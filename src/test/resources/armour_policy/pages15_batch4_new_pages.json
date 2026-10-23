@@ -1,1 +1,130 @@
-{}
+{
+  "MERCURY": [
+    "quicksilver_pool",
+    "silver_needles",
+    "mercury_whip",
+    "silver_skate",
+    "silver_dome",
+    "silver_shackles",
+    "silver_wave",
+    "toxic_quicksilver",
+    "liquid_metal_tide",
+    "mercury_vortex",
+    "silver_wing_barrage"
+  ],
+  "SAND": [
+    "sand_bullets",
+    "dust_veil",
+    "dune_step",
+    "sand_whip",
+    "sand_wall",
+    "sand_mirage",
+    "scouring_sand",
+    "sinking_dune",
+    "sand_cyclone",
+    "dune_collapse"
+  ],
+  "STEEL": [
+    "steel_needle",
+    "steel_strike",
+    "lance_vault",
+    "steel_chariot",
+    "steel_coffin",
+    "restraining_steel",
+    "steel_plating",
+    "lance_downpour",
+    "steel_blade_storm",
+    "thousand_lances"
+  ],
+  "ROCK": [
+    "gravel_spray",
+    "flint_shards",
+    "rockslide_skate",
+    "rock_fortress",
+    "rolling_boulder",
+    "rock_hide",
+    "avalanche_crush",
+    "mountain_fall"
+  ],
+  "RED_OCHRE": [
+    "ochre_dust",
+    "pigment_darts",
+    "red_handprint",
+    "ancestral_dance",
+    "ochre_spear",
+    "ochre_wall",
+    "ochre_mire",
+    "red_earth_rite"
+  ],
+  "STONE": [
+    "pebble_shot",
+    "stone_fist",
+    "stone_skin",
+    "granite_lance",
+    "pillar_burst",
+    "boulder_drop",
+    "quarry_collapse",
+    "colossus_stampede"
+  ],
+  "MINERAL": [
+    "ore_shard_shot",
+    "mineral_assault",
+    "ore_sight",
+    "talos_doll",
+    "heavy_armored_titan",
+    "geode_burst",
+    "talos_doll_army",
+    "colossal_ore_fist"
+  ],
+  "SANDSTONE": [
+    "grit_slash",
+    "sandstone_hurl",
+    "sandstone_leap",
+    "rock_fall",
+    "sandstone_shell",
+    "quarry_sweep",
+    "rock_storm"
+  ],
+  "EARTH": [
+    "rising_ground",
+    "ground_wall",
+    "mud_wall_cliff",
+    "dirt_clod_seal",
+    "giant_king_of_wisdom",
+    "march_of_holy_fools"
+  ],
+  "SHAKUDO": [
+    "gilded_darts",
+    "patina_step",
+    "inlay_snare",
+    "black_gold_wave",
+    "gilded_kiln"
+  ],
+  "CRYSTAL": [
+    "refraction_veil",
+    "geode_trap",
+    "crystal_tide"
+  ],
+  "GLASS": [
+    "lens_flare",
+    "glass_wall",
+    "stained_glass_field"
+  ],
+  "IRON": [
+    "iron_filings",
+    "magnetic_pull",
+    "iron_curtain"
+  ],
+  "COPPER": [
+    "spark_coil",
+    "voltaic_pulse",
+    "lightning_rod"
+  ],
+  "CORUNDUM": [
+    "ruby_flare",
+    "sapphire_salve"
+  ],
+  "BRONZE": [
+    "bronze_gong"
+  ]
+}

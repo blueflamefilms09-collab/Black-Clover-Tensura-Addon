@@ -58,6 +58,13 @@ class CharacterSetRestSourceScanTest {
         return s.substring(a, z);
     }
 
+    /** The "15 spells for every grimoire" batches append pages to a book (book/pages15/BatchN.java): their sources count as book pages too. */
+    private static String pages15Source() throws IOException {
+        StringBuilder sb = new StringBuilder();
+        for (int n = 1; n <= 8; n++) sb.append(read(SRC.resolve("book/pages15/Batch" + n + ".java")));
+        return sb.toString();
+    }
+
     private static List<String> added(String book) throws IOException {
         String file = read(SRC.resolve("book/CharacterPagesRest.java"));
         Matcher m = Pattern.compile("register\\(\"" + book + "\", List\\.of\\((.*?)\\)\\);", Pattern.DOTALL).matcher(file);
@@ -80,7 +87,7 @@ class CharacterSetRestSourceScanTest {
             List<String> add = added(book);
             for (var sp : e.getValue().getAsJsonArray("spells")) {
                 String page = sp.getAsJsonObject().get("page").getAsString();
-                assertTrue(add.contains(page) || src.contains("\"" + page + "\""), e.getKey() + ": page " + page + " is not in " + book);
+                assertTrue(add.contains(page) || src.contains("\"" + page + "\"") || pages15Source().contains("\"" + page + "\""), e.getKey() + ": page " + page + " is not in " + book);
             }
         }
     }

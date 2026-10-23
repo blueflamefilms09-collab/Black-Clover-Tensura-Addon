@@ -69,6 +69,149 @@
         ]
       },
       "note": "NEW page. A giant greatsword of ore made and swung; listed as a mineral offensive spell, no description beyond that."
+    },
+    {
+      "page": "ore_shard_shot",
+      "name": "Mineral Magic: Ore Shard Shot",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "design",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.14
+      },
+      "note": "NEW shared page of the 15-pages project (docs/magic/pages15_batch4.md); added so this grimoire also shows 15 pages. Order and mastery are this mod's design (no source names an episode). Inspired by a mobile-game skill, not the manga."
+    },
+    {
+      "page": "mineral_assault",
+      "name": "Mineral Magic: Mineral Assault",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "design",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.18
+      },
+      "note": "NEW shared page of the 15-pages project (docs/magic/pages15_batch4.md); added so this grimoire also shows 15 pages. Order and mastery are this mod's design (no source names an episode). Name seen in a mobile game, not the manga."
+    },
+    {
+      "page": "ore_sight",
+      "name": "Mineral Magic: Ore Sight",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "design",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.2
+      },
+      "note": "NEW shared page of the 15-pages project (docs/magic/pages15_batch4.md); added so this grimoire also shows 15 pages. Order and mastery are this mod's design (no source names an episode)."
+    },
+    {
+      "page": "talos_doll",
+      "name": "Mineral Magic: Talos Doll",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "ja_search",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.3
+      },
+      "note": "NEW shared page; the Talos Puppet of this file's planned list (ja_search)."
+    },
+    {
+      "page": "heavy_armored_titan",
+      "name": "Mineral Magic: Heavy Armored Titan",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "ja_search",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.34
+      },
+      "note": "NEW shared page; the Heavy Armored Titan of this file's planned list (ja_search)."
+    },
+    {
+      "page": "geode_burst",
+      "name": "Mineral Magic: Geode Burst",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "design",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.4
+      },
+      "note": "NEW shared page of the 15-pages project (docs/magic/pages15_batch4.md); added so this grimoire also shows 15 pages. Order and mastery are this mod's design (no source names an episode)."
+    },
+    {
+      "page": "attribute_cut",
+      "name": "Mineral Magic: (the book's cutting page)",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "design",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.45
+      },
+      "note": "Existing page of the book that was hidden for him; opened so his grimoire shows 15 pages (owner decision: every grimoire 15)."
+    },
+    {
+      "page": "attribute_field",
+      "name": "Mineral Magic: (the book's field page)",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "design",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.5
+      },
+      "note": "Existing page of the book that was hidden for him; opened so his grimoire shows 15 pages (owner decision: every grimoire 15)."
+    },
+    {
+      "page": "talos_doll_army",
+      "name": "Mineral Magic: Talos Doll Army",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "ja_search",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.58
+      },
+      "note": "NEW shared page; the Talos Puppet Cluster of this file's planned list (ja_search)."
+    },
+    {
+      "page": "mineral_spire",
+      "name": "Mineral Magic: Crystal Spire",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "design",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.62
+      },
+      "note": "Existing page of the book that was hidden for him; opened so his grimoire shows 15 pages (owner decision: every grimoire 15)."
+    },
+    {
+      "page": "colossal_ore_fist",
+      "name": "Mineral Creation Magic: Colossal Ore Fist",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "design",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.9
+      },
+      "note": "NEW shared page of the 15-pages project (docs/magic/pages15_batch4.md); added so this grimoire also shows 15 pages. Order and mastery are this mod's design (no source names an episode)."
     }
   ],
   "planned": [

@@ -91,6 +91,136 @@
         ]
       },
       "note": "The English Steel Magic page lists it as a union spell; the Japanese article puts it in the Royal Knights Selection Exam, a super-fast attack that is hard to steer after it is shot."
+    },
+    {
+      "page": "steel_needle",
+      "name": "Steel Magic: Steel Needle",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "design",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.08
+      },
+      "note": "NEW shared page of the 15-pages project (docs/magic/pages15_batch4.md); added so this grimoire also shows 15 pages. Order and mastery are this mod's design (no source names an episode). Name seen in a game guide, not the manga."
+    },
+    {
+      "page": "steel_strike",
+      "name": "Steel Magic: Steel Strike",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "design",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.12
+      },
+      "note": "NEW shared page of the 15-pages project (docs/magic/pages15_batch4.md); added so this grimoire also shows 15 pages. Order and mastery are this mod's design (no source names an episode). Name seen in a game guide, not the manga."
+    },
+    {
+      "page": "lance_vault",
+      "name": "Steel Magic: Lance Vault",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "design",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.2
+      },
+      "note": "NEW shared page of the 15-pages project (docs/magic/pages15_batch4.md); added so this grimoire also shows 15 pages. Order and mastery are this mod's design (no source names an episode)."
+    },
+    {
+      "page": "steel_chariot",
+      "name": "Steel Magic: Steel Chariot",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "en_wiki",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.3
+      },
+      "note": "NEW shared page; the name is the 'Steel chariot' of this file's planned list (en_wiki summary)."
+    },
+    {
+      "page": "steel_coffin",
+      "name": "Steel Magic: Steel Coffin",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "en_wiki",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.34
+      },
+      "note": "NEW shared page; the name is the 'steel coffin' of this file's planned list (en_wiki summary)."
+    },
+    {
+      "page": "restraining_steel",
+      "name": "Steel Magic: Restraining Steel",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "en_wiki",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.4
+      },
+      "note": "NEW shared page; the 'Restraining Magic with steel' of this file's planned list (en_wiki summary)."
+    },
+    {
+      "page": "steel_plating",
+      "name": "Steel Magic: Steel Plating",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "design",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.45
+      },
+      "note": "NEW shared page of the 15-pages project (docs/magic/pages15_batch4.md); added so this grimoire also shows 15 pages. Order and mastery are this mod's design (no source names an episode)."
+    },
+    {
+      "page": "lance_downpour",
+      "name": "Steel Magic: Lance Downpour",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "design",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.58
+      },
+      "note": "NEW shared page of the 15-pages project (docs/magic/pages15_batch4.md); added so this grimoire also shows 15 pages. Order and mastery are this mod's design (no source names an episode). In the line of his lance spells."
+    },
+    {
+      "page": "steel_blade_storm",
+      "name": "Steel Magic: Steel Blade Storm",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "design",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.62
+      },
+      "note": "NEW shared page of the 15-pages project (docs/magic/pages15_batch4.md); added so this grimoire also shows 15 pages. Order and mastery are this mod's design (no source names an episode)."
+    },
+    {
+      "page": "thousand_lances",
+      "name": "Steel Magic: Thousand Lances",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "design",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.9
+      },
+      "note": "NEW shared page of the 15-pages project (docs/magic/pages15_batch4.md); added so this grimoire also shows 15 pages. Order and mastery are this mod's design (no source names an episode)."
     }
   ],
   "planned": [
