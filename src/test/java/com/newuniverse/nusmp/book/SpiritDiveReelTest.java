@@ -153,7 +153,12 @@ class SpiritDiveReelTest {
         assertEquals(SpiritDiveReelRules.MOSAIC_LEVELS, SpiritDiveReelRules.mosaicLevel(1f, 0f, 0.6f));
         assertTrue(SpiritDiveReelRules.mosaicLevel(0.4f, 0f, 0.6f) > SpiritDiveReelRules.mosaicLevel(0.4f, 0.25f, 0.7f), "the legs are ahead of the body, the body ahead of the head");
         int n = 12;
-        for (float u = 11f; u < 19f; u += 0.5f) assertTrue(SpiritDiveReelRules.crownCube(u, 0, n) >= SpiritDiveReelRules.crownCube(u, n - 1, n) - 1e-4f, "cube 0 lights before cube 11");
+        float first0 = -1f, first11 = -1f;
+        for (float u = 0f; u <= 22f; u += 0.1f) {
+            if (first0 < 0f && SpiritDiveReelRules.crownCube(u, 0, n) > 0.01f) first0 = u;
+            if (first11 < 0f && SpiritDiveReelRules.crownCube(u, n - 1, n) > 0.01f) first11 = u;
+        }
+        assertTrue(first0 >= 11f && first0 < first11 && first11 <= 20f, "cube 0 lights (" + first0 + ") before cube 11 (" + first11 + "), inside the ignition window");
         for (int i = 0; i < n; i++) assertEquals(1f, SpiritDiveReelRules.crownCube(22f, i, n), 1e-4f, "every cube is on at the end");
         for (float u = 0f; u <= 22f; u += 0.25f) for (int i = 0; i < n; i++) { float k = SpiritDiveReelRules.crownCube(u, i, n); assertTrue(k >= 0f && k < 1.2f, "cube " + i + " at " + u + ": " + k); }
     }

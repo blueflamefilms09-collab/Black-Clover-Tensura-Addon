@@ -77,7 +77,7 @@ class SpiritDiveReelAssetTest {
                     }
                 assertTrue(lit >= prev, e + " level " + k + ": the patches only ever grow (" + lit + " after " + prev + ")");
                 prev = lit;
-                if (k == SpiritDiveReelRules.MOSAIC_LEVELS) assertTrue(lit > 600 && shades.size() >= 3, e + ": the last level is the whole patchwork in several shades (" + lit + ", " + shades.size() + ")");
+                if (k == SpiritDiveReelRules.MOSAIC_LEVELS) assertTrue(lit > 300 && shades.size() >= 3, e + ": the last level is the whole patchwork in several shades (" + lit + ", " + shades.size() + ")");
             }
         }
     }

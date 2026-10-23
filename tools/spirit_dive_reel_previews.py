@@ -113,7 +113,7 @@ def entry(el):
         tiles += [label(tile(sc, 0, c), "tick %d" % SCENES[sc]["ages"][c]) for c in range(n)]
         sx = "sdr_%s_%s_exit" % (el, tier)
         tiles += [label(tile(sx, 0, c), "exit, tick %d" % SCENES[sx]["ages"][c]) for c in range(len(SCENES[sx]["ages"]))]
-        save("entry_%s_%s" % (el, tier), tiles, "%s %s tier: the entry (18 ticks) and the exit (preview harness)" % (el.upper(), tn))
+        save("entry_%s_%s" % (el, tier), tiles, "%s %s tier: the entry (22 ticks) and the exit (preview harness)" % (el.upper(), tn))
 
 
 def half():
