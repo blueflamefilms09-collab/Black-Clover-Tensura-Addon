@@ -129,6 +129,7 @@ public final class SpiritDiveWind {
         PoseStack pose = c.pose();
         pose.pushPose();
         SpiritDiveReelPieces.applyPart(pose, c.model().head);
+        SpiritDiveMerge2.fit(pose);                                                                         // merge 2: smaller and closer to the head (spiritDive.crownDistinct)
         SealDraw.camera(pose);
         float age = c.age();
         float ga = SpiritDiveReelRules.smooth(ign * 1.5f);

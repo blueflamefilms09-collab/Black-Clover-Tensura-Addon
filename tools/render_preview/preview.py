@@ -549,10 +549,14 @@ class View:
         self.k = (H / 2) / math.tan(math.radians(fov) / 2)
 
 
-def background(view, floor_on=True):
-    """Sky gradient, checker floor (1 block squares) and the floor's depth, for the whole tile."""
+def background(view, floor_on=True, mode=None):
+    """Sky gradient, checker floor (1 block squares) and the floor's depth, for the whole tile. `mode` "dark" / "bright" (scene key "bg", merge 2 previews) swaps the sky for a near black / near white one."""
     W, H, k = view.W, view.H, view.k
     top, horizon = np.array([0.40, 0.44, 0.52]), np.array([0.62, 0.64, 0.66])
+    if mode == "dark":
+        top, horizon = np.array([0.02, 0.03, 0.06]), np.array([0.05, 0.06, 0.09])
+    elif mode == "bright":
+        top, horizon = np.array([0.92, 0.95, 1.0]), np.array([0.98, 0.98, 0.98])
     yy, xx = np.mgrid[0:H, 0:W].astype(np.float64)
     dirs = view.f[None, None, :] * k + view.r[None, None, :] * (xx[..., None] + 0.5 - W / 2) - view.u[None, None, :] * (yy[..., None] + 0.5 - H / 2)
     dirs /= np.linalg.norm(dirs, axis=2, keepdims=True)
@@ -941,7 +945,7 @@ def draw_sheet(name, sc, sm, res, st, verbose):
     for r, vw in enumerate(views):
         view = View(vw["eye"], vw["target"], vw["fov"], W * ss, H * ss)
         key = r
-        bg_cache[key] = background(view, bool(sc.get("floor", True)))
+        bg_cache[key] = background(view, bool(sc.get("floor", True)), sc.get("bg"))
         for c, age in enumerate(ages):
             fr = frame_of(frames_idx[c][min(r, st["n_views"] - 1)])
             img = bg_cache[key][0].copy()

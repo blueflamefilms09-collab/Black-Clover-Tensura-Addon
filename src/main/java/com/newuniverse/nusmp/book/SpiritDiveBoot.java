@@ -28,5 +28,6 @@ public final class SpiritDiveBoot {
         SpiritDiveWind3SelfTests.register();                                                         // 4.x: self-test magic.spirit_dive_wind3
         SpiritDiveWind4SelfTests.register();                                                         // 4.x final A: self-test magic.spirit_dive_windfinal
         SpiritDiveMergeSelfTests.register();                                                         // 4.x: self-test magic.spirit_dive_merge
+        SpiritDiveMerge2SelfTests.register();                                                        // 4.x: self-test magic.spirit_dive_merge2
     }
 }

@@ -31,5 +31,6 @@ public final class DiveClient {
         NeoForge.EVENT_BUS.addListener(DiveAnimeFirstPerson::onRenderArm);                  // the ANIME look: the arms glow lightly in first person
         NeoForge.EVENT_BUS.addListener(DiveAnimeFirstPerson::onRenderHand);
         NeoForge.EVENT_BUS.addListener(DiveParticles::onClientTick);
+        NeoForge.EVENT_BUS.addListener(DiveMergeFirstPerson::onRender);                 // merge 2: the merge in first person (spiritDive.mergeFirstPerson)
     }
 }

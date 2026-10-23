@@ -124,6 +124,10 @@ final class SpiritDiveReelPieces {
     static void crown(AuraContext c, Element el, Spec sp, boolean character, Pal pal, float u, float uLeft, boolean upgrade, boolean leftOnly, float lit) {
         float ign = Math.max(SpiritDiveReelRules.crown(u), upgrade ? SpiritDiveReelRules.crown(uLeft) : 0f);
         if (ign <= 0.01f || sp.crownCubes() <= 0) return;
+        if (SpiritDiveMerge2.crownDistinct()) {                                                 // merge 2: the smaller element crown (client option spiritDive.crownDistinct)
+            SpiritDiveMerge2.crown(c, el, character, pal.glow(), u, uLeft, upgrade, leftOnly, lit, 1f);
+            return;
+        }
         PoseStack pose = c.pose();
         pose.pushPose();
         applyPart(pose, c.model().head);

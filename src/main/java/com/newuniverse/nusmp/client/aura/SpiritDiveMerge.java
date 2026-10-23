@@ -3,6 +3,7 @@ package com.newuniverse.nusmp.client.aura;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.newuniverse.nusmp.book.SpiritDiveAnimeRules;
+import com.newuniverse.nusmp.book.SpiritDiveMerge2Rules;
 import com.newuniverse.nusmp.book.SpiritDiveMergeMesh;
 import com.newuniverse.nusmp.book.SpiritDiveMergeRules;
 import com.newuniverse.nusmp.book.SpiritDivePieces;
@@ -18,6 +19,7 @@ import com.newuniverse.nusmp.client.prop.SealDraw;
 import com.newuniverse.nusmp.perf.PerfBudget;
 import com.newuniverse.nusmp.perf.PerfProbe;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
@@ -128,12 +130,12 @@ public final class SpiritDiveMerge {
         if (a > 0.01f) {
             SpiritDiveMergeRules.path(m, side, character, PATH);
             float bob = m < SpiritDiveMergeRules.APPEAR_END + 2f ? 1.6f * Mth.sin(c.age() * 0.13f) : 0f;
-            float s = SpiritDiveMergeRules.ghostSize(el, character) * SpiritDiveMergeRules.ghostScale(m);
+            float s = SpiritDiveMergeRules.ghostSize(el, character) * SpiritDiveMergeRules.ghostScale(m) * SpiritDiveMerge2.sizeK(el, character);
             pose.pushPose();
             pose.translate(PATH[0], PATH[1] + bob, PATH[2]);
             pose.mulPose(Q.rotationY(PATH[3]));
             pose.scale(s, s, s);
-            mesh(c, SpiritDiveMergeMesh.get(SpiritDiveMergeRules.ghostMesh(el, character)), a * (1f + 0.5f * SpiritDiveMergeRules.flash(m)));
+            mesh(c, ghostMesh(el, character), a * (1f + 0.5f * SpiritDiveMergeRules.flash(m)));
             pose.popPose();
         }
         float sa = SpiritDiveMergeRules.strips(m);
@@ -165,7 +167,7 @@ public final class SpiritDiveMerge {
             for (int j = 0; j <= segs; j++) {
                 float mj = m + dir * j * 0.75f;
                 SpiritDiveMergeRules.path(mj, side, character, PATH);
-                float sc = SpiritDiveMergeRules.ghostSize(el, character) * SpiritDiveMergeRules.ghostScale(mj);
+                float sc = SpiritDiveMergeRules.ghostSize(el, character) * SpiritDiveMergeRules.ghostScale(mj) * SpiritDiveMerge2.sizeK(el, character);
                 float off = o * 3.4f * sc, cy = Mth.cos(PATH[3]), sy = Mth.sin(PATH[3]);
                 PTS[j * 3] = PATH[0] + off * cy;
                 PTS[j * 3 + 1] = PATH[1] + 2.2f * sc * Mth.sin(j * 0.9f + k * 1.7f) + o * 1.2f;
@@ -189,18 +191,35 @@ public final class SpiritDiveMerge {
         pose.translate(0f, SpiritDiveMergeRules.CORE_Y, SpiritDiveMergeRules.CORE_Z);
         if (el == Element.FIRE) pose.mulPose(Q.rotationY(c.age() * 0.012f));                                  // the Salamander coils slowly round the torso
         pose.scale(s, s, s);
-        mesh(c, SpiritDiveMergeMesh.get(SpiritDiveMergeRules.coreMesh(el)), a);
+        mesh(c, SpiritDiveMerge2.slim() ? SpiritDiveMerge2Rules.mesh(SpiritDiveMerge2Rules.slimCore(el)) : SpiritDiveMergeMesh.get(SpiritDiveMergeRules.coreMesh(el)), a);
         pose.popPose();
     }
 
-    // ------------------------------------------------------------------ drawing a mesh (layer 1 = the additive layer; the tints are baked)
-    private static void mesh(AuraContext c, SpiritDiveWind3Mesh m, float alpha) {
-        int layer = SpiritDiveWind3Mesh.GLOW, quads = m.quads(layer);
+    // ------------------------------------------------------------------ drawing a mesh (the tints are baked)
+    /** The ghost mesh of the chosen models: the slim spirit of merge 2 (default) or the boxy one of the first merge ({@code spiritDive.mergeModels}). */
+    static SpiritDiveWind3Mesh ghostMesh(Element el, boolean character) {
+        return SpiritDiveMerge2.slim() ? SpiritDiveMerge2Rules.mesh(SpiritDiveMerge2Rules.slimMesh(el, character)) : SpiritDiveMergeMesh.get(SpiritDiveMergeRules.ghostMesh(el, character));
+    }
+
+    private static void mesh(AuraContext c, SpiritDiveWind3Mesh m, float alpha) { draw(c.pose(), c.buffers(), m, alpha); }
+
+    /**
+     * Draws a spirit mesh in the pose's frame, all additive: the slim mesh has two layers (the solid body at {@link SpiritDiveMerge2Rules#SOLID_K}, the soft glow shell at {@link SpiritDiveMerge2Rules#GLOW_K} of
+     * the alpha), the boxy mesh only layer 1. Shared by the third person merge and the first person merge. No allocation (static scratch).
+     */
+    static void draw(PoseStack ps, MultiBufferSource buffers, SpiritDiveWind3Mesh m, float alpha) {
+        if (alpha <= 0.004f) return;
+        PoseStack.Pose pose = ps.last();
+        VertexConsumer vc = buffers.getBuffer(SafeAdditive.additive(SKIN));
+        if (m.quads(SpiritDiveWind3Mesh.SOLID) > 0) emit(pose, vc, m, SpiritDiveWind3Mesh.SOLID, alpha * SpiritDiveMerge2Rules.SOLID_K);
+        emit(pose, vc, m, SpiritDiveWind3Mesh.GLOW, alpha * (m.quads(SpiritDiveWind3Mesh.SOLID) > 0 ? SpiritDiveMerge2Rules.GLOW_K : 1f));
+    }
+
+    private static void emit(PoseStack.Pose pose, VertexConsumer vc, SpiritDiveWind3Mesh m, int layer, float alpha) {
+        int quads = m.quads(layer);
         if (quads == 0 || alpha <= 0.004f) return;
         int a = Math.min(255, (int) (alpha * 255f + 0.5f));
-        PoseStack.Pose pose = c.pose().last();
         Matrix4f mat = pose.pose();
-        VertexConsumer vc = c.buffers().getBuffer(SafeAdditive.additive(SKIN));
         float[] pos = m.pos[layer], uv = m.uv[layer], nrm = m.nrm[layer];
         int[] tint = m.tint[layer];
         for (int q = 0; q < quads; q++) {
