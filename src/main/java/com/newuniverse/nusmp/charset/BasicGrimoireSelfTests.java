@@ -19,7 +19,7 @@ import java.util.Set;
  * docs/magic/basic_grimoires.md): every page a character set marks exclusive is hidden in a grimoire bound to nobody; every page {@link BasicSignatures} reserves is a real family page of its
  * book, is hidden in the basic grimoire, and shows again in the grimoire of its owner when the owner's set is for that book; every page {@link BasicPages} appended is a real family page placed
  * after every other page of the book, has a cast and a cooldown that keeps it cheap, belongs to nobody (no lock, no set lists it) and is visible in the basic grimoire; and no book is over the
- * 24 family pages the unlock mask allows.
+ * 64 family pages the unlock mask holds and none shows more than 32 pages in the basic grimoire.
  */
 public final class BasicGrimoireSelfTests {
     private BasicGrimoireSelfTests() {}
@@ -48,7 +48,9 @@ public final class BasicGrimoireSelfTests {
         // 1. the size budget of every book
         for (var h : NUSkills.BOOKS) {
             GrimoireBook b = h.get();
-            if (b.familyCount() > 24) return Result.fail(h.getId().getPath() + " has " + b.familyCount() + " family pages, over the 24 the unlock mask allows");
+            if (b.familyCount() > 64) return Result.fail(h.getId().getPath() + " has " + b.familyCount() + " family pages, over the 64 the unlock mask holds");      // 15 spells for every grimoire: 64 bits (book.UnlockMask) ...
+            int shown = CharacterSets.visibleCount(b.createDefaultInstance(), b);
+            if (shown > 32) return Result.fail(h.getId().getPath() + "'s basic grimoire shows " + shown + " pages, over the 32 one grimoire may show");      // ... and 32 pages visible in one grimoire (was 24 family pages)
         }
         // 2. every exclusive page is out of the basic grimoire
         int exclusive = 0;
@@ -102,6 +104,6 @@ public final class BasicGrimoireSelfTests {
                 added++;
             }
         }
-        return Result.ok(exclusive + " exclusive pages are out of the basic grimoires, " + reserved + " more are reserved, " + added + " generic pages are appended last in " + BasicPages.books().size() + " books, no book is over 24 pages");
+        return Result.ok(exclusive + " exclusive pages are out of the basic grimoires, " + reserved + " more are reserved, " + added + " generic pages are appended last in " + BasicPages.books().size() + " books, no book is over 32 shown pages");
     }
 }

@@ -238,7 +238,7 @@ public class ForbiddenBook extends GrimoireBook {
         p.teleportTo(d.getDouble("nusmp_soul_x"), d.getDouble("nusmp_soul_y"), d.getDouble("nusmp_soul_z"));
         GrimoirePages.grimoireOf(p).ifPresent(g -> {
             if (g.getSkill() instanceof GrimoireBook gb) for (int m = gb.familyCount() - 1; m >= 1; m--) {
-                if (isUnlocked(g, m)) { g.getOrCreateTag().putInt("Unlocked", g.getOrCreateTag().getInt("Unlocked") & ~(1 << m)); g.markDirty(); break; }
+                if (isUnlocked(g, m)) { relock(g, m); break; }
             }
         });
         ForbiddenMagic.subtitle(p, Component.literal(p.getName().getString() + " returns from death. Something was left behind."));

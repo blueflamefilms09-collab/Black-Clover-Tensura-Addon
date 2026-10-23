@@ -102,9 +102,10 @@ page.withCooldown(ticks)
 Cast = (GrimoireBook b, ManasSkillInstance i, ServerPlayer p, int mode) -> boolean   // return false = nothing happened, nothing spent
 ```
 
-**Page limit: a book may hold at most 24 family pages in TOTAL (existing + yours).** Unlocks are bits of an int (`1 << mode`) and the book appends four special pages after the family pages
-(spirit dive, spirit channeling, devil union, summon grimoire), so a page number above 31 would alias another page. For upgrades and audits count the existing pages first
-(`ElementBooks.java` / `<X>Book.java` / `PaintingBook.java`) and add at most `24 - existing`.
+**Page limit: a grimoire may SHOW at most 32 family pages (existing + yours); a book may hold at most 64 in all** (the budget used to be 24). Unlocks are bits of a 64-bit mask
+(`book.UnlockMask`: modes 0-31 in the item tag `Unlocked`, modes 32-63 in `Unlocked2`; read and write it only through `book.PageBits` / `GrimoireBook.isUnlocked` / `unlock` / `relock`, never with `1 << mode`)
+and the book appends the special pages after the family pages (spirit dive, spirit channeling, devil union, summon grimoire ...). For upgrades and audits count the existing pages first
+(`ElementBooks.java` / `<X>Book.java` / `PaintingBook.java`) and add at most `32 - existing`. The "15 spells for every grimoire" pages are not written in the book files at all: see `docs/magic/pages15_recipe.md`.
 
 Page ids are lower-case snake_case and unique in the book; they are save keys: **never rename an id you wrote**. Lang key per page:
 `nusmp.page.book_<key>.<id>`: one sentence, what it does and what scales with EP.

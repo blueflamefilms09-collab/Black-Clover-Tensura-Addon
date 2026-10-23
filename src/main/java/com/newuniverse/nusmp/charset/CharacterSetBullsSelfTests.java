@@ -18,7 +18,7 @@ import java.util.Map;
 /**
  * Why: nothing here can be played by its author, so what can be proved without a person is proved by the real game (the CI server smoke test, key {@code magic.character_spells_bulls}): the
  * twelve Black Bulls files load with no problem; every page they name is a real family page of that character's real book; every page the squad added sits after the older pages (so the hooks
- * of the twelve books work), belongs to a character and has an owner lock; no book is over the 24 family pages the unlock mask allows; a rule waits for what the series says it waits for (Double
+ * of the twelve books work), belongs to a character and has an owner lock; no book is over the 64 family pages the unlock mask holds; a rule waits for what the series says it waits for (Double
  * Reflect Refrain for Real Double, Keraunos for the boots); a grimoire bound to Luck hides what he never used and shows Keraunos while the basic grimoire hides it; the flair palette names real
  * effect shapes and stays inside its packet limit.
  */
@@ -76,7 +76,7 @@ public final class CharacterSetBullsSelfTests {
             }
             for (String ref : set.spells().stream().flatMap(s -> s.rule().pages().stream()).toList())
                 if (!SpellRule.UNIVERSAL_PAGES.contains(ref) && index(b, ref) < 0) return Result.fail(id + ": a rule names unknown page " + ref);
-            if (b.familyCount() > 24) return Result.fail(set.book() + " has " + b.familyCount() + " family pages (the unlock mask allows 24)");
+            if (b.familyCount() > 64) return Result.fail(set.book() + " has " + b.familyCount() + " family pages (the 64-bit unlock mask holds 64)");
         }
         // the pages the squad added sit after every older page and belong to a character
         int added = 0;

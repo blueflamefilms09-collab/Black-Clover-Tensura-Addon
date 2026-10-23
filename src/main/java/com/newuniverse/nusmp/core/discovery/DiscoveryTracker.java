@@ -49,7 +49,7 @@ public final class DiscoveryTracker {
     /** The server thread's scratch array for one scan (every slot is overwritten each time). */
     private static Item[] SCRATCH = new Item[0];
     private static final Map<UUID, Item[]> SEEN = new HashMap<>();
-    private static final Map<UUID, Map<String, Integer>> BOOK_MASKS = new HashMap<>();
+    private static final Map<UUID, Map<String, Long>> BOOK_MASKS = new HashMap<>();      // 64-bit page masks (book.UnlockMask: "Unlocked" + "Unlocked2")
     private static final Map<UUID, List<String>> PENDING = new HashMap<>();
     private static final Map<UUID, Boolean> SHOWN_ALL = new HashMap<>();
 
@@ -245,9 +245,9 @@ public final class DiscoveryTracker {
     private static void scanBook(ServerPlayer p, ManasSkillInstance inst, GrimoireBook book, boolean full) {
         discover(p, DiscoveryRules.magicKey(GrimoirePages.magicOf(inst).name()));
         String path = book.getRegistryName().getPath();
-        int mask = inst.getOrCreateTag().getInt("Unlocked");
-        Map<String, Integer> masks = BOOK_MASKS.computeIfAbsent(p.getUUID(), k -> new HashMap<>());
-        Integer last = masks.get(path);
+        long mask = com.newuniverse.nusmp.book.PageBits.read(inst.getOrCreateTag(), com.newuniverse.nusmp.book.PageBits.UNLOCKED);
+        Map<String, Long> masks = BOOK_MASKS.computeIfAbsent(p.getUUID(), k -> new HashMap<>());
+        Long last = masks.get(path);
         if (!full && last != null && last == mask && p.tickCount % 200 >= 40) return;      // unchanged: the base pages are only re-read every ten seconds
         masks.put(path, mask);
         int family = book.familyCount();

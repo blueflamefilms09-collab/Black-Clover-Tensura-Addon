@@ -19,7 +19,7 @@ import java.util.Set;
 /**
  * Why: nothing of the 1.93.0 rebuild of Song, Sound, Soul, Soul Corpse and Memory Magic can be played by its author, so what can be proved without a person is proved by the
  * real game: the CI server smoke test boots the mod and runs these (key prefix {@code magic}). One checks every rebuilt book in the real skill registry (the right class, the
- * five generic page ids in their old order, the exclusive pages of Kahono, Lucius and Rades still at their old places, unique ids, at most 24 family pages); the other spawns
+ * five generic page ids in their old order, the exclusive pages of Kahono, Lucius and Rades still at their old places, unique ids, at most 32 family pages); the other spawns
  * every prop kind of the five magics in the real world, ticks it once and ends it, and fails if a spawn is refused, a behaviour throws or a prop stays.
  */
 public final class SongRebuildSelfTests {
@@ -55,7 +55,7 @@ public final class SongRebuildSelfTests {
                 if (!pages.get(k).id().equals(GENERIC[k])) return Result.fail(m + ": page " + k + " is " + pages.get(k).id() + ", expected " + GENERIC[k]);
             Set<String> ids = new HashSet<>();
             for (BookPage p : pages) if (!ids.add(p.id())) return Result.fail(m + ": the page id " + p.id() + " is used twice");
-            if (b.familyCount() > 24) return Result.fail(m + ": " + b.familyCount() + " family pages (the limit is 24)");
+            if (b.familyCount() > 32) return Result.fail(m + ": " + b.familyCount() + " family pages (the budget is 32)");
             List<String> old = switch (m) {
                 case SONG -> List.of("song_mode_heal", "song_mode_lullaby", "song_mode_barrier", "song_mode_requiem", "song_crescendo");
                 case SOUL -> List.of("paladin_conversion", "paladin_recall");

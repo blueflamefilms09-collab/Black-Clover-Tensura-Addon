@@ -85,8 +85,9 @@ class PageCountsTest {
         int pages = 0;
         for (Row r : g.values()) {
             assertTrue(r.total() >= 1 && r.basic() >= 1 && r.basic() <= r.total(), r.book() + ": total " + r.total() + " basic " + r.basic());
-            // the engine's own budget: the unlock mask is an int (1 << mode), so a book can never have more than 32 family pages
-            assertTrue(r.total() <= 32, r.book() + " has " + r.total() + " family pages: the unlock mask (1 << mode) holds 32");
+            // the engine's own limit: the unlock mask is 64 bits ("Unlocked" + "Unlocked2", book.UnlockMask), so a book can never have more than 64 family pages; and no grimoire may SHOW more than 32
+            assertTrue(r.total() <= 64, r.book() + " has " + r.total() + " family pages: the 64-bit unlock mask holds 64");
+            assertTrue(r.basic() <= 32, r.book() + "'s basic grimoire shows " + r.basic() + " pages: one grimoire may show 32");
             for (var c : r.chars().entrySet()) assertTrue(c.getValue() >= 1 && c.getValue() <= r.total(), r.book() + "/" + c.getKey());
             pages += r.total();
         }

@@ -44,7 +44,7 @@ public final class EarthFamilySelfTests {
             List<BookPage> pages = b.pages();
             for (int k = 0; k < GENERIC.length; k++)
                 if (!pages.get(k).id().equals(GENERIC[k])) return SelfTests.Result.fail(m + ": page " + k + " is " + pages.get(k).id() + ", not " + GENERIC[k]);
-            if (b.familyCount() < 7 || b.familyCount() > 24) return SelfTests.Result.fail(m + ": family page count " + b.familyCount());
+            if (b.familyCount() < 7 || b.familyCount() > 32) return SelfTests.Result.fail(m + ": family page count " + b.familyCount());
             for (int k = 0; k < b.familyCount(); k++)
                 for (int j = k + 1; j < b.familyCount(); j++)
                     if (pages.get(k).id().equals(pages.get(j).id())) return SelfTests.Result.fail(m + ": duplicate page id " + pages.get(k).id());

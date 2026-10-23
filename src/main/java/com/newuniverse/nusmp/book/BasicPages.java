@@ -11,8 +11,8 @@ import java.util.Map;
  * book (rule 2: no page id, name or mode number moves, so every save, unlock bit and mastery stays). None of them belongs to a character: they have no owner, no lock and no set lists them, so
  * every grimoire of the book can open them by the usual mastery order, and a character's grimoire shows them only when its set lists them (it never does for these). The casts are in {@link BasicArts}.
  *
- * <p>The hook is one place, {@code GrimoireBook.familyAll()}, which asks {@link #append} last of all (after the character pages), so a book class needs no edit. The family page budget (the unlock
- * mask) is 24 pages per book; {@code charset.BasicGrimoiresTest} counts every book's family pages from the sources and fails above 24. The tiers (cost, cooldown) follow the usual page tiers.
+ * <p>The hook is one place, {@code GrimoireBook.familyAll()}, which asks {@link #append} last of all (after the character pages), so a book class needs no edit. The family page budget
+ * is 32 pages per grimoire (the unlock mask has 64 bits, {@link UnlockMask}); {@code charset.BasicGrimoiresTest} counts every book's family pages from the sources and fails above 32. The tiers (cost, cooldown) follow the usual page tiers.
  */
 public final class BasicPages {
     private BasicPages() {}

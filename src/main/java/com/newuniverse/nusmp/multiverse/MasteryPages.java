@@ -24,7 +24,7 @@ import java.util.Set;
  *   <li>mastery: page k of n needs mastery >= k/n of the bar (x the configured scale);</li>
  *   <li>gates: the page's minimum Magic Knight rank (zone pages Intermediate, signature pages Senior by default, per-page overrides
  *       in the config) and, if set, an allowed race;</li>
- *   <li>a free slot: 6 at first, growing to 12 with mastery, +4 with a spirit or devil contract, never above 16.</li>
+ *   <li>a free slot: 6 at first, growing to 15 (or to the number of pages the grimoire can show, if more) with mastery, +4 with a spirit or devil contract, never above 19 (old config files: 12 / 16).</li>
  * </ol>
  * Pages are checked in order every 2 seconds; a page that is gated is skipped and the next one may still open.
  * Mastery comes from successful casts (as before), altar training, Spirit Channeling time and gold stars from missions.
@@ -34,10 +34,9 @@ public final class MasteryPages {
 
     /** Page slots for this grimoire right now. */
     public static int slots(ServerPlayer p, ManasSkillInstance inst, GrimoireBook book) {
-        int floor = MultiverseConfig.get(MultiverseConfig.PAGE_SLOTS_FLOOR), ceil = Math.max(floor, MultiverseConfig.get(MultiverseConfig.PAGE_SLOTS_CEILING));
-        int s = floor + (int) Math.floor(book.masteryFrac(inst) * (ceil - floor));
-        if (hasContract(p, inst)) s += MultiverseConfig.get(MultiverseConfig.PAGE_SLOTS_CONTRACT_BONUS);
-        return Math.min(s, MultiverseConfig.get(MultiverseConfig.PAGE_SLOTS_CAP));
+        int visible = com.newuniverse.nusmp.charset.CharacterSets.visibleCount(inst, book);
+        return PageSlots.slots(MultiverseConfig.get(MultiverseConfig.PAGE_SLOTS_FLOOR), MultiverseConfig.get(MultiverseConfig.PAGE_SLOTS_CEILING), MultiverseConfig.get(MultiverseConfig.PAGE_SLOTS_CONTRACT_BONUS),
+                MultiverseConfig.get(MultiverseConfig.PAGE_SLOTS_CAP), visible, book.masteryFrac(inst), hasContract(p, inst));      // 15 spells for every grimoire: the ceiling is never below the visible pages (multiverse.PageSlots)
     }
 
     /** Spirit contract (bonded spirit or Spirit Lord) or devil contract (five-leaf cover or a Forbidden Magic pact). */
@@ -148,9 +147,8 @@ public final class MasteryPages {
     /** Tells the player once per page (until it opens) what it waits for. */
     private static void remindGate(ServerPlayer p, ManasSkillInstance inst, int m, BookPage page, String what) {
         var tag = inst.getOrCreateTag();
-        int told = tag.getInt("GateTold");
-        if ((told & (1 << m)) != 0) return;
-        tag.putInt("GateTold", told | (1 << m));
+        if (com.newuniverse.nusmp.book.PageBits.has(tag, com.newuniverse.nusmp.book.PageBits.GATE_TOLD, m)) return;      // 64 bits (modes 32-63 in "GateTold2")
+        com.newuniverse.nusmp.book.PageBits.set(tag, com.newuniverse.nusmp.book.PageBits.GATE_TOLD, m);
         inst.markDirty();
         // 1.27.0 (discovery): a page that has not opened is not named yet
         p.sendSystemMessage(Component.literal("A page stirs (" + com.newuniverse.nusmp.core.discovery.DiscoveryRules.QUESTION + "), but it will only open for: " + what + ".").withStyle(ChatFormatting.GRAY));

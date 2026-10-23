@@ -106,8 +106,10 @@ public abstract class GrimoireBook extends Skill {
     // ---------------------------------------------------------------- pages / modes
     public final List<BookPage> pages() {
         int version = pagesVersion();
-        if (all == null || version != builtVersion) {
+        boolean fifteen = com.newuniverse.nusmp.book.pages15.Pages15.enabled();
+        if (all == null || version != builtVersion || fifteen != builtFifteen) {
             builtVersion = version;
+            builtFifteen = fifteen;
             List<BookPage> l = new ArrayList<>(familyAll());
             if (spiritElement() != null) {
                 l.add(BookPage.signature("spirit_dive", "Spirit Dive", GrimoireBook::spiritDive).withCooldown(0));
@@ -136,13 +138,16 @@ public abstract class GrimoireBook extends Skill {
     public int familyCount() { return familyAll().size(); }
 
     private List<BookPage> restBase, restAll;
+    private boolean restFifteen, builtFifteen;
     /** The family's pages followed by the pages the character spell sets of the squad captains / Spade / Heart / Diamond / Seabed append to this book (book.CharacterPagesRest; the same list when none). */
     private List<BookPage> familyAll() {
         List<BookPage> f = familyPages();
-        if (restBase == f && restAll != null) return restAll;
+        boolean fifteen = com.newuniverse.nusmp.book.pages15.Pages15.enabled();      // server setting magic.pagesFifteen: false = the old lists
+        if (restBase == f && restAll != null && restFifteen == fifteen) return restAll;
         if (getRegistryName() == null) return f;
-        restAll = BasicPages.append(getRegistryName().getPath(), CharacterPagesRest.append(getRegistryName().getPath(), f));      // basic grimoires (docs/magic/basic_grimoires.md): the generic anime pages go last of all
+        restAll = com.newuniverse.nusmp.book.pages15.Pages15.append(getRegistryName().getPath(), BasicPages.append(getRegistryName().getPath(), CharacterPagesRest.append(getRegistryName().getPath(), f)));      // basic grimoires (docs/magic/basic_grimoires.md): the generic anime pages go next to last; the "15 spells for every grimoire" pages (book.pages15) go last of all
         restBase = f;
+        restFifteen = fifteen;
         return restAll;
     }
 
@@ -181,11 +186,17 @@ public abstract class GrimoireBook extends Skill {
     }
 
     public static boolean isUnlocked(ManasSkillInstance i, int mode) {
-        return (mode == 0 || (i.getOrCreateTag().getInt("Unlocked") & (1 << mode)) != 0) && !com.newuniverse.nusmp.charset.CharacterSets.hidden(i, mode);      // character spell sets: a page the bound character never used (or a signature spell, in the basic book) is not in the grimoire
+        return (mode == 0 || PageBits.has(i.getOrCreateTag(), PageBits.UNLOCKED, mode)) && !com.newuniverse.nusmp.charset.CharacterSets.hidden(i, mode);      // character spell sets: a page the bound character never used (or a signature spell, in the basic book) is not in the grimoire
     }
 
     public static void unlock(ManasSkillInstance i, int mode) {
-        i.getOrCreateTag().putInt("Unlocked", i.getOrCreateTag().getInt("Unlocked") | (1 << mode));
+        PageBits.set(i.getOrCreateTag(), PageBits.UNLOCKED, mode);      // 64 bits: modes 32-63 live in "Unlocked2" (book.UnlockMask), so a 33rd page never aliases the first
+        i.markDirty();
+    }
+
+    /** Closes a page again (the devil's seal, a forbidden death): clears its bit in both ints. */
+    public static void relock(ManasSkillInstance i, int mode) {
+        PageBits.clear(i.getOrCreateTag(), PageBits.UNLOCKED, mode);
         i.markDirty();
     }
 

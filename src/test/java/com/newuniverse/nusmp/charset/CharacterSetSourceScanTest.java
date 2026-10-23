@@ -78,7 +78,7 @@ class CharacterSetSourceScanTest {
             String src = read(SRC.resolve("book/" + BOOK_FILES.get(book)));
             assertTrue(src.contains("CharacterPages." + book.replace("book_", "") + "(pages)"), book + " appends the pages after the shared ones");
         }
-        assertTrue(added("book_wind").size() + legacy("book_wind").size() <= 24, "at most 24 family pages (the unlock mask is 32 bits)");
+        assertTrue(added("book_wind").size() + legacy("book_wind").size() <= 32, "at most 32 family pages (the budget of one grimoire; the unlock mask holds 64)");
     }
 
     @Test

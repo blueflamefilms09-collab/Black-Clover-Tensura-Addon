@@ -70,7 +70,7 @@ public final class CharacterRestSelfTests {
             if (c == null) return Result.fail(id + " is not a CanonBook");
             if (b == null) return Result.fail(id + ": no book " + set.book());
             if (!c.magic.equals(set.magic()) || !b.magic.name().equals(set.magic())) return Result.fail(id + ": magic " + set.magic() + " is not the book's magic (" + b.magic.name() + ") and his canon magic (" + c.magic + ")");
-            if (b.familyCount() > 31) return Result.fail(set.book() + " has " + b.familyCount() + " family pages: over the 32 bit unlock mask");
+            if (b.familyCount() > 64) return Result.fail(set.book() + " has " + b.familyCount() + " family pages: over the 64 bit unlock mask");
             for (CharacterSet.Spell s : set.spells()) {
                 int m = index(b, s.page());
                 if (m < 0 || m >= b.familyCount()) return Result.fail(id + ": page " + s.page() + " is not a family page of " + set.book());

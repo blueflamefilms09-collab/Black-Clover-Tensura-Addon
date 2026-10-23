@@ -77,7 +77,7 @@ class CharacterSetGoldTest {
             Matcher p = Pattern.compile("register\\(\"" + book + "\", List\\.of\\((.*?)\\)\\);", Pattern.DOTALL).matcher(pilot);
             if (p.find()) m.get(book).addAll(ids(p.group(1)));
             Matcher bu = Pattern.compile("register\\(\"" + book + "\", [^,]+, List\\.of\\((.*?)\\)\\);", Pattern.DOTALL).matcher(bulls);
-            if (bu.find()) m.get(book).addAll(ids(bu.group(1)));      // the Black Bulls' twin class: Magna's Fire pages, Finral's Spatial page (counted for the 24-page limit)
+            if (bu.find()) m.get(book).addAll(ids(bu.group(1)));      // the Black Bulls' twin class: Magna's Fire pages, Finral's Spatial page (counted for the 32-page budget)
         }
         return m;
     }
@@ -209,7 +209,7 @@ class CharacterSetGoldTest {
                 assertTrue(lang.has("nusmp.page." + book + "." + page) && lang.get("nusmp.page." + book + "." + page).getAsString().length() > 40, "lang: " + book + "." + page);
                 assertTrue(listed.contains(page), page + " is not in the armour policy's new_pages");
             }
-            assertTrue(pages.get(book).size() <= 24, book + " has " + pages.get(book).size() + " family pages: the unlock mask is 32 bits");
+            assertTrue(pages.get(book).size() <= 32, book + " has " + pages.get(book).size() + " family pages: the budget of one grimoire is 32 (the unlock mask holds 64)");
         }
         assertEquals(26, total, "the pages added by this builder");
         assertEquals(26, lang.size(), "one text per added page and nothing else");

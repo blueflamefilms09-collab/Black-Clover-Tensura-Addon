@@ -58,9 +58,9 @@ public final class MultiverseConfig {
 
         b.push("pages");
         PAGE_SLOTS_FLOOR = b.defineInRange("slotsFloor", 6, 1, 64);
-        PAGE_SLOTS_CEILING = b.comment("Slots grow from the floor to this ceiling with mastery.").defineInRange("slotsCeiling", 12, 1, 64);
+        PAGE_SLOTS_CEILING = b.comment("Slots grow from the floor to this ceiling with mastery (15 since the '15 spells for every grimoire' release; a grimoire that can show more pages than this always gets at least that many).").defineInRange("slotsCeiling", 15, 1, 64);
         PAGE_SLOTS_CONTRACT_BONUS = b.comment("Extra slots with a spirit or devil contract.").defineInRange("slotsContractBonus", 4, 0, 64);
-        PAGE_SLOTS_CAP = b.defineInRange("slotsCap", 16, 1, 64);
+        PAGE_SLOTS_CAP = b.defineInRange("slotsCap", 19, 1, 64);
         PAGE_MASTERY_SCALE = b.comment("A page's mastery cost: the larger of its place in the book (k/n) and its spell cost (cost% / 35), times this.").defineInRange("masteryScale", 1.0, 0.05, 2.0);
         GATE_ZONE = b.comment("Minimum Magic Knight rank for zone pages (rank or rank:class, e.g. INTERMEDIATE:5).").define("gateZone", "INTERMEDIATE:5");
         GATE_SIGNATURE = b.comment("Minimum rank for signature (ultimate) pages.").define("gateSignature", "SENIOR:5");

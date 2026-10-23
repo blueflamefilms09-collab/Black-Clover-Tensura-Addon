@@ -100,7 +100,7 @@ public final class ForbiddenMagic {
                 if (inst.getSkill() instanceof GrimoireBook b) {
                     for (int m = b.familyCount() - 1; m >= 1; m--) {
                         if (GrimoireBook.isUnlocked(inst, m)) {
-                            inst.getOrCreateTag().putInt("Unlocked", inst.getOrCreateTag().getInt("Unlocked") & ~(1 << m));
+                            GrimoireBook.relock(inst, m);
                             p.displayClientMessage(Component.literal("The devil seals " + b.page(m).name() + " forever.").withStyle(ChatFormatting.DARK_RED), false);
                             break;
                         }

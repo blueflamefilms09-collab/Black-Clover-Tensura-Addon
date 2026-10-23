@@ -178,7 +178,7 @@ public final class SimulatedPlayerCaster extends FakePlayer {
                 if (dup) continue;
                 ManasSkillInstance inst = book.createDefaultInstance();
                 int open = PageTier.unlockedPages(book.familyCount(), TensuraBridge.maxEp(avatar), intelligence(avatar));
-                inst.getOrCreateTag().putInt("Unlocked", PageTier.mask(open));
+                com.newuniverse.nusmp.book.PageBits.write(inst.getOrCreateTag(), com.newuniverse.nusmp.book.PageBits.UNLOCKED, PageTier.mask64(open));      // 64 bits (a book can have more than 31 family pages)
                 out.add(new Source("apt:" + ids.get(i), i, book, inst));
             } catch (RuntimeException | LinkageError soft) {
                 LOG.debug("[nusmp] Avatar aptitude book failed for {}", ids.get(i), soft);
