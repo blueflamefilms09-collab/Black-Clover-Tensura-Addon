@@ -210,6 +210,8 @@ def textures():
             along = (x + 0.5) / w                                                         # u: 0 at the tail, 1 at the head
             a = across * (along ** 1.4) * (1.0 if along < 0.92 else (1.0 - (along - 0.92) / 0.08 * 0.6))
             tr[y, x, 3] = int(round(255 * min(1.0, a)))
+            if tr[y, x, 3] == 0:
+                tr[y, x, :3] = 0                                                              # no colour under alpha 0 (SafeAdditive: the additive blend would show it as a box)
     Image.fromarray(tr, "RGBA").save(os.path.join(TEXDIR, "sdm_trail.png"))
 
 

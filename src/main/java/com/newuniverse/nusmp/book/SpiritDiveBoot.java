@@ -26,5 +26,6 @@ public final class SpiritDiveBoot {
         SpiritDiveReelSelfTests.register();                                                          // 3.3: self-test magic.spirit_dive_reel
         SpiritDiveWindSelfTests.register();                                                          // 3.4: self-test magic.spirit_dive_wind
         SpiritDiveWind3SelfTests.register();                                                         // 4.x: self-test magic.spirit_dive_wind3
+        SpiritDiveMergeSelfTests.register();                                                         // 4.x: self-test magic.spirit_dive_merge
     }
 }
