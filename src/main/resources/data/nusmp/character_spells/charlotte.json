@@ -6,7 +6,8 @@
   "sources": {
     "en_wiki": "Black Clover Wiki (blackclover.fandom.com), English. The host is not reachable from the build machine, so the text was read from the repo's own snapshot of the wiki pages (the .github/wiki folder: the attribute pages and the spell pages, intro and description) and from the search summaries of the live pages. Quoted facts are the wiki's; nothing was invented.",
     "ja_search": "Japanese fallback (rule 10): ja.wikipedia.org (Black Clover), the pixiv encyclopedia and the namu.wiki Japanese spell list, read through search summaries only (the hosts are not fetchable from the build machine).",
-    "design": "Order and thresholds of acquisition decided by this mod from the arcs and the strength of the spell: the sources give no chapter or episode for them. See docs/magic/character_spells_rest.md."
+    "design": "Order and thresholds of acquisition decided by this mod from the arcs and the strength of the spell: the sources give no chapter or episode for them. See docs/magic/character_spells_rest.md.",
+    "pages15": "Pages added by the 15-spells project (docs/magic/pages15_batch7.md): canon first, otherwise the mod's own pages in the book's style; each page says which in that document."
   },
   "spells": [
     {
@@ -150,6 +151,123 @@
         ]
       },
       "note": "NEW page. Named in the wiki's True Briar list, no description found: the effect is inferred from the name (red briars braided into a spear)."
+    },
+    {
+      "page": "thorn_spike_row",
+      "name": "Thorn Spike Row",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "pages15",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.05
+      },
+      "note": "The mod's own page in the book's style (original); added by the 15-spells project, shared with the basic grimoire."
+    },
+    {
+      "page": "thorn_javelin",
+      "name": "Thorn Javelin",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "pages15",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.075
+      },
+      "note": "The mod's own page in the book's style (original); added by the 15-spells project, shared with the basic grimoire."
+    },
+    {
+      "page": "bramble_cage",
+      "name": "Bramble Cage",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "pages15",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.26
+      },
+      "note": "The mod's own page in the book's style (original); added by the 15-spells project, shared with the basic grimoire."
+    },
+    {
+      "page": "briar_whirl",
+      "name": "Briar Whirl",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "pages15",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.285
+      },
+      "note": "The mod's own page in the book's style (original); added by the 15-spells project, shared with the basic grimoire."
+    },
+    {
+      "page": "healing_rose",
+      "name": "Healing Rose",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "pages15",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.31
+      },
+      "note": "The mod's own page in the book's style (original); added by the 15-spells project, shared with the basic grimoire."
+    },
+    {
+      "page": "wild_rose_thicket",
+      "name": "Wild Rose Thicket",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "pages15",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.5
+      },
+      "note": "The mod's own page in the book's style (original); added by the 15-spells project, shared with the basic grimoire."
+    },
+    {
+      "page": "thorn_reflect",
+      "name": "Thorn Reflect",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "pages15",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.1
+      },
+      "note": "An existing shared page of the book that this set did not list; listed by the 15-spells project so the grimoire reaches 15 pages."
+    },
+    {
+      "page": "briar_leap",
+      "name": "Briar Leap",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "pages15",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.15
+      },
+      "note": "An existing shared page of the book that this set did not list; listed by the 15-spells project so the grimoire reaches 15 pages."
+    },
+    {
+      "page": "briar_garden",
+      "name": "Briar Garden",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "pages15",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.2
+      },
+      "note": "An existing shared page of the book that this set did not list; listed by the 15-spells project so the grimoire reaches 15 pages."
     }
   ],
   "planned": [

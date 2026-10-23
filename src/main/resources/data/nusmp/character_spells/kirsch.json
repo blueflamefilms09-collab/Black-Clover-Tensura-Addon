@@ -6,7 +6,8 @@
   "sources": {
     "en_wiki": "Black Clover Wiki (blackclover.fandom.com) pages and spell lists, read through WebSearch summaries only: the wiki host is not reachable from the build machine (the search summaries name the pages and quote their descriptions).",
     "ja_search": "Japanese pages found by WebSearch (ja.wikipedia.org Black Clover article, manga-tantei.com character articles, pixiv encyclopedia, ja.namu.wiki spell list, bclover.jp character files): Japanese spell names and one-line effects, read through search summaries only.",
-    "design": "Order of acquisition decided by this mod from the arcs (the exact chapter or episode of most spells was not confirmed): see docs/magic/character_spells_gold.md."
+    "design": "Order of acquisition decided by this mod from the arcs (the exact chapter or episode of most spells was not confirmed): see docs/magic/character_spells_gold.md.",
+    "pages15": "Pages added by the 15-spells project (docs/magic/pages15_batch7.md): canon first, otherwise the mod's own pages in the book's style; each page says which in that document."
   },
   "spells": [
     {
@@ -81,6 +82,162 @@
         ]
       },
       "note": "A grimoire spell, with Clones of the Beautiful Me his two named advanced techniques."
+    },
+    {
+      "page": "petal_burst",
+      "name": "Petal Burst",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "pages15",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.05
+      },
+      "note": "The mod's own page in the book's style (original); added by the 15-spells project, shared with the basic grimoire."
+    },
+    {
+      "page": "blossom_spring",
+      "name": "Blossom Spring",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "pages15",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.075
+      },
+      "note": "The mod's own page in the book's style (original); added by the 15-spells project, shared with the basic grimoire."
+    },
+    {
+      "page": "sakura_lance",
+      "name": "Sakura Lance",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "pages15",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.26
+      },
+      "note": "The mod's own page in the book's style (original); added by the 15-spells project, shared with the basic grimoire."
+    },
+    {
+      "page": "petal_cyclone",
+      "name": "Petal Cyclone",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "pages15",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.285
+      },
+      "note": "The mod's own page in the book's style (original); added by the 15-spells project, shared with the basic grimoire."
+    },
+    {
+      "page": "scent_of_spring",
+      "name": "Scent of Spring",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "pages15",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.31
+      },
+      "note": "The mod's own page in the book's style (original); added by the 15-spells project, shared with the basic grimoire."
+    },
+    {
+      "page": "falling_petal_rain",
+      "name": "Falling Petal Rain",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "pages15",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.5
+      },
+      "note": "The mod's own page in the book's style (original); added by the 15-spells project, shared with the basic grimoire."
+    },
+    {
+      "page": "razor_petal_stream",
+      "name": "Cherry Blossom: Razor Petal Stream",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "pages15",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.1
+      },
+      "note": "An existing shared page of the book that this set did not list; listed by the 15-spells project so the grimoire reaches 15 pages."
+    },
+    {
+      "page": "petal_fan",
+      "name": "Cherry Blossom: Petal Fan",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "pages15",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.15
+      },
+      "note": "An existing shared page of the book that this set did not list; listed by the 15-spells project so the grimoire reaches 15 pages."
+    },
+    {
+      "page": "blossom_snare",
+      "name": "Cherry Blossom: Blossom Snare",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "pages15",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.2
+      },
+      "note": "An existing shared page of the book that this set did not list; listed by the 15-spells project so the grimoire reaches 15 pages."
+    },
+    {
+      "page": "beautifying_bloom",
+      "name": "Cherry Blossom: Beautifying Bloom",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "pages15",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.25
+      },
+      "note": "An existing shared page of the book that this set did not list; listed by the 15-spells project so the grimoire reaches 15 pages."
+    },
+    {
+      "page": "blossom_blessing",
+      "name": "Cherry Blossom: Blossom Blessing",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "pages15",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.3
+      },
+      "note": "An existing shared page of the book that this set did not list; listed by the 15-spells project so the grimoire reaches 15 pages."
+    },
+    {
+      "page": "everlasting_sakura_grove",
+      "name": "Cherry Blossom: Everlasting Sakura Grove",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "pages15",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.35
+      },
+      "note": "An existing shared page of the book that this set did not list; listed by the 15-spells project so the grimoire reaches 15 pages."
     }
   ],
   "planned": [
