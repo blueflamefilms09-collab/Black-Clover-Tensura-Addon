@@ -84,7 +84,7 @@ the **ANIME** sprite crown (Wind, Water, Fire, Earth sprites). Now:
 | Wind B, Wind C, the PACK sprite crown, the ANIME sprite crown | **scaled only** (62 percent about the head's top: smaller and closer); they are cubes, a mesh, sprites of their own style, not remodelled |
 
 Vertices (crown only): Wind 320 (standard) / 400 (character), the half crowns 180 / 220, against 400 / 688 and 232 / 344 for the old Wind A crown (**cheaper by 80 to 288**); Fire 320 / 400; Water 476 / 612 (the drops);
-Earth 316. Budget in the rules and tests: 480 standard, 620 character. The REEL cube crown drew 12 to 16 cubes at 24 + 24 vertices plus bars and the gold ring (about 700 to 900); the new crowns are cheaper.
+Earth 316. Budget in the rules and tests: 480 standard, 620 character. Measured in the harness (the whole steady dive at age 50, front view, vertices before -> after): Wind standard 1,332 -> 1,252, Wind Yuno 2,776 -> 2,488, Fire standard 1,372 -> 1,272, Fuegoleon 2,720 -> 2,484, Water Noelle 2,136 -> 2,112 (the drops cost nearly what the cubes did), Earth 1,356 -> 1,252: every crown is cheaper or equal. The same for the entry (tick 14, standard Wind): 2,840 -> 2,720 vertices.
 Previews: `crowns_<element>_<tier>.png`: front, three quarters and side, BEFORE (left) and AFTER (right), on a dark (top) and a bright (bottom) background; `crowns_meshes.png` the bare meshes.
 
 ## 6. Files
