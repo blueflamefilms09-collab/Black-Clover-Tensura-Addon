@@ -66,5 +66,10 @@
   "nusmp.page.book_modification.modification_adrenal_edit": "Modification: Adrenal Edit - your own body is rewritten for six seconds: Speed II and Strength I.",
   "nusmp.page.book_modification.modification_nerve_edit": "Modification: Nerve Edit - the nerves of the foe in your crosshair are cut for a moment: it is held (hard control: shares the twelve-second lock, three seconds on a player, a boss for one) and weakened. Damage scales with your EP.",
   "nusmp.page.book_modification.modification_regeneration": "Modification: Cell Regrowth - your cells are told to grow back: every harmful effect leaves you, a broken seal on you is undone and a quarter of your health returns (the heal decays if you were healed a moment ago).",
-  "nusmp.page.book_modification.modification_mutagen_field": "Modification: Mutagen Field - a field of mutagen laid where you look for four seconds: every half second the foes in it take a pulse, are poisoned and weakened. Damage scales with your EP."
+  "nusmp.page.book_modification.modification_mutagen_field": "Modification: Mutagen Field - a field of mutagen laid where you look for four seconds: every half second the foes in it take a pulse, are poisoned and weakened. Damage scales with your EP.",
+  "nusmp.page.book_hair.hair_reach": "Hair Reach: your hair shoots out sixteen blocks and lashes every foe on the line, slowing it for a second and a half. Damage scales with your EP.",
+  "nusmp.page.book_hair.hair_needles": "Hair Needles: five strands of hair stiffen into needles and fly after the nearest foes, thin enough to slip through a guard. Damage scales with your EP.",
+  "nusmp.page.book_hair.hair_wall": "Hair Wall: hair is woven into a wall round you for three seconds: spells and arrows that come within four blocks are unravelled (at most four at a time), and you gain Absorption I.",
+  "nusmp.page.book_hair.hair_spear": "Hair Spear: your hair is braided into a spear and thrust twelve blocks ahead: every foe on the line is hit, shoved back and weakened for two seconds. Damage scales with your EP.",
+  "nusmp.page.book_hair.hair_forest": "Hair Forest: hair grows up out of the ground where you look and tangles round every ankle for four seconds: the foes in it take a pulse every half second and are slowed (Slowness III). Damage scales with your EP."
 }

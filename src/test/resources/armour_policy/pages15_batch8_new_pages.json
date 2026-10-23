@@ -82,5 +82,12 @@
     "modification_nerve_edit",
     "modification_regeneration",
     "modification_mutagen_field"
+  ],
+  "HAIR": [
+    "hair_reach",
+    "hair_needles",
+    "hair_wall",
+    "hair_spear",
+    "hair_forest"
   ]
 }

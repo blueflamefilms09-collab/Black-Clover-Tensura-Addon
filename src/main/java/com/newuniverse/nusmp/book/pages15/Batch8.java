@@ -384,6 +384,25 @@ public final class Batch8 {
             Pages15Kit.zone("modification_mutagen_field", "Modification: Mutagen Field",
                     Pages15Kit.field(Tier.ZONE, 5, 80, 10, true, M2, Pages15Kit.all(poison(40, 0), weak(40, 0)))).withCooldown(450)));
 
+    private static final List<BookPage> HAIR = register("book_hair", List.of(
+            Pages15Kit.starter("hair_reach", "Hair Reach",
+                    Pages15Kit.line(Tier.STARTER, 16, 0.8, HR1, slow(30, 1))).withAnim("thrust"),
+            Pages15Kit.starter("hair_needles", "Hair Needles",
+                    Pages15Kit.volley(Tier.STARTER, 5, true, HR1, Pages15Kit.NONE)).withCooldown(120),
+            Pages15Kit.mid("hair_wall", "Hair Wall",
+                    Pages15Kit.cast(Tier.MID, c -> {
+                    if (!c.zone(60, 4, age -> SpellRuntime.dissolveBolts(c.caster.serverLevel(), c.caster.position(), 4.0, c.caster, 4))) return false;
+                    c.circle(1f);
+                    Vec3 at = c.caster.position();
+                    new Fx(c).shape(HR2, at.add(0, 0.05, 0), at.add(0, 1.5, 0), 70, 1.6f);
+                    c.caster.addEffect(new MobEffectInstance(MobEffects.ABSORPTION, 120, 0));
+                    return true;
+                })).withCooldown(300),
+            Pages15Kit.mid("hair_spear", "Hair Spear",
+                    Pages15Kit.line(Tier.MID, 12, 1.0, HR1, Pages15Kit.all(Pages15Kit.knock(0.6), weak(40, 0)))).withCooldown(200).withAnim("thrust"),
+            Pages15Kit.zone("hair_forest", "Hair Forest",
+                    Pages15Kit.field(Tier.ZONE, 5, 80, 10, true, HR2, slow(40, 2))).withCooldown(450)));
+
 
     /** The pages this batch appends to the book (empty for a book it has not written yet, or a book of another batch). Never null. */
     static List<BookPage> pages(String bookPath) {
