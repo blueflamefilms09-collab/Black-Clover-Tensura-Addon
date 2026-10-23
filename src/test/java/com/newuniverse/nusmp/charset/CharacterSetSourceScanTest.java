@@ -31,6 +31,20 @@ class CharacterSetSourceScanTest {
 
     private static String code(Path p) throws IOException { return read(p).replaceAll("(?s)/\\*.*?\\*/", "").replaceAll("(?m)//.*$", ""); }
 
+    /** "15 spells" project: the page ids the eight Batch classes append to a book (book/pages15/Batch1..8.java). */
+    private static List<String> pages15(String book) throws IOException {
+        List<String> out = new ArrayList<>();
+        for (int n = 1; n <= 8; n++) {
+            String t = Files.readString(Path.of("src/main/java/com/newuniverse/nusmp/book/pages15/Batch" + n + ".java"));
+            Matcher m = Pattern.compile("register\\(\\s*\"" + book + "\"\\s*,").matcher(t);
+            if (!m.find()) continue;
+            int end = t.indexOf("register(", m.end());
+            Matcher d = Pattern.compile("\\b(?:starter|mid|zone|signature)\\(\\s*\"([a-z0-9_]+)\"").matcher(t.substring(m.end(), end < 0 ? t.length() : end));
+            while (d.find()) out.add(d.group(1));
+        }
+        return out;
+    }
+
     private static List<String> ids(String src) {
         List<String> out = new ArrayList<>();
         Matcher m = Pattern.compile("(?:BookPage\\.\\w+|new BookPage)\\(\"(\\w+)\"").matcher(src);
@@ -93,6 +107,7 @@ class CharacterSetSourceScanTest {
                 Matcher twin = Pattern.compile("register\\(\"" + book + "\", [^,]+, List\\.of\\((.*?)\\)\\);", Pattern.DOTALL).matcher(read(SRC.resolve("book/CharacterPagesBulls.java")));      // the Black Bulls' twin class (pages for Magna in the Fire book)
                 if (twin.find()) have.addAll(ids(twin.group(1)));
                 have.addAll(addedGold(book));      // builder gold: the Golden Dawn / Crimson Lion pages
+                have.addAll(pages15(book));      // the "15 spells" batches
                 for (var e : o.getAsJsonArray("spells")) {
                     String page = e.getAsJsonObject().get("page").getAsString();
                     assertTrue(have.contains(page), f.getFileName() + ": page " + page + " is not in " + book + " " + have);
