@@ -41,6 +41,7 @@ public final class SpiritDiveSelfTests {
         registered = true;
         SelfTests.register("magic.spirit_dive_looks", SpiritDiveSelfTests::looks);
         SelfTests.register("magic.fuegoleon_arm", SpiritDiveSelfTests::arm);
+        SelfTests.register("magic.spirit_dive_djinn", SpiritDiveSelfTests::djinn);
     }
 
     private static boolean has(String path) {
@@ -114,6 +115,83 @@ public final class SpiritDiveSelfTests {
         if (SpiritDivePieces.pieces(el, SpiritDivePieces.stage(style), got).isEmpty()) bad.add(who + ": no pieces");
         SpiritDiveForm.end(fp, book);
         ArmourState.takeOff(fp);
+    }
+
+    // ------------------------------------------------------------------ magic.spirit_dive_djinn
+    /**
+     * The Djinn-style dive: every piece of every set the lists can name has its model, texture and glow map (and its clip when it moves); the lists of every element, stage and tier are non-empty, in the
+     * Djinn's forge order, left-only for the first Wind dive, without a right-arm plate for Fuegoleon; the pieces' draw budget is under the Djinn Full Equip's; the forge cues are known sounds; and with a
+     * stand-in player the dive's lease still carries the tier of the bound grimoire (the Djinn look changes what is drawn, not what is sent).
+     */
+    private static Result djinn(MinecraftServer server) {
+        List<String> bad = new ArrayList<>();
+        int pieces = 0;
+        for (SpiritDivePieces.Element e : SpiritDivePieces.Element.values())
+            for (boolean ch : new boolean[]{false, true}) {
+                if (ch && SpiritDiveTier.gradeOfElement(e) == SpiritDiveTier.Grade.STANDARD) continue;                    // Earth has no character set
+                java.util.LinkedHashSet<String> names = new java.util.LinkedHashSet<>(SpiritDiveDjinnPieces.fullNames(e, ch));
+                names.addAll(SpiritDiveDjinnPieces.halfNames(e, ch));
+                for (String n : names) {
+                    pieces++;
+                    SpiritDiveDjinnPieces.Def def = SpiritDiveDjinnPieces.def(n, ch);
+                    if (def == null) { bad.add("no definition for " + n); continue; }
+                    String stem = SpiritDiveDjinnPieces.modelId(e, ch, n);
+                    for (String rel : new String[]{"geo/entity/" + stem + ".geo.json", "textures/entity/" + stem + ".png", "textures/entity/" + stem + "_glow.png"})
+                        if (!asset(rel)) bad.add("missing " + rel);
+                    if (!def.clip().isEmpty() && !asset("animations/entity/" + stem + ".animation.json")) bad.add(stem + " has no animation for its clip");
+                    if (def.delay() < 0f || def.delay() > 12f) bad.add(n + " delay " + def.delay());
+                }
+                for (SpiritDivePieces.Stage st : SpiritDivePieces.Stage.values())
+                    for (SpiritDiveTier.Grade g : SpiritDiveTier.Grade.values())
+                        if (SpiritDiveDjinnPieces.pieces(e, st, g, ch).isEmpty()) bad.add("an empty list for " + e + "/" + st + "/" + g);
+            }
+        for (SpiritDivePieces.Element e : SpiritDivePieces.Element.values())
+            for (boolean ch : new boolean[]{false, true}) {
+                if (ch && SpiritDiveTier.gradeOfElement(e) == SpiritDiveTier.Grade.STANDARD) continue;
+                int v = 0;
+                for (SpiritDiveDjinnPieces.Def d : SpiritDiveDjinnPieces.pieces(e, SpiritDivePieces.Stage.FULL, SpiritDiveTier.Grade.STANDARD, ch)) v += faces(SpiritDiveDjinnPieces.modelId(e, ch, d.name())) * 4 * d.passes();
+                if (v > SpiritDiveDjinnPieces.pieceVertexCap(ch)) bad.add(e + (ch ? " character" : " standard") + " set: " + v + " vertices > " + SpiritDiveDjinnPieces.pieceVertexCap(ch));
+            }
+        if (SpiritDiveDjinnPieces.names(SpiritDivePieces.Element.FIRE, SpiritDivePieces.Stage.FULL, SpiritDiveTier.Grade.FUEGOLEON, true).contains("gauntlet_r")) bad.add("Fuegoleon's dive has a right-arm plate");
+        if (SpiritDiveDjinnPieces.names(SpiritDivePieces.Element.WIND, SpiritDivePieces.Stage.HALF, SpiritDiveTier.Grade.YUNO, true).stream().anyMatch(n -> n.endsWith("_r") || n.equals("crest_c")))
+            bad.add("the first Wind dive is not left-only");
+        for (SpiritDiveForge.Kind k : SpiritDiveForge.Kind.values())
+            if (SpiritDiveForge.cue(k, SpiritDivePieces.Stage.FULL, true).length > SpiritDiveForge.MAX_SOUNDS) bad.add("a forge cue with too many sounds");
+        if (!bad.isEmpty()) return Result.fail(String.join("; ", bad.subList(0, Math.min(8, bad.size()))));
+        ServerLevel level = server.overworld();
+        ServerPlayer fp = SelfTests.player(level, "spirit_dive_djinn", 0.5, 100, 0.5);
+        GrimoireBook wind = NUSkills.bookFor(MagicType.WIND);
+        if (wind == null) return Result.ok(pieces + " pieces are in place and the lists hold; the lease check was skipped (no Wind book)");
+        ItemStack kept = GrimoireSlot.get(fp);
+        try {
+            check(fp, wind, SpiritDivePieces.Element.WIND, CanonBook.YUNO, SpiritDiveTier.Grade.YUNO, bad, "the Djinn look: Yuno's grimoire on Wind");
+            int style = PlayerAuras.active(fp, Aura.SPIRIT_DIVE) ? PlayerAuras.style(fp, Aura.SPIRIT_DIVE) : 0;
+            if (style != 0 && !SpiritDivePieces.valid(style)) bad.add("the style " + style + " is not valid");
+        } catch (RuntimeException ex) {
+            bad.add("the dive threw " + ex);
+        } finally {
+            GrimoireSlot.set(fp, kept);
+            ArmourState.end(fp, ArmourRules.Drop.DEATH);
+            try { PlayerAuras.clear(fp, Aura.SPIRIT_DIVE); } catch (NullPointerException noConnection) { /* a fake player */ }
+        }
+        if (!bad.isEmpty()) return Result.fail(String.join("; ", bad.subList(0, Math.min(8, bad.size()))));
+        return Result.ok(pieces + " pieces (models, textures, glow maps, clips) are in place; the lists, the forge cues and the draw budget hold; the lease still carries the tier");
+    }
+
+    /** The faces (quads) a model file draws in one pass: the entries of every cube's uv object (0 when the file cannot be read: the missing-file check reports that). */
+    private static int faces(String stem) {
+        try (var in = SpiritDiveSelfTests.class.getClassLoader().getResourceAsStream("assets/nusmp/geo/entity/" + stem + ".geo.json")) {
+            if (in == null) return 0;
+            com.google.gson.JsonObject root = com.google.gson.JsonParser.parseString(new String(in.readAllBytes(), java.nio.charset.StandardCharsets.UTF_8)).getAsJsonObject();
+            int n = 0;
+            for (var geo : root.getAsJsonArray("minecraft:geometry"))
+                for (var bone : geo.getAsJsonObject().getAsJsonArray("bones"))
+                    if (bone.getAsJsonObject().has("cubes"))
+                        for (var cube : bone.getAsJsonObject().getAsJsonArray("cubes")) n += cube.getAsJsonObject().getAsJsonObject("uv").size();
+            return n;
+        } catch (java.io.IOException | RuntimeException ex) {
+            return 0;
+        }
     }
 
     // ------------------------------------------------------------------ magic.fuegoleon_arm

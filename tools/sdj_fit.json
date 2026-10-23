@@ -1,0 +1,44 @@
+{
+ "earth:s": {
+  "cap": 10796,
+  "k": 2.2,
+  "thin": 0.58,
+  "vertices": 10600
+ },
+ "fire:c": {
+  "cap": 16744,
+  "k": 1.85,
+  "thin": 0.52,
+  "vertices": 16172
+ },
+ "fire:s": {
+  "cap": 10796,
+  "k": 1.5,
+  "thin": 0.58,
+  "vertices": 10704
+ },
+ "water:c": {
+  "cap": 16744,
+  "k": 1.75,
+  "thin": 0.52,
+  "vertices": 15168
+ },
+ "water:s": {
+  "cap": 10796,
+  "k": 1.5,
+  "thin": 0.58,
+  "vertices": 10168
+ },
+ "wind:c": {
+  "cap": 16744,
+  "k": 1.75,
+  "thin": 0.52,
+  "vertices": 16536
+ },
+ "wind:s": {
+  "cap": 10796,
+  "k": 1.5,
+  "thin": 0.58,
+  "vertices": 10720
+ }
+}

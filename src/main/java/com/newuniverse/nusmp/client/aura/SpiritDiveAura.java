@@ -45,7 +45,10 @@ import java.util.Map;
  * a small, capped stream of motes flowing INTO the body (the passive absorption of ambient mana: at most {@link #MOTES} sprites and {@link #BITS} rising bits, none beyond 24 blocks).
  * The pieces come from tools/gen_spirit_dive_geo.py (and tools/gen_water_aura_geo.py for the Valkyrie set); the lists per element and stage are book.SpiritDivePieces.
  *
- * <p><b>The remade look (Spirit Dive remake, the default).</b> The same layer, a lighter and more elemental dive in two tiers ({@link SpiritDiveTier}): the STANDARD tier for every mage, and the CHARACTER
+ * <p><b>The Djinn look (the default since 3.1).</b> {@link SpiritDiveDjinn}: a full set of plates in the style of the Djinn Full Equip. The two looks below are kept behind the client option
+ * {@code spiritDive.look} ({@link SpiritDiveLook}): {@code V2} is the remade look, {@code CLASSIC} the 1.99 look.</p>
+ *
+ * <p><b>The remade look (Spirit Dive remake, look V2).</b> The same layer, a lighter and more elemental dive in two tiers ({@link SpiritDiveTier}): the STANDARD tier for every mage, and the CHARACTER
  * tier (Yuno on Wind, Fuegoleon on Fire, Noelle on Water: the server puts the grade in the style number, {@link SpiritDivePieces#grade}) with the character's own pieces and effects ({@link SpiritDiveFx}:
  * columns of light, helices, a sigil on the ground and behind the back, orbiting rune rings, a shockwave and a pillar of light on entry, glowing eyes and hands) in the colours of the character. Every
  * count comes from {@link SpiritDiveTier#budget}; the level of detail follows the distance ({@link SpiritDiveTier#lod}); at most {@link SpiritDiveTier#CHARACTER_PER_FRAME} dives a frame draw the character
@@ -125,7 +128,8 @@ public final class SpiritDiveAura {
         Element el = SpiritDivePieces.element(style);
         Stage st = SpiritDivePieces.stage(style);
         float age = c.age(), pulse = 0.8f + 0.2f * Mth.sin(age * 0.17f) + 0.08f * Mth.sin(age * 0.53f);
-        if (!SpiritDiveLook.classic()) { remade(c, el, st, SpiritDivePieces.grade(style), pulse); return; }
+        if (SpiritDiveLook.look() == com.newuniverse.nusmp.book.SpiritDiveDjinnPieces.Look.DJINN) { SpiritDiveDjinn.paint(c, el, st, SpiritDivePieces.grade(style), pulse); return; }   // the default: the Djinn-style set of plates
+        if (!SpiritDiveLook.classic()) { remade(c, el, st, SpiritDivePieces.grade(style), pulse); return; }                                                                         // look V2: the remake of 3.0.0
         // the classic look (the 1.99 dive; the client option spiritDive.classicLook)
         shell(c, el, st, pulse, false, false, false);
         drawPieces(c, el, st, Grade.STANDARD, false, Lod.FULL, glowRgb(el, st), 0.75f * pulse + 0.35f, tintRgb(el, st));

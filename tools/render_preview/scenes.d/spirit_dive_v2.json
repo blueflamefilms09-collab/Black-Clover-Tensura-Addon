@@ -3,7 +3,7 @@
  "sdv_wind_std_full": {
   "kind": "aura",
   "attr": "SpiritDive",
-  "realFiles": [
+  "realFiles": ["book/SpiritDiveDjinnPieces.java", 
    "book/SpiritDivePieces.java",
    "book/SpiritDiveTier.java",
    "book/FuegoleonArmRules.java",
@@ -62,7 +62,7 @@
  "sdv_wind_yuno_half": {
   "kind": "aura",
   "attr": "SpiritDive",
-  "realFiles": [
+  "realFiles": ["book/SpiritDiveDjinnPieces.java", 
    "book/SpiritDivePieces.java",
    "book/SpiritDiveTier.java",
    "book/FuegoleonArmRules.java",
@@ -121,7 +121,7 @@
  "sdv_wind_yuno_full": {
   "kind": "aura",
   "attr": "SpiritDive",
-  "realFiles": [
+  "realFiles": ["book/SpiritDiveDjinnPieces.java", 
    "book/SpiritDivePieces.java",
    "book/SpiritDiveTier.java",
    "book/FuegoleonArmRules.java",
@@ -180,7 +180,7 @@
  "sdv_fire_std_full": {
   "kind": "aura",
   "attr": "SpiritDive",
-  "realFiles": [
+  "realFiles": ["book/SpiritDiveDjinnPieces.java", 
    "book/SpiritDivePieces.java",
    "book/SpiritDiveTier.java",
    "book/FuegoleonArmRules.java",
@@ -239,7 +239,7 @@
  "sdv_fire_fuego_half": {
   "kind": "aura",
   "attr": "SpiritDive",
-  "realFiles": [
+  "realFiles": ["book/SpiritDiveDjinnPieces.java", 
    "book/SpiritDivePieces.java",
    "book/SpiritDiveTier.java",
    "book/FuegoleonArmRules.java",
@@ -302,7 +302,7 @@
  "sdv_fire_fuego_full": {
   "kind": "aura",
   "attr": "SpiritDive",
-  "realFiles": [
+  "realFiles": ["book/SpiritDiveDjinnPieces.java", 
    "book/SpiritDivePieces.java",
    "book/SpiritDiveTier.java",
    "book/FuegoleonArmRules.java",
@@ -365,7 +365,7 @@
  "sdv_water_std_full": {
   "kind": "aura",
   "attr": "SpiritDive",
-  "realFiles": [
+  "realFiles": ["book/SpiritDiveDjinnPieces.java", 
    "book/SpiritDivePieces.java",
    "book/SpiritDiveTier.java",
    "book/FuegoleonArmRules.java",
@@ -424,7 +424,7 @@
  "sdv_water_noelle_half": {
   "kind": "aura",
   "attr": "SpiritDive",
-  "realFiles": [
+  "realFiles": ["book/SpiritDiveDjinnPieces.java", 
    "book/SpiritDivePieces.java",
    "book/SpiritDiveTier.java",
    "book/FuegoleonArmRules.java",
@@ -483,7 +483,7 @@
  "sdv_water_noelle_full": {
   "kind": "aura",
   "attr": "SpiritDive",
-  "realFiles": [
+  "realFiles": ["book/SpiritDiveDjinnPieces.java", 
    "book/SpiritDivePieces.java",
    "book/SpiritDiveTier.java",
    "book/FuegoleonArmRules.java",
@@ -542,7 +542,7 @@
  "sdv_earth_std_half": {
   "kind": "aura",
   "attr": "SpiritDive",
-  "realFiles": [
+  "realFiles": ["book/SpiritDiveDjinnPieces.java", 
    "book/SpiritDivePieces.java",
    "book/SpiritDiveTier.java",
    "book/FuegoleonArmRules.java",
@@ -601,7 +601,7 @@
  "sdv_earth_std_full": {
   "kind": "aura",
   "attr": "SpiritDive",
-  "realFiles": [
+  "realFiles": ["book/SpiritDiveDjinnPieces.java", 
    "book/SpiritDivePieces.java",
    "book/SpiritDiveTier.java",
    "book/FuegoleonArmRules.java",
@@ -660,7 +660,7 @@
  "sdv_wind_std_half": {
   "kind": "aura",
   "attr": "SpiritDive",
-  "realFiles": [
+  "realFiles": ["book/SpiritDiveDjinnPieces.java", 
    "book/SpiritDivePieces.java",
    "book/SpiritDiveTier.java",
    "book/FuegoleonArmRules.java",
@@ -708,7 +708,7 @@
  "sdv_fire_std_half": {
   "kind": "aura",
   "attr": "SpiritDive",
-  "realFiles": [
+  "realFiles": ["book/SpiritDiveDjinnPieces.java", 
    "book/SpiritDivePieces.java",
    "book/SpiritDiveTier.java",
    "book/FuegoleonArmRules.java",
@@ -756,7 +756,7 @@
  "sdv_water_std_half": {
   "kind": "aura",
   "attr": "SpiritDive",
-  "realFiles": [
+  "realFiles": ["book/SpiritDiveDjinnPieces.java", 
    "book/SpiritDivePieces.java",
    "book/SpiritDiveTier.java",
    "book/FuegoleonArmRules.java",
@@ -804,7 +804,7 @@
  "sdv_entry_yuno": {
   "kind": "aura",
   "attr": "SpiritDive",
-  "realFiles": [
+  "realFiles": ["book/SpiritDiveDjinnPieces.java", 
    "book/SpiritDivePieces.java",
    "book/SpiritDiveTier.java",
    "book/FuegoleonArmRules.java",
@@ -844,7 +844,7 @@
  "sdv_entry_fuego": {
   "kind": "aura",
   "attr": "SpiritDive",
-  "realFiles": [
+  "realFiles": ["book/SpiritDiveDjinnPieces.java", 
    "book/SpiritDivePieces.java",
    "book/SpiritDiveTier.java",
    "book/FuegoleonArmRules.java",
@@ -884,7 +884,7 @@
  "sdv_entry_noelle": {
   "kind": "aura",
   "attr": "SpiritDive",
-  "realFiles": [
+  "realFiles": ["book/SpiritDiveDjinnPieces.java", 
    "book/SpiritDivePieces.java",
    "book/SpiritDiveTier.java",
    "book/FuegoleonArmRules.java",
@@ -924,7 +924,7 @@
  "sdv_arm_rest": {
   "kind": "aura",
   "attr": "FuegoleonArm",
-  "realFiles": [
+  "realFiles": ["book/SpiritDiveDjinnPieces.java", 
    "book/SpiritDivePieces.java",
    "book/SpiritDiveTier.java",
    "book/FuegoleonArmRules.java",
@@ -982,7 +982,7 @@
  "sdv_arm_linked": {
   "kind": "aura",
   "attr": "FuegoleonArm",
-  "realFiles": [
+  "realFiles": ["book/SpiritDiveDjinnPieces.java", 
    "book/SpiritDivePieces.java",
    "book/SpiritDiveTier.java",
    "book/FuegoleonArmRules.java",
@@ -1040,7 +1040,7 @@
  "sdv_arm_fp_rest": {
   "kind": "aura",
   "attr": "FuegoleonArm",
-  "realFiles": [
+  "realFiles": ["book/SpiritDiveDjinnPieces.java", 
    "book/SpiritDivePieces.java",
    "book/SpiritDiveTier.java",
    "book/FuegoleonArmRules.java",
@@ -1078,7 +1078,7 @@
  "sdv_arm_fp_linked": {
   "kind": "aura",
   "attr": "FuegoleonArm",
-  "realFiles": [
+  "realFiles": ["book/SpiritDiveDjinnPieces.java", 
    "book/SpiritDivePieces.java",
    "book/SpiritDiveTier.java",
    "book/FuegoleonArmRules.java",

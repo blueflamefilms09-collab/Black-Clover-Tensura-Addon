@@ -69,6 +69,7 @@ public final class SpiritDiveForm {
         ArmourState.putOn(p, ownLook ? withoutAura(e) : e, style, true, stage);
         if (el != null) look(p, el, SpiritDivePieces.stageFor(stage), LEASE_TICKS);
         if (el != null && counts) announceTier(p, gradeOf(p, el));
+        if (el != null && counts) SpiritDiveSound.play(p, el, SpiritDivePieces.stageFor(stage), SpiritDiveTier.character(el, gradeOf(p, el)), SpiritDiveForge.Kind.BEGIN);          // the forge sounds (the Djinn's way: vanilla sounds from the server)
         if (el == SpiritDivePieces.Element.FIRE && counts) FuegoleonArm.update(p);                  // Fuegoleon's arm burns from the first tick of the Fire dive, not at the next check
     }
 
@@ -126,6 +127,8 @@ public final class SpiritDiveForm {
         ArmourRules.Held h = ArmourState.held(p);
         i.getOrCreateTag().putBoolean(UPGRADED, true);
         ArmourState.putOn(p, withoutAura(e), h == null ? 0 : h.style(), true, 1f);
+        SpiritDivePieces.Element upEl = SpiritDivePieces.elementOf(e.magic());
+        if (upEl != null) SpiritDiveSound.play(p, upEl, SpiritDivePieces.Stage.UPGRADE, SpiritDiveTier.character(upEl, gradeOf(p, upEl)), SpiritDiveForge.Kind.UPGRADE);
         p.displayClientMessage(Component.translatableWithFallback("nusmp.dive.upgrade", "The spirit's other half joins you: the full dive.").withStyle(ChatFormatting.AQUA), true);
     }
 
@@ -160,7 +163,10 @@ public final class SpiritDiveForm {
         if (!PlayerAuras.active(p, Aura.SPIRIT_DIVE)) return;
         int style = PlayerAuras.style(p, Aura.SPIRIT_DIVE);
         try {
-            if (p.isAlive()) PlayerAuras.set(p, Aura.SPIRIT_DIVE, ArmourRules.SHATTER_TICKS, style);
+            if (p.isAlive()) {
+                PlayerAuras.set(p, Aura.SPIRIT_DIVE, ArmourRules.SHATTER_TICKS, style);
+                SpiritDiveSound.play(p, SpiritDivePieces.element(style), SpiritDivePieces.stage(style), false, SpiritDiveForge.Kind.END);
+            }
             else PlayerAuras.clear(p, Aura.SPIRIT_DIVE);
         } catch (NullPointerException noConnection) { /* a fake player: the table is already written */ }
     }
