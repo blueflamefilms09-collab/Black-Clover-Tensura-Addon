@@ -63,7 +63,7 @@ public final class SpiritDiveMergeFirstPerson {
         }
         float fa = SpiritDiveMerge2Rules.fpFlashAlpha(m);
         if (fa > 0.01f) {                                                                                // the soft flash at the contact, at the chest: only its top edge reaches into the view
-            float cx = -SpiritDiveMerge2Rules.FP_CHEST_X, cy = SpiritDiveMerge2Rules.FP_CHEST_Y + 0.12f, cz = -SpiritDiveMerge2Rules.FP_CHEST_Z - 0.2f, d = (float) Math.sqrt(cx * cx + cy * cy + cz * cz);
+            float cx = -SpiritDiveMerge2Rules.FP_CHEST_X, cy = SpiritDiveMerge2Rules.FP_CHEST_Y + 0.62f, cz = -SpiritDiveMerge2Rules.FP_CHEST_Z - 0.2f, d = (float) Math.sqrt(cx * cx + cy * cy + cz * cz);
             float r = SpiritDiveMerge2Rules.fpFlashRadius(m, d, fovDeg, aspect);
             int argb = SealDraw.argb(fa, SpiritDiveMergeRules.flashRgb(el));
             var vc = buffers.getBuffer(SafeAdditive.additive(FLASH));

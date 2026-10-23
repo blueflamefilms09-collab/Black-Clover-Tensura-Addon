@@ -33,7 +33,7 @@ H_CHAR = [9.4, 5.8, 5.8, 7.8, 7.8, 6.2, 6.2]                    # front, +-51.4,
 PAL = {
     "wind": dict(shaft=(190, 255, 224), head=(255, 255, 255), rim=(255, 255, 255), band=(52, 190, 150), haze=(255, 255, 255)),
     "fire": dict(base=(255, 110, 30), mid=(255, 178, 60), tip=(255, 246, 190), rim=(255, 226, 150), band=(190, 70, 20), haze=(255, 255, 255)),
-    "water": dict(base=(80, 160, 255), mid=(150, 212, 255), tip=(255, 255, 255), rim=(225, 245, 255), band=(40, 110, 200), drop=(235, 250, 255), haze=(255, 255, 255)),
+    "water": dict(base=(80, 160, 255), mid=(150, 212, 255), tip=(255, 255, 255), rim=(225, 245, 255), band=(40, 110, 200), drop=(190, 230, 255), haze=(255, 255, 255)),
     "earth": dict(base=(200, 120, 40), mid=(255, 190, 80), tip=(255, 240, 170), rim=(255, 214, 120), band=(120, 70, 25), haze=(255, 255, 255)),
 }
 
@@ -108,7 +108,7 @@ def tongue(m, pal, a, h, lean, sway, kinds=("base", "mid", "tip")):
     sws = [0.0, sway * 0.2, sway * 0.6, sway]
     secs = [sec(ys[i], cx, cz, a, ws[i], ts[i], offs[i], sws[i]) for i in range(4)]
     for i in range(3):
-        m.loft(0, [secs[i], secs[i + 1]], pal[kinds[i]], g.BEVEL if i == 2 else g.WHITE)
+        m.loft(0, [secs[i], secs[i + 1]], pal[kinds[i]], g.WHITE)                    # (the BEVEL region of the atlas has a mint centre: only the Wind crown uses it)
 
 
 def fire(n):
@@ -132,11 +132,11 @@ def water(n):
         cx, cz = pos(a)
         ys = [0.0, h * 0.40, h * 0.76, h * 0.96, h * 0.9]                     # a wave crest: rises, then the top curls outwards and over
         offs = [0.0, 0.08, 0.5, 1.3, 2.0]
-        ws = [0.46, 0.5, 0.42, 0.26, 0.0]
+        ws = [0.6, 0.64, 0.54, 0.34, 0.0]
         ts = [0.2, 0.2, 0.18, 0.14, 0.0]
         secs = [sec(ys[i], cx, cz, a, ws[i], ts[i], offs[i]) for i in range(5)]
         for i, kd in enumerate(("base", "mid", "mid", "tip")):
-            m.loft(0, [secs[i], secs[i + 1]], pal[kd], g.BEVEL if i >= 2 else g.WHITE)
+            m.loft(0, [secs[i], secs[i + 1]], pal[kd], g.WHITE)
         if k % 2 == 0:                                                        # a drop above the crest (a diamond), on every second one
             dy, dx = h + 1.5, 0.0
             top, bot = (cx + math.sin(a) * 1.0, dy + 0.75, cz + math.cos(a) * 1.0), (cx + math.sin(a) * 1.0, dy - 0.65, cz + math.cos(a) * 1.0)
@@ -164,7 +164,7 @@ def earth(n):
         for (y, rad, off) in ((0.0, 0.62, 0.0), (h * 0.62, 0.62, lean * 0.5), (h + 0.9, 0.0, lean)):
             rings.append([(cx + math.sin(a) * off + rad * math.cos(2 * math.pi * i / 5 + a), y, cz + math.cos(a) * off + rad * math.sin(2 * math.pi * i / 5 + a)) for i in range(5)])
         m.loft(0, [rings[0], rings[1]], pal["base"], g.WHITE)
-        m.loft(0, [rings[1], rings[2]], pal["tip"], g.BEVEL)
+        m.loft(0, [rings[1], rings[2]], pal["tip"], g.WHITE)
         haze(m, a, h, 0.8, 0.25)
     return m
 

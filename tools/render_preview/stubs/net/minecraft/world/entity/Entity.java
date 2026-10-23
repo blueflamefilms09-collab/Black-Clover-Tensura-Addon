@@ -19,7 +19,7 @@ public class Entity {
     private float bbWidth = 0.6F, bbHeight = 1.8F;
     private final EntityType<?> type;
     private final Level level;
-    private final UUID uuid = UUID.randomUUID();
+    private final UUID uuid = new UUID(0L, 0L);                                    // fixed so the previews are repeatable (the Spirit Dive merge takes its side from the UUID hash)
 
     public Entity(EntityType<?> type, Level level) {
         this.type = type;

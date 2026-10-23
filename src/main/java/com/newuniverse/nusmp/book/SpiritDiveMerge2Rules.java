@@ -36,6 +36,11 @@ public final class SpiritDiveMerge2Rules {
     public static final int CHAR_VERTS = 900, STD_VERTS = 500, CORE_VERTS = 300;
     /** The ghost is drawn in two additive layers: the solid body at this share of the ghost's alpha, the soft glow shell at this share. */
     public static final float SOLID_K = 0.92f, GLOW_K = 0.42f;
+    /** The slim ghost is drawn this much larger than the boxy one at the same {@link SpiritDiveMergeRules#ghostSize} (the meshes are thinner at the same 32 px height). */
+    public static final float SLIM_SIZE_K = 1.3f;
+
+    /** The share used for a spirit: the Salamander is already the largest (a ghost of 1.45 at the character tier), so it only grows a little. */
+    public static float slimSizeK(Element e, boolean character) { return e == Element.FIRE ? (character ? 1.0f : 1.15f) : SLIM_SIZE_K; }
 
     /** The name of the slim ghost mesh: {@code <element>_char} or {@code <element>_std} (Earth has no character mesh). */
     public static String slimMesh(Element e, boolean character) {
@@ -133,7 +138,7 @@ public final class SpiritDiveMerge2Rules {
     /** At most this share of the screen (area of the bounding square of anything drawn for the merge) may be covered. */
     public static final float FP_MAX_COVERAGE = 0.35f;
     /** The spirit's size in the view (blocks across its longest side before the share of the clock) and the top alpha (a share of the third person ghost). */
-    public static final float FP_SIZE = 0.8f, FP_ALPHA_K = 0.6f, FP_FLASH_ALPHA = 0.55f;
+    public static final float FP_SIZE = 0.8f, FP_ALPHA_K = 0.6f, FP_FLASH_ALPHA = 0.5f;
     /** Camera space (x to the left, y up, z forward, blocks): where the spirit appears (upper side, in front) and the chest (below the eyes, just behind the near plane). */
     public static final float FP_START_X = 0.72f, FP_START_Y = 0.46f, FP_START_Z = 1.45f, FP_CHEST_X = 0f, FP_CHEST_Y = -0.78f, FP_CHEST_Z = 0.16f;
 
@@ -177,7 +182,7 @@ public final class SpiritDiveMerge2Rules {
 
     /** The radius (blocks) of the soft flash at the chest, clamped so its square never covers more than the cap at that distance. */
     public static float fpFlashRadius(float m, float dist, float fovDeg, float aspect) {
-        float want = 0.16f + 0.30f * SpiritDiveMergeRules.flash(m);
+        float want = 0.12f + 0.22f * SpiritDiveMergeRules.flash(m);
         return Math.min(want, maxExtent(dist, fovDeg, aspect) * 0.5f);
     }
 

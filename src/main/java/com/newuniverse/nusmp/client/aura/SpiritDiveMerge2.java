@@ -34,6 +34,9 @@ public final class SpiritDiveMerge2 {
 
     public static boolean slim() { return models == Models.SLIM; }
 
+    /** The size of the ghost relative to the first merge's: the slim spirits are thinner than the boxy ones, so they are drawn a little larger ({@link SpiritDiveMerge2Rules#SLIM_SIZE_K}); 1 for the boxy ones. */
+    static float sizeK(Element e, boolean character) { return models == Models.SLIM ? SpiritDiveMerge2Rules.slimSizeK(e, character) : 1f; }
+
     public static boolean calmEntry() { return calmEntry; }
 
     public static boolean firstPerson() { return firstPerson; }

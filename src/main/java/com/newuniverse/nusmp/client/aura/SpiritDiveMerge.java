@@ -130,7 +130,7 @@ public final class SpiritDiveMerge {
         if (a > 0.01f) {
             SpiritDiveMergeRules.path(m, side, character, PATH);
             float bob = m < SpiritDiveMergeRules.APPEAR_END + 2f ? 1.6f * Mth.sin(c.age() * 0.13f) : 0f;
-            float s = SpiritDiveMergeRules.ghostSize(el, character) * SpiritDiveMergeRules.ghostScale(m);
+            float s = SpiritDiveMergeRules.ghostSize(el, character) * SpiritDiveMergeRules.ghostScale(m) * SpiritDiveMerge2.sizeK(el, character);
             pose.pushPose();
             pose.translate(PATH[0], PATH[1] + bob, PATH[2]);
             pose.mulPose(Q.rotationY(PATH[3]));
@@ -167,7 +167,7 @@ public final class SpiritDiveMerge {
             for (int j = 0; j <= segs; j++) {
                 float mj = m + dir * j * 0.75f;
                 SpiritDiveMergeRules.path(mj, side, character, PATH);
-                float sc = SpiritDiveMergeRules.ghostSize(el, character) * SpiritDiveMergeRules.ghostScale(mj);
+                float sc = SpiritDiveMergeRules.ghostSize(el, character) * SpiritDiveMergeRules.ghostScale(mj) * SpiritDiveMerge2.sizeK(el, character);
                 float off = o * 3.4f * sc, cy = Mth.cos(PATH[3]), sy = Mth.sin(PATH[3]);
                 PTS[j * 3] = PATH[0] + off * cy;
                 PTS[j * 3 + 1] = PATH[1] + 2.2f * sc * Mth.sin(j * 0.9f + k * 1.7f) + o * 1.2f;
