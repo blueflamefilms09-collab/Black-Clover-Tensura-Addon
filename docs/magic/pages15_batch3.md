@@ -7,7 +7,7 @@ How to build a page: `docs/magic/pages15_recipe.md`. Files this batch edits: `sr
 
 **What was built.** 87 new pages (66 original, 21 with a canon source), all NEW, nothing replaced; they are the LAST family pages of their book (no mode number, unlock bit or mastery moves), behind `magic.pagesFifteen`.
 Per book: dream +11, illusion +10, air +7, smoke +7, vortex +7, wing +7, wind +6, sound +6, memory +6, permeation +6, soul +6, soul corpse +6, song +2. Every basic grimoire of the batch now shows at least 15 pages.
-Most pages are the kit's standard casts (the tier fixes the damage); about twenty use the kit's bounded `Ctx` (party buffs, projectile guards, zones, a leap, a hard-control signature) through the small helpers at the top of `Batch3.java`.
+Most pages are the kit's standard casts (the tier fixes the damage); about 25 use the kit's bounded `Ctx` (party buffs, projectile guards, zones, a leap, a hard-control signature) through the small helpers at the top of `Batch3.java`.
 No new asset, entity, packet or block is used. **Nothing here was seen in a game** (only compiled against the API stubs and unit tested).
 
 ## Pages
