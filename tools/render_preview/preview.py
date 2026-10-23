@@ -231,7 +231,7 @@ def run_java(classes, joml, gson, job, tag):
         json.dump({"scenes": job, "modAssets": MOD_ASSETS, "previewDir": HERE}, f)
     if os.path.isfile(meta):
         os.remove(meta)
-    cp = os.pathsep.join([classes, joml] + ([gson] if gson else []))
+    cp = os.pathsep.join([classes, joml] + ([gson] if gson else []) + [os.path.join(ROOT, "src", "main", "resources")])        # 4.x: the Wind remake reads its meshes (assets/nusmp/sdw3_meshes) from the class path
     r = subprocess.run(["java", "-Xmx1g", "-Xss8m", "-XX:+UseSerialGC", "-XX:TieredStopAtLevel=1", "-cp", cp, "Preview", jobfile, meta, bindir],
                        stdout=subprocess.PIPE, stderr=subprocess.STDOUT, timeout=600)
     out = "\n".join(l for l in r.stdout.decode("utf-8", "replace").splitlines() if "Picked up" not in l)

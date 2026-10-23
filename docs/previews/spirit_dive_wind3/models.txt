@@ -1,0 +1,10 @@
+sword    layer0  488  layer1   72  layer2  384  total  944 vertices
+bow      layer0  320  layer1   96  layer2   96  total  512 vertices
+arrow    layer0   48  layer1   32  layer2  176  total  256 vertices
+spear    layer0   80  layer1   32  layer2  232  total  344 vertices
+blade    layer0   64  layer1   32  layer2    0  total   96 vertices
+feather  layer0   64  layer1   48  layer2   24  total  136 vertices
+cube     layer0   24  layer1   24  layer2    0  total   48 vertices
+panel    layer0   24  layer1   24  layer2    0  total   48 vertices
+plate    layer0   72  layer1   16  layer2   24  total  112 vertices
+crown    layer0  576  layer1    0  layer2  128  total  704 vertices

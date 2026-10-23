@@ -56,18 +56,21 @@ public final class SpiritDiveWind {
 
     // ------------------------------------------------------------------ the entry point
     /** Called by {@link SpiritDiveReel} for the PACK Wind: one dive of Wind at {@code st} for the tier {@code grade}. */
-    static void paint(AuraContext c, Stage st, Grade grade, float pulse) {
+    static void paint(AuraContext c, Stage st, Grade grade, float pulse) { paint(c, st, grade, pulse, false); }
+
+    /** The same, with {@code real3d} true for the version A of the Wind remake: the weapons are the real 3D pieces of {@link SpiritDiveWind3} instead of the flat strips. */
+    static void paint(AuraContext c, Stage st, Grade grade, float pulse, boolean real3d) {
         Lod lod = SpiritDiveTier.lod(SpiritDiveFrame.distSq(c));
         if (lod == Lod.CULLED) return;
         long t0 = PerfProbe.begin();
         try {
-            paintLod(c, st, grade, pulse, lod);
+            paintLod(c, st, grade, pulse, lod, real3d);
         } finally {
             PerfProbe.end(SECTION, t0);
         }
     }
 
-    private static void paintLod(AuraContext c, Stage st, Grade grade, float pulse, Lod lod) {
+    private static void paintLod(AuraContext c, Stage st, Grade grade, float pulse, Lod lod, boolean real3d) {
         Element el = Element.WIND;
         boolean wantsCharacter = SpiritDiveWindRules.character(grade) && SpiritDiveLook.characterEffects() && lod != Lod.FAR;
         boolean character = wantsCharacter && SpiritDiveFrame.admitCharacter();
@@ -92,7 +95,8 @@ public final class SpiritDiveWind {
         SpiritDiveAnimeRibbon.camera(pose);
         leaves(c, sp, lod, character, pal, st, u, uk, half, lit);
         if (full && sp.backCircle()) backCircle(c, pal, SpiritDiveReelRules.settle(u), lit);
-        if (full && sp.weapon()) weapon(c, pal, SpiritDiveWindRules.weapon(casting), SpiritDiveReelRules.weapon(u), lit, pulse);
+        if (real3d) { if (full && lod == Lod.FULL) SpiritDiveWind3.weaponsA(c, pal, character, casting, SpiritDiveReelRules.weapon(u), lit, pulse); }
+        else if (full && sp.weapon()) weapon(c, pal, SpiritDiveWindRules.weapon(casting), SpiritDiveReelRules.weapon(u), lit, pulse);
         if (full && sp.ribbons() > 0) ribbons(c, sp, SpiritDiveReelRules.settle(u));
         if (u < SpiritDiveReelRules.ENTRY_TICKS - 0.5f && reel.ribbons() > 0 && !upgrade) SpiritDiveReel.ribbons(c, reel, el, pal, u);
         pose.popPose();
@@ -113,7 +117,7 @@ public final class SpiritDiveWind {
      * The crown on the head: the thin ring of the pack, the tall bars with arrow-tip tops on it (each turns about the vertical to face the viewer), a soft glow under them. {@code leftOnly} (the first dive
      * of Wind) draws the left half of the ring and the bars with x >= 0.
      */
-    private static void crown(AuraContext c, Spec sp, boolean character, Pal pal, float u, float uLeft, boolean upgrade, boolean leftOnly, float lit) {
+    static void crown(AuraContext c, Spec sp, boolean character, Pal pal, float u, float uLeft, boolean upgrade, boolean leftOnly, float lit) {
         float ign = Math.max(SpiritDiveReelRules.crown(u), upgrade ? SpiritDiveReelRules.crown(uLeft) : 0f);
         if (ign <= 0.01f) return;
         PoseStack pose = c.pose();
@@ -147,7 +151,7 @@ public final class SpiritDiveWind {
     }
 
     // ------------------------------------------------------------------ the wrist circles (arm frame, px)
-    private static void wrists(AuraContext c, Spec sp, Pal pal, float u, float uk, int mask, int keptMask, float lit) {
+    static void wrists(AuraContext c, Spec sp, Pal pal, float u, float uk, int mask, int keptMask, float lit) {
         boolean slim = WaterAuraRig.slim(c.model());
         int drawn = 0;
         if ((mask & SpiritDivePieces.SHELL_ARM_L) != 0 && drawn < sp.wrists()) {                                // the left hand is the casting hand of the pack
@@ -174,7 +178,7 @@ public final class SpiritDiveWind {
 
     // ------------------------------------------------------------------ the leaves (body frame, px)
     /** The big leaf and the small leaf of each side, unfolding with an overshoot; the cross on the big leaf's tip. */
-    private static void leaves(AuraContext c, Spec sp, Lod lod, boolean character, Pal pal, Stage st, float u, float uk, boolean half, float lit) {
+    static void leaves(AuraContext c, Spec sp, Lod lod, boolean character, Pal pal, Stage st, float u, float uk, boolean half, float lit) {
         if (sp.leafSegs() <= 0) return;
         boolean full = SpiritDivePieces.full(st), upgrade = st == Stage.UPGRADE;
         float sw = Mth.clamp(c.limbSwingAmount(), 0f, 1f);
@@ -213,7 +217,7 @@ public final class SpiritDiveWind {
 
     // ------------------------------------------------------------------ the circle behind the back, the weapons, the ribbons (body frame, px)
     /** The big circle of connected crosses behind the back of the character tier: a plane facing back and front, turning slowly about its axis. */
-    private static void backCircle(AuraContext c, Pal pal, float set, float lit) {
+    static void backCircle(AuraContext c, Pal pal, float set, float lit) {
         if (set <= 0.02f) return;
         PoseStack pose = c.pose();
         float[] b = SpiritDiveWindGeometry.BACK;
@@ -267,7 +271,7 @@ public final class SpiritDiveWind {
     }
 
     /** White ribbons of wind looping slowly round the body (the loops of Spirit of Zephyr): thin strips along a helix, one pass. */
-    private static void ribbons(AuraContext c, Spec sp, float set) {
+    static void ribbons(AuraContext c, Spec sp, float set) {
         if (set <= 0.02f) return;
         PoseStack pose = c.pose();
         VertexConsumer vc = c.buffers().getBuffer(SafeAdditive.additive(RIBBON));
@@ -279,7 +283,7 @@ public final class SpiritDiveWind {
     }
 
     // ------------------------------------------------------------------ the rest (block frame)
-    private static void extras(AuraContext c, Spec sp, SpiritDiveReelRules.Spec reel, Pal pal, Stage st, float u, float uk, boolean full, float lit, float pulse, Lod lod) {
+    static void extras(AuraContext c, Spec sp, SpiritDiveReelRules.Spec reel, Pal pal, Stage st, float u, float uk, boolean full, float lit, float pulse, Lod lod) {
         PoseStack pose = c.pose();
         float age = c.age(), set = SpiritDiveReelRules.settle(Math.max(u, uk));
         SealDraw.camera(pose);
@@ -294,7 +298,7 @@ public final class SpiritDiveWind {
     }
 
     /** Four-point sparkles drifting up round the body (the white stars of Spirit of Zephyr). */
-    private static void sparks(AuraContext c, Spec sp, Pal pal, float set, float age) {
+    static void sparks(AuraContext c, Spec sp, Pal pal, float set, float age) {
         PoseStack pose = c.pose();
         VertexConsumer vc = c.buffers().getBuffer(SafeAdditive.additive(STAR));
         for (int i = 0; i < sp.sparks(); i++) {
@@ -304,7 +308,7 @@ public final class SpiritDiveWind {
         }
     }
 
-    private static boolean firstPersonSelf(AuraContext c) {
+    static boolean firstPersonSelf(AuraContext c) {
         try {
             Minecraft mc = Minecraft.getInstance();
             return c.player() == mc.player && mc.options.getCameraType().isFirstPerson();

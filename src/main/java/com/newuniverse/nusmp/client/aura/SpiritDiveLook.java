@@ -2,6 +2,7 @@ package com.newuniverse.nusmp.client.aura;
 
 import com.newuniverse.nusmp.book.FuegoleonArmRules;
 import com.newuniverse.nusmp.book.SpiritDiveDjinnPieces.Look;
+import com.newuniverse.nusmp.book.SpiritDiveWindRules;
 import com.newuniverse.nusmp.book.SpiritDiveWindRules.WindLook;
 
 /**
@@ -21,7 +22,7 @@ public final class SpiritDiveLook {
 
     private static volatile boolean characterEffects = true, particles = true;
     private static volatile Look look = Look.REEL;
-    private static volatile WindLook windLook = WindLook.PACK;
+    private static volatile WindLook windLook = SpiritDiveWindRules.DEFAULT_LOOK;
     private static volatile FuegoleonArmRules.View armView = FuegoleonArmRules.View.ALWAYS;
 
     /** The look this client draws. */
@@ -44,7 +45,7 @@ public final class SpiritDiveLook {
 
     public static boolean windPack() { return windLook == WindLook.PACK; }
 
-    public static void setWindLook(WindLook which) { windLook = which == null ? WindLook.PACK : which; }
+    public static void setWindLook(WindLook which) { windLook = which == null ? SpiritDiveWindRules.DEFAULT_LOOK : which; }
 
     public static boolean characterEffects() { return characterEffects; }
 

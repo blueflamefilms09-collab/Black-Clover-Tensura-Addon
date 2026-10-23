@@ -71,12 +71,13 @@ public final class SpiritDiveWindSelfTests {
         // ---- 3. the option and the weapon
         SpiritDiveWindRules.WindLook[] look = SpiritDiveWindRules.WindLook.values();
         if (look.length < 2 || look[0] != SpiritDiveWindRules.WindLook.PACK || look[1] != SpiritDiveWindRules.WindLook.REEL) bad.add("the windLook values changed (PACK, REEL)");
-        if (SpiritDiveWindRules.DEFAULT_LOOK != SpiritDiveWindRules.WindLook.PACK || SpiritDiveWindRules.parse("garbage") != SpiritDiveWindRules.WindLook.PACK || SpiritDiveWindRules.parse(null) != SpiritDiveWindRules.WindLook.PACK
+        if (SpiritDiveWindRules.DEFAULT_LOOK != SpiritDiveWindRules.WindLook.B_CLIP || SpiritDiveWindRules.parse("garbage") != SpiritDiveWindRules.DEFAULT_LOOK || SpiritDiveWindRules.parse(null) != SpiritDiveWindRules.DEFAULT_LOOK
+                || SpiritDiveWindRules.parse("pack") != SpiritDiveWindRules.WindLook.PACK
                 || SpiritDiveWindRules.parse("reel") != SpiritDiveWindRules.WindLook.REEL) bad.add("the windLook option does not parse");
         if (SpiritDiveWindRules.weapon(false) != SpiritDiveWindRules.Weapon.SWORD || SpiritDiveWindRules.weapon(true) != SpiritDiveWindRules.Weapon.BOW) bad.add("the weapon rule is wrong");
         if (!bad.isEmpty()) return Result.fail(String.join("; ", bad.subList(0, Math.min(8, bad.size()))));
         return Result.ok(SpiritDiveWindRules.allTextures().size() + " textures are in place; the tables hold; the worst full dive draws " + SpiritDiveWindRules.worstVertices(true) + " vertices (Yuno), "
                 + SpiritDiveWindRules.worstVertices(false) + " (standard) against the REEL look's worst of " + SpiritDiveReelRules.worstVertices(true) + " / " + SpiritDiveReelRules.worstVertices(false)
-                + "; PACK is the default of windLook and REEL brings the old Wind back");
+                + "; B_CLIP is the default of windLook; PACK and REEL bring the older Winds back");
     }
 }
