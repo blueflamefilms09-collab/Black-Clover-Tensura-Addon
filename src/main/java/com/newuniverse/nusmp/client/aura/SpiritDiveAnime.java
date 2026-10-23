@@ -245,7 +245,7 @@ public final class SpiritDiveAnime {
         float a = SpiritDiveAnimeRules.smooth((progress - 0.3f) / 0.5f);
         if (a <= 0.01f) return;
         float pulse = 1f + 0.8f * Math.max(0f, 1f - Math.abs(progress - 0.7f) * 6f);                          // the flash as it opens
-        float hs = (character ? 8.0f : 6.5f) * open, cy = -6.4f - 0.48f * hs;                                  // the circlet sits on the forehead: the sprite's circlet is 0.24 of its height below its centre
+        float hk = SpiritDiveMerge2.crownK(), hs = (character ? 8.0f : 6.5f) * open * hk, cy = -6.4f - 0.48f * hs;      // merge 2: the sprite crown is smaller (spiritDive.crownDistinct), the halo behind keeps its size                                  // the circlet sits on the forehead: the sprite's circlet is 0.24 of its height below its centre
         float fire = el == Element.FIRE ? 0.7f : 1f;
         VertexConsumer vc = c.buffers().getBuffer(SafeAdditive.additive(CROWN[i]));
         if (half) {
@@ -255,7 +255,7 @@ public final class SpiritDiveAnime {
         SealDraw.glow(pose, vc, 0f, cy, 1.2f, hs, 0.03f * Mth.sin(age * 0.07f), SealDraw.argb(Math.min(1f, 0.95f * a * lit * pulse * fire), pal.halo()), FB);
         if (count > 1) {
             VertexConsumer ring = c.buffers().getBuffer(SafeAdditive.additive(HALO[i]));
-            SealDraw.glow(pose, ring, 0f, -7.5f, 3.2f, hs * 1.3f, age * 0.014f, SealDraw.argb(Math.min(1f, 0.42f * a * lit * pulse * fire), pal.glow()), FB);
+            SealDraw.glow(pose, ring, 0f, -7.5f, 3.2f, hs * 1.3f / hk, age * 0.014f, SealDraw.argb(Math.min(1f, 0.42f * a * lit * pulse * fire), pal.glow()), FB);
         }
     }
 

@@ -8,6 +8,7 @@ import com.newuniverse.nusmp.book.SpiritDivePieces;
 import com.newuniverse.nusmp.book.SpiritDivePieces.Element;
 import com.newuniverse.nusmp.book.SpiritDivePieces.Stage;
 import com.newuniverse.nusmp.book.SpiritDiveReelGeometry;
+import com.newuniverse.nusmp.book.SpiritDiveMerge2Rules;
 import com.newuniverse.nusmp.book.SpiritDiveReelRules;
 import com.newuniverse.nusmp.book.SpiritDiveReelRules.Pal;
 import com.newuniverse.nusmp.book.SpiritDiveReelRules.Spec;
@@ -178,6 +179,7 @@ public final class SpiritDiveReel {
      */
     static void ribbons(AuraContext c, Spec sp, Element el, Pal pal, float u) {
         float a = SpiritDiveReelRules.ribbonAlpha(u);
+        if (SpiritDiveMerge2.calmEntry()) a *= SpiritDiveMerge2Rules.ribbonK(u);                              // merge 2: a third while the spirit merges (spiritDive.calmEntry)
         if (a <= 0.01f) return;
         PoseStack pose = c.pose();
         float travel = SpiritDiveReelRules.ribbonTravel(u), head = -4f + (SpiritDiveReelGeometry.BODY_TOP + 14f) * travel, tail = 34f + 10f * travel;
@@ -254,12 +256,16 @@ public final class SpiritDiveReel {
         if (u >= SpiritDiveReelRules.ENTRY_TICKS - 0.5f || st == Stage.UPGRADE) return;
         PoseStack pose = c.pose();
         float age = c.age();
-        float fl = Math.max(SpiritDiveReelRules.flash(u), SpiritDiveReelRules.reveal(u));
+        float fl = Math.max(SpiritDiveReelRules.flash(u), SpiritDiveReelRules.reveal(u)), szk = 1f;
+        if (SpiritDiveMerge2.calmEntry()) {                                                                 // merge 2: the flash at the start, a third while the spirit merges, a short burst after the contact
+            fl = SpiritDiveMerge2Rules.flashAlpha(u, SpiritDiveReelRules.flash(u), SpiritDiveReelRules.reveal(u));
+            szk = SpiritDiveMerge2Rules.flashSizeK(u);
+        }
         if (fl > 0.01f) {                                                                                   // the flash: a star and a soft white bloom at the chest, growing as it fades; a second burst when the final form appears
             float grow = SpiritDiveReelRules.reveal(u) > SpiritDiveReelRules.flash(u) ? 0.5f + 0.5f * SpiritDiveReelRules.reveal(u) : SpiritDiveReelRules.smooth(u / 4.5f);
-            SealDraw.glow(pose, c.buffers().getBuffer(SafeAdditive.additive(FLASH)), 0f, 1.5f - 1.2f, 0f, 0.8f + 1.5f * grow, age * 0.04f, SealDraw.argb(Math.min(1f, fl * 1.2f), 0xFFFFFF), FB);
-            SealDraw.glow(pose, c.buffers().getBuffer(SafeAdditive.additive(GLOW)), 0f, 1.5f - 1.2f, 0f, 1.1f + 1.6f * grow, 0f, SealDraw.argb(Math.min(1f, fl * 1.0f), 0xE8FFFA), FB);
-            SealDraw.glow(pose, c.buffers().getBuffer(SafeAdditive.additive(GLOW)), 0f, 1.5f - 1.2f, 0f, 0.6f + 0.9f * grow, 0f, SealDraw.argb(Math.min(1f, fl * 1.0f), 0xFFFFFF), FB);
+            SealDraw.glow(pose, c.buffers().getBuffer(SafeAdditive.additive(FLASH)), 0f, 1.5f - 1.2f, 0f, (0.8f + 1.5f * grow) * szk, age * 0.04f, SealDraw.argb(Math.min(1f, fl * 1.2f), 0xFFFFFF), FB);
+            SealDraw.glow(pose, c.buffers().getBuffer(SafeAdditive.additive(GLOW)), 0f, 1.5f - 1.2f, 0f, (1.1f + 1.6f * grow) * szk, 0f, SealDraw.argb(Math.min(1f, fl * 1.0f), 0xE8FFFA), FB);
+            SealDraw.glow(pose, c.buffers().getBuffer(SafeAdditive.additive(GLOW)), 0f, 1.5f - 1.2f, 0f, (0.6f + 0.9f * grow) * szk, 0f, SealDraw.argb(Math.min(1f, fl * 1.0f), 0xFFFFFF), FB);
         }
         float gp = SpiritDiveReelRules.groundPulse(u);
         if (gp > 0f) {                                                                                      // the ring pulse: a ring running out from the feet
@@ -269,6 +275,7 @@ public final class SpiritDiveReel {
             pose.popPose();
         }
         float cg = SpiritDiveReelRules.cage(u);
+        if (SpiritDiveMerge2.calmEntry()) cg *= SpiritDiveMerge2Rules.ribbonK(u);                           // merge 2: the cage of circles too
         if (cg > 0.01f && sp.cage() > 0) cage(c, sp, cg, SpiritDiveReelRules.cageScale(u), age, cageRgb);
     }
 

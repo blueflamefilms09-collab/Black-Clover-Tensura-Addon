@@ -50,6 +50,10 @@ final class SpiritDiveWind4 {
     static void crown(AuraContext c, boolean character, Pal pal, float u, float uLeft, boolean upgrade, boolean leftOnly, float lit, float e) {
         float ign = Math.max(SpiritDiveReelRules.crown(u), upgrade ? SpiritDiveReelRules.crown(uLeft) : 0f);
         if (ign <= 0.01f) return;
+        if (SpiritDiveMerge2.crownDistinct()) {                                                             // merge 2: the smaller, more distinct crown (client option spiritDive.crownDistinct)
+            SpiritDiveMerge2.crown(c, com.newuniverse.nusmp.book.SpiritDivePieces.Element.WIND, character, pal.glow(), u, uLeft, upgrade, leftOnly, lit, e);
+            return;
+        }
         SpiritDiveWind3Mesh m = character ? (leftOnly ? CROWN_YUNO_HALF : CROWN_YUNO) : (leftOnly ? CROWN_STD_HALF : CROWN_STD);
         PoseStack pose = c.pose();
         ModelPart head = c.model().head;

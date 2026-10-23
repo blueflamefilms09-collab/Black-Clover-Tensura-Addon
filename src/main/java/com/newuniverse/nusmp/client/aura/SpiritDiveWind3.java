@@ -181,6 +181,7 @@ public final class SpiritDiveWind3 {
         PoseStack pose = c.pose();
         pose.pushPose();
         SpiritDiveReelPieces.applyPart(pose, c.model().head);
+        SpiritDiveMerge2.fit(pose);                                                                         // merge 2: smaller and closer to the head
         SealDraw.camera(pose);
         float age = c.age();
         int n = Math.min(sp.cubes(), SpiritDiveWind3Geometry.CROWN_PLACES), lights = 0;
@@ -294,6 +295,7 @@ public final class SpiritDiveWind3 {
         PoseStack pose = c.pose();
         pose.pushPose();
         SpiritDiveReelPieces.applyPart(pose, c.model().head);
+        SpiritDiveMerge2.fit(pose);                                                                         // merge 2: smaller and closer to the head
         SealDraw.camera(pose);
         float g = SpiritDiveReelRules.smooth(ign * 1.5f), age = c.age(), sy = 1.25f * (0.4f + 0.6f * Math.min(1f, ign * 1.4f));
         piece(c, CROWN, SpiritDiveWind3Rules.SOLID, 0f, SpiritDiveWindGeometry.RING_Y + 0.4f, 0f, 0f, -1f, 0f, 1f, 0f, 0f, 1f, sy, 1f, Math.min(1f, 0.97f * g), 0f, 0);

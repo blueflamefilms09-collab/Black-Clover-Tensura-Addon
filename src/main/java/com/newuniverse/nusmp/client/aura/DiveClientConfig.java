@@ -2,6 +2,7 @@ package com.newuniverse.nusmp.client.aura;
 
 import com.newuniverse.nusmp.book.FuegoleonArmDjinnRules;
 import com.newuniverse.nusmp.book.FuegoleonArmRules;
+import com.newuniverse.nusmp.book.SpiritDiveMerge2Rules;
 import com.newuniverse.nusmp.book.SpiritDiveDjinnPieces.Look;
 import com.newuniverse.nusmp.book.SpiritDiveWindRules;
 import com.newuniverse.nusmp.book.SpiritDiveWindRules.WindLook;
@@ -23,7 +24,8 @@ import net.neoforged.neoforge.common.ModConfigSpec;
  */
 public final class DiveClientConfig {
     public static final ModConfigSpec SPEC;
-    private static final ModConfigSpec.BooleanValue CLASSIC, CHARACTER_FX, PARTICLES, CALM, MERGE;
+    private static final ModConfigSpec.BooleanValue CLASSIC, CHARACTER_FX, PARTICLES, CALM, MERGE, CALM_ENTRY, MERGE_FP, CROWN_DISTINCT;
+    private static final ModConfigSpec.EnumValue<SpiritDiveMerge2Rules.Models> MERGE_MODELS;
     private static final ModConfigSpec.EnumValue<Look> LOOK;
     private static final ModConfigSpec.EnumValue<WindLook> WIND_LOOK;
     private static final ModConfigSpec.EnumValue<FuegoleonArmRules.View> ARM_VIEW;
@@ -42,6 +44,10 @@ public final class DiveClientConfig {
         CHARACTER_FX = b.comment("The character tier of the dive (Yuno's, Fuegoleon's and Noelle's own look). false = every dive is drawn as the standard tier.").define("characterEffects", true);
         PARTICLES = b.comment("The ember / mote particle trail of a Spirit Dive.").define("particles", true);
         MERGE = b.comment("The diver merges with the spirit like the anime (any Spirit Dive, every look): the spirit (Sylph, Undine, Salamander, Gnome) appears, flows into the chest with a flash, and leaves a faint silhouette round the torso. false = no merge.").define("merge", true);
+        MERGE_MODELS = b.comment("Merge 2: the spirit meshes of the merge: SLIM (default: smooth low-poly spirits with real wings, fins and tails) or BOXY (the first merge's cube spirits).").defineEnum("mergeModels", SpiritDiveMerge2Rules.DEFAULT_MODELS);
+        CALM_ENTRY = b.comment("Merge 2: true (default) = the look's own entry (the white flash, the spiral ribbons, the cage of circles) is turned down to a third while the spirit merges (clock 8..17) so the merge reads; the flash at the start and a short burst after the contact stay. false = the previous entry.").define("calmEntry", true);
+        MERGE_FP = b.comment("Merge 2: true (default) = the wearer also sees the merge in first person (the spirit comes in at the upper side of the view and flows down into the chest, a soft flash at the contact; never more than 35 percent of the screen, no blur). false = nothing in first person.").define("mergeFirstPerson", true);
+        CROWN_DISTINCT = b.comment("Merge 2: true (default) = the Spirit Dive crowns are smaller (about 62 percent) and more distinct (Wind: arrow bars on a thin ring; Fire: flame tongues; Water: wave crests with drops; Earth: crystal spikes). false = the previous crowns.").define("crownDistinct", true);
         b.pop();
         b.push("fuegoleonArm");
         ARM_VIEW = b.comment("Fuegoleon's flaming right arm: OFF, FLARE (only while he casts, dives or has the Salamander out) or ALWAYS (also at rest, quieter).").defineEnum("view", FuegoleonArmRules.View.ALWAYS);
@@ -59,12 +65,14 @@ public final class DiveClientConfig {
             SpiritDiveLook.setWindLook(WIND_LOOK.get());
             SpiritDiveLook.setCalm(CALM.get());
             SpiritDiveMerge.setEnabled(MERGE.get());
+            SpiritDiveMerge2.set(MERGE_MODELS.get(), CALM_ENTRY.get(), MERGE_FP.get(), CROWN_DISTINCT.get());
             FuegoleonArmLook.set(ARM_LOOK.get());
         } catch (IllegalStateException notLoaded) {
             SpiritDiveLook.set(Look.REEL, true, true, FuegoleonArmRules.View.ALWAYS);
             SpiritDiveLook.setWindLook(SpiritDiveWindRules.DEFAULT_LOOK);
             SpiritDiveLook.setCalm(true);
             SpiritDiveMerge.setEnabled(true);
+            SpiritDiveMerge2.set(SpiritDiveMerge2Rules.DEFAULT_MODELS, true, true, true);
             FuegoleonArmLook.set(FuegoleonArmDjinnRules.DEFAULT_LOOK);
         }
     }
