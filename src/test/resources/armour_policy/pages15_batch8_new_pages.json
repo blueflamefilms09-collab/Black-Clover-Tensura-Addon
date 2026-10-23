@@ -46,5 +46,16 @@
     "switching_tangle_field",
     "shuffling_barrage",
     "grand_reversal"
+  ],
+  "RECOMBINATION": [
+    "house_door_slam",
+    "house_plank_volley",
+    "house_stair_leap",
+    "house_chimney_cannon",
+    "house_trapdoor",
+    "house_scaffold_span",
+    "house_roof_slam",
+    "house_hallway_maze",
+    "house_collapse"
   ]
 }

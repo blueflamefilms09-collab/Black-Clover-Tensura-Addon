@@ -279,6 +279,41 @@ public final class Batch8 {
                     return true;
                 })).withCooldown(1500).withAnim("slam")));
 
+    private static final List<BookPage> RECOMBINATION = register("book_recombination", List.of(
+            Pages15Kit.starter("house_door_slam", "Recombination: Door Slam",
+                    xCone(Tier.STARTER, 4, 0.4, R3, Pages15Kit.knock(0.9))).withAnim("sweep"),
+            Pages15Kit.starter("house_plank_volley", "Recombination: Plank Volley",
+                    xFan(Tier.STARTER, 3, 12, 14, 0.9, R1, Pages15Kit.NONE)).withCooldown(100).withAnim("thrust"),
+            Pages15Kit.starter("house_stair_leap", "Recombination: Stair Leap",
+                    leap(Tier.STARTER, 0.9, 0.9, 40, R2)).withCooldown(120),
+            Pages15Kit.mid("house_chimney_cannon", "Recombination: Chimney Cannon",
+                    xLine(Tier.MID, 18, 1.2, R1, Pages15Kit.knock(0.9))).withCooldown(240).withAnim("thrust"),
+            Pages15Kit.mid("house_trapdoor", "Recombination: Trapdoor",
+                    xNova(Tier.MID, 3.5, true, R2, Pages15Kit.all(slow(60, 3), drop()))).withCooldown(220).withAnim("slam"),
+            Pages15Kit.mid("house_scaffold_span", "Recombination: Scaffold Span",
+                    teamBuff(Tier.MID, R2, 8, eff(MobEffects.MOVEMENT_SPEED, 160, 0), eff(MobEffects.JUMP, 160, 1), eff(MobEffects.SLOW_FALLING, 160, 0))).withCooldown(400),
+            Pages15Kit.zone("house_roof_slam", "Recombination: Roof Slam",
+                    xNova(Tier.ZONE, 5, true, R3, Pages15Kit.all(slow(40, 2), Pages15Kit.knock(0.6)))).withCooldown(400).withAnim("slam"),
+            Pages15Kit.zone("house_hallway_maze", "Recombination: Hallway Maze",
+                    xField(Tier.ZONE, 5, 80, 10, true, R2, Pages15Kit.all(slow(30, 1), nausea(40)))).withCooldown(450),
+            Pages15Kit.signature("house_collapse", "Recombination: House Collapse",
+                    Pages15Kit.cast(Tier.SIGNATURE, c -> {
+                    Vec3 at = c.aim(24);
+                    Fx fx = new Fx(c);
+                    c.circle(1.6f);
+                    fx.shape(R2, at.add(0, 0.05, 0), at.add(0, 1, 0), 30, 7f / 1.5f);
+                    fx.shape(R1, at.add(0, 12, 0), at, 16, 1.6f);
+                    Rider crush = Pages15Kit.all(slow(50, 2), Pages15Kit.knock(0.6), Pages15Kit.lift(0.4));
+                    c.later(16, () -> {
+                        for (LivingEntity e : c.foes(at, 7)) {
+                            c.hit(e);
+                            crush.apply(e, c.caster);
+                        }
+                        fx.shape(R3, at, at.add(0, 1.5, 0), 36, 2.4f);
+                    });
+                    return true;
+                })).withCooldown(1500).withAnim("slam")));
+
 
     /** The pages this batch appends to the book (empty for a book it has not written yet, or a book of another batch). Never null. */
     static List<BookPage> pages(String bookPath) {
