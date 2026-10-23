@@ -1,0 +1,12 @@
+{
+  "_note": "Texture layout of the Wind Spirit Dive v2 overlay (Yuno). Single source for tools/gen_mwv2_textures.py; ModeArmorWindV2Rules (R_* / *_W / *_H) must say the same (ModeArmorWindV2AssetTest compares). Regions are [x0, y0, x1, y1] in texels.",
+  "coat": {"size": [256, 256], "regions": {
+    "TORSO": [0, 0, 160, 64], "TAIL_BACK": [160, 0, 192, 48], "TAIL_FRONT": [192, 0, 224, 40], "SLEEVE": [0, 64, 64, 96], "MANTLE": [64, 64, 144, 88],
+    "TROUSER": [0, 96, 64, 124], "BOOT": [64, 96, 128, 120], "SASH": [128, 96, 256, 112], "BUCKLE": [160, 64, 176, 72], "CORD": [176, 64, 192, 96], "TASSEL": [192, 64, 208, 80]}},
+  "glow": {"size": [256, 256]},
+  "fur": {"size": [128, 128], "regions": {"OUTER": [0, 0, 128, 32], "LIP": [0, 32, 64, 48], "INNER": [64, 32, 128, 48]}},
+  "wing": {"size": [128, 256], "regions": {"WING": [0, 0, 128, 256]}},
+  "fx": {"size": [128, 128], "regions": {
+    "BLADE": [0, 0, 16, 32], "BLADE_FLAT": [48, 0, 64, 32], "ARROW": [16, 0, 48, 16], "RING": [0, 32, 64, 40], "RING_TOP": [64, 32, 128, 40], "HALO": [0, 40, 40, 80],
+    "CROSS": [48, 40, 88, 80], "RIBBON": [96, 48, 112, 112], "LEAF": [0, 80, 16, 96], "EYE": [112, 40, 128, 48], "HAIR": [96, 0, 128, 32]}}
+}

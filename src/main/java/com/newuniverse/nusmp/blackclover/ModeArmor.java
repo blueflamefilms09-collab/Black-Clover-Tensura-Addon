@@ -26,9 +26,14 @@ public final class ModeArmor {
     /** Append only: the ordinal goes over the network. */
     public enum Mode { NONE, WIND_SPIRIT_DIVE, FIRE_SPIRIT_DIVE, DEMON, LIGHTNING_GOD, VALKYRIE,
         /** 1.43.0: Nacht Faust's Devil Unite modes (shadow.UniteState): Slotos, Gimodelo, Plumede, Walgner. */
-        DEVIL_EQUUS, DEVIL_CANIS, DEVIL_FELIS, DEVIL_GALLUS }
+        DEVIL_EQUUS, DEVIL_CANIS, DEVIL_FELIS, DEVIL_GALLUS,
+        /**
+         * Wind Spirit Dive overlay v2: the overlay of the mage whose bound grimoire is Yuno's. WIRE ONLY: the server keeps (and {@link #active} returns) {@link #WIND_SPIRIT_DIVE}; {@link #start} sends this
+         * ordinal to the clients instead when the wearer is Yuno-tier, so the client draws the new coat, crown and wings ({@code client.mode.ModeArmorWindV2}) and every other Wind user keeps the old overlay.
+         */
+        WIND_SPIRIT_DIVE_YUNO }
 
-    private static final String KEY = "nusmp_mode_armor", UNTIL = "nusmp_mode_armor_until";
+    private static final String KEY = "nusmp_mode_armor", UNTIL = "nusmp_mode_armor_until", YUNO = "nusmp_mode_armor_yuno";
 
     private ModeArmor() {}
 
@@ -37,7 +42,21 @@ public final class ModeArmor {
         long until = p.level().getGameTime() + ticks;
         p.getPersistentData().putInt(KEY, mode.ordinal());
         p.getPersistentData().putLong(UNTIL, until);
-        PacketDistributor.sendToPlayersTrackingEntityAndSelf(p, new ModePayload(p.getId(), mode.ordinal(), ticks));
+        boolean yuno = mode == Mode.WIND_SPIRIT_DIVE && yunoTier(p);                         // one grimoire read; start() runs once a second while a dive holds
+        p.getPersistentData().putBoolean(YUNO, yuno);
+        PacketDistributor.sendToPlayersTrackingEntityAndSelf(p, new ModePayload(p.getId(), wire(mode, yuno).ordinal(), ticks));
+    }
+
+    /** The mode the clients are told about: the Wind Spirit Dive of a Yuno-tier wearer is the Yuno variant, everything else is the mode itself. Pure. */
+    public static Mode wire(Mode mode, boolean yuno) { return yuno && mode == Mode.WIND_SPIRIT_DIVE ? Mode.WIND_SPIRIT_DIVE_YUNO : mode; }
+
+    /** True when the wearer's Spirit Dive tier is Yuno's (the bound grimoire is Yuno's and the server allows the character tier); false on any failure. */
+    private static boolean yunoTier(ServerPlayer p) {
+        try {
+            return com.newuniverse.nusmp.book.SpiritDiveForm.gradeOf(p, com.newuniverse.nusmp.book.SpiritDivePieces.Element.WIND) == com.newuniverse.nusmp.book.SpiritDiveTier.Grade.YUNO;
+        } catch (RuntimeException | LinkageError e) {
+            return false;
+        }
     }
 
     /** End {@code mode} now, if it is the one showing (null = whatever is showing). */
@@ -60,13 +79,13 @@ public final class ModeArmor {
         Mode m = active(target);
         if (m == Mode.NONE) return;
         int left = (int) (target.getPersistentData().getLong(UNTIL) - target.level().getGameTime());
-        PacketDistributor.sendToPlayer(watcher, new ModePayload(target.getId(), m.ordinal(), left));
+        PacketDistributor.sendToPlayer(watcher, new ModePayload(target.getId(), wire(m, target.getPersistentData().getBoolean(YUNO)).ordinal(), left));
     }
 
     public static void onLogin(PlayerEvent.PlayerLoggedInEvent e) {
         if (!(e.getEntity() instanceof ServerPlayer p)) return;
         Mode m = active(p);
-        if (m != Mode.NONE) PacketDistributor.sendToPlayer(p, new ModePayload(p.getId(), m.ordinal(),
+        if (m != Mode.NONE) PacketDistributor.sendToPlayer(p, new ModePayload(p.getId(), wire(m, p.getPersistentData().getBoolean(YUNO)).ordinal(),
                 (int) (p.getPersistentData().getLong(UNTIL) - p.level().getGameTime())));
     }
 

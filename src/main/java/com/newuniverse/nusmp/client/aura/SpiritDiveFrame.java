@@ -30,6 +30,11 @@ public final class SpiritDiveFrame {
     /** May one more dive draw the character tier in this frame? */
     public static boolean admitCharacter() { return !live() || CHARACTER.tryTake(frame, 1); }
 
+    private static final PerfBudget MODE_V2 = new PerfBudget("mode-wind-v2", com.newuniverse.nusmp.book.ModeArmorWindV2Rules.CHARACTER_PER_FRAME);
+
+    /** Mode Armour Wind v2 (Yuno's overlay): may one more wearer draw the full level of detail in this frame? (at most 3 a frame; the rest draw the mid level; every wearer when no frame event arrives) */
+    public static boolean admitModeV2() { return !live() || MODE_V2.tryTake(frame, 1); }
+
     /** The squared distance from the camera to the player being painted (0 when the camera cannot be read). */
     public static double distSq(AuraContext c) {
         try {

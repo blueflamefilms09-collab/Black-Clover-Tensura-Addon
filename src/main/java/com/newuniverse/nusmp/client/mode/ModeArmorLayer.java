@@ -85,7 +85,7 @@ public class ModeArmorLayer extends RenderLayer<AbstractClientPlayer, PlayerMode
 
     private static String libraryKey(ModeArmor.Mode mode) {
         String k = LIBRARY_KEYS[mode.ordinal()];
-        if (k == null) LIBRARY_KEYS[mode.ordinal()] = k = "mode_" + mode.name().toLowerCase(Locale.ROOT);
+        if (k == null) LIBRARY_KEYS[mode.ordinal()] = k = "mode_" + (mode == ModeArmor.Mode.WIND_SPIRIT_DIVE_YUNO ? ModeArmor.Mode.WIND_SPIRIT_DIVE : mode).name().toLowerCase(Locale.ROOT);   // Yuno's variant shares the library pieces of the classic overlay
         return k;
     }
 
@@ -100,10 +100,15 @@ public class ModeArmorLayer extends RenderLayer<AbstractClientPlayer, PlayerMode
         float k = grow * fade;
         if (k <= 0.01f) return;
         PlayerModel<AbstractClientPlayer> m = getParentModel();
+        if (ModeArmorWindV2.active(mode)) {                                             // Yuno's Wind Spirit Dive, version 2: the layered coat, the crown and the leaf wings (client option modeArmor.windLook = CLASSIC keeps the cards below)
+            float u = com.newuniverse.nusmp.book.SpiritDiveReelRules.clock(ModeArmorClient.age(player.getId(), now), ModeArmorClient.left(player.getId(), now));      // the entry clock of the dive: the wings unfold and the crown ignites on it
+            ModeArmorWindV2.draw(pose, buffers, light, m, now, k, u, limbSwingAmount, player.distanceToSqr(Minecraft.getInstance().gameRenderer.getMainCamera().getPosition()));
+            return;
+        }
         WornLibrary.Ensemble lib = RelicFxOptions.models() ? WornLibrary.ofKey(libraryKey(mode)) : null;     // 1.34.0: 3D wings, crowns and horns
         Ctx c = new Ctx(pose, buffers, light, now, k, limbSwingAmount, lib != null);
         switch (mode) {
-            case WIND_SPIRIT_DIVE -> wind(c, m);
+            case WIND_SPIRIT_DIVE, WIND_SPIRIT_DIVE_YUNO -> wind(c, m);
             case FIRE_SPIRIT_DIVE -> fire(c, m);
             case DEMON -> demon(c, m);
             case LIGHTNING_GOD -> lightning(c, m);
