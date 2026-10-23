@@ -392,7 +392,7 @@ public final class Batch5 {
             starter("hex_needle", "Hex Needle",
                     bolt(Tier.STARTER, 0, VfxShape.CURSE_FX1, VfxShape.CURSE_FX3, rider(MobEffects.WEAKNESS, 100, 0))).withAnim("thrust"),
             starter("wasting_touch", "Wasting Touch",
-                    cone(Tier.STARTER, 3, 0.7, VfxShape.CURSE_FX1, all(rider(MobEffects.WITHER, 80, 0), rider(MobEffects.HUNGER, 100, 1)))).withAnim("thrust"),
+                    cone(Tier.STARTER, 3, 0.7, VfxShape.CURSE_FX1, all(rider(MobEffects.WITHER, 80, 0), rider(MobEffects.WEAKNESS, 100, 0)))).withAnim("thrust"),
             starter("jinx", "Jinx",
                     nova(Tier.STARTER, 3, true, VfxShape.CURSE_FX3, all(rider(MobEffects.UNLUCK, 200, 1), rider(MobEffects.MOVEMENT_SLOWDOWN, 40, 0)))).withAnim("up"),
             mid("plague_wind", "Plague Wind",
