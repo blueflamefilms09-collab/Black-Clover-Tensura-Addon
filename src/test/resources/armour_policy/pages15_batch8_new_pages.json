@@ -1,1 +1,14 @@
-{}
+{
+  "SEALING": [
+    "seal_stamp",
+    "sealing_needles",
+    "seal_ward_mark",
+    "seal_rune_lattice",
+    "seal_gate_closing",
+    "protective_seal",
+    "seal_sigil_burst",
+    "seal_sigil_field",
+    "seal_pillars",
+    "forbidden_seal_art"
+  ]
+}

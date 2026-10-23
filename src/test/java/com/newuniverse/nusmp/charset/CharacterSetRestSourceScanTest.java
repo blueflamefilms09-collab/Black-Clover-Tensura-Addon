@@ -77,7 +77,8 @@ class CharacterSetRestSourceScanTest {
         for (var e : files().entrySet()) {
             String book = e.getValue().get("book").getAsString();
             String src = bookSource(book);
-            List<String> add = added(book);
+            List<String> add = new ArrayList<>(added(book));
+            add.addAll(Pages15Added.ids(book));      // the shared pages the "15 spells" batches append (book/pages15/Batch*.java)
             for (var sp : e.getValue().getAsJsonArray("spells")) {
                 String page = sp.getAsJsonObject().get("page").getAsString();
                 assertTrue(add.contains(page) || src.contains("\"" + page + "\""), e.getKey() + ": page " + page + " is not in " + book);

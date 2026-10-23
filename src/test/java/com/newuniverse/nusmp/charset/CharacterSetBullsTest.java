@@ -159,6 +159,7 @@ class CharacterSetBullsTest {
             String book = o.get("book").getAsString();
             List<String> have = new ArrayList<>(legacy(book));
             have.addAll(ADDED.getOrDefault(book, List.of()));
+            have.addAll(Pages15Added.ids(book));      // the shared pages the "15 spells" batches append (book/pages15/Batch*.java)
             for (var e : o.getAsJsonArray("spells")) {
                 String page = e.getAsJsonObject().get("page").getAsString();
                 assertTrue(have.contains(page), c + ": page " + page + " is not in " + book + " " + have);

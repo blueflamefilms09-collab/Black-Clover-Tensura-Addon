@@ -1,1 +1,12 @@
-{}
+{
+  "nusmp.page.book_sealing.seal_stamp": "Seal Magic: Sealing Stamp - a small seal is thrown at the first foe it meets and bursts there: the foes in 1.5 blocks take a light hit, a mage among them finds the grimoire shut for two seconds (a boss for one), and all are slowed. Damage scales with your EP.",
+  "nusmp.page.book_sealing.sealing_needles": "Seal Magic: Sealing Needles - four needles of sealing light fly out and seek the nearest foes; each hit is small but cuts the foe's casting for one and a half seconds (Magic Jamming). Damage scales with your EP.",
+  "nusmp.page.book_sealing.seal_ward_mark": "Seal Magic: Ward Mark - a ward is sealed onto your own skin: a seal laid on you by another mage breaks at once, and for eight seconds you have Absorption II and Resistance I.",
+  "nusmp.page.book_sealing.seal_rune_lattice": "Seal Magic: Rune Lattice - a lattice of runes unfolds in a wide cone ahead of you: every foe in it takes a hit, is slowed (Slowness III, 2.5 s) and cannot cast for two seconds. Damage scales with your EP.",
+  "nusmp.page.book_sealing.seal_gate_closing": "Seal Magic: Closing Gate - the seal that shuts what is open is thrown down a 14 block line: every foe on it is hit, shoved back and has its casting shut for 2.5 seconds. Damage scales with your EP.",
+  "nusmp.page.book_sealing.protective_seal": "Seal Magic: Protective Seal - a ward seal on you and up to five allies within eight blocks: Absorption II and Resistance I for ten seconds.",
+  "nusmp.page.book_sealing.seal_sigil_burst": "Seal Magic: Sigil Burst - a sigil is laid where you look and bursts: foes within 4.5 blocks are hit, pushed away and cannot cast for two seconds. Damage scales with your EP.",
+  "nusmp.page.book_sealing.seal_sigil_field": "Seal Magic: Sigil Field - a field of sigils lies for four seconds where you look; every half second the foes inside take a pulse, are slowed and cannot cast. Damage scales with your EP.",
+  "nusmp.page.book_sealing.seal_pillars": "Seal Magic: Pillars of Seal - six pillars of sealing light rise one after another along a 12 block line ahead of you: every foe on it is hit, thrown up a little, slowed and cannot cast for two seconds. Damage scales with your EP.",
+  "nusmp.page.book_sealing.forbidden_seal_art": "Seal Magic: Forbidden Seal Art - the art that sealed a devil, aimed at the foe in your crosshair (18 blocks): it and the foes within five blocks of it are struck hard, rooted (hard control: shares the twelve-second lock, shortened for players and bosses), their grimoires shut for up to eight seconds and their casting cut. Damage scales with your EP."
+}
