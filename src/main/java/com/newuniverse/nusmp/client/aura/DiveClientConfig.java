@@ -23,7 +23,7 @@ import net.neoforged.neoforge.common.ModConfigSpec;
  */
 public final class DiveClientConfig {
     public static final ModConfigSpec SPEC;
-    private static final ModConfigSpec.BooleanValue CLASSIC, CHARACTER_FX, PARTICLES;
+    private static final ModConfigSpec.BooleanValue CLASSIC, CHARACTER_FX, PARTICLES, MERGE;
     private static final ModConfigSpec.EnumValue<Look> LOOK;
     private static final ModConfigSpec.EnumValue<WindLook> WIND_LOOK;
     private static final ModConfigSpec.EnumValue<FuegoleonArmRules.View> ARM_VIEW;
@@ -39,6 +39,7 @@ public final class DiveClientConfig {
         CLASSIC = b.comment("true: the Spirit Dive is drawn as in 1.99 (armour-like pieces), whatever 'look' says (the same as look = CLASSIC).").define("classicLook", false);
         CHARACTER_FX = b.comment("The character tier of the dive (Yuno's, Fuegoleon's and Noelle's own look). false = every dive is drawn as the standard tier.").define("characterEffects", true);
         PARTICLES = b.comment("The ember / mote particle trail of a Spirit Dive.").define("particles", true);
+        MERGE = b.comment("The diver merges with the spirit like the anime (any Spirit Dive, every look): the spirit (Sylph, Undine, Salamander, Gnome) appears, flows into the chest with a flash, and leaves a faint silhouette round the torso. false = no merge.").define("merge", true);
         b.pop();
         b.push("fuegoleonArm");
         ARM_VIEW = b.comment("Fuegoleon's flaming right arm: OFF, FLARE (only while he casts, dives or has the Salamander out) or ALWAYS (also at rest, quieter).").defineEnum("view", FuegoleonArmRules.View.ALWAYS);
@@ -54,10 +55,12 @@ public final class DiveClientConfig {
         try {
             SpiritDiveLook.set(CLASSIC.get() ? Look.CLASSIC : LOOK.get(), CHARACTER_FX.get(), PARTICLES.get(), ARM_VIEW.get());
             SpiritDiveLook.setWindLook(WIND_LOOK.get());
+            SpiritDiveMerge.setEnabled(MERGE.get());
             FuegoleonArmLook.set(ARM_LOOK.get());
         } catch (IllegalStateException notLoaded) {
             SpiritDiveLook.set(Look.REEL, true, true, FuegoleonArmRules.View.ALWAYS);
             SpiritDiveLook.setWindLook(SpiritDiveWindRules.DEFAULT_LOOK);
+            SpiritDiveMerge.setEnabled(true);
             FuegoleonArmLook.set(FuegoleonArmDjinnRules.DEFAULT_LOOK);
         }
     }

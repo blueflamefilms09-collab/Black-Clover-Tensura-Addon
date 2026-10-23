@@ -128,6 +128,7 @@ public final class SpiritDiveAura {
         Element el = SpiritDivePieces.element(style);
         Stage st = SpiritDivePieces.stage(style);
         float age = c.age(), pulse = 0.8f + 0.2f * Mth.sin(age * 0.17f) + 0.08f * Mth.sin(age * 0.53f);
+        SpiritDiveMerge.paint(c, el, st, SpiritDivePieces.grade(style));                                  // the user merges with the spirit, like the anime: one layer for every look and element (client option spiritDive.merge)
         if (SpiritDiveLook.look() == com.newuniverse.nusmp.book.SpiritDiveDjinnPieces.Look.REEL) { SpiritDiveReel.paint(c, el, st, SpiritDivePieces.grade(style), pulse); return; }   // the default since 3.3: the V2 design like the videos
         if (SpiritDiveLook.look() == com.newuniverse.nusmp.book.SpiritDiveDjinnPieces.Look.ANIME) { SpiritDiveAnime.paint(c, el, st, SpiritDivePieces.grade(style), pulse); return; }   // 3.2: the look of the anime
         if (SpiritDiveLook.look() == com.newuniverse.nusmp.book.SpiritDiveDjinnPieces.Look.DJINN) { SpiritDiveDjinn.paint(c, el, st, SpiritDivePieces.grade(style), pulse); return; }   // the default: the Djinn-style set of plates
