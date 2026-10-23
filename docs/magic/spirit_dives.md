@@ -87,6 +87,8 @@ that holds an item at the same hand pose the Djinn gauntlet uses (`RenderHandEve
 **Settings.** Server: `spiritDive.fuegoleonArm` (default true). Client (`nusmp-spiritdive-client.toml`): `fuegoleonArm.view` = `OFF`, `FLARE` (only while casting, diving or with the Salamander out) or
 `ALWAYS` (default: also at rest, a quieter flame). Not for anyone whose grimoire is not Fuegoleon's: other Fire users get the standard Salamander look.
 
+**3.1: the default look of the arm is now the Djinn-style flame limb** (a sculpted limb of flame forged in piece by piece, `docs/magic/fuegoleon_arm_djinn.md`); the arm described in this section is kept as the client option `fuegoleonArm.look = V3` (and `CLASSIC` for the plain molten model).
+
 ## 7. Settings
 
 | File | Key | Default | Effect |

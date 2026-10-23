@@ -1,0 +1,409 @@
+{
+ "fad_quiet": {
+  "kind": "aura",
+  "attr": "FuegoleonArm",
+  "realFiles": [
+   "book/SpiritDivePieces.java",
+   "book/SpiritDiveTier.java",
+   "client/aura/SpiritDiveFrame.java",
+   "book/FuegoleonArmRules.java",
+   "book/FuegoleonArmDjinnRules.java",
+   "perf/PerfBudget.java",
+   "client/aura/SpiritDiveLook.java"
+  ],
+  "style": 1,
+  "total": 120,
+  "ages": [
+   50
+  ],
+  "tile": [
+   400,
+   560
+  ],
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": -30,
+    "pitch": 8,
+    "target": [
+     0,
+     1.0,
+     0.1
+    ],
+    "dist": 3.6
+   },
+   {
+    "name": "right side",
+    "yaw": -85,
+    "pitch": 6,
+    "target": [
+     0,
+     1.0,
+     0.1
+    ],
+    "dist": 3.6
+   },
+   {
+    "name": "back 3/4",
+    "yaw": -150,
+    "pitch": 10,
+    "target": [
+     0,
+     1.0,
+     0.1
+    ],
+    "dist": 3.6
+   },
+   {
+    "name": "close front",
+    "yaw": -40,
+    "pitch": 6,
+    "target": [
+     -0.35,
+     1.05,
+     0.0
+    ],
+    "dist": 2.0
+   }
+  ],
+  "examples": [
+   "FadArm"
+  ]
+ },
+ "fad_out": {
+  "kind": "aura",
+  "attr": "FuegoleonArm",
+  "realFiles": [
+   "book/SpiritDivePieces.java",
+   "book/SpiritDiveTier.java",
+   "client/aura/SpiritDiveFrame.java",
+   "book/FuegoleonArmRules.java",
+   "book/FuegoleonArmDjinnRules.java",
+   "perf/PerfBudget.java",
+   "client/aura/SpiritDiveLook.java"
+  ],
+  "style": 2,
+  "total": 120,
+  "ages": [
+   50
+  ],
+  "tile": [
+   400,
+   560
+  ],
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": -30,
+    "pitch": 8,
+    "target": [
+     0,
+     1.0,
+     0.1
+    ],
+    "dist": 3.6
+   },
+   {
+    "name": "right side",
+    "yaw": -85,
+    "pitch": 6,
+    "target": [
+     0,
+     1.0,
+     0.1
+    ],
+    "dist": 3.6
+   },
+   {
+    "name": "back 3/4",
+    "yaw": -150,
+    "pitch": 10,
+    "target": [
+     0,
+     1.0,
+     0.1
+    ],
+    "dist": 3.6
+   },
+   {
+    "name": "close front",
+    "yaw": -40,
+    "pitch": 6,
+    "target": [
+     -0.35,
+     1.05,
+     0.0
+    ],
+    "dist": 2.0
+   }
+  ],
+  "examples": [
+   "FadArm"
+  ]
+ },
+ "fad_flare": {
+  "kind": "aura",
+  "attr": "FuegoleonArm",
+  "realFiles": [
+   "book/SpiritDivePieces.java",
+   "book/SpiritDiveTier.java",
+   "client/aura/SpiritDiveFrame.java",
+   "book/FuegoleonArmRules.java",
+   "book/FuegoleonArmDjinnRules.java",
+   "perf/PerfBudget.java",
+   "client/aura/SpiritDiveLook.java"
+  ],
+  "style": 2,
+  "total": 120,
+  "ages": [
+   50
+  ],
+  "tile": [
+   400,
+   560
+  ],
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": -30,
+    "pitch": 8,
+    "target": [
+     0,
+     1.0,
+     0.1
+    ],
+    "dist": 3.6
+   },
+   {
+    "name": "right side",
+    "yaw": -85,
+    "pitch": 6,
+    "target": [
+     0,
+     1.0,
+     0.1
+    ],
+    "dist": 3.6
+   },
+   {
+    "name": "back 3/4",
+    "yaw": -150,
+    "pitch": 10,
+    "target": [
+     0,
+     1.0,
+     0.1
+    ],
+    "dist": 3.6
+   },
+   {
+    "name": "close front",
+    "yaw": -40,
+    "pitch": 6,
+    "target": [
+     -0.35,
+     1.05,
+     0.0
+    ],
+    "dist": 2.0
+   }
+  ],
+  "examples": [
+   "FadArm"
+  ]
+ },
+ "fad_forge": {
+  "kind": "aura",
+  "attr": "FuegoleonArm",
+  "realFiles": [
+   "book/SpiritDivePieces.java",
+   "book/SpiritDiveTier.java",
+   "client/aura/SpiritDiveFrame.java",
+   "book/FuegoleonArmRules.java",
+   "book/FuegoleonArmDjinnRules.java",
+   "perf/PerfBudget.java",
+   "client/aura/SpiritDiveLook.java"
+  ],
+  "style": 1,
+  "total": 120,
+  "ages": [
+   2,
+   5,
+   8,
+   11,
+   14,
+   18,
+   24
+  ],
+  "tile": [
+   260,
+   380
+  ],
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": -30,
+    "pitch": 8,
+    "target": [
+     0,
+     1.0,
+     0.1
+    ],
+    "dist": 3.6
+   },
+   {
+    "name": "close front",
+    "yaw": -40,
+    "pitch": 6,
+    "target": [
+     -0.35,
+     1.05,
+     0.0
+    ],
+    "dist": 2.0
+   }
+  ],
+  "examples": [
+   "FadArm"
+  ]
+ },
+ "fad_slim": {
+  "kind": "aura",
+  "attr": "FuegoleonArm",
+  "realFiles": [
+   "book/SpiritDivePieces.java",
+   "book/SpiritDiveTier.java",
+   "client/aura/SpiritDiveFrame.java",
+   "book/FuegoleonArmRules.java",
+   "book/FuegoleonArmDjinnRules.java",
+   "perf/PerfBudget.java",
+   "client/aura/SpiritDiveLook.java"
+  ],
+  "style": 2,
+  "total": 120,
+  "ages": [
+   50
+  ],
+  "tile": [
+   400,
+   560
+  ],
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": -30,
+    "pitch": 8,
+    "target": [
+     0,
+     1.0,
+     0.1
+    ],
+    "dist": 3.6
+   },
+   {
+    "name": "close front",
+    "yaw": -40,
+    "pitch": 6,
+    "target": [
+     -0.35,
+     1.05,
+     0.0
+    ],
+    "dist": 2.0
+   }
+  ],
+  "examples": [
+   "FadArm"
+  ],
+  "slim": true
+ },
+ "fad_v3": {
+  "kind": "aura",
+  "attr": "FuegoleonArm",
+  "realFiles": [
+   "book/SpiritDivePieces.java",
+   "book/SpiritDiveTier.java",
+   "client/aura/SpiritDiveFrame.java",
+   "book/FuegoleonArmRules.java",
+   "book/FuegoleonArmDjinnRules.java",
+   "perf/PerfBudget.java",
+   "client/aura/SpiritDiveLook.java"
+  ],
+  "style": 2,
+  "total": 120,
+  "ages": [
+   50
+  ],
+  "tile": [
+   400,
+   560
+  ],
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": -30,
+    "pitch": 8,
+    "target": [
+     0,
+     1.0,
+     0.1
+    ],
+    "dist": 3.6
+   },
+   {
+    "name": "close front",
+    "yaw": -40,
+    "pitch": 6,
+    "target": [
+     -0.35,
+     1.05,
+     0.0
+    ],
+    "dist": 2.0
+   }
+  ],
+  "examples": [
+   "FadArmV3"
+  ]
+ },
+ "fad_fp": {
+  "kind": "aura",
+  "attr": "FuegoleonArm",
+  "realFiles": [
+   "book/SpiritDivePieces.java",
+   "book/SpiritDiveTier.java",
+   "client/aura/SpiritDiveFrame.java",
+   "book/FuegoleonArmRules.java",
+   "book/FuegoleonArmDjinnRules.java",
+   "perf/PerfBudget.java",
+   "client/aura/SpiritDiveLook.java"
+  ],
+  "style": 2,
+  "total": 120,
+  "ages": [
+   50
+  ],
+  "tile": [
+   520,
+   340
+  ],
+  "views": [
+   {
+    "name": "from the eye (approximation, MOCK)",
+    "yaw": 200,
+    "pitch": 38,
+    "target": [
+     -0.42,
+     1.0,
+     0.6
+    ],
+    "dist": 1.7
+   }
+  ],
+  "examples": [
+   "FadArm"
+  ],
+  "limbSwing": 0.0,
+  "limbSwingAmount": 1.0
+ }
+}
