@@ -22,5 +22,6 @@ public final class SpiritDiveBoot {
         NeoForge.EVENT_BUS.addListener(FuegoleonArm::onDeath);
         SpiritDiveSelfTests.register();
         FuegoleonArmDjinnSelfTests.register();                                                       // 3.1: self-test magic.fuegoleon_arm_djinn
+        SpiritDiveAnimeSelfTests.register();                                                         // 3.2: self-test magic.spirit_dive_anime
     }
 }

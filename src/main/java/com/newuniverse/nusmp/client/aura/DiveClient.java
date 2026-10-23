@@ -28,6 +28,8 @@ public final class DiveClient {
         NeoForge.EVENT_BUS.addListener(FireArmFirstPerson::onRenderHand);
         NeoForge.EVENT_BUS.addListener(DiveFirstPerson::onRenderArm);                       // the Djinn-style dive: the gauntlets in first person
         NeoForge.EVENT_BUS.addListener(DiveFirstPerson::onRenderHand);
+        NeoForge.EVENT_BUS.addListener(DiveAnimeFirstPerson::onRenderArm);                  // the ANIME look: the arms glow lightly in first person
+        NeoForge.EVENT_BUS.addListener(DiveAnimeFirstPerson::onRenderHand);
         NeoForge.EVENT_BUS.addListener(DiveParticles::onClientTick);
     }
 }

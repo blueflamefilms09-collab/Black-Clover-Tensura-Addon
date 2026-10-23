@@ -159,7 +159,7 @@ final class SpiritDiveAnimeShell {
     /** Draws the whole shell of one dive: the passes the level of detail allows (3: wash, rim, soft; 2: wash, rim; 1: the rim outline alone). */
     static void draw(AuraContext c, Element el, int passes, int tint, int rim, int glow, float pulse, float progress, int mask, boolean head, boolean skipArmR, int keptMask, float k) {
         boolean slim = WaterAuraRig.slim(c.model());
-        if (passes >= 2) pass(c, SafeAdditive.emissive(SOFT), false, SpiritDiveAnimeRules.INFLATE[0] * 0.5f, tint, (el == Element.WATER ? 0.2f : 0.3f) * k, progress, mask, head, skipArmR, keptMask, slim);   // the light on the clothes: a translucent cover in the colour of the spirit
+        if (passes >= 2) pass(c, SafeAdditive.emissive(SOFT), false, SpiritDiveAnimeRules.INFLATE[0] * 0.5f, tint, (el == Element.WATER ? 0.2f : 0.3f) * k, progress, mask, true, skipArmR, keptMask, slim);   // the light on the clothes: a translucent cover in the colour of the spirit
         if (passes >= 2) pass(c, swirl(el, SpiritDiveAnimeRules.swirlStep(el, c.age())), false, SpiritDiveAnimeRules.INFLATE[0], tint, 0.85f * pulse * k, progress, mask, head, skipArmR, keptMask, slim);
         pass(c, SafeAdditive.additive(RIM), true, SpiritDiveAnimeRules.INFLATE[1], rim, 0.95f * k, progress, mask, head, skipArmR, keptMask, slim);
         if (passes >= 3) pass(c, SafeAdditive.additive(SOFT), true, SpiritDiveAnimeRules.INFLATE[2], glow, 0.4f * pulse * k, progress, mask, head, skipArmR, keptMask, slim);
@@ -180,5 +180,22 @@ final class SpiritDiveAnimeShell {
         p.visible = true;
         p.render(pose, INFLATE, 0xF000F0, OverlayTexture.NO_OVERLAY, AuraRender.alpha(0xFF000000 | rgb, alpha));
         p.visible = was;
+    }
+
+    /**
+     * One arm in FIRST person: the wash and the rim outline round the arm the game is drawing (the pose is at the arm, as for the game's own hand draw), lightly. {@code part} is the model's arm;
+     * its rotation is zeroed by the caller as the game does for the hand.
+     */
+    static void arm(PoseStack pose, net.minecraft.client.renderer.MultiBufferSource buffers, ModelPart part, boolean right, boolean slim, Element el, int tint, int rim, float alpha, float age) {
+        float[] box = SpiritDiveAnimeRules.PART_BOX[right ? ARM_R : ARM_L];
+        float cxl = box[0] + (slim ? (right ? 0.5f : -0.5f) : 0f);
+        for (int pass = 0; pass < 2; pass++) {
+            INFLATE.begin(buffers.getBuffer(pass == 0 ? swirl(el, SpiritDiveAnimeRules.swirlStep(el, age)) : SafeAdditive.additive(RIM)), pass == 1, SpiritDiveAnimeRules.INFLATE[pass]);
+            pose.pushPose();
+            pose.translate(part.x / 16f, part.y / 16f, part.z / 16f);
+            INFLATE.frame(pose.last().pose(), cxl / 16f, box[1] / 16f, box[2] / 16f);
+            pose.popPose();
+            part.render(pose, INFLATE, 0xF000F0, OverlayTexture.NO_OVERLAY, AuraRender.alpha(0xFF000000 | (pass == 0 ? tint : rim), alpha * (pass == 0 ? 0.8f : 0.9f)));
+        }
     }
 }

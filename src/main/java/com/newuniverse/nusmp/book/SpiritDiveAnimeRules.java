@@ -109,6 +109,16 @@ public final class SpiritDiveAnimeRules {
         return n;
     }
 
+    /**
+     * Vertices of the shell at a level of detail: FULL draws the cover (the light on the clothes, the head too), the wash, the rim hull and the soft hull; MID the cover, the wash and the rim hull;
+     * FAR the rim hull alone (the aura outline). The head is only in the cover.
+     */
+    public static int shellVertices(Element el, Stage st, Lod lod) {
+        int n = shellModelParts(el, st);
+        int heads = SpiritDivePieces.full(st) ? 1 : 0;
+        return PART_VERTICES * switch (lod) { case FULL -> 4 * n + heads; case MID -> 3 * n + heads; case FAR -> n; case CULLED -> 0; };
+    }
+
     // ------------------------------------------------------------------ the tiers
     /**
      * What one dive draws at a level of detail: the plume rows of the element's table that are used, the layers of each plume, its segments, hair locks, hand and foot trails, halos, whether the
@@ -149,7 +159,7 @@ public final class SpiritDiveAnimeRules {
      */
     public static int vertices(Element el, boolean character, Lod lod, Stage st) {
         Spec s = spec(character, lod);
-        int v = shellPasses(lod) * shellModelParts(el, st) * PART_VERTICES;
+        int v = shellVertices(el, st, lod);
         int rows = Math.min(s.plumeRows(), SpiritDiveAnimeGeometry.rows(el, character));
         int sides = SpiritDivePieces.halfBody(el, st) ? 1 : 2;
         v += rows * sides * s.plumeLayers() * s.plumeSegs() * 4 * PLUME_PASSES;
