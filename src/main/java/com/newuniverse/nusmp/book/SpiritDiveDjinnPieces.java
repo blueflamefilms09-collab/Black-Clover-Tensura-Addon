@@ -95,7 +95,7 @@ public final class SpiritDiveDjinnPieces {
         n.add("gauntlet_r"); n.add("gauntlet_l"); n.add("vambrace_r"); n.add("vambrace_l");
         n.add("sabaton_r"); n.add("sabaton_l");
         n.add("greave_r"); n.add("greave_l");
-        if (character || e == Element.EARTH) { n.add("cuisse_r"); n.add("cuisse_l"); }
+        n.add("cuisse_r"); n.add("cuisse_l");                                                   // every tier: a plated thigh (the skin never shows between the plates)
         if (character || e == Element.WATER) n.add("skirt");
         n.add("helm");
         switch (e) {
@@ -116,7 +116,7 @@ public final class SpiritDiveDjinnPieces {
         List<String> n = new ArrayList<>();
         if (e == Element.WIND) {
             n.addAll(List.of("gauntlet_l", "vambrace_l", "sabaton_l", "greave_l"));
-            if (character) n.add("cuisse_l");
+            n.add("cuisse_l");
             n.add("crest_l");
             n.add("pauldron_l");
             if (character) n.add("wing_l");

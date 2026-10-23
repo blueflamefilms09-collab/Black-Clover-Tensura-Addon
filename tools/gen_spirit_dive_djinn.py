@@ -4,6 +4,7 @@
     python3 -B tools/gen_spirit_dive_djinn.py wind                  # one element (both tiers)
     python3 -B tools/gen_spirit_dive_djinn.py wind:c                # one set
     python3 -B tools/gen_spirit_dive_djinn.py wind:c --only helm,crest_c       # some pieces of it
+    python3 -B tools/gen_spirit_dive_djinn.py --fit                 # re-fit the panel thinning of every set to the vertex cap (writes tools/sdj_fit.json), then build
     python3 -B tools/gen_spirit_dive_djinn.py --report              # only the numbers of the files already written (faces, vertices, budget)
 
 Files (assets/nusmp): geo/entity/sdj_<element>_<tier>_arm_<piece>.geo.json, textures/entity/sdj_<element>_<tier>_arm_<piece>(.png|_glow.png), animations/entity/<id>.animation.json for the pieces that
@@ -87,6 +88,15 @@ PT.SHAPES["leaf"] = _leaf()
 PT.SHAPES["crest"] = [[(0, -1), (0.25, -0.5), (0.62, -0.15), (0.35, 0.05), (0.5, 0.6), (0, 0.3), (-0.5, 0.6), (-0.35, 0.05), (-0.62, -0.15), (-0.25, -0.5)]]
 
 
+def clean_glow(path):
+    """The SafeAdditive rule: a glow map carries no colour under alpha 0 (the additive blend of the game would draw it as a box)."""
+    import numpy as np
+    from PIL import Image
+    a = np.array(Image.open(path).convert("RGBA"))
+    a[a[..., 3] == 0, :3] = 0
+    Image.fromarray(a, "RGBA").save(path, optimize=True)
+
+
 class DCtx(Ctx):
     """A Requip context keyed for this kit: files are sdj_<element>_<tier>_arm_<piece>."""
 
@@ -98,6 +108,7 @@ class DCtx(Ctx):
 
     def done(self, p, anim=None):
         r = p.save(anim, root=ASSETS)
+        clean_glow(os.path.join(ASSETS, "textures", "entity", p.id + "_glow.png"))
         self.made.append(r)
         return r
 
@@ -105,16 +116,32 @@ class DCtx(Ctx):
 STANDARD = ("helm", "gorget", "chest", "backplate", "belt", "skirt", "pauldron", "vambrace", "gauntlet", "cuisse", "greave", "sabaton")
 
 
-def piece_names(el, tier):
-    """The names of the pieces of a set (pairs written as the two sides), in the order they are built."""
-    names = [n for n in ("helm", "chest", "backplate", "belt", "pauldron_r", "pauldron_l", "vambrace_r", "vambrace_l", "gauntlet_r", "gauntlet_l", "greave_r", "greave_l", "sabaton_r", "sabaton_l")]
-    return names
+# the vertex cap of a set (the Djinn Full Equip's quads x 4, minus the vein layer and the extras: book/SpiritDiveDjinnPieces.pieceVertexCap; the Java test pins the real numbers)
+CAP = {"c": 4351 * 4 - 21 * 4 - 576, "s": 2856 * 4 - 13 * 4 - 576}
+FIT_FILE = os.path.join(HERE, "sdj_fit.json")
 
 
-def build(el, tier, only=None):
+def fit_of(el, tier):
+    """The panel thinning and the sliver threshold of a set: the fitted numbers (sdj_fit.json, written by --fit) or the tier's defaults."""
+    try:
+        with open(FIT_FILE) as fh:
+            f = json.load(fh).get("%s:%s" % (el, tier))
+    except (OSError, ValueError):
+        f = None
+    return (f["k"], f["thin"]) if f else (COARSE[tier], THIN[tier])
+
+
+def vertices(made, tier):
+    glow = SETS.GLOW_C if tier == "c" else SETS.GLOW_S
+    return sum(r["faces"] * 4 * (2 if r["id"].split("_arm_")[1] in glow else 1) for r in made)
+
+
+def build(el, tier, only=None, fit=None, quiet=False):
     import sdj_parts as XP
     c = DCtx(el, tier)
-    _coarse[0] = COARSE[tier]
+    k, thin = fit or fit_of(el, tier)
+    _coarse[0] = k
+    THIN[tier] = thin
     _tier[0] = tier
     t0 = time.time()
     want = set(SETS.CORE)
@@ -135,12 +162,54 @@ def build(el, tier, only=None):
         XP.build(c, ex)
     cubes = sum(r["cubes"] for r in c.made)
     faces = sum(r["faces"] for r in c.made)
-    glow = SETS.GLOW_C if tier == "c" else SETS.GLOW_S
-    verts = sum(r["faces"] * 4 * (2 if r["id"].split("_arm_")[1] in glow else 1) for r in c.made)
-    print("%-10s pieces %2d cubes %5d faces %5d vertices (body + glow passes) %6d  (%.1f s)" % (el + ":" + tier, len(c.made), cubes, faces, verts, time.time() - t0))
+    verts = vertices(c.made, tier)
+    if quiet:
+        return verts
+    print("%-10s pieces %2d cubes %5d faces %5d vertices (body + glow passes) %6d of %d  (K %.2f, plate %.2f)  (%.1f s)" % (el + ":" + tier, len(c.made), cubes, faces, verts, CAP[tier], k, thin, time.time() - t0))
     for r in c.made:
         print("   %-34s cubes %4d faces %4d tex %s" % (r["id"], r["cubes"], r["faces"], "%dx%d" % r["tex"]))
     return c.made
+
+
+def fit_all(todo):
+    """Finds, for every set, the least thinning (K, then the sliver threshold) that brings its vertices under the cap, and writes sdj_fit.json (the normal build reads it, so the files are reproducible)."""
+    global ASSETS
+    real = ASSETS
+    import tempfile
+    out = {}
+    with tempfile.TemporaryDirectory(prefix="sdj_fit_") as tmp:
+        ASSETS = tmp
+        try:
+            for el, t in todo:
+                k0, th0 = COARSE[t], THIN[t]
+                best, v = None, 0
+                for step in range(0, 40):
+                    k = round(k0 + 0.1 * step, 2)
+                    v = build(el, t, fit=(k, th0), quiet=True)
+                    if v <= CAP[t]:
+                        best = (k, th0, v)
+                        break
+                if best is None:
+                    for th in (0.62, 0.7, 0.8):
+                        v = build(el, t, fit=(4.0, th), quiet=True)
+                        if v <= CAP[t]:
+                            best = (4.0, th, v)
+                            break
+                if best is None:
+                    raise SystemExit("%s:%s cannot be fitted under %d vertices (last %d)" % (el, t, CAP[t], v))
+                out["%s:%s" % (el, t)] = {"k": best[0], "thin": best[1], "vertices": best[2], "cap": CAP[t]}
+                print("fit %s:%s  K %.2f  plate %.2f  -> %d of %d vertices" % (el, t, best[0], best[1], best[2], CAP[t]))
+        finally:
+            ASSETS = real
+    try:
+        with open(FIT_FILE) as fh:
+            old = json.load(fh)
+    except (OSError, ValueError):
+        old = {}
+    old.update(out)
+    with open(FIT_FILE, "w") as fh:
+        json.dump(old, fh, indent=1, sort_keys=True)
+        fh.write("\n")
 
 
 def report():
@@ -176,6 +245,7 @@ def main(argv):
     if "--report" in argv:
         report()
         return
+    fit = "--fit" in argv
     todo = []
     for a in [a for a in argv if not a.startswith("--")] or list(SETS.ELEMENTS):
         el, _, tier = a.partition(":")
@@ -183,6 +253,8 @@ def main(argv):
             if el == "earth" and t == "c":
                 continue                                                  # Earth has no character in the mod: the standard set only
             todo.append((el, t))
+    if fit:
+        fit_all(todo)
     for el, t in todo:
         build(el, t, only)
 

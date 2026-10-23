@@ -116,7 +116,7 @@ SPEC = {
 SPEC[("earth", "c")] = SPEC[("earth", "s")]
 
 # which pieces each set has (the generator builds exactly these; book/SpiritDiveDjinnPieces lists the same names and the unit test compares them)
-CORE = ("helm", "chest", "backplate", "belt", "pauldron", "vambrace", "gauntlet", "greave", "sabaton")
+CORE = ("helm", "chest", "backplate", "belt", "pauldron", "vambrace", "gauntlet", "cuisse", "greave", "sabaton")
 ORNATE = ("gorget", "cuisse", "skirt")
 EXTRA = {
     ("wind", "s"): ("crest_l", "crest_r"),
@@ -125,8 +125,8 @@ EXTRA = {
     ("fire", "c"): ("crest", "plume", "mantle", "wing"),
     ("water", "s"): ("crest", "skirt"),
     ("water", "c"): ("crest", "wing"),
-    ("earth", "s"): ("crest", "backcrystals", "cuisse"),
-    ("earth", "c"): ("crest", "backcrystals", "cuisse"),
+    ("earth", "s"): ("crest", "backcrystals"),
+    ("earth", "c"): ("crest", "backcrystals"),
 }
 
 # the pieces whose glow map is drawn (a second pass): the same table as book/SpiritDiveDjinnPieces.def (the Java test sums the real numbers from it); used by the generator's report

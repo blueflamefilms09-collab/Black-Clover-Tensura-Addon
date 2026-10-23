@@ -39,6 +39,20 @@ def curved_blades(p, bone, base_fn, dir_fn, n, mat_fn, length_fn, width, normal_
     return out
 
 
+def crystal(p, bone, base, direction, length, width, mat, normal=(0, 0, -1)):
+    """A cut crystal prism: a body, the same body turned 45 degrees about its axis (an eight-sided section) and a pointed cap; one hard gem, not a stack of boxes."""
+    d = unit(V3(direction))
+    b = V3(base)
+    body = length * 0.62
+    c0 = b + d * (body / 2.0)
+    M = frame(d, normal, 1, 2)
+    p.cbox(bone, c0, (width, body, width * 0.8), mat, eul=euler_of(M))
+    p.cbox(bone, c0, (width, body * 0.98, width * 0.8), mat, eul=euler_of(M @ rot_xyz(0, 45, 0)))
+    tip0 = b + d * body
+    p.cbox(bone, tip0 + d * (length * 0.19), (width * 0.62, length * 0.38, width * 0.5), mat, eul=euler_of(M @ rot_xyz(0, 45, 0)))
+    return b + d * length
+
+
 def ring_band(p, bone, y0, y1, a, depth, mat, cell=1.2, thick=0.6, th0=-180, th1=180, decals=()):
     """A closed band round the dome of the helm (the cap is 4.6 wide at y 29.5 to 32)."""
     L = Loft([(y0, a, depth, depth, 5), (y1, a - 0.08, depth - 0.08, depth - 0.08, 5)])
@@ -64,7 +78,7 @@ def _laurel(c, side):
         for row in range(2):
             d = V(-(0.55 if row == 0 else 0.95), up if row == 0 else -0.1, 0.55 + 0.25 * t, side)
             L = (5.4 - 1.6 * abs(t - 0.45)) * (1.0 if row == 0 else 0.72)
-            blade(p, "root", b + V(-0.1 * row, -0.5 * row, 0.0, side), d, V(-1.0, 0.25, 0.0, side), L, 2.3 - 0.4 * row, P["feather"] if row == 0 else P["alt"], segs=2 if row == 0 else 2,
+            blade(p, "root", b + V(-0.1 * row, -0.5 * row, 0.0, side), d, V(-1.0, 0.25, 0.0, side), L, 2.3 - 0.4 * row, P["feather"] if row == 0 else P["trim"], segs=2,
                   bend=V(-0.2, 0.5, 0.5, side), thick=0.4, tip=0.3)
     # the band that holds the laurel: a gold bar along the temple, a gem at the brow end
     pts = [base(t) + V(0.35, -0.55, 0.0, side) for t in (0.0, 0.33, 0.66, 1.0)]
@@ -83,16 +97,16 @@ def _wind_crown(c):
     p = c.piece("crest_c", skin=None)
     ring_band(p, "root", 32.35, 33.25, 4.62, 4.62, P["trim"], cell=0.95, thick=0.6)
     cap = Loft([(32.35, 4.6, 4.6, 4.6, 5), (33.25, 4.5, 4.5, 4.5, 5)])
-    prongs = [(-72, 4.6), (-54, 5.6), (-36, 6.6), (-18, 7.6), (0, 9.0), (18, 7.6), (36, 6.6), (54, 5.6), (72, 4.6)]
+    prongs = [(-70, 3.8), (-52, 4.6), (-34, 5.4), (-17, 6.2), (0, 7.4), (17, 6.2), (34, 5.4), (52, 4.6), (70, 3.8)]
     for k, (th, L) in enumerate(prongs):
         out = unit(V3((math.sin(math.radians(th)), 0.0, -math.cos(math.radians(th)))))
         base = cap.point(th, 32.9, 0.1)
-        lean = 0.12 + 0.05 * abs(k - 4)
-        blade(p, "root", base, V3((0, 1, 0)) + out * lean, out, L, 2.0 if k not in (0, 8) else 1.6, P["alt"] if k % 2 == 0 else P["main"], segs=4, bend=out * -0.25 + V3((0, 0.3, 0.1)), thick=0.45, tip=0.2)
+        lean = 0.30 + 0.07 * abs(k - 4)                                  # the prongs fan out like a tiara
+        blade(p, "root", base, V3((0, 1, 0)) + out * lean, out, L, 2.3 if k not in (0, 8) else 1.8, P["alt"] if k % 2 == 0 else P["main"], segs=3, bend=out * 0.1 + V3((0, 0.2, 0.1)), thick=0.45, tip=0.04)
         p.cbox("root", base + V3((0, 0.2, 0)) + out * 0.2, (1.5, 0.7, 0.7), P["trim"], eul=euler_of(frame(V3((0, 1, 0)), out)))
-    for th, L in ((180, 8.0), (150, 6.2), (210, 6.2)):          # three taller prongs behind the head: the arc of the halo, standing on the ring
+    for th, L in ((180, 6.4), (152, 5.4), (208, 5.4)):          # three taller prongs behind the head: the arc of the halo, standing on the ring
         out = unit(V3((math.sin(math.radians(th)), 0.0, -math.cos(math.radians(th)))))
-        blade(p, "root", cap.point(th, 32.9, 0.1), V3((0, 1, 0)) + out * 0.3, out, L, 2.1, P["trim"], segs=4, bend=out * 0.35 + V3((0, 0.2, 0)), thick=0.45, tip=0.22)
+        blade(p, "root", cap.point(th, 32.9, 0.1), V3((0, 1, 0)) + out * 0.45, out, L, 2.3, P["trim"], segs=2, bend=out * 0.2 + V3((0, 0.2, 0)), thick=0.45, tip=0.12)
     gem(p, "root", V3((0, 33.3, -4.95)), 1.7, P["gem"], facing=V3((0, 0.4, -1)))
     return c.done(p)
 
@@ -120,25 +134,22 @@ def _fire_crest(c):
 
 
 def _water_crest(c):
-    """The fin helm of the Undine: a dorsal fin of pearl plates fanning from the brow over the crown to the nape, a swept fin at each temple (a third pair behind for the character tier)."""
+    """The fin helm of the Undine: a dorsal fin of pearl plates rising from the brow, over the crown and sweeping back along the nape (three big overlapping plates, five for the character tier), and a swept fin at each temple."""
     P = c.pal
     p = c.piece("crest", skin=None)
     ring_band(p, "root", 32.3, 33.0, 4.6, 4.6, P["trim"], cell=1.0, thick=0.55)
-    n = 6 if c.ornate else 4
+    n = 5 if c.ornate else 3
     for k in range(n):
         t = k / (n - 1.0)
-        base = V3((0, 33.0 - 0.5 * t, -3.2 + 7.0 * t))
-        ang = math.radians(12 + 78 * t)                        # from leaning forward to lying back along the nape
-        d = V3((0, math.cos(ang), math.sin(ang) * 0.8 + 0.35))
-        L = (6.4 + 3.2 * math.sin(math.pi * t * 0.85)) * (1.0 if c.ornate else 0.85)
-        blade(p, "root", base, d, V3((1, 0, 0)), L, 2.7, P["alt"] if k % 2 == 0 else P["main"], segs=4, bend=V3((0, -0.2, 0.9)), thick=0.45, tip=0.2)
+        base = V3((0, 33.1 - 0.4 * t, -3.0 + 6.6 * t))
+        ang = math.radians(8 + 70 * t)                          # from standing at the brow to lying back along the nape
+        d = V3((0, math.cos(ang), math.sin(ang) * 0.9 + 0.3))
+        L = (7.0 + 3.6 * math.sin(math.pi * (0.15 + 0.7 * t))) * (1.0 if c.ornate else 0.9)
+        blade(p, "root", base, d, V3((1, 0, 0)), L, 3.6, P["alt"] if k % 2 == 0 else P["main"], segs=3, bend=V3((0, -0.25, 1.0)), thick=0.45, tip=0.1)
     for sx in (0, 1):
-        for k in range(3 if c.ornate else 2):
-            blade(p, "root", V(-4.75, 29.7 + 0.8 * k, -0.4 + 1.2 * k, sx), V(-0.8, 0.25 + 0.2 * k, 0.55, sx), V(0, 1, -0.2, sx), 5.6 - 0.9 * k, 2.0, P["alt"] if k % 2 == 0 else P["glass"], segs=3,
-                  bend=V(-0.4, 0.2, 0.7, sx), thick=0.4, tip=0.25)
-        if c.ornate:
-            for k in range(2):
-                blade(p, "root", V(-4.2, 32.0 - 0.5 * k, 2.2 + 0.7 * k, sx), V(-0.5, 0.55, 0.8, sx), V(-1, 0.2, 0, sx), 6.0 - 1.0 * k, 2.0, P["main"], segs=3, bend=V(-0.3, 0.3, 0.8, sx), thick=0.4)
+        for k in range(2 if c.ornate else 1):
+            blade(p, "root", V(-4.75, 29.9 + 1.4 * k, -0.3 + 1.6 * k, sx), V(-0.8, 0.3 + 0.25 * k, 0.5, sx), V(0, 1, -0.2, sx), 6.4 - 1.0 * k, 2.6, P["alt"] if k == 0 else P["glass"], segs=3,
+                  bend=V(-0.4, 0.2, 0.8, sx), thick=0.4, tip=0.12)
     gem(p, "root", V3((0, 32.7, -4.85)), 1.6, P["gem"], facing=V3((0, 0.3, -1)))
     return c.done(p)
 
@@ -157,10 +168,10 @@ def _earth_crest(c):
         front = max(0.0, math.cos(math.radians(th)))
         L = 3.2 + 3.6 * front ** 3 + 0.5 * (k % 2)
         base = cap.point(th, 33.2, 0.1)
-        spike(p, "root", base, V3((0, 1, 0)) + out * (0.22 + 0.1 * (k % 3)), L, 2.0 if front > 0.9 else 1.5, P["gem"], segs=3, bend=out * 0.2, thick=0.8, normal=out, taper=0.18)
+        crystal(p, "root", base, V3((0, 1, 0)) + out * (0.28 + 0.1 * (k % 3)), L, 2.0 if front > 0.9 else 1.5, P["gem"], normal=out)
     for sx in (0, 1):                                          # a small crystal cluster at each temple
-        spike(p, "root", V(-4.9, 30.6, -0.6, sx), V(-0.7, 0.9, 0.0, sx), 3.8, 1.5, P["gem"], segs=3, normal=V(0, 0, -1, sx), taper=0.2)
-        spike(p, "root", V(-4.9, 30.2, 0.8, sx), V(-0.8, 0.5, 0.4, sx), 2.8, 1.2, P["gem"], segs=3, normal=V(0, 0, -1, sx), taper=0.2)
+        crystal(p, "root", V(-4.9, 30.6, -0.6, sx), V(-0.7, 0.9, 0.0, sx), 3.8, 1.5, P["gem"], normal=V(0, 0, -1, sx))
+        crystal(p, "root", V(-4.9, 30.2, 0.8, sx), V(-0.8, 0.5, 0.4, sx), 2.8, 1.2, P["gem"], normal=V(0, 0, -1, sx))
     return c.done(p)
 
 
@@ -238,7 +249,7 @@ def backcrystals(c):
     prisms = [(0.0, 21.5, 0.0, 12.0, 2.6), (-2.6, 21.0, -0.3, 9.0, 2.2), (2.6, 21.0, 0.3, 9.4, 2.2), (-4.4, 20.2, -0.7, 6.4, 1.8), (4.4, 20.2, 0.7, 6.8, 1.8), (-1.3, 22.0, 0.15, 8.0, 1.8),
               (1.3, 22.0, -0.15, 7.4, 1.7)]
     for k, (x, y, lean, L, w) in enumerate(prisms):
-        spike(p, "root", V3((x, y, 3.8)), V3((lean * 0.5 + x * 0.05, 1.0, 0.18)), L, w, P["gem"], segs=3, thick=0.8, normal=V3((0, 0, 1)), taper=0.15)
+        crystal(p, "root", V3((x, y, 3.8)), V3((lean * 0.5 + x * 0.09, 1.0, 0.18)), L, w, P["gem"], normal=V3((0, 0, 1)))
     return c.done(p)
 
 
