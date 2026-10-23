@@ -2,6 +2,7 @@ package com.newuniverse.nusmp.client.aura;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.newuniverse.nusmp.aura.Aura;
+import com.newuniverse.nusmp.book.FuegoleonArmDjinnRules;
 import com.newuniverse.nusmp.book.FuegoleonArmRules;
 import com.newuniverse.nusmp.client.geo.GeoDraw;
 import com.newuniverse.nusmp.client.geo.GeoSpec;
@@ -26,7 +27,8 @@ import org.joml.Quaternionf;
  * the Djinn gauntlet, client.relics.djinn.DjinnFirstPerson: copied from ItemInHandRenderer.renderPlayerArm). Only the RIGHT arm, only while the server says the arm is on ({@code Aura.FUEGOLEON_ARM}
  * running on the local player) and the viewer's setting allows it; nothing else about the hand changes (the item, the swing, the other arm). The molten model and its flames are the same as in third
  * person ({@link FuegoleonArmAura}, {@link FuegoleonArmFx}); the flames use the hand's own camera basis ({@link FuegoleonArmFx#cameraFirstPerson}). Not seen in a running game by its author (see the
- * doc); {@link #ENABLED} switches it off. No allocation per frame.
+ * doc); {@link #ENABLED} switches it off. 3.1: for the DJINN look (default, {@code fuegoleonArm.look}) the same placement draws the Djinn-style flame limb ({@link FuegoleonArmDjinn}: the same five
+ * pieces, forged in from the lease's start; the slim (Alex) arm is detected like the third person painter does, {@link WaterAuraRig#slim}); V3 and CLASSIC are the code below, unchanged. No allocation per frame.
  */
 public final class FireArmFirstPerson {
     private FireArmFirstPerson() {}
@@ -37,6 +39,11 @@ public final class FireArmFirstPerson {
     private static final Quaternionf Q = new Quaternionf();                                       // scratch: the render thread is the only user
     private static final float DEG = (float) (Math.PI / 180.0);
 
+    private static float lastT, lastLeft;
+    private static boolean lastLinked;                                                       // scratch: written by strengthOf, read by draw (render thread only)
+
+    private static float mcPartial() { return Minecraft.getInstance().getTimer().getGameTimeDeltaPartialTick(false); }
+
     /** The state of the local player's arm this frame: strength 0 = not drawn. */
     private static float strengthOf(AbstractClientPlayer p) {
         var running = PlayerAuraClient.running(p.getId());
@@ -46,6 +53,10 @@ public final class FireArmFirstPerson {
         if (view == FuegoleonArmRules.View.OFF) return 0f;
         boolean casting = DiveCast.casting(p.getId()), diving = PlayerAuraClient.has(p.getId(), Aura.SPIRIT_DIVE);
         float grow = Mth.clamp((p.level().getGameTime() - w[0]) / 8f, 0f, 1f);
+        float partial = mcPartial();
+        lastLinked = (int) w[2] == FuegoleonArmRules.STYLE_LINKED;
+        lastT = p.level().getGameTime() - w[0] + partial;                                            // 3.1: the clock of the Djinn-style forge-in (ticks since the arm was lit, ticks left on the lease)
+        lastLeft = w[1] - p.level().getGameTime() - partial;
         return FuegoleonArmRules.strength(view, casting, diving, (int) w[2] == FuegoleonArmRules.STYLE_LINKED) * grow;
     }
 
@@ -100,6 +111,20 @@ public final class FireArmFirstPerson {
         float age = (mc.level == null ? 0f : mc.level.getGameTime()) + mc.getTimer().getGameTimeDeltaPartialTick(false);
         boolean casting = DiveCast.casting(p.getId()), diving = PlayerAuraClient.has(p.getId(), Aura.SPIRIT_DIVE);
         float flare = FuegoleonArmRules.flare(casting, diving);
+        FuegoleonArmDjinnRules.Look look = FuegoleonArmLook.get();
+        if (FuegoleonArmDjinnRules.drawsLimb(look)) {                                            // 3.1: the Djinn-style flame limb in the hand (default)
+            FuegoleonArmDjinnRules.State st = FuegoleonArmDjinnRules.state(lastLinked, casting, diving);
+            pose.pushPose();
+            part.translateAndRotate(pose);
+            FuegoleonArmDjinn.limb(pose, buffers, rest, age, lastT, lastLeft, 1f, st, FuegoleonArmDjinnRules.Lod.FULL, WaterAuraRig.slim(m));
+            pose.scale(1f / 16f, 1f / 16f, 1f / 16f);
+            FuegoleonArmDjinn.fxFirstPerson(pose, buffers, age, st);
+            pose.popPose();
+            part.xRot = ox;
+            part.yRot = oy;
+            part.zRot = oz;
+            return;
+        }
         pose.pushPose();                                                                          // the molten model (authored in whole-body coordinates: undo the arm's rest position)
         part.translateAndRotate(pose);
         pose.translate(-rest.x / 16f, -rest.y / 16f, -rest.z / 16f);

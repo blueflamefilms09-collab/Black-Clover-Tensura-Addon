@@ -2,6 +2,7 @@ package com.newuniverse.nusmp.client.aura;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.newuniverse.nusmp.aura.Aura;
+import com.newuniverse.nusmp.book.FuegoleonArmDjinnRules;
 import com.newuniverse.nusmp.book.FuegoleonArmRules;
 import com.newuniverse.nusmp.book.SpiritDiveTier;
 import com.newuniverse.nusmp.book.SpiritDiveTier.Lod;
@@ -21,6 +22,7 @@ import org.joml.Quaternionf;
  * haze and a mane of fire strands streaming off the shoulder ({@link FuegoleonArmFx}). The flames leap when the wearer casts (the cast animation, {@link DiveCast}) and burn highest during the Fire dive
  * ({@code Aura.SPIRIT_DIVE} running). The viewer's setting ({@link SpiritDiveLook#armView}) can turn the arm off or limit it to the moments of casting and diving. The first person arm is
  * {@link FireArmFirstPerson}. Level of detail by distance ({@link SpiritDiveTier#lod}): the full arm up to 24 blocks, the model and half the flames up to 48, nothing beyond.
+ * Since 3.1 the look is chosen by {@code fuegoleonArm.look} ({@link FuegoleonArmLook}): DJINN (default) hands over to {@link FuegoleonArmDjinn}; V3 and CLASSIC are the code below, unchanged.
  * The dive of the Fuegoleon grade does not draw an arm of its own: the server keeps this arm alive during the Fire dive. No allocation per frame.
  */
 public final class FuegoleonArmAura {
@@ -29,6 +31,17 @@ public final class FuegoleonArmAura {
     private static final GeoSpec SPEC = GeoSpec.of("spiritdive", "arm_flame_arm_r");
     private static final Quaternionf ROT = new Quaternionf();                                   // scratch: the render thread is the only user
     private static final PerfProbe.Section SECTION = PerfProbe.section("c.fuegoleon.arm");           // timed (/multiverse perf)
+
+    /**
+     * Whether this client draws the flame arm of {@code p} right now (the server's lease is running with a valid style, the player is visible and the viewer did not turn the arm off). The Spirit
+     * Dive painters call this so the Fire dive does not draw a second arm of its own on a wearer whose arm is drawn here (every look of the arm, DJINN, V3 and CLASSIC, is drawn by this class).
+     */
+    public static boolean drawsArm(net.minecraft.client.player.AbstractClientPlayer p) {
+        if (p == null || p.isInvisible() || SpiritDiveLook.armView() == FuegoleonArmRules.View.OFF) return false;
+        var running = PlayerAuraClient.running(p.getId());
+        long[] w = running == null ? null : running.get(Aura.FUEGOLEON_ARM);
+        return w != null && p.level().getGameTime() < w[1] && FuegoleonArmRules.valid((int) w[2]);
+    }
 
     /** Called once by AuraRegistry on the client. */
     public static void register() {
@@ -48,6 +61,11 @@ public final class FuegoleonArmAura {
     private static void paintArm(AuraContext c) {
         FuegoleonArmRules.View view = SpiritDiveLook.armView();
         if (view == FuegoleonArmRules.View.OFF) return;
+        FuegoleonArmDjinnRules.Look look = FuegoleonArmLook.get();
+        if (FuegoleonArmDjinnRules.drawsLimb(look)) {                                              // 3.1: the Djinn-Equip flame limb (default); V3 and CLASSIC below are the 3.0.0 arm, kept
+            FuegoleonArmDjinn.paint(c, view);
+            return;
+        }
         int id = c.player().getId();
         boolean casting = DiveCast.casting(id), diving = PlayerAuraClient.has(id, Aura.SPIRIT_DIVE);
         float k = FuegoleonArmRules.strength(view, casting, diving, c.style() == FuegoleonArmRules.STYLE_LINKED) * c.fade();
@@ -75,8 +93,10 @@ public final class FuegoleonArmAura {
         if (arm.xRot != 0f || arm.yRot != 0f || arm.zRot != 0f) pose.mulPose(ROT.rotationZYX(arm.zRot, arm.yRot, arm.xRot));
         pose.scale(1f / 16f, 1f / 16f, 1f / 16f);
         boolean full = lod == Lod.FULL;
-        FuegoleonArmFx.draw(pose, c.buffers(), age, k, flare, full, false);
-        if (full) FuegoleonArmFx.mane(pose, c.buffers(), age, k, flare, c.limbSwingAmount());
+        if (FuegoleonArmDjinnRules.drawsSheets(look)) {                                            // CLASSIC is the molten model alone
+            FuegoleonArmFx.draw(pose, c.buffers(), age, k, flare, full, false);
+            if (full) FuegoleonArmFx.mane(pose, c.buffers(), age, k, flare, c.limbSwingAmount());
+        }
         pose.popPose();
     }
 }
