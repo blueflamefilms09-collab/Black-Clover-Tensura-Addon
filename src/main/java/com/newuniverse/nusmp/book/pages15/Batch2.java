@@ -125,7 +125,7 @@ public final class Batch2 {
                         Pages15Kit.field(Tier.MID, 5, 80, 20, false, VfxShape.SNOW_FX2, blind(30))).withCooldown(260),
                 Pages15Kit.starter("snow_binding", "Snow Binding",
                         Pages15Kit.bind(Tier.STARTER, 14, false, VfxShape.SNOW_FX3, slow(60, 1))).withAnim("thrust"),
-                Pages15Kit.starter("powder_burst", "Powder Burst",
+                Pages15Kit.starter("snow_powder_burst", "Powder Burst",
                         Pages15Kit.nova(Tier.STARTER, 3.5, false, VfxShape.SNOW_FX3, knock(0.8))).withAnim("slam"),
                 Pages15Kit.starter("snowball_barrage", "Snowball Barrage",
                         Pages15Kit.volley(Tier.STARTER, 4, false, VfxShape.SNOW_FX1, slow(30, 0))).withAnim("out"),

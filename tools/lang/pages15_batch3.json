@@ -20,7 +20,7 @@
   "nusmp.page.book_illusion.endless_corridor": "Endless Corridor - the ground where you aim becomes a corridor with no end: for 4 seconds foes within 5.5 blocks keep being drawn back to its middle, slowed, and take a pulse every two seconds.",
   "nusmp.page.book_illusion.curtain_of_lies": "Curtain of Lies - a shimmering curtain hides you and up to five allies within 8 blocks (Invisibility for 8 seconds, Speed) and every mob within 18 blocks that hunted you loses the trail.",
   "nusmp.page.book_illusion.illusion_reality_break": "Reality Break - the lie shatters all at once: up to ten foes within 7 blocks take a heavy hit, are thrown back, dizzied for 6 seconds and blinded for 3.",
-  "nusmp.page.book_air.gust_jab": "Gust Jab - a short jab of compressed air in a narrow cone, 4 blocks long: a light hit and a hard shove.",
+  "nusmp.page.book_air.air_gust_jab": "Gust Jab - a short jab of compressed air in a narrow cone, 4 blocks long: a light hit and a hard shove.",
   "nusmp.page.book_air.air_needles": "Air Needles - four thin needles of air fan out; the starter damage is shared between them, so a close foe takes most of them.",
   "nusmp.page.book_air.featherfall_gift": "Featherfall Gift - the air thickens under you and up to five allies within 8 blocks: Slow Falling for 20 seconds and a short burst of Speed. Utility, no damage.",
   "nusmp.page.book_air.air_updraft": "Updraft - a column of air shoots up around you: foes within 3.5 blocks take a hit and are thrown into the air.",

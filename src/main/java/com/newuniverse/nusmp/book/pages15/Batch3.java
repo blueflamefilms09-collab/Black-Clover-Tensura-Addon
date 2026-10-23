@@ -375,7 +375,7 @@ public final class Batch3 {
                 Pages15Kit.signature("illusion_reality_break", "Reality Break", Pages15Kit.nova(Tier.SIGNATURE, 7, false, VfxShape.MAGIC_CIRCLE_EXPLOSION, Pages15Kit.all(aff(MobEffects.CONFUSION, 120, 0), aff(MobEffects.BLINDNESS, 60, 0), Pages15Kit.knock(0.9)))).withCooldown(1500)));
 
     private static final List<BookPage> AIR = register("book_air", List.of(
-                Pages15Kit.starter("gust_jab", "Gust Jab", Pages15Kit.cone(Tier.STARTER, 4, 0.6, VfxShape.AIR_FX1, Pages15Kit.knock(0.9))),
+                Pages15Kit.starter("air_gust_jab", "Gust Jab", Pages15Kit.cone(Tier.STARTER, 4, 0.6, VfxShape.AIR_FX1, Pages15Kit.knock(0.9))),
                 Pages15Kit.starter("air_needles", "Air Needles", Pages15Kit.volley(Tier.STARTER, 4, false, VfxShape.AIR_FX1, Pages15Kit.NONE)),
                 Pages15Kit.starter("featherfall_gift", "Featherfall Gift", partyBuff(Tier.STARTER, 8, VfxShape.AIR_FX2, 1.0f, false, eff(MobEffects.SLOW_FALLING, 400, 0), eff(MobEffects.MOVEMENT_SPEED, 100, 0))),
                 Pages15Kit.mid("air_updraft", "Updraft", Pages15Kit.nova(Tier.MID, 3.5, false, VfxShape.AIR_FX3, Pages15Kit.lift(0.75))).withAnim("up"),
