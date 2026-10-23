@@ -217,7 +217,7 @@ class Pages15Batch1Test {
                     assertTrue(min >= 0 && min <= 1, ch.getKey() + "/" + page + ": mastery " + min);
                 }
             }
-            assertEquals(ADDED.get(ch.getKey()), mine, ch.getKey() + ": entries added by batch 1");
+            assertEquals(ADDED.get(ch.getKey()).intValue(), mine, ch.getKey() + ": entries added by batch 1");
         }
     }
 
