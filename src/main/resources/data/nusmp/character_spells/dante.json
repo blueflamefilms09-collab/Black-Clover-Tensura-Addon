@@ -139,6 +139,135 @@
         ]
       },
       "note": "The Gravity Singularity itself stays a forbidden ritual and is not a page; this is its small form."
+    },
+    {
+      "page": "gravity_jab",
+      "name": "Gravity Magic (heavy jab)",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "design",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.06
+      },
+      "note": "NEW shared page of the 15-spells project (original to this mod, see docs/magic/pages15_batch6.md); the order and thresholds are the mod's design."
+    },
+    {
+      "page": "ground_slam",
+      "name": "Gravity Magic (ground slam)",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "design",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.1
+      },
+      "note": "NEW shared page of the 15-spells project (original to this mod, see docs/magic/pages15_batch6.md); the order and thresholds are the mod's design."
+    },
+    {
+      "page": "pressure_lane",
+      "name": "Gravity Magic (lane of pressure)",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "design",
+      "acquire": {
+        "type": "all",
+        "of": [
+          {
+            "type": "page_uses",
+            "page": "heavy_infighting",
+            "count": 4
+          },
+          {
+            "type": "mastery",
+            "min": 0.24
+          }
+        ]
+      },
+      "note": "NEW shared page of the 15-spells project (original to this mod, see docs/magic/pages15_batch6.md); the order and thresholds are the mod's design."
+    },
+    {
+      "page": "inward_pull",
+      "name": "Gravity Magic (drawing in)",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "design",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.32
+      },
+      "note": "NEW shared page of the 15-spells project (original to this mod, see docs/magic/pages15_batch6.md); the order and thresholds are the mod's design."
+    },
+    {
+      "page": "weightless_burst",
+      "name": "Gravity Magic (taking the weight)",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "design",
+      "acquire": {
+        "type": "all",
+        "of": [
+          {
+            "type": "page_uses",
+            "page": "lightened_step",
+            "count": 3
+          },
+          {
+            "type": "mastery",
+            "min": 0.42
+          }
+        ]
+      },
+      "note": "NEW shared page of the 15-spells project (original to this mod, see docs/magic/pages15_batch6.md); the order and thresholds are the mod's design."
+    },
+    {
+      "page": "falling_weight",
+      "name": "Gravity Magic (a falling weight)",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "design",
+      "acquire": {
+        "type": "all",
+        "of": [
+          {
+            "type": "page_open",
+            "page": "crushing_weight"
+          },
+          {
+            "type": "mastery",
+            "min": 0.6
+          }
+        ]
+      },
+      "note": "NEW shared page of the 15-spells project (original to this mod, see docs/magic/pages15_batch6.md); the order and thresholds are the mod's design."
+    },
+    {
+      "page": "gravity_singularity",
+      "name": "Gravity Magic: Gravity Singularity",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "en_wiki",
+      "acquire": {
+        "type": "all",
+        "of": [
+          {
+            "type": "page_open",
+            "page": "gravity_sphere"
+          },
+          {
+            "type": "mastery",
+            "min": 0.88
+          }
+        ]
+      },
+      "note": "The wiki's Gravity Singularity (listed as planned in this file): a small black hole that sucks in and destroys what is near it. The mod's effect: a pull, then a collapse."
     }
   ],
   "planned": [

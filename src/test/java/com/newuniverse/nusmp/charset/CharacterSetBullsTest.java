@@ -159,6 +159,7 @@ class CharacterSetBullsTest {
             String book = o.get("book").getAsString();
             List<String> have = new ArrayList<>(legacy(book));
             have.addAll(ADDED.getOrDefault(book, List.of()));
+            have.addAll(com.newuniverse.nusmp.book.pages15.Pages15Batch6Ids.of(book));      // the pages the 15-spells project appended (batch 6)
             for (var e : o.getAsJsonArray("spells")) {
                 String page = e.getAsJsonObject().get("page").getAsString();
                 assertTrue(have.contains(page), c + ": page " + page + " is not in " + book + " " + have);

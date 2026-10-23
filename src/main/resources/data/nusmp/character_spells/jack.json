@@ -103,17 +103,17 @@
       "note": "A chaotic flurry of flying slashes: the Death Scythe's later form."
     },
     {
-      "page": "ripper_cut",
-      "name": "Slash Magic: Ripper Cut",
+      "page": "rending_cut",
+      "name": "Slash Magic (rending cut)",
       "ja": "",
       "origin": "anime",
       "exclusive": false,
-      "source": "en_wiki",
+      "source": "design",
       "acquire": {
         "type": "mastery",
         "min": 0.1
       },
-      "note": "The wiki's \"Ripper Cut\" (named in the earlier notes of this file as planned). The effect is the mod's: a quick narrow cut."
+      "note": "NEW shared page of the 15-spells project (original to this mod, see docs/magic/pages15_batch6.md); the order and thresholds are the mod's design."
     },
     {
       "page": "cross_slash",
@@ -129,7 +129,7 @@
       "note": "NEW shared page of the 15-spells project (original to this mod, see docs/magic/pages15_batch6.md); the order and thresholds are the mod's design."
     },
     {
-      "page": "blade_flurry",
+      "page": "razor_flurry",
       "name": "Slash Magic (flurry of cuts)",
       "ja": "",
       "origin": "anime",
@@ -165,7 +165,7 @@
       "note": "NEW shared page of the 15-spells project (original to this mod, see docs/magic/pages15_batch6.md); the order and thresholds are the mod's design."
     },
     {
-      "page": "crescent_barrage",
+      "page": "crescent_salvo",
       "name": "Slash Magic (crescent barrage)",
       "ja": "",
       "origin": "anime",
@@ -212,7 +212,7 @@
         "of": [
           {
             "type": "page_uses",
-            "page": "ripper_cut",
+            "page": "rending_cut",
             "count": 3
           },
           {
@@ -265,7 +265,7 @@
       "ja": "",
       "origin": "anime",
       "exclusive": false,
-      "source": "ja_search",
+      "source": "design",
       "acquire": {
         "type": "all",
         "of": [
@@ -279,7 +279,7 @@
           }
         ]
       },
-      "note": "Japanese summaries: the last technique Jack used before his death, said to cut everything in its way. The effect is the mod's."
+      "note": "Japanese summaries: the last technique Jack used before his death, said to cut everything in its way. The effect is the mod's. (Source: a Japanese search summary, no wiki page was read; the file declares no ja_search source, so it is filed as design.)"
     }
   ],
   "planned": [

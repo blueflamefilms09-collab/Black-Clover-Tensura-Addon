@@ -77,6 +77,186 @@
         ]
       },
       "note": "Learned after the Elf Reincarnation experience, according to the Japanese summary: spatial magic that guards him by itself."
+    },
+    {
+      "page": "archangel_shootdown",
+      "name": "Spatial Magic: Archangel Shootdown",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "en_wiki",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.06
+      },
+      "note": "The wiki's Archangel Shootdown: spheres of spatial force that erase what they touch; Langris is its user. The effect is the mod's."
+    },
+    {
+      "page": "rift_step",
+      "name": "Spatial Magic (stepping through a rift)",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "design",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.1
+      },
+      "note": "NEW shared page of the 15-spells project (original to this mod, see docs/magic/pages15_batch6.md); the order and thresholds are the mod's design."
+    },
+    {
+      "page": "crevice_men",
+      "name": "Spatial Magic: Crevice Men",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "en_wiki",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.18
+      },
+      "note": "Named on the wiki's Spatial Magic navigation; the effect is the mod's."
+    },
+    {
+      "page": "space_cut",
+      "name": "Spatial Magic (cutting space)",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "design",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.26
+      },
+      "note": "An existing page of the book that was not in this set; added by the 15-spells project so the grimoire shows 15 pages. No source names it for this character: the fit and the order are the mod's design."
+    },
+    {
+      "page": "rift_burst",
+      "name": "Spatial Magic (bursting a rift)",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "design",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.32
+      },
+      "note": "NEW shared page of the 15-spells project (original to this mod, see docs/magic/pages15_batch6.md); the order and thresholds are the mod's design."
+    },
+    {
+      "page": "myriad_black",
+      "name": "Spatial Magic: Myriad Black",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "design",
+      "acquire": {
+        "type": "all",
+        "of": [
+          {
+            "type": "page_uses",
+            "page": "archangel_shootdown",
+            "count": 3
+          },
+          {
+            "type": "mastery",
+            "min": 0.4
+          }
+        ]
+      },
+      "note": "An existing page of the book that was not in this set; added by the 15-spells project so the grimoire shows 15 pages. No source names it for this character: the fit and the order are the mod's design."
+    },
+    {
+      "page": "blackout",
+      "name": "Spatial Magic: Blackout",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "en_wiki",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.46
+      },
+      "note": "Named on the wiki's Spatial Magic navigation; the effect is the mod's (a group transport)."
+    },
+    {
+      "page": "archangel_destruction",
+      "name": "Spatial Magic: Archangel Destruction",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "en_wiki",
+      "acquire": {
+        "type": "all",
+        "of": [
+          {
+            "type": "page_open",
+            "page": "archangel_shootdown"
+          },
+          {
+            "type": "mastery",
+            "min": 0.55
+          }
+        ]
+      },
+      "note": "The wiki's Archangel Destruction, the stronger form of Shootdown; the effect is the mod's."
+    },
+    {
+      "page": "unopening_red_room",
+      "name": "Spatial Magic (the red room)",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "design",
+      "acquire": {
+        "type": "mastery",
+        "min": 0.6
+      },
+      "note": "An existing page of the book that was not in this set; added by the 15-spells project so the grimoire shows 15 pages. No source names it for this character: the fit and the order are the mod's design."
+    },
+    {
+      "page": "different_dimension_sphere",
+      "name": "Spatial Magic: Different Dimension Sphere",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "en_wiki",
+      "acquire": {
+        "type": "all",
+        "of": [
+          {
+            "type": "page_open",
+            "page": "unopening_red_room"
+          },
+          {
+            "type": "mastery",
+            "min": 0.7
+          }
+        ]
+      },
+      "note": "Named on the wiki's Spatial Magic navigation; the effect is the mod's."
+    },
+    {
+      "page": "dimension_collapse",
+      "name": "Spatial Magic (collapse of a dimension)",
+      "ja": "",
+      "origin": "anime",
+      "exclusive": false,
+      "source": "design",
+      "acquire": {
+        "type": "all",
+        "of": [
+          {
+            "type": "page_open",
+            "page": "langris_archangel_annihilation"
+          },
+          {
+            "type": "mastery",
+            "min": 0.8
+          }
+        ]
+      },
+      "note": "An existing page of the book that was not in this set; added by the 15-spells project so the grimoire shows 15 pages. No source names it for this character: the fit and the order are the mod's design."
     }
   ],
   "planned": [

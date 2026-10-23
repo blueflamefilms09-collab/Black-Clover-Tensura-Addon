@@ -83,8 +83,8 @@
       "note": "NEW shared page of the 15-spells project (original to this mod, see docs/magic/pages15_batch6.md); the order and thresholds are the mod's design."
     },
     {
-      "page": "magnetic_pull",
-      "name": "Compass Magic: Magnetic Pull",
+      "page": "magnet_draw",
+      "name": "Compass Magic: Magnet Draw",
       "ja": "",
       "origin": "anime",
       "exclusive": false,

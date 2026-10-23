@@ -79,6 +79,8 @@ class CharacterSetGoldTest {
             Matcher bu = Pattern.compile("register\\(\"" + book + "\", [^,]+, List\\.of\\((.*?)\\)\\);", Pattern.DOTALL).matcher(bulls);
             if (bu.find()) m.get(book).addAll(ids(bu.group(1)));      // the Black Bulls' twin class: Magna's Fire pages, Finral's Spatial page (counted for the 32-page budget)
         }
+        for (String book : new String[]{"book_spatial", "book_time", "book_compass"})      // the pages the 15-spells project appended (batch 6)
+            m.get(book).addAll(com.newuniverse.nusmp.book.pages15.Pages15Batch6Ids.of(book));
         return m;
     }
 
