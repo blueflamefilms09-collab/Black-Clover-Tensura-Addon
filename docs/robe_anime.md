@@ -60,3 +60,6 @@ Look at `docs/armor_build/anime_sets_a.png`, `_b`, `_c` (front, three-quarter, s
 1. Add the robe item pieces as before (NUItems, the old `SETS` row for the older look).
 2. Add one row to `ANIME_SETS` (id, cloak key, `CloakStyle`, head model or None, palette, tier, theme); add a new head model with `@model` in `gen_worn_armor.py` if it needs one.
 3. `python3 tools/relics/gen_worn_all.py`, then `python3 tools/relics/armor_contact_sheet.py --only anime`, then run the tests.
+
+## Update 3.1.2
+The "Legs, boots = Nothing" rows of the slot table above are no longer what is drawn by default: an anime entry that is only `none` falls back to the older garment for that piece (hip sash and legs, boots, hood), so a full robe set shows all four pieces again. `relicfx.robeAnimeBare = true` restores the 1.48.0 look (cloak only).
