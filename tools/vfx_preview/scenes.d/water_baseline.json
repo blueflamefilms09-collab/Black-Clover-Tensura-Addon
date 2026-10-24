@@ -1,0 +1,5 @@
+{
+ "_comment": "Water baseline scenes for the V2 water remake research (docs/vfx_remake/water_research.md): the two old WaterMagicLayer shapes that no scene covered (WATER_SPLASH is also used by the Blood and Mist pages, WATER_RING by Mist Veil and Mana pages).",
+ "water_splash": {"layer": "WaterMagicLayer", "shape": "WATER_SPLASH", "from": [0, 0, 0], "to": [0, 0.8, 4], "power": 1.2, "duration": 20, "cam": [-4.5, 2.2, 0.5], "target": [0, 0.8, 4], "ages": [2, 6, 12], "figures": [[0, 0, 0, 1.8]]},
+ "water_ring": {"layer": "WaterMagicLayer", "shape": "WATER_RING", "from": [0, 0, 4], "to": [0, 1, 4], "power": 1.2, "duration": 30, "cam": [-4.5, 3.0, 0.5], "target": [0, 0.3, 4], "ages": [4, 12, 22], "figures": [[0, 0, 0, 1.8]]}
+}
