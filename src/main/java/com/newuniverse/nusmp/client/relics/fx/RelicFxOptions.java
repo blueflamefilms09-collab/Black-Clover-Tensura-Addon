@@ -16,6 +16,7 @@ public final class RelicFxOptions {
     public static final ModConfigSpec.BooleanValue MODELS;
     public static final ModConfigSpec.BooleanValue HIDE_ARMOUR_RELICS;
     public static final ModConfigSpec.BooleanValue ROBE_ANIME;
+    public static final ModConfigSpec.BooleanValue ROBE_ANIME_BARE;
     public static final ModConfigSpec.BooleanValue HAND_MODELS;
     public static final ModConfigSpec.BooleanValue SHOW_WORN;
 
@@ -35,6 +36,9 @@ public final class RelicFxOptions {
         ROBE_ANIME = b.comment("Wear the Magic Knight robe sets as in the Black Clover anime: only the squad cloak (with its emblem, clasp and collar) on the chest piece, at most one small head piece, "
                         + "and nothing on the legs and feet. Off = the older lofted garments (hood, robe, sleeves, hip band, legs, boots).")
                 .define("robeAnime", true);
+        ROBE_ANIME_BARE = b.comment("Only with robeAnime on: true = the legs, boots and bare-headed pieces of a robe set draw nothing (the 1.48.0 look, only the cloak shows). "
+                        + "false (default) = those pieces wear their older model (hip sash, legs, boots, hood), so helmet, leggings and boots show next to the cloak.")
+                .define("robeAnimeBare", false);
         HAND_MODELS = b.comment("Show relics that are not weapons (rings, necklaces, hoods, boots, flasks, scrolls ...) as 3D objects in the hand, on the ground and in item frames. Off = the flat sprite, as before. "
                         + "The inventory always shows the sprite.")
                 .define("handModels", true);
@@ -63,6 +67,8 @@ public final class RelicFxOptions {
 
     /** True when the robe sets are worn as anime cloaks ({@code relicfx.robeAnime}, default on); true when the config is not loaded. */
     public static boolean robeAnime() { return get(ROBE_ANIME); }
+    /** True when the legs, boots and bare-head pieces of an anime robe set draw nothing ({@code relicfx.robeAnimeBare}, default false). */
+    public static boolean robeAnimeBare() { return get(ROBE_ANIME_BARE); }
     /** Relics that are not weapons as 3D objects in hand, on the ground and in frames ({@code relicfx.handModels}). */
     public static boolean handModels() { return get(HAND_MODELS); }
 

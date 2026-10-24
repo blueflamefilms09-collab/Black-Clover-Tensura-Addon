@@ -29,6 +29,19 @@ public final class WornCatalog {
     /** The catalog key of the anime look of the item with this registry path. */
     public static String animeKey(String path) { return ANIME_PREFIX + path; }
 
+    /**
+     * 3.1.2: does this armour item wear its anime entry? Only the chest piece (and a head piece that really has a model) of a robe set does: an anime entry that is the explicit
+     * "draw nothing" ({@link #NONE}, the legs, boots and bare-headed sets of 1.48.0) falls back to the older model, so helmet, leggings and boots show again next to the cloak.
+     * {@code bareLimbs} (option {@code relicfx.robeAnimeBare}) restores the 1.48.0 behaviour (nothing there).
+     */
+    public boolean wearsAnime(String path, boolean animeOn, boolean bareLimbs) {
+        String key = animeKey(path);
+        if (!animeOn || !hasItem(key)) return false;
+        return bareLimbs || !isNothing(itemPieces(key)) || !hasPlainItem(path);
+    }
+
+    private boolean hasPlainItem(String path) { return items.containsKey(path); }
+
     /** One model on one body part. {@code anchor} is null for the one in the model's file. */
     public record Piece(String model, WornAnchor anchor, boolean mirror) {}
 
