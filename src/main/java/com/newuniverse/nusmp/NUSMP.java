@@ -187,6 +187,7 @@ public class NUSMP {
             com.newuniverse.nusmp.client.aura.NoelleFormsClientConfig.init(modEventBus, modContainer);                       // 1.99.0: noelleForms.classicLook (nusmp-noelle-forms-client.toml): the first Valkyrie Dress look
             com.newuniverse.nusmp.client.song.SongClient.init(modEventBus);
             com.newuniverse.nusmp.client.shishou.ShishouClient.init(modEventBus);      // Shishou: the throw / cast / next-skill keys, the movable HUD, the body renderer, the concealed tooltip
+            com.newuniverse.nusmp.client.companion.CompanionClient.init(modEventBus, modContainer);                           // companions: the talk screen, the speech bubbles, the sample companion's renderer, nusmp-companions-client.toml
 
             com.newuniverse.nusmp.client.spiritlight.SpiritLightClient.init(modEventBus);        // Spirit of Light: the seraph's spoken-line player (no keys since 3.0.0)
 
