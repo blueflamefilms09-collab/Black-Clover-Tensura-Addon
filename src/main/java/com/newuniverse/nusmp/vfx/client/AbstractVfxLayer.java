@@ -21,7 +21,10 @@ public abstract class AbstractVfxLayer {
     /** Default ARGB tint. */
     public int defaultColor(VfxShape shape) { return 0xFFFFD86B; }
 
-    /** Vertex cap for one activation (never above 400). */
+    /** The most vertices this layer's activation may ever have (the buffer never lets an activation pass it): 400 for every layer but the one that says otherwise (the Mana Method rune writes up to 1,200). */
+    public int hardVertexCap(VfxShape shape) { return VfxVertexBuffer.MAX_VERTICES_PER_ACTIVATION; }
+
+    /** Vertex cap for one activation (never above {@link #hardVertexCap}, 400 by default). */
     public int vertexBudget(VfxShape shape) { return VfxVertexBuffer.MAX_VERTICES_PER_ACTIVATION; }
 
     /**

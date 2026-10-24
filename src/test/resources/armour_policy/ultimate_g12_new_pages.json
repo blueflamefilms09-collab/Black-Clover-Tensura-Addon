@@ -1,0 +1,146 @@
+{
+  "EXPLOSION": [
+    "ultimate_explosion"
+  ],
+  "MAGMA": [
+    "ultimate_magma"
+  ],
+  "ICE": [
+    "ultimate_ice"
+  ],
+  "MERCURY": [
+    "ultimate_mercury"
+  ],
+  "MIST": [
+    "ultimate_mist"
+  ],
+  "STAR": [
+    "ultimate_star"
+  ],
+  "STORM": [
+    "ultimate_storm"
+  ],
+  "PLANT": [
+    "ultimate_plant"
+  ],
+  "SAND": [
+    "ultimate_sand"
+  ],
+  "SWORD": [
+    "ultimate_sword"
+  ],
+  "SHADOW": [
+    "ultimate_shadow"
+  ],
+  "POISON": [
+    "ultimate_poison"
+  ],
+  "MIRROR": [
+    "ultimate_mirror"
+  ],
+  "GRAVITY": [
+    "ultimate_gravity"
+  ],
+  "SEALING": [
+    "ultimate_sealing"
+  ],
+  "REINFORCEMENT": [
+    "ultimate_reinforcement"
+  ],
+  "BEAST": [
+    "ultimate_beast"
+  ],
+  "BONE": [
+    "ultimate_bone"
+  ],
+  "BLOOD": [
+    "ultimate_blood"
+  ],
+  "CREATION": [
+    "ultimate_creation"
+  ],
+  "COPY": [
+    "ultimate_copy"
+  ],
+  "ILLUSION": [
+    "ultimate_illusion"
+  ],
+  "DREAM": [
+    "ultimate_dream"
+  ],
+  "ANTI_MAGIC": [
+    "ultimate_antimagic"
+  ],
+  "STEEL": [
+    "ultimate_steel"
+  ],
+  "THREAD": [
+    "ultimate_thread"
+  ],
+  "TRANSMUTATION": [
+    "ultimate_transmutation"
+  ],
+  "ASH": [
+    "ultimate_ash"
+  ],
+  "COTTON": [
+    "ultimate_cotton"
+  ],
+  "RECOMBINATION": [
+    "ultimate_recombination"
+  ],
+  "PAINTING": [
+    "ultimate_painting"
+  ],
+  "WORLD_TREE": [
+    "ultimate_worldtree"
+  ],
+  "DICE": [
+    "ultimate_dice"
+  ],
+  "SLASH": [
+    "ultimate_slash"
+  ],
+  "COMPASS": [
+    "ultimate_compass"
+  ],
+  "KOTODAMA": [
+    "ultimate_kotodama"
+  ],
+  "GAME": [
+    "ultimate_game"
+  ],
+  "DEMON_BEAST": [
+    "ultimate_demonbeast"
+  ],
+  "BODY": [
+    "ultimate_body"
+  ],
+  "EYE": [
+    "ultimate_eye"
+  ],
+  "EYEBALL": [
+    "ultimate_eyeball"
+  ],
+  "CURSE": [
+    "ultimate_curse"
+  ],
+  "CURSE_WARDING": [
+    "ultimate_cursewarding"
+  ],
+  "DEMON_FIRE": [
+    "ultimate_demonfire"
+  ],
+  "DEMON_ICE": [
+    "ultimate_demonice"
+  ],
+  "DEMON_LIGHT": [
+    "ultimate_demonlight"
+  ],
+  "DEMON_WATER": [
+    "ultimate_demonwater"
+  ],
+  "BARRIER": [
+    "ultimate_barrier"
+  ]
+}

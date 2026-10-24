@@ -107,6 +107,7 @@ public final class ManaZoneManager {
     private static final Predicate<Projectile> LIVE_PROJECTILE = pr -> pr.isAlive() && !pr.isRemoved();
 
     private static final ResourceLocation SPEED_ID = ResourceLocation.fromNamespaceAndPath("nusmp", "mana_zone_speed"), FLY_ID = ResourceLocation.fromNamespaceAndPath("nusmp", "mana_zone_foothold");
+    private static final ResourceLocation ATTACK_ID = ResourceLocation.fromNamespaceAndPath("nusmp", "mana_zone_attack"), KNOCKBACK_ID = ResourceLocation.fromNamespaceAndPath("nusmp", "mana_zone_knockback");
     private static final String SLOWED = "nusmp_mz_slow";
 
     // ---------------------------------------------------------------- queries
@@ -256,6 +257,7 @@ public final class ManaZoneManager {
             speed.removeModifier(SPEED_ID);
             speed.addTransientModifier(new AttributeModifier(SPEED_ID, zr.speedBonus(), AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL));
         }
+        buffsOn(p);
         flightOn(p);
         ManaZonePlayer.countCast(p);
         sync(p, payload(z, ManaZoneNet.START, now));
@@ -288,6 +290,9 @@ public final class ManaZoneManager {
         long elapsed = now - z.startTick;
         AttributeInstance speed = p.getAttribute(Attributes.MOVEMENT_SPEED);
         if (speed != null) speed.removeModifier(SPEED_ID);
+        buffsOff(p);
+        ZoneCast.clear(p.getUUID());                                                      // the upgrade's per-owner state goes with the zone (death, logout, dimension, expiry, collapse)
+        ZoneEvasion.clear(p.getUUID());
         flightOff(p);
         boolean leaving = why == End.DEATH || why == End.LOGOUT;
         if (!leaving && !p.onGround() && !p.isInWater()) {
@@ -321,6 +326,29 @@ public final class ManaZoneManager {
             };
             p.displayClientMessage(Component.translatableWithFallback("nusmp.mana_zone.end." + why.name().toLowerCase(java.util.Locale.ROOT), fb).withStyle(ChatFormatting.GRAY), true);
         }
+    }
+
+    // ---------------------------------------------------------------- the upgrade's attribute buffs (docs/magic/mana_zone_upgrade.md; the speed bonus above is the 1.99.0 one)
+    private static void buffsOn(ServerPlayer p) {
+        ZoneUpRules.Rules up = ManaZoneConfig.upgrade();
+        if (!up.buffs()) return;
+        AttributeInstance atk = p.getAttribute(Attributes.ATTACK_DAMAGE);
+        if (atk != null) {
+            atk.removeModifier(ATTACK_ID);
+            if (up.attackBonus() > 0) atk.addTransientModifier(new AttributeModifier(ATTACK_ID, up.attackBonus(), AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL));
+        }
+        AttributeInstance kb = p.getAttribute(Attributes.KNOCKBACK_RESISTANCE);
+        if (kb != null) {
+            kb.removeModifier(KNOCKBACK_ID);
+            if (up.knockbackResist() > 0) kb.addTransientModifier(new AttributeModifier(KNOCKBACK_ID, up.knockbackResist(), AttributeModifier.Operation.ADD_VALUE));
+        }
+    }
+
+    private static void buffsOff(ServerPlayer p) {
+        AttributeInstance atk = p.getAttribute(Attributes.ATTACK_DAMAGE);
+        if (atk != null) atk.removeModifier(ATTACK_ID);
+        AttributeInstance kb = p.getAttribute(Attributes.KNOCKBACK_RESISTANCE);
+        if (kb != null) kb.removeModifier(KNOCKBACK_ID);
     }
 
     // ---------------------------------------------------------------- mid-air footholds (NeoForge's creative-flight attribute, as the other flight powers of the mod)
@@ -374,7 +402,7 @@ public final class ManaZoneManager {
         for (int i = 0, n = SCRATCH.size(); i < n; i++) {
             Zone z = SCRATCH.get(i);
             ServerPlayer p = server.getPlayerList().getPlayer(z.owner);
-            if (p == null || p.hasDisconnected()) { ZONES.remove(z.owner); continue; }
+            if (p == null || p.hasDisconnected()) { ZONES.remove(z.owner); ZoneCast.clear(z.owner); ZoneEvasion.clear(z.owner); continue; }
             tickOne(p, z, now);
         }
         SCRATCH.clear();
@@ -427,7 +455,7 @@ public final class ManaZoneManager {
         ServerLevel sl = p.serverLevel();
         List<Projectile> list = sl.getEntitiesOfClass(Projectile.class, new AABB(z.cx - r, z.cy - r, z.cz - r, z.cx + r, z.cy + r, z.cz + r), LIVE_PROJECTILE);
         if (list.isEmpty()) return;
-        int budget = zr.maxProjectilesPerScan(), done = 0;
+        int budget = zr.maxProjectilesPerScan(), done = 0, looks = 0, lookCap = ManaZoneConfig.upgrade().evasionLooks();
         for (int i = 0, n = list.size(); i < n; i++) {
             Projectile pr = list.get(i);
             if (!ManaZoneMath.inside(pr.getX() - z.cx, pr.getY() - z.cy, pr.getZ() - z.cz, r)) continue;
@@ -437,6 +465,7 @@ public final class ManaZoneManager {
             boolean boss = owner instanceof LivingEntity lb && BalanceLaw.isBoss(lb);
             if (boss || done >= budget) {                                                 // a boss's attack is slowed, never undone; so is whatever exceeds this scan's budget
                 slow(pr, zr);
+                if (looks < lookCap) { looks++; ZoneEvasion.look(p, z, pr, now); }    // the upgrade: the owner may still step out of the way of what was only slowed
                 continue;
             }
             Vec3 at = pr.position();
@@ -616,6 +645,8 @@ public final class ManaZoneManager {
 
     public static void onServerStopping() {
         ZONES.clear();
+        ZoneCast.clearAll();
+        ZoneEvasion.clearAll();
         CACHE.clear();
         SENT.clear();
         GrandZones.clearRuntime();

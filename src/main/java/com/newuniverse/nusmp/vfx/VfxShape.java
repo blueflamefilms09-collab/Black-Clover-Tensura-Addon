@@ -343,7 +343,10 @@ public enum VfxShape {
     STORM_FALL,
     STORM_BOLT,
     STORM_FRONT,
-    STORM_CANCEL;
+    STORM_CANCEL,
+    // The Mana Method rune (vfx.client.layer.RuneWritingLayer): rune symbols WRITTEN in the air by a pen, rings of them, circle lines, lightning (mana.method.RuneGlyphLayout). Sent locally by the client holder
+    // when the one rune packet arrives, never over the network: from = the rune's centre, to = centre + the caster's look, color = the element's tint, seed = the packed RuneSpec, duration = charge + 10 ticks
+    RUNE_WRITING;
 
     public static VfxShape byId(int id) {
         VfxShape[] v = values();

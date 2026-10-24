@@ -2,7 +2,7 @@ package net.minecraft.util;
 
 /** Preview stub of Minecraft's Mth (same maths, exact trig instead of the sin table). */
 public final class Mth {
-    public static final float PI = (float) Math.PI, TWO_PI = (float) (Math.PI * 2), HALF_PI = (float) (Math.PI / 2);
+    public static final float PI = (float) Math.PI, TWO_PI = (float) (Math.PI * 2), HALF_PI = (float) (Math.PI / 2), DEG_TO_RAD = (float) (Math.PI / 180.0);
     private Mth() {}
     public static float sin(float a) { return (float) Math.sin(a); }
     public static float cos(float a) { return (float) Math.cos(a); }

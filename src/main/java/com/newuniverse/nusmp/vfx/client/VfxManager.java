@@ -73,6 +73,7 @@ import com.newuniverse.nusmp.vfx.client.layer.FireSpellLayer;
 import com.newuniverse.nusmp.vfx.client.layer.WaterSpellLayer;
 import com.newuniverse.nusmp.vfx.client.layer.WindSpellLayer;
 import com.newuniverse.nusmp.vfx.client.layer.EarthSpellLayer;
+import com.newuniverse.nusmp.vfx.client.layer.RuneWritingLayer;
 import com.newuniverse.nusmp.perf.PerfProbe;
 import com.newuniverse.nusmp.perf.PerfSettings;
 import com.newuniverse.nusmp.perf.VfxQuality;
@@ -247,6 +248,7 @@ public final class VfxManager {
         register(new com.newuniverse.nusmp.vfx.client.layer.ManaZoneLayer());              // 1.99.0: the Mana Zone and the Grand Magic Zones
         register(new com.newuniverse.nusmp.vfx.client.layer.UpgradeSignatureLayer());      // 1.102.0: the signature effects of the upgraded weapons' acts
         register(new com.newuniverse.nusmp.vfx.client.layer.DeckSummonLayer());              // 1.110.0: the card summon of the Deck of Many Things
+        register(new RuneWritingLayer());                                                          // the Mana Method rune: symbols written in the air
         com.newuniverse.nusmp.client.storm.StormClientFx.install();                              // Storm Magic: the splash particles (custom particles only) of a running storm
         register(new com.newuniverse.nusmp.vfx.client.layer.StormLayer());                    // Storm Magic (Fairy Tail): the storm cell, its rain and hail, the bolts, the gust front and the surge
         // Wind in the Minecraft style (pixel-anime): registered after WindMagicLayer / WindSpellLayer on purpose, it takes Slash, Ring, Emperor, Gale and Gust Lane over from them (V1 hands them back); Tornado and Zephyr stay with WindSpellLayer
@@ -357,7 +359,7 @@ public final class VfxManager {
             }
             ctx.detail = base * lod[i];
             if (lod[i] < 1f) thinned++;
-            buffer.beginActivation(inst.layer.vertexBudget(inst.shape));
+            buffer.beginActivation(inst.layer.vertexBudget(inst.shape), inst.layer.hardVertexCap(inst.shape));
             long lt = PerfProbe.begin();
             try {
                 inst.layer.render(inst, ctx, buffer);
@@ -404,7 +406,7 @@ public final class VfxManager {
             float l = quality.detailAt(eff);
             lod[i] = l;
             if (l <= 0f) culled++;
-            else estimate += Math.min(inst.layer.vertexBudget(inst.shape), VfxVertexBuffer.MAX_VERTICES_PER_ACTIVATION);
+            else estimate += Math.min(inst.layer.vertexBudget(inst.shape), Math.max(VfxVertexBuffer.MAX_VERTICES_PER_ACTIVATION, inst.layer.hardVertexCap(inst.shape)));
         }
         if (estimate > quality.frameVertices) {                         // the effects do not all fit: the nearest ones are kept until the allowance is spent
             int room = quality.frameVertices;
@@ -416,7 +418,7 @@ public final class VfxManager {
                 taken[best] = true;
                 VfxInstance inst = active.get(best);
                 if (inst.layer instanceof TimeMagicLayer) continue;
-                int cost = Math.min(inst.layer.vertexBudget(inst.shape), VfxVertexBuffer.MAX_VERTICES_PER_ACTIVATION);
+                int cost = Math.min(inst.layer.vertexBudget(inst.shape), Math.max(VfxVertexBuffer.MAX_VERTICES_PER_ACTIVATION, inst.layer.hardVertexCap(inst.shape)));
                 if (cost > room) left[best] = true;
                 else room -= cost;
             }

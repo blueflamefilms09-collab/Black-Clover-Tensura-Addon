@@ -137,6 +137,15 @@ def build(layers):
         if fn.endswith(".java") and fn in PORTAL_PREVIEW_FILES:
             shutil.copy(os.path.join(portal_src, fn), portal_dst)
     shutil.copy(os.path.join(layer_dir, "SpatialPortalLayer.java"), os.path.join(pkg, "client", "layer"))
+    if any(l.split(".")[-1] == "RuneWritingLayer" for l in layers):           # the Mana Method rune: the pure classes (and the plane maths) the layer reads
+        mm_src = os.path.join(SRC, "com", "newuniverse", "nusmp", "mana", "method")
+        mm_dst = os.path.join(gen, "com", "newuniverse", "nusmp", "mana", "method")
+        os.makedirs(mm_dst, exist_ok=True)
+        for name in ("RuneElement", "RuneMods", "RuneSpec", "RuneRules", "RuneAlphabet", "RuneGlyphLayout", "RuneGeneratorUtil"):
+            shutil.copy(os.path.join(mm_src, name + ".java"), mm_dst)
+        perf_dst = os.path.join(gen, "com", "newuniverse", "nusmp", "perf")
+        os.makedirs(perf_dst, exist_ok=True)
+        shutil.copy(os.path.join(SRC, "com", "newuniverse", "nusmp", "perf", "PerfMath.java"), perf_dst)
     shutil.copy(os.path.join(HERE, "Preview.java"), gen)
     classes = os.path.join(BUILD, "classes")
     shutil.rmtree(classes, ignore_errors=True)

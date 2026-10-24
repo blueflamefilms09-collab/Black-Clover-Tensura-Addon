@@ -161,6 +161,15 @@ public final class ManaZoneClient {
                 Math.max(4f, p.radiusCap() * (collapse ? 1f : 1f)), -1, p.serial() * 31 + (collapse ? 7 : 3)));
     }
 
+    /** The radius now of the LOCAL player's own zone as the server synced it (the omnidirectional cast aims within it), or 0 when the local player has none open. */
+    public static double ownRadius(int localPlayerId, long now) {
+        for (int i = 0, n = ZONES.size(); i < n; i++) {
+            CZone z = ZONES.get(i);
+            if (z.ownerId == localPlayerId) return ManaZoneMath.radiusAt(now - z.startClient, z.grow, z.cap);
+        }
+        return 0.0;
+    }
+
     // ---------------------------------------------------------------- the tick (returns at once with nothing to do)
     private static void onClientTick(ClientTickEvent.Post event) {
         Minecraft mc = Minecraft.getInstance();

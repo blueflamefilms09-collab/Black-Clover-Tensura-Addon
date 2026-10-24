@@ -59,3 +59,5 @@ visual/demonslayer/DsSelfTests.java
 vupgrade/DjinnDarkSelfTests.java
 vupgrade/GodBSelfTests.java
 wizard/WizardNet.java
+mana/method/ManaMethodBoot.java
+mana/method/RuneNet.java

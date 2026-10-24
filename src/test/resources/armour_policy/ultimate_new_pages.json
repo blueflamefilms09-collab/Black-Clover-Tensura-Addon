@@ -1,0 +1,10 @@
+{
+  "FLAME": ["ultimate_fire"],
+  "WATER": ["ultimate_water"],
+  "WIND": ["ultimate_wind"],
+  "EARTH": ["ultimate_earth"],
+  "LIGHTNING": ["ultimate_lightning"],
+  "LIGHT": ["ultimate_light"],
+  "DARK": ["ultimate_dark"],
+  "SPATIAL": ["ultimate_spatial"]
+}

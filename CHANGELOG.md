@@ -1,5 +1,36 @@
 # Changelog
 
+## [3.3.0] — Mana Method written runes, Mana Zone upgrade, Ultimate Magic for 104 attributes (+ kingdom charge animations)
+
+### NEW
+- **Ultimate Magic**: one Ultimate for every attribute that has a grimoire (8 flagship + 48 rows 1-48 + 48 rows 49-96 = 104; Time Magic has none), the last page of each family book. Gate: full mastery of the book, Senior 1st Class rank and 1M EP (the Wizard King skips rank and EP). Wind-up of 110-220 ticks, 99% mana to start, all mana taken at the release, three damage pulses (60/25/15%), at most 24 foes per pulse, 2 casts at once on the server, 15 minute cooldown (server settings in `nusmp-ultimate-server.toml`). The existing canon ultimates (Excelitius Leonum, Lightning Battle Fiend, Apocalypra Astrauza) are untouched. All 96 new Ultimates are original designs (no wiki page could be fetched), numbers are first drafts.
+- **Kingdom charge animations**: 12 new player clips `ult_<clover|diamond|spade|heart>_<start|loop|release>` (Clover roars, Diamond decrees, Spade crosses its arms, Heart embraces); the Dark Triad follow Spade. Setting `ultimate.kingdomAnimations` (server, default on).
+- **Character grimoires show their character's own Ultimate** (setting `ultimate.showInCharacterGrimoires`, server, default on; off = the old rule).
+- **Mana Method**: five new pages (Flame, Water, Wind, Earth, True Magic Rune) behind the Mana Zone gate with Homing and Growth runes, True Magic placing real blocks, caps of 2 runes per caster and 24 on the server (server setting `nusmp-mana-method-server.toml`); the rune is drawn as actual rune symbols written in the air in dense rings with an open mod grimoire.
+- **Mana Zone upgrade**: evasion of arrows and projectiles, +15% attack and +0.5 knockback resistance while the zone is open, and omnidirectional zone-casting (the page is cast from behind the target / the zone edge / above). All server settings in the `[upgrade]` section of `nusmp-mana-zone-server.toml`, each switchable back to the 1.99.0 zone.
+- **Companion system (own version)**: a talk screen (Talk / Interact / Bond / Pouch tabs, all state on the server), speech bubbles, gifts with favourites, rapport tiers (3 / 10 / 25), stances (guard / aggressive / passive), a 9-slot healing pouch, friend-or-foe rules, followers that cross dimensions, and a voice-line hook. First companion: Charmy Pappitson (`nusmp:arc_companion`, spawn egg in the creative tab). Settings `nusmp-companions-server.toml` / `-client.toml`; `companions.enabled=false` restores the old arc chat talk.
+- Docs and previews: `docs/companions/*`, `docs/magic/ultimate_*.md`, `mana_method.md`, `mana_zone_upgrade.md`, audits, `docs/previews/ultimate/*`, `docs/previews/mana_method/*`, GUI redesign directions A/B/C (`docs/gui_redesign/`, not built yet).
+
+### REPLACED
+- The Mana Method rune look: the written runes replace the staged dot-ring look (only ever in unreleased builds, nothing shipped is removed).
+- Character-grimoire rule "the Ultimate page is hidden unless the set lists it" (setting off restores it); the kingdom clips replace `cast_mana_zone` + `cast_signature` as the Ultimate charge pose (the old clips stay as the fallback for a caster with no kingdom).
+
+### KEPT
+- Every older page, VFX layer, texture and shape, the Time Magic and its VFX, `CastAnimClient`, the 28 old clips, the older Mana Zone and all earlier ultimates.
+
+### Cost (rule 11)
+- Ultimate: at most 12 effect packets per cast (limit 16), 4 animation packets plus 1 stop per cast, 24 foes per pulse, 2 casts at once, no entities, blocks or chunks created.
+- Mana Method: at most 300 quads (1,200 vertices) per rune, 1,800 quads for six; 1 rune packet of 28 bytes per cast; 7 blocks per cast, 160 in the world, taken back after 30 s; no entities.
+- Companions: nothing per tick but a gated crossing check; sweeps once a second over at most one record per player; at most 5 inbound packets per second per player, 8 bubble packets per tick server-wide, 24 bubbles drawn within 24 blocks, followers per player 2 (hard cap 6), no forced chunk loads.
+- Mana Zone upgrade: no entities, no chunk loads, at most one aim packet per 3 ticks (dropped faster than 2) per zone owner, 4 projectile looks per scan, at most 4 dodges per server tick.
+
+### Not done / caveats
+- Nothing in this release has been seen in a game: previews are software renders, the self-tests (`magic.ultimate`, `magic.mana_method`, `magic.zone_up`) only ran offline as pure tests; the CI server smoke test is their first real run.
+- Ultimate numbers are not balance-tested; some proposal mechanics are not built (Anti-Magic buff-stripping, Curse Warding cleanse, Dice variance, Copy replay, Blood life-steal, Switching swap, Scale weight, Food ally heal).
+- The floating grimoire may clip into the arms in the Diamond and Spade poses; clips only move arms and legs.
+- Companions: never run; Charmy's tastes were picked for play, not from a wiki; no recorded voice lines; no high-five pose; followers also follow into arenas and the Mega-Dungeon (no dimension deny-list yet).
+- Not in this release (still being built): Valkyrie Armor, Star Magic, the GUI redesign, Earth.
+
 ## [3.2.0] — Element effect remakes: Wind (pixel-anime), Water (3D toon + glass), Fire (cel + glow); Shishou flurry
 
 ### NEW

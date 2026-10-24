@@ -111,6 +111,40 @@ public final class CharacterSetRegistry {
     }
 
     /**
+     * The books that are this character's own attributes: the book of his set, plus every other book in which a page is reserved for him ({@link BasicSignatures}: Charmy's Food book next to her Cotton set, Gordon's Curse
+     * book, ...). Empty for a character without a set. Pure; used by the Ultimate Magic rule below.
+     */
+    public Set<String> booksOf(String canon) {
+        CharacterSet set = of(canon);
+        if (set == null) return Set.of();
+        Set<String> out = new java.util.LinkedHashSet<>();
+        out.add(set.book());
+        for (BasicSignatures.Entry e : BasicSignatures.all()) if (e.owner().equals(set.canon())) out.add(e.book());
+        return out;
+    }
+
+    /** Is this book one of the character's own attributes ({@link #booksOf})? */
+    public boolean ownsBook(String canon, String book) { return booksOf(canon).contains(book); }
+
+    /**
+     * {@link #hidden(String, String, String, boolean, boolean)} with the Ultimate Magic rule (server setting {@code ultimate.showInCharacterGrimoires}). A grimoire bound to a character WITH a set used to hide the
+     * Ultimate page of its own book (the set does not list it). With {@code showUltimate} on, such a grimoire shows the Ultimate of the character's OWN book(s) and hides the Ultimate of every other attribute; the
+     * grimoire of a character without a set, the plain grimoire and the basic grimoire are not touched (they show it, as before). Off = the old answer for every page.
+     *
+     * @param ultimatePage the page is the Ultimate of its book
+     */
+    public boolean hidden(String canon, String book, String page, boolean modeZero, boolean hideSignatures, boolean ultimatePage, boolean showUltimate) {
+        if (ultimatePage && showUltimate && !modeZero && of(canon) != null) return !ownsBook(canon, book);
+        return hidden(canon, book, page, modeZero, hideSignatures);
+    }
+
+    /** {@link #opens(String, String, String, RuleFacts)} with the Ultimate Magic rule: the Ultimate of a character's own book opens by the ordinary mastery order and its own gate (null = "no set verdict"), not by the set. */
+    public Boolean opens(String canon, String book, String page, RuleFacts facts, boolean ultimatePage, boolean showUltimate) {
+        if (ultimatePage && showUltimate && of(canon) != null && ownsBook(canon, book)) return null;
+        return opens(canon, book, page, facts);
+    }
+
+    /**
      * The set's verdict on opening a page for a grimoire of this character: null = the character has no set (the old mastery rule applies), false = not yet (or not his), true = open it now.
      * The rank / race gates and the free-slot rule are NOT decided here.
      */

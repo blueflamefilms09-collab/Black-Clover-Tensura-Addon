@@ -107,9 +107,11 @@ public abstract class GrimoireBook extends Skill {
     public final List<BookPage> pages() {
         int version = pagesVersion();
         boolean fifteen = com.newuniverse.nusmp.book.pages15.Pages15.enabled();
-        if (all == null || version != builtVersion || fifteen != builtFifteen) {
+        boolean ultimate = com.newuniverse.nusmp.ultimate.UltimatePages.enabled();      // Ultimate Magic (ultimate.enabled): a book list is rebuilt when the setting flips
+        if (all == null || version != builtVersion || fifteen != builtFifteen || ultimate != builtUltimate) {
             builtVersion = version;
             builtFifteen = fifteen;
+            builtUltimate = ultimate;
             List<BookPage> l = new ArrayList<>(familyAll());
             if (spiritElement() != null) {
                 l.add(BookPage.signature("spirit_dive", "Spirit Dive", GrimoireBook::spiritDive).withCooldown(0));
@@ -129,6 +131,7 @@ public abstract class GrimoireBook extends Skill {
                 l.add(com.newuniverse.nusmp.mana.zone.ManaZoneActions.spacePage());
                 l.add(com.newuniverse.nusmp.mana.zone.TrueMagic.page());                 // 1.99.0: True Magic (Mana Method): the real element from a rune array, natural attributes only, same late-game gate
                 l.addAll(com.newuniverse.nusmp.spiritcontrol.SpiritControlPages.pages());   // 3.0.0: the spirit control pages (Summon / Release, Combat Mode, the spirit's abilities), appended after everything; hidden unless a spirit of this magic answers the player
+                l.addAll(com.newuniverse.nusmp.mana.method.ManaMethodPages.pages());       // Mana Method: the Mana Method pages (Flame, Water, Wind, Earth and True Magic Rune), appended after the spirit pages; late-game gate, see usable
             }
             all = l;
         }
@@ -138,16 +141,18 @@ public abstract class GrimoireBook extends Skill {
     public int familyCount() { return familyAll().size(); }
 
     private List<BookPage> restBase, restAll;
-    private boolean restFifteen, builtFifteen;
+    private boolean restFifteen, builtFifteen, restUltimate, builtUltimate;
     /** The family's pages followed by the pages the character spell sets of the squad captains / Spade / Heart / Diamond / Seabed append to this book (book.CharacterPagesRest; the same list when none). */
     private List<BookPage> familyAll() {
         List<BookPage> f = familyPages();
         boolean fifteen = com.newuniverse.nusmp.book.pages15.Pages15.enabled();      // server setting magic.pagesFifteen: false = the old lists
-        if (restBase == f && restAll != null && restFifteen == fifteen) return restAll;
+        boolean ultimate = com.newuniverse.nusmp.ultimate.UltimatePages.enabled();
+        if (restBase == f && restAll != null && restFifteen == fifteen && restUltimate == ultimate) return restAll;
         if (getRegistryName() == null) return f;
-        restAll = com.newuniverse.nusmp.book.pages15.Pages15.append(getRegistryName().getPath(), BasicPages.append(getRegistryName().getPath(), CharacterPagesRest.append(getRegistryName().getPath(), f)));      // basic grimoires (docs/magic/basic_grimoires.md): the generic anime pages go next to last; the "15 spells for every grimoire" pages (book.pages15) go last of all
+        restAll = com.newuniverse.nusmp.ultimate.UltimatePages.append(getRegistryName().getPath(), com.newuniverse.nusmp.book.pages15.Pages15.append(getRegistryName().getPath(), BasicPages.append(getRegistryName().getPath(), CharacterPagesRest.append(getRegistryName().getPath(), f))));      // Ultimate Magic (ultimate.UltimatePages): the Ultimate is the very last family page of its book; basic grimoires (docs/magic/basic_grimoires.md): the generic anime pages go next to last; the "15 spells for every grimoire" pages (book.pages15) go last of all
         restBase = f;
         restFifteen = fifteen;
+        restUltimate = ultimate;
         return restAll;
     }
 
@@ -156,6 +161,8 @@ public abstract class GrimoireBook extends Skill {
      * Cotton / Food half. Null = nothing; otherwise who or what it waits for, shown to the player once.
      */
     public String pageBlock(ServerPlayer p, ManasSkillInstance inst, int mode) {
+        String ultimateBlock = com.newuniverse.nusmp.ultimate.UltimatePages.block(this, page(mode), p, inst);      // Ultimate Magic: the late-game gate of its page
+        if (ultimateBlock != null) return ultimateBlock;
         return CharacterSpells.block(this, page(mode), p);
     }
     public BookPage page(int mode) { return mode >= 0 && mode < pages().size() ? pages().get(mode) : null; }
@@ -175,6 +182,8 @@ public abstract class GrimoireBook extends Skill {
         return pg != null && (pg.id().equals(ZONE_ID) || pg.id().equals(com.newuniverse.nusmp.mana.zone.ManaZoneActions.VOLLEY_ID) || pg.id().equals(com.newuniverse.nusmp.mana.zone.ManaZoneActions.SPACE_ID)
                 || pg.id().equals(com.newuniverse.nusmp.mana.zone.TrueMagic.ID));
     }
+    /** The five Mana Method pages (mana.method.ManaMethodPages). */
+    private boolean isMethodPage(int mode) { return page(mode) != null && com.newuniverse.nusmp.mana.method.ManaMethodPages.isPage(page(mode).id()); }
     /** 3.0.0: the two toggle pages of the spirit control plane (Summon / Release Spirit, Combat Mode) act on the key press; the ability pages are ordinary casts. */
     private boolean isSpiritToggle(int mode) { return page(mode) != null && com.newuniverse.nusmp.spiritcontrol.SpiritControlPages.isInstant(page(mode).id()); }
     private boolean isSpiritPage(int mode) { return page(mode) != null && com.newuniverse.nusmp.spiritcontrol.SpiritControlPages.isPage(page(mode).id()); }
@@ -205,6 +214,7 @@ public abstract class GrimoireBook extends Skill {
         if (mode < familyCount()) return isUnlocked(i, mode);
         if (isDive(mode)) return e instanceof ServerPlayer p ? spiritGateOpen(p) : true;
         if (isUnion(mode)) return cover(i).isForbidden();
+        if (isMethodPage(mode)) return com.newuniverse.nusmp.mana.method.ManaMethodPages.usable(e);      // Mana Method: the Mana Method pages: the same late-game gate as the Mana Zone, and the server setting manaMethod.enabled
         if (isZoneGated(mode)) return com.newuniverse.nusmp.mana.zone.ManaZoneManager.gateOpenFor(e);      // 1.99.0: before the instant-page rule below, which used to make the Mana Zone open to everyone
         if (isSpiritPage(mode)) return com.newuniverse.nusmp.spiritcontrol.SpiritControlPages.usable(this, i, e, page(mode).id());      // 3.0.0: shown only while a spirit of this book's magic answers the player (asked after the Mana Zone gate)
         if (instant(mode)) return true;
@@ -382,13 +392,14 @@ public abstract class GrimoireBook extends Skill {
         instance.getOrCreateTag().putBoolean("ManaZone", false);
         if (EnergyHelper.isOutOfEnergy(player, instance, mode)) return;
         com.newuniverse.nusmp.labyrinth.mega.flow.FlowCasts.beforeCast(player, magicId(), p.id());      // 1.55.0: the Rukh flow: this tick's damage comes from this page
-        if (!com.newuniverse.nusmp.core.magic.profile.SafeCast.run(magicId(), gameTime, player, () -> com.newuniverse.nusmp.sylph.SylphCasting.run(this, p, player, mode, () -> com.newuniverse.nusmp.undine.UndineCasting.run(this, p, instance, player, mode)))) { com.newuniverse.nusmp.anim.CastAnim.play(player, com.newuniverse.nusmp.anim.CastAnim.FAIL); return; }
+        // Mana Zone upgrade: with a zone open and an aim sent, ZoneCast.around casts the page from the zone, at the aimed point (the plain cast when there is none)
+        if (!com.newuniverse.nusmp.core.magic.profile.SafeCast.run(magicId(), gameTime, player, () -> com.newuniverse.nusmp.mana.zone.ZoneCast.around(player, mode, p.id(), () -> com.newuniverse.nusmp.sylph.SylphCasting.run(this, p, player, mode, () -> com.newuniverse.nusmp.undine.UndineCasting.run(this, p, instance, player, mode))))) { com.newuniverse.nusmp.anim.CastAnim.play(player, com.newuniverse.nusmp.anim.CastAnim.FAIL); return; }
         ArmourCast.afterCast(player, this, instance, p.id(), mode);      // 1.99.0: only an armour page equips; every other page leaves the armour layer alone (book.ArmourPolicy)
         MagicType castMagic = magicNow();
         if (castMagic == MagicType.SCALE) com.newuniverse.nusmp.scalecast.ScaleCastKit.onCast(player);      // Scale casting (docs/magic/scale_casting.md): the floating Scale weighs the foe, the weighing animation starts
         String clip = castMagic == MagicType.KEY ? com.newuniverse.nusmp.anim.CastAnim.KEY_TURN
                 : castMagic == MagicType.DICE || castMagic == MagicType.GAME ? com.newuniverse.nusmp.anim.CastAnim.DICE_TOSS
-                : com.newuniverse.nusmp.anim.CastAnim.releaseFor(p);
+                : com.newuniverse.nusmp.ultimate.UltimateManager.pageClip(player, p.id(), com.newuniverse.nusmp.anim.CastAnim.releaseFor(p));      // Ultimate Magic: the cast that just began keeps the wind-up pose of the caster's kingdom
         String styledClip = com.newuniverse.nusmp.firecast.FireCasting.releaseClip(this, player, mode, clip);      // fire casting: the style's own release clip (the bat swing started at the toss)
         if (styledClip != null) com.newuniverse.nusmp.anim.CastAnim.play(player, styledClip);
         shout(player, p.incantation());
@@ -459,6 +470,8 @@ public abstract class GrimoireBook extends Skill {
     }
 
     public static LivingEntity target(ServerPlayer p, double range) {
+        LivingEntity zoneTarget = com.newuniverse.nusmp.mana.zone.ZoneCast.targetOverride(p);      // Mana Zone upgrade: the foe the caster aimed at inside the zone
+        if (zoneTarget != null) return zoneTarget;
         Vec3 start = p.getEyePosition(), end = start.add(p.getViewVector(1f).scale(range));
         HitResult wall = p.level().clip(new net.minecraft.world.level.ClipContext(start, end,
                 net.minecraft.world.level.ClipContext.Block.COLLIDER, net.minecraft.world.level.ClipContext.Fluid.NONE, p));
@@ -469,7 +482,10 @@ public abstract class GrimoireBook extends Skill {
     }
 
     /** Point under the crosshair (block hit or max range). */
-    public static Vec3 aim(ServerPlayer p, double range) { return p.pick(range, 1f, false).getLocation(); }
+    public static Vec3 aim(ServerPlayer p, double range) {
+        Vec3 zoneAim = com.newuniverse.nusmp.mana.zone.ZoneCast.aimOverride(p);      // Mana Zone upgrade: the point aimed at inside the zone
+        return zoneAim != null ? zoneAim : p.pick(range, 1f, false).getLocation();
+    }
 
     public static List<LivingEntity> around(ServerPlayer p, Vec3 c, double r) {
         return p.serverLevel().getEntitiesOfClass(LivingEntity.class, new AABB(c, c).inflate(r),
@@ -478,6 +494,7 @@ public abstract class GrimoireBook extends Skill {
 
     /** Entities within 'width' of the segment a->b. */
     public static List<LivingEntity> along(ServerPlayer p, Vec3 a, Vec3 b, double width) {
+        a = com.newuniverse.nusmp.mana.zone.ZoneCast.fromOverride(p, a);      // Mana Zone upgrade: a beam that starts at the hand starts at the zone-cast origin
         List<LivingEntity> out = new ArrayList<>();
         Vec3 ab = b.subtract(a);
         double len2 = Math.max(1e-6, ab.lengthSqr());
@@ -499,7 +516,7 @@ public abstract class GrimoireBook extends Skill {
 
     // ---------------------------------------------------------------- VFX helpers
     public void vfx(ServerPlayer p, VfxShape shape, Vec3 from, Vec3 to, int ticks, float power) {
-        VfxSpawn.send(p.serverLevel(), shape, com.newuniverse.nusmp.sylph.SylphCasting.origin(p, com.newuniverse.nusmp.undine.UndineCasting.origin(p, com.newuniverse.nusmp.firecast.FireCasting.origin(p, from))), to, color, ticks, power);      // fire casting: a spell's own start moves to the emitter (the ball, the fist, the Salamander's mouth)
+        VfxSpawn.send(p.serverLevel(), shape, com.newuniverse.nusmp.mana.zone.ZoneCast.fromOverride(p, com.newuniverse.nusmp.sylph.SylphCasting.origin(p, com.newuniverse.nusmp.undine.UndineCasting.origin(p, com.newuniverse.nusmp.firecast.FireCasting.origin(p, from)))), to, color, ticks, power);      // fire casting: a spell's own start moves to the emitter (the ball, the fist, the Salamander's mouth)
     }
 
     /** Spinning magic circle under the caster in this book's color (every cast). */
