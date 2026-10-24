@@ -52,6 +52,7 @@ public final class NUCreativeTab {
                 for (net.minecraft.world.item.ItemStack ft : com.newuniverse.nusmp.fairytail.FairyTailSystem.creativeItems()) output.accept(ft);   // Fairy Tail skill books
                 output.accept(com.newuniverse.nusmp.fairytail.storm.StormBoot.STAFF.get());                                          // Storm Magic (Fairy Tail): the Stormcaller Staff
                 output.accept(com.newuniverse.nusmp.firecast.FireCastBoot.BAT.get());                                                // fire casting: Magna's Soul Bat
+                for (var egg : com.newuniverse.nusmp.companion.sample.CompanionEntities.spawnEggs()) output.accept(egg.get());                       // companions: the sample companion's spawn egg (Charmy)
                 for (var sb : com.newuniverse.nusmp.spiritblades.SpiritBladesBoot.creativeItems()) output.accept(sb.get());                  // the Wind Spirit blades: Spirit of Zephyr and Spirit of Boreas (creative only)
                 for (var ci : com.newuniverse.nusmp.celestial.CelestialItems.creativeItems()) output.accept(ci.get());               // Celestial Spirit Magic: the keys, the book, the sceptre
                 output.accept(com.newuniverse.nusmp.block.NUBlocks.GRIMOIRE_ALTAR_ITEM.get());

@@ -90,6 +90,7 @@ public class NUSMP {
         com.newuniverse.nusmp.gnome.GnomeBoot.init(modEventBus, modContainer);      // the Gnome (Earth Spirit): its sound events, nusmp-gnome-server.toml (magic.gnome), the key packet, the events, self-test magic.gnome
 
         com.newuniverse.nusmp.firecast.FireCastBoot.init(modEventBus, modContainer);                                      // fire casting: Magna's Soul Bat, nusmp-firecast-server.toml (magic.fireCasting), the key packet, the events, self-test magic.fire_casting
+        com.newuniverse.nusmp.companion.CompanionBoot.init(modEventBus, modContainer);                                  // companions: the talk screen, gifts / high five / stances / pouch, followers through dimensions, speech bubbles, the sample companion (Charmy), nusmp-companions-server.toml (companions.enabled), the packets, the events, self-tests magic.companions.*
         com.newuniverse.nusmp.sylph.SylphBoot.init(modEventBus, modContainer);                                            // the Sylph: Yuno's wind Spirit Lord, her sounds, nusmp-sylph-server.toml (magic.sylph), the key packet, the events, self-test magic.sylph
         com.newuniverse.nusmp.spiritspace.SpiritSpaceBoot.init(modEventBus, modContainer);                                // Spirit of Space: nusmp-spiritspace-server.toml (magic.spiritSpace), the key packet, the sounds, the events, self-test magic.spirit_space
         com.newuniverse.nusmp.spiritlight.SpiritLightBoot.init(modEventBus, modContainer);                                  // Spirit of Light: nusmp-spiritlight-server.toml (magic.spiritLight), the key packet, its own sounds, the events, self-test magic.spirit_light
@@ -186,6 +187,7 @@ public class NUSMP {
             com.newuniverse.nusmp.client.aura.NoelleFormsClientConfig.init(modEventBus, modContainer);                       // 1.99.0: noelleForms.classicLook (nusmp-noelle-forms-client.toml): the first Valkyrie Dress look
             com.newuniverse.nusmp.client.song.SongClient.init(modEventBus);
             com.newuniverse.nusmp.client.shishou.ShishouClient.init(modEventBus);      // Shishou: the throw / cast / next-skill keys, the movable HUD, the body renderer, the concealed tooltip
+            com.newuniverse.nusmp.client.companion.CompanionClient.init(modEventBus, modContainer);                           // companions: the talk screen, the speech bubbles, the sample companion's renderer, nusmp-companions-client.toml
 
             com.newuniverse.nusmp.client.spiritlight.SpiritLightClient.init(modEventBus);        // Spirit of Light: the seraph's spoken-line player (no keys since 3.0.0)
 
