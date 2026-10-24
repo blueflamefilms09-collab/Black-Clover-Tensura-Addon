@@ -20,6 +20,7 @@ public final class ManaZoneBoot {
     public static void init(IEventBus modBus, ModContainer container) {
         container.registerConfig(ModConfig.Type.SERVER, ManaZoneConfig.SPEC, "nusmp-mana-zone-server.toml");
         modBus.addListener(ManaZoneNet::registerPayloads);
+        modBus.addListener(ZoneCastNet::registerPayloads);                                // the upgrade's one client-to-server packet (the aim)
         NeoForge.EVENT_BUS.addListener((AddReloadListenerEvent e) -> {
             e.addListener(new ManaZoneData.Loader());
             e.addListener(new GrandZones.Loader());
@@ -32,9 +33,12 @@ public final class ManaZoneBoot {
         NeoForge.EVENT_BUS.addListener(ManaZoneManager::onLogin);
         NeoForge.EVENT_BUS.addListener(ManaZoneManager::onRespawn);
         NeoForge.EVENT_BUS.addListener((ServerStoppingEvent e) -> ManaZoneManager.onServerStopping());
+        NeoForge.EVENT_BUS.addListener(ZoneEvasion::onImpact);                            // the upgrade's evasion backstop (returns at once while no zone is open)
         NeoForge.EVENT_BUS.addListener(GrandZones::onPlayerTick);
         NeoForge.EVENT_BUS.addListener(GrandZones::onLogout);
         ManaZoneSelfTests.register();
+        ZoneUpSelfTests.register();
         if (FMLEnvironment.dist == Dist.CLIENT) com.newuniverse.nusmp.client.manazone.ManaZoneClient.init(modBus);
+        if (FMLEnvironment.dist == Dist.CLIENT) com.newuniverse.nusmp.client.manazone.ZoneCastClient.init();
     }
 }

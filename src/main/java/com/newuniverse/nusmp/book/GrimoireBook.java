@@ -392,7 +392,8 @@ public abstract class GrimoireBook extends Skill {
         instance.getOrCreateTag().putBoolean("ManaZone", false);
         if (EnergyHelper.isOutOfEnergy(player, instance, mode)) return;
         com.newuniverse.nusmp.labyrinth.mega.flow.FlowCasts.beforeCast(player, magicId(), p.id());      // 1.55.0: the Rukh flow: this tick's damage comes from this page
-        if (!com.newuniverse.nusmp.core.magic.profile.SafeCast.run(magicId(), gameTime, player, () -> com.newuniverse.nusmp.sylph.SylphCasting.run(this, p, player, mode, () -> com.newuniverse.nusmp.undine.UndineCasting.run(this, p, instance, player, mode)))) { com.newuniverse.nusmp.anim.CastAnim.play(player, com.newuniverse.nusmp.anim.CastAnim.FAIL); return; }
+        // Mana Zone upgrade: with a zone open and an aim sent, ZoneCast.around casts the page from the zone, at the aimed point (the plain cast when there is none)
+        if (!com.newuniverse.nusmp.core.magic.profile.SafeCast.run(magicId(), gameTime, player, () -> com.newuniverse.nusmp.mana.zone.ZoneCast.around(player, mode, p.id(), () -> com.newuniverse.nusmp.sylph.SylphCasting.run(this, p, player, mode, () -> com.newuniverse.nusmp.undine.UndineCasting.run(this, p, instance, player, mode))))) { com.newuniverse.nusmp.anim.CastAnim.play(player, com.newuniverse.nusmp.anim.CastAnim.FAIL); return; }
         ArmourCast.afterCast(player, this, instance, p.id(), mode);      // 1.99.0: only an armour page equips; every other page leaves the armour layer alone (book.ArmourPolicy)
         MagicType castMagic = magicNow();
         if (castMagic == MagicType.SCALE) com.newuniverse.nusmp.scalecast.ScaleCastKit.onCast(player);      // Scale casting (docs/magic/scale_casting.md): the floating Scale weighs the foe, the weighing animation starts
@@ -469,6 +470,8 @@ public abstract class GrimoireBook extends Skill {
     }
 
     public static LivingEntity target(ServerPlayer p, double range) {
+        LivingEntity zoneTarget = com.newuniverse.nusmp.mana.zone.ZoneCast.targetOverride(p);      // Mana Zone upgrade: the foe the caster aimed at inside the zone
+        if (zoneTarget != null) return zoneTarget;
         Vec3 start = p.getEyePosition(), end = start.add(p.getViewVector(1f).scale(range));
         HitResult wall = p.level().clip(new net.minecraft.world.level.ClipContext(start, end,
                 net.minecraft.world.level.ClipContext.Block.COLLIDER, net.minecraft.world.level.ClipContext.Fluid.NONE, p));
@@ -479,7 +482,10 @@ public abstract class GrimoireBook extends Skill {
     }
 
     /** Point under the crosshair (block hit or max range). */
-    public static Vec3 aim(ServerPlayer p, double range) { return p.pick(range, 1f, false).getLocation(); }
+    public static Vec3 aim(ServerPlayer p, double range) {
+        Vec3 zoneAim = com.newuniverse.nusmp.mana.zone.ZoneCast.aimOverride(p);      // Mana Zone upgrade: the point aimed at inside the zone
+        return zoneAim != null ? zoneAim : p.pick(range, 1f, false).getLocation();
+    }
 
     public static List<LivingEntity> around(ServerPlayer p, Vec3 c, double r) {
         return p.serverLevel().getEntitiesOfClass(LivingEntity.class, new AABB(c, c).inflate(r),
@@ -488,6 +494,7 @@ public abstract class GrimoireBook extends Skill {
 
     /** Entities within 'width' of the segment a->b. */
     public static List<LivingEntity> along(ServerPlayer p, Vec3 a, Vec3 b, double width) {
+        a = com.newuniverse.nusmp.mana.zone.ZoneCast.fromOverride(p, a);      // Mana Zone upgrade: a beam that starts at the hand starts at the zone-cast origin
         List<LivingEntity> out = new ArrayList<>();
         Vec3 ab = b.subtract(a);
         double len2 = Math.max(1e-6, ab.lengthSqr());
@@ -509,7 +516,7 @@ public abstract class GrimoireBook extends Skill {
 
     // ---------------------------------------------------------------- VFX helpers
     public void vfx(ServerPlayer p, VfxShape shape, Vec3 from, Vec3 to, int ticks, float power) {
-        VfxSpawn.send(p.serverLevel(), shape, com.newuniverse.nusmp.sylph.SylphCasting.origin(p, com.newuniverse.nusmp.undine.UndineCasting.origin(p, com.newuniverse.nusmp.firecast.FireCasting.origin(p, from))), to, color, ticks, power);      // fire casting: a spell's own start moves to the emitter (the ball, the fist, the Salamander's mouth)
+        VfxSpawn.send(p.serverLevel(), shape, com.newuniverse.nusmp.mana.zone.ZoneCast.fromOverride(p, com.newuniverse.nusmp.sylph.SylphCasting.origin(p, com.newuniverse.nusmp.undine.UndineCasting.origin(p, com.newuniverse.nusmp.firecast.FireCasting.origin(p, from)))), to, color, ticks, power);      // fire casting: a spell's own start moves to the emitter (the ball, the fist, the Salamander's mouth)
     }
 
     /** Spinning magic circle under the caster in this book's color (every cast). */
