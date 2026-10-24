@@ -1,0 +1,32 @@
+Water remake, direction C: mesh pieces (quads; verts = 4 x quads; layer 0 body / 1 glow / 2 foam)
+
+piece                     quads     L0     L1     L2
+dragon_head_upper            60     51      3      6
+dragon_head_upper_lo         41     34      3      4
+dragon_head_lower            30     24      0      6
+dragon_head_lower_lo         16     12      0      4
+dragon_seg                    8      7      1      0
+dragon_seg_lo                 6      5      1      0
+dragon_seg_b                 14      7      1      6
+dragon_seg_b_lo              10      5      1      4
+dragon_tail                  14     14      0      0
+dragon_tail_lo               10     10      0      0
+gem                           8      8      0      0
+gem_lo                        8      8      0      0
+orb                          48     48      0      0
+orb_lo                       24     24      0      0
+orb_xs                       15     15      0      0
+sphere                       80     80      0      0
+sphere_lo                    48     48      0      0
+ripple                       48     36      0     12
+ripple_lo                    28     20      0      8
+horn                         12     12      0      0
+horn_lo                       8      8      0      0
+wisp                          7      7      0      0
+wisp_lo                       4      4      0      0
+lance                        38     30      8      0
+lance_lo                     28     20      8      0
+dome                        120     60      0     60
+dome_lo                      50     32      0     18
+feather                      24     16      8      0
+feather_lo                   20     12      8      0
