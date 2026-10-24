@@ -1,6 +1,8 @@
 package com.newuniverse.nusmp.star;
 
+import com.newuniverse.nusmp.antimagic.Nullification;
 import com.newuniverse.nusmp.book.BookPage;
+import com.newuniverse.nusmp.book.EnergyBridge;
 import com.newuniverse.nusmp.book.SpellRuntime;
 import com.newuniverse.nusmp.book.pages15.Pages15Kit;
 import com.newuniverse.nusmp.book.pages15.Pages15Kit.Ctx;
@@ -10,6 +12,8 @@ import com.newuniverse.nusmp.prop.MagicProps;
 import com.newuniverse.nusmp.prop.PropKind;
 import com.newuniverse.nusmp.skilltree.kit.KitAllies;
 import com.newuniverse.nusmp.vfx.VfxShape;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -30,7 +34,7 @@ import java.util.UUID;
  * Effects go through {@link StarFx} (at most ten packets per cast, to nearby players only).
  *
  * <p>Worst case per cast: Seed 1 packet, 1 entity; Conjunction 1 packet, 1 ray, up to 5 box tests, up to 5 allies moved; Scutum 4 or 5 packets, 1 entity; Hasta 5 or 6 packets, 1 segment query; Flagellum 4 or 5
- * packets plus 3, 12 or 15 segment queries over 12 ticks; Black Neverland 1 packet, 5 pulses of one sphere query each. The old versions of Conjunction and Flagellum are kept as the fallback.
+ * packets plus 3, 12 or 15 segment queries over 12 ticks; Black Neverland 1 packet, 5 pulses of one sphere query each (the anti-magic dome adds one shatterBarriers per cancelling pulse, 4 of the 5). The old versions of Conjunction and Flagellum are kept as the fallback.
  */
 public final class StarCasts {
     private StarCasts() {}
@@ -236,28 +240,52 @@ public final class StarCasts {
     }
 
     // ------------------------------------------------------------------------------------------------ Black Neverland
+    /**
+     * Black Neverland (manga: Yuno's Star + Sylph Union Magic with Asta's anti-magic, ch. 381 to 383; rules in {@link StarNeverlandRules}). The Grinberryall heir mark is the base gate; while
+     * {@code star.neverlandCanonGate} is true the Sylph bond and the anti-magic source are needed too. The dome (8 blocks, 100 ticks, a pulse every 20) weakens and slows the foes inside, ends their spell
+     * bolts, quickens and strengthens the caster's allies, and, for an anti-magic caster, cancels the foes' magic (silence, jammed skills, shattered barriers) until the anti-magic fades after 80 ticks.
+     */
     public static BookPage.Cast blackNeverland() {
         return Pages15Kit.cast(Tier.ZONE, c -> {
             if (!gate(c, StarRules.BLACK_NEVERLAND)) return false;
             ServerPlayer p = c.caster;
+            StarNeverlandRules.Plan plan = StarNeverlandRules.plan(true, StarGame.sylphBond(p), StarGame.antiMagicSource(p), StarConfig.neverlandCanonGate());
+            if (!plan.ok()) return c.fail(plan.problem());
             ServerLevel level = p.serverLevel();
             final Vec3 centre = p.position();
-            final double radius = 8.0;
-            if (!c.zone(100, 20, age -> pulse(c, level, centre, radius))) return false;
+            final double radius = StarNeverlandRules.RADIUS;
+            final boolean[] anti = {plan.antiMagic()};
+            if (!c.zone(100, 20, age -> pulse(c, level, centre, radius, anti[0], age))) return false;
+            if (anti[0] && !EnergyBridge.aura(p, StarNeverlandRules.AURA_FRAC, StarNeverlandRules.AURA_FLOOR)) {
+                anti[0] = false;                                      // the dome rises, but without the anti-magic: it costs nothing and cancels nothing
+                p.displayClientMessage(Component.literal(StarNeverlandRules.NO_AURA + " The dome holds without anti-magic.").withStyle(ChatFormatting.GRAY), true);
+            }
             c.circle(1.0f);
             StarFx.send(new StarFx.Budget(), level, VfxShape.STAR_DOME, centre, centre.add(0, 1, 0), 0, 100, (float) radius);
             return true;
         });
     }
 
-    /** One pulse of the dome (every 20 ticks for 5 seconds): the foes inside are weakened and hurt a little, the mage's allies are strengthened, and the magic of others fades (their bolts end). */
-    private static void pulse(Ctx c, ServerLevel level, Vec3 centre, double radius) {
+    /**
+     * One pulse of the dome (every 20 ticks for 5 seconds): the foes inside are weakened and hurt a little, the mage's allies are strengthened, and the magic of others fades (their bolts end). For an
+     * anti-magic dome, while it has not faded (age under 80): the foes are silenced, every second pulse their skills are jammed for 3 seconds, and the barriers and stars of others inside shatter
+     * ({@code Nullification}, temporary for players: it never touches learned skills, mastery or max EP). Cost per pulse: one foe query (up to 8 targets), one ally query, at most 6 bolts, and for the
+     * anti-magic dome one {@code shatterBarriers} (one entity query of the sphere, one pass over the star registry).
+     */
+    private static void pulse(Ctx c, ServerLevel level, Vec3 centre, double radius, boolean anti, int age) {
         ServerPlayer p = c.caster;
+        boolean cancel = anti && StarNeverlandRules.cancelsAt(age);
+        boolean jam = cancel && StarNeverlandRules.jamsAt(age);
         for (LivingEntity t : c.foes(centre, radius)) {
             c.hit(t, c.tier.pulse * 0.6f);
             t.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 60, 1));
             t.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 60, 0));
+            if (cancel) {
+                EnergyBridge.effect(t, "silence", StarNeverlandRules.SILENCE_TICKS, 0);
+                if (jam) Nullification.jamAll(t, StarNeverlandRules.JAM_SECONDS, StarNeverlandRules.JAM_MISFIRE);
+            }
         }
+        if (cancel) Nullification.shatterBarriers(level, centre, radius, p);
         SpellRuntime.dissolveBolts(level, centre, radius, p, 6);
         List<LivingEntity> friends = new ArrayList<>(KitAllies.around(p, centre, radius));
         friends.removeIf(e -> !e.isAlive() || e.isSpectator());

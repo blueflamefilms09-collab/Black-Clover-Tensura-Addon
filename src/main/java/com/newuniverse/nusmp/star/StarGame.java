@@ -7,7 +7,11 @@ import com.newuniverse.nusmp.arc.world.SagaRewards;
 import com.newuniverse.nusmp.blackclover.GrimoirePages;
 import com.newuniverse.nusmp.blackclover.Kingdom;
 import com.newuniverse.nusmp.blackclover.MagicType;
+import com.newuniverse.nusmp.antimagic.AntiMagic;
 import com.newuniverse.nusmp.book.GrimoireBook;
+import com.newuniverse.nusmp.book.SpiritBond;
+import com.newuniverse.nusmp.item.NUItems;
+import com.newuniverse.nusmp.multiverse.SpiritLordSkill;
 import com.newuniverse.nusmp.prop.MagicPropEntity;
 import com.newuniverse.nusmp.prop.MagicProps;
 import com.newuniverse.nusmp.prop.PropKind;
@@ -22,6 +26,7 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
@@ -77,6 +82,24 @@ public final class StarGame {
         } catch (RuntimeException e) {
             return false;                       // a story that cannot be read is "not an heir", never a crash of a cast
         }
+    }
+
+    // ------------------------------------------------------------------------------------------------ Black Neverland's canon flags (server flags, read at the cast; see StarNeverlandRules)
+    /** Flag {@code sylph_bond}: the caster is bonded to the wind spirit Sylph (a spirit bond or a Spirit Lord skill whose spirit is Sylph). Computed, never stored. */
+    public static boolean sylphBond(ServerPlayer p) {
+        try {
+            return (SpiritBond.bonded(p) || SpiritLordSkill.instance(p).isPresent()) && "Sylph".equalsIgnoreCase(SpiritLordSkill.bondedType(p));
+        } catch (RuntimeException e) { return false; }
+    }
+
+    /** Flag {@code anti_magic_source}: a Demon-Dweller-family sword (Asta's, as in the manga) in either hand, or the Anti-Magic Lord. Computed, never stored. */
+    public static boolean antiMagicSource(ServerPlayer p) {
+        try {
+            for (Item held : new Item[]{p.getMainHandItem().getItem(), p.getOffhandItem().getItem()}) {
+                if (held == NUItems.DEMON_SLAYER.get() || held == NUItems.DEMON_DWELLER.get() || held == NUItems.DEMON_DESTROYER.get() || held == NUItems.DEMON_SLASHER_KATANA.get()) return true;
+            }
+            return AntiMagic.lord(p).isPresent();
+        } catch (RuntimeException e) { return false; }
     }
 
     // ------------------------------------------------------------------------------------------------ the stars

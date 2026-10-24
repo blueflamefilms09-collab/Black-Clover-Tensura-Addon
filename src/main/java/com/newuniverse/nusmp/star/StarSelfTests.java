@@ -72,6 +72,9 @@ public final class StarSelfTests {
         if (StarDispelRules.clampChance(9) != 1.0 || StarDispelRules.clampChance(-1) != 0.0 || Math.abs(StarDispelRules.chance(0.35, StarDispelRules.Role.PANE, false) - 0.6) > 1e-6
                 || StarDispelRules.chance(0.35, StarDispelRules.Role.NODE, true) >= StarDispelRules.chance(0.35, StarDispelRules.Role.NODE, false) || StarDispelRules.breaks(0.0, 0.0) || !StarDispelRules.breaks(1.0, 0.99)) bad.add("the dispel chances");
         if (StarConfig.dispelChance() < 0.0 || StarConfig.dispelChance() > 1.0) bad.add("star.dispelChance out of range");
+        if (StarNeverlandRules.plan(false, true, true, false).ok() || StarNeverlandRules.plan(true, false, true, true).ok() || StarNeverlandRules.plan(true, true, false, true).ok()
+                || !StarNeverlandRules.plan(true, true, true, true).antiMagic() || !StarNeverlandRules.plan(true, false, false, false).ok() || StarNeverlandRules.plan(true, false, false, false).antiMagic()
+                || StarNeverlandRules.cancellingPulses() != 4) bad.add("the Black Neverland plan");
     }
 
     // ---------------------------------------------------------------------------------------------- with a stand-in player
@@ -153,6 +156,10 @@ public final class StarSelfTests {
         // the real entry: the mod's dispel calls the hook (nothing is left to break, so this is a no-op that must not throw)
         int viaMod = com.newuniverse.nusmp.antimagic.Nullification.shatterBarriers(level, c, 4, null);
         if (viaMod < 0) bad.add("shatterBarriers");
+        // Black Neverland's server flags are computable for a stand-in player (no bond, no sword): the canon gate refuses it, the relaxed gate does not
+        boolean sylph = StarGame.sylphBond(owner), source = StarGame.antiMagicSource(owner);
+        if (sylph || source) bad.add("a fresh stand-in player has a Sylph bond or an anti-magic source: " + sylph + " " + source);
+        if (StarNeverlandRules.plan(true, sylph, source, true).ok() || !StarNeverlandRules.plan(true, sylph, source, false).ok()) bad.add("the canon gate does not follow the flags");
         StarGame.forget(owner);
         if (StarGame.NODES.total() != 0 || StarGame.GRACE.size() > StarDispelRules.GRACE_CAP) bad.add("dispel leaks");
         return "dispel hook: chance 0 / own / outside / grace / pane (default chance " + StarConfig.dispelChance() + ")";
