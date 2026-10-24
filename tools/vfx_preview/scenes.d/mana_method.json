@@ -1,0 +1,20 @@
+{
+  "mana_method_rune": {
+    "layer": "RuneWritingLayer",
+    "shape": "RUNE_WRITING",
+    "from": [0, 70, 2.6],
+    "to": [0, 69.95, 3.6],
+    "power": 1.0,
+    "duration": 28,
+    "seed": 7,
+    "budget": 1200,
+    "cam": [0.3, 70.55, -0.35],
+    "target": [0, 69.9, 2.6],
+    "ages": [3, 7, 11, 15, 18, 21],
+    "figures": [[0, 68.38, 0, 1.8]],
+    "ground": 68.38,
+    "sky": [0.14, 0.18, 0.2],
+    "horizon": [0.22, 0.26, 0.28],
+    "_comment": "The Mana Method rune through the real RuneWritingLayer (a True Flame rune: seed 7 = both runes + True Magic + fire; charge 18 + 10 tail). The open grimoire is the real item model drawn by client.manamethod.RuneClient, which this headless tool cannot draw: only its gold glow shows here."
+  }
+}

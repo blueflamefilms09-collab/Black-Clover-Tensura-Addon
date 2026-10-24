@@ -122,6 +122,12 @@ public final class VfxVertexBuffer {
         activationLimit = Math.min(limit, MAX_VERTICES_PER_ACTIVATION);
     }
 
+    /** The same with the hard cap of the layer being drawn (400 for every layer but the Mana Method rune's, see {@link AbstractVfxLayer#hardVertexCap}). */
+    public void beginActivation(int limit, int hardCap) {
+        activationVertices = 0;
+        activationLimit = Math.min(limit, Math.max(MAX_VERTICES_PER_ACTIVATION, hardCap));
+    }
+
     public boolean hasBudget(int vertices) { return activationVertices + vertices <= activationLimit; }
 
     /** The vertices the current (or just finished) activation has added. */

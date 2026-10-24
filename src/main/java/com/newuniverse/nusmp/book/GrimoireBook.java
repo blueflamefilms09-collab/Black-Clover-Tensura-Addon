@@ -131,6 +131,7 @@ public abstract class GrimoireBook extends Skill {
                 l.add(com.newuniverse.nusmp.mana.zone.ManaZoneActions.spacePage());
                 l.add(com.newuniverse.nusmp.mana.zone.TrueMagic.page());                 // 1.99.0: True Magic (Mana Method): the real element from a rune array, natural attributes only, same late-game gate
                 l.addAll(com.newuniverse.nusmp.spiritcontrol.SpiritControlPages.pages());   // 3.0.0: the spirit control pages (Summon / Release, Combat Mode, the spirit's abilities), appended after everything; hidden unless a spirit of this magic answers the player
+                l.addAll(com.newuniverse.nusmp.mana.method.ManaMethodPages.pages());       // Mana Method: the Mana Method pages (Flame, Water, Wind, Earth and True Magic Rune), appended after the spirit pages; late-game gate, see usable
             }
             all = l;
         }
@@ -181,6 +182,8 @@ public abstract class GrimoireBook extends Skill {
         return pg != null && (pg.id().equals(ZONE_ID) || pg.id().equals(com.newuniverse.nusmp.mana.zone.ManaZoneActions.VOLLEY_ID) || pg.id().equals(com.newuniverse.nusmp.mana.zone.ManaZoneActions.SPACE_ID)
                 || pg.id().equals(com.newuniverse.nusmp.mana.zone.TrueMagic.ID));
     }
+    /** The five Mana Method pages (mana.method.ManaMethodPages). */
+    private boolean isMethodPage(int mode) { return page(mode) != null && com.newuniverse.nusmp.mana.method.ManaMethodPages.isPage(page(mode).id()); }
     /** 3.0.0: the two toggle pages of the spirit control plane (Summon / Release Spirit, Combat Mode) act on the key press; the ability pages are ordinary casts. */
     private boolean isSpiritToggle(int mode) { return page(mode) != null && com.newuniverse.nusmp.spiritcontrol.SpiritControlPages.isInstant(page(mode).id()); }
     private boolean isSpiritPage(int mode) { return page(mode) != null && com.newuniverse.nusmp.spiritcontrol.SpiritControlPages.isPage(page(mode).id()); }
@@ -211,6 +214,7 @@ public abstract class GrimoireBook extends Skill {
         if (mode < familyCount()) return isUnlocked(i, mode);
         if (isDive(mode)) return e instanceof ServerPlayer p ? spiritGateOpen(p) : true;
         if (isUnion(mode)) return cover(i).isForbidden();
+        if (isMethodPage(mode)) return com.newuniverse.nusmp.mana.method.ManaMethodPages.usable(e);      // Mana Method: the Mana Method pages: the same late-game gate as the Mana Zone, and the server setting manaMethod.enabled
         if (isZoneGated(mode)) return com.newuniverse.nusmp.mana.zone.ManaZoneManager.gateOpenFor(e);      // 1.99.0: before the instant-page rule below, which used to make the Mana Zone open to everyone
         if (isSpiritPage(mode)) return com.newuniverse.nusmp.spiritcontrol.SpiritControlPages.usable(this, i, e, page(mode).id());      // 3.0.0: shown only while a spirit of this book's magic answers the player (asked after the Mana Zone gate)
         if (instant(mode)) return true;
