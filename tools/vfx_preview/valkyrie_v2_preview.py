@@ -43,7 +43,11 @@ TONES = {"plate": [(88, 160, 214), (150, 214, 242), (236, 252, 255)],
          "suit": [(14, 22, 38), (22, 36, 58), (40, 60, 90)],
          "hair": [(26, 24, 38), (50, 46, 66), (90, 88, 112)],
          "gold": [(176, 138, 56), (226, 188, 92), (255, 236, 160)],
-         "dark": [(10, 10, 18), (16, 16, 26), (30, 30, 44)]}
+         "dark": [(10, 10, 18), (16, 16, 26), (30, 30, 44)],
+         "frost": [(150, 190, 225), (222, 242, 255), (255, 255, 255)],
+         "deep": [(26, 74, 156), (44, 116, 206), (110, 178, 240)],
+         "scale": [(40, 112, 180), (76, 170, 226), (176, 230, 252)],
+         "glass": [(50, 128, 215), (110, 190, 245), (214, 244, 255)]}
 RIM = np.array([205, 246, 255], np.float32) / 255
 GLOWC = np.array([200, 255, 255], np.float32) / 255
 LIGHT = [0.9, 1.0, 1.08]
@@ -61,8 +65,13 @@ def tex(name):
     return _tex[name]
 
 
-def sample(t, U, V):
+WRAP = ("scales",)
+
+
+def sample(t, U, V, wrap=False):
     th, tw = t.shape[:2]
+    if wrap:
+        U, V = U % 1.0, V % 1.0
     x = np.clip(U, 0, 0.9999) * tw - 0.5
     y = np.clip(V, 0, 0.9999) * th - 0.5
     x0 = np.clip(np.floor(x).astype(int), 0, tw - 1)
@@ -140,7 +149,7 @@ class Quads:
     def __len__(self): return len(self.P)
 
 
-KIND = {0: "plate", 1: "add", 3: "card", 4: "veil", 5: "glow"}
+KIND = {0: "plate", 1: "add", 3: "card", 4: "veil", 5: "glow", 6: "frost", 7: "deep", 8: "scale", 9: "glass"}
 
 
 def mesh_to_quads(out, mesh, texmap, fn, only_kinds=None, tint_gold=False):
@@ -179,7 +188,7 @@ def box(out, mn, mx, kind, M, tint=(255, 255, 255)):
     obox(out, c, (1, 0, 0), (0, 1, 0), (mx[0] - mn[0]) / 2, (mx[1] - mn[1]) / 2, (mx[2] - mn[2]) / 2, kind, M, tint)
 
 
-def figure(out, B, p):
+def figure(out, B, p, legs=True):
     box(out, (-4, 12, -2), (4, 24, 2), "suit", B["body"])
     box(out, (-4, 24, -4), (4, 32, 4), "skin", B["head"])
     box(out, (-4.4, 29, -4.4), (4.4, 32.4, 4.4), "hair", B["head"])
@@ -197,7 +206,8 @@ def figure(out, B, p):
         x0, x1 = (4, 8) if s > 0 else (-8, -4)
         box(out, (x0, 12, -2), (x1, 24, 2), "skin", B["arm_" + key])
         lx0, lx1 = (0, 4) if s > 0 else (-4, 0)
-        box(out, (lx0, 0, -2), (lx1, 12, 2), "suit", B["leg_" + key])
+        if legs:
+            box(out, (lx0, 0, -2), (lx1, 12, 2), "suit", B["leg_" + key])
 
 
 def armour(out, B, p, lod, look="VALKYRIE", only=None, side=None):
@@ -300,12 +310,12 @@ def render(quads, eye, target, size, bg, ss=2, fov=FOV, front=None):
             V = (wa * uv[tri[0], 1] + wb * uv[tri[1], 1] + wc * uv[tri[2], 1]) / iz
             yield (slice(miny, maxy), slice(minx, maxx)), msk, iz.astype(np.float32), U, V
 
-    flat = ("plate", "skin", "suit", "hair", "gold", "dark")
+    flat = ("plate", "skin", "suit", "hair", "gold", "dark", "frost", "deep", "scale")
     for kind, tx, tint, uv, pc, z, tone, ndv, zc in recs:                                  # opaque: plates, stand-in, cut-out cards
         if kind in flat:
             pal = np.array(TONES[kind][tone], np.float32) / 255
             col = pal * (0.7 + 0.3 * tint) if kind in ("plate", "gold") else pal
-            if ndv < 0.2 and kind == "plate":
+            if ndv < 0.22 and kind in ("plate", "frost", "deep", "scale"):
                 col = col * 0.6 + RIM * 0.4
             for sl, msk, iz, U, V in tris(pc, z, uv):
                 ok = msk & (iz > ZB[sl])
@@ -314,15 +324,22 @@ def render(quads, eye, target, size, bg, ss=2, fov=FOV, front=None):
         elif kind == "card":
             t = tex(tx)
             for sl, msk, iz, U, V in tris(pc, z, uv):
-                px = sample(t, U, V)
+                px = sample(t, U, V, tx in WRAP)
                 ok = msk & (iz > ZB[sl]) & (px[..., 3] > 0.5)
                 col = np.clip(px[..., :3] * tint[None, None, :] * LIGHT[tone], 0, 1)
                 if ndv < 0.2:
                     col = col * 0.8 + RIM * 0.2
                 ZB[sl] = np.where(ok, iz, ZB[sl])
                 img[sl] = np.where(ok[..., None], col, img[sl])
-    veil = sorted([q for q in recs if q[0] == "veil"], key=lambda q: -q[8])
+    veil = sorted([q for q in recs if q[0] in ("veil", "glass")], key=lambda q: -q[8])
     for kind, tx, tint, uv, pc, z, tone, ndv, zc in veil:                                  # translucent, far to near
+        if kind == "glass":
+            gc = np.array(TONES["glass"][tone], np.float32) / 255
+            ga = float(np.clip(0.72 + 0.3 * (1 - ndv), 0.7, 0.95))
+            for sl, msk, iz, U, V in tris(pc, z, uv):
+                a3 = (ga * (msk & (iz > ZB[sl])))[..., None]
+                img[sl] = img[sl] * (1 - a3) + (gc * (0.7 + 0.3 * ndv) + (RIM * 0.3 if ndv < 0.25 else 0))[None, None, :] * a3
+            continue
         t = tex(tx)
         for sl, msk, iz, U, V in tris(pc, z, uv):
             px = sample(t, U, V)

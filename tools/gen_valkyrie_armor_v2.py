@@ -72,6 +72,8 @@ def tex_veil():
             c = c * (1 - 0.35 * glow) + 0.35 * glow
             rim = math.exp(-(u / 0.045) ** 2)
             c = c * (1 - rim) + rim
+            mb = 0.5 + 0.5 * math.sin(7.0 * u + 3.2 * math.sin(5.0 * v + 4.0 * u) + 1.3)
+            c = c * (1 - 0.34 * mb ** 2 * smooth(0.1, 0.35, u)) + np.array([0.20, 0.45, 0.88]) * 0.34 * mb ** 2 * smooth(0.1, 0.35, u)
             for vu in (0.30, 0.58):
                 vein = math.exp(-((u - vu - 0.015 * math.sin(v * 14)) / 0.02) ** 2)
                 c = c * (1 - 0.35 * vein) + 0.35 * vein
@@ -200,7 +202,61 @@ def tex_halo():
     return img
 
 
-TEXTURES = {"veil": tex_veil, "petal": tex_petal, "water": tex_water, "flame": tex_flame, "feather": tex_feather, "glow": tex_glow, "book": tex_book, "halo": tex_halo}
+def tex_fin():
+    """a scalloped fan fin: u = 0 at the root .. 1 at the tip, v across; blue near the root, frosted at the scalloped rim."""
+    img = np.zeros((64, 64, 4), np.float32)
+    for y in range(64):
+        for x in range(64):
+            u, v = (x + 0.5) / 64, (y + 0.5) / 64
+            hw = 0.5 * (0.35 + 0.65 * u)
+            scall = 0.07 * abs(math.sin(v * 3.5 * math.pi))
+            if abs(v - 0.5) > hw or u > 0.95 - scall:
+                continue
+            c = np.array([62, 140, 222]) * (1 - u) + np.array([196, 238, 255]) * u
+            if int((v - 0.5) * 12 + 20) % 2 == 0 and u > 0.12:
+                c = c * 0.9 + 18
+            if abs(v - 0.5) > hw * 0.93 or u > 0.9 - scall:
+                c = np.array([236, 251, 255])
+            img[y, x] = (*np.clip(c / 255, 0, 1), 1.0)
+    return img
+
+
+def tex_foam():
+    """a jagged white foam tuft: v = 0 at the root (wide, blue-tinted) .. 1 at the tip, two side teeth."""
+    img = np.zeros((64, 64, 4), np.float32)
+    for y in range(64):
+        for x in range(64):
+            u, v = (x + 0.5) / 64, (y + 0.5) / 64
+            hw = 0.5 * (1 - v) ** 0.8
+            teeth = 0.16 * max(0.0, math.sin(v * 3 * math.pi + 0.4)) * (1 - v)
+            if abs(u - 0.5) > hw + teeth:
+                continue
+            c = np.array([255, 255, 255]) * v + np.array([190, 225, 250]) * (1 - v)
+            img[y, x] = (*(c / 255), 1.0)
+    return img
+
+
+def tex_scales():
+    """fish scales (tile it: the UVs repeat): rows of scalloped scales, blue with a lighter rim and a dark gap between."""
+    img = np.zeros((64, 64, 4), np.float32)
+    for y in range(64):
+        for x in range(64):
+            row, col = y // 16, x // 16
+            ox = 8 if row % 2 else 0
+            lx, ly = ((x + ox) % 16) - 8, (y % 16)
+            d = math.hypot(lx, ly - 2)
+            if d > 9.0:
+                c = np.array([22, 70, 140])
+            else:
+                t = d / 9.0
+                c = np.array([74, 158, 232]) * (1 - t * 0.5) + np.array([170, 224, 252]) * t * 0.5
+                if t > 0.82:
+                    c = np.array([200, 240, 255])
+            img[y, x] = (*np.clip(c / 255, 0, 1), 1.0)
+    return img
+
+
+TEXTURES = {"veil": tex_veil, "petal": tex_petal, "water": tex_water, "flame": tex_flame, "feather": tex_feather, "glow": tex_glow, "book": tex_book, "halo": tex_halo, "fin": tex_fin, "foam": tex_foam, "scales": tex_scales}
 
 
 def write_textures():
@@ -260,7 +316,7 @@ def veil_wing(name, s, H, L, th0, th1, lean, wmax, tilt, ncol, nrow, scallops, r
         if a[0] * s > 0:
             a = mul(a, -1)
         n = norm(cross(d, a)) if dot(cross(d, a), n0) > 0 else norm(cross(a, d))
-        g = ((1 - u) ** 0.8) * (0.42 + 0.58 * smooth(0.0, 0.3, u))
+        g = ((1 - u) ** 0.8) * (0.42 + 0.58 * smooth(0.0, 0.3, u)) * (1.0 - 0.2 * smooth(0.42, 0.47, u) * (1.0 - smooth(0.6, 0.66, u)))
         sc = 1.0 - 0.2 * smooth(0.2, 0.5, u) * (0.5 - 0.5 * math.cos(2 * math.pi * scallops * u))
         w = wmax * g * sc * (1.0 if u < 0.985 else 0.0)
         cols.append((u, p, d, a, n, w))
@@ -275,16 +331,16 @@ def veil_wing(name, s, H, L, th0, th1, lean, wmax, tilt, ncol, nrow, scallops, r
             r0, r1 = j / nrow, (j + 1) / nrow
             u0, u1 = cols[i][0], cols[i + 1][0]
             m.quad(4, [pos(i, r0), pos(i + 1, r0), pos(i + 1, r1), pos(i, r1)], [(r0, u0), (r0, u1), (r1, u1), (r1, u0)], W)
-    if frill_sheet:                                                            # a second, shorter layer over the outer half, scalloped out of phase
-        r_in = 0.5
-        for i in range(ncol):
-            u0, u1 = cols[i][0], cols[i + 1][0]
-            if u0 < 0.1 or u1 > 0.97:
-                continue
-            e0 = 1.0 + 0.07 * math.sin(2 * math.pi * (scallops + 1) * u0 + 1.6)
-            e1 = 1.0 + 0.07 * math.sin(2 * math.pi * (scallops + 1) * u1 + 1.6)
-            q0, q1 = [pos(i, r_in, 0.55, 0.9), pos(i + 1, r_in, 0.55, 0.9)], [pos(i, e0, 0.55, 0.9), pos(i + 1, e1, 0.55, 0.9)]
-            m.quad(4, [q0[0], q0[1], q1[1], q1[0]], [(0.5, u0), (0.5, u1), (min(1.0, e1 * 0.98), u1), (min(1.0, e0 * 0.98), u0)], W)
+    if frill_sheet:                                                            # folded ribbon frills: two shorter sheets over the outer half, offset toward the viewer, scalloped out of phase
+        for (r_in, off, ks, ph, rmax) in ((0.5, 0.55, scallops + 1, 1.6, 1.0), (0.74, 1.1, scallops + 2, 0.4, 1.0)):
+            for i in range(ncol):
+                u0, u1 = cols[i][0], cols[i + 1][0]
+                if u0 < 0.1 or u1 > 0.97:
+                    continue
+                e0 = rmax + 0.08 * math.sin(2 * math.pi * ks * u0 + ph)
+                e1 = rmax + 0.08 * math.sin(2 * math.pi * ks * u1 + ph)
+                q0, q1 = [pos(i, r_in, off, ph), pos(i + 1, r_in, off, ph)], [pos(i, e0, off, ph), pos(i + 1, e1, off, ph)]
+                m.quad(4, [q0[0], q0[1], q1[1], q1[0]], [(r_in, u0), (r_in, u1), (min(1.0, e1 * 0.98), u1), (min(1.0, e0 * 0.98), u0)], W)
     for i in range(ncol):                                                      # the rim: a thin bright strip along the leading edge
         u0, u1 = cols[i][0], cols[i + 1][0]
         a0, a1 = cols[i][3], cols[i + 1][3]
@@ -300,7 +356,7 @@ def veil_wing(name, s, H, L, th0, th1, lean, wmax, tilt, ncol, nrow, scallops, r
 
 def wing_main(lod):
     ncol, nrow, sc = {0: (14, 3, 4), 1: (8, 2, 3), 2: (5, 1, 2)}[lod]
-    return veil_wing("valk2_wing_main" + ["", "_mid", "_lo"][lod], 1.0, BONES["wing_hinge"]["hinge"], 32.0, 26.0, 46.0, 0.07, 13.0, 12.0, ncol, nrow, sc, 0.65 if lod < 2 else 0.0,
+    return veil_wing("valk2_wing_main" + ["", "_mid", "_lo"][lod], 1.0, BONES["wing_hinge"]["hinge"], 32.0, 26.0, 46.0, 0.07, 17.0, 12.0, ncol, nrow, sc, 0.65 if lod < 2 else 0.0,
                      frill_sheet=lod == 0, veins=lod < 2, seed=3)
 
 
@@ -549,6 +605,138 @@ def saint_sash(lod):
     return m
 
 
+# ---- 131.png: the sweeping blade-scarf and the fin greaves; 132 / 133.png: the Mermaid Form
+def scarf(lod):
+    """the long curved blade-like scarf of 131.png: a wide ribbon from the left hip sweeping out and down, then curving back up in a crescent to a needle tip; textured veil (face-on to the viewer)."""
+    m = Mesh("valk2_scarf" + ["", "_mid", "_lo"][lod])
+    nc, nr = {0: (9, 2), 1: (6, 2), 2: (4, 1)}[lod]
+    pts, p = [], (5.0, 13.5, 1.2)
+    L = 46.0
+    for i in range(nc + 1):
+        s_ = i / nc
+        th = math.radians(-70 + 105 * s_ ** 0.9)
+        d = (math.cos(th), math.sin(th), -0.12)
+        pts.append((p, d, s_))
+        p = add(p, mul(d, L / nc))
+    for i in range(nc):
+        for j in range(nr):
+            r0, r1 = j / nr, (j + 1) / nr
+            def at(k, r):
+                p_, d, s_ = pts[k]
+                w = 9.0 * (4 * s_ * (1 - s_)) ** 0.75 * (1 - 0.3 * s_) + 0.4
+                n_ = norm(cross(d, (0, 0, 1)))
+                return add(add(p_, mul(n_, w * (r - 0.5) * 2 * -1)), (0, 0, 0.3 * math.sin(s_ * 9)))
+            m.quad(4, [at(i, r0), at(i + 1, r0), at(i + 1, r1), at(i, r1)], [(r0 * 0.9, pts[i][2]), (r0 * 0.9, pts[i + 1][2]), (r1 * 0.9, pts[i + 1][2]), (r1 * 0.9, pts[i][2])], W)
+    return m
+
+
+def fin_greave(lod):
+    """the pointed fin boot of 131.png on the left leg (pivot (2, 12, 0)): a cone that runs on below the foot to a point, with fan fins on the calf and the ankle."""
+    m = Mesh("valk2_fin_greave" + ["", "_mid", "_lo"][lod])
+    n = {0: 6, 1: 5, 2: 4}[lod]
+    secs = [ring(3.4, 2.7, 2.7, n, cx=2.0, rot=math.pi / n), ring(-0.6, 2.2, 2.4, n, cx=2.0, rot=math.pi / n), ring(-7.5, 0.25, 0.25, n, cx=2.0)]
+    if lod == 2:
+        secs = [secs[0], secs[2]]
+    for i in range(len(secs) - 1):
+        for j in range(n):
+            k = (j + 1) % n
+            m.quad(8, [secs[i][j], secs[i][k], secs[i + 1][k], secs[i + 1][j]], [(0, 0)] * 4, W, ref=mean([mean(secs[i]), mean(secs[i + 1])]))
+    if lod < 2:
+        for (y, dx, dz, L_) in ((8.6, 1.0, -0.2, 5.5), (6.0, 1.0, 0.3, 5.0), (1.6, 0.9, -0.6, 5.5))[: 3 if lod == 0 else 1]:
+            base = (2.0 + dx * 2.5, y, dz * 2.5)
+            d = norm((dx, -0.35, dz - 0.15))
+            tip = add(base, mul(d, L_))
+            card(m, 3, add(base, (0, 1.6, 0)), add(tip, (0, 1.1, 0)), add(tip, (0, -1.1, 0)), add(base, (0, -1.6, 0)), (0, 0, 1, 1), W)
+    return m
+
+
+def horn(lod):
+    """the small spiral drill horn of 133.png at the head side: a grooved cone with a frosted ring, on the left of the head."""
+    m = Mesh("valk2_horn" + ["", "_mid", "_lo"][lod])
+    n = {0: 6, 1: 5, 2: 4}[lod]
+    nr = {0: 5, 1: 3, 2: 2}[lod]
+    base = (-5.2, 30.0, -1.0)
+    ax = norm((-0.55, 0.62, -0.55))
+    up = norm(cross(ax, (0, 1, 0)))
+    up2 = norm(cross(ax, up))
+    prev = None
+    for i in range(nr + 1):
+        t = i / nr
+        rr = 1.9 * (1 - t) + 0.12
+        a0 = 2 * math.pi * 1.4 * t
+        ring_ = [add(add(base, mul(ax, 9.0 * t)), add(mul(up, rr * (1 - 0.3 * math.exp(-(((k / n) * 2 * math.pi - a0 + math.pi) % (2 * math.pi) - math.pi) ** 2 * 2)) * math.cos(2 * math.pi * k / n)), mul(up2, rr * math.sin(2 * math.pi * k / n)))) for k in range(n)]
+        if prev is not None:
+            for j in range(n):
+                k = (j + 1) % n
+                m.quad(6 if (i + j) % 2 else 7, [prev[j], prev[k], ring_[k], ring_[j]], [(0, 0)] * 4, W, ref=mean([mean(prev), mean(ring_)]))
+        prev = ring_
+    return m
+
+
+def shell_top(lod):
+    """the shell bikini top of the Mermaid Form (132.png): two small scalloped shell cups on the chest with a frill edge."""
+    m = Mesh("valk2_shell_top" + ["", "_mid", "_lo"][lod])
+    n = {0: 6, 1: 5, 2: 4}[lod]
+    cx, y, z = 2.3, 19.6, 2.3
+    secs = [ring(y + 1.7, 1.6, 1.3, n, cx=cx, cz=z + 0.4), ring(y, 2.5, 1.9, n, cx=cx, cz=z), ring(y - 1.7, 2.3, 1.7, n, cx=cx, cz=z - 0.1)]
+    for i in range(len(secs) - 1):
+        for j in range(n):
+            k = (j + 1) % n
+            m.quad(6, [secs[i][j], secs[i][k], secs[i + 1][k], secs[i + 1][j]], [(0, 0)] * 4, W, ref=mean([mean(secs[i]), mean(secs[i + 1])]))
+    if lod == 0:
+        frill(m, y - 1.4, 2.5, 1.9, 6, 2.2, 10, 40, 1.4, cx=cx, cz=z, rgbs=(W, P))
+    return m
+
+
+def mermaid_tail(lod):
+    """the scaled fish tail of 132 / 133.png (body bone): a scaled body round both legs that narrows, curls down and back, a fan tail fin at the end and fins along the back; scales are a tiled texture."""
+    m = Mesh("valk2_mermaid_tail" + ["", "_mid", "_lo"][lod])
+    n = {0: 8, 1: 6, 2: 5}[lod]
+    path = [(0.0, 13.0, 0.0), (0.0, 7.0, 0.3), (0.0, 1.0, -0.8), (0.0, -5.5, -3.2), (0.0, -10.0, -7.5), (0.0, -12.0, -12.5), (0.0, -10.5, -17.0)]
+    ns = {0: 12, 1: 8, 2: 5}[lod]
+    cen = []
+    for i in range(ns + 1):
+        t = i / ns * (len(path) - 1)
+        k = min(int(t), len(path) - 2)
+        f = t - k
+        cen.append(tuple(path[k][c] * (1 - f) + path[k + 1][c] * f for c in range(3)))
+    prev = None
+    for i in range(ns + 1):
+        t = i / ns
+        tg = norm(sub(cen[min(ns, i + 1)], cen[max(0, i - 1)]))
+        nn = norm(cross(tg, (1, 0, 0)))
+        rx = (5.4 * (1 - t) ** 0.8 + 0.9) * (1.0 + 0.1 * math.sin(i * 1.9))
+        rn = rx * 0.78
+        ring_ = [add(cen[i], add(mul((1, 0, 0), rx * math.cos(2 * math.pi * k / n)), mul(nn, rn * math.sin(2 * math.pi * k / n)))) for k in range(n)]
+        if prev is not None:
+            for j in range(n):
+                k = (j + 1) % n
+                m.quad(3, [prev[j], prev[k], ring_[k], ring_[j]], [(j / n * 2.0, (i - 1) / ns * 6.0), ((j + 1) / n * 2.0, (i - 1) / ns * 6.0), ((j + 1) / n * 2.0, i / ns * 6.0), (j / n * 2.0, i / ns * 6.0)], W)
+        prev = ring_
+    e = cen[-1]
+    tg = norm(sub(cen[-1], cen[-2]))
+    for sgn in (-1, 1):                                                                       # the fan tail fin: two lobes either side
+        tip = add(e, add(mul((1, 0, 0), sgn * 12.0), mul(tg, 6.0)))
+        card(m, 3, add(e, (0, 2.0, 0)), add(tip, (0, 4.0, 0)), add(tip, (0, -4.0, 0)), add(e, (0, -2.0, 0)), (0, 0, 1, 1), W)
+    if lod < 2:
+        for i in range(2, ns - 1, 3 if lod == 0 else 4):                                      # a dorsal fin along the back of the curl
+            c0 = cen[i]
+            t0 = norm(sub(cen[min(ns, i + 1)], cen[i - 1]))
+            up = norm(cross((1, 0, 0), t0))
+            r = 3.4 * (1 - i / ns) + 1.4
+            tip = add(c0, add(mul(up, -(r + 5.0)), mul(t0, 2.0)))
+            card(m, 3, add(add(c0, mul(up, -r * 0.8)), mul(t0, -2.2)), tip, add(tip, mul(t0, 3.4)), add(add(c0, mul(up, -r * 0.8)), mul(t0, 2.2)), (0, 0, 1, 1), W)
+    return m
+
+
+def mermaid_frill(lod):
+    m = Mesh("valk2_mermaid_frill" + ["", "_mid", "_lo"][lod])
+    tiers = {0: [(14.0, 4.9, 3.0, 9, 4.6, 24, 50), (12.6, 5.4, 3.5, 10, 4.8, 34, 58)], 1: [(13.4, 5.1, 3.2, 8, 5.0, 30, 54)], 2: [(13.0, 5.2, 3.3, 6, 5.2, 32, 56)]}[lod]
+    for i, (y, hx, hz, nn, L, f0, f1) in enumerate(tiers):
+        frill(m, y, hx, hz, nn, L, f0, f1, 1.5, rot=0.3 * i, rgbs=(W, P, A))
+    return m
+
+
 # ============================================================================================ build
 # name, builder, bone, copies, tex per layer, looks
 PIECES = [
@@ -556,13 +744,19 @@ PIECES = [
     ("wing_low", wing_low, "wing_hinge_low", 2, {4: "veil", 5: "glow"}, ("VALKYRIE",)),
     ("arm_veil", arm_veil, "arm", 2, {4: "veil"}, ("VALKYRIE",)),
     ("sleeve", sleeve, "arm", 2, {4: "veil"}, ("VALKYRIE", "SAINT")),
-    ("crown", crown, "head", 1, {3: "petal"}, ("VALKYRIE",)),
+    ("crown", crown, "head", 1, {3: "petal"}, ("VALKYRIE", "MERMAID")),
     ("bodice", bodice, "body", 1, {3: "petal"}, ("VALKYRIE", "SAINT")),
     ("skirt", skirt, "body", 1, {3: "petal"}, ("VALKYRIE", "SAINT")),
-    ("shoulder", shoulder, "arm", 2, {3: "petal"}, ("VALKYRIE", "SAINT")),
-    ("cuff", cuff, "arm", 2, {3: "petal"}, ("VALKYRIE", "SAINT")),
+    ("shoulder", shoulder, "arm", 2, {3: "petal"}, ("VALKYRIE", "SAINT", "MERMAID")),
+    ("cuff", cuff, "arm", 2, {3: "petal"}, ("VALKYRIE", "SAINT", "MERMAID")),
     ("leg", leg, "leg", 2, {3: "flame", 4: "water"}, ("VALKYRIE", "SAINT")),
-    ("grimoire", grimoire, "body", 1, {4: "book", 5: "glow"}, ("VALKYRIE", "SAINT")),
+    ("grimoire", grimoire, "body", 1, {4: "book", 5: "glow"}, ("VALKYRIE", "SAINT", "MERMAID")),
+    ("scarf", scarf, "body", 1, {4: "veil"}, ("VALKYRIE",)),
+    ("fin_greave", fin_greave, "leg", 2, {3: "fin"}, ("VALKYRIE",)),
+    ("horn", horn, "head", 1, {}, ("MERMAID",)),
+    ("shell_top", shell_top, "body", 2, {3: "petal"}, ("MERMAID",)),
+    ("mermaid_tail", mermaid_tail, "body", 1, {3: "scales"}, ("MERMAID",)),
+    ("mermaid_frill", mermaid_frill, "body", 1, {3: "petal"}, ("MERMAID",)),
     ("saint_wing", saint_wing, "saint_hinge", 2, {3: "feather"}, ("SAINT",)),
     ("saint_halo", saint_halo, "head", 1, {5: "halo"}, ("SAINT",)),
     ("saint_crown", saint_crown, "head", 1, {3: "feather"}, ("SAINT",)),
@@ -602,7 +796,7 @@ def main():
         ent = {"name": name, "bone": bone, "copies": copies, "tex": {str(k): v for k, v in tx.items()}, "looks": list(looks), "levels": {}}
         for lod in range(3):
             m = ms[(name, lod)]
-            c = {k: 0 for k in range(6)}
+            c = {k: 0 for k in range(10)}
             for qd in m.q:
                 c[qd[0]] += 1
             fn_ = "valk2_%s%s.txt" % (name, NAMES[lod])
@@ -613,7 +807,7 @@ def main():
         man["pieces"].append(ent)
     lines += ["", "TOTAL quads per wearer (both copies), by look"]
     man["totals"] = {}
-    for look in ("VALKYRIE", "SAINT"):
+    for look in ("VALKYRIE", "SAINT", "MERMAID"):
         t = totals(ms, look)
         man["totals"][look] = {LV[i]: {"quads": t[i], "vertices": t[i] * 4} for i in range(3)}
         lines.append("%-9s near %4d (%5d verts)  mid %4d (%5d)  far %4d (%5d)" % (look, t[0], t[0] * 4, t[1], t[1] * 4, t[2], t[2] * 4))

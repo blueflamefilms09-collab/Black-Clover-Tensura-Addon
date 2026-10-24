@@ -41,7 +41,7 @@
    "levels": {
     "near": {
      "file": "valk2_wing_main.txt",
-     "quads": 79
+     "quads": 90
     },
     "mid": {
      "file": "valk2_wing_main_mid.txt",
@@ -138,7 +138,8 @@
     "3": "petal"
    },
    "looks": [
-    "VALKYRIE"
+    "VALKYRIE",
+    "MERMAID"
    ],
    "levels": {
     "near": {
@@ -216,7 +217,8 @@
    },
    "looks": [
     "VALKYRIE",
-    "SAINT"
+    "SAINT",
+    "MERMAID"
    ],
    "levels": {
     "near": {
@@ -242,7 +244,8 @@
    },
    "looks": [
     "VALKYRIE",
-    "SAINT"
+    "SAINT",
+    "MERMAID"
    ],
    "levels": {
     "near": {
@@ -296,7 +299,8 @@
    },
    "looks": [
     "VALKYRIE",
-    "SAINT"
+    "SAINT",
+    "MERMAID"
    ],
    "levels": {
     "near": {
@@ -310,6 +314,154 @@
     "far": {
      "file": "valk2_grimoire_lo.txt",
      "quads": 3
+    }
+   }
+  },
+  {
+   "name": "scarf",
+   "bone": "body",
+   "copies": 1,
+   "tex": {
+    "4": "veil"
+   },
+   "looks": [
+    "VALKYRIE"
+   ],
+   "levels": {
+    "near": {
+     "file": "valk2_scarf.txt",
+     "quads": 18
+    },
+    "mid": {
+     "file": "valk2_scarf_mid.txt",
+     "quads": 12
+    },
+    "far": {
+     "file": "valk2_scarf_lo.txt",
+     "quads": 4
+    }
+   }
+  },
+  {
+   "name": "fin_greave",
+   "bone": "leg",
+   "copies": 2,
+   "tex": {
+    "3": "fin"
+   },
+   "looks": [
+    "VALKYRIE"
+   ],
+   "levels": {
+    "near": {
+     "file": "valk2_fin_greave.txt",
+     "quads": 15
+    },
+    "mid": {
+     "file": "valk2_fin_greave_mid.txt",
+     "quads": 11
+    },
+    "far": {
+     "file": "valk2_fin_greave_lo.txt",
+     "quads": 4
+    }
+   }
+  },
+  {
+   "name": "horn",
+   "bone": "head",
+   "copies": 1,
+   "tex": {},
+   "looks": [
+    "MERMAID"
+   ],
+   "levels": {
+    "near": {
+     "file": "valk2_horn.txt",
+     "quads": 30
+    },
+    "mid": {
+     "file": "valk2_horn_mid.txt",
+     "quads": 15
+    },
+    "far": {
+     "file": "valk2_horn_lo.txt",
+     "quads": 8
+    }
+   }
+  },
+  {
+   "name": "shell_top",
+   "bone": "body",
+   "copies": 2,
+   "tex": {
+    "3": "petal"
+   },
+   "looks": [
+    "MERMAID"
+   ],
+   "levels": {
+    "near": {
+     "file": "valk2_shell_top.txt",
+     "quads": 24
+    },
+    "mid": {
+     "file": "valk2_shell_top_mid.txt",
+     "quads": 10
+    },
+    "far": {
+     "file": "valk2_shell_top_lo.txt",
+     "quads": 8
+    }
+   }
+  },
+  {
+   "name": "mermaid_tail",
+   "bone": "body",
+   "copies": 1,
+   "tex": {
+    "3": "scales"
+   },
+   "looks": [
+    "MERMAID"
+   ],
+   "levels": {
+    "near": {
+     "file": "valk2_mermaid_tail.txt",
+     "quads": 101
+    },
+    "mid": {
+     "file": "valk2_mermaid_tail_mid.txt",
+     "quads": 52
+    },
+    "far": {
+     "file": "valk2_mermaid_tail_lo.txt",
+     "quads": 27
+    }
+   }
+  },
+  {
+   "name": "mermaid_frill",
+   "bone": "body",
+   "copies": 1,
+   "tex": {
+    "3": "petal"
+   },
+   "looks": [
+    "MERMAID"
+   ],
+   "levels": {
+    "near": {
+     "file": "valk2_mermaid_frill.txt",
+     "quads": 38
+    },
+    "mid": {
+     "file": "valk2_mermaid_frill_mid.txt",
+     "quads": 16
+    },
+    "far": {
+     "file": "valk2_mermaid_frill_lo.txt",
+     "quads": 12
     }
    }
   },
@@ -415,16 +567,16 @@
  "totals": {
   "VALKYRIE": {
    "near": {
-    "quads": 622,
-    "vertices": 2488
+    "quads": 692,
+    "vertices": 2768
    },
    "mid": {
-    "quads": 310,
-    "vertices": 1240
+    "quads": 344,
+    "vertices": 1376
    },
    "far": {
-    "quads": 162,
-    "vertices": 648
+    "quads": 174,
+    "vertices": 696
    }
   },
   "SAINT": {
@@ -439,6 +591,20 @@
    "far": {
     "quads": 170,
     "vertices": 680
+   }
+  },
+  "MERMAID": {
+   "near": {
+    "quads": 343,
+    "vertices": 1372
+   },
+   "mid": {
+    "quads": 177,
+    "vertices": 708
+   },
+   "far": {
+    "quads": 117,
+    "vertices": 468
    }
   }
  }

@@ -1,0 +1,12 @@
+Valkyrie drill lance, three candidate designs (preview only): quads per version and level; layers 0 plate, 1 emissive, 3 card, 4 veil, 5 glow, 6 frost, 7 deep, 8 scale, 9 glass
+
+version                    level  quads  by layer
+A Frosted Drill            near     213  L3:40 L4:27 L5:2 L6:80 L7:64
+A Frosted Drill            mid      106  L3:15 L4:17 L5:2 L6:36 L7:36
+A Frosted Drill            far       44  L3:5 L4:2 L5:2 L6:20 L7:15
+B Crystal Corkscrew        near     216  L1:8 L4:32 L5:2 L6:54 L7:12 L9:108
+B Crystal Corkscrew        mid      123  L1:4 L4:15 L5:2 L6:30 L7:12 L9:60
+B Crystal Corkscrew        far       68  L1:4 L4:2 L5:2 L6:18 L7:6 L9:36
+C Living Water Dragon Lance near     171  L3:21 L4:22 L5:2 L6:30 L7:30 L8:66
+C Living Water Dragon Lance mid       98  L3:7 L4:14 L5:2 L6:25 L7:15 L8:35
+C Living Water Dragon Lance far       44  L4:2 L5:2 L6:20 L7:4 L8:16
