@@ -11,7 +11,7 @@ import net.neoforged.neoforge.common.ModConfigSpec;
  */
 public final class StarConfig {
     public static final ModConfigSpec SPEC;
-    public static final ModConfigSpec.BooleanValue NODES, AUTO_QUARTET, CONJUNCTION_FALLBACK;
+    public static final ModConfigSpec.BooleanValue NODES, AUTO_QUARTET, CONJUNCTION_FALLBACK, NEVERLAND_CANON_GATE;
     public static final ModConfigSpec.IntValue PER_PLAYER, HEIR_PER_PLAYER, SERVER_CAP, LIFE_TICKS, PLACE_RANGE, SEED_COOLDOWN, CONJUNCTION_ALLIES;
     public static final ModConfigSpec.DoubleValue HEIR_MASTERY, DISPEL_CHANCE;
     public static final ModConfigSpec.EnumValue<StarRules.DualMode> DUAL_MODE;
@@ -39,6 +39,8 @@ public final class StarConfig {
                 .defineEnum("dualMode", StarRules.DualMode.FUSION);
         DISPEL_CHANCE = b.comment("Chance (0 to 1) that a star or a Quartile Scutum pane breaks when the mod's Anti-Magic dispel reaches it (an Anti-Magic slash, the Nihility zone, the other dispel arts). A pane and the stars holding it use about 1.7 times this (0.35 -> 0.6), a Grinberryall heir's use half. 0 = stars never die to Anti-Magic (as before). Allies' and the caster's own stars are never hit.")
                 .defineInRange(StarDispelRules.CONFIG_KEY, StarDispelRules.DEFAULT_CHANCE, StarDispelRules.MIN_CHANCE, StarDispelRules.MAX_CHANCE);
+        NEVERLAND_CANON_GATE = b.comment("Black Neverland as the manga has it: besides the Grinberryall heir mark the caster must be bonded to the wind spirit Sylph (flag sylph_bond) and hold a Demon-Dweller-family sword or be the Anti-Magic Lord (flag anti_magic_source); the dome then cancels magic (silence, jammed skills, shattered barriers) for an Aura price. false = only the heir mark is needed (the dome without the anti-magic part, unless the caster has the anti-magic source anyway).")
+                .define(StarNeverlandRules.CONFIG_KEY, StarNeverlandRules.DEFAULT_CANON_GATE);
         b.pop();
         SPEC = b.build();
     }
@@ -59,6 +61,7 @@ public final class StarConfig {
     public static boolean conjunctionFallback() { return get(CONJUNCTION_FALLBACK); }
     public static int conjunctionAllies() { return StarRules.maxAllies(get(CONJUNCTION_ALLIES)); }
     public static double heirMastery() { return StarRules.heirMastery(get(HEIR_MASTERY)); }
+    public static boolean neverlandCanonGate() { return get(NEVERLAND_CANON_GATE); }
     public static double dispelChance() { return StarDispelRules.clampChance(get(DISPEL_CHANCE)); }
     public static StarRules.DualMode dualMode() { return get(DUAL_MODE); }
 }
