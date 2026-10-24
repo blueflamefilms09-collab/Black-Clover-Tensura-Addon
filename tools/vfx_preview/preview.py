@@ -105,7 +105,7 @@ def build(layers):
     os.makedirs(storm_pkg, exist_ok=True)
     for name in ("StormMath.java", "StormComp.java"):
         shutil.copy(os.path.join(SRC, "com", "newuniverse", "nusmp", "fairytail", "storm", name), storm_pkg)
-    for name in ("AbstractVfxLayer", "VfxAnim", "VfxPose", "VfxBloom", "VfxTextures", "SolidParts", "SolidModels"):
+    for name in ("AbstractVfxLayer", "VfxAnim", "VfxPose", "VfxBloom", "VfxTextures", "SolidParts", "SolidModels") + (("VfxPart",) if any(l.split(".")[-1] == "ElementShapesLayer" for l in layers) else ()):      # 3.6.0: ElementShapesLayer (the lightning strike) draws a rune band with VfxPart
         shutil.copy(os.path.join(VFX, "client", name + ".java"), os.path.join(pkg, "client"))
     with open(os.path.join(VFX, "client", "VfxVertexBuffer.java"), encoding="utf-8") as f:
         vb = patched_vertex_buffer(f.read())
@@ -143,7 +143,7 @@ def build(layers):
         mm_src = os.path.join(SRC, "com", "newuniverse", "nusmp", "mana", "method")
         mm_dst = os.path.join(gen, "com", "newuniverse", "nusmp", "mana", "method")
         os.makedirs(mm_dst, exist_ok=True)
-        for name in ("RuneElement", "RuneMods", "RuneSpec", "RuneRules", "RuneAlphabet", "RuneGlyphLayout", "RuneGeneratorUtil", "RuneCharge", "RuneHoldView"):
+        for name in ("RuneElement", "RuneMods", "RuneSpec", "RuneRules", "RuneAlphabet", "RuneGlyphLayout", "RuneGeneratorUtil", "RuneCharge", "RuneHoldView", "LightningCharge", "RuneCost"):      # 3.6.0: RuneGlyphLayout reads LightningCharge (the arcs by ring), which reads RuneCost
             shutil.copy(os.path.join(mm_src, name + ".java"), mm_dst)
         perf_dst = os.path.join(gen, "com", "newuniverse", "nusmp", "perf")
         os.makedirs(perf_dst, exist_ok=True)
@@ -293,6 +293,8 @@ def run_java(scene, classes, out_json):
         args += ["--budget", str(scene["budget"])]
     if scene.get("hold"):                                  # Mana Method hold: [min, max, releaseAge (-1 = still held), held]
         args += ["--hold", ",".join(map(str, scene["hold"]))]
+    if scene.get("paint"):                                 # 3.6.0 painted rune (Brush / Body): [paintTicks, endAge, launchAge (-1 = none)]
+        args += ["--paint", ",".join(map(str, scene["paint"]))]
     if scene.get("flat"):
         args += ["--flat", "1"]
     if scene.get("style"):
