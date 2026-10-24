@@ -1,0 +1,218 @@
+{
+ "roar": {
+  "duration": 24,
+  "before": {
+   "sprite_quads": 51,
+   "mesh_quads": 0,
+   "sprite_vertices": 204
+  },
+  "BC_LOD0": {
+   "sprite_quads": 54,
+   "mesh_quads": 335,
+   "sprite_vertices": 216
+  },
+  "BC_LOD1": {
+   "sprite_quads": 32,
+   "mesh_quads": 169,
+   "sprite_vertices": 128
+  },
+  "A_fallback": {
+   "sprite_quads": 20,
+   "mesh_quads": 0,
+   "sprite_vertices": 80
+  },
+  "V1_equals_old_layer": true
+ },
+ "lance": {
+  "duration": 12,
+  "before": {
+   "sprite_quads": 51,
+   "mesh_quads": 0,
+   "sprite_vertices": 204
+  },
+  "BC_LOD0": {
+   "sprite_quads": 39,
+   "mesh_quads": 110,
+   "sprite_vertices": 156
+  },
+  "BC_LOD1": {
+   "sprite_quads": 20,
+   "mesh_quads": 66,
+   "sprite_vertices": 80
+  },
+  "A_fallback": {
+   "sprite_quads": 21,
+   "mesh_quads": 0,
+   "sprite_vertices": 84
+  },
+  "V1_equals_old_layer": true
+ },
+ "cradle": {
+  "duration": 80,
+  "before": {
+   "sprite_quads": 39,
+   "mesh_quads": 0,
+   "sprite_vertices": 156
+  },
+  "BC_LOD0": {
+   "sprite_quads": 23,
+   "mesh_quads": 176,
+   "sprite_vertices": 92
+  },
+  "BC_LOD1": {
+   "sprite_quads": 14,
+   "mesh_quads": 120,
+   "sprite_vertices": 56
+  },
+  "A_fallback": {
+   "sprite_quads": 12,
+   "mesh_quads": 0,
+   "sprite_vertices": 48
+  },
+  "V1_equals_old_layer": true
+ },
+ "nest": {
+  "duration": 80,
+  "before": {
+   "sprite_quads": 39,
+   "mesh_quads": 0,
+   "sprite_vertices": 156
+  },
+  "BC_LOD0": {
+   "sprite_quads": 26,
+   "mesh_quads": 120,
+   "sprite_vertices": 104
+  },
+  "BC_LOD1": {
+   "sprite_quads": 14,
+   "mesh_quads": 79,
+   "sprite_vertices": 56
+  },
+  "A_fallback": {
+   "sprite_quads": 10,
+   "mesh_quads": 0,
+   "sprite_vertices": 40
+  },
+  "V1_equals_old_layer": true
+ },
+ "burst": {
+  "duration": 28,
+  "before": {
+   "sprite_quads": 30,
+   "mesh_quads": 0,
+   "sprite_vertices": 120
+  },
+  "BC_LOD0": {
+   "sprite_quads": 30,
+   "mesh_quads": 208,
+   "sprite_vertices": 120
+  },
+  "BC_LOD1": {
+   "sprite_quads": 18,
+   "mesh_quads": 96,
+   "sprite_vertices": 72
+  },
+  "A_fallback": {
+   "sprite_quads": 13,
+   "mesh_quads": 0,
+   "sprite_vertices": 52
+  },
+  "V1_equals_old_layer": true
+ },
+ "splash": {
+  "duration": 20,
+  "before": {
+   "sprite_quads": 23,
+   "mesh_quads": 0,
+   "sprite_vertices": 92
+  },
+  "BC_LOD0": {
+   "sprite_quads": 17,
+   "mesh_quads": 144,
+   "sprite_vertices": 68
+  },
+  "BC_LOD1": {
+   "sprite_quads": 11,
+   "mesh_quads": 60,
+   "sprite_vertices": 44
+  },
+  "A_fallback": {
+   "sprite_quads": 8,
+   "mesh_quads": 0,
+   "sprite_vertices": 32
+  },
+  "V1_equals_old_layer": true
+ },
+ "ring": {
+  "duration": 30,
+  "before": {
+   "sprite_quads": 100,
+   "mesh_quads": 0,
+   "sprite_vertices": 400
+  },
+  "BC_LOD0": {
+   "sprite_quads": 7,
+   "mesh_quads": 132,
+   "sprite_vertices": 28
+  },
+  "BC_LOD1": {
+   "sprite_quads": 4,
+   "mesh_quads": 48,
+   "sprite_vertices": 16
+  },
+  "A_fallback": {
+   "sprite_quads": 3,
+   "mesh_quads": 0,
+   "sprite_vertices": 12
+  },
+  "V1_equals_old_layer": true
+ },
+ "splash_tint": {
+  "duration": 20,
+  "before": {
+   "sprite_quads": 23,
+   "mesh_quads": 0,
+   "sprite_vertices": 92
+  },
+  "BC_LOD0": {
+   "sprite_quads": 17,
+   "mesh_quads": 144,
+   "sprite_vertices": 68
+  },
+  "BC_LOD1": {
+   "sprite_quads": 11,
+   "mesh_quads": 60,
+   "sprite_vertices": 44
+  },
+  "A_fallback": {
+   "sprite_quads": 8,
+   "mesh_quads": 0,
+   "sprite_vertices": 32
+  },
+  "V1_equals_old_layer": true
+ },
+ "ring_tint": {
+  "duration": 30,
+  "before": {
+   "sprite_quads": 100,
+   "mesh_quads": 0,
+   "sprite_vertices": 400
+  },
+  "BC_LOD0": {
+   "sprite_quads": 7,
+   "mesh_quads": 132,
+   "sprite_vertices": 28
+  },
+  "BC_LOD1": {
+   "sprite_quads": 4,
+   "mesh_quads": 48,
+   "sprite_vertices": 16
+  },
+  "A_fallback": {
+   "sprite_quads": 3,
+   "mesh_quads": 0,
+   "sprite_vertices": 12
+  },
+  "V1_equals_old_layer": true
+ }
+}

@@ -91,6 +91,11 @@ def build(layers):
     shutil.copy(os.path.join(VFX, "WindMc.java"), pkg)                     # Wind pixel look: the pure rules (style switch, caps, stepped timing, tint choice) the vertex buffer and WindMcLayer read
     if any(l.split(".")[-1] == "WindMcLayer" for l in layers):             # WindMcLayer hands V1 back to the two layers that drew the shapes before it
         layers = list(layers) + ["WindMagicLayer", "WindSpellLayer"]
+    if any(l.split(".")[-1] == "WaterBcLayer" for l in layers):            # the water hybrid: its pure half (rules, meshes, toon shading, scene), the per-frame plan, and the two layers it hands V1 back to
+        for name in ("WaterBc.java", "WaterBcMeshes.java", "WaterBcMeshBuffer.java", "WaterBcToon.java", "WaterBcScene.java"):
+            shutil.copy(os.path.join(VFX, name), pkg)
+        shutil.copy(os.path.join(VFX, "client", "WaterBcFrame.java"), os.path.join(pkg, "client"))
+        layers = list(layers) + ["WaterFxLayer", "WaterMagicLayer"]
     storm_pkg = os.path.join(gen, "com", "newuniverse", "nusmp", "fairytail", "storm")           # Storm Magic: the pure maths the server and the layer share (StormMath, StormComp)
     os.makedirs(storm_pkg, exist_ok=True)
     for name in ("StormMath.java", "StormComp.java"):
@@ -276,6 +281,12 @@ def run_java(scene, classes, out_json):
         args += ["--flat", "1"]
     if scene.get("style"):
         args += ["--style", scene["style"]]
+    if scene.get("water"):
+        args += ["--water", scene["water"]]
+    if scene.get("tier") is not None:
+        args += ["--tier", str(scene["tier"])]
+    if scene.get("follow"):
+        args += ["--follow", "1"]
     subprocess.run(args, check=True)
     with open(out_json) as f:
         return json.load(f)

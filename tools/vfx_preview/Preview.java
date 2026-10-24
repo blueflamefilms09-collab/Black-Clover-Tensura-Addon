@@ -28,6 +28,8 @@ public final class Preview {
         for (int i = 0; i + 1 < a.length; i += 2) o.put(a[i], a[i + 1]);
         FlatProps.setDrawFlat("1".equals(o.get("--flat")));                   // a scene may ask for the old flat cut-outs (the before picture)
         com.newuniverse.nusmp.vfx.WindMc.setStyle(com.newuniverse.nusmp.vfx.WindMc.parse(o.get("--style")));      // the wind pixel look (default MC_C) or V1, the old wind layers
+        com.newuniverse.nusmp.vfx.WaterBc.setStyle(com.newuniverse.nusmp.vfx.WaterBc.parse(o.get("--water")));    // the water hybrid (default BC) or V1, the old water layers
+        com.newuniverse.nusmp.vfx.WaterBc.forceTier(Integer.parseInt(o.getOrDefault("--tier", "-1")));            // a water tier forced for the picture (0 full mesh, 1 light mesh, 2 flat sprites)
         AbstractVfxLayer layer = (AbstractVfxLayer) Class.forName(o.get("--layer")).getDeclaredConstructor().newInstance();
         VfxShape shape = VfxShape.valueOf(o.get("--shape"));
         Vec3 from = vec(o.getOrDefault("--from", "0,0,0")), to = vec(o.getOrDefault("--to", "0,1,0"));
@@ -40,7 +42,7 @@ public final class Preview {
         Vec3 cam = vec(o.get("--cam")), target = vec(o.get("--target"));
         float detail = Float.parseFloat(o.getOrDefault("--detail", "1"));
 
-        VfxPayload payload = new VfxPayload(shape.ordinal(), from, to, color, duration, power, -1, seed);
+        VfxPayload payload = new VfxPayload(shape.ordinal(), from, to, color, duration, power, "1".equals(o.get("--follow")) ? 1 : -1, seed);        // --follow 1: an effect that follows its caster (the water Cradle)
         VfxInstance inst = new VfxInstance(payload, layer, color, duration);
         layer.onSpawn(inst);
         VfxVertexBuffer buf = new VfxVertexBuffer();
@@ -52,11 +54,12 @@ public final class Preview {
             float partial = age - (float) Math.floor(age);
             VfxRenderContext ctx = new VfxRenderContext(cam, target, partial, detail);
             buf.beginActivation(o.containsKey("--budget") ? Integer.parseInt(o.get("--budget")) : layer.vertexBudget(shape));
+            com.newuniverse.nusmp.vfx.client.WaterBcFrame.plan(new ArrayList<>(), new double[0], new float[0], new boolean[0], 0, 40000);      // empties the water mesh buffer and the sprite allowance of the last frame
             layer.render(inst, ctx, buf);
             List<Object[]> quads = buf.drain();
             if (!firstFrame) sb.append(',');
             firstFrame = false;
-            sb.append("{\"age\":").append(age).append(",\"vertices\":").append(quads.size() * 4).append(",\"quads\":[");
+            sb.append("{\"age\":").append(age).append(",\"vertices\":").append(quads.size() * 4).append(",\"mesh\":").append(meshJson()).append(",\"quads\":[");
             for (int q = 0; q < quads.size(); q++) {
                 Object[] e = quads.get(q);
                 float[] d = (float[]) e[3];
@@ -73,6 +76,26 @@ public final class Preview {
         }
         sb.append("],\"shake\":").append(VfxShake.last).append("}");
         try (FileWriter w = new FileWriter(o.get("--out"))) { w.write(sb.toString()); }
+    }
+
+    /** The 3D cores the water hybrid put in its mesh buffer this frame (toon shaded, camera relative): [{"k": pass 0 solid / 1 translucent / 2 glow, "c": argb, "p": 12 floats}] */
+    private static String meshJson() {
+        com.newuniverse.nusmp.vfx.WaterBcMeshBuffer mb = com.newuniverse.nusmp.vfx.WaterBcMeshBuffer.FRAME;
+        StringBuilder m = new StringBuilder("[");
+        boolean first = true;
+        for (int pass = 0; pass < com.newuniverse.nusmp.vfx.WaterBcMeshBuffer.PASSES; pass++) {
+            float[] d = mb.data(pass);
+            int[] c = mb.colours(pass);
+            for (int q = 0; q < mb.count(pass); q++) {
+                if (!first) m.append(',');
+                first = false;
+                m.append("{\"k\":").append(pass).append(",\"c\":").append(c[q] & 0xFFFFFFFFL).append(",\"p\":[");
+                for (int i = 0; i < 12; i++) m.append(i > 0 ? "," : "").append(String.format(Locale.ROOT, "%.4f", d[q * 12 + i]));
+                m.append("]}");
+            }
+        }
+        mb.reset();
+        return m.append("]").toString();
     }
 
     private static Vec3 vec(String s) {

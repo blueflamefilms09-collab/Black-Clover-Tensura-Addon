@@ -16,6 +16,7 @@ What is different from the C pieces (the weak spots listed in docs/vfx_remake/wa
 Same file format and layers as the C pieces: q <layer> (x y z u v) x4 nx ny nz r g b ;  layer 0 body, 1 emissive, 2 foam.  Units are 1/16 block, y along the piece.
 
     python tools/gen_water_bc_meshes.py   ->  docs/previews/vfx_remake/water_new/meshes/bc_*.txt  +  counts_bc.txt
+                                          ->  src/main/resources/assets/nusmp/wbc_meshes/bc_*.txt   (the game set, read by vfx/WaterBcMeshes; the two Valkyrie wing files are NOT shipped: the wings are deferred)
 """
 import math
 import os
@@ -25,6 +26,9 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 from gen_sdw3_models import Mesh                                                    # noqa: E402
 from gen_water_new_meshes import sec, pt, W, loft, OUT                              # noqa: E402  (same vocabulary as C)
+
+GAME = os.path.join(os.path.abspath(os.path.join(HERE, "..")), "src", "main", "resources", "assets", "nusmp", "wbc_meshes")
+NOT_SHIPPED = ("wing_r", "wing_l")                                                  # the Valkyrie wings are remade separately (owner decision), so no wing mesh goes into the game
 
 
 def blade2(m, layer, pts, rgb=W):
@@ -276,6 +280,7 @@ MESHES = [("head_upper", head_upper, True), ("head_lower", head_lower, True), ("
 
 def main():
     os.makedirs(OUT, exist_ok=True)
+    os.makedirs(GAME, exist_ok=True)
     lines = ["Water remake, hybrid BC: mesh cores (quads; verts = 4 x quads; layer 0 body / 1 glow / 2 foam)", "", "%-22s %6s %6s %6s %6s" % ("piece", "quads", "L0", "L1", "L2")]
     for name, fn, has_lo in MESHES:
         for lo in ((False, True) if has_lo else (False,)):
@@ -285,6 +290,9 @@ def main():
                 c[q[0]] += 1
             with open(os.path.join(OUT, m.name + ".txt"), "w", encoding="utf-8", newline="\n") as f:
                 f.write(m.text())
+            if name not in NOT_SHIPPED:
+                with open(os.path.join(GAME, m.name + ".txt"), "w", encoding="utf-8", newline="\n") as f:
+                    f.write(m.text())
             lines.append("%-22s %6d %6d %6d %6d" % (m.name, len(m.q), c[0], c[1], c[2]))
     with open(os.path.join(OUT, "counts_bc.txt"), "w", encoding="utf-8", newline="\n") as f:
         f.write("\n".join(lines) + "\n")
