@@ -123,7 +123,7 @@ class WindMcSourceScanTest {
         assertEquals(1, buf.split("setFilter\\(", -1).length - 1, "one filter decision per batch, not per quad");
         String mgr = code(read("vfx/client/VfxManager.java"));
         assertTrue(mgr.contains("PerfProbe.end(layerSection(inst.layer), lt)"), "the performance probe times every layer, WindMcLayer included (c.vfx.layer.WindMcLayer)");
-        assertTrue(mgr.contains("buffer.beginActivation(inst.layer.vertexBudget(inst.shape))"), "the activation budget is asked from the layer");
+        assertTrue(mgr.contains("buffer.beginActivation(inst.layer.vertexBudget(inst.shape)"), "the activation budget is asked from the layer");
     }
 
     @Test
