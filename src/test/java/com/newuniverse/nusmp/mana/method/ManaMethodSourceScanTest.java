@@ -224,8 +224,8 @@ class ManaMethodSourceScanTest {
     void theGlyphRingLayoutIsStagedAndNothingInTheGameCallsItYet() throws IOException {
         try (Stream<Path> w = Files.walk(SRC)) {
             for (Path p : (Iterable<Path>) w.filter(x -> x.toString().endsWith(".java"))::iterator)
-                if (!p.getFileName().toString().equals("RuneGlyphLayout.java"))
-                    assertFalse(code(read(p)).contains("RuneGlyphLayout"), p.getFileName() + " uses the staged glyph layout: wire it in a deliberate step, with the client quads budgeted");
+                if (!p.getFileName().toString().equals("RuneGlyphLayout.java") && !p.getFileName().toString().equals("RuneAlphabet.java"))
+                    assertFalse(code(read(p)).contains("RuneGlyphLayout") || code(read(p)).contains("RuneAlphabet"), p.getFileName() + " uses the staged rune writing: wire it in a deliberate step, with the client quads budgeted");
         }
     }
 
@@ -251,7 +251,7 @@ class ManaMethodSourceScanTest {
             assertTrue(lang.contains("\"nusmp.mana_method.page." + id + ".desc\""), "a description for " + id);
         assertTrue(lang.contains("\"nusmp.mana_method.cast\""));
         assertTrue(read(METHOD.resolve("ManaMethodPages.java")).contains("\"nusmp.mana_method.cast\""));
-        for (String png : new String[]{"rune_faces_the_caster.png", "rune_drawing_sequence.png", "rune_elements.png", "rune_glyph_rings.png", "rune_glyph_alphabet.png", "rune_glyph_charge.png", "rune_glyph_lod.png"})
+        for (String png : new String[]{"rune_faces_the_caster.png", "rune_drawing_sequence.png", "rune_elements.png", "rune_glyph_rings.png", "rune_glyph_writing.png", "rune_glyph_alphabet.png", "rune_glyph_charge.png", "rune_glyph_lod.png"})
             assertTrue(Files.exists(Path.of("docs/previews/mana_method/" + png)), "preview " + png);
     }
 }

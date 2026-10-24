@@ -180,7 +180,7 @@ def main():
             sheet.paste(bg, (10 + c * cell + 3, y0 + 12 + k * cell))
         d.text((12 + COLS * cell - 4, y0 + 12 + k * cell + 24), tint, fill=(200, 205, 230))
     os.makedirs(OUT, exist_ok=True)
-    sheet.save(os.path.join(OUT, "rune_glyph_alphabet.png"))
+    sheet.save(os.path.join(OUT, "rune_glyph_sprites_alt.png"))
     print("wrote", OUT)
 
 

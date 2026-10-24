@@ -75,35 +75,54 @@ only: a crash right after a cast leaves those few blocks in the world.
 Previews (software render of the REAL class output, `python tools/mana_method/preview_runes.py`): `docs/previews/mana_method/rune_faces_the_caster.png` (six looks incl. up and down: always face-on from the caster's eye, edge-on
 from the side with the normal pointing back), `rune_drawing_sequence.png` (the charge and the release), `rune_elements.png` (six elements, single modifier and True Magic).
 
-## Glyph-ring look (STAGED: preview only, the game still draws the dot rings above)
+## Rune writing look (STAGED: preview only, the game still draws the dot rings above)
 
-The owner's reference frame (`tools/mana_method/reference_frame.png`): several concentric rings of readable angular rune glyphs, each with a bright yellow core and a red-orange outline, a tight ring round the
-hands, a bigger outer ring tilted like a bowl, a few loose glyphs floating above, yellow lightning arcs weaving through the rings, an open glowing grimoire at the lower right. The new look is built and previewed;
-**nothing in the game calls it** (a source-scan test fails if any other file names `RuneGlyphLayout`), so the five pages and the dot-ring particles are exactly as described above until you say go.
+The owner's reference frame (`tools/mana_method/reference_frame.png`) shows rings of readable rune symbols with a bright yellow core and an orange-red edge, a tight ring round the hands, a bigger tilted outer
+ring, loose glyphs above, yellow lightning and an open glowing grimoire; the owner's clarification: **actual rune symbols written in the air**. This look is built and previewed; **nothing in the game calls it**
+(a source-scan test fails if any other file names `RuneGlyphLayout` or `RuneAlphabet`), so the five pages and the dot-ring particles are exactly as described above until you say go.
 
-Previews (`docs/previews/mana_method/`): **`rune_glyph_rings.png`** (the reference frame and the new rune side by side at the same framing, the body is a flat placeholder), **`rune_glyph_alphabet.png`** (the 32 glyphs
-and the element tints), **`rune_glyph_charge.png`** (the 18-tick charge and the release), `rune_glyph_lod.png` (the four levels of detail and the six element tints), `glyph_atlas/rune_glyphs_<tint>.png` (the atlases).
-Re-make them with `python tools/mana_method/gen_rune_glyphs.py` then `python tools/mana_method/preview_glyph_rings.py`; the quads in the previews are the output of the real class.
+Previews (`docs/previews/mana_method/`, drawn from the output of the real classes; the body is a flat placeholder):
+**`rune_glyph_rings.png`** (the reference frame, the new rune at the same framing, and the rune from the caster's eye, face on), **`rune_glyph_writing.png`** (8 frames of ONE glyph being written, then the ring being
+written next to the reference), **`rune_glyph_alphabet.png`** (all 32 glyphs at 4x with names and stroke counts), `rune_glyph_charge.png` (the 18-tick charge and the release), `rune_glyph_lod.png` (the four levels
+and the six elements, each writing its own words). Re-make them with `python tools/mana_method/preview_glyph_rings.py`.
 
-* **Alphabet** (`tools/mana_method/gen_rune_glyphs.py`, seeded, strokes in `rune_glyphs.json`): 32 angular glyphs of 32x32 pixels in an 8x4 atlas (cell = index, row major), strokes on a 5x5 lattice (horizontal, vertical and diagonal steps
-  only, a tall stem with hooks and ticks like the reference), a bright core and a red-orange outline with a faint glow; a glyph is kept only if it differs from every earlier one and from their mirror images. One atlas per tint:
-  gold (the reference look, True Magic), flame, water, wind, earth, lightning, plant (7 atlases of 256x128). The element tints are core + outline colour pairs (water: pale cyan / deep blue, wind: white-mint / sea green, ...).
-* **Layout** (`mana/method/RuneGlyphLayout.java`, pure, keeps the quaternion plane of `RuneGeneratorUtil.frameFacing`, so the whole figure still faces the caster): three rings in the caster-facing plane,
-  the **hand ring** (8 glyphs, radius 0.28 R, turns +0.09 rad/tick), the **middle ring** (14, 0.55 R, turns -0.05: counter-rotation) and the **outer ring** (20, 0.80 R, tilted 0.5 rad and lifted like a bowl, +0.035), plus
-  2 to 6 **floating glyphs** above (bobbing, wobbling), up to 3 **lightning arcs** and the **open grimoire**. Each ring glyph is a quad lying on its ring: its up axis is the outward radius, its right axis the clockwise tangent
-  (right x up = the plane's normal, so it reads correctly to the caster, tested). The glyph of each slot is a hash of the spell and the slot (deterministic, the same rune always reads the same).
-* **Charge**: over the charge the glyphs light up one after the other (hand ring, middle ring, outer ring, then the floating glyphs): each one grows 60 to 100 % and flashes to 1.6 x brightness for 3 ticks, then settles at 1.
-  The arcs start once 35 % is charged; the book fades in from the start. On the release the outer ring widens 25 % and flares for 6 ticks.
-* **Lightning**: up to 3 arcs per rune, each 7 jagged strip quads (0.06 wide, turned to the camera) from an outer-ring glyph to a hand-ring glyph or a floating glyph, a new shape every 3 ticks, present 2 slices in 3.
-* **Grimoire**: three quads (two tilted gold pages meeting at the spine, a glow behind), hovering with a slow bob at the lower right of the plane as the caster sees it. The preview uses a procedural page texture; in the game the
-  floating grimoire model of the mod (`GrimoireFloatClient`) could replace it, which was not checked, so the cheap three-quad book is what is costed.
-* **Levels of detail** (`levelFor(detail)`, detail = effect quality x distance): full 72 quads; medium (no book, 3 floating glyphs, 2 arcs) 59; low (half the glyphs of the rings, 1 arc) 28; minimal (outer ring only, 10 glyphs) 10; none beyond 64 blocks.
+* **Alphabet** (`mana/method/RuneAlphabet.java`, pure): 32 hand-authored runes, each 2 to 6 straight strokes on a 5x5 lattice (x right, y up), in the angular Elder-Futhark style of the reference: vertical bars with hooks
+  and branches (fehu, uruz, ansuz, raido ...), triangles, crosses, arrows, diamonds (ingwaz, lantern), gates and tridents. Pinned by `RuneAlphabetTest`: 32 distinct names, no two glyphs equal or mirror images, every one at
+  least 3 lattice units tall or wide, at most 6 segments (this bounds the quads of a rune). The older **stamped sprite** alphabet (`gen_rune_glyphs.py`, 32 random 32x32 sprites, `glyph_atlas/`, `rune_glyph_sprites_alt.png`)
+  was not what the owner meant (random strokes, not real runes); it is kept as a cheaper alternative (one quad per glyph) and is not used by the writing look.
+* **Handwriting** (`RuneGlyphLayout.write`): a glyph is written by a PEN that walks its strokes one after the other (a pen lift is instant) at a constant speed along the path; every stroke segment up to the pen is ONE strip quad
+  in the caster-facing plane (0.32 of the glyph's half size wide: yellow core, orange-red edge, square caps so the joints close), the last one shortened to the pen's tip, and a glow quad sits on the pen. The line is brightest
+  right behind the pen (1.7 x), cools to its resting glow over 3 ticks, and then **breathes** (+-12 %, each glyph a little out of step). The preview shows 8 pen positions of the glyph raido.
+* **Reads right**: a glyph is written in its own frame (right = the clockwise tangent of its ring, up = outward), right x up = the plane's normal, so it reads correctly to the caster and is never mirrored. Tested by the
+  winding of every strip (a mirrored glyph would be wound away from the caster) and by fehu's branches ending on the right of its stem, for four look directions including straight down.
+* **Rings** (the quaternion plane of `RuneGeneratorUtil.frameFacing` is kept): the **hand ring** (6 glyphs, radius 0.34 R, turns +0.09 rad/tick), the **middle ring** (9, 0.60 R, -0.05: counter-rotation) and the **outer
+  ring** (13, 0.84 R, tilted 0.5 rad and lifted like a bowl, +0.035), plus 1 to 4 **floating glyphs** above. The rings are written AT THE SAME TIME, each glyph after the one before it (hand ring over 3..48 % of the charge,
+  middle 12..66 %, outer 22..84 %, floating 60..92 %): about 1.7 to 2.7 ticks per glyph in an 18-tick charge, a pen sweeping each in a few frames. Written glyphs keep glowing and breathing and the rings keep turning; on
+  the release the outer ring widens 25 % and flares for 6 ticks.
+* **Words per element** (`RuneAlphabet.phrase`): each element has a fixed run of six glyphs (Flame: kenaz, sowilo, hagal, fehu, triangle, algiz; Water: laguz, jera, ingwaz, ansuz, eihwaz, zigzag; Wind, Earth, Lightning,
+  Plant likewise). The hand ring writes the phrase, the other rings write it half the time and the rest of the alphabet otherwise (deterministic from the spell). True Magic replaces the first and the fourth word by gebo
+  and othala, the two glyphs only it writes. Two elements share at most two words (tested).
+* **Lightning**: up to 3 arcs of 7 camera-facing strip quads (0.06 wide) from an outer-ring point to a hand-ring point, a new shape every 3 ticks, present 2 slices in 3, from 55 % of the charge. **Grimoire**: 3 quads (two
+  tilted gold pages and a glow), bobbing at the caster's lower right; the mod's floating grimoire model could replace it, which was not checked.
+* **Colours**: one stroke texture per element tint (core + edge colour pairs: gold / True Magic, flame, water, wind, earth, lightning, plant; the preview builds them from the table in `preview_glyph_rings.py`).
+* **Levels of detail** (`levelFor(detail)`, detail = effect quality x distance): full (all glyphs, book, 3 arcs), medium (no book, half the floating glyphs, 2 arcs), low (half the glyphs of each ring, 1 arc), minimal (half the
+  outer ring only), none beyond 64 blocks.
 
-**Worst case with this look (per rune, replacing the 166 to 204 dot particles when it is switched on):** 72 quads = 288 vertices at full detail (48 glyph quads + 21 arc strips + 3 book quads), 59 / 28 / 10 at the lower levels;
-at most 6 runes at once = **432 quads = 1,728 vertices a frame** (and the farther ones are drawn at a lower level, so a crowd costs far less); at most 3 spark particles per rune per tick on top, each through
-`PerfBudgets.clientParticles` (0 while that budget is spent); a layout is filled into the rune's own preallocated arrays each frame (about 150 sin / cos, **no allocation**), 7 atlases of 32 KB bound the textures;
-server cost and packets: unchanged (the same one 28-byte packet). To switch it on the game needs (1) a client setting `visual.runeStyle` (classic dots / glyph rings; the dot rings stay), (2) a render layer that draws the quads through the
-existing `VfxVertexBuffer` batches (so the frame vertex cap of `VfxQuality` applies), (3) the atlases copied to `assets/nusmp/textures/`. None of that is done, so nothing about the game's cost has changed.
+**Worst case with this look (per rune, replacing the 166 to 204 dot particles when it is switched on):**
+
+| What | Bound |
+|---|---|
+| Stroke strips | at most 32 glyphs x 6 segments = **192** (a typical full rune: about 100, the alphabet averages 3.4 segments), 4 pen glows |
+| Other quads | at most 21 lightning strips and 3 book quads |
+| **Per rune** | at most **220 quads = 880 vertices** at full detail (typically about 125 quads); 59-to-10 times fewer at the lower levels |
+| **Six runes** | at most **1,320 quads = 5,280 vertices a frame** (and the farther ones are drawn at a lower level, so a crowd costs far less; the near ones are capped by the `VfxQuality` frame vertex cap once the quads go through `VfxVertexBuffer`) |
+| Particles | at most 3 spark particles per rune per tick on top, each through `PerfBudgets.clientParticles` (the spark spawning is not written yet) |
+| Per frame work | one `fill` per drawn rune: about 130 sin / cos for the rings and one multiply-add per strip corner, **no allocation** (preallocated `Layout` arrays; a test reads the bodies of `fill`, `write`, `emit`, `arc`, `book`, `writeSingle` and fails on `new`) |
+| Textures | 1 stroke strip texture per tint (tiny), 1 pen glow, 1 book page |
+| Server | unchanged: the same one 28-byte packet per cast |
+
+To switch it on the game needs (1) a client setting `visual.runeStyle` (classic dots / written runes; the dot rings stay), (2) a render layer drawing the quads through the existing `VfxVertexBuffer` batches (so the frame
+vertex cap of `VfxQuality` applies) with the stroke textures, (3) the textures copied to `assets/nusmp/textures/`. None of that is done, so nothing about the game's cost has changed.
 
 ## Settings (SERVER, `nusmp-mana-method-server.toml`)
 
@@ -133,12 +152,12 @@ existing `VfxVertexBuffer` batches (so the frame vertex cap of `VfxQuality` appl
   no chunk load, permission per cell, allocation-free draw; wiring: pages last, gate order, one config file, one boot line, the older True Magic page and the Rune Stone untouched, Time Magic not referenced; docs and previews exist).
 * In game (CI server smoke, **not run here**): `magic.mana_method` (the five pages are the last of every grimoire, closed for a fresh player, off the Avatar's list; NBT round trip for every spec; caps per caster; despawn by itself; clean-up of a dropped
   caster; a Homing rune strikes a zombie 3 blocks off its line; Growth numbers) and `magic.mana_method.true_blocks` (water source, stone mound, fire; nothing where the caster may not build; wind and lightning place none; caps; everything taken back).
-* Staged look: `RuneGlyphLayoutTest` (glyphs face the caster and stand on their rings pointing outward, the rings are circles in the plane and counter-rotate, the sequence lights hand ring first, the flash, every count bounded at every level, arcs late, bounded and camera-facing, the book at full detail only, deterministic, `fill` allocates nothing, the atlases are 32 distinct glyphs per tint) and a scan test that nothing in the game names the staged class.
+* Staged look: `RuneAlphabetTest` (32 distinct legible glyphs of at most 6 segments, none a mirror image of another, the words of each element) and `RuneGlyphLayoutTest` (the pen walks the strokes and the line only grows, glyphs read right way round in every plane, strokes in the plane and inside the glyph's box, the glow cools behind the pen, rings written at once glyph after glyph hand ring first, each element its own words, every count bounded at every level, arcs late and camera-facing, the book at full detail only, deterministic, nothing allocated), and a scan test that nothing in the game names the staged classes.
 * Two pinned lists that assumed the spirit pages are the last of a book now look past the five new pages (`SpiritControlSelfTests`, `ManaZoneSelfTests`, through `ManaMethodPages.tailCount`).
 
 ## NEW / REPLACED / KEPT
 
-* **NEW**: the five pages; `mana/method/*` (rules, spec, generator, manager, true blocks, packet, config, self-tests, boot); `client/manamethod/RuneClient`; the packet `nusmp:mana_method_rune`; `nusmp-mana-method-server.toml`; `tools/mana_method/` (preview); `tools/lang/mana_method.json`; the three previews; the STAGED glyph-ring look (`RuneGlyphLayout`, `gen_rune_glyphs.py`, `preview_glyph_rings.py`, `DumpGlyphRings.java`, 4 more previews, 7 preview atlases, the reference frame), not wired into the game.
+* **NEW**: the five pages; `mana/method/*` (rules, spec, generator, manager, true blocks, packet, config, self-tests, boot); `client/manamethod/RuneClient`; the packet `nusmp:mana_method_rune`; `nusmp-mana-method-server.toml`; `tools/mana_method/` (preview); `tools/lang/mana_method.json`; the three previews; the STAGED rune-writing look (`RuneAlphabet`, `RuneGlyphLayout`, `preview_glyph_rings.py`, `DumpGlyphRings.java`, 5 more previews, the reference frame, and the older stamped-sprite alternative `gen_rune_glyphs.py` with its 7 atlases), not wired into the game.
 * **REPLACED**: nothing.
 * **KEPT**: the older True Magic page (`true_magic_rune_array`) and its tests, the Mana Method Rune Stone item, the Heart kingdom perk, `SpellRuntime`, every older page and mode number, the Time Magic VFX.
 
