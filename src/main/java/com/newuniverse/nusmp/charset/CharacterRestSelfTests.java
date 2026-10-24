@@ -105,7 +105,7 @@ public final class CharacterRestSelfTests {
             for (int m = 0; m < b.familyCount(); m++) {
                 boolean listed = set.spell(b.page(m).id()) != null;
                 if (m == 0 && CharacterSets.hidden(inst, 0)) return Result.fail(id + ": mode 0 was hidden");
-                if (m > 0 && listed == CharacterSets.hidden(inst, m)) return Result.fail(id + ": page " + b.page(m).id() + (listed ? " is hidden although it is in his set" : " is shown although it is not in his set"));
+                if (m > 0 && !com.newuniverse.nusmp.ultimate.UltimateRegistry.isUltimatePage(b.page(m).id()) && listed == CharacterSets.hidden(inst, m)) return Result.fail(id + ": page " + b.page(m).id() + (listed ? " is hidden although it is in his set" : " is shown although it is not in his set"));
             }
             for (CharacterSet.Spell s : set.spells()) {
                 int m = index(b, s.page());

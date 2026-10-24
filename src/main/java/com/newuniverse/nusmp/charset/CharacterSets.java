@@ -54,7 +54,7 @@ public final class CharacterSets {
     public static boolean hidden(ManasSkillInstance i, int mode) {
         if (!enabled() || !(i.getSkill() instanceof GrimoireBook b) || mode < 0 || mode >= b.familyCount()) return false;
         BookPage pg = b.page(mode);
-        return pg != null && registry().hidden(canonOf(i), bookPath(b), pg.id(), mode == 0, CharacterSetConfig.basicHidesSignatures());
+        return pg != null && registry().hidden(canonOf(i), bookPath(b), pg.id(), mode == 0, CharacterSetConfig.basicHidesSignatures(), com.newuniverse.nusmp.ultimate.UltimateRegistry.isUltimatePage(pg.id()), com.newuniverse.nusmp.ultimate.UltimateConfig.showInCharacterGrimoires());      // Ultimate Magic: a character grimoire shows the Ultimate of its own attribute(s) (ultimate.showInCharacterGrimoires)
     }
 
     /** How many family pages this grimoire can ever show (the pages of a character's set, or all). For the status panel's "x of y". */
@@ -69,7 +69,7 @@ public final class CharacterSets {
         if (!enabled()) return null;
         BookPage pg = b.page(mode);
         if (pg == null) return null;
-        return registry().opens(canonOf(i), bookPath(b), pg.id(), new Facts(p, i, b));
+        return registry().opens(canonOf(i), bookPath(b), pg.id(), new Facts(p, i, b), com.newuniverse.nusmp.ultimate.UltimateRegistry.isUltimatePage(pg.id()), com.newuniverse.nusmp.ultimate.UltimateConfig.showInCharacterGrimoires());
     }
 
     /** Does this character's set list the page (so the old "locked to another grimoire" line must not block it)? */

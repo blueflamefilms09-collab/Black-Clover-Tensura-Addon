@@ -9,7 +9,7 @@ import net.neoforged.neoforge.common.ModConfigSpec;
  */
 public final class UltimateConfig {
     public static final ModConfigSpec SPEC;
-    public static final ModConfigSpec.BooleanValue ENABLED, SNEAK_CANCEL, EXHAUST_AFTER, HIT_PLAYERS;
+    public static final ModConfigSpec.BooleanValue ENABLED, SNEAK_CANCEL, EXHAUST_AFTER, HIT_PLAYERS, KINGDOM_ANIMATIONS, SHOW_IN_CHARACTER_GRIMOIRES;
     public static final ModConfigSpec.IntValue MAX_SIMULTANEOUS, COOLDOWN_TICKS;
     public static final ModConfigSpec.DoubleValue WINDUP_SCALE, RADIUS_SCALE, DAMAGE_SCALE, INTERRUPT_FRACTION, GATE_STRICTNESS;
 
@@ -38,6 +38,12 @@ public final class UltimateConfig {
                 .define("hitPlayers", true);
         GATE_STRICTNESS = b.comment("Multiplier on the EP the page's gate asks (1,000,000 EP by default; floor 500,000). The rank and the full mastery bar always stay.")
                 .defineInRange("gateStrictness", 1.0, UltimateGate.MIN_STRICTNESS, UltimateGate.MAX_STRICTNESS);
+        KINGDOM_ANIMATIONS = b.comment("The wind-up, hold and release body animation of an Ultimate depends on the caster's kingdom (Clover, Diamond, Spade, Heart); a caster without a kingdom keeps the old Mana Zone pose.",
+                "false = every caster plays the old single looping pose, as before. The animation is only drawn by the clients; nothing about the cast itself changes.")
+                .define("kingdomAnimations", true);
+        SHOW_IN_CHARACTER_GRIMOIRES = b.comment("A grimoire bound to a character (Yuno, Noelle, Asta ...) whose spell set does not list the Ultimate page used to hide it. true = it shows the Ultimate of the character's OWN attribute(s)",
+                "(his book or books); the Ultimates of other attributes stay hidden there. false = the old behaviour (hidden in every character grimoire that has a spell set). Plain and basic grimoires always show it.")
+                .define("showInCharacterGrimoires", true);
         b.pop();
         SPEC = b.build();
     }
@@ -78,6 +84,14 @@ public final class UltimateConfig {
 
     public static boolean hitPlayers() {
         try { return HIT_PLAYERS.get(); } catch (RuntimeException notLoaded) { return true; }
+    }
+
+    public static boolean kingdomAnimations() {
+        try { return KINGDOM_ANIMATIONS.get(); } catch (RuntimeException notLoaded) { return true; }
+    }
+
+    public static boolean showInCharacterGrimoires() {
+        try { return SHOW_IN_CHARACTER_GRIMOIRES.get(); } catch (RuntimeException notLoaded) { return true; }
     }
 
     public static double gateStrictness() {
