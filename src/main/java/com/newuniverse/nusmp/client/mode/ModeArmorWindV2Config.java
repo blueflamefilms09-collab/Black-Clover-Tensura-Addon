@@ -25,6 +25,7 @@ public final class ModeArmorWindV2Config {
                 .defineEnum("windLook", Look.V2);
         ARMS = b.comment("The arms of the V2 overlay: BLOCKY (default: the classic overlay's square box sleeves with the chunky fur cuffs and a square shoulder mantle, in the v2 cloth) or SMOOTH (the rounded sleeves, cuffs and domed mantles of the first v2). Only changes what this client draws; windLook = CLASSIC ignores it.")
                 .defineEnum("windArms", ArmStyle.BLOCKY);
+        ModeArmorValkyrieConfig.define(b);                                                              // the Valkyrie Dress options: modeArmor.valkyrieLook / valkyrieForm / valkyrieLance
         b.pop();
         SPEC = b.build();
     }
@@ -46,9 +47,11 @@ public final class ModeArmorWindV2Config {
         try {
             ModeArmorWindV2.setLook(LOOK.get());
             ModeArmorWindV2.setArms(ARMS.get());
+            ModeArmorValkyrieConfig.apply();
         } catch (IllegalStateException notLoaded) {
             ModeArmorWindV2.setLook(Look.V2);
             ModeArmorWindV2.setArms(ArmStyle.BLOCKY);
+            ModeArmorValkyrieConfig.apply();
         }
     }
 }

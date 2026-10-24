@@ -266,8 +266,10 @@ public final class SpiritDiveAura {
         PoseStack pose = c.pose();
         int lit = SealDraw.lift(c.light(), 6);
         java.util.List<String> list = remade ? SpiritDivePieces.pieces(el, st, grade) : SpiritDivePieces.pieces(el, st);
+        boolean valkyrie = el == Element.WATER && com.newuniverse.nusmp.client.mode.ModeArmorValkyrieV2.replacesAuraPieces(c.player().getId());       // the Valkyrie armour v2 draws the wings, the helm and the halo itself
         for (int pi = 0, pn = list.size(); pi < pn; pi++) {
             String id = list.get(pi);
+            if (valkyrie && com.newuniverse.nusmp.client.mode.ModeArmorValkyrieV2.replacesAuraPiece(id)) continue;
             Def p = DEFS.get(id);
             if (p == null || (p.detail() && !near) || (p.head() && self1p)) continue;
             boolean already = remade ? SpiritDivePieces.alreadyOn(el, st, grade, id) : SpiritDivePieces.alreadyOn(el, st, id);

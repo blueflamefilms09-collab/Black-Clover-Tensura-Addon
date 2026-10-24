@@ -27,6 +27,7 @@ public final class ModeArmorClient {
     public static void init(IEventBus modBus) {
         modBus.addListener(ModeArmorClient::addLayers);
         NeoForge.EVENT_BUS.addListener((ClientPlayerNetworkEvent.LoggingOut e) -> WORN.clear());
+        ModeArmorValkyrieEvents.init();                                                  // the Valkyrie armour v2: first person arm pieces, the Mermaid look's hidden legs
     }
 
     private static void addLayers(EntityRenderersEvent.AddLayers event) {
