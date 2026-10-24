@@ -374,6 +374,52 @@ public final class ModeArmorWindV2Mesh {
         return new ModeArmorWindV2Mesh(b);
     }
 
+    // ------------------------------------------------------------------ the BLOCKY ARMS (the classic overlay's square sleeve, cuff and shoulder, left arm, centre x = +1; the right one is the mirror)
+    /**
+     * An axis aligned box as quads: the four side faces take a quarter of {@code side} each (u runs front, outer, back, inner round the box; v from the top edge to the bottom edge), the top takes {@code top};
+     * the bottom is left out (it is hidden under the cuff, or faces the hand). 5 quads = 20 vertices, flat normals, rigid.
+     */
+    private static void box(B b, float x0, float y0, float z0, float x1, float y1, float z1, float[] side, float[] top) {
+        float du = (side[2] - side[0]) / 4f;
+        float[][] c = {{x0, z0, x1, z0, 0, 0, -1}, {x1, z0, x1, z1, 1, 0, 0}, {x1, z1, x0, z1, 0, 0, 1}, {x0, z1, x0, z0, -1, 0, 0}};      // each side: from (xa, za) to (xb, zb) and its outward normal
+        for (int f = 0; f < 4; f++) {
+            float[] e = c[f];
+            float ua = side[0] + du * f, ub = ua + du;
+            b.v(e[0], y0, e[1], ua, side[1], e[4], 0, e[6], 0, 0); b.v(e[2], y0, e[3], ub, side[1], e[4], 0, e[6], 0, 0);
+            b.v(e[2], y1, e[3], ub, side[3], e[4], 0, e[6], 0, 0); b.v(e[0], y1, e[1], ua, side[3], e[4], 0, e[6], 0, 0);
+        }
+        b.v(x0, y0, z0, top[0], top[1], 0, -1, 0, 0, 0); b.v(x1, y0, z0, top[2], top[1], 0, -1, 0, 0, 0);
+        b.v(x1, y0, z1, top[2], top[3], 0, -1, 0, 0, 0); b.v(x0, y0, z1, top[0], top[3], 0, -1, 0, 0, 0);
+    }
+
+    /** The box sleeve: the classic's arm box (x -1.3..3.3, y -2.3..6.6, z +-2.3, 0.3 px of cloth round the arm). */
+    private static ModeArmorWindV2Mesh sleeveBox() {
+        B b = new B();
+        box(b, -1.3f, -2.3f, -2.3f, 3.3f, 6.6f, 2.3f, coat(ModeArmorWindV2Rules.R_SLEEVE_BOX), coat(ModeArmorWindV2Rules.R_SLEEVE_CAP));
+        return new ModeArmorWindV2Mesh(b);
+    }
+
+    /** The chunky fur cuff: the classic's box (x -1.8..3.8, y 6.4..8.6, z +-2.8), fur with the tuft line along its top edge and a fur lip on top. */
+    private static ModeArmorWindV2Mesh cuffBox() {
+        B b = new B();
+        box(b, -1.8f, 6.4f, -2.8f, 3.8f, 8.6f, 2.8f, fur(ModeArmorWindV2Rules.R_FUR_OUTER), fur(ModeArmorWindV2Rules.R_FUR_LIP));
+        return new ModeArmorWindV2Mesh(b);
+    }
+
+    /** The square shoulder mantle: a slab over the top of the sleeve. */
+    private static ModeArmorWindV2Mesh mantleBox() {
+        B b = new B();
+        box(b, -1.55f, -3.1f, -2.55f, 3.55f, -0.9f, 2.55f, coat(ModeArmorWindV2Rules.R_MANTLE_BOX), coat(ModeArmorWindV2Rules.R_MANTLE_CAP));
+        return new ModeArmorWindV2Mesh(b);
+    }
+
+    /** The fur band under the mantle slab, the same box as the cuff, so the shoulder and the wrist match. */
+    private static ModeArmorWindV2Mesh mantleTrimBox() {
+        B b = new B();
+        box(b, -1.8f, -1.0f, -2.8f, 3.8f, 0.9f, 2.8f, fur(ModeArmorWindV2Rules.R_FUR_OUTER), fur(ModeArmorWindV2Rules.R_FUR_LIP));
+        return new ModeArmorWindV2Mesh(b);
+    }
+
     // ------------------------------------------------------------------ LEGS (centred on x = 0)
     private static ModeArmorWindV2Mesh trouser(int d) {
         B b = new B();
@@ -645,5 +691,11 @@ public final class ModeArmorWindV2Mesh {
         MESHES[Piece.WING_ORN.ordinal()][0] = wingOrn();
         MESHES[Piece.RIBBON_CUFF.ordinal()][0] = ribbonCuff();
         MESHES[Piece.RIBBON_TAIL.ordinal()][0] = ribbonTail();
+        for (int d = 0; d < 2; d++) {                                                                          // the blocky arms: full and mid level share the box (it is 20 vertices already)
+            MESHES[Piece.SLEEVE_BOX.ordinal()][d] = sleeveBox();
+            MESHES[Piece.CUFF_BOX.ordinal()][d] = cuffBox();
+        }
+        MESHES[Piece.MANTLE_BOX.ordinal()][0] = mantleBox();
+        MESHES[Piece.MANTLE_TRIM_BOX.ordinal()][0] = mantleTrimBox();
     }
 }

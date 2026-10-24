@@ -27,6 +27,21 @@ public final class ModeArmorWindV2Rules {
 
     public static final Look DEFAULT_LOOK = Look.V2;
 
+    /**
+     * The client option {@code modeArmor.windArms}: which arms the overlay v2 wears. BLOCKY (the default, "the blocky part for the arms for the classic"): the classic overlay's square box sleeve with the chunky fur cuff
+     * sitting round the arm and a square shoulder mantle, painted with the cel banded cloth of v2. SMOOTH: the rounded lofted sleeves, cuffs and domed mantles of the first v2. Everything else of v2 is the same in both.
+     * Append only.
+     */
+    public enum ArmStyle { BLOCKY, SMOOTH }
+
+    public static final ArmStyle DEFAULT_ARMS = ArmStyle.BLOCKY;
+
+    public static ArmStyle parseArms(String s) {
+        if (s == null) return DEFAULT_ARMS;
+        for (ArmStyle a : ArmStyle.values()) if (a.name().equalsIgnoreCase(s.trim())) return a;
+        return DEFAULT_ARMS;
+    }
+
     public static Look parse(String s) {
         if (s == null) return DEFAULT_LOOK;
         for (Look l : Look.values()) if (l.name().equalsIgnoreCase(s.trim())) return l;
@@ -63,7 +78,8 @@ public final class ModeArmorWindV2Rules {
 
     /** A region of a texture in pixels: {x0, y0, x1, y1}. */
     public static final int[] R_TORSO = {0, 0, 160, 64}, R_TAIL_BACK = {160, 0, 192, 48}, R_TAIL_FRONT = {192, 0, 224, 40}, R_SLEEVE = {0, 64, 64, 96}, R_MANTLE = {64, 64, 144, 88},
-            R_TROUSER = {0, 96, 64, 124}, R_BOOT = {64, 96, 128, 120}, R_SASH = {128, 96, 256, 112}, R_BUCKLE = {160, 64, 176, 72}, R_CORD = {176, 64, 192, 96}, R_TASSEL = {192, 64, 208, 80};
+            R_TROUSER = {0, 96, 64, 124}, R_BOOT = {64, 96, 128, 120}, R_SASH = {128, 96, 256, 112}, R_BUCKLE = {160, 64, 176, 72}, R_CORD = {176, 64, 192, 96}, R_TASSEL = {192, 64, 208, 80},
+            R_SLEEVE_BOX = {0, 128, 80, 164}, R_SLEEVE_CAP = {80, 128, 100, 148}, R_MANTLE_BOX = {104, 128, 184, 140}, R_MANTLE_CAP = {184, 128, 204, 148};
     public static final int[] R_FUR_OUTER = {0, 0, 128, 32}, R_FUR_LIP = {0, 32, 64, 48}, R_FUR_INNER = {64, 32, 128, 48};
     public static final int[] R_WING = {0, 0, 128, 256};
     public static final int[] R_BLADE = {0, 0, 16, 32}, R_BLADE_FLAT = {48, 0, 64, 32}, R_ARROW = {16, 0, 48, 16}, R_RING = {0, 32, 64, 40}, R_RING_TOP = {64, 32, 128, 40}, R_HALO = {0, 40, 40, 80},
@@ -86,7 +102,9 @@ public final class ModeArmorWindV2Rules {
         EYES, HAIR,
         CROWN, HALO,
         WING_BIG, WING_SMALL, WING_ORN,
-        RIBBON_CUFF, RIBBON_TAIL
+        RIBBON_CUFF, RIBBON_TAIL,
+        /** The BLOCKY arm pieces (appended): box sleeve, box fur cuff, box shoulder mantle, its fur band. Built for the left arm like their smooth twins. */
+        SLEEVE_BOX, CUFF_BOX, MANTLE_BOX, MANTLE_TRIM_BOX
     }
 
     /** One thing a wearer draws: the piece at a detail index of its mesh, in a pass, once or mirrored for both sides. */
@@ -95,7 +113,7 @@ public final class ModeArmorWindV2Rules {
     /** The body part a piece is bound to (the left / right variants are chosen by the painter when {@link Entry#copies} is 2). */
     public static Part partOf(Piece p) {
         return switch (p) {
-            case SLEEVE, CUFF, MANTLE, MANTLE_TRIM, RIBBON_CUFF -> Part.ARM_L;
+            case SLEEVE, CUFF, MANTLE, MANTLE_TRIM, RIBBON_CUFF, SLEEVE_BOX, CUFF_BOX, MANTLE_BOX, MANTLE_TRIM_BOX -> Part.ARM_L;
             case TROUSER, BOOT, BOOT_FUR -> Part.LEG_L;
             case EYES, HAIR -> Part.HEAD;
             case CROWN, HALO -> Part.CROWN;
@@ -134,18 +152,38 @@ public final class ModeArmorWindV2Rules {
 
     private static final Entry[] NONE = {};
 
-    /** The things a wearer draws at a level of detail, in pass order (the painter draws a pass at a time). */
-    public static Entry[] entries(Lod lod) {
-        return switch (lod) { case FULL -> FULL; case MID -> MID; case FAR -> FAR; case CULLED -> NONE; };
+    /** Swaps the smooth arm pieces of a table for their blocky twins (the same pass and copies, the same order, so the pass-by-pass painter is unchanged). */
+    private static Entry[] blocky(Entry[] src) {
+        Entry[] out = new Entry[src.length];
+        for (int i = 0; i < src.length; i++) {
+            Entry en = src[i];
+            Piece p = switch (en.piece()) { case SLEEVE -> Piece.SLEEVE_BOX; case CUFF -> Piece.CUFF_BOX; case MANTLE -> Piece.MANTLE_BOX; case MANTLE_TRIM -> Piece.MANTLE_TRIM_BOX; default -> en.piece(); };
+            out[i] = p == en.piece() ? en : new Entry(p, en.detail(), en.pass(), en.copies());
+        }
+        return out;
+    }
+
+    private static final Entry[] FULL_BLOCKY = blocky(FULL), MID_BLOCKY = blocky(MID);
+
+    /** The things a wearer draws at a level of detail with the SMOOTH arms (the first v2), in pass order (the painter draws a pass at a time). */
+    public static Entry[] entries(Lod lod) { return entries(lod, ArmStyle.SMOOTH); }
+
+    /** The things a wearer draws at a level of detail with the given arms. The far level has no arms. */
+    public static Entry[] entries(Lod lod, ArmStyle arms) {
+        boolean box = arms == ArmStyle.BLOCKY;
+        return switch (lod) { case FULL -> box ? FULL_BLOCKY : FULL; case MID -> box ? MID_BLOCKY : MID; case FAR -> FAR; case CULLED -> NONE; };
     }
 
     /** Drifting leaves (quads of 4 vertices) per level of detail. */
     public static int leaves(Lod lod) { return switch (lod) { case FULL -> 6; case MID -> 2; default -> 0; }; }
 
     /** Vertices of one wearer at a level of detail, counted from the real meshes: every entry's mesh times its copies, and the leaves. */
-    public static int vertices(Lod lod) {
+    public static int vertices(Lod lod) { return vertices(lod, ArmStyle.SMOOTH); }
+
+    /** Vertices of one wearer at a level of detail with the given arms (BLOCKY is never more than SMOOTH: the budget does not grow with the option). */
+    public static int vertices(Lod lod, ArmStyle arms) {
         int v = leaves(lod) * 4;
-        for (Entry en : entries(lod)) v += ModeArmorWindV2Mesh.get(en.piece(), en.detail()).verts * en.copies();
+        for (Entry en : entries(lod, arms)) v += ModeArmorWindV2Mesh.get(en.piece(), en.detail()).verts * en.copies();
         return v;
     }
 

@@ -55,7 +55,7 @@ class ModeArmorWindV2Test {
     @Test
     void everyMeshIsFiniteWithUnitNormalsUvInsideAndSwayWeightsInRange() {
         for (Lod lod : new Lod[]{Lod.FULL, Lod.MID, Lod.FAR}) {
-            for (Entry e : ModeArmorWindV2Rules.entries(lod)) {
+            for (ModeArmorWindV2Rules.ArmStyle arms : ModeArmorWindV2Rules.ArmStyle.values()) for (Entry e : ModeArmorWindV2Rules.entries(lod, arms)) {
                 ModeArmorWindV2Mesh m = ModeArmorWindV2Mesh.get(e.piece(), e.detail());
                 assertTrue(m.verts > 0 && m.verts % 4 == 0, e + " is whole quads");
                 for (int i = 0; i < m.verts; i++) {
@@ -78,7 +78,7 @@ class ModeArmorWindV2Test {
 
     @Test
     void theMirroredPiecesAreBuiltOnTheLeftAndTheCrownIsSixtyToSixtyFivePercentOfTheOldOne() {
-        for (Piece p : new Piece[]{Piece.SLEEVE, Piece.CUFF, Piece.MANTLE, Piece.MANTLE_TRIM, Piece.WING_BIG, Piece.WING_SMALL, Piece.RIBBON_CUFF}) {
+        for (Piece p : new Piece[]{Piece.SLEEVE, Piece.CUFF, Piece.MANTLE, Piece.MANTLE_TRIM, Piece.SLEEVE_BOX, Piece.CUFF_BOX, Piece.MANTLE_BOX, Piece.MANTLE_TRIM_BOX, Piece.WING_BIG, Piece.WING_SMALL, Piece.RIBBON_CUFF}) {
             ModeArmorWindV2Mesh m = ModeArmorWindV2Mesh.get(p, 0);
             float sum = 0;
             for (int i = 0; i < m.verts; i++) sum += m.pos[i * 3];
@@ -124,9 +124,73 @@ class ModeArmorWindV2Test {
     @Test
     void theFlagshipPiecesAreAllInTheFullLevel() {
         java.util.Set<Piece> drawn = new java.util.HashSet<>();
-        for (Entry e : ModeArmorWindV2Rules.entries(Lod.FULL)) drawn.add(e.piece());
+        for (ModeArmorWindV2Rules.ArmStyle arms : ModeArmorWindV2Rules.ArmStyle.values()) for (Entry e : ModeArmorWindV2Rules.entries(Lod.FULL, arms)) drawn.add(e.piece());      // every piece is in the full level of one of the two arm styles
         for (Piece p : Piece.values()) assertTrue(drawn.contains(p), p + " is drawn at the full level");
         assertTrue(ModeArmorWindV2Rules.leaves(Lod.FULL) > 0 && ModeArmorWindV2Rules.leaves(Lod.FULL) <= 6, "a capped handful of drifting leaves");
         assertEquals(0, ModeArmorWindV2Rules.leaves(Lod.FAR));
+    }
+
+    @Test
+    void theArmOptionIsAppendOnlyAndDefaultsToBlocky() {
+        assertEquals("[BLOCKY, SMOOTH]", java.util.Arrays.toString(ModeArmorWindV2Rules.ArmStyle.values()));
+        assertEquals(ModeArmorWindV2Rules.ArmStyle.BLOCKY, ModeArmorWindV2Rules.DEFAULT_ARMS);
+        assertEquals(ModeArmorWindV2Rules.ArmStyle.BLOCKY, ModeArmorWindV2Rules.parseArms(null));
+        assertEquals(ModeArmorWindV2Rules.ArmStyle.BLOCKY, ModeArmorWindV2Rules.parseArms("garbage"));
+        assertEquals(ModeArmorWindV2Rules.ArmStyle.SMOOTH, ModeArmorWindV2Rules.parseArms(" smooth "));
+        assertEquals("[SLEEVE_BOX, CUFF_BOX, MANTLE_BOX, MANTLE_TRIM_BOX]", java.util.Arrays.toString(java.util.Arrays.copyOfRange(Piece.values(), Piece.values().length - 4, Piece.values().length)), "the blocky pieces are appended last");
+    }
+
+    @Test
+    void theOptionIsReadFromTheClientConfigAndTheClassicLookStillBypassesV2() throws IOException {
+        String cfg = Files.readString(Path.of("src/main/java/com/newuniverse/nusmp/client/mode/ModeArmorWindV2Config.java"));
+        assertTrue(cfg.contains("ModConfig.Type.CLIENT") && cfg.contains("nusmp-modearmor-client.toml"), "a CLIENT config file");
+        assertTrue(cfg.contains("defineEnum(\"windArms\", ArmStyle.BLOCKY)"), "modeArmor.windArms defaults to BLOCKY");
+        assertTrue(cfg.contains("defineEnum(\"windLook\", Look.V2)"), "modeArmor.windLook still defaults to V2");
+        assertTrue(cfg.contains("setArms(ARMS.get())"), "the value is mirrored into the painter");
+        String v2 = Files.readString(Path.of("src/main/java/com/newuniverse/nusmp/client/mode/ModeArmorWindV2.java"));
+        assertTrue(v2.contains("mode == ModeArmor.Mode.WIND_SPIRIT_DIVE_YUNO && look == Look.V2"), "CLASSIC (windLook) is never drawn by v2, so the classic 73-quad overlay of ModeArmorLayer.wind draws");
+        assertTrue(v2.contains("ModeArmorWindV2Rules.entries(lod, arms)"), "the painter draws the arms of the option");
+        String layer = Files.readString(Path.of("src/main/java/com/newuniverse/nusmp/client/mode/ModeArmorLayer.java"));
+        assertTrue(layer.contains("case WIND_SPIRIT_DIVE, WIND_SPIRIT_DIVE_YUNO -> wind(c, m);"), "the classic overlay is still wired");
+        assertTrue(layer.contains("box(c.solid(WIND_PLATE), pose, x0, -2.3f, -2.3f, x1, 6.6f, 2.3f, 255, a, c.light);") && layer.contains("box(c.solid(WIND_FUR), pose, x0 - 0.5f, 6.4f, -2.8f, x1 + 0.5f, 8.6f, 2.8f, 255, a, c.light);"),
+                "the classic sleeve and cuff boxes are untouched");
+    }
+
+    @Test
+    void theBlockyArmsAreTheClassicBoxesAndNeverCostMoreThanTheSmoothOnes() {
+        for (Lod lod : new Lod[]{Lod.FULL, Lod.MID}) {
+            for (Entry e : ModeArmorWindV2Rules.entries(lod, ModeArmorWindV2Rules.ArmStyle.BLOCKY))
+                assertTrue(e.piece() != Piece.SLEEVE && e.piece() != Piece.CUFF && e.piece() != Piece.MANTLE && e.piece() != Piece.MANTLE_TRIM, "no smooth arm piece in the blocky arms: " + e);
+            for (Entry e : ModeArmorWindV2Rules.entries(lod, ModeArmorWindV2Rules.ArmStyle.SMOOTH))
+                assertTrue(e.piece() != Piece.SLEEVE_BOX && e.piece() != Piece.CUFF_BOX && e.piece() != Piece.MANTLE_BOX && e.piece() != Piece.MANTLE_TRIM_BOX, "no box piece in the smooth arms: " + e);
+            int blocky = ModeArmorWindV2Rules.vertices(lod, ModeArmorWindV2Rules.ArmStyle.BLOCKY), smooth = ModeArmorWindV2Rules.vertices(lod, ModeArmorWindV2Rules.ArmStyle.SMOOTH);
+            assertTrue(blocky <= smooth, lod + ": the blocky arms (" + blocky + ") do not grow the overlay (smooth " + smooth + ")");
+            assertTrue(blocky <= ModeArmorWindV2Rules.cap(lod), lod + " blocky under its cap");
+            assertEquals(smooth, ModeArmorWindV2Rules.vertices(lod), "the no argument count is the smooth count of the first v2");
+        }
+        assertEquals(3168, ModeArmorWindV2Rules.vertices(Lod.FULL, ModeArmorWindV2Rules.ArmStyle.SMOOTH));
+        assertEquals(2792, ModeArmorWindV2Rules.vertices(Lod.FULL, ModeArmorWindV2Rules.ArmStyle.BLOCKY));
+        assertEquals(ModeArmorWindV2Rules.vertices(Lod.FAR, ModeArmorWindV2Rules.ArmStyle.SMOOTH), ModeArmorWindV2Rules.vertices(Lod.FAR, ModeArmorWindV2Rules.ArmStyle.BLOCKY), "no arms at the far level");
+        // the boxes: axis aligned (every normal on an axis), the classic's proportions (sleeve x -1.3..3.3, y -2.3..6.6, z +-2.3; cuff 0.5 wider all round, y 6.4..8.6)
+        float[][] want = {{-1.3f, -2.3f, -2.3f, 3.3f, 6.6f, 2.3f}, {-1.8f, 6.4f, -2.8f, 3.8f, 8.6f, 2.8f}};
+        Piece[] ps = {Piece.SLEEVE_BOX, Piece.CUFF_BOX};
+        for (int k = 0; k < 2; k++) {
+            ModeArmorWindV2Mesh m = ModeArmorWindV2Mesh.get(ps[k], 0);
+            assertEquals(20, m.verts, ps[k] + " is a box of five faces (the bottom is hidden)");
+            float[] lo = {1e9f, 1e9f, 1e9f}, hi = {-1e9f, -1e9f, -1e9f};
+            for (int i = 0; i < m.verts; i++) {
+                int axes = 0;
+                for (int a = 0; a < 3; a++) {
+                    lo[a] = Math.min(lo[a], m.pos[i * 3 + a]); hi[a] = Math.max(hi[a], m.pos[i * 3 + a]);
+                    if (Math.abs(m.nrm[i * 3 + a]) > 0.99f) axes++;
+                }
+                assertEquals(0f, m.sw[i], "a box does not sway");
+                assertEquals(1, axes, ps[k] + " has flat, axis aligned faces");
+            }
+            for (int a = 0; a < 3; a++) {
+                assertEquals(want[k][a], lo[a], 1e-4f, ps[k] + " min " + a);
+                assertEquals(want[k][a + 3], hi[a], 1e-4f, ps[k] + " max " + a);
+            }
+        }
     }
 }

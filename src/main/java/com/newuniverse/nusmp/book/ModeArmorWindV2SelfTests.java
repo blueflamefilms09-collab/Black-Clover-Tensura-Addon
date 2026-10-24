@@ -31,7 +31,7 @@ public final class ModeArmorWindV2SelfTests {
     private static Result check(MinecraftServer server) {
         List<String> bad = new ArrayList<>();
         for (Lod lod : new Lod[]{Lod.FULL, Lod.MID, Lod.FAR}) {
-            for (Entry e : ModeArmorWindV2Rules.entries(lod)) {
+            for (ModeArmorWindV2Rules.ArmStyle arms : ModeArmorWindV2Rules.ArmStyle.values()) for (Entry e : ModeArmorWindV2Rules.entries(lod, arms)) {
                 ModeArmorWindV2Mesh m;
                 try { m = ModeArmorWindV2Mesh.get(e.piece(), e.detail()); } catch (RuntimeException ex) { bad.add("missing mesh " + e); continue; }
                 if (m.verts <= 0 || m.verts % 4 != 0) bad.add(e + " has " + m.verts + " vertices");
@@ -42,8 +42,11 @@ public final class ModeArmorWindV2SelfTests {
                     if (!(l > 0.97f && l < 1.03f)) { bad.add(e + " has a normal of length " + l); break; }
                 }
             }
-            int v = ModeArmorWindV2Rules.vertices(lod);
-            if (v > ModeArmorWindV2Rules.cap(lod)) bad.add(lod + ": " + v + " vertices over the cap " + ModeArmorWindV2Rules.cap(lod));
+            for (ModeArmorWindV2Rules.ArmStyle arms : ModeArmorWindV2Rules.ArmStyle.values()) {
+                int v = ModeArmorWindV2Rules.vertices(lod, arms);
+                if (v > ModeArmorWindV2Rules.cap(lod)) bad.add(lod + " " + arms + ": " + v + " vertices over the cap " + ModeArmorWindV2Rules.cap(lod));
+            }
+            if (ModeArmorWindV2Rules.vertices(lod, ModeArmorWindV2Rules.ArmStyle.BLOCKY) > ModeArmorWindV2Rules.vertices(lod, ModeArmorWindV2Rules.ArmStyle.SMOOTH)) bad.add(lod + ": the blocky arms grow the overlay");
         }
         if (ModeArmorWindV2Rules.vertices(Lod.CULLED) != 0) bad.add("something is drawn beyond 64 blocks");
         int combined = ModeArmorWindV2Rules.yunoCombinedSteady();
@@ -54,8 +57,10 @@ public final class ModeArmorWindV2SelfTests {
             bad.add("the mode wire is wrong");
         if (ModeArmorWindV2Rules.DEFAULT_LOOK != ModeArmorWindV2Rules.Look.V2 || ModeArmorWindV2Rules.parse("garbage") != ModeArmorWindV2Rules.Look.V2 || ModeArmorWindV2Rules.parse("classic") != ModeArmorWindV2Rules.Look.CLASSIC)
             bad.add("the windLook option does not default to V2 / parse");
+        if (ModeArmorWindV2Rules.DEFAULT_ARMS != ModeArmorWindV2Rules.ArmStyle.BLOCKY || ModeArmorWindV2Rules.parseArms("garbage") != ModeArmorWindV2Rules.ArmStyle.BLOCKY || ModeArmorWindV2Rules.parseArms("smooth") != ModeArmorWindV2Rules.ArmStyle.SMOOTH)
+            bad.add("the windArms option does not default to BLOCKY / parse");
         if (!bad.isEmpty()) return Result.fail(String.join("; ", bad.subList(0, Math.min(8, bad.size()))));
-        return Result.ok("meshes finite; wearer vertices " + ModeArmorWindV2Rules.vertices(Lod.FULL) + " / " + ModeArmorWindV2Rules.vertices(Lod.MID) + " / " + ModeArmorWindV2Rules.vertices(Lod.FAR)
-                + " (full / mid / far, caps 3200 / 1200 / 150); combined calm Yuno dive " + combined + " (cap " + ModeArmorWindV2Rules.CAP_COMBINED_STEADY + "); 5 textures; mode wire ok; default V2");
+        return Result.ok("meshes finite; wearer vertices " + ModeArmorWindV2Rules.vertices(Lod.FULL, ModeArmorWindV2Rules.ArmStyle.BLOCKY) + " blocky arms (smooth " + ModeArmorWindV2Rules.vertices(Lod.FULL) + ") / " + ModeArmorWindV2Rules.vertices(Lod.MID) + " / " + ModeArmorWindV2Rules.vertices(Lod.FAR)
+                + " (full / mid / far, caps 3200 / 1200 / 150); combined calm Yuno dive " + combined + " (cap " + ModeArmorWindV2Rules.CAP_COMBINED_STEADY + "); 5 textures; mode wire ok; default V2, arms BLOCKY");
     }
 }
