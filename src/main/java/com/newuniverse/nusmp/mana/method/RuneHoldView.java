@@ -35,6 +35,11 @@ public final class RuneHoldView {
     public int holdAtRelease;
     /** Ticks since the rune began at which the bolt leaves (-1 = unknown) and at which the rune is gone (-1 = not yet known). */
     public float launchAge = -1f, endAge = -1f;
+    /**
+     * 3.6.0, PAINTED runes (the Brush Rune and the Body Rune): a rune that nobody holds. When above 0 the rings are written one after the other over this many ticks from the start
+     * (see {@link #written}) and stay written; the rune is then fixed or follows a body, and ends at {@link #endAge}. 0 = a held rune, as before.
+     */
+    public int paintTicks;
 
     public RuneHoldView(int ownerId, RuneSpec spec, int minHold, int maxHold, Frame frame) {
         this.ownerId = ownerId;
@@ -71,6 +76,14 @@ public final class RuneHoldView {
      * Writes four numbers; allocation free.
      */
     public void written(double age, double[] out) {
+        if (paintTicks > 0) {                                                               // a painted rune: all four groups over the paint time, hand ring first
+            double t = clamp(age / paintTicks);
+            out[0] = clamp(t / 0.4);
+            out[1] = clamp((t - 0.15) / 0.45);
+            out[2] = clamp((t - 0.3) / 0.6);
+            out[3] = clamp((t - 0.7) / 0.3);
+            return;
+        }
         double hold = released() ? holdAtRelease : Math.min(age, RuneCharge.HOLD_CAP);
         double span = maxHold - minHold, since = released() ? Math.max(0.0, age - releaseAge) : 0.0;
         double w0 = clamp(hold / minHold);

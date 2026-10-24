@@ -54,7 +54,7 @@ public class RuneWritingLayer extends AbstractVfxLayer {
     /** The strokes are drawn at 0.85 x their light (the light goes to 1.7 at the pen), so the glow at rest is bright and the writing head is full. */
     private static final float ALPHA_PER_LIGHT = 0.85f;
 
-    private static final int SLOTS = 8;
+    private static final int SLOTS = 16;                                                  // 3.6.0: six cast runes and eight painted runes may be up together
 
     /** The parts of a rune that do not change during its life, kept per instance (the manager gives a layer no place to put them). */
     private static final class Slot {
@@ -90,6 +90,8 @@ public class RuneWritingLayer extends AbstractVfxLayer {
         s.inst = inst;
         s.spec = RuneSpec.unpack((int) (inst.seed & 63L));
         s.params = RuneGeneratorUtil.paramsFor(s.spec);
+        float scale = inst.power;                                                        // 3.6.0: a painted rune (brush or body) asks for another size through the effect's power; the held and cast runes send 1
+        if (scale > 0.05f && Math.abs(scale - 1f) > 0.001f) s.params = new Params(s.params.radius() * scale, s.params.complexity(), s.params.ringParticle(), s.params.glyphParticle(), s.params.tint());
         Vec3 from = inst.from(ctx), to = inst.to(ctx);
         double lx = to.x - from.x, ly = to.y - from.y, lz = to.z - from.z;
         s.frame = RuneGeneratorUtil.frameFacing(from.x, from.y, from.z, lx, ly, lz);
@@ -112,6 +114,7 @@ public class RuneWritingLayer extends AbstractVfxLayer {
             if (fade <= 0f) return;
             v.progress(age, prog, scale, written);
             RuneGlyphLayout.fillStaged(layout, s.spec, s.params, v.frame, age, prog, scale, v.flare(age), level, cx, cy, cz);
+            if (v.paintTicks > 0) layout.bookLight = 0f;                                 // 3.6.0: a painted rune (brush, body) has no grimoire: no gold glow where the book would be
         } else {
             int charge = Math.max(1, inst.duration - TAIL);
             fade = (float) Math.max(0.0, Math.min(1.0, (inst.duration - age) / FADE));

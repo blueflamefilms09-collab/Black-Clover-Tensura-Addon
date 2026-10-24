@@ -43,8 +43,11 @@ public final class ManaMethodPages {
     public static final String FIRE_ID = "mana_method_fire", WATER_ID = "mana_method_water", WIND_ID = "mana_method_wind", EARTH_ID = "mana_method_earth", TRUE_ID = "mana_method_true";
     /** 3.5.0: the two mobility pages, appended after the five rune pages. */
     public static final String AIR_STEP_ID = "mana_method_air_step", DASH_ID = "mana_method_dash";
+    /** 3.6.0: the two canon pages, appended LAST after the mobility pages: Gadjah's runes on the body and Rill's painted rune. */
+    public static final String BODY_ID = "mana_method_body", BRUSH_ID = "mana_method_brush";
     private static final List<String> RUNE_IDS = List.of(FIRE_ID, WATER_ID, WIND_ID, EARTH_ID, TRUE_ID);
-    private static final List<String> IDS = List.of(FIRE_ID, WATER_ID, WIND_ID, EARTH_ID, TRUE_ID, AIR_STEP_ID, DASH_ID);
+    private static final List<String> IDS_35 = List.of(FIRE_ID, WATER_ID, WIND_ID, EARTH_ID, TRUE_ID, AIR_STEP_ID, DASH_ID);
+    private static final List<String> IDS = List.of(FIRE_ID, WATER_ID, WIND_ID, EARTH_ID, TRUE_ID, AIR_STEP_ID, DASH_ID, BODY_ID, BRUSH_ID);
 
     public static List<String> ids() { return IDS; }
 
@@ -55,13 +58,16 @@ public final class ManaMethodPages {
 
     public static boolean isMobility(String id) { return AIR_STEP_ID.equals(id) || DASH_ID.equals(id); }
 
+    /** 3.6.0: the two canon pages (Body Rune, Brush Rune). */
+    public static boolean isCanon(String id) { return BODY_ID.equals(id) || BRUSH_ID.equals(id); }
+
     /**
-     * How many of the last pages of a book are Mana Method pages: all seven, the five of 3.4.0, or none (an older list). The pinned "the last pages are the spirit pages" checks use it to
-     * look past them.
+     * How many of the last pages of a book are Mana Method pages: all nine (3.6.0), the seven of 3.5.0, the five of 3.4.0, or none (an older list). The pinned "the last pages are the spirit
+     * pages" checks use it to look past them.
      */
     public static int tailCount(List<BookPage> pages) {
         int n = pages.size();
-        for (List<String> ids : List.of(IDS, RUNE_IDS)) {
+        for (List<String> ids : List.of(IDS, IDS_35, RUNE_IDS)) {
             int k = ids.size();
             if (n < k) continue;
             boolean all = true;
@@ -80,7 +86,9 @@ public final class ManaMethodPages {
                 element(EARTH_ID, "Earth Rune", RuneElement.EARTH),
                 new BookPage(TRUE_ID, "True Magic Rune", "Mana Method: True Magic", RuneRules.COST_PERCENT_TRUE, RuneRules.COST_FLOOR_TRUE, RuneRules.COOLDOWN_TRUE, ManaMethodPages::castTrue),
                 new BookPage(AIR_STEP_ID, "Air Step Rune", "Mana Method: Air Step", MobilityRules.COST_PERCENT_AIR_STEP, MobilityRules.COST_FLOOR_AIR_STEP, MobilityRules.COOLDOWN_AIR_STEP, ManaMethodPages::castAirStep),
-                new BookPage(DASH_ID, "Dash Rune", "Mana Method: Dash", MobilityRules.COST_PERCENT_DASH, MobilityRules.COST_FLOOR_DASH, MobilityRules.COOLDOWN_DASH, ManaMethodPages::castDash));
+                new BookPage(DASH_ID, "Dash Rune", "Mana Method: Dash", MobilityRules.COST_PERCENT_DASH, MobilityRules.COST_FLOOR_DASH, MobilityRules.COOLDOWN_DASH, ManaMethodPages::castDash),
+                new BookPage(BODY_ID, "Body Rune", "Mana Method: Body", BodyRuneRules.COST_PERCENT, BodyRuneRules.COST_FLOOR, BodyRuneRules.COOLDOWN, ManaMethodPages::castBody),
+                new BookPage(BRUSH_ID, "Brush Rune", "Mana Method: Brush", BrushRules.COST_PERCENT, BrushRules.COST_FLOOR, BrushRules.COOLDOWN, ManaMethodPages::castBrush));
     }
 
     private static BookPage element(String id, String name, RuneElement e) {
@@ -92,7 +100,49 @@ public final class ManaMethodPages {
     public static boolean usable(LivingEntity e) { return ManaMethodConfig.enabled() && ManaZoneManager.gateOpenFor(e); }
 
     /** As {@link #usable(LivingEntity)}, and the mobility pages also need the setting {@code manaMethod.mobility}. */
-    public static boolean usable(LivingEntity e, String pageId) { return usable(e) && (!isMobility(pageId) || ManaMethodConfig.mobility()); }
+    public static boolean usable(LivingEntity e, String pageId) {
+        return usable(e) && (!isMobility(pageId) || ManaMethodConfig.mobility()) && (!BODY_ID.equals(pageId) || ManaMethodConfig.bodyRunes()) && (!BRUSH_ID.equals(pageId) || ManaMethodConfig.brushRunes());
+    }
+
+    // ---------------------------------------------------------------- the price
+    /**
+     * 3.6.0: the share of the page's normal price the cast that is about to happen pays ({@link RuneCost}): the charge of the release that is waiting for its cast, peeked WITHOUT using it up. 1
+     * when the setting {@code manaMethod.costScalesWithCharge} is off, hold-to-charge is off, nothing is waiting (the 3.4.0 cast), or for the Air Step Rune (no charge to speak of).
+     */
+    public static double costFactor(ServerPlayer p, String pageId, int mode) {
+        if (!isPage(pageId) || AIR_STEP_ID.equals(pageId) || !ManaMethodConfig.costScalesWithCharge() || !RuneHold.active()) return 1.0;
+        Charge c = RuneHold.peek(p.getUUID(), mode, p.level().getGameTime());
+        return c == null ? 1.0 : RuneCost.fraction(c, ManaMethodConfig.minCostFraction());
+    }
+
+    /** The share of the normal price a cast with {@code charge} has been charged (what {@link #costFactor} gave when the grimoire asked). */
+    static double paidFraction(Charge charge) {
+        return charge == null || !ManaMethodConfig.costScalesWithCharge() ? 1.0 : RuneCost.fraction(charge, ManaMethodConfig.minCostFraction());
+    }
+
+    /**
+     * 3.6.0: gives back what a REFUSED Mana Method cast was charged. The grimoire takes the price before the page's cast runs (the page cannot know it will be refused); a cast the page
+     * refuses (runes still forming, server full, cooldown, nothing to paint on, ...) must not cost. A creative player paid nothing.
+     */
+    static void refund(GrimoireBook b, ManasSkillInstance i, ServerPlayer p, int mode, Charge charge) {
+        if (p.isCreative()) return;
+        try {
+            double cost = b.getMagiculeCost(p, i, mode) * paidFraction(charge);
+            if (cost > 0) io.github.manasmods.tensura.util.EnergyHelper.gainMagicule(p, cost, io.github.manasmods.tensura.util.EnergyHelper.GainType.NORMAL);
+        } catch (Throwable ignored) { /* no Tensura data: nothing was taken */ }
+    }
+
+    private static boolean paid(GrimoireBook b, ManasSkillInstance i, ServerPlayer p, int mode, Charge charge, boolean ok) {
+        if (!ok) refund(b, i, p, mode, charge);
+        return ok;
+    }
+
+    /** The element a Body or Brush Rune is drawn in: the natural element of the grimoire, else wind (the neutral one). */
+    private static RuneElement canonElement(ManasSkillInstance i) {
+        MagicType magic = GrimoirePages.magicOf(i);
+        RuneElement e = RuneElement.ofMagic(magic == null ? null : magic.name());
+        return e == null ? RuneElement.WIND : e;
+    }
 
     // ---------------------------------------------------------------- the casts
     private static boolean castElement(GrimoireBook b, ManasSkillInstance i, ServerPlayer p, int mode, RuneElement e) {
@@ -136,32 +186,33 @@ public final class ManaMethodPages {
     }
 
     private static boolean castAirStep(GrimoireBook b, ManasSkillInstance i, ServerPlayer p, int mode) {
-        if (!ManaMethodConfig.mobility()) { GrimoireBook.fail(p, "The mobility runes are switched off on this server."); return false; }
+        if (!ManaMethodConfig.mobility()) { GrimoireBook.fail(p, "The mobility runes are switched off on this server."); return paid(b, i, p, mode, null, false); }
         RuneHold.take(p.getUUID(), mode, p.level().getGameTime());                  // the hold does not matter for the platform; the waiting release is used up
-        return AirStep.start(p, ManaMethodConfig.airStepSeconds(), p.level().getGameTime());
+        return paid(b, i, p, mode, null, AirStep.start(p, ManaMethodConfig.airStepSeconds(), p.level().getGameTime()));
     }
 
     private static boolean castDash(GrimoireBook b, ManasSkillInstance i, ServerPlayer p, int mode) {
-        if (!ManaMethodConfig.mobility()) { GrimoireBook.fail(p, "The mobility runes are switched off on this server."); return false; }
-        return Dash.cast(p, chargeOf(p, mode), p.level().getGameTime());
+        Charge ch = chargeOf(p, mode);
+        if (!ManaMethodConfig.mobility()) { GrimoireBook.fail(p, "The mobility runes are switched off on this server."); return paid(b, i, p, mode, ch, false); }
+        return paid(b, i, p, mode, ch, Dash.cast(p, ch, p.level().getGameTime()));
     }
 
     private static boolean castTrue(GrimoireBook b, ManasSkillInstance i, ServerPlayer p, int mode) {
+        Charge ch = chargeOf(p, mode);
         MagicType magic = GrimoirePages.magicOf(i);
         RuneElement e = RuneElement.ofMagic(magic == null ? null : magic.name());
         if (e == null || !TrueMagicRules.isNatural(magic.name())) {
             GrimoireBook.fail(p, "True Magic follows the shapes of nature: fire, water, wind, earth, lightning and plants. Your magic is too abstract to be drawn as a rune array.");
-            return false;
+            return paid(b, i, p, mode, ch, false);
         }
         var stage = ManaLaw.stage(p);
         if (!TrueMagicRules.controlEnough(stage.number(), stage.arcane() || stage.saint())) {
             GrimoireBook.fail(p, "True Magic needs the control of Stage 3 or higher to hold the runes.");
-            return false;
+            return paid(b, i, p, mode, ch, false);
         }
-        Charge ch = chargeOf(p, mode);
         int mods = RuneCharge.modsFor(ch, e, p.isShiftKeyDown());
         boolean ok = begin(b, i, p, mode, new RuneSpec(e, mods, true), ch);
-        if (ok) RuneManager.refundFuel(b, i, p, mode, ManaLaw.density(p.level(), p.blockPosition()));
+        if (ok) RuneManager.refundFuel(b, i, p, mode, ManaLaw.density(p.level(), p.blockPosition()), paidFraction(ch));
         return ok;
     }
 
@@ -176,6 +227,23 @@ public final class ManaMethodPages {
             case SERVER_FULL -> GrimoireBook.fail(p, "The mana of this world is busy with other runes. Try again in a moment.");
             default -> GrimoireBook.fail(p, "The Mana Method is switched off on this server.");
         }
+        refund(b, i, p, mode, charge);                                                      // 3.6.0: a refused cast gives its price back
         return false;
+    }
+
+    // ---------------------------------------------------------------- 3.6.0: the two canon pages
+    private static boolean castBody(GrimoireBook b, ManasSkillInstance i, ServerPlayer p, int mode) {
+        Charge ch = chargeOf(p, mode);
+        if (!ManaMethodConfig.bodyRunes()) { GrimoireBook.fail(p, "The Body Rune is switched off on this server."); return paid(b, i, p, mode, ch, false); }
+        RuneElement e = canonElement(i);
+        return paid(b, i, p, mode, ch, BodyRunes.start(p, new RuneSpec(e, e.defaultMods(), false), ch, p.level().getGameTime()));
+    }
+
+    private static boolean castBrush(GrimoireBook b, ManasSkillInstance i, ServerPlayer p, int mode) {
+        Charge ch = chargeOf(p, mode);
+        if (!ManaMethodConfig.brushRunes()) { GrimoireBook.fail(p, "The Brush Rune is switched off on this server."); return paid(b, i, p, mode, ch, false); }
+        RuneElement e = canonElement(i);
+        RuneSpec spec = new RuneSpec(e, RuneCharge.modsFor(ch, e, p.isShiftKeyDown()), false);
+        return paid(b, i, p, mode, ch, BrushRunes.paint(b, i, p, mode, spec, ch, p.level().getGameTime()));
     }
 }

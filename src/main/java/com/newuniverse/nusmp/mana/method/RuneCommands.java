@@ -82,8 +82,14 @@ public final class RuneCommands {
      * The filter: the commands of {@code spec} and the completeness of the array ({@code c}) in, the bolt's state out. With {@link Charge#LEGACY} the numbers are exactly the 3.4.0 ones
      * ({@link RuneRules}), which the tests pin value by value.
      */
-    public static BoltState inject(RuneSpec spec, Charge c) {
-        double g = c.growth(), size = c.size();
+    public static BoltState inject(RuneSpec spec, Charge c) { return inject(spec, c, false); }
+
+    /**
+     * As above; with {@code lightningScale} the LIGHTNING element's hit volume and splash grow with the charge by {@link LightningCharge#radiusMult} (3.6.0: x1.0 for a tap up to x1.35 for
+     * a full hold), still inside {@link #MAX_HIT_RADIUS} and {@link #MAX_SPLASH}. With it off, or for any other element, the numbers are those of the call above.
+     */
+    public static BoltState inject(RuneSpec spec, Charge c, boolean lightningScale) {
+        double g = c.growth(), size = c.size() * (lightningScale ? LightningCharge.radiusMult(spec, c) : 1.0);
         double radiusMax = 1.0 + (RuneRules.GROWTH_RADIUS_MAX - 1.0) * g;
         double damageMax = 1.0 + (RuneRules.GROWTH_DAMAGE_MAX - 1.0) * g;
         double power = Math.max(0.0, Math.min(MAX_DAMAGE_MULT, c.power()));

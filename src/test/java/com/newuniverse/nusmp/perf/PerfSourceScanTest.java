@@ -294,7 +294,11 @@ class PerfSourceScanTest {
         PROBES.put("relics/wave/Wave101Events.java", "s.relic.w101");
         PROBES.put("relics/wave/Wave102Events.java", "s.relic.w102");
         PROBES.put("client/prop/CompassPropPainter.java", "c.compass.paint");
-        PROBES.put("shishou/ShishouService.java", "s.shishou.hold");                                      // Shishou: the holder tick, the casts, the blows and the server tick are measurable
+        PROBES.put("mana/method/RuneManager.java", "s.mana.method");                                    // 3.6.0: the Mana Method's casts, the body runes and the painted runes are measurable
+        PROBES.put("mana/method/AirStep.java", "s.mana.airstep");
+        PROBES.put("mana/method/BodyRunes.java", "s.mana.body");
+        PROBES.put("mana/method/BrushRunes.java", "s.mana.brush");
+        PROBES.put("shishou/ShishouService.java", "s.shishou.hold");                                    // Shishou: the holder tick, the casts, the blows and the server tick are measurable
     }
 
     @Test

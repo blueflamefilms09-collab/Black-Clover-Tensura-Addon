@@ -269,6 +269,7 @@ public abstract class GrimoireBook extends Skill {
         if (pct <= 0 && floor <= 0) return 0;                       // e.g. Anti-Magic costs nothing
         if (cover(instance).kingdom == com.newuniverse.nusmp.blackclover.Kingdom.HEART && pct >= 20) c *= 0.85; // Mana Method
         if (entity instanceof ServerPlayer sp) c *= com.newuniverse.nusmp.item.MagicGear.costMult(sp) * (1 + ForbiddenMagic.manaTax(sp)) * com.newuniverse.nusmp.mana.ManaLaw.costMult(sp);   // 1.5.0
+        if (entity instanceof ServerPlayer mp && com.newuniverse.nusmp.mana.method.ManaMethodPages.isPage(p.id())) c *= com.newuniverse.nusmp.mana.method.ManaMethodPages.costFactor(mp, p.id(), mode);      // 3.6.0: a Mana Method page costs by the charge of the release that is being cast
         return c;
     }
 

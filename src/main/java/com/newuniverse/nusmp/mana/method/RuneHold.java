@@ -98,6 +98,16 @@ public final class RuneHold {
         return r.charge();
     }
 
+    /**
+     * 3.6.0: the charge waiting for this player's cast of this page, WITHOUT consuming it (null when none). The grimoire asks the price of a page before the page's cast runs, so the price
+     * can follow the charge of the very release that is about to be cast ({@link RuneCost}); {@link #take} then uses the entry up. One map lookup, no allocation.
+     */
+    public static Charge peek(UUID owner, int mode, long now) {
+        Released r = RELEASED.get(owner);
+        if (r == null || r.mode() != mode || now - r.at() > RELEASED_TTL) return null;
+        return r.charge();
+    }
+
     private static void cancel(ServerPlayer p, Holding h) {
         if (h.spec != null) RuneNet.sendHold(p, RuneNet.PHASE_CANCEL, h.spec, 0, ManaMethodConfig.minHold(), ManaMethodConfig.maxHold());
     }

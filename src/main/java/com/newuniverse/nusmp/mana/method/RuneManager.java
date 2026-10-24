@@ -14,6 +14,8 @@ import com.newuniverse.nusmp.perf.PerfBudget;
 import com.newuniverse.nusmp.perf.PerfParticles;
 import com.newuniverse.nusmp.perf.PerfProbe;
 import com.newuniverse.nusmp.quests.NusmpEvents;
+import com.newuniverse.nusmp.vfx.VfxShape;
+import com.newuniverse.nusmp.vfx.VfxSpawn;
 import io.github.manasmods.manascore.skill.api.ManasSkillInstance;
 import io.github.manasmods.tensura.registry.attribute.TensuraAttributes;
 import net.minecraft.core.BlockPos;
@@ -93,8 +95,12 @@ public final class RuneManager {
         int age, denied;
         UUID target;
         double density = 1.0;
+        /** 3.6.0, a painted rune's bolt: the direction it leaves in (null = the caster's look, as always). */
+        Vec3 fixedDir;
 
-        Cast(ServerPlayer owner, GrimoireBook book, ManasSkillInstance inst, int mode, RuneSpec spec, Vec3 center, long born, Charge rc) {
+        Cast(ServerPlayer owner, GrimoireBook book, ManasSkillInstance inst, int mode, RuneSpec spec, Vec3 center, long born, Charge rc) { this(owner, book, inst, mode, spec, center, born, rc, 0); }
+
+        Cast(ServerPlayer owner, GrimoireBook book, ManasSkillInstance inst, int mode, RuneSpec spec, Vec3 center, long born, Charge rc, int chargeOverride) {
             this.ownerId = owner.getUUID();
             this.owner = owner;
             this.book = book;
@@ -105,7 +111,7 @@ public final class RuneManager {
             this.data = RuneSpecNbt.write(spec);
             this.born = born;
             this.rc = rc;
-            this.charge = rc.castTicks(data.getInt(RuneSpecNbt.CHARGE));
+            this.charge = chargeOverride > 0 ? chargeOverride : rc.castTicks(data.getInt(RuneSpecNbt.CHARGE));
             this.bolt = RuneCommands.legacy(spec);
             this.center = center;
         }
@@ -151,6 +157,24 @@ public final class RuneManager {
         return Begin.OK;
     }
 
+    /**
+     * 3.6.0: a bolt from a PAINTED rune (the Brush Rune): the same cast record and the same flight as any rune's bolt, but it starts at once at {@code center} and leaves along {@code dir}
+     * (a unit vector toward the foe that stepped into the array). It counts against the same caps (per caster, on the server) and sends no rune packet (the painted rune is already on the
+     * clients); a refusal (caps full, setting off) is answered, and the array simply waits for the next look. Returns {@link Begin#OK} when the bolt is on its way.
+     */
+    public static Begin beginAt(GrimoireBook book, ManasSkillInstance inst, ServerPlayer p, int mode, RuneSpec spec, Vec3 center, Vec3 dir, long now, Charge rc) {
+        if (!ManaMethodConfig.enabled()) return Begin.OFF;
+        if (activeCount(p.getUUID()) >= ManaMethodConfig.perCaster()) return Begin.CASTER_FULL;
+        if (ACTIVE.size() >= ManaMethodConfig.global()) return Begin.SERVER_FULL;
+        double len = dir.length();
+        if (!(len > 1e-6)) return Begin.OFF;
+        Cast c = new Cast(p, book, inst, mode, spec, center, now, rc, 1);
+        c.fixedDir = dir.scale(1.0 / len);
+        ACTIVE.add(c);
+        NusmpEvents.fire(p, "mana_method.brush_fire", spec.element().name().toLowerCase(java.util.Locale.ROOT));
+        return Begin.OK;
+    }
+
     // ---------------------------------------------------------------- the tick
     public static void onServerTick(ServerTickEvent.Post event) {
         MinecraftServer server = event.getServer();
@@ -163,7 +187,10 @@ public final class RuneManager {
                 PerfProbe.end(PROBE, t0);
             }
         }
-        RuneHold.tick(server, now);
+        long world = server.overworld().getGameTime();                                   // 3.6.0: RuneHold and the new ledgers stamp the world clock; the tick count restarts at a server start
+        RuneHold.tick(server, world);
+        BodyRunes.tick(server, world);
+        BrushRunes.tick(server, world);
         TrueBlocks.tick(server, now);
     }
 
@@ -191,14 +218,14 @@ public final class RuneManager {
 
     private static void launch(Cast c) {
         ServerPlayer p = c.owner;
-        Vec3 look = p.getLookAngle().normalize();
+        Vec3 look = c.fixedDir != null ? c.fixedDir : p.getLookAngle().normalize();
         c.dx = look.x;
         c.dy = look.y;
         c.dz = look.z;
         c.px = c.lx = c.center.x;
         c.py = c.ly = c.center.y;
         c.pz = c.lz = c.center.z;
-        c.bolt = ManaMethodConfig.commandFilter() ? RuneCommands.inject(c.spec, c.rc) : RuneCommands.legacy(c.spec);      // the filter: the runes' commands are written into the bolt once, here
+        c.bolt = ManaMethodConfig.commandFilter() ? RuneCommands.inject(c.spec, c.rc, ManaMethodConfig.lightningChargeScale()) : RuneCommands.legacy(c.spec);      // the filter: the runes' commands are written into the bolt once, here
         if (c.bolt.isHoming()) c.target = acquire(c, look);
         c.flying = true;
         c.level.playSound(null, BlockPos.containing(c.center), SoundEvents.ILLUSIONER_CAST_SPELL, SoundSource.PLAYERS, 1.2f, 1.3f);
@@ -312,7 +339,22 @@ public final class RuneManager {
         if (c.spec.element() == RuneElement.PLANT && TrueWorldRules.cageWanted(ManaMethodConfig.plantCage(), primary != null, primary != null && Foes.isFoe(p, primary)))
             caged = TrueBlocks.placeCage(c.level, c.ownerId, primary.blockPosition(), may, now);
         if (caged == 0) TrueBlocks.place(c.level, c.ownerId, at, c.spec.element(), may, now);                  // the moss carpet of 3.4.0 (the setting is off, nothing was free, or no creature was struck)
-        if (c.spec.element() == RuneElement.LIGHTNING) TrueLightning.strike(c.level, p, at, may, now);
+        if (c.spec.element() == RuneElement.LIGHTNING && TrueLightning.strike(c.level, p, at, may, now) && ManaMethodConfig.lightningChargeScale() && !c.rc.legacy()) lightningFx(c, at);
+    }
+
+    /**
+     * 3.6.0: the strike grows with the charge ({@link LightningCharge#strike}): 1 to 3 jagged bolts of the existing LIGHTNING_SPEAR effect, taller and brighter for a fuller hold. Only after a
+     * strike the server allowance let through (3 a second on the whole server), so at most 9 effect packets a second, each through the effect packet budget; no entity, nothing placed.
+     */
+    private static void lightningFx(Cast c, Vec3 at) {
+        LightningCharge.Strike st = LightningCharge.strike(c.rc);
+        double[] off = new double[2];
+        int color = 0xFF000000 | RuneElement.LIGHTNING.tint;
+        for (int k = 0; k < st.bolts(); k++) {
+            LightningCharge.boltOffset(st, k, off);
+            Vec3 ground = at.add(off[0], 0.0, off[1]);
+            VfxSpawn.send(c.level, VfxShape.LIGHTNING_SPEAR, ground.add(off[0] * 0.6, st.height(), off[1] * 0.6), ground, color, st.ticks(), st.width());
+        }
     }
 
     /** Is this target an Anti-Magic user (the Black Form, the Physique and the shields decide by the damage type, see {@link TrueDamageRules})? A failed lookup counts as yes: the old safe route. */
@@ -422,9 +464,12 @@ public final class RuneManager {
     }
 
     /** The old fuel idea of the True Magic page: the environment's dense mana pays a share of the cost back. */
-    public static void refundFuel(GrimoireBook b, ManasSkillInstance i, ServerPlayer p, int mode, double density) {
+    public static void refundFuel(GrimoireBook b, ManasSkillInstance i, ServerPlayer p, int mode, double density) { refundFuel(b, i, p, mode, density, 1.0); }
+
+    /** As above for a page that was paid {@code costFraction} of its price ({@link RuneCost}): the environment pays back its share of what was really paid. */
+    public static void refundFuel(GrimoireBook b, ManasSkillInstance i, ServerPlayer p, int mode, double density, double costFraction) {
         try {
-            double cost = b.getMagiculeCost(p, i, mode);
+            double cost = b.getMagiculeCost(p, i, mode) * Math.max(0.0, Math.min(1.0, costFraction));
             EnergyHelper.gainMagicule(p, cost * TrueMagicRules.fuelShare(density), EnergyHelper.GainType.NORMAL);
         } catch (Throwable ignored) { /* no Tensura data: nothing to refund */ }
     }
@@ -442,6 +487,8 @@ public final class RuneManager {
     private static void dropOwner(ServerPlayer p) {
         cancelOwner(p.getUUID());
         RuneHold.cancelOwner(p.getUUID());
+        BodyRunes.cancelOwner(p.getUUID());
+        BrushRunes.cancelOwner(p.getUUID());
         TrueBlocks.cancelOwner(p.getServer(), p.getUUID());
     }
 
@@ -460,6 +507,8 @@ public final class RuneManager {
     public static void onServerStopping(MinecraftServer server) {
         ACTIVE.clear();
         RuneHold.clearAll();
+        BodyRunes.clearAll();
+        BrushRunes.clearAll();
         TrueBlocks.clearAll(server);
     }
 
