@@ -1,0 +1,65 @@
+{
+ "node": {
+  "before_scene": "star_node",
+  "new_layer_peak_quads_detail_1.0": 6,
+  "new_layer_peak_quads_detail_0.5": 4,
+  "v1_peak_quads": 26,
+  "prop_painter_quads_full": 7
+ },
+ "lines": {
+  "before_scene": "star_lines",
+  "new_layer_peak_quads_detail_1.0": 24,
+  "new_layer_peak_quads_detail_0.5": 20,
+  "v1_peak_quads": 104,
+  "prop_painter_quads_full": 28
+ },
+ "conj": {
+  "before_scene": "star_conjunction",
+  "new_layer_peak_quads_detail_1.0": 12,
+  "new_layer_peak_quads_detail_0.5": 11,
+  "v1_peak_quads": 26,
+  "prop_painter_quads_full": 7
+ },
+ "scutum": {
+  "before_scene": "star_scutum",
+  "new_layer_peak_quads_detail_1.0": 24,
+  "new_layer_peak_quads_detail_0.5": 20,
+  "v1_peak_quads": 104,
+  "prop_painter_quads_full": 33
+ },
+ "pane_hit": {
+  "before_scene": "star_scutum",
+  "new_layer_peak_quads_detail_1.0": 3,
+  "new_layer_peak_quads_detail_0.5": 3,
+  "v1_peak_quads": 26,
+  "prop_painter_quads_full": 33
+ },
+ "pane_break": {
+  "before_scene": "star_scutum",
+  "new_layer_peak_quads_detail_1.0": 11,
+  "new_layer_peak_quads_detail_0.5": 7,
+  "v1_peak_quads": 26,
+  "prop_painter_quads_full": 28
+ },
+ "hasta": {
+  "before_scene": "star_hasta",
+  "new_layer_peak_quads_detail_1.0": 24,
+  "new_layer_peak_quads_detail_0.5": 20,
+  "v1_peak_quads": 104,
+  "prop_painter_quads_full": 0
+ },
+ "whip": {
+  "before_scene": "star_flagellum",
+  "new_layer_peak_quads_detail_1.0": 20,
+  "new_layer_peak_quads_detail_0.5": 16,
+  "v1_peak_quads": 104,
+  "prop_painter_quads_full": 28
+ },
+ "dome": {
+  "before_scene": null,
+  "new_layer_peak_quads_detail_1.0": 12,
+  "new_layer_peak_quads_detail_0.5": 8,
+  "v1_peak_quads": 26,
+  "prop_painter_quads_full": 0
+ }
+}

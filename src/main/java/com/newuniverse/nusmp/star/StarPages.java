@@ -2,9 +2,7 @@ package com.newuniverse.nusmp.star;
 
 import com.newuniverse.nusmp.book.BookPage;
 import com.newuniverse.nusmp.book.GrimoireBook;
-import com.newuniverse.nusmp.book.pages15.Pages15;
 import com.newuniverse.nusmp.book.pages15.Pages15Kit;
-import com.newuniverse.nusmp.book.pages15.Pages15Rules;
 import com.newuniverse.nusmp.book.pages15.Pages15Rules.Tier;
 import net.minecraft.server.level.ServerPlayer;
 
@@ -14,7 +12,7 @@ import java.util.Set;
 
 /**
  * Star Magic nodes: the seven pages appended to {@code book_star} AFTER every other page (the Pages15 pages included), so no id, name, mode number, unlock bit or mastery of an older page moves (rule 2). They
- * are hooked into {@code GrimoireBook.familyAll()} by one wrapper and follow the same setting as the 15-pages project ({@code magic.pagesFifteen}). The list is the same on client and server whatever
+ * are handed to {@code Pages15.definedFor} (one line), so they follow the 15-pages project's setting ({@code magic.pagesFifteen}) and its self-test {@code magic.pages15}. The list is the same on client and server whatever
  * {@code star.nodes} says (so the mode numbers always agree); with {@code star.nodes = false} the new pages simply never open ({@link #block}) and cannot be cast.
  *
  * <p>Pages (docs/vfx_remake/star_ingame.md has the canon source of each): Star Seed (starter), Quartile Scutum and Quartile Hasta (mid, heir), Black Neverland (zone, heir), Quintile: Atrum Scutum / Hasta /
@@ -32,25 +30,28 @@ public final class StarPages {
     public static synchronized List<BookPage> pages() {
         if (pages == null) {
             pages = List.of(
-                    Pages15Kit.starter(StarRules.SEED, "Star Seed", StarCasts.seed()).withCooldown(20).withAnim("up"),
-                    Pages15Kit.mid(StarRules.SCUTUM, "Quartile Scutum", StarCasts.scutum(Tier.MID, 4, StarRules.PANE_LIFE_TICKS)).withCooldown(300).withAnim("up"),
-                    Pages15Kit.mid(StarRules.HASTA, "Quartile Hasta", StarCasts.hasta(Tier.MID, 4, 1.2)).withCooldown(160).withAnim("thrust"),
-                    Pages15Kit.zone(StarRules.BLACK_NEVERLAND, "Black Neverland", StarCasts.blackNeverland()).withCooldown(420).withAnim("up"),
-                    Pages15Kit.zone(StarRules.QUINTILE_SCUTUM, "Quintile: Atrum Scutum", StarCasts.scutum(Tier.ZONE, 5, StarRules.PANE_LIFE_TICKS_QUINTILE)).withCooldown(360).withAnim("up"),
-                    Pages15Kit.zone(StarRules.QUINTILE_HASTA, "Quintile: Atrum Hasta", StarCasts.hasta(Tier.ZONE, 5, 1.6)).withCooldown(400).withAnim("thrust"),
-                    Pages15Kit.zone(StarRules.QUINTILE_FLAGELLUM, "Quintile: Atrum Flagellum", StarCasts.atrumFlagellum()).withCooldown(380).withAnim("sweep"));
+                    Pages15Kit.starter("star_seed", "Star Seed", StarCasts.seed()).withCooldown(20).withAnim("up"),
+                    Pages15Kit.mid("quartile_scutum", "Quartile Scutum", StarCasts.scutum(Tier.MID, 4, StarRules.PANE_LIFE_TICKS)).withCooldown(300).withAnim("up"),
+                    Pages15Kit.mid("quartile_hasta", "Quartile Hasta", StarCasts.hasta(Tier.MID, 4, 1.2)).withCooldown(160).withAnim("thrust"),
+                    Pages15Kit.zone("black_neverland", "Black Neverland", StarCasts.blackNeverland()).withCooldown(420).withAnim("up"),
+                    Pages15Kit.zone("quintile_atrum_scutum", "Quintile: Atrum Scutum", StarCasts.scutum(Tier.ZONE, 5, StarRules.PANE_LIFE_TICKS_QUINTILE)).withCooldown(360).withAnim("up"),
+                    Pages15Kit.zone("quintile_atrum_hasta", "Quintile: Atrum Hasta", StarCasts.hasta(Tier.ZONE, 5, 1.6)).withCooldown(400).withAnim("thrust"),
+                    Pages15Kit.zone("quintile_atrum_flagellum", "Quintile: Atrum Flagellum", StarCasts.atrumFlagellum()).withCooldown(380).withAnim("sweep"));
         }
         return pages;
     }
 
-    /** The hook of {@code GrimoireBook.familyAll()}: the Star book's list followed by the new pages (the same list object for every other book and when the setting of the 15-pages project is off). */
-    public static List<BookPage> append(String bookPath, List<BookPage> base) {
-        if (!BOOK.equals(bookPath) || !Pages15.enabled()) return base;
-        List<BookPage> out = new ArrayList<>(base);
+    /**
+     * The hook of {@code Pages15.definedFor}: the pages the batch wrote for this book followed by the seven new ones (the same list object for every other book). {@code Pages15.append} then puts them
+     * after every other page of the book, honours {@code magic.pagesFifteen} and the 64-page limit, and the in-game self-test {@code magic.pages15} checks them like every page of the project.
+     */
+    public static List<BookPage> extend(String bookPath, List<BookPage> batch) {
+        if (!BOOK.equals(bookPath)) return batch;
+        List<BookPage> out = new ArrayList<>(batch);
         Set<String> ids = new java.util.HashSet<>();
-        for (BookPage p : base) ids.add(p.id());
-        for (BookPage p : pages()) if (out.size() < Pages15Rules.MAX_FAMILY && ids.add(p.id())) out.add(p);
-        return out.size() == base.size() ? base : List.copyOf(out);
+        for (BookPage p : batch) ids.add(p.id());
+        for (BookPage p : pages()) if (ids.add(p.id())) out.add(p);
+        return List.copyOf(out);
     }
 
     /**

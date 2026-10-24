@@ -44,7 +44,7 @@ public final class Pages15 {
                 case 8 -> Batch8.pages(bookPath);
                 default -> List.of();
             };
-            return l == null ? List.of() : l;
+            return com.newuniverse.nusmp.star.StarPages.extend(bookPath, l == null ? List.of() : l);      // Star nodes: the seven new Star pages follow the nine of Batch1 (docs/vfx_remake/star_ingame.md)
         } catch (RuntimeException | LinkageError e) {
             if (BROKEN.add(batch)) LOG.error("[nusmp] pages15 batch {} failed for {}; its books keep their old pages", batch, bookPath, e);
             return List.of();

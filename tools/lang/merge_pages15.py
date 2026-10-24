@@ -21,7 +21,7 @@ def main():
     with open(LANG, encoding='utf-8') as f:
         text = f.read()
     lang = json.loads(text)
-    add, clash, files = {}, [], sorted(glob.glob(os.path.join(ROOT, 'tools/lang/pages15_batch*.json')))
+    add, clash, files = {}, [], sorted(glob.glob(os.path.join(ROOT, 'tools/lang/pages15_batch*.json'))) + sorted(glob.glob(os.path.join(ROOT, 'tools/lang/star_magic.json')))      # star_magic.json: the seven Star nodes pages (docs/vfx_remake/star_ingame.md)
     for p in files:
         with open(p, encoding='utf-8') as f:
             frag = json.load(f)

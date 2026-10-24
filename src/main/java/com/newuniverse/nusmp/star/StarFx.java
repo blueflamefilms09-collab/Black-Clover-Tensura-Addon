@@ -30,7 +30,7 @@ public final class StarFx {
     }
 
     /** The shapes this feature adds (the layer registers for exactly these). */
-    public static final List<VfxShape> SHAPES = List.of(VfxShape.STAR_NODE, VfxShape.STAR_LINK, VfxShape.STAR_CONJ, VfxShape.STAR_PANE, VfxShape.STAR_LANCE, VfxShape.STAR_WHIP, VfxShape.STAR_DOME);
+    public static final List<VfxShape> SHAPES = com.newuniverse.nusmp.vfx.StarV2.SHAPES;
 
     /** Sends one effect outside a cast budget (a pane hit): still through the per-tick server budget. */
     public static void send(ServerLevel level, VfxShape shape, Vec3 from, Vec3 to, int flag, int ticks, float power) {

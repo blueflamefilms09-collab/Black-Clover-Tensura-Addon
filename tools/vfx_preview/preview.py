@@ -91,11 +91,13 @@ def build(layers):
     shutil.copy(os.path.join(VFX, "WindMc.java"), pkg)                     # Wind pixel look: the pure rules (style switch, caps, stepped timing, tint choice) the vertex buffer and WindMcLayer read
     if any(l.split(".")[-1] == "WindMcLayer" for l in layers):             # WindMcLayer hands V1 back to the two layers that drew the shapes before it
         layers = list(layers) + ["WindMagicLayer", "WindSpellLayer"]
-    if any(l.split(".")[-1] == "WaterBcLayer" for l in layers):            # the water hybrid: its pure half (rules, meshes, toon shading, scene), the per-frame plan, and the two layers it hands V1 back to
-        for name in ("WaterBc.java", "WaterBcMeshes.java", "WaterBcMeshBuffer.java", "WaterBcToon.java", "WaterBcScene.java"):
-            shutil.copy(os.path.join(VFX, name), pkg)
-        shutil.copy(os.path.join(VFX, "client", "WaterBcFrame.java"), os.path.join(pkg, "client"))
-        layers = list(layers) + ["WaterFxLayer", "WaterMagicLayer"]
+    for name in ("WaterBc.java", "WaterBcMeshes.java", "WaterBcMeshBuffer.java", "WaterBcToon.java", "WaterBcScene.java"):      # the water hybrid's pure half (rules, meshes, toon shading, scene) and the per-frame plan: Preview.java names them for every scene, so they are always compiled
+        shutil.copy(os.path.join(VFX, name), pkg)
+    shutil.copy(os.path.join(VFX, "client", "WaterBcFrame.java"), os.path.join(pkg, "client"))
+    if not any(l.split(".")[-1] == "WaterBcLayer" for l in layers):        # WaterBcFrame names WaterBcLayer, so the layer (and the two it hands V1 back to) is always compiled
+        layers = list(layers) + ["WaterBcLayer"]
+    layers = list(layers) + [x for x in ("WaterFxLayer", "WaterMagicLayer") if x not in layers]
+    shutil.copy(os.path.join(VFX, "StarV2.java"), pkg)                     # Star V2: the pure rules (style switch, caps, reduced flashes, textures) StarMagicLayer reads
     shutil.copy(os.path.join(VFX, "FireV2.java"), pkg)                     # Fire V2: the pure rules (style switch, caps, flip-book, reduced flashes, tint choice) FireV2Layer reads
     if any(l.split(".")[-1] == "FireV2Layer" for l in layers):             # FireV2Layer hands V1 back to the three layers that drew the shapes before it
         layers = list(layers) + ["FireSpellLayer", "FlameFxLayer", "FlameMagicLayer"]
@@ -292,6 +294,8 @@ def run_java(scene, classes, out_json):
         args += ["--follow", "1"]
     if scene.get("fire_style"):
         args += ["--fire-style", scene["fire_style"]]
+    if scene.get("star_style"):
+        args += ["--star-style", scene["star_style"]]
     if scene.get("reduced"):
         args += ["--reduced", "1"]
     subprocess.run(args, check=True)

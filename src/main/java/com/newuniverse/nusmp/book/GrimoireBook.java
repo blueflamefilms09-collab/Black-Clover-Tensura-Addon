@@ -145,7 +145,7 @@ public abstract class GrimoireBook extends Skill {
         boolean fifteen = com.newuniverse.nusmp.book.pages15.Pages15.enabled();      // server setting magic.pagesFifteen: false = the old lists
         if (restBase == f && restAll != null && restFifteen == fifteen) return restAll;
         if (getRegistryName() == null) return f;
-        restAll = com.newuniverse.nusmp.star.StarPages.append(getRegistryName().getPath(), com.newuniverse.nusmp.book.pages15.Pages15.append(getRegistryName().getPath(), BasicPages.append(getRegistryName().getPath(), CharacterPagesRest.append(getRegistryName().getPath(), f))));      // basic grimoires (docs/magic/basic_grimoires.md): the generic anime pages go next to last; the "15 spells for every grimoire" pages (book.pages15) go last of all
+        restAll = com.newuniverse.nusmp.book.pages15.Pages15.append(getRegistryName().getPath(), BasicPages.append(getRegistryName().getPath(), CharacterPagesRest.append(getRegistryName().getPath(), f)));      // basic grimoires (docs/magic/basic_grimoires.md): the generic anime pages go next to last; the "15 spells for every grimoire" pages (book.pages15) go last of all
         restBase = f;
         restFifteen = fifteen;
         return restAll;
