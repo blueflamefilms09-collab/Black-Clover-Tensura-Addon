@@ -279,3 +279,6 @@ Measured by `PerfProbe` sections `s.shishou.hold`, `s.shishou.cast`, `s.shishou.
 - The Japanese wiki facts are from search snippets only.
 - Tensura Reincarnated's appraisal and engraving behaviour was not integrated beyond the enchantment ids in `WeaponEngravings`.
 - Audio: none exists.
+
+## 3.2.0: the flurry bounce
+After a landed strike Shishou bounces off the target (0.55 blocks a tick away from it, a little up, for 3 ticks, `ShishouHunt.bounce`) and then the charge starts again, like an anime sword flurry. Server setting `flurryBounce` (default true; false = the 3.1 behaviour of hovering on the target). Entity attributes: flying speed 1.5, movement speed 0.8, follow range 64, attack damage 14 (the strike damage itself still comes from the sword level, `ShishouRules.strikeDamage`). The 3.0 hunter (flying move control, flying navigation, direct 3D charge, one bounded box query per scan, no melee goal) is kept: a 2-tick scan over 64 blocks would break the no-lag rule, so the scan gap stays the configured `huntScanTicks`. Worst case cost of the bounce: one velocity set per strike, nothing per tick but a counter.

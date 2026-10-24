@@ -150,10 +150,11 @@ public final class ShishouGoals {
             if (t == null) return;
             double reach = ShishouRules.REACH + t.getBbWidth() * 0.5;
             Vec3 aim = new Vec3(t.getX(), t.getY(0.5), t.getZ());
+            if (sword.bouncing()) return;                                                         // flying free on the bounce after a strike (3.2.0 flurry)
             if (sword.distanceToSqr(aim) > reach * reach) sword.charge(aim);
             else {
                 sword.hoverOn(aim);
-                if (sword.strikeReady()) sword.strike(t);
+                if (sword.strikeReady() && sword.strike(t) && t.isAlive()) sword.bounceOff(aim);
             }
         }
     }

@@ -65,8 +65,8 @@ public class ShishouEntity extends PathfinderMob {
     }
 
     public static AttributeSupplier.Builder createAttributes() {
-        return PathfinderMob.createMobAttributes().add(Attributes.MAX_HEALTH, 100.0).add(Attributes.FLYING_SPEED, 1.0).add(Attributes.MOVEMENT_SPEED, 0.5)
-                .add(Attributes.ATTACK_DAMAGE, ShishouRules.START_ATTACK).add(Attributes.FOLLOW_RANGE, ShishouHunt.RADIUS_MAX).add(Attributes.KNOCKBACK_RESISTANCE, 1.0);
+        return PathfinderMob.createMobAttributes().add(Attributes.MAX_HEALTH, 100.0).add(Attributes.FLYING_SPEED, 1.5).add(Attributes.MOVEMENT_SPEED, 0.8)
+                .add(Attributes.ATTACK_DAMAGE, 14.0).add(Attributes.FOLLOW_RANGE, 64.0).add(Attributes.KNOCKBACK_RESISTANCE, 1.0);
     }
 
     @Override
@@ -223,6 +223,22 @@ public class ShishouEntity extends PathfinderMob {
         setDeltaMovement(getDeltaMovement().scale(0.6));
     }
 
+    private int bounceTicks;
+
+    /** Still on the bounce after a strike: the goal leaves the velocity alone (the charge would blend it away). */
+    public boolean bouncing() { return bounceTicks > 0; }
+
+    /** A strike landed: bounce off {@code from} (the target's middle) a little, then the charge begins again. Server config {@code flurryBounce}. */
+    public void bounceOff(Vec3 from) {
+        if (!ShishouConfig.flurryBounce()) return;
+        Vec3 d = position().subtract(from);
+        double[] v = ShishouHunt.bounce(d.x, d.y, d.z);
+        setDeltaMovement(v[0], v[1], v[2]);
+        hasImpulse = true;
+        bounceTicks = ShishouHunt.BOUNCE_TICKS;
+        beginCharge();
+    }
+
     private void steer(Vec3 aim, double speed, boolean charging) {
         Vec3 to = aim.subtract(position());
         double dist = to.length();
@@ -300,6 +316,7 @@ public class ShishouEntity extends PathfinderMob {
         ServerLevel sl = (ServerLevel) level();
         long now = sl.getGameTime();
         if (strikeCooldown > 0) strikeCooldown--;
+        if (bounceTicks > 0) bounceTicks--;
         if (attackTicks > 0 && --attackTicks == 0 && state() == ShishouRules.STATE_ATTACK) setState(getTarget() != null ? ShishouRules.STATE_AGGRO : ShishouRules.STATE_IDLE);
         if (!isDormant()) {
             LivingEntity t = getTarget();

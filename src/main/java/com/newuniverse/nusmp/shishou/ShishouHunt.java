@@ -66,6 +66,18 @@ public final class ShishouHunt {
     /** The strike cooldown in ticks: 15 at level 10 down to 6 at level 100 (2.0.0: 24 always). */
     public static int strikeCooldown(int level) { return Math.max(6, 15 - ShishouRules.clampLevel(level) / 11); }
 
+    // ---------------------------------------------------------------- the flurry (3.2.0)
+    /** After a strike he bounces off the target: this many ticks he flies free on the bounce, at {@link #BOUNCE_SPEED} blocks a tick away from it (a little up), then the charge takes over again. */
+    public static final int BOUNCE_TICKS = 3;
+    public static final double BOUNCE_SPEED = 0.55, BOUNCE_LIFT = 0.12;
+
+    /** The bounce velocity away from the target along {@code (dx, dy, dz)} (sword minus target); zero length bounces straight up. */
+    public static double[] bounce(double dx, double dy, double dz) {
+        double len = Math.sqrt(dx * dx + dy * dy + dz * dz);
+        if (len < 1.0e-4) return new double[]{0.0, BOUNCE_SPEED, 0.0};
+        return new double[]{dx / len * BOUNCE_SPEED, dy / len * BOUNCE_SPEED + BOUNCE_LIFT, dz / len * BOUNCE_SPEED};
+    }
+
     // ---------------------------------------------------------------- the unstick rule
     /** Ticks of a blocked charge before he slides upward, and before he gives the target up for a while (so a creature behind a wall that he cannot reach does not hold him forever). */
     public static final int STUCK_NUDGE = 3, STUCK_GIVE_UP = 40, IGNORE_TICKS = 160;
