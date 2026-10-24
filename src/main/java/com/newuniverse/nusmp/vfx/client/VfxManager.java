@@ -251,6 +251,8 @@ public final class VfxManager {
         register(new com.newuniverse.nusmp.vfx.client.layer.StormLayer());                    // Storm Magic (Fairy Tail): the storm cell, its rain and hail, the bolts, the gust front and the surge
         // Wind in the Minecraft style (pixel-anime): registered after WindMagicLayer / WindSpellLayer on purpose, it takes Slash, Ring, Emperor, Gale and Gust Lane over from them (V1 hands them back); Tornado and Zephyr stay with WindSpellLayer
         register(new com.newuniverse.nusmp.vfx.client.layer.WindMcLayer());
+        // Water in the hybrid style (3D toon cores wrapped in glass): registered after WaterFxLayer / WaterMagicLayer on purpose, it takes Roar / Javelin, Cradle / Nest, Burst, Splash and Ring over from them (V1 hands them back); the old WaterSpellLayer shapes are not in it
+        register(new com.newuniverse.nusmp.vfx.client.layer.WaterBcLayer());
     }
 
     public void register(AbstractVfxLayer layer) { for (VfxShape s : layer.shapes()) layers.put(s, layer); }
@@ -343,6 +345,7 @@ public final class VfxManager {
             left = new boolean[n * 2];
         }
         int culled = plan(ctx, quality, n, base);
+        WaterBcFrame.plan(active, distance, lod, left, n, quality.frameVertices);          // the water hybrid: tiers under the per-frame ceilings, empties the mesh buffer of the last frame
         int drawn = 0, thinned = 0, skipped = 0;
         for (int i = 0; i < n; i++) {
             VfxInstance inst = active.get(i);
@@ -369,6 +372,7 @@ public final class VfxManager {
         mvStack.pushMatrix();
         mvStack.identity();
         com.mojang.blaze3d.systems.RenderSystem.applyModelViewMatrix();
+        WaterBcDraw.flush(modelView);                                          // the water hybrid's 3D cores first (they write the depth the glass sprites are tested against)
         buffer.flush(modelView);
         mvStack.popMatrix();
         com.mojang.blaze3d.systems.RenderSystem.applyModelViewMatrix();

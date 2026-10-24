@@ -10,6 +10,10 @@ Extra glass sprites that the hybrid needs on top of the 26 sprites of tools/gen_
   bc_ribbon   a thin glass ribbon with a bright core line and tapered ends (flow ribbons spiralling round the body / the lance)
 
     python tools/gen_water_bc_textures.py     ->  docs/previews/vfx_remake/water_new/tex/bc_*.png   (Pillow + numpy, deterministic)
+                                              ->  src/main/resources/assets/nusmp/textures/particle/wbc_*.png   (the game set: the sprites the in-game build draws, copied from the preview
+                                                  folder under the prefix `wbc_`, plus the grey twins `wbc_<name>_t` of the sprites the tintable shapes use, and `wbc_solid` for the mesh quads)
+
+The names must equal vfx/WaterBc.SPRITES / TINT_TWINS (WaterBcAssetTest checks both ways).
 """
 import math
 import os
@@ -110,12 +114,48 @@ def ribbon(w=256, h=32):
     return Image.fromarray((np.clip(rgba, 0, 1) * 255 + 0.5).astype(np.uint8), "RGBA")
 
 
+GAME = os.path.join(os.path.abspath(os.path.join(HERE, "..")), "src", "main", "resources", "assets", "nusmp", "textures", "particle")
+# preview file -> game name (prefix wbc_); the bc_ prefix of the preview is dropped
+GAME_SPRITES = {"b_body": "b_body", "b_ripple": "b_ripple", "b_crown": "b_crown", "b_drop": "b_drop", "b_bubble": "b_bubble", "b_glint": "b_glint", "b_lance": "b_lance", "b_sphere": "b_sphere",
+                "b_dome": "b_dome", "b_swirl": "b_swirl", "bc_mist": "mist", "bc_ribbon": "ribbon", "bc_sheen": "sheen", "bc_shell": "shell", "glow": "glow",
+                "a_body": "a_body", "a_head": "a_head", "a_drop": "a_drop", "a_ring": "a_ring", "a_crown": "a_crown", "a_lance": "a_lance", "a_sphere": "a_sphere", "a_blob": "a_blob",
+                "a_dome": "a_dome", "a_flash": "a_flash"}
+# sprites the tintable shapes (SPLASH and RING, reused by blood and paint pages) draw: they get a grey twin that the effect's own colour multiplies
+TINT_TWINS = ("b_ripple", "b_crown", "b_drop", "b_bubble", "mist", "a_crown", "a_ring", "a_blob")
+
+
+def grey_twin(im):
+    """same silhouette and alpha, colour replaced by its luma, lifted so that colour x grey still reads (the vertex colour multiplies it)"""
+    a = np.asarray(im.convert("RGBA"), np.float32) / 255.0
+    lum = a[..., 0] * 0.30 + a[..., 1] * 0.59 + a[..., 2] * 0.11
+    live = a[..., 3] > 0.02
+    top = float(np.percentile(lum[live], 97)) if live.any() else 1.0
+    g = np.clip(lum / max(top, 1e-3) * 0.96, 0, 1)
+    out = np.zeros_like(a)
+    out[..., 0] = out[..., 1] = out[..., 2] = g
+    out[..., 3] = a[..., 3]
+    return Image.fromarray((out * 255 + 0.5).astype(np.uint8), "RGBA")
+
+
+def export_game():
+    """copy the sprites of the game set out of the preview folder under the wbc_ prefix, write the grey twins and the white solid cell the mesh quads use"""
+    os.makedirs(GAME, exist_ok=True)
+    for src, name in GAME_SPRITES.items():
+        im = Image.open(os.path.join(OUT, src + ".png")).convert("RGBA")
+        im.save(os.path.join(GAME, "wbc_" + name + ".png"), optimize=True)
+        if name in TINT_TWINS:
+            grey_twin(im).save(os.path.join(GAME, "wbc_" + name + "_t.png"), optimize=True)
+    Image.new("RGBA", (4, 4), (255, 255, 255, 255)).save(os.path.join(GAME, "wbc_solid.png"))
+    print(len(GAME_SPRITES) + len(TINT_TWINS) + 1, "game textures ->", GAME)
+
+
 def main():
     os.makedirs(OUT, exist_ok=True)
     tex = {"bc_shell": shell(), "bc_mist": mist(), "bc_sheen": sheen(), "bc_ribbon": ribbon()}
     for k, im in tex.items():
         im.save(os.path.join(OUT, k + ".png"))
     print(len(tex), "textures ->", OUT)
+    export_game()
 
 
 if __name__ == "__main__":
