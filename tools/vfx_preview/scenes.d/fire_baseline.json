@@ -1,0 +1,5 @@
+{
+ "_comment": "Fire remake phase 1: baseline scenes for the two older FLAME_* shapes (FlameMagicLayer) that had no preview scene.",
+ "flame_trail": {"layer": "FlameMagicLayer", "shape": "FLAME_TRAIL", "from": [0, 1.2, 0], "to": [0, 1.2, 12], "power": 1.0, "duration": 24, "cam": [-5.0, 2.4, 4.0], "target": [0, 1.2, 6], "ages": [4, 10, 16, 22], "figures": [[0, 0, -0.6, 1.8]], "sky": [0.3, 0.34, 0.44]},
+ "flame_explosion": {"layer": "FlameMagicLayer", "shape": "FLAME_EXPLOSION", "from": [0, 0.8, 0], "to": [0, 0.8, 0], "power": 1.0, "duration": 26, "cam": [0, 2.0, -7], "target": [0, 1, 0], "ages": [3, 8, 14, 22], "figures": [[2.5, 0, 1, 1.8]]}
+}
