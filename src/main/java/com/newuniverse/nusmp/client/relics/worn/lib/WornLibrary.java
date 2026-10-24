@@ -197,7 +197,7 @@ public final class WornLibrary {
         if (path == null || slot == null) return null;
         // 1.48.0: with relicfx.robeAnime on, an item that has an `anime:` entry wears that look (cloak only); the older look stays the fallback and the option's off state
         String key = WornCatalog.animeKey(path);
-        boolean anime = RelicFxOptions.robeAnime() && WornModels.catalog().hasItem(key);
+        boolean anime = WornModels.catalog().wearsAnime(path, RelicFxOptions.robeAnime(), RelicFxOptions.robeAnimeBare());   // 3.1.2: a legs / boots / bare-head anime entry (`none`) falls back to the older model
         String cacheKey = (anime ? "ANIME:" : "") + slot.key() + ":" + path;
         Optional<Ensemble> e = ITEM_CACHE.get(cacheKey);
         if (e == null) {

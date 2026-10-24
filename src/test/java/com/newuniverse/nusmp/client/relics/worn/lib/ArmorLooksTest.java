@@ -191,6 +191,25 @@ class ArmorLooksTest {
         }
     }
 
+    /** 3.1.2 regression: since 1.48.0 only the robe (chest) showed, because the anime entries of leggings, boots and most helmets are `none`. */
+    @Test
+    void everyPieceOfARobeSetShowsAModelNotOnlyTheChest() throws IOException {
+        WornCatalog c = real();
+        for (String id : robeSetIds()) {
+            assertTrue(c.wearsAnime(id, true, false), id + ": the chest piece keeps the anime cloak");
+            for (String suffix : new String[]{"_leggings", "_boots"}) {
+                assertFalse(c.wearsAnime(id + suffix, true, false), id + suffix + " must wear its older model, not the empty anime entry");
+                assertFalse(WornCatalog.isNothing(c.itemPieces(id + suffix)), id + suffix + " older model draws something");
+                assertTrue(c.wearsAnime(id + suffix, true, true), id + suffix + ": option relicfx.robeAnimeBare restores the 1.48.0 bare legs");
+                assertFalse(c.wearsAnime(id + suffix, false, true), "robeAnime off: older look");
+            }
+            String hood = id + "_hood";
+            boolean animeHead = !WornCatalog.isNothing(c.itemPieces(WornCatalog.animeKey(hood)));
+            assertEquals(animeHead, c.wearsAnime(hood, true, false), hood + ": a real anime head piece stays, a `none` one falls back to the older hood");
+            assertFalse(WornCatalog.isNothing(c.itemPieces(animeHead ? WornCatalog.animeKey(hood) : hood)), hood + " draws something");
+        }
+    }
+
     @Test
     void theAnimeKeysAndTheNothingPieceAreParsedAsData() {
         assertEquals("anime:black_bull_robe", WornCatalog.animeKey("black_bull_robe"));
