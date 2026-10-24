@@ -43,6 +43,17 @@ public final class Preview {
         int duration = Integer.parseInt(o.getOrDefault("--duration", "0"));
         if (duration <= 0) duration = layer.defaultDuration(shape);
         long seed = Long.parseLong(o.getOrDefault("--seed", "12345"));
+        if (o.containsKey("--hold")) {                                        // 3.5.0, the Mana Method hold: --hold min,max,releaseAge(-1 = still held),held; a view is registered by reflection (no compile link)
+            String[] h = o.get("--hold").split(",");
+            Class<?> specC = Class.forName("com.newuniverse.nusmp.mana.method.RuneSpec"), viewC = Class.forName("com.newuniverse.nusmp.mana.method.RuneHoldView"), utilC = Class.forName("com.newuniverse.nusmp.mana.method.RuneGeneratorUtil");
+            Vec3 f0 = vec(o.getOrDefault("--from", "0,0,0")), t0 = vec(o.getOrDefault("--to", "0,1,0"));
+            Object spec0 = specC.getMethod("unpack", int.class).invoke(null, (int) (seed & 63L));
+            Object frame0 = utilC.getMethod("frameFacing", double.class, double.class, double.class, double.class, double.class, double.class).invoke(null, f0.x, f0.y, f0.z, t0.x - f0.x, t0.y - f0.y, t0.z - f0.z);
+            Object view = viewC.getConstructors()[0].newInstance(1, spec0, Integer.parseInt(h[0]), Integer.parseInt(h[1]), frame0);
+            if (Float.parseFloat(h[2]) >= 0f) viewC.getMethod("release", float.class, int.class).invoke(view, Float.parseFloat(h[2]), Integer.parseInt(h[3]));
+            int key = (Integer) viewC.getMethod("register", viewC).invoke(null, view);
+            seed = (Long) viewC.getMethod("seedOf", int.class, int.class).invoke(null, (int) (seed & 63L), key);
+        }
         Vec3 cam = vec(o.get("--cam")), target = vec(o.get("--target"));
         float detail = Float.parseFloat(o.getOrDefault("--detail", "1"));
 
