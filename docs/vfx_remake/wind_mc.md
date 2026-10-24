@@ -1,5 +1,9 @@
 # Wind VFX, "Minecraft style" remake, phase A (PREVIEW ONLY)
 
+> **Status update:** the owner chose version C. It is built into the game for Slash, Slicing Wind Emperor, Gale / Gust Lane and the Wind Ring (swallow sprites kept; the hawk, the optional beam and
+> drill shapes were not built). The Wind Tornado and Spirit of Zephyr were **excluded by the owner** and keep their old code and look in every setting. See `wind_mc_ingame.md`. The text below is the
+> phase A document and is kept as it was.
+
 The owner said "try to make these Minecraft styles" about the Wind reference pack. This is the answer for WIND: the shapes and colours of the pack redrawn as
 Minecraft, in three versions, rendered next to the current look. **Nothing is wired into the game**: no Java class under `src/`, nothing under `assets/`, no
 lang key, no config, no version / changelog change. Only a texture script, a preview script, preview images and this doc.

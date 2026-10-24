@@ -165,6 +165,7 @@ public class NUSMP {
             com.newuniverse.nusmp.client.grimoire.GrimoireFloatClient.init();
             com.newuniverse.nusmp.client.mode.ModeArmorClient.init(modEventBus);
             com.newuniverse.nusmp.client.mode.ModeArmorWindV2Config.init(modEventBus, modContainer);                           // Wind Spirit Dive overlay v2 (Yuno): nusmp-modearmor-client.toml (modeArmor.windLook = V2 | CLASSIC)
+            com.newuniverse.nusmp.vfx.client.WindMcConfig.init(modEventBus, modContainer);                                      // Wind pixel look (Slash, Emperor, Gale / Gust Lane, Ring): nusmp-wind-mc-client.toml (vfx.element.wind = MC_C | V1)
             com.newuniverse.nusmp.client.DreamSkyClient.init(modEventBus);
             com.newuniverse.nusmp.client.grimoire.GrimoireSlotClient.init(modEventBus);
             com.newuniverse.nusmp.client.multiverse.MultiverseStatusClient.init(modEventBus);
@@ -439,6 +440,7 @@ public class NUSMP {
         com.newuniverse.nusmp.book.SpiritLooksSelfTests.register();                                               // 1.99.0 Great Spirits: self-test magic.spirit_looks
         com.newuniverse.nusmp.book.SpiritDiveBoot.init(modContainer);                                              // Spirit Dive remake: server config nusmp-spiritdive-server.toml, Fuegoleon's arm events, self-tests magic.spirit_dive_looks / magic.fuegoleon_arm
         com.newuniverse.nusmp.vfx.SquareBugSelfTests.register();                                                  // 1.105.0: self-test vfx.square_bug
+        com.newuniverse.nusmp.vfx.WindMcSelfTests.register();                                                     // Wind pixel look: self-test magic.wind_mc (shapes, quad caps, 32 textures, option, tint choice; pure, runs on the server)
         com.newuniverse.nusmp.vupgrade.UpgradeParticlesSelfTests.register();                                      // 1.110.0: self-test visual.upgrade_particles (the upgraded items spawn only the mod's own particles, the budget and the first-person size cap)
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.book.GrimoireBook::onPlayerTick);
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.book.TimeBook::passiveTick);                    // 0.49: Time Magic's passive every tick               // 0.48: book upkeep without relying on skill ticks

@@ -249,6 +249,8 @@ public final class VfxManager {
         register(new com.newuniverse.nusmp.vfx.client.layer.DeckSummonLayer());              // 1.110.0: the card summon of the Deck of Many Things
         com.newuniverse.nusmp.client.storm.StormClientFx.install();                              // Storm Magic: the splash particles (custom particles only) of a running storm
         register(new com.newuniverse.nusmp.vfx.client.layer.StormLayer());                    // Storm Magic (Fairy Tail): the storm cell, its rain and hail, the bolts, the gust front and the surge
+        // Wind in the Minecraft style (pixel-anime): registered after WindMagicLayer / WindSpellLayer on purpose, it takes Slash, Ring, Emperor, Gale and Gust Lane over from them (V1 hands them back); Tornado and Zephyr stay with WindSpellLayer
+        register(new com.newuniverse.nusmp.vfx.client.layer.WindMcLayer());
     }
 
     public void register(AbstractVfxLayer layer) { for (VfxShape s : layer.shapes()) layers.put(s, layer); }
@@ -278,6 +280,7 @@ public final class VfxManager {
         }
         VfxDefinitions.Def def = VfxDefinitions.get(shape);
         AbstractVfxLayer layer = layers.get(shape);
+        if (layer != null && !layer.handles(shape)) layer = null;                  // wind pixel look off (V1): FX_WIND_GUST is a shape without a layer again
         int color = p.color() != 0 ? p.color() : def != null && def.color() != 0 ? def.color()
                 : layer != null ? layer.defaultColor(shape) : 0xFFFFFFFF;
 

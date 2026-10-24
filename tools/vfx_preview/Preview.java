@@ -27,6 +27,7 @@ public final class Preview {
         Map<String, String> o = new HashMap<>();
         for (int i = 0; i + 1 < a.length; i += 2) o.put(a[i], a[i + 1]);
         FlatProps.setDrawFlat("1".equals(o.get("--flat")));                   // a scene may ask for the old flat cut-outs (the before picture)
+        com.newuniverse.nusmp.vfx.WindMc.setStyle(com.newuniverse.nusmp.vfx.WindMc.parse(o.get("--style")));      // the wind pixel look (default MC_C) or V1, the old wind layers
         AbstractVfxLayer layer = (AbstractVfxLayer) Class.forName(o.get("--layer")).getDeclaredConstructor().newInstance();
         VfxShape shape = VfxShape.valueOf(o.get("--shape"));
         Vec3 from = vec(o.getOrDefault("--from", "0,0,0")), to = vec(o.getOrDefault("--to", "0,1,0"));

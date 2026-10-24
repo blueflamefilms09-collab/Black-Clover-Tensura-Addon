@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 """
-Wind, "Minecraft style" pixel textures, PHASE A = PREVIEW ONLY (nothing is registered in the game, nothing goes to assets/).
+Wind, "Minecraft style" pixel textures.  PHASE A (preview): all three looks to docs/previews.  PHASE B (in the game; the owner picked C "pixel-anime"): the C subset that the
+four shipped effects use (Slash, Emperor, Gale / Gust Lane, Ring) goes to src/main/resources/assets/nusmp/textures/particle/wmc_*.png, in two sets:
+  wmc_<name>_<frame>.png     the pack palette (white / mint / lime / deep green + a dark green outline), drawn with a white vertex colour
+  wmc_<name>_<frame>_t.png   the same shapes in five greys, drawn with the effect's tint (the six non-wind melee pages that reuse Crescent Slash, and any other book colour)
 
 Three looks, each with its own tiny palette, hard pixel edges (no anti-aliasing, no gradients), nearest filtering:
 
@@ -20,11 +23,13 @@ from PIL import Image, ImageDraw
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 OUT = os.path.join(ROOT, "docs", "previews", "vfx_remake", "mc", "wind_tex")
+GAME = os.path.join(ROOT, "src", "main", "resources", "assets", "nusmp", "textures", "particle")
 
 # ---------------------------------------------------------------------------------------------------------------- palettes
 PAL_A = {"W": (247, 247, 247), "L": (213, 221, 211), "M": (163, 175, 161), "D": (107, 120, 106), "G": (142, 212, 90), "H": (79, 154, 53)}
 PAL_B = {"W": (248, 251, 240), "N": (204, 238, 190), "G": (137, 248, 66), "M": (84, 210, 52), "D": (70, 169, 44)}
 PAL_C = {"O": (55, 100, 30), "D": (70, 169, 44), "G": (137, 248, 66), "N": (204, 238, 190), "W": (248, 251, 240)}      # pack: shadow green, deep, lime, mint rim, core white
+PAL_T = {"O": (82, 82, 82), "D": (140, 140, 140), "G": (199, 199, 199), "N": (235, 235, 235), "W": (255, 255, 255)}      # the same five steps as greys, multiplied by the effect's tint
 
 
 class Cv:
@@ -299,35 +304,54 @@ def build():
     keep("B", "cube_green", cube_tex("M", "G", "D", "G", "D", PAL_B, 4))
 
     # ======================================================= C : pixel-anime (dark outline, 2-frame flip-book)
+    for name, cv in c_set(PAL_C).items():
+        made["C_" + name] = cv.save("C_" + name)
+    return made
+
+
+# The C set, built in any five-step palette (the pack palette, or the greys of the tintable twins). Name -> canvas, outline already applied.
+GAME_NAMES = ("crescent", "ribbon", "swirl", "spark", "streak", "leaf", "ring", "flash")        # what the shipped effects use (the hawk, puff and beam of the preview are not shipped)
+
+
+def c_set(pal):
+    out = {}
     for fr in (0, 1):
         sh = fr * 1.2
         # crescent: frame 1 = inner disc 1.2 px further out, so the blade "breathes" in two steps
-        cv = Cv(32, 32, PAL_C).fill(crescent_fn(15, 13.2, 20.5 + sh, 11.6 + sh * 0.2, 16, "W", "N", "G"))
-        keep("C", f"crescent_{fr}", cv, "O")
-        cv = Cv(32, 16, PAL_C).fill(sribbon_fn(32, 16, 3.0, 3.6, fr * 0.9, "W", "N"))
-        keep("C", f"ribbon_{fr}", cv, "O")
-        cv = Cv(32, 32, PAL_C).fill(swirl_fn(32, 3, 5, 13, 2.4, fr * 2 * math.pi / 6, "W", "N"))
-        keep("C", f"swirl_{fr}", cv, "O")
-        cv = Cv(16, 16, PAL_C).fill(spark_fn(16, 5 + fr * 2, 2 + fr, "W", "N"))
-        keep("C", f"spark_{fr}", cv, "O")
-        cv = Cv(32, 16, PAL_C).fill(beam_fn(32, 16, fr * 8, "W", "N", "G", "W"))
+        out[f"crescent_{fr}"] = Cv(32, 32, pal).fill(crescent_fn(15, 13.2, 20.5 + sh, 11.6 + sh * 0.2, 16, "W", "N", "G")).outline("O")
+        out[f"ribbon_{fr}"] = Cv(32, 16, pal).fill(sribbon_fn(32, 16, 3.0, 3.6, fr * 0.9, "W", "N")).outline("O")
+        out[f"swirl_{fr}"] = Cv(32, 32, pal).fill(swirl_fn(32, 3, 5, 13, 2.4, fr * 2 * math.pi / 6, "W", "N")).outline("O")
+        out[f"spark_{fr}"] = Cv(16, 16, pal).fill(spark_fn(16, 5 + fr * 2, 2 + fr, "W", "N")).outline("O")
+        cv = Cv(32, 16, pal).fill(beam_fn(32, 16, fr * 8, "W", "N", "G", "W"))
         for x in range(32):                                    # the beam tiles along x, so only its two long edges get the dark outline row
             cv.put(x, 0, "O")
             cv.put(x, 15, "O")
-        keep("C", f"beam_{fr}", cv, None)
-        cv = Cv(32, 8, PAL_C).fill(streak_fn(32, 8, "W", "N"))
-        keep("C", f"streak_{fr}", cv)
-        cv = Cv(32, 32, PAL_C).fill(hawk_fn(32, fr, "W", "N", "G"))
-        keep("C", f"hawk_{fr}", cv, "O")
-        cv = Cv(16, 16, PAL_C).fill(leaf_fn(16, -0.7 + fr * 1.4, "G", "D", "O"))
-        keep("C", f"leaf_{fr}", cv)
-        cv = Cv(16, 16, PAL_C).fill(disc_union([(5, 9, 4.2 + fr * 0.5), (9.5, 6.5, 4), (10.5, 10, 3.8)], 16, ["W", "N", "N", "G"]))
-        keep("C", f"puff_{fr}", cv, "O")
-        cv = Cv(32, 32, PAL_C).fill(ring_fn(32, 12.0, 14.5, 6, fr * 0.5, "W", "N"))
-        keep("C", f"ring_{fr}", cv, "O")
-        cv = Cv(32, 32, PAL_C).fill(spark_fn(32, 13 + fr * 2, 7 + fr * 2, "W", "N"))         # big flash star for the palm / impact
-        keep("C", f"flash_{fr}", cv, "O")
-    return made
+        out[f"beam_{fr}"] = cv
+        out[f"streak_{fr}"] = Cv(32, 8, pal).fill(streak_fn(32, 8, "W", "N"))
+        out[f"hawk_{fr}"] = Cv(32, 32, pal).fill(hawk_fn(32, fr, "W", "N", "G")).outline("O")
+        out[f"leaf_{fr}"] = Cv(16, 16, pal).fill(leaf_fn(16, -0.7 + fr * 1.4, "G", "D", "O"))
+        out[f"puff_{fr}"] = Cv(16, 16, pal).fill(disc_union([(5, 9, 4.2 + fr * 0.5), (9.5, 6.5, 4), (10.5, 10, 3.8)], 16, ["W", "N", "N", "G"])).outline("O")
+        out[f"ring_{fr}"] = Cv(32, 32, pal).fill(ring_fn(32, 12.0, 14.5, 6, fr * 0.5, "W", "N")).outline("O")
+        out[f"flash_{fr}"] = Cv(32, 32, pal).fill(spark_fn(32, 13 + fr * 2, 7 + fr * 2, "W", "N")).outline("O")         # big flash star for the palm / impact
+    return out
+
+
+def game_files():
+    """file name (no folder) -> RGBA array of every texture the game gets: wmc_<name>_<frame>.png (pack palette) and wmc_<name>_<frame>_t.png (greys, tinted at draw time)"""
+    files = {}
+    for suffix, pal in (("", PAL_C), ("_t", PAL_T)):
+        for name, cv in c_set(pal).items():
+            if name.rsplit("_", 1)[0] in GAME_NAMES:
+                files[f"wmc_{name}{suffix}.png"] = cv.p
+    return files
+
+
+def write_game():
+    os.makedirs(GAME, exist_ok=True)
+    files = game_files()
+    for fn, arr in files.items():
+        Image.fromarray(arr, "RGBA").save(os.path.join(GAME, fn))
+    return files
 
 
 def sheet(made):
@@ -366,6 +390,24 @@ def main():
             print("  TOO MANY COLOURS", sorted(used))
             sys.exit(1)
     print(len(made), "textures ->", OUT)
+    # phase B: the shipped set. Hard alpha only, at most five colours per set, exact palette, sizes 8..32.
+    files = write_game()
+    native = {n: a for n, a in files.items() if not n.endswith("_t.png")}
+    grey = {n: a for n, a in files.items() if n.endswith("_t.png")}
+    for label, group, pal in (("native", native, PAL_C), ("tinted greys", grey, PAL_T)):
+        used = set()
+        for n, a in group.items():
+            used |= colours_used(a)
+            alpha = set(np.unique(a[..., 3]).tolist())
+            if not alpha <= {0, 255}:
+                print("  SOFT ALPHA in", n, sorted(alpha))
+                sys.exit(1)
+        allowed = set(pal.values())
+        if not used <= allowed:
+            print("  COLOURS OUTSIDE THE PALETTE", label, sorted(used - allowed))
+            sys.exit(1)
+        print(f"game set {label}: {len(group)} files, {len(used)} colours (limit 5)")
+    print("game textures ->", GAME)
 
 
 if __name__ == "__main__":

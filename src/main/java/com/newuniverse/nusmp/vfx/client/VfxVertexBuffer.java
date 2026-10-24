@@ -280,7 +280,8 @@ public final class VfxVertexBuffer {
             RenderSystem.depthMask(false);
             RenderSystem.disableCull();
             RenderSystem.enableDepthTest();
-            Minecraft.getInstance().getTextureManager().getTexture(tex).setFilter(true, false);       // not cached on purpose: the aura render types set the same texture to nearest between frames
+            // not cached on purpose: the aura render types set the same texture to nearest between frames. The pixel textures of the wind style (wmc_*) are sampled hard, as vanilla's particle textures are.
+            Minecraft.getInstance().getTextureManager().getTexture(tex).setFilter(!com.newuniverse.nusmp.vfx.WindMc.isPixelTexture(tex.getPath()), false);
             RenderSystem.setShaderTexture(0, tex);
             b.blend.apply();
             BufferBuilder bb = Tesselator.getInstance().begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX_COLOR);
