@@ -1,0 +1,222 @@
+{
+ "lion": {
+  "title": "FIRE_LION  Leo Rugiens",
+  "shape": "FIRE_LION",
+  "cap_current_vertices": 264,
+  "before_peak_vertices_in_preview": 264,
+  "A": {
+   "peak_vertices": 88,
+   "peak_tick": 23
+  },
+  "B": {
+   "peak_vertices": 160,
+   "peak_tick": 0
+  },
+  "C": {
+   "peak_vertices": 384,
+   "peak_tick": 23,
+   "mesh_quads_at_peak": 92
+  },
+  "still": "Fuegoleon_Leo_Rugiens (lion head, open jaw, white-hot mouth) + Fuegoleon_easily_defeats_Carl (manga lion)"
+ },
+ "spear": {
+  "title": "FIRE_SPEAR  Sol Linea",
+  "shape": "FIRE_SPEAR",
+  "cap_current_vertices": 196,
+  "before_peak_vertices_in_preview": 196,
+  "A": {
+   "peak_vertices": 68,
+   "peak_tick": 1
+  },
+  "B": {
+   "peak_vertices": 84,
+   "peak_tick": 0
+  },
+  "C": {
+   "peak_vertices": 248,
+   "peak_tick": 0,
+   "mesh_quads_at_peak": 60
+  },
+  "still": "Burst_Javelin (flame ridge with hooked cel tongues along a lance)"
+ },
+ "pillar": {
+  "title": "FIRE_PILLAR  Ignis Columna",
+  "shape": "FIRE_PILLAR",
+  "cap_current_vertices": 220,
+  "before_peak_vertices_in_preview": 220,
+  "A": {
+   "peak_vertices": 92,
+   "peak_tick": 0
+  },
+  "B": {
+   "peak_vertices": 128,
+   "peak_tick": 0
+  },
+  "C": {
+   "peak_vertices": 372,
+   "peak_tick": 1,
+   "mesh_quads_at_peak": 89
+  },
+  "still": "Magna_burns_his_pies (tall flame columns) + tutorial column / twister (b669a565) + 2d2ffc50 pillar sprites"
+ },
+ "burst": {
+  "title": "FIRE_BURST  flame explosion",
+  "shape": "FIRE_BURST",
+  "cap_current_vertices": 244,
+  "before_peak_vertices_in_preview": 244,
+  "A": {
+   "peak_vertices": 116,
+   "peak_tick": 7
+  },
+  "B": {
+   "peak_vertices": 144,
+   "peak_tick": 5
+  },
+  "C": {
+   "peak_vertices": 376,
+   "peak_tick": 7,
+   "mesh_quads_at_peak": 88
+  },
+  "still": "Magna_Exploding_Fireball (white-yellow ball, radial speed lines, swirling orange ring)"
+ },
+ "spiral": {
+  "title": "FIRE_SPIRAL  Spiral Flame",
+  "shape": "FIRE_SPIRAL",
+  "cap_current_vertices": 268,
+  "before_peak_vertices_in_preview": 268,
+  "A": {
+   "peak_vertices": 124,
+   "peak_tick": 13
+  },
+  "B": {
+   "peak_vertices": 196,
+   "peak_tick": 13
+  },
+  "C": {
+   "peak_vertices": 340,
+   "peak_tick": 1,
+   "mesh_quads_at_peak": 83
+  },
+  "still": "Leopold_spiral_flame (wide yellow-white swirling flame sheets) + Grand_Slam (spiral ribbons round a white core)"
+ },
+ "wild": {
+  "title": "FIRE_WILD  Wild Bursting Flame",
+  "shape": "FIRE_WILD",
+  "cap_current_vertices": 288,
+  "before_peak_vertices_in_preview": 288,
+  "A": {
+   "peak_vertices": 200,
+   "peak_tick": 12
+  },
+  "B": {
+   "peak_vertices": 364,
+   "peak_tick": 12
+  },
+  "C": {
+   "peak_vertices": 308,
+   "peak_tick": 0,
+   "mesh_quads_at_peak": 66
+  },
+  "still": "Leopold_wild_bursting_flame (round fireballs and long light beams in every direction)"
+ },
+ "cast": {
+  "title": "FLAMEFX_CAST  Flame book cast",
+  "shape": "FLAMEFX_CAST",
+  "cap_current_vertices": 180,
+  "before_peak_vertices_in_preview": 180,
+  "A": {
+   "peak_vertices": 68,
+   "peak_tick": 12
+  },
+  "B": {
+   "peak_vertices": 92,
+   "peak_tick": 12
+  },
+  "C": {
+   "peak_vertices": 232,
+   "peak_tick": 12,
+   "mesh_quads_at_peak": 54
+  },
+  "still": "Calidus_Brachium (yellow punch burst along the arm) + tutorial comet / flame tail (b669a565)"
+ },
+ "zone": {
+  "title": "FLAMEFX_ZONE  Flame zone",
+  "shape": "FLAMEFX_ZONE",
+  "cap_current_vertices": 156,
+  "before_peak_vertices_in_preview": 156,
+  "A": {
+   "peak_vertices": 108,
+   "peak_tick": 0
+  },
+  "B": {
+   "peak_vertices": 192,
+   "peak_tick": 0
+  },
+  "C": {
+   "peak_vertices": 296,
+   "peak_tick": 1,
+   "mesh_quads_at_peak": 70
+  },
+  "still": "Calidus_Brachium_Purgatory (concentric fire arcs, blue in the still: recolour) + tutorial ring of fire (b669a565)"
+ },
+ "fxburst": {
+  "title": "FLAMEFX_BURST  Flame burst",
+  "shape": "FLAMEFX_BURST",
+  "cap_current_vertices": 216,
+  "before_peak_vertices_in_preview": 216,
+  "A": {
+   "peak_vertices": 104,
+   "peak_tick": 9
+  },
+  "B": {
+   "peak_vertices": 140,
+   "peak_tick": 0
+  },
+  "C": {
+   "peak_vertices": 332,
+   "peak_tick": 0,
+   "mesh_quads_at_peak": 78
+  },
+  "still": "Calidus_Brachium_Barrage (fat radial yellow spokes from a white centre)"
+ },
+ "trail": {
+  "title": "FLAME_TRAIL  Explosion/Magma stream",
+  "shape": "FLAME_TRAIL",
+  "cap_current_vertices": 164,
+  "before_peak_vertices_in_preview": 164,
+  "A": {
+   "peak_vertices": 52,
+   "peak_tick": 1
+  },
+  "B": {
+   "peak_vertices": 96,
+   "peak_tick": 1
+  },
+  "C": {
+   "peak_vertices": 248,
+   "peak_tick": 1,
+   "mesh_quads_at_peak": 60
+  },
+  "still": "Magna's_Vanishing_Fireball (fireball with a straight streak) + tutorial comet (b669a565)"
+ },
+ "explosion": {
+  "title": "FLAME_EXPLOSION  Explosion/Magma blast",
+  "shape": "FLAME_EXPLOSION",
+  "cap_current_vertices": 292,
+  "before_peak_vertices_in_preview": 292,
+  "A": {
+   "peak_vertices": 116,
+   "peak_tick": 10
+  },
+  "B": {
+   "peak_vertices": 164,
+   "peak_tick": 6
+  },
+  "C": {
+   "peak_vertices": 368,
+   "peak_tick": 0,
+   "mesh_quads_at_peak": 86
+  },
+  "still": "Combo_Eruption (cluster of round cel fireballs with red-orange rims)"
+ }
+}
