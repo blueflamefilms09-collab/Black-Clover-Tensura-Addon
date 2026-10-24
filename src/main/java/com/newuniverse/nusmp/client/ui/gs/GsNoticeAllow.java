@@ -22,15 +22,22 @@ public final class GsNoticeAllow {
 
     public static boolean allowed(String key) {
         if (key == null || key.isEmpty() || key.length() > 120) return false;
+        if (companionHeal(key)) return true;
         for (String k : KEYS) {
             if (k.endsWith(".") ? key.startsWith(k) : key.equals(k)) return true;
         }
         return false;
     }
 
+    /** A companion looking after the player from her pouch ("nusmp.companion.<name>.use"): the one companion line the crest mirrors. */
+    static boolean companionHeal(String key) {
+        return key.startsWith("nusmp.companion.") && key.endsWith(".use") && key.indexOf('.', 16) == key.length() - 4;
+    }
+
     /** The kind (colour) of a mirrored key: warnings and refusals read as WARN, exhaustion as BAD, the rest as INFO. */
     public static GsNoticeQueue.Kind kind(String key) {
         if (key == null) return GsNoticeQueue.Kind.INFO;
+        if (companionHeal(key)) return GsNoticeQueue.Kind.OK;
         if (key.contains("refused") || key.contains("exhausted")) return GsNoticeQueue.Kind.WARN;
         if (key.contains("attuned") || key.contains("upgrade")) return GsNoticeQueue.Kind.OK;
         return GsNoticeQueue.Kind.INFO;

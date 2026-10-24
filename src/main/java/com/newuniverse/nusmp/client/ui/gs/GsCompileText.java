@@ -50,6 +50,24 @@ public final class GsCompileText {
         return new Lines(plain, ink);
     }
 
+    /**
+     * The first 'count' of lines that are already wrapped (the companion screen's bond story), as a compile block. Each line is cut to the glyph budget of the block. Built once per set of lines, not per
+     * frame.
+     */
+    public static Lines ofLines(String[] source, int count, int lineH) {
+        int n = Math.max(0, Math.min(count, source.length));
+        int longest = 1;
+        for (int i = 0; i < n; i++) longest = Math.max(longest, source[i].length());
+        int cap = GsCompile.glyphCap(Math.max(1, n), longest, lineH, GsCompile.PAGE_GLYPHS);
+        String[] plain = new String[n];
+        FormattedCharSequence[] ink = new FormattedCharSequence[n];
+        for (int i = 0; i < n; i++) {
+            plain[i] = GsCompile.fit(source[i], cap);
+            ink[i] = Component.literal(plain[i]).withStyle(ChatFormatting.ITALIC).getVisualOrderText();
+        }
+        return new Lines(plain, ink);
+    }
+
     private static final char[] BUF = new char[200];
 
     /**

@@ -51,6 +51,9 @@ public final class GsNotices {
     /** True when the crest and notices are on at all (theme great_spirit and ui.greatSpirit.notices). */
     static boolean on() { return UiTheme.greatSpirit() && UiThemeOptions.notices(); }
 
+    /** The same answer for other client code (the companion screen offers its events only when the crest is on). */
+    public static boolean active() { return on(); }
+
     /** The chat mirror: a line whose translation key is on the allow-list becomes a notice. The chat line itself is never touched. */
     private static void onChat(ClientChatReceivedEvent e) {
         if (!on()) return;
