@@ -80,6 +80,7 @@ public final class MultiverseSync {
         if (inst.isPresent()) {
             var cover = GrimoirePages.coverOf(inst.get());
             g.putString("Cover", cover.displayName());
+            g.putInt("Tier", cover.tier);                                              // 2.x GUI: the clover frame (3 / 4 / 5 leaves) of the Four Kingdoms menu
             g.putString("Magic", GrimoirePages.magicOf(inst.get()).displayName);
             if (inst.get().getSkill() instanceof GrimoireBook book) {
                 int unlocked = 0;
@@ -108,6 +109,12 @@ public final class MultiverseSync {
             }
         }
         t.put("Grimoire", g);
+        // 2.x GUI: a look only. Is this a devil user (menu skin C)? Decided here, read by the client from the status it already gets.
+        boolean devilUser = DevilUser.is(inst.map(GrimoirePages::coverOf).orElse(null),
+                inst.map(i -> !i.getOrCreateTag().getString("Devil").isEmpty()).orElse(false),
+                inst.map(i -> i.getOrCreateTag().getLong("UnionUntil")).orElse(0L),
+                MultiverseProfile.antiMode(p), MultiverseProfile.race(p), RaceBuffs.tensuraFamily(p));
+        t.putBoolean("Devil", devilUser);
         // spirit lord
         CompoundTag s = new CompoundTag();
         if (SpiritBond.bonded(p) || SpiritLordSkill.instance(p).isPresent()) {

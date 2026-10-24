@@ -1,5 +1,8 @@
 package com.newuniverse.nusmp.client.ui.theme;
 
+import com.newuniverse.nusmp.client.ui.gs.GsDraw;
+import com.newuniverse.nusmp.client.ui.gs.GsSkin;
+import com.newuniverse.nusmp.client.ui.gs.GsUser;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 
@@ -14,14 +17,18 @@ public final class UiPanel {
     // ---------------------------------------------------------------- panels
     /** A translucent panel: soft halo, body gradient, top sheen, inner line, glowing edge and corner brackets in the accent colour. */
     public static void panel(GuiGraphics g, int x, int y, int w, int h, int accent, float glow, float alpha) {
+        GsSkin gs = UiTheme.greatSpirit() ? GsUser.skin() : null;                    // 2.x: the great_spirit look re-colours the same panel and adds filigree corners
+        if (gs != null) accent = GsDraw.tint(accent, gs);
         int a = accent & 0xFFFFFF;
         g.renderOutline(x - 2, y - 2, w + 4, h + 4, UiMath.withAlpha(a, 0.05f * glow * alpha));
         g.renderOutline(x - 1, y - 1, w + 2, h + 2, UiMath.withAlpha(a, 0.12f * glow * alpha));
-        g.fillGradient(x, y, x + w, y + h, UiMath.scaleAlpha(UiTheme.PANEL_TOP, alpha), UiMath.scaleAlpha(UiTheme.PANEL_BOTTOM, alpha));
+        if (gs == null) g.fillGradient(x, y, x + w, y + h, UiMath.scaleAlpha(UiTheme.PANEL_TOP, alpha), UiMath.scaleAlpha(UiTheme.PANEL_BOTTOM, alpha));
+        else g.fillGradient(x, y, x + w, y + h, UiMath.withAlpha(GsDraw.PANEL_TOP[gs.ordinal()], 0.85f * alpha), UiMath.withAlpha(GsDraw.PANEL_BOTTOM[gs.ordinal()], 0.88f * alpha));
         g.fillGradient(x + 1, y + 1, x + w - 1, y + 1 + Math.min(h / 3, 26), UiMath.withAlpha(0xFFFFFF, 0.07f * alpha), 0x00FFFFFF);
         g.renderOutline(x + 1, y + 1, w - 2, h - 2, UiMath.withAlpha(a, 0.16f * alpha));
         g.renderOutline(x, y, w, h, UiMath.withAlpha(a, (0.32f + 0.45f * glow) * alpha));
         brackets(g, x, y, w, h, 6, UiMath.withAlpha(a, 0.95f * alpha));
+        if (gs != null) GsDraw.corners(g, x, y, w, h, gs, alpha);
     }
 
     /** {@link #panel} plus a slow scan line sweeping down it (needs the clock: {@link UiTheme#now()}). */
@@ -32,6 +39,7 @@ public final class UiPanel {
 
     /** A deeper, flatter panel for insets (slots, bars, lists). */
     public static void well(GuiGraphics g, int x, int y, int w, int h, int accent, float alpha) {
+        if (UiTheme.greatSpirit()) accent = GsDraw.tint(accent, GsUser.skin());
         g.fill(x, y, x + w, y + h, UiMath.scaleAlpha(UiTheme.PANEL_DEEP, alpha));
         g.renderOutline(x, y, w, h, UiMath.withAlpha(accent & 0xFFFFFF, 0.38f * alpha));
     }
@@ -73,6 +81,7 @@ public final class UiPanel {
     /** Hover highlight over a row: a tinted wash, a bright bar on the left and a hairline under it. 'amount' is 0..1. */
     public static void hover(GuiGraphics g, int x, int y, int w, int h, float amount, int rgb) {
         if (amount <= 0.01f) return;
+        if (UiTheme.greatSpirit()) rgb = GsDraw.tint(rgb, GsUser.skin());
         int a = rgb & 0xFFFFFF;
         g.fill(x, y, x + w, y + h, UiMath.withAlpha(a, 0.13f * amount));
         g.fill(x, y, x + 2, y + h, UiMath.withAlpha(a, 0.9f * amount));
@@ -81,6 +90,7 @@ public final class UiPanel {
 
     /** A tab chip (the Codex's side tabs): translucent, accent edge, brighter when active or hovered. */
     public static void chip(GuiGraphics g, int x, int y, int w, int h, boolean active, boolean hovered, int rgb) {
+        if (UiTheme.greatSpirit()) rgb = GsDraw.tint(rgb, GsUser.skin());
         int a = rgb & 0xFFFFFF;
         float k = active ? 1f : hovered ? 0.6f : 0.25f;
         g.fillGradient(x, y, x + w, y + h, UiMath.withAlpha(a, 0.10f + 0.28f * k), UiMath.withAlpha(a, 0.04f + 0.14f * k));

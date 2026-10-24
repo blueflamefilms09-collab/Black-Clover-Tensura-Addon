@@ -77,7 +77,12 @@ public final class PageUnlockOverlay {
             byId.put(id, e);
         }
         List<String> fresh = TRACKER.update(gr.getString("Cover") + "|" + gr.getString("MagicId"), ids);
-        if (fresh.isEmpty() || !UiTheme.anime() || !UiThemeOptions.pageToast()) return;
+        if (fresh.isEmpty()) return;
+        for (String id : fresh) {                                                                // 2.x: the great_spirit look also mirrors it on the alert crest (no-op in the other themes)
+            CompoundTag e = byId.get(id);
+            if (e != null) com.newuniverse.nusmp.client.ui.gs.GsNotices.pageOpened(id, e.getString("Name"));
+        }
+        if (!UiTheme.anime() || !UiThemeOptions.pageToast()) return;
         for (String id : fresh) {
             CompoundTag e = byId.get(id);
             if (e == null) continue;
