@@ -1,0 +1,17 @@
+{
+ "A": {
+  "textures": 12,
+  "png_bytes": 123884,
+  "vram_bytes": 548864
+ },
+ "B": {
+  "textures": 13,
+  "png_bytes": 258197,
+  "vram_bytes": 997440
+ },
+ "C": {
+  "textures": 12,
+  "png_bytes": 124828,
+  "vram_bytes": 548864
+ }
+}

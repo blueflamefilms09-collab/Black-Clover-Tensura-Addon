@@ -50,7 +50,7 @@ THEMES = {"A": A, "B": B, "C": C}
 
 
 def reg(name, im):
-    TEXTURES[name] = (im.width, im.height)
+    TEXTURES[name] = im
     return im
 
 
@@ -324,7 +324,7 @@ def clover_frame(th, leaves, size=96):
     n = leaves
     tier = {3: 3, 4: 4, 5: 5}[n]
     fill_hi, fill_lo = {3: th.leaf3, 4: th.leaf4, 5: th.leaf5}[tier]
-    leaf_len = S * (0.36 if n == 3 else 0.34 if n == 4 else 0.30) / 1.62 * 1.0
+    leaf_len = S * (0.425 if n == 3 else 0.415 if n == 4 else 0.37) / 1.62
     start = -math.pi / 2
     body = Image.new("RGBA", (S, S), (0, 0, 0, 0))
     gl = Image.new("RGBA", (S, S), (0, 0, 0, 0))
@@ -337,11 +337,11 @@ def clover_frame(th, leaves, size=96):
     # a short stem for the three- and four-leaf (down-right), none for five (it is wrapped in slime)
     if n == 3:
         for t in np.linspace(0.0, 1.0, 40):
-            x, y = c + math.sin(t * 2.2) * S * 0.05 + t * S * 0.02, c + S * 0.14 + t * S * 0.34
+            x, y = c + math.sin(t * 2.2) * S * 0.04 + t * S * 0.01, c + S * 0.2 + t * S * 0.26
             md.ellipse([x - S * 0.014, y - S * 0.014, x + S * 0.014, y + S * 0.014], fill=255)
     elif n == 4:
         for t in np.linspace(0.0, 1.0, 40):
-            x, y = c + S * 0.14 + t * S * 0.22 + math.sin(t * 2.5) * S * 0.02, c + S * 0.14 + t * S * 0.34
+            x, y = c + S * 0.2 + t * S * 0.16 + math.sin(t * 2.5) * S * 0.015, c + S * 0.2 + t * S * 0.26
             md.ellipse([x - S * 0.014, y - S * 0.014, x + S * 0.014, y + S * 0.014], fill=255)
     m = np.asarray(mask).astype(np.float32) / 255.0
     yy, xx = np.mgrid[0:S, 0:S].astype(np.float32)
@@ -376,7 +376,7 @@ def clover_frame(th, leaves, size=96):
             hx, hy = c + math.cos(a) * S * 0.30 - S * 0.02, c + math.sin(a) * S * 0.30 - S * 0.03
             d.ellipse([hx - S * 0.035, hy - S * 0.022, hx + S * 0.035, hy + S * 0.022], fill=(255, 235, 255, 150))
     # medallion ring + hole
-    holeR = S * 0.175
+    holeR = S * 0.185
     rim = Image.new("RGBA", (S, S), (0, 0, 0, 0))
     rd = ImageDraw.Draw(rim)
     rimc = {3: mixc(th.metal_hi, th.metal_lo, 0.5), 4: th.metal_hi, 5: mixc(th.glow5, (30, 10, 50), 0.4)}[tier]
@@ -475,7 +475,9 @@ def crest(th, size=96):
         for a in range(4):                                          # clover mark on the brow
             ang = math.pi / 4 + a * math.pi / 2
             d.polygon(heart_pts(c + math.cos(ang) * S * 0.006, c - S * 0.20 + math.sin(ang) * S * 0.006, S * 0.095, ang), fill=th.accent + (255,))
-        d.ellipse([c - S * 0.30, c - S * 0.24, c - S * 0.1, c - S * 0.12], fill=(255, 255, 255, 40))
+        hl = Image.new('RGBA', (S, S), (0, 0, 0, 0))
+        ImageDraw.Draw(hl).ellipse([c - S * 0.27, c - S * 0.21, c - S * 0.1, c - S * 0.11], fill=(255, 255, 255, 70))
+        im.alpha_composite(hl)
     im = im.resize((size, size), Image.LANCZOS)
     return reg("gui/gs_%s/alert_crest" % th.key.lower(), im)
 
