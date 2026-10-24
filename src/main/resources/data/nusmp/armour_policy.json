@@ -142,6 +142,7 @@
   },
   "STAR": {
    "kind": "NONE",
+   "new_pages": ["star_seed", "quartile_scutum", "quartile_hasta", "black_neverland", "quintile_atrum_scutum", "quintile_atrum_hasta", "quintile_atrum_flagellum"],
    "canon": "No worn armour or transformation exists for this attribute in the anime; its spells are shots, zones, constructs and summons."
   },
   "STORM": {

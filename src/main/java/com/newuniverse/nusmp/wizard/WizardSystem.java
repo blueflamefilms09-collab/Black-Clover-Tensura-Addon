@@ -176,12 +176,18 @@ public final class WizardSystem {
     }
 
     private static void arrive(ServerPlayer p, Questionnaire.Result r, GrimoireCover cover, Devil devil) {
-        GrimoireAcceptance.grantExact(p, cover, r.primary(), devil);
+        // Star nodes (server setting star.dualMode, default FUSION = exactly the code below): with SECOND_GRIMOIRE a tie that involves Star gives two real grimoires, the other attribute's and a Star one
+        com.newuniverse.nusmp.star.StarRules.DualPlan dual = cover.isForbidden() ? new com.newuniverse.nusmp.star.StarRules.DualPlan(r.primary().name(), null, r.fused())
+                : com.newuniverse.nusmp.star.StarRules.dualPlan(com.newuniverse.nusmp.star.StarConfig.dualMode(), r.primary().name(), r.parentA() == null ? null : r.parentA().name(), r.parentB() == null ? null : r.parentB().name());
+        boolean split = dual.extra() != null;
+        com.newuniverse.nusmp.blackclover.MagicType first = split ? com.newuniverse.nusmp.blackclover.MagicType.valueOf(dual.first()) : r.primary();
+        GrimoireAcceptance.grantExact(p, cover, first, devil);
         if (GrimoirePages.grimoireOf(p).isEmpty()) return;                                    // another mod refused the skill
         // 1.16.0: two attributes fuse into the one grimoire (no second book): its fused look, its Signature Spell and, when the pair has no
         // blend in the game, a magic of its own born of them
-        String bornName = r.born() ? BornMagic.nameOf(r.parentA(), r.parentB()) : null;
-        String signature = GrimoireAcceptance.applyFusion(p, r.primary(), r.parentA(), r.parentB(), bornName);
+        String bornName = !split && r.born() ? BornMagic.nameOf(r.parentA(), r.parentB()) : null;
+        String signature = GrimoireAcceptance.applyFusion(p, first, split ? null : r.parentA(), split ? null : r.parentB(), bornName);
+        if (split) GrimoireAcceptance.grantExtra(p, cover, com.newuniverse.nusmp.blackclover.MagicType.STAR);      // the real second grimoire: Star, with the same cover (a Spade mage can become the Grinberryall heir)
         for (int i = 0; i < p.getInventory().getContainerSize(); i++)                  // the summons has done its work
             if (p.getInventory().getItem(i).is(NUItems.GRIMOIRE_SUMMONS.get())) p.getInventory().setItem(i, ItemStack.EMPTY);
         MultiverseProfile.setSocialClass(p, r.social());
@@ -189,13 +195,15 @@ public final class WizardSystem {
         Ceremony.finish(p, "the Tower Wizard");
         var kt = Heritage.kingdomTrait(r.kingdom());
         var bt = Heritage.bloodTrait(r.blood());
-        if (r.fused()) {
+        if (split) {
+            p.sendSystemMessage(Component.literal("Two attributes answered you: " + first.displayName + " and Star Magic. You carry two grimoires.").withStyle(ChatFormatting.LIGHT_PURPLE, ChatFormatting.BOLD));
+        } else if (r.fused()) {
             p.sendSystemMessage(Component.literal("Two attributes answered you: " + r.parentA().displayName + " and " + r.parentB().displayName + ". They have fused into one grimoire.")
                     .withStyle(ChatFormatting.LIGHT_PURPLE));
             p.sendSystemMessage(Component.literal(r.born() ? "A magic that did not exist before is born: " + bornName + " Magic."
                     : "Together they are " + r.primary().displayName + ".").withStyle(ChatFormatting.LIGHT_PURPLE, ChatFormatting.BOLD));
         }
-        p.sendSystemMessage(Component.literal("Your magic: " + (r.born() ? bornName + " Magic" : r.primary().displayName) + "  |  " + cover.displayName()).withStyle(ChatFormatting.AQUA));
+        p.sendSystemMessage(Component.literal("Your magic: " + (r.born() && !split ? bornName + " Magic" : first.displayName + (split ? " + Star Magic" : "")) + "  |  " + cover.displayName()).withStyle(ChatFormatting.AQUA));
         p.sendSystemMessage(Component.literal("No two wizards' magic is the same. Yours is called " + signature + ": " + com.newuniverse.nusmp.mana.Signature.describe(p)
                 + ". Its Signature Spell is the last page of your grimoire.").withStyle(ChatFormatting.AQUA));
         var sct = Heritage.socialTrait(r.social());
