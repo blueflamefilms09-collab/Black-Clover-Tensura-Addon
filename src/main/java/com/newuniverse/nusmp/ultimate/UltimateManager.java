@@ -3,9 +3,11 @@ package com.newuniverse.nusmp.ultimate;
 import com.newuniverse.nusmp.NUSMP;
 import com.newuniverse.nusmp.anim.CastAnim;
 import com.newuniverse.nusmp.balance.BalanceLaw;
+import com.newuniverse.nusmp.blackclover.Kingdom;
 import com.newuniverse.nusmp.blackclover.MagicType;
 import com.newuniverse.nusmp.book.GrimoireBook;
 import com.newuniverse.nusmp.heroweapon.weapon.kit.Foes;
+import com.newuniverse.nusmp.mana.Heritage;
 import com.newuniverse.nusmp.mana.ManaLaw;
 import com.newuniverse.nusmp.multiverse.MultiverseProfile;
 import com.newuniverse.nusmp.multiverse.WizardKing;
@@ -85,6 +87,7 @@ public final class UltimateManager {
         final ParticleOptions particle;
         final boolean creative;
         boolean released, test;
+        UltimateAnim.Clips clips = UltimateAnim.DEFAULT;       // the body animation of this caster (by kingdom, or the old single loop), chosen once at the start
         long releaseTick;
         int nextPulse, sneakTicks, packets;
         double damageTaken, cx, cy, cz;
@@ -186,12 +189,37 @@ public final class UltimateManager {
         s.cz = p.getZ();
         SESSIONS.put(p.getUUID(), s);
         lock(p);
-        CastAnim.play(p, CastAnim.MANA_ZONE);
+        s.clips = UltimateAnim.choose(UltimateConfig.kingdomAnimations(), kingdomOf(p, inst));
+        CastAnim.play(p, s.clips.first());      // the wind-up pose of the caster's kingdom (the old looping Mana Zone pose when there is none)
         sendCircle(sl, p, s);
         sl.playSound(null, p.blockPosition(), SoundEvents.BEACON_ACTIVATE, SoundSource.PLAYERS, 3.0f, 0.5f);
         warnNearby(sl, p, s);
         p.displayClientMessage(Component.translatableWithFallback("nusmp.ultimate.gathering", "You gather everything you are... (sneak to let go)").withStyle(ChatFormatting.GOLD), true);
         return true;
+    }
+
+    /** The caster's kingdom for the animation: the one they hail from (Heritage), else the kingdom of their grimoire's cover. Null when neither is known (a stand-in player, a grimoire without a cover). */
+    static Kingdom kingdomOf(ServerPlayer p, ManasSkillInstance inst) {
+        Kingdom heritage = null, cover = null;
+        try { heritage = Heritage.kingdom(p); } catch (Throwable ignored) { /* no heritage data */ }
+        try { cover = inst == null ? null : GrimoireBook.cover(inst).kingdom; } catch (Throwable ignored) { /* no cover data */ }
+        return UltimateAnim.resolveKingdom(heritage, cover);
+    }
+
+    /**
+     * The grimoire plays the page's own release clip right after a cast that began (GrimoireBook.onRelease); for an Ultimate page that must not replace the wind-up pose the manager just chose, so the clip of the
+     * running cast is returned instead (the client ignores a clip that already plays). Anything else gets {@code clip} back unchanged.
+     */
+    public static String pageClip(Player p, String pageId, String clip) {
+        if (SESSIONS.isEmpty() || p == null) return clip;
+        Session s = SESSIONS.get(p.getUUID());
+        return s != null && !s.released && s.def.id().equals(pageId) ? s.clips.first() : clip;
+    }
+
+    /** The clips the running cast of this player plays (null when none): for the self-test. */
+    static UltimateAnim.Clips clipsOf(Player p) {
+        Session s = SESSIONS.get(p.getUUID());
+        return s == null ? null : s.clips;
     }
 
     private static void refuse(ServerPlayer p, UltimateRules.Start why, UltimateGate.Verdict gate, long now) {
@@ -240,6 +268,7 @@ public final class UltimateManager {
             if (age % 20 == 0) lock(p);
             if (age % UltimateRules.FX_EMIT_PERIOD == 0) emitCharge(s, age);
             if (UltimateRules.chargeFxDue(age, s.windup) && age > 0) sendCharge(p.serverLevel(), s);
+            if (s.clips.loopDue(age)) CastAnim.play(p, s.clips.loop());      // the wind-up pose is over: the long hold begins (one packet, the existing cast-animation payload)
             if (age >= s.windup) release(s, now);
         } else {
             if (p.isRemoved() || !p.isAlive() || p.level().dimension() != s.dim) { finish(s); return; }       // the magicule is already spent: the remaining pulses are simply lost
@@ -368,7 +397,7 @@ public final class UltimateManager {
         try {
             if (s.instance != null && s.mode >= 0) s.instance.setCoolDown(NUSMP.ticksToSeconds(cd), s.mode);      // the grimoire's own cooldown display
         } catch (Throwable ignored) { /* the instance may be gone */ }
-        CastAnim.play(p, CastAnim.SIGNATURE);
+        CastAnim.play(p, s.clips.release());      // the release clip of the caster's kingdom (the Signature finisher for the default)
         Vec3 c = new Vec3(s.cx, s.cy, s.cz);
         send(sl, s, VfxShape.MAGIC_CIRCLE_EXPLOSION, c.add(0, 0.1, 0), c.add(0, 1.1, 0), 30, (float) (s.radius / 5.0));
         send(sl, s, shape(s.def.burstShape()), c, c.add(0, 1, 0), burstTicks(s.def), s.def.burstPower());

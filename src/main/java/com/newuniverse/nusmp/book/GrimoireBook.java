@@ -399,7 +399,7 @@ public abstract class GrimoireBook extends Skill {
         if (castMagic == MagicType.SCALE) com.newuniverse.nusmp.scalecast.ScaleCastKit.onCast(player);      // Scale casting (docs/magic/scale_casting.md): the floating Scale weighs the foe, the weighing animation starts
         String clip = castMagic == MagicType.KEY ? com.newuniverse.nusmp.anim.CastAnim.KEY_TURN
                 : castMagic == MagicType.DICE || castMagic == MagicType.GAME ? com.newuniverse.nusmp.anim.CastAnim.DICE_TOSS
-                : com.newuniverse.nusmp.anim.CastAnim.releaseFor(p);
+                : com.newuniverse.nusmp.ultimate.UltimateManager.pageClip(player, p.id(), com.newuniverse.nusmp.anim.CastAnim.releaseFor(p));      // Ultimate Magic: the cast that just began keeps the wind-up pose of the caster's kingdom
         String styledClip = com.newuniverse.nusmp.firecast.FireCasting.releaseClip(this, player, mode, clip);      // fire casting: the style's own release clip (the bat swing started at the toss)
         if (styledClip != null) com.newuniverse.nusmp.anim.CastAnim.play(player, styledClip);
         shout(player, p.incantation());
