@@ -1,0 +1,35 @@
+Valkyrie armour (preview only): quads per piece and level (LEFT copy written; copies = 2 means the layer draws the mirror as well); layer 0 body, 1 emissive, 2 foam
+
+piece          level   quads     L0     L1     L2 x copies
+crown          near       59     53      6      0       59
+crown          mid        47     41      6      0       47
+crown          far        21     21      0      0       21
+bodice         near       98     90      8      0       98
+bodice         mid        54     48      6      0       54
+bodice         far        37     31      6      0       37
+skirt          near       54     54      0      0       54
+skirt          mid        28     28      0      0       28
+skirt          far        12     12      0      0       12
+pauldron       near       39     33      6      0       78
+pauldron       mid        27     27      0      0       54
+pauldron       far        21     21      0      0       42
+gauntlet       near       39     33      6      0       78
+gauntlet       mid        24     18      6      0       48
+gauntlet       far        10     10      0      0       20
+greave         near       48     42      6      0       96
+greave         mid        24     18      6      0       48
+greave         far         7      7      0      0       14
+wing_main      near       70     36     34      0      140
+wing_main      mid        36     20     16      0       72
+wing_main      far        12      6      6      0       24
+wing_low       near       21      8     13      0       42
+wing_low       mid        14      6      8      0       28
+wing_low       far         8      4      4      0       16
+grimoire       near       18     12      6      0       18
+grimoire       mid        18     12      6      0       18
+grimoire       far        12      6      6      0       12
+
+TOTAL drawn quads per wearer (both copies; the grimoire is optional and listed apart)
+near     663 quads ( 2652 vertices), without the grimoire   645
+mid      397 quads ( 1588 vertices), without the grimoire   379
+far      198 quads (  792 vertices), without the grimoire   186

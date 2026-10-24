@@ -1,0 +1,220 @@
+{
+ "units": "px (1/16 block), vanilla player REST pose, y up, feet y=0, front +z",
+ "pieces": [
+  {
+   "name": "crown",
+   "bone": "head",
+   "copies": 1,
+   "pass": "plate",
+   "alpha": 0.92,
+   "optional": false,
+   "levels": {
+    "near": {
+     "file": "valk_crown.txt",
+     "quads": 59
+    },
+    "mid": {
+     "file": "valk_crown_mid.txt",
+     "quads": 47
+    },
+    "far": {
+     "file": "valk_crown_lo.txt",
+     "quads": 21
+    }
+   }
+  },
+  {
+   "name": "bodice",
+   "bone": "body",
+   "copies": 1,
+   "pass": "plate",
+   "alpha": 0.9,
+   "optional": false,
+   "levels": {
+    "near": {
+     "file": "valk_bodice.txt",
+     "quads": 98
+    },
+    "mid": {
+     "file": "valk_bodice_mid.txt",
+     "quads": 54
+    },
+    "far": {
+     "file": "valk_bodice_lo.txt",
+     "quads": 37
+    }
+   }
+  },
+  {
+   "name": "skirt",
+   "bone": "body",
+   "copies": 1,
+   "pass": "plate",
+   "alpha": 0.86,
+   "optional": false,
+   "levels": {
+    "near": {
+     "file": "valk_skirt.txt",
+     "quads": 54
+    },
+    "mid": {
+     "file": "valk_skirt_mid.txt",
+     "quads": 28
+    },
+    "far": {
+     "file": "valk_skirt_lo.txt",
+     "quads": 12
+    }
+   }
+  },
+  {
+   "name": "pauldron",
+   "bone": "arm",
+   "copies": 2,
+   "pass": "plate",
+   "alpha": 0.92,
+   "optional": false,
+   "levels": {
+    "near": {
+     "file": "valk_pauldron.txt",
+     "quads": 39
+    },
+    "mid": {
+     "file": "valk_pauldron_mid.txt",
+     "quads": 27
+    },
+    "far": {
+     "file": "valk_pauldron_lo.txt",
+     "quads": 21
+    }
+   }
+  },
+  {
+   "name": "gauntlet",
+   "bone": "arm",
+   "copies": 2,
+   "pass": "plate",
+   "alpha": 0.9,
+   "optional": false,
+   "levels": {
+    "near": {
+     "file": "valk_gauntlet.txt",
+     "quads": 39
+    },
+    "mid": {
+     "file": "valk_gauntlet_mid.txt",
+     "quads": 24
+    },
+    "far": {
+     "file": "valk_gauntlet_lo.txt",
+     "quads": 10
+    }
+   }
+  },
+  {
+   "name": "greave",
+   "bone": "leg",
+   "copies": 2,
+   "pass": "plate",
+   "alpha": 0.88,
+   "optional": false,
+   "levels": {
+    "near": {
+     "file": "valk_greave.txt",
+     "quads": 48
+    },
+    "mid": {
+     "file": "valk_greave_mid.txt",
+     "quads": 24
+    },
+    "far": {
+     "file": "valk_greave_lo.txt",
+     "quads": 7
+    }
+   }
+  },
+  {
+   "name": "wing_main",
+   "bone": "wing_hinge",
+   "copies": 2,
+   "pass": "glass",
+   "alpha": 0.72,
+   "optional": false,
+   "levels": {
+    "near": {
+     "file": "valk_wing_main.txt",
+     "quads": 70
+    },
+    "mid": {
+     "file": "valk_wing_main_mid.txt",
+     "quads": 36
+    },
+    "far": {
+     "file": "valk_wing_main_lo.txt",
+     "quads": 12
+    }
+   }
+  },
+  {
+   "name": "wing_low",
+   "bone": "wing_hinge_low",
+   "copies": 2,
+   "pass": "glass",
+   "alpha": 0.7,
+   "optional": false,
+   "levels": {
+    "near": {
+     "file": "valk_wing_low.txt",
+     "quads": 21
+    },
+    "mid": {
+     "file": "valk_wing_low_mid.txt",
+     "quads": 14
+    },
+    "far": {
+     "file": "valk_wing_low_lo.txt",
+     "quads": 8
+    }
+   }
+  },
+  {
+   "name": "grimoire",
+   "bone": "body",
+   "copies": 1,
+   "pass": "plate",
+   "alpha": 0.95,
+   "optional": true,
+   "levels": {
+    "near": {
+     "file": "valk_grimoire.txt",
+     "quads": 18
+    },
+    "mid": {
+     "file": "valk_grimoire_mid.txt",
+     "quads": 18
+    },
+    "far": {
+     "file": "valk_grimoire_lo.txt",
+     "quads": 12
+    }
+   }
+  }
+ ],
+ "totals": {
+  "near": {
+   "quads": 663,
+   "vertices": 2652,
+   "quads_without_grimoire": 645
+  },
+  "mid": {
+   "quads": 397,
+   "vertices": 1588,
+   "quads_without_grimoire": 379
+  },
+  "far": {
+   "quads": 198,
+   "vertices": 792,
+   "quads_without_grimoire": 186
+  }
+ }
+}

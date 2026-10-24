@@ -1,0 +1,112 @@
+{
+ "units": "px (1/16 block); weapon frame: +y axis, butt y=0, grip at 0.25 x length",
+ "lances": {
+  "A": {
+   "name": "Frosted Drill",
+   "length_px": 52.0,
+   "grip_px": 13.0,
+   "tex": {
+    "3": "foam",
+    "4": "veil",
+    "5": "glow"
+   },
+   "levels": {
+    "near": {
+     "file": "lance_A.txt",
+     "quads": 213,
+     "vertices": 852
+    },
+    "mid": {
+     "file": "lance_A_mid.txt",
+     "quads": 106,
+     "vertices": 424
+    },
+    "far": {
+     "file": "lance_A_lo.txt",
+     "quads": 44,
+     "vertices": 176
+    }
+   }
+  },
+  "B": {
+   "name": "Crystal Corkscrew",
+   "length_px": 54.0,
+   "grip_px": 13.5,
+   "tex": {
+    "4": "veil",
+    "5": "glow"
+   },
+   "levels": {
+    "near": {
+     "file": "lance_B.txt",
+     "quads": 216,
+     "vertices": 864
+    },
+    "mid": {
+     "file": "lance_B_mid.txt",
+     "quads": 123,
+     "vertices": 492
+    },
+    "far": {
+     "file": "lance_B_lo.txt",
+     "quads": 68,
+     "vertices": 272
+    }
+   }
+  },
+  "C": {
+   "name": "Living Water Dragon Lance",
+   "length_px": 56.0,
+   "grip_px": 14.0,
+   "tex": {
+    "3": "fin",
+    "4": "veil",
+    "5": "glow"
+   },
+   "levels": {
+    "near": {
+     "file": "lance_C.txt",
+     "quads": 171,
+     "vertices": 684
+    },
+    "mid": {
+     "file": "lance_C_mid.txt",
+     "quads": 98,
+     "vertices": 392
+    },
+    "far": {
+     "file": "lance_C_lo.txt",
+     "quads": 44,
+     "vertices": 176
+    }
+   }
+  },
+  "AB": {
+   "name": "Frosted Crystal Drill (A + B merged)",
+   "length_px": 54.0,
+   "grip_px": 13.5,
+   "tex": {
+    "3": "foam",
+    "4": "veil",
+    "5": "glow"
+   },
+   "levels": {
+    "near": {
+     "file": "lance_AB.txt",
+     "quads": 312,
+     "vertices": 1248
+    },
+    "mid": {
+     "file": "lance_AB_mid.txt",
+     "quads": 179,
+     "vertices": 716
+    },
+    "far": {
+     "file": "lance_AB_lo.txt",
+     "quads": 76,
+     "vertices": 304
+    }
+   }
+  }
+ }
+}
