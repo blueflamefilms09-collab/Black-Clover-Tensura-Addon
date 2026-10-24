@@ -48,6 +48,8 @@ public final class StarGame {
 
     public static final StarNodes NODES = new StarNodes();
     public static final StarPaneBook PANES = new StarPaneBook();
+    /** Stars and panes that survived a dispel roll and are left alone for a while (see {@link StarDispelRules}). */
+    public static final StarDispelRules.Grace GRACE = new StarDispelRules.Grace();
     /** Game tick of each mage's last placement (cleared on logout). */
     private static final Map<UUID, Long> LAST_SEED = new HashMap<>();
 
@@ -196,6 +198,22 @@ public final class StarGame {
         }
     }
 
+    /** A star broken from outside (a dispel): its record goes and its body is removed at once. True when the record was there. */
+    public static boolean breakStar(MinecraftServer server, UUID owner, StarNodes.Node n) {
+        boolean was = NODES.remove(owner, n.entity());
+        GRACE.forget(n.entity());
+        if (server != null) discardBody(server, n, false);
+        return was;
+    }
+
+    /** A pane broken from outside (a dispel): its record goes and its body is removed at once. True when the record was there. */
+    public static boolean breakPane(MinecraftServer server, StarPaneBook.Pane pane) {
+        boolean was = PANES.remove(pane.entity);
+        GRACE.forget(pane.entity);
+        if (server != null) discardPanes(server, List.of(pane));
+        return was;
+    }
+
     /** A body ended by itself (its life ran out): forget its record. */
     public static void bodyGone(MagicPropEntity e) {
         UUID owner = e.ownerId();
@@ -228,6 +246,7 @@ public final class StarGame {
         discardAll(server, NODES.clearAll());
         discardPanes(server, PANES.clearAll());
         LAST_SEED.clear();
+        GRACE.clear();
     }
 
     /** Ground under a star: a downward ray of at most 16 blocks; null when there is none (no floor within reach). */

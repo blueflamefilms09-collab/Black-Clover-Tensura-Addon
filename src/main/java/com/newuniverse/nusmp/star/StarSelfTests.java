@@ -69,6 +69,9 @@ public final class StarSelfTests {
         if (!StarMath.crosses(geom, new StarMath.P(2, 3.5, 6), new StarMath.P(2, 3.5, -2)) || StarMath.crosses(geom, new StarMath.P(20, 3.5, 6), new StarMath.P(20, 3.5, -2))) bad.add("pane geometry");
         if (StarMath.pickByLook(List.of(new StarMath.P(0, 0, 10), new StarMath.P(10, 0, 0)), new StarMath.P(0, 0, 0), new StarMath.P(0, 0, 1), 20, 48) != 0) bad.add("look pick");
         if (StarFx.SHAPES.size() != 7) bad.add("the shapes");
+        if (StarDispelRules.clampChance(9) != 1.0 || StarDispelRules.clampChance(-1) != 0.0 || Math.abs(StarDispelRules.chance(0.35, StarDispelRules.Role.PANE, false) - 0.6) > 1e-6
+                || StarDispelRules.chance(0.35, StarDispelRules.Role.NODE, true) >= StarDispelRules.chance(0.35, StarDispelRules.Role.NODE, false) || StarDispelRules.breaks(0.0, 0.0) || !StarDispelRules.breaks(1.0, 0.99)) bad.add("the dispel chances");
+        if (StarConfig.dispelChance() < 0.0 || StarConfig.dispelChance() > 1.0) bad.add("star.dispelChance out of range");
     }
 
     // ---------------------------------------------------------------------------------------------- with a stand-in player
@@ -111,7 +114,48 @@ public final class StarSelfTests {
         if (replaced.size() != 1 || StarGame.PANES.size() != 1) bad.add("a second pane of one owner must replace the first");
         StarGame.forget(p);
         if (StarGame.PANES.size() != 0) bad.add("pane cleanup");
-        return placed + " stars placed (cap " + cap + "), evicted bodies removed, cleanup clean";
+        String dispel = dispel(level, p, spawn, y, bad);
+        StarGame.forget(p);
+        return dispel + "; " + placed + " stars placed (cap " + cap + "), evicted bodies removed, cleanup clean";
+    }
+
+    // ---------------------------------------------------------------------------------------------- the dispel hook (stars sometimes die to Anti-Magic)
+    /**
+     * Real stars and a pane in the overworld, dispelled through the real hook with the chance forced: 0 breaks nothing, 1 breaks what is inside the sphere and spares the caster's own, a star outside the
+     * sphere stays, a survivor of a roll is left alone for a while, the hook leaves the registries empty after cleanup, and {@code Nullification.shatterBarriers} (the mod's real dispel) reaches the hook.
+     */
+    private static String dispel(ServerLevel level, ServerPlayer owner, BlockPos spawn, double y, List<String> bad) {
+        StarGame.forget(owner);
+        Vec3 c = new Vec3(spawn.getX() + 0.5, y, spawn.getZ() + 0.5);
+        StarGame.Placed near = StarGame.placeAt(owner, c.add(2, 0, 0), false);
+        StarGame.Placed near2 = StarGame.placeAt(owner, c.add(0, 0, 2), false);
+        StarGame.Placed far = StarGame.placeAt(owner, c.add(15, 0, 0), false);
+        if (near.node() == null || near2.node() == null || far.node() == null) { bad.add("the dispel test could not place its stars: " + near.problem() + far.problem()); return "dispel not exercised"; }
+        net.minecraft.util.RandomSource rnd = level.getRandom();
+        int none = StarDispel.onDispel(level, c, 6, null, 0.0, rnd);
+        if (none != 0 || StarGame.NODES.count(owner.getUUID()) != 3) bad.add("a dispel chance of 0 broke " + none + " stars");
+        int own = StarDispel.onDispel(level, c, 6, owner, 1.0, rnd);
+        if (own != 0 || StarGame.NODES.count(owner.getUUID()) != 3) bad.add("the caster's own stars must be spared");
+        int fresh = StarDispel.onDispel(level, c, 6, null, 1.0, rnd);
+        boolean farLeft = level.getEntity(far.node().entity()) != null && StarGame.NODES.count(owner.getUUID()) == 1;
+        if (fresh != 2 || !farLeft) bad.add("a certain dispel of 6 blocks should break the two near stars and spare the far one: broke " + fresh + ", left " + StarGame.NODES.count(owner.getUUID()));
+        if (level.getEntity(near.node().entity()) != null) bad.add("a broken star left its body");
+        // the survivor of a roll is left alone for a while (chance 0.0001 cannot be told from a miss here: use the grace table directly)
+        StarGame.GRACE.survived(far.node().entity(), level.getGameTime());
+        int graced = StarDispel.onDispel(level, c, 20, null, 1.0, rnd);
+        if (graced != 0) bad.add("a star that just survived a roll was rolled again");
+        StarGame.GRACE.forget(far.node().entity());
+        // a pane in the sphere breaks too, one packet at most
+        StarMath.Pane geom = StarMath.pane(List.of(new StarMath.P(c.x - 2, y, c.z), new StarMath.P(c.x + 2, y, c.z), new StarMath.P(c.x + 2, y + 3, c.z), new StarMath.P(c.x - 2, y + 3, c.z)), new StarMath.P(c.x, y, c.z + 8), 6, 5);
+        StarGame.PANES.add(UUID.randomUUID(), owner.getUUID(), StarGame.dimOf(level), geom, 10f, level.getGameTime() + 100);
+        int pane = StarDispel.onDispel(level, c, 20, null, 1.0, rnd);
+        if (StarGame.PANES.size() != 0 || pane < 2) bad.add("a certain dispel should break the pane and the last star: broke " + pane);
+        // the real entry: the mod's dispel calls the hook (nothing is left to break, so this is a no-op that must not throw)
+        int viaMod = com.newuniverse.nusmp.antimagic.Nullification.shatterBarriers(level, c, 4, null);
+        if (viaMod < 0) bad.add("shatterBarriers");
+        StarGame.forget(owner);
+        if (StarGame.NODES.total() != 0 || StarGame.GRACE.size() > StarDispelRules.GRACE_CAP) bad.add("dispel leaks");
+        return "dispel hook: chance 0 / own / outside / grace / pane (default chance " + StarConfig.dispelChance() + ")";
     }
 
     // ---------------------------------------------------------------------------------------------- the book

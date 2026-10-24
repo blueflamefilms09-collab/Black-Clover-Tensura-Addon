@@ -13,7 +13,7 @@ public final class StarConfig {
     public static final ModConfigSpec SPEC;
     public static final ModConfigSpec.BooleanValue NODES, AUTO_QUARTET, CONJUNCTION_FALLBACK;
     public static final ModConfigSpec.IntValue PER_PLAYER, HEIR_PER_PLAYER, SERVER_CAP, LIFE_TICKS, PLACE_RANGE, SEED_COOLDOWN, CONJUNCTION_ALLIES;
-    public static final ModConfigSpec.DoubleValue HEIR_MASTERY;
+    public static final ModConfigSpec.DoubleValue HEIR_MASTERY, DISPEL_CHANCE;
     public static final ModConfigSpec.EnumValue<StarRules.DualMode> DUAL_MODE;
 
     static {
@@ -37,6 +37,8 @@ public final class StarConfig {
                 .defineInRange("heirMastery", StarRules.DEFAULT_HEIR_MASTERY, StarRules.MIN_HEIR_MASTERY, 1.0);
         DUAL_MODE = b.comment("What the Grimoire Tower does when the questionnaire ties Star with another attribute: FUSION (default, as before: one fused grimoire) or SECOND_GRIMOIRE (two real grimoires, the other attribute's and a Star one).")
                 .defineEnum("dualMode", StarRules.DualMode.FUSION);
+        DISPEL_CHANCE = b.comment("Chance (0 to 1) that a star or a Quartile Scutum pane breaks when the mod's Anti-Magic dispel reaches it (an Anti-Magic slash, the Nihility zone, the other dispel arts). A pane and the stars holding it use about 1.7 times this (0.35 -> 0.6), a Grinberryall heir's use half. 0 = stars never die to Anti-Magic (as before). Allies' and the caster's own stars are never hit.")
+                .defineInRange(StarDispelRules.CONFIG_KEY, StarDispelRules.DEFAULT_CHANCE, StarDispelRules.MIN_CHANCE, StarDispelRules.MAX_CHANCE);
         b.pop();
         SPEC = b.build();
     }
@@ -57,5 +59,6 @@ public final class StarConfig {
     public static boolean conjunctionFallback() { return get(CONJUNCTION_FALLBACK); }
     public static int conjunctionAllies() { return StarRules.maxAllies(get(CONJUNCTION_ALLIES)); }
     public static double heirMastery() { return StarRules.heirMastery(get(HEIR_MASTERY)); }
+    public static double dispelChance() { return StarDispelRules.clampChance(get(DISPEL_CHANCE)); }
     public static StarRules.DualMode dualMode() { return get(DUAL_MODE); }
 }

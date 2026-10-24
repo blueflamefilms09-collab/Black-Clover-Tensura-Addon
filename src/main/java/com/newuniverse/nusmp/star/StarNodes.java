@@ -123,6 +123,29 @@ public final class StarNodes {
         return out;
     }
 
+    /** A star with the UUID of the mage who owns it (for a read across every owner). */
+    public record Owned(UUID owner, Node node) {}
+
+    /**
+     * Stars of ANY owner in this dimension that hang within {@code r} of the point and have not expired, at most {@code limit} of them (the first found, no sorting). One pass over the registry, which holds at
+     * most {@code maxOnServer} (512) stars; nothing is removed or changed. Used by the dispel hook ({@link StarDispel}).
+     */
+    public List<Owned> near(String dim, double cx, double cy, double cz, double r, long now, int limit) {
+        List<Owned> out = new ArrayList<>();
+        if (total == 0 || limit <= 0) return out;
+        double r2 = r * r;
+        for (Map.Entry<UUID, ArrayDeque<Node>> e : byOwner.entrySet()) {
+            for (Node n : e.getValue()) {
+                if (n.expiry() <= now || !n.dim().equals(dim)) continue;
+                double dx = n.x() - cx, dy = n.y() - cy, dz = n.z() - cz;
+                if (dx * dx + dy * dy + dz * dz > r2) continue;
+                out.add(new Owned(e.getKey(), n));
+                if (out.size() >= limit) return out;
+            }
+        }
+        return out;
+    }
+
     /** Owners that have at least one star (for the self-test). */
     public int owners() { return byOwner.size(); }
 }

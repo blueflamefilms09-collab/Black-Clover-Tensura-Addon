@@ -73,6 +73,24 @@ public final class StarPaneBook {
         return out;
     }
 
+    /** Panes of any owner in this dimension whose box comes within {@code r} of the point (at most eight boxes are tested). */
+    public List<Pane> within(String dim, double cx, double cy, double cz, double r) {
+        List<Pane> out = new ArrayList<>();
+        for (Pane p : byEntity.values()) {
+            if (!p.dim.equals(dim)) continue;
+            if (StarDispelRules.boxDistSq(p.geom.bounds(), cx, cy, cz) <= r * r) out.add(p);
+        }
+        return out;
+    }
+
+    /** Is the star at this point one of the end-stars of the owner's pane, i.e. does it hang within {@code tol} of the pane's box? */
+    public boolean isEndStar(UUID owner, String dim, double x, double y, double z, double tol) {
+        for (Pane p : byEntity.values()) {
+            if (p.owner.equals(owner) && p.dim.equals(dim) && StarDispelRules.boxDistSq(p.geom.bounds(), x, y, z) <= tol * tol) return true;
+        }
+        return false;
+    }
+
     /** Takes {@code amount} off the pane's pool. True when the pane is used up (the caller breaks it). */
     public boolean damage(UUID entity, float amount) {
         Pane p = byEntity.get(entity);
