@@ -40,7 +40,7 @@ class UltimateRegistryTest {
     void theEightFlagshipBooksEachHaveExactlyOneAndNothingElseYet() {
         Set<String> books = new HashSet<>();
         for (UltimateDef d : UltimateRegistry.all()) assertTrue(books.add(d.bookPath()), "two Ultimates for " + d.bookPath());
-        assertEquals(FLAGSHIP, books);
+        assertTrue(books.containsAll(FLAGSHIP), "the eight flagship books keep their Ultimate; the group files UltimateDefs1..4 add the others (UltimateG12Test checks rows 1-48)");
         for (String b : FLAGSHIP) assertNotNull(UltimateRegistry.forBook(b), b);
         assertNull(UltimateRegistry.forBook("book_time"), "there is no Time Ultimate (owner rule 3: the Time Magic is not touched)");
         assertNull(UltimateRegistry.forBook(null));
@@ -90,7 +90,7 @@ class UltimateRegistryTest {
         String shapes = Files.readString(SRC.resolve("vfx/VfxShape.java"), StandardCharsets.UTF_8);
         for (UltimateDef d : UltimateRegistry.all())
             for (String s : List.of(d.chargeShape(), d.burstShape(), d.echoShape())) {
-                assertTrue(Pattern.compile("(?m)^\\s*" + s + "\\b").matcher(shapes).find(), d.id() + ": no VfxShape " + s);
+                assertTrue(Pattern.compile("(?m)(?:^\\s*|,\\s*)" + s + "\\s*(?:,|;|\\(|//|$)").matcher(shapes).find(), d.id() + ": no VfxShape " + s);
                 assertFalse(s.startsWith("TIME_"), d.id() + " reuses a Time Magic shape: " + s);
             }
     }
