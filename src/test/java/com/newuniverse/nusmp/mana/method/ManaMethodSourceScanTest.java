@@ -164,17 +164,48 @@ class ManaMethodSourceScanTest {
     void theClientDrawsBoundedAndAllocationFree() throws IOException {
         String c = code(read(CLIENT.resolve("RuneClient.java")));
         assertTrue(body(c, "onClientTick").contains("if (RUNES.isEmpty()) return;"), "no rune, no work");
-        assertTrue(c.contains("PerfBudgets.clientParticles(") && c.contains("RuneGeneratorUtil.distanceDetailSq(") && c.contains("PerfSettings.vfxQuality()"), "budget, distance and quality");
-        assertTrue(c.contains("RuneGeneratorUtil.MAX_RUNES_DRAWN") && c.contains("RUNES.remove(0)"), "a few runes at once, the oldest goes first");
+        assertTrue(body(c, "onRender").contains("RUNES.isEmpty()"), "no rune, no book");
+        assertTrue(c.contains("PerfBudgets.clientParticles(") && c.contains("RuneGeneratorUtil.distanceDetailSq(") && c.contains("PerfSettings.vfxQuality()"), "the sparks ask the budget, the distance and the quality");
+        assertTrue(c.contains("RuneGeneratorUtil.MAX_RUNES_DRAWN") && c.contains("RUNES.size() >= RuneGeneratorUtil.MAX_RUNES_DRAWN"), "at most six runes at once");
+        assertTrue(c.contains("RuneGlyphLayout.MAX_SPARKS_PER_TICK"), "the sparks per tick are capped");
         assertTrue(c.contains("SafeCast.client("), "a drawing fault never reaches the game loop");
         assertTrue(c.contains("ClientPlayerNetworkEvent.LoggingOut") && c.contains("RUNES.clear()"), "forgets everything when the world is left");
-        assertFalse(body(c, "spawn").contains(" new "), "nothing is allocated per point");
-        assertFalse(body(c, "draw").contains("new "), "nothing is allocated per tick but what the particle engine takes");
+        assertTrue(c.contains("RuneGeneratorUtil.BOOK_DISTANCE") && c.contains("renderStatic(r.book, ItemDisplayContext.THIRD_PERSON_RIGHT_HAND"), "the REAL grimoire model through the item renderer, within 32 blocks only");
+        assertTrue(c.contains("GrimoireItem.withOpenView(") && c.contains("GrimoireCarry.OPEN_STEPS") && c.contains("BOOKS[e.ordinal()]"), "the open V of the mod's own grimoire, built once per element");
+        assertTrue(c.contains("VfxManager.get().spawn(new VfxPayload(VfxShape.RUNE_WRITING.ordinal()"), "the picture is the vfx layer, so the effect quality and the frame vertex cap apply");
+        assertFalse(body(c, "tick").contains("new "), "nothing is allocated per tick but what the particle engine takes");
         assertFalse(c.contains("Class.forName") || c.contains(".getMethod("), "no reflection");
+        assertFalse(c.contains("RuneGeneratorUtil.geometry") || c.contains("toWorld(") || c.contains("strideFor(") || c.contains("newPointIndex("), "the old dot-ring drawing is gone");
         String u = code(read(METHOD.resolve("RuneGeneratorUtil.java")));
-        assertFalse(body(u, "toWorld").contains("new "), "the world position of a point allocates nothing");
-        assertTrue(u.contains("BoundedCache<Integer, Geometry>") && u.contains("CACHE.get("), "the figure is cached");
+        assertFalse(u.contains("Geometry") || u.contains("BoundedCache") || u.contains("MAX_PER_TICK") || u.contains("RING_DENSITY"), "the dot-ring geometry and its particle budget are gone from the generator");
         for (Path f : files(METHOD)) assertFalse(code(read(f)).contains("Math.random()"), "no unseeded randomness in " + f.getFileName());
+    }
+
+    @Test
+    void theWritingLayerIsRegisteredBudgetedAndAllocationFree() throws IOException {
+        String l = code(read(SRC.resolve("vfx/client/layer/RuneWritingLayer.java")));
+        assertTrue(l.contains("extends AbstractVfxLayer") && l.contains("EnumSet.of(VfxShape.RUNE_WRITING)"));
+        assertTrue(l.contains("hardVertexCap(VfxShape shape) { return RuneGlyphLayout.MAX_QUADS * 4; }") && l.contains("vertexBudget(VfxShape shape) { return RuneGlyphLayout.MAX_QUADS * 4; }"), "ONE instance per rune with the vertex budget of the layout, nothing more");
+        String render = body(l, "render");
+        assertFalse(render.contains("new "), "nothing is allocated while a rune is drawn (the frame, the spec and the parameters are kept per instance)");
+        assertTrue(render.contains("RuneGlyphLayout.levelFor(ctx.detail)"), "the manager's level of detail (quality x distance) chooses the level");
+        assertTrue(l.contains("SLOTS = 8") && l.contains("s.inst == inst"), "eight slots for the frames of the runes alive");
+        assertTrue(l.contains("VfxBlend.ADD"), "the glow blend");
+        String vm = code(read(SRC.resolve("vfx/client/VfxManager.java")));
+        assertTrue(vm.contains("register(new RuneWritingLayer())"), "registered with the manager");
+        assertTrue(vm.contains("buffer.beginActivation(inst.layer.vertexBudget(inst.shape), inst.layer.hardVertexCap(inst.shape))"), "the buffer is told the layer's hard cap");
+        assertEquals(3, count(vm, "inst.layer.hardVertexCap(inst.shape)"), "the frame plan counts the same cap (estimate and cost)");
+        String ab = code(read(SRC.resolve("vfx/client/AbstractVfxLayer.java")));
+        assertTrue(ab.contains("hardVertexCap(VfxShape shape) { return VfxVertexBuffer.MAX_VERTICES_PER_ACTIVATION; }"), "every other layer stays at 400 vertices");
+        String vb = code(read(SRC.resolve("vfx/client/VfxVertexBuffer.java")));
+        assertTrue(vb.contains("public static final int MAX_VERTICES_PER_ACTIVATION = 400;") && vb.contains("Math.min(limit, Math.max(MAX_VERTICES_PER_ACTIVATION, hardCap))"), "the shared cap is unchanged, a layer may ask for more only through its own hard cap");
+        String shapes = read(SRC.resolve("vfx/VfxShape.java"));
+        int storm = shapes.indexOf("STORM_CANCEL,"), rune = shapes.indexOf("RUNE_WRITING;");
+        assertTrue(storm > 0 && rune > storm, "the shape is appended after the older entries (ordinals never move)");
+        for (String tex : new String[]{"rune_stroke_gold", "rune_stroke_flame", "rune_stroke_water", "rune_stroke_wind", "rune_stroke_earth", "rune_stroke_lightning", "rune_stroke_plant", "rune_line_ring", "rune_arc_strip"}) {
+            assertTrue(l.contains("\"" + tex + "\""), "the layer uses " + tex);
+            assertTrue(Files.exists(Path.of("src/main/resources/assets/nusmp/textures/particle/" + tex + ".png")), tex + " ships");
+        }
     }
 
     // ---------------------------------------------------------------- wiring
@@ -221,12 +252,20 @@ class ManaMethodSourceScanTest {
     }
 
     @Test
-    void theGlyphRingLayoutIsStagedAndNothingInTheGameCallsItYet() throws IOException {
+    void theWritingRunesAreTheOnlyLookAndAreWiredIntoTheGame() throws IOException {
+        String net = code(read(METHOD.resolve("RuneNet.java")));
+        assertTrue(net.contains("com.newuniverse.nusmp.client.manamethod.RuneClient.onRune(p)"), "the one packet reaches the client holder, which starts the writing");
+        int users = 0;
         try (Stream<Path> w = Files.walk(SRC)) {
-            for (Path p : (Iterable<Path>) w.filter(x -> x.toString().endsWith(".java"))::iterator)
-                if (!p.getFileName().toString().equals("RuneGlyphLayout.java") && !p.getFileName().toString().equals("RuneAlphabet.java"))
-                    assertFalse(code(read(p)).contains("RuneGlyphLayout") || code(read(p)).contains("RuneAlphabet"), p.getFileName() + " uses the staged rune writing: wire it in a deliberate step, with the client quads budgeted");
+            for (Path p : (Iterable<Path>) w.filter(x -> x.toString().endsWith(".java"))::iterator) {
+                String c = code(read(p));
+                if (c.contains("RuneGlyphLayout") && !p.getFileName().toString().equals("RuneGlyphLayout.java")) users++;
+            }
         }
+        assertTrue(users >= 3, "the layout is used by the layer, the client holder and the self-test (" + users + ")");
+        for (Path f : files(CLIENT)) assertFalse(code(read(f)).contains("sendParticles"), "no server particles from the client");
+        String doc = read(Path.of("docs/magic/mana_method.md"));
+        assertTrue(doc.contains("removed") && doc.contains("dot rings"), "the doc says exactly what was removed");
     }
 
     @Test
@@ -251,7 +290,7 @@ class ManaMethodSourceScanTest {
             assertTrue(lang.contains("\"nusmp.mana_method.page." + id + ".desc\""), "a description for " + id);
         assertTrue(lang.contains("\"nusmp.mana_method.cast\""));
         assertTrue(read(METHOD.resolve("ManaMethodPages.java")).contains("\"nusmp.mana_method.cast\""));
-        for (String png : new String[]{"rune_faces_the_caster.png", "rune_drawing_sequence.png", "rune_elements.png", "rune_glyph_rings.png", "rune_glyph_writing.png", "rune_glyph_alphabet.png", "rune_glyph_charge.png", "rune_glyph_lod.png"})
+        for (String png : new String[]{"rune_ingame.png", "rune_glyph_rings.png", "rune_glyph_writing.png", "rune_glyph_alphabet.png", "rune_glyph_charge.png", "rune_glyph_lod.png"})
             assertTrue(Files.exists(Path.of("docs/previews/mana_method/" + png)), "preview " + png);
     }
 }

@@ -77,7 +77,7 @@ public final class DumpGlyphRings {
                 System.arraycopy(lay.aq, i * 12, q, 0, 12);
                 sb.append("{\"q\":").append(arr(q, 12)).append(String.format(Locale.ROOT, ",\"light\":%.3f}", lay.arcLight[i]));
             }
-            sb.append("],\"book\":").append(lay.bookQuads > 0 ? arr(lay.bq, 36) : "null").append(String.format(Locale.ROOT, ",\"bookLight\":%.3f,\"glyphs\":%d}", lay.bookLight, lay.glyphs));
+            sb.append("],\"book\":null").append(String.format(Locale.ROOT, ",\"bookLight\":%.3f,\"glyphs\":%d}", lay.bookLight, lay.glyphs));
             System.out.println(sb);
         }
     }

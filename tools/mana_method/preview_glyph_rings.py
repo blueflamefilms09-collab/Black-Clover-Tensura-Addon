@@ -6,7 +6,7 @@ The quads come from the REAL classes (src/main/java/.../mana/method/RuneAlphabet
 alphabet's strokes, the pen that walks them, the three rings, the lightning and the book. Every stroke segment is a strip quad in the caster-facing plane, drawn here with a stroke texture
 (yellow core, orange-red edge, soft round ends) warped to its projected quad and added to the frame (additive, like the game's glow blend). The body is a flat placeholder for the framing.
 
-    python tools/mana_method/preview_glyph_rings.py   # writes docs/previews/mana_method/rune_glyph_rings.png, rune_glyph_writing.png, rune_glyph_alphabet.png, rune_glyph_charge.png, rune_glyph_lod.png
+    python tools/mana_method/preview_glyph_rings.py   # writes docs/previews/mana_method/rune_glyph_writing.png (one glyph, 8 pen positions) and rune_glyph_alphabet.png (the 32 glyphs at 4x); the whole rune through the game's own render path: preview_ingame.py
 
 Needs JDK 21, Python 3 with numpy + Pillow, and JOML (tools/vfx_preview/lib/joml-1.10.5.jar, or $JOML).
 """
@@ -251,84 +251,35 @@ def unit(v):
 
 
 def main():
-    look = unit((0.0, -0.05, 1.0))
-    caster = np.array([0.0, 70.0, 0.0])
-    centre = caster + look * 2.6                                               # RuneRules.RUNE_DISTANCE
-    cam_pos = caster + np.array([0.30, 0.55, -0.35])
-    target = centre + np.array([0.0, -0.1, 0.0])
-    cam = Cam(cam_pos, target, 94, W, H)
-    charge = 18
-    lines = []
-    def rune(name, age, el="FIRE", mods=3, true=True, det=1.0):
-        lines.append(line(name, el, mods, true, age, charge, look, centre, cam_pos, det))
-    rune("final", 18.0)
-    lines.append(line("faceon", "FIRE", 3, True, 18.0, charge, look, centre, caster, 1.0))
-    for age in (1, 3, 5, 7, 9, 11, 13, 15, 18):
-        rune("c%d" % age, float(age))
-    rune("rel", 21.0)
-    for det in (1.0, 0.75, 0.5, 0.2):
-        rune("lod%.2f" % det, 19.0, det=det)
-    for el in ("FIRE", "WATER", "WIND", "EARTH", "LIGHTNING", "PLANT"):
-        rune("el" + el, 19.0, el=el, mods=1, true=el == "LIGHTNING")
-    # one glyph being written, face on (the glyph raido: a stem, a bowl and a leg), then the whole alphabet at 4x
     fl = unit((0, 0, 1))
     gc = np.array([0.0, 70.0, 0.0])
     gcam = gc - fl * 2.6
+    charge = 18
+    lines = []
     WRITE = [0.10, 0.22, 0.34, 0.46, 0.58, 0.72, 0.86, 1.0]
-    for i, wv in enumerate(WRITE):
+    for i, wv in enumerate(WRITE):                                      # one glyph (raido) being written, face on
         lines.append(line("w%d" % i, "FIRE", 3, True, 10.0, charge, fl, gc, gcam, 1.0, (4, wv, 1.0)))
-    for g in range(32):
+    for g in range(32):                                                  # the whole alphabet
         lines.append(line("a%d" % g, "FIRE", 3, True, 10.0, charge, fl, gc, gcam, 1.0, (g, 1.0, 1.0)))
     lines.append("#alphabet")
     out = dump(lines)
     alpha = [d for d in out if "alphabet" in d][0]["alphabet"]
     data = {d["name"]: d for d in out if "name" in d}
-    for d in data.values():
-        if d["name"].startswith(("a", "w")) and d["name"][1:].isdigit():
-            continue
-        assert d["quads"] <= d["expected"] and d["quads"] <= 220, (d["name"], d["quads"], d["expected"])
     os.makedirs(OUT, exist_ok=True)
 
-    # 1. the new rune beside the reference frame
-    main_im = render(data["final"], cam, "gold", "True Flame rune, charged (tick 18 of 18, placeholder body)")
-    ref = Image.open(REFERENCE).convert("RGB").resize((W, H)) if os.path.exists(REFERENCE) else Image.new("RGB", (W, H), (30, 30, 30))
-    d = ImageDraw.Draw(ref)
-    d.rectangle([0, 0, W, 15], fill=(0, 0, 0))
-    d.text((4, 2), "owner's reference frame", fill=(235, 235, 255))
-    eye_cam = Cam(caster, centre, 84, 420, 420)
-    data["faceon"]["arcs"] = []
-    data["faceon"]["book"] = None
-    eye_im = render(data["faceon"], eye_cam, "gold", "caster's eye, face on", 420, 420, True)
-    sheet([ref, main_im, eye_im], "rune_glyph_rings.png", "Written rune symbols: the owner's reference (left), the new rune at the same framing (middle) and from the caster's eye (right)", 3)
-
-    # 2. the writing: eight frames of one glyph, the ring being written, the reference beside them
+    # the writing: eight frames of one glyph
     gcam_obj = Cam(gcam, gc, 46, 260, 260)
-    frames = []
-    for i, wv in enumerate(WRITE):
-        frames.append(render(data["w%d" % i], gcam_obj, "gold", "pen at %d%% of the glyph" % round(wv * 100), 260, 260, True, False))
+    frames = [render(data["w%d" % i], gcam_obj, "gold", "pen at %d%% of the glyph" % round(wv * 100), 260, 260, True, False) for i, wv in enumerate(WRITE)]
     grid = Image.new("RGB", (4 * 264 + 4, 2 * 264 + 4 + 20), (6, 6, 12))
-    ImageDraw.Draw(grid).text((8, 4), "One glyph (raido) being written: the pen walks the strokes, a bright head, the line cools behind it", fill=(255, 235, 170))
+    ImageDraw.Draw(grid).text((8, 4), "One glyph (raido) being written: the pen walks the strokes, a bright head, the line cools behind it (the ring being written: rune_glyph_charge.png)", fill=(255, 235, 170))
     for i, im in enumerate(frames):
         grid.paste(im, (4 + (i % 4) * 264, 20 + (i // 4) * 264))
-    ringseq = []
-    small = Cam(cam_pos, target, 94, W, H)
-    for name, lab in (("c3", "tick 3"), ("c7", "tick 7"), ("c11", "tick 11"), ("c15", "tick 15"), ("c18", "tick 18: written")):
-        ringseq.append(render(data[name], small, "gold", lab, stats=False).resize((W // 2, H // 2), Image.LANCZOS))
-    refsmall = ref.resize((W // 2, H // 2), Image.LANCZOS)
-    full = Image.new("RGB", (max(grid.width, 4 + 4 * (W // 2 + 4)), grid.height + H // 2 + 30), (6, 6, 12))
-    full.paste(grid, (0, 0))
-    y = grid.height + 4
-    row1 = [refsmall] + ringseq[:3]
-    for i, im in enumerate(row1):
-        full.paste(im, (4 + i * (W // 2 + 4), y))
-    y += H // 2 + 4
-    ImageDraw.Draw(full).text((8, y), "the reference frame, then the ring being written glyph after glyph (ticks 3, 7, 11 and see rune_glyph_charge.png for the rest)", fill=(255, 235, 170))
-    full.save(os.path.join(OUT, "rune_glyph_writing.png"))
+    grid.save(os.path.join(OUT, "rune_glyph_writing.png"))
 
-    # 3. the alphabet at 4x
+    # the alphabet at 4x
     cell = 4 * 32 + 16
     sheetim = Image.new("RGB", (8 * cell + 8, 4 * (cell + 14) + 28), (8, 8, 18))
-    ImageDraw.Draw(sheetim).text((8, 6), "Mana Method rune alphabet: 32 hand-authored glyphs of 2 to 6 straight strokes (shown at 4x, the writing pen in the real class)", fill=(255, 235, 170))
+    ImageDraw.Draw(sheetim).text((8, 6), "Mana Method rune alphabet: 32 hand-authored glyphs of 2 to 5 straight strokes (shown at 4x, the writing pen in the real class)", fill=(255, 235, 170))
     acam = Cam(gcam, gc, 46, 4 * 32, 4 * 32)
     for g in range(32):
         im = render(data["a%d" % g], acam, "gold", None, 4 * 32, 4 * 32, True, False)
@@ -336,18 +287,6 @@ def main():
         sheetim.paste(im, (x, yy))
         ImageDraw.Draw(sheetim).text((x + 2, yy + 4 * 32 + 1), "%d %s (%d)" % (g, alpha[g]["name"], alpha[g]["segments"]), fill=(150, 160, 200))
     sheetim.save(os.path.join(OUT, "rune_glyph_alphabet.png"))
-
-    # 4. the charge sequence of the ring
-    strip = []
-    for name, lab in (("c1", "tick 1"), ("c3", "tick 3: hand ring"), ("c5", "tick 5"), ("c7", "tick 7: middle ring"), ("c9", "tick 9"), ("c11", "tick 11: outer ring"), ("c13", "tick 13: floating, arcs"),
-                      ("c15", "tick 15"), ("c18", "tick 18: charged"), ("rel", "release: outer ring flares")):
-        strip.append(render(data[name], small, "gold", lab, stats=False).resize((W // 2, H // 2), Image.LANCZOS))
-    sheet(strip, "rune_glyph_charge.png", "Charge (18 ticks): glyph after glyph is written, each ring at once; the book and the arcs come in last", 5)
-
-    # 5. levels of detail and elements (each element has its own words)
-    lod = [render(data["lod%.2f" % det], small, "gold", "detail %.2f -> level %d" % (det, data["lod%.2f" % det]["level"])).resize((W // 2, H // 2), Image.LANCZOS) for det in (1.0, 0.75, 0.5, 0.2)]
-    els = [render(data["el" + el], small, TINT_OF[el] if el != "LIGHTNING" else "gold", el.lower()).resize((W // 2, H // 2), Image.LANCZOS) for el in ("FIRE", "WATER", "WIND", "EARTH", "LIGHTNING", "PLANT")]
-    sheet(lod + els, "rune_glyph_lod.png", "Levels of detail (full, medium, low, minimal) and the six elements, each writing its own words", 5)
     print("wrote", OUT)
 
 

@@ -124,8 +124,30 @@ public final class ManaMethodSelfTests {
         if (!(RuneRules.hitRadius(grow, 20) > RuneRules.hitRadius(grow, 2)) || RuneRules.hitRadius(grow, 1e6) > RuneRules.BASE_HIT_RADIUS * RuneRules.GROWTH_RADIUS_MAX + 1e-9)
             return Result.fail("the Growth radius does not grow, or is not capped");
         if (!(RuneRules.damageFactor(grow, 20) > 1.0) || RuneRules.damageFactor(grow, 1e6) > RuneRules.GROWTH_DAMAGE_MAX + 1e-9) return Result.fail("the Growth damage does not grow, or is not capped");
+
+        // ---- the written rune: the layout the clients draw is bounded for every spell at every moment, and the textures it needs ship in the jar
+        int worst = 0;
+        RuneGlyphLayout.Layout layout = new RuneGlyphLayout.Layout();
+        for (RuneElement e : RuneElement.values())
+            for (int mods = 0; mods <= RuneMods.ALL; mods++)
+                for (boolean tm : new boolean[]{false, true}) {
+                    RuneSpec s2 = new RuneSpec(e, mods, tm);
+                    var params = RuneGeneratorUtil.paramsFor(s2);
+                    var frame = RuneGeneratorUtil.frameFacing(1, 70, 2, 0.3, -0.2, 1.0);
+                    for (int level = RuneGlyphLayout.LEVEL_FULL; level <= RuneGlyphLayout.LEVEL_MIN; level++)
+                        for (int age = 0; age <= RuneRules.chargeTicks(s2) + 12; age += 3) {
+                            RuneGlyphLayout.fill(layout, s2, params, frame, age, RuneRules.chargeTicks(s2), level, 0, 72, 0);
+                            worst = Math.max(worst, layout.quads());
+                            if (layout.quads() > RuneGlyphLayout.quadsAt(params, level) || layout.quads() > RuneGlyphLayout.MAX_QUADS) return Result.fail("the rune of " + s2 + " draws " + layout.quads() + " quads at level " + level + ", over its bound");
+                        }
+                }
+        if (RuneGlyphLayout.MAX_QUADS * 4 > 1200) return Result.fail("a rune may draw " + RuneGlyphLayout.MAX_QUADS * 4 + " vertices, over the 1200 its layer asks for");
+        String[] tints = {"gold", "flame", "water", "wind", "earth", "lightning", "plant"};
+        for (String tint : tints) if (ManaMethodSelfTests.class.getResourceAsStream("/assets/nusmp/textures/particle/rune_stroke_" + tint + ".png") == null) return Result.fail("the stroke texture of " + tint + " is not in the jar");
+        for (String tex : new String[]{"rune_line_ring", "rune_arc_strip"}) if (ManaMethodSelfTests.class.getResourceAsStream("/assets/nusmp/textures/particle/" + tex + ".png") == null) return Result.fail("the texture " + tex + " is not in the jar");
+        try { com.newuniverse.nusmp.vfx.VfxShape.valueOf("RUNE_WRITING"); } catch (IllegalArgumentException missing) { return Result.fail("the shape RUNE_WRITING is missing"); }
         return Result.ok(books + " grimoires carry the 5 pages last; closed for a fresh player; casts capped at " + per + " per caster, despawn after " + ticks + " ticks of flight and charge; Homing struck a target off its line (" + before + " -> " + after + "); NBT round trip for "
-                + (RuneElement.values().length * (RuneMods.ALL + 1) * 2) + " specs");
+                + (RuneElement.values().length * (RuneMods.ALL + 1) * 2) + " specs; the written rune fills at most " + worst + " of " + RuneGlyphLayout.MAX_QUADS + " quads, its 9 textures ship");
     }
 
     private static Result trueBlocks(MinecraftServer server) {

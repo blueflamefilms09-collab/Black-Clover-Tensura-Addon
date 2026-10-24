@@ -13,7 +13,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -151,7 +150,7 @@ class RuneGlyphLayoutTest {
         for (double[] look : new double[][]{{0, 0, 1}, {1, -0.4, 0.2}, {-0.3, 0.8, -0.5}, {0.01, -1, 0.02}}) {
             Layout l = fill(TRUE, 40, RuneGlyphLayout.LEVEL_FULL, look);
             Frame f = RuneGeneratorUtil.frameFacing(3, 70, -2, look[0], look[1], look[2]);
-            assertTrue(l.strips > 80, "strips " + l.strips);
+            assertTrue(l.strips > 150, "strips " + l.strips);
             for (int i = 0; i < l.strips; i++) {
                 double[] n = winding(l.sq, i);
                 assertTrue(n[0] * f.nx() + n[1] * f.ny() + n[2] * f.nz() > 0.85, "strip " + i + " (ring " + l.stripRing[i] + ") is wound away from the caster");
@@ -216,9 +215,9 @@ class RuneGlyphLayoutTest {
     // ---------------------------------------------------------------- bounds
     @Test
     void everyCountIsBoundedAtEveryLevelAndShrinksWithTheDetail() {
-        assertEquals(32, RuneGlyphLayout.MAX_GLYPH_SLOTS);
-        assertEquals(32 * RuneAlphabet.MAX_SEGMENTS, RuneGlyphLayout.MAX_STRIPS);
-        assertEquals(220, RuneGlyphLayout.MAX_QUADS);
+        assertEquals(54, RuneGlyphLayout.MAX_GLYPH_SLOTS);
+        assertEquals(54 * RuneAlphabet.MAX_SEGMENTS, RuneGlyphLayout.MAX_STRIPS);
+        assertEquals(300, RuneGlyphLayout.MAX_QUADS);
         for (RuneSpec s : new RuneSpec[]{TRUE, PLAIN, new RuneSpec(RuneElement.EARTH, 0, false), new RuneSpec(RuneElement.LIGHTNING, RuneMods.ALL, true)}) {
             Params p = RuneGeneratorUtil.paramsFor(s);
             int prev = Integer.MAX_VALUE;
@@ -231,7 +230,7 @@ class RuneGlyphLayoutTest {
                     Frame f = RuneGeneratorUtil.frameFacing(0, 0, 0, 0.2, 0.1, 1);
                     RuneGlyphLayout.fill(l, s, p, f, age, RuneRules.chargeTicks(s), level, 5, 5, -5);
                     assertTrue(l.strips <= RuneGlyphLayout.glyphsAt(p, level) * RuneAlphabet.MAX_SEGMENTS, "strips");
-                    assertTrue(l.pens <= RuneGlyphLayout.MAX_PENS && l.arcQuads <= RuneGlyphLayout.MAX_ARC_QUADS && l.bookQuads <= RuneGlyphLayout.BOOK_QUADS);
+                    assertTrue(l.pens <= RuneGlyphLayout.MAX_PENS && l.arcQuads <= RuneGlyphLayout.MAX_ARC_QUADS && l.lines <= RuneGlyphLayout.lines(level));
                     assertTrue(l.quads() <= q, "the filled quads never exceed the level's bound: " + l.quads() + " > " + q);
                 }
             }
@@ -243,7 +242,8 @@ class RuneGlyphLayoutTest {
         assertEquals(RuneGlyphLayout.LEVEL_MEDIUM, RuneGlyphLayout.levelFor(0.75f));
         assertEquals(RuneGlyphLayout.LEVEL_LOW, RuneGlyphLayout.levelFor(0.5f));
         assertEquals(RuneGlyphLayout.LEVEL_MIN, RuneGlyphLayout.levelFor(0.1f));
-        assertTrue(RuneGlyphLayout.MAX_QUADS * RuneGeneratorUtil.MAX_RUNES_DRAWN <= 1320, "six runes at most 1320 quads = 5280 vertices a frame");
+        assertTrue(RuneGlyphLayout.MAX_QUADS * RuneGeneratorUtil.MAX_RUNES_DRAWN <= 1800, "six runes at most 1800 quads = 7200 vertices a frame");
+        assertEquals(1200, RuneGlyphLayout.MAX_QUADS * 4, "one rune is at most 1200 vertices: the layer asks the buffer for exactly that");
     }
 
     @Test
@@ -269,16 +269,56 @@ class RuneGlyphLayoutTest {
     }
 
     @Test
-    void theBookHoversAtTheCastersSideOnlyAtFullDetail() {
+    void theRealBookHoversAtTheCastersSideOnlyAtFullDetail() {
         Layout l = fill(TRUE, 5, RuneGlyphLayout.LEVEL_FULL, new double[]{0, 0, 1});
-        assertEquals(RuneGlyphLayout.BOOK_QUADS, l.bookQuads);
+        assertTrue(l.bookLight > 0f, "the glow of the book is there once the rune has begun");
         Frame f = RuneGeneratorUtil.frameFacing(3, 70, -2, 0, 0, 1);
-        double dx = l.bq[24] - f.cx(), dz = l.bq[26] - f.cz();
-        assertTrue(Math.sqrt(dx * dx + dz * dz) < 3.0, "the book is next to the rune");
-        assertEquals(0, fill(TRUE, 0.5, RuneGlyphLayout.LEVEL_FULL, new double[]{0, 0, 1}).bookQuads, "it appears once the rune has begun");
+        double[] at = new double[3];
+        RuneGlyphLayout.bookPos(f, RuneGeneratorUtil.paramsFor(TRUE).radius(), 5, at);
+        assertEquals(at[0], l.bookX, 1e-9);
+        assertEquals(at[1], l.bookY, 1e-9);
+        assertEquals(at[2], l.bookZ, 1e-9);
+        double dx = at[0] - f.cx(), dy = at[1] - f.cy(), dz = at[2] - f.cz();
+        assertTrue(Math.sqrt(dx * dx + dy * dy + dz * dz) < 3.0, "the book is next to the rune");
+        assertTrue(dx * f.ux() + dy * f.uy() + dz * f.uz() > 0.5, "on the caster's right");
+        assertTrue(dx * f.vx() + dy * f.vy() + dz * f.vz() < -0.3, "and lower");
+        assertEquals(0f, fill(TRUE, 0.5, RuneGlyphLayout.LEVEL_FULL, new double[]{0, 0, 1}).bookLight, 0f, "it appears once the rune has begun");
         Layout medium = new Layout();
         RuneGlyphLayout.fill(medium, TRUE, RuneGeneratorUtil.paramsFor(TRUE), f, 10, 26, RuneGlyphLayout.LEVEL_MEDIUM, 0, 0, 0);
-        assertEquals(0, medium.bookQuads);
+        assertEquals(0f, medium.bookLight, 0f);
+    }
+
+    @Test
+    void theRingsFillTheirCircumferenceSoNeighboursNearlyTouch() {
+        for (double R : new double[]{1.15, 1.55, 1.8}) {
+            for (int r = 0; r < 3; r++) {
+                double spacing = 2 * Math.PI * RuneGlyphLayout.ringRadius(r, R) / RuneGlyphLayout.RING_N[r], size = RuneGlyphLayout.glyphSize(r, R);
+                assertEquals(RuneGlyphLayout.FILL, size / spacing, 1e-9, "ring " + r);
+                assertTrue(size / spacing >= 0.9 && size / spacing < 1.0, "neighbours nearly touch but do not overlap");
+            }
+            assertTrue(RuneGlyphLayout.ringRadius(0, R) < RuneGlyphLayout.ringRadius(1, R) && RuneGlyphLayout.ringRadius(1, R) < RuneGlyphLayout.ringRadius(2, R) && RuneGlyphLayout.ringRadius(2, R) < R);
+        }
+        assertArrayEquals(new int[]{10, 16, 24}, RuneGlyphLayout.RING_N);
+    }
+
+    @Test
+    void thereAreThinCircleLinesUnderEachRingAndABoundaryRingOutside() {
+        Layout l = fill(TRUE, 40, RuneGlyphLayout.LEVEL_FULL, new double[]{0.2, -0.3, 1});
+        Frame f = RuneGeneratorUtil.frameFacing(3, 70, -2, 0.2, -0.3, 1);
+        double R = RuneGeneratorUtil.paramsFor(TRUE).radius();
+        assertEquals(4, l.lines, "three ring lines and the boundary");
+        double[] half = new double[4];
+        for (int i = 0; i < 4; i++) {
+            double[] c = centre(l.lq, i);
+            double dx = c[0] - f.cx(), dy = c[1] - f.cy(), dz = c[2] - f.cz();
+            double[] corner = {l.lq[i * 12] - c[0], l.lq[i * 12 + 1] - c[1], l.lq[i * 12 + 2] - c[2]};
+            half[i] = Math.sqrt(corner[0] * corner[0] + corner[1] * corner[1] + corner[2] * corner[2]) / Math.sqrt(2.0);
+            if (i < 2) assertEquals(0.0, dx * f.nx() + dy * f.ny() + dz * f.nz(), 1e-4, "the hand and middle lines lie in the plane");
+            assertTrue(l.lineLight[i] > 0.3f && l.lineLight[i] <= 1.0f, "a thin, dim line");
+        }
+        for (int i = 1; i < 4; i++) assertTrue(half[i] > half[i - 1], "each line is outside the one before it (the last is the boundary)");
+        assertTrue(half[3] * RuneGlyphLayout.LINE_RADIUS_IN_TEXTURE > RuneGlyphLayout.ringRadius(2, R), "the boundary is outside the outer ring's glyphs' baseline");
+        assertEquals(0, fill(TRUE, 0, RuneGlyphLayout.LEVEL_FULL, new double[]{0, 0, 1}).lines, "no line before anything is written");
     }
 
     @Test
@@ -288,7 +328,7 @@ class RuneGlyphLayoutTest {
         assertArrayEquals(a.aq, b.aq, 0f);
         assertArrayEquals(a.stripLight, b.stripLight, 0f);
         String src = Files.readString(Path.of("src/main/java/com/newuniverse/nusmp/mana/method/RuneGlyphLayout.java"), StandardCharsets.UTF_8).replaceAll("(?s)/\\*.*?\\*/", "").replaceAll("//[^\\n]*", "");
-        for (String method : new String[]{"public static void fill(", "public static int write(", "private static void emit(", "private static void arc(", "private static void book(", "public static void writeSingle("}) {
+        for (String method : new String[]{"public static void fill(", "public static int write(", "private static void emit(", "private static void arc(", "public static void bookPos(", "private static void circle(", "public static void writeSingle("}) {
             int at = src.indexOf(method);
             assertTrue(at > 0, method);
             int open = src.indexOf('{', at), depth = 0, end = open;
@@ -302,25 +342,28 @@ class RuneGlyphLayoutTest {
     }
 
     @Test
-    void theStampedSpriteAtlasOfTheAlternativeIsThirtyTwoDistinctGlyphsPerTint() throws IOException {
-        Path dir = Path.of("docs/previews/mana_method/glyph_atlas");
-        try (Stream<Path> s = Files.list(dir)) { assertTrue(s.count() >= 7, "gold plus six element tints"); }
+    void theTexturesOfTheWritingExistAndCannotDrawAsSquares() throws IOException {
+        Path dir = Path.of("src/main/resources/assets/nusmp/textures/particle");
         for (String tint : new String[]{"gold", "flame", "water", "wind", "earth", "lightning", "plant"}) {
-            BufferedImage im = ImageIO.read(dir.resolve("rune_glyphs_" + tint + ".png").toFile());
-            assertEquals(RuneGlyphLayout.ATLAS_COLS * 32, im.getWidth());
-            assertEquals(RuneGlyphLayout.ATLAS_ROWS * 32, im.getHeight());
-            Set<String> seen = new HashSet<>();
-            for (int cell = 0; cell < RuneGlyphLayout.GLYPH_COUNT; cell++) {
-                StringBuilder sb = new StringBuilder();
-                int ink = 0;
-                for (int y = 0; y < 32; y++) for (int x = 0; x < 32; x++) {
-                    int a = im.getRGB((cell % 8) * 32 + x, (cell / 8) * 32 + y) >>> 24;
-                    if (a > 128) ink++;
-                    sb.append(a > 128 ? '1' : '0');
-                }
-                assertTrue(ink > 60 && ink < 600, tint + " glyph " + cell + " has " + ink + " inked pixels");
-                assertTrue(seen.add(sb.toString()), tint + " glyph " + cell + " repeats an earlier one");
-            }
+            BufferedImage im = ImageIO.read(dir.resolve("rune_stroke_" + tint + ".png").toFile());
+            assertEquals(32, im.getWidth(), "across the stroke");
+            assertEquals(48, im.getHeight(), "along the stroke");
+            int centre = im.getRGB(16, 24), edge = im.getRGB(1, 24), end = im.getRGB(16, 0);
+            assertTrue((centre >>> 24) > 200, tint + ": the core is solid");
+            assertTrue((edge >>> 24) < (centre >>> 24), tint + ": the edge is softer than the core");
+            assertTrue((end >>> 24) < 120, tint + ": the end of the stroke is rounded off");
+            assertTrue(((centre >> 16) & 255) + ((centre >> 8) & 255) + (centre & 255) > ((edge >> 16) & 255) + ((edge >> 8) & 255) + (edge & 255), tint + ": a bright core in a darker edge");
+            for (int x : new int[]{0, 31}) for (int y : new int[]{0, 47}) assertTrue((im.getRGB(x, y) >>> 24) < 16, tint + ": transparent corners");
         }
+        BufferedImage ring = ImageIO.read(dir.resolve("rune_line_ring.png").toFile());
+        assertEquals(128, ring.getWidth());
+        assertEquals(128, ring.getHeight());
+        for (int x : new int[]{0, 127}) for (int y : new int[]{0, 127}) assertTrue((ring.getRGB(x, y) >>> 24) < 8, "the ring line has transparent corners (it is drawn on a square quad)");
+        assertTrue((ring.getRGB(64, 64) >>> 24) < 8, "and an empty middle");
+        int on = (int) Math.round(RuneGlyphLayout.LINE_RADIUS_IN_TEXTURE * 64);
+        assertTrue((ring.getRGB(64 + on, 64) >>> 24) > 150 || (ring.getRGB(64 + on - 1, 64) >>> 24) > 150, "the circle sits where the layout says (92 % of the half width)");
+        BufferedImage arc = ImageIO.read(dir.resolve("rune_arc_strip.png").toFile());
+        assertEquals(8, arc.getWidth());
+        assertEquals(16, arc.getHeight());
     }
 }

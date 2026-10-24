@@ -13,7 +13,7 @@ package com.newuniverse.nusmp.mana.method;
 public final class RuneAlphabet {
     private RuneAlphabet() {}
 
-    public static final int COUNT = 32, MAX_SEGMENTS = 6, LATTICE = 5;
+    public static final int COUNT = 32, MAX_SEGMENTS = 5, LATTICE = 5;
 
     /** name, then the strokes "x,y-x,y-x,y;..." (a stroke is a polyline of lattice points). */
     private static final String[][] SPEC = {
@@ -60,13 +60,13 @@ public final class RuneAlphabet {
     static {
         for (int g = 0; g < COUNT; g++) {
             NAME[g] = SPEC[g][0];
-            int[] flat = new int[MAX_SEGMENTS * 4 * 2];
+            int[] flat = new int[MAX_SEGMENTS * 4];
             int n = 0;
             for (String stroke : SPEC[g][1].split(";")) {
                 String[] pts = stroke.split("-");
                 for (int i = 0; i + 1 < pts.length; i++) {
                     String[] a = pts[i].split(","), b = pts[i + 1].split(",");
-                    if (n >= flat.length / 4) throw new IllegalStateException("glyph " + NAME[g] + " has too many segments");
+                    if (n >= MAX_SEGMENTS) throw new IllegalStateException("glyph " + NAME[g] + " has too many segments");
                     flat[n * 4] = Integer.parseInt(a[0]);
                     flat[n * 4 + 1] = Integer.parseInt(a[1]);
                     flat[n * 4 + 2] = Integer.parseInt(b[0]);

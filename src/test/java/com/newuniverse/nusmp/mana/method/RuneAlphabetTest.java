@@ -30,6 +30,7 @@ class RuneAlphabetTest {
             assertTrue(RuneAlphabet.name(g).matches("[a-z]{3,9}"), RuneAlphabet.name(g));
             int n = RuneAlphabet.segments(g);
             assertTrue(n >= 2 && n <= RuneAlphabet.MAX_SEGMENTS, RuneAlphabet.name(g) + " has " + n + " segments");
+            assertEquals(5, RuneAlphabet.MAX_SEGMENTS);
             int minX = 9, maxX = -1, minY = 9, maxY = -1;
             for (int s = 0; s < n; s++) {
                 for (int k = 0; k < 4; k++) assertTrue(RuneAlphabet.coord(g, s, k) >= 0 && RuneAlphabet.coord(g, s, k) < RuneAlphabet.LATTICE, "inside the lattice");
