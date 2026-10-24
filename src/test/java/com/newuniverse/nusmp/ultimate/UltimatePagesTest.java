@@ -50,7 +50,7 @@ class UltimatePagesTest {
         String book = read(SRC.resolve("book/GrimoireBook.java"));
         int m = book.indexOf("public String pageBlock(");
         assertTrue(m > 0);
-        String body = book.substring(m, book.indexOf("}", book.indexOf("return CharacterSpells.block(", m)));
+        String body = book.substring(m, book.indexOf("\n    }", m));
         assertTrue(body.indexOf("UltimatePages.block(") > 0 && body.indexOf("UltimatePages.block(") < body.indexOf("CharacterSpells.block("), body);
     }
 

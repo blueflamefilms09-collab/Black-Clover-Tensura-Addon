@@ -158,7 +158,7 @@ class StarSourceScanTest {
         String kind = code(read("prop/PropKind.java"));
         assertTrue(kind.contains("GNOME_1,\n    STAR_NODE,\n    STAR_PANE\n}") || kind.replaceAll("\\s+", " ").contains("GNOME_1, STAR_NODE, STAR_PANE }"), "the two prop kinds are appended at the END (ordinals never move)");
         String shape = code(read("vfx/VfxShape.java")).replaceAll("\\s+", " ");
-        assertTrue(shape.contains("STORM_CANCEL, STAR_NODE, STAR_LINK, STAR_CONJ, STAR_PANE, STAR_LANCE, STAR_WHIP, STAR_DOME; public static VfxShape byId"), "the seven shapes are appended at the END, STAR_MAGIC stays where it was");
+        assertTrue(shape.contains("STORM_CANCEL, RUNE_WRITING, STAR_NODE, STAR_LINK, STAR_CONJ, STAR_PANE, STAR_LANCE, STAR_WHIP, STAR_DOME; public static VfxShape byId"), "the seven shapes are appended at the END, STAR_MAGIC stays where it was");
         String reg = code(read("prop/PropRegistry.java"));
         assertTrue(reg.contains("com.newuniverse.nusmp.star.StarProps.init();"));
         String pp = code(read("client/prop/PropPainterRegistry.java"));

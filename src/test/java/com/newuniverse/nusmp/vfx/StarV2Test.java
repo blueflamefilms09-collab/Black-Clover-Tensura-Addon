@@ -22,7 +22,7 @@ class StarV2Test {
         assertFalse(StarV2.owns(VfxShape.STAR_MAGIC));
         VfxShape[] all = VfxShape.values();
         assertEquals(VfxShape.STAR_DOME, all[all.length - 1], "appended last");
-        assertEquals(VfxShape.STAR_NODE.ordinal(), VfxShape.STORM_CANCEL.ordinal() + 1);
+        assertEquals(VfxShape.STAR_NODE.ordinal(), VfxShape.RUNE_WRITING.ordinal() + 1);
         assertTrue(VfxShape.STAR_MAGIC.ordinal() < VfxShape.STORM_CANCEL.ordinal(), "the old shape did not move");
         assertTrue(StarV2.isCel(VfxShape.STAR_NODE) && StarV2.isCel(VfxShape.STAR_LINK) && StarV2.isCel(VfxShape.STAR_PANE) && StarV2.isCel(VfxShape.STAR_WHIP), "A is the base of the star, lines, pane and whip");
         assertFalse(StarV2.isCel(VfxShape.STAR_CONJ), "B is Conjunction");

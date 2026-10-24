@@ -18101,5 +18101,14 @@
   "nusmp.companion.charmy.stance.aggressive": "Anything hostile gets the fluff!",
   "nusmp.companion.charmy.stance.passive": "I'll stay out of it. Promise.",
   "entity.nusmp.arc_companion": "Charmy Pappitson",
-  "item.nusmp.companion_charmy_spawn_egg": "Charmy Pappitson (Companion) Spawn Egg"
+  "item.nusmp.companion_charmy_spawn_egg": "Charmy Pappitson (Companion) Spawn Egg",
+  "nusmp.page.book_star.star_seed": "Hangs a star in the air where you look (up to 24 blocks, 3 blocks over the ground). Stars last 40 seconds; you can keep 6 at once (8 for a Grinberryall heir), the oldest goes first. Conjunction and the Quartile pages use them. Nothing is hurt.",
+  "nusmp.page.book_star.quartile_scutum": "Four of your stars join into a standing barrier of starlight, up to 6 by 5 blocks, for 5 seconds: arrows, fireballs and spell bolts of everyone who is not on your side stop on it until it has taken three hits' worth of damage (a devil's magic counts half). Needs the Grinberryall heir mark. Your stars stay.",
+  "nusmp.page.book_star.quartile_hasta": "Four stars link and gather their light for a moment, then fire it from their middle as a spear of light with a laser tail along your crosshair (32 blocks, up to 6 foes pierced, a little knockback). The four stars are used up. Needs the Grinberryall heir mark.",
+  "nusmp.page.book_star.black_neverland": "Black Neverland (canon: Yuno's Never-Never Land fused with Asta's anti-magic, manga ch. 381 to 383): a dome of starlight 8 blocks wide for 5 seconds. Foes inside are weakened, slowed and lightly hurt, spell bolts of others fade away, and your allies inside are quickened and strengthened. Needs the Grinberryall heir mark.",
+  "nusmp.page.book_star.quintile_atrum_scutum": "Quintile: Atrum Scutum (unverified canon: one source only). Five of your stars form a wider barrier, up to 8 by 6 blocks, for 7 seconds, that can take four and a half hits' worth of damage. Needs five real stars and the Grinberryall heir mark. Your stars stay.",
+  "nusmp.page.book_star.quintile_atrum_hasta": "Quintile: Atrum Hasta (unverified canon: one source only). Five stars gather their light into a heavier spear of light, 1.6 blocks wide, up to 8 foes pierced. All five stars are used up. Needs five real stars and the Grinberryall heir mark.",
+  "nusmp.page.book_star.quintile_atrum_flagellum": "Quintile: Atrum Flagellum (unverified canon: one source only). A whip of starlight lashes through five of your stars three times; each foe on its path can be hit twice. Needs five real stars and the Grinberryall heir mark. Your stars stay.",
+  "item.nusmp.valkyrie_drill_lance": "Valkyrie Drill Lance",
+  "item.nusmp.valkyrie_drill_lance.lore": "The spiral lance of water of the Valkyrie Dress: its drill turns, and a hit scatters drops."
 }

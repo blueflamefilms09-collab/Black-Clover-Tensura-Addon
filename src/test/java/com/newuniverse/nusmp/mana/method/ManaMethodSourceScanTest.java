@@ -200,7 +200,7 @@ class ManaMethodSourceScanTest {
         String vb = code(read(SRC.resolve("vfx/client/VfxVertexBuffer.java")));
         assertTrue(vb.contains("public static final int MAX_VERTICES_PER_ACTIVATION = 400;") && vb.contains("Math.min(limit, Math.max(MAX_VERTICES_PER_ACTIVATION, hardCap))"), "the shared cap is unchanged, a layer may ask for more only through its own hard cap");
         String shapes = read(SRC.resolve("vfx/VfxShape.java"));
-        int storm = shapes.indexOf("STORM_CANCEL,"), rune = shapes.indexOf("RUNE_WRITING;");
+        int storm = shapes.indexOf("STORM_CANCEL,"), rune = shapes.indexOf("RUNE_WRITING,");
         assertTrue(storm > 0 && rune > storm, "the shape is appended after the older entries (ordinals never move)");
         for (String tex : new String[]{"rune_stroke_gold", "rune_stroke_flame", "rune_stroke_water", "rune_stroke_wind", "rune_stroke_earth", "rune_stroke_lightning", "rune_stroke_plant", "rune_line_ring", "rune_arc_strip"}) {
             assertTrue(l.contains("\"" + tex + "\""), "the layer uses " + tex);
