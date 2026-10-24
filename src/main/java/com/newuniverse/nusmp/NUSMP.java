@@ -421,6 +421,7 @@ public class NUSMP {
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.book.KotodamaWords::onIncomingDamage);          // 0.48: "Reverse"
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.antimagic.AntiMagic::migrate);                  // 0.48: old Spirit Lords fold into the grimoire
         com.newuniverse.nusmp.mana.zone.ManaZoneBoot.init(modEventBus, modContainer);                           // 1.99.0: the Mana Zone (late-game) and the Grand Magic Zones: config, packets, data, events, self-tests mana.zone_gate and mana.zone_core
+        com.newuniverse.nusmp.ultimate.UltimateBoot.init(modEventBus, modContainer);                              // Ultimate Magic (docs/magic/ultimate_magic.md): nusmp-ultimate-server.toml (ultimate.enabled), self-tests magic.ultimate.rules and magic.ultimate.cast
         com.newuniverse.nusmp.perf.PerfBoot.init(modEventBus, modContainer);                                      // 1.99.0: performance pass: nusmp-performance-common.toml, /multiverse perf, the server probe, self-test perf.core
         com.newuniverse.nusmp.vupgrade.GodBSelfTests.register();                                                  // 1.102.0: self-test visual.god_melee_b (the upgraded God melee weapons: tables, meshes, skins, fallback, level of detail)
         com.newuniverse.nusmp.vupgrade.DjinnDarkSelfTests.register();                                             // 1.108.0: self-test visual.djinn_dark_weapons (the 36 upgraded dark Djinn weapons: tables, meshes, skins, fallback)

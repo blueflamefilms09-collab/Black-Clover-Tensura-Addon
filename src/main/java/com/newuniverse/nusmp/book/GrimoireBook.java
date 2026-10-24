@@ -107,9 +107,11 @@ public abstract class GrimoireBook extends Skill {
     public final List<BookPage> pages() {
         int version = pagesVersion();
         boolean fifteen = com.newuniverse.nusmp.book.pages15.Pages15.enabled();
-        if (all == null || version != builtVersion || fifteen != builtFifteen) {
+        boolean ultimate = com.newuniverse.nusmp.ultimate.UltimatePages.enabled();      // Ultimate Magic (ultimate.enabled): a book list is rebuilt when the setting flips
+        if (all == null || version != builtVersion || fifteen != builtFifteen || ultimate != builtUltimate) {
             builtVersion = version;
             builtFifteen = fifteen;
+            builtUltimate = ultimate;
             List<BookPage> l = new ArrayList<>(familyAll());
             if (spiritElement() != null) {
                 l.add(BookPage.signature("spirit_dive", "Spirit Dive", GrimoireBook::spiritDive).withCooldown(0));
@@ -138,16 +140,18 @@ public abstract class GrimoireBook extends Skill {
     public int familyCount() { return familyAll().size(); }
 
     private List<BookPage> restBase, restAll;
-    private boolean restFifteen, builtFifteen;
+    private boolean restFifteen, builtFifteen, restUltimate, builtUltimate;
     /** The family's pages followed by the pages the character spell sets of the squad captains / Spade / Heart / Diamond / Seabed append to this book (book.CharacterPagesRest; the same list when none). */
     private List<BookPage> familyAll() {
         List<BookPage> f = familyPages();
         boolean fifteen = com.newuniverse.nusmp.book.pages15.Pages15.enabled();      // server setting magic.pagesFifteen: false = the old lists
-        if (restBase == f && restAll != null && restFifteen == fifteen) return restAll;
+        boolean ultimate = com.newuniverse.nusmp.ultimate.UltimatePages.enabled();
+        if (restBase == f && restAll != null && restFifteen == fifteen && restUltimate == ultimate) return restAll;
         if (getRegistryName() == null) return f;
-        restAll = com.newuniverse.nusmp.book.pages15.Pages15.append(getRegistryName().getPath(), BasicPages.append(getRegistryName().getPath(), CharacterPagesRest.append(getRegistryName().getPath(), f)));      // basic grimoires (docs/magic/basic_grimoires.md): the generic anime pages go next to last; the "15 spells for every grimoire" pages (book.pages15) go last of all
+        restAll = com.newuniverse.nusmp.ultimate.UltimatePages.append(getRegistryName().getPath(), com.newuniverse.nusmp.book.pages15.Pages15.append(getRegistryName().getPath(), BasicPages.append(getRegistryName().getPath(), CharacterPagesRest.append(getRegistryName().getPath(), f))));      // Ultimate Magic (ultimate.UltimatePages): the Ultimate is the very last family page of its book; basic grimoires (docs/magic/basic_grimoires.md): the generic anime pages go next to last; the "15 spells for every grimoire" pages (book.pages15) go last of all
         restBase = f;
         restFifteen = fifteen;
+        restUltimate = ultimate;
         return restAll;
     }
 
@@ -156,6 +160,8 @@ public abstract class GrimoireBook extends Skill {
      * Cotton / Food half. Null = nothing; otherwise who or what it waits for, shown to the player once.
      */
     public String pageBlock(ServerPlayer p, ManasSkillInstance inst, int mode) {
+        String ultimateBlock = com.newuniverse.nusmp.ultimate.UltimatePages.block(this, page(mode), p, inst);      // Ultimate Magic: the late-game gate of its page
+        if (ultimateBlock != null) return ultimateBlock;
         return CharacterSpells.block(this, page(mode), p);
     }
     public BookPage page(int mode) { return mode >= 0 && mode < pages().size() ? pages().get(mode) : null; }

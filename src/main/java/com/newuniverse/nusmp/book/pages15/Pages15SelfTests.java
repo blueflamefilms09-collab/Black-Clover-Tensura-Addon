@@ -74,7 +74,7 @@ public final class Pages15SelfTests {
             GrimoireBook b = book(path);
             if (b == null) return Result.fail(path + " is in the plan but is not a registered book");
             List<String> ids = Pages15.addedTo(path);
-            int n = ids.size(), first = b.familyCount() - n;
+            int n = ids.size(), first = b.familyCount() - n - com.newuniverse.nusmp.ultimate.UltimatePages.extraCount(path);      // Ultimate Magic appends ONE more page after these
             if (first < 1) return Result.fail(path + ": " + n + " added pages but only " + b.familyCount() + " family pages");
             for (int m = 0; m < first; m++) older.add(b.page(m).id());
             base.put(path, first);
