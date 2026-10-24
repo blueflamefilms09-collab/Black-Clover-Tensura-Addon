@@ -42,6 +42,9 @@ import java.util.Comparator;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.UUID;
+import com.newuniverse.nusmp.particle.fx.Fx;
+import com.newuniverse.nusmp.particle.fx.FxOld;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
 
 /**
  * Why: the ONE sample companion that proves the whole system end to end, and it is an existing canon character, not a new one: Charmy Pappitson of the arcs' roster (her model, name, colours and talk clip), as a
@@ -192,7 +195,7 @@ public class ArcCompanionEntity extends ArcNpcEntity implements Talkable, Compan
 
     @Override
     public void bondFeel(boolean eating, int ticks) {
-        if (level() instanceof ServerLevel sl) sl.sendParticles(eating ? ParticleTypes.HAPPY_VILLAGER : ParticleTypes.ANGRY_VILLAGER, getX(), getY() + 2.0, getZ(), 4, 0.3, 0.2, 0.3, 0.0);
+        if (level() instanceof ServerLevel sl) sl.sendParticles(eating ? Fx.options(FxThemes.WORLD, FxOld.HAPPY_VILLAGER) : ParticleTypes.ANGRY_VILLAGER, getX(), getY() + 2.0, getZ(), 4, 0.3, 0.2, 0.3, 0.0);
     }
 
     @Override public int socialKind() { return CompanionRules.cleanKind(entityData.get(SOCIAL)); }
@@ -205,7 +208,7 @@ public class ArcCompanionEntity extends ArcNpcEntity implements Talkable, Compan
         entityData.set(SOCIAL, (byte) CompanionRules.cleanKind(kind));
         entityData.set(SOCIAL_AT, (int) level().getGameTime());
         socialUntil = ticks < 0 ? Integer.MAX_VALUE : tickCount + ticks;
-        if (kind != NONE && level() instanceof ServerLevel sl) sl.sendParticles(ParticleTypes.HAPPY_VILLAGER, getX(), getY() + 1.6, getZ(), 5, 0.4, 0.3, 0.4, 0.0);
+        if (kind != NONE && level() instanceof ServerLevel sl) Fx.spray(sl, FxThemes.WORLD, FxOld.HAPPY_VILLAGER, getX(), getY() + 1.6, getZ(), 5, 0.4, 0.3, 0.4, 0.0);
     }
 
     @Override public UUID followedPlayer() { return owner; }

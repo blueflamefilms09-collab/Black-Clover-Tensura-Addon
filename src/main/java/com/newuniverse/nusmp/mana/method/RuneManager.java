@@ -43,6 +43,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
+import com.newuniverse.nusmp.particle.fx.Fx;
+import com.newuniverse.nusmp.particle.fx.FxOld;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
 
 /**
  * The rune constructs of the Mana Method and the bolts they fire. A construct is NOT an entity: it is a small record in a list on the server (nothing to register, save, sync or
@@ -257,7 +260,7 @@ public final class RuneManager {
     }
 
     private static void fizzle(Cast c) {
-        PerfParticles.send(c.level, ParticleTypes.POOF, c.px, c.py, c.pz, 4, 0.15, 0.15, 0.15, 0.01);
+        PerfParticles.send(c.level, Fx.options(FxThemes.WORLD, FxOld.POOF), c.px, c.py, c.pz, 4, 0.15, 0.15, 0.15, 0.01);
     }
 
     // ---------------------------------------------------------------- the impact
@@ -317,23 +320,23 @@ public final class RuneManager {
 
     static ParticleOptions trailParticle(RuneElement el) {
         return switch (el) {
-            case FIRE -> ParticleTypes.FLAME;
-            case WATER -> ParticleTypes.BUBBLE;
-            case WIND -> ParticleTypes.CLOUD;
+            case FIRE -> Fx.options(FxThemes.WORLD, FxOld.FLAME);
+            case WATER -> Fx.options(FxThemes.WORLD, FxOld.BUBBLE);
+            case WIND -> Fx.options(FxThemes.WORLD, FxOld.CLOUD);
             case EARTH -> new BlockParticleOption(ParticleTypes.BLOCK, Blocks.DIRT.defaultBlockState());
-            case LIGHTNING -> ParticleTypes.ELECTRIC_SPARK;
-            case PLANT -> ParticleTypes.HAPPY_VILLAGER;
+            case LIGHTNING -> Fx.options(FxThemes.WORLD, FxOld.ELECTRIC_SPARK);
+            case PLANT -> Fx.options(FxThemes.WORLD, FxOld.HAPPY_VILLAGER);
         };
     }
 
     static ParticleOptions burstParticle(RuneElement el) {
         return switch (el) {
-            case FIRE -> ParticleTypes.LAVA;
-            case WATER -> ParticleTypes.SPLASH;
-            case WIND -> ParticleTypes.CLOUD;
+            case FIRE -> Fx.options(FxThemes.WORLD, FxOld.LAVA);
+            case WATER -> Fx.options(FxThemes.WORLD, FxOld.SPLASH);
+            case WIND -> Fx.options(FxThemes.WORLD, FxOld.CLOUD);
             case EARTH -> new BlockParticleOption(ParticleTypes.BLOCK, Blocks.STONE.defaultBlockState());
-            case LIGHTNING -> ParticleTypes.ELECTRIC_SPARK;
-            case PLANT -> ParticleTypes.HAPPY_VILLAGER;
+            case LIGHTNING -> Fx.options(FxThemes.WORLD, FxOld.ELECTRIC_SPARK);
+            case PLANT -> Fx.options(FxThemes.WORLD, FxOld.HAPPY_VILLAGER);
         };
     }
 
