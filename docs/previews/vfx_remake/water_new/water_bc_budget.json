@@ -1,0 +1,178 @@
+{
+ "roar": {
+  "title": "ROAR  Sea Dragon's Roar",
+  "today_live_quads": 51,
+  "BC_lod0": {
+   "total": 374,
+   "mesh": 320,
+   "sprites": 54,
+   "mesh_layers_0_1_2": [
+    270,
+    6,
+    44
+   ]
+  },
+  "BC_lod1": {
+   "total": 201,
+   "mesh": 169,
+   "sprites": 32
+  },
+  "A_fallback": {
+   "total": 20
+  }
+ },
+ "lance": {
+  "title": "LANCE  Aqua Javelin",
+  "today_live_quads": 51,
+  "BC_lod0": {
+   "total": 149,
+   "mesh": 110,
+   "sprites": 39,
+   "mesh_layers_0_1_2": [
+    96,
+    8,
+    6
+   ]
+  },
+  "BC_lod1": {
+   "total": 86,
+   "mesh": 66,
+   "sprites": 20
+  },
+  "A_fallback": {
+   "total": 21
+  }
+ },
+ "cradle": {
+  "title": "CRADLE  Sea Dragon's Cradle (zone, sphere)",
+  "today_live_quads": 39,
+  "BC_lod0": {
+   "total": 199,
+   "mesh": 176,
+   "sprites": 23,
+   "mesh_layers_0_1_2": [
+    152,
+    0,
+    24
+   ]
+  },
+  "BC_lod1": {
+   "total": 134,
+   "mesh": 120,
+   "sprites": 14
+  },
+  "A_fallback": {
+   "total": 12
+  }
+ },
+ "nest": {
+  "title": "NEST  Sea Dragon's Nest (zone, dome)",
+  "today_live_quads": 39,
+  "BC_lod0": {
+   "total": 146,
+   "mesh": 120,
+   "sprites": 26,
+   "mesh_layers_0_1_2": [
+    78,
+    0,
+    42
+   ]
+  },
+  "BC_lod1": {
+   "total": 93,
+   "mesh": 79,
+   "sprites": 14
+  },
+  "A_fallback": {
+   "total": 10
+  }
+ },
+ "burst": {
+  "title": "BURST  impact (crown + ripples)",
+  "today_live_quads": 30,
+  "BC_lod0": {
+   "total": 238,
+   "mesh": 208,
+   "sprites": 30,
+   "mesh_layers_0_1_2": [
+    188,
+    0,
+    20
+   ]
+  },
+  "BC_lod1": {
+   "total": 114,
+   "mesh": 96,
+   "sprites": 18
+  },
+  "A_fallback": {
+   "total": 13
+  }
+ },
+ "splash": {
+  "title": "SPLASH  Mist Step / pages",
+  "today_live_quads": 23,
+  "BC_lod0": {
+   "total": 161,
+   "mesh": 144,
+   "sprites": 17,
+   "mesh_layers_0_1_2": [
+    134,
+    0,
+    10
+   ]
+  },
+  "BC_lod1": {
+   "total": 71,
+   "mesh": 60,
+   "sprites": 11
+  },
+  "A_fallback": {
+   "total": 8
+  }
+ },
+ "ring": {
+  "title": "RING  Mist Veil / basic arts",
+  "today_live_quads": 100,
+  "BC_lod0": {
+   "total": 139,
+   "mesh": 132,
+   "sprites": 7,
+   "mesh_layers_0_1_2": [
+    102,
+    0,
+    30
+   ]
+  },
+  "BC_lod1": {
+   "total": 52,
+   "mesh": 48,
+   "sprites": 4
+  },
+  "A_fallback": {
+   "total": 3
+  }
+ },
+ "valk": {
+  "title": "VALKYRIE  add-on (wings, halo, drips)",
+  "today_live_quads": 74,
+  "BC_lod0": {
+   "total": 152,
+   "mesh": 136,
+   "sprites": 16,
+   "mesh_layers_0_1_2": [
+    130,
+    0,
+    6
+   ]
+  },
+  "BC_lod1": {
+   "total": 113,
+   "mesh": 104,
+   "sprites": 9
+  },
+  "A_fallback": {
+   "total": 10
+  }
+ }
+}
