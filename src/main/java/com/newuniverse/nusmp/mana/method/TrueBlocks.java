@@ -15,8 +15,11 @@ import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseFireBlock;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.phys.shapes.CollisionContext;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -89,6 +92,30 @@ public final class TrueBlocks {
         return placed;
     }
 
+    /**
+     * 3.5.0, True Plant: a small cage of logs and leaves round the creature standing in {@code feet} (rules and shape: {@link TrueWorldRules}). Same safety as {@link #place}: loaded chunks
+     * only, free cells only (and never a cell a creature stands in), only where the caster may build, never in the guarded worlds, caps per cast / per caster / in the world, all taken back
+     * after {@link TrueWorldRules#cageSeconds}. Returns how many blocks stand (0 when the setting is off or nothing was free: the caller then falls back to the moss carpet).
+     */
+    public static int placeCage(ServerLevel level, UUID owner, BlockPos feet, BiPredicate<ServerLevel, BlockPos> may, long now) {
+        if (!ManaMethodConfig.trueBlocks() || !ManaMethodConfig.plantCage() || !levelAllows(level)) return 0;
+        int want = TrueWorldRules.allowedCage(liveOf(owner), LEDGER.size());
+        if (want <= 0) return 0;
+        long until = now + TrueWorldRules.cageSeconds(ManaMethodConfig.blockSeconds()) * 20L;
+        int placed = 0;
+        for (int i = 0; i < TrueWorldRules.CAGE_CELLS && placed < want; i++) {
+            int[] c = TrueWorldRules.cageCell(i);
+            BlockPos cell = feet.offset(c[0], c[1], c[2]);
+            if (!free(level, cell, may)) continue;
+            BlockState state = TrueWorldRules.cageMaterial(i) == TrueWorldRules.Material.LOG ? Blocks.OAK_LOG.defaultBlockState() : Blocks.OAK_LEAVES.defaultBlockState().setValue(LeavesBlock.PERSISTENT, true);
+            if (!level.isUnobstructed(state, cell, CollisionContext.empty())) continue;
+            if (!level.setBlock(cell, state, 3)) continue;
+            LEDGER.add(new Entry(level.dimension(), cell.immutable(), state.getBlock(), owner, until));
+            placed++;
+        }
+        return placed;
+    }
+
     /** The free cell for this kind at or near {@code pos}: the cell itself, one up (a wall was hit), or down to three below for the kinds that need the ground. */
     private static BlockPos find(ServerLevel level, BlockPos pos, Kind kind, BiPredicate<ServerLevel, BlockPos> may) {
         boolean ground = TrueBlockRules.needsGround(kind);
@@ -133,6 +160,23 @@ public final class TrueBlocks {
 
     private static void takeBack(ServerLevel l, Entry e) {
         if (l.getBlockState(e.pos).is(e.block)) DungeonGuard.internal(() -> l.removeBlock(e.pos, false));
+    }
+
+    /**
+     * 3.5.0: takes back the blocks of one player at once (logout, death, dimension change), so a cage never outlives its caster. A block in an unloaded chunk stays on the ledger and
+     * expires by time as before. Nothing to do (one {@code isEmpty()}) while the ledger is empty.
+     */
+    public static void cancelOwner(MinecraftServer server, UUID owner) {
+        if (LEDGER.isEmpty()) return;
+        for (Iterator<Entry> it = LEDGER.iterator(); it.hasNext(); ) {
+            Entry e = it.next();
+            if (!e.owner.equals(owner)) continue;
+            ServerLevel l = server == null ? null : server.getLevel(e.dim);
+            if (l == null) { it.remove(); continue; }
+            if (!l.isLoaded(e.pos)) continue;
+            takeBack(l, e);
+            it.remove();
+        }
     }
 
     /** Takes back every block still standing (the server is stopping, or a test ends). */

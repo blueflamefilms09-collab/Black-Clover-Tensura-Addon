@@ -215,7 +215,7 @@ public abstract class GrimoireBook extends Skill {
         if (mode < familyCount()) return isUnlocked(i, mode);
         if (isDive(mode)) return e instanceof ServerPlayer p ? spiritGateOpen(p) : true;
         if (isUnion(mode)) return cover(i).isForbidden();
-        if (isMethodPage(mode)) return com.newuniverse.nusmp.mana.method.ManaMethodPages.usable(e);      // Mana Method: the Mana Method pages: the same late-game gate as the Mana Zone, and the server setting manaMethod.enabled
+        if (isMethodPage(mode)) return com.newuniverse.nusmp.mana.method.ManaMethodPages.usable(e, page(mode).id());      // Mana Method: the Mana Method pages: the same late-game gate as the Mana Zone, and the server setting manaMethod.enabled
         if (isZoneGated(mode)) return com.newuniverse.nusmp.mana.zone.ManaZoneManager.gateOpenFor(e);      // 1.99.0: before the instant-page rule below, which used to make the Mana Zone open to everyone
         if (isSpiritPage(mode)) return com.newuniverse.nusmp.spiritcontrol.SpiritControlPages.usable(this, i, e, page(mode).id());      // 3.0.0: shown only while a spirit of this book's magic answers the player (asked after the Mana Zone gate)
         if (instant(mode)) return true;
@@ -315,6 +315,7 @@ public abstract class GrimoireBook extends Skill {
         if (com.newuniverse.nusmp.entity.zogratis.LuciusCapabilities.fightOn())          // 1.45.0: a heavy page held long enough is a massive channel to the god-tier Lucius
             com.newuniverse.nusmp.entity.zogratis.LuciusCapabilities.onGrimoireHold(p, page(mode), charge, castTicks(instance, p), castReady(instance, p, mode));
         com.newuniverse.nusmp.firecast.FireCasting.held(this, instance, p, heldTicks, mode);      // fire casting: Leopold's spiral winds while the key is held (nothing for every other caster)
+        if (isMethodPage(mode)) com.newuniverse.nusmp.mana.method.RuneHold.onHeld(this, instance, p, heldTicks, mode);      // 3.5.0: the Mana Method measures the hold (hold-to-charge)
         return true;
     }
 
@@ -332,6 +333,7 @@ public abstract class GrimoireBook extends Skill {
         if (com.newuniverse.nusmp.entity.zogratis.LuciusCapabilities.fightOn())          // 1.45.0: releasing a heavy page that was held long enough is a launched devastating attack
             com.newuniverse.nusmp.entity.zogratis.LuciusCapabilities.onGrimoireRelease(player, page(mode), charge, castTicks(instance, player), castReady(instance, player, mode));
         if (pendingUntil > now) return;
+        if (isMethodPage(mode)) com.newuniverse.nusmp.mana.method.RuneHold.onRelease(this, instance, player, mode, heldTicks);      // 3.5.0: the Mana Method keeps the charge of this release for the cast that follows
         long castAt = now + windup;
         instance.getOrCreateTag().putLong("PendingCastUntil", castAt);
         instance.getOrCreateTag().putFloat("MagicBuildUp", chargePower);
@@ -468,6 +470,22 @@ public abstract class GrimoireBook extends Skill {
                 || (target instanceof ServerPlayer tp && GrimoirePages.grimoireOf(tp).map(g -> cover(g).isForbidden()).orElse(false)))) r *= 1.25f;
         com.newuniverse.nusmp.blackclover.CopyMemory.remember(target, this, mode);
         target.hurt(createSource(i, caster, type, mode), BalanceLaw.damage(caster, target, r, masteryFrac(i)));
+    }
+
+    /**
+     * 3.5.0 (Mana Method, True Magic): {@link #hurtAs} through a ready-made damage source (a vanilla physical / environmental type attributed to the caster) instead of a Tensura magic type.
+     * The multipliers and the balance law's caps are the same as {@link #hurtAs}; only the damage type differs. Returns whether the target took the damage.
+     */
+    public boolean hurtDirect(ManasSkillInstance i, ServerPlayer caster, LivingEntity target, int mode, float raw, net.minecraft.world.damagesource.DamageSource source) {
+        if (target == caster || target.isAlliedTo(caster)) return false;
+        float r = raw * (float) cover(i).damage * (inUnion(i, caster) ? 1.1f : 1f)
+                * buildUpMultiplier(i, caster) * (float) com.newuniverse.nusmp.firecast.FireCasting.damageMult(caster)
+                * ArmourState.spellBoost(caster, magic)
+                * (float) com.newuniverse.nusmp.item.MagicGear.damageMult(caster, magic);
+        if ((magic == MagicType.DARK || magic == MagicType.SHADOW) && (inDevilState(target)
+                || (target instanceof ServerPlayer tp && GrimoirePages.grimoireOf(tp).map(g -> cover(g).isForbidden()).orElse(false)))) r *= 1.25f;
+        com.newuniverse.nusmp.blackclover.CopyMemory.remember(target, this, mode);
+        return target.hurt(source, BalanceLaw.damage(caster, target, r, masteryFrac(i)));
     }
 
     public static LivingEntity target(ServerPlayer p, double range) {
