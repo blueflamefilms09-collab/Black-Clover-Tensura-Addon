@@ -656,7 +656,9 @@ public abstract class GrimoireBook extends Skill {
         if (this instanceof LegionBook) LegionArts.updateChessboard(i, p);
         // Spirit Dive upkeep: magicule each second; ends if the Lord contract is lost.
         if (now < i.getOrCreateTag().getLong("DiveUntil") && !com.newuniverse.nusmp.relics.Severance.isSevered(p)) {      // 1.45.0: severed, the upkeep waits (nothing is drained, nothing ends)
-            if (!spiritGateOpen(p) || !drain(p, EnergyHelper.getMaxMagicule(p) * 0.02)) {
+            SpiritDiveUpkeep.Verdict verdict = diveVerdict(p);      // one decision (book.SpiritDiveUpkeep): the gate, then the pay (a creative player pays nothing)
+            if (verdict != SpiritDiveUpkeep.Verdict.HOLD) {
+                org.slf4j.LoggerFactory.getLogger("nusmp").info("nusmp spirit dive ended: {} ({}, creative={})", verdict.reason(), p.getGameProfile().getName(), p.isCreative());
                 i.getOrCreateTag().putLong("DiveUntil", now);
                 if (diveArmor() != null) com.newuniverse.nusmp.blackclover.ModeArmor.stop(p, diveArmor());
                 SpiritDiveForm.end(p, this);
@@ -706,6 +708,14 @@ public abstract class GrimoireBook extends Skill {
         if (p.tickCount % 20 != 3) return;
         for (var h : com.newuniverse.nusmp.skill.NUSkills.BOOKS)
             skills.getSkill(h.getId()).ifPresent(i -> { if (i.getSkill() instanceof GrimoireBook b) b.second(i, p); });
+    }
+
+    /** The upkeep of this second: HOLD (the magicules are paid) or the reason the dive ends. */
+    private SpiritDiveUpkeep.Verdict diveVerdict(ServerPlayer p) {
+        if (!spiritGateOpen(p)) return SpiritDiveUpkeep.Verdict.GATE_CLOSED;
+        double need = SpiritDiveUpkeep.cost(EnergyHelper.getMaxMagicule(p));
+        if (p.isCreative() || need <= 0.0) return SpiritDiveUpkeep.Verdict.HOLD;
+        return drain(p, need) ? SpiritDiveUpkeep.Verdict.HOLD : SpiritDiveUpkeep.Verdict.NO_MAGICULE;
     }
 
     private static boolean drain(ServerPlayer p, double amount) {
