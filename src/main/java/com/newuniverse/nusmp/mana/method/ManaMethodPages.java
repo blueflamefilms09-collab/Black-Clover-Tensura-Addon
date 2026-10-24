@@ -8,6 +8,8 @@ import com.newuniverse.nusmp.mana.ManaLaw;
 import com.newuniverse.nusmp.mana.zone.ManaZoneManager;
 import com.newuniverse.nusmp.mana.zone.TrueMagicRules;
 import io.github.manasmods.manascore.skill.api.ManasSkillInstance;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.LivingEntity;
 
@@ -21,11 +23,11 @@ import java.util.List;
  * <table>
  *   <caption>The pages</caption>
  *   <tr><th>id</th><th>name</th><th>tier</th><th>cost</th><th>cooldown</th><th>rune</th></tr>
- *   <tr><td>mana_method_fire</td><td>Flame Rune</td><td>mid, late game</td><td>10 % (floor 300)</td><td>8 s</td><td>grows</td></tr>
- *   <tr><td>mana_method_water</td><td>Water Rune</td><td>mid, late game</td><td>10 %</td><td>8 s</td><td>pursues</td></tr>
- *   <tr><td>mana_method_wind</td><td>Wind Rune</td><td>mid, late game</td><td>10 %</td><td>8 s</td><td>pursues</td></tr>
- *   <tr><td>mana_method_earth</td><td>Earth Rune</td><td>mid, late game</td><td>10 %</td><td>8 s</td><td>grows</td></tr>
- *   <tr><td>mana_method_true</td><td>True Magic Rune</td><td>zone, late game</td><td>16 % (floor 700)</td><td>20 s</td><td>grows (your natural element)</td></tr>
+ *   <tr><td>mana_method_fire</td><td>Flame Rune</td><td>mid, late game</td><td>12 % (floor 300)</td><td>8 s</td><td>grows</td></tr>
+ *   <tr><td>mana_method_water</td><td>Water Rune</td><td>mid, late game</td><td>12 %</td><td>8 s</td><td>pursues</td></tr>
+ *   <tr><td>mana_method_wind</td><td>Wind Rune</td><td>mid, late game</td><td>12 %</td><td>8 s</td><td>pursues</td></tr>
+ *   <tr><td>mana_method_earth</td><td>Earth Rune</td><td>mid, late game</td><td>12 %</td><td>8 s</td><td>grows</td></tr>
+ *   <tr><td>mana_method_true</td><td>True Magic Rune</td><td>zone, late game</td><td>20 % (floor 600)</td><td>20 s</td><td>grows (your natural element)</td></tr>
  * </table>
  * Casting while sneaking writes BOTH runes (pursue and grow), at 85 % of the power and 4 more ticks of charge. The ids contain no attack word, so an Avatar never casts them
  * (AvatarSkillList), and the Mana Method pages are not family pages, so the "15 spells" pages15 machinery and the armour policy do not see them.
@@ -93,7 +95,10 @@ public final class ManaMethodPages {
     private static boolean begin(GrimoireBook b, ManasSkillInstance i, ServerPlayer p, int mode, RuneSpec spec) {
         RuneManager.Begin r = RuneManager.begin(b, i, p, mode, spec, p.getServer().getTickCount());
         switch (r) {
-            case OK -> { return true; }
+            case OK -> {
+                p.displayClientMessage(Component.translatableWithFallback("nusmp.mana_method.cast", "Mana Method: %s (%s)", spec.element().title + (spec.trueMagic() ? " True Magic" : " Rune"), RuneMods.describe(spec.mods())).withStyle(ChatFormatting.LIGHT_PURPLE), true);
+                return true;
+            }
             case CASTER_FULL -> GrimoireBook.fail(p, "Your runes are still forming (" + ManaMethodConfig.perCaster() + " at most).");
             case SERVER_FULL -> GrimoireBook.fail(p, "The mana of this world is busy with other runes. Try again in a moment.");
             default -> GrimoireBook.fail(p, "The Mana Method is switched off on this server.");

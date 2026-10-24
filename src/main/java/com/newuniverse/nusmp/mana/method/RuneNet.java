@@ -10,12 +10,12 @@ import net.neoforged.neoforge.network.PacketDistributor;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 
 /**
- * The one packet of the Mana Method: server to client only, optional (a client without the mod simply sees no rune), 29 bytes. It tells the clients near a cast WHERE the rune
+ * The one packet of the Mana Method: server to client only, optional (a client without the mod simply sees no rune), about 28 bytes. It tells the clients near a cast WHERE the rune
  * forms, which way the caster looks, what it says ({@link RuneSpec#pack}) and for how many ticks it draws itself; the client works out the rings, the symbols and the particles
  * itself ({@link RuneGeneratorUtil}). Sent once per cast to the players within {@value #RANGE} blocks, and only if the effect packet budget of the tick allows it.
  *
- * <p>There is no serverbound packet: casting goes through the grimoire pages, so there is no sender to trust. The client still validates what it receives (it clamps the numbers
- * and ignores a rune from outside its level), because a client must not trust a server it did not choose either.
+ * <p>There is no serverbound packet: casting goes through the grimoire pages, so there is no sender to trust. The client still validates what it receives (it rejects bad numbers
+ * and a charge outside 1..60), because a client must not trust a server it did not choose either.
  */
 public final class RuneNet {
     private RuneNet() {}

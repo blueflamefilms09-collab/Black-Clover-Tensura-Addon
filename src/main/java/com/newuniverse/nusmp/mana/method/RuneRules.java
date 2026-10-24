@@ -43,9 +43,9 @@ public final class RuneRules {
     /** The most trail packets one flight may send (one every {@link #TRAIL_EVERY} ticks) and the particles in each. */
     public static final int TRAIL_EVERY = 3, TRAIL_PARTICLES = 3;
 
-    // ---------------------------------------------------------------- costs of the pages (percent of the pool, floor, cooldown ticks)
-    public static final double COST_PERCENT = 10.0, COST_PERCENT_TRUE = 16.0;
-    public static final double COST_FLOOR = 300.0, COST_FLOOR_TRUE = 700.0;
+    // ---------------------------------------------------------------- costs of the pages (percent of the pool, floor, cooldown ticks): the element runes are the MID tier of the 15-spells recipe (12 %, floor 300, 160 ticks), True Magic the ZONE tier (20 %, floor 600, 400 ticks: inside its 300..1400 bounds)
+    public static final double COST_PERCENT = 12.0, COST_PERCENT_TRUE = 20.0;
+    public static final double COST_FLOOR = 300.0, COST_FLOOR_TRUE = 600.0;
     public static final int COOLDOWN = 160, COOLDOWN_TRUE = 400;
 
     public static int clampPerCaster(int configured) { return configured < 1 ? 1 : Math.min(configured, MAX_PER_CASTER); }
