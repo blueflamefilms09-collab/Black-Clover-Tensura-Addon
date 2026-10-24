@@ -1,0 +1,466 @@
+{
+ "_comment": "Star Magic remake phase 1: BEFORE scenes for docs/previews/vfx_remake/star/star_baseline.png. Every scene is the REAL ElementIdentityLayer (VfxShape.STAR_MAGIC, which is what every page of book_star sends through ElementBook.vfx), called the way the nearest existing page calls it. Star Shield sends SPIRIT_AURA (AuraLayer) because ElementBook.empower sends the page's own shape, not the identity shape.",
+ "star_node": {
+  "layer": "ElementIdentityLayer",
+  "shape": "STAR_MAGIC",
+  "from": [
+   0,
+   0.05,
+   6
+  ],
+  "to": [
+   0,
+   1.05,
+   6
+  ],
+  "power": 1.67,
+  "duration": 24,
+  "cam": [
+   -5,
+   2.6,
+   1.5
+  ],
+  "target": [
+   0,
+   2.2,
+   5.5
+  ],
+  "ages": [
+   4,
+   12,
+   22
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ],
+  "sky": [
+   0.04,
+   0.06,
+   0.16
+  ],
+  "horizon": [
+   0.16,
+   0.17,
+   0.32
+  ],
+  "floor": [
+   0.1,
+   0.11,
+   0.17
+  ],
+  "note": "Stardust Field step (field: from the ground point to +1 up, power r/3); there is no placed star today"
+ },
+ "star_lines": {
+  "layer": "ElementIdentityLayer",
+  "shape": "STAR_MAGIC",
+  "from": [
+   0,
+   1.6,
+   0
+  ],
+  "to": [
+   -2.2,
+   1.6,
+   20
+  ],
+  "power": 0.6,
+  "duration": 14,
+  "cam": [
+   -6.5,
+   3.2,
+   0.5
+  ],
+  "target": [
+   0.4,
+   2.9,
+   7
+  ],
+  "ages": [
+   3,
+   8,
+   13
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ],
+  "also": [
+   {
+    "to": [
+     -1.1,
+     1.7,
+     20
+    ],
+    "seed": 778
+   },
+   {
+    "to": [
+     0,
+     1.8,
+     20
+    ],
+    "seed": 779
+   },
+   {
+    "to": [
+     1.1,
+     1.7,
+     20
+    ],
+    "seed": 780
+   },
+   {
+    "to": [
+     2.2,
+     1.6,
+     20
+    ],
+    "seed": 781
+   }
+  ],
+  "sky": [
+   0.04,
+   0.06,
+   0.16
+  ],
+  "horizon": [
+   0.16,
+   0.17,
+   0.32
+  ],
+  "floor": [
+   0.1,
+   0.11,
+   0.17
+  ],
+  "note": "Constellation page: volley of 5 bolts, 14 ticks, power 0.6 (THREAD_LINE is rewritten to STAR_MAGIC)"
+ },
+ "star_conjunction": {
+  "layer": "ElementIdentityLayer",
+  "shape": "STAR_MAGIC",
+  "from": [
+   0,
+   1,
+   0
+  ],
+  "to": [
+   0,
+   1,
+   11
+  ],
+  "power": 1.0,
+  "duration": 12,
+  "cam": [
+   -9.5,
+   3.6,
+   0.5
+  ],
+  "target": [
+   0,
+   2,
+   6
+  ],
+  "ages": [
+   3,
+   6,
+   10
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ],
+   [
+    0,
+    0,
+    11,
+    1.8
+   ]
+  ],
+  "sky": [
+   0.04,
+   0.06,
+   0.16
+  ],
+  "horizon": [
+   0.16,
+   0.17,
+   0.32
+  ],
+  "floor": [
+   0.1,
+   0.11,
+   0.17
+  ],
+  "note": "Conjunction page: dash 12 blocks ahead, vfx from start+1 to dest+1, 12 ticks, power 1"
+ },
+ "star_scutum": {
+  "layer": "AuraLayer",
+  "shape": "SPIRIT_AURA",
+  "from": [
+   0,
+   1,
+   0
+  ],
+  "to": [
+   0,
+   1,
+   0
+  ],
+  "power": 1.0,
+  "duration": 200,
+  "cam": [
+   -5.5,
+   2.6,
+   -1.5
+  ],
+  "target": [
+   0,
+   2,
+   3.5
+  ],
+  "ages": [
+   5,
+   12,
+   22
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ],
+  "sky": [
+   0.04,
+   0.06,
+   0.16
+  ],
+  "horizon": [
+   0.16,
+   0.17,
+   0.32
+  ],
+  "floor": [
+   0.1,
+   0.11,
+   0.17
+  ],
+  "note": "Star Shield page: empower, sendFollowing with SPIRIT_AURA (not a star effect at all)"
+ },
+ "star_hasta": {
+  "layer": "ElementIdentityLayer",
+  "shape": "STAR_MAGIC",
+  "from": [
+   0,
+   1.6,
+   0
+  ],
+  "to": [
+   0,
+   1.6,
+   16
+  ],
+  "power": 1.2,
+  "duration": 18,
+  "cam": [
+   -5.5,
+   3.0,
+   -3.5
+  ],
+  "target": [
+   0,
+   1.8,
+   8
+  ],
+  "ages": [
+   3,
+   8,
+   14
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ],
+   [
+    0,
+    0,
+    16.5,
+    1.8
+   ]
+  ],
+  "sky": [
+   0.04,
+   0.06,
+   0.16
+  ],
+  "horizon": [
+   0.16,
+   0.17,
+   0.32
+  ],
+  "floor": [
+   0.1,
+   0.11,
+   0.17
+  ],
+  "note": "Star Beam page: line 16, vfx eye -> eye+16, 18 ticks, power 1.2"
+ },
+ "star_flagellum": {
+  "layer": "ElementIdentityLayer",
+  "shape": "STAR_MAGIC",
+  "from": [
+   0,
+   1.6,
+   0
+  ],
+  "to": [
+   0,
+   1.6,
+   8
+  ],
+  "power": 2.0,
+  "duration": 14,
+  "cam": [
+   -4.5,
+   5.5,
+   -2.8
+  ],
+  "target": [
+   0.4,
+   1.0,
+   5
+  ],
+  "ages": [
+   3,
+   7,
+   11
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ],
+   [
+    1.5,
+    0,
+    6,
+    1.8
+   ],
+   [
+    -1.5,
+    0,
+    7,
+    1.8
+   ]
+  ],
+  "sky": [
+   0.04,
+   0.06,
+   0.16
+  ],
+  "horizon": [
+   0.16,
+   0.17,
+   0.32
+  ],
+  "floor": [
+   0.1,
+   0.11,
+   0.17
+  ],
+  "note": "Quartile Flagellum page: cone range 8, vfx eye -> eye+8, 14 ticks, power r/4 = 2"
+ },
+ "star_halation": {
+  "layer": "ElementIdentityLayer",
+  "shape": "STAR_MAGIC",
+  "from": [
+   0,
+   1.6,
+   0
+  ],
+  "to": [
+   0,
+   1.2,
+   10
+  ],
+  "power": 0.6,
+  "duration": 14,
+  "cam": [
+   -6,
+   4.2,
+   -3.5
+  ],
+  "target": [
+   0,
+   2.2,
+   6
+  ],
+  "ages": [
+   3,
+   7,
+   11
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ],
+   [
+    0,
+    0,
+    10,
+    1.8
+   ]
+  ],
+  "also": [
+   {
+    "seed": 791
+   },
+   {
+    "seed": 792
+   },
+   {
+    "seed": 793
+   },
+   {
+    "seed": 794
+   }
+  ],
+  "sky": [
+   0.04,
+   0.06,
+   0.16
+  ],
+  "horizon": [
+   0.16,
+   0.17,
+   0.32
+  ],
+  "floor": [
+   0.1,
+   0.11,
+   0.17
+  ],
+  "note": "Orbit Barrage page: volley of 5 homing bolts on one target (14 ticks, power 0.6)"
+ }
+}

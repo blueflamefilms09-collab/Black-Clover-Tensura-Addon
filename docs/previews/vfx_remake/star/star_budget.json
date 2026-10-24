@@ -1,0 +1,196 @@
+{
+ "scenes": {
+  "node": {
+   "title": "Star node (a placed star)",
+   "before_scene": "star_node",
+   "before_layer": "ElementIdentityLayer",
+   "before_peak_vertices": 104,
+   "engine_cap_per_activation": 400,
+   "A": {
+    "peak_vertices": 44,
+    "peak_tick": 7
+   },
+   "B": {
+    "peak_vertices": 56,
+    "peak_tick": 7
+   },
+   "C": {
+    "peak_vertices": 380,
+    "peak_tick": 10,
+    "mesh_quads_at_peak": 90
+   },
+   "canon": "Star Magic overview: 'create and manipulate stars at will' (EN wiki, Star Magic)",
+   "note": "Stardust Field step (field: from the ground point to +1 up, power r/3); there is no placed star today"
+  },
+  "lines": {
+   "title": "Constellation lines (nodes linked)",
+   "before_scene": "star_lines",
+   "before_layer": "ElementIdentityLayer",
+   "before_peak_vertices": 520,
+   "engine_cap_per_activation": 400,
+   "A": {
+    "peak_vertices": 104,
+    "peak_tick": 21
+   },
+   "B": {
+    "peak_vertices": 144,
+    "peak_tick": 21
+   },
+   "C": {
+    "peak_vertices": 676,
+    "peak_tick": 21,
+    "mesh_quads_at_peak": 156
+   },
+   "canon": "Star Magic overview: 'connecting stars forms a constellation, stronger attacks and defences' (EN wiki)",
+   "note": "Constellation page: volley of 5 bolts, 14 ticks, power 0.6 (THREAD_LINE is rewritten to STAR_MAGIC)"
+  },
+  "conjunction": {
+   "title": "Conjunction (teleport between stars)",
+   "before_scene": "star_conjunction",
+   "before_layer": "ElementIdentityLayer",
+   "before_peak_vertices": 104,
+   "engine_cap_per_activation": 400,
+   "A": {
+    "peak_vertices": 56,
+    "peak_tick": 9
+   },
+   "B": {
+    "peak_vertices": 80,
+    "peak_tick": 9
+   },
+   "C": {
+    "peak_vertices": 488,
+    "peak_tick": 9,
+    "mesh_quads_at_peak": 114
+   },
+   "canon": "Star Magic: Conjunction, ch. 309/310: teleport to the point beneath one of your stars (EN wiki; JA \u5408\u5929)",
+   "note": "Conjunction page: dash 12 blocks ahead, vfx from start+1 to dest+1, 12 ticks, power 1"
+  },
+  "scutum": {
+   "title": "Quartile Scutum (4-star barrier)",
+   "before_scene": "star_scutum",
+   "before_layer": "AuraLayer",
+   "before_peak_vertices": 140,
+   "engine_cap_per_activation": 400,
+   "A": {
+    "peak_vertices": 120,
+    "peak_tick": 22
+   },
+   "B": {
+    "peak_vertices": 164,
+    "peak_tick": 22
+   },
+   "C": {
+    "peak_vertices": 784,
+    "peak_tick": 22,
+    "mesh_quads_at_peak": 182
+   },
+   "canon": "Star Magic: Quartile Scutum, ch. 309/310: four stars, beams between them form a rectangular barrier (EN wiki; JA \u56db\u5929\u30fb\u76fe)",
+   "note": "Star Shield page: empower, sendFollowing with SPIRIT_AURA (not a star effect at all)"
+  },
+  "hasta": {
+   "title": "Quartile Hasta (spear of light)",
+   "before_scene": "star_hasta",
+   "before_layer": "ElementIdentityLayer",
+   "before_peak_vertices": 104,
+   "engine_cap_per_activation": 400,
+   "A": {
+    "peak_vertices": 104,
+    "peak_tick": 14
+   },
+   "B": {
+    "peak_vertices": 144,
+    "peak_tick": 14
+   },
+   "C": {
+    "peak_vertices": 768,
+    "peak_tick": 14,
+    "mesh_quads_at_peak": 177
+   },
+   "canon": "Star Magic: Quartile Hasta (EN wiki nav, no page text; JA \u56db\u5929\u30fb\u69cd: light gathered in the middle of four stars, fired as a laser)",
+   "note": "Star Beam page: line 16, vfx eye -> eye+16, 18 ticks, power 1.2"
+  },
+  "flagellum": {
+   "title": "Quartile Flagellum (whip of light)",
+   "before_scene": "star_flagellum",
+   "before_layer": "ElementIdentityLayer",
+   "before_peak_vertices": 104,
+   "engine_cap_per_activation": 400,
+   "A": {
+    "peak_vertices": 140,
+    "peak_tick": 10
+   },
+   "B": {
+    "peak_vertices": 184,
+    "peak_tick": 10
+   },
+   "C": {
+    "peak_vertices": 556,
+    "peak_tick": 10,
+    "mesh_quads_at_peak": 128
+   },
+   "canon": "Star Magic: Quartile Flagellum, ch. 310: starlight joins four stars into a thin sharp whip (EN wiki; JA \u56db\u5929\u30fb\u97ad)",
+   "note": "Quartile Flagellum page: cone range 8, vfx eye -> eye+8, 14 ticks, power r/4 = 2"
+  },
+  "halation": {
+   "title": "Halation (beams from the stars)",
+   "before_scene": "star_halation",
+   "before_layer": "ElementIdentityLayer",
+   "before_peak_vertices": 520,
+   "engine_cap_per_activation": 400,
+   "A": {
+    "peak_vertices": 144,
+    "peak_tick": 10
+   },
+   "B": {
+    "peak_vertices": 196,
+    "peak_tick": 12
+   },
+   "C": {
+    "peak_vertices": 860,
+    "peak_tick": 5,
+    "mesh_quads_at_peak": 200
+   },
+   "canon": "no canon spell of this name found (EN and JA search); mod-original beam finisher",
+   "note": "Orbit Barrage page: volley of 5 homing bolts on one target (14 ticks, power 0.6)"
+  }
+ },
+ "primitives_vertices_lod0": {
+  "A": {
+   "node": 16,
+   "link_5_blocks": 4,
+   "sigil": 4,
+   "pane": 4,
+   "spear": 8,
+   "ray": 8,
+   "whip": 64,
+   "flash": 12,
+   "ring": 4,
+   "spark": 4
+  },
+  "B": {
+   "node": 20,
+   "link_5_blocks": 12,
+   "sigil": 8,
+   "pane": 8,
+   "spear": 16,
+   "ray": 16,
+   "whip": 92,
+   "flash": 12,
+   "ring": 4,
+   "spark": 4
+  },
+  "C": {
+   "node": 72,
+   "link_5_blocks": 52,
+   "sigil": 84,
+   "pane": 28,
+   "spear": 132,
+   "ray": 24,
+   "whip": 168,
+   "flash": 100,
+   "ring": 40,
+   "spark": 24
+  }
+ }
+}
