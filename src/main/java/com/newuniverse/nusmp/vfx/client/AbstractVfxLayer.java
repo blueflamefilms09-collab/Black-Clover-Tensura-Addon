@@ -24,6 +24,12 @@ public abstract class AbstractVfxLayer {
     /** Vertex cap for one activation (never above 400). */
     public int vertexBudget(VfxShape shape) { return VfxVertexBuffer.MAX_VERTICES_PER_ACTIVATION; }
 
+    /**
+     * Whether this layer draws the shape right now. True for every layer except one that a client setting can turn back into "no layer" (the Wind layer with {@code vfx.element.wind = V1} and
+     * FX_WIND_GUST, which had none before): the manager then falls back to the cheap dust, exactly as it did before the layer existed.
+     */
+    public boolean handles(VfxShape shape) { return true; }
+
     /** Called once when the effect starts (sounds/shake). */
     public void onSpawn(VfxInstance inst) {}
 

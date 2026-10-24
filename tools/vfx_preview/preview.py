@@ -88,6 +88,9 @@ def build(layers):
     shutil.copy(os.path.join(VFX, "VfxShape.java"), pkg)
     shutil.copy(os.path.join(VFX, "FlatProps.java"), pkg)                  # the pure switch of the flat object cut-outs (the vertex buffer asks it)
     shutil.copy(os.path.join(VFX, "EarthFxStyle.java"), pkg)               # 1.93.0: the pure palette table of the earth-family layer (colour -> magic identity)
+    shutil.copy(os.path.join(VFX, "WindMc.java"), pkg)                     # Wind pixel look: the pure rules (style switch, caps, stepped timing, tint choice) the vertex buffer and WindMcLayer read
+    if any(l.split(".")[-1] == "WindMcLayer" for l in layers):             # WindMcLayer hands V1 back to the two layers that drew the shapes before it
+        layers = list(layers) + ["WindMagicLayer", "WindSpellLayer"]
     storm_pkg = os.path.join(gen, "com", "newuniverse", "nusmp", "fairytail", "storm")           # Storm Magic: the pure maths the server and the layer share (StormMath, StormComp)
     os.makedirs(storm_pkg, exist_ok=True)
     for name in ("StormMath.java", "StormComp.java"):
@@ -271,6 +274,8 @@ def run_java(scene, classes, out_json):
         args += ["--budget", str(scene["budget"])]
     if scene.get("flat"):
         args += ["--flat", "1"]
+    if scene.get("style"):
+        args += ["--style", scene["style"]]
     subprocess.run(args, check=True)
     with open(out_json) as f:
         return json.load(f)

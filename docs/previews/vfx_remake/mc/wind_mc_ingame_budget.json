@@ -1,0 +1,42 @@
+{
+ "slash": {
+  "duration": 16,
+  "C_peak_quads_detail_1.0": 8,
+  "before_peak_quads_detail_1.0": 72,
+  "C_peak_quads_detail_0.5": 5,
+  "before_peak_quads_detail_0.5": 37
+ },
+ "slash_tint": {
+  "duration": 16,
+  "C_peak_quads_detail_1.0": 8,
+  "before_peak_quads_detail_1.0": 72,
+  "C_peak_quads_detail_0.5": 5,
+  "before_peak_quads_detail_0.5": 37
+ },
+ "emperor": {
+  "duration": 20,
+  "C_peak_quads_detail_1.0": 18,
+  "before_peak_quads_detail_1.0": 80,
+  "C_peak_quads_detail_0.5": 10,
+  "before_peak_quads_detail_0.5": 48
+ },
+ "gale": {
+  "duration": 24,
+  "C_peak_quads_detail_1.0": 16,
+  "before_peak_quads_detail_1.0": 68,
+  "C_peak_quads_detail_0.5": 9,
+  "before_peak_quads_detail_0.5": 40
+ },
+ "gust": {
+  "duration": 18,
+  "C_peak_quads_detail_1.0": 16,
+  "C_peak_quads_detail_0.5": 9
+ },
+ "ring": {
+  "duration": 30,
+  "C_peak_quads_detail_1.0": 13,
+  "before_peak_quads_detail_1.0": 100,
+  "C_peak_quads_detail_0.5": 8,
+  "before_peak_quads_detail_0.5": 86
+ }
+}
