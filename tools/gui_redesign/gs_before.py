@@ -127,6 +127,6 @@ def before_hud(scale, win=(1280, 720)):
     c.fill(gw / 2 - 0.5, gh / 2 - 5, gw / 2 + 0.5, gh / 2 + 5, (255, 255, 255, 220))
     hx, hy = hotbar(c, gw / 2, gh - 1, 2)
     hearts_row(c, hx + 1, hy - 11, 10, 8)
-    c.text("no mana / magicule gauge of the mod: Tensura draws its own bars", 7, gh - 36, (255, 255, 255, 255), True, k=0.8)
-    c.text("(top left: the dungeon System window, only in the dungeon)", 7, gh - 26, (200, 210, 225, 255), True, k=0.8)
+    c.text("no mana / magicule gauge of the mod: Tensura draws its own bars", 7, gh - 52, (255, 255, 255, 255), True, k=0.8)
+    c.text("(top left: the dungeon System window, only in the dungeon)", 7, gh - 42, (200, 210, 225, 255), True, k=0.8)
     return c
