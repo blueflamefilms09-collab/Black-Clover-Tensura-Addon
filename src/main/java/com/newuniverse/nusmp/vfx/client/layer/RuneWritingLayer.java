@@ -5,6 +5,7 @@ import com.newuniverse.nusmp.mana.method.RuneGeneratorUtil.Frame;
 import com.newuniverse.nusmp.mana.method.RuneGeneratorUtil.Params;
 import com.newuniverse.nusmp.mana.method.RuneGlyphLayout;
 import com.newuniverse.nusmp.mana.method.RuneGlyphLayout.Layout;
+import com.newuniverse.nusmp.mana.method.RuneHoldView;
 import com.newuniverse.nusmp.mana.method.RuneSpec;
 import com.newuniverse.nusmp.vfx.VfxShape;
 import com.newuniverse.nusmp.vfx.client.AbstractVfxLayer;
@@ -31,7 +32,11 @@ import java.util.Set;
  * for its whole life (eight slots): nothing is allocated per frame.
  *
  * <p>Protocol (never sent over the network; {@code client.manamethod.RuneClient} spawns it when the one rune packet arrives): from = the rune's centre, to = centre + the caster's look,
- * colour = the element's tint, seed = the packed {@link RuneSpec}, duration = charge + {@value #TAIL} ticks.
+ * colour = the element's tint, seed = the packed {@link RuneSpec} (bits 0..5), duration = charge + {@value #TAIL} ticks.
+ *
+ * <p>3.5.0, the hold: when bits 8..15 of the seed hold a key ({@link RuneHoldView#keyOf}), the rune belongs to a HELD page and is drawn from the view the client holder keeps for it
+ * ({@link RuneGlyphLayout#fillStaged}): the rings are written as long as the key is held, stop where it was let go, and only the tiers that were reached are completed. No key: the fixed
+ * rune of 3.4.0, drawn exactly as before. The view is looked up once per instance and the progress arrays are four preallocated numbers: nothing is allocated per frame.
  */
 public class RuneWritingLayer extends AbstractVfxLayer {
     /** The ticks the rune lives after its charge: the release flare, then it fades over the last {@value #FADE}. */
@@ -58,11 +63,13 @@ public class RuneWritingLayer extends AbstractVfxLayer {
         Params params;
         Frame frame;
         int tint;
+        RuneHoldView view;
     }
 
     private final Layout layout = new Layout();
     private final Slot[] slots = new Slot[SLOTS];
     private int nextSlot;
+    private final double[] prog = new double[RuneGlyphLayout.RING_GROUPS], scale = new double[RuneGlyphLayout.RING_GROUPS], written = new double[RuneGlyphLayout.RING_GROUPS];
     private final Vector3f p0 = new Vector3f(), p1 = new Vector3f(), p2 = new Vector3f(), p3 = new Vector3f();
 
     @Override public Set<VfxShape> shapes() { return EnumSet.of(VfxShape.RUNE_WRITING); }
@@ -86,6 +93,7 @@ public class RuneWritingLayer extends AbstractVfxLayer {
         Vec3 from = inst.from(ctx), to = inst.to(ctx);
         double lx = to.x - from.x, ly = to.y - from.y, lz = to.z - from.z;
         s.frame = RuneGeneratorUtil.frameFacing(from.x, from.y, from.z, lx, ly, lz);
+        s.view = RuneHoldView.lookup(RuneHoldView.keyOf(inst.seed));
         s.tint = s.spec.trueMagic() ? 0 : TINT_OF_ELEMENT[Math.min(s.spec.element().ordinal(), TINT_OF_ELEMENT.length - 1)];
         return s;
     }
@@ -96,11 +104,20 @@ public class RuneWritingLayer extends AbstractVfxLayer {
         if (level == RuneGlyphLayout.LEVEL_NONE) return;
         Slot s = slotOf(inst, ctx);
         double age = inst.ageTicks(ctx.partialTick);
-        int charge = Math.max(1, inst.duration - TAIL);
-        float fade = (float) Math.max(0.0, Math.min(1.0, (inst.duration - age) / FADE));
-        if (fade <= 0f) return;
         double cx = ctx.camPos.x, cy = ctx.camPos.y, cz = ctx.camPos.z;
-        RuneGlyphLayout.fill(layout, s.spec, s.params, s.frame, age, charge, level, cx, cy, cz);
+        float fade;
+        if (s.view != null) {                                                            // a held rune: the picture follows the hold
+            RuneHoldView v = s.view;
+            fade = v.fade(age);
+            if (fade <= 0f) return;
+            v.progress(age, prog, scale, written);
+            RuneGlyphLayout.fillStaged(layout, s.spec, s.params, v.frame, age, prog, scale, v.flare(age), level, cx, cy, cz);
+        } else {
+            int charge = Math.max(1, inst.duration - TAIL);
+            fade = (float) Math.max(0.0, Math.min(1.0, (inst.duration - age) / FADE));
+            if (fade <= 0f) return;
+            RuneGlyphLayout.fill(layout, s.spec, s.params, s.frame, age, charge, level, cx, cy, cz);
+        }
         ResourceLocation stroke = STROKE[s.tint];
         int core = CORE[s.tint];
         // the circle lines first (they lie under the glyphs), then the strokes, the pens, the lightning and the glow behind the book

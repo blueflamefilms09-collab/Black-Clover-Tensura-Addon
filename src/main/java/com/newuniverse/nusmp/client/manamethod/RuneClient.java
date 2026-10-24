@@ -13,6 +13,8 @@ import com.newuniverse.nusmp.mana.method.RuneGeneratorUtil.Frame;
 import com.newuniverse.nusmp.mana.method.RuneGeneratorUtil.Params;
 import com.newuniverse.nusmp.mana.method.RuneGlyphLayout;
 import com.newuniverse.nusmp.mana.method.RuneGlyphLayout.Layout;
+import com.newuniverse.nusmp.mana.method.RuneHoldView;
+import com.newuniverse.nusmp.mana.method.RuneRules;
 import com.newuniverse.nusmp.mana.method.RuneNet;
 import com.newuniverse.nusmp.mana.method.RuneSpec;
 import com.newuniverse.nusmp.particle.fx.FxCatalog;
@@ -37,9 +39,12 @@ import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.client.event.ClientPlayerNetworkEvent;
 import net.neoforged.neoforge.client.event.ClientTickEvent;
@@ -79,6 +84,10 @@ public final class RuneClient {
         final Layout scratch = new Layout();
         ParticleOptions spark;
         final RandomSource random = RandomSource.create();
+        /** 3.5.0: the view of a HELD rune (null for the fixed rune of the old cast), the entity id of the caster, whether the bolt's cast packet has arrived. */
+        RuneHoldView view;
+        int ownerId;
+        boolean launched;
     }
 
     private static final List<CRune> RUNES = new ArrayList<>();
@@ -87,11 +96,15 @@ public final class RuneClient {
     /** The open grimoire of each element, built once (a render-only copy at the full V). */
     private static final ItemStack[] BOOKS = new ItemStack[RuneElement.values().length];
     private static final double SPARK_DISTANCE = 40.0;
+    /** Scratch for the staged drawing (the client tick runs on one thread). */
+    private static final double[] PROG = new double[RuneGlyphLayout.RING_GROUPS], SCALE = new double[RuneGlyphLayout.RING_GROUPS], WRITTEN = new double[RuneGlyphLayout.RING_GROUPS];
+    /** A released rune whose cast never arrives (the cast failed, or its packet was dropped) goes away this many ticks after the release (the wind-up is 4 to 7). */
+    private static final int ORPHAN_TICKS = 14;
 
     public static void init() {
         NeoForge.EVENT_BUS.addListener(RuneClient::onClientTick);
         NeoForge.EVENT_BUS.addListener(RuneClient::onRender);
-        NeoForge.EVENT_BUS.addListener((ClientPlayerNetworkEvent.LoggingOut e) -> RUNES.clear());
+        NeoForge.EVENT_BUS.addListener((ClientPlayerNetworkEvent.LoggingOut e) -> { RUNES.clear(); RuneHoldView.forgetAll(); });
     }
 
     /** A rune packet arrived: validate it, start the writing effect and keep the small state the book and the sparks need. */
@@ -100,6 +113,19 @@ public final class RuneClient {
         if (mc.level == null || !RuneNet.valid(p)) return;
         long now = mc.level.getGameTime();
         for (int i = RUNES.size() - 1; i >= 0; i--) if (now - RUNES.get(i).born > RUNES.get(i).lifetime) RUNES.remove(i);
+        CRune held = heldRuneOf(p.ownerId());
+        if (held != null) {                                                                  // the rune of the hold is the rune of this cast: it stops following, finishes, and flares when the bolt leaves
+            long age = now - held.born;
+            if (!held.view.released()) held.view.release(age, (int) age);                    // the release packet was dropped: the hold lasted as long as the rune has been up
+            held.view.follow = false;
+            held.frame = held.view.frame = RuneGeneratorUtil.frameFacing(p.x(), p.y(), p.z(), p.lx(), p.ly(), p.lz());
+            held.yawDeg = Math.toDegrees(Math.atan2(-p.lx(), p.lz()));
+            held.view.launchAge = age + p.charge();
+            held.view.endAge = held.view.launchAge + RuneWritingLayer.TAIL;
+            held.lifetime = (int) Math.ceil(held.view.endAge);
+            held.launched = true;
+            return;
+        }
         if (RUNES.size() >= RuneGeneratorUtil.MAX_RUNES_DRAWN) return;                      // at most six at once
         RuneSpec spec = RuneSpec.unpack(p.spec());
         CRune r = new CRune();
@@ -116,6 +142,76 @@ public final class RuneClient {
         RUNES.add(r);
         Vec3 from = new Vec3(p.x(), p.y(), p.z());
         VfxManager.get().spawn(new VfxPayload(VfxShape.RUNE_WRITING.ordinal(), from, from.add(p.lx(), p.ly(), p.lz()), 0xFF000000 | spec.element().tint, r.lifetime, 1.0f, -1, spec.pack()));
+    }
+
+    /** The rune of a hold that is still waiting for its cast (not launched), of one caster; null when there is none. */
+    private static CRune heldRuneOf(int ownerId) {
+        for (CRune r : RUNES) if (r.view != null && !r.launched && r.ownerId == ownerId && r.view.endAge < 0f) return r;
+        return null;
+    }
+
+    /**
+     * A hold packet arrived (3.5.0): a page is being held (HOLD), was let go after N ticks (RELEASE), or was given up (CANCEL). HOLD starts the rune that is written while the key is down;
+     * RELEASE stops its clock (and starts the rune now when the HOLD never arrived, as for a tap shorter than a tick); CANCEL fades it. Validated like the rune packet.
+     */
+    public static void onHold(RuneNet.HoldPayload p) {
+        Minecraft mc = Minecraft.getInstance();
+        if (mc.level == null || !RuneNet.validHold(p)) return;
+        long now = mc.level.getGameTime();
+        for (int i = RUNES.size() - 1; i >= 0; i--) if (now - RUNES.get(i).born > RUNES.get(i).lifetime) RUNES.remove(i);
+        CRune r = heldRuneOf(p.ownerId());
+        switch (p.phase()) {
+            case RuneNet.PHASE_HOLD -> {
+                if (r != null) endRune(r, now);                                               // a new hold: the old unfinished one is over
+                start(mc, p, now, 0);
+            }
+            case RuneNet.PHASE_RELEASE -> {
+                if (r == null) r = start(mc, p, now, p.held());
+                if (r != null && !r.view.released()) r.view.release(now - r.born, p.held());
+            }
+            default -> { if (r != null) endRune(r, now); }                                   // CANCEL
+        }
+    }
+
+    private static void endRune(CRune r, long now) {
+        r.view.endAge = (float) (now - r.born) + RuneHoldView.FADE;
+        r.lifetime = (int) Math.ceil(r.view.endAge);
+    }
+
+    /** Starts the rune of a held page in front of its caster; null when the caster is not known here, or six runes are up. */
+    private static CRune start(Minecraft mc, RuneNet.HoldPayload p, long now, int held) {
+        Entity owner = mc.level.getEntity(p.ownerId());
+        if (owner == null || RUNES.size() >= RuneGeneratorUtil.MAX_RUNES_DRAWN) return null;
+        RuneSpec spec = RuneSpec.unpack(p.spec());
+        RuneHoldView view = new RuneHoldView(p.ownerId(), spec, p.minHold(), p.maxHold(), null);
+        CRune r = new CRune();
+        r.spec = spec;
+        r.params = RuneGeneratorUtil.paramsFor(spec);
+        r.born = now;
+        r.view = view;
+        r.ownerId = p.ownerId();
+        r.charge = view.maxHold;
+        r.lifetime = view.lifetime();
+        r.own = mc.player != null && mc.player.getId() == p.ownerId();
+        r.book = book(spec.element());
+        r.spark = options(RuneElement.RING_PARTICLE, spec.element().tint, 0.9f);
+        follow(mc, r, owner);
+        RUNES.add(r);
+        Vec3 from = new Vec3(r.frame.cx(), r.frame.cy(), r.frame.cz());
+        Vec3 look = owner.getLookAngle();
+        VfxManager.get().spawn(new VfxPayload(VfxShape.RUNE_WRITING.ordinal(), from, from.add(look.x, look.y, look.z), 0xFF000000 | spec.element().tint, view.lifetime(), 1.0f, -1, RuneHoldView.seedOf(spec.pack(), RuneHoldView.register(view))));
+        return r;
+    }
+
+    /** Puts the rune where the server puts it: {@link RuneRules#RUNE_DISTANCE} in front of the caster's eye, nearer when a wall is in the way. One short ray per held rune per tick (at most six). */
+    private static void follow(Minecraft mc, CRune r, Entity owner) {
+        Vec3 eye = owner.getEyePosition(), look = owner.getLookAngle().normalize();
+        Vec3 center = eye.add(look.scale(RuneRules.RUNE_DISTANCE));
+        HitResult wall = mc.level.clip(new ClipContext(eye, center, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, owner));
+        if (wall.getType() != HitResult.Type.MISS) center = eye.add(look.scale(Math.max(0.8, wall.getLocation().distanceTo(eye) - 0.35)));
+        r.frame = RuneGeneratorUtil.frameFacing(center.x, center.y, center.z, look.x, look.y, look.z);
+        r.view.frame = r.frame;
+        r.yawDeg = Math.toDegrees(Math.atan2(-look.x, look.z));
     }
 
     private static ItemStack book(RuneElement e) {
@@ -162,12 +258,24 @@ public final class RuneClient {
             CRune r = RUNES.get(k);
             long age = now - r.born;
             if (age < 0 || age > r.lifetime) { RUNES.remove(k); continue; }
-            if (age > r.charge) continue;                                                       // only the pen throws sparks
+            if (r.view != null) {
+                Entity owner = r.view.follow ? level.getEntity(r.ownerId) : null;
+                if (r.view.follow && (owner == null || !owner.isAlive())) { endRune(r, now); continue; }          // the caster left: the rune fades where it is
+                if (owner != null) follow(mc, r, owner);
+                if (r.view.released() && !r.launched && r.view.endAge < 0f && age - r.view.releaseAge > ORPHAN_TICKS) { endRune(r, now); continue; }      // no cast followed the release
+            } else if (age > r.charge) {
+                continue;                                                                       // only the pen throws sparks
+            }
             double dx = r.frame.cx() - cam.x, dy = r.frame.cy() - cam.y, dz = r.frame.cz() - cam.z, d2 = dx * dx + dy * dy + dz * dz;
             if (!r.own && d2 > SPARK_DISTANCE * SPARK_DISTANCE) continue;
             float detail = Math.min(q.detail, RuneGeneratorUtil.distanceDetailSq(d2, r.own));
             if (!(detail > 0.45f)) continue;                                                    // the lower levels draw no sparks
-            RuneGlyphLayout.fill(r.scratch, r.spec, r.params, r.frame, age, r.charge, RuneGlyphLayout.LEVEL_FULL, cam.x, cam.y, cam.z);
+            if (r.view != null) {
+                r.view.progress(age, PROG, SCALE, WRITTEN);
+                RuneGlyphLayout.fillStaged(r.scratch, r.spec, r.params, r.frame, age, PROG, SCALE, r.view.flare(age), RuneGlyphLayout.LEVEL_FULL, cam.x, cam.y, cam.z);
+            } else {
+                RuneGlyphLayout.fill(r.scratch, r.spec, r.params, r.frame, age, r.charge, RuneGlyphLayout.LEVEL_FULL, cam.x, cam.y, cam.z);
+            }
             int want = Math.min(RuneGlyphLayout.MAX_SPARKS_PER_TICK, r.scratch.pens);
             int n = PerfBudgets.clientParticles(now, want);
             for (int i = 0; i < n; i++) {
