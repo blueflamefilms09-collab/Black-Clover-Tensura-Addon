@@ -125,7 +125,8 @@ class PerfSourceScanTest {
             "client/remodel/AbyssalRenderer.java", "client/thread/ThreadTrapRenderer.java", "client/grimoire/GrimoireFloatClient.java", "client/relics/djinn/DjinnArmorLayer.java",
             "vfx/client/layer/WindMcLayer.java",        // the Wind pixel look: its textures are static finals, its frame methods build no location
             "vfx/client/layer/WaterBcLayer.java", "vfx/client/WaterBcDraw.java", "vfx/client/WaterBcFrame.java",        // the Water hybrid: static textures, a fixed plan, a mesh draw of three passes
-            "vfx/client/layer/FireV2Layer.java");       // the Fire V2 look: the same, its textures are static finals resolved once
+            "vfx/client/layer/FireV2Layer.java",       // the Fire V2 look: the same, its textures are static finals resolved once
+            "client/mode/ModeArmorValkyrieV2.java", "client/mode/ModeArmorValkyrieWorld.java", "client/mode/ModeArmorValkyrieEvents.java");       // the Valkyrie armour v2: static textures, a plan once a frame, no location built per frame
 
     @Test
     void theHotRenderFilesBuildNoLocationInTheirFrameMethods() throws IOException {

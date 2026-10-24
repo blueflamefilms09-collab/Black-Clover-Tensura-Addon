@@ -2411,6 +2411,20 @@
       "fixed_scale": 0.398
     },
     {
+      "id": "valkyrie_drill_lance",
+      "action": "preset",
+      "length_blocks": 3.529,
+      "first_person_scale": 0.259,
+      "first_person_translation_px": [
+        1.13,
+        0.77,
+        0.3
+      ],
+      "tip_out_of_view": false,
+      "ground_scale": 0.226,
+      "fixed_scale": 0.425
+    },
+    {
       "id": "vanguard_hammer",
       "action": "preset",
       "length_blocks": 1.765,

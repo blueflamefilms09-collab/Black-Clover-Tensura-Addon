@@ -52,6 +52,7 @@ OVERRIDES = {
     "djinn_weapon_haagenti": 0.15, "djinn_weapon_haagenti_dark": 0.15,                       # a cleaver on a long handle with a gourd pommel
     "gauches_hand_mirror": 0.18, "spirit_king_sceptre": 0.30, "vassal_fan": 0.12, "glutton_chalice": 0.30,                   # held things: by the handle, the shaft, the stem
     "fairy_glitter_gauntlets": 0.45, "fairy_heart_gauntlets": 0.45,                          # a pair of gauntlets: held in the middle
+    "valkyrie_drill_lance": 0.25,                                # the Valkyrie Drill Lance: the hand guard sits a quarter up the length (docs/vfx_remake/valkyrie_ingame.md); the mesh also states `gripxyz`
 }
 POINT_OVERRIDES = {"demon_slayer_sword": (0.0, -12.0, 0.0)}      # the middle of the cloth grip (hilt() of DemonSlayerMesh: y -22 to -2)
 

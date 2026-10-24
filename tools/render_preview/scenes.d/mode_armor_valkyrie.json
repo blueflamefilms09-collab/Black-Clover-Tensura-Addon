@@ -1,0 +1,2847 @@
+{
+ "_comment": "Valkyrie armour v2: written by tools/mode_armor_valkyrie_scenes.py (do not edit by hand).",
+ "vg2_before_full": {
+  "kind": "aura",
+  "attr": "SpiritDive",
+  "realFiles": [
+   "book/SpiritDiveDjinnPieces.java",
+   "book/SpiritDivePieces.java",
+   "book/SpiritDiveTier.java",
+   "book/SpiritDiveAnimeRules.java",
+   "book/SpiritDiveAnimeGeometry.java",
+   "book/SpiritDiveReelRules.java",
+   "book/SpiritDiveReelGeometry.java",
+   "book/SpiritDiveWindRules.java",
+   "book/SpiritDiveWindGeometry.java",
+   "book/SpiritDiveWind3Rules.java",
+   "book/SpiritDiveWind3Geometry.java",
+   "book/SpiritDiveWind3Mesh.java",
+   "book/SpiritDiveWind4Rules.java",
+   "book/SpiritDiveMergeRules.java",
+   "book/SpiritDiveMergeMesh.java",
+   "book/SpiritDiveMerge2Rules.java",
+   "book/FuegoleonArmRules.java",
+   "book/FuegoleonArmDjinnRules.java",
+   "perf/PerfBudget.java",
+   "client/aura/FuegoleonArmAura.java",
+   "client/aura/FuegoleonArmFx.java",
+   "client/aura/FuegoleonArmDjinn.java",
+   "client/aura/FuegoleonArmDjinnFx.java",
+   "client/aura/FuegoleonArmLook.java",
+   "book/ModeArmorWindV2Rules.java",
+   "book/ModeArmorWindV2Mesh.java",
+   "client/mode/ModeArmorLayer.java",
+   "client/mode/ModeArmorWindV2.java",
+   "book/ModeArmorValkyrieRules.java",
+   "book/ModeArmorValkyrieMesh.java",
+   "book/ModeArmorValkyrieBudget.java",
+   "book/ModeArmorValkyrieSpin.java",
+   "client/mode/ModeArmorValkyrieV2.java"
+  ],
+  "exampleFiles": [
+   "Vg2Common.java"
+  ],
+  "examples": [
+   "Vg2Old"
+  ],
+  "total": 120,
+  "ages": [
+   50
+  ],
+  "tile": [
+   480,
+   700
+  ],
+  "views": [
+   {
+    "name": "front",
+    "yaw": 0,
+    "pitch": 6,
+    "target": [
+     0,
+     0.75,
+     0.2
+    ],
+    "dist": 4.4
+   },
+   {
+    "name": "front 3/4",
+    "yaw": 32,
+    "pitch": 8,
+    "target": [
+     0,
+     0.75,
+     0.2
+    ],
+    "dist": 4.4
+   },
+   {
+    "name": "back 3/4",
+    "yaw": 150,
+    "pitch": 12,
+    "target": [
+     0,
+     0.75,
+     0.2
+    ],
+    "dist": 4.4
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 6,
+    "target": [
+     0,
+     0.75,
+     0.2
+    ],
+    "dist": 4.4
+   },
+   {
+    "name": "back",
+    "yaw": 180,
+    "pitch": 8,
+    "target": [
+     0,
+     0.75,
+     0.2
+    ],
+    "dist": 4.4
+   }
+  ],
+  "aura": "MUCUS"
+ },
+ "vg2_before_wings": {
+  "kind": "aura",
+  "attr": "SpiritDive",
+  "realFiles": [
+   "book/SpiritDiveDjinnPieces.java",
+   "book/SpiritDivePieces.java",
+   "book/SpiritDiveTier.java",
+   "book/SpiritDiveAnimeRules.java",
+   "book/SpiritDiveAnimeGeometry.java",
+   "book/SpiritDiveReelRules.java",
+   "book/SpiritDiveReelGeometry.java",
+   "book/SpiritDiveWindRules.java",
+   "book/SpiritDiveWindGeometry.java",
+   "book/SpiritDiveWind3Rules.java",
+   "book/SpiritDiveWind3Geometry.java",
+   "book/SpiritDiveWind3Mesh.java",
+   "book/SpiritDiveWind4Rules.java",
+   "book/SpiritDiveMergeRules.java",
+   "book/SpiritDiveMergeMesh.java",
+   "book/SpiritDiveMerge2Rules.java",
+   "book/FuegoleonArmRules.java",
+   "book/FuegoleonArmDjinnRules.java",
+   "perf/PerfBudget.java",
+   "client/aura/FuegoleonArmAura.java",
+   "client/aura/FuegoleonArmFx.java",
+   "client/aura/FuegoleonArmDjinn.java",
+   "client/aura/FuegoleonArmDjinnFx.java",
+   "client/aura/FuegoleonArmLook.java",
+   "book/ModeArmorWindV2Rules.java",
+   "book/ModeArmorWindV2Mesh.java",
+   "client/mode/ModeArmorLayer.java",
+   "client/mode/ModeArmorWindV2.java",
+   "book/ModeArmorValkyrieRules.java",
+   "book/ModeArmorValkyrieMesh.java",
+   "book/ModeArmorValkyrieBudget.java",
+   "book/ModeArmorValkyrieSpin.java",
+   "client/mode/ModeArmorValkyrieV2.java"
+  ],
+  "exampleFiles": [
+   "Vg2Common.java"
+  ],
+  "examples": [
+   "Vg2Old"
+  ],
+  "total": 120,
+  "ages": [
+   50
+  ],
+  "tile": [
+   480,
+   520
+  ],
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 32,
+    "pitch": 8,
+    "target": [
+     0,
+     1.55,
+     0.5
+    ],
+    "dist": 3.2
+   },
+   {
+    "name": "back 3/4",
+    "yaw": 150,
+    "pitch": 12,
+    "target": [
+     0,
+     1.55,
+     0.5
+    ],
+    "dist": 3.2
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 6,
+    "target": [
+     0,
+     1.55,
+     0.5
+    ],
+    "dist": 3.2
+   },
+   {
+    "name": "back",
+    "yaw": 180,
+    "pitch": 8,
+    "target": [
+     0,
+     1.55,
+     0.5
+    ],
+    "dist": 3.2
+   }
+  ],
+  "aura": "MUCUS"
+ },
+ "vg2_before_upper": {
+  "kind": "aura",
+  "attr": "SpiritDive",
+  "realFiles": [
+   "book/SpiritDiveDjinnPieces.java",
+   "book/SpiritDivePieces.java",
+   "book/SpiritDiveTier.java",
+   "book/SpiritDiveAnimeRules.java",
+   "book/SpiritDiveAnimeGeometry.java",
+   "book/SpiritDiveReelRules.java",
+   "book/SpiritDiveReelGeometry.java",
+   "book/SpiritDiveWindRules.java",
+   "book/SpiritDiveWindGeometry.java",
+   "book/SpiritDiveWind3Rules.java",
+   "book/SpiritDiveWind3Geometry.java",
+   "book/SpiritDiveWind3Mesh.java",
+   "book/SpiritDiveWind4Rules.java",
+   "book/SpiritDiveMergeRules.java",
+   "book/SpiritDiveMergeMesh.java",
+   "book/SpiritDiveMerge2Rules.java",
+   "book/FuegoleonArmRules.java",
+   "book/FuegoleonArmDjinnRules.java",
+   "perf/PerfBudget.java",
+   "client/aura/FuegoleonArmAura.java",
+   "client/aura/FuegoleonArmFx.java",
+   "client/aura/FuegoleonArmDjinn.java",
+   "client/aura/FuegoleonArmDjinnFx.java",
+   "client/aura/FuegoleonArmLook.java",
+   "book/ModeArmorWindV2Rules.java",
+   "book/ModeArmorWindV2Mesh.java",
+   "client/mode/ModeArmorLayer.java",
+   "client/mode/ModeArmorWindV2.java",
+   "book/ModeArmorValkyrieRules.java",
+   "book/ModeArmorValkyrieMesh.java",
+   "book/ModeArmorValkyrieBudget.java",
+   "book/ModeArmorValkyrieSpin.java",
+   "client/mode/ModeArmorValkyrieV2.java"
+  ],
+  "exampleFiles": [
+   "Vg2Common.java"
+  ],
+  "examples": [
+   "Vg2Old"
+  ],
+  "total": 120,
+  "ages": [
+   50
+  ],
+  "tile": [
+   420,
+   520
+  ],
+  "views": [
+   {
+    "name": "front",
+    "yaw": 0,
+    "pitch": 6,
+    "target": [
+     0,
+     1.4,
+     0.1
+    ],
+    "dist": 2.2
+   },
+   {
+    "name": "front 3/4",
+    "yaw": 32,
+    "pitch": 8,
+    "target": [
+     0,
+     1.4,
+     0.1
+    ],
+    "dist": 2.2
+   },
+   {
+    "name": "back 3/4",
+    "yaw": 150,
+    "pitch": 12,
+    "target": [
+     0,
+     1.4,
+     0.1
+    ],
+    "dist": 2.2
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 6,
+    "target": [
+     0,
+     1.4,
+     0.1
+    ],
+    "dist": 2.2
+   }
+  ],
+  "aura": "MUCUS"
+ },
+ "vg2_before_run": {
+  "kind": "aura",
+  "attr": "SpiritDive",
+  "realFiles": [
+   "book/SpiritDiveDjinnPieces.java",
+   "book/SpiritDivePieces.java",
+   "book/SpiritDiveTier.java",
+   "book/SpiritDiveAnimeRules.java",
+   "book/SpiritDiveAnimeGeometry.java",
+   "book/SpiritDiveReelRules.java",
+   "book/SpiritDiveReelGeometry.java",
+   "book/SpiritDiveWindRules.java",
+   "book/SpiritDiveWindGeometry.java",
+   "book/SpiritDiveWind3Rules.java",
+   "book/SpiritDiveWind3Geometry.java",
+   "book/SpiritDiveWind3Mesh.java",
+   "book/SpiritDiveWind4Rules.java",
+   "book/SpiritDiveMergeRules.java",
+   "book/SpiritDiveMergeMesh.java",
+   "book/SpiritDiveMerge2Rules.java",
+   "book/FuegoleonArmRules.java",
+   "book/FuegoleonArmDjinnRules.java",
+   "perf/PerfBudget.java",
+   "client/aura/FuegoleonArmAura.java",
+   "client/aura/FuegoleonArmFx.java",
+   "client/aura/FuegoleonArmDjinn.java",
+   "client/aura/FuegoleonArmDjinnFx.java",
+   "client/aura/FuegoleonArmLook.java",
+   "book/ModeArmorWindV2Rules.java",
+   "book/ModeArmorWindV2Mesh.java",
+   "client/mode/ModeArmorLayer.java",
+   "client/mode/ModeArmorWindV2.java",
+   "book/ModeArmorValkyrieRules.java",
+   "book/ModeArmorValkyrieMesh.java",
+   "book/ModeArmorValkyrieBudget.java",
+   "book/ModeArmorValkyrieSpin.java",
+   "client/mode/ModeArmorValkyrieV2.java"
+  ],
+  "exampleFiles": [
+   "Vg2Common.java"
+  ],
+  "examples": [
+   "Vg2Old"
+  ],
+  "total": 120,
+  "ages": [
+   50
+  ],
+  "tile": [
+   480,
+   700
+  ],
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 32,
+    "pitch": 8,
+    "target": [
+     0,
+     0.75,
+     0.2
+    ],
+    "dist": 4.4
+   },
+   {
+    "name": "back 3/4",
+    "yaw": 150,
+    "pitch": 12,
+    "target": [
+     0,
+     0.75,
+     0.2
+    ],
+    "dist": 4.4
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 6,
+    "target": [
+     0,
+     0.75,
+     0.2
+    ],
+    "dist": 4.4
+   }
+  ],
+  "aura": "MUCUS",
+  "limbSwing": 3.0,
+  "limbSwingAmount": 0.9
+ },
+ "vg2_before_ages": {
+  "kind": "aura",
+  "attr": "SpiritDive",
+  "realFiles": [
+   "book/SpiritDiveDjinnPieces.java",
+   "book/SpiritDivePieces.java",
+   "book/SpiritDiveTier.java",
+   "book/SpiritDiveAnimeRules.java",
+   "book/SpiritDiveAnimeGeometry.java",
+   "book/SpiritDiveReelRules.java",
+   "book/SpiritDiveReelGeometry.java",
+   "book/SpiritDiveWindRules.java",
+   "book/SpiritDiveWindGeometry.java",
+   "book/SpiritDiveWind3Rules.java",
+   "book/SpiritDiveWind3Geometry.java",
+   "book/SpiritDiveWind3Mesh.java",
+   "book/SpiritDiveWind4Rules.java",
+   "book/SpiritDiveMergeRules.java",
+   "book/SpiritDiveMergeMesh.java",
+   "book/SpiritDiveMerge2Rules.java",
+   "book/FuegoleonArmRules.java",
+   "book/FuegoleonArmDjinnRules.java",
+   "perf/PerfBudget.java",
+   "client/aura/FuegoleonArmAura.java",
+   "client/aura/FuegoleonArmFx.java",
+   "client/aura/FuegoleonArmDjinn.java",
+   "client/aura/FuegoleonArmDjinnFx.java",
+   "client/aura/FuegoleonArmLook.java",
+   "book/ModeArmorWindV2Rules.java",
+   "book/ModeArmorWindV2Mesh.java",
+   "client/mode/ModeArmorLayer.java",
+   "client/mode/ModeArmorWindV2.java",
+   "book/ModeArmorValkyrieRules.java",
+   "book/ModeArmorValkyrieMesh.java",
+   "book/ModeArmorValkyrieBudget.java",
+   "book/ModeArmorValkyrieSpin.java",
+   "client/mode/ModeArmorValkyrieV2.java"
+  ],
+  "exampleFiles": [
+   "Vg2Common.java"
+  ],
+  "examples": [
+   "Vg2Old"
+  ],
+  "total": 120,
+  "ages": [
+   2,
+   6,
+   12,
+   20,
+   33,
+   50
+  ],
+  "tile": [
+   300,
+   520
+  ],
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 32,
+    "pitch": 8,
+    "target": [
+     0,
+     0.75,
+     0.2
+    ],
+    "dist": 4.4
+   }
+  ],
+  "aura": "MUCUS"
+ },
+ "vg2_after_full": {
+  "kind": "aura",
+  "attr": "SpiritDive",
+  "realFiles": [
+   "book/SpiritDiveDjinnPieces.java",
+   "book/SpiritDivePieces.java",
+   "book/SpiritDiveTier.java",
+   "book/SpiritDiveAnimeRules.java",
+   "book/SpiritDiveAnimeGeometry.java",
+   "book/SpiritDiveReelRules.java",
+   "book/SpiritDiveReelGeometry.java",
+   "book/SpiritDiveWindRules.java",
+   "book/SpiritDiveWindGeometry.java",
+   "book/SpiritDiveWind3Rules.java",
+   "book/SpiritDiveWind3Geometry.java",
+   "book/SpiritDiveWind3Mesh.java",
+   "book/SpiritDiveWind4Rules.java",
+   "book/SpiritDiveMergeRules.java",
+   "book/SpiritDiveMergeMesh.java",
+   "book/SpiritDiveMerge2Rules.java",
+   "book/FuegoleonArmRules.java",
+   "book/FuegoleonArmDjinnRules.java",
+   "perf/PerfBudget.java",
+   "client/aura/FuegoleonArmAura.java",
+   "client/aura/FuegoleonArmFx.java",
+   "client/aura/FuegoleonArmDjinn.java",
+   "client/aura/FuegoleonArmDjinnFx.java",
+   "client/aura/FuegoleonArmLook.java",
+   "book/ModeArmorWindV2Rules.java",
+   "book/ModeArmorWindV2Mesh.java",
+   "client/mode/ModeArmorLayer.java",
+   "client/mode/ModeArmorWindV2.java",
+   "book/ModeArmorValkyrieRules.java",
+   "book/ModeArmorValkyrieMesh.java",
+   "book/ModeArmorValkyrieBudget.java",
+   "book/ModeArmorValkyrieSpin.java",
+   "client/mode/ModeArmorValkyrieV2.java"
+  ],
+  "exampleFiles": [
+   "Vg2Common.java"
+  ],
+  "examples": [
+   "Vg2New"
+  ],
+  "total": 120,
+  "ages": [
+   50
+  ],
+  "tile": [
+   480,
+   700
+  ],
+  "views": [
+   {
+    "name": "front",
+    "yaw": 0,
+    "pitch": 6,
+    "target": [
+     0,
+     0.75,
+     0.2
+    ],
+    "dist": 4.4
+   },
+   {
+    "name": "front 3/4",
+    "yaw": 32,
+    "pitch": 8,
+    "target": [
+     0,
+     0.75,
+     0.2
+    ],
+    "dist": 4.4
+   },
+   {
+    "name": "back 3/4",
+    "yaw": 150,
+    "pitch": 12,
+    "target": [
+     0,
+     0.75,
+     0.2
+    ],
+    "dist": 4.4
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 6,
+    "target": [
+     0,
+     0.75,
+     0.2
+    ],
+    "dist": 4.4
+   },
+   {
+    "name": "back",
+    "yaw": 180,
+    "pitch": 8,
+    "target": [
+     0,
+     0.75,
+     0.2
+    ],
+    "dist": 4.4
+   }
+  ],
+  "aura": "MUCUS"
+ },
+ "vg2_after_wings": {
+  "kind": "aura",
+  "attr": "SpiritDive",
+  "realFiles": [
+   "book/SpiritDiveDjinnPieces.java",
+   "book/SpiritDivePieces.java",
+   "book/SpiritDiveTier.java",
+   "book/SpiritDiveAnimeRules.java",
+   "book/SpiritDiveAnimeGeometry.java",
+   "book/SpiritDiveReelRules.java",
+   "book/SpiritDiveReelGeometry.java",
+   "book/SpiritDiveWindRules.java",
+   "book/SpiritDiveWindGeometry.java",
+   "book/SpiritDiveWind3Rules.java",
+   "book/SpiritDiveWind3Geometry.java",
+   "book/SpiritDiveWind3Mesh.java",
+   "book/SpiritDiveWind4Rules.java",
+   "book/SpiritDiveMergeRules.java",
+   "book/SpiritDiveMergeMesh.java",
+   "book/SpiritDiveMerge2Rules.java",
+   "book/FuegoleonArmRules.java",
+   "book/FuegoleonArmDjinnRules.java",
+   "perf/PerfBudget.java",
+   "client/aura/FuegoleonArmAura.java",
+   "client/aura/FuegoleonArmFx.java",
+   "client/aura/FuegoleonArmDjinn.java",
+   "client/aura/FuegoleonArmDjinnFx.java",
+   "client/aura/FuegoleonArmLook.java",
+   "book/ModeArmorWindV2Rules.java",
+   "book/ModeArmorWindV2Mesh.java",
+   "client/mode/ModeArmorLayer.java",
+   "client/mode/ModeArmorWindV2.java",
+   "book/ModeArmorValkyrieRules.java",
+   "book/ModeArmorValkyrieMesh.java",
+   "book/ModeArmorValkyrieBudget.java",
+   "book/ModeArmorValkyrieSpin.java",
+   "client/mode/ModeArmorValkyrieV2.java"
+  ],
+  "exampleFiles": [
+   "Vg2Common.java"
+  ],
+  "examples": [
+   "Vg2New"
+  ],
+  "total": 120,
+  "ages": [
+   50
+  ],
+  "tile": [
+   480,
+   520
+  ],
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 32,
+    "pitch": 8,
+    "target": [
+     0,
+     1.55,
+     0.5
+    ],
+    "dist": 3.2
+   },
+   {
+    "name": "back 3/4",
+    "yaw": 150,
+    "pitch": 12,
+    "target": [
+     0,
+     1.55,
+     0.5
+    ],
+    "dist": 3.2
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 6,
+    "target": [
+     0,
+     1.55,
+     0.5
+    ],
+    "dist": 3.2
+   },
+   {
+    "name": "back",
+    "yaw": 180,
+    "pitch": 8,
+    "target": [
+     0,
+     1.55,
+     0.5
+    ],
+    "dist": 3.2
+   }
+  ],
+  "aura": "MUCUS"
+ },
+ "vg2_after_upper": {
+  "kind": "aura",
+  "attr": "SpiritDive",
+  "realFiles": [
+   "book/SpiritDiveDjinnPieces.java",
+   "book/SpiritDivePieces.java",
+   "book/SpiritDiveTier.java",
+   "book/SpiritDiveAnimeRules.java",
+   "book/SpiritDiveAnimeGeometry.java",
+   "book/SpiritDiveReelRules.java",
+   "book/SpiritDiveReelGeometry.java",
+   "book/SpiritDiveWindRules.java",
+   "book/SpiritDiveWindGeometry.java",
+   "book/SpiritDiveWind3Rules.java",
+   "book/SpiritDiveWind3Geometry.java",
+   "book/SpiritDiveWind3Mesh.java",
+   "book/SpiritDiveWind4Rules.java",
+   "book/SpiritDiveMergeRules.java",
+   "book/SpiritDiveMergeMesh.java",
+   "book/SpiritDiveMerge2Rules.java",
+   "book/FuegoleonArmRules.java",
+   "book/FuegoleonArmDjinnRules.java",
+   "perf/PerfBudget.java",
+   "client/aura/FuegoleonArmAura.java",
+   "client/aura/FuegoleonArmFx.java",
+   "client/aura/FuegoleonArmDjinn.java",
+   "client/aura/FuegoleonArmDjinnFx.java",
+   "client/aura/FuegoleonArmLook.java",
+   "book/ModeArmorWindV2Rules.java",
+   "book/ModeArmorWindV2Mesh.java",
+   "client/mode/ModeArmorLayer.java",
+   "client/mode/ModeArmorWindV2.java",
+   "book/ModeArmorValkyrieRules.java",
+   "book/ModeArmorValkyrieMesh.java",
+   "book/ModeArmorValkyrieBudget.java",
+   "book/ModeArmorValkyrieSpin.java",
+   "client/mode/ModeArmorValkyrieV2.java"
+  ],
+  "exampleFiles": [
+   "Vg2Common.java"
+  ],
+  "examples": [
+   "Vg2New"
+  ],
+  "total": 120,
+  "ages": [
+   50
+  ],
+  "tile": [
+   420,
+   520
+  ],
+  "views": [
+   {
+    "name": "front",
+    "yaw": 0,
+    "pitch": 6,
+    "target": [
+     0,
+     1.4,
+     0.1
+    ],
+    "dist": 2.2
+   },
+   {
+    "name": "front 3/4",
+    "yaw": 32,
+    "pitch": 8,
+    "target": [
+     0,
+     1.4,
+     0.1
+    ],
+    "dist": 2.2
+   },
+   {
+    "name": "back 3/4",
+    "yaw": 150,
+    "pitch": 12,
+    "target": [
+     0,
+     1.4,
+     0.1
+    ],
+    "dist": 2.2
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 6,
+    "target": [
+     0,
+     1.4,
+     0.1
+    ],
+    "dist": 2.2
+   }
+  ],
+  "aura": "MUCUS"
+ },
+ "vg2_after_run": {
+  "kind": "aura",
+  "attr": "SpiritDive",
+  "realFiles": [
+   "book/SpiritDiveDjinnPieces.java",
+   "book/SpiritDivePieces.java",
+   "book/SpiritDiveTier.java",
+   "book/SpiritDiveAnimeRules.java",
+   "book/SpiritDiveAnimeGeometry.java",
+   "book/SpiritDiveReelRules.java",
+   "book/SpiritDiveReelGeometry.java",
+   "book/SpiritDiveWindRules.java",
+   "book/SpiritDiveWindGeometry.java",
+   "book/SpiritDiveWind3Rules.java",
+   "book/SpiritDiveWind3Geometry.java",
+   "book/SpiritDiveWind3Mesh.java",
+   "book/SpiritDiveWind4Rules.java",
+   "book/SpiritDiveMergeRules.java",
+   "book/SpiritDiveMergeMesh.java",
+   "book/SpiritDiveMerge2Rules.java",
+   "book/FuegoleonArmRules.java",
+   "book/FuegoleonArmDjinnRules.java",
+   "perf/PerfBudget.java",
+   "client/aura/FuegoleonArmAura.java",
+   "client/aura/FuegoleonArmFx.java",
+   "client/aura/FuegoleonArmDjinn.java",
+   "client/aura/FuegoleonArmDjinnFx.java",
+   "client/aura/FuegoleonArmLook.java",
+   "book/ModeArmorWindV2Rules.java",
+   "book/ModeArmorWindV2Mesh.java",
+   "client/mode/ModeArmorLayer.java",
+   "client/mode/ModeArmorWindV2.java",
+   "book/ModeArmorValkyrieRules.java",
+   "book/ModeArmorValkyrieMesh.java",
+   "book/ModeArmorValkyrieBudget.java",
+   "book/ModeArmorValkyrieSpin.java",
+   "client/mode/ModeArmorValkyrieV2.java"
+  ],
+  "exampleFiles": [
+   "Vg2Common.java"
+  ],
+  "examples": [
+   "Vg2New"
+  ],
+  "total": 120,
+  "ages": [
+   50
+  ],
+  "tile": [
+   480,
+   700
+  ],
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 32,
+    "pitch": 8,
+    "target": [
+     0,
+     0.75,
+     0.2
+    ],
+    "dist": 4.4
+   },
+   {
+    "name": "back 3/4",
+    "yaw": 150,
+    "pitch": 12,
+    "target": [
+     0,
+     0.75,
+     0.2
+    ],
+    "dist": 4.4
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 6,
+    "target": [
+     0,
+     0.75,
+     0.2
+    ],
+    "dist": 4.4
+   }
+  ],
+  "aura": "MUCUS",
+  "limbSwing": 3.0,
+  "limbSwingAmount": 0.9
+ },
+ "vg2_after_ages": {
+  "kind": "aura",
+  "attr": "SpiritDive",
+  "realFiles": [
+   "book/SpiritDiveDjinnPieces.java",
+   "book/SpiritDivePieces.java",
+   "book/SpiritDiveTier.java",
+   "book/SpiritDiveAnimeRules.java",
+   "book/SpiritDiveAnimeGeometry.java",
+   "book/SpiritDiveReelRules.java",
+   "book/SpiritDiveReelGeometry.java",
+   "book/SpiritDiveWindRules.java",
+   "book/SpiritDiveWindGeometry.java",
+   "book/SpiritDiveWind3Rules.java",
+   "book/SpiritDiveWind3Geometry.java",
+   "book/SpiritDiveWind3Mesh.java",
+   "book/SpiritDiveWind4Rules.java",
+   "book/SpiritDiveMergeRules.java",
+   "book/SpiritDiveMergeMesh.java",
+   "book/SpiritDiveMerge2Rules.java",
+   "book/FuegoleonArmRules.java",
+   "book/FuegoleonArmDjinnRules.java",
+   "perf/PerfBudget.java",
+   "client/aura/FuegoleonArmAura.java",
+   "client/aura/FuegoleonArmFx.java",
+   "client/aura/FuegoleonArmDjinn.java",
+   "client/aura/FuegoleonArmDjinnFx.java",
+   "client/aura/FuegoleonArmLook.java",
+   "book/ModeArmorWindV2Rules.java",
+   "book/ModeArmorWindV2Mesh.java",
+   "client/mode/ModeArmorLayer.java",
+   "client/mode/ModeArmorWindV2.java",
+   "book/ModeArmorValkyrieRules.java",
+   "book/ModeArmorValkyrieMesh.java",
+   "book/ModeArmorValkyrieBudget.java",
+   "book/ModeArmorValkyrieSpin.java",
+   "client/mode/ModeArmorValkyrieV2.java"
+  ],
+  "exampleFiles": [
+   "Vg2Common.java"
+  ],
+  "examples": [
+   "Vg2New"
+  ],
+  "total": 120,
+  "ages": [
+   2,
+   6,
+   12,
+   20,
+   33,
+   50
+  ],
+  "tile": [
+   300,
+   520
+  ],
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 32,
+    "pitch": 8,
+    "target": [
+     0,
+     0.75,
+     0.2
+    ],
+    "dist": 4.4
+   }
+  ],
+  "aura": "MUCUS"
+ },
+ "vg2_float_full": {
+  "kind": "aura",
+  "attr": "SpiritDive",
+  "realFiles": [
+   "book/SpiritDiveDjinnPieces.java",
+   "book/SpiritDivePieces.java",
+   "book/SpiritDiveTier.java",
+   "book/SpiritDiveAnimeRules.java",
+   "book/SpiritDiveAnimeGeometry.java",
+   "book/SpiritDiveReelRules.java",
+   "book/SpiritDiveReelGeometry.java",
+   "book/SpiritDiveWindRules.java",
+   "book/SpiritDiveWindGeometry.java",
+   "book/SpiritDiveWind3Rules.java",
+   "book/SpiritDiveWind3Geometry.java",
+   "book/SpiritDiveWind3Mesh.java",
+   "book/SpiritDiveWind4Rules.java",
+   "book/SpiritDiveMergeRules.java",
+   "book/SpiritDiveMergeMesh.java",
+   "book/SpiritDiveMerge2Rules.java",
+   "book/FuegoleonArmRules.java",
+   "book/FuegoleonArmDjinnRules.java",
+   "perf/PerfBudget.java",
+   "client/aura/FuegoleonArmAura.java",
+   "client/aura/FuegoleonArmFx.java",
+   "client/aura/FuegoleonArmDjinn.java",
+   "client/aura/FuegoleonArmDjinnFx.java",
+   "client/aura/FuegoleonArmLook.java",
+   "book/ModeArmorWindV2Rules.java",
+   "book/ModeArmorWindV2Mesh.java",
+   "client/mode/ModeArmorLayer.java",
+   "client/mode/ModeArmorWindV2.java",
+   "book/ModeArmorValkyrieRules.java",
+   "book/ModeArmorValkyrieMesh.java",
+   "book/ModeArmorValkyrieBudget.java",
+   "book/ModeArmorValkyrieSpin.java",
+   "client/mode/ModeArmorValkyrieV2.java"
+  ],
+  "exampleFiles": [
+   "Vg2Common.java"
+  ],
+  "examples": [
+   "Vg2Float"
+  ],
+  "total": 120,
+  "ages": [
+   50
+  ],
+  "tile": [
+   480,
+   700
+  ],
+  "views": [
+   {
+    "name": "front",
+    "yaw": 0,
+    "pitch": 6,
+    "target": [
+     0,
+     0.75,
+     0.2
+    ],
+    "dist": 4.4
+   },
+   {
+    "name": "front 3/4",
+    "yaw": 32,
+    "pitch": 8,
+    "target": [
+     0,
+     0.75,
+     0.2
+    ],
+    "dist": 4.4
+   },
+   {
+    "name": "back 3/4",
+    "yaw": 150,
+    "pitch": 12,
+    "target": [
+     0,
+     0.75,
+     0.2
+    ],
+    "dist": 4.4
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 6,
+    "target": [
+     0,
+     0.75,
+     0.2
+    ],
+    "dist": 4.4
+   },
+   {
+    "name": "back",
+    "yaw": 180,
+    "pitch": 8,
+    "target": [
+     0,
+     0.75,
+     0.2
+    ],
+    "dist": 4.4
+   }
+  ],
+  "aura": "MUCUS"
+ },
+ "vg2_float_wings": {
+  "kind": "aura",
+  "attr": "SpiritDive",
+  "realFiles": [
+   "book/SpiritDiveDjinnPieces.java",
+   "book/SpiritDivePieces.java",
+   "book/SpiritDiveTier.java",
+   "book/SpiritDiveAnimeRules.java",
+   "book/SpiritDiveAnimeGeometry.java",
+   "book/SpiritDiveReelRules.java",
+   "book/SpiritDiveReelGeometry.java",
+   "book/SpiritDiveWindRules.java",
+   "book/SpiritDiveWindGeometry.java",
+   "book/SpiritDiveWind3Rules.java",
+   "book/SpiritDiveWind3Geometry.java",
+   "book/SpiritDiveWind3Mesh.java",
+   "book/SpiritDiveWind4Rules.java",
+   "book/SpiritDiveMergeRules.java",
+   "book/SpiritDiveMergeMesh.java",
+   "book/SpiritDiveMerge2Rules.java",
+   "book/FuegoleonArmRules.java",
+   "book/FuegoleonArmDjinnRules.java",
+   "perf/PerfBudget.java",
+   "client/aura/FuegoleonArmAura.java",
+   "client/aura/FuegoleonArmFx.java",
+   "client/aura/FuegoleonArmDjinn.java",
+   "client/aura/FuegoleonArmDjinnFx.java",
+   "client/aura/FuegoleonArmLook.java",
+   "book/ModeArmorWindV2Rules.java",
+   "book/ModeArmorWindV2Mesh.java",
+   "client/mode/ModeArmorLayer.java",
+   "client/mode/ModeArmorWindV2.java",
+   "book/ModeArmorValkyrieRules.java",
+   "book/ModeArmorValkyrieMesh.java",
+   "book/ModeArmorValkyrieBudget.java",
+   "book/ModeArmorValkyrieSpin.java",
+   "client/mode/ModeArmorValkyrieV2.java"
+  ],
+  "exampleFiles": [
+   "Vg2Common.java"
+  ],
+  "examples": [
+   "Vg2Float"
+  ],
+  "total": 120,
+  "ages": [
+   50
+  ],
+  "tile": [
+   480,
+   520
+  ],
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 32,
+    "pitch": 8,
+    "target": [
+     0,
+     1.55,
+     0.5
+    ],
+    "dist": 3.2
+   },
+   {
+    "name": "back 3/4",
+    "yaw": 150,
+    "pitch": 12,
+    "target": [
+     0,
+     1.55,
+     0.5
+    ],
+    "dist": 3.2
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 6,
+    "target": [
+     0,
+     1.55,
+     0.5
+    ],
+    "dist": 3.2
+   },
+   {
+    "name": "back",
+    "yaw": 180,
+    "pitch": 8,
+    "target": [
+     0,
+     1.55,
+     0.5
+    ],
+    "dist": 3.2
+   }
+  ],
+  "aura": "MUCUS"
+ },
+ "vg2_float_upper": {
+  "kind": "aura",
+  "attr": "SpiritDive",
+  "realFiles": [
+   "book/SpiritDiveDjinnPieces.java",
+   "book/SpiritDivePieces.java",
+   "book/SpiritDiveTier.java",
+   "book/SpiritDiveAnimeRules.java",
+   "book/SpiritDiveAnimeGeometry.java",
+   "book/SpiritDiveReelRules.java",
+   "book/SpiritDiveReelGeometry.java",
+   "book/SpiritDiveWindRules.java",
+   "book/SpiritDiveWindGeometry.java",
+   "book/SpiritDiveWind3Rules.java",
+   "book/SpiritDiveWind3Geometry.java",
+   "book/SpiritDiveWind3Mesh.java",
+   "book/SpiritDiveWind4Rules.java",
+   "book/SpiritDiveMergeRules.java",
+   "book/SpiritDiveMergeMesh.java",
+   "book/SpiritDiveMerge2Rules.java",
+   "book/FuegoleonArmRules.java",
+   "book/FuegoleonArmDjinnRules.java",
+   "perf/PerfBudget.java",
+   "client/aura/FuegoleonArmAura.java",
+   "client/aura/FuegoleonArmFx.java",
+   "client/aura/FuegoleonArmDjinn.java",
+   "client/aura/FuegoleonArmDjinnFx.java",
+   "client/aura/FuegoleonArmLook.java",
+   "book/ModeArmorWindV2Rules.java",
+   "book/ModeArmorWindV2Mesh.java",
+   "client/mode/ModeArmorLayer.java",
+   "client/mode/ModeArmorWindV2.java",
+   "book/ModeArmorValkyrieRules.java",
+   "book/ModeArmorValkyrieMesh.java",
+   "book/ModeArmorValkyrieBudget.java",
+   "book/ModeArmorValkyrieSpin.java",
+   "client/mode/ModeArmorValkyrieV2.java"
+  ],
+  "exampleFiles": [
+   "Vg2Common.java"
+  ],
+  "examples": [
+   "Vg2Float"
+  ],
+  "total": 120,
+  "ages": [
+   50
+  ],
+  "tile": [
+   420,
+   520
+  ],
+  "views": [
+   {
+    "name": "front",
+    "yaw": 0,
+    "pitch": 6,
+    "target": [
+     0,
+     1.4,
+     0.1
+    ],
+    "dist": 2.2
+   },
+   {
+    "name": "front 3/4",
+    "yaw": 32,
+    "pitch": 8,
+    "target": [
+     0,
+     1.4,
+     0.1
+    ],
+    "dist": 2.2
+   },
+   {
+    "name": "back 3/4",
+    "yaw": 150,
+    "pitch": 12,
+    "target": [
+     0,
+     1.4,
+     0.1
+    ],
+    "dist": 2.2
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 6,
+    "target": [
+     0,
+     1.4,
+     0.1
+    ],
+    "dist": 2.2
+   }
+  ],
+  "aura": "MUCUS"
+ },
+ "vg2_float_run": {
+  "kind": "aura",
+  "attr": "SpiritDive",
+  "realFiles": [
+   "book/SpiritDiveDjinnPieces.java",
+   "book/SpiritDivePieces.java",
+   "book/SpiritDiveTier.java",
+   "book/SpiritDiveAnimeRules.java",
+   "book/SpiritDiveAnimeGeometry.java",
+   "book/SpiritDiveReelRules.java",
+   "book/SpiritDiveReelGeometry.java",
+   "book/SpiritDiveWindRules.java",
+   "book/SpiritDiveWindGeometry.java",
+   "book/SpiritDiveWind3Rules.java",
+   "book/SpiritDiveWind3Geometry.java",
+   "book/SpiritDiveWind3Mesh.java",
+   "book/SpiritDiveWind4Rules.java",
+   "book/SpiritDiveMergeRules.java",
+   "book/SpiritDiveMergeMesh.java",
+   "book/SpiritDiveMerge2Rules.java",
+   "book/FuegoleonArmRules.java",
+   "book/FuegoleonArmDjinnRules.java",
+   "perf/PerfBudget.java",
+   "client/aura/FuegoleonArmAura.java",
+   "client/aura/FuegoleonArmFx.java",
+   "client/aura/FuegoleonArmDjinn.java",
+   "client/aura/FuegoleonArmDjinnFx.java",
+   "client/aura/FuegoleonArmLook.java",
+   "book/ModeArmorWindV2Rules.java",
+   "book/ModeArmorWindV2Mesh.java",
+   "client/mode/ModeArmorLayer.java",
+   "client/mode/ModeArmorWindV2.java",
+   "book/ModeArmorValkyrieRules.java",
+   "book/ModeArmorValkyrieMesh.java",
+   "book/ModeArmorValkyrieBudget.java",
+   "book/ModeArmorValkyrieSpin.java",
+   "client/mode/ModeArmorValkyrieV2.java"
+  ],
+  "exampleFiles": [
+   "Vg2Common.java"
+  ],
+  "examples": [
+   "Vg2Float"
+  ],
+  "total": 120,
+  "ages": [
+   50
+  ],
+  "tile": [
+   480,
+   700
+  ],
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 32,
+    "pitch": 8,
+    "target": [
+     0,
+     0.75,
+     0.2
+    ],
+    "dist": 4.4
+   },
+   {
+    "name": "back 3/4",
+    "yaw": 150,
+    "pitch": 12,
+    "target": [
+     0,
+     0.75,
+     0.2
+    ],
+    "dist": 4.4
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 6,
+    "target": [
+     0,
+     0.75,
+     0.2
+    ],
+    "dist": 4.4
+   }
+  ],
+  "aura": "MUCUS",
+  "limbSwing": 3.0,
+  "limbSwingAmount": 0.9
+ },
+ "vg2_float_ages": {
+  "kind": "aura",
+  "attr": "SpiritDive",
+  "realFiles": [
+   "book/SpiritDiveDjinnPieces.java",
+   "book/SpiritDivePieces.java",
+   "book/SpiritDiveTier.java",
+   "book/SpiritDiveAnimeRules.java",
+   "book/SpiritDiveAnimeGeometry.java",
+   "book/SpiritDiveReelRules.java",
+   "book/SpiritDiveReelGeometry.java",
+   "book/SpiritDiveWindRules.java",
+   "book/SpiritDiveWindGeometry.java",
+   "book/SpiritDiveWind3Rules.java",
+   "book/SpiritDiveWind3Geometry.java",
+   "book/SpiritDiveWind3Mesh.java",
+   "book/SpiritDiveWind4Rules.java",
+   "book/SpiritDiveMergeRules.java",
+   "book/SpiritDiveMergeMesh.java",
+   "book/SpiritDiveMerge2Rules.java",
+   "book/FuegoleonArmRules.java",
+   "book/FuegoleonArmDjinnRules.java",
+   "perf/PerfBudget.java",
+   "client/aura/FuegoleonArmAura.java",
+   "client/aura/FuegoleonArmFx.java",
+   "client/aura/FuegoleonArmDjinn.java",
+   "client/aura/FuegoleonArmDjinnFx.java",
+   "client/aura/FuegoleonArmLook.java",
+   "book/ModeArmorWindV2Rules.java",
+   "book/ModeArmorWindV2Mesh.java",
+   "client/mode/ModeArmorLayer.java",
+   "client/mode/ModeArmorWindV2.java",
+   "book/ModeArmorValkyrieRules.java",
+   "book/ModeArmorValkyrieMesh.java",
+   "book/ModeArmorValkyrieBudget.java",
+   "book/ModeArmorValkyrieSpin.java",
+   "client/mode/ModeArmorValkyrieV2.java"
+  ],
+  "exampleFiles": [
+   "Vg2Common.java"
+  ],
+  "examples": [
+   "Vg2Float"
+  ],
+  "total": 120,
+  "ages": [
+   2,
+   6,
+   12,
+   20,
+   33,
+   50
+  ],
+  "tile": [
+   300,
+   520
+  ],
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 32,
+    "pitch": 8,
+    "target": [
+     0,
+     0.75,
+     0.2
+    ],
+    "dist": 4.4
+   }
+  ],
+  "aura": "MUCUS"
+ },
+ "vg2_nolance_full": {
+  "kind": "aura",
+  "attr": "SpiritDive",
+  "realFiles": [
+   "book/SpiritDiveDjinnPieces.java",
+   "book/SpiritDivePieces.java",
+   "book/SpiritDiveTier.java",
+   "book/SpiritDiveAnimeRules.java",
+   "book/SpiritDiveAnimeGeometry.java",
+   "book/SpiritDiveReelRules.java",
+   "book/SpiritDiveReelGeometry.java",
+   "book/SpiritDiveWindRules.java",
+   "book/SpiritDiveWindGeometry.java",
+   "book/SpiritDiveWind3Rules.java",
+   "book/SpiritDiveWind3Geometry.java",
+   "book/SpiritDiveWind3Mesh.java",
+   "book/SpiritDiveWind4Rules.java",
+   "book/SpiritDiveMergeRules.java",
+   "book/SpiritDiveMergeMesh.java",
+   "book/SpiritDiveMerge2Rules.java",
+   "book/FuegoleonArmRules.java",
+   "book/FuegoleonArmDjinnRules.java",
+   "perf/PerfBudget.java",
+   "client/aura/FuegoleonArmAura.java",
+   "client/aura/FuegoleonArmFx.java",
+   "client/aura/FuegoleonArmDjinn.java",
+   "client/aura/FuegoleonArmDjinnFx.java",
+   "client/aura/FuegoleonArmLook.java",
+   "book/ModeArmorWindV2Rules.java",
+   "book/ModeArmorWindV2Mesh.java",
+   "client/mode/ModeArmorLayer.java",
+   "client/mode/ModeArmorWindV2.java",
+   "book/ModeArmorValkyrieRules.java",
+   "book/ModeArmorValkyrieMesh.java",
+   "book/ModeArmorValkyrieBudget.java",
+   "book/ModeArmorValkyrieSpin.java",
+   "client/mode/ModeArmorValkyrieV2.java"
+  ],
+  "exampleFiles": [
+   "Vg2Common.java"
+  ],
+  "examples": [
+   "Vg2NoLance"
+  ],
+  "total": 120,
+  "ages": [
+   50
+  ],
+  "tile": [
+   480,
+   700
+  ],
+  "views": [
+   {
+    "name": "front",
+    "yaw": 0,
+    "pitch": 6,
+    "target": [
+     0,
+     0.75,
+     0.2
+    ],
+    "dist": 4.4
+   },
+   {
+    "name": "front 3/4",
+    "yaw": 32,
+    "pitch": 8,
+    "target": [
+     0,
+     0.75,
+     0.2
+    ],
+    "dist": 4.4
+   },
+   {
+    "name": "back 3/4",
+    "yaw": 150,
+    "pitch": 12,
+    "target": [
+     0,
+     0.75,
+     0.2
+    ],
+    "dist": 4.4
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 6,
+    "target": [
+     0,
+     0.75,
+     0.2
+    ],
+    "dist": 4.4
+   },
+   {
+    "name": "back",
+    "yaw": 180,
+    "pitch": 8,
+    "target": [
+     0,
+     0.75,
+     0.2
+    ],
+    "dist": 4.4
+   }
+  ],
+  "aura": "MUCUS"
+ },
+ "vg2_nolance_wings": {
+  "kind": "aura",
+  "attr": "SpiritDive",
+  "realFiles": [
+   "book/SpiritDiveDjinnPieces.java",
+   "book/SpiritDivePieces.java",
+   "book/SpiritDiveTier.java",
+   "book/SpiritDiveAnimeRules.java",
+   "book/SpiritDiveAnimeGeometry.java",
+   "book/SpiritDiveReelRules.java",
+   "book/SpiritDiveReelGeometry.java",
+   "book/SpiritDiveWindRules.java",
+   "book/SpiritDiveWindGeometry.java",
+   "book/SpiritDiveWind3Rules.java",
+   "book/SpiritDiveWind3Geometry.java",
+   "book/SpiritDiveWind3Mesh.java",
+   "book/SpiritDiveWind4Rules.java",
+   "book/SpiritDiveMergeRules.java",
+   "book/SpiritDiveMergeMesh.java",
+   "book/SpiritDiveMerge2Rules.java",
+   "book/FuegoleonArmRules.java",
+   "book/FuegoleonArmDjinnRules.java",
+   "perf/PerfBudget.java",
+   "client/aura/FuegoleonArmAura.java",
+   "client/aura/FuegoleonArmFx.java",
+   "client/aura/FuegoleonArmDjinn.java",
+   "client/aura/FuegoleonArmDjinnFx.java",
+   "client/aura/FuegoleonArmLook.java",
+   "book/ModeArmorWindV2Rules.java",
+   "book/ModeArmorWindV2Mesh.java",
+   "client/mode/ModeArmorLayer.java",
+   "client/mode/ModeArmorWindV2.java",
+   "book/ModeArmorValkyrieRules.java",
+   "book/ModeArmorValkyrieMesh.java",
+   "book/ModeArmorValkyrieBudget.java",
+   "book/ModeArmorValkyrieSpin.java",
+   "client/mode/ModeArmorValkyrieV2.java"
+  ],
+  "exampleFiles": [
+   "Vg2Common.java"
+  ],
+  "examples": [
+   "Vg2NoLance"
+  ],
+  "total": 120,
+  "ages": [
+   50
+  ],
+  "tile": [
+   480,
+   520
+  ],
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 32,
+    "pitch": 8,
+    "target": [
+     0,
+     1.55,
+     0.5
+    ],
+    "dist": 3.2
+   },
+   {
+    "name": "back 3/4",
+    "yaw": 150,
+    "pitch": 12,
+    "target": [
+     0,
+     1.55,
+     0.5
+    ],
+    "dist": 3.2
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 6,
+    "target": [
+     0,
+     1.55,
+     0.5
+    ],
+    "dist": 3.2
+   },
+   {
+    "name": "back",
+    "yaw": 180,
+    "pitch": 8,
+    "target": [
+     0,
+     1.55,
+     0.5
+    ],
+    "dist": 3.2
+   }
+  ],
+  "aura": "MUCUS"
+ },
+ "vg2_nolance_upper": {
+  "kind": "aura",
+  "attr": "SpiritDive",
+  "realFiles": [
+   "book/SpiritDiveDjinnPieces.java",
+   "book/SpiritDivePieces.java",
+   "book/SpiritDiveTier.java",
+   "book/SpiritDiveAnimeRules.java",
+   "book/SpiritDiveAnimeGeometry.java",
+   "book/SpiritDiveReelRules.java",
+   "book/SpiritDiveReelGeometry.java",
+   "book/SpiritDiveWindRules.java",
+   "book/SpiritDiveWindGeometry.java",
+   "book/SpiritDiveWind3Rules.java",
+   "book/SpiritDiveWind3Geometry.java",
+   "book/SpiritDiveWind3Mesh.java",
+   "book/SpiritDiveWind4Rules.java",
+   "book/SpiritDiveMergeRules.java",
+   "book/SpiritDiveMergeMesh.java",
+   "book/SpiritDiveMerge2Rules.java",
+   "book/FuegoleonArmRules.java",
+   "book/FuegoleonArmDjinnRules.java",
+   "perf/PerfBudget.java",
+   "client/aura/FuegoleonArmAura.java",
+   "client/aura/FuegoleonArmFx.java",
+   "client/aura/FuegoleonArmDjinn.java",
+   "client/aura/FuegoleonArmDjinnFx.java",
+   "client/aura/FuegoleonArmLook.java",
+   "book/ModeArmorWindV2Rules.java",
+   "book/ModeArmorWindV2Mesh.java",
+   "client/mode/ModeArmorLayer.java",
+   "client/mode/ModeArmorWindV2.java",
+   "book/ModeArmorValkyrieRules.java",
+   "book/ModeArmorValkyrieMesh.java",
+   "book/ModeArmorValkyrieBudget.java",
+   "book/ModeArmorValkyrieSpin.java",
+   "client/mode/ModeArmorValkyrieV2.java"
+  ],
+  "exampleFiles": [
+   "Vg2Common.java"
+  ],
+  "examples": [
+   "Vg2NoLance"
+  ],
+  "total": 120,
+  "ages": [
+   50
+  ],
+  "tile": [
+   420,
+   520
+  ],
+  "views": [
+   {
+    "name": "front",
+    "yaw": 0,
+    "pitch": 6,
+    "target": [
+     0,
+     1.4,
+     0.1
+    ],
+    "dist": 2.2
+   },
+   {
+    "name": "front 3/4",
+    "yaw": 32,
+    "pitch": 8,
+    "target": [
+     0,
+     1.4,
+     0.1
+    ],
+    "dist": 2.2
+   },
+   {
+    "name": "back 3/4",
+    "yaw": 150,
+    "pitch": 12,
+    "target": [
+     0,
+     1.4,
+     0.1
+    ],
+    "dist": 2.2
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 6,
+    "target": [
+     0,
+     1.4,
+     0.1
+    ],
+    "dist": 2.2
+   }
+  ],
+  "aura": "MUCUS"
+ },
+ "vg2_nolance_run": {
+  "kind": "aura",
+  "attr": "SpiritDive",
+  "realFiles": [
+   "book/SpiritDiveDjinnPieces.java",
+   "book/SpiritDivePieces.java",
+   "book/SpiritDiveTier.java",
+   "book/SpiritDiveAnimeRules.java",
+   "book/SpiritDiveAnimeGeometry.java",
+   "book/SpiritDiveReelRules.java",
+   "book/SpiritDiveReelGeometry.java",
+   "book/SpiritDiveWindRules.java",
+   "book/SpiritDiveWindGeometry.java",
+   "book/SpiritDiveWind3Rules.java",
+   "book/SpiritDiveWind3Geometry.java",
+   "book/SpiritDiveWind3Mesh.java",
+   "book/SpiritDiveWind4Rules.java",
+   "book/SpiritDiveMergeRules.java",
+   "book/SpiritDiveMergeMesh.java",
+   "book/SpiritDiveMerge2Rules.java",
+   "book/FuegoleonArmRules.java",
+   "book/FuegoleonArmDjinnRules.java",
+   "perf/PerfBudget.java",
+   "client/aura/FuegoleonArmAura.java",
+   "client/aura/FuegoleonArmFx.java",
+   "client/aura/FuegoleonArmDjinn.java",
+   "client/aura/FuegoleonArmDjinnFx.java",
+   "client/aura/FuegoleonArmLook.java",
+   "book/ModeArmorWindV2Rules.java",
+   "book/ModeArmorWindV2Mesh.java",
+   "client/mode/ModeArmorLayer.java",
+   "client/mode/ModeArmorWindV2.java",
+   "book/ModeArmorValkyrieRules.java",
+   "book/ModeArmorValkyrieMesh.java",
+   "book/ModeArmorValkyrieBudget.java",
+   "book/ModeArmorValkyrieSpin.java",
+   "client/mode/ModeArmorValkyrieV2.java"
+  ],
+  "exampleFiles": [
+   "Vg2Common.java"
+  ],
+  "examples": [
+   "Vg2NoLance"
+  ],
+  "total": 120,
+  "ages": [
+   50
+  ],
+  "tile": [
+   480,
+   700
+  ],
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 32,
+    "pitch": 8,
+    "target": [
+     0,
+     0.75,
+     0.2
+    ],
+    "dist": 4.4
+   },
+   {
+    "name": "back 3/4",
+    "yaw": 150,
+    "pitch": 12,
+    "target": [
+     0,
+     0.75,
+     0.2
+    ],
+    "dist": 4.4
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 6,
+    "target": [
+     0,
+     0.75,
+     0.2
+    ],
+    "dist": 4.4
+   }
+  ],
+  "aura": "MUCUS",
+  "limbSwing": 3.0,
+  "limbSwingAmount": 0.9
+ },
+ "vg2_nolance_ages": {
+  "kind": "aura",
+  "attr": "SpiritDive",
+  "realFiles": [
+   "book/SpiritDiveDjinnPieces.java",
+   "book/SpiritDivePieces.java",
+   "book/SpiritDiveTier.java",
+   "book/SpiritDiveAnimeRules.java",
+   "book/SpiritDiveAnimeGeometry.java",
+   "book/SpiritDiveReelRules.java",
+   "book/SpiritDiveReelGeometry.java",
+   "book/SpiritDiveWindRules.java",
+   "book/SpiritDiveWindGeometry.java",
+   "book/SpiritDiveWind3Rules.java",
+   "book/SpiritDiveWind3Geometry.java",
+   "book/SpiritDiveWind3Mesh.java",
+   "book/SpiritDiveWind4Rules.java",
+   "book/SpiritDiveMergeRules.java",
+   "book/SpiritDiveMergeMesh.java",
+   "book/SpiritDiveMerge2Rules.java",
+   "book/FuegoleonArmRules.java",
+   "book/FuegoleonArmDjinnRules.java",
+   "perf/PerfBudget.java",
+   "client/aura/FuegoleonArmAura.java",
+   "client/aura/FuegoleonArmFx.java",
+   "client/aura/FuegoleonArmDjinn.java",
+   "client/aura/FuegoleonArmDjinnFx.java",
+   "client/aura/FuegoleonArmLook.java",
+   "book/ModeArmorWindV2Rules.java",
+   "book/ModeArmorWindV2Mesh.java",
+   "client/mode/ModeArmorLayer.java",
+   "client/mode/ModeArmorWindV2.java",
+   "book/ModeArmorValkyrieRules.java",
+   "book/ModeArmorValkyrieMesh.java",
+   "book/ModeArmorValkyrieBudget.java",
+   "book/ModeArmorValkyrieSpin.java",
+   "client/mode/ModeArmorValkyrieV2.java"
+  ],
+  "exampleFiles": [
+   "Vg2Common.java"
+  ],
+  "examples": [
+   "Vg2NoLance"
+  ],
+  "total": 120,
+  "ages": [
+   2,
+   6,
+   12,
+   20,
+   33,
+   50
+  ],
+  "tile": [
+   300,
+   520
+  ],
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 32,
+    "pitch": 8,
+    "target": [
+     0,
+     0.75,
+     0.2
+    ],
+    "dist": 4.4
+   }
+  ],
+  "aura": "MUCUS"
+ },
+ "vg2_saint_full": {
+  "kind": "aura",
+  "attr": "SpiritDive",
+  "realFiles": [
+   "book/SpiritDiveDjinnPieces.java",
+   "book/SpiritDivePieces.java",
+   "book/SpiritDiveTier.java",
+   "book/SpiritDiveAnimeRules.java",
+   "book/SpiritDiveAnimeGeometry.java",
+   "book/SpiritDiveReelRules.java",
+   "book/SpiritDiveReelGeometry.java",
+   "book/SpiritDiveWindRules.java",
+   "book/SpiritDiveWindGeometry.java",
+   "book/SpiritDiveWind3Rules.java",
+   "book/SpiritDiveWind3Geometry.java",
+   "book/SpiritDiveWind3Mesh.java",
+   "book/SpiritDiveWind4Rules.java",
+   "book/SpiritDiveMergeRules.java",
+   "book/SpiritDiveMergeMesh.java",
+   "book/SpiritDiveMerge2Rules.java",
+   "book/FuegoleonArmRules.java",
+   "book/FuegoleonArmDjinnRules.java",
+   "perf/PerfBudget.java",
+   "client/aura/FuegoleonArmAura.java",
+   "client/aura/FuegoleonArmFx.java",
+   "client/aura/FuegoleonArmDjinn.java",
+   "client/aura/FuegoleonArmDjinnFx.java",
+   "client/aura/FuegoleonArmLook.java",
+   "book/ModeArmorWindV2Rules.java",
+   "book/ModeArmorWindV2Mesh.java",
+   "client/mode/ModeArmorLayer.java",
+   "client/mode/ModeArmorWindV2.java",
+   "book/ModeArmorValkyrieRules.java",
+   "book/ModeArmorValkyrieMesh.java",
+   "book/ModeArmorValkyrieBudget.java",
+   "book/ModeArmorValkyrieSpin.java",
+   "client/mode/ModeArmorValkyrieV2.java"
+  ],
+  "exampleFiles": [
+   "Vg2Common.java"
+  ],
+  "examples": [
+   "Vg2Saint"
+  ],
+  "total": 120,
+  "ages": [
+   50
+  ],
+  "tile": [
+   480,
+   700
+  ],
+  "views": [
+   {
+    "name": "front",
+    "yaw": 0,
+    "pitch": 6,
+    "target": [
+     0,
+     0.75,
+     0.2
+    ],
+    "dist": 4.4
+   },
+   {
+    "name": "front 3/4",
+    "yaw": 32,
+    "pitch": 8,
+    "target": [
+     0,
+     0.75,
+     0.2
+    ],
+    "dist": 4.4
+   },
+   {
+    "name": "back 3/4",
+    "yaw": 150,
+    "pitch": 12,
+    "target": [
+     0,
+     0.75,
+     0.2
+    ],
+    "dist": 4.4
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 6,
+    "target": [
+     0,
+     0.75,
+     0.2
+    ],
+    "dist": 4.4
+   },
+   {
+    "name": "back",
+    "yaw": 180,
+    "pitch": 8,
+    "target": [
+     0,
+     0.75,
+     0.2
+    ],
+    "dist": 4.4
+   }
+  ],
+  "aura": "MUCUS"
+ },
+ "vg2_saint_wings": {
+  "kind": "aura",
+  "attr": "SpiritDive",
+  "realFiles": [
+   "book/SpiritDiveDjinnPieces.java",
+   "book/SpiritDivePieces.java",
+   "book/SpiritDiveTier.java",
+   "book/SpiritDiveAnimeRules.java",
+   "book/SpiritDiveAnimeGeometry.java",
+   "book/SpiritDiveReelRules.java",
+   "book/SpiritDiveReelGeometry.java",
+   "book/SpiritDiveWindRules.java",
+   "book/SpiritDiveWindGeometry.java",
+   "book/SpiritDiveWind3Rules.java",
+   "book/SpiritDiveWind3Geometry.java",
+   "book/SpiritDiveWind3Mesh.java",
+   "book/SpiritDiveWind4Rules.java",
+   "book/SpiritDiveMergeRules.java",
+   "book/SpiritDiveMergeMesh.java",
+   "book/SpiritDiveMerge2Rules.java",
+   "book/FuegoleonArmRules.java",
+   "book/FuegoleonArmDjinnRules.java",
+   "perf/PerfBudget.java",
+   "client/aura/FuegoleonArmAura.java",
+   "client/aura/FuegoleonArmFx.java",
+   "client/aura/FuegoleonArmDjinn.java",
+   "client/aura/FuegoleonArmDjinnFx.java",
+   "client/aura/FuegoleonArmLook.java",
+   "book/ModeArmorWindV2Rules.java",
+   "book/ModeArmorWindV2Mesh.java",
+   "client/mode/ModeArmorLayer.java",
+   "client/mode/ModeArmorWindV2.java",
+   "book/ModeArmorValkyrieRules.java",
+   "book/ModeArmorValkyrieMesh.java",
+   "book/ModeArmorValkyrieBudget.java",
+   "book/ModeArmorValkyrieSpin.java",
+   "client/mode/ModeArmorValkyrieV2.java"
+  ],
+  "exampleFiles": [
+   "Vg2Common.java"
+  ],
+  "examples": [
+   "Vg2Saint"
+  ],
+  "total": 120,
+  "ages": [
+   50
+  ],
+  "tile": [
+   480,
+   520
+  ],
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 32,
+    "pitch": 8,
+    "target": [
+     0,
+     1.55,
+     0.5
+    ],
+    "dist": 3.2
+   },
+   {
+    "name": "back 3/4",
+    "yaw": 150,
+    "pitch": 12,
+    "target": [
+     0,
+     1.55,
+     0.5
+    ],
+    "dist": 3.2
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 6,
+    "target": [
+     0,
+     1.55,
+     0.5
+    ],
+    "dist": 3.2
+   },
+   {
+    "name": "back",
+    "yaw": 180,
+    "pitch": 8,
+    "target": [
+     0,
+     1.55,
+     0.5
+    ],
+    "dist": 3.2
+   }
+  ],
+  "aura": "MUCUS"
+ },
+ "vg2_saint_upper": {
+  "kind": "aura",
+  "attr": "SpiritDive",
+  "realFiles": [
+   "book/SpiritDiveDjinnPieces.java",
+   "book/SpiritDivePieces.java",
+   "book/SpiritDiveTier.java",
+   "book/SpiritDiveAnimeRules.java",
+   "book/SpiritDiveAnimeGeometry.java",
+   "book/SpiritDiveReelRules.java",
+   "book/SpiritDiveReelGeometry.java",
+   "book/SpiritDiveWindRules.java",
+   "book/SpiritDiveWindGeometry.java",
+   "book/SpiritDiveWind3Rules.java",
+   "book/SpiritDiveWind3Geometry.java",
+   "book/SpiritDiveWind3Mesh.java",
+   "book/SpiritDiveWind4Rules.java",
+   "book/SpiritDiveMergeRules.java",
+   "book/SpiritDiveMergeMesh.java",
+   "book/SpiritDiveMerge2Rules.java",
+   "book/FuegoleonArmRules.java",
+   "book/FuegoleonArmDjinnRules.java",
+   "perf/PerfBudget.java",
+   "client/aura/FuegoleonArmAura.java",
+   "client/aura/FuegoleonArmFx.java",
+   "client/aura/FuegoleonArmDjinn.java",
+   "client/aura/FuegoleonArmDjinnFx.java",
+   "client/aura/FuegoleonArmLook.java",
+   "book/ModeArmorWindV2Rules.java",
+   "book/ModeArmorWindV2Mesh.java",
+   "client/mode/ModeArmorLayer.java",
+   "client/mode/ModeArmorWindV2.java",
+   "book/ModeArmorValkyrieRules.java",
+   "book/ModeArmorValkyrieMesh.java",
+   "book/ModeArmorValkyrieBudget.java",
+   "book/ModeArmorValkyrieSpin.java",
+   "client/mode/ModeArmorValkyrieV2.java"
+  ],
+  "exampleFiles": [
+   "Vg2Common.java"
+  ],
+  "examples": [
+   "Vg2Saint"
+  ],
+  "total": 120,
+  "ages": [
+   50
+  ],
+  "tile": [
+   420,
+   520
+  ],
+  "views": [
+   {
+    "name": "front",
+    "yaw": 0,
+    "pitch": 6,
+    "target": [
+     0,
+     1.4,
+     0.1
+    ],
+    "dist": 2.2
+   },
+   {
+    "name": "front 3/4",
+    "yaw": 32,
+    "pitch": 8,
+    "target": [
+     0,
+     1.4,
+     0.1
+    ],
+    "dist": 2.2
+   },
+   {
+    "name": "back 3/4",
+    "yaw": 150,
+    "pitch": 12,
+    "target": [
+     0,
+     1.4,
+     0.1
+    ],
+    "dist": 2.2
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 6,
+    "target": [
+     0,
+     1.4,
+     0.1
+    ],
+    "dist": 2.2
+   }
+  ],
+  "aura": "MUCUS"
+ },
+ "vg2_saint_run": {
+  "kind": "aura",
+  "attr": "SpiritDive",
+  "realFiles": [
+   "book/SpiritDiveDjinnPieces.java",
+   "book/SpiritDivePieces.java",
+   "book/SpiritDiveTier.java",
+   "book/SpiritDiveAnimeRules.java",
+   "book/SpiritDiveAnimeGeometry.java",
+   "book/SpiritDiveReelRules.java",
+   "book/SpiritDiveReelGeometry.java",
+   "book/SpiritDiveWindRules.java",
+   "book/SpiritDiveWindGeometry.java",
+   "book/SpiritDiveWind3Rules.java",
+   "book/SpiritDiveWind3Geometry.java",
+   "book/SpiritDiveWind3Mesh.java",
+   "book/SpiritDiveWind4Rules.java",
+   "book/SpiritDiveMergeRules.java",
+   "book/SpiritDiveMergeMesh.java",
+   "book/SpiritDiveMerge2Rules.java",
+   "book/FuegoleonArmRules.java",
+   "book/FuegoleonArmDjinnRules.java",
+   "perf/PerfBudget.java",
+   "client/aura/FuegoleonArmAura.java",
+   "client/aura/FuegoleonArmFx.java",
+   "client/aura/FuegoleonArmDjinn.java",
+   "client/aura/FuegoleonArmDjinnFx.java",
+   "client/aura/FuegoleonArmLook.java",
+   "book/ModeArmorWindV2Rules.java",
+   "book/ModeArmorWindV2Mesh.java",
+   "client/mode/ModeArmorLayer.java",
+   "client/mode/ModeArmorWindV2.java",
+   "book/ModeArmorValkyrieRules.java",
+   "book/ModeArmorValkyrieMesh.java",
+   "book/ModeArmorValkyrieBudget.java",
+   "book/ModeArmorValkyrieSpin.java",
+   "client/mode/ModeArmorValkyrieV2.java"
+  ],
+  "exampleFiles": [
+   "Vg2Common.java"
+  ],
+  "examples": [
+   "Vg2Saint"
+  ],
+  "total": 120,
+  "ages": [
+   50
+  ],
+  "tile": [
+   480,
+   700
+  ],
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 32,
+    "pitch": 8,
+    "target": [
+     0,
+     0.75,
+     0.2
+    ],
+    "dist": 4.4
+   },
+   {
+    "name": "back 3/4",
+    "yaw": 150,
+    "pitch": 12,
+    "target": [
+     0,
+     0.75,
+     0.2
+    ],
+    "dist": 4.4
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 6,
+    "target": [
+     0,
+     0.75,
+     0.2
+    ],
+    "dist": 4.4
+   }
+  ],
+  "aura": "MUCUS",
+  "limbSwing": 3.0,
+  "limbSwingAmount": 0.9
+ },
+ "vg2_saint_ages": {
+  "kind": "aura",
+  "attr": "SpiritDive",
+  "realFiles": [
+   "book/SpiritDiveDjinnPieces.java",
+   "book/SpiritDivePieces.java",
+   "book/SpiritDiveTier.java",
+   "book/SpiritDiveAnimeRules.java",
+   "book/SpiritDiveAnimeGeometry.java",
+   "book/SpiritDiveReelRules.java",
+   "book/SpiritDiveReelGeometry.java",
+   "book/SpiritDiveWindRules.java",
+   "book/SpiritDiveWindGeometry.java",
+   "book/SpiritDiveWind3Rules.java",
+   "book/SpiritDiveWind3Geometry.java",
+   "book/SpiritDiveWind3Mesh.java",
+   "book/SpiritDiveWind4Rules.java",
+   "book/SpiritDiveMergeRules.java",
+   "book/SpiritDiveMergeMesh.java",
+   "book/SpiritDiveMerge2Rules.java",
+   "book/FuegoleonArmRules.java",
+   "book/FuegoleonArmDjinnRules.java",
+   "perf/PerfBudget.java",
+   "client/aura/FuegoleonArmAura.java",
+   "client/aura/FuegoleonArmFx.java",
+   "client/aura/FuegoleonArmDjinn.java",
+   "client/aura/FuegoleonArmDjinnFx.java",
+   "client/aura/FuegoleonArmLook.java",
+   "book/ModeArmorWindV2Rules.java",
+   "book/ModeArmorWindV2Mesh.java",
+   "client/mode/ModeArmorLayer.java",
+   "client/mode/ModeArmorWindV2.java",
+   "book/ModeArmorValkyrieRules.java",
+   "book/ModeArmorValkyrieMesh.java",
+   "book/ModeArmorValkyrieBudget.java",
+   "book/ModeArmorValkyrieSpin.java",
+   "client/mode/ModeArmorValkyrieV2.java"
+  ],
+  "exampleFiles": [
+   "Vg2Common.java"
+  ],
+  "examples": [
+   "Vg2Saint"
+  ],
+  "total": 120,
+  "ages": [
+   2,
+   6,
+   12,
+   20,
+   33,
+   50
+  ],
+  "tile": [
+   300,
+   520
+  ],
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 32,
+    "pitch": 8,
+    "target": [
+     0,
+     0.75,
+     0.2
+    ],
+    "dist": 4.4
+   }
+  ],
+  "aura": "MUCUS"
+ },
+ "vg2_mermaid_full": {
+  "kind": "aura",
+  "attr": "SpiritDive",
+  "realFiles": [
+   "book/SpiritDiveDjinnPieces.java",
+   "book/SpiritDivePieces.java",
+   "book/SpiritDiveTier.java",
+   "book/SpiritDiveAnimeRules.java",
+   "book/SpiritDiveAnimeGeometry.java",
+   "book/SpiritDiveReelRules.java",
+   "book/SpiritDiveReelGeometry.java",
+   "book/SpiritDiveWindRules.java",
+   "book/SpiritDiveWindGeometry.java",
+   "book/SpiritDiveWind3Rules.java",
+   "book/SpiritDiveWind3Geometry.java",
+   "book/SpiritDiveWind3Mesh.java",
+   "book/SpiritDiveWind4Rules.java",
+   "book/SpiritDiveMergeRules.java",
+   "book/SpiritDiveMergeMesh.java",
+   "book/SpiritDiveMerge2Rules.java",
+   "book/FuegoleonArmRules.java",
+   "book/FuegoleonArmDjinnRules.java",
+   "perf/PerfBudget.java",
+   "client/aura/FuegoleonArmAura.java",
+   "client/aura/FuegoleonArmFx.java",
+   "client/aura/FuegoleonArmDjinn.java",
+   "client/aura/FuegoleonArmDjinnFx.java",
+   "client/aura/FuegoleonArmLook.java",
+   "book/ModeArmorWindV2Rules.java",
+   "book/ModeArmorWindV2Mesh.java",
+   "client/mode/ModeArmorLayer.java",
+   "client/mode/ModeArmorWindV2.java",
+   "book/ModeArmorValkyrieRules.java",
+   "book/ModeArmorValkyrieMesh.java",
+   "book/ModeArmorValkyrieBudget.java",
+   "book/ModeArmorValkyrieSpin.java",
+   "client/mode/ModeArmorValkyrieV2.java"
+  ],
+  "exampleFiles": [
+   "Vg2Common.java"
+  ],
+  "examples": [
+   "Vg2Mermaid"
+  ],
+  "total": 120,
+  "ages": [
+   50
+  ],
+  "tile": [
+   480,
+   700
+  ],
+  "views": [
+   {
+    "name": "front",
+    "yaw": 0,
+    "pitch": 6,
+    "target": [
+     0,
+     0.75,
+     0.2
+    ],
+    "dist": 4.4
+   },
+   {
+    "name": "front 3/4",
+    "yaw": 32,
+    "pitch": 8,
+    "target": [
+     0,
+     0.75,
+     0.2
+    ],
+    "dist": 4.4
+   },
+   {
+    "name": "back 3/4",
+    "yaw": 150,
+    "pitch": 12,
+    "target": [
+     0,
+     0.75,
+     0.2
+    ],
+    "dist": 4.4
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 6,
+    "target": [
+     0,
+     0.75,
+     0.2
+    ],
+    "dist": 4.4
+   },
+   {
+    "name": "back",
+    "yaw": 180,
+    "pitch": 8,
+    "target": [
+     0,
+     0.75,
+     0.2
+    ],
+    "dist": 4.4
+   }
+  ],
+  "aura": "MUCUS"
+ },
+ "vg2_mermaid_wings": {
+  "kind": "aura",
+  "attr": "SpiritDive",
+  "realFiles": [
+   "book/SpiritDiveDjinnPieces.java",
+   "book/SpiritDivePieces.java",
+   "book/SpiritDiveTier.java",
+   "book/SpiritDiveAnimeRules.java",
+   "book/SpiritDiveAnimeGeometry.java",
+   "book/SpiritDiveReelRules.java",
+   "book/SpiritDiveReelGeometry.java",
+   "book/SpiritDiveWindRules.java",
+   "book/SpiritDiveWindGeometry.java",
+   "book/SpiritDiveWind3Rules.java",
+   "book/SpiritDiveWind3Geometry.java",
+   "book/SpiritDiveWind3Mesh.java",
+   "book/SpiritDiveWind4Rules.java",
+   "book/SpiritDiveMergeRules.java",
+   "book/SpiritDiveMergeMesh.java",
+   "book/SpiritDiveMerge2Rules.java",
+   "book/FuegoleonArmRules.java",
+   "book/FuegoleonArmDjinnRules.java",
+   "perf/PerfBudget.java",
+   "client/aura/FuegoleonArmAura.java",
+   "client/aura/FuegoleonArmFx.java",
+   "client/aura/FuegoleonArmDjinn.java",
+   "client/aura/FuegoleonArmDjinnFx.java",
+   "client/aura/FuegoleonArmLook.java",
+   "book/ModeArmorWindV2Rules.java",
+   "book/ModeArmorWindV2Mesh.java",
+   "client/mode/ModeArmorLayer.java",
+   "client/mode/ModeArmorWindV2.java",
+   "book/ModeArmorValkyrieRules.java",
+   "book/ModeArmorValkyrieMesh.java",
+   "book/ModeArmorValkyrieBudget.java",
+   "book/ModeArmorValkyrieSpin.java",
+   "client/mode/ModeArmorValkyrieV2.java"
+  ],
+  "exampleFiles": [
+   "Vg2Common.java"
+  ],
+  "examples": [
+   "Vg2Mermaid"
+  ],
+  "total": 120,
+  "ages": [
+   50
+  ],
+  "tile": [
+   480,
+   520
+  ],
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 32,
+    "pitch": 8,
+    "target": [
+     0,
+     1.55,
+     0.5
+    ],
+    "dist": 3.2
+   },
+   {
+    "name": "back 3/4",
+    "yaw": 150,
+    "pitch": 12,
+    "target": [
+     0,
+     1.55,
+     0.5
+    ],
+    "dist": 3.2
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 6,
+    "target": [
+     0,
+     1.55,
+     0.5
+    ],
+    "dist": 3.2
+   },
+   {
+    "name": "back",
+    "yaw": 180,
+    "pitch": 8,
+    "target": [
+     0,
+     1.55,
+     0.5
+    ],
+    "dist": 3.2
+   }
+  ],
+  "aura": "MUCUS"
+ },
+ "vg2_mermaid_upper": {
+  "kind": "aura",
+  "attr": "SpiritDive",
+  "realFiles": [
+   "book/SpiritDiveDjinnPieces.java",
+   "book/SpiritDivePieces.java",
+   "book/SpiritDiveTier.java",
+   "book/SpiritDiveAnimeRules.java",
+   "book/SpiritDiveAnimeGeometry.java",
+   "book/SpiritDiveReelRules.java",
+   "book/SpiritDiveReelGeometry.java",
+   "book/SpiritDiveWindRules.java",
+   "book/SpiritDiveWindGeometry.java",
+   "book/SpiritDiveWind3Rules.java",
+   "book/SpiritDiveWind3Geometry.java",
+   "book/SpiritDiveWind3Mesh.java",
+   "book/SpiritDiveWind4Rules.java",
+   "book/SpiritDiveMergeRules.java",
+   "book/SpiritDiveMergeMesh.java",
+   "book/SpiritDiveMerge2Rules.java",
+   "book/FuegoleonArmRules.java",
+   "book/FuegoleonArmDjinnRules.java",
+   "perf/PerfBudget.java",
+   "client/aura/FuegoleonArmAura.java",
+   "client/aura/FuegoleonArmFx.java",
+   "client/aura/FuegoleonArmDjinn.java",
+   "client/aura/FuegoleonArmDjinnFx.java",
+   "client/aura/FuegoleonArmLook.java",
+   "book/ModeArmorWindV2Rules.java",
+   "book/ModeArmorWindV2Mesh.java",
+   "client/mode/ModeArmorLayer.java",
+   "client/mode/ModeArmorWindV2.java",
+   "book/ModeArmorValkyrieRules.java",
+   "book/ModeArmorValkyrieMesh.java",
+   "book/ModeArmorValkyrieBudget.java",
+   "book/ModeArmorValkyrieSpin.java",
+   "client/mode/ModeArmorValkyrieV2.java"
+  ],
+  "exampleFiles": [
+   "Vg2Common.java"
+  ],
+  "examples": [
+   "Vg2Mermaid"
+  ],
+  "total": 120,
+  "ages": [
+   50
+  ],
+  "tile": [
+   420,
+   520
+  ],
+  "views": [
+   {
+    "name": "front",
+    "yaw": 0,
+    "pitch": 6,
+    "target": [
+     0,
+     1.4,
+     0.1
+    ],
+    "dist": 2.2
+   },
+   {
+    "name": "front 3/4",
+    "yaw": 32,
+    "pitch": 8,
+    "target": [
+     0,
+     1.4,
+     0.1
+    ],
+    "dist": 2.2
+   },
+   {
+    "name": "back 3/4",
+    "yaw": 150,
+    "pitch": 12,
+    "target": [
+     0,
+     1.4,
+     0.1
+    ],
+    "dist": 2.2
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 6,
+    "target": [
+     0,
+     1.4,
+     0.1
+    ],
+    "dist": 2.2
+   }
+  ],
+  "aura": "MUCUS"
+ },
+ "vg2_mermaid_run": {
+  "kind": "aura",
+  "attr": "SpiritDive",
+  "realFiles": [
+   "book/SpiritDiveDjinnPieces.java",
+   "book/SpiritDivePieces.java",
+   "book/SpiritDiveTier.java",
+   "book/SpiritDiveAnimeRules.java",
+   "book/SpiritDiveAnimeGeometry.java",
+   "book/SpiritDiveReelRules.java",
+   "book/SpiritDiveReelGeometry.java",
+   "book/SpiritDiveWindRules.java",
+   "book/SpiritDiveWindGeometry.java",
+   "book/SpiritDiveWind3Rules.java",
+   "book/SpiritDiveWind3Geometry.java",
+   "book/SpiritDiveWind3Mesh.java",
+   "book/SpiritDiveWind4Rules.java",
+   "book/SpiritDiveMergeRules.java",
+   "book/SpiritDiveMergeMesh.java",
+   "book/SpiritDiveMerge2Rules.java",
+   "book/FuegoleonArmRules.java",
+   "book/FuegoleonArmDjinnRules.java",
+   "perf/PerfBudget.java",
+   "client/aura/FuegoleonArmAura.java",
+   "client/aura/FuegoleonArmFx.java",
+   "client/aura/FuegoleonArmDjinn.java",
+   "client/aura/FuegoleonArmDjinnFx.java",
+   "client/aura/FuegoleonArmLook.java",
+   "book/ModeArmorWindV2Rules.java",
+   "book/ModeArmorWindV2Mesh.java",
+   "client/mode/ModeArmorLayer.java",
+   "client/mode/ModeArmorWindV2.java",
+   "book/ModeArmorValkyrieRules.java",
+   "book/ModeArmorValkyrieMesh.java",
+   "book/ModeArmorValkyrieBudget.java",
+   "book/ModeArmorValkyrieSpin.java",
+   "client/mode/ModeArmorValkyrieV2.java"
+  ],
+  "exampleFiles": [
+   "Vg2Common.java"
+  ],
+  "examples": [
+   "Vg2Mermaid"
+  ],
+  "total": 120,
+  "ages": [
+   50
+  ],
+  "tile": [
+   480,
+   700
+  ],
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 32,
+    "pitch": 8,
+    "target": [
+     0,
+     0.75,
+     0.2
+    ],
+    "dist": 4.4
+   },
+   {
+    "name": "back 3/4",
+    "yaw": 150,
+    "pitch": 12,
+    "target": [
+     0,
+     0.75,
+     0.2
+    ],
+    "dist": 4.4
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 6,
+    "target": [
+     0,
+     0.75,
+     0.2
+    ],
+    "dist": 4.4
+   }
+  ],
+  "aura": "MUCUS",
+  "limbSwing": 3.0,
+  "limbSwingAmount": 0.9
+ },
+ "vg2_mermaid_ages": {
+  "kind": "aura",
+  "attr": "SpiritDive",
+  "realFiles": [
+   "book/SpiritDiveDjinnPieces.java",
+   "book/SpiritDivePieces.java",
+   "book/SpiritDiveTier.java",
+   "book/SpiritDiveAnimeRules.java",
+   "book/SpiritDiveAnimeGeometry.java",
+   "book/SpiritDiveReelRules.java",
+   "book/SpiritDiveReelGeometry.java",
+   "book/SpiritDiveWindRules.java",
+   "book/SpiritDiveWindGeometry.java",
+   "book/SpiritDiveWind3Rules.java",
+   "book/SpiritDiveWind3Geometry.java",
+   "book/SpiritDiveWind3Mesh.java",
+   "book/SpiritDiveWind4Rules.java",
+   "book/SpiritDiveMergeRules.java",
+   "book/SpiritDiveMergeMesh.java",
+   "book/SpiritDiveMerge2Rules.java",
+   "book/FuegoleonArmRules.java",
+   "book/FuegoleonArmDjinnRules.java",
+   "perf/PerfBudget.java",
+   "client/aura/FuegoleonArmAura.java",
+   "client/aura/FuegoleonArmFx.java",
+   "client/aura/FuegoleonArmDjinn.java",
+   "client/aura/FuegoleonArmDjinnFx.java",
+   "client/aura/FuegoleonArmLook.java",
+   "book/ModeArmorWindV2Rules.java",
+   "book/ModeArmorWindV2Mesh.java",
+   "client/mode/ModeArmorLayer.java",
+   "client/mode/ModeArmorWindV2.java",
+   "book/ModeArmorValkyrieRules.java",
+   "book/ModeArmorValkyrieMesh.java",
+   "book/ModeArmorValkyrieBudget.java",
+   "book/ModeArmorValkyrieSpin.java",
+   "client/mode/ModeArmorValkyrieV2.java"
+  ],
+  "exampleFiles": [
+   "Vg2Common.java"
+  ],
+  "examples": [
+   "Vg2Mermaid"
+  ],
+  "total": 120,
+  "ages": [
+   2,
+   6,
+   12,
+   20,
+   33,
+   50
+  ],
+  "tile": [
+   300,
+   520
+  ],
+  "views": [
+   {
+    "name": "front 3/4",
+    "yaw": 32,
+    "pitch": 8,
+    "target": [
+     0,
+     0.75,
+     0.2
+    ],
+    "dist": 4.4
+   }
+  ],
+  "aura": "MUCUS"
+ }
+}

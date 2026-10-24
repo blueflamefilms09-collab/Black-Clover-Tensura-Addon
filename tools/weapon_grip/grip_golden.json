@@ -4799,6 +4799,14 @@
   "y": 74.771,
   "z": 0.012
  },
+ "valkyrie_drill_lance": {
+  "class": "spear",
+  "fraction": 0.285,
+  "source": "gripxyz",
+  "x": 0.0,
+  "y": 13.5,
+  "z": 0.0
+ },
  "vanguard_hammer": {
   "class": "hammer",
   "fraction": 0.248,

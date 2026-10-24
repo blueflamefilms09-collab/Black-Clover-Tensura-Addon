@@ -137,7 +137,9 @@ public final class WeaponEngravings {
             Map.entry("golem_maul", List.of(e("crushing", 2), e("sturdy", 2), e("magic_interference", 1))),              // a golem's fist on a haft: heavy, hard, jams spells
             // the Wind Spirit blades (spiritblades.SpiritBladesBoot; creative-display items): the sword of Zephyr cuts clean through wards and is holy; the bow of Boreas jams magic
             Map.entry("spirit_of_zephyr", List.of(e("severance", 1), e("barrier_piercing", 1), e("holy_weapon", 1))),    // Spirit of Zephyr: a clean cut that parts wards, light of the wind spirit
-            Map.entry("spirit_of_boreas", List.of(e("magic_interference", 1))));                                        // Spirit of Boreas: its arrow of light jams the magic it strikes
+            Map.entry("spirit_of_boreas", List.of(e("magic_interference", 1))),                                         // Spirit of Boreas: its arrow of light jams the magic it strikes
+            // the Valkyrie Drill Lance (valkyrielance.ValkyrieLanceBoot; a creative-display item): the spiral lance of water of the Valkyrie Dress bores through wards, boosts water, breaks what it drills, a spell-made weapon
+            Map.entry("valkyrie_drill_lance", List.of(e("barrier_piercing", 3), e("elemental_boost", 2), e("crushing", 1), e("magic_weapon", 1))));
 
     static final String FLAG = "NUEngraved";
 

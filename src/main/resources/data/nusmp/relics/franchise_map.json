@@ -3,7 +3,7 @@
  "comment": "Written by tools/relics/franchise_map.py (re-run it after a wave changes; manual choices are in tools/relics/franchise_overrides.json). An id that is not here has no franchise.",
  "franchises": {
   "berserk": 11,
-  "black_clover": 79,
+  "black_clover": 80,
   "danmachi": 3,
   "delicious_in_dungeon": 20,
   "dnd": 354,
@@ -887,6 +887,7 @@
   "unlimited_blade_works_brooch": "fate",
   "urek_mazinos_chain_mantle": "tower_of_god",
   "urn_of_black_pudding": "dnd",
+  "valkyrie_drill_lance": "black_clover",
   "vanguard_hammer": "dnd",
   "vanirs_mask_of_devilish_luck": "konosuba",
   "vassal_axe": "shield_hero",

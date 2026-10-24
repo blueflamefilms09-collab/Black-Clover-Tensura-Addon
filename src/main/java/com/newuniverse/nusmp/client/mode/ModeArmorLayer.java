@@ -105,6 +105,10 @@ public class ModeArmorLayer extends RenderLayer<AbstractClientPlayer, PlayerMode
             ModeArmorWindV2.draw(pose, buffers, light, m, now, k, u, limbSwingAmount, player.distanceToSqr(Minecraft.getInstance().gameRenderer.getMainCamera().getPosition()));
             return;
         }
+        if (ModeArmorValkyrieV2.active(mode)) {                                         // Noelle's Valkyrie Dress, version 2: the player-fitted armour, its Saint / Mermaid looks and the drill lance (client option modeArmor.valkyrieLook = CLASSIC keeps the old overlay below)
+            ModeArmorValkyrieV2.draw(pose, buffers, light, m, player, now, k, limbSwingAmount, player.distanceToSqr(Minecraft.getInstance().gameRenderer.getMainCamera().getPosition()));
+            return;
+        }
         WornLibrary.Ensemble lib = RelicFxOptions.models() ? WornLibrary.ofKey(libraryKey(mode)) : null;     // 1.34.0: 3D wings, crowns and horns
         Ctx c = new Ctx(pose, buffers, light, now, k, limbSwingAmount, lib != null);
         switch (mode) {

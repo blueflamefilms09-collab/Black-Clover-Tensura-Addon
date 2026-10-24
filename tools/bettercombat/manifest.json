@@ -1271,6 +1271,11 @@
       "profile": "spear",
       "source": "relic"
     },
+    "valkyrie_drill_lance": {
+      "class": "spear",
+      "profile": "spear",
+      "source": "table"
+    },
     "vanguard_hammer": {
       "class": "hammer",
       "profile": "hammer",
