@@ -114,7 +114,7 @@ Nothing new runs: the rows only add data to the table that `UltimateManager` alr
 
 ## Previews
 
-`docs/previews/ultimate/g34_*.png`: software render of the real effect layers for a sample (Key, Black Oil, Cherry Blossom, Song, Soul, Stone, Vortex, Crystal), each sheet the charge picture, the release and the lingering pulse of that Ultimate, plus `g34_overview.png`. Scenes: `tools/vfx_preview/scenes.d/ultimate_g34.json`. The previewer has no world, lighting or depth. 
+`docs/previews/ultimate/g34_*.png`: software render of the real effect layers for a sample (Key, Black Oil, Cherry Blossom, Song, Soul, Stone, Vortex, Crystal), each sheet the charge picture, the release and the lingering pulse of that Ultimate, plus `g34_overview.png`. Scenes: `tools/vfx_preview/scenes.d/ultimate_g34.json`. The previewer has no world, lighting or depth. All 137 scenes that the previewer can build (every row except the WIKI_MAGIC pictures of Skin and Tongue and the charge picture of Switching) were run against the 400-vertex budget: the worst are Fungus (388), Chain (360) and Stone (356); none is over. The previewer cannot compile WikiMagicLayer (it needs WikiBooks and WikiStyles), so those pictures were not rendered at all.
 
 ## Files
 
