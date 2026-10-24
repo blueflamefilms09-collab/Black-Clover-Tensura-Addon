@@ -66,7 +66,7 @@ class ModeArmorValkyrieScanTest {
         String wind = code(read("client/mode/ModeArmorWindV2Config.java"));
         assertTrue(wind.contains("ModConfig.Type.CLIENT, SPEC, \"nusmp-modearmor-client.toml\"") && wind.contains("ModeArmorValkyrieConfig.define(b)") && wind.contains("ModeArmorValkyrieConfig.apply()"), "in the file of the Wind overlay, inside its modeArmor group");
         String item = code(read("valkyrielance/ValkyrieDrillLanceItem.java"));
-        assertTrue(item.contains("hitBurstAllowed") && item.contains("HIT_BURSTS_PER_TICK") && item.contains("sendParticles"), "the hit burst is capped and sent as ordinary particles to the players near");
+        assertTrue(item.contains("hitBurstAllowed") && item.contains("HIT_BURSTS_PER_TICK") && item.contains("Fx.spray(level"), "the hit burst is capped and sent as ordinary particles to the players near");
         assertFalse(item.contains("onUseTick") || item.contains("ThrownTrident") || item.contains("shoot"), "an honest spear: no throw");
     }
 

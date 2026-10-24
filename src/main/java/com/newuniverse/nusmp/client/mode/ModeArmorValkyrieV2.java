@@ -111,12 +111,16 @@ public final class ModeArmorValkyrieV2 {
     private static final boolean[] ONE_LANCE = new boolean[1];
     private static int count, used, pool = ModeArmorValkyrieBudget.POOL_QUADS;
     private static float stamp = Float.NaN;
+    /** The wearers drawn since the plan was made: one wearer is drawn once a frame, so one drawn twice means a new frame with the same clock (the game paused, a second view): the plan is made again. */
+    private static final int[] SEEN = new int[MAX];
+    private static int seen;
 
     /** Plans the frame once: the wearers in view, nearest first, each with its level and lance, under the pool; frees the spin slots of wearers that are gone. */
     private static void ensurePlan(Minecraft mc, long gameTime) {
         float s = gameTime + mc.getTimer().getGameTimeDeltaPartialTick(false);
         if (s == stamp) return;
         stamp = s;
+        seen = 0;
         pool = ModeArmorValkyrieWorld.pool();
         count = ModeArmorValkyrieWorld.scan(gameTime, IDS, DIST, HOLDS);
         boolean lanceOn = lance != LanceMode.OFF;
@@ -206,8 +210,11 @@ public final class ModeArmorValkyrieV2 {
         if (k <= 0.02f) return;
         Minecraft mc = Minecraft.getInstance();
         if (mc.level == null) return;
+        int id = player.getId();
+        for (int i = 0; i < seen; i++) if (SEEN[i] == id) { stamp = Float.NaN; break; }                   // drawn twice under one clock: a new frame
         ensurePlan(mc, mc.level.getGameTime());
-        int id = player.getId(), slot = slotOf(id), level;
+        if (seen < MAX) SEEN[seen++] = id;
+        int slot = slotOf(id), level;
         boolean withLance;
         Form f = form;
         if (slot >= 0) {

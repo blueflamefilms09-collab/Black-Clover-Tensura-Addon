@@ -1,7 +1,6 @@
 package com.newuniverse.nusmp.valkyrielance;
 
 import net.minecraft.ChatFormatting;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.LivingEntity;
@@ -11,6 +10,9 @@ import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.item.Tiers;
 import net.minecraft.world.item.TooltipFlag;
+import com.newuniverse.nusmp.particle.fx.Fx;
+import com.newuniverse.nusmp.particle.fx.FxOld;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
 
 import java.util.HashMap;
 import java.util.List;
@@ -52,7 +54,7 @@ public class ValkyrieDrillLanceItem extends SwordItem {
         if (bursts >= ValkyrieLanceRules.HIT_BURSTS_PER_TICK) return;
         bursts++;
         double x = target.getX(), y = target.getY() + target.getBbHeight() * 0.55, z = target.getZ();
-        level.sendParticles(ParticleTypes.SPLASH, x, y, z, ValkyrieLanceRules.HIT_PARTICLES, 0.35, 0.3, 0.35, 0.05);
+        Fx.spray(level, FxThemes.WORLD, FxOld.SPLASH, x, y, z, ValkyrieLanceRules.HIT_PARTICLES, 0.35, 0.3, 0.35, 0.05);
     }
 
     /** Forgets an attacker (logout). */
