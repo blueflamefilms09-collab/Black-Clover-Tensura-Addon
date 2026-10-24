@@ -251,6 +251,8 @@ public final class VfxManager {
         register(new com.newuniverse.nusmp.vfx.client.layer.StormLayer());                    // Storm Magic (Fairy Tail): the storm cell, its rain and hail, the bolts, the gust front and the surge
         // Wind in the Minecraft style (pixel-anime): registered after WindMagicLayer / WindSpellLayer on purpose, it takes Slash, Ring, Emperor, Gale and Gust Lane over from them (V1 hands them back); Tornado and Zephyr stay with WindSpellLayer
         register(new com.newuniverse.nusmp.vfx.client.layer.WindMcLayer());
+        // Fire V2 (anime cel mixed with volumetric glow): registered after FlameMagicLayer / FireSpellLayer / FlameFxLayer on purpose, it takes their eleven shapes over (V1 hands them back to the three old layers)
+        register(new com.newuniverse.nusmp.vfx.client.layer.FireV2Layer());
     }
 
     public void register(AbstractVfxLayer layer) { for (VfxShape s : layer.shapes()) layers.put(s, layer); }

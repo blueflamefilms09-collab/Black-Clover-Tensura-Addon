@@ -28,6 +28,8 @@ public final class Preview {
         for (int i = 0; i + 1 < a.length; i += 2) o.put(a[i], a[i + 1]);
         FlatProps.setDrawFlat("1".equals(o.get("--flat")));                   // a scene may ask for the old flat cut-outs (the before picture)
         com.newuniverse.nusmp.vfx.WindMc.setStyle(com.newuniverse.nusmp.vfx.WindMc.parse(o.get("--style")));      // the wind pixel look (default MC_C) or V1, the old wind layers
+        com.newuniverse.nusmp.vfx.FireV2.setStyle(com.newuniverse.nusmp.vfx.FireV2.parse(o.get("--fire-style")));   // the fire V2 look (default) or V1, the old fire layers
+        com.newuniverse.nusmp.vfx.FireV2.setReducedFlashes("1".equals(o.get("--reduced")));                          // the reduced-flashes option of the fire look
         AbstractVfxLayer layer = (AbstractVfxLayer) Class.forName(o.get("--layer")).getDeclaredConstructor().newInstance();
         VfxShape shape = VfxShape.valueOf(o.get("--shape"));
         Vec3 from = vec(o.getOrDefault("--from", "0,0,0")), to = vec(o.getOrDefault("--to", "0,1,0"));

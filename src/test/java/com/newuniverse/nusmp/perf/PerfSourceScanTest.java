@@ -123,7 +123,8 @@ class PerfSourceScanTest {
             "vfx/client/VfxVertexBuffer.java", "vfx/client/VfxManager.java", "vfx/client/FxRenderer.java", "client/geo/GeoDraw.java", "client/aura/PlayerAuraLayer.java",
             "client/aura/AuraRender.java", "client/relics/RelicWornLayer.java", "client/relics/HumanoidRelicLayer.java", "client/labyrinth/foundry/FoundryRenderer.java",
             "client/remodel/AbyssalRenderer.java", "client/thread/ThreadTrapRenderer.java", "client/grimoire/GrimoireFloatClient.java", "client/relics/djinn/DjinnArmorLayer.java",
-            "vfx/client/layer/WindMcLayer.java");        // the Wind pixel look: its textures are static finals, its frame methods build no location
+            "vfx/client/layer/WindMcLayer.java",        // the Wind pixel look: its textures are static finals, its frame methods build no location
+            "vfx/client/layer/FireV2Layer.java");       // the Fire V2 look: the same, its textures are static finals resolved once
 
     @Test
     void theHotRenderFilesBuildNoLocationInTheirFrameMethods() throws IOException {
