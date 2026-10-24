@@ -2,7 +2,10 @@ package com.newuniverse.nusmp.ultimate;
 
 import com.newuniverse.nusmp.avatar.cast.AvatarSkillList;
 import com.newuniverse.nusmp.book.BookPage;
+import com.newuniverse.nusmp.blackclover.Kingdom;
 import com.newuniverse.nusmp.book.GrimoireBook;
+import com.newuniverse.nusmp.charset.CharacterSets;
+import com.newuniverse.nusmp.mana.Heritage;
 import com.newuniverse.nusmp.labyrinth.mega.SelfTests;
 import com.newuniverse.nusmp.labyrinth.mega.SelfTests.Result;
 import com.newuniverse.nusmp.skill.NUSkills;
@@ -36,6 +39,9 @@ import java.util.Set;
  *       fresh player in every way it is asked (the verdict, the page, the grimoire's own cast, the Avatar's list); the bounds hold (worst-case packets, targets, damage, cooldown).</li>
  *   <li>{@code magic.ultimate.cast}: with stand-in players: one tracked entry per caster, the global cap, the movement hold and its removal, every cancel reason (nothing spent, a lockout), the release (the whole magicule is
  *       taken, the cooldown set, at most 24 foes hit, an ally / a creative player / the caster / a far mob untouched, the debuffs applied) and a clean end.</li>
+ *   <li>{@code magic.ultimate.anim}: every kingdom animation clip is in the shipped animation file with the shape the client needs; a cast of a stand-in with each kingdom's heritage (and with none, falling back to
+ *       the grimoire cover) chooses that kingdom's clips and the grimoire's own follow-up play of the page clip keeps them; the setting off and a caster without a kingdom give the old Mana Zone loop.</li>
+ *   <li>{@code magic.ultimate.charbook}: a grimoire bound to a character shows the Ultimate of its own book (setting on), hides the Ultimate of every other book, and the plain / basic / file-less grimoires show all.</li>
  * </ul>
  */
 public final class UltimateSelfTests {
@@ -48,6 +54,8 @@ public final class UltimateSelfTests {
         registered = true;
         SelfTests.register("magic.ultimate.rules", UltimateSelfTests::rules);
         SelfTests.register("magic.ultimate.cast", UltimateSelfTests::cast);
+        SelfTests.register("magic.ultimate.anim", UltimateSelfTests::anim);
+        SelfTests.register("magic.ultimate.charbook", UltimateSelfTests::charBook);
     }
 
     private static GrimoireBook book(String path) {
@@ -113,6 +121,91 @@ public final class UltimateSelfTests {
         if (UltimateRules.cooldownTicks(1) < UltimateRules.MIN_COOLDOWN_TICKS) return Result.fail("the cooldown can be configured under its floor");
         return Result.ok(UltimateRegistry.all().size() + " Ultimates, each the last family page of its book, with handler, lang text, shapes and potion effects; closed for a fresh player in 6 ways; worst case "
                 + packets + " effect packets per cast, " + UltimateRules.MAX_TARGETS + " targets x " + UltimateRules.PULSES + " pulses");
+    }
+
+    private static Result anim(MinecraftServer server) {
+        if (!UltimateConfig.kingdomAnimations()) return Result.fail("ultimate.kingdomAnimations does not default to true");
+        // the clips of every kingdom are in the shipped animation file with the shape the client needs
+        com.google.gson.JsonObject all;
+        try (InputStream in = UltimateSelfTests.class.getResourceAsStream("/assets/nusmp/animations/player/cast.animation.json")) {
+            if (in == null) return Result.fail("cast.animation.json is not in the jar");
+            all = com.google.gson.JsonParser.parseReader(new InputStreamReader(in, StandardCharsets.UTF_8)).getAsJsonObject().getAsJsonObject("animations");
+        } catch (Exception e) {
+            return Result.fail("cast.animation.json is unreadable: " + e);
+        }
+        Set<String> bones = Set.of("body", "head", "left_arm", "right_arm", "left_leg", "right_leg");
+        for (Kingdom k : Kingdom.values()) {
+            UltimateAnim.Clips c = UltimateAnim.forKingdom(k);
+            if (c == UltimateAnim.DEFAULT) return Result.fail(k + " has no kingdom animation");
+            if (UltimateAnim.choose(false, k) != UltimateAnim.DEFAULT) return Result.fail("the setting off does not restore the old loop for " + k);
+            for (String id : new String[]{c.start(), c.loop(), c.release()}) {
+                if (!all.has(id)) return Result.fail("clip " + id + " is not in the animation file");
+                com.google.gson.JsonObject clip = all.getAsJsonObject(id);
+                if (!clip.has("animation_length") || clip.get("animation_length").getAsDouble() <= 0.4) return Result.fail(id + " has no sane length");
+                for (var b : clip.getAsJsonObject("bones").entrySet()) if (!bones.contains(b.getKey())) return Result.fail(id + " drives the unknown bone " + b.getKey());
+            }
+            if (!all.getAsJsonObject(c.start()).get("loop").getAsBoolean() || !all.getAsJsonObject(c.loop()).get("loop").getAsBoolean() || all.getAsJsonObject(c.release()).get("loop").getAsBoolean())
+                return Result.fail(k + ": the loop flags are wrong (start and loop loop, the release does not)");
+        }
+        for (String old : new String[]{"cast_mana_zone", "cast_signature", "cast_fail"}) if (!all.has(old)) return Result.fail("the old clip " + old + " is gone");
+
+        // a cast of a stand-in chooses the clips of ITS kingdom, and the grimoire's own follow-up play of the page clip keeps them
+        ServerLevel level = server.overworld();
+        UltimateManager.clearAll();
+        UltimateDef def = UltimateRegistry.byId("ultimate_fire");
+        GrimoireBook fire = book(def.bookPath());
+        ManasSkillInstance inst = fire.createDefaultInstance();
+        FakePlayer p = SelfTests.standIn(level, "ultimate_anim", 8.5, 120, 104.5);
+        try {
+            for (Kingdom k : Kingdom.values()) {
+                Heritage.set(p, k, null);
+                if (!UltimateManager.startForTest(p, def, fire, inst, 100)) return Result.fail("the test cast did not start for " + k);
+                UltimateAnim.Clips c = UltimateManager.clipsOf(p);
+                if (c == null || !c.equals(UltimateAnim.forKingdom(k))) return Result.fail(k + ": the cast chose " + c);
+                if (!UltimateManager.pageClip(p, def.id(), "cast_mana_zone").equals(c.start())) return Result.fail(k + ": the page's own clip replaced the wind-up pose");
+                if (!UltimateManager.pageClip(p, "mana_strike", "cast_thrust").equals("cast_thrust")) return Result.fail("another page's clip was changed");
+                UltimateManager.cancel(p, Cancel.ADMIN);
+                if (UltimateManager.clipsOf(p) != null) return Result.fail("the entry outlived the cancel");
+                if (!UltimateManager.pageClip(p, def.id(), "cast_mana_zone").equals("cast_mana_zone")) return Result.fail("a clip was replaced without a cast");
+            }
+            // no heritage: the kingdom of the grimoire cover, else the old loop
+            Heritage.set(p, null, null);
+            Kingdom viaCover = UltimateAnim.resolveKingdom(null, GrimoireBook.cover(inst) == null ? null : GrimoireBook.cover(inst).kingdom);
+            if (!UltimateManager.startForTest(p, def, fire, inst, 100)) return Result.fail("the test cast did not start without a kingdom");
+            if (!UltimateManager.clipsOf(p).equals(UltimateAnim.forKingdom(viaCover))) return Result.fail("without a heritage the cast did not follow the cover (" + viaCover + "): " + UltimateManager.clipsOf(p));
+            UltimateManager.cancel(p, Cancel.ADMIN);
+            if (UltimateManager.startForTest(p, def, fire, null, 100) && !UltimateManager.clipsOf(p).equals(UltimateAnim.DEFAULT)) return Result.fail("a caster with no kingdom and no grimoire did not get the old loop");
+            return Result.ok(Kingdom.values().length + " kingdoms x 3 clips in the file with real bones and loop flags, each cast chooses its kingdom's clips (heritage, then cover, then the old loop), the page's own play keeps them, setting off = old loop");
+        } finally {
+            Heritage.set(p, null, null);
+            UltimateManager.clearAll();
+            UltimatePlayer.setLockUntil(p, 0);
+        }
+    }
+
+    private static Result charBook(MinecraftServer server) {
+        if (!CharacterSets.enabled()) return Result.ok("character spell sets are off on this server: nothing to check");
+        if (!UltimateConfig.showInCharacterGrimoires()) return Result.ok("ultimate.showInCharacterGrimoires is off on this server: the old rule applies, nothing to check");
+        int own = 0, other = 0;
+        for (UltimateDef d : UltimateRegistry.all()) {
+            GrimoireBook b = book(d.bookPath());
+            if (b == null) return Result.fail(d.id() + ": " + d.bookPath() + " is not a registered book");
+            int m = b.familyCount() - 1;
+            if (!b.page(m).id().equals(d.id())) return Result.fail(d.id() + " is not the last family page of " + d.bookPath());
+            ManasSkillInstance inst = b.createDefaultInstance();
+            for (String canon : new String[]{"", "floga"}) {
+                inst.getOrCreateTag().putString("Canon", canon);
+                if (CharacterSets.hidden(inst, m)) return Result.fail(d.id() + " is hidden for the grimoire of '" + canon + "' (the plain grimoire and a character without a file show it)");
+            }
+            for (var set : CharacterSets.registry().all()) {
+                inst.getOrCreateTag().putString("Canon", set.canon());
+                boolean owns = CharacterSets.registry().ownsBook(set.canon(), d.bookPath());
+                if (CharacterSets.hidden(inst, m) == owns) return Result.fail(set.canon() + ": " + d.id() + (owns ? " is hidden in the grimoire of its own attribute" : " is shown in a grimoire of another attribute"));
+                if (owns) own++; else other++;
+                if (CharacterSets.hidden(inst, 0)) return Result.fail("mode 0 was hidden");
+            }
+        }
+        return Result.ok(own + " own-attribute checks shown, " + other + " other-attribute checks hidden, over " + UltimateRegistry.all().size() + " Ultimates and " + CharacterSets.registry().all().size() + " character grimoires; plain and file-less grimoires show all");
     }
 
     private static Result cast(MinecraftServer server) {
