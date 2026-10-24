@@ -1,5 +1,29 @@
 # Changelog
 
+## [3.4.0] — Great Spirit GUI (skins B and C, alert crest), companion screens in the new style, Star Magic phase 2 (stars break to Anti-Magic, Black Neverland as in the manga)
+
+### NEW
+- **Great Spirit GUI** (client option `ui.theme = great_spirit`; the default stays `anime` until you switch): two skins, **B Parchment and Ink** for normal users and **C Slime Crest** for devil users (`ui.greatSpirit.skin` AUTO | B | C; AUTO = C for a forbidden or devil-bound grimoire, Devil Union active or used, or a Devil or Daemon race). Filigree corners, clover frames (three leaves = Extra, four = Unique, five = Ultimate / Anti-Magic in the Slime Crest styling), the ink-to-matrix compile animation on new text, the slime ripple on hover, and `ui.greatSpirit.quality` HIGH | LOW. There is no mana ring or gauge, by the owner's decision.
+- **Alert crest**: a small crest in a corner that shows notices as `[Notice... Great Sage has...]`; the player picks where it sits on a move screen and can change it later.
+- **Companion screens in the Great Spirit style** (client option `companions.screenStyle` AUTO | GREAT_SPIRIT | CLASSIC): Talk, Interact, Bond and Pouch tabs with a portrait from the companion's own skin face (breathing, blink, five moods), typed dialogue with ink-to-matrix compile, rapport meter with leaves at 3 / 10 / 25, a gift slot (click or drag), remembered likes and dislikes, stance icons, a bond-story log, a 9-slot pouch with a heal ring, and restyled speech bubbles; crest notices for rapport, tiers, gifts, joining and leaving.
+- **Star Magic: stars break to Anti-Magic.** The mod's one dispel (`Nullification.shatterBarriers`: every Anti-Magic slash, the Nihility zone and about 40 other dispel arts) now rolls each star and Quartile Scutum pane of other mages inside the sphere (`star.dispelChance`, default 0.35; a pane and its end-stars about 1.7 times that; a Grinberryall heir's stars half). A survivor is left alone for 40 ticks. The caster's own and allied stars are never hit. At most 16 stars considered and 8 broken per dispel. (3.3.0's notes listed this by mistake; it was not in that jar.)
+
+### REPLACED
+- **Black Neverland** now follows the manga (ch. 381 to 383): it needs the heir mark, the Sylph bond (flag `sylph_bond`) and an anti-magic source (a Demon-Slayer, Dweller, Destroyer or Slasher sword in hand, or being the Anti-Magic Lord), unless the server setting `star.neverlandCanonGate` is false (then the heir mark alone, and the plain dome of 3.3.0). Six rim stars; the dome silences foes, jams their skills and shatters barriers and stars for 80 of its 100 ticks, then the anti-magic fades; it costs 8% of max Aura (at least 30). Duration, size and cost are the mod's own (no source gives them).
+
+### KEPT
+- Every older page, theme, screen and VFX (the `anime` and `classic` themes, the classic companion screen and bubble, the 3.3.0 dome behaviour behind the gate setting), the Quintile pages, Time Magic and its VFX. `star.nodes` off still restores the old Star Magic.
+
+### Cost (rule 11)
+- GUI: no packets and no server work. The Great Spirit look is drawn only while a menu or the crest is open; about 200 fills and sprites a frame on the companion screen, at most 36 item icons (gift picker) or 9 + 9 (pouch), nothing allocated per frame; `quality = LOW` drops ripples and glow pulses.
+- Companion screens: no new packet; inventory scan of 36 slots every 5 ticks only on the Bond and Pouch tabs; gift memory at most 8 companions x 24 items, bond story 8 x 6 events, all cleared on logout; bubbles at most 24 x 6 draws, 2 lines beyond 12 blocks.
+- Star dispel: one pass over the in-memory registries (at most 512 stars and 8 panes), zero work when no star exists, at most 8 effect packets per dispel, a grace table capped at 640 entries. Black Neverland: 5 pulses, each one foe query, one ally query and at most 6 bolts; at most 4 `shatterBarriers` calls, 8 shatter packets and 8 foes affected per cast; one dome packet per cast.
+
+### Not done / caveats
+- Nothing in this release has been seen in a game; all previews are software renders. The Great Spirit text and companion labels truncate more in the previews than in the game.
+- Great Spirit is not the default theme. There is no ink-script font. Clover frames appear in the companion portrait and the Four Kingdoms header, not in Tensura's own skill windows. The heal ring cannot see the server's 30-second timer. Gift memory and the bond story are lost on logout.
+- Star dispel and the Black Neverland numbers (chance 0.35, grace 40 ticks, duration, size, cost) are first drafts. Only the mod's own dispel breaks stars; Tensura's dispel skills do not. The canon facts for Black Neverland come from search summaries of the English wiki and fan summaries of the chapters (the wiki host could not be fetched, a Japanese search found nothing); Quintile is still unverified canon.
+
 ## [3.3.0] — Valkyrie Armor + drill lance, Star Magic nodes, Ultimate Magic for 104 attributes, Mana Method runes, Mana Zone upgrade, companions
 
 ### NEW
