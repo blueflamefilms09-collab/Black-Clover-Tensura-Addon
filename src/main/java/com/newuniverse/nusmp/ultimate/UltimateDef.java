@@ -20,13 +20,15 @@ import java.util.List;
  * @param freezeTicks   freezing for the targets (0 = none, at most 300)
  * @param push          knockback away from the centre (negative = pulled in), at most 2.5 either way
  * @param lift          upward kick on the targets (0..1)
- * @param burstPower    the VfxShape power of the release picture (the charge ring uses radius / 4, the echo half of this)
+ * @param chargePower   the VfxShape power of the wind-up picture (for the ground sigils this is their radius in blocks)
+ * @param burstPower    the VfxShape power of the release picture
+ * @param echoPower     the VfxShape power of the two lingering pulses
  * @param chargeShape   the VfxShape that follows the caster during the wind-up (re-sent every 40 ticks, at most 6 times)
  * @param burstShape    the VfxShape of the release at the centre
  * @param echoShape     the VfxShape of the two lingering pulses
  */
 public record UltimateDef(String id, String bookPath, String magic, String name, String element, String origin, int windupTicks, double radius, float damage,
-                          List<Debuff> debuffs, int igniteSeconds, int freezeTicks, double push, double lift, float burstPower, String chargeShape, String burstShape, String echoShape) {
+                          List<Debuff> debuffs, int igniteSeconds, int freezeTicks, double push, double lift, float chargePower, float burstPower, float echoPower, String chargeShape, String burstShape, String echoShape) {
 
     /** One potion effect of the release: the registry id of the effect (e.g. {@code minecraft:slowness}), the ticks and the amplifier. */
     public record Debuff(String effect, int ticks, int amplifier) {}
@@ -55,7 +57,7 @@ public record UltimateDef(String id, String bookPath, String magic, String name,
         if (freezeTicks < 0 || freezeTicks > UltimateRules.MAX_FREEZE_TICKS) return id + ": freeze out of bounds";
         if (Math.abs(push) > UltimateRules.MAX_PUSH) return id + ": push out of bounds";
         if (lift < 0 || lift > UltimateRules.MAX_LIFT) return id + ": lift out of bounds";
-        if (burstPower < 0.5f || burstPower > 8f) return id + ": burst power out of bounds";
+        for (float pw : new float[]{chargePower, burstPower, echoPower}) if (pw < 0.5f || pw > 24f) return id + ": a picture power is out of bounds";
         if (chargeShape == null || burstShape == null || echoShape == null) return id + ": a shape is missing";
         return null;
     }

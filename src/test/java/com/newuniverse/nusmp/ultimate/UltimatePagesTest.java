@@ -115,6 +115,29 @@ class UltimatePagesTest {
         for (var e : o.entrySet()) assertTrue(e.getKey().startsWith("nusmp.page.") || e.getKey().startsWith("nusmp.ultimate."), e.getKey());
     }
 
+    @Test
+    void theDocsNameEveryUltimateAndProposeOneForEveryOtherAttribute() throws IOException {
+        String doc = read(ROOT.resolve("docs/magic/ultimate_magic.md")), audit = read(ROOT.resolve("docs/magic/ultimate_audit.md"));
+        for (UltimateDef d : UltimateRegistry.all()) {
+            assertTrue(doc.contains("| `" + d.bookPath() + "` | `" + d.id() + "` | " + d.name() + " | " + d.origin() + " |"), "docs/magic/ultimate_magic.md has no row for " + d.id());
+            assertTrue(audit.contains("| `" + d.bookPath() + "` | `" + d.id() + "` | " + d.name() + " | " + d.origin() + " |"), "the audit has no row for " + d.id());
+        }
+        String magics = read(SRC.resolve("blackclover/MagicType.java"));
+        java.util.regex.Matcher m = java.util.regex.Pattern.compile("(?m)^\\s{4}([A-Z_]+)\\(\"[^\"]+\",\\s*\"[^\"]+\",\\s*\"[A-Z]+\"").matcher(magics);
+        java.util.Set<String> built = new java.util.HashSet<>();
+        for (UltimateDef d : UltimateRegistry.all()) built.add(d.magic());
+        int n = 0;
+        while (m.find()) {
+            String t = m.group(1);
+            if (built.contains(t) || t.equals("TIME")) continue;
+            assertTrue(audit.contains("| `" + t + "` |"), "the audit proposes no Ultimate for " + t);
+            n++;
+        }
+        assertTrue(n >= 90, "all the other attributes: " + n);
+        assertFalse(audit.contains("| `TIME` |"), "no Time Ultimate is proposed (owner rule 3)");
+        assertTrue(audit.contains("Time Magic is deliberately absent"));
+    }
+
     private static int count(String s, String what) {
         int n = 0;
         for (int at = s.indexOf(what); at >= 0; at = s.indexOf(what, at + 1)) n++;

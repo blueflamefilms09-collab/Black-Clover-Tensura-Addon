@@ -371,7 +371,7 @@ public final class UltimateManager {
         CastAnim.play(p, CastAnim.SIGNATURE);
         Vec3 c = new Vec3(s.cx, s.cy, s.cz);
         send(sl, s, VfxShape.MAGIC_CIRCLE_EXPLOSION, c.add(0, 0.1, 0), c.add(0, 1.1, 0), 30, (float) (s.radius / 5.0));
-        send(sl, s, shape(s.def.burstShape()), c, c.add(0, 1, 0), 60, s.def.burstPower());
+        send(sl, s, shape(s.def.burstShape()), c, c.add(0, 1, 0), burstTicks(s.def), s.def.burstPower());
         sl.playSound(null, p.blockPosition(), SoundEvents.GENERIC_EXPLODE.value(), SoundSource.PLAYERS, 5.0f, 0.6f);
         sl.playSound(null, p.blockPosition(), SoundEvents.LIGHTNING_BOLT_THUNDER, SoundSource.PLAYERS, 5.0f, 0.5f);
         p.displayClientMessage(Component.literal(s.def.name()).withStyle(ChatFormatting.GOLD, ChatFormatting.BOLD), true);
@@ -384,7 +384,7 @@ public final class UltimateManager {
         ServerPlayer p = s.player;
         ServerLevel sl = p.serverLevel();
         Vec3 c = new Vec3(s.cx, s.cy, s.cz);
-        if (index > 0) send(sl, s, shape(s.def.echoShape()), c, c.add(0, 1, 0), 40, s.def.burstPower() * 0.5f);
+        if (index > 0) send(sl, s, shape(s.def.echoShape()), c, c.add(0, 1, 0), 40, s.def.echoPower());
         List<LivingEntity> foes = foes(p, c, s.radius);
         double damageScale = UltimateConfig.damageScale();
         for (LivingEntity t : foes) {
@@ -454,6 +454,12 @@ public final class UltimateManager {
         VfxSpawn.send(sl, shape, from, to, s.tint, ticks, power);
     }
 
+    /** The long pictures (the black moon, the tornado) are drawn for 100 ticks, the others for 60. */
+    private static int burstTicks(UltimateDef d) { return d.burstShape().equals("DARK_BLACK_MOON") || d.burstShape().equals("WIND_TORNADO") ? 100 : 60; }
+
+    /** The wind-up picture is drawn as big as the area the release will hit (the configured radius scale included). */
+    private static float chargePower(Session s) { return (float) Math.max(0.5, Math.min(24.0, s.def.chargePower() * (s.radius / Math.max(1.0, s.def.radius())))); }
+
     private static void sendCircle(ServerLevel sl, ServerPlayer p, Session s) {
         if (s.packets >= UltimateRules.MAX_EFFECT_PACKETS) return;
         s.packets++;
@@ -463,7 +469,7 @@ public final class UltimateManager {
 
     private static void sendCharge(ServerLevel sl, Session s) {
         Vec3 c = new Vec3(s.cx, s.cy, s.cz);
-        send(sl, s, shape(s.def.chargeShape()), c, c.add(0, 1, 0), Math.min(80, s.windup), (float) (s.radius / 4.0));
+        send(sl, s, shape(s.def.chargeShape()), c, c.add(0, 1, 0), Math.min(80, s.windup), chargePower(s));
     }
 
     /** Two budgeted particle packets every 10 ticks: a swirl that tightens as the wind-up ends, and a rising column. */
