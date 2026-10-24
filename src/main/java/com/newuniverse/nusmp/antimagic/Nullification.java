@@ -78,10 +78,10 @@ public final class Nullification {
     /**
      * Shatters magic constructs within r of c: Tensura barriers, jails and area spells (boss arena walls are spared), spell
      * projectiles, barrier effects, and barrier skills toggled on. What belongs to 'by' or its allies is left alone.
-     * Returns how many things broke.
+     * Star Magic stars and Quartile Scutum panes inside are dispelled with a chance ({@code star.dispelChance}). Returns how many things broke.
      */
     public static int shatterBarriers(ServerLevel level, Vec3 c, double r, LivingEntity by) {
-        int n = 0;
+        int n = com.newuniverse.nusmp.star.StarDispel.onDispel(level, c, r, by);        // Star Magic nodes: a star or pane inside may break (server chance star.dispelChance; a no-op while none exists)
         AABB box = new AABB(c, c).inflate(r);
         for (Entity e : level.getEntities((Entity) null, box, e -> !(e instanceof LivingEntity) && e.isAlive() && e.position().distanceToSqr(c) <= r * r)) {
             String cls = e.getClass().getName();

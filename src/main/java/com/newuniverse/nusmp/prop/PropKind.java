@@ -182,5 +182,8 @@ public enum PropKind {
     /** Spirit of Darkness (spiritdark.SpiritDarkProps): the shadow-wisp companion (variant 0) and the powered demon form (variant 1); the param word is spiritdark.SpiritDarkRules (painter client.prop.SpiritDarkPropPainter) */
     SPIRITDARK_1,
     /** The Gnome (gnome.GnomeProps): GNOME_1 = the stone companion beside an Earth Magic caster (variant 0) and the full-size stone giant that rises for the big earth pages (1); the variant is the low four bits of the param (painter client.prop.GnomePropPainter) */
-    GNOME_1
+    GNOME_1,
+    /** Star Magic nodes (star.StarProps, docs/vfx_remake/star_ingame.md): STAR_NODE = one star a Star mage hangs in the world (param: the owner's placement index); STAR_PANE = the barrier of Quartile Scutum (param: share of its health left, 0 to 100; yaw: its facing). Painter client.prop.StarPropPainter */
+    STAR_NODE,
+    STAR_PANE
 }

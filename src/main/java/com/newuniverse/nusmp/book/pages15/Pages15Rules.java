@@ -33,6 +33,9 @@ public final class Pages15Rules {
     /** At most one signature page (35 % cost, the full mastery bar and Senior rank) per book. */
     public static final int MAX_SIGNATURE_PER_BOOK = 1;
     /** The bounds of a standing effect (the project-wide figure of docs/magic/page_counts.md section 8). */
+    /** Pages that deliberately ask a cooldown under their tier's minimum (Star Seed: 20 ticks, a cheap capped star; docs/vfx_remake/star_ingame.md). */
+    public static final java.util.Set<String> COOLDOWN_EXEMPT = java.util.Set.of("star_seed");
+
     public static final int MAX_ZONE_TICKS = 100, MIN_ZONE_STEP = 4, MAX_PACKETS = 10;
 
     /** The four page tiers (BookPage.starter / mid / zone / signature) with the numbers a new page uses. */
@@ -154,7 +157,7 @@ public final class Pages15Rules {
             Tier t = Tier.ofCost(s.costPercent());
             if (t == null) out.add(where + ": cost " + s.costPercent() + " % is not a tier (8 / 12 / 20 / 35)");
             else {
-                if (s.cooldown() < t.minCooldown || s.cooldown() > t.maxCooldown)
+                if (!COOLDOWN_EXEMPT.contains(s.id()) && (s.cooldown() < t.minCooldown || s.cooldown() > t.maxCooldown))
                     out.add(where + ": cooldown " + s.cooldown() + " ticks is outside " + t.minCooldown + ".." + t.maxCooldown + " of a " + t.name().toLowerCase(Locale.ROOT) + " page");
                 if (t == Tier.SIGNATURE) signatures.merge(s.book(), 1, Integer::sum);
             }

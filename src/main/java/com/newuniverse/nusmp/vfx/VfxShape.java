@@ -346,7 +346,18 @@ public enum VfxShape {
     STORM_CANCEL,
     // The Mana Method rune (vfx.client.layer.RuneWritingLayer): rune symbols WRITTEN in the air by a pen, rings of them, circle lines, lightning (mana.method.RuneGlyphLayout). Sent locally by the client holder
     // when the one rune packet arrives, never over the network: from = the rune's centre, to = centre + the caster's look, color = the element's tint, seed = the packed RuneSpec, duration = charge + 10 ticks
-    RUNE_WRITING;
+    RUNE_WRITING,
+    // Star Magic nodes (vfx.client.layer.StarMagicLayer, docs/vfx_remake/star_ingame.md); the seed carries a flag the layer reads. STAR_NODE: from = the hand, to = the star, seed 0 = a star forming (comet + ground sigil);
+    // STAR_LINK: one constellation line from -> to (seed = the line's index in the loop); STAR_CONJ: Conjunction, from = where the mage left, to = where they arrive; STAR_PANE: a pane hit (seed 0) or its breaking (seed 1) at
+    // from, the pane centred on to; STAR_LANCE: the spear of light of Quartile Hasta from -> to (power = width); STAR_WHIP: one leg of the whip (seed = its index 0..4, so the ribbon tapers along the legs);
+    // STAR_DOME: Black Neverland round from, power = radius. STAR_MAGIC stays the old shape of every other page.
+    STAR_NODE,
+    STAR_LINK,
+    STAR_CONJ,
+    STAR_PANE,
+    STAR_LANCE,
+    STAR_WHIP,
+    STAR_DOME;
 
     public static VfxShape byId(int id) {
         VfxShape[] v = values();

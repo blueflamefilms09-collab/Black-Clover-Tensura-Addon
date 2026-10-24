@@ -92,5 +92,7 @@ final class PropRegistry {
 
         com.newuniverse.nusmp.gnome.GnomeProps.init();      // the Gnome: the stone companion and the full-size giant
 
+        com.newuniverse.nusmp.star.StarProps.init();        // Star Magic: the placed stars and the Quartile Scutum pane
+
     }
 }

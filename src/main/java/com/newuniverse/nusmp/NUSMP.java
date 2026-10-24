@@ -170,6 +170,7 @@ public class NUSMP {
             com.newuniverse.nusmp.vfx.client.WindMcConfig.init(modEventBus, modContainer);                                      // Wind pixel look (Slash, Emperor, Gale / Gust Lane, Ring): nusmp-wind-mc-client.toml (vfx.element.wind = MC_C | V1)
             com.newuniverse.nusmp.vfx.client.WaterBcConfig.init(modEventBus, modContainer);                                     // Water hybrid look (Roar, Javelin, Cradle, Nest, Burst, Splash, Ring): nusmp-water-bc-client.toml (vfx.element.water = BC | V1)
             com.newuniverse.nusmp.vfx.client.FireV2Config.init(modEventBus, modContainer);                                      // Fire V2 look (11 fire shapes): nusmp-fire-v2-client.toml (vfx.element.fire = V2 | V1, vfx.element.fireReducedFlashes)
+            com.newuniverse.nusmp.vfx.client.StarV2Config.init(modEventBus, modContainer);                                      // Star V2 look (the star nodes, lines, Conjunction, pane, lance, whip): nusmp-star-v2-client.toml (vfx.element.star = V2 | V1, vfx.element.starReducedFlashes)
             com.newuniverse.nusmp.client.DreamSkyClient.init(modEventBus);
             com.newuniverse.nusmp.client.grimoire.GrimoireSlotClient.init(modEventBus);
             com.newuniverse.nusmp.client.multiverse.MultiverseStatusClient.init(modEventBus);
@@ -446,6 +447,8 @@ public class NUSMP {
         com.newuniverse.nusmp.book.NoelleFormsSelfTests.register();                                               // 1.99.0: self-test magic.noelle_forms
         com.newuniverse.nusmp.book.SpiritLooksSelfTests.register();                                               // 1.99.0 Great Spirits: self-test magic.spirit_looks
         com.newuniverse.nusmp.book.SpiritDiveBoot.init(modContainer);                                              // Spirit Dive remake: server config nusmp-spiritdive-server.toml, Fuegoleon's arm events, self-tests magic.spirit_dive_looks / magic.fuegoleon_arm
+        com.newuniverse.nusmp.star.StarBoot.init(modContainer);                                                   // Star nodes: server config nusmp-star-server.toml, cleanup events, self-test magic.star_nodes
+        com.newuniverse.nusmp.vfx.StarV2SelfTests.register();                                                     // Star V2 look: self-test magic.star_nodes_look (shapes, quad caps, textures, options; pure, runs on the server)
         com.newuniverse.nusmp.vfx.SquareBugSelfTests.register();                                                  // 1.105.0: self-test vfx.square_bug
         com.newuniverse.nusmp.vfx.WindMcSelfTests.register();                                                     // Wind pixel look: self-test magic.wind_mc (shapes, quad caps, 32 textures, option, tint choice; pure, runs on the server)
         com.newuniverse.nusmp.vfx.WaterBcSelfTests.register();                                                    // Water hybrid look: self-test magic.water_bc (tiers, caps, assets, option, tint choice; pure, runs on the server)

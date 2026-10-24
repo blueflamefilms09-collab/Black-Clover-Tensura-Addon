@@ -214,11 +214,11 @@ public final class Batch1 {
 
     private static final List<BookPage> STAR = register("book_star", List.of(
                 Pages15Kit.starter("quartile_flagellum", "Quartile Flagellum",
-                        cone(Tier.STARTER, 8, 0.5, VfxShape.STAR_MAGIC, glow(60))).withCooldown(90).withAnim("sweep"),
+                        com.newuniverse.nusmp.star.StarCasts.flagellum(cone(Tier.STARTER, 8, 0.5, VfxShape.STAR_MAGIC, glow(60)))).withCooldown(90).withAnim("sweep"),      // star.nodes: an heir with room for four stars whips through them, everybody else (and star.nodes = false) swings the old cone
                 Pages15Kit.starter("twinkle_dart", "Twinkle Dart",
                         bolt(Tier.STARTER, 0, VfxShape.STAR_MAGIC, null, glow(80))),
                 Pages15Kit.mid("star_conjunction", "Conjunction",
-                        dash(Tier.MID, false, 12, false, VfxShape.STAR_MAGIC, NONE)).withCooldown(160).withAnim("thrust"),
+                        com.newuniverse.nusmp.star.StarCasts.conjunction(dash(Tier.MID, false, 12, false, VfxShape.STAR_MAGIC, NONE))).withCooldown(160).withAnim("thrust"),      // star.nodes: teleports to beneath one of your stars; the 12-block dash is the fallback (and the whole cast with star.nodes = false)
                 Pages15Kit.mid("never_never_land", "Never Never Land",
                         cast(Tier.MID, c -> neverNeverLand(c))).withCooldown(400),
                 Pages15Kit.mid("star_beam", "Star Beam",

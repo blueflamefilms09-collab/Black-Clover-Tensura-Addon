@@ -163,7 +163,8 @@ public abstract class GrimoireBook extends Skill {
     public String pageBlock(ServerPlayer p, ManasSkillInstance inst, int mode) {
         String ultimateBlock = com.newuniverse.nusmp.ultimate.UltimatePages.block(this, page(mode), p, inst);      // Ultimate Magic: the late-game gate of its page
         if (ultimateBlock != null) return ultimateBlock;
-        return CharacterSpells.block(this, page(mode), p);
+        String block = CharacterSpells.block(this, page(mode), p);
+        return block != null ? block : com.newuniverse.nusmp.star.StarPages.block(this, page(mode), p);      // Star nodes: the new Star pages wait for the Grinberryall heir (docs/vfx_remake/star_ingame.md)
     }
     public BookPage page(int mode) { return mode >= 0 && mode < pages().size() ? pages().get(mode) : null; }
     private boolean isDive(int mode) { return page(mode) != null && (page(mode).id().equals("spirit_dive") || page(mode).id().equals("spirit_channeling")); }
