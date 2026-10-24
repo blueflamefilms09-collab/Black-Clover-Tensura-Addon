@@ -30,7 +30,7 @@ public final class UltimateRegistry {
 
     private static final List<UltimateDef> CORE = List.of(
             new UltimateDef("ultimate_fire", "book_fire", "FLAME", "Ultimate Flame Magic: Crimson Sun Descent", "fire", "original", 160, 16.0, 40f,
-                    d(slow(120, 2), weak(300, 1), new Debuff("minecraft:hunger", 300, 1)), 12, 0, 1.3, 0.35, 16f, 6f, 5f, "FLAMEFX_ZONE", "FIRE_PILLAR", "FLAMEFX_BURST"),
+                    d(slow(120, 2), weak(300, 1), new Debuff("minecraft:mining_fatigue", 300, 1)), 12, 0, 1.3, 0.35, 16f, 6f, 5f, "FLAMEFX_ZONE", "FIRE_PILLAR", "FLAMEFX_BURST"),
             new UltimateDef("ultimate_water", "book_water", "WATER", "Ultimate Water Magic: Sea God's Deluge", "water", "original", 180, 18.0, 36f,
                     d(slow(160, 2), fatigue(200, 2), weak(200, 1), new Debuff("minecraft:nausea", 120, 0)), 0, 0, 1.6, 0.25, 18f, 6f, 5f, "WATERFX_ZONE", "WATER_BURST", "WATERFX_BURST"),
             new UltimateDef("ultimate_wind", "book_wind", "WIND", "Ultimate Wind Magic: Heavenfall Tempest", "wind", "original", 140, 20.0, 32f,

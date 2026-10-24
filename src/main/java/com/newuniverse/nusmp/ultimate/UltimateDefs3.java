@@ -34,7 +34,7 @@ final class UltimateDefs3 {
             new UltimateDef("ultimate_fungus", "book_fungus", "FUNGUS", "Ultimate Fungus Magic: Spore Apocalypse", "fungus", "original", 180, 19.0, 26.0f,
                     d(new Debuff("minecraft:poison", 240, 1), new Debuff("minecraft:nausea", 200, 0), weak(240, 1)), 0, 0, 0.2, 0.1, 19.0f, 5.7f, 9.0f, "FUNGUS_FX2", "FUNGUS_FX3", "FUNGUS_FX2"),
             new UltimateDef("ultimate_food", "book_food", "FOOD", "Ultimate Food Magic: Grand Banquet of Ruin", "food", "original", 190, 16.0, 24.0f,
-                    d(new Debuff("minecraft:hunger", 300, 3), new Debuff("minecraft:nausea", 160, 0), weak(200, 1)), 0, 0, -0.5, 0.0, 16.0f, 5.0f, 3.0f, "FOOD_FX2", "FOOD_MAW", "FOOD_FX3"),
+                    d(new Debuff("minecraft:mining_fatigue", 300, 3), new Debuff("minecraft:nausea", 160, 0), weak(200, 1)), 0, 0, -0.5, 0.0, 16.0f, 5.0f, 3.0f, "FOOD_FX2", "FOOD_MAW", "FOOD_FX3"),
             new UltimateDef("ultimate_crystal", "book_crystal", "CRYSTAL", "Ultimate Crystal Magic: Prism Cathedral", "crystal", "original", 150, 15.0, 42.0f,
                     d(new Debuff("minecraft:glowing", 300, 0), new Debuff("minecraft:blindness", 60, 0), slow(80, 1), weak(160, 1)), 0, 0, 1.0, 0.35, 15.0f, 4.5f, 3.0f, "CRYSTAL_FX2", "CRYSTAL_FX3", "CRYSTAL_FX3"),
             new UltimateDef("ultimate_corundum", "book_corundum", "CORUNDUM", "Ultimate Corundum Magic: Ruby Sun Cutter", "corundum", "original", 130, 13.0, 46.0f,

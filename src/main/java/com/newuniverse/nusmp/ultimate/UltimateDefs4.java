@@ -58,7 +58,7 @@ final class UltimateDefs4 {
             new UltimateDef("ultimate_switching", "book_switching", "SWITCHING", "Ultimate Switching Magic: Total Swap", "switching", "original", 160, 16.0, 24.0f,
                     d(new Debuff("minecraft:nausea", 240, 0), new Debuff("minecraft:blindness", 60, 0), slow(80, 1), weak(160, 1)), 0, 0, -1.2, 0.45, 16.0f, 8.0f, 4.0f, "WIKI_MAGIC_FIELD", "SPACE_RINGGATE", "SPACE_CRACK"),
             new UltimateDef("ultimate_tongue", "book_tongue", "TONGUE", "Ultimate Tongue Magic: Great Toad Lash", "tongue", "original", 110, 15.0, 40.0f,
-                    d(slow(80, 1), weak(200, 1), new Debuff("minecraft:hunger", 160, 1)), 0, 0, -2.2, 0.0, 15.0f, 4.5f, 2.5f, "WIKI_MAGIC_FIELD", "WIKI_MAGIC_BURST", "WIKI_MAGIC_CAST"),
+                    d(slow(80, 1), weak(200, 1), new Debuff("minecraft:mining_fatigue", 160, 1)), 0, 0, -2.2, 0.0, 15.0f, 4.5f, 2.5f, "WIKI_MAGIC_FIELD", "WIKI_MAGIC_BURST", "WIKI_MAGIC_CAST"),
             new UltimateDef("ultimate_tree", "book_tree", "TREE", "Ultimate Tree Magic: Ancient Grove Wrath", "tree", "original", 200, 19.0, 40.0f,
                     d(slow(160, 2), weak(180, 1), fatigue(160, 1)), 0, 0, 1.0, 0.6, 19.0f, 5.7f, 9.0f, "TREE_FX2", "TREE_FX3", "TREE_FX2"),
             new UltimateDef("ultimate_stone", "book_stone", "STONE", "Ultimate Stone Magic: Monolith Rain", "stone", "original", 170, 14.0, 48.0f,
