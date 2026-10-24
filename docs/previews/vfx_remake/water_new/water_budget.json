@@ -1,0 +1,314 @@
+{
+ "roar": {
+  "title": "ROAR  Sea Dragon's Roar",
+  "shape": "WATERFX_CAST (also WATER_DRAGON, unused)",
+  "cap_quads": 100,
+  "today_live_quads": 51,
+  "today_peak_in_preview": 51,
+  "A": {
+   "peak_total_quads": 20,
+   "peak_sprite_quads": 20,
+   "peak_mesh_quads": 0,
+   "mesh_layers_0_1_2": [
+    0,
+    0,
+    0
+   ]
+  },
+  "B": {
+   "peak_total_quads": 42,
+   "peak_sprite_quads": 42,
+   "peak_mesh_quads": 0,
+   "mesh_layers_0_1_2": [
+    0,
+    0,
+    0
+   ]
+  },
+  "C": {
+   "peak_total_quads": 250,
+   "peak_sprite_quads": 2,
+   "peak_mesh_quads": 248,
+   "mesh_layers_0_1_2": [
+    209,
+    7,
+    32
+   ],
+   "lod1_peak_total_quads": 163,
+   "lod1_peak_mesh_quads": 161
+  }
+ },
+ "lance": {
+  "title": "LANCE  Aqua Javelin",
+  "shape": "WATERFX_CAST (also WATER_JAVELIN, unused)",
+  "cap_quads": 100,
+  "today_live_quads": 51,
+  "today_peak_in_preview": 51,
+  "A": {
+   "peak_total_quads": 21,
+   "peak_sprite_quads": 21,
+   "peak_mesh_quads": 0,
+   "mesh_layers_0_1_2": [
+    0,
+    0,
+    0
+   ]
+  },
+  "B": {
+   "peak_total_quads": 15,
+   "peak_sprite_quads": 15,
+   "peak_mesh_quads": 0,
+   "mesh_layers_0_1_2": [
+    0,
+    0,
+    0
+   ]
+  },
+  "C": {
+   "peak_total_quads": 153,
+   "peak_sprite_quads": 2,
+   "peak_mesh_quads": 151,
+   "mesh_layers_0_1_2": [
+    143,
+    8,
+    0
+   ],
+   "lod1_peak_total_quads": 78,
+   "lod1_peak_mesh_quads": 76
+  }
+ },
+ "cradle": {
+  "title": "CRADLE  Sea Dragon's Cradle (zone, sphere)",
+  "shape": "WATERFX_ZONE (also WATER_CRADLE, unused)",
+  "cap_quads": 100,
+  "today_live_quads": 39,
+  "today_peak_in_preview": 39,
+  "A": {
+   "peak_total_quads": 12,
+   "peak_sprite_quads": 12,
+   "peak_mesh_quads": 0,
+   "mesh_layers_0_1_2": [
+    0,
+    0,
+    0
+   ]
+  },
+  "B": {
+   "peak_total_quads": 13,
+   "peak_sprite_quads": 13,
+   "peak_mesh_quads": 0,
+   "mesh_layers_0_1_2": [
+    0,
+    0,
+    0
+   ]
+  },
+  "C": {
+   "peak_total_quads": 268,
+   "peak_sprite_quads": 1,
+   "peak_mesh_quads": 267,
+   "mesh_layers_0_1_2": [
+    235,
+    0,
+    32
+   ],
+   "lod1_peak_total_quads": 163,
+   "lod1_peak_mesh_quads": 162
+  }
+ },
+ "nest": {
+  "title": "NEST  Sea Dragon's Nest (zone, dome)",
+  "shape": "WATERFX_ZONE (also WATER_NEST, unused)",
+  "cap_quads": 100,
+  "today_live_quads": 39,
+  "today_peak_in_preview": 39,
+  "A": {
+   "peak_total_quads": 10,
+   "peak_sprite_quads": 10,
+   "peak_mesh_quads": 0,
+   "mesh_layers_0_1_2": [
+    0,
+    0,
+    0
+   ]
+  },
+  "B": {
+   "peak_total_quads": 13,
+   "peak_sprite_quads": 13,
+   "peak_mesh_quads": 0,
+   "mesh_layers_0_1_2": [
+    0,
+    0,
+    0
+   ]
+  },
+  "C": {
+   "peak_total_quads": 238,
+   "peak_sprite_quads": 0,
+   "peak_mesh_quads": 238,
+   "mesh_layers_0_1_2": [
+    170,
+    0,
+    68
+   ],
+   "lod1_peak_total_quads": 123,
+   "lod1_peak_mesh_quads": 123
+  }
+ },
+ "burst": {
+  "title": "BURST  impact (crown + ripples)",
+  "shape": "WATERFX_BURST (also WATER_BURST, unused)",
+  "cap_quads": 100,
+  "today_live_quads": 30,
+  "today_peak_in_preview": 30,
+  "A": {
+   "peak_total_quads": 13,
+   "peak_sprite_quads": 13,
+   "peak_mesh_quads": 0,
+   "mesh_layers_0_1_2": [
+    0,
+    0,
+    0
+   ]
+  },
+  "B": {
+   "peak_total_quads": 16,
+   "peak_sprite_quads": 16,
+   "peak_mesh_quads": 0,
+   "mesh_layers_0_1_2": [
+    0,
+    0,
+    0
+   ]
+  },
+  "C": {
+   "peak_total_quads": 177,
+   "peak_sprite_quads": 1,
+   "peak_mesh_quads": 176,
+   "mesh_layers_0_1_2": [
+    160,
+    0,
+    16
+   ],
+   "lod1_peak_total_quads": 113,
+   "lod1_peak_mesh_quads": 112
+  }
+ },
+ "splash": {
+  "title": "SPLASH  Mist Step / pages",
+  "shape": "WATER_SPLASH",
+  "cap_quads": 100,
+  "today_live_quads": 23,
+  "today_peak_in_preview": 23,
+  "A": {
+   "peak_total_quads": 8,
+   "peak_sprite_quads": 8,
+   "peak_mesh_quads": 0,
+   "mesh_layers_0_1_2": [
+    0,
+    0,
+    0
+   ]
+  },
+  "B": {
+   "peak_total_quads": 9,
+   "peak_sprite_quads": 9,
+   "peak_mesh_quads": 0,
+   "mesh_layers_0_1_2": [
+    0,
+    0,
+    0
+   ]
+  },
+  "C": {
+   "peak_total_quads": 120,
+   "peak_sprite_quads": 0,
+   "peak_mesh_quads": 120,
+   "mesh_layers_0_1_2": [
+    112,
+    0,
+    8
+   ],
+   "lod1_peak_total_quads": 68,
+   "lod1_peak_mesh_quads": 68
+  }
+ },
+ "ring": {
+  "title": "RING  Mist Veil / basic arts",
+  "shape": "WATER_RING",
+  "cap_quads": 100,
+  "today_live_quads": 100,
+  "today_peak_in_preview": 100,
+  "A": {
+   "peak_total_quads": 3,
+   "peak_sprite_quads": 3,
+   "peak_mesh_quads": 0,
+   "mesh_layers_0_1_2": [
+    0,
+    0,
+    0
+   ]
+  },
+  "B": {
+   "peak_total_quads": 6,
+   "peak_sprite_quads": 6,
+   "peak_mesh_quads": 0,
+   "mesh_layers_0_1_2": [
+    0,
+    0,
+    0
+   ]
+  },
+  "C": {
+   "peak_total_quads": 84,
+   "peak_sprite_quads": 0,
+   "peak_mesh_quads": 84,
+   "mesh_layers_0_1_2": [
+    60,
+    0,
+    24
+   ],
+   "lod1_peak_total_quads": 56,
+   "lod1_peak_mesh_quads": 56
+  }
+ },
+ "valk": {
+  "title": "VALKYRIE  add-on (wings, halo, drips)",
+  "shape": "new optional; today WATER_DRESS (unused) + the 3D armour",
+  "cap_quads": 100,
+  "today_live_quads": 74,
+  "today_peak_in_preview": 74,
+  "A": {
+   "peak_total_quads": 10,
+   "peak_sprite_quads": 10,
+   "peak_mesh_quads": 0,
+   "mesh_layers_0_1_2": [
+    0,
+    0,
+    0
+   ]
+  },
+  "B": {
+   "peak_total_quads": 12,
+   "peak_sprite_quads": 12,
+   "peak_mesh_quads": 0,
+   "mesh_layers_0_1_2": [
+    0,
+    0,
+    0
+   ]
+  },
+  "C": {
+   "peak_total_quads": 205,
+   "peak_sprite_quads": 1,
+   "peak_mesh_quads": 204,
+   "mesh_layers_0_1_2": [
+    148,
+    48,
+    8
+   ],
+   "lod1_peak_total_quads": 125,
+   "lod1_peak_mesh_quads": 124
+  }
+ }
+}
