@@ -28,7 +28,7 @@ public final class UltimateRegistry {
 
     private static Debuff fatigue(int t, int a) { return new Debuff("minecraft:mining_fatigue", t, a); }
 
-    private static final List<UltimateDef> ALL = List.of(
+    private static final List<UltimateDef> CORE = List.of(
             new UltimateDef("ultimate_fire", "book_fire", "FLAME", "Ultimate Flame Magic: Crimson Sun Descent", "fire", "original", 160, 16.0, 40f,
                     d(slow(120, 2), weak(300, 1), new Debuff("minecraft:hunger", 300, 1)), 12, 0, 1.3, 0.35, 16f, 6f, 5f, "FLAMEFX_ZONE", "FIRE_PILLAR", "FLAMEFX_BURST"),
             new UltimateDef("ultimate_water", "book_water", "WATER", "Ultimate Water Magic: Sea God's Deluge", "water", "original", 180, 18.0, 36f,
@@ -45,6 +45,18 @@ public final class UltimateRegistry {
                     d(new Debuff("minecraft:wither", 160, 1), new Debuff("minecraft:darkness", 200, 0), new Debuff("minecraft:blindness", 80, 0), slow(100, 1)), 0, 0, -1.2, 0.0, 18f, 8f, 5f, "DARKFX_ZONE", "DARK_BLACK_MOON", "DARKFX_BURST"),
             new UltimateDef("ultimate_spatial", "book_spatial", "SPATIAL", "Ultimate Spatial Magic: World's Edge Collapse", "space", "original", 170, 18.0, 34f,
                     d(slow(100, 2), new Debuff("minecraft:nausea", 200, 0), weak(200, 1)), 0, 0, -1.5, 0.2, 12f, 18f, 10f, "SPACE_CRACK", "SPACE_SHATTER", "SPACE_SHATTER"));
+
+    /** The core eight, then the four groups of the remaining attributes (3.3.0, each group is its own file so builders never touch the same lines); the order never changes, new rows are appended inside a group. */
+    private static final List<UltimateDef> ALL;
+
+    static {
+        List<UltimateDef> l = new ArrayList<>(CORE);
+        l.addAll(UltimateDefs1.all());
+        l.addAll(UltimateDefs2.all());
+        l.addAll(UltimateDefs3.all());
+        l.addAll(UltimateDefs4.all());
+        ALL = Collections.unmodifiableList(l);
+    }
 
     private static final Map<String, UltimateDef> BY_ID, BY_BOOK;
 
