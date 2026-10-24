@@ -105,3 +105,9 @@ Nothing here has been run in Minecraft: the build environment could not run Grad
 and the pure tests were run; the self-tests, the screen, the bubble renderer, the follow goal, the high five (no dedicated pose for the arc model: it shows particles and the talk
 clip; `socialKind` / `socialAge` are synced and ready for a pose clip) and the Nether crossing have not been seen working. The stub check cannot tell `RegistryFriendlyByteBuf` and
 `MobEffectInstance` are concrete (it reports four false errors on them). The potion's bottle is not given back when she uses a potion.
+
+## Great Spirit screens (client only)
+
+The Talk, Interact, Bond and Pouch screens and the bubbles can be drawn in the great_spirit skins (B for normal users, C for devil users), with portrait expressions, a rapport meter,
+a gift slot, taste hints, a stance selector, a 9-slot pouch with a heal-ready ring and a bond-story log. The client option `companions.screenStyle` (AUTO, GREAT_SPIRIT, CLASSIC) picks
+the style; CLASSIC is the old screen, unchanged. No new packet and no server change. Details, costs and previews: `docs/gui_redesign/companion_gui.md`.
