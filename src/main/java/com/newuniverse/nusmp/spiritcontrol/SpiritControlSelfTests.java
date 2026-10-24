@@ -81,7 +81,7 @@ public final class SpiritControlSelfTests {
             GrimoireBook b = h.get();
             if (!b.pages().isEmpty() && b.pages().stream().noneMatch(pg -> pg.id().equals(GrimoireBook.STRIKE_ID))) continue;     // a book without the universal pages (the Forbidden book) has no spirit pages either
             List<BookPage> pages = b.pages();
-            int n = pages.size();
+            int n = pages.size() - com.newuniverse.nusmp.mana.method.ManaMethodPages.tailCount(pages);      // the five Mana Method pages are appended after the spirit pages
             if (n < want.size()) return Result.fail(b.magicId() + " has too few pages");
             Set<String> ids = new HashSet<>();
             for (BookPage pg : pages) if (!ids.add(pg.id())) return Result.fail(b.magicId() + " has the page " + pg.id() + " twice");
@@ -96,7 +96,7 @@ public final class SpiritControlSelfTests {
         ServerPlayer p = SelfTests.standIn(level, "spirit_control", at.x, at.y, at.z);
         try {
             GrimoireBook fire = NUSkills.bookFor(MagicType.FLAME);
-            int n = fire.pages().size();
+            int n = fire.pages().size() - com.newuniverse.nusmp.mana.method.ManaMethodPages.tailCount(fire.pages());
             for (int k = n - want.size(); k < n; k++) if (fire.usable(null, p, k)) return Result.fail("the spirit page " + fire.page(k).id() + " is usable for a player no spirit answers");
             if (!SpiritControl.eligible(p).isEmpty()) return Result.fail("a spirit answers a fresh stand-in player");
             // the command tree under both roots
