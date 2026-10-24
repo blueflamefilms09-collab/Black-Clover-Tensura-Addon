@@ -1,0 +1,162 @@
+{
+ "slash": {
+  "title": "WIND_SLASH  Crescent Kamaitachi",
+  "cap_current_quads": 72,
+  "before_peak_quads_in_preview": 72,
+  "A": {
+   "peak_quads": 12,
+   "peak_cubes": 0,
+   "worst_case_quads": 12
+  },
+  "B": {
+   "peak_quads": 66,
+   "peak_cubes": 22,
+   "worst_case_quads": null
+  },
+  "C": {
+   "peak_quads": 8,
+   "peak_cubes": 0,
+   "worst_case_quads": 8
+  }
+ },
+ "emperor": {
+  "title": "WIND_EMPEROR  Slicing Wind Emperor",
+  "cap_current_quads": 80,
+  "before_peak_quads_in_preview": 80,
+  "A": {
+   "peak_quads": 14,
+   "peak_cubes": 0,
+   "worst_case_quads": 14
+  },
+  "B": {
+   "peak_quads": 73,
+   "peak_cubes": 25,
+   "worst_case_quads": null
+  },
+  "C": {
+   "peak_quads": 18,
+   "peak_cubes": 0,
+   "worst_case_quads": 18
+  }
+ },
+ "tornado": {
+  "title": "WIND_TORNADO  Towering Tornado",
+  "cap_current_quads": 96,
+  "before_peak_quads_in_preview": 96,
+  "A": {
+   "peak_quads": 51,
+   "peak_cubes": 0,
+   "worst_case_quads": 51
+  },
+  "B": {
+   "peak_quads": 93,
+   "peak_cubes": 31,
+   "worst_case_quads": null
+  },
+  "C": {
+   "peak_quads": 30,
+   "peak_cubes": 0,
+   "worst_case_quads": 30
+  }
+ },
+ "gale": {
+  "title": "WIND_GALE / FX_WIND_GUST  Gust Lane",
+  "cap_current_quads": 66,
+  "before_peak_quads_in_preview": 66,
+  "A": {
+   "peak_quads": 16,
+   "peak_cubes": 0,
+   "worst_case_quads": 16
+  },
+  "B": {
+   "peak_quads": 66,
+   "peak_cubes": 22,
+   "worst_case_quads": null
+  },
+  "C": {
+   "peak_quads": 13,
+   "peak_cubes": 0,
+   "worst_case_quads": 13
+  }
+ },
+ "zephyr": {
+  "title": "WIND_ZEPHYR  Spirit of Zephyr",
+  "cap_current_quads": 92,
+  "before_peak_quads_in_preview": 92,
+  "A": {
+   "peak_quads": 21,
+   "peak_cubes": 0,
+   "worst_case_quads": 21
+  },
+  "B": {
+   "peak_quads": 78,
+   "peak_cubes": 27,
+   "worst_case_quads": null
+  },
+  "C": {
+   "peak_quads": 17,
+   "peak_cubes": 0,
+   "worst_case_quads": 17
+  }
+ },
+ "ring": {
+  "title": "WIND_RING  Tempest Ring",
+  "cap_current_quads": 100,
+  "before_peak_quads_in_preview": 100,
+  "A": {
+   "peak_quads": 18,
+   "peak_cubes": 0,
+   "worst_case_quads": 18
+  },
+  "B": {
+   "peak_quads": 84,
+   "peak_cubes": 28,
+   "worst_case_quads": null
+  },
+  "C": {
+   "peak_quads": 13,
+   "peak_cubes": 0,
+   "worst_case_quads": 13
+  }
+ },
+ "beam": {
+  "title": "WIND_BEAM (new, optional)  Spirit Storm palm beam",
+  "cap_current_quads": 100,
+  "before_peak_quads_in_preview": 96,
+  "A": {
+   "peak_quads": 14,
+   "peak_cubes": 0,
+   "worst_case_quads": 14
+  },
+  "B": {
+   "peak_quads": 84,
+   "peak_cubes": 28,
+   "worst_case_quads": null
+  },
+  "C": {
+   "peak_quads": 15,
+   "peak_cubes": 0,
+   "worst_case_quads": 15
+  }
+ },
+ "drill": {
+  "title": "WIND_DRILL (new, optional)  Tornado Fang",
+  "cap_current_quads": 100,
+  "before_peak_quads_in_preview": 96,
+  "A": {
+   "peak_quads": 33,
+   "peak_cubes": 0,
+   "worst_case_quads": 33
+  },
+  "B": {
+   "peak_quads": 69,
+   "peak_cubes": 23,
+   "worst_case_quads": null
+  },
+  "C": {
+   "peak_quads": 13,
+   "peak_cubes": 0,
+   "worst_case_quads": 13
+  }
+ }
+}
