@@ -1,0 +1,29 @@
+Water remake, hybrid BC: mesh cores (quads; verts = 4 x quads; layer 0 body / 1 glow / 2 foam)
+
+piece                   quads     L0     L1     L2
+bc_head_upper              67     50      3     14
+bc_head_upper_lo           37     26      3      8
+bc_head_lower              32     24      0      8
+bc_head_lower_lo           16     12      0      4
+bc_seg                     15     14      1      0
+bc_seg_lo                   7      6      1      0
+bc_seg_b                   21     14      1      6
+bc_seg_b_lo                11      6      1      4
+bc_tail                    16     16      0      0
+bc_tail_lo                 12     12      0      0
+bc_head_hull               24     24      0      0
+bc_head_hull_lo            15     15      0      0
+bc_horn                    20     20      0      0
+bc_horn_lo                 12     12      0      0
+bc_ripple                  44     34      0     10
+bc_ripple_lo               24     18      0      6
+bc_sphere                  80     80      0      0
+bc_sphere_lo               48     48      0      0
+bc_dome                    96     60      0     36
+bc_dome_lo                 55     32      0     23
+bc_lance                   50     36      8      6
+bc_lance_lo                30     22      8      0
+bc_wing_r                  56     56      0      0
+bc_wing_r_lo               40     40      0      0
+bc_wing_l                  56     56      0      0
+bc_wing_l_lo               40     40      0      0
