@@ -95,7 +95,9 @@ def count(q):
     return sum(1 for k in q.K if k not in ("skin", "suit", "hair", "dark"))
 
 
-NAMES = {"A": "A  Frosted Drill", "B": "B  Crystal Corkscrew", "C": "C  Living Water Dragon Lance"}
+NAMES = {"A": "A  Frosted Drill", "B": "B  Crystal Corkscrew", "C": "C  Living Water Dragon Lance", "AB": "AB  Frosted Crystal Drill (A + B)"}
+VERS = ["A", "B", "C"]
+TAG = ""
 POSE_RAISED = Pose(hover=2, arm_l=(8, 150), arm_r=(10, 152), pitch=-10, flap=3, bend=5, wave_amp=0.5, wave=1.0, tails=True, leg_l=8, leg_r=-10, leg_abd_l=6, leg_abd_r=5)
 POSE_THROW = Pose(hover=1, lean=-4, yaw=-10, pitch=-6, arm_r=(112, 8), arm_l=(30, 40), leg_l=-12, leg_r=14, flap=2, bend=3, wave_amp=0.4, tails=True)
 POSE_ATTACH = Pose(hover=2.5, lean=-3, yaw_body=-8, yaw=8, pitch=-14, arm_l=(14, 148), arm_r=(10, 152), leg_l=10, leg_r=-14, leg_abd_l=8, leg_abd_r=7, flap=3, bend=5, wave_amp=0.55, wave=1.0, tails=True)
@@ -108,21 +110,21 @@ def compare():
             ("held, ready to throw", POSE_THROW, "held", (-0.08, 0.34, 0.94), orbit(-62, 10.5, 1.6, 1.5)),
             ("floating beside the wearer", POSE_ATTACH, "float", (0.03, 0.1, 1.0), orbit(-30, 11.0, 1.3, 1.45))]
     TW, TH = 360, 520
-    sheet = Image.new("RGB", (TW * 4, TH * 3), (10, 14, 18))
-    for r, v in enumerate("ABC"):
+    sheet = Image.new("RGB", (TW * 4, TH * len(VERS)), (10, 14, 18))
+    for r, v in enumerate(VERS):
         for c, (nm, pose, mode, d, (eye, tgt)) in enumerate(cols):
             img, cam, q = scene(pose, "VALKYRIE", v, mode, 0, eye, tgt, (TW, TH), bg_plain((TW, TH)), spin=0.7 * (r + 1), d=d)
             label(img, "%s  /  %s" % (NAMES[v], nm), sz=12)
             sheet.paste(img, (c * TW, r * TH))
-    p = os.path.join(OUT, "valkyrie_lance_compare.png")
+    p = os.path.join(OUT, "valkyrie_lance%s_compare.png" % TAG)
     sheet.save(p)
     return p
 
 
 def turn():
     TW, TH = 210, 380
-    sheet = Image.new("RGB", (TW * 8, TH * 3), (10, 14, 18))
-    for r, v in enumerate("ABC"):
+    sheet = Image.new("RGB", (TW * 8, TH * len(VERS)), (10, 14, 18))
+    for r, v in enumerate(VERS):
         for c in range(8):
             a = c * 45
             eye = v3(math.sin(math.radians(a)) * 6.6, 0.2, math.cos(math.radians(a)) * 6.6)
@@ -131,15 +133,15 @@ def turn():
             img, cam = render(q, eye, v3(0, 0.0, 0), (TW, TH), bg_plain((TW, TH)), ss=2, fov=32)
             label(img, "%s / %d" % (v, a), sz=12)
             sheet.paste(img, (c * TW, r * TH))
-    p = os.path.join(OUT, "valkyrie_lance_turntable.png")
+    p = os.path.join(OUT, "valkyrie_lance%s_turntable.png" % TAG)
     sheet.save(p)
     return p
 
 
 def close():
     TW, TH = 520, 520
-    sheet = Image.new("RGB", (TW * 3, TH * 2), (10, 14, 18))
-    for c, v in enumerate("ABC"):
+    sheet = Image.new("RGB", (TW * len(VERS), TH * 2), (10, 14, 18))
+    for c, v in enumerate(VERS):
         L = gl.LEN[v]
         for r, (nm, yc, ext) in enumerate((("tip and the upper cone", L * 0.78, 22.0), ("grip, guard and the base", 12.0, 26.0))):
             q = Quads()
@@ -149,7 +151,7 @@ def close():
             img, cam = render(q, eye, tgt, (TW, TH), bg_plain((TW, TH)), ss=2, fov=34)
             label(img, "%s  /  %s" % (NAMES[v], nm), sz=13)
             sheet.paste(img, (c * TW, r * TH))
-    p = os.path.join(OUT, "valkyrie_lance_closeup.png")
+    p = os.path.join(OUT, "valkyrie_lance%s_closeup.png" % TAG)
     sheet.save(p)
     return p
 
@@ -158,33 +160,33 @@ def vs_ref():
     size = (600, 400)
     r131 = Image.open(os.path.join(BASE, "ref", "valkyrie_ref_131_drill.png")).convert("RGB")
     r130 = Image.open(os.path.join(BASE, "ref", "valkyrie_ref_130.png")).convert("RGB")
-    sheet = Image.new("RGB", (size[0] * 4 + 18, size[1] * 2 + 48), (12, 12, 14))
+    sheet = Image.new("RGB", (size[0] * (len(VERS) + 1) + 18, size[1] * 2 + 48), (12, 12, 14))
     rows = [("held out behind (frame 131)", r131, POSE_131, "held", (-0.9, 0.38, -0.2), orbit(-22, 8.6, 1.2, 1.55), lambda: bg_plain(size, (6, 14, 30), (16, 40, 70))),
             ("attached at the legs (frame 130 pose)", r130, POSE_ATTACH, "attached", None, orbit(-22, 8.4, 0.7, 1.0), None)]
     for ri, (nm, ref, pose, mode, d, (eye, tgt), bgf) in enumerate(rows):
         y = 24 + ri * (size[1] + 24)
         sheet.paste(ref.resize(size, Image.LANCZOS), (0, y))
         label(sheet, "REFERENCE  " + nm, (6, y - 18), 13)
-        for ci, v in enumerate("ABC"):
+        for ci, v in enumerate(VERS):
             bg = bgf() if bgf else bg_ref(size, 4)
             img, cam, q = scene(pose, "VALKYRIE", v, mode, 0, eye, tgt, size, bg, spin=0.9, d=d)
             sheet.paste(img, ((ci + 1) * (size[0] + 6), y))
             label(sheet, "%s  %d quads incl. armour" % (NAMES[v], count(q)), ((ci + 1) * (size[0] + 6) + 6, y - 18), 13)
-    p = os.path.join(OUT, "valkyrie_lance_vs_ref.png")
+    p = os.path.join(OUT, "valkyrie_lance%s_vs_ref.png" % TAG)
     sheet.save(p)
     return p
 
 
 def saint():
     TW, TH = 480, 520
-    sheet = Image.new("RGB", (TW * 3, TH), (10, 14, 18))
-    for c, v in enumerate("ABC"):
+    sheet = Image.new("RGB", (TW * len(VERS), TH), (10, 14, 18))
+    for c, v in enumerate(VERS):
         pose = Pose(hover=2, arm_r=(40, 20), arm_l=(10, 40), pitch=-4, leg_l=-6, leg_r=8)
         eye, tgt = orbit(-28, 12.5, 1.6, 1.75)
         img, cam, q = scene(pose, "SAINT", v, "float", 0, eye, tgt, (TW, TH), bg_plain((TW, TH), (22, 40, 70), (150, 190, 215)), spin=0.6 * c, d=(0.05, 0.12, 1.0))
         label(img, "SAINT look + %s" % NAMES[v], sz=13)
         sheet.paste(img, (c * TW, 0))
-    p = os.path.join(OUT, "valkyrie_lance_saint.png")
+    p = os.path.join(OUT, "valkyrie_lance%s_saint.png" % TAG)
     sheet.save(p)
     return p
 
@@ -210,10 +212,46 @@ def mermaid():
     return p
 
 
+def spin_strip(v="AB"):
+    """six frames of the drill turning about its axis (30 degrees apart): the middle of the cone (spiral stripes, the groove window, the foam collars) and the whole lance, so the screw motion reads."""
+    TW, TH = 250, 470
+    sheet = Image.new("RGB", (TW * 6, TH * 2), (10, 14, 18))
+    L = gl.LEN[v]
+    for k in range(6):
+        ang = 30.0 * k
+        q = Quads()
+        add_lance(q, v, 0, frame((0, 1, 0), ang))
+        yc = L * 0.5
+        eye = v3(0.2, (yc + 2) / 16, 24.0 / 16 * 1.9 + 0.1)
+        img, cam = render(q, eye, v3(0, yc / 16, 0), (TW, TH), bg_plain((TW, TH)), ss=2, fov=34)
+        label(img, "spin %d deg (middle of the cone)" % ang, sz=12)
+        sheet.paste(img, (k * TW, 0))
+        eye2 = v3(0.4, L * 0.45 / 16, 6.8)
+        img2, cam = render(q, eye2, v3(0, L * 0.45 / 16, 0), (TW, TH), bg_plain((TW, TH)), ss=2, fov=32)
+        label(img2, "whole lance, spin %d deg" % ang, sz=12)
+        sheet.paste(img2, (k * TW, TH))
+    p = os.path.join(OUT, "valkyrie_lance_%s_spin.png" % v)
+    sheet.save(p)
+    return p
+
+
 def main():
+    global VERS, TAG
     os.makedirs(OUT, exist_ok=True)
-    todo = sys.argv[1:] or ["compare", "turn", "close", "vs", "saint", "mermaid"]
-    fn = {"compare": compare, "turn": turn, "close": close, "vs": vs_ref, "saint": saint, "mermaid": mermaid}
+    args = sys.argv[1:]
+    if args and args[0] == "ab":                                   # the merged lance AB: every sheet of the earlier rounds, alone, plus the spin strip and the A / B / AB close-up
+        out = []
+        VERS, TAG = ["AB"], "_AB"
+        for f in (compare, turn, close, vs_ref, saint):
+            out.append(f())
+        out.append(spin_strip("AB"))
+        VERS, TAG = ["A", "B", "AB"], "_merge"
+        out.append(close())
+        for o in out:
+            print("wrote", o)
+        return
+    todo = args or ["compare", "turn", "close", "vs", "saint", "mermaid"]
+    fn = {"compare": compare, "turn": turn, "close": close, "vs": vs_ref, "saint": saint, "mermaid": mermaid, "spin": spin_strip}
     for t in todo:
         print("wrote", fn[t]())
 

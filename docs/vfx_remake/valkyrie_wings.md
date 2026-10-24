@@ -179,7 +179,7 @@ floating one turns slowly about its axis), `valkyrie_lance_turntable.png` (3 x 8
 takes about 75 %: 1 NEAR (905) + 1 FAR (218) = 1,123; two MID wearers (900) fit with a FAR (218) = 1,118. The lance could also be dropped to MID at 16 to 32 blocks to save 100 quads per wearer. Per-frame CPU: the lance is rigid
 (one pose), its spin is a rotation of the whole mesh (no per-vertex work), ribbons are static; the floating lance costs one extra pose.
 
-**Recommendation: A, the Frosted Drill**, for the Valkyrie Dress: it is the shape of frame 131 (spiral stripes, foam mane, needle point) and the cheapest to read at a distance (white and blue stripes, silhouette like a cone with a fringe).
+**Recommendation (before the merge): A, the Frosted Drill**, for the Valkyrie Dress (the owner then asked for A and B merged, section 19): it is the shape of frame 131 (spiral stripes, foam mane, needle point) and the cheapest to read at a distance (white and blue stripes, silhouette like a cone with a fringe).
 Use **C** for the Mermaid Form (the tail IS the lance in the frames; 132 / 133), and take **B's glowing core and crystal collars** as the Saint variant's smooth, holy lance (the wiki: smooth texture, rounded guard) if you want a third look.
 What is still off in all three: facet count (they are toon-shaded polygons; the frames are painted), the foam mane of A is a spread of flat tufts (the frame's is a dense fluffy mass), B's core reads as a white pole, C reads as a blue twisted blob from afar.
 
@@ -203,8 +203,8 @@ Name proposal: **Valkyrie Drill Lance** (id `valkyrie_drill_lance`), a Water-mag
   written to `assets/nusmp/weapon_meshes/valkyrie_drill_lance.txt` and drawn by `client/WeaponRenderer.java`; textures `textures/entity/weapon/valkyrie_drill_lance.png` and the glow `_glow.png` (the second texture: needle tip,
   ribbons, belt: additive, pulsing through the `glow` line); the model json `models/item/valkyrie_drill_lance.json` (parent `builtin/entity`) gets its display transforms from the preset tool (length about 2.8 blocks: the
   1st-person scale about 0.35 to 0.4, apparent length at most 1.0, grip on the anchor); preview with `python tools/item_preview/preview_weapons.py`.
-* **Moving part**: the drill cone is the one part that turns; `docs/asset_pipeline.md` rule 3 wants moving parts as separate named parts: name it `drill*` and add a spin to the renderer (about 90 degrees per second), which is a small
-  new `WeaponRenderer` feature, or ship it static first.
+* **Moving part**: the drill cone is the one part that turns; `docs/asset_pipeline.md` rule 3 wants moving parts as separate named parts: name it `drill*` and add a spin to the renderer: decided yes (section 19), idle 60 degrees per second, up to 720 while charging, a small
+  new `WeaponRenderer` feature.
 * **Inventory icon** (rule 7): the old 16 x 16 sprite stays the icon (`valkyrie_drill_lance_icon.json`): concept = a diagonal drill, white / blue banded cone with a spiky white fringe in the middle, a blue grip bottom-left, a 2 px
   cyan glint at the tip, 1 px dark outline.
 * **Grip entry**: `assets/nusmp/weapon_classes.json` lists `valkyrie_drill_lance` as class `spear`; `weapon_grips.json` `fractions`: `"valkyrie_drill_lance": 0.25` (the guard sits at the quarter), `GripTableTest` then passes.
@@ -225,3 +225,44 @@ a pose on the root. The preview places the grip on the hand and the direction by
 `tools/gen_valkyrie_lance.py`, `tools/vfx_preview/valkyrie_lance_preview.py` (new); `tools/gen_valkyrie_armor_v2.py` and `tools/vfx_preview/valkyrie_v2_preview.py` (extended, nothing removed);
 `meshes/lance_*.txt`, `meshes/counts_lance.txt`, `lances.json`, `tex/valk2_fin.png`, `valk2_foam.png`, `valk2_scales.png`; the three new frames in `ref/`.
 `python tools/gen_valkyrie_armor_v2.py ; python tools/gen_valkyrie_lance.py ; python tools/vfx_preview/valkyrie_v2_preview.py ; python tools/vfx_preview/valkyrie_lance_preview.py` (about 1 minute).
+
+
+---
+
+## 19. The merged lance "AB" (owner: "merge the spears A and B"; spin = yes)
+
+**New** version next to A, B and C (they stay): `lance_AB` in `tools/gen_valkyrie_lance.py`, meshes `meshes/lance_AB[_mid|_lo].txt`, the same weapon frame (+y axis, butt at 0, grip at a quarter, length 54 px).
+Construction (outside in):
+* **A's fat cone**: blue / white spiral stripes (the stripe of each quad follows the spiral), ribs, a deep spiral groove, a ribbon loop at the base, and **a much denser, layered foam mane**: five tiers of jagged white tufts
+  (12 / 12 / 11 / 10 / 8 per tier near, long and short tufts alternating, each tier turned half a step against the one below, 53 tuft cards against A's 40), two frosted ring collars (B's) at the base and the middle;
+* **B's crystal screw inside**: a translucent faceted three-lobed section twisted 1.5 turns plus a thin glowing axis; **the spiral groove of the cone is an open glass window**, so the crystal thread and the glowing axis
+  show through it all along the drill (turning with the spin: `valkyrie_lance_AB_spin.png`);
+* the last tenth of the cone is a **crystal needle** (glass) with the tip glow; two water ribbons wind round the cone, two trail behind the butt.
+
+| | Near / mid / far quads (lance only) | With the VALKYRIE armour (692 / 344 / 174) |
+|---|---|---|
+| **AB** | **312 / 179 / 76** (1,248 / 716 / 304 vertices) | **1,004 / 523 / 250** |
+| (A / B / C for comparison) | 213 / 106 / 44, 216 / 123 / 68, 171 / 98 / 44 | 905 / 450 / 218, 908 / 467 / 242, 863 / 442 / 218 |
+
+The merge costs about 100 quads more than A. In the armour's own pool of 1200 quads one NEAR wearer with the AB lance takes 84 %, a second wearer only fits if its lance is left off: **rule proposed: the lance is drawn at
+NEAR and MID only**, a FAR wearer has no lance; so 1 NEAR + lance (1,004) + 1 FAR armour (174) = 1,178 fits; two MID with lance (1,046) fit; the cap stays 1200. If you want every wearer to carry the lance, the pool would have
+to be about 1,500. Per-frame CPU: the lance is rigid, its spin is one rotation of the whole mesh (no per-vertex work), nothing else moves; the ribbons are static. Network 0, server 0.
+
+Images: `valkyrie_lance_AB_compare.png` (attached at the legs, held with the arms raised, ready to throw, floating beside the wearer), `valkyrie_lance_AB_turntable.png` (8 angles), `valkyrie_lance_AB_closeup.png` (tip and
+grip / base), `valkyrie_lance_AB_vs_ref.png` (frame 131 and frame 130 pose next to it), `valkyrie_lance_AB_saint.png` (the Saint look), `valkyrie_lance_merge_closeup.png` (A, B and AB at the same close-up, side by side),
+`valkyrie_lance_AB_spin.png` (the spin strip: six frames 30 degrees apart, the middle of the cone close and the whole lance).
+Match notes: the foam mane is denser and layered but still flat tufts, not the fluffy mass of frame 131; the glass window shows the crystal and the axis only as a faint blue and a thin white line (translucent quads over a
+toon-shaded core, no refraction); the cone silhouette is a little tree-like (a cone with a fringe), as in 131 it should read as one long drill with the foam only at the lower half: the tiers could be shortened at the top.
+
+### Spin (decision 3 = yes): the plan, preview only
+
+* **Behaviour**: the drill turns about its own axis: an idle slow turn (proposal 60 degrees per second, one turn in 6 s), faster while charging or attacking (ramping up to 720 degrees per second, back to idle in 10 ticks),
+  in hand, floating and attached alike; in the preview the spin is a rotation about +y of the whole mesh (the ribs, stripes, window and tufts turn together; the handle should not turn, see below).
+* **Item (`valkyrie_drill_lance`)**: the mesh is built as two named parts: `grip` (handle, guard, trailing ribbons: rigid) and **`drill*`** (cone, crystal, tufts, ribbons round the cone: the part that turns), as
+  `docs/asset_pipeline.md` rule 3 asks for moving parts. The small `WeaponRenderer` feature: when a mesh has parts named `drill*`, the renderer draws them after a rotation about the mesh's +y axis through the grip-guard
+  junction by `angle = idleSpeed * t + chargeTerm`, with `t` = the client game time plus the partial tick and `chargeTerm` from the use / swing progress of the holder (client-side, deterministic, no state, no packet); one
+  extra `PoseStack` rotation per frame per held lance. The texture is symmetric about the axis in u (the stripes are geometry, not texture), so nothing needs re-baking; a state mesh is not needed.
+* **Armour layer**: the lance in the attached / floating modes takes the same `angle` from the client time and the mode's casting flag (`ModeArmorClient` knows the mode and its age; whether the cast animation exposes a
+  "casting now" flag was not checked); the layer applies the rotation to the lance's pose only.
+* **Cost**: nothing per vertex; the spin makes the lance's shading change slowly, which also hides the low facet count a little (the toon tones step as the quads turn).
+* **Limits of the preview**: the strip shows still frames of the geometry turning; the speed values are proposals, nothing was seen moving.

@@ -80,6 +80,33 @@
      "vertices": 176
     }
    }
+  },
+  "AB": {
+   "name": "Frosted Crystal Drill (A + B merged)",
+   "length_px": 54.0,
+   "grip_px": 13.5,
+   "tex": {
+    "3": "foam",
+    "4": "veil",
+    "5": "glow"
+   },
+   "levels": {
+    "near": {
+     "file": "lance_AB.txt",
+     "quads": 312,
+     "vertices": 1248
+    },
+    "mid": {
+     "file": "lance_AB_mid.txt",
+     "quads": 179,
+     "vertices": 716
+    },
+    "far": {
+     "file": "lance_AB_lo.txt",
+     "quads": 76,
+     "vertices": 304
+    }
+   }
   }
  }
 }

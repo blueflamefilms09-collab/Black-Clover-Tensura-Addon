@@ -37,7 +37,7 @@ FROST, DEEP, SCALE, GLASS = 6, 7, 8, 9
 RIB = (150, 215, 245)
 LV = ["near", "mid", "far"]
 NM = ["", "_mid", "_lo"]
-LEN = {"A": 52.0, "B": 54.0, "C": 56.0}
+LEN = {"A": 52.0, "B": 54.0, "C": 56.0, "AB": 54.0}
 GRIP = 0.25
 
 
@@ -164,6 +164,91 @@ def lance_a(lod):
     return m
 
 
+# ============================================================================================ AB: the merge of A and B
+def lance_ab(lod):
+    """The owner's merge of A and B.  Outside: the fat striped cone of A (blue / white spiral stripes, ribs, a deep spiral groove, a needle tip) wrapped in a DENSE layered mane of jagged white foam tufts (five tiers,
+    long and short tufts alternating, each tier turned half a step against the one below) and two frosted ring collars.  Inside: B's translucent faceted crystal screw (a three-lobed section twisted 1.5 turns) with a thin
+    glowing axis.  The spiral groove of the cone is an open window of glass, so the crystal thread and the glowing axis show through it all along the drill.  The last part of the tip is a crystal needle."""
+    m = Mesh("lance_AB" + NM[lod])
+    n = {0: 8, 1: 6, 2: 5}[lod]
+    nr = {0: 14, 1: 9, 2: 5}[lod]
+    y0, L = 8.0, LEN["AB"]
+    H = L - y0
+    R0 = 6.6
+
+    def R(y):
+        t = min(1.0, max(0.0, (y - y0) / H))
+        return R0 * (1 - t) ** 0.8 + 0.3
+
+    handle(m, n, lod)
+    turns = 1.5
+    # the inner crystal screw (B): visible through the groove windows
+    ni = 6 if lod < 2 else 4
+    nri = {0: 9, 1: 6, 2: 3}[lod]
+    prev = None
+    for i in range(nri + 1):
+        t = i / nri * 0.97
+        y = y0 + H * t
+        ring = ring_pts(y, max(0.12, R(y) * 0.62), ni, twist=2 * math.pi * turns * t, lobes=(3, 0.45) if ni == 6 else None)
+        if prev is not None:
+            gap(m, GLASS, prev, ring, A)
+        prev = ring
+    cs = [ring_pts(y0 + H * t, max(0.1, 1.0 * (1 - t) ** 0.9), 4) for t in ((0.0, 0.5, 0.98) if lod == 0 else (0.0, 0.98))]
+    for i in range(len(cs) - 1):
+        gap(m, 1, cs[i], cs[i + 1], G)
+    # the outer cone (A): spiral stripes, ribs; the quad on the groove is a glass window onto the crystal
+    prev = None
+    t_needle = 0.9
+    for i in range(nr + 1):
+        t = i / nr
+        y = y0 + H * t
+        rib = 1.0 if i % 2 == 0 else 0.93
+        ring = ring_pts(y, max(0.12, R(y) * rib), n, twist=2 * math.pi * turns * t, groove=0.4, gw=0.42)
+        if prev is not None:
+            ph = (turns * (i - 0.5) / nr) * n
+            for j in range(n):
+                k = (j + 1) % n
+                fr = ((j - ph) / n) % 1.0
+                if t > t_needle:
+                    lay = GLASS
+                elif fr > 1.0 - 1.0 / n:
+                    lay = GLASS
+                else:
+                    lay = DEEP if fr < 0.42 else FROST
+                m.quad(lay, [prev[j], prev[k], ring[k], ring[j]], [(j / n, 0), ((j + 1) / n, 0), ((j + 1) / n, 1), (j / n, 1)], A if lay == GLASS else W, ref=mean([mean(prev), mean(ring)]))
+        prev = ring
+    # frosted collars (B) at the base and the middle
+    for t, wd in ((0.03, 0.045), (0.34, 0.03))[: 2 if lod < 2 else 1]:
+        y = y0 + H * t
+        r = R(y) * 1.2
+        a_, b_, c_ = ring_pts(y - H * wd, r * 0.82, n), ring_pts(y, r, n), ring_pts(y + H * wd, r * 0.82, n)
+        gap(m, FROST, a_, b_, W)
+        gap(m, FROST, b_, c_, W)
+    # the dense foam mane (A, denser and layered): tiers of tufts, long and short alternating, every tier turned half a step
+    tiers = {0: [(0.03, 12, 12.5, 4.6), (0.12, 12, 11.5, 4.2), (0.22, 11, 10.0, 3.8), (0.32, 10, 8.5, 3.4), (0.43, 8, 7.0, 3.0)],
+             1: [(0.05, 9, 11.5, 4.6), (0.17, 8, 9.5, 4.0), (0.3, 7, 7.5, 3.4)], 2: [(0.08, 6, 10.0, 4.6), (0.24, 5, 7.5, 3.8)]}[lod]
+    for ti, (t, cnt, ln, wd) in enumerate(tiers):
+        y = y0 + H * t
+        r = R(y)
+        for k in range(cnt):
+            a = 2 * math.pi * (k + 0.5 * (ti % 2)) / cnt
+            o = (math.cos(a), 0.0, math.sin(a))
+            tg = (-o[2], 0.0, o[0])
+            root = (o[0] * r * 0.9, y, o[2] * r * 0.9)
+            short = 0.62 if k % 2 else 1.0
+            d = norm(add(mul(o, 0.74 + 0.1 * ((k * 5 + ti) % 3)), (0, -0.62, 0)))
+            tip = add(root, mul(d, ln * short * (0.88 + 0.24 * ((k * 7 + ti * 3) % 5) / 4)))
+            card(m, 3, add(root, mul(tg, -wd * 0.5)), add(root, mul(tg, wd * 0.5)), add(tip, mul(tg, wd * 0.14)), add(tip, mul(tg, -wd * 0.14)), (0, 0, 1, 1), W)
+    if lod < 2:
+        helix_ribbon(m, lambda y: R0 + 2.4, y0 - 1, y0 + 9, 1.1, 2.4, 8 if lod == 0 else 5, 0.4, off=0.0)
+        helix_ribbon(m, R, y0 + H * 0.5, y0 + H * 0.98, 1.3, 1.6, 7 if lod == 0 else 4, math.pi, off=0.8)
+    trail(m, 0, 6 if lod == 0 else 4 if lod == 1 else 2)
+    if lod < 2:
+        trail(m, 1, 6 if lod == 0 else 4, sign=-1.0)
+    tip_glow(m, L + 0.6, 1.7)
+    return m
+
+
 # ============================================================================================ B: Crystal Corkscrew
 def lance_b(lod):
     m = Mesh("lance_B" + NM[lod])
@@ -283,8 +368,8 @@ def lance_c(lod):
     return m
 
 
-LANCES = {"A": ("Frosted Drill", lance_a), "B": ("Crystal Corkscrew", lance_b), "C": ("Living Water Dragon Lance", lance_c)}
-LAYER_TEX = {"A": {3: "foam", 4: "veil", 5: "glow"}, "B": {4: "veil", 5: "glow"}, "C": {3: "fin", 4: "veil", 5: "glow"}}
+LANCES = {"A": ("Frosted Drill", lance_a), "B": ("Crystal Corkscrew", lance_b), "C": ("Living Water Dragon Lance", lance_c), "AB": ("Frosted Crystal Drill (A + B merged)", lance_ab)}
+LAYER_TEX = {"A": {3: "foam", 4: "veil", 5: "glow"}, "B": {4: "veil", 5: "glow"}, "C": {3: "fin", 4: "veil", 5: "glow"}, "AB": {3: "foam", 4: "veil", 5: "glow"}}
 
 
 def build_all():

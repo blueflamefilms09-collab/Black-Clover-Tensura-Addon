@@ -10,3 +10,6 @@ B Crystal Corkscrew        far       68  L1:4 L4:2 L5:2 L6:18 L7:6 L9:36
 C Living Water Dragon Lance near     171  L3:21 L4:22 L5:2 L6:30 L7:30 L8:66
 C Living Water Dragon Lance mid       98  L3:7 L4:14 L5:2 L6:25 L7:15 L8:35
 C Living Water Dragon Lance far       44  L4:2 L5:2 L6:20 L7:4 L8:16
+AB Frosted Crystal Drill (A + B merged) near     312  L1:8 L3:53 L4:27 L5:2 L6:85 L7:57 L9:80
+AB Frosted Crystal Drill (A + B merged) mid      179  L1:4 L3:24 L4:17 L5:2 L6:46 L7:36 L9:50
+AB Frosted Crystal Drill (A + B merged) far       76  L1:4 L3:11 L4:2 L5:2 L6:23 L7:13 L9:21
