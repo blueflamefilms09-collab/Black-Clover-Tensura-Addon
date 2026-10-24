@@ -39,12 +39,12 @@ public final class TalkLayout {
         int[] tabs0 = {x + PAD, ty, w - 2 * PAD, 14};
         int tabW = (w - 2 * PAD) / TABS;
         int textY = ty + 14 + 4;
-        boolean statusShown = tab == 2 || tab == 3;
+        boolean statusShown = tab == 2 || (tab == 3 && h >= 200);              // a small window skips the strip on the Pouch tab to make room for the slots
         int textH = Math.max(24, Math.min(statusShown ? 40 : 52, (h - 130) / 2 + 24));
         int[] text = {x + PAD, textY, w - 2 * PAD, textH};
         int statusY = textY + textH + 3;
-        int[] status = statusShown ? new int[]{x + PAD, statusY, w - 2 * PAD, 18} : new int[]{x + PAD, statusY, w - 2 * PAD, 0};
-        int listY = statusShown ? statusY + 18 + 3 : statusY;
+        int[] status = statusShown ? new int[]{x + PAD, statusY, w - 2 * PAD, 24} : new int[]{x + PAD, statusY, w - 2 * PAD, 0};
+        int listY = statusShown ? statusY + 24 + 3 : statusY;
         int footer = 16;
         int listBottom = y + h - PAD - footer;
         int listH = Math.max(ROW_PITCH, listBottom - listY);

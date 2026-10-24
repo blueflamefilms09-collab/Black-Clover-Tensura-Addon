@@ -111,17 +111,17 @@ public final class TalkPainter {
         // the status strip: rapport in four segments, its tier, the stance
         if (L.status[3] > 0 && f.rapport() >= 0) {
             int[] s = L.status;
-            int barW = s[2] * 56 / 100, seg = (barW - 3) / 4;
+            int barW = s[2] * 55 / 100, seg = (barW - 3) / 4;
             for (int i = 0; i < 4; i++) {
                 int x0 = s[0] + i * (seg + 1);
-                c.fill(x0, s[1] + 3, x0 + seg, s[1] + 9, 0xFF22222C);
+                c.fill(x0, s[1] + 1, x0 + seg, s[1] + 7, 0xFF22222C);
                 int lo = SEGMENTS[i], hi = SEGMENTS[i + 1];
                 int filled = f.rapport() >= hi ? seg : f.rapport() <= lo ? 0 : seg * (f.rapport() - lo) / (hi - lo);
-                if (filled > 0) c.fill(x0, s[1] + 3, x0 + filled, s[1] + 9, 0xFF000000 | mix(col, 0xFFFFFF, 0.25f));
+                if (filled > 0) c.fill(x0, s[1] + 1, x0 + filled, s[1] + 7, 0xFF000000 | mix(col, 0xFFFFFF, 0.25f));
             }
-            c.text(fit(c, f.tierName() + "  " + f.rapport(), barW), s[0], s[1] + 11, DIM);
+            c.text(fit(c, f.tierName() + "  " + f.rapport(), s[2] - barW - 8), s[0] + barW + 8, s[1], DIM);
             String line = f.statusLine();
-            if (line != null && !line.isEmpty()) c.text(fit(c, line, s[2] - barW - 8), s[0] + barW + 8, s[1] + 3, INK);
+            if (line != null && !line.isEmpty()) c.text(fit(c, line, s[2]), s[0], s[1] + 12, INK);
         }
 
         // the choices
