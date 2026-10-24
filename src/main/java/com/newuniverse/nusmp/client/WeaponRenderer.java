@@ -38,6 +38,7 @@ import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions;
 import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
 import org.joml.Matrix3f;
 import org.joml.Matrix4f;
+import org.joml.Quaternionf;
 import org.joml.Vector3f;
 
 import java.io.BufferedReader;
@@ -224,8 +225,9 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
             pose.translate(0f, -mesh.ymin, 0f);
         }
         PoseStack.Pose p = pose.last();
-        emit(p, ItemRenderer.getFoilBufferDirect(buffers, RenderType.entityCutout(mesh.tex), false, stack.hasFoil()), mesh.layers[BODY],
-                state.tint() ? VariantRules.BODY_TINT_5LEAF : 0xFFFFFFFF, light, overlay);
+        float spin = mesh.drillFrom == null ? 0f : drillAngle(ctx, time);                      // Valkyrie Drill Lance: the turn of the `drill*` part (0 and unused on every other mesh)
+        emitLayer(pose, p, mesh, BODY, ItemRenderer.getFoilBufferDirect(buffers, RenderType.entityCutout(mesh.tex), false, stack.hasFoil()),
+                state.tint() ? VariantRules.BODY_TINT_5LEAF : 0xFFFFFFFF, light, overlay, spin);
         if (!mesh.layers[VOID].isEmpty()) {
             VertexConsumer vc = buffers.getBuffer(NURenderTypes.demonVoid());
             Matrix4f m = p.pose();
@@ -240,7 +242,7 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
             int rgb = state.tint() ? VariantRules.tintGlow(mesh.glowRgb) : mesh.glowRgb;
             if (ExSingularityFx.applies(id)) rgb = ExSingularityFx.glowRgb(time);          // EX-Singularity (Shishou): the glow walks through every hue (client/ExSingularityFx)
             int r = VariantRules.channel(rgb >> 16 & 255, k), g = VariantRules.channel(rgb >> 8 & 255, k), b = VariantRules.channel(rgb & 255, k);
-            emit(p, buffers.getBuffer(com.newuniverse.nusmp.client.SafeAdditive.additive(ExSingularityFx.glowTex(id, mesh))), mesh.layers[GLOW], 0xFF000000 | r << 16 | g << 8 | b, 0xF000F0, OverlayTexture.NO_OVERLAY);
+            emitLayer(pose, p, mesh, GLOW, buffers.getBuffer(com.newuniverse.nusmp.client.SafeAdditive.additive(ExSingularityFx.glowTex(id, mesh))), 0xFF000000 | r << 16 | g << 8 | b, 0xF000F0, OverlayTexture.NO_OVERLAY, spin);
             if (state.intensify()) {                                               // 1.25.0: a Genesis glow adds a translucent emissive pass on top
                 int a = VariantRules.emissiveAlpha(time);
                 emit(p, buffers.getBuffer(com.newuniverse.nusmp.client.SafeAdditive.emissive(mesh.glowTex)), mesh.layers[GLOW], a << 24 | (rgb & 0xFFFFFF), 0xF000F0, OverlayTexture.NO_OVERLAY);
@@ -266,11 +268,52 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
     private static final Vector3f SCRATCH_POS = new Vector3f(), SCRATCH_NORMAL = new Vector3f();
 
     static void emit(PoseStack.Pose p, VertexConsumer vc, List<float[]> verts, int argb, int light, int overlay) {      // 1.102.0: package-private (client/GodMeleeBRender draws its extra passes with it)
+        emit(p, vc, verts, 0, verts.size(), argb, light, overlay);
+    }
+
+    private static final Quaternionf DRILL_Q = new Quaternionf();
+
+    /**
+     * Valkyrie Drill Lance: a layer drawn in two parts when the mesh has `drill*` parts ({@code part drill} line: every quad from there on is the drill, the quads before it are rigid): the rigid part as it is,
+     * the drill after a turn of {@code spinDeg} about the mesh's +y axis (the lance's axis, through x = z = 0). A mesh without a drill part is drawn by the plain {@link #emit} exactly as before.
+     */
+    private static void emitLayer(PoseStack pose, PoseStack.Pose p, Mesh mesh, int layer, VertexConsumer vc, int argb, int light, int overlay, float spinDeg) {
+        List<float[]> verts = mesh.layers[layer];
+        if (mesh.drillFrom == null) {
+            emit(p, vc, verts, 0, verts.size(), argb, light, overlay);
+            return;
+        }
+        int from = Math.min(mesh.drillFrom[layer], verts.size());
+        emit(p, vc, verts, 0, from, argb, light, overlay);
+        pose.pushPose();
+        pose.mulPose(DRILL_Q.rotationY(spinDeg * ((float) Math.PI / 180f)));
+        emit(pose.last(), vc, verts, from, verts.size(), argb, light, overlay);
+        pose.popPose();
+    }
+
+    /**
+     * The turn of a drill part (degrees): the idle turn of the client game time plus what the holder's charge adds ({@link com.newuniverse.nusmp.book.ModeArmorValkyrieSpin#itemAngle}); the holder is the local
+     * player in first person and the living entity being drawn in third person ({@link HolderTracker}); an item on the ground or in a frame idles. A pure function of the clock and the holder's use / swing
+     * time: no state, no packet.
+     */
+    private static float drillAngle(ItemDisplayContext ctx, float time) {
+        net.minecraft.world.entity.LivingEntity holder = com.newuniverse.nusmp.client.relics.item.HolderTracker.holderFor(ctx);
+        float charge = 0f;
+        if (holder != null) {
+            float partial = Minecraft.getInstance().getTimer().getGameTimeDeltaPartialTick(false);
+            if (holder.isUsingItem()) charge = holder.getTicksUsingItem() + partial;
+            else if (holder.swinging) charge = holder.swingTime + partial;
+        }
+        return com.newuniverse.nusmp.book.ModeArmorValkyrieSpin.itemAngle(time, charge);
+    }
+
+    static void emit(PoseStack.Pose p, VertexConsumer vc, List<float[]> verts, int from, int to, int argb, int light, int overlay) {
         Matrix4f m = p.pose();
         Matrix3f nm = p.normal();
         int a = argb >>> 24, r = argb >> 16 & 255, g = argb >> 8 & 255, b = argb & 255;
         Vector3f q = SCRATCH_POS, n = SCRATCH_NORMAL;                              // 1.99.0: two scratch vectors for the whole pass (two new vectors per vertex before); same maths, same order
-        for (float[] v : verts) {
+        for (int i = from; i < to; i++) {
+            float[] v = verts.get(i);
             m.transformPosition(v[0], v[1], v[2], q);
             nm.transform(v[5], v[6], v[7], n).normalize();
             vc.addVertex(q.x, q.y, q.z).setColor(r, g, b, a).setUv(v[3] / 128f, v[4] / 128f).setOverlay(overlay).setLight(light).setNormal(n.x, n.y, n.z);
@@ -292,6 +335,7 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
         float gripAt = Float.NaN;                                                // 1.34.0: `grip <fraction>`: where the grip's middle lies (share of the length from the low-y end); NaN = not stated
         int glowRgb;
         ResourceLocation tex, glowTex;
+        int[] drillFrom;                                                         // Valkyrie Drill Lance: per layer, the index of the first quad vertex of the `drill*` part (the part directive); null = no turning part
         WeaponUpgrade.Data up;                                                   // 1.102.0: set on an upgraded mesh: its spec, orbiting groups, low-detail meshes (null on every shipped mesh)
         @SuppressWarnings("unchecked")
         final List<float[]>[] layers = new List[]{new ArrayList<>(), new ArrayList<>(), new ArrayList<>()};
@@ -542,6 +586,9 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
                             Float.parseFloat(v[o + 3]), Float.parseFloat(v[o + 4]), Float.parseFloat(v[o + 5]), Float.parseFloat(v[o + 6]), Float.parseFloat(v[o + 7])});
                     if (layer < mesh.layers.length) mesh.ymax = Math.max(mesh.ymax, Float.parseFloat(v[o + 1]));
                 }
+            }
+            case "part" -> {                                                         // Valkyrie Drill Lance: `part drill*` starts the turning part (it must come last: every quad after it turns); other part names are labels
+                if (v.length > 1 && v[1].startsWith("drill") && mesh.drillFrom == null) mesh.drillFrom = new int[]{mesh.layers[0].size(), mesh.layers[1].size(), mesh.layers[2].size()};
             }
             case "orbit" -> WeaponUpgrade.addOrbit(mesh, v);                         // 1.102.0: `orbit <layer> <pivot xyz> <axis xyz> <degrees per tick> <phase> <glow 0|1>`
             default -> { }

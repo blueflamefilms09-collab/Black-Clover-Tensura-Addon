@@ -22,19 +22,30 @@ OUT = os.path.join(ROOT, "build", "item_preview")
 W = H = 220
 
 
-def load(item_id):
+def load(item_id, spin=0.0):
+    """spin: degrees the `drill*` part (the quads after a `part drill` line: the Valkyrie Drill Lance) is turned about the mesh's +y axis, as client/WeaponRenderer does; 0 = at rest."""
     place, glow, quads = None, None, []
+    in_drill = False
+    cs, sn = math.cos(math.radians(spin)), math.sin(math.radians(spin))
     for line in open(os.path.join(ASSETS, "weapon_meshes", item_id + ".txt")):
         v = line.split()
         if not v or v[0] == "#":
             continue
-        if v[0] == "place":
+        if v[0] == "part":
+            in_drill = len(v) > 1 and v[1].startswith("drill")
+        elif v[0] == "place":
             place = [float(x) for x in v[1:]]
         elif v[0] == "glow":
             glow = (int(v[1], 16), float(v[2]), float(v[3]), float(v[4]))
         elif v[0] == "q":
             pts = np.array([float(x) for x in v[2:22]]).reshape(4, 5)
-            quads.append((int(v[1]), pts, np.array([float(x) for x in v[22:25]])))
+            n = np.array([float(x) for x in v[22:25]])
+            if in_drill and spin:                                           # a turn about +y: x' = x cos + z sin, z' = -x sin + z cos (the renderer's Axis.YP)
+                pts = pts.copy()
+                x, z = pts[:, 0].copy(), pts[:, 2].copy()
+                pts[:, 0], pts[:, 2] = x * cs + z * sn, -x * sn + z * cs
+                n = np.array([n[0] * cs + n[2] * sn, n[1], -n[0] * sn + n[2] * cs])
+            quads.append((int(v[1]), pts, n))
         elif v[0] == "qn":                                                  # 1.93.0: per-vertex normals (the Djinn weapons): x y z u v nx ny nz a vertex
             arr = np.array([float(x) for x in v[2:34]]).reshape(4, 8)
             nn = arr[:, 5:8].sum(axis=0)
@@ -55,8 +66,8 @@ def tex(path):
     return np.asarray(Image.open(path).convert("RGBA"), np.float32) / 255 if os.path.exists(path) else None
 
 
-def view(yaw, pitch, dist=1.9):
-    target = np.array([0.5, 0.5, 0.5])
+def view(yaw, pitch, dist=1.9, target=(0.5, 0.5, 0.5)):
+    target = np.array(target, float)
     cy, sy, cp, sp = math.cos(math.radians(yaw)), math.sin(math.radians(yaw)), math.cos(math.radians(pitch)), math.sin(math.radians(pitch))
     eye = target + dist * np.array([sy * cp, sp, cy * cp])
     f = target - eye
