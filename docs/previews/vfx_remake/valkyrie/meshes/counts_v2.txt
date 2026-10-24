@@ -1,0 +1,52 @@
+Valkyrie armour v2 (preview only): quads per piece and level (LEFT copy written; x copies = what the layer draws); layers 0 plate, 1 emissive, 3 card, 4 veil, 5 glow
+
+piece        level  quads    L0   L1    L3    L4    L5 x copies  looks
+wing_main    near      79     0    0     0    53    26      158  VALKYRIE
+wing_main    mid       30     0    0     0    16    14       60  VALKYRIE
+wing_main    far       10     0    0     0     5     5       20  VALKYRIE
+wing_low     near      24     0    0     0    16     8       48  VALKYRIE
+wing_low     mid       10     0    0     0     5     5       20  VALKYRIE
+wing_low     far        6     0    0     0     3     3       12  VALKYRIE
+arm_veil     near      15     0    0     0    15     0       30  VALKYRIE
+arm_veil     mid        6     0    0     0     6     0       12  VALKYRIE
+arm_veil     far        2     0    0     0     2     0        4  VALKYRIE
+sleeve       near      12     0    0     0    12     0       24  VALKYRIE/SAINT
+sleeve       mid        5     0    0     0     5     0       10  VALKYRIE/SAINT
+sleeve       far        4     0    0     0     4     0        8  VALKYRIE/SAINT
+crown        near      33    29    0     4     0     0       33  VALKYRIE
+crown        mid       27    23    0     4     0     0       27  VALKYRIE
+crown        far       15    15    0     0     0     0       15  VALKYRIE
+bodice       near      98    24    8    66     0     0       98  VALKYRIE/SAINT
+bodice       mid       62    18    6    38     0     0       62  VALKYRIE/SAINT
+bodice       far       30    12    6    12     0     0       30  VALKYRIE/SAINT
+skirt        near      60     0    0    60     0     0       60  VALKYRIE/SAINT
+skirt        mid       34     0    0    34     0     0       34  VALKYRIE/SAINT
+skirt        far       14     0    0    14     0     0       14  VALKYRIE/SAINT
+shoulder     near      30     0    0    30     0     0       60  VALKYRIE/SAINT
+shoulder     mid       12     0    0    12     0     0       24  VALKYRIE/SAINT
+shoulder     far       10     0    0    10     0     0       20  VALKYRIE/SAINT
+cuff         near      12     0    0    12     0     0       24  VALKYRIE/SAINT
+cuff         mid       10     0    0    10     0     0       20  VALKYRIE/SAINT
+cuff         far        8     0    0     8     0     0       16  VALKYRIE/SAINT
+leg          near      39     0    0     6    33     0       78  VALKYRIE/SAINT
+leg          mid       19     0    0     4    15     0       38  VALKYRIE/SAINT
+leg          far       10     0    0     0    10     0       20  VALKYRIE/SAINT
+grimoire     near       9     6    0     0     2     1        9  VALKYRIE/SAINT
+grimoire     mid        3     0    0     0     2     1        3  VALKYRIE/SAINT
+grimoire     far        3     0    0     0     2     1        3  VALKYRIE/SAINT
+saint_wing   near      50     2    0    48     0     0      100  SAINT
+saint_wing   mid       30     2    0    28     0     0       60  SAINT
+saint_wing   far       16     2    0    14     0     0       32  SAINT
+saint_halo   near      16     0    0     0     0    16       16  SAINT
+saint_halo   mid       10     0    0     0     0    10       10  SAINT
+saint_halo   far        6     0    0     0     0     6        6  SAINT
+saint_crown  near      29    23    0     6     0     0       29  SAINT
+saint_crown  mid       23    17    0     6     0     0       23  SAINT
+saint_crown  far       15    15    0     0     0     0       15  SAINT
+saint_sash   near      14    14    0     0     0     0       14  SAINT
+saint_sash   mid       12    12    0     0     0     0       12  SAINT
+saint_sash   far        6     6    0     0     0     0        6  SAINT
+
+TOTAL quads per wearer (both copies), by look
+VALKYRIE  near  622 ( 2488 verts)  mid  310 ( 1240)  far  162 (  648)
+SAINT     near  512 ( 2048 verts)  mid  296 ( 1184)  far  170 (  680)

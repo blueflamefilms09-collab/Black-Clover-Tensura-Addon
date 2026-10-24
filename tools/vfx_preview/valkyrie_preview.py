@@ -8,7 +8,7 @@ A software render (numpy + Pillow) of the player-fitted Valkyrie armour of tools
     python tools/gen_valkyrie_armor_meshes.py
     python tools/vfx_preview/valkyrie_preview.py [ref|turn|vs|flutter|fit|lod|pieces ...]       (no argument: everything)
 
-Output (docs/previews/vfx_remake/valkyrie/): valkyrie_ref_crop.png, valkyrie_wings_front_back_side.png, valkyrie_vs_ref.png, valkyrie_flutter.png, valkyrie_player_fit.png, valkyrie_lod.png,
+Output (docs/previews/vfx_remake/valkyrie/v1/): valkyrie_ref_crop.png, valkyrie_wings_front_back_side.png, valkyrie_vs_ref.png, valkyrie_flutter.png, valkyrie_player_fit.png, valkyrie_lod.png,
 valkyrie_pieces.png.
 
 How a frame is put together (what the layer would do): opaque plate pieces and the stand-in z-buffered and toon shaded per quad (3 tones from the quad normal against a light from the upper left of the
@@ -29,7 +29,7 @@ ROOT = os.path.abspath(os.path.join(TOOLS, ".."))
 sys.path.insert(0, TOOLS)
 import gen_valkyrie_armor_meshes as gv                                       # noqa: E402
 
-OUT = os.path.join(ROOT, "docs", "previews", "vfx_remake", "valkyrie")
+OUT = os.path.join(ROOT, "docs", "previews", "vfx_remake", "valkyrie", "v1")        # v1, kept; the redo is valkyrie_v2_preview.py
 REF = os.path.join(ROOT, "docs", "previews", "vfx_remake", "valkyrie", "ref", "valkyrie_ref_130.png")      # the owner's reference (identical to Valkyrie_Dress.webp of the elemzip Water pack)
 FOV = 34.0
 

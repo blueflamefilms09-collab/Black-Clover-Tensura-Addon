@@ -14,7 +14,7 @@ Only the LEFT (+x) copy of a paired piece is written (`valk_<piece>.txt`); the r
 Three levels of detail per piece: no suffix = NEAR, `_mid`, `_lo` = FAR.  The wings carry NO stored sway weights: the layer derives the weight of a vertex from its distance to the wing hinge
 (w = |v - hinge| / wing length) and bends / sweeps it by that much, so the flutter needs no extra data.
 
-    python tools/gen_valkyrie_armor_meshes.py   ->  docs/previews/vfx_remake/valkyrie/meshes/valk_*.txt, pieces.json, counts.txt
+    python tools/gen_valkyrie_armor_meshes.py   ->  docs/previews/vfx_remake/valkyrie/v1/meshes/valk_*.txt, pieces.json, counts.txt
 """
 import json
 import math
@@ -26,7 +26,7 @@ sys.path.insert(0, HERE)
 from gen_sdw3_models import Mesh, WHITE as REGION, add, sub, mul, cross, dot, norm, mean    # noqa: E402
 
 ROOT = os.path.abspath(os.path.join(HERE, ".."))
-OUT = os.path.join(ROOT, "docs", "previews", "vfx_remake", "valkyrie", "meshes")
+OUT = os.path.join(ROOT, "docs", "previews", "vfx_remake", "valkyrie", "v1", "meshes")        # v1 (stiff faceted crystal wings), kept; the redo is tools/gen_valkyrie_armor_v2.py
 
 W = (255, 255, 255)          # frost white
 P = (214, 244, 255)          # pale aqua
