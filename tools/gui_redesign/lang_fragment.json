@@ -1,0 +1,13 @@
+{
+  "nusmp.ui.notice.head": "[Notice... Great Sage has recorded]",
+  "nusmp.ui.notice.page_open": "A grimoire page opened: %s",
+  "nusmp.ui.crest.open": "Alert crest",
+  "nusmp.ui.crest.title": "Alert crest",
+  "nusmp.ui.crest.save": "Save",
+  "nusmp.ui.crest.reset": "Reset",
+  "nusmp.ui.crest.test": "Test notice",
+  "nusmp.ui.crest.test_text": "This is where Great Sage will tell you what it has recorded.",
+  "nusmp.ui.crest.cancel": "Cancel",
+  "nusmp.ui.crest.hint": "Drag the crest where you want it. Arrow keys nudge it (Shift = 8). Enter saves, Esc cancels.",
+  "nusmp.ui.crest.theme_hint": "The crest only shows in game when ui.theme is great_spirit."
+}

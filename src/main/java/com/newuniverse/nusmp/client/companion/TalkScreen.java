@@ -21,7 +21,7 @@ import java.util.List;
  * {@link TalkLayout}; this class only turns the server's {@link TalkView} into a {@link TalkFrame} (each text resolved once, when the view arrives, never per frame), draws the pouch's item icons and tooltips, and
  * forwards clicks and the wheel. Closing it (Escape, the Close button, another screen opening) tells the server once.
  */
-public final class TalkScreen extends Screen {
+public final class TalkScreen extends Screen implements TalkHost {
     private static final String[] TIER_KEYS = {"stranger", "acquaintance", "friend", "close"};
     private static final String[] STANCE_KEYS = {"guard", "aggressive", "passive"};
 
@@ -48,9 +48,10 @@ public final class TalkScreen extends Screen {
         update(view);
     }
 
-    public int entityId() { return entityId; }
+    @Override public int entityId() { return entityId; }
 
     /** A new screen from the server (the answer to a pick). */
+    @Override
     public void update(TalkView v) {
         this.view = v;
         title = v.name.getString();
@@ -82,6 +83,7 @@ public final class TalkScreen extends Screen {
     }
 
     /** The server closed the conversation. */
+    @Override
     public void closeFromServer() {
         closedByServer = true;
         onClose();

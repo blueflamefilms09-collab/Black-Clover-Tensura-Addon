@@ -248,7 +248,8 @@ public final class Bond {
         speak(c, line);
     }
 
-    private static int[] kindAndValue(ItemStack s) {
+    /** What a stack is worth to the pouch's heal rule: {kind, value} (the client's heal-ready ring asks the same question). */
+    public static int[] kindAndValue(ItemStack s) {
         if (s.isEmpty()) return new int[]{CompanionRules.NOT_USEFUL, 0};
         if (s.is(Items.POTION)) {
             PotionContents pc = s.get(DataComponents.POTION_CONTENTS);

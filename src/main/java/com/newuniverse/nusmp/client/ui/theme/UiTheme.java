@@ -23,7 +23,10 @@ public final class UiTheme {
     private static final long T0 = System.nanoTime();
 
     /** True when the anime look is on (the config {@code ui.theme}). */
-    public static boolean anime() { return UiThemeOptions.mode() == UiThemeMode.ANIME; }
+    public static boolean anime() { return UiThemeOptions.mode() != UiThemeMode.CLASSIC; }
+
+    /** True when the Great Spirit look is on ({@code ui.theme = great_spirit}); {@link #anime()} is true then too. */
+    public static boolean greatSpirit() { return UiThemeOptions.mode() == UiThemeMode.GREAT_SPIRIT; }
 
     /** True when animation is allowed ({@code ui.motion}). */
     public static boolean motion() { return UiThemeOptions.motion(); }

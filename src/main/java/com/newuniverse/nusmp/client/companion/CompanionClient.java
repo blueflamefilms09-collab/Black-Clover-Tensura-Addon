@@ -9,6 +9,7 @@ import net.minecraft.client.Minecraft;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.config.ModConfig;
+import net.neoforged.neoforge.client.event.ClientPlayerNetworkEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.common.NeoForge;
 
@@ -34,17 +35,19 @@ public final class CompanionClient {
         NeoForge.EVENT_BUS.addListener(BubbleClient::onRender);
         NeoForge.EVENT_BUS.addListener(BubbleClient::onTick);
         NeoForge.EVENT_BUS.addListener(BubbleClient::onLogout);
+        NeoForge.EVENT_BUS.addListener((ClientPlayerNetworkEvent.LoggingOut e) -> CompanionScreens.clear());      // the gift memory and the bond story belong to one session
+        NeoForge.EVENT_BUS.addListener(CompanionScreens::onChat);
     }
 
     private static void onShow(CompanionNet.Show s) {
         Minecraft mc = Minecraft.getInstance();
         if (mc.level == null || mc.player == null) return;
-        if (mc.screen instanceof TalkScreen open && open.entityId() == s.entityId()) open.update(s.view());
-        else mc.setScreen(new TalkScreen(s.entityId(), s.view()));
+        if (mc.screen instanceof TalkHost open && open.entityId() == s.entityId()) open.update(s.view());
+        else mc.setScreen(CompanionScreens.create(s.entityId(), s.view()));
     }
 
     private static void onEnd(CompanionNet.End e) {
         Minecraft mc = Minecraft.getInstance();
-        if (mc.screen instanceof TalkScreen open && open.entityId() == e.entityId()) open.closeFromServer();
+        if (mc.screen instanceof TalkHost open && open.entityId() == e.entityId()) open.closeFromServer();
     }
 }

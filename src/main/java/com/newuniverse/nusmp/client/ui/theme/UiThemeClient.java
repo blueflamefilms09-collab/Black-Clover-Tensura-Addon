@@ -13,6 +13,7 @@ public final class UiThemeClient {
 
     public static void init(IEventBus modBus) {
         PageUnlockOverlay.init(modBus);
+        com.newuniverse.nusmp.client.ui.gs.GsNotices.init(modBus);                       // 2.x: the alert crest of the great_spirit look (draws nothing in the other themes)
         TensuraScreenTheme.init();
         com.newuniverse.nusmp.client.ui.codex.CodexClient.init(modBus);                  // 1.37.0: the data-driven Codex reloads with the resource packs
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.client.relics.RelicTooltip::onColor);

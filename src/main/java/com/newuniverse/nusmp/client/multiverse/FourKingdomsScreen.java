@@ -1,6 +1,14 @@
 package com.newuniverse.nusmp.client.multiverse;
 
+import com.newuniverse.nusmp.client.ui.gs.GsClover;
+import com.newuniverse.nusmp.client.ui.gs.GsCompile;
+import com.newuniverse.nusmp.client.ui.gs.GsCompileText;
+import com.newuniverse.nusmp.client.ui.gs.GsDraw;
+import com.newuniverse.nusmp.client.ui.gs.GsSkin;
+import com.newuniverse.nusmp.client.ui.gs.GsTex;
+import com.newuniverse.nusmp.client.ui.gs.GsUser;
 import com.newuniverse.nusmp.client.ui.theme.MagicCircle;
+import com.newuniverse.nusmp.client.ui.theme.UiThemeOptions;
 import com.newuniverse.nusmp.client.ui.theme.ThemedButton;
 import com.newuniverse.nusmp.client.ui.theme.UiBar;
 import com.newuniverse.nusmp.client.ui.theme.UiMath;
@@ -37,6 +45,10 @@ import java.util.List;
  * <p>
  * 1.27.0: the anime look (config ui.theme, default) draws the frame as a translucent glowing panel, the pages as glass with a magic circle
  * turning behind each page's text, an animated mastery bar in the header and a bar for each page's cost; the classic look is the old drawing.
+ * <p>
+ * 2.x: the great_spirit look (config ui.theme) keeps all of that and re-skins it: Parchment and Ink (parchment pages, warm frame) or Slime Crest
+ * (dark violet) by the user, filigree corners on the frame, a clover frame (3 / 4 / 5 leaves by the grimoire cover's tier) around the logo, and the
+ * ink-to-matrix compile animation on the page text each time a spread opens. Geometry, clicks, keys and the page turn are unchanged.
  */
 public class FourKingdomsScreen extends Screen {
     public static final ResourceLocation LOGO = ResourceLocation.fromNamespaceAndPath("nusmp", "textures/gui/four_kingdoms_logo.png");
@@ -52,6 +64,8 @@ public class FourKingdomsScreen extends Screen {
     private long flipStart;
     private int left, top, bookX, bookY;
     private final UiBar masteryBar = new UiBar();                // anime look: the header's mastery bar
+    private float compileAt = -1000f;                            // great_spirit: when the compile animation of the shown spread started (UiTheme.realNow)
+    private final java.util.HashMap<Integer, GsCompileText.Lines> gsLines = new java.util.HashMap<>();   // great_spirit: wrapped page text, built once per page
 
     public FourKingdomsScreen(Screen parent) {
         super(Component.literal("Four Kingdoms"));
@@ -61,6 +75,8 @@ public class FourKingdomsScreen extends Screen {
     @Override
     protected void init() {
         pages.clear();
+        gsLines.clear();
+        compileAt = UiTheme.realNow();
         CompoundTag g = MultiverseStatusClient.status().getCompound("Grimoire");
         ListTag list = g.getList("PageList", Tag.TAG_COMPOUND);
         for (int k = 0; k < list.size(); k++) pages.add(list.getCompound(k));
@@ -115,6 +131,12 @@ public class FourKingdomsScreen extends Screen {
         // the header: logo, title, the grimoire it is
         g.blit(LOGO, left + 8, top + 6, 48, 48, 0, 0, 256, 256, 256, 256);
         boolean anime = UiTheme.anime();
+        boolean gs = UiTheme.greatSpirit();
+        GsSkin skin = gs ? GsUser.skin() : GsSkin.B;
+        if (gs && UiThemeOptions.cloverIcons() && MultiverseStatusClient.status().getCompound("Grimoire").contains("Tier")) {           // the clover frame of the cover around the logo
+            int leaves = GsClover.leavesForTier(MultiverseStatusClient.status().getCompound("Grimoire").getInt("Tier"));
+            GsDraw.clover(g, left + 32, top + 30, 62, leaves, skin, UiTheme.now(), true, 0);
+        }
         float now = UiTheme.now();
         g.drawString(font, Component.literal("Four Kingdoms").withStyle(s -> s.withBold(true)), left + 62, top + 12, anime ? UiTheme.GOLD : GOLD, true);
         g.drawString(font, "Tensura", left + 62, top + 24, anime ? UiTheme.CYAN : 0xFFA0B8FF, true);
@@ -127,14 +149,19 @@ public class FourKingdomsScreen extends Screen {
             masteryBar.draw(g, left + 62, top + 50, 150, 4, UiTheme.VIOLET, now, 1f);
         }
         // the book
-        if (anime) {
+        if (gs) {
+            int s = skin.ordinal();
+            g.fill(bookX - PAGE_W - 4, bookY - 3, bookX + PAGE_W + 4, bookY + PAGE_H + 3, UiMath.withAlpha(s == 0 ? 0x3A2112 : 0x0B0414, 0.92f));
+            g.renderOutline(bookX - PAGE_W - 4, bookY - 3, PAGE_W * 2 + 8, PAGE_H + 6, UiMath.withAlpha(GsDraw.NEON[s], 0.75f));
+            UiPanel.brackets(g, bookX - PAGE_W - 4, bookY - 3, PAGE_W * 2 + 8, PAGE_H + 6, 8, UiMath.withAlpha(GsDraw.NEON2[s], 0.9f));
+        } else if (anime) {
             g.fill(bookX - PAGE_W - 4, bookY - 3, bookX + PAGE_W + 4, bookY + PAGE_H + 3, UiMath.withAlpha(0x03050B, 0.85f));
             g.renderOutline(bookX - PAGE_W - 4, bookY - 3, PAGE_W * 2 + 8, PAGE_H + 6, UiMath.withAlpha(UiTheme.CYAN, 0.55f));
             UiPanel.brackets(g, bookX - PAGE_W - 4, bookY - 3, PAGE_W * 2 + 8, PAGE_H + 6, 8, UiMath.withAlpha(UiTheme.GOLD, 0.9f));
         } else
         g.fill(bookX - PAGE_W - 4, bookY - 3, bookX + PAGE_W + 4, bookY + PAGE_H + 3, 0xFF5A2E1A);          // the cover behind the pages
         float p = flipDir == 0 ? 0 : Mth.clamp((System.nanoTime() - flipStart) / (float) FLIP_NS, 0, 1);
-        if (flipDir != 0 && p >= 1) { spread += flipDir; flipDir = 0; p = 0; }
+        if (flipDir != 0 && p >= 1) { spread += flipDir; flipDir = 0; p = 0; compileAt = UiTheme.realNow(); }       // great_spirit: the new spread compiles from ink
         if (flipDir == 0) {
             page(g, font, 2 * spread, false, 1f, 0f);
             page(g, font, 2 * spread + 1, true, 1f, 0f);
@@ -155,7 +182,8 @@ public class FourKingdomsScreen extends Screen {
             }
         }
         // the spine
-        if (anime) g.fillGradient(bookX - 1, bookY - 2, bookX + 1, bookY + PAGE_H + 2, UiMath.withAlpha(UiTheme.CYAN, 0.95f), UiMath.withAlpha(UiTheme.VIOLET, 0.5f));
+        if (gs) g.fillGradient(bookX - 1, bookY - 2, bookX + 1, bookY + PAGE_H + 2, UiMath.withAlpha(GsDraw.NEON[skin.ordinal()], 0.95f), UiMath.withAlpha(GsDraw.NEON2[skin.ordinal()], 0.5f));
+        else if (anime) g.fillGradient(bookX - 1, bookY - 2, bookX + 1, bookY + PAGE_H + 2, UiMath.withAlpha(UiTheme.CYAN, 0.95f), UiMath.withAlpha(UiTheme.VIOLET, 0.5f));
         else g.fillGradient(bookX - 2, bookY - 2, bookX + 2, bookY + PAGE_H + 2, 0xFF2A1408, 0xFF4A2410);
         g.drawCenteredString(font, (spread + 1) + " / " + spreads(), bookX, bookY + PAGE_H + 7, anime ? UiTheme.TEXT_DIM : 0xFFC8B890);
     }
@@ -171,10 +199,12 @@ public class FourKingdomsScreen extends Screen {
         pose.translate(bookX, bookY, flipDir != 0 && shade > 0 && sx < 1 ? 50 : 0);
         pose.scale(sx, 1, 1);
         int x0 = right ? 0 : -PAGE_W;
-        if (UiTheme.anime()) {                                                // glass with a faint circle turning behind the text
+        if (UiTheme.greatSpirit() && GsUser.skin() == GsSkin.B) {                 // Parchment and Ink: the shipped parchment texture, mirrored on the right page
+            g.blit(GsTex.PAGE_B, x0, 0, PAGE_W, PAGE_H, right ? PAGE_W * 2f : 0f, 0f, right ? -PAGE_W * 2 : PAGE_W * 2, PAGE_H * 2, GsTex.PAGE_B_W, GsTex.PAGE_B_H);
+        } else if (UiTheme.anime()) {                                                // glass with a faint circle turning behind the text (Slime Crest: violet)
             g.fillGradient(x0, 0, x0 + PAGE_W, PAGE_H, UiMath.withAlpha(0x131E38, 0.80f), UiMath.withAlpha(0x090E1C, 0.84f));
             g.fillGradient(x0, 0, x0 + PAGE_W, 24, UiMath.withAlpha(0xFFFFFF, 0.05f), 0x00FFFFFF);
-            MagicCircle.draw(g, x0 + PAGE_W / 2f, PAGE_H / 2f, 60f, UiTheme.now(), UiTheme.CYAN, 0.14f, MagicCircle.CALM, 1f);
+            MagicCircle.draw(g, x0 + PAGE_W / 2f, PAGE_H / 2f, 60f, UiTheme.now(), UiTheme.greatSpirit() ? 0xFF000000 | GsDraw.NEON[GsUser.skin().ordinal()] : UiTheme.CYAN, 0.14f, MagicCircle.CALM, 1f);
         } else
         g.blit(PAGE, x0, 0, PAGE_W, PAGE_H, 0, 0, 128, 160, 128, 160);
         // the gutter shadow by the spine
@@ -185,11 +215,26 @@ public class FourKingdomsScreen extends Screen {
         pose.popPose();
     }
 
-    private static int cTitle() { return UiTheme.anime() ? UiTheme.GOLD : TITLE; }
+    private static int cTitle() {
+        if (UiTheme.greatSpirit()) return 0xFF000000 | GsDraw.TITLE[GsUser.skin().ordinal()];
+        return UiTheme.anime() ? UiTheme.GOLD : TITLE;
+    }
 
-    private static int cInk() { return UiTheme.anime() ? UiTheme.TEXT : INK; }
+    private static int cInk() {
+        if (UiTheme.greatSpirit()) return 0xFF000000 | (GsUser.skin() == GsSkin.B ? GsDraw.INK[0] : GsDraw.TEXT[1]);
+        return UiTheme.anime() ? UiTheme.TEXT : INK;
+    }
 
-    private static int cFaint() { return UiTheme.anime() ? UiTheme.TEXT_DIM : FAINT; }
+    private static int cFaint() {
+        if (UiTheme.greatSpirit()) return GsUser.skin() == GsSkin.B ? FAINT : 0xFF000000 | GsDraw.DIM[1];
+        return UiTheme.anime() ? UiTheme.TEXT_DIM : FAINT;
+    }
+
+    /** great_spirit: ticks since the compile of this page started; the page a leaf is turning in compiles from ink once the turn is done, so until then it shows ink. */
+    private float compileAge(int index) {
+        if (flipDir != 0 && index / 2 == spread + flipDir) return 0f;
+        return UiTheme.realNow() - compileAt;
+    }
 
     /** One grimoire page: its name, mode / cost / cooldown, a rule, then what it does. */
     void content(GuiGraphics g, Font font, int index, int x, int y, int w) {
@@ -214,7 +259,7 @@ public class FourKingdomsScreen extends Screen {
         g.drawString(font, meta, x, yy + 1, cFaint(), false);
         yy += 12;
         if (UiTheme.anime()) {                                                   // the page's cost as a bar (percent of the player's magicules)
-            UiBar.draw(g, x, yy + 1, w, 3, Math.min(1f, e.getInt("Cost") / 100f), UiTheme.CYAN, UiTheme.now(), 1f);
+            UiBar.draw(g, x, yy + 1, w, 3, Math.min(1f, e.getInt("Cost") / 100f), UiTheme.greatSpirit() ? 0xFF000000 | GsDraw.NEON[GsUser.skin().ordinal()] : UiTheme.CYAN, UiTheme.now(), 1f);
             yy += 8;
         } else {
         g.fill(x, yy, x + w, yy + 1, 0x60402010);
@@ -224,6 +269,18 @@ public class FourKingdomsScreen extends Screen {
         String text = desc.getString();
         int dash = text.indexOf(" - ");                                    // descriptions start "Name - what it does"
         if (dash > 0 && dash < 60) text = text.substring(dash + 3);
+        if (UiTheme.greatSpirit()) {                                               // the ink-to-matrix compile (GsCompileText): lines wrapped once per page
+            GsCompileText.Lines lines = gsLines.get(index);
+            if (lines == null) {
+                lines = GsCompileText.build(font, text, w, Math.max(1, (y + PAGE_H - 26 - yy) / 9 + 1), 9);
+                gsLines.put(index, lines);
+            }
+            GsSkin sk = GsUser.skin();
+            int si = sk.ordinal();
+            float age = !UiTheme.motion() ? GsCompile.DURATION : compileAge(index);
+            GsCompileText.draw(g, font, lines, x, yy, 9, age, 0xFF000000 | GsDraw.INK[si], 0xFF000000 | (sk == GsSkin.B ? GsDraw.SETTLED[0] : GsDraw.TEXT[1]),
+                    0xFF000000 | GsDraw.DATA[si], UiThemeOptions.highQuality());
+        } else
         for (FormattedCharSequence l : font.split(Component.literal(text), w)) {
             if (yy > y + PAGE_H - 26) { g.drawString(font, "...", x, yy, cFaint(), false); break; }
             g.drawString(font, l, x, yy, cInk(), false);
@@ -237,7 +294,7 @@ public class FourKingdomsScreen extends Screen {
         renderTransparentBackground(g);
         if (UiTheme.anime()) {
             UiPanel.scrim(g, width, height, 0.8f);
-            MagicCircle.draw(g, left + PANEL_W / 2f, top + PANEL_H / 2f, PANEL_H * 0.62f, UiTheme.now(), UiTheme.VIOLET, 0.20f, MagicCircle.CALM, 1f);
+            MagicCircle.draw(g, left + PANEL_W / 2f, top + PANEL_H / 2f, PANEL_H * 0.62f, UiTheme.now(), UiTheme.greatSpirit() ? 0xFF000000 | GsDraw.NEON2[GsUser.skin().ordinal()] : UiTheme.VIOLET, 0.20f, MagicCircle.CALM, 1f);
             UiPanel.panelScan(g, left, top, PANEL_W, PANEL_H, UiTheme.CYAN, 0.9f, 1f, UiTheme.now());
             return;
         }

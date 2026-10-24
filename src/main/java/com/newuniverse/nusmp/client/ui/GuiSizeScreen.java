@@ -81,6 +81,9 @@ public class GuiSizeScreen extends Screen {
         // GUI Move: the sibling of this screen. Sizes are set here, places are set in edit mode (also on the F9 key and /nusmp gui move)
         addRenderableWidget(new ThemedButton(x0 + listW - 100, 5, 100, 15, com.newuniverse.nusmp.client.ui.move.GuiMoveScreen.tr("gui_move.open", "Move GUIs"),
                 b -> minecraft.setScreen(new com.newuniverse.nusmp.client.ui.move.GuiMoveScreen(this))));
+        // 2.x: the alert crest of the great_spirit look has its own place and move screen (also /nusmp_gui_crest)
+        addRenderableWidget(new ThemedButton(x0 + listW - 204, 5, 100, 15, Component.translatableWithFallback("nusmp.ui.crest.open", "Alert crest"),
+                b -> minecraft.setScreen(new com.newuniverse.nusmp.client.ui.gs.GsCrestScreen(this))));
         int bw = Math.min(100, (listW - 8) / 3);
         addRenderableWidget(new ThemedButton(x0, height - 26, bw, 18, tr("done", "Done"), b -> onClose()));
         addRenderableWidget(new ThemedButton(x0 + bw + 4, height - 26, bw, 18, tr("reset", "Reset all"), b -> {
