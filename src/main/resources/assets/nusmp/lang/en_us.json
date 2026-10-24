@@ -18167,5 +18167,9 @@
   "nusmp.companion.gs.ev.joined": "She walks with you",
   "nusmp.companion.gs.ev.left": "She waits here",
   "nusmp.companion.gs.ev.stance": "Stance: %s",
-  "nusmp.companion.gs.ev.heal": "She looked after you from the pouch"
+  "nusmp.companion.gs.ev.heal": "She looked after you from the pouch",
+  "nusmp.mana_method.page.mana_method_air_step.desc": "Mana Method, Air Step Rune: a small rune array forms under your feet and holds you up. Walk on air for a few seconds; sneak to drop. Works for any mage with the Mana Zone gate. Late-game: the Mana Zone gate applies.",
+  "nusmp.mana_method.page.mana_method_dash.desc": "Mana Method, Dash Rune: a rune array bursts behind you and throws you forward in your look direction, with a short grace for the fall. Short cooldown. Late-game: the Mana Zone gate applies.",
+  "nusmp.mana_method.air_step": "Air Step Rune: walk on air for %s s (sneak to drop)",
+  "nusmp.mana_method.air_step_end": "The Air Step Rune fades."
 }

@@ -60,7 +60,7 @@ The DanMachi spells are chanted: hold the skill key, a line finishes every 14 ti
    - Windows: `gradlew.bat build`
    - Mac/Linux: `./gradlew build`
    The first build downloads Minecraft, NeoForge and Tensura, so it takes a while.
-3. The mod jar is in `build/libs/multiverse-of-anime-3.4.0.jar`.
+3. The mod jar is in `build/libs/multiverse-of-anime-3.5.0.jar`.
 
 ## Install
 Put the jar in the `mods` folder of the **server and every player's client**.

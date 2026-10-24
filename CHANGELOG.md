@@ -1,5 +1,35 @@
 # Changelog
 
+## [3.5.0] — Mana Method: hold to charge, command filter, True Magic as physical damage, True Lightning and Plant cage, Air Step and Dash runes
+
+### NEW
+- **Hold to charge**: the Mana Method pages now follow how long you hold the cast. A tap fires a BASIC rune (power x0.5, one ring); a hold under 40 ticks is CHARGED (x0.75 to x1.6, two rings); a full hold of 40 ticks or more is FULL (x1.6, every ring, sneaking writes both runes). The rings are drawn while you hold and the early-release rune is drawn smaller. The server measures the hold per player; a small `nusmp:mana_method_hold` packet (HOLD, RELEASE, CANCEL, at most 3 per cast) tells nearby players. Settings `manaMethod.holdToCharge`, `minHoldTicks` (8), `maxHoldTicks` (40).
+- **Command filter**: the rune injects its commands into the bolt as it leaves: **Pursue** (homing) and **Grow** (hit radius and damage grow with distance), scaled by the charge, with hard caps (hit radius 3.6, splash 4.8, damage x3.0). Setting `manaMethod.commandFilter`. The rune stays a small server record, not an entity (a vanilla entity would be tracked, ticked, saved and synced for every cast on a public server).
+- **True Magic as physical damage**: True Magic now hits with a vanilla physical or environmental damage type credited to the caster (fire, impact, falling block, lightning; player attack for water and plant), so Tensura's magic-blocking skills do not stop it. The balance-law caps still hold. Setting `trueMagic.physicalDamage`. **Anti-Magic still cancels True Magic by default** (`trueMagic.antiMagicStillCancels`, default on); switch it off and True Magic slips past Anti-Magic, the Black Form, Physique and shields that read the damage type.
+- **True Plant cage**: a cage of logs and leaves (17 cells) around the target, taken back after `blockSeconds`; the moss carpet stays as the fallback (`trueMagic.plantCage`).
+- **True Lightning**: a lightning strike at the impact (`trueMagic.lightningBolt`); the real vanilla lightning bolt entity is off by default (`trueMagic.lightningRealBolt`) because it sets fires and changes mobs.
+- **Two mobility pages**, appended after the five Mana Method pages, same gate: **Air Step Rune** (temporary invisible barrier blocks under your feet for `airStepSeconds` = 6, sneak to drop; 8 % cost, 240 tick cooldown) and **Dash Rune** (a velocity push along your look, also in the air, scaled by the charge; 6 % cost, 60 tick cooldown, 3 blocks of fall grace). Settings `manaMethod.mobility`, `airStepSeconds`, `dashStrength` (0.9).
+- Canon check in `docs/magic/mana_method.md` (English wiki search summaries and Pixiv Encyclopedia for the Japanese side; the runes are instructions such as pursue and grow, True Magic is the real element at Third Stage or higher, Keraunos puts mana arrays under the feet and Gadjah flies by formula).
+
+### REPLACED
+- The fixed 18-tick charge (the hold replaces it; `holdToCharge` off restores it), the bolt numbers read straight from the spec (now the injected bolt state; `commandFilter` off restores them), the magic-damage True Magic hit (`physicalDamage` off restores it), the moss carpet as True Plant's block (`plantCage` off restores it).
+- True blocks of a player are now removed at once on logout, death or dimension change, where before they waited for their timer (no setting).
+
+### KEPT
+- The five older Mana Method pages, their ids and order, the 28-byte rune packet, the config file and keys, the older True Magic page, the Rune Stone, the Heart kingdom perk, the Time Magic and its VFX.
+
+### Cost (rule 11)
+- At most 3 hold packets per cast and none per tick, to players within 64 blocks through the effect budget. No entity is spawned (the lightning entity only if `lightningRealBolt` is on: 0 or 1 per strike, at most 3 a second on the server).
+- Blocks: cage 17 per cast, 36 per caster, 240 in the world, at most 30 s; Air Step 4 per caster, 16 sessions, 64 in the world. Idle server: two `isEmpty()` checks; the hold sweep runs every 5 ticks over holders only.
+- Client: at most 6 runes, each at most 300 quads (1,200 vertices), at most 7,200 vertices a frame for six; the held rune draws fewer until fully written; nothing allocated in the layer.
+
+### Not done / caveats
+- Nothing in this release has been seen in a game; the six new `magic.mana_method` self-tests have never run before CI. The previews are software renders and cannot draw the grimoire or real terrain.
+- The charge numbers (x0.5, x0.75 to x1.6, x1.6; 8 and 40 ticks) are first drafts. The damage order tap < half < full is not strictly guaranteed because the balance-law caps run after the charge scaling.
+- Not verified whether Tensura's `MAGIC_RESISTANCE` applies only to magic damage types; if it applies to all types, the physical route is reduced by it too.
+- The canon gives no numbers and names only Pursue and Grow; no further runes were invented. Full fandom pages could not be fetched. Runes applied to the body (Gadjah) and brush-painted runes (Rill) are not built.
+- A 3.4.0 server with a 3.5.0 client sends no hold packet, so the client draws the old fixed rune. Air Step barrier blocks are visible to map or claim mods for a few seconds.
+
 ## [3.4.0] — Great Spirit GUI (skins B and C, alert crest), companion screens in the new style, Star Magic phase 2 (stars break to Anti-Magic, Black Neverland as in the manga)
 
 ### NEW
