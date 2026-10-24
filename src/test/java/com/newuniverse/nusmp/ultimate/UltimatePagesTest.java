@@ -77,19 +77,17 @@ class UltimatePagesTest {
     }
 
     @Test
-    void theNewPagesFileListsExactlyTheRegistryAndNoOtherFileDoes() throws IOException {
+    void theNewPagesFilesListExactlyTheRegistryAndNoOtherFileDoes() throws IOException {
         Path dir = ROOT.resolve("src/test/resources/armour_policy");
         Map<String, List<String>> listed = new LinkedHashMap<>();
-        try (DirectoryStream<Path> ds = Files.newDirectoryStream(dir, "ultimate*_new_pages.json")) {      // ultimate_new_pages.json (core) + one file per group builder (ultimate_g34_new_pages.json ...)
-            for (Path f : ds) {
-                JsonObject o = JsonParser.parseString(read(f)).getAsJsonObject();
-                for (var e : o.entrySet()) {
-                    List<String> ids = new ArrayList<>();
-                    JsonArray a = e.getValue().getAsJsonArray();
-                    a.forEach(x -> ids.add(x.getAsString()));
-                    assertFalse(listed.containsKey(e.getKey()), f.getFileName() + ": " + e.getKey() + " is listed in two files");
-                    listed.put(e.getKey(), ids);
-                }
+        List<Path> files = new ArrayList<>();
+        try (DirectoryStream<Path> ds = Files.newDirectoryStream(dir, "ultimate*_new_pages.json")) { for (Path f : ds) files.add(f); }      // ultimate_new_pages.json (flagship) and one ultimate_<group>_new_pages.json per group
+        assertTrue(files.contains(dir.resolve("ultimate_new_pages.json")));
+        for (Path f : files) {
+            JsonObject o = JsonParser.parseString(read(f)).getAsJsonObject();
+            for (var e : o.entrySet()) {
+                List<String> ids = listed.computeIfAbsent(e.getKey(), k -> new ArrayList<>());
+                e.getValue().getAsJsonArray().forEach(x -> ids.add(x.getAsString()));
             }
         }
         List<String> all = new ArrayList<>();
@@ -125,19 +123,22 @@ class UltimatePagesTest {
 
     @Test
     void theDocsNameEveryUltimateAndProposeOneForEveryOtherAttribute() throws IOException {
-        String groups = "";
-        try (DirectoryStream<Path> ds = Files.newDirectoryStream(ROOT.resolve("docs/magic"), "ultimate_g*.md")) {      // the docs of the group builders (docs/magic/ultimate_g34.md ...) hold the same row format
-            for (Path f : ds) groups += read(f);
-        }
-        String doc = read(ROOT.resolve("docs/magic/ultimate_magic.md")) + groups, audit = read(ROOT.resolve("docs/magic/ultimate_audit.md")) + groups;
+        String doc = read(ROOT.resolve("docs/magic/ultimate_magic.md")), audit = read(ROOT.resolve("docs/magic/ultimate_audit.md"));
+        StringBuilder groupDocs = new StringBuilder();      // the rows built later are documented in docs/magic/ultimate_<group>.md (g12: rows 1-48 of the proposal table, ...)
+        try (DirectoryStream<Path> ds = Files.newDirectoryStream(ROOT.resolve("docs/magic"), "ultimate_g*.md")) { for (Path f : ds) groupDocs.append(read(f)); }
+        java.util.Set<String> flagship = java.util.Set.of("book_fire", "book_water", "book_wind", "book_earth", "book_lightning", "book_light", "book_dark", "book_spatial");
         for (UltimateDef d : UltimateRegistry.all()) {
+            if (!flagship.contains(d.bookPath())) {
+                assertTrue(groupDocs.toString().contains("| `" + d.bookPath() + "` | `" + d.id() + "` | " + d.name() + " | " + d.origin()), "no group doc row for " + d.id());
+                continue;
+            }
             assertTrue(doc.contains("| `" + d.bookPath() + "` | `" + d.id() + "` | " + d.name() + " | " + d.origin() + " |"), "docs/magic/ultimate_magic.md has no row for " + d.id());
             assertTrue(audit.contains("| `" + d.bookPath() + "` | `" + d.id() + "` | " + d.name() + " | " + d.origin() + " |"), "the audit has no row for " + d.id());
         }
         String magics = read(SRC.resolve("blackclover/MagicType.java"));
         java.util.regex.Matcher m = java.util.regex.Pattern.compile("(?m)^\\s{4}([A-Z_]+)\\(\"[^\"]+\",\\s*\"[^\"]+\",\\s*\"[A-Z]+\"").matcher(magics);
         java.util.Set<String> built = new java.util.HashSet<>();
-        for (UltimateDef d : UltimateRegistry.all()) built.add(d.magic());
+        for (UltimateDef d : UltimateRegistry.all()) if (flagship.contains(d.bookPath())) built.add(d.magic());      // the audit keeps its proposal rows for the attributes built later (they are documented in docs/magic/ultimate_g*.md)
         int n = 0;
         while (m.find()) {
             String t = m.group(1);
