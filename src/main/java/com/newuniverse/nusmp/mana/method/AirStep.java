@@ -122,7 +122,7 @@ public final class AirStep {
         if (SESSIONS.isEmpty()) return;
         long t0 = PerfProbe.begin();
         try {
-            tickAll(event.getServer().getTickCount());
+            tickAll(event.getServer().overworld().getGameTime());                  // 3.6.0: the world clock, the one start() writes (the tick count restarts at a server start and fell behind it)
         } finally {
             PerfProbe.end(PROBE, t0);
         }

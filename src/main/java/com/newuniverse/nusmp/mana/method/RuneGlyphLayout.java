@@ -262,7 +262,7 @@ public final class RuneGlyphLayout {
         double progress = Math.max(0.0, Math.min(1.0, age / ch));
         double flare = age <= ch ? 0.0 : Math.min(1.0, (age - ch) / RuneRules.FLARE_TICKS);
         for (int k = 0; k < RING_GROUPS; k++) { LEGACY_PROG[k] = progress; LEGACY_SCALE[k] = ch; }
-        fillCore(o, spec, p, f, age, LEGACY_PROG, LEGACY_SCALE, flare, level, camX, camY, camZ);
+        fillCore(o, spec, p, f, age, LEGACY_PROG, LEGACY_SCALE, flare, level, camX, camY, camZ, false);
     }
 
     /** The four groups that are written separately: the hand ring, the middle ring, the outer ring, the loose glyphs. */
@@ -275,6 +275,13 @@ public final class RuneGlyphLayout {
         return WIN_START[group] + w * (WIN_END[group] - WIN_START[group]);
     }
 
+    /** The inverse of {@link #progressOf}: how much (0..1) of group {@code group}'s work the layout progress {@code progress} stands for. */
+    public static double writtenOf(int group, double progress) {
+        double span = WIN_END[group] - WIN_START[group];
+        double w = (progress - WIN_START[group]) / span;
+        return Double.isNaN(w) ? 0.0 : Math.max(0.0, Math.min(1.0, w));
+    }
+
     /**
      * The same picture driven by a HOLD (the charge of a held page): every group has its own progress {@code prog[g]} (see {@link #progressOf}) and its own ticks per unit of progress
      * {@code scale[g]} (how long its pens take), so the rings can be written one after the other as the player holds, stop where the player released, and only the tiers that were reached
@@ -283,10 +290,14 @@ public final class RuneGlyphLayout {
     public static void fillStaged(Layout o, RuneSpec spec, RuneGeneratorUtil.Params p, Frame f, double age, double[] prog, double[] scale, double flare, int level, double camX, double camY, double camZ) {
         reset(o);
         if (level == LEVEL_NONE) return;
-        fillCore(o, spec, p, f, age, prog, scale, Math.max(0.0, Math.min(1.0, flare)), level, camX, camY, camZ);
+        fillCore(o, spec, p, f, age, prog, scale, Math.max(0.0, Math.min(1.0, flare)), level, camX, camY, camZ, true);
     }
 
-    private static void fillCore(Layout o, RuneSpec spec, RuneGeneratorUtil.Params p, Frame f, double age, double[] prog, double[] scale, double flare, int level, double camX, double camY, double camZ) {
+    /**
+     * {@code staged}: the picture of a HELD rune (3.6.0). Only there does the LIGHTNING element's rune grow its arcs with the rings that are written ({@link LightningCharge}); the fixed rune
+     * of the 3.4.0 cast (and so hold-to-charge off) draws the arcs exactly as before.
+     */
+    private static void fillCore(Layout o, RuneSpec spec, RuneGeneratorUtil.Params p, Frame f, double age, double[] prog, double[] scale, double flare, int level, double camX, double camY, double camZ, boolean staged) {
         double R = p.radius();
         int floating = floatingGlyphs(p, level);
         int slot = 0, outerN = ringGlyphs(2, level);
@@ -336,12 +347,25 @@ public final class RuneGlyphLayout {
         o.glyphs = slot;
         // lightning arcs from the outer ring to the hand ring: new shape every 3 ticks, present two slices out of three, only once the rings are mostly written
         int nArcs = arcs(level);
-        if (prog[2] > 0.55 && nArcs > 0 && outerN > 0) {
+        if (staged && spec.element() == RuneElement.LIGHTNING) {
+            // the lightning rune of a hold: one arc per ring written (hand, middle, outer), starting on the outermost written ring, thicker, wilder and brighter with each ring
+            int reached = LightningCharge.arcsReached(writtenOf(0, prog[0]), writtenOf(1, prog[1]), writtenOf(2, prog[2]));          // the progress is a point of the timeline: the arcs ask how much of each ring is WRITTEN (0..1)
+            int n = Math.min(nArcs, reached);
+            if (n > 0) {
+                int slice = (int) Math.floor(age / 3.0), from = LightningCharge.startRing(reached);
+                for (int k = 0; k < n; k++) {
+                    if (unit(seed + slice, 700 + k) < 0.33) continue;
+                    int a = (int) (unit(seed + slice, 710 + k) * RING_N[from]), b = (int) (unit(seed + slice, 720 + k) * RING_N[0]);
+                    if (from == 0 && a == b) b = (b + 4) % RING_N[0];
+                    arc(o, f, R, from, a, b, seed + slice * 7 + k, camX, camY, camZ, age, LightningCharge.arcWidth(reached), LightningCharge.arcJag(reached), LightningCharge.arcLight(reached));
+                }
+            }
+        } else if (prog[2] > 0.55 && nArcs > 0 && outerN > 0) {
             int slice = (int) Math.floor(age / 3.0);
             for (int k = 0; k < nArcs; k++) {
                 if (unit(seed + slice, 700 + k) < 0.33) continue;
                 int a = (int) (unit(seed + slice, 710 + k) * RING_N[2]), b = (int) (unit(seed + slice, 720 + k) * RING_N[0]);
-                arc(o, f, R, a, b, seed + slice * 7 + k, camX, camY, camZ, age);
+                arc(o, f, R, 2, a, b, seed + slice * 7 + k, camX, camY, camZ, age, 1.0, 1.0, 1.0);
             }
         }
         if (book(level) && prog[0] > 0.08) {
@@ -393,13 +417,13 @@ public final class RuneGlyphLayout {
     }
 
     /** A jagged polyline of {@link #ARC_SEGMENTS} strip quads from position {@code a} of the outer ring to position {@code b} of the hand ring, each strip turned to face the camera. */
-    private static void arc(Layout o, Frame f, double R, int a, int b, int seed, double camX, double camY, double camZ, double age) {
-        ringPoint(f, R, 2, a, age, END_A);
+    private static void arc(Layout o, Frame f, double R, int fromRing, int a, int b, int seed, double camX, double camY, double camZ, double age, double widthMult, double jagMult, double lightMult) {
+        ringPoint(f, R, fromRing, a, age, END_A);
         ringPoint(f, R, 0, b, age, END_B);
         double ax = END_A[0], ay = END_A[1], az = END_A[2], bx = END_B[0], by = END_B[1], bz = END_B[2];
         double dx = bx - ax, dy = by - ay, dz = bz - az, len = Math.sqrt(dx * dx + dy * dy + dz * dz);
         if (len < 1e-6) return;
-        double jag = Math.min(0.28, 0.12 * len + 0.04);
+        double jag = Math.min(0.28 * jagMult, (0.12 * len + 0.04) * jagMult);
         double px = ax, py = ay, pz = az;
         for (int s = 1; s <= ARC_SEGMENTS && o.arcQuads < MAX_ARC_QUADS; s++) {
             double t = s / (double) ARC_SEGMENTS;
@@ -414,7 +438,7 @@ public final class RuneGlyphLayout {
             double vx = camX - (px + qx) * 0.5, vy = camY - (py + qy) * 0.5, vz = camZ - (pz + qz) * 0.5;
             double wx = sy * vz - sz * vy, wy = sz * vx - sx * vz, wz = sx * vy - sy * vx, wl = Math.sqrt(wx * wx + wy * wy + wz * wz);
             if (wl < 1e-9) { px = qx; py = qy; pz = qz; continue; }
-            double k = ARC_WIDTH * 0.5 / wl;
+            double k = ARC_WIDTH * widthMult * 0.5 / wl;
             wx *= k;
             wy *= k;
             wz *= k;
@@ -423,7 +447,7 @@ public final class RuneGlyphLayout {
             o.aq[q + 3] = (float) (px + wx); o.aq[q + 4] = (float) (py + wy); o.aq[q + 5] = (float) (pz + wz);
             o.aq[q + 6] = (float) (qx + wx); o.aq[q + 7] = (float) (qy + wy); o.aq[q + 8] = (float) (qz + wz);
             o.aq[q + 9] = (float) (qx - wx); o.aq[q + 10] = (float) (qy - wy); o.aq[q + 11] = (float) (qz - wz);
-            o.arcLight[o.arcQuads] = (float) (0.75 + 0.25 * unit(seed, 90 + s));
+            o.arcLight[o.arcQuads] = (float) ((0.75 + 0.25 * unit(seed, 90 + s)) * lightMult);
             o.arcQuads++;
             px = qx;
             py = qy;

@@ -7,6 +7,9 @@ import com.newuniverse.nusmp.blackclover.GrimoireItem;
 import com.newuniverse.nusmp.blackclover.MagicType;
 import com.newuniverse.nusmp.core.magic.grimoire.GrimoireCarry;
 import com.newuniverse.nusmp.core.magic.profile.SafeCast;
+import com.newuniverse.nusmp.mana.method.BodyRuneRules;
+import com.newuniverse.nusmp.mana.method.BrushRules;
+import com.newuniverse.nusmp.mana.method.RuneCharge;
 import com.newuniverse.nusmp.mana.method.RuneElement;
 import com.newuniverse.nusmp.mana.method.RuneGeneratorUtil;
 import com.newuniverse.nusmp.mana.method.RuneGeneratorUtil.Frame;
@@ -101,10 +104,177 @@ public final class RuneClient {
     /** A released rune whose cast never arrives (the cast failed, or its packet was dropped) goes away this many ticks after the release (the wind-up is 4 to 7). */
     private static final int ORPHAN_TICKS = 14;
 
+    // ---------------------------------------------------------------- 3.6.0: painted runes (the Brush Rune on a surface, the Body Rune on a body)
+    /** A rune painted on a surface: it is written once (24 ticks), stays, flares when it fires and fades. Not a book rune: nothing is held and no grimoire is drawn. */
+    private static final class CPaint {
+        int id;
+        RuneHoldView view;
+        long born;
+        int life;
+    }
+
+    /** The runes on one body: the chest rune and, from the second ring tier, the rune at the feet. They follow the body every frame. */
+    private static final class CBody {
+        int ownerId;
+        RuneHoldView chest, feet;
+        long born;
+        int life;
+        double lastX = Double.NaN, lastY, lastZ, lastYaw;
+    }
+
+    private static final List<CPaint> PAINTS = new ArrayList<>();
+    private static final List<CBody> BODIES = new ArrayList<>();
+    private static final double[] LOOK = new double[3], NORMAL = new double[3];
+    /** The picture of a painted rune takes this many ticks to be written. */
+    private static final int PAINT_TICKS = 24;
+    /** The scale of the chest rune and of the rune at the feet, relative to a rune's own size. */
+    private static final float CHEST_SCALE = 0.3f, FEET_SCALE = 0.85f;
+
     public static void init() {
         NeoForge.EVENT_BUS.addListener(RuneClient::onClientTick);
         NeoForge.EVENT_BUS.addListener(RuneClient::onRender);
-        NeoForge.EVENT_BUS.addListener((ClientPlayerNetworkEvent.LoggingOut e) -> { RUNES.clear(); RuneHoldView.forgetAll(); });
+        NeoForge.EVENT_BUS.addListener(RuneClient::onRenderBodies);
+        NeoForge.EVENT_BUS.addListener((ClientPlayerNetworkEvent.LoggingOut e) -> { RUNES.clear(); PAINTS.clear(); BODIES.clear(); RuneHoldView.forgetAll(); });
+    }
+
+    private static int paintedDrawn() {
+        int n = PAINTS.size();
+        for (CBody b : BODIES) n += b.feet != null ? 2 : 1;
+        return n;
+    }
+
+    /** A brush packet arrived (3.6.0): a painted rune appeared, fired or is gone. Validated; a rune farther than {@value BrushRules#PAINT_DISTANCE} blocks or past the cap of {@value BrushRules#MAX_PAINTED_DRAWN} is not started. */
+    public static void onBrush(RuneNet.BrushPayload p) {
+        Minecraft mc = Minecraft.getInstance();
+        if (mc.level == null || !RuneNet.validBrush(p)) return;
+        long now = mc.level.getGameTime();
+        for (int i = PAINTS.size() - 1; i >= 0; i--) if (now - PAINTS.get(i).born > PAINTS.get(i).life + RuneHoldView.FADE) PAINTS.remove(i);
+        if (p.phase() != RuneNet.PHASE_APPEAR) {
+            for (CPaint c : PAINTS) {
+                if (c.id != p.id()) continue;
+                float age = (float) (now - c.born);
+                if (p.phase() == RuneNet.PHASE_FIRED) {                                       // the bolt left: the rune flares and goes
+                    c.view.launchAge = age;
+                    c.view.endAge = age + RuneRules.FLARE_TICKS + RuneHoldView.FADE;
+                } else {
+                    c.view.endAge = Math.min(c.view.endAge, age + RuneHoldView.FADE);
+                }
+                c.life = (int) Math.ceil(c.view.endAge);
+                return;
+            }
+            return;
+        }
+        Vec3 cam = mc.gameRenderer.getMainCamera().getPosition();
+        double dx = p.x() - cam.x, dy = p.y() - cam.y, dz = p.z() - cam.z;
+        if (dx * dx + dy * dy + dz * dz > BrushRules.PAINT_DISTANCE * BrushRules.PAINT_DISTANCE || paintedDrawn() >= BrushRules.MAX_PAINTED_DRAWN) return;
+        for (CPaint c : PAINTS) if (c.id == p.id()) return;
+        RuneSpec spec = RuneSpec.unpack(p.spec());
+        BrushRules.normal(p.face(), NORMAL);
+        BrushRules.lookFor(NORMAL[0], NORMAL[1], NORMAL[2], BrushRules.yawDegrees(p.yaw()), LOOK);
+        RuneHoldView view = new RuneHoldView(-1, spec, RuneCharge.DEFAULT_MIN_HOLD, RuneCharge.DEFAULT_MAX_HOLD, RuneGeneratorUtil.frameFacing(p.x(), p.y(), p.z(), LOOK[0], LOOK[1], LOOK[2]));
+        view.follow = false;
+        view.paintTicks = PAINT_TICKS;
+        view.endAge = p.ticks();
+        CPaint c = new CPaint();
+        c.id = p.id();
+        c.view = view;
+        c.born = now;
+        c.life = p.ticks();
+        PAINTS.add(c);
+        float scale = BrushRules.pictureScale(p.radiusTenths() / 10.0, RuneGeneratorUtil.paramsFor(spec).radius());
+        Vec3 from = new Vec3(p.x(), p.y(), p.z());
+        VfxManager.get().spawn(new VfxPayload(VfxShape.RUNE_WRITING.ordinal(), from, from.add(LOOK[0], LOOK[1], LOOK[2]), 0xFF000000 | spec.element().tint, p.ticks() + 1, scale, -1, RuneHoldView.seedOf(spec.pack(), RuneHoldView.register(view))));
+    }
+
+    /** A body packet arrived (3.6.0): the runes were written on a body (START) or faded (END). The pictures follow the body every frame; at most {@value BrushRules#MAX_PAINTED_DRAWN} painted runes are drawn together. */
+    public static void onBody(RuneNet.BodyPayload p) {
+        Minecraft mc = Minecraft.getInstance();
+        if (mc.level == null || !RuneNet.validBody(p)) return;
+        long now = mc.level.getGameTime();
+        for (int i = BODIES.size() - 1; i >= 0; i--) {
+            CBody b = BODIES.get(i);
+            if (now - b.born > b.life + RuneHoldView.FADE) { BODIES.remove(i); continue; }
+            if (b.ownerId != p.ownerId()) continue;
+            if (p.phase() == RuneNet.PHASE_END) {
+                float end = (float) (now - b.born) + RuneHoldView.FADE;
+                b.chest.endAge = Math.min(b.chest.endAge, end);
+                if (b.feet != null) b.feet.endAge = Math.min(b.feet.endAge, end);
+                b.life = (int) Math.ceil(Math.min(b.life, end));
+                return;
+            }
+            BODIES.remove(i);                                                                 // a new cast on the same body: the old pictures end, new ones are written
+            b.chest.endAge = Math.min(b.chest.endAge, (float) (now - b.born) + 1f);
+            if (b.feet != null) b.feet.endAge = Math.min(b.feet.endAge, (float) (now - b.born) + 1f);
+        }
+        if (p.phase() != RuneNet.PHASE_START || p.ticks() < 1) return;
+        Entity owner = mc.level.getEntity(p.ownerId());
+        int pics = BodyRuneRules.pictures(p.tier());
+        if (owner == null || paintedDrawn() + pics > BrushRules.MAX_PAINTED_DRAWN) return;
+        Vec3 cam = mc.gameRenderer.getMainCamera().getPosition();
+        if (owner.position().distanceToSqr(cam) > BrushRules.PAINT_DISTANCE * BrushRules.PAINT_DISTANCE) return;
+        RuneSpec spec = RuneSpec.unpack(p.spec());
+        CBody b = new CBody();
+        b.ownerId = p.ownerId();
+        b.born = now;
+        b.life = p.ticks();
+        b.chest = bodyView(owner, spec, p.ticks(), CHEST_SCALE, 1.15);
+        if (pics > 1) b.feet = bodyView(owner, spec, p.ticks(), FEET_SCALE, 0.05);
+        BODIES.add(b);
+    }
+
+    private static RuneHoldView bodyView(Entity owner, RuneSpec spec, int ticks, float scale, double height) {
+        RuneHoldView view = new RuneHoldView(owner.getId(), spec, 8, 40, RuneGeneratorUtil.frameFacing(owner.getX(), owner.getY() + height, owner.getZ(), 0, -1, 0));
+        view.follow = false;
+        view.paintTicks = PAINT_TICKS;
+        view.endAge = ticks;
+        Vec3 from = owner.position().add(0, height, 0);
+        VfxManager.get().spawn(new VfxPayload(VfxShape.RUNE_WRITING.ordinal(), from, from.add(0, -1, 0), 0xFF000000 | spec.element().tint, ticks + 1, scale, owner.getId(), RuneHoldView.seedOf(spec.pack(), RuneHoldView.register(view))));
+        return view;
+    }
+
+    /** Before the frame's entities are drawn: the pictures on a body are moved to where the body is NOW (partial tick), so they do not lag a tick behind a running player. Only when the body moved or turned. */
+    private static void onRenderBodies(RenderLevelStageEvent event) {
+        if (event.getStage() != RenderLevelStageEvent.Stage.AFTER_ENTITIES || BODIES.isEmpty()) return;
+        Minecraft mc = Minecraft.getInstance();
+        if (mc.level == null) return;
+        SafeCast.client("mana-method-body", () -> {
+            float partial = event.getPartialTick().getGameTimeDeltaPartialTick(false);
+            for (CBody b : BODIES) {
+                Entity o = mc.level.getEntity(b.ownerId);
+                if (o == null) continue;
+                Vec3 pos = o.getPosition(partial);
+                double yaw = o instanceof net.minecraft.world.entity.LivingEntity le ? Mth.rotLerp(partial, le.yBodyRotO, le.yBodyRot) : o.getYRot();
+                if (!Double.isNaN(b.lastX) && Math.abs(pos.x - b.lastX) < 0.002 && Math.abs(pos.y - b.lastY) < 0.002 && Math.abs(pos.z - b.lastZ) < 0.002 && Math.abs(yaw - b.lastYaw) < 0.2) continue;
+                b.lastX = pos.x;
+                b.lastY = pos.y;
+                b.lastZ = pos.z;
+                b.lastYaw = yaw;
+                double rad = Math.toRadians(yaw), fx = -Math.sin(rad), fz = Math.cos(rad);        // where the body faces
+                b.chest.frame = RuneGeneratorUtil.frameFacing(pos.x + fx * 0.32, pos.y + 1.15, pos.z + fz * 0.32, -fx, 0, -fz);          // seen by someone in front of the body
+                if (b.feet != null) {
+                    BrushRules.lookFor(0, 1, 0, yaw, LOOK);
+                    b.feet.frame = RuneGeneratorUtil.frameFacing(pos.x, pos.y + 0.05, pos.z, LOOK[0], LOOK[1], LOOK[2]);
+                }
+            }
+        });
+    }
+
+    /** Once a tick: the painted runes that ran out go; a body whose owner left or died fades. */
+    private static void tickPainted(Minecraft mc, Level level) {
+        long now = level.getGameTime();
+        for (int i = PAINTS.size() - 1; i >= 0; i--) if (now - PAINTS.get(i).born > PAINTS.get(i).life + RuneHoldView.FADE) PAINTS.remove(i);
+        for (int i = BODIES.size() - 1; i >= 0; i--) {
+            CBody b = BODIES.get(i);
+            long age = now - b.born;
+            if (age > b.life + RuneHoldView.FADE) { BODIES.remove(i); continue; }
+            Entity o = level.getEntity(b.ownerId);
+            if (o == null || !o.isAlive()) {
+                float end = (float) age + RuneHoldView.FADE;
+                if (b.chest.endAge > end) b.chest.endAge = end;
+                if (b.feet != null && b.feet.endAge > end) b.feet.endAge = end;
+                b.life = (int) Math.min(b.life, Math.ceil(end));
+            }
+        }
     }
 
     /** A rune packet arrived: validate it, start the writing effect and keep the small state the book and the sparks need. */
@@ -243,10 +413,12 @@ public final class RuneClient {
 
     // ---------------------------------------------------------------- sparks off the pens
     private static void onClientTick(ClientTickEvent.Post e) {
-        if (RUNES.isEmpty()) return;
+        if (RUNES.isEmpty() && PAINTS.isEmpty() && BODIES.isEmpty()) return;
         Minecraft mc = Minecraft.getInstance();
         Level level = mc.level;
-        if (level == null) { RUNES.clear(); return; }
+        if (level == null) { RUNES.clear(); PAINTS.clear(); BODIES.clear(); return; }
+        if (!PAINTS.isEmpty() || !BODIES.isEmpty()) SafeCast.client("mana-method-painted", () -> tickPainted(mc, level));
+        if (RUNES.isEmpty()) return;
         SafeCast.client("mana-method-rune", () -> tick(mc, level));
     }
 

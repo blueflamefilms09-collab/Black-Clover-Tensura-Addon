@@ -37,6 +37,9 @@ import java.util.UUID;
  *       {@code .physical} (True Magic hurts with a vanilla physical type credited to the caster, a normal rune with the Tensura type), {@code .cage} (the plant's cage: free cells only,
  *       caps, gone when the caster leaves and by time), {@code .lightning} (at most the per-second allowance, never into an unloaded chunk), {@code .air_step} (a bounded barrier
  *       platform that follows the feet, sneak drops, nothing is left when it ends), {@code .dash} (the push, the cooldown, the marked motion, the small fall grace).</li>
+ *   <li>3.6.0, the same prefix: {@code .cost} (the price follows the waiting charge, is never used up by being asked, never above the normal price), {@code .lightning_charge} (the lightning's size
+ *       follows the charge inside the caps), {@code .body} (the Body Rune's modifiers: applied, refreshed not stacked, capped, gone by time / leaving / server stop, a full hold glides, no
+ *       flight), {@code .brush} (the painted rune: caps and spacing, the caster does not trigger it, a foe draws exactly one bolt and spends it, expiry and clean-up).</li>
  * </ul>
  */
 public final class ManaMethodSelfTests {
@@ -51,6 +54,10 @@ public final class ManaMethodSelfTests {
         SelfTests.register("magic.mana_method.lightning", ManaMethodSelfTests::lightning);
         SelfTests.register("magic.mana_method.air_step", ManaMethodSelfTests::airStep);
         SelfTests.register("magic.mana_method.dash", ManaMethodSelfTests::dash);
+        SelfTests.register("magic.mana_method.cost", ManaMethodSelfTests::cost);
+        SelfTests.register("magic.mana_method.lightning_charge", ManaMethodSelfTests::lightningCharge);
+        SelfTests.register("magic.mana_method.body", ManaMethodSelfTests::body);
+        SelfTests.register("magic.mana_method.brush", ManaMethodSelfTests::brush);
     }
 
     private static Result core(MinecraftServer server) {
@@ -498,6 +505,213 @@ public final class ManaMethodSelfTests {
             Dash.cancelOwner(p.getUUID());
             p.setDeltaMovement(0, 0, 0);
             p.fallDistance = 0f;
+        }
+    }
+
+    // ---------------------------------------------------------------- 3.6.0
+    private static int modeOf(GrimoireBook book, String id) {
+        var pages = book.pages();
+        for (int m = 0; m < pages.size(); m++) if (pages.get(m).id().equals(id)) return m;
+        return -1;
+    }
+
+    /** {@code magic.mana_method.cost}: the price of a page follows the charge that is waiting, is never used up by being asked, never passes the normal price, and the Air Step Rune is not scaled. */
+    private static Result cost(MinecraftServer server) {
+        ServerLevel sl = server.overworld();
+        sl.getChunk(0, 0);
+        FakePlayer p = SelfTests.standIn(sl, "mana_method_cost", 8.5, 120, 8.5);
+        GrimoireBook book = NUSkills.BOOK_REINFORCEMENT.get();
+        ManasSkillInstance inst = book.createDefaultInstance();
+        int fire = modeOf(book, ManaMethodPages.FIRE_ID), air = modeOf(book, ManaMethodPages.AIR_STEP_ID), body = modeOf(book, ManaMethodPages.BODY_ID);
+        if (fire < 0 || air < 0 || body < 0) return Result.fail("a Mana Method page is missing from the book");
+        int min = ManaMethodConfig.minHold(), max = ManaMethodConfig.maxHold();
+        long now = p.level().getGameTime();
+        RuneHold.cancelOwner(p.getUUID());
+        try {
+            if (!ManaMethodConfig.costScalesWithCharge() || !RuneHold.active()) return Result.ok("skipped: the price scaling or hold-to-charge is switched off in this config");
+            double none = ManaMethodPages.costFactor(p, ManaMethodPages.FIRE_ID, fire);
+            if (none != 1.0) return Result.fail("with no release waiting the price should be the normal one, got x" + none);
+            RuneHold.releaseForTest(p.getUUID(), fire, 0, now);
+            double tap = ManaMethodPages.costFactor(p, ManaMethodPages.FIRE_ID, fire);
+            double again = ManaMethodPages.costFactor(p, ManaMethodPages.FIRE_ID, fire);
+            if (tap != again) return Result.fail("asking the price used the release up: " + tap + " then " + again);
+            double wantTap = RuneCost.fraction(RuneCharge.of(0, min, max), ManaMethodConfig.minCostFraction());
+            if (Math.abs(tap - wantTap) > 1e-9 || tap >= 1.0) return Result.fail("a tap should pay x" + wantTap + ", got x" + tap);
+            if (ManaMethodPages.costFactor(p, ManaMethodPages.FIRE_ID, fire + 1) != 1.0) return Result.fail("a release for another page changed this page's price");
+            if (ManaMethodPages.costFactor(p, ManaMethodPages.AIR_STEP_ID, air) != 1.0) return Result.fail("the Air Step Rune must not be scaled");
+            double base = book.getMagiculeCost(p, inst, fire);
+            RuneHold.take(p.getUUID(), fire, now);
+            double normal = book.getMagiculeCost(p, inst, fire);
+            RuneHold.releaseForTest(p.getUUID(), fire, 0, now);
+            double scaled = book.getMagiculeCost(p, inst, fire);
+            RuneHold.take(p.getUUID(), fire, now);
+            if (normal > 0 && Math.abs(scaled / normal - tap) > 1e-6) return Result.fail("the grimoire charged x" + (scaled / normal) + " for a tap, expected x" + tap);
+            RuneHold.releaseForTest(p.getUUID(), body, max, now);
+            double full = ManaMethodPages.costFactor(p, ManaMethodPages.BODY_ID, body);
+            RuneHold.take(p.getUUID(), body, now);
+            if (Math.abs(full - 1.0) > 1e-9) return Result.fail("a full hold should pay the whole price, got x" + full);
+            double last = 0.0;
+            for (int h = 0; h <= RuneCharge.HOLD_CAP; h += 3) {
+                RuneHold.releaseForTest(p.getUUID(), fire, h, now);
+                double f = ManaMethodPages.costFactor(p, ManaMethodPages.FIRE_ID, fire);
+                RuneHold.take(p.getUUID(), fire, now);
+                if (f < last - 1e-12 || f > 1.0 + 1e-12) return Result.fail("the price at a hold of " + h + " is x" + f + " (last x" + last + ")");
+                last = f;
+            }
+            return Result.ok("a tap pays x" + String.format("%.2f", tap) + ", a full hold x1.00, rising with the hold and never above the normal price; asking never uses the release up; Air Step unscaled (base " + String.format("%.0f", base) + ")");
+        } finally {
+            RuneHold.cancelOwner(p.getUUID());
+        }
+    }
+
+    /** {@code magic.mana_method.lightning_charge}: the lightning's size follows the charge inside the caps, and the 3.5.0 bolt is what the setting off (or no measured hold) gives. */
+    private static Result lightningCharge(MinecraftServer server) {
+        int min = ManaMethodConfig.minHold(), max = ManaMethodConfig.maxHold();
+        RuneSpec spec = new RuneSpec(RuneElement.LIGHTNING, RuneMods.ALL, true);
+        double lastHit = 0.0, lastSplash = 0.0;
+        for (int h = 0; h <= RuneCharge.HOLD_CAP; h += 2) {
+            RuneCharge.Charge c = RuneCharge.of(h, min, max);
+            RuneCommands.BoltState b = RuneCommands.inject(spec, c, true), off = RuneCommands.inject(spec, c, false);
+            double hit = b.hitRadius(30.0), splash = b.splashRadius(30.0);
+            if (hit > RuneCommands.MAX_HIT_RADIUS + 1e-9 || splash > RuneCommands.MAX_SPLASH + 1e-9) return Result.fail("the lightning at a hold of " + h + " passed the bolt's caps: " + hit + " / " + splash);
+            if (hit < off.hitRadius(30.0) - 1e-9 || splash < off.splashRadius(30.0) - 1e-9) return Result.fail("the charge made the lightning smaller at " + h);
+            if (hit < lastHit - 1e-9 || splash < lastSplash - 1e-9) return Result.fail("the lightning shrank with a longer hold at " + h);
+            lastHit = hit;
+            lastSplash = splash;
+            LightningCharge.Strike s = LightningCharge.strike(c);
+            if (s.bolts() < 1 || s.bolts() > LightningCharge.MAX_BOLTS || s.height() > LightningCharge.MAX_HEIGHT || s.width() > LightningCharge.MAX_WIDTH) return Result.fail("the strike plan passed its caps at " + h);
+        }
+        RuneSpec fire = new RuneSpec(RuneElement.FIRE, RuneMods.ALL, true);
+        RuneCharge.Charge full = RuneCharge.of(max, min, max);
+        if (RuneCommands.inject(fire, full, true).hitRadius(30.0) != RuneCommands.inject(fire, full, false).hitRadius(30.0)) return Result.fail("another element's bolt changed with the lightning setting");
+        if (RuneCommands.inject(spec, RuneCharge.Charge.LEGACY, true).hitRadius(30.0) != RuneCommands.inject(spec, RuneCharge.Charge.LEGACY, false).hitRadius(30.0)) return Result.fail("the 3.4.0 spell's lightning changed");
+        return Result.ok("the strike is 1 to " + LightningCharge.MAX_BOLTS + " bolts, at most " + LightningCharge.MAX_HEIGHT + " tall, the radius x1.0 to x" + LightningCharge.radiusMult(spec, full) + " inside the bolt's caps, nothing changes for the other elements or the old spell");
+    }
+
+    /** {@code magic.mana_method.body}: the Body Rune's modifiers are applied, refresh instead of stacking, stay under their caps, end by time, by clean-up and with the setting; a full hold glides. */
+    private static Result body(MinecraftServer server) {
+        ServerLevel sl = server.overworld();
+        sl.getChunk(0, 0);
+        FakePlayer p = SelfTests.standIn(sl, "mana_method_body", 8.5, 120, 8.5);
+        UUID id = p.getUUID();
+        BodyRunes.cancelOwner(id);
+        long now = p.level().getGameTime();
+        int min = ManaMethodConfig.minHold(), max = ManaMethodConfig.maxHold();
+        RuneSpec spec = new RuneSpec(RuneElement.LIGHTNING, RuneElement.LIGHTNING.defaultMods(), false);
+        try {
+            if (!ManaMethodConfig.bodyRunes() || !ManaMethodConfig.enabled()) return Result.ok("skipped: the Body Rune is switched off in this config");
+            double speed0 = p.getAttributeValue(Attributes.MOVEMENT_SPEED), kb0 = p.getAttributeValue(Attributes.KNOCKBACK_RESISTANCE);
+            RuneCharge.Charge full = RuneCharge.of(max, min, max), tap = RuneCharge.of(0, min, max);
+            if (!BodyRunes.start(p, spec, tap, now)) return Result.fail("the Body Rune was refused");
+            double tapSpeed = p.getAttributeValue(Attributes.MOVEMENT_SPEED);
+            if (!(tapSpeed > speed0)) return Result.fail("a tap did not raise the speed: " + speed0 + " -> " + tapSpeed);
+            if (!BodyRunes.start(p, spec, full, now + 1)) return Result.fail("a second cast was refused");
+            if (BodyRunes.sessions() != 1) return Result.fail("a second cast made " + BodyRunes.sessions() + " sessions for one player");
+            double fullSpeed = p.getAttributeValue(Attributes.MOVEMENT_SPEED);
+            if (!(fullSpeed > tapSpeed)) return Result.fail("the refreshed full cast is not stronger than the tap: " + fullSpeed + " vs " + tapSpeed);
+            if (fullSpeed > speed0 * (1.0 + BodyRuneRules.SPEED_MAX) + 1e-9) return Result.fail("the speed passed its cap: " + fullSpeed + " from " + speed0);
+            if (p.getAttributeValue(Attributes.KNOCKBACK_RESISTANCE) > kb0 + BodyRuneRules.KNOCKBACK_MAX + 1e-9) return Result.fail("the knockback resistance passed its cap");
+            BodyRuneRules.Mods fullMods = BodyRuneRules.modsFor(full, ManaMethodConfig.bodySeconds());
+            for (int i = 0; i < BodyRuneRules.IDS.length; i++)
+                if (BodyRunes.has(p, i) != fullMods.amount(i) > 0.0) return Result.fail("the modifier " + BodyRuneRules.IDS[i] + " is " + (BodyRunes.has(p, i) ? "there" : "missing") + " for a full hold");
+            if (!p.hasEffect(net.minecraft.world.effect.MobEffects.SLOW_FALLING)) return Result.fail("a full hold should glide (slow falling)");
+            if (p.hasEffect(net.minecraft.world.effect.MobEffects.LEVITATION) || p.getAbilities().mayfly) return Result.fail("the Body Rune gave flight");
+            long until = BodyRunes.untilOf(id);
+            if (until != now + 1 + BodyRuneRules.modsFor(full, ManaMethodConfig.bodySeconds()).ticks()) return Result.fail("the session ends at " + until + ", expected the charge's duration");
+            BodyRunes.sweep(until - 1);
+            if (!BodyRunes.active(id)) return Result.fail("the runes ended early");
+            BodyRunes.sweep(until);
+            if (BodyRunes.active(id) || p.getAttributeValue(Attributes.MOVEMENT_SPEED) != speed0) return Result.fail("the runes did not end by time; speed " + p.getAttributeValue(Attributes.MOVEMENT_SPEED) + " vs " + speed0);
+            // the clean-up of a caster who leaves
+            BodyRunes.start(p, spec, full, now);
+            BodyRunes.cancelOwner(id);
+            if (BodyRunes.active(id) || p.getAttributeValue(Attributes.MOVEMENT_SPEED) != speed0 || p.getAttributeValue(Attributes.KNOCKBACK_RESISTANCE) != kb0) return Result.fail("a caster who left kept the modifiers");
+            // the server stops
+            BodyRunes.start(p, spec, tap, now);
+            BodyRunes.clearAll();
+            if (BodyRunes.sessions() != 0 || p.getAttributeValue(Attributes.MOVEMENT_SPEED) != speed0) return Result.fail("clearAll left a session or a modifier");
+            return Result.ok("tap +" + String.format("%.1f", 100.0 * (tapSpeed / speed0 - 1.0)) + " % and full +" + String.format("%.1f", 100.0 * (fullSpeed / speed0 - 1.0)) + " % speed (cap " + (int) (100 * BodyRuneRules.SPEED_MAX) + " %), refreshed not stacked, a full hold glides, no flight, gone by time, by leaving and by server stop");
+        } finally {
+            BodyRunes.cancelOwner(id);
+            p.removeEffect(net.minecraft.world.effect.MobEffects.SLOW_FALLING);
+        }
+    }
+
+    /** {@code magic.mana_method.brush}: a painted rune stays within its caps and spacing, ignores its caster, fires ONE bolt at a foe that steps in and is spent, expires, and is cleaned up. */
+    private static Result brush(MinecraftServer server) {
+        ServerLevel sl = server.overworld();
+        sl.getChunk(0, 0);
+        FakePlayer p = SelfTests.standIn(sl, "mana_method_brush", 8.5, 120, 8.5);
+        UUID id = p.getUUID();
+        GrimoireBook book = NUSkills.BOOK_REINFORCEMENT.get();
+        ManasSkillInstance inst = book.createDefaultInstance();
+        int mode = modeOf(book, ManaMethodPages.BRUSH_ID);
+        RuneSpec spec = new RuneSpec(RuneElement.WIND, RuneMods.ALL, false);
+        RuneCharge.Charge full = RuneCharge.of(ManaMethodConfig.maxHold(), ManaMethodConfig.minHold(), ManaMethodConfig.maxHold());
+        List<BlockPos> floor = new ArrayList<>();
+        Zombie z = null;
+        BrushRunes.cancelOwner(id);
+        RuneManager.cancelOwner(id);
+        try {
+            if (!ManaMethodConfig.brushRunes() || !ManaMethodConfig.enabled()) return Result.ok("skipped: the Brush Rune is switched off in this config");
+            for (int x = 0; x < 40; x++) for (int dz = -2; dz <= 2; dz++) {
+                BlockPos f = new BlockPos(x, 119, 8 + dz);
+                BlockPos up1 = f.above(), up2 = f.above(2), up3 = f.above(3);
+                sl.setBlock(f, Blocks.STONE.defaultBlockState(), 3);
+                sl.setBlock(up1, Blocks.AIR.defaultBlockState(), 3);
+                sl.setBlock(up2, Blocks.AIR.defaultBlockState(), 3);
+                sl.setBlock(up3, Blocks.AIR.defaultBlockState(), 3);
+                floor.add(f);
+            }
+            if (!sl.mayInteract(p, new BlockPos(8, 119, 8))) return Result.ok("skipped: the spot is under spawn protection for the stand-in");
+            long now = p.level().getGameTime();
+            int cap = BrushRules.clampPerCaster(ManaMethodConfig.brushPerCaster());
+            p.setYRot(0f);
+            p.setXRot(90f);                                                          // looking straight down at the floor
+            int painted = 0;
+            for (int k = 0; k < cap + 2; k++) {
+                p.setPos(8.5 + k * 3.0, 120, 8.5);
+                if (BrushRunes.paint(book, inst, p, mode, spec, full, now)) painted++;
+            }
+            if (painted != cap || BrushRunes.countOf(id) != cap) return Result.fail("painted " + painted + " arrays (ledger " + BrushRunes.countOf(id) + "), the per-caster cap is " + cap);
+            p.setPos(8.5, 120, 8.5);
+            if (BrushRunes.paint(book, inst, p, mode, spec, full, now)) return Result.fail("an array was painted over the cap or on top of another");
+            // the caster standing in their own array never triggers it
+            for (int k = 0; k < 12; k++) BrushRunes.sweep(now + BrushRules.ARM_TICKS + k);
+            if (BrushRunes.countOf(id) != cap || RuneManager.activeCount(id) != 0) return Result.fail("the caster triggered their own array");
+            // a foe steps in: ONE bolt leaves and the array is spent
+            z = EntityType.ZOMBIE.create(sl);
+            if (z == null) return Result.fail("could not create a test zombie");
+            z.setNoAi(true);
+            z.setNoGravity(true);
+            z.setPos(8.5, 120.0, 8.5);
+            sl.addFreshEntity(z);
+            for (int k = 0; k < 16 && RuneManager.activeCount(id) == 0; k++) BrushRunes.sweep(now + BrushRules.ARM_TICKS + 20 + k);
+            if (RuneManager.activeCount(id) != 1) return Result.fail("expected one bolt from the array the foe stood in, got " + RuneManager.activeCount(id));
+            if (BrushRunes.countOf(id) != cap - 1) return Result.fail("the array was not spent: " + BrushRunes.countOf(id) + " left of " + cap);
+            for (int k = 0; k < 24; k++) BrushRunes.sweep(now + BrushRules.ARM_TICKS + 40 + k);
+            if (RuneManager.activeCount(id) > 1) return Result.fail("a spent array fired again: " + RuneManager.activeCount(id));
+            // they run out by time
+            BrushRunes.sweep(now + BrushRules.MAX_SECONDS * 20L + 10);
+            if (BrushRunes.countOf(id) != 0) return Result.fail("the arrays did not expire: " + BrushRunes.countOf(id) + " left");
+            // and they are cleaned up when the caster leaves
+            p.setPos(8.5, 120, 8.5);
+            z.discard();
+            z = null;
+            BrushRunes.paint(book, inst, p, mode, spec, full, now);
+            if (BrushRunes.countOf(id) != 1) return Result.fail("could not paint again after the arrays expired");
+            BrushRunes.cancelOwner(id);
+            if (BrushRunes.countOf(id) != 0) return Result.fail("a caster who left kept an array");
+            BrushRunes.paint(book, inst, p, mode, spec, full, now);
+            BrushRunes.clearAll();
+            if (BrushRunes.count() != 0) return Result.fail("clearAll left arrays");
+            return Result.ok("at most " + cap + " arrays per caster, none on top of another, the caster does not trigger their own, a foe in the array draws exactly one bolt and spends it, expiry and clean-up leave none");
+        } finally {
+            if (z != null) z.discard();
+            BrushRunes.cancelOwner(id);
+            RuneManager.cancelOwner(id);
+            for (BlockPos f : floor) sl.setBlock(f, Blocks.AIR.defaultBlockState(), 3);
+            p.setXRot(0f);
         }
     }
 }

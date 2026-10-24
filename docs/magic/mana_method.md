@@ -3,6 +3,7 @@
 Builder `manamethod`. Spec: the owner's master prompt, section 1 (Mana Method). The audit that decided what is new is `docs/magic/manamethod_audit.md`.
 Self-test prefix for the smoke list: **`magic.mana_method`** (3.4.0: `magic.mana_method` and `.true_blocks`; 3.5.0 adds `.charge`, `.physical`, `.cage`, `.lightning`, `.air_step`, `.dash`, all under the same prefix, which `.github/workflows/smoke.yml` already lists). Server setting: `serverconfig/nusmp-mana-method-server.toml`.
 3.5.0 (the sections called 3.5.0 below): hold to charge, the command filter, True Magic's physical hit, world and Anti-Magic answer, two mobility pages, and the canon check.
+3.6.0 (the sections called 3.6.0 below; self-tests `magic.mana_method.cost`, `magic.mana_method.lightning_charge`, `magic.mana_method.body` and `magic.mana_method.brush`, all under the existing smoke prefix `magic.mana_method`): the price follows the charge (a refused cast now costs nothing), True Lightning grows with the charge, and the two canon extras the owner asked for, the **Body Rune** (Gadjah) and the **Brush Rune** (Rill), as new pages appended last.
 
 ## What is built, in plain words
 
@@ -22,7 +23,7 @@ Self-test prefix for the smoke list: **`magic.mana_method`** (3.4.0: `magic.mana
 
 ## How a cast reads (flow)
 
-`page cast` (server) -> `RuneManager.begin` (switch, per-caster cap, global cap; refused before anything is spent) -> `RuneNet` packet to players within 64 blocks (28 bytes) ->
+`page cast` (server) -> `RuneManager.begin` (switch, per-caster cap, global cap; a refusal is a refusal of the cast, and since 3.6.0 the price the grimoire had already taken is given back, see 3.6.0 section 1: the older text here said "refused before anything is spent", which was not true, the grimoire takes the price before the page runs) -> `RuneNet` packet to players within 64 blocks (28 bytes) ->
 clients draw the rune over `charge` ticks -> `RuneManager.tickAll`: charge over -> `launch` (look, Homing target) -> `fly` each tick (move, block ray, budgeted entity sweep) ->
 `impact` (primary + splash up to 6 foes through `GrimoireBook.hurt` = balance law, rider, VFX, particles, True blocks) -> the cast record is removed.
 A wall hit explodes (splash share 50 % for everyone, the radius grows with Growth); running out of range or time fizzles (a puff, no damage).
@@ -154,6 +155,104 @@ Appended LAST after the five older pages (their ids hold no attack word, so an A
 The canon has a rune array under the feet that carries the caster (Keraunos, and Gadjah's flight by formula: see the canon check), so a rune under the feet and a rune that throws the caster are the nearest honest readings of "mobility". The Air Step platform is a **barrier-block ledger** (`AirStep`): at most 4 blocks per caster, 16 sessions and 64 blocks on the server; a block is removed only if it is still the block that was placed
 (`DungeonGuard.internal` wraps the removal); sessions end on logout, death, dimension change and server stop. Settings: `manaMethod.mobility` (true; false = the two pages cannot be used), `airStepSeconds`, `dashStrength`.
 
+## 3.6.0: what changed (the price follows the charge, True Lightning grows, the Body Rune and the Brush Rune)
+
+Plain words first (rule 12). **What is built:** (1) a rune page now costs by the hold: a tap about 40 % of the normal price, a full hold the whole price; a cast the page refuses costs nothing; (2) True Lightning grows with the charge: 1, 2 or 3 jagged bolts, taller and brighter, a wider hit, and more arcs in the written rune;
+(3) two new universal pages the owner asked for, appended LAST after the seven that exist: the **Body Rune** (Gadjah writes runes on his own body: small temporary gifts) and the **Brush Rune** (Rill paints a rune array on a surface, which fires one bolt at the first foe that steps in).
+**How it is read:** all of it is decided on the server (the client only draws); each part has its own SERVER setting, default ON, and with the setting off the 3.5.0 behaviour is back (the two new pages cannot be used). **What is not included:** the real vanilla lightning bolt stays OFF (`lightningRealBolt`, owner's answer),
+Anti-Magic still cancels True Magic (owner's answer), the Air Step's and the Dash's fall grace is unchanged, the grimoire's cooldown is not scaled, no GUI code was touched, and no new key is bound.
+
+### 1. The price follows the charge (`costScalesWithCharge`, `minCostFraction`, `RuneCost`, `ManaMethodPages.costFactor`)
+
+* **The curve (pure, `RuneCost`).** `fraction = min + (1 - min) * level`, `level = (power - 0.5) / (1.6 - 0.5)` clamped to 0..1, `min` = the setting `minCostFraction` (default 0.40, 0.10 to 1.0). The fraction never passes 1: a cast never costs more than the page's normal price. A cast without a measured hold (the 3.4.0 spell, hold-to-charge off) costs the normal price.
+
+  | Charge | Power | Fraction of the normal price (default) |
+  |---|---|---|
+  | BASIC (a tap) | x0.5 | **40 %** |
+  | CHARGED, just past the minimum hold (8 ticks) | x0.75 | 53.6 % |
+  | CHARGED, half way (24 ticks) | x1.18 | 76.8 % |
+  | FULL (40 ticks and more) | x1.6 | **100 %** |
+  | no measured hold (legacy cast) | x1 | 100 % |
+
+* **How it is read.** One line in `GrimoireBook.getMagiculeCost` multiplies the page's price by `ManaMethodPages.costFactor`, which PEEKS the charge of the release that is waiting for its cast (`RuneHold.peek`, it is not used up) and gives 1 when the setting is off, hold-to-charge is off, nothing is waiting, or for the Air Step Rune (nothing to charge).
+  Applies to the Flame, Water, Wind, Earth, True Magic, Dash, Body and Brush pages. The price already carries the percent of the pool, the floor, the Heart kingdom perk and the other multipliers, so the fraction multiplies all of them.
+* **A cancelled hold costs nothing** (the grimoire only prices a cast that happens). **The cooldown is NOT scaled** (documented choice: a tap is cheap but not spammable; the grimoire sets the cooldown after a successful cast, as before).
+* **A refused cast costs nothing (fix).** The grimoire takes the price BEFORE the page's cast runs, so a cast the page then refuses (runes still forming, server cap full, no free surface to paint on, ...) used to cost mana; the old doc line "refused before anything is spent" was wrong. Now `ManaMethodPages.refund` gives back exactly what was charged (`getMagiculeCost * paidFraction`; a creative player paid nothing), through `Tensura EnergyHelper.gainMagicule`.
+  The True Magic page's own fuel refund (the environment pays part of the cost) now works on the scaled price.
+
+### 2. True Lightning grows with the charge (`lightningChargeScale`, `LightningCharge`)
+
+The owner's answer: the real bolt (`lightningRealBolt`) stays OFF; "just add the charge effect". Three things scale, all inside hard caps and all pure (`LightningCharge`, tested):
+
+| | Tap (level 0) | Half hold (24) | Full hold | Hard cap |
+|---|---|---|---|---|
+| Visual bolts at the strike | 1 | 2 | 3 | 3 |
+| Height of a bolt | 8 blocks | 16.6 | 22 | 24 |
+| Width (the effect's power) | 0.9 | 1.45 | 1.8 | 2.0 |
+| Ticks | 10 | 14 | 16 | |
+| Side bolts stand off the centre by | 0.6 | 1.15 | 1.5 blocks | |
+| Hit and splash radius of the bolt | x1.0 | x1.21 | x1.35 | x1.4 (inside `RuneCommands.MAX_HIT_RADIUS` / `MAX_SPLASH` too) |
+| Arcs in the written rune (lightning element, held rune) | 1 (from the hand ring) | 2 (from the middle ring) | 3 (from the outer ring), longer, thicker, brighter | 3 (`RuneGlyphLayout.MAX_ARCS`) |
+
+* **Server.** After `TrueLightning.strike` has let a strike through (the existing allowance of 3 a second for the whole server), `RuneManager.lightningFx` sends up to 3 effect packets of the EXISTING `LIGHTNING_SPEAR` effect (`VfxSpawn.send`, through the effect packet budget, nearby players only). Nothing is placed, nothing is hurt by the picture. Only for a measured hold (a legacy cast gets no extra bolts).
+* **Correction to the 3.5.0 text.** `TrueLightning.strike` DOES spawn a vanilla `LightningBolt` entity, but with `setVisualOnly(true)` (no fire, no damage, no mob changes) unless `lightningRealBolt` is on; the line "no vanilla lightning entity" in 3.5.0 section 4 and in the 3.5.0 cost table meant "no harmful bolt". The cost is one short-lived visual-only entity per strike, at most 3 a second on the server, as before; 3.6.0 adds no entity.
+* **The hit radius** is `size x radiusMult` for the lightning element only, and `RuneCommands` still clamps it.
+* **Previews:** `docs/previews/mana_method/rune_lightning_strike.png` (the strike of a tap, half hold and full hold) and `rune_lightning_rune.png` (the arcs of the written rune), from `python tools/mana_method/preview_lightning.py`.
+
+### 3. The Body Rune (`mana_method_body`, `bodyRunes`, `bodySeconds`, `BodyRuneRules`, `BodyRunes`)
+
+Canon: Gadjah writes runes on his own body and takes very powerful attacks unharmed (chapter 226; see the canon check). The page does NOT copy "takes attacks unharmed" (a damage shield would be balance-breaking and is the thing the 3.5.0 doc marked as an owner decision); it gives small temporary gifts that grow with the hold, and a short glide.
+
+| Page | Cost | Cooldown | Gate |
+|---|---|---|---|
+| Body Rune `mana_method_body` | 10 % of the pool (floor 200) x the charge fraction | 600 ticks | the Mana Zone's gate, any grimoire, `bodyRunes` on |
+
+| Gift (transient attribute modifier) | Tap | Full hold | Hard cap |
+|---|---|---|---|
+| Movement speed (+ percent) | +6 % | +20 % | +25 % |
+| Attack damage (+ percent) | +5 % | +20 % | +25 % |
+| Jump strength | +0.04 | +0.12 | +0.15 |
+| Step height (second ring tier and up) | 0 | +0.4 | +0.4 |
+| Safe fall distance | +1 block | +5 | +5 |
+| Knockback resistance | +0.1 | +0.4 | +0.4 |
+| Slow falling (a full hold only, once, at the cast) | | 60 ticks | 60 |
+| Duration | 7.5 s | 15 s (`bodySeconds`, 5 to 60) | 60 s |
+
+* **Bounded and clean.** One session per player (a second cast replaces the first: every modifier is removed, then added; it never stacks), at most 64 sessions on the server, six attribute modifiers per session with fixed ids (`nusmp:mana_method_body_{speed,attack,jump,step,fall,knockback}`), **transient** (never saved, a crash cannot leave one behind). A sweep every 5 ticks, only while a session exists, compares two numbers per session.
+  Ends by time, logout, death, dimension change, the server stopping, and when the setting is switched off. Time is the WORLD clock.
+* **No flight, no shield:** the glide is slow falling (it works only while falling, 60 ticks, once per full-hold cast). Nothing reduces damage except the knockback resistance.
+* **Packets:** two small clientbound packets per cast (`BodyPayload` START and END), nearby players only, through the effect packet budget, validated on the client (`RuneNet.validBody`).
+* **The look.** The client writes a chest rune (a small array 0.32 blocks in front of the chest) and, from the second ring tier, a rune at the feet, as painted runes (`RuneHoldView.paintTicks`: written over 24 ticks, then kept until the end of the gift, then faded). They follow the body every frame (`RuneClient.onRenderBodies`, only when the body moved or turned). No grimoire glow is drawn for a painted rune.
+  Preview: `docs/previews/mana_method/rune_body.png` (`python tools/mana_method/preview_body.py`; the capsule is a stand-in for the player and the body stands still, so it shows the look, not the following).
+
+### 4. The Brush Rune (`mana_method_brush`, `brushRunes`, `brushSeconds`, `brushPerCaster`, `brushGlobal`, `BrushRules`, `BrushRunes`)
+
+Canon: Rill, a Painting Magic user, learns the Mana Method in the Heart Kingdom by writing the runes with his paint and brush (Potrof's training, anime episode 155; see the canon check). The page paints a rune array on the surface you look at.
+
+| Page | Cost | Cooldown | Gate |
+|---|---|---|---|
+| Brush Rune `mana_method_brush` | 9 % of the pool (floor 180) x the charge fraction | 240 ticks | the Mana Zone's gate, any grimoire, `brushRunes` on |
+
+* **Where.** A block face within 5 blocks of the look (floor, wall or ceiling), only where the caster `mayInteract` (spawn protection, world border), only in a loaded chunk (nothing is ever loaded), only where the cell in front of the face is free, never in the Labyrinth or a world the Dungeon Guard holds, at least 1.5 blocks from the caster's other arrays. If there is no such surface the cast is refused and costs nothing.
+* **What it does.** The array draws itself and is armed after 14 ticks. A foe that steps into it (inside the trigger radius in the surface's plane and from 0.3 behind to 2 blocks in front of the surface; on a floor that is "standing in it", on a wall "standing in front of it") makes it fire ONE bolt toward the foe through `RuneManager.beginAt` (the same bolt as the other runes: Pursue / Grow, the balance law, credited to the caster), and the array is spent. It never triggers on, or hurts, the caster or an ally. If the rune caps are full (2 per caster, 24 on the server) the array just keeps waiting.
+  Element: the grimoire's natural element, else Wind (the neutral one).
+* **The charge** sizes the array and its life: trigger radius 1.3 blocks (tap) to 2.4 (full hold), life `brushSeconds` (default 30, 5 to 120) x 0.5 (tap) to 1 (full hold), and the power of the bolt (the charge).
+* **Bounded.** An array is NOT an entity and NOT a block: it is a small record in a list. At most `brushPerCaster` (default 3, hard ceiling 5) per caster and `brushGlobal` (default 24, hard 4..64) on the server. Each array looks around every 4 ticks (staggered by id) with ONE entity query of a small box; all arrays together may do 8 queries a tick (`PerfBudget`); no block access, no chunk load. Gone at once when the caster dies, logs out, changes dimension, the server stops or the setting is switched off.
+* **Packets:** `BrushPayload` APPEAR, then FIRED or GONE (an array that just runs out is faded by the client from the life it was told): at most 2 small clientbound packets per array, nearby players only, through the effect packet budget, validated (`RuneNet.validBrush`).
+* **The look.** A painted rune on the surface (the plane of the face; on a floor or ceiling the caster's yaw turns the glyphs upright toward the caster), written in 24 ticks, kept, flaring when it fires and fading. A client draws at most 8 painted runes (brush and body together) and none farther than 56 blocks.
+  Previews: `docs/previews/mana_method/rune_brush_floor.png` (written, waiting, fired) and `rune_brush_surfaces.png` (tap against full hold; wall and ceiling), from `python tools/mana_method/preview_brush.py`.
+
+### 5. Three faults found on the way (all fixed in 3.6.0)
+
+* **A refused cast cost mana** (see section 1).
+* **Two ledgers read the wrong clock.** `AirStep.start` and `RuneHold` stamp `getGameTime`, but the tick handlers passed `server.getTickCount()` (which restarts at a server start): the sweeps now all use `server.overworld().getGameTime()`, the same clock the stamps use (`ManaMethodSourceScanTest.theTimeBasesOfTheLedgersAreOneClock` pins it).
+* **The lightning arcs were never drawn, and painted runes drew a stray gold glow** (both found by the previews, both fixed). `RuneGlyphLayout` asked `LightningCharge.arcsReached` with the layout's timeline progress (a hand ring ends at 0.48) instead of the written share of each ring (0 to 1, new `RuneGlyphLayout.writtenOf`), so the 0.5 threshold was never met and the lightning rune showed no arc; and `RuneWritingLayer` drew the book glow
+  (a glow where the grimoire hovers) for painted runes, which have no grimoire. Both are pinned by tests (`LightningChargeTest.theLayoutAsksTheArcsWithTheWrittenShareOfEachRingNotWithTheTimelineProgress` and two scan pins).
+
+### 6. Page order and the Avatar
+
+The ids in the book are now: `fire, water, wind, earth, true, air_step, dash, body, brush` (nine), appended last, after the spirit pages; the new two come after the seven that existed, the order of the old ones never moves. Neither new id holds an attack word, so an Avatar never casts them (`ManaMethodPages.tailCount` and the tests that pin "the last pages" look past nine, seven and five).
+
 ## Canon check (rule 10: English wiki first, Japanese as the fallback)
 
 Method: web search with a domain filter. The sandbox cannot open fandom pages directly (`blackclover.fandom.com` does not resolve here), so the facts below come from the **search summaries** of the pages named, not from a full read of the pages.
@@ -179,9 +278,21 @@ and any exact number (casting times, ranges, multipliers): the canon gives none,
 
 **Cheap extras from the canon, and where they went:**
 * Sneak writes a second rune: already in 3.4.0, KEPT.
-* Runes applied to the BODY (Gadjah takes powerful attacks while his body carries runes): **owner decision**, not built (it would be a damage-reduction buff, balance-sensitive).
-* Painting the runes with a brush (Rill, Potrof's training): **owner decision**, not built (a different weapon and a new look).
+* Runes applied to the BODY (Gadjah takes powerful attacks while his body carries runes): was an owner decision in 3.5.0; **the owner said yes, built in 3.6.0 as the Body Rune page** (section 3 of "3.6.0", with small gifts and no damage shield).
+* Painting the runes with a brush (Rill, Potrof's training): was an owner decision in 3.5.0; **the owner said yes, built in 3.6.0 as the Brush Rune page** (section 4 of "3.6.0").
 * More named runes (Fly, Speed, Size): not named by the sources, so not invented.
+
+**3.6.0 canon check of the two extras** (English wiki first; the sandbox still cannot open `blackclover.fandom.com`, DNS `ENOTFOUND`, so every line is from the **search summaries** of the page named, not a full read; the Japanese wiki was not needed for these two and was not fetched):
+
+| Fact | Used for | Source (English wiki unless noted) |
+|---|---|---|
+| Gadjah is the Spirit Guardian of the Heart Kingdom and a lightning mage; he uses the Mana Method to enlarge his Lightning Magic and was the one who taught Luck True Lightning | the lightning growing with the charge; the Body Rune's owner | "Gadjah", "Spirit Guardian", "Lightning Magic" |
+| He places runes on his own body, so he takes very powerful attacks unharmed (chapter 226) | the Body Rune (read as small gifts, NOT as a damage shield: the canon names an effect, not a number, and a shield would be unbalanced) | "Gadjah", "Chapter 226" |
+| He hovers in the air without magic (a separate ability of his, not a rune) | only the short slow-fall glide of a full hold; no flight was built | "Gadjah" |
+| Rill Boismortier is a Painting Magic user who fights with a brush and a palette; he learned the Mana Method in the Heart Kingdom | the Brush Rune's owner | "Rill Boismortier", "Painting Magic", "Mana Method" |
+| Potrof told him to write the runes directly with his paint (anime episode 155) | the Brush Rune (the rune is painted on a surface and left standing: it is the nearest honest reading of "painted runes") | "Potrof", "Episode 155" |
+
+What is the author's, not canon: every number (the gifts, the durations, the radii, the caps, the cooldowns), "fires at the first foe that steps in" (the canon says runes written with paint, not that they are traps), and the chest-and-feet pictures of the Body Rune. **Not fetched at all:** the full text of the Gadjah, Rill, Potrof and Chapter 226 pages (summaries only), the episode 155 page itself, and every Japanese fandom page. Nothing here was contradicted by what could be read.
 
 ## Settings (SERVER, `nusmp-mana-method-server.toml`)
 
@@ -205,6 +316,20 @@ and any exact number (casting times, ranges, multipliers): the canon gives none,
 | `trueMagic.lightningBolt` | true | | True Lightning has no strike on the impact |
 | `trueMagic.lightningRealBolt` | **false** | | the strike is visual-only (the full vanilla bolt only when switched on, and then only when safe) |
 
+3.6.0, all SERVER settings in the same file, all default ON; each OFF restores the 3.5.0 behaviour of its part (the two new pages: they cannot be used). The keys are plain names inside the file's own categories, as the 3.5.0 keys:
+
+| Key | Default | Range | Off / low means |
+|---|---|---|---|
+| `costScalesWithCharge` | true | | the 3.5.0 flat price (the refund of a refused cast stays: a refused cast never costs) |
+| `minCostFraction` | 0.40 | 0.10 to 1.0 | the share of the normal price a tap pays; 1.0 = no discount for a tap |
+| `lightningChargeScale` | true | | the 3.5.0 strike (one base bolt, radius x1.0 whatever the charge) and the 3.5.0 arcs of the lightning rune |
+| `bodyRunes` | true | | the Body Rune page cannot be used; a running session ends within 5 ticks |
+| `bodySeconds` | 15 | 5 to 60 | seconds at a full hold (a tap lasts half) |
+| `brushRunes` | true | | the Brush Rune page cannot be used; standing arrays go |
+| `brushSeconds` | 30 | 5 to 120 | seconds an array waits at a full hold (a tap half) |
+| `brushPerCaster` | 3 | 1 to 5 | arrays one caster may have standing |
+| `brushGlobal` | 24 | 4 to 64 | arrays the whole server may have standing |
+
 ## Worst case cost (rule 11)
 
 | What | Bound |
@@ -227,6 +352,11 @@ and any exact number (casting times, ranges, multipliers): the canon gives none,
 | 3.5.0 Air Step | at most 16 sessions, 4 barrier blocks per caster, 64 on the server; one foot check per session per tick (an `int[12]` scratch, no allocation); gone after `airStepSeconds` (at most 30) and at logout, death, dimension change, server stop |
 | 3.5.0 Dash | one velocity set per cast, one `Map<UUID,Long>` entry per recent dasher (30 tick floor, removed on logout); nothing per tick |
 | 3.5.0 client | a held rune adds per tick, per held rune (at most 6): one short block ray (the wall clip), one `Frame`, a few small objects in `RuneClient.follow` (no per-frame allocation in the layer or the layout); quads and vertices per rune stay within the same 300 quads / 1,200 vertices as before (a held rune draws fewer until it is fully written: 92 to 712 vertices in the previews); six runes at most 7,200 vertices a frame |
+| 3.6.0 price | a pure multiplication (`RuneCost`) and one `RuneHold.peek` (a map read) per price question; no per-tick cost; the refund is one `gainMagicule` call on a refused cast |
+| 3.6.0 lightning | per strike (the existing 3 a second for the whole server): at most 3 effect packets of the existing `LIGHTNING_SPEAR` effect, so **at most 9 packets a second server-wide**, each small, each through `PerfBudgets.effectPacket`, nearby players only; no new entity (the visual-only bolt of 3.5.0 is unchanged); the radius is a number inside the 3.5.0 caps. Client: one `LIGHTNING_SPEAR` costs 72 vertices (8 segments), so a 3-bolt strike is 216 vertices for 10 to 16 ticks, inside the layer's 400 per effect; the rune's arcs are at most 3 x 7 = 21 quads, already inside the 300-quad bound of a rune |
+| 3.6.0 Body Rune | at most 1 session per player (hard 64 on the server), 6 transient attribute modifiers each; a sweep every 5 ticks only while a session exists (two number comparisons per session); **2 clientbound packets per cast** (START, END), a caster casts at most once per 30 s; no entity, no block |
+| 3.6.0 Brush Rune | at most 3 arrays per caster (hard 5) and 24 on the server (hard 64), none an entity or a block, no chunk loaded; per array **one entity query of a small box every 4 ticks**, all arrays together **at most 8 queries per tick** (`PerfBudget`), so at 24 arrays about 6 a tick and at the hard ceiling of 64 still 8; a fired array makes ONE bolt through `RuneManager.beginAt` (inside the rune caps of 2 per caster and 24 on the server, so it adds nothing beyond the 3.5.0 bound); **2 packets per array** (APPEAR, FIRED or GONE), nearby players only; lives 2.5 to 120 s |
+| 3.6.0 client | at most **8 painted runes** (brush and body together) drawn at once and none beyond 56 blocks; a painted rune is the same layer and the same bound as a held one (at most 300 quads / 1,200 vertices; **680 vertices measured for a fully written one in the previews**, 1,360 for a body with a chest and a feet rune), so at worst 8 x 1,200 = 9,600 vertices on top of the 7,200 of six cast runes, in practice about 5,500; the frame vertex cap and the distance levels of detail cut the rest; `RuneWritingLayer` has 16 slots (was 8) and no per-frame allocation (a pin test) |
 | Time Magic VFX | untouched |
 
 ## Tests
@@ -244,9 +374,26 @@ and any exact number (casting times, ranges, multipliers): the canon gives none,
   now also covers `RuneWritingLayer` and `RuneClient` as hot render files.
 * 3.5.0 self-tests (CI server smoke, **not run here**), all under the smoke prefix `magic.mana_method`: `.charge` (a tap is weaker and quicker than a full hold, the charge is taken once and goes stale), `.physical` (True Magic hurts with a vanilla physical type credited to the caster, a normal rune with the Tensura type), `.cage` (free cells only, caps, gone when the caster leaves and by time),
   `.lightning` (at most the per-second allowance, never into an unloaded chunk), `.air_step` (a bounded platform that follows the feet, sneak drops it, nothing is left at the end), `.dash` (the push, the cooldown, the marked motion, the fall grace).
+* 3.6.0 pure tests (`mana/method`, in the offline JUnit shim: the four new classes pass 40 of 40 with the arc test, the 11 older rule classes 94 of 94, the whole `mana/method` folder 163 of 163): `RuneCostTest` (the curve at 40 / 53.6 / 76.8 / 100 %, never above 1, the setting's range, off = flat, NaN safe), `LightningChargeTest` (bolts 1 to 3, height / width / radius up and inside the caps, the old spell one base bolt, only the lightning element scales, the side bolts stand apart,
+  the arcs follow the rings, and the layout asks with the written share), `BodyRuneRulesTest` (every gift grows with the hold and stays under its cap, the step height only from the second tier, the glide only at a full hold, the duration, the fixed ids), `BrushRulesTest` (caps, lifetimes, the arming grace, the staggered turn, spacing, **the trigger geometry on a floor, a wall and a ceiling**, the look of each surface, the packet bytes).
+* 3.6.0 source scans (`ManaMethodSourceScanTest`, now 29 tests; `PerfSourceScanTest` also lists `RuneManager` s.mana.method, `AirStep` s.mana.airstep, `BodyRunes` s.mana.body and `BrushRunes` s.mana.brush as probed hot files): the price goes through one line of the grimoire and a refusal is refunded; the lightning scales behind its setting through the existing effect; the Body Rune is transient, bounded and cleaned on every exit;
+  the Brush Rune is capped, budgeted, permission-checked and loads no chunk; the new packets are small, validated and clientbound and the pages are appended last and gated; the ledgers share one clock; the painted rune draws no grimoire glow; the config keys are server settings with hard ranges.
+* 3.6.0 self-tests (CI server smoke, **not run here**), under the existing smoke prefix `magic.mana_method` (no workflow file was touched): `.cost` (no waiting release = the normal price, asking the price never uses the release up, a tap pays the curve's fraction and the grimoire really charges it, a release for another page changes nothing, the Air Step Rune is unscaled, a full hold pays everything, the price never falls with a longer hold or passes the normal price),
+  `.lightning_charge` (the strike plan and the hit and splash radius grow inside their caps, never smaller than the 3.5.0 numbers, another element and the old spell do not scale),
+  `.body` (a tap raises the speed, a second cast refreshes and does not stack, a full hold is stronger and under every cap, exactly the modifiers the charge gives are there, a full hold glides and nothing gives flight, the session ends at the charge's tick and on time, a caster who left and `clearAll` leave no modifier),
+  `.brush` (arrays only up to the per-caster cap and none on top of another, the caster does not trigger their own array, a foe standing in it draws exactly ONE bolt and the array is spent and does not fire again, arrays expire, a caster who left and `clearAll` leave none). The refund of a refused cast is covered by the source scan, not by a self-test, and the ally rule by the shared `Foes.isFoe` check (both unrun in a game).
 * Two pinned lists that assumed the spirit pages are the last of a book now look past the five new pages (`SpiritControlSelfTests`, `ManaZoneSelfTests`, through `ManaMethodPages.tailCount`).
 
 ## NEW / REPLACED / KEPT
+
+**3.6.0** (rule 5: each part compared with what the mod already had)
+
+* **NEW**: the cost curve (`RuneCost`, the settings `costScalesWithCharge`, `minCostFraction`, `ManaMethodPages.costFactor`, the one-line hook in `GrimoireBook.getMagiculeCost`); the lightning growth (`LightningCharge`, `lightningChargeScale`, `RuneManager.lightningFx`, `RuneCommands.inject(spec, charge, lightningScale)`, `RuneGlyphLayout.writtenOf`);
+  the **Body Rune** page (`mana_method_body`; `BodyRuneRules`, `BodyRunes`, the packet `BodyPayload`, the client pictures in `RuneClient`) and the **Brush Rune** page (`mana_method_brush`; `BrushRules`, `BrushRunes`, `RuneManager.beginAt`, the packet `BrushPayload`, the painted-rune view `RuneHoldView.paintTicks`);
+  seven settings (`lightningChargeScale`, `bodyRunes`, `bodySeconds`, `brushRunes`, `brushSeconds`, `brushPerCaster`, `brushGlobal`) plus the two cost ones; four self-tests; four pure test classes; the previews and their scripts (`tools/mana_method/preview_lightning.py`, `preview_body.py`, `preview_brush.py`, `mm36_common.py`, `DumpMm36.java`, an append-only `--paint` option in `tools/vfx_preview/Preview.java` and `preview.py`); the lang keys in `tools/lang/mana_method.json` (two page descriptions and three messages).
+* **REPLACED** (each behind its setting, off = the 3.5.0 behaviour): the flat price of a rune page (by the curve, `costScalesWithCharge`); the 3.5.0 True Lightning strike of one base bolt and its fixed radius (by the growing one, `lightningChargeScale`); the arcs of the held lightning rune (by the arcs that follow the rings, same setting).
+  Without a setting, small and deliberate: a refused cast no longer costs mana (it did, by accident); the ledgers' sweeps use the world clock the stamps use (they used the server's tick count); the `RuneWritingLayer` has 16 slots instead of 8; the first line of the doc's "refused before anything is spent" (it was not true).
+* **KEPT**: the seven older pages with their ids and order (the two new ones are appended last, after them, never in between), the 28-byte rune packet and the hold packet, every older config key and the file, the data ids, the balance law's caps, Anti-Magic cancelling True Magic (owner's answer), `lightningRealBolt` off, the fall grace of the Air Step and Dash, the cooldowns (unscaled), the older True Magic page, the Rune Stone, the Heart kingdom perk, the GUI (untouched), the Time Magic VFX (untouched, not referenced).
 
 **3.5.0**
 
@@ -271,9 +418,23 @@ and any exact number (casting times, ranges, multipliers): the canon gives none,
 * The numbers (ranges, caps, 85 % for two runes, the cone, the turn rate) are the author's interpretation, as with the older True Magic page; the canon gives no values. The Japanese wiki was not needed (the English pages covered the names and effects) and was not fetched.
   Fandom pages could not be fetched directly (search summaries only).
 
+3.6.0: the Gadjah and Rill facts are from the search summaries of the Black Clover Wiki pages Gadjah, Chapter 226, Spirit Guardian, Lightning Magic, Potrof, Rill Boismortier, Mana Method, Painting Magic and Episode 155 (English wiki first, rule 10); `blackclover.fandom.com` could not be opened from the sandbox (`ENOTFOUND`), so no page was read in full, and the Japanese wiki was not fetched. See "3.6.0 canon check of the two extras".
+
 ## Not seen in a game / honest caveats
 
-3.5.0 (read these first):
+3.6.0 (read these first):
+
+* **Nothing was run in Minecraft.** The type-check (API stubs, whose only complaints in these files are the known stub artifacts `MobEffectInstance` / `BlockPos` shown as abstract), the pure tests, the source scans and the headless preview renders are all that was run; the four new self-tests (`magic.mana_method.cost`, `.lightning_charge`, `.body`, `.brush`) have never run.
+  The `.body` test assumes the `FakePlayer` of the smoke server has a connection (it reads attributes and effects only, but the glide check adds an effect).
+* **The Body Rune in a game.** The gifts are small attribute modifiers: whether they feel like "Gadjah's body runes" is a play-test question. The attribute ids are unique, but another mod that reads `SAFE_FALL_DISTANCE`, `STEP_HEIGHT` or `JUMP_STRENGTH` will see the bonus; they are transient and end with the session. The chest and feet pictures follow the body per frame only in a game (they are moved in `RenderLevelStageEvent` AFTER_ENTITIES, with the partial tick, and the effects are drawn later, at AFTER_PARTICLES); the preview has a still capsule, so how smoothly they follow a running player is unseen.
+* **The Brush Rune in a game.** The trigger (a box query on the floor, wall and ceiling) is pinned by pure tests and the self-test, not by a play test; a foe that is a flying mob 3 blocks above a floor array does not trigger it (the trigger reaches 2 blocks above the surface). The first array after a cast waits 14 ticks to be armed so the caster who steps back is never hit. A rune that is painted and then its block broken stays until its time ends (it is a record, not a block).
+  The bolt leaves the surface toward the foe through the normal rune bolt, so a bolt that starts inside a block (a wall array seen from behind) may hit the wall at once.
+* **Previews are a software raster**, without the world, light or bloom; the foe and the player are dark capsules; the bolt that leaves a brush array is the existing bolt and is not drawn there. The lightning strike was drawn with the real `ElementShapesLayer` and the numbers of the real `LightningCharge`, but its look next to terrain is unseen.
+* **Costs.** The price follows the hold, so a tap costs about 40 % of the normal price: a player can now cast four cheap taps for what one full hold costs (the cooldown, which is not scaled, is what limits that). If that is too cheap, raise `minCostFraction` (1.0 = no discount).
+* **The refund** adds the mana back through Tensura's `EnergyHelper.gainMagicule`; whether Tensura clamps the pool on that call was not checked (the refund is never more than what was taken, so it should not matter).
+* **The time-base fix** changes when the Air Step and the held-rune sweeps expire after a server RESTART (before: the stamps and the sweep disagreed, so a stale entry could live too long or too short); it is invisible otherwise.
+
+3.5.0:
 
 * **Nothing was run in Minecraft.** Everything here is checked only by the type-check against the API stubs, the 54 pure tests and the source scans (offline), and the preview renders; the six new self-tests have never run.
 * **Damage order tap, half, full is not guaranteed strictly.** The charge scales power 0.5x to 1.6x, but the balance law's per-hit caps run after it; a tap is never above a full hold, but two stages can end up at the same capped value against a weak target. The self-test only requires tap <= half <= full and tap < full.
@@ -298,7 +459,19 @@ and any exact number (casting times, ranges, multipliers): the canon gives none,
 * Anti-Magic users still cancel it as they cancel any magic (their rules read the damage type); in 3.5.0 this is still the default (`antiMagicStillCancels` true), and the switch to let True Magic slip past is described in section 3 above.
 * The Rune Stone's armed runes (`MagicGear.placeRune`, a 5 minute `SpellRuntime.zone` with an uncapped entity query per half second) were not touched; they are not capped, which a later pass may want.
 
+## Owner decisions (3.6.0)
+
+Answered in the brief and built as answered: (1) Anti-Magic still cancels True Magic (no change); (2) the cost scales with the charge (tap about 40 %, full 100 %, `costScalesWithCharge`, `minCostFraction`; the cooldown stays unscaled); (3) `lightningRealBolt` stays OFF and the strike and the rune's lightning grow with the charge instead; (4) the Air Step and Dash fall grace is unchanged;
+(5) the Body Rune and the Brush Rune were built, as pages appended last, behind server settings (default ON); (6) the GUI stays anime and was not touched. Still open:
+
+1. **Tap price.** A tap pays 40 %. Is that the right floor (`minCostFraction`)? Four taps cost 1.6 full holds and make four casts (weaker ones, power x0.5); only the (unscaled) cooldown limits how often.
+2. **Body Rune strength.** The gifts are small by design (at most +25 % speed and attack, +5 blocks safe fall, +0.4 knockback resistance). Gadjah's canon is "takes very powerful attacks unharmed"; a real damage reduction was NOT built (balance). Should a full hold also give a small damage reduction?
+3. **Brush Rune trigger.** It fires at the first foe that steps in and is then spent (a trap). Alternatives that are also canon-neutral: it fires every second until its life ends (more server work, more packets), or it is a visible circle that the caster fires by hand. Keep the trap?
+4. **Defaults of the two new pages' numbers** (10 % / 200 / 600 ticks for the Body Rune, 9 % / 180 / 240 for the Brush Rune, 15 s and 30 s lives, 3 arrays per caster, 24 on the server) are the author's; the canon gives none. Tune after a play test.
+
 ## Owner decisions (3.5.0)
+
+(Answered for 3.6.0 above: the Anti-Magic default stays, the cost scales with the charge, the real bolt stays off, the fall grace stays, and the body and brush extras are built.)
 
 1. **Anti-Magic against True Magic.** Default: Anti-Magic still cancels it (`antiMagicStillCancels` true). Set it to false and True Magic slips past Anti-Magic, the Black Form and shields that read the damage type. Which should be the default?
 2. **Does charging cost more?** Today the cost of a page is the same for a tap and a full hold (a tap is simply weak). A cost that scales with the charge (for example 50 % to 100 %) is one small change in `ManaMethodPages`; it was not built because the owner did not ask for it.
