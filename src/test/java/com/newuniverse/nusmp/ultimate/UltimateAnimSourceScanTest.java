@@ -103,6 +103,18 @@ class UltimateAnimSourceScanTest {
     }
 
     @Test
+    void theDocAndThePreviewsExistForEveryKingdom() throws IOException {
+        String doc = read("docs/magic/ultimate_animations.md");
+        for (com.newuniverse.nusmp.blackclover.Kingdom k : com.newuniverse.nusmp.blackclover.Kingdom.values()) {
+            String id = k.name().toLowerCase(java.util.Locale.ROOT);
+            assertTrue(doc.contains("anim_" + id + ".png"), id);
+            assertTrue(Files.size(ROOT.resolve("docs/previews/ultimate/anim_" + id + ".png")) > 20_000, "preview of " + id);
+        }
+        assertTrue(Files.size(ROOT.resolve("docs/previews/ultimate/anim_kingdoms.png")) > 20_000);
+        for (String needed : new String[]{"kingdomAnimations", "showInCharacterGrimoires", "magic.ultimate.anim", "Not verified", "NEW and REPLACED"}) assertTrue(doc.contains(needed), needed);
+    }
+
+    @Test
     void theSelfTestsAreRegisteredUnderTheUltimatePrefix() throws IOException {
         String t = read(SRC + "/ultimate/UltimateSelfTests.java");
         assertTrue(t.contains("\"magic.ultimate.anim\"") && t.contains("\"magic.ultimate.charbook\""));

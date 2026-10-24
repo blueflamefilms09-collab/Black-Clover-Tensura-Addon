@@ -160,7 +160,6 @@ def clover():
 def diamond():
     feet = dict(ll=(0, 0, -3), rl=(0, 0, 3))
     belt = P(body=(2, 0, 0), la=(-52, 22, 0), ra=(-52, -22, 0), lift=0.0, **feet)
-    chest = P(body=(0, 0, 0), la=(-80, 24, 0), ra=(-80, -24, 0), lift=0.0, **feet)
 
     def loop_pose(t):                                                     # 6.0 s: the joined hands rise slowly to the face and sink again (1 cycle), a faint tremor of power (6 cycles), nothing else moves
         L = 6.0
@@ -187,7 +186,6 @@ def diamond():
 # ================================================================ SPADE: cold and sharp, arms crossed over the chest, then thrust outward like blades
 def spade():
     feet = dict(ll=(-8, 0, -2), rl=(10, 0, 3))
-    crossed = P(body=(4, 0, 0), la=(-70, 52, 0), ra=(-92, -52, 0), lift=-0.4, **feet)
     over = P(body=(6, 0, 0), la=(-68, 60, 0), ra=(-92, -60, 0), lift=-0.4, **feet)
 
     def loop_pose(t):                                                     # 5.0 s: almost perfectly still (cold), a very slow drift, and two sharp jolts at 1.5 s and 3.6 s
@@ -214,7 +212,6 @@ def spade():
 def heart():
     feet = dict(ll=(-4, 0, -2), rl=(4, 0, 2))
     chest_hand = (-62, -34, 0)
-    opening0 = P(body=(-2, 0, 0), la=(-72, 6, -32), ra=chest_hand, lift=0.0, **feet)
 
     def loop_pose(t):                                                     # 4.8 s: the open hand blooms up and sinks (1 cycle) with a small circle (2 cycles); the hand on the chest only breathes (3 cycles)
         L = 4.8

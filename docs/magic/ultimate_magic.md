@@ -22,7 +22,7 @@ A data-driven framework (`ultimate/UltimateDef` + `UltimateRegistry`: id, book, 
 
 ## How a player meets it
 
-1. The page is the LAST family page of its book (`UltimatePages.append` wraps outside the 15-spells hook, so no existing mode, id, unlock bit or mastery moves). It is hidden in a grimoire bound to a character whose set does not list it; the plain and basic grimoires show it.
+1. The page is the LAST family page of its book (`UltimatePages.append` wraps outside the 15-spells hook, so no existing mode, id, unlock bit or mastery moves). A grimoire bound to a character shows the Ultimate of the character's OWN attribute(s) and hides the Ultimates of the other attributes (server setting `showInCharacterGrimoires`; off = the old rule, hidden in a grimoire bound to a character whose set does not list it); the plain and basic grimoires show it. See `docs/magic/ultimate_animations.md`.
 2. It opens at the end of the mastery bar and only for a player who passes the gate (`UltimateGate`, asked through `GrimoireBook.pageBlock`): **full mastery bar, Magic Knight step 14 (Senior 1st Class) and 1,000,000 EP** (Wizard King: rank and EP waived, mastery still needed). The cast checks the gate again.
 3. Hold the page and release as for any page: at max magicule (99 percent) a wind-up starts (default 120 to 200 ticks by element, scaled by `windupScale`, always 100 to 400). The caster is held in place (movement speed and jump strength transient modifiers), the existing looping charge clip plays, a circle follows the caster, the ground picture of the element is re-sent every 40 ticks, nearby players (radius + 48 blocks, at most 32) get an action-bar warning so they can run or interrupt.
 4. At the end: ALL current magicule is taken, the cooldown (default 15 minutes) starts, and three pulses at +0, +10, +20 ticks (60 / 25 / 15 percent of the damage) hit up to 24 foes each inside the radius; the first pulse also applies the debuffs, fire, push / pull and lift. Then the mana law's exhaustion applies (slowness and weakness, a blackout that does not kill by default).
@@ -43,7 +43,7 @@ After the release the entry only finishes its pulses; a caster who died or left 
 
 ## Settings (SERVER config `nusmp-ultimate-server.toml`, section `[ultimate]`)
 
-`enabled` (true; false = the books exactly as before), `maxSimultaneous` (2, 1 to 8, global), `cooldownTicks` (18000, never under 6000), `windupScale`, `radiusScale` (0.25 to 2), `damageScale` (0 to 2), `interruptFraction` (0.35), `sneakCancel` (true), `exhaustAfter` (true), `hitPlayers` (true; they still must be foes: PvP setting and teams), `gateStrictness` (EP x 0.5 to 4, floors 500,000 EP and step 12). Every value is clamped again by `UltimateRules` when read.
+`enabled` (true; false = the books exactly as before), `maxSimultaneous` (2, 1 to 8, global), `cooldownTicks` (18000, never under 6000), `windupScale`, `radiusScale` (0.25 to 2), `damageScale` (0 to 2), `interruptFraction` (0.35), `sneakCancel` (true), `exhaustAfter` (true), `hitPlayers` (true; they still must be foes: PvP setting and teams), `gateStrictness` (EP x 0.5 to 4, floors 500,000 EP and step 12), `kingdomAnimations` (true; the charge animation follows the caster's kingdom, false = the old single loop), `showInCharacterGrimoires` (true; see above). Every value is clamped again by `UltimateRules` when read.
 
 ## Worst-case cost (rule 11)
 
@@ -65,4 +65,4 @@ In game (CI server smoke, key prefix `magic.ultimate`): `magic.ultimate.rules` (
 
 ## Not verified
 
-Nothing was played: no cast in a real client, no check of how the grimoire UI shows the page or the key flow feels, no multiplayer run, no look at the effects inside the game (only the software-render previews of the real layers, which have no world, lighting or depth). The charge pose is the Mana Zone's clip (no new Blockbench animation). The Light and Space ground pictures are the Zogratis layers (boss look).
+Nothing was played: no cast in a real client, no check of how the grimoire UI shows the page or the key flow feels, no multiplayer run, no look at the effects inside the game (only the software-render previews of the real layers, which have no world, lighting or depth). The charge pose is now one animation set per kingdom (`docs/magic/ultimate_animations.md`); for a caster without a kingdom, or with `kingdomAnimations` off, it is still the Mana Zone's clip. The Light and Space ground pictures are the Zogratis layers (boss look).
