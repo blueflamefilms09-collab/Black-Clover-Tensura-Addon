@@ -3,7 +3,10 @@ package com.newuniverse.nusmp.mana.method;
 import com.newuniverse.nusmp.balance.BalanceLaw;
 import com.newuniverse.nusmp.book.GrimoireBook;
 import com.newuniverse.nusmp.core.magic.profile.SafeCast;
+import com.newuniverse.nusmp.antimagic.AntiMagic;
 import com.newuniverse.nusmp.heroweapon.weapon.kit.Foes;
+import com.newuniverse.nusmp.mana.method.RuneCharge.Charge;
+import com.newuniverse.nusmp.mana.method.RuneCommands.BoltState;
 import com.newuniverse.nusmp.mana.ManaLaw;
 import com.newuniverse.nusmp.mana.zone.TrueMagic;
 import com.newuniverse.nusmp.mana.zone.TrueMagicRules;
@@ -14,6 +17,12 @@ import com.newuniverse.nusmp.quests.NusmpEvents;
 import io.github.manasmods.manascore.skill.api.ManasSkillInstance;
 import io.github.manasmods.tensura.registry.attribute.TensuraAttributes;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageType;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
@@ -76,6 +85,8 @@ public final class RuneManager {
         final CompoundTag data;
         final long born;
         final int charge;
+        final Charge rc;
+        BoltState bolt;
         final Vec3 center;
         boolean flying;
         double px, py, pz, dx, dy, dz, travelled, lx, ly, lz;
@@ -83,7 +94,7 @@ public final class RuneManager {
         UUID target;
         double density = 1.0;
 
-        Cast(ServerPlayer owner, GrimoireBook book, ManasSkillInstance inst, int mode, RuneSpec spec, Vec3 center, long born) {
+        Cast(ServerPlayer owner, GrimoireBook book, ManasSkillInstance inst, int mode, RuneSpec spec, Vec3 center, long born, Charge rc) {
             this.ownerId = owner.getUUID();
             this.owner = owner;
             this.book = book;
@@ -93,7 +104,9 @@ public final class RuneManager {
             this.spec = spec;
             this.data = RuneSpecNbt.write(spec);
             this.born = born;
-            this.charge = data.getInt(RuneSpecNbt.CHARGE);
+            this.rc = rc;
+            this.charge = rc.castTicks(data.getInt(RuneSpecNbt.CHARGE));
+            this.bolt = RuneCommands.legacy(spec);
             this.center = center;
         }
     }
@@ -116,6 +129,11 @@ public final class RuneManager {
     // ---------------------------------------------------------------- the cast
     /** Starts a cast: the rune forms in front of the caster. Refused (nothing spent, nothing sent) over the caps or with the setting off. */
     public static Begin begin(GrimoireBook book, ManasSkillInstance inst, ServerPlayer p, int mode, RuneSpec spec, long now) {
+        return begin(book, inst, p, mode, spec, now, Charge.LEGACY);
+    }
+
+    /** As above, for a charge measured by the hold ({@link Charge#LEGACY} = the 3.4.0 spell: the fixed charge, everything drawn, power x1). */
+    public static Begin begin(GrimoireBook book, ManasSkillInstance inst, ServerPlayer p, int mode, RuneSpec spec, long now, Charge rc) {
         if (!ManaMethodConfig.enabled()) return Begin.OFF;
         if (activeCount(p.getUUID()) >= ManaMethodConfig.perCaster()) return Begin.CASTER_FULL;
         if (ACTIVE.size() >= ManaMethodConfig.global()) return Begin.SERVER_FULL;
@@ -124,7 +142,7 @@ public final class RuneManager {
         Vec3 center = eye.add(look.scale(RuneRules.RUNE_DISTANCE));
         HitResult wall = level.clip(new ClipContext(eye, center, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, p));
         if (wall.getType() != HitResult.Type.MISS) center = eye.add(look.scale(Math.max(0.8, wall.getLocation().distanceTo(eye) - 0.35)));      // a wall in front: the rune forms nearer
-        Cast c = new Cast(p, book, inst, mode, spec, center, now);
+        Cast c = new Cast(p, book, inst, mode, spec, center, now, rc);
         c.density = spec.trueMagic() ? ManaLaw.density(level, BlockPos.containing(center)) : 1.0;
         ACTIVE.add(c);
         RuneNet.send(level, center, look, spec, c.charge, p.getId());
@@ -145,6 +163,7 @@ public final class RuneManager {
                 PerfProbe.end(PROBE, t0);
             }
         }
+        RuneHold.tick(server, now);
         TrueBlocks.tick(server, now);
     }
 
@@ -179,7 +198,8 @@ public final class RuneManager {
         c.px = c.lx = c.center.x;
         c.py = c.ly = c.center.y;
         c.pz = c.lz = c.center.z;
-        if (c.spec.homing()) c.target = acquire(c, look);
+        c.bolt = ManaMethodConfig.commandFilter() ? RuneCommands.inject(c.spec, c.rc) : RuneCommands.legacy(c.spec);      // the filter: the runes' commands are written into the bolt once, here
+        if (c.bolt.isHoming()) c.target = acquire(c, look);
         c.flying = true;
         c.level.playSound(null, BlockPos.containing(c.center), SoundEvents.ILLUSIONER_CAST_SPELL, SoundSource.PLAYERS, 1.2f, 1.3f);
     }
@@ -203,7 +223,7 @@ public final class RuneManager {
         c.age++;
         if (c.age > RuneRules.MAX_FLIGHT_TICKS || c.travelled > RuneRules.MAX_RANGE) { fizzle(c); return true; }
         // Homing: a bounded turn toward the target picked at the launch (looked up by id: no scan)
-        if (c.target != null && RuneRules.homingActive(c.spec, c.age)) {
+        if (c.target != null && c.bolt.homingActive(c.age)) {
             Entity t = c.level.getEntity(c.target);
             if (t instanceof LivingEntity le && le.isAlive()) {
                 Vec3 want = le.getBoundingBox().getCenter().subtract(c.px, c.py, c.pz);
@@ -211,7 +231,7 @@ public final class RuneManager {
                 if (len > 0.3) {
                     DIR[0] = c.dx; DIR[1] = c.dy; DIR[2] = c.dz;
                     WANT[0] = want.x / len; WANT[1] = want.y / len; WANT[2] = want.z / len;
-                    RuneRules.steer(DIR, WANT, RuneRules.HOMING_TURN, DIR);
+                    RuneRules.steer(DIR, WANT, c.bolt.turn(), DIR);
                     c.dx = DIR[0]; c.dy = DIR[1]; c.dz = DIR[2];
                 }
             } else {
@@ -230,7 +250,7 @@ public final class RuneManager {
         LivingEntity hit = null;
         if (query) {
             c.denied = 0;
-            double radius = RuneRules.hitRadius(c.spec, c.travelled + step);
+            double radius = c.bolt.hitRadius(c.travelled + step);
             Vec3 last = new Vec3(c.lx, c.ly, c.lz);
             double best = Double.MAX_VALUE;
             for (LivingEntity e : c.level.getEntitiesOfClass(LivingEntity.class, new AABB(last, next).inflate(radius),
@@ -253,7 +273,7 @@ public final class RuneManager {
             return true;
         }
         if (c.age % RuneRules.TRAIL_EVERY == 0) {
-            double spread = 0.08 + 0.12 * (RuneRules.growthScale(c.travelled) - 1.0) * (c.spec.growth() ? 1.0 : 0.0);
+            double spread = 0.08 + 0.12 * (c.bolt.growthScale(c.travelled) - 1.0) * (c.bolt.grows() ? 1.0 : 0.0);
             PerfParticles.send(c.level, trailParticle(c.spec.element()), c.px, c.py, c.pz, RuneRules.TRAIL_PARTICLES, spread, spread, spread, 0.01);
         }
         return false;
@@ -267,7 +287,7 @@ public final class RuneManager {
     private static void impact(Cast c, Vec3 at, LivingEntity primary, long now) {
         ServerPlayer p = c.owner;
         RuneSpec spec = c.spec;
-        double splash = RuneRules.splashRadius(spec, c.travelled);
+        double splash = c.bolt.splashRadius(c.travelled);
         List<LivingEntity> targets = new ArrayList<>(RuneRules.MAX_TARGETS);
         if (primary != null) targets.add(primary);
         for (LivingEntity t : GrimoireBook.around(p, at, splash)) {
@@ -275,23 +295,74 @@ public final class RuneManager {
             if (t != primary && Foes.isFoe(p, t)) targets.add(t);
         }
         for (LivingEntity t : targets) {
-            c.book.hurt(c.inst, p, t, c.mode, (float) damageFor(c, t, t == primary));
+            strike(c, t, t == primary);
             rider(spec.element(), t, BalanceLaw.isBoss(t));
         }
-        c.book.impact(p, at, (float) (1.0 + 0.5 * RuneRules.growthScale(spec.growth() ? c.travelled : 0.0)));
+        c.book.impact(p, at, (float) (1.0 + 0.5 * c.bolt.growthScale(c.travelled)));
         PerfParticles.send(c.level, burstParticle(spec.element()), at.x, at.y, at.z, 14, splash * 0.35, splash * 0.25, splash * 0.35, 0.08);
         c.level.playSound(null, BlockPos.containing(at), impactSound(spec.element()), SoundSource.PLAYERS, 1.1f, spec.trueMagic() ? 0.8f : 1.1f);
-        if (spec.trueMagic()) TrueBlocks.place(c.level, c.ownerId, at, spec.element(), TrueBlocks.mayBuild(p), now);
+        if (spec.trueMagic()) trueWorld(c, at, primary, now);
+    }
+
+    /** What True Magic does to the world at the impact: the old blocks, plus (3.5.0) the plant's cage round the struck foe and the lightning bolt. All capped, see {@link TrueBlocks}, {@link TrueLightning}. */
+    private static void trueWorld(Cast c, Vec3 at, LivingEntity primary, long now) {
+        ServerPlayer p = c.owner;
+        var may = TrueBlocks.mayBuild(p);
+        int caged = 0;
+        if (c.spec.element() == RuneElement.PLANT && TrueWorldRules.cageWanted(ManaMethodConfig.plantCage(), primary != null, primary != null && Foes.isFoe(p, primary)))
+            caged = TrueBlocks.placeCage(c.level, c.ownerId, primary.blockPosition(), may, now);
+        if (caged == 0) TrueBlocks.place(c.level, c.ownerId, at, c.spec.element(), may, now);                  // the moss carpet of 3.4.0 (the setting is off, nothing was free, or no creature was struck)
+        if (c.spec.element() == RuneElement.LIGHTNING) TrueLightning.strike(c.level, p, at, may, now);
+    }
+
+    /** Is this target an Anti-Magic user (the Black Form, the Physique and the shields decide by the damage type, see {@link TrueDamageRules})? A failed lookup counts as yes: the old safe route. */
+    private static boolean antiMagicUser(LivingEntity t) {
+        if (!(t instanceof Player pl)) return false;
+        try {
+            return AntiMagic.isUser(pl);
+        } catch (Throwable unknown) {
+            return true;
+        }
+    }
+
+    /** The vanilla damage source of a True Magic kind, attributed to the caster (a kill is theirs); null if the registry has no such type. */
+    private static DamageSource physicalSource(ServerLevel level, ServerPlayer caster, TrueDamageRules.Kind kind) {
+        try {
+            var holder = level.registryAccess().registryOrThrow(Registries.DAMAGE_TYPE).getHolderOrThrow(ResourceKey.create(Registries.DAMAGE_TYPE, ResourceLocation.withDefaultNamespace(kind.path)));
+            return new DamageSource(holder, caster, caster);
+        } catch (Throwable unknown) {
+            return null;
+        }
+    }
+
+    /** One hit: the damage and its route. Normal runes (and True Magic against an Anti-Magic user, or with the setting off) hurt through the grimoire's magic damage as in 3.4.0. */
+    private static void strike(Cast c, LivingEntity t, boolean main) {
+        ServerPlayer p = c.owner;
+        TrueDamageRules.Route route = TrueDamageRules.route(c.spec.trueMagic(), ManaMethodConfig.physicalDamage(), ManaMethodConfig.antiMagicStillCancels(), c.spec.trueMagic() && antiMagicUser(t));
+        if (route == TrueDamageRules.Route.PHYSICAL) {
+            DamageSource src = physicalSource(c.level, p, TrueDamageRules.kindOf(c.spec.element()));
+            if (src != null) {
+                c.book.hurtDirect(c.inst, p, t, c.mode, (float) damageFor(c, t, main, route), src);
+                return;
+            }
+            route = TrueDamageRules.Route.MAGIC_UNDONE;                               // no such damage type in this registry: the old route
+        }
+        c.book.hurt(c.inst, p, t, c.mode, (float) damageFor(c, t, main, route));
     }
 
     /** The damage of one hit before the balance law: the growth of the distance, the splash share, and for True Magic the cancelled resistance, the devil's weakness, the dense mana. */
     static double damageFor(Cast c, LivingEntity t, boolean main) {
+        return damageFor(c, t, main, TrueDamageRules.Route.MAGIC_UNDONE);
+    }
+
+    /** As above, for a route: the old route undoes the target's magic resistance, the physical route has none to undo. The charge's power rides on top ({@code bolt.damageMult()}, x1 for the 3.4.0 spell). */
+    static double damageFor(Cast c, LivingEntity t, boolean main, TrueDamageRules.Route route) {
         RuneSpec s = c.spec;
-        double raw = RuneRules.rawDamage(s) * RuneRules.damageFactor(s, c.travelled);
+        double raw = RuneRules.rawDamage(s) * c.bolt.damageFactor(c.travelled) * c.bolt.damageMult();
         if (!main) raw *= RuneRules.SPLASH_SHARE;
         if (s.trueMagic()) {
             boolean boss = BalanceLaw.isBoss(t);
-            raw *= RuneRules.bypassFor(resistance(t), boss) * TrueMagicRules.powerMult(c.density) * TrueMagicRules.devilMult(TrueMagic.isDevil(t), boss);
+            raw *= TrueDamageRules.resistanceFactor(route, route == TrueDamageRules.Route.MAGIC_UNDONE ? resistance(t) : 0.0, boss) * TrueMagicRules.powerMult(c.density) * TrueMagicRules.devilMult(TrueMagic.isDevil(t), boss);
         }
         return raw;
     }
@@ -367,20 +438,28 @@ public final class RuneManager {
 
     public static void clearAll() { ACTIVE.clear(); }
 
+    /** Everything of one player that the Mana Method keeps: the casts, the hold, the True blocks (the cage and the rest are taken back at once). Each part returns at once when it has nothing. */
+    private static void dropOwner(ServerPlayer p) {
+        cancelOwner(p.getUUID());
+        RuneHold.cancelOwner(p.getUUID());
+        TrueBlocks.cancelOwner(p.getServer(), p.getUUID());
+    }
+
     public static void onDeath(LivingDeathEvent e) {
-        if (!ACTIVE.isEmpty() && e.getEntity() instanceof ServerPlayer p) cancelOwner(p.getUUID());
+        if (e.getEntity() instanceof ServerPlayer p) dropOwner(p);
     }
 
     public static void onDimension(PlayerEvent.PlayerChangedDimensionEvent e) {
-        if (!ACTIVE.isEmpty() && e.getEntity() instanceof ServerPlayer p) cancelOwner(p.getUUID());
+        if (e.getEntity() instanceof ServerPlayer p) dropOwner(p);
     }
 
     public static void onLogout(PlayerEvent.PlayerLoggedOutEvent e) {
-        if (!ACTIVE.isEmpty() && e.getEntity() instanceof ServerPlayer p) cancelOwner(p.getUUID());
+        if (e.getEntity() instanceof ServerPlayer p) dropOwner(p);
     }
 
     public static void onServerStopping(MinecraftServer server) {
         ACTIVE.clear();
+        RuneHold.clearAll();
         TrueBlocks.clearAll(server);
     }
 

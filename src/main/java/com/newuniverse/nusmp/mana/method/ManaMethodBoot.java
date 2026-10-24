@@ -23,6 +23,13 @@ public final class ManaMethodBoot {
         NeoForge.EVENT_BUS.addListener(RuneManager::onDimension);
         NeoForge.EVENT_BUS.addListener(RuneManager::onLogout);
         NeoForge.EVENT_BUS.addListener((ServerStoppingEvent e) -> RuneManager.onServerStopping(e.getServer()));
+        // 3.5.0: the Air Step ledger and the Dash cooldowns (each handler returns at once when it has nothing)
+        NeoForge.EVENT_BUS.addListener(AirStep::onServerTick);
+        NeoForge.EVENT_BUS.addListener(AirStep::onDeath);
+        NeoForge.EVENT_BUS.addListener(AirStep::onDimension);
+        NeoForge.EVENT_BUS.addListener(AirStep::onLogout);
+        NeoForge.EVENT_BUS.addListener(Dash::onLogout);
+        NeoForge.EVENT_BUS.addListener((ServerStoppingEvent e) -> { AirStep.onServerStopping(e.getServer()); Dash.clearAll(); });
         ManaMethodSelfTests.register();
         if (FMLEnvironment.dist == Dist.CLIENT) com.newuniverse.nusmp.client.manamethod.RuneClient.init();
     }

@@ -261,6 +261,32 @@ public final class RuneGlyphLayout {
         int ch = Math.max(1, charge);
         double progress = Math.max(0.0, Math.min(1.0, age / ch));
         double flare = age <= ch ? 0.0 : Math.min(1.0, (age - ch) / RuneRules.FLARE_TICKS);
+        for (int k = 0; k < RING_GROUPS; k++) { LEGACY_PROG[k] = progress; LEGACY_SCALE[k] = ch; }
+        fillCore(o, spec, p, f, age, LEGACY_PROG, LEGACY_SCALE, flare, level, camX, camY, camZ);
+    }
+
+    /** The four groups that are written separately: the hand ring, the middle ring, the outer ring, the loose glyphs. */
+    public static final int RING_GROUPS = 4;
+    private static final double[] LEGACY_PROG = new double[RING_GROUPS], LEGACY_SCALE = new double[RING_GROUPS];
+
+    /** The layout progress at which group {@code group} (0 hand ring, 1 middle ring, 2 outer ring, 3 loose glyphs) has done {@code written} (0..1) of its work: a point in its window of the timeline. */
+    public static double progressOf(int group, double written) {
+        double w = Math.max(0.0, Math.min(1.0, written));
+        return WIN_START[group] + w * (WIN_END[group] - WIN_START[group]);
+    }
+
+    /**
+     * The same picture driven by a HOLD (the charge of a held page): every group has its own progress {@code prog[g]} (see {@link #progressOf}) and its own ticks per unit of progress
+     * {@code scale[g]} (how long its pens take), so the rings can be written one after the other as the player holds, stop where the player released, and only the tiers that were reached
+     * are completed. {@code age} drives the turning and the breathing, {@code flare} (0..1) the release flare of the outer ring. Allocation free like {@link #fill}.
+     */
+    public static void fillStaged(Layout o, RuneSpec spec, RuneGeneratorUtil.Params p, Frame f, double age, double[] prog, double[] scale, double flare, int level, double camX, double camY, double camZ) {
+        reset(o);
+        if (level == LEVEL_NONE) return;
+        fillCore(o, spec, p, f, age, prog, scale, Math.max(0.0, Math.min(1.0, flare)), level, camX, camY, camZ);
+    }
+
+    private static void fillCore(Layout o, RuneSpec spec, RuneGeneratorUtil.Params p, Frame f, double age, double[] prog, double[] scale, double flare, int level, double camX, double camY, double camZ) {
         double R = p.radius();
         int floating = floatingGlyphs(p, level);
         int slot = 0, outerN = ringGlyphs(2, level);
@@ -277,40 +303,40 @@ public final class RuneGlyphLayout {
                 double a = 2 * Math.PI * pos / full + turn;
                 double ca = Math.cos(a), sa = Math.sin(a);
                 double start = WIN_START[r] + (WIN_END[r] - WIN_START[r] - dur) * pos / Math.max(1, full - 1);
-                double w = written(progress, start, dur);
+                double w = written(prog[r], start, dur);
                 if (w <= 0.0) continue;
                 // the glyph's frame on the ring: right = the clockwise tangent, up = outward; the tilt turns y into (y cos t, y sin t) about the plane's x axis
                 double lx = rr * ca, ly = rr * sa * ct + lift, lz = rr * sa * st;
                 double rLx = sa * half, rLy = -ca * ct * half, rLz = -ca * st * half, uLx = ca * half, uLy = sa * ct * half, uLz = sa * st * half;
                 double mul = 1.0 + (r == 2 && flare > 0 ? 0.5 * (1.0 - flare) : 0.0);
-                double sinceDone = progress >= start + dur ? (progress - start - dur) * ch : 0.0;
-                emit(o, f, spec, r, pos, w, lx, ly, lz, rLx, rLy, rLz, uLx, uLy, uLz, dur * ch, sinceDone, mul, age, slot);
+                double sinceDone = prog[r] >= start + dur ? (prog[r] - start - dur) * scale[r] : 0.0;
+                emit(o, f, spec, r, pos, w, lx, ly, lz, rLx, rLy, rLz, uLx, uLy, uLz, dur * scale[r], sinceDone, mul, age, slot);
             }
             // the thin circle line under the ring (at the inner foot of its glyphs), drawn itself with the ring's window
-            if (n > 0 && r >= MAX_LINES - lines(level)) circle(o, f, rr - half, tilt, lift, Math.min(1.0, Math.max(0.0, (progress - WIN_START[r]) / 0.12)) * LINE_LIGHT * (1.0 + 0.15 * Math.sin(age * 0.17 + r)));
+            if (n > 0 && r >= MAX_LINES - lines(level)) circle(o, f, rr - half, tilt, lift, Math.min(1.0, Math.max(0.0, (prog[r] - WIN_START[r]) / 0.12)) * LINE_LIGHT * (1.0 + 0.15 * Math.sin(age * 0.17 + r)));
         }
         // the second thin boundary line outside the outer ring
         if (outerN > 0 && lines(level) > 0) {
             double rr = R * RING_R[2] * (1.0 + 0.25 * flare), half = glyphSize(2, R) * 0.5 * (1.0 + 0.25 * flare);
-            circle(o, f, rr + half * 1.2, RING_TILT[2], RING_LIFT[2] * R, Math.min(1.0, Math.max(0.0, (progress - WIN_START[2]) / 0.12)) * LINE_LIGHT * 0.8);
+            circle(o, f, rr + half * 1.2, RING_TILT[2], RING_LIFT[2] * R, Math.min(1.0, Math.max(0.0, (prog[2] - WIN_START[2]) / 0.12)) * LINE_LIGHT * 0.8);
         }
         // the loose glyphs above the rune, written last, bobbing and drifting a little; spread evenly across the width, each at its own height
         int seed = spec.pack() * 31 + 17;
         double fdur = (WIN_END[3] - WIN_START[3]) / Math.max(1, floating) * 1.6;
         for (int i = 0; i < floating; i++, slot++) {
             double start = WIN_START[3] + (WIN_END[3] - WIN_START[3] - fdur) * i / Math.max(1, floating - 1);
-            double w = written(progress, start, fdur);
+            double w = written(prog[3], start, fdur);
             if (w <= 0.0) continue;
             double across = floating == 1 ? 0.0 : (i / (double) (floating - 1) - 0.5) * 2.0;
             double ox = across * 1.05 * R + (unit(seed, 100 + i) - 0.5) * 0.25 * R, oy = (1.12 + 0.18 * unit(seed, 200 + i) + 0.10 * (i % 2)) * R + Math.sin(age * 0.11 + i * 1.7) * 0.06, oz = 0.12 * R;
             double half = FLOAT_SIZE * 0.5 * Math.max(0.7, R / 1.5), wob = 0.30 * Math.sin(age * 0.07 + i), cw = Math.cos(wob) * half, sw = Math.sin(wob) * half;
-            double sinceDone = progress >= start + fdur ? (progress - start - fdur) * ch : 0.0;
-            emit(o, f, spec, 3, i, w, ox, oy, oz, cw, sw, 0.0, -sw, cw, 0.0, fdur * ch, sinceDone, 1.0, age, slot);
+            double sinceDone = prog[3] >= start + fdur ? (prog[3] - start - fdur) * scale[3] : 0.0;
+            emit(o, f, spec, 3, i, w, ox, oy, oz, cw, sw, 0.0, -sw, cw, 0.0, fdur * scale[3], sinceDone, 1.0, age, slot);
         }
         o.glyphs = slot;
         // lightning arcs from the outer ring to the hand ring: new shape every 3 ticks, present two slices out of three, only once the rings are mostly written
         int nArcs = arcs(level);
-        if (progress > 0.55 && nArcs > 0 && outerN > 0) {
+        if (prog[2] > 0.55 && nArcs > 0 && outerN > 0) {
             int slice = (int) Math.floor(age / 3.0);
             for (int k = 0; k < nArcs; k++) {
                 if (unit(seed + slice, 700 + k) < 0.33) continue;
@@ -318,13 +344,13 @@ public final class RuneGlyphLayout {
                 arc(o, f, R, a, b, seed + slice * 7 + k, camX, camY, camZ, age);
             }
         }
-        if (book(level) && progress > 0.08) {
+        if (book(level) && prog[0] > 0.08) {
             double[] at = BOOK;
             bookPos(f, R, age, at);
             o.bookX = at[0];
             o.bookY = at[1];
             o.bookZ = at[2];
-            o.bookLight = (float) (Math.min(1.0, progress * 4.0) * (0.85 + 0.15 * Math.sin(age * 0.3)));
+            o.bookLight = (float) (Math.min(1.0, prog[0] * 4.0) * (0.85 + 0.15 * Math.sin(age * 0.3)));
         }
     }
 

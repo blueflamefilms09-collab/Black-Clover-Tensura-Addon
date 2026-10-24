@@ -143,7 +143,7 @@ def build(layers):
         mm_src = os.path.join(SRC, "com", "newuniverse", "nusmp", "mana", "method")
         mm_dst = os.path.join(gen, "com", "newuniverse", "nusmp", "mana", "method")
         os.makedirs(mm_dst, exist_ok=True)
-        for name in ("RuneElement", "RuneMods", "RuneSpec", "RuneRules", "RuneAlphabet", "RuneGlyphLayout", "RuneGeneratorUtil"):
+        for name in ("RuneElement", "RuneMods", "RuneSpec", "RuneRules", "RuneAlphabet", "RuneGlyphLayout", "RuneGeneratorUtil", "RuneCharge", "RuneHoldView"):
             shutil.copy(os.path.join(mm_src, name + ".java"), mm_dst)
         perf_dst = os.path.join(gen, "com", "newuniverse", "nusmp", "perf")
         os.makedirs(perf_dst, exist_ok=True)
@@ -291,6 +291,8 @@ def run_java(scene, classes, out_json):
             "--detail", str(scene.get("detail", 1)), "--out", out_json]
     if "budget" in scene:
         args += ["--budget", str(scene["budget"])]
+    if scene.get("hold"):                                  # Mana Method hold: [min, max, releaseAge (-1 = still held), held]
+        args += ["--hold", ",".join(map(str, scene["hold"]))]
     if scene.get("flat"):
         args += ["--flat", "1"]
     if scene.get("style"):

@@ -78,9 +78,10 @@ class ManaMethodSourceScanTest {
                 assertFalse(c.contains("playToServer") || c.contains("sendToServer") || c.contains("playBidirectional"), f.getFileName() + " sends something to the server");
             }
         String net = code(read(METHOD.resolve("RuneNet.java")));
-        assertEquals(1, count(net, "playToClient("));
+        assertEquals(2, count(net, "playToClient("), "the rune packet and (3.5.0) the small hold packet, both clientbound");
         assertTrue(net.contains(".optional()"), "optional: a client without the mod still joins");
         assertTrue(net.contains("static boolean valid(") && read(CLIENT.resolve("RuneClient.java")).contains("RuneNet.valid(p)"), "the client validates what it receives");
+        assertTrue(net.contains("static boolean validHold(") && read(CLIENT.resolve("RuneClient.java")).contains("RuneNet.validHold(p)"), "and so it does for the hold packet");
         assertTrue(net.contains("PacketDistributor.sendToPlayersNear(") && !net.contains("sendToAllPlayers") && !net.contains("sendToAll("), "sent to nearby players only");
         assertTrue(net.contains("PerfBudgets.effectPacket("), "through the effect packet budget");
     }
@@ -125,7 +126,7 @@ class ManaMethodSourceScanTest {
         assertTrue(code(read(METHOD.resolve("TrueBlocks.java"))).contains("if (LEDGER.isEmpty() || now % CHECK_EVERY != 0) return;"));
         assertTrue(m.contains("PerfProbe.section(\"s.mana.method\")") && m.contains("PerfProbe.begin()") && m.contains("PerfProbe.end(PROBE, t0)"), "the section is probed");
         // the caps are asked before anything is made
-        String begin = body(m, "begin");
+        String begin = body(m.substring(m.indexOf("public static Begin begin(GrimoireBook book, ManasSkillInstance inst, ServerPlayer p, int mode, RuneSpec spec, long now, Charge rc)")), "begin");
         assertTrue(begin.indexOf("ManaMethodConfig.perCaster()") > 0 && begin.indexOf("ManaMethodConfig.global()") > 0, "both caps");
         assertTrue(begin.indexOf("ManaMethodConfig.global()") < begin.indexOf("ACTIVE.add(c)"), "the caps come before the cast is added");
         assertTrue(begin.indexOf("ManaMethodConfig.enabled()") < begin.indexOf("ACTIVE.add(c)"), "the switch comes first");
@@ -229,7 +230,7 @@ class ManaMethodSourceScanTest {
         Matcher m = Pattern.compile("(\\w+_ID) = \"([a-z_]+)\"").matcher(pages);
         List<String> ids = new ArrayList<>();
         while (m.find()) ids.add(m.group(2));
-        assertEquals(List.of("mana_method_fire", "mana_method_water", "mana_method_wind", "mana_method_earth", "mana_method_true"), ids);
+        assertEquals(List.of("mana_method_fire", "mana_method_water", "mana_method_wind", "mana_method_earth", "mana_method_true", "mana_method_air_step", "mana_method_dash"), ids, "the five rune pages of 3.4.0, then the two mobility pages appended last");
         for (String id : ids) {
             assertFalse(AvatarSkillList.allowedPage(id, 10.0), "an Avatar never casts " + id);
             assertTrue(id.length() >= 3 && id.length() <= 48, "id length");
@@ -239,7 +240,7 @@ class ManaMethodSourceScanTest {
         assertTrue(RuneRules.COST_PERCENT == 12.0 && RuneRules.COST_FLOOR == 300.0 && RuneRules.COOLDOWN == 160, "the mid tier of the 15-spells recipe (12 %, floor 300, 160 ticks)");
         assertTrue(RuneRules.COST_PERCENT_TRUE == 20.0 && RuneRules.COST_FLOOR_TRUE == 600.0 && RuneRules.COOLDOWN_TRUE >= 300 && RuneRules.COOLDOWN_TRUE <= 1400, "True Magic is a zone-tier page (20 %, floor 600, cooldown inside 300..1400), below the signature tier");
         assertTrue(c.contains("TrueMagicRules.isNatural(") && c.contains("TrueMagicRules.controlEnough("), "True Magic reuses the rules of the older page: natural attribute, Stage 3 control");
-        assertEquals(2, count(c, "new BookPage("), "the True Magic page and the one factory of the four element pages");
+        assertEquals(4, count(c, "new BookPage("), "the True Magic page, the two mobility pages and the one factory of the four element pages");
         assertFalse(c.contains("Pages15"), "the pages15 machinery is per family and mastery gated, so it is not used");
     }
 
@@ -277,11 +278,147 @@ class ManaMethodSourceScanTest {
             }
     }
 
+    // ---------------------------------------------------------------- 3.5.0: hold-to-charge, the filter, True Magic's world and body, the mobility runes
+    @Test
+    void theHoldIsMeasuredByTheServerFromTheGrimoiresOwnHoldAndTheGrimoireHooksAreAppendOnly() throws IOException {
+        String h = code(read(METHOD.resolve("RuneHold.java")));
+        assertTrue(h.contains("Map<UUID, Holding> HOLDING") && h.contains("Map<UUID, Released> RELEASED"), "keyed by the player's UUID");
+        assertTrue(h.contains("heldTicks") && h.contains("RuneCharge.of(held, min, max)"), "the server turns the ticks held into the charge");
+        assertTrue(body(h, "tick").contains("HOLDING.isEmpty() && RELEASED.isEmpty()") && body(h, "tick").contains("now % SWEEP_EVERY != 0"), "idle: two isEmpty checks; busy: one sweep every few ticks");
+        assertTrue(body(h, "onHeld").contains("if (!active()) return;") && body(h, "onRelease").contains("if (!active()) return;"), "the setting off is the 3.4.0 cast");
+        assertTrue(h.contains("RuneNet.sendHold(p, RuneNet.PHASE_HOLD") && h.contains("RuneNet.PHASE_RELEASE") && h.contains("RuneNet.PHASE_CANCEL"), "three small packets at most");
+        assertTrue(h.contains("RELEASED_TTL") && h.contains("STALE"), "an abandoned hold and an untaken release go by themselves");
+        String book = code(read(SRC.resolve("book/GrimoireBook.java")));
+        assertTrue(body(book, "onHeld").contains("if (isMethodPage(mode)) com.newuniverse.nusmp.mana.method.RuneHold.onHeld(this, instance, p, heldTicks, mode)"), "the hold hook, for Mana Method pages only");
+        String rel = body(book, "onRelease");
+        assertTrue(rel.indexOf("if (pendingUntil > now) return;") > 0 && rel.indexOf("RuneHold.onRelease(") > rel.indexOf("if (pendingUntil > now) return;"), "a repeat tap during the wind-up never overrides the pending charge");
+        assertTrue(book.contains("ManaMethodPages.usable(e, page(mode).id())"), "the mobility pages also need their own setting");
+        String pages = code(read(METHOD.resolve("ManaMethodPages.java")));
+        assertTrue(pages.contains("RuneHold.take(p.getUUID(), mode, p.level().getGameTime())"), "the cast takes the release's charge");
+        assertFalse(pages.contains("KeyMapping"), "no key");
+    }
+
+    @Test
+    void theRunePacketIsUnchangedAndTheHoldPacketIsSmallValidatedAndNearby() throws IOException {
+        String net = code(read(METHOD.resolve("RuneNet.java")));
+        String runePayload = net.substring(net.indexOf("record RunePayload"), net.indexOf("PHASE_HOLD ="));
+        assertEquals(6, count(runePayload, "b.writeFloat("), "the 28 byte rune packet: six floats ...");
+        assertTrue(runePayload.contains("b.writeByte(spec)") && runePayload.contains("b.writeByte(charge)") && runePayload.contains("b.writeVarInt(ownerId)"), "... and the three small fields, as in 3.4.0");
+        String hold = net.substring(net.indexOf("record HoldPayload"), net.indexOf("static boolean validHold("));
+        assertEquals(1, count(hold, "b.writeVarInt("), "the hold packet: the owner id ...");
+        assertEquals(5, count(hold, "b.writeByte("), "... and five single bytes (about 7 bytes in all)");
+        String send = body(net, "sendHold");
+        assertTrue(send.contains("PerfBudgets.effectPacket(") && send.contains("sendToPlayersNear(") && send.contains("RANGE"), "nearby players only, through the effect packet budget");
+        assertTrue(body(net, "validHold").contains("HOLD_CAP") && body(net, "validHold").contains("MIN_SPAN"), "the client checks the numbers it is sent");
+    }
+
+    @Test
+    void theFilterWritesThePursueAndGrowCommandsIntoTheBoltOnceAtTheLaunch() throws IOException {
+        String m = code(read(METHOD.resolve("RuneManager.java")));
+        String launch = body(m, "launch");
+        assertTrue(launch.contains("ManaMethodConfig.commandFilter() ? RuneCommands.inject(c.spec, c.rc) : RuneCommands.legacy(c.spec)"), "the setting off is the 3.4.0 bolt, value by value");
+        assertTrue(launch.indexOf("c.bolt =") < launch.indexOf("acquire(c, look)"), "the commands are in the bolt before Homing looks for its target");
+        String fly = body(m, "fly");
+        for (String old : new String[]{"RuneRules.homingActive(", "RuneRules.HOMING_TURN", "RuneRules.hitRadius(", "RuneRules.growthScale("}) assertFalse(fly.contains(old), "the flight reads the bolt, not " + old);
+        assertTrue(fly.contains("c.bolt.homingActive(c.age)") && fly.contains("c.bolt.hitRadius("), "the flight reads the injected state");
+        String ras = code(read(METHOD.resolve("RuneCommands.java")));
+        assertFalse(ras.contains("net.minecraft"), "the filter is pure");
+        assertFalse(m.contains("extends Entity") || m.contains("EntityType."), "the rune is a small server record, not a vanilla entity (docs: why the rune is not an entity)");
+    }
+
+    @Test
+    void trueMagicHurtsPhysicallyThroughTheBalanceLawAndAntiMagicStillCancelsByDefault() throws IOException {
+        String m = code(read(METHOD.resolve("RuneManager.java")));
+        String strike = body(m, "strike");
+        assertTrue(strike.contains("TrueDamageRules.route(c.spec.trueMagic(), ManaMethodConfig.physicalDamage(), ManaMethodConfig.antiMagicStillCancels()"), "both settings");
+        assertTrue(strike.contains("c.book.hurtDirect(") && strike.contains("c.book.hurt("), "the physical route and the old route");
+        assertTrue(m.contains("new DamageSource(holder, caster, caster)"), "attributed to the caster, so a kill is theirs");
+        assertTrue(m.contains("AntiMagic.isUser(pl)") && m.contains("return true;"), "a failed Anti-Magic lookup takes the old, safe route");
+        String book = code(read(SRC.resolve("book/GrimoireBook.java")));
+        String direct = body(book, "hurtDirect");
+        assertTrue(direct.contains("BalanceLaw.damage(caster, target, r, masteryFrac(i))"), "the balance law's caps stay");
+        assertTrue(direct.contains("target.isAlliedTo(caster)"), "never an ally");
+        assertTrue(m.contains("TrueDamageRules.resistanceFactor("), "the resistance is only undone on the old route");
+    }
+
+    @Test
+    void theCageAndTheLightningAreCappedGuardedAndTakenBack() throws IOException {
+        String t = code(read(METHOD.resolve("TrueBlocks.java")));
+        String cage = body(t, "placeCage");
+        assertTrue(cage.contains("ManaMethodConfig.plantCage()") && cage.contains("levelAllows(level)") && cage.contains("TrueWorldRules.allowedCage(liveOf(owner), LEDGER.size())"), "the setting, the guarded worlds, the caps");
+        assertTrue(cage.contains("free(level, cell, may)") && cage.contains("isUnobstructed("), "free cells only, never a cell a creature stands in");
+        assertEquals(1, count(cage, "setBlock("), "one write per cell");
+        assertTrue(cage.contains("LEDGER.add(") && cage.contains("TrueWorldRules.cageSeconds("), "on the ledger, taken back after the cage's time");
+        assertTrue(body(t, "cancelOwner").contains("if (LEDGER.isEmpty()) return;") && body(t, "cancelOwner").contains("takeBack(l, e)"), "a player's blocks are taken back at once, nothing to do while the ledger is empty");
+        String m = code(read(METHOD.resolve("RuneManager.java")));
+        for (String ev : new String[]{"onDeath", "onDimension", "onLogout"}) assertTrue(body(m, ev).contains("dropOwner(p)"), ev + " drops the player's casts, hold and blocks");
+        assertTrue(body(m, "dropOwner").contains("TrueBlocks.cancelOwner(p.getServer(), p.getUUID())") && body(m, "dropOwner").contains("RuneHold.cancelOwner(p.getUUID())"));
+        assertTrue(body(m, "onServerStopping").contains("RuneHold.clearAll()") && body(m, "onServerStopping").contains("TrueBlocks.clearAll(server)"));
+        assertTrue(body(m, "trueWorld").contains("TrueBlocks.place(") && body(m, "trueWorld").contains("caged == 0"), "the moss carpet is the fallback");
+        String l = code(read(METHOD.resolve("TrueLightning.java")));
+        String strike = body(l, "strike");
+        assertTrue(strike.contains("ManaMethodConfig.lightningBolt()") && strike.contains("TrueBlocks.levelAllows(level)") && strike.contains("level.isLoaded(pos)") && strike.contains("may.test(level, pos)") && strike.contains("TrueWorldRules.takeBolt("), "setting, guarded worlds, loaded chunk, building permission, server-wide rate");
+        assertEquals(1, count(strike, "addFreshEntity("), "at most one bolt per strike");
+        assertTrue(strike.contains("setVisualOnly(!real)"), "visual only unless the full bolt is switched on and safe");
+        for (String banned : new String[]{"getChunk(", "forceLoad", "setChunkForced", "addRegionTicket"}) assertFalse(l.contains(banned) || t.contains(banned), "no chunk is loaded: " + banned);
+    }
+
+    @Test
+    void theAirStepIsABoundedLedgerThatIsTakenBackOnEveryExit() throws IOException {
+        String a = code(read(METHOD.resolve("AirStep.java")));
+        assertTrue(a.contains("Map<UUID, Session> SESSIONS") && a.contains("MobilityRules.MAX_SESSIONS"), "keyed by the player, at most sixteen at once");
+        assertTrue(body(a, "onServerTick").contains("if (SESSIONS.isEmpty()) return;"), "idle: one isEmpty check");
+        assertTrue(a.contains("PerfProbe.section(\"s.mana.airstep\")"), "probed");
+        String place = body(a, "place");
+        assertTrue(place.contains("MobilityRules.cellAllowed(") && place.contains("level.isLoaded(pos)") && place.contains("level.mayInteract(p, pos)") && place.contains("isAir()"), "caps, loaded chunks, building permission, air cells only");
+        assertEquals(1, count(place, "setBlock("), "one write");
+        assertTrue(a.contains("Blocks.BARRIER") && body(a, "remove").contains("is(Blocks.BARRIER)") && body(a, "remove").contains("DungeonGuard.internal("), "only a barrier that is still ours is taken back");
+        assertTrue(body(a, "start").contains("TrueBlocks.levelAllows("), "never in the Labyrinth or a guarded world");
+        assertTrue(body(a, "tickAll").contains("!p.isAlive()") && body(a, "tickAll").contains("p.level() != s.level") && body(a, "tickAll").contains("!ManaMethodConfig.mobility()"), "a dead, moved or switched-off session ends");
+        assertTrue(body(a, "step").contains("MobilityRules.decide(p.isShiftKeyDown()"), "sneak drops");
+        String boot = code(read(METHOD.resolve("ManaMethodBoot.java")));
+        for (String h : new String[]{"AirStep::onServerTick", "AirStep::onDeath", "AirStep::onDimension", "AirStep::onLogout", "AirStep.onServerStopping(e.getServer())", "Dash::onLogout"}) assertTrue(boot.contains(h), "the boot wires " + h);
+        assertFalse(a.contains("getChunk(") || a.contains("forceLoad"), "no chunk is loaded");
+    }
+
+    @Test
+    void theDashSetsTheVelocityOnTheServerAndTellsTheClientAndKeepsACooldownPerPlayer() throws IOException {
+        String d = code(read(METHOD.resolve("Dash.java")));
+        assertTrue(d.contains("p.hurtMarked = true") && d.contains("p.setDeltaMovement("), "the new motion is sent to the player's own client");
+        assertTrue(d.contains("Map<UUID, Long> LAST") && d.contains("MobilityRules.dashReady("), "a cooldown per player");
+        assertTrue(d.contains("MobilityRules.fallAfterDash(p.fallDistance)") && !d.contains("fallDistance = 0"), "the fall is only forgiven a little, never reset");
+        assertTrue(d.contains("PerfParticles.send("), "the puff goes through the particle budget");
+        assertTrue(d.contains("MobilityRules.dashSpeed(") && d.contains("MobilityRules.dashVelocity("), "the maths is the pure, tested one");
+    }
+
+    @Test
+    void theNewSettingsAreServerSettingsThatDefaultToTheNewBehaviourAndHaveHardRanges() throws IOException {
+        String cfg = code(read(METHOD.resolve("ManaMethodConfig.java")));
+        for (String key : new String[]{"holdToCharge", "minHoldTicks", "maxHoldTicks", "commandFilter", "mobility", "airStepSeconds", "dashStrength", "physicalDamage", "antiMagicStillCancels", "plantCage", "lightningBolt", "lightningRealBolt"})
+            assertTrue(cfg.contains("\"" + key + "\""), "setting " + key);
+        assertTrue(cfg.contains("define(\"holdToCharge\", true)") && cfg.contains("define(\"commandFilter\", true)") && cfg.contains("define(\"mobility\", true)") && cfg.contains("define(\"physicalDamage\", true)") && cfg.contains("define(\"antiMagicStillCancels\", true)") && cfg.contains("define(\"plantCage\", true)") && cfg.contains("define(\"lightningBolt\", true)"), "the new behaviour is on by default ...");
+        assertTrue(cfg.contains("define(\"lightningRealBolt\", false)"), "... except the full vanilla bolt, which is opt-in");
+        assertTrue(cfg.contains("RuneCharge.minHold(") && cfg.contains("RuneCharge.maxHold(") && cfg.contains("MobilityRules.seconds(") && cfg.contains("MobilityRules.strength("), "every number is clamped by the pure rules");
+    }
+
+    @Test
+    void theHoldViewAndTheDrawingStayAllocationFreeAndBounded() throws IOException {
+        String l = code(read(SRC.resolve("vfx/client/layer/RuneWritingLayer.java")));
+        assertTrue(l.contains("RuneHoldView.lookup(RuneHoldView.keyOf(inst.seed))") && l.contains("RuneGlyphLayout.fillStaged("), "the held rune is drawn from its view");
+        String c = code(read(CLIENT.resolve("RuneClient.java")));
+        assertTrue(c.contains("RuneHoldView.forgetAll()"), "the views are forgotten when the world is left");
+        assertTrue(body(c, "start").contains("RUNES.size() >= RuneGeneratorUtil.MAX_RUNES_DRAWN"), "a held rune counts against the six");
+        assertTrue(c.contains("ORPHAN_TICKS"), "a release whose cast never comes ends by itself");
+        String v = code(read(METHOD.resolve("RuneHoldView.java")));
+        assertFalse(v.contains("net.minecraft") || v.contains("Minecraft"), "the timeline is pure");
+        assertTrue(code(read(METHOD.resolve("RuneGlyphLayout.java"))).contains("public static void fillStaged("), "the staged drawing");
+    }
+
     // ---------------------------------------------------------------- docs
     @Test
     void theDocsAndTheLangFragmentExist() throws IOException {
         String doc = read(Path.of("docs/magic/mana_method.md"));
-        for (String must : new String[]{"NEW", "REPLACED", "KEPT", "worst case", "magic.mana_method", "not seen in a game", "RuneGeneratorUtil", "Homing", "Growth", "True Magic", "docs/previews/mana_method/"})
+        for (String must : new String[]{"NEW", "REPLACED", "KEPT", "worst case", "magic.mana_method", "not seen in a game", "RuneGeneratorUtil", "Homing", "Growth", "True Magic", "docs/previews/mana_method/", "Canon check", "Anti-Magic", "why the rune is not an entity", "Owner decisions"})
             assertTrue(doc.toLowerCase().contains(must.toLowerCase()), "docs/magic/mana_method.md lacks: " + must);
         String audit = read(Path.of("docs/magic/manamethod_audit.md"));
         for (String must : new String[]{"exists", "partly", "missing", "NEW", "REPLACED", "KEPT"}) assertTrue(audit.contains(must), "the audit lacks: " + must);
@@ -289,8 +426,10 @@ class ManaMethodSourceScanTest {
         for (String id : new String[]{"mana_method_fire", "mana_method_water", "mana_method_wind", "mana_method_earth", "mana_method_true"})
             assertTrue(lang.contains("\"nusmp.mana_method.page." + id + ".desc\""), "a description for " + id);
         assertTrue(lang.contains("\"nusmp.mana_method.cast\""));
+        for (String k : new String[]{"nusmp.mana_method.page.mana_method_air_step.desc", "nusmp.mana_method.page.mana_method_dash.desc", "nusmp.mana_method.air_step", "nusmp.mana_method.air_step_end"})
+            assertTrue(lang.contains("\"" + k + "\""), "lang key " + k);
         assertTrue(read(METHOD.resolve("ManaMethodPages.java")).contains("\"nusmp.mana_method.cast\""));
-        for (String png : new String[]{"rune_ingame.png", "rune_glyph_rings.png", "rune_glyph_writing.png", "rune_glyph_alphabet.png", "rune_glyph_charge.png", "rune_glyph_lod.png"})
+        for (String png : new String[]{"rune_ingame.png", "rune_glyph_rings.png", "rune_glyph_writing.png", "rune_glyph_alphabet.png", "rune_glyph_charge.png", "rune_glyph_lod.png", "rune_hold_tap.png", "rune_hold_half.png", "rune_hold_full.png", "rune_hold_compare.png"})
             assertTrue(Files.exists(Path.of("docs/previews/mana_method/" + png)), "preview " + png);
     }
 }

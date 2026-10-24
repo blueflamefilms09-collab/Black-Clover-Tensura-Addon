@@ -33,6 +33,10 @@ import java.util.UUID;
  *       at; a Growth rune's hit volume and damage grow with the distance.</li>
  *   <li>{@code magic.mana_method.true_blocks}: True Magic places real blocks (water sources, a stone mound, fire) only into free cells the caster may build in, within the
  *       per-cast, per-caster and world caps, and takes every one back.</li>
+ *   <li>3.5.0, each under the same prefix: {@code .charge} (the release's charge is taken once and goes stale; a tap is weaker and quicker than a full hold),
+ *       {@code .physical} (True Magic hurts with a vanilla physical type credited to the caster, a normal rune with the Tensura type), {@code .cage} (the plant's cage: free cells only,
+ *       caps, gone when the caster leaves and by time), {@code .lightning} (at most the per-second allowance, never into an unloaded chunk), {@code .air_step} (a bounded barrier
+ *       platform that follows the feet, sneak drops, nothing is left when it ends), {@code .dash} (the push, the cooldown, the marked motion, the small fall grace).</li>
  * </ul>
  */
 public final class ManaMethodSelfTests {
@@ -41,6 +45,12 @@ public final class ManaMethodSelfTests {
     public static void register() {
         SelfTests.register("magic.mana_method", ManaMethodSelfTests::core);
         SelfTests.register("magic.mana_method.true_blocks", ManaMethodSelfTests::trueBlocks);
+        SelfTests.register("magic.mana_method.charge", ManaMethodSelfTests::charge);
+        SelfTests.register("magic.mana_method.physical", ManaMethodSelfTests::physical);
+        SelfTests.register("magic.mana_method.cage", ManaMethodSelfTests::cage);
+        SelfTests.register("magic.mana_method.lightning", ManaMethodSelfTests::lightning);
+        SelfTests.register("magic.mana_method.air_step", ManaMethodSelfTests::airStep);
+        SelfTests.register("magic.mana_method.dash", ManaMethodSelfTests::dash);
     }
 
     private static Result core(MinecraftServer server) {
@@ -210,6 +220,284 @@ public final class ManaMethodSelfTests {
                     BlockPos q = floor.offset(dx, dy, dz);
                     if (!sl.getBlockState(q).isAir() && !sl.getFluidState(q).isEmpty()) sl.setBlock(q, Blocks.AIR.defaultBlockState(), 3);     // water that flowed from a removed source
                 }
+        }
+    }
+
+    // ================================================================ 3.5.0
+    /** A 200 hp-ish dummy a few blocks in front of the stand-in at (8.5, 120, 8.5) looking along +z, with the hurt time cleared. */
+    private static Zombie dummy(ServerLevel sl, double dz) {
+        Zombie z = EntityType.ZOMBIE.create(sl);
+        if (z == null) return null;
+        z.getAttribute(Attributes.MAX_HEALTH).setBaseValue(1000.0);
+        z.setHealth(1000f);
+        z.setNoAi(true);
+        z.setNoGravity(true);
+        z.setPos(8.5, 120.0, 8.5 + dz);
+        sl.addFreshEntity(z);
+        return z;
+    }
+
+    private static float shoot(MinecraftServer server, ServerLevel sl, FakePlayer p, GrimoireBook book, ManasSkillInstance inst, Zombie z, RuneSpec spec, RuneCharge.Charge charge, long t) {
+        z.setHealth(1000f);
+        z.invulnerableTime = 0;
+        z.hurtTime = 0;
+        RuneManager.cancelOwner(p.getUUID());
+        if (RuneManager.begin(book, inst, p, 0, spec, t, charge) != RuneManager.Begin.OK) return -1f;
+        int ticks = 0;
+        while (RuneManager.activeCount(p.getUUID()) > 0 && ticks < 400) RuneManager.tickAll(server, t + ++ticks);
+        RuneManager.cancelOwner(p.getUUID());
+        return 1000f - z.getHealth();
+    }
+
+    private static Result charge(MinecraftServer server) {
+        ServerLevel sl = server.overworld();
+        sl.getChunk(0, 0);
+        FakePlayer p = SelfTests.standIn(sl, "mana_method_charge", 8.5, 120, 8.5);
+        p.setYRot(0f);
+        p.setXRot(0f);
+        GrimoireBook book = NUSkills.BOOK_REINFORCEMENT.get();
+        ManasSkillInstance inst = book.createDefaultInstance();
+        int min = ManaMethodConfig.minHold(), max = ManaMethodConfig.maxHold();
+        // the server's side of the hold: a release waits for its cast, is taken once, goes stale, and a dropped player loses it
+        long now = server.getTickCount() + 2000;
+        RuneHold.cancelOwner(p.getUUID());
+        RuneHold.releaseForTest(p.getUUID(), 3, max, now);
+        if (RuneHold.take(p.getUUID(), 4, now + 1) != null) return Result.fail("a release was taken by another page");
+        RuneHold.releaseForTest(p.getUUID(), 3, max, now);
+        RuneCharge.Charge full = RuneHold.take(p.getUUID(), 3, now + 5);
+        if (full == null || full.stage() != RuneCharge.Stage.FULL) return Result.fail("a full hold did not give the full charge: " + full);
+        if (RuneHold.take(p.getUUID(), 3, now + 5) != null) return Result.fail("a release was taken twice");
+        RuneHold.releaseForTest(p.getUUID(), 3, 1, now);
+        if (RuneHold.take(p.getUUID(), 3, now + RuneHold.RELEASED_TTL + 5) != null) return Result.fail("a stale release was used");
+        RuneHold.releaseForTest(p.getUUID(), 3, 1, now);
+        RuneHold.cancelOwner(p.getUUID());
+        if (RuneHold.take(p.getUUID(), 3, now + 1) != null) return Result.fail("a dropped player kept a release");
+        RuneCharge.Charge tap = RuneCharge.of(1, min, max), mid = RuneCharge.of((min + max) / 2, min, max);
+        if (tap.stage() != RuneCharge.Stage.BASIC || mid.stage() != RuneCharge.Stage.CHARGED) return Result.fail("the stages of a tap and a half hold are wrong");
+        // the cast itself: a tap is smaller and weaker than a half hold, which is weaker than a full one; the charge decides how long the rune takes
+        Zombie z = dummy(sl, 8.0);
+        if (z == null) return Result.fail("could not create a test zombie");
+        try {
+            long t = server.getTickCount() + 7000;
+            RuneSpec spec = new RuneSpec(RuneElement.WIND, RuneMods.NONE, false);
+            RuneManager.cancelOwner(p.getUUID());
+            if (RuneManager.begin(book, inst, p, 0, spec, t, tap) != RuneManager.Begin.OK) return Result.fail("the tap was refused");
+            var cast = RuneManager.castOf(p.getUUID());
+            if (cast == null || cast.charge != RuneCharge.FINISH_BASIC) return Result.fail("a tap should finish in " + RuneCharge.FINISH_BASIC + " ticks, got " + (cast == null ? -1 : cast.charge));
+            RuneManager.cancelOwner(p.getUUID());
+            if (RuneManager.begin(book, inst, p, 0, spec, t, full) != RuneManager.Begin.OK) return Result.fail("the full hold was refused");
+            cast = RuneManager.castOf(p.getUUID());
+            if (cast == null || cast.charge != RuneCharge.FINISH_FULL) return Result.fail("a full hold should finish in " + RuneCharge.FINISH_FULL + " ticks, got " + (cast == null ? -1 : cast.charge));
+            RuneManager.cancelOwner(p.getUUID());
+            float dTap = shoot(server, sl, p, book, inst, z, spec, tap, t), dMid = shoot(server, sl, p, book, inst, z, spec, mid, t + 3000), dFull = shoot(server, sl, p, book, inst, z, spec, full, t + 6000), dOld = shoot(server, sl, p, book, inst, z, spec, RuneCharge.Charge.LEGACY, t + 9000);
+            if (dTap <= 0f || dMid <= 0f || dFull <= 0f || dOld <= 0f) return Result.fail("a rune missed the dummy: tap " + dTap + ", half " + dMid + ", full " + dFull + ", old " + dOld);
+            if (!(dTap <= dMid && dMid <= dFull && dTap < dFull)) return Result.fail("damage does not rise with the hold: tap " + dTap + ", half " + dMid + ", full " + dFull);
+            if (!(dTap <= dOld && dOld <= dFull)) return Result.fail("the old spell should sit between the tap and the full hold: " + dTap + " / " + dOld + " / " + dFull);
+            // a tap never writes the second rune, even sneaking
+            p.setShiftKeyDown(true);
+            int mods = RuneCharge.modsFor(tap, RuneElement.FIRE, p.isShiftKeyDown());
+            p.setShiftKeyDown(false);
+            if (mods != RuneElement.FIRE.defaultMods()) return Result.fail("a tapped rune wrote the second rune");
+            return Result.ok("tap/half/full/old damage " + dTap + " / " + dMid + " / " + dFull + " / " + dOld + "; finish " + RuneCharge.FINISH_BASIC + " to " + RuneCharge.FINISH_FULL + " ticks; the release is taken once, goes stale, and is dropped with the player");
+        } finally {
+            z.discard();
+            RuneManager.cancelOwner(p.getUUID());
+            RuneHold.cancelOwner(p.getUUID());
+        }
+    }
+
+    private static Result physical(MinecraftServer server) {
+        ServerLevel sl = server.overworld();
+        sl.getChunk(0, 0);
+        FakePlayer p = SelfTests.standIn(sl, "mana_method_physical", 8.5, 120, 8.5);
+        p.setYRot(0f);
+        p.setXRot(0f);
+        GrimoireBook book = NUSkills.BOOK_REINFORCEMENT.get();
+        ManasSkillInstance inst = book.createDefaultInstance();
+        Zombie z = dummy(sl, 8.0);
+        if (z == null) return Result.fail("could not create a test zombie");
+        try {
+            long t = server.getTickCount() + 12000;
+            float normal = shoot(server, sl, p, book, inst, z, new RuneSpec(RuneElement.WIND, RuneMods.NONE, false), RuneCharge.Charge.LEGACY, t);
+            var src = z.getLastDamageSource();
+            if (normal <= 0f || src == null) return Result.fail("the normal rune did not hurt the dummy");
+            if (!src.typeHolder().unwrapKey().map(k -> k.location().getNamespace().equals("tensura")).orElse(false)) return Result.fail("a normal rune is not the grimoire's Tensura damage: " + src.getMsgId());
+            float tm = shoot(server, sl, p, book, inst, z, new RuneSpec(RuneElement.WIND, RuneMods.NONE, true), RuneCharge.Charge.LEGACY, t + 3000);
+            var psrc = z.getLastDamageSource();
+            if (tm <= 0f || psrc == null) return Result.fail("True Magic did not hurt the dummy");
+            boolean physicalWanted = ManaMethodConfig.physicalDamage();
+            if (physicalWanted) {
+                if (!psrc.is(net.minecraft.world.damagesource.DamageTypes.FLY_INTO_WALL)) return Result.fail("True Wind should hurt as a blow against a wall, got " + psrc.getMsgId());
+                if (psrc.getEntity() != p) return Result.fail("True Magic damage is not credited to the caster");
+                if (com.newuniverse.nusmp.antimagic.AntiMagic.isMagic(psrc)) return Result.fail("the physical route is still read as magic damage");
+            }
+            return Result.ok("normal rune " + normal + " as " + src.getMsgId() + "; True Wind " + tm + " as " + psrc.getMsgId() + " credited to the caster (physicalDamage " + physicalWanted + ")");
+        } finally {
+            z.discard();
+            RuneManager.cancelOwner(p.getUUID());
+        }
+    }
+
+    private static Result cage(MinecraftServer server) {
+        ServerLevel sl = server.overworld();
+        sl.getChunk(0, 0);
+        UUID owner = UUID.nameUUIDFromBytes("nusmp-selftest:mana_method_cage".getBytes(java.nio.charset.StandardCharsets.UTF_8));
+        long now = server.getTickCount();
+        TrueBlocks.expireAllForTest(server);
+        BlockPos feet = new BlockPos(8, 120, 8);
+        List<BlockPos> cells = new ArrayList<>();
+        for (int dx = -2; dx <= 2; dx++) for (int dy = -1; dy <= 4; dy++) for (int dz = -2; dz <= 2; dz++) cells.add(feet.offset(dx, dy, dz));
+        try {
+            for (BlockPos q : cells) sl.setBlock(q, Blocks.AIR.defaultBlockState(), 3);
+            if (!ManaMethodConfig.plantCage() || !ManaMethodConfig.trueBlocks()) return Result.ok("skipped: the cage or the True blocks are switched off in this config");
+            if (TrueBlocks.placeCage(sl, owner, feet, (l, q) -> false, now) != 0) return Result.fail("a cage was built where the caster may not build");
+            int n = TrueBlocks.placeCage(sl, owner, feet, (l, q) -> true, now);
+            if (n < 1 || n > TrueWorldRules.CAGE_PER_CAST || n > TrueWorldRules.CAGE_CELLS) return Result.fail("the cage placed " + n + " blocks");
+            int logs = 0, leaves = 0;
+            for (BlockPos q : TrueBlocks.positionsOf(owner)) {
+                var s = sl.getBlockState(q);
+                if (s.is(Blocks.OAK_LOG)) logs++;
+                else if (s.is(Blocks.OAK_LEAVES)) leaves++;
+                else return Result.fail("a cage block at " + q + " is neither a log nor a leaf: " + s);
+                if (q.getX() == feet.getX() && q.getZ() == feet.getZ() && q.getY() < feet.getY() + 2) return Result.fail("a cage block stands in the target's own cell at " + q);
+            }
+            if (logs == 0 || leaves == 0) return Result.fail("the cage should have posts and sides: " + logs + " logs, " + leaves + " leaves");
+            for (int k = 0; k < 10; k++) TrueBlocks.placeCage(sl, owner, feet.offset(k * 3, 0, 0), (l, q) -> true, now);
+            if (TrueBlocks.liveOf(owner) > TrueWorldRules.CAGE_PER_CASTER) return Result.fail("one caster has " + TrueBlocks.liveOf(owner) + " cage blocks, over " + TrueWorldRules.CAGE_PER_CASTER);
+            if (TrueBlocks.count() > TrueWorldRules.CAGE_GLOBAL) return Result.fail("the world has " + TrueBlocks.count() + " cage blocks, over " + TrueWorldRules.CAGE_GLOBAL);
+            List<BlockPos> standing = new ArrayList<>(TrueBlocks.positionsOf(owner));
+            // the caster leaves (logout, death, dimension change): every block of theirs goes at once
+            TrueBlocks.cancelOwner(server, owner);
+            if (TrueBlocks.liveOf(owner) != 0) return Result.fail("the ledger still lists " + TrueBlocks.liveOf(owner) + " blocks after the caster left");
+            for (BlockPos q : standing) if (sl.getBlockState(q).is(Blocks.OAK_LOG) || sl.getBlockState(q).is(Blocks.OAK_LEAVES)) return Result.fail("a cage block still stands at " + q + " after the caster left");
+            // and by time
+            int again = TrueBlocks.placeCage(sl, owner, feet, (l, q) -> true, now);
+            TrueBlocks.tick(server, now - now % 10 + 10 + TrueWorldRules.CAGE_MAX_SECONDS * 20L + 20);
+            if (TrueBlocks.liveOf(owner) != 0) return Result.fail("the cage did not expire: " + TrueBlocks.liveOf(owner) + " blocks left");
+            return Result.ok("a cage of " + n + " blocks (" + logs + " logs, " + leaves + " leaves) round the target, none where the caster may not build, caps " + TrueWorldRules.CAGE_PER_CASTER + "/" + TrueWorldRules.CAGE_GLOBAL + " held, gone when the caster left, gone by time (" + again + ")");
+        } finally {
+            TrueBlocks.cancelOwner(server, owner);
+            TrueBlocks.expireAllForTest(server);
+            for (BlockPos q : cells) { var s = sl.getBlockState(q); if (s.is(Blocks.OAK_LOG) || s.is(Blocks.OAK_LEAVES)) sl.setBlock(q, Blocks.AIR.defaultBlockState(), 3); }
+            for (int k = 1; k < 10; k++)
+                for (int dx = -2; dx <= 2; dx++) for (int dy = -1; dy <= 4; dy++) for (int dz = -2; dz <= 2; dz++) {
+                    BlockPos q = feet.offset(k * 3 + dx, dy, dz);
+                    var s = sl.getBlockState(q);
+                    if (s.is(Blocks.OAK_LOG) || s.is(Blocks.OAK_LEAVES)) sl.setBlock(q, Blocks.AIR.defaultBlockState(), 3);
+                }
+        }
+    }
+
+    private static Result lightning(MinecraftServer server) {
+        ServerLevel sl = server.overworld();
+        sl.getChunk(0, 0);
+        FakePlayer p = SelfTests.standIn(sl, "mana_method_lightning", 8.5, 120, 8.5);
+        long now = server.getTickCount();
+        Vec3 at = new Vec3(8.5, 140.0, 40.5);
+        sl.getChunk(2, 2);                                                          // a test may load a chunk; the strike never does
+        net.minecraft.world.phys.AABB box = new net.minecraft.world.phys.AABB(at, at).inflate(3.0);
+        TrueLightning.resetForTest();
+        List<net.minecraft.world.entity.LightningBolt> made = new ArrayList<>();
+        try {
+            if (TrueLightning.strike(sl, p, at, (l, q) -> false, now)) return Result.fail("a bolt struck where the caster may not build");
+            if (!ManaMethodConfig.lightningBolt()) return Result.ok("skipped: the lightning is switched off in this config");
+            int struck = 0;
+            for (int k = 0; k < 8; k++) if (TrueLightning.strike(sl, p, at, (l, q) -> true, now)) struck++;
+            made.addAll(sl.getEntitiesOfClass(net.minecraft.world.entity.LightningBolt.class, box));
+            if (struck != TrueWorldRules.LIGHTNING_PER_SECOND) return Result.fail(struck + " bolts struck in one second, expected " + TrueWorldRules.LIGHTNING_PER_SECOND);
+            if (made.size() != struck) return Result.fail(made.size() + " bolt entities exist, " + struck + " strikes were counted");
+            // an unloaded chunk gets nothing, and nothing is loaded for it
+            TrueLightning.resetForTest();
+            if (TrueLightning.strike(sl, p, new Vec3(20000.5, 100.0, 20000.5), (l, q) -> true, now)) return Result.fail("a bolt struck into an unloaded chunk");
+            if (sl.isLoaded(BlockPos.containing(20000.5, 100.0, 20000.5))) return Result.fail("the strike loaded a chunk");
+            return Result.ok(struck + " bolts in a second (cap " + TrueWorldRules.LIGHTNING_PER_SECOND + "), one entity each, none where the caster may not build, none into an unloaded chunk (visual-only unless lightningRealBolt)");
+        } finally {
+            for (var b : made) b.discard();
+            for (var b : sl.getEntitiesOfClass(net.minecraft.world.entity.LightningBolt.class, box)) b.discard();
+            TrueLightning.resetForTest();
+        }
+    }
+
+    private static Result airStep(MinecraftServer server) {
+        ServerLevel sl = server.overworld();
+        sl.getChunk(0, 0);
+        FakePlayer p = SelfTests.standIn(sl, "mana_method_air_step", 8.5, 120, 8.5);
+        UUID id = p.getUUID();
+        long now = server.getTickCount() + 20000;
+        AirStep.cancelOwner(id);
+        BlockPos under = BlockPos.containing(8.5, 119, 8.5);
+        try {
+            for (int dx = -2; dx <= 2; dx++) for (int dz = -2; dz <= 2; dz++) sl.setBlock(under.offset(dx, 0, dz), Blocks.AIR.defaultBlockState(), 3);
+            if (!ManaMethodConfig.mobility()) return Result.ok("skipped: the mobility runes are switched off in this config");
+            if (!sl.mayInteract(p, under)) return Result.ok("skipped: the spot is under spawn protection for the stand-in");
+            p.setOnGround(false);
+            p.setShiftKeyDown(false);
+            if (!AirStep.start(p, ManaMethodConfig.airStepSeconds(), now)) return Result.fail("the Air Step Rune was refused");
+            AirStep.tickAll(now + 1);
+            int cells = AirStep.cellsOf(id);
+            if (cells < 1 || cells > MobilityRules.MAX_CELLS_PER_CASTER) return Result.fail("the platform has " + cells + " blocks, expected 1 to " + MobilityRules.MAX_CELLS_PER_CASTER);
+            for (BlockPos q : AirStep.positionsOf(id)) if (!sl.getBlockState(q).is(Blocks.BARRIER) || q.getY() != under.getY()) return Result.fail("a platform block at " + q + " is not a barrier under the feet");
+            // the platform follows the feet and never grows past the cap
+            for (int k = 0; k < 12; k++) { p.setPos(8.5 + k * 0.9, 120, 8.5); AirStep.tickAll(now + 2 + k); }
+            if (AirStep.cellsOf(id) > MobilityRules.MAX_CELLS_PER_CASTER || AirStep.globalCells() > MobilityRules.MAX_CELLS_GLOBAL) return Result.fail("the platform grew past its caps: " + AirStep.cellsOf(id) + " / " + AirStep.globalCells());
+            p.setPos(8.5, 120, 8.5);
+            AirStep.tickAll(now + 20);
+            // sneaking drops the player through
+            p.setShiftKeyDown(true);
+            AirStep.tickAll(now + 21);
+            p.setShiftKeyDown(false);
+            for (BlockPos q : footprintCells(8.5, 120, 8.5)) if (sl.getBlockState(q).is(Blocks.BARRIER)) return Result.fail("the barrier under the sneaking player at " + q + " was not removed");
+            // it ends with the player (logout, death, dimension change)
+            AirStep.tickAll(now + 22);
+            AirStep.cancelOwner(id);
+            if (AirStep.sessions() != 0 && AirStep.cellsOf(id) != 0) return Result.fail("the session survived the end");
+            for (int dx = -14; dx <= 14; dx++) for (int dz = -2; dz <= 2; dz++) if (sl.getBlockState(under.offset(dx, 0, dz)).is(Blocks.BARRIER)) return Result.fail("a barrier is left at " + under.offset(dx, 0, dz));
+            return Result.ok("a platform of at most " + MobilityRules.MAX_CELLS_PER_CASTER + " barriers follows the feet, sneak drops, every barrier is gone when the session ends; world cap " + MobilityRules.MAX_CELLS_GLOBAL);
+        } finally {
+            AirStep.cancelOwner(id);
+            for (int dx = -14; dx <= 14; dx++) for (int dz = -2; dz <= 2; dz++) if (sl.getBlockState(under.offset(dx, 0, dz)).is(Blocks.BARRIER)) sl.setBlock(under.offset(dx, 0, dz), Blocks.AIR.defaultBlockState(), 3);
+        }
+    }
+
+    private static List<BlockPos> footprintCells(double x, double y, double z) {
+        int[] out = new int[12];
+        int n = MobilityRules.footprint(x, y, z, out);
+        List<BlockPos> cells = new ArrayList<>(n);
+        for (int i = 0; i < n; i++) cells.add(new BlockPos(out[i * 3], out[i * 3 + 1], out[i * 3 + 2]));
+        return cells;
+    }
+
+    private static Result dash(MinecraftServer server) {
+        ServerLevel sl = server.overworld();
+        sl.getChunk(0, 0);
+        FakePlayer p = SelfTests.standIn(sl, "mana_method_dash", 8.5, 120, 8.5);
+        p.setYRot(0f);
+        p.setXRot(-20f);
+        long now = server.getTickCount() + 30000;
+        Dash.cancelOwner(p.getUUID());
+        try {
+            if (!ManaMethodConfig.mobility()) return Result.ok("skipped: the mobility runes are switched off in this config");
+            p.setDeltaMovement(0, 0, 0);
+            p.fallDistance = 10f;
+            RuneCharge.Charge tap = RuneCharge.of(0, ManaMethodConfig.minHold(), ManaMethodConfig.maxHold()), full = RuneCharge.of(ManaMethodConfig.maxHold(), ManaMethodConfig.minHold(), ManaMethodConfig.maxHold());
+            if (!Dash.cast(p, tap, now)) return Result.fail("the dash was refused");
+            double tapSpeed = p.getDeltaMovement().length();
+            if (!p.hurtMarked) return Result.fail("the dash did not mark the player's motion for the client");
+            if (tapSpeed <= 0.05 || tapSpeed > MobilityRules.MAX_SPEED + 1e-6) return Result.fail("the dash speed is " + tapSpeed);
+            if (p.getDeltaMovement().z <= 0) return Result.fail("the dash does not go the way the player looks");
+            if (p.fallDistance < 10f - (float) MobilityRules.FALL_GRACE - 1e-3f || p.fallDistance > 10f) return Result.fail("the fall after a dash is " + p.fallDistance + ", expected the 10 blocks minus the grace");
+            if (Dash.cast(p, tap, now + 1)) return Result.fail("a second dash in the same moment was not refused");
+            if (!Dash.cast(p, full, now + MobilityRules.DASH_COOLDOWN)) return Result.fail("the dash after the cooldown was refused");
+            double fullSpeed = p.getDeltaMovement().length();
+            if (!(fullSpeed > tapSpeed)) return Result.fail("a full hold should dash faster than a tap: " + fullSpeed + " vs " + tapSpeed);
+            if (fullSpeed > MobilityRules.MAX_SPEED + 1e-6) return Result.fail("a dash is faster than the maximum: " + fullSpeed);
+            Dash.cancelOwner(p.getUUID());
+            if (!Dash.cast(p, tap, now)) return Result.fail("a dropped player kept a cooldown");
+            return Result.ok("tap " + String.format("%.2f", tapSpeed) + " and full " + String.format("%.2f", fullSpeed) + " blocks/tick (max " + MobilityRules.MAX_SPEED + "), motion marked for the client, cooldown " + MobilityRules.DASH_COOLDOWN + " ticks, fall forgiven only " + MobilityRules.FALL_GRACE + " blocks");
+        } finally {
+            Dash.cancelOwner(p.getUUID());
+            p.setDeltaMovement(0, 0, 0);
+            p.fallDistance = 0f;
         }
     }
 }

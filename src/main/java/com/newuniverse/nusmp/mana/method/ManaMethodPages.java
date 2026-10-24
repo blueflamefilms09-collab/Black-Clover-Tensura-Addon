@@ -5,6 +5,7 @@ import com.newuniverse.nusmp.blackclover.MagicType;
 import com.newuniverse.nusmp.book.BookPage;
 import com.newuniverse.nusmp.book.GrimoireBook;
 import com.newuniverse.nusmp.mana.ManaLaw;
+import com.newuniverse.nusmp.mana.method.RuneCharge.Charge;
 import com.newuniverse.nusmp.mana.zone.ManaZoneManager;
 import com.newuniverse.nusmp.mana.zone.TrueMagicRules;
 import io.github.manasmods.manascore.skill.api.ManasSkillInstance;
@@ -29,6 +30,10 @@ import java.util.List;
  *   <tr><td>mana_method_earth</td><td>Earth Rune</td><td>mid, late game</td><td>12 %</td><td>8 s</td><td>grows</td></tr>
  *   <tr><td>mana_method_true</td><td>True Magic Rune</td><td>zone, late game</td><td>20 % (floor 600)</td><td>20 s</td><td>grows (your natural element)</td></tr>
  * </table>
+ * <p>3.5.0: two mobility pages are appended LAST after these five (same gate, same setting, plus {@code manaMethod.mobility}): <b>Air Step Rune</b> ({@code mana_method_air_step}, 8 %, floor 150,
+ * 12 s) and <b>Dash Rune</b> ({@code mana_method_dash}, 6 %, floor 100, 3 s). Their ids hold the words "step" and "dash", which the Avatar's list denies, so an Avatar never casts them.
+ * The rune pages are charged by HOLDING the cast key ({@link RuneHold}); a tap fires the basic spell, a full hold the massive one.
+ *
  * Casting while sneaking writes BOTH runes (pursue and grow), at 85 % of the power and 4 more ticks of charge. The ids contain no attack word, so an Avatar never casts them
  * (AvatarSkillList), and the Mana Method pages are not family pages, so the "15 spells" pages15 machinery and the armour policy do not see them.
  */
@@ -36,18 +41,34 @@ public final class ManaMethodPages {
     private ManaMethodPages() {}
 
     public static final String FIRE_ID = "mana_method_fire", WATER_ID = "mana_method_water", WIND_ID = "mana_method_wind", EARTH_ID = "mana_method_earth", TRUE_ID = "mana_method_true";
-    private static final List<String> IDS = List.of(FIRE_ID, WATER_ID, WIND_ID, EARTH_ID, TRUE_ID);
+    /** 3.5.0: the two mobility pages, appended after the five rune pages. */
+    public static final String AIR_STEP_ID = "mana_method_air_step", DASH_ID = "mana_method_dash";
+    private static final List<String> RUNE_IDS = List.of(FIRE_ID, WATER_ID, WIND_ID, EARTH_ID, TRUE_ID);
+    private static final List<String> IDS = List.of(FIRE_ID, WATER_ID, WIND_ID, EARTH_ID, TRUE_ID, AIR_STEP_ID, DASH_ID);
 
     public static List<String> ids() { return IDS; }
 
+    /** The five rune pages (3.4.0), without the mobility pages. */
+    public static List<String> runeIds() { return RUNE_IDS; }
+
     public static boolean isPage(String id) { return id != null && IDS.contains(id); }
 
-    /** How many of the last pages of a book are Mana Method pages: all five, or none (an older list). The pinned "the last pages are the spirit pages" checks use it to look past them. */
+    public static boolean isMobility(String id) { return AIR_STEP_ID.equals(id) || DASH_ID.equals(id); }
+
+    /**
+     * How many of the last pages of a book are Mana Method pages: all seven, the five of 3.4.0, or none (an older list). The pinned "the last pages are the spirit pages" checks use it to
+     * look past them.
+     */
     public static int tailCount(List<BookPage> pages) {
-        int n = pages.size(), k = IDS.size();
-        if (n < k) return 0;
-        for (int i = 0; i < k; i++) if (!pages.get(n - k + i).id().equals(IDS.get(i))) return 0;
-        return k;
+        int n = pages.size();
+        for (List<String> ids : List.of(IDS, RUNE_IDS)) {
+            int k = ids.size();
+            if (n < k) continue;
+            boolean all = true;
+            for (int i = 0; i < k && all; i++) all = pages.get(n - k + i).id().equals(ids.get(i));
+            if (all) return k;
+        }
+        return 0;
     }
 
     /** The pages as the grimoire appends them (always present, so the mode numbers never depend on the setting; {@link #usable} hides them). */
@@ -57,7 +78,9 @@ public final class ManaMethodPages {
                 element(WATER_ID, "Water Rune", RuneElement.WATER),
                 element(WIND_ID, "Wind Rune", RuneElement.WIND),
                 element(EARTH_ID, "Earth Rune", RuneElement.EARTH),
-                new BookPage(TRUE_ID, "True Magic Rune", "Mana Method: True Magic", RuneRules.COST_PERCENT_TRUE, RuneRules.COST_FLOOR_TRUE, RuneRules.COOLDOWN_TRUE, ManaMethodPages::castTrue));
+                new BookPage(TRUE_ID, "True Magic Rune", "Mana Method: True Magic", RuneRules.COST_PERCENT_TRUE, RuneRules.COST_FLOOR_TRUE, RuneRules.COOLDOWN_TRUE, ManaMethodPages::castTrue),
+                new BookPage(AIR_STEP_ID, "Air Step Rune", "Mana Method: Air Step", MobilityRules.COST_PERCENT_AIR_STEP, MobilityRules.COST_FLOOR_AIR_STEP, MobilityRules.COOLDOWN_AIR_STEP, ManaMethodPages::castAirStep),
+                new BookPage(DASH_ID, "Dash Rune", "Mana Method: Dash", MobilityRules.COST_PERCENT_DASH, MobilityRules.COST_FLOOR_DASH, MobilityRules.COOLDOWN_DASH, ManaMethodPages::castDash));
     }
 
     private static BookPage element(String id, String name, RuneElement e) {
@@ -68,10 +91,59 @@ public final class ManaMethodPages {
     /** Usable = the setting is on and the late-game gate of the Mana Zone is open for this entity. */
     public static boolean usable(LivingEntity e) { return ManaMethodConfig.enabled() && ManaZoneManager.gateOpenFor(e); }
 
+    /** As {@link #usable(LivingEntity)}, and the mobility pages also need the setting {@code manaMethod.mobility}. */
+    public static boolean usable(LivingEntity e, String pageId) { return usable(e) && (!isMobility(pageId) || ManaMethodConfig.mobility()); }
+
     // ---------------------------------------------------------------- the casts
     private static boolean castElement(GrimoireBook b, ManasSkillInstance i, ServerPlayer p, int mode, RuneElement e) {
-        int mods = p.isShiftKeyDown() ? RuneMods.ALL : e.defaultMods();
-        return begin(b, i, p, mode, new RuneSpec(e, mods, false));
+        Charge ch = chargeOf(p, mode);
+        int mods = RuneCharge.modsFor(ch, e, p.isShiftKeyDown());                  // a basic (tapped) spell never writes the second rune
+        return begin(b, i, p, mode, new RuneSpec(e, mods, false), ch);
+    }
+
+    /** The charge of this cast: what the hold measured (hold-to-charge on and a release waiting), otherwise the 3.4.0 spell. */
+    private static Charge chargeOf(ServerPlayer p, int mode) {
+        if (!RuneHold.active()) return Charge.LEGACY;
+        Charge c = RuneHold.take(p.getUUID(), mode, p.level().getGameTime());
+        return c == null ? Charge.LEGACY : c;
+    }
+
+    /**
+     * The rune a page would write for this player right now, without any message or side effect (null for a page that writes no rune, or a True Magic page the caster cannot use): the
+     * hold packet draws it while the key is down.
+     */
+    public static RuneSpec specFor(String pageId, ManasSkillInstance i, ServerPlayer p, Charge charge) {
+        if (pageId == null) return null;
+        RuneElement e = switch (pageId) {
+            case FIRE_ID -> RuneElement.FIRE;
+            case WATER_ID -> RuneElement.WATER;
+            case WIND_ID -> RuneElement.WIND;
+            case EARTH_ID -> RuneElement.EARTH;
+            case TRUE_ID -> trueElement(i, p);
+            default -> null;
+        };
+        if (e == null) return null;
+        return new RuneSpec(e, RuneCharge.modsFor(charge, e, p.isShiftKeyDown()), TRUE_ID.equals(pageId));
+    }
+
+    /** The element of the True Magic page for this caster (the natural attribute of the grimoire), or null when it cannot be cast. */
+    private static RuneElement trueElement(ManasSkillInstance i, ServerPlayer p) {
+        MagicType magic = GrimoirePages.magicOf(i);
+        RuneElement e = RuneElement.ofMagic(magic == null ? null : magic.name());
+        if (e == null || !TrueMagicRules.isNatural(magic.name())) return null;
+        var stage = ManaLaw.stage(p);
+        return TrueMagicRules.controlEnough(stage.number(), stage.arcane() || stage.saint()) ? e : null;
+    }
+
+    private static boolean castAirStep(GrimoireBook b, ManasSkillInstance i, ServerPlayer p, int mode) {
+        if (!ManaMethodConfig.mobility()) { GrimoireBook.fail(p, "The mobility runes are switched off on this server."); return false; }
+        RuneHold.take(p.getUUID(), mode, p.level().getGameTime());                  // the hold does not matter for the platform; the waiting release is used up
+        return AirStep.start(p, ManaMethodConfig.airStepSeconds(), p.level().getGameTime());
+    }
+
+    private static boolean castDash(GrimoireBook b, ManasSkillInstance i, ServerPlayer p, int mode) {
+        if (!ManaMethodConfig.mobility()) { GrimoireBook.fail(p, "The mobility runes are switched off on this server."); return false; }
+        return Dash.cast(p, chargeOf(p, mode), p.level().getGameTime());
     }
 
     private static boolean castTrue(GrimoireBook b, ManasSkillInstance i, ServerPlayer p, int mode) {
@@ -86,17 +158,18 @@ public final class ManaMethodPages {
             GrimoireBook.fail(p, "True Magic needs the control of Stage 3 or higher to hold the runes.");
             return false;
         }
-        int mods = p.isShiftKeyDown() ? RuneMods.ALL : e.defaultMods();
-        boolean ok = begin(b, i, p, mode, new RuneSpec(e, mods, true));
+        Charge ch = chargeOf(p, mode);
+        int mods = RuneCharge.modsFor(ch, e, p.isShiftKeyDown());
+        boolean ok = begin(b, i, p, mode, new RuneSpec(e, mods, true), ch);
         if (ok) RuneManager.refundFuel(b, i, p, mode, ManaLaw.density(p.level(), p.blockPosition()));
         return ok;
     }
 
-    private static boolean begin(GrimoireBook b, ManasSkillInstance i, ServerPlayer p, int mode, RuneSpec spec) {
-        RuneManager.Begin r = RuneManager.begin(b, i, p, mode, spec, p.getServer().getTickCount());
+    private static boolean begin(GrimoireBook b, ManasSkillInstance i, ServerPlayer p, int mode, RuneSpec spec, Charge charge) {
+        RuneManager.Begin r = RuneManager.begin(b, i, p, mode, spec, p.getServer().getTickCount(), charge);
         switch (r) {
             case OK -> {
-                p.displayClientMessage(Component.translatableWithFallback("nusmp.mana_method.cast", "Mana Method: %s (%s)", spec.element().title + (spec.trueMagic() ? " True Magic" : " Rune"), RuneMods.describe(spec.mods())).withStyle(ChatFormatting.LIGHT_PURPLE), true);
+                p.displayClientMessage(Component.translatableWithFallback("nusmp.mana_method.cast", "Mana Method: %s (%s)", spec.element().title + (spec.trueMagic() ? " True Magic" : " Rune"), RuneMods.describe(spec.mods()) + (charge.legacy() ? "" : ", " + charge.stage().name().toLowerCase(java.util.Locale.ROOT))).withStyle(ChatFormatting.LIGHT_PURPLE), true);
                 return true;
             }
             case CASTER_FULL -> GrimoireBook.fail(p, "Your runes are still forming (" + ManaMethodConfig.perCaster() + " at most).");
