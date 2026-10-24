@@ -253,6 +253,7 @@ public final class VfxManager {
         register(new com.newuniverse.nusmp.vfx.client.layer.WindMcLayer());
         // Water in the hybrid style (3D toon cores wrapped in glass): registered after WaterFxLayer / WaterMagicLayer on purpose, it takes Roar / Javelin, Cradle / Nest, Burst, Splash and Ring over from them (V1 hands them back); the old WaterSpellLayer shapes are not in it
         register(new com.newuniverse.nusmp.vfx.client.layer.WaterBcLayer());
+        register(new com.newuniverse.nusmp.vfx.client.layer.FireV2Layer());
     }
 
     public void register(AbstractVfxLayer layer) { for (VfxShape s : layer.shapes()) layers.put(s, layer); }

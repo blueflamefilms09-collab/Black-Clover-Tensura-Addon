@@ -1,0 +1,970 @@
+{
+ "_comment": "Fire V2 (in the game): the real FireV2Layer. Same cameras / ticks as the preview round (fire_new_effects.py SCENES). *_v1 run the same layer with vfx.element.fire = V1 (they must equal the old layers); *_tint is a blue flame (the grey twin textures); *_reduced is the reduced-flashes option.",
+ "fire_v2_lion": {
+  "layer": "FireV2Layer",
+  "shape": "FIRE_LION",
+  "from": [
+   0.0,
+   1.2,
+   0.0
+  ],
+  "to": [
+   0.0,
+   1.2,
+   16.0
+  ],
+  "power": 1.2,
+  "duration": 34,
+  "cam": [
+   9,
+   3,
+   4
+  ],
+  "target": [
+   0,
+   1.5,
+   9
+  ],
+  "ages": [
+   6,
+   14,
+   26
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    -1,
+    1.8
+   ],
+   [
+    0,
+    0,
+    16.5,
+    1.8
+   ]
+  ],
+  "sky": [
+   0.25,
+   0.22,
+   0.3
+  ]
+ },
+ "fire_v2_lion_v1": {
+  "layer": "FireV2Layer",
+  "shape": "FIRE_LION",
+  "from": [
+   0.0,
+   1.2,
+   0.0
+  ],
+  "to": [
+   0.0,
+   1.2,
+   16.0
+  ],
+  "power": 1.2,
+  "duration": 34,
+  "cam": [
+   9,
+   3,
+   4
+  ],
+  "target": [
+   0,
+   1.5,
+   9
+  ],
+  "ages": [
+   6,
+   14,
+   26
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    -1,
+    1.8
+   ],
+   [
+    0,
+    0,
+    16.5,
+    1.8
+   ]
+  ],
+  "sky": [
+   0.25,
+   0.22,
+   0.3
+  ],
+  "fire_style": "V1"
+ },
+ "fire_v2_spear": {
+  "layer": "FireV2Layer",
+  "shape": "FIRE_SPEAR",
+  "from": [
+   0.0,
+   1.6,
+   0.0
+  ],
+  "to": [
+   0.0,
+   1.6,
+   20.0
+  ],
+  "power": 1.0,
+  "duration": 16,
+  "cam": [
+   6,
+   2.5,
+   3
+  ],
+  "target": [
+   0,
+   1.5,
+   9
+  ],
+  "ages": [
+   3,
+   6,
+   11
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    -0.5,
+    1.8
+   ]
+  ]
+ },
+ "fire_v2_spear_v1": {
+  "layer": "FireV2Layer",
+  "shape": "FIRE_SPEAR",
+  "from": [
+   0.0,
+   1.6,
+   0.0
+  ],
+  "to": [
+   0.0,
+   1.6,
+   20.0
+  ],
+  "power": 1.0,
+  "duration": 16,
+  "cam": [
+   6,
+   2.5,
+   3
+  ],
+  "target": [
+   0,
+   1.5,
+   9
+  ],
+  "ages": [
+   3,
+   6,
+   11
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    -0.5,
+    1.8
+   ]
+  ],
+  "fire_style": "V1"
+ },
+ "fire_v2_pillar": {
+  "layer": "FireV2Layer",
+  "shape": "FIRE_PILLAR",
+  "from": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "to": [
+   0.0,
+   1.0,
+   0.0
+  ],
+  "power": 1.0,
+  "duration": 30,
+  "cam": [
+   0,
+   2.0,
+   -7
+  ],
+  "target": [
+   0,
+   2,
+   0
+  ],
+  "ages": [
+   3,
+   10,
+   22
+  ],
+  "figures": [
+   [
+    2.5,
+    0,
+    1,
+    1.8
+   ]
+  ],
+  "sky": [
+   0.25,
+   0.22,
+   0.3
+  ]
+ },
+ "fire_v2_pillar_v1": {
+  "layer": "FireV2Layer",
+  "shape": "FIRE_PILLAR",
+  "from": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "to": [
+   0.0,
+   1.0,
+   0.0
+  ],
+  "power": 1.0,
+  "duration": 30,
+  "cam": [
+   0,
+   2.0,
+   -7
+  ],
+  "target": [
+   0,
+   2,
+   0
+  ],
+  "ages": [
+   3,
+   10,
+   22
+  ],
+  "figures": [
+   [
+    2.5,
+    0,
+    1,
+    1.8
+   ]
+  ],
+  "sky": [
+   0.25,
+   0.22,
+   0.3
+  ],
+  "fire_style": "V1"
+ },
+ "fire_v2_burst": {
+  "layer": "FireV2Layer",
+  "shape": "FIRE_BURST",
+  "from": [
+   0.0,
+   0.8,
+   0.0
+  ],
+  "to": [
+   0.0,
+   0.8,
+   0.0
+  ],
+  "power": 1.0,
+  "duration": 22,
+  "cam": [
+   0,
+   2.0,
+   -7
+  ],
+  "target": [
+   0,
+   1,
+   0
+  ],
+  "ages": [
+   2,
+   7,
+   15
+  ],
+  "figures": [
+   [
+    2.5,
+    0,
+    1,
+    1.8
+   ]
+  ]
+ },
+ "fire_v2_burst_v1": {
+  "layer": "FireV2Layer",
+  "shape": "FIRE_BURST",
+  "from": [
+   0.0,
+   0.8,
+   0.0
+  ],
+  "to": [
+   0.0,
+   0.8,
+   0.0
+  ],
+  "power": 1.0,
+  "duration": 22,
+  "cam": [
+   0,
+   2.0,
+   -7
+  ],
+  "target": [
+   0,
+   1,
+   0
+  ],
+  "ages": [
+   2,
+   7,
+   15
+  ],
+  "figures": [
+   [
+    2.5,
+    0,
+    1,
+    1.8
+   ]
+  ],
+  "fire_style": "V1"
+ },
+ "fire_v2_spiral": {
+  "layer": "FireV2Layer",
+  "shape": "FIRE_SPIRAL",
+  "from": [
+   0.0,
+   1.6,
+   0.0
+  ],
+  "to": [
+   0.0,
+   1.6,
+   18.0
+  ],
+  "power": 1.2,
+  "duration": 22,
+  "cam": [
+   10,
+   3.5,
+   5.4
+  ],
+  "target": [
+   0,
+   1.5,
+   9.9
+  ],
+  "ages": [
+   4,
+   9,
+   15
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    -1,
+    1.8
+   ],
+   [
+    0,
+    0,
+    18.5,
+    1.8
+   ]
+  ]
+ },
+ "fire_v2_spiral_v1": {
+  "layer": "FireV2Layer",
+  "shape": "FIRE_SPIRAL",
+  "from": [
+   0.0,
+   1.6,
+   0.0
+  ],
+  "to": [
+   0.0,
+   1.6,
+   18.0
+  ],
+  "power": 1.2,
+  "duration": 22,
+  "cam": [
+   10,
+   3.5,
+   5.4
+  ],
+  "target": [
+   0,
+   1.5,
+   9.9
+  ],
+  "ages": [
+   4,
+   9,
+   15
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    -1,
+    1.8
+   ],
+   [
+    0,
+    0,
+    18.5,
+    1.8
+   ]
+  ],
+  "fire_style": "V1"
+ },
+ "fire_v2_wild": {
+  "layer": "FireV2Layer",
+  "shape": "FIRE_WILD",
+  "from": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "to": [
+   0.0,
+   1.0,
+   0.0
+  ],
+  "power": 5.0,
+  "duration": 30,
+  "cam": [
+   0,
+   5,
+   -13
+  ],
+  "target": [
+   0,
+   1,
+   0
+  ],
+  "ages": [
+   4,
+   10,
+   18
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "fire_v2_wild_v1": {
+  "layer": "FireV2Layer",
+  "shape": "FIRE_WILD",
+  "from": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "to": [
+   0.0,
+   1.0,
+   0.0
+  ],
+  "power": 5.0,
+  "duration": 30,
+  "cam": [
+   0,
+   5,
+   -13
+  ],
+  "target": [
+   0,
+   1,
+   0
+  ],
+  "ages": [
+   4,
+   10,
+   18
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ],
+  "fire_style": "V1"
+ },
+ "fire_v2_cast": {
+  "layer": "FireV2Layer",
+  "shape": "FLAMEFX_CAST",
+  "from": [
+   0.0,
+   1.2,
+   0.0
+  ],
+  "to": [
+   0.0,
+   1.2,
+   10.0
+  ],
+  "power": 1.0,
+  "duration": 24,
+  "cam": [
+   -5.0,
+   2.4,
+   4.0
+  ],
+  "target": [
+   0,
+   1.2,
+   5
+  ],
+  "ages": [
+   5,
+   9,
+   14
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    -0.6,
+    1.8
+   ]
+  ],
+  "sky": [
+   0.3,
+   0.34,
+   0.44
+  ]
+ },
+ "fire_v2_cast_v1": {
+  "layer": "FireV2Layer",
+  "shape": "FLAMEFX_CAST",
+  "from": [
+   0.0,
+   1.2,
+   0.0
+  ],
+  "to": [
+   0.0,
+   1.2,
+   10.0
+  ],
+  "power": 1.0,
+  "duration": 24,
+  "cam": [
+   -5.0,
+   2.4,
+   4.0
+  ],
+  "target": [
+   0,
+   1.2,
+   5
+  ],
+  "ages": [
+   5,
+   9,
+   14
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    -0.6,
+    1.8
+   ]
+  ],
+  "sky": [
+   0.3,
+   0.34,
+   0.44
+  ],
+  "fire_style": "V1"
+ },
+ "fire_v2_zone": {
+  "layer": "FireV2Layer",
+  "shape": "FLAMEFX_ZONE",
+  "from": [
+   0.0,
+   0.0,
+   6.0
+  ],
+  "to": [
+   0.0,
+   1.0,
+   6.0
+  ],
+  "power": 4.0,
+  "duration": 80,
+  "cam": [
+   -6.0,
+   4.0,
+   -1.0
+  ],
+  "target": [
+   0,
+   0.8,
+   6
+  ],
+  "ages": [
+   8,
+   16,
+   40
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ],
+   [
+    3,
+    0,
+    6,
+    1.8
+   ]
+  ],
+  "sky": [
+   0.3,
+   0.34,
+   0.44
+  ]
+ },
+ "fire_v2_zone_v1": {
+  "layer": "FireV2Layer",
+  "shape": "FLAMEFX_ZONE",
+  "from": [
+   0.0,
+   0.0,
+   6.0
+  ],
+  "to": [
+   0.0,
+   1.0,
+   6.0
+  ],
+  "power": 4.0,
+  "duration": 80,
+  "cam": [
+   -6.0,
+   4.0,
+   -1.0
+  ],
+  "target": [
+   0,
+   0.8,
+   6
+  ],
+  "ages": [
+   8,
+   16,
+   40
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ],
+   [
+    3,
+    0,
+    6,
+    1.8
+   ]
+  ],
+  "sky": [
+   0.3,
+   0.34,
+   0.44
+  ],
+  "fire_style": "V1"
+ },
+ "fire_v2_fxburst": {
+  "layer": "FireV2Layer",
+  "shape": "FLAMEFX_BURST",
+  "from": [
+   0.0,
+   0.0,
+   6.0
+  ],
+  "to": [
+   0.0,
+   1.0,
+   6.0
+  ],
+  "power": 1.4,
+  "duration": 28,
+  "cam": [
+   -5.0,
+   2.6,
+   0.0
+  ],
+  "target": [
+   0,
+   1.0,
+   6
+  ],
+  "ages": [
+   3,
+   6,
+   10
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ],
+  "sky": [
+   0.3,
+   0.34,
+   0.44
+  ]
+ },
+ "fire_v2_fxburst_v1": {
+  "layer": "FireV2Layer",
+  "shape": "FLAMEFX_BURST",
+  "from": [
+   0.0,
+   0.0,
+   6.0
+  ],
+  "to": [
+   0.0,
+   1.0,
+   6.0
+  ],
+  "power": 1.4,
+  "duration": 28,
+  "cam": [
+   -5.0,
+   2.6,
+   0.0
+  ],
+  "target": [
+   0,
+   1.0,
+   6
+  ],
+  "ages": [
+   3,
+   6,
+   10
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ],
+  "sky": [
+   0.3,
+   0.34,
+   0.44
+  ],
+  "fire_style": "V1"
+ },
+ "fire_v2_trail": {
+  "layer": "FireV2Layer",
+  "shape": "FLAME_TRAIL",
+  "from": [
+   0.0,
+   1.2,
+   0.0
+  ],
+  "to": [
+   0.0,
+   1.2,
+   12.0
+  ],
+  "power": 1.0,
+  "duration": 24,
+  "cam": [
+   -7.0,
+   2.8,
+   5.0
+  ],
+  "target": [
+   0,
+   1.2,
+   7
+  ],
+  "ages": [
+   4,
+   10,
+   16
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    -0.6,
+    1.8
+   ]
+  ],
+  "sky": [
+   0.3,
+   0.34,
+   0.44
+  ]
+ },
+ "fire_v2_trail_v1": {
+  "layer": "FireV2Layer",
+  "shape": "FLAME_TRAIL",
+  "from": [
+   0.0,
+   1.2,
+   0.0
+  ],
+  "to": [
+   0.0,
+   1.2,
+   12.0
+  ],
+  "power": 1.0,
+  "duration": 24,
+  "cam": [
+   -7.0,
+   2.8,
+   5.0
+  ],
+  "target": [
+   0,
+   1.2,
+   7
+  ],
+  "ages": [
+   4,
+   10,
+   16
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    -0.6,
+    1.8
+   ]
+  ],
+  "sky": [
+   0.3,
+   0.34,
+   0.44
+  ],
+  "fire_style": "V1"
+ },
+ "fire_v2_explosion": {
+  "layer": "FireV2Layer",
+  "shape": "FLAME_EXPLOSION",
+  "from": [
+   0.0,
+   0.8,
+   0.0
+  ],
+  "to": [
+   0.0,
+   0.8,
+   0.0
+  ],
+  "power": 1.0,
+  "duration": 26,
+  "cam": [
+   0,
+   2.0,
+   -7
+  ],
+  "target": [
+   0,
+   1,
+   0
+  ],
+  "ages": [
+   3,
+   8,
+   14,
+   22
+  ],
+  "figures": [
+   [
+    2.5,
+    0,
+    1,
+    1.8
+   ]
+  ]
+ },
+ "fire_v2_explosion_v1": {
+  "layer": "FireV2Layer",
+  "shape": "FLAME_EXPLOSION",
+  "from": [
+   0.0,
+   0.8,
+   0.0
+  ],
+  "to": [
+   0.0,
+   0.8,
+   0.0
+  ],
+  "power": 1.0,
+  "duration": 26,
+  "cam": [
+   0,
+   2.0,
+   -7
+  ],
+  "target": [
+   0,
+   1,
+   0
+  ],
+  "ages": [
+   3,
+   8,
+   14,
+   22
+  ],
+  "figures": [
+   [
+    2.5,
+    0,
+    1,
+    1.8
+   ]
+  ],
+  "fire_style": "V1"
+ }
+}

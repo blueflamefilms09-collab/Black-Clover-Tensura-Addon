@@ -1,0 +1,90 @@
+{
+ "lion": {
+  "duration": 34,
+  "v1_equals_old_layer": true,
+  "V2_peak_quads_detail_1.0": 22,
+  "before_peak_quads_detail_1.0": 66,
+  "V2_peak_quads_detail_0.5": 15,
+  "before_peak_quads_detail_0.5": 41
+ },
+ "spear": {
+  "duration": 16,
+  "v1_equals_old_layer": true,
+  "V2_peak_quads_detail_1.0": 17,
+  "before_peak_quads_detail_1.0": 49,
+  "V2_peak_quads_detail_0.5": 12,
+  "before_peak_quads_detail_0.5": 28
+ },
+ "pillar": {
+  "duration": 30,
+  "v1_equals_old_layer": true,
+  "V2_peak_quads_detail_1.0": 33,
+  "before_peak_quads_detail_1.0": 55,
+  "V2_peak_quads_detail_0.5": 21,
+  "before_peak_quads_detail_0.5": 34
+ },
+ "burst": {
+  "duration": 22,
+  "v1_equals_old_layer": true,
+  "V2_peak_quads_detail_1.0": 29,
+  "before_peak_quads_detail_1.0": 61,
+  "V2_peak_quads_detail_0.5": 17,
+  "before_peak_quads_detail_0.5": 36
+ },
+ "spiral": {
+  "duration": 22,
+  "v1_equals_old_layer": true,
+  "V2_peak_quads_detail_1.0": 49,
+  "before_peak_quads_detail_1.0": 67,
+  "V2_peak_quads_detail_0.5": 28,
+  "before_peak_quads_detail_0.5": 39
+ },
+ "wild": {
+  "duration": 30,
+  "v1_equals_old_layer": true,
+  "V2_peak_quads_detail_1.0": 69,
+  "before_peak_quads_detail_1.0": 93,
+  "V2_peak_quads_detail_0.5": 42,
+  "before_peak_quads_detail_0.5": 57
+ },
+ "cast": {
+  "duration": 24,
+  "v1_equals_old_layer": true,
+  "V2_peak_quads_detail_1.0": 26,
+  "before_peak_quads_detail_1.0": 45,
+  "V2_peak_quads_detail_0.5": 18,
+  "before_peak_quads_detail_0.5": 27
+ },
+ "zone": {
+  "duration": 80,
+  "v1_equals_old_layer": true,
+  "V2_peak_quads_detail_1.0": 31,
+  "before_peak_quads_detail_1.0": 39,
+  "V2_peak_quads_detail_0.5": 17,
+  "before_peak_quads_detail_0.5": 21
+ },
+ "fxburst": {
+  "duration": 28,
+  "v1_equals_old_layer": true,
+  "V2_peak_quads_detail_1.0": 26,
+  "before_peak_quads_detail_1.0": 54,
+  "V2_peak_quads_detail_0.5": 15,
+  "before_peak_quads_detail_0.5": 30
+ },
+ "trail": {
+  "duration": 24,
+  "v1_equals_old_layer": true,
+  "V2_peak_quads_detail_1.0": 24,
+  "before_peak_quads_detail_1.0": 41,
+  "V2_peak_quads_detail_0.5": 15,
+  "before_peak_quads_detail_0.5": 22
+ },
+ "explosion": {
+  "duration": 26,
+  "v1_equals_old_layer": true,
+  "V2_peak_quads_detail_1.0": 29,
+  "before_peak_quads_detail_1.0": 73,
+  "V2_peak_quads_detail_0.5": 19,
+  "before_peak_quads_detail_0.5": 38
+ }
+}

@@ -96,6 +96,9 @@ def build(layers):
             shutil.copy(os.path.join(VFX, name), pkg)
         shutil.copy(os.path.join(VFX, "client", "WaterBcFrame.java"), os.path.join(pkg, "client"))
         layers = list(layers) + ["WaterFxLayer", "WaterMagicLayer"]
+    shutil.copy(os.path.join(VFX, "FireV2.java"), pkg)                     # Fire V2: the pure rules (style switch, caps, flip-book, reduced flashes, tint choice) FireV2Layer reads
+    if any(l.split(".")[-1] == "FireV2Layer" for l in layers):             # FireV2Layer hands V1 back to the three layers that drew the shapes before it
+        layers = list(layers) + ["FireSpellLayer", "FlameFxLayer", "FlameMagicLayer"]
     storm_pkg = os.path.join(gen, "com", "newuniverse", "nusmp", "fairytail", "storm")           # Storm Magic: the pure maths the server and the layer share (StormMath, StormComp)
     os.makedirs(storm_pkg, exist_ok=True)
     for name in ("StormMath.java", "StormComp.java"):
@@ -287,6 +290,10 @@ def run_java(scene, classes, out_json):
         args += ["--tier", str(scene["tier"])]
     if scene.get("follow"):
         args += ["--follow", "1"]
+    if scene.get("fire_style"):
+        args += ["--fire-style", scene["fire_style"]]
+    if scene.get("reduced"):
+        args += ["--reduced", "1"]
     subprocess.run(args, check=True)
     with open(out_json) as f:
         return json.load(f)
