@@ -343,7 +343,18 @@ public enum VfxShape {
     STORM_FALL,
     STORM_BOLT,
     STORM_FRONT,
-    STORM_CANCEL;
+    STORM_CANCEL,
+    // Star Magic nodes (vfx.client.layer.StarMagicLayer, docs/vfx_remake/star_ingame.md); the seed carries a flag the layer reads. STAR_NODE: from = the hand, to = the star, seed 0 = a star forming (comet + ground sigil);
+    // STAR_LINK: one constellation line from -> to (seed = the line's index in the loop); STAR_CONJ: Conjunction, from = where the mage left, to = where they arrive; STAR_PANE: a pane hit (seed 0) or its breaking (seed 1) at
+    // from, the pane centred on to; STAR_LANCE: the spear of light of Quartile Hasta from -> to (power = width); STAR_WHIP: one leg of the whip (seed = its index 0..4, so the ribbon tapers along the legs);
+    // STAR_DOME: Black Neverland round from, power = radius. STAR_MAGIC stays the old shape of every other page.
+    STAR_NODE,
+    STAR_LINK,
+    STAR_CONJ,
+    STAR_PANE,
+    STAR_LANCE,
+    STAR_WHIP,
+    STAR_DOME;
 
     public static VfxShape byId(int id) {
         VfxShape[] v = values();

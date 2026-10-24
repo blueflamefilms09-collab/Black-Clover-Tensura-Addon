@@ -70,6 +70,7 @@ public final class SpellRuntime {
         Vec3 next = b.pos.add(b.vel);
         HitResult wall = b.level.clip(new ClipContext(b.pos, next, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, b.owner));
         if (wall.getType() != HitResult.Type.MISS) next = wall.getLocation();
+        if (com.newuniverse.nusmp.star.StarProps.absorbBolt(b.level, b.pos, next, b.owner)) { end(b, b.pos); return; }      // Quartile Scutum: a pane stops it (nothing while no pane stands)
         for (LivingEntity e : b.level.getEntitiesOfClass(LivingEntity.class, new AABB(b.pos, next).inflate(b.radius),
                 e -> e != b.owner && e.isAlive() && !e.isSpectator() && !e.isAlliedTo(b.owner))) {
             if (!b.hit.add(e)) continue;

@@ -254,6 +254,8 @@ public final class VfxManager {
         // Water in the hybrid style (3D toon cores wrapped in glass): registered after WaterFxLayer / WaterMagicLayer on purpose, it takes Roar / Javelin, Cradle / Nest, Burst, Splash and Ring over from them (V1 hands them back); the old WaterSpellLayer shapes are not in it
         register(new com.newuniverse.nusmp.vfx.client.layer.WaterBcLayer());
         register(new com.newuniverse.nusmp.vfx.client.layer.FireV2Layer());
+        // Star Magic nodes (anime cel + volumetric glow): its own seven shapes (STAR_NODE ... STAR_DOME), appended after STAR_MAGIC; STAR_MAGIC and ElementIdentityLayer are untouched. V1 draws them as the old starlight beam.
+        register(new com.newuniverse.nusmp.vfx.client.layer.StarMagicLayer());
     }
 
     public void register(AbstractVfxLayer layer) { for (VfxShape s : layer.shapes()) layers.put(s, layer); }
