@@ -21,7 +21,7 @@ def main():
     with open(LANG, encoding='utf-8') as f:
         text = f.read()
     lang = json.loads(text)
-    add, clash, files = {}, [], sorted(glob.glob(os.path.join(ROOT, 'tools/lang/ultimate.json')))
+    add, clash, files = {}, [], sorted(glob.glob(os.path.join(ROOT, 'tools/lang/ultimate*.json')))
     for p in files:
         with open(p, encoding='utf-8') as f:
             frag = json.load(f)

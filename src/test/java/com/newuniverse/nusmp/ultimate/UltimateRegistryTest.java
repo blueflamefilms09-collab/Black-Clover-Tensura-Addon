@@ -40,7 +40,7 @@ class UltimateRegistryTest {
     void theEightFlagshipBooksEachHaveExactlyOneAndNothingElseYet() {
         Set<String> books = new HashSet<>();
         for (UltimateDef d : UltimateRegistry.all()) assertTrue(books.add(d.bookPath()), "two Ultimates for " + d.bookPath());
-        assertEquals(FLAGSHIP, books);
+        assertTrue(books.containsAll(FLAGSHIP), "the eight flagship books keep their Ultimate (the groups UltimateDefs1..4 add more)");
         for (String b : FLAGSHIP) assertNotNull(UltimateRegistry.forBook(b), b);
         assertNull(UltimateRegistry.forBook("book_time"), "there is no Time Ultimate (owner rule 3: the Time Magic is not touched)");
         assertNull(UltimateRegistry.forBook(null));
@@ -88,9 +88,10 @@ class UltimateRegistryTest {
     @Test
     void everyShapeIsARealVfxShapeAndNeverATimeShape() throws IOException {
         String shapes = Files.readString(SRC.resolve("vfx/VfxShape.java"), StandardCharsets.UTF_8);
+        shapes = shapes.substring(0, shapes.indexOf("public static VfxShape byId")).replaceAll("//[^\\n]*", "");      // the enum body only, comments out (several constants may share a line)
         for (UltimateDef d : UltimateRegistry.all())
             for (String s : List.of(d.chargeShape(), d.burstShape(), d.echoShape())) {
-                assertTrue(Pattern.compile("(?m)^\\s*" + s + "\\b").matcher(shapes).find(), d.id() + ": no VfxShape " + s);
+                assertTrue(Pattern.compile("(?m)(^|[\\s,])" + s + "[\\s,;(]").matcher(shapes).find(), d.id() + ": no VfxShape " + s);
                 assertFalse(s.startsWith("TIME_"), d.id() + " reuses a Time Magic shape: " + s);
             }
     }
@@ -107,8 +108,10 @@ class UltimateRegistryTest {
     void everyBookIsARegisteredGrimoireAndTheMagicIsARealMagicType() throws IOException {
         String skills = Files.readString(SRC.resolve("skill/NUSkills.java"), StandardCharsets.UTF_8);
         String magics = Files.readString(SRC.resolve("blackclover/MagicType.java"), StandardCharsets.UTF_8);
+        String wiki = Files.readString(SRC.resolve("book/WikiBooks.java"), StandardCharsets.UTF_8);
+        wiki = wiki.substring(wiki.indexOf("NEW_ATTRIBUTES = EnumSet.of("), wiki.indexOf("public static Set<MagicType> newAttributes"));
         for (UltimateDef d : UltimateRegistry.all()) {
-            assertTrue(skills.contains("book(\"" + d.bookPath() + "\""), d.bookPath() + " is not a registered book");
+            assertTrue(skills.contains("book(\"" + d.bookPath() + "\"") || Pattern.compile("MagicType\\." + d.magic() + "\\b").matcher(wiki).find(), d.bookPath() + " is not a registered book");      // the 30 wiki attributes are registered by WikiBooks.newAttributes()
             assertTrue(Pattern.compile("(?m)^\\s{4}" + d.magic() + "\\(\"").matcher(magics).find(), d.magic() + " is not a MagicType");
         }
     }

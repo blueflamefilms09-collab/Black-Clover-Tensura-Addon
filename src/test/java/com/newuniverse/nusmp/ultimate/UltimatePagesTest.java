@@ -79,13 +79,18 @@ class UltimatePagesTest {
     @Test
     void theNewPagesFileListsExactlyTheRegistryAndNoOtherFileDoes() throws IOException {
         Path dir = ROOT.resolve("src/test/resources/armour_policy");
-        JsonObject o = JsonParser.parseString(read(dir.resolve("ultimate_new_pages.json"))).getAsJsonObject();
         Map<String, List<String>> listed = new LinkedHashMap<>();
-        for (var e : o.entrySet()) {
-            List<String> ids = new ArrayList<>();
-            JsonArray a = e.getValue().getAsJsonArray();
-            a.forEach(x -> ids.add(x.getAsString()));
-            listed.put(e.getKey(), ids);
+        try (DirectoryStream<Path> ds = Files.newDirectoryStream(dir, "ultimate*_new_pages.json")) {      // ultimate_new_pages.json (core) + one file per group builder (ultimate_g34_new_pages.json ...)
+            for (Path f : ds) {
+                JsonObject o = JsonParser.parseString(read(f)).getAsJsonObject();
+                for (var e : o.entrySet()) {
+                    List<String> ids = new ArrayList<>();
+                    JsonArray a = e.getValue().getAsJsonArray();
+                    a.forEach(x -> ids.add(x.getAsString()));
+                    assertFalse(listed.containsKey(e.getKey()), f.getFileName() + ": " + e.getKey() + " is listed in two files");
+                    listed.put(e.getKey(), ids);
+                }
+            }
         }
         List<String> all = new ArrayList<>();
         listed.values().forEach(all::addAll);
@@ -103,7 +108,10 @@ class UltimatePagesTest {
 
     @Test
     void theLangFragmentCoversEveryPageAndEveryMessage() throws IOException {
-        JsonObject o = JsonParser.parseString(read(ROOT.resolve("tools/lang/ultimate.json"))).getAsJsonObject();
+        JsonObject o = new JsonObject();
+        try (DirectoryStream<Path> ds = Files.newDirectoryStream(ROOT.resolve("tools/lang"), "ultimate*.json")) {      // the core fragment + one per group builder
+            for (Path f : ds) JsonParser.parseString(read(f)).getAsJsonObject().entrySet().forEach(e -> o.add(e.getKey(), e.getValue()));
+        }
         for (UltimateDef d : UltimateRegistry.all()) {
             assertTrue(o.has(d.langKey()), "no lang text " + d.langKey());
             String t = o.get(d.langKey()).getAsString();
@@ -117,7 +125,11 @@ class UltimatePagesTest {
 
     @Test
     void theDocsNameEveryUltimateAndProposeOneForEveryOtherAttribute() throws IOException {
-        String doc = read(ROOT.resolve("docs/magic/ultimate_magic.md")), audit = read(ROOT.resolve("docs/magic/ultimate_audit.md"));
+        String groups = "";
+        try (DirectoryStream<Path> ds = Files.newDirectoryStream(ROOT.resolve("docs/magic"), "ultimate_g*.md")) {      // the docs of the group builders (docs/magic/ultimate_g34.md ...) hold the same row format
+            for (Path f : ds) groups += read(f);
+        }
+        String doc = read(ROOT.resolve("docs/magic/ultimate_magic.md")) + groups, audit = read(ROOT.resolve("docs/magic/ultimate_audit.md")) + groups;
         for (UltimateDef d : UltimateRegistry.all()) {
             assertTrue(doc.contains("| `" + d.bookPath() + "` | `" + d.id() + "` | " + d.name() + " | " + d.origin() + " |"), "docs/magic/ultimate_magic.md has no row for " + d.id());
             assertTrue(audit.contains("| `" + d.bookPath() + "` | `" + d.id() + "` | " + d.name() + " | " + d.origin() + " |"), "the audit has no row for " + d.id());
@@ -133,7 +145,7 @@ class UltimatePagesTest {
             assertTrue(audit.contains("| `" + t + "` |"), "the audit proposes no Ultimate for " + t);
             n++;
         }
-        assertTrue(n >= 90, "all the other attributes: " + n);
+        assertTrue(n + built.size() - 8 >= 90, "all the other attributes: " + n + " unbuilt + " + (built.size() - 8) + " built by the groups");      // the rows built by UltimateDefs1..4 are skipped above
         assertFalse(audit.contains("| `TIME` |"), "no Time Ultimate is proposed (owner rule 3)");
         assertTrue(audit.contains("Time Magic is deliberately absent"));
     }
