@@ -1,5 +1,17 @@
 # Changelog
 
+## [3.10.0] — Head and feet relic slots
+
+### NEW
+- **Two Curios slots for head and feet relics** (owner request: the armour-slot head and feet relics were not drawn on the body): `relic_head` ("Head Relic") and `relic_feet` ("Feet Relic"), one place each, given to the player. Every HEAD relic (115) and FEET relic (49) is in the item tag of its slot, so it can be put on in the Curios screen. A relic worn there is found by the relic scan like a neck or back relic and drawn by the same worn layer, with its Curios eye icon (off = not drawn). The armour slots work as before (nothing removed); a relic worn in both counts once. The Mask of Mind Melting and the Ruby Boots of Planestriding are among them.
+- Dev: `tools/relics/gen_curios_tags.py` writes the two new tags; `-Pclientshot` / `.github/workflows/clientshot.yml` is a CI-only client run that takes screenshots of worn armour relics (inert without the property).
+
+### Cost
+- No new per-tick work: the Curios read is the one that already existed; at most one extra stack per slot; no new packets (WornSync already sends the Curios list).
+
+### Not included
+- Not seen in a game by the build; the chest relics have no slot of their own; right-click equip still puts head/feet relics on as armour.
+
 ## [3.9.1] — Wings on feet relics stay as they were
 
 ### FIXED

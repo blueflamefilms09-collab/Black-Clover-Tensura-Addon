@@ -1,0 +1,201 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "nusmp:association_rubber_boots",
+      "required": false
+    },
+    {
+      "id": "nusmp:babel_street_sandals",
+      "required": false
+    },
+    {
+      "id": "nusmp:beastkin_hunters_boots",
+      "required": false
+    },
+    {
+      "id": "nusmp:boots_of_burglery",
+      "required": false
+    },
+    {
+      "id": "nusmp:boots_of_the_gate_runner",
+      "required": false
+    },
+    {
+      "id": "nusmp:boots_of_the_high_ground",
+      "required": false
+    },
+    {
+      "id": "nusmp:boots_of_the_indomitable",
+      "required": false
+    },
+    {
+      "id": "nusmp:boots_of_the_winding_path",
+      "required": false
+    },
+    {
+      "id": "nusmp:cave_raiders_greaves",
+      "required": false
+    },
+    {
+      "id": "nusmp:corps_straw_zori",
+      "required": false
+    },
+    {
+      "id": "nusmp:delvers_rope_soled_boots",
+      "required": false
+    },
+    {
+      "id": "nusmp:dragon_fire_boots",
+      "required": false
+    },
+    {
+      "id": "nusmp:dwargon_miners_steel_toe_boots",
+      "required": false
+    },
+    {
+      "id": "nusmp:dwarven_road_hobnail_boots",
+      "required": false
+    },
+    {
+      "id": "nusmp:elven_travellers_soft_boots",
+      "required": false
+    },
+    {
+      "id": "nusmp:exam_marathon_shoes",
+      "required": false
+    },
+    {
+      "id": "nusmp:grave_dust_boots_of_nazarick",
+      "required": false
+    },
+    {
+      "id": "nusmp:greaves_of_the_wind_walker",
+      "required": false
+    },
+    {
+      "id": "nusmp:hage_village_work_boots",
+      "required": false
+    },
+    {
+      "id": "nusmp:hero_course_sneakers",
+      "required": false
+    },
+    {
+      "id": "nusmp:kingdom_couriers_boots",
+      "required": false
+    },
+    {
+      "id": "nusmp:kou_soldiers_marching_sandals",
+      "required": false
+    },
+    {
+      "id": "nusmp:lizardman_marsh_greaves",
+      "required": false
+    },
+    {
+      "id": "nusmp:magic_knight_recruits_boots",
+      "required": false
+    },
+    {
+      "id": "nusmp:marine_recruits_boots",
+      "required": false
+    },
+    {
+      "id": "nusmp:marsh_walker_waders",
+      "required": false
+    },
+    {
+      "id": "nusmp:martial_artists_training_boots",
+      "required": false
+    },
+    {
+      "id": "nusmp:mudwalkers",
+      "required": false
+    },
+    {
+      "id": "nusmp:orc_hide_greaves",
+      "required": false
+    },
+    {
+      "id": "nusmp:ozens_immovable_boots",
+      "required": false
+    },
+    {
+      "id": "nusmp:pharaohs_sandals_of_silence",
+      "required": false
+    },
+    {
+      "id": "nusmp:pilgrims_walking_boots",
+      "required": false
+    },
+    {
+      "id": "nusmp:ruby_boots_of_planestriding",
+      "required": false
+    },
+    {
+      "id": "nusmp:sailors_deck_shoes",
+      "required": false
+    },
+    {
+      "id": "nusmp:sandals_of_sneaking",
+      "required": false
+    },
+    {
+      "id": "nusmp:servants_light_boots",
+      "required": false
+    },
+    {
+      "id": "nusmp:shinobi_sandals",
+      "required": false
+    },
+    {
+      "id": "nusmp:soul_reaper_waraji",
+      "required": false
+    },
+    {
+      "id": "nusmp:squires_running_shoes",
+      "required": false
+    },
+    {
+      "id": "nusmp:straw_sandals_of_the_mountain",
+      "required": false
+    },
+    {
+      "id": "nusmp:student_dormitory_slippers",
+      "required": false
+    },
+    {
+      "id": "nusmp:survey_corps_cadet_boots",
+      "required": false
+    },
+    {
+      "id": "nusmp:tomb_wardens_greaves",
+      "required": false
+    },
+    {
+      "id": "nusmp:training_ground_sneakers",
+      "required": false
+    },
+    {
+      "id": "nusmp:travelers_boots_of_the_journey",
+      "required": false
+    },
+    {
+      "id": "nusmp:wangnans_pillar_climber_boots",
+      "required": false
+    },
+    {
+      "id": "nusmp:waterwalkers",
+      "required": false
+    },
+    {
+      "id": "nusmp:weighted_training_boots",
+      "required": false
+    },
+    {
+      "id": "nusmp:whale_island_hiking_boots",
+      "required": false
+    }
+  ]
+}

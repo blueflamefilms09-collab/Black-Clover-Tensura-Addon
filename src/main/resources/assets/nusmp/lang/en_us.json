@@ -12643,6 +12643,8 @@
   "nusmp.skill.legacy": "Forgotten Magic",
   "nusmp.skill.legacy.description": "A magic that was removed from this world. It does nothing and is forgotten when you next log in.",
   "curios.identifier.celestial_key": "Celestial Key",
+  "curios.identifier.relic_head": "Head Relic",
+  "curios.identifier.relic_feet": "Feet Relic",
   "entity.nusmp.spirit_king": "The Celestial Spirit King",
   "item.nusmp.aquarius_key": "Gold Key of Aquarius",
   "item.nusmp.aries_key": "Gold Key of Aries",

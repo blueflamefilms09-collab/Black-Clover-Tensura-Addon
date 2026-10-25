@@ -34,7 +34,7 @@ public final class RelicWear {
     public static final Set<String> CURIOS_SHIPPED = Set.of("necklace", "back", "belt", "hands", "charm", "ring", "head", "body", "bracelet", "curio");
 
     /** The slot ids the relics of the mod use besides the five of the {@link RelicSlot} enum (the dungeon relics and the celestial keys have slots of their own). */
-    public static final List<String> OTHER_SLOTS = List.of("dungeon_relic", "celestial_key");
+    public static final List<String> OTHER_SLOTS = List.of("dungeon_relic", "celestial_key", "relic_head", "relic_feet");      // 3.10.0: relic_head / relic_feet hold the head and feet relics besides the armour slots
 
     /** The mod's slot files that must exist (the relic slots, in the order of {@link RelicSlot}). */
     public static final List<String> RELIC_SLOTS = List.of("necklace", "back", "belt", "hands", "charm");

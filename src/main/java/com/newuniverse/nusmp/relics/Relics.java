@@ -128,7 +128,7 @@ public final class Relics {
         List<Located> out = new ArrayList<>(4);
         for (ItemStack s : CuriosLink.equipped(e)) {
             RelicDef d = defOf(s);
-            if (d != null && d.slot().isCurio()) out.add(new Located(s, d, Where.CURIOS));
+            if (d != null && (d.slot().isCurio() || isHeadOrFeet(d))) out.add(new Located(s, d, Where.CURIOS));      // 3.10.0: a head or feet relic in its relic_head / relic_feet Curios slot
         }
         for (ItemStack s : MobRelics.pack(e)) {
             RelicDef d = defOf(s);
@@ -136,6 +136,9 @@ public final class Relics {
         }
         return out;
     }
+
+    /** 3.10.0: head and feet relics also fit the Curios slots relic_head / relic_feet (the armour slots stay as they were). */
+    static boolean isHeadOrFeet(RelicDef d) { return d.slot() == RelicSlot.HEAD || d.slot() == RelicSlot.FEET; }
 
     /** relics_wear: the one client-side entity (the local player) whose look is kept for only {@link WornSyncRules#FAST_TTL} ticks right now, or null. Set by the client while a screen is open. */
     private static volatile UUID fastLook;
@@ -228,7 +231,12 @@ public final class Relics {
             RelicDef d = defOf(s);
             if (d != null && d.slot().isArmor()) out.add(new Located(s, d, Where.ARMOUR));
         }
-        out.addAll(scanExtra(e));                                                // the Curios slots, then (1.50.0) the pack of a named mob (empty for players)
+        int armourEnd = out.size();
+        for (Located x : scanExtra(e)) {
+            boolean twin = false;                                                // 3.10.0: the same head/feet relic worn as armour AND in its Curios slot counts once
+            if (x.where() == Where.CURIOS && x.def().slot().isArmor()) for (int i = 0; i < armourEnd; i++) if (out.get(i).where() == Where.ARMOUR && out.get(i).def().id().equals(x.def().id())) twin = true;
+            if (!twin) out.add(x);
+        }                                                                        // the Curios slots, then (1.50.0) the pack of a named mob (empty for players)
         if (e.level().isClientSide()) addSynced(e, out);                         // 1.99.0: what the server says the wearer carries and this client's own look did not find
         return out;
     }

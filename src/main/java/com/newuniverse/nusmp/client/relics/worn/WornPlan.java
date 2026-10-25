@@ -158,7 +158,7 @@ public final class WornPlan {
             if (whole != null) { k = Kind.SKIP; y = whole; }
             else if (e.isHand()) { k = Kind.SKIP; y = Why.HELD_IN_HAND; }
             else if (!e.isArmourSlot() && !e.isCurioSlot()) { k = Kind.SKIP; y = Why.NOT_A_WORN_SLOT; }
-            else if (e.isCurioSlot() && e.source() == Source.CURIOS && Boolean.FALSE.equals(e.eye())) { k = Kind.SKIP; y = Why.EYE_OFF; }
+            else if ((e.isCurioSlot() || e.isArmourSlot()) && e.source() == Source.CURIOS && Boolean.FALSE.equals(e.eye())) { k = Kind.SKIP; y = Why.EYE_OFF; }
             else if (e.isArmourSlot() && ctx.hideArmourOption()) { k = Kind.SKIP; y = Why.ARMOUR_OPTION; }
             else if (e.custom()) k = Kind.CUSTOM;
             else if (ctx.view() == View.SELF_FIRST && "HEAD".equals(e.slot())) { k = Kind.SKIP; y = Why.FIRST_PERSON_HEAD; }

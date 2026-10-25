@@ -1,0 +1,465 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "nusmp:absolute_beings_crown_shard",
+      "required": false
+    },
+    {
+      "id": "nusmp:adventurers_guild_bandana",
+      "required": false
+    },
+    {
+      "id": "nusmp:alphas_elf_ribbon",
+      "required": false
+    },
+    {
+      "id": "nusmp:apostles_mask_of_many_faces",
+      "required": false
+    },
+    {
+      "id": "nusmp:arcanists_circlet",
+      "required": false
+    },
+    {
+      "id": "nusmp:assassins_hundred_faces_mask",
+      "required": false
+    },
+    {
+      "id": "nusmp:axel_apprentice_wizards_hat",
+      "required": false
+    },
+    {
+      "id": "nusmp:basilica_halo",
+      "required": false
+    },
+    {
+      "id": "nusmp:betas_reading_glasses",
+      "required": false
+    },
+    {
+      "id": "nusmp:brumund_knight_captains_helm",
+      "required": false
+    },
+    {
+      "id": "nusmp:bucket_of_disguise",
+      "required": false
+    },
+    {
+      "id": "nusmp:captains_tricorn",
+      "required": false
+    },
+    {
+      "id": "nusmp:casters_rule_breaker_cowl",
+      "required": false
+    },
+    {
+      "id": "nusmp:circlet_of_the_phoenix",
+      "required": false
+    },
+    {
+      "id": "nusmp:clairvoyant_monocle",
+      "required": false
+    },
+    {
+      "id": "nusmp:corps_fox_mask_replica",
+      "required": false
+    },
+    {
+      "id": "nusmp:corpse_mask",
+      "required": false
+    },
+    {
+      "id": "nusmp:crown_of_the_conjurer",
+      "required": false
+    },
+    {
+      "id": "nusmp:dante_gravity_crown",
+      "required": false
+    },
+    {
+      "id": "nusmp:dark_unicorn_crown",
+      "required": false
+    },
+    {
+      "id": "nusmp:death_knights_helmet",
+      "required": false
+    },
+    {
+      "id": "nusmp:deltas_beast_ear_band",
+      "required": false
+    },
+    {
+      "id": "nusmp:demiurges_spectacles",
+      "required": false
+    },
+    {
+      "id": "nusmp:demon_hunters_spirit_mask",
+      "required": false
+    },
+    {
+      "id": "nusmp:demon_slayer_corps_hairpin",
+      "required": false
+    },
+    {
+      "id": "nusmp:diadem_of_fabulous_truthiness",
+      "required": false
+    },
+    {
+      "id": "nusmp:double_dungeon_mask",
+      "required": false
+    },
+    {
+      "id": "nusmp:dreamwalker_cowl",
+      "required": false
+    },
+    {
+      "id": "nusmp:dungeon_cooks_bandana",
+      "required": false
+    },
+    {
+      "id": "nusmp:dwargon_smiths_leather_cap",
+      "required": false
+    },
+    {
+      "id": "nusmp:east_blue_sailors_bandana",
+      "required": false
+    },
+    {
+      "id": "nusmp:exam_hall_bandana",
+      "required": false
+    },
+    {
+      "id": "nusmp:explosion_mages_crimson_hat",
+      "required": false
+    },
+    {
+      "id": "nusmp:eye_of_vecna",
+      "required": false
+    },
+    {
+      "id": "nusmp:falmuth_footmans_kettle_helm",
+      "required": false
+    },
+    {
+      "id": "nusmp:ferns_diligence_ribbon",
+      "required": false
+    },
+    {
+      "id": "nusmp:frank",
+      "required": false
+    },
+    {
+      "id": "nusmp:gate_raiders_rank_helmet",
+      "required": false
+    },
+    {
+      "id": "nusmp:ghislaines_beast_ear_band",
+      "required": false
+    },
+    {
+      "id": "nusmp:godking_crown",
+      "required": false
+    },
+    {
+      "id": "nusmp:goggles_of_dwarvenkin",
+      "required": false
+    },
+    {
+      "id": "nusmp:gold_circlet",
+      "required": false
+    },
+    {
+      "id": "nusmp:helm_of_whispers",
+      "required": false
+    },
+    {
+      "id": "nusmp:helmet_of_headbutting",
+      "required": false
+    },
+    {
+      "id": "nusmp:hero_costume_visor",
+      "required": false
+    },
+    {
+      "id": "nusmp:hero_course_goggles",
+      "required": false
+    },
+    {
+      "id": "nusmp:hollow_hood_of_nanachi",
+      "required": false
+    },
+    {
+      "id": "nusmp:hollow_mask_fragment",
+      "required": false
+    },
+    {
+      "id": "nusmp:holy_knight_recruits_helm",
+      "required": false
+    },
+    {
+      "id": "nusmp:hunter_exam_goggles",
+      "required": false
+    },
+    {
+      "id": "nusmp:igriss_vigilant_helm",
+      "required": false
+    },
+    {
+      "id": "nusmp:jellyfish_cap",
+      "required": false
+    },
+    {
+      "id": "nusmp:joyboys_straw_hat",
+      "required": false
+    },
+    {
+      "id": "nusmp:kijin_festival_mask",
+      "required": false
+    },
+    {
+      "id": "nusmp:lantern_keepers_cap",
+      "required": false
+    },
+    {
+      "id": "nusmp:leaf_genin_forehead_protector",
+      "required": false
+    },
+    {
+      "id": "nusmp:leaf_village_forehead_protector",
+      "required": false
+    },
+    {
+      "id": "nusmp:lens_of_straight_creepin",
+      "required": false
+    },
+    {
+      "id": "nusmp:limitless_blindfold",
+      "required": false
+    },
+    {
+      "id": "nusmp:magician_turban_circlet",
+      "required": false
+    },
+    {
+      "id": "nusmp:magnoshutatt_student_cap",
+      "required": false
+    },
+    {
+      "id": "nusmp:man_gods_whisper_mask",
+      "required": false
+    },
+    {
+      "id": "nusmp:mares_hood_of_earth",
+      "required": false
+    },
+    {
+      "id": "nusmp:marine_recruit_cap",
+      "required": false
+    },
+    {
+      "id": "nusmp:marine_recruits_cap",
+      "required": false
+    },
+    {
+      "id": "nusmp:mask_of_difference",
+      "required": false
+    },
+    {
+      "id": "nusmp:mask_of_indifference",
+      "required": false
+    },
+    {
+      "id": "nusmp:mask_of_mind_melting",
+      "required": false
+    },
+    {
+      "id": "nusmp:mask_of_the_raven_queens_disciple",
+      "required": false
+    },
+    {
+      "id": "nusmp:mask_of_the_witchdoctor",
+      "required": false
+    },
+    {
+      "id": "nusmp:melromarc_guards_coif",
+      "required": false
+    },
+    {
+      "id": "nusmp:millennium_eye",
+      "required": false
+    },
+    {
+      "id": "nusmp:mind_stone",
+      "required": false
+    },
+    {
+      "id": "nusmp:mirror_lotus_hairpin",
+      "required": false
+    },
+    {
+      "id": "nusmp:mystic_eyes_of_the_rider",
+      "required": false
+    },
+    {
+      "id": "nusmp:nervegear_circlet",
+      "required": false
+    },
+    {
+      "id": "nusmp:novice_magic_knights_cap",
+      "required": false
+    },
+    {
+      "id": "nusmp:odins_all_seeing_eye",
+      "required": false
+    },
+    {
+      "id": "nusmp:oni_maids_horn_circlet",
+      "required": false
+    },
+    {
+      "id": "nusmp:ordinal_scale_visor",
+      "required": false
+    },
+    {
+      "id": "nusmp:pandoras_actor_mask",
+      "required": false
+    },
+    {
+      "id": "nusmp:prides_crown",
+      "required": false
+    },
+    {
+      "id": "nusmp:rachels_idol_ribbon",
+      "required": false
+    },
+    {
+      "id": "nusmp:ras_dawn_crown",
+      "required": false
+    },
+    {
+      "id": "nusmp:ribbon_of_the_half_elf",
+      "required": false
+    },
+    {
+      "id": "nusmp:rogues_black_cowl",
+      "required": false
+    },
+    {
+      "id": "nusmp:rose_orianas_crown_pin",
+      "required": false
+    },
+    {
+      "id": "nusmp:roxys_blue_hat",
+      "required": false
+    },
+    {
+      "id": "nusmp:s_class_trial_hood",
+      "required": false
+    },
+    {
+      "id": "nusmp:sand_village_travellers_hat",
+      "required": false
+    },
+    {
+      "id": "nusmp:shadow_garden_mask",
+      "required": false
+    },
+    {
+      "id": "nusmp:shiroes_strategist_glasses",
+      "required": false
+    },
+    {
+      "id": "nusmp:silver_circlet",
+      "required": false
+    },
+    {
+      "id": "nusmp:skull_mask_of_the_undead_king",
+      "required": false
+    },
+    {
+      "id": "nusmp:sorceress_silver_tiara",
+      "required": false
+    },
+    {
+      "id": "nusmp:soul_searchers",
+      "required": false
+    },
+    {
+      "id": "nusmp:sphinxs_riddle_mask",
+      "required": false
+    },
+    {
+      "id": "nusmp:squad_vice_captains_circlet",
+      "required": false
+    },
+    {
+      "id": "nusmp:steel_circlet",
+      "required": false
+    },
+    {
+      "id": "nusmp:straw_hat_of_joy_boy",
+      "required": false
+    },
+    {
+      "id": "nusmp:survey_corps_cadet_cap",
+      "required": false
+    },
+    {
+      "id": "nusmp:sylphiettes_verdant_pin",
+      "required": false
+    },
+    {
+      "id": "nusmp:the_mad_kings_crown",
+      "required": false
+    },
+    {
+      "id": "nusmp:the_orb_of_ancient_sight",
+      "required": false
+    },
+    {
+      "id": "nusmp:tiny_duck_crown",
+      "required": false
+    },
+    {
+      "id": "nusmp:tomb_raiders_headlamp",
+      "required": false
+    },
+    {
+      "id": "nusmp:travellers_mage_cap",
+      "required": false
+    },
+    {
+      "id": "nusmp:trickster_mask",
+      "required": false
+    },
+    {
+      "id": "nusmp:unicorn_crown",
+      "required": false
+    },
+    {
+      "id": "nusmp:vanirs_mask_of_devilish_luck",
+      "required": false
+    },
+    {
+      "id": "nusmp:veil_of_the_princess_of_the_gate",
+      "required": false
+    },
+    {
+      "id": "nusmp:village_militia_kettle_helm",
+      "required": false
+    },
+    {
+      "id": "nusmp:wizards_apprentice_pointed_hat",
+      "required": false
+    },
+    {
+      "id": "nusmp:yunyuns_lightning_hairband",
+      "required": false
+    },
+    {
+      "id": "nusmp:zahards_crown_fragment",
+      "required": false
+    }
+  ]
+}
