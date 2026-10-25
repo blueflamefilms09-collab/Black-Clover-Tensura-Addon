@@ -15,7 +15,7 @@ public final class ManaMethodConfig {
     public static final ModConfigSpec.IntValue MIN_HOLD, MAX_HOLD, AIR_STEP_SECONDS;
     public static final ModConfigSpec.DoubleValue DASH_STRENGTH;
     /** 3.6.0: the cost that follows the charge, the lightning that grows with it, and the two canon extras (Body Rune, Brush Rune). Every one defaults ON; OFF restores the 3.5.0 behaviour (the extras: the pages cannot be used). */
-    public static final ModConfigSpec.BooleanValue COST_SCALES, LIGHTNING_CHARGE_SCALE, BODY_RUNES, BRUSH_RUNES;
+    public static final ModConfigSpec.BooleanValue COST_SCALES, LIGHTNING_CHARGE_SCALE, BODY_RUNES, BRUSH_RUNES, BODY_REDUCTION;
     public static final ModConfigSpec.DoubleValue MIN_COST_FRACTION;
     public static final ModConfigSpec.IntValue BODY_SECONDS, BRUSH_SECONDS, BRUSH_PER_CASTER, BRUSH_GLOBAL;
 
@@ -42,6 +42,8 @@ public final class ManaMethodConfig {
                 .defineInRange("minCostFraction", RuneCost.DEFAULT_MIN, RuneCost.MIN_LOW, RuneCost.MIN_HIGH);
         BODY_RUNES = b.comment("The Body Rune page (Gadjah writes runes on his own body): temporary speed, attack, jump, step height, fall and knockback bonuses scaled by the hold. Off = the page cannot be used.")
                 .define("bodyRunes", true);
+        BODY_REDUCTION = b.comment("A FULL-hold Body Rune also turns away 15% of each hit its wearer takes (not void or kill damage), while the runes last. false = the 3.6.0 Body Rune, gifts only.")
+                .define("bodyDamageReduction", true);
         BODY_SECONDS = b.comment("Seconds the runes stay on the body at a full hold (a tap lasts half as long).").defineInRange("bodySeconds", BodyRuneRules.DEFAULT_SECONDS, BodyRuneRules.MIN_SECONDS, BodyRuneRules.MAX_SECONDS);
         BRUSH_RUNES = b.comment("The Brush Rune page (Rill paints runes with a brush): a rune array painted on the surface you look at that fires one bolt at the first foe that steps into it. Off = the page cannot be used.")
                 .define("brushRunes", true);
@@ -142,6 +144,8 @@ public final class ManaMethodConfig {
     public static boolean lightningChargeScale() { return flag(LIGHTNING_CHARGE_SCALE, true); }
 
     public static boolean bodyRunes() { return flag(BODY_RUNES, true); }
+
+    public static boolean bodyDamageReduction() { return flag(BODY_REDUCTION, true); }
 
     public static int bodySeconds() {
         try { return BodyRuneRules.seconds(BODY_SECONDS.get()); } catch (RuntimeException notLoaded) { return BodyRuneRules.DEFAULT_SECONDS; }

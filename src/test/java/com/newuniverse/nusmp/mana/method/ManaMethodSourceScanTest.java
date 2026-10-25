@@ -462,7 +462,7 @@ class ManaMethodSourceScanTest {
         assertTrue(b.contains("PerfProbe.section(\"s.mana.body\")") && b.contains("now % SWEEP_EVERY != 0") && b.contains("SESSIONS.isEmpty()"), "an idle server pays one check; the sweep runs every five ticks");
         assertTrue(b.contains("p.isRemoved() || !p.isAlive() || p.level() != s.level") && b.contains("ManaMethodConfig.bodyRunes()"), "a dead, removed or moved player, or the setting off, ends the runes");
         assertFalse(b.contains("getTickCount"), "time is the world clock");
-        assertFalse(b.contains("MobEffects.LEVITATION") || b.contains("mayfly") || b.contains("setNoGravity") || b.contains("ABILITY"), "a body rune never grants flight or creative abilities");
+        assertFalse(b.contains("MobEffects.LEVITATION") || b.contains("mayfly") || b.contains("setNoGravity") || b.contains("getAbilities") || b.contains("onUpdateAbilities"), "a body rune never grants flight or creative abilities (the invulnerability damage tag is not an ability)");
         String rm = code(read(METHOD.resolve("RuneManager.java")));
         assertTrue(body(rm, "dropOwner").contains("BodyRunes.cancelOwner(") && body(rm, "onServerStopping").contains("BodyRunes.clearAll()"), "gone on death, dimension change, logout and server stop");
         assertTrue(body(rm, "onServerTick").contains("BodyRunes.tick(server, world)"), "swept from the one server tick handler");

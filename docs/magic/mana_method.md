@@ -459,6 +459,12 @@ What is the author's, not canon: every number (the gifts, the durations, the rad
 * Anti-Magic users still cancel it as they cancel any magic (their rules read the damage type); in 3.5.0 this is still the default (`antiMagicStillCancels` true), and the switch to let True Magic slip past is described in section 3 above.
 * The Rune Stone's armed runes (`MagicGear.placeRune`, a 5 minute `SpellRuntime.zone` with an uncapped entity query per half second) were not touched; they are not capped, which a later pass may want.
 
+## 3.7.0: the owner's answers to the 3.6.0 decisions
+
+1. **Tap price 40 %: kept** (no change). 3. **Brush Rune stays a one-shot trap** (no change).
+2. **Body Rune damage reduction: built.** A FULL hold (a measured full hold only) also turns away **15 %** of each hit the wearer takes while the runes last (`BodyRuneRules.reduction`, hard cap 20 %; a tap, a half hold and a cast without a measured hold give 0). Server setting `manaMethod.bodyDamageReduction` (default true; false = the 3.6.0 Body Rune, gifts only). It is applied in `BodyRunes.onIncomingDamage` (`LivingIncomingDamageEvent`, players with a session only; void and kill damage, the `bypasses_invulnerability` tag, are never touched). It is still not a shield: 15 % of a hit, for the 15 s of a full hold, with the page's 600 tick cooldown. Cost: one `isEmpty()` check per damage event while no body carries runes, otherwise one map read per hit on a player; no packet, no allocation.
+   Tests: `BodyRuneRulesTest` (only a full hold reduces, cap, the reduced amount is smaller, non-negative and clamped); self-test `magic.mana_method.body` (a full hold records the reduction, a tap none). Caveat: Tensura's own damage handling may change the amount again after this event; the order of the two was not checked in a game.
+
 ## Owner decisions (3.6.0)
 
 Answered in the brief and built as answered: (1) Anti-Magic still cancels True Magic (no change); (2) the cost scales with the charge (tap about 40 %, full 100 %, `costScalesWithCharge`, `minCostFraction`; the cooldown stays unscaled); (3) `lightningRealBolt` stays OFF and the strike and the rune's lightning grow with the charge instead; (4) the Air Step and Dash fall grace is unchanged;

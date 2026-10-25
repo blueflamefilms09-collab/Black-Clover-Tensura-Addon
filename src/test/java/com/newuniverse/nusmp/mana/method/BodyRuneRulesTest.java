@@ -90,4 +90,26 @@ class BodyRuneRulesTest {
         assertTrue(old.speed() > tap.speed() && old.speed() < full.speed());
         assertEquals(3, old.tier());
     }
+
+    @Test
+    void onlyAFullHoldTurnsAwayAFewHitsAndNeverMoreThanTheCap() {
+        assertEquals(0.0, BodyRuneRules.reduction(RuneCharge.of(0, MIN, MAX)), 1e-9);
+        assertEquals(0.0, BodyRuneRules.reduction(RuneCharge.of((MIN + MAX) / 2, MIN, MAX)), 1e-9);
+        assertEquals(0.0, BodyRuneRules.reduction(Charge.LEGACY), 1e-9);
+        assertEquals(0.0, BodyRuneRules.reduction(null), 1e-9);
+        double full = BodyRuneRules.reduction(RuneCharge.of(MAX, MIN, MAX));
+        assertEquals(0.15, full, 1e-9);
+        assertTrue(full <= BodyRuneRules.REDUCTION_CAP);
+        for (int h = 0; h <= RuneCharge.HOLD_CAP; h++) assertTrue(BodyRuneRules.reduction(RuneCharge.of(h, MIN, MAX)) <= BodyRuneRules.REDUCTION_CAP);
+    }
+
+    @Test
+    void theReducedHitIsASmallerNonNegativeShareOfTheHit() {
+        assertEquals(8.5f, BodyRuneRules.reduced(10f, 0.15), 1e-5f);
+        assertEquals(10f, BodyRuneRules.reduced(10f, 0.0), 1e-5f);
+        assertEquals(0f, BodyRuneRules.reduced(0f, 0.15), 1e-5f);
+        assertEquals(8f, BodyRuneRules.reduced(10f, 5.0), 1e-5f, "a silly reduction is clamped to the cap");
+        assertEquals(10f, BodyRuneRules.reduced(10f, -1.0), 1e-5f, "a negative reduction never adds damage");
+        for (float a = 0f; a < 200f; a += 3.7f) assertTrue(BodyRuneRules.reduced(a, 0.15) <= a);
+    }
 }

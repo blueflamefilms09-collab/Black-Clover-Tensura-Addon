@@ -4,8 +4,7 @@ import com.newuniverse.nusmp.mana.method.RuneCharge.Charge;
 
 /**
  * The Body Rune page (pure, tested). Canon (Black Clover Wiki, Gadjah): the Heart Kingdom's Spirit Guardian of lightning writes runes ON HIS OWN BODY with the Mana Method and so takes very powerful
- * attacks unharmed; he also hovers in the air without magic. The page writes runes on the CASTER'S body for a limited time. What the runes give is small, temporary attribute changes (never a damage
- * shield, never creative flight), scaled by the hold:
+ * attacks unharmed; he also hovers in the air without magic. The page writes runes on the CASTER'S body for a limited time. What the runes give is small, temporary attribute changes (never creative flight; since 3.7.0 a FULL hold also turns away {@value #REDUCTION_FULL_PERCENT} % of each hit), scaled by the hold:
  * <table>
  *   <caption>At a tap (level 0) and at a full hold (level 1)</caption>
  *   <tr><th>attribute</th><th>how</th><th>tap</th><th>full</th><th>hard cap</th></tr>
@@ -36,6 +35,22 @@ public final class BodyRuneRules {
     public static final String[] IDS = {"mana_method_body_speed", "mana_method_body_attack", "mana_method_body_jump", "mana_method_body_step", "mana_method_body_fall", "mana_method_body_knockback"};
 
     public static final double SPEED_MAX = 0.25, ATTACK_MAX = 0.25, JUMP_MAX = 0.15, STEP_MAX = 0.4, FALL_MAX = 5.0, KNOCKBACK_MAX = 0.4;
+
+    /** The damage the runes turn away (3.7.0, owner decision: "sure, a little"): a FULL hold only, 15 % of every hit that is not void or a kill command; never more than {@value #REDUCTION_CAP}. */
+    public static final double REDUCTION_FULL = 0.15, REDUCTION_CAP = 0.20;
+    static final int REDUCTION_FULL_PERCENT = 15;
+
+    /** The share of a hit a body with this charge turns away: {@link #REDUCTION_FULL} for a measured full hold, 0 for a tap, a half hold and a cast without a measured hold. */
+    public static double reduction(Charge c) {
+        boolean full = c != null && !c.legacy() && c.stage() == RuneCharge.Stage.FULL;
+        return full ? Math.min(REDUCTION_CAP, REDUCTION_FULL) : 0.0;
+    }
+
+    /** The amount left of a hit after {@code reduction} (clamped to 0..{@link #REDUCTION_CAP}); never negative, never more than the hit. */
+    public static float reduced(float amount, double reduction) {
+        double r = Math.max(0.0, Math.min(REDUCTION_CAP, reduction));
+        return (float) Math.max(0.0, amount * (1.0 - r));
+    }
 
     public static int seconds(int configured) { return Math.max(MIN_SECONDS, Math.min(MAX_SECONDS, configured)); }
 

@@ -614,6 +614,8 @@ public final class ManaMethodSelfTests {
             BodyRuneRules.Mods fullMods = BodyRuneRules.modsFor(full, ManaMethodConfig.bodySeconds());
             for (int i = 0; i < BodyRuneRules.IDS.length; i++)
                 if (BodyRunes.has(p, i) != fullMods.amount(i) > 0.0) return Result.fail("the modifier " + BodyRuneRules.IDS[i] + " is " + (BodyRunes.has(p, i) ? "there" : "missing") + " for a full hold");
+            if (ManaMethodConfig.bodyDamageReduction() && Math.abs(BodyRunes.reductionOf(id) - BodyRuneRules.reduction(full)) > 1e-9) return Result.fail("a full hold should turn away " + BodyRuneRules.reduction(full) + " of each hit, got " + BodyRunes.reductionOf(id));
+            if (BodyRuneRules.reduction(tap) != 0.0) return Result.fail("a tap should turn nothing away");
             if (!p.hasEffect(net.minecraft.world.effect.MobEffects.SLOW_FALLING)) return Result.fail("a full hold should glide (slow falling)");
             if (p.hasEffect(net.minecraft.world.effect.MobEffects.LEVITATION) || p.getAbilities().mayfly) return Result.fail("the Body Rune gave flight");
             long until = BodyRunes.untilOf(id);

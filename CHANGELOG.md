@@ -1,5 +1,22 @@
 # Changelog
 
+## [3.7.0] — Body Rune turns away a little damage on a full hold
+
+### NEW
+- **Body Rune damage reduction** (owner decision): a FULL-hold Body Rune also turns away 15 % of each hit its wearer takes while the runes last (15 s by default; hard cap 20 %). A tap, a half hold and a cast without a measured hold give none. Void and kill damage are never touched. Server setting `manaMethod.bodyDamageReduction` (default on). The Body Rune page text says so.
+
+### REPLACED
+- The 3.6.0 Body Rune rule "gifts only, no damage reduction" (`bodyDamageReduction` off restores it).
+
+### KEPT
+- Everything else of 3.6.0: the 40 % tap price and the one-shot Brush Rune trap (the owner confirmed both), Anti-Magic cancelling True Magic, the GUI default theme `anime`, Time Magic and its VFX.
+
+### Cost (rule 11)
+- One `isEmpty()` check per damage event while no body carries runes; otherwise one map read per hit on a player. No packet, no entity, nothing allocated.
+
+### Not done / caveats
+- Not seen in a game; the extended `magic.mana_method.body` self-test is the first real run. Tensura's own damage handling may change the amount again after this event; the order was not checked in a game. The 15 % is the author's number.
+
 ## [3.6.0] — Mana Method: cost follows the charge, lightning grows with the charge, Body Rune (Gadjah) and Brush Rune (Rill)
 
 ### NEW

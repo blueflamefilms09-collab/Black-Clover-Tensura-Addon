@@ -46,12 +46,15 @@ public final class BodyRunes {
         final ServerPlayer player;
         final ServerLevel level;
         final long until;
+        /** The share of each hit the runes turn away (0 unless a full hold with the setting on). */
+        final double reduction;
 
-        Session(ServerPlayer p, long until) {
+        Session(ServerPlayer p, long until, double reduction) {
             this.owner = p.getUUID();
             this.player = p;
             this.level = p.serverLevel();
             this.until = until;
+            this.reduction = reduction;
         }
     }
 
@@ -81,6 +84,21 @@ public final class BodyRunes {
         };
     }
 
+    /** The share of each hit the owner's runes turn away right now, or 0 (tests, messages). */
+    public static double reductionOf(UUID owner) {
+        Session s = SESSIONS.get(owner);
+        return s == null ? 0.0 : s.reduction;
+    }
+
+    /** A wearer of a full-hold Body Rune takes a little less from each hit (void and kill damage are never touched). One map read per hit on a player, nothing at all while no body carries runes. */
+    public static void onIncomingDamage(net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent event) {
+        if (SESSIONS.isEmpty() || !(event.getEntity() instanceof ServerPlayer p)) return;
+        Session s = SESSIONS.get(p.getUUID());
+        if (s == null || s.reduction <= 0.0) return;
+        if (event.getSource().is(net.minecraft.tags.DamageTypeTags.BYPASSES_INVULNERABILITY)) return;
+        event.setAmount(BodyRuneRules.reduced(event.getAmount(), s.reduction));
+    }
+
     // ---------------------------------------------------------------- the cast
     /** Writes the runes on {@code p} for the duration of the charge; false (with a message) when the server is full. A second cast replaces the first (it never stacks). */
     public static boolean start(ServerPlayer p, RuneSpec spec, Charge charge, long now) {
@@ -92,7 +110,7 @@ public final class BodyRunes {
         BodyRuneRules.Mods m = BodyRuneRules.modsFor(charge, ManaMethodConfig.bodySeconds());
         if (old != null) strip(old.player);
         apply(p, m);
-        Session s = new Session(p, now + m.ticks());
+        Session s = new Session(p, now + m.ticks(), ManaMethodConfig.bodyDamageReduction() ? BodyRuneRules.reduction(charge) : 0.0);
         SESSIONS.put(p.getUUID(), s);
         if (m.glideTicks() > 0) p.addEffect(new MobEffectInstance(MobEffects.SLOW_FALLING, m.glideTicks(), 0, false, false, true));
         p.level().playSound(null, p.blockPosition(), SoundEvents.ENCHANTMENT_TABLE_USE, SoundSource.PLAYERS, 0.9f, 0.8f);
