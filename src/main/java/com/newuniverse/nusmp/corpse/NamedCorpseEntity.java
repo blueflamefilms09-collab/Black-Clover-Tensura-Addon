@@ -138,6 +138,30 @@ public class NamedCorpseEntity extends PathfinderMob implements OwnableEntity {
 
     @Override public boolean shouldBeSaved() { return false; }            // a named corpse is a loan from this session only
 
+    // ---------------------------------------------------------------- the daylight rule (3.7.1)
+    /** Sunlight never ignites a numbered undead: it is a plain {@link PathfinderMob} (not a zombie or a skeleton, the only bodies that read daylight), and both daylight questions answer no besides. */
+    @Override public boolean isSunBurnTick() { return false; }
+
+    /** True when daylight can ignite this body (never): the self-test and the source scan read this. */
+    public boolean burnsInDaylight() { return false; }
+
+    // ---------------------------------------------------------------- why did it go (3.7.1)
+    private boolean dismissed;
+
+    /** The sweep, the cap or the owner's logout took this body on purpose: the diagnosis of an early removal does not speak. */
+    void dismissed() { this.dismissed = true; }
+
+    /** A numbered body that leaves the world within 5 seconds by anything but a dismissal or a chunk or dimension move writes one server-log line with the reason (rate limited, {@code corpse.diagnose}). */
+    @Override
+    public void remove(RemovalReason reason) {
+        if (!level().isClientSide && !dismissed && ownerId != null) {
+            boolean normal = RadesCastDiagnosis.normalEnd(reason.name());
+            if (RadesCastDiagnosis.vanishedEarly(tickCount, normal))
+                Corpses.diag(ownerId, level().getGameTime(), RadesCastDiagnosis.vanishedLine(kind.id, ownerId.toString(), tickCount, RadesCastDiagnosis.removalReason(reason.name(), false, false)));
+        }
+        super.remove(reason);
+    }
+
     @Override protected boolean shouldDropLoot() { return false; }
 
     @Override public boolean removeWhenFarAway(double distance) { return false; }

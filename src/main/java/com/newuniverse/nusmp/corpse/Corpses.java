@@ -155,6 +155,7 @@ public final class Corpses {
     static void forget(UUID player) {
         LEDGERS.remove(player);
         FOES.remove(player);
+        DIAG_AT.remove(player);
     }
 
     /** A creature died: write it into the ledger of every Soul Corpse mage within the ledger radius. */
@@ -370,16 +371,41 @@ public final class Corpses {
         return made;
     }
 
-    /** Summons one of the named puppets beside the caster; an earlier one of the same name crumbles first. Null if the world refused. */
-    static NamedCorpseEntity summonNamed(ServerPlayer owner, NamedCorpses kind) {
+    /** Summons one of the named puppets beside the caster; an earlier one of the same name crumbles first. Null if the world refused (see {@link #summonNamedChecked} for the reason). */
+    static NamedCorpseEntity summonNamed(ServerPlayer owner, NamedCorpses kind) { return summonNamedChecked(owner, kind).body(); }
+
+    /** The result of a numbered summon: the body, or null and the reason (3.7.1: every refusal has a reason, written to the log and shown to the player). */
+    record NamedSummon(NamedCorpseEntity body, RadesCastDiagnosis.Refusal why) {}
+
+    /** Game time of the last diagnosis line of each player (one line per player per second), per owner UUID. */
+    private static final Map<UUID, Long> DIAG_AT = new HashMap<>();
+    private static final org.slf4j.Logger LOG = com.mojang.logging.LogUtils.getLogger();
+
+    /** Writes one diagnosis line for 'who' (rate limited per player; nothing when {@code corpse.diagnose} is off). */
+    static void diag(UUID who, long now, String line) {
+        if (!CorpseConfig.diagnose()) return;
+        Long last = DIAG_AT.get(who);
+        if (!RadesCastDiagnosis.mayLog(last == null ? Long.MIN_VALUE : last, now)) return;
+        DIAG_AT.put(who, now);
+        LOG.warn(line);
+    }
+
+    /** One INFO line when a numbered body stands (a page cooldown of 8 s or more bounds it): the id and the place, so "only a circle" can be told from "a body nobody could see". */
+    static void diagStood(ServerPlayer owner, NamedCorpseEntity n) {
+        if (CorpseConfig.diagnose()) LOG.info("[nusmp] numbered undead: {} of {} stands (entity {} at {} {} {}, life {} ticks)", n.kind().id, owner.getGameProfile().getName(), n.getId(),
+                Math.round(n.getX()), Math.round(n.getY()), Math.round(n.getZ()), n.getPersistentData().getCompound(TAG).getInt("Life"));
+    }
+
+    /** The summon of a numbered undead with the reason when it made no body. */
+    static NamedSummon summonNamedChecked(ServerPlayer owner, NamedCorpses kind) {
         ServerLevel level = owner.serverLevel();
         for (UUID id : NAMED.bodies(owner.getUUID())) {
             Entity e = find(owner.getServer(), id);
             if (e instanceof NamedCorpseEntity n && n.kind() == kind) { crumble(n); NAMED.remove(owner.getUUID(), id); }
         }
-        if (NAMED.total() >= CorpseConfig.namedGlobalCap() && NAMED.count(owner.getUUID()) < NamedCorpses.MAX_AT_ONCE) return null;      // the server-wide cap (an owner at their own cap replaces their oldest)
+        if (NAMED.total() >= CorpseConfig.namedGlobalCap() && NAMED.count(owner.getUUID()) < NamedCorpses.MAX_AT_ONCE) return refused(owner, kind, RadesCastDiagnosis.Refusal.SERVER_CAP);      // the server-wide cap (an owner at their own cap replaces their oldest)
         NamedCorpseEntity n = CorpseEntities.type(kind).create(level);
-        if (n == null) return null;
+        if (n == null) return refused(owner, kind, RadesCastDiagnosis.Refusal.NO_ENTITY);
         n.setPersistenceRequired();
         // 1.46.0: the old spot (straight ahead at the caster's own height) could be inside a wall or a slope, where the puppet suffocated at once;
         // look for a free spot with ground under it, nearest in front first, and fall back to the caster's own place
@@ -398,12 +424,18 @@ public final class Corpses {
         n.getPersistentData().put(TAG, t);
         n.setCustomName(Component.literal(kind.title()));
         n.setCustomNameVisible(true);
-        if (!level.addFreshEntity(n)) return null;
+        if (!level.addFreshEntity(n)) return refused(owner, kind, RadesCastDiagnosis.Refusal.WORLD_REFUSED);
         for (UUID old : NAMED.add(owner.getUUID(), n.getUUID(), NamedCorpses.MAX_AT_ONCE)) crumbleById(owner.getServer(), old);
         mark(n, 0);
         CorpseVfx.raise(level, n.position(), Math.max(1.0f, kind.width * 2.0f), 40);
         level.playSound(null, n.blockPosition(), SoundEvents.SOUL_ESCAPE.value(), SoundSource.PLAYERS, 1.2f, 0.55f);
-        return n;
+        diagStood(owner, n);
+        return new NamedSummon(n, RadesCastDiagnosis.Refusal.NONE);
+    }
+
+    private static NamedSummon refused(ServerPlayer owner, NamedCorpses kind, RadesCastDiagnosis.Refusal why) {
+        diag(owner.getUUID(), owner.level().getGameTime(), RadesCastDiagnosis.refusedLine(owner.getGameProfile().getName(), kind.id, why));
+        return new NamedSummon(null, why);
     }
 
     /** The owner's live named corpse of this kind, or null. */
@@ -523,14 +555,19 @@ public final class Corpses {
     // ================================================================ the sweep
     static void tick(MinecraftServer server) {
         if ((RAISED.isEmpty() && NAMED.isEmpty() && ZOMBIES.isEmpty()) || server.getTickCount() % SWEEP != 7) return;
-        sweep(server, RAISED, false);
-        sweep(server, NAMED, true);
-        sweep(server, ZOMBIES, true);                                        // a zombie has its own goals: it is on the clock and the owner's side only, no bleed and no driving
+        sweepAll(server, id -> server.getPlayerList().getPlayer(id));
     }
 
-    private static void sweep(MinecraftServer server, CorpseRoster<UUID, UUID> roster, boolean named) {
+    /** One pass of the sweep over every roster; 'online' finds the player of an owner id (the self-test passes its stand-in, which is not in the player list). */
+    static void sweepAll(MinecraftServer server, java.util.function.Function<UUID, ServerPlayer> online) {
+        sweep(server, RAISED, false, online);
+        sweep(server, NAMED, true, online);
+        sweep(server, ZOMBIES, true, online);                                // a zombie has its own goals: it is on the clock and the owner's side only, no bleed and no driving
+    }
+
+    private static void sweep(MinecraftServer server, CorpseRoster<UUID, UUID> roster, boolean named, java.util.function.Function<UUID, ServerPlayer> online) {
         for (UUID ownerId : roster.owners()) {
-            ServerPlayer owner = server.getPlayerList().getPlayer(ownerId);
+            ServerPlayer owner = online.apply(ownerId);
             LivingEntity pick = null;
             for (UUID id : roster.bodies(ownerId)) {
                 Entity e = find(server, id);
@@ -540,7 +577,15 @@ public final class Corpses {
                 CompoundTag t = body.getPersistentData().getCompound(TAG);
                 long born = t.getLong("Born");
                 int life = t.getInt("Life");
-                if (owner == null || !owner.isAlive() || owner.level() != level || now - born >= life) { crumble(body); roster.remove(ownerId, id); continue; }
+                boolean ownerGone = owner == null || !owner.isAlive() || owner.level() != level, lifeOver = now - born >= life;
+                if (ownerGone || lifeOver) {
+                    if (body instanceof NamedCorpseEntity nb && RadesCastDiagnosis.vanishedEarly((int) (now - born), false))      // 3.7.1: a numbered body dismissed within 5 seconds says why
+                        diag(ownerId, now, RadesCastDiagnosis.vanishedLine(nb.kind().id, String.valueOf(ownerId), (int) (now - born), RadesCastDiagnosis.removalReason("DISCARDED", ownerGone, lifeOver && !ownerGone)));
+                    crumble(body);
+                    roster.remove(ownerId, id);
+                    continue;
+                }
+                if (!named && CorpseConfig.noSunBurn() && body.isOnFire() && body.hasEffect(net.minecraft.world.effect.MobEffects.FIRE_RESISTANCE)) body.clearFire();      // 3.7.1: a creature raised the old way is put out (it has Fire Resistance: the fire is only the daylight's flames)
                 int stage = CorpseDecay.stage(born, now, life);
                 mark(body, stage, body.tickCount % CorpseDecay.STAGE_REFRESH_TICKS < SWEEP);
                 if (!named && body.tickCount % 20 < SWEEP) bleed(body, life);
@@ -592,6 +637,7 @@ public final class Corpses {
     /** A body comes apart: a puff of pale soul, no drops, no experience. */
     static void crumble(Entity e) {
         if (e == null || e.isRemoved()) return;
+        if (e instanceof NamedCorpseEntity named) named.dismissed();                                  // an intended end: the early-removal diagnosis stays quiet
         if (e.level() instanceof ServerLevel sl) {
             Fx.spray(sl, FxThemes.CORPSE, FxTone.DARK, e.getX(), e.getY() + e.getBbHeight() * 0.5, e.getZ(), 14, e.getBbWidth() * 0.5, e.getBbHeight() * 0.4, e.getBbWidth() * 0.5, 0.04);
             sl.playSound(null, e.blockPosition(), SoundEvents.SOUL_ESCAPE.value(), SoundSource.NEUTRAL, 0.8f, 1.2f);

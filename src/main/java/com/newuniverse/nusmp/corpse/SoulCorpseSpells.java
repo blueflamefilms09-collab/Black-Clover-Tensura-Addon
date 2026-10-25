@@ -49,12 +49,19 @@ public final class SoulCorpseSpells {
 
     /** One of Rades's numbered undead: No.4 Jimmy, No.3 David, No.2 Alfredo, No.1 Carl or No.0 Michael Caesal (the elite: only one at a time). */
     public static boolean named(GrimoireBook b, ManasSkillInstance i, ServerPlayer p, NamedCorpses kind) {
-        if (!CorpseConfig.enabled()) { GrimoireBook.fail(p, "Soul Corpse Magic is switched off on this server."); return false; }
-        if (kind.elite() && Corpses.liveNamed(p, kind) != null) { GrimoireBook.fail(p, kind.display + " already stands at your side."); return false; }
-        if (Corpses.summonNamed(p, kind) == null) { GrimoireBook.fail(p, kind.title() + " will not come here: the world refused the body."); return false; }
+        if (!CorpseConfig.enabled()) { refuse(p, kind, RadesCastDiagnosis.Refusal.SWITCHED_OFF); return false; }
+        if (kind.elite() && Corpses.liveNamed(p, kind) != null) { refuse(p, kind, RadesCastDiagnosis.Refusal.ELITE_STANDS); return false; }
+        Corpses.NamedSummon made = Corpses.summonNamedChecked(p, kind);      // 3.7.1: a refusal has a reason: it is shown to the player and written to the server log
+        if (made.body() == null) { GrimoireBook.fail(p, made.why().playerLine(kind.title())); return false; }
         b.castCircle(p, kind.elite() ? 1.4f : 1.0f);
         p.displayClientMessage(Component.literal(kind.title() + " answers your call.").withStyle(ChatFormatting.GRAY), true);
         return true;
+    }
+
+    /** A refusal before any body is made: the server log line (rate limited) and the player's line (summonNamedChecked logs its own refusals). */
+    private static void refuse(ServerPlayer p, NamedCorpses kind, RadesCastDiagnosis.Refusal why) {
+        Corpses.diag(p.getUUID(), p.level().getGameTime(), RadesCastDiagnosis.refusedLine(p.getGameProfile().getName(), kind.id, why));
+        GrimoireBook.fail(p, why.playerLine(kind.title()));
     }
 
     /** True Soul Corpse Magic: arms the pact (ten minutes), re-raises the pets that fell shortly before, and starts the long cooldown itself. */

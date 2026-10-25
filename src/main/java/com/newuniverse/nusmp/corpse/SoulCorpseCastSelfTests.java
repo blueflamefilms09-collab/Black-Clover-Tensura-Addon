@@ -159,9 +159,113 @@ public final class SoulCorpseCastSelfTests {
             }
             if (Corpses.NAMED.total() > CorpseConfig.namedGlobalCap()) return Result.fail("the server-wide cap of numbered undead was passed");
             sb.append("named ").append(Corpses.NAMED.count(id)).append("/").append(NamedCorpses.MAX_AT_ONCE).append(note);
+
+            // ---- 5. (3.7.1, owner report "Rades's Number Summons are just magic circles") each numbered page, cast through the real page path, leaves a real, visible, owned body that stays
+            Corpses.crumbleAllOf(server, id);
+            String standing = numberedStand(server, level, book, inst, p, sb);
+            if (standing != null) return Result.fail(standing);
+            String sun = sunRule(server, level, p, sb);
+            if (sun != null) return Result.fail(sun);
             return Result.ok(sb.toString());
         } finally {
             reset(server, p);
+        }
+    }
+
+    // ---------------------------------------------------------------- the numbered undead really stand (3.7.1)
+    /** The five numbered pages in the order Rades's list shows them: page id and the body it must leave. */
+    private static final Object[][] NUMBERED = {{SoulCorpseAccess.JIMMY, NamedCorpses.JIMMY}, {SoulCorpseAccess.DAVID, NamedCorpses.DAVID}, {SoulCorpseAccess.ALFREDO, NamedCorpses.ALFREDO},
+            {SoulCorpseAccess.CARL, NamedCorpses.CARL}, {SoulCorpseAccess.MICHAEL, NamedCorpses.MICHAEL_CAESAL}};
+
+    /** Ticks a body is driven after its cast (two seconds): the entity's own tick forty times and the owner sweep every ten. */
+    private static final int STAND_TICKS = 40;
+
+    /**
+     * For each of the five numbered pages: one cast through the real page path ({@code castFromStyle}: checks, mana, SafeCast, the wrappers, cooldown, mastery) as the stand-in, then the body must be in
+     * the level's entity list under its id, alive, of the right type and row, owned by the caster (field, ledger and the tag), not invisible, named with its title and the name shown, carrying the decay
+     * marker, listed in the roster, and still all of that after {@value #STAND_TICKS} ticks of its own tick and four owner sweeps (the sweep gets the stand-in as the online owner: it is not in the
+     * player list, which is why a plain {@code Corpses.tick} would dismiss it at once). The elite is cast twice: the second cast must refuse and leave the same body. Null when all hold.
+     */
+    private static String numberedStand(MinecraftServer server, ServerLevel level, GrimoireBook book, ManasSkillInstance inst, ServerPlayer p, StringBuilder sb) {
+        UUID id = p.getUUID();
+        java.util.function.Function<UUID, ServerPlayer> online = who -> id.equals(who) ? p : null;
+        for (Object[] row : NUMBERED) {
+            String pageId = (String) row[0];
+            NamedCorpses kind = (NamedCorpses) row[1];
+            Corpses.crumbleAllOf(server, id);
+            int m = mode(book, pageId);
+            inst.setCoolDown(0, m);
+            refill(p);
+            try {
+                book.castFromStyle(inst, p, m);
+            } catch (RuntimeException afterwards) {
+                if (Corpses.liveNamed(p, kind) == null) return pageId + ": the real page cast threw " + afterwards;
+            }
+            NamedCorpseEntity n = Corpses.liveNamed(p, kind);
+            if (n == null) return pageId + ": the real page cast left no " + kind.title() + " (the server log has a 'numbered undead' line with the reason)";
+            UUID uid = n.getUUID();
+            String bad = standing(level, n, kind, id);
+            if (bad != null) return pageId + ": " + bad + " right after the cast";
+            if (kind.elite()) {                                                                        // the elite stands once: a second cast refuses and leaves him as he is
+                inst.setCoolDown(0, m);
+                refill(p);
+                try { book.castFromStyle(inst, p, m); } catch (RuntimeException ignored) { /* a refusal may still run the hooks after it */ }
+                NamedCorpseEntity again = Corpses.liveNamed(p, kind);
+                if (again == null || !again.getUUID().equals(uid)) return pageId + ": a second cast replaced or removed the elite instead of refusing";
+            }
+            for (int t = 1; t <= STAND_TICKS; t++) {
+                n.tick();
+                if (t % 10 == 0) Corpses.sweepAll(server, online);
+            }
+            bad = standing(level, n, kind, id);
+            if (bad != null) return pageId + ": " + bad + " " + STAND_TICKS + " ticks after the cast";
+            sb.append(kind.number).append(" stands; ");
+        }
+        Corpses.crumbleAllOf(server, id);
+        return null;
+    }
+
+    /** Everything that must be true of a numbered body in the world; null when it is, else the first thing that is not. */
+    private static String standing(ServerLevel level, NamedCorpseEntity n, NamedCorpses kind, UUID owner) {
+        UUID uid = n.getUUID();
+        if (!n.isAlive() || n.isRemoved() || n.getHealth() <= 0f) return kind.title() + " is not alive (health " + n.getHealth() + ", removed " + n.isRemoved() + ")";
+        if (level.getEntity(uid) != n) return kind.title() + " is not in the level's entity list";
+        if (n.getType() != CorpseEntities.type(kind) || n.kind() != kind) return kind.title() + " has the wrong type or row (" + n.getType() + ", " + n.kind() + ")";
+        if (!owner.equals(n.getOwnerUUID()) || !owner.equals(Corpses.ownerOf(n)) || !Corpses.isCorpse(n)) return kind.title() + " is not owned and tagged by the caster";
+        if (n.isInvisible()) return kind.title() + " is invisible";
+        if (n.getCustomName() == null || !n.isCustomNameVisible() || !kind.title().equals(n.getCustomName().getString())) return kind.title() + " has lost its name tag";
+        if (n.getEffect(CorpseEffects.holder()) == null) return kind.title() + " carries no decay marker (the client picks its skin from it)";
+        if (!Corpses.NAMED.bodies(owner).contains(uid)) return kind.title() + " is not in the roster";
+        if (n.burnsInDaylight() || n.isSunBurnTick()) return kind.title() + " would burn in daylight";
+        return null;
+    }
+
+    /**
+     * The daylight rule (3.7.1, "zombies raised by Soul Corpse Magic do not burn in daylight"): at noon, a Soul Zombie and each numbered undead, driven twenty ticks, never catch fire and answer no to both
+     * daylight questions. The time of day is put back. The rule itself is the two overrides ({@code SoulZombieEntity}, {@code NamedCorpseEntity}), which a source scan pins too.
+     */
+    private static String sunRule(MinecraftServer server, ServerLevel level, ServerPlayer p, StringBuilder sb) {
+        long was = level.getDayTime();
+        UUID id = p.getUUID();
+        try {
+            level.setDayTime(6000L);
+            Corpses.crumbleAllOf(server, id);
+            List<SoulZombieEntity> zs = SoulZombies.summon(p, 1, 400, 1.0, null);
+            if (zs.isEmpty()) return "no soul zombie could be summoned for the daylight check";
+            SoulZombieEntity z = zs.get(0);
+            for (int t = 0; t < 20; t++) z.tick();
+            if (z.burnsInDaylight() || z.isSunBurnTick() || z.isOnFire()) return "a soul zombie burns in daylight (burnsInDaylight " + z.burnsInDaylight() + ", on fire " + z.isOnFire() + ")";
+            for (NamedCorpses k : NamedCorpses.values()) {
+                NamedCorpseEntity n = Corpses.summonNamed(p, k);
+                if (n == null) return k.title() + " could not be summoned for the daylight check";
+                for (int t = 0; t < 20; t++) n.tick();
+                if (n.burnsInDaylight() || n.isSunBurnTick() || n.isOnFire()) return k.title() + " burns in daylight (on fire " + n.isOnFire() + ")";
+            }
+            sb.append("no sun burn at noon; ");
+            return null;
+        } finally {
+            level.setDayTime(was);
+            Corpses.crumbleAllOf(server, id);
         }
     }
 
