@@ -1,5 +1,16 @@
 # Changelog
 
+## [3.10.1] — Grimoire Tower and Library Ruins no longer generate
+
+### REMOVED (owner request)
+- **The Grimoire Tower and the Library Ruins** no longer generate in the overworld: their two biome modifiers (`neoforge/biome_modifier/grimoire_tower.json`, `library_ruins.json`) are deleted. Nothing else is touched: the feature code, the configured/placed features, their loot tables, the tower wizard and every grimoire path stay registered, so old worlds load; only new chunks stop getting these structures. Structures already built in an existing world stay where they are (a world needs a fresh area, or the blocks removed by hand). To get them back, restore the two modifier files.
+
+### Cost
+- Less worldgen work per new chunk; nothing added.
+
+### Not included
+- Not seen in a game by the build. The Mega-Dungeon gateway and the sanctuary are different structures and are unchanged.
+
 ## [3.10.0] — Head and feet relic slots
 
 ### NEW
