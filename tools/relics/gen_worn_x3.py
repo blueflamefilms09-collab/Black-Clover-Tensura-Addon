@@ -372,6 +372,16 @@ def selected():
     return out, skipped
 
 
+def wing_groups(m):
+    """The group ids of the wings of a model (`grp <id> wings ...`): the owner wants wings left as they were, so they are copied unchanged and never made blocky."""
+    return {int(g.split()[1]) for g in m.groups if len(g.split()) > 2 and "wing" in g.split()[2].lower()}
+
+
+def raw_quads(path, ids):
+    """The `q` lines of a classic model that belong to the given groups, copied as they are."""
+    return [l.rstrip("\n") for l in open(path) if l.startswith("q ") and int(l.split()[1]) in ids]
+
+
 def main(argv):
     only = None
     out = DEFAULT_OUT
@@ -392,12 +402,20 @@ def main(argv):
     done = []
     rep = {}
     for n in names:
-        m = read_model(os.path.join(WORN, n + ".txt"))
+        src = os.path.join(WORN, n + ".txt")
+        m = read_model(src)
         if not m.quads:
             continue
+        wings = wing_groups(m)
+        if wings:                                                      # wings stay exactly as they were: only the rest of the boot is blocky
+            m.quads = [q for q in m.quads if q[0] not in wings]
         r = {}
         q = build(m, r)
-        write_model(os.path.join(out, n + ".txt"), n, m.anchor, m.groups, q, "grid %s px, was %d quads" % (r["grid"], r["orig"]))
+        dst = os.path.join(out, n + ".txt")
+        write_model(dst, n, m.anchor, m.groups, q, "grid %s px, was %d quads%s" % (r["grid"], r["orig"], ", wings kept as they were" if wings else ""))
+        if wings:
+            with open(dst, "a") as f:
+                f.write("\n".join(raw_quads(src, wings)) + "\n")
         done.append(n)
         rep[n] = r
     if not only:

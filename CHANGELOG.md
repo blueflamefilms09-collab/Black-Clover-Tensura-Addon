@@ -1,5 +1,10 @@
 # Changelog
 
+## [3.9.1] — Wings on feet relics stay as they were
+
+### FIXED
+- **Winged feet relics** (owner request): the wings of the winged sandals (`sandals_winged`) and the Wind Walker greaves (`greaves_windwalker`) are no longer made blocky; their wing quads are copied unchanged from the classic models (`tools/relics/gen_worn_x3.py`, `wing_groups`). Only the boot or greave itself is blocky. Quads of the feet models: 15,370 -> 14,708. Cost bounds unchanged. Preview: `docs/previews/relic_x3/feet_wings_kept.png`.
+
 ## [3.9.0] — Blocky feet relics and a contact fit for worn relics
 
 ### NEW
