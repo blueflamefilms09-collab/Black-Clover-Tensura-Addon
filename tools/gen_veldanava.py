@@ -278,6 +278,190 @@ def build_humanoid():
     return b
 
 
+# ------------------------------------------------------------------------------------------------------------------ the Dark Avatar of God
+HAIR_K = ((6, 6, 12), (16, 16, 28), (32, 34, 54), (62, 66, 98))
+WHITE_L = ((196, 204, 226), (226, 232, 246), (246, 248, 255), (255, 255, 255))
+SKIN_D = ((176, 168, 182), (208, 202, 214), (230, 226, 236), (244, 242, 248))
+CHAR = ((10, 10, 16), (22, 22, 32), (38, 38, 52), (60, 60, 80))
+SILVER = ((108, 112, 132), (166, 172, 192), (214, 220, 238), (248, 250, 255))
+HORN = ((58, 58, 68), (92, 92, 104), (132, 132, 146), (176, 176, 190))
+AMBER = (255, 150, 22)
+SILVER_GLOW = (200, 212, 255)
+
+
+def lined(salt, cols=CHAR, edge=1, hem=True, centre=False, glow=70):
+    """Fitted charcoal cloth with the silver-white lines: one line a texel in from each vertical edge, one near the hem, optionally one down the middle."""
+    base = fabric(cols, salt=salt, period=6.0, amp=0.18, seam=False)
+
+    def p(face, i, j, fw, fh):
+        c, g = base(face, i, j, fw, fh)
+        if face in ("front", "back", "left", "right"):
+            on = i == edge or i == fw - 1 - edge or (hem and j == fh - 2) or (centre and i == fw // 2 and face == "front")
+            if on and fw > 3 and fh > 3:
+                return px(SILVER[2 + (hsh(i, j, salt) > 0.5)]), px(SILVER_GLOW, glow)
+        return c, g
+    return p
+
+
+def white_panel(salt, border=1):
+    """A white cloth panel with a thin charcoal edge line and a silver hem."""
+    base = fabric(WHITE_L, salt=salt, period=7.0, amp=0.12, lit=0.12, dither=0.04, hem=0, seam=False)
+
+    def p(face, i, j, fw, fh):
+        c, g = base(face, i, j, fw, fh)
+        if face in ("front", "back") and fw > 3:
+            if i < border or i >= fw - border:
+                return px(CHAR[1]), None
+            if j >= fh - 2:
+                return px(SILVER[1]), px(SILVER_GLOW, 60)
+        return c, g
+    return p
+
+
+def cloth_flap(salt, panel=True):
+    """A hanging black flap: black cloth, a white panel down the middle third, silver edge lines."""
+    cloth = lined(salt, cols=BLACK, edge=0, hem=True)
+    white = white_panel(salt + 1)
+
+    def p(face, i, j, fw, fh):
+        if panel and face in ("front", "back") and fw // 3 <= i < fw - fw // 3 and fh // 6 < j < fh - 3:
+            return white(face, i, j, fw, fh)
+        return cloth(face, i, j, fw, fh)
+    return p
+
+
+def horn_paint(salt):
+    def p(face, i, j, fw, fh):
+        t = 0.75 - 0.35 * (i / max(1, fw - 1)) + FACE_T[face] * 0.5 + 0.08 * (hsh(i, j, salt) - 0.5)
+        if j % 5 == 0:
+            t -= 0.3                                                      # growth rings
+        return px(pal(HORN, t, i, j, 0.04)), None
+    return p
+
+
+def hair_black(salt, cut=None, cut_depth=5):
+    base = hair_paint(salt=salt, cols=HAIR_K, strand=2.0, sheen=0.4)
+
+    def p(face, i, j, fw, fh):
+        if cut and face in SIDES and edge_cut(face, i, j, fw, fh, cut, cut_depth, salt, 2.0, 1.6):
+            return None, None
+        return base(face, i, j, fw, fh)
+    return p
+
+
+def face_art_avatar():
+    """Front of the head (32 x 32): pale face, a centre-parted black fringe with the side curtains, sharp amber eyes (on the glow layer), a slim nose, a thin mouth."""
+    cv = Canvas(32, 32)
+    for y in range(32):
+        for x in range(32):
+            shade = 0.6 + 0.08 * (1 - abs(x - 15.5) / 16) - 0.16 * (y / 31.0)
+            cv.put(x, y, pal(SKIN_D, shade, x, y, 0.04))
+    hp = hair_black(5)
+    for y in range(32):
+        for x in range(32):
+            part = abs(x - 15.5)
+            if y < 6 or x < 4 or x > 27 or (y < 13 and part > 3.2 + (12 - y) * 0.9 and y < 6 + (part - 3.0) * 1.1):
+                c, g = hp("front", x, y, 32, 32)
+                cv.put(x, y, c[:3] if c else HAIR_K[1])
+    for x0 in (6, 19):                                                                       # the eyes: dark upper lid, amber iris, a pupil
+        for y in range(15, 19):
+            for x in range(x0, x0 + 7):
+                lid = y == 15
+                rim = (x in (x0, x0 + 6)) and y >= 18
+                if lid or rim:
+                    cv.put(x, y, HAIR_K[0])
+                else:
+                    cv.put(x, y, AMBER if y == 16 else (214, 112, 14), glow=AMBER, ga=235)
+        cv.put(x0 + 3, 17, (70, 20, 6)); cv.put(x0 + 3, 16, (70, 20, 6))
+        for x in range(x0 - 1, x0 + 8):                                                      # the brow
+            cv.put(x, 13 + (1 if (x - x0) % 7 in (0, 6) else 0), HAIR_K[0])
+    cv.rect(15, 21, 16, 23, SKIN_D[0])                                                       # nose
+    cv.rect(13, 26, 18, 26, (120, 76, 92))                                                   # mouth
+    cv.rect(11, 31, 20, 31, SKIN_D[0])                                                       # chin shade
+    return cv
+
+
+def build_avatar():
+    """The second reference: the Dark Avatar of God. The same skin-sized body as the humanoid, an unrelated look: a fitted charcoal outfit with silver lines, layered black
+    cloth with white panels, a short mantle, dark pointed shoes, hair down to the shoes, two big curved horns, amber eyes."""
+    b = Build("dark_avatar", 512, 1536)
+    A = b.A
+    skin_p = skin(SKIN_D, salt=4)
+    b.bone("root", None, (0, 0, 0))
+    b.bone("body", "root", (0, 12, 0))
+    b.bone("head", "body", (0, 24, 0))
+    b.bone("hair", "head", (0, 32, 0))
+    b.bone("hair_b1", "body", (0, 30.0, 4.6))
+    b.bone("hair_b2", "hair_b1", (0, 20.0, 4.6))
+    b.bone("hair_b3", "hair_b2", (0, 10.0, 4.6))
+    b.bone("lock_l", "head", (4.4, 30.0, -3.0))
+    b.bone("lock_r", "head", (-4.4, 30.0, -3.0))
+    b.bone("robe_back", "body", (0, 23.5, 2.4))
+    b.bone("robe_l", "body", (2.2, 15.8, -2.8))
+    b.bone("robe_r", "body", (-2.2, 15.8, -2.8))
+    b.bone("sash_tail", "body", (3.6, 14.8, -2.9))
+    b.bone("front_cloth", "body", (0, 14.6, -2.6))
+    for suf, sg in (("_l", 1), ("_r", -1)):
+        b.bone("arm" + suf, "body", (sg * 6.0, 22.0, 0))
+        b.bone("forearm" + suf, "arm" + suf, (sg * 6.0, 17.0, 0))
+        b.bone("leg" + suf, "root", (sg * 2.0, 12, 0))
+        b.bone("skirt" + suf, "root", (sg * 2.0, 12, 0))
+        b.bone("horn" + suf, "head", (sg * 3.2, 31.0, 0.0))
+
+    # ----- legs: fitted trousers with a silver line, a black thigh wrap, dark pointed shoes with a silver rim
+    b.pair("leg_l", "leg_r", (0.0, 4.8, -2.0), (4.0, 7.2, 4.0), lined(30, hem=False, edge=0))
+    b.pair("leg_l", "leg_r", (0.0, 0.0, -2.0), (4.0, 5.0, 4.0), fabric(BLACK, salt=31, period=6.0, amp=0.12, seam=False))
+    b.pair("leg_l", "leg_r", (0.0, 0.0, -5.2), (4.0, 1.8, 3.2), fabric(BLACK, salt=32, period=6.0, amp=0.1, seam=False))
+    b.pair("leg_l", "leg_r", (0.3, 1.2, -7.0), (3.4, 0.9, 1.9), fabric(BLACK, salt=33, period=6.0, amp=0.1, seam=False), rotation=(-22, 0, 0), pivot=(2.0, 1.8, -5.2))
+    b.pair("leg_l", "leg_r", (-0.15, 4.4, -2.15), (4.3, 0.5, 4.3), metal(SILVER, salt=34, glow=None, emboss=False), faces=SIDES + ("top",))
+    b.pair("skirt_l", "skirt_r", (-0.3, 6.6, -2.4), (4.6, 5.8, 4.8), lined(21, cols=BLACK, edge=0, hem=True), faces=SIDES + ("bottom",))
+    # ----- torso: fitted charcoal, silver centre seam and collar, a belt with a silver buckle, a white chest panel
+    b.box("body", (-4.0, 12.0, -2.0), (8.0, 12.0, 4.0), lined(1, centre=True, edge=1, hem=False))
+    b.box("body", (-2.5, 22.4, -2.5), (5.0, 2.0, 5.0), lined(3, edge=0, hem=False))
+    b.box("body", (-2.5, 24.1, -2.5), (5.0, 0.4, 5.0), metal(SILVER, salt=35, glow=None, emboss=False), faces=SIDES + ("top",))
+    b.box("body", (-4.3, 12.2, -2.3), (8.6, 2.6, 4.6), fabric(BLACK, salt=2, period=6.0, amp=0.2, seam=False))
+    b.box("body", (-1.0, 12.6, -2.75), (2.0, 1.8, 0.6), metal(SILVER, salt=36, glow=(220, 230, 255, 120), emboss=False), faces=("front", "top", "left", "right"))
+    b.box("body", (-2.4, 14.8, -2.6), (4.8, 8.4, 0.6), white_panel(37), faces=("front", "left", "right", "top"))
+    # ----- the layered black cloth: two long front flaps with white panels, a short white-panelled apron, a hip strip, the mantle
+    b.pair("robe_l", "robe_r", (0.5, 2.4, -3.2), (3.4, 13.4, 0.9), cloth_flap(40), faces=SIDES + ("bottom",))
+    b.box("front_cloth", (-1.3, 5.6, -3.7), (2.6, 9.0, 0.8), cloth_flap(42), faces=SIDES + ("bottom",))
+    b.box("sash_tail", (3.0, 3.6, -3.1), (1.8, 11.0, 0.8), lined(44, cols=BLACK, edge=0, hem=True), faces=SIDES + ("bottom",))
+    b.box("robe_back", (-4.8, 12.0, 2.2), (9.6, 12.0, 0.9), cloth_flap(46, panel=False), faces=SIDES + ("bottom",))
+    b.box("robe_back", (-4.4, 5.0, 2.7), (8.8, 8.0, 0.8), white_panel(47), faces=SIDES + ("bottom",))
+    # ----- head: the face, the hair as layers, the horns
+    b.box("head", (-4, 24, -4), (8, 8, 8), head_paint(face_art_avatar(), hair_black(11), skin_p), dens={"front": 4}, faces=("front", "left", "right", "back", "top", "bottom"))
+    b.box("hair", (-4.5, 31.4, -4.5), (9.0, 1.7, 9.0), hair_black(12), faces=("top", "back", "left", "right", "front"))
+    b.pair("hair", "hair", (4.0, 25.2, -4.4), (0.7, 6.4, 8.8), hair_black(22), faces=("front", "back", "top", "left", "right"))
+    b.box("hair", (-4.5, 24.4, 3.7), (9.0, 7.2, 1.0), hair_black(13), faces=("back", "left", "right"))
+    hk = [clump_paint(HAIR_K, salt=170 + k, strands=2.6, root=0.1, curl=((-1) ** k) * 0.18, dither=0.04) for k in range(4)]
+    for n, x in enumerate((-3.9, 0.0, 3.9)):                                                                                              # the fringe: a short centre and the side curtains
+        b.clump("head", (x, 32.3, -4.6), x * 3, 6, 3.0 if x else 2.4, 7.6 if x else 4.0, hk[n % 4], key="bg%d" % n)
+    for sg in (1, -1):
+        for n, z in enumerate((-2.6, 0.0, 2.6)):
+            b.clump("head", (sg * 4.6, 31.4, z), 90 * sg, 6 + 4 * n, 2.8, 8.0 - 1.0 * n, hk[(n + 1) % 4], key="tl%d%d" % ((n + 1) % 4, sg > 0))
+    b.box("hair_b1", (-4.8, 20.0, 4.0), (9.6, 10.0, 2.0), hair_black(14), faces=SIDES)
+    b.box("hair_b2", (-5.2, 10.0, 4.0), (10.4, 10.0, 2.0), hair_black(15), faces=SIDES)
+    b.box("hair_b3", (-5.0, 2.0, 4.0), (10.0, 8.0, 2.0), hair_black(16, cut="b", cut_depth=7), faces=SIDES)
+    for n, x in enumerate((-3.8, -1.3, 1.3, 3.8)):
+        b.clump("hair_b3", (x, 2.8, 5.0), 180, 4, 3.0, 6.0 - (n % 2) * 1.6, hk[n % 4], key="hb%d" % (n % 4))
+    for suf, sg in (("_l", 1), ("_r", -1)):                                                                                               # the long front locks
+        b.box("lock" + suf, (sg * 4.4 - 0.9, 12.0, -4.2), (1.8, 18.0, 1.3), hair_black(17 + (sg > 0), cut="b", cut_depth=6), faces=SIDES)
+    # the horns: four tapering segments sweeping up and outward, then curving back and in
+    for suf, sg in (("_l", 1), ("_r", -1)):
+        b.spike("horn" + suf, (sg * 3.2, 31.0, 0.5), 3.4, 17.0, 6, -sg * 24, horn_paint(60), key="horn", fracs=(0.3, 0.28, 0.24, 0.18), taper=0.8, bend=(15, sg * 12))
+    # ----- arms: fitted sleeves with silver cuffs and bare hands, an armoured left shoulder and a cloth right one
+    b.pair("arm_l", "arm_r", (4.0, 17.0, -2.0), (4.0, 7.0, 4.0), lined(20, edge=0, hem=False))
+    b.box("arm_l", (3.7, 20.2, -2.6), (5.0, 4.4, 5.2), lined(23, cols=CHAR, edge=0, hem=True), faces=SIDES + ("top", "bottom"))
+    b.box("arm_l", (3.5, 23.8, -2.3), (4.6, 0.6, 4.6), metal(SILVER, salt=38, glow=None, emboss=False), faces=SIDES + ("top",))
+    b.box("arm_r", (-8.7, 20.6, -2.4), (4.7, 3.6, 4.8), fabric(BLACK, salt=24, period=6.0, amp=0.2, seam=False), faces=SIDES + ("top", "bottom"))
+    b.pair("forearm_l", "forearm_r", (4.0, 12.4, -2.0), (4.0, 4.6, 4.0), lined(25, edge=0, hem=False))
+    b.pair("forearm_l", "forearm_r", (3.85, 12.2, -2.15), (4.3, 0.6, 4.3), metal(SILVER, salt=39, glow=None, emboss=False), faces=SIDES + ("top", "bottom"))
+    b.pair("forearm_l", "forearm_r", (4.2, 10.4, -1.8), (3.6, 1.9, 3.6), skin(SKIN_D, salt=9), faces=SIDES + ("bottom",))
+
+    clips_humanoid(A)
+    return b
+
+
 # ------------------------------------------------------------------------------------------------------------------ animation (shared by the two humanoid forms)
 CLIPS = ("idle", "walk", "run", "attack", "cast", "cast_big", "hurt", "transform", "death")
 HAIR_CHAIN = ("hair_b1", "hair_b2", "hair_b3")
@@ -454,10 +638,10 @@ def run_build(b):
     return b.save(img, glow)
 
 
-MODELS = ("humanoid",)
-BUILDERS = {"humanoid": build_humanoid}
-TOWER = {"humanoid": 2.0}
-LOOK = {"humanoid": 1.0}
+MODELS = ("humanoid", "dark_avatar")
+BUILDERS = {"humanoid": build_humanoid, "dark_avatar": build_avatar}
+TOWER = {"humanoid": 2.0, "dark_avatar": 2.0}
+LOOK = {"humanoid": 1.0, "dark_avatar": 1.1}
 
 
 # ------------------------------------------------------------------------------------------------------------------ preview scenes
