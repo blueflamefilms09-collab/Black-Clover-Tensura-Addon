@@ -136,8 +136,8 @@ class StarSourceScanTest {
         assertFalse(c.substring(scutum, c.indexOf("public static BookPage.Cast hasta(")).contains("consume("), "Scutum keeps the stars");
         int flag = c.indexOf("private static boolean lash(");
         assertFalse(c.substring(flag, c.indexOf("public static BookPage.Cast blackNeverland()")).contains("consume("), "the whip keeps the stars");
-        assertTrue(c.contains("StarRules.needsHeir(id) && !StarGame.isHeir(c.caster)"), "the heir gate is checked on the server in every heir cast");
-        assertTrue(c.contains("StarConfig.nodes() && StarGame.isHeir(p) ? whip.cast(b, i, p, mode) : cone.cast(b, i, p, mode)") && c.contains("StarConfig.nodes() ? nodes.cast(b, i, p, mode) : dash.cast(b, i, p, mode)"),
+        assertTrue(c.contains("StarAccess.needsHeir(id, StarConfig.vfxForAll()) && !StarGame.isHeir(c.caster)"), "the heir gate (Black Neverland; every shared page too while star.vfxForAll is false) is checked on the server in every gated cast");
+        assertTrue(c.contains("StarConfig.nodes() && (StarConfig.vfxForAll() || StarGame.isHeir(p)) ? whip.cast(b, i, p, mode) : cone.cast(b, i, p, mode)") && c.contains("StarConfig.nodes() ? nodes.cast(b, i, p, mode) : dash.cast(b, i, p, mode)"),
                 "star.nodes = false restores the dash and the cone");
         assertTrue(c.contains("DAMAGE_RESISTANCE, StarRules.EVADE_TICKS"), "the evade is a 4-tick resistance effect that expires by itself (never an invulnerable flag that could be saved)");
         assertFalse(c.contains("setInvulnerable"), "no invulnerable flag");

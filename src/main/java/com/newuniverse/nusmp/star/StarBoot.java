@@ -28,6 +28,7 @@ public final class StarBoot {
         NeoForge.EVENT_BUS.addListener(StarBoot::onDimension);
         NeoForge.EVENT_BUS.addListener(StarBoot::onStopping);
         StarSelfTests.register();
+        StarAccessSelfTests.register();      // Star Magic for everybody (docs/star_vfx_for_all.md): key magic.star_nodes_all, inside the smoke prefix magic.star_nodes
     }
 
     static void onLogout(PlayerEvent.PlayerLoggedOutEvent e) { if (e.getEntity() instanceof ServerPlayer p) StarGame.forget(p); }
