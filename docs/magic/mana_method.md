@@ -465,6 +465,114 @@ What is the author's, not canon: every number (the gifts, the durations, the rad
 2. **Body Rune damage reduction: built.** A FULL hold (a measured full hold only) also turns away **15 %** of each hit the wearer takes while the runes last (`BodyRuneRules.reduction`, hard cap 20 %; a tap, a half hold and a cast without a measured hold give 0). Server setting `manaMethod.bodyDamageReduction` (default true; false = the 3.6.0 Body Rune, gifts only). It is applied in `BodyRunes.onIncomingDamage` (`LivingIncomingDamageEvent`, players with a session only; void and kill damage, the `bypasses_invulnerability` tag, are never touched). It is still not a shield: 15 % of a hit, for the 15 s of a full hold, with the page's 600 tick cooldown. Cost: one `isEmpty()` check per damage event while no body carries runes, otherwise one map read per hit on a player; no packet, no allocation.
    Tests: `BodyRuneRulesTest` (only a full hold reduces, cap, the reduced amount is smaller, non-negative and clamped); self-test `magic.mana_method.body` (a full hold records the reduction, a tap none). Caveat: Tensura's own damage handling may change the amount again after this event; the order of the two was not checked in a game.
 
+## 3.8.0: the runes as a passive on mastery, and a rune writes your own element
+
+Plain words first (rule 12). **What is built:** (A) who may use the Mana Method pages is now a server setting, `manaMethod.access`, with three modes: **PASSIVE** (the new default: nothing to switch on; the pages open when your grimoire's mastery reaches `passiveMastery`, 0.7), **TIMED** (a new page, **Rune State**, switches the runes on for 8 minutes, then a 10 minute cooldown; both are settings) and **MANA_ZONE_GATE** (exactly the 3.7.0 behaviour, the late-game gate);
+(B) a rune writes **the user's own element**, as in the anime: with `manaMethod.ownElementOnly` (default true) the Flame, Water, Wind and Earth Rune pages are listed and castable only in a grimoire of that element (a fused grimoire counts for both parents); `false` gives every grimoire all four, as in 3.7.0.
+**How it is read:** the server decides everything; the client only lists. The mastery and the element are read from the grimoire's skill instance, which the client already has (the same way the Signature Spell's `Fusion` tag is read on both sides), so PASSIVE and the element rule need **no packet**; TIMED needs one tiny packet to the player themselves so the menu knows the state is on.
+**What is not included:** the Mana Zone page, Omni Volley and Pressure Space keep the Mana Zone gate whatever `access` says (`GrimoireBook.isZoneGated` is untouched); `ManaZoneManager.gateOpenFor` is unchanged; no GUI code, no key, no new entity, no new block; the rune bolt, the sneak "both runes" and the True Magic page keep their element rules.
+
+### Settings (SERVER, `nusmp-mana-method-server.toml`, category `manaMethod`)
+
+| Key | Default | Range | Meaning / what restores 3.7.0 |
+|---|---|---|---|
+| `access` | **PASSIVE** | PASSIVE, TIMED, MANA_ZONE_GATE | who may use the nine pages; **MANA_ZONE_GATE = the 3.7.0 late-game gate** |
+| `passiveMastery` | **0.7** | 0.0 to 1.0 | PASSIVE: the share of the grimoire's mastery at which the pages open (see decision 1) |
+| `timedSeconds` | **480** (8 min) | 30 to 3600 | TIMED: how long the rune state stays on |
+| `timedCooldownSeconds` | **600** (10 min) | 0 to 7200 | TIMED: the rest after the state ends before the page can be cast again |
+| `ownElementOnly` | **true** | | **false = every grimoire shows and casts all four elemental runes, as in 3.7.0** |
+
+To get exactly the 3.7.0 behaviour set `access = "MANA_ZONE_GATE"` and `ownElementOnly = false`.
+
+### The three access modes (`RuneAccess`, `ManaMethodPages.usable(book, instance, entity, pageId)`)
+
+One question, asked in one place (`GrimoireBook.usable` for a Mana Method page): is `manaMethod.enabled` on and the page's own switch (mobility, body, brush) on? Then the mode, then the element rule. "The nine pages" are Flame, Water, Wind, Earth, True Magic, Air Step, Dash, Body and Brush; the tenth, **Rune State**, is the new page.
+
+| Mode | Nine pages usable when | Rune State page |
+|---|---|---|
+| PASSIVE | the mastery fraction of the grimoire the page belongs to is at least `passiveMastery` (`GrimoireBook.masteryFrac(instance)`, the same number `SoulCorpseSpells` and the Mana Zone gate use); a menu with no instance cannot know it and shows nothing | not usable (hidden) |
+| TIMED | the caster's rune state is ON; **mastery and the late-game gate do not matter** | usable (always, to see the time left or to start it) |
+| MANA_ZONE_GATE | `ManaZoneManager.gateOpenFor` is open (six requirements), exactly as 3.7.0 | not usable (hidden) |
+
+**Listing on both sides.** PASSIVE: the client reads `instance.getMastery()` (already synced for the stage display) and the book's `getMaxMastery()`; nothing is sent. TIMED: the client reads `RuneStateGate` (one volatile number, no Minecraft types, the pattern of `ManaZoneClientGate`) that the new packet `nusmp:mana_method_state` sets; it is read when a menu asks whether a page is usable, never per frame. MANA_ZONE_GATE: the existing `ManaZoneClientGate`.
+The server asks the same function again when a page is cast (`castPage` checks `usable`), so a client that lists a page too early (a stale number) still cannot cast it.
+
+**The TIMED timeline** (defaults 480 s on, 600 s cooldown; the clock is the WORLD game time, stored as two stamps on the player's persisted data, so a relog, a death or a restart cannot reset the cooldown):
+
+| Time | What happens |
+|---|---|
+| 0:00 | the player casts **Rune State**: action bar "Rune State: ON for 8:00. The runes answer your call."; stamps `OnUntil = 8:00`, `CooldownUntil = 18:00`; the runes are usable |
+| 3:00 | casting it again: "Rune State: already ON (5:00 left)." (free, changes nothing) |
+| 7:30 | "Rune State: the runes fade in 0:30." (once) |
+| 8:00 | the state ends: "Rune State: OFF. It can be called again in 10:00."; the pages close |
+| 12:00 | casting it: "Rune State: the runes have not settled yet (6:00 left)." (refused, free) |
+| 18:00 | the page works again |
+| early cut | the player logs out at 2:00 (or dies, or changes dimension, or the server stops): the state ends THERE, the cooldown starts there (cooldown ends at 12:00); logging in again at 2:05 shows "...not settled yet (9:55 left)" and the clock cannot be reset by relogging. A state still marked ON in the file after a crash is ended at the next login the same way |
+
+The cooldown counts from the END of the state (a long state does not eat into the rest); an early cut starts the rest at the cut and loses the remaining on-time, so leaving early gains nothing.
+
+### The element rule (`RuneOwnElement`, `ManaMethodPages.elementOk`)
+
+The page belongs to a grimoire, and so does the rule: it reads **that grimoire's** magic (`GrimoirePages.magicOf(instance)`) and the two parents written in its `Fusion` tag. A player with two grimoires (for example a second Star grimoire, or one in the pack) gets the elemental pages each grimoire earns; a grimoire never decides for another. The cast comes from the page of the grimoire the player is casting with (the bound / held / slotted one, `GrimoirePages.grimoireOf`), so switching grimoires switches the pages. The table is the natural list of True Magic (`TrueMagicRules.NATURAL`) without Lightning and Plant (they have no basic rune page; the True Magic Rune page covers them); it is pinned for **every** `MagicType` by `RuneOwnElementTest`.
+
+| Grimoire (its magic, or a parent of its fusion) | Elemental rune pages listed and castable (with `ownElementOnly`) |
+|---|---|
+| Flame | Flame Rune |
+| Water | Water Rune |
+| Wind | Wind Rune |
+| Earth | Earth Rune |
+| a fused grimoire with two natural parents (`FLAME:EARTH` on a Glass book) | both: Flame and Earth |
+| a fused grimoire with one natural parent (`STAR:WIND`) | that one: Wind |
+| Lightning, Plant | none of the four (they have the True Magic Rune page) |
+| Time, Star, Sealing, Spatial, Gravity, Light, Dark, Anti-Magic, Reinforcement, ... and also Magma, Explosion, Ice, Mist, Storm, Sand ... (not a basic element by this table) | none |
+
+* **Never filtered by element:** True Magic Rune (it already writes "your natural element": the grimoire's own magic, Stage 3 control; this was checked and is consistent), Air Step, Dash, Body, Brush (they use the natural element, else Wind, for their picture) and Rune State.
+* **The bolt keeps its element.** The element of the rune is still the page's (`RuneElement`); the sneak "both runes (pursue and grow)" is about the two instructions, not two elements, and is unchanged.
+* **Second look at the cast.** `castElement` asks `elementOk` again and refuses (and refunds the price) a rune that is not the user's, whatever called it.
+
+### Worst-case cost (rule 11)
+
+| What | Bound |
+|---|---|
+| `usable` (key press, a held tick, a menu) | a few field reads and compares; for the four elemental pages one `getString("Fusion")` and an allocation-free scan (`regionMatches`); the gate is evaluated only in MANA_ZONE_GATE (it was already cached for 2 s); no packet, no world access |
+| PASSIVE | no state at all, no tick, no packet |
+| TIMED, idle | one `ACTIVE.isEmpty()` check per server tick |
+| TIMED, busy | one pass over the players who are ON once a second (a map entry and one persisted-data read each), at most one entry per online player; no world access, no entity query |
+| TIMED, network | **at most 2 packets per ON period per player** (start, end), a third on a death or dimension cut: each 2 to 4 bytes of body, to that player only (never to others), 18 minutes apart with the defaults. It is a state flag, not an effect, so it is not dropped by the effect packet budget |
+| TIMED, memory and storage | two `long`s per player in the persisted data; one `UUID -> Long` entry per player who is ON; cleared on logout, death, dimension change and server stop |
+| Client | one volatile read when a menu asks; nothing per frame |
+
+### Tests
+
+* Pure: `RuneAccessTest` (16 tests: all three modes and the Rune State page in each, the mastery edge, the clamps, the **timeline with the cooldown across a relog**, a crash-left state, death and dimension cut, cooldown 0, the clock text, two players independent) and `RuneOwnElementTest` (10 tests: a table over **every `MagicType`** read from the enum's source, hybrids and malformed fusion strings, the setting off, the other pages unfiltered, the ids agree with the book, True Magic's natural list agrees).
+* Source scans: `ManaMethodSourceScanTest` (6 new pins: one decision place, the old gate and `usable(LivingEntity)` kept, the zone-gated pages untouched; the element rule reads only the instance; per-player UUID state, idle check, world clock, persisted stamps, every exit wired; the packet tiny, validated, clientbound and to the player only; the page appended last and free; the five new settings and their defaults; this doc and the lang keys) and `PerfSourceScanTest` (`RuneState` probe section `s.mana.state`, and a new pin that the rune-state tick looks at the empty map and the once-a-second modulo before it sweeps, scans no entities and never sends to others).
+* In game (CI server smoke, **not run here**), under the existing prefix `magic.mana_method`: **`magic.mana_method.access`** (the real grimoire's answer follows the configured mode: PASSIVE at the mastery edge, TIMED with the state, MANA_ZONE_GATE with the gate; the Rune State page only in TIMED and last in the book; on a stand-in player the state starts, is refused while on and while cooling, keeps its cooldown across a logout, ends by time, and `clearAll` leaves none) and **`magic.mana_method.element`** (each element's grimoire shows its own page only, a `FLAME:EARTH` fused book both, Time / Star / Lightning none, two grimoires decide for themselves, the other pages unfiltered, the cast of a foreign element is refused; with the setting off all four are open). The two tests adapt to the configured mode; they do not change the config.
+
+### NEW / REPLACED / KEPT (rule 5)
+
+* **NEW:** `RuneAccess` (the pure decision and timeline), `RuneOwnElement` (the pure element rule), `RuneState` (the server side of TIMED), `RuneStateGate` (the client flag), the packet `nusmp:mana_method_state` (`RuneNet.StatePayload`, `validState`), the page `mana_method_state` (**Rune State**, appended LAST after `mana_method_brush`; free; no attack word, so an Avatar never casts it), five settings (`access`, `passiveMastery`, `timedSeconds`, `timedCooldownSeconds`, `ownElementOnly`), the `ManaMethodPages.usable(book, instance, entity, pageId)` and `elementOk`, the self-tests `.access` and `.element`, two pure test classes, six scan pins, one perf pin, one probe section, six lang keys and one page description.
+* **REPLACED** (behind settings that restore the old behaviour): the late-game gate as the *default* way to open the Mana Method pages (now PASSIVE on mastery; `access = MANA_ZONE_GATE` restores it); "every grimoire shows all four elemental runes" (now only the user's own; `ownElementOnly = false` restores it); the sentence "Late-game: the Mana Zone gate applies." in the ten page descriptions (lang only, now says who may use it); the single grimoire call `ManaMethodPages.usable(e, id)` (now `usable(this, i, e, id)`; the old method stays).
+* **KEPT:** every older page, id and mode number (the new page is appended after Brush; `ManaMethodPages.tailCount` still recognises the 9-, 7- and 5-page tails), `ManaZoneManager.gateOpenFor` and its six requirements, the Mana Zone / Omni Volley / Pressure Space gate, all older settings and the config file, all packets, the bolt, Homing / Growth, the cost curve, the Body and Brush Rune, True Magic's own rules (natural attribute, Stage 3 control), the Time Magic VFX (untouched, not referenced). `en_us.json` was not edited (the coordinator merges `tools/lang/mana_method.json`).
+
+### Honest caveats (3.8.0)
+
+* **Nothing was run in Minecraft.** Type-checked against the API stubs (only the known stub artifacts remain), pure tests and source scans run offline; the two new self-tests have never run. Whether ManasCore syncs the skill instance's mastery and tags to the client at the moment a menu opens (the code relies on it, as the Signature Spell page names already do) is read from the existing code, not seen.
+* **A change for existing worlds.** The default is now PASSIVE. A player who had passed the Mana Zone gate but whose grimoire is below 0.7 mastery **loses** the Mana Method pages until the grimoire catches up; a player at 0.7 mastery who never passed the gate **gains** them. Set `access = "MANA_ZONE_GATE"` to keep the 3.7.0 behaviour.
+* **Mastery is per grimoire**, not per player: a second grimoire at low mastery shows no runes while the first one does.
+* **TIMED needs only the page**: any mage, whatever the mastery and whatever the gate, can call the runes for 8 minutes out of every 18 (True Magic still needs Stage 3 control inside its own cast). That is what was asked; it is the loosest of the three modes.
+* **A dimension change ends the TIMED state** (the same rule as the other Mana Method sessions). Going through a portal costs the rest of the state and starts the 10 minute rest. If that is too harsh, it is one handler (`RuneState.onDimension`) to drop.
+* **The client's menu flag runs on the machine's own clock.** In single player, pausing the game stops the server's game time but not the client's wall clock, so the menu may stop listing the pages a little before the server ends the state; the server's answer is the one that counts at the cast.
+* **Strict element table.** Magma, Explosion, Ice, Storm and the other sub-attributes of the four soul types write no elemental rune page (they are not a basic element in `TrueMagicRules.NATURAL`), and neither do Lightning and Plant (they have the True Magic Rune page). A fused grimoire counts only its two parents. A fused grimoire whose own magic is not natural (a Glass book) still cannot cast the True Magic Rune page (unchanged: it follows the book's own magic).
+* The page is free and gives the usual mastery point per cast; with a cooldown of minutes that is negligible.
+
+### Owner decisions (3.8.0)
+
+1. **`passiveMastery` 0.7.** The book's stage is `9 - round(mastery * 9)`: Stage 3 is the band from 0.611 to 0.722, Stage 2 starts at 0.722. The canon says only the Third Stage and above can use the Mana Method in combat, so 0.7 sits inside Stage 3 (late Stage 3). Use 0.62 for "as soon as Stage 3 is reached", 0.73 for Stage 2. Keep 0.7?
+2. **Which magics get which elemental rune.** The strict table above gives nothing to Magma, Ice, Storm, Explosion and the like. Should the sub-attributes of the four soul types (Magma = Flame + Earth, Ice = Water, Storm = Wind + Water, ...) count for their parent elements? It is one table in `RuneOwnElement.basicOf`.
+3. **TIMED for everyone.** In TIMED the Rune State needs no mastery. Should it also need a minimum mastery (for example the same `passiveMastery`) before the page can be cast?
+4. **A dimension change cuts the state.** Keep, or let the state survive a portal (and only end on logout, death and server stop)?
+5. **Lightning and Plant mages** have only the True Magic Rune among the elemental pages. Add a Lightning Rune and a Plant Rune page later (new pages, appended last)?
+
 ## Owner decisions (3.6.0)
 
 Answered in the brief and built as answered: (1) Anti-Magic still cancels True Magic (no change); (2) the cost scales with the charge (tap about 40 %, full 100 %, `costScalesWithCharge`, `minCostFraction`; the cooldown stays unscaled); (3) `lightningRealBolt` stays OFF and the strike and the rune's lightning grow with the charge instead; (4) the Air Step and Dash fall grace is unchanged;
