@@ -40,6 +40,9 @@ import java.util.UUID;
  *   <li>3.6.0, the same prefix: {@code .cost} (the price follows the waiting charge, is never used up by being asked, never above the normal price), {@code .lightning_charge} (the lightning's size
  *       follows the charge inside the caps), {@code .body} (the Body Rune's modifiers: applied, refreshed not stacked, capped, gone by time / leaving / server stop, a full hold glides, no
  *       flight), {@code .brush} (the painted rune: caps and spacing, the caster does not trigger it, a foe draws exactly one bolt and spends it, expiry and clean-up).</li>
+ *   <li>3.8.0, the same prefix: {@code .access} (the page decision follows the configured mode through the real grimoire; the Rune State timeline on a stand-in player: starts, refuses while on and
+ *       cooling, the cooldown survives a logout, the natural end, the clean-up) and {@code .element} (a grimoire writes its own element's page only, a fused one both, one grimoire never
+ *       decides for another, the other pages are never filtered, the cast refuses an element that is not the user's).</li>
  * </ul>
  */
 public final class ManaMethodSelfTests {
@@ -58,6 +61,8 @@ public final class ManaMethodSelfTests {
         SelfTests.register("magic.mana_method.lightning_charge", ManaMethodSelfTests::lightningCharge);
         SelfTests.register("magic.mana_method.body", ManaMethodSelfTests::body);
         SelfTests.register("magic.mana_method.brush", ManaMethodSelfTests::brush);
+        SelfTests.register("magic.mana_method.access", ManaMethodSelfTests::access);
+        SelfTests.register("magic.mana_method.element", ManaMethodSelfTests::element);
     }
 
     private static Result core(MinecraftServer server) {
@@ -86,7 +91,7 @@ public final class ManaMethodSelfTests {
         GrimoireBook book = NUSkills.BOOK_REINFORCEMENT.get();
         var pages = book.pages();
         for (int m = pages.size() - want.size(); m < pages.size(); m++)
-            if (book.usable(null, p, m)) return Result.fail("page " + pages.get(m).id() + " is usable for a player who fails the late-game gate");
+            if (book.usable(null, p, m) && !(ManaMethodConfig.accessMode() == RuneAccess.Mode.TIMED && pages.get(m).id().equals(ManaMethodPages.STATE_ID))) return Result.fail("page " + pages.get(m).id() + " is usable for a player who fails the late-game gate");
 
         // ---- the spell's NBT round trip and the rune's look
         for (RuneElement e : RuneElement.values())
@@ -715,5 +720,131 @@ public final class ManaMethodSelfTests {
             for (BlockPos f : floor) sl.setBlock(f, Blocks.AIR.defaultBlockState(), 3);
             p.setXRot(0f);
         }
+    }
+
+    // ---------------------------------------------------------------- 3.8.0
+    private static ManasSkillInstance withMastery(GrimoireBook book, int mastery) {
+        ManasSkillInstance inst = book.createDefaultInstance();
+        inst.setMastery(Math.max(0, mastery));
+        return inst;
+    }
+
+    /**
+     * {@code magic.mana_method.access}: the real grimoire's decision follows the configured mode (PASSIVE: the mastery of the page's own grimoire, TIMED: the Rune State, MANA_ZONE_GATE: the
+     * late-game gate; the Rune State page is usable only in TIMED), and the TIMED timeline on a stand-in player, whatever the configured mode is: it starts, is refused while on and while
+     * cooling, the cooldown survives a logout, it ends by time, and a dropped player leaves nothing behind.
+     */
+    private static Result access(MinecraftServer server) {
+        ServerLevel sl = server.overworld();
+        sl.getChunk(0, 0);
+        FakePlayer p = SelfTests.standIn(sl, "mana_method_access", 8.5, 120, 8.5);
+        UUID id = p.getUUID();
+        GrimoireBook book = NUSkills.BOOK_FIRE.get();
+        int fire = modeOf(book, ManaMethodPages.FIRE_ID), state = modeOf(book, ManaMethodPages.STATE_ID);
+        if (fire < 0 || state < 0) return Result.fail("the Flame Rune page or the Rune State page is missing from the book");
+        if (state != book.pages().size() - 1) return Result.fail("the Rune State page is not the last page of the book");
+        RuneAccess.Mode mode = ManaMethodConfig.accessMode();
+        RuneState.clearAll();
+        RuneState.write(p, RuneAccess.Stamps.NONE);
+        try {
+            // ---- the grimoire's decision
+            ManasSkillInstance none = withMastery(book, 0);
+            if (ManaMethodPages.usable(book, null, p, ManaMethodPages.FIRE_ID)) return Result.fail("a menu with no instance listed a rune page");
+            boolean statePage = book.usable(none, p, state);
+            if (statePage != (mode == RuneAccess.Mode.TIMED && ManaMethodConfig.enabled())) return Result.fail("the Rune State page is " + (statePage ? "usable" : "closed") + " in mode " + mode);
+            int max = Math.max(1, book.getMaxMastery());
+            if (mode == RuneAccess.Mode.PASSIVE && ManaMethodConfig.enabled()) {
+                if (book.usable(none, p, fire)) return Result.fail("PASSIVE: a grimoire with no mastery can write a rune");
+                int need = (int) Math.ceil(ManaMethodConfig.passiveMastery() * max - 1e-9);
+                if (need > 0 && book.usable(withMastery(book, need - 1), p, fire)) return Result.fail("PASSIVE: one point short of the mastery can write a rune");
+                if (!book.usable(withMastery(book, need), p, fire)) return Result.fail("PASSIVE: the mastery that reaches " + ManaMethodConfig.passiveMastery() + " cannot write a rune");
+                if (!book.usable(withMastery(book, max), p, fire)) return Result.fail("PASSIVE: a mastered grimoire cannot write a rune");
+                if (!book.usable(withMastery(book, max), p, modeOf(book, ManaMethodPages.AIR_STEP_ID)) && ManaMethodConfig.mobility()) return Result.fail("PASSIVE: a mastered grimoire cannot use the Air Step Rune");
+            } else if (mode == RuneAccess.Mode.TIMED && ManaMethodConfig.enabled()) {
+                if (book.usable(withMastery(book, max), p, fire)) return Result.fail("TIMED: full mastery wrote a rune with the state off");
+            } else if (mode == RuneAccess.Mode.MANA_ZONE_GATE && ManaMethodConfig.enabled()) {
+                boolean gate = com.newuniverse.nusmp.mana.zone.ManaZoneManager.gateOpenFor(p);
+                if (book.usable(withMastery(book, max), p, fire) != gate) return Result.fail("MANA_ZONE_GATE: the pages did not follow the late-game gate (" + gate + ")");
+            }
+
+            // ---- the Rune State timeline (explicit durations, so it does not depend on the config)
+            long now = RuneState.clock(p);
+            int dur = 30, cd = 600;
+            if (!RuneState.castAt(p, now, dur, cd)) return Result.fail("the first cast of the Rune State was refused");
+            if (!RuneState.on(p) || !RuneState.isActive(id)) return Result.fail("the state is not on after the cast");
+            if (RuneState.read(p).onUntil() != now + 20L * dur || RuneState.read(p).cooldownUntil() != now + 20L * (dur + cd)) return Result.fail("the stamps on the player are " + RuneState.read(p));
+            if (mode == RuneAccess.Mode.TIMED && ManaMethodConfig.enabled() && !book.usable(none, p, fire)) return Result.fail("TIMED: the state is on and a grimoire with no mastery still cannot write a rune");
+            if (RuneState.castAt(p, now + 10, dur, cd)) return Result.fail("a second cast while on was accepted");
+            RuneState.sweepWith(u -> u.equals(id) ? p : null, now + 20L * dur - RuneAccess.WARN_TICKS);                  // the warning
+            if (!RuneState.isActive(id)) return Result.fail("the warning ended the state");
+            RuneState.sweepWith(u -> u.equals(id) ? p : null, now + 20L * dur);                                          // the natural end
+            if (RuneState.isActive(id) || RuneState.on(p)) return Result.fail("the state did not end by time");
+            if (RuneState.castAt(p, now + 20L * dur + 5, dur, cd)) return Result.fail("a cast during the cooldown was accepted");
+            if (!RuneState.castAt(p, now + 20L * (dur + cd), dur, cd)) return Result.fail("the cast after the cooldown was refused");
+            // a logout cuts the state; the cooldown starts there and a relog does not reset it
+            RuneState.endEarly(p, false);
+            if (RuneState.isActive(id)) return Result.fail("a logout left the state on");
+            long cut = RuneState.clock(p);
+            if (RuneState.read(p).onUntil() > cut || RuneState.read(p).cooldownUntil() != cut + 20L * ManaMethodConfig.timedCooldownSeconds()) return Result.fail("the cut state was stamped " + RuneState.read(p));
+            if (RuneState.castAt(p, cut + 20, dur, ManaMethodConfig.timedCooldownSeconds())) return Result.fail("logging out and in reset the cooldown");
+            // the server stopping and a clean slate
+            RuneState.write(p, RuneAccess.Stamps.NONE);
+            if (!RuneState.castAt(p, now, dur, 0)) return Result.fail("could not start again with a clean slate");
+            RuneState.clearAll();
+            if (RuneState.activeCount() != 0 || RuneState.on(p)) return Result.fail("clearAll left a state");
+            return Result.ok("mode " + mode + ": the grimoire's answer follows it; the Rune State starts, refuses while on and cooling, keeps its cooldown across a logout, ends by time, and clearAll leaves none");
+        } finally {
+            RuneState.clearAll();
+            RuneState.write(p, RuneAccess.Stamps.NONE);
+        }
+    }
+
+    /**
+     * {@code magic.mana_method.element}: with {@code ownElementOnly} a grimoire writes its own element's page only, a fused grimoire both parents', Time / Star / Lightning get no elemental page,
+     * two grimoires decide each for themselves, no other page is filtered, and the cast of an element that is not the user's is refused. With the setting off all four are open (3.7.0).
+     */
+    private static Result element(MinecraftServer server) {
+        ServerLevel sl = server.overworld();
+        sl.getChunk(0, 0);
+        FakePlayer p = SelfTests.standIn(sl, "mana_method_element", 8.5, 120, 8.5);
+        boolean own = ManaMethodConfig.ownElementOnly();
+        String[] ids = {ManaMethodPages.FIRE_ID, ManaMethodPages.WATER_ID, ManaMethodPages.WIND_ID, ManaMethodPages.EARTH_ID};
+        GrimoireBook[] books = {NUSkills.BOOK_FIRE.get(), NUSkills.BOOK_WATER.get(), NUSkills.BOOK_WIND.get(), NUSkills.BOOK_EARTH.get()};
+        for (int b = 0; b < 4; b++) {
+            ManasSkillInstance inst = books[b].createDefaultInstance();
+            for (int k = 0; k < 4; k++) {
+                boolean want = !own || k == b;
+                if (ManaMethodPages.elementOk(inst, ids[k]) != want) return Result.fail(books[b].magicId() + " and " + ids[k] + ": expected " + want + " (ownElementOnly " + own + ")");
+            }
+        }
+        for (GrimoireBook other : new GrimoireBook[]{NUSkills.BOOK_TIME.get(), NUSkills.BOOK_STAR.get(), NUSkills.BOOK_LIGHTNING.get()}) {
+            ManasSkillInstance inst = other.createDefaultInstance();
+            for (String id : ids) if (ManaMethodPages.elementOk(inst, id) == own) return Result.fail(other.magicId() + " and " + id + ": a non-elemental magic should " + (own ? "have none" : "have all four (ownElementOnly off)"));
+        }
+        // a fused grimoire counts for both parents
+        ManasSkillInstance glass = NUSkills.BOOK_GLASS.get().createDefaultInstance();
+        glass.getOrCreateTag().putString("Fusion", "FLAME:EARTH");
+        boolean[] wantGlass = {true, !own, !own, true};
+        for (int k = 0; k < 4; k++) if (ManaMethodPages.elementOk(glass, ids[k]) != wantGlass[k]) return Result.fail("a Flame:Earth fused grimoire and " + ids[k] + " should be " + wantGlass[k]);
+        // two grimoires decide each for themselves
+        ManasSkillInstance f = books[0].createDefaultInstance(), w = books[1].createDefaultInstance();
+        if (ManaMethodPages.elementOk(f, ManaMethodPages.WATER_ID) == own || ManaMethodPages.elementOk(w, ManaMethodPages.WATER_ID) == false) return Result.fail("the Flame grimoire decided for the Water grimoire");
+        // the other pages are never filtered by element
+        ManasSkillInstance time = NUSkills.BOOK_TIME.get().createDefaultInstance();
+        for (String id : List.of(ManaMethodPages.TRUE_ID, ManaMethodPages.AIR_STEP_ID, ManaMethodPages.DASH_ID, ManaMethodPages.BODY_ID, ManaMethodPages.BRUSH_ID, ManaMethodPages.STATE_ID))
+            if (!ManaMethodPages.elementOk(time, id)) return Result.fail(id + " was filtered by element for a Time grimoire");
+        // the cast itself refuses an element that is not the user's (the second, server-side look)
+        if (own) {
+            GrimoireBook timeBook = NUSkills.BOOK_TIME.get();
+            int fire = modeOf(timeBook, ManaMethodPages.FIRE_ID);
+            RuneManager.cancelOwner(p.getUUID());
+            try {
+                if (timeBook.pages().get(fire).cast().cast(timeBook, time, p, fire)) return Result.fail("a Time grimoire cast the Flame Rune");
+                if (RuneManager.activeCount(p.getUUID()) != 0) return Result.fail("the refused Flame Rune left a cast behind");
+            } finally {
+                RuneManager.cancelOwner(p.getUUID());
+            }
+        }
+        return Result.ok("ownElementOnly " + own + ": each grimoire shows its own element's page" + (own ? "" : " (all four)") + ", a fused one both parents', Time / Star / Lightning " + (own ? "none" : "all") + ", other pages unfiltered, the cast refuses a foreign element");
     }
 }
