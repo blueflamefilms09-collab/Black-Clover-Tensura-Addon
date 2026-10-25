@@ -1,0 +1,380 @@
+{
+ "humanoid_front": {
+  "kind": "geo",
+  "model": "veldanava_humanoid",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0
+  ],
+  "tile": [
+   400,
+   560
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "idle",
+  "views": [
+   {
+    "name": "front",
+    "yaw": 0,
+    "pitch": 4,
+    "target": [
+     0,
+     1.0,
+     0
+    ],
+    "dist": 4.0
+   },
+   {
+    "name": "front 3/4",
+    "yaw": 35,
+    "pitch": 8,
+    "target": [
+     0,
+     1.0,
+     0
+    ],
+    "dist": 4.0
+   }
+  ]
+ },
+ "humanoid_back": {
+  "kind": "geo",
+  "model": "veldanava_humanoid",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0
+  ],
+  "tile": [
+   400,
+   560
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "idle",
+  "views": [
+   {
+    "name": "back",
+    "yaw": 180,
+    "pitch": 5,
+    "target": [
+     0,
+     1.0,
+     0
+    ],
+    "dist": 4.0
+   },
+   {
+    "name": "side",
+    "yaw": 90,
+    "pitch": 4,
+    "target": [
+     0,
+     1.0,
+     0
+    ],
+    "dist": 4.0
+   }
+  ]
+ },
+ "humanoid_face": {
+  "kind": "geo",
+  "model": "veldanava_humanoid",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0
+  ],
+  "tile": [
+   420,
+   420
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "idle",
+  "views": [
+   {
+    "name": "face",
+    "yaw": 0,
+    "pitch": 2,
+    "target": [
+     0,
+     1.76,
+     0
+    ],
+    "dist": 2.2
+   },
+   {
+    "name": "face 3/4",
+    "yaw": 32,
+    "pitch": 6,
+    "target": [
+     0,
+     1.76,
+     0
+    ],
+    "dist": 2.2
+   }
+  ]
+ },
+ "humanoid_cast": {
+  "kind": "geo",
+  "model": "veldanava_humanoid",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0.0,
+   6.0,
+   12.0,
+   18.0
+  ],
+  "tile": [
+   340,
+   480
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "cast",
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 30,
+    "pitch": 6,
+    "target": [
+     0,
+     1.0,
+     0
+    ],
+    "dist": 4.2
+   }
+  ]
+ },
+ "humanoid_cast_big": {
+  "kind": "geo",
+  "model": "veldanava_humanoid",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0.0,
+   10.0,
+   20.0,
+   30.0
+  ],
+  "tile": [
+   340,
+   480
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "cast_big",
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 30,
+    "pitch": 6,
+    "target": [
+     0,
+     1.25,
+     0
+    ],
+    "dist": 5.4
+   }
+  ]
+ },
+ "humanoid_attack": {
+  "kind": "geo",
+  "model": "veldanava_humanoid",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0.0,
+   3.2,
+   6.4,
+   9.6,
+   12.8
+  ],
+  "tile": [
+   340,
+   480
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "attack",
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 30,
+    "pitch": 6,
+    "target": [
+     0,
+     1.0,
+     0
+    ],
+    "dist": 4.2
+   }
+  ]
+ },
+ "humanoid_transform": {
+  "kind": "geo",
+  "model": "veldanava_humanoid",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0.0,
+   10.7,
+   21.3,
+   32.0,
+   42.7,
+   53.3
+  ],
+  "tile": [
+   340,
+   480
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "transform",
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 30,
+    "pitch": 6,
+    "target": [
+     0,
+     1.25,
+     0
+    ],
+    "dist": 5.4
+   }
+  ]
+ },
+ "humanoid_death": {
+  "kind": "geo",
+  "model": "veldanava_humanoid",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0.0,
+   11.2,
+   22.4,
+   33.6,
+   44.8
+  ],
+  "tile": [
+   340,
+   480
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "death",
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 30,
+    "pitch": 6,
+    "target": [
+     0,
+     1.0,
+     0
+    ],
+    "dist": 4.2
+   }
+  ]
+ },
+ "humanoid_walk": {
+  "kind": "geo",
+  "model": "veldanava_humanoid",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0.0,
+   5.5,
+   11.0,
+   16.5
+  ],
+  "tile": [
+   340,
+   480
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "walk",
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 30,
+    "pitch": 6,
+    "target": [
+     0,
+     1.0,
+     0
+    ],
+    "dist": 4.2
+   }
+  ]
+ },
+ "humanoid_run": {
+  "kind": "geo",
+  "model": "veldanava_humanoid",
+  "space": "PROP",
+  "layer": "CUTOUT",
+  "argb": "FFFFFFFF",
+  "glow": "FFFFFFFF",
+  "ages": [
+   0.0,
+   3.1,
+   6.2,
+   9.3
+  ],
+  "tile": [
+   340,
+   480
+  ],
+  "floor": true,
+  "figure": false,
+  "expect": [],
+  "anim": "run",
+  "views": [
+   {
+    "name": "3/4",
+    "yaw": 30,
+    "pitch": 6,
+    "target": [
+     0,
+     1.0,
+     0
+    ],
+    "dist": 4.2
+   }
+  ]
+ }
+}

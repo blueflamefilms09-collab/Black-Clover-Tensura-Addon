@@ -16,7 +16,7 @@ final class ModeArmorValkyrieWorld {
 
     static int scan(long gameTime, int[] ids, double[] distSq, boolean[] holds) { return 0; }
 
-    static int pool() { return com.newuniverse.nusmp.book.ModeArmorValkyrieBudget.POOL_QUADS; }
+    static int pool() { return 1200;   /* ModeArmorValkyrieBudget.POOL_QUADS */ }
 
     static boolean holdsLance(AbstractClientPlayer p) { return HOLDS; }
 
