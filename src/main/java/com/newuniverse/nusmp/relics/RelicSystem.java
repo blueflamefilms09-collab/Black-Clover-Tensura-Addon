@@ -44,5 +44,6 @@ public final class RelicSystem {
         WornOnce.setSink(line -> com.mojang.logging.LogUtils.getLogger().warn("[nusmp] worn relic: {}", line));   // relics_wear: each fallback names its cause once
         RelicCurioEquip.register(gameBus);                      // relics_wear: right-click puts a Curios relic on (first free place of its slot type; sneak keeps the ritual)
         RelicWearSelfTests.register();                          // relics_wear: the self-test relic.wear (every relic maps to a defined, assigned, tagged slot; armour and Curios equip; the visibility contract)
+        HeadFeetSelfTests.register();                           // 3.12.0: the self-test relic.headfeet (head and feet relics are worn in the Curios slots relic_head / relic_feet: right-click, the move out of the armour slot, the kept armour points)
     }
 }

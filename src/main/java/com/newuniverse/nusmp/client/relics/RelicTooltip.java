@@ -252,7 +252,7 @@ public final class RelicTooltip {
         Grade g = Tiers.effectiveGrade(stack, def);                                           // 1.29.0: the effective grade
         out.add(new Para(g.stars() + "  " + g.label() + (def.isVessel() ? "  (can hold a Djinn)" : ""), GRADE));
         if (g != def.grade()) out.add(new Para(I18n.get("nusmp.tier.tooltip.raised", def.grade().label(), Tiers.steps(stack, def)), PASSIVE));
-        out.add(new Para("Slot: " + def.slot().label() + (def.slot().isCurio() ? " (Curios)" : ""), SLOT));
+        out.add(new Para("Slot: " + def.slot().label() + (def.slot().isCurio() ? " (Curios)" : com.newuniverse.nusmp.relics.HeadFeetCurios.redirectSlot(def) != null ? " (Curios: " + (def.slot() == com.newuniverse.nusmp.relics.RelicSlot.HEAD ? "Head" : "Feet") + " Relic slot)" : ""), SLOT));      // 3.12.0: head and feet relics are worn in their Curios slot
         if (def.isPairHalf()) out.add(new Para(I18n.get("tooltip.nusmp.relic.pair_needs", I18n.get("item.nusmp." + def.pairPartnerId())), HINT_ATTUNE));      // 1.29.0: "Pair: needs <the other half>"
         boolean mine = mc.player != null && Attune.isMine(stack, mc.player);
         if (def.needsAttunement()) {

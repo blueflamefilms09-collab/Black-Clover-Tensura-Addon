@@ -31,6 +31,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.bus.api.IEventBus;
@@ -131,6 +132,7 @@ public final class RelicEngine {
         APPLIED.clear();
         LAST_PACKET.clear();
         RITUAL.clear();
+        HeadFeetCurios.clear();
         RelicSummons.discardAll(e.getServer());
         RelicSummons.clear();
         Relics.clearCaches();
@@ -143,6 +145,7 @@ public final class RelicEngine {
         APPLIED.remove(id);
         LAST_PACKET.remove(id);
         RITUAL.remove(id);
+        HeadFeetCurios.forget(id);
         Relics.invalidate(e.getEntity());
     }
 
@@ -161,7 +164,10 @@ public final class RelicEngine {
         if (!(e.getEntity() instanceof ServerPlayer p) || !p.isAlive()) return;
         if (p.isUsingItem()) holdRitual(p);
         int phase = (p.tickCount + p.getId()) % 20;
-        if (phase == 0) pass(p);
+        if (phase == 0) {
+            HeadFeetCurios.tick(p);                                                    // 3.12.0: a head or feet relic found in the armour slot goes to its Curios slot (setting headFeetInCurios)
+            pass(p);
+        }
         else if (phase == 9) RelicEngravings.engraveInventory(p);
     }
 
@@ -184,6 +190,10 @@ public final class RelicEngine {
                     }
                     i++;
                 }
+            }
+            for (HeadFeetMoveRules.Share sh : HeadFeetCurios.shares(Relics.locatedList(p))) {      // 3.12.0: a head or feet relic worn in a Curios slot keeps the armour points / toughness of its armour form
+                Holder<Attribute> h = sh.toughness() ? Attributes.ARMOR_TOUGHNESS : Attributes.ARMOR;
+                want.put(ResourceLocation.fromNamespaceAndPath(MOD_NS, "relic_curio_armour/" + sh.key()), new Want(h, sh.amount(), AttributeModifier.Operation.ADD_VALUE));
             }
             if (lo.epBonus() > 0) {                                                    // the grade lifts the existence the wearer has
                 for (String a : new String[]{"tensura:max_magicule", "tensura:max_aura"}) {

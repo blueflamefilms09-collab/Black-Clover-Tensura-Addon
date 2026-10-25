@@ -17,7 +17,7 @@ import net.minecraft.world.level.Level;
 
 /**
  * A HEAD, CHEST or FEET relic: real armour (vanilla armour points from the def, never breaks). Right-click puts it on, except that an unattuned one
- * that needs attunement starts the ritual while you sneak. Its look on the body is painted at run time on the client from the def's palette and look.
+ * that needs attunement starts the ritual while you sneak. 3.12.0: a head or feet relic goes to its Curios slot first ({@link RelicCurioEquip}); the armour slot is the fallback. Its look on the body is painted at run time on the client from the def's palette and look.
  */
 public class RelicArmorItem extends ArmorItem implements RelicBearer {
     private final RelicDef def;
@@ -54,6 +54,7 @@ public class RelicArmorItem extends ArmorItem implements RelicBearer {
             if (!level.isClientSide && player instanceof net.minecraft.server.level.ServerPlayer p) RelicEngine.useHeld(p, stack, def, hand);
             return InteractionResultHolder.consume(stack);
         }
+        if (level.isClientSide && !player.isShiftKeyDown() && HeadFeetCurios.redirectSlot(def) != null) return InteractionResultHolder.consume(stack);      // 3.12.0: the server decides (the Curios slot, or the armour slot as the fallback); the client does not predict an armour swap that may not happen
         return super.use(level, player, hand);                                          // put it on
     }
 

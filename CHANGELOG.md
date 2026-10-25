@@ -1,5 +1,31 @@
 # Changelog
 
+## [3.12.0] — Head and feet relics move to the Curios slots
+
+### NEW
+- **Head and feet relics are worn in the Curios slots** (owner request: "move them", because the armour-slot ones never showed on the body). All 115 head and 49 feet relics (the Mask of Mind Melting, the Ruby Boots of Planestriding, ...) now go to **Head Relic** (`relic_head`) and **Feet Relic** (`relic_feet`), which 3.10.0 added, and are drawn by the same worn layer as neck and back relics (Curios eye icon: off = not drawn).
+  - **Right-click** puts the relic in the free Curios place (sound and an action-bar line). Sneak + right-click is still the attunement ritual. If the place is taken, nothing is put on (the action bar says so; it is not worn as armour behind your back). Without Curios the old behaviour runs.
+  - **A relic found in the HEAD / FEET armour slot** (a click, a shift-click, a dispenser, an old save) is moved to the free Curios place within a second. If the place is taken or Curios is missing it stays and keeps working; the try is repeated every 10 seconds.
+  - **Nothing is lost by moving:** a Curios-worn head or feet relic adds the armour points and toughness its armour form had, as ordinary attribute modifiers.
+  - The client no longer predicts the vanilla armour swap for these relics (the server decides: Curios slot, or armour as the fallback), so its armour slot cannot show a piece the server never gave.
+  - The tooltip's slot line now says "Slot: Head (Curios: Head Relic slot)".
+- **Server setting** `relics.headFeetInCurios` in `nusmp-relicpower-server.toml` (on by default). Off restores the 3.11 behaviour exactly.
+- Tests: `HeadFeetMoveRulesTest`, `HeadFeetWiringTest`, and the smoke self-test `relic.headfeet` (right-click equip, the move out of the armour slot, a taken place, the kept armour points, for a real head relic and a real feet relic; the smoke list now expects the prefix). Doc: `docs/relic_head_feet_slots.md`.
+
+### REPLACED
+- The right-click of a head or feet relic: it used to put the relic on as armour; with the setting on it goes to the Curios slot instead (the armour path stays as the fallback and as the setting-off behaviour).
+
+### KEPT
+- Every relic item, armour material, painted layer, model and texture; the Curios slots, tags and the worn layer of 3.10.0; chest relics as armour; named mobs wearing relics in their armour slots; the Time Magic VFX; every other item, model, page and setting.
+
+### Cost
+- Once a second per player, inside the relic pass that already runs: two armour-slot reads and an instance check; the Curios inventory is read only when a head / feet relic is actually in an armour slot, and a try that found no place backs off for 200 ticks. At most 4 attribute modifiers per player (cap 8). No scan of entities, chunks or blocks, no packet of its own. Full table in `docs/relic_head_feet_slots.md`.
+
+### Not included
+- Not seen in a running game. The draw of a Curios-worn head or feet relic is the 3.10.0 worn-layer path; it is covered by tests and the CI server smoke test, not by eye.
+- The armour-slot display bug itself (the CI client run found the slot empty on the client a few seconds after the server set it) was not diagnosed; this release moves the relics out of that slot instead.
+- Named mobs still wear relics in their armour slots (they have no Curios inventory). Chest relics stay armour.
+
 ## [3.11.0] — Veldanava, the Creator God
 
 ### NEW

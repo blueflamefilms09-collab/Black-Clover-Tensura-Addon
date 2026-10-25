@@ -16698,6 +16698,8 @@
   "message.nusmp.relic_wear.equipped": "%s put on (%s slot)",
   "message.nusmp.relic_wear.show_on": "Worn relics are shown on every player.",
   "message.nusmp.relic_wear.show_off": "Worn relics are hidden on every player (turn them back on with /multiverse relic show on).",
+  "message.nusmp.relic_wear.moved": "%s moved to its Curios slot (%s)",
+  "message.nusmp.relic_wear.slot_full": "The %s slot is full: take the relic in it off first",
   "key.nusmp.toggle_show_worn_relics": "Show or hide all worn relics",
   "subtitles.nusmp.salamander.trill": "Salamander trills",
   "subtitles.nusmp.salamander.chirp": "Salamander chirps",

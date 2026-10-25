@@ -36,9 +36,17 @@ public final class RelicCurioEquip {
         if (e.getLevel().isClientSide() || !(e.getEntity() instanceof ServerPlayer p)) return;
         ItemStack inHand = p.getItemInHand(e.getHand());
         RelicDef def = Relics.defOf(inHand);
-        boolean curio = def != null && def.slot().isCurio();
+        boolean headFeet = def != null && !def.isAdopted() && HeadFeetMoveRules.redirectOnUse(HeadFeetCurios.enabled(), def.slot().name(), p.isShiftKeyDown(), inHand.isEmpty());      // 3.12.0: a head or feet relic goes to relic_head / relic_feet
+        boolean curio = def != null && (def.slot().isCurio() || headFeet);
         if (!CurioEquipRules.tryOnUse(curio, p.isShiftKeyDown(), inHand.isEmpty())) return;
-        if (tryEquip(p, e.getHand()) != CurioEquipRules.Result.EQUIPPED) return;      // nothing fits: the relic's own right-click runs as it always did
+        CurioEquipRules.Result r = tryEquip(p, e.getHand());
+        if (r == CurioEquipRules.Result.SLOT_FULL && headFeet) {                      // 3.12.0: the Curios place is taken; it is not put on as armour behind the player's back (take the worn one off first)
+            p.displayClientMessage(Component.translatableWithFallback("message.nusmp.relic_wear.slot_full", "The %s slot is full: take the relic in it off first", HeadFeetMoveRules.curiosSlot(def.slot().name())), true);
+            e.setCancellationResult(InteractionResult.FAIL);
+            e.setCanceled(true);
+            return;
+        }
+        if (r != CurioEquipRules.Result.EQUIPPED) return;                              // nothing fits (or no Curios): the relic's own right-click runs as it always did
         e.setCancellationResult(InteractionResult.SUCCESS);
         e.setCanceled(true);
     }
@@ -62,11 +70,11 @@ public final class RelicCurioEquip {
     public static CurioEquipRules.Result tryEquip(ServerPlayer p, InteractionHand hand) {
         ItemStack inHand = p.getItemInHand(hand);
         RelicDef def = Relics.defOf(inHand);
-        if (def == null || !def.slot().isCurio()) return CurioEquipRules.Result.NOT_A_CURIO_RELIC;
+        String want = def == null ? null : def.slot().isCurio() ? def.slot().curiosSlot() : HeadFeetCurios.redirectSlot(def);      // 3.12.0: a head or feet relic wants relic_head / relic_feet (setting on)
+        if (want == null) return CurioEquipRules.Result.NOT_A_CURIO_RELIC;
         if (!CuriosLink.available()) return CurioEquipRules.Result.NO_CURIOS;
         Map<String, IItemHandler> handlers = CuriosLink.slotHandlers(p);
         if (handlers.isEmpty()) return CurioEquipRules.Result.NO_CURIOS;
-        String want = def.slot().curiosSlot();
         if (!handlers.containsKey(want)) {
             WornOnce.log(WornOnce.Cause.SLOT_MISSING, def.id() + " (" + want + ")");
             return CurioEquipRules.Result.NO_SLOT_TYPE;

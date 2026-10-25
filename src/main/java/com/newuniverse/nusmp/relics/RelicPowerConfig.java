@@ -11,6 +11,7 @@ public final class RelicPowerConfig {
     public static final ModConfigSpec SPEC;
     public static final ModConfigSpec.BooleanValue ATTUNE_LOCK;
     public static final ModConfigSpec.DoubleValue UNATTUNED_POWER;
+    public static final ModConfigSpec.BooleanValue HEAD_FEET_IN_CURIOS;
 
     static {
         ModConfigSpec.Builder b = new ModConfigSpec.Builder();
@@ -19,6 +20,8 @@ public final class RelicPowerConfig {
                 .define("attuneLock", true);
         UNATTUNED_POWER = b.comment("The fraction of its damage an unattuned relic deals (0.20 = 20%).")
                 .defineInRange("unattunedPower", RelicPower.DEFAULT_UNATTUNED, RelicPower.MIN_UNATTUNED, RelicPower.MAX_UNATTUNED);
+        HEAD_FEET_IN_CURIOS = b.comment("3.12.0: head and feet relics are worn in the Curios slots Head Relic / Feet Relic (the armour slot never drew them on the body): a right-click puts one there, and one found in the HEAD / FEET armour slot is moved there (once a second, only when the Curios place is free; they then add the armour points their armour form had). false: the armour slots as before 3.12.0.")
+                .define("headFeetInCurios", true);
         b.pop();
         SPEC = b.build();
     }
@@ -28,6 +31,9 @@ public final class RelicPowerConfig {
     public static boolean lockOn() { try { return ATTUNE_LOCK.get(); } catch (IllegalStateException | NullPointerException e) { return true; } }
 
     public static double unattunedPower() { try { return UNATTUNED_POWER.get(); } catch (IllegalStateException | NullPointerException e) { return RelicPower.DEFAULT_UNATTUNED; } }
+
+    /** 3.12.0: head and feet relics go to the Curios slots relic_head / relic_feet (true by default; the old armour-slot behaviour when false). */
+    public static boolean headFeetInCurios() { try { return HEAD_FEET_IN_CURIOS.get(); } catch (IllegalStateException | NullPointerException e) { return true; } }
 
     /** The settings now. */
     public static RelicPower.Config current() { return new RelicPower.Config(lockOn(), unattunedPower()); }
