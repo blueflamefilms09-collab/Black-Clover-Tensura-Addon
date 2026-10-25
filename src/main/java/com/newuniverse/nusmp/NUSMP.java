@@ -240,6 +240,7 @@ public class NUSMP {
             modEventBus.addListener(com.newuniverse.nusmp.client.dungeon.DungeonSky::registerEffects);         // 1.19.0: the Dungeon's own sky and fog
             modEventBus.addListener(com.newuniverse.nusmp.client.zogratis.ZogratisClient::register);            // 1.20.0: the Zogratis renderers
             com.newuniverse.nusmp.client.relics.RelicClient.init(modEventBus);                                                   // 1.24.0
+            com.newuniverse.nusmp.client.debug.ClientShot.init();                                                                // 3.9.2: CI only, does nothing without -Dnusmp.clientshot
             modEventBus.addListener(com.newuniverse.nusmp.client.relics.order.OrderClient::register);
             com.newuniverse.nusmp.client.relics.djinn.DjinnClient.init(modEventBus);
             modEventBus.addListener(com.newuniverse.nusmp.client.floor.goliath.GoliathClient::register);                            // 1.23.0

@@ -41,7 +41,16 @@ runs {
         workingDirectory project.layout.projectDirectory.dir('run').dir(name)
         modSource project.sourceSets.main
     }
-    client { }
+    client {
+        // CI screenshot run (.github/workflows/clientshot.yml): ./gradlew runClient -Pclientshot
+        if (project.hasProperty('clientshot')) {
+            jvmArgument '-Dnusmp.clientshot=1'
+            argument '--width'
+            argument '960'
+            argument '--height'
+            argument '540'
+        }
+    }
     server { argument '--nogui' }
 }
 

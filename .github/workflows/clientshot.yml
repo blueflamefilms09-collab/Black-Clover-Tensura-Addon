@@ -1,0 +1,78 @@
+# Starts the real game CLIENT in a virtual display with a software GL driver, equips two armour relics on the player, and prints screenshots (as text, so they can be read from the log) and what the worn
+# layer decided. Why: the worn armour relics could only ever be reasoned about; this is the one place they are SEEN. See client/debug/ClientShot.java.
+# Runs only for a push whose commit message contains  [clientshot]  (use  [no-build]  with it so no release is published), or by hand.
+name: Client screenshot
+
+on:
+  push:
+    branches: [ "claude/**" ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  shot:
+    if: ${{ github.event_name == 'workflow_dispatch' || contains(github.event.head_commit.message, '[clientshot]') }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+
+      - uses: gradle/actions/setup-gradle@v4
+
+      - name: Packages for a virtual display and software GL
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y xvfb libgl1-mesa-dri libglx-mesa0 libglu1-mesa mesa-utils libxxf86vm1 libxrandr2 libxinerama1 libxcursor1 libxi6 libopenal1 python3-pil
+
+      - name: Run the client and take the screenshots
+        run: |
+          chmod +x gradlew
+          mkdir -p run/client
+          printf 'onboardAccessibility:false\nguiScale:2\ntutorialStep:none\nskipMultiplayerWarning:true\nrenderDistance:4\nsimulationDistance:5\nmaxFps:30\nenableVsync:false\nfullscreen:false\n' > run/client/options.txt
+          export LIBGL_ALWAYS_SOFTWARE=1 GALLIUM_DRIVER=llvmpipe MESA_GL_VERSION_OVERRIDE=4.5 MESA_GLSL_VERSION_OVERRIDE=450
+          set -o pipefail
+          xvfb-run -a -s "-screen 0 1280x720x24" ./gradlew runClient -Pclientshot --no-daemon --console=plain 2>&1 | tee client.log || true
+
+      - name: What the driver and the worn layer said
+        if: always()
+        run: |
+          grep -E "clientshot|\[CHAT\]|nusmp.*(WARN|ERROR)|Exception|armour relic" client.log | head -200 || true
+
+      - name: Screenshots as text (base64 JPEG, decode with the SHOT lines)
+        if: always()
+        run: |
+          python3 - <<'PY'
+          import glob, base64, io
+          from PIL import Image
+          for p in sorted(glob.glob('run/client/clientshot/*.png')):
+              im = Image.open(p).convert('RGB')
+              w, h = im.size
+              for tag, box, scale in (('full', (0, 0, w, h), 1), ('mid', (w // 2 - 200, h // 2 - 180, w // 2 + 200, h // 2 + 180), 2)):
+                  c = im.crop(box)
+                  if scale != 1:
+                      c = c.resize((c.width * scale, c.height * scale), Image.LANCZOS)
+                  buf = io.BytesIO()
+                  c.save(buf, 'JPEG', quality=80)
+                  b = base64.b64encode(buf.getvalue()).decode()
+                  print('SHOTBEGIN', p.split('/')[-1], tag, c.size, len(b))
+                  for i in range(0, len(b), 200):
+                      print('SHOT', b[i:i + 200])
+                  print('SHOTEND')
+          PY
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: client-shots
+          path: |
+            client.log
+            run/client/clientshot/
+            run/client/logs/
+          if-no-files-found: ignore
