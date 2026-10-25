@@ -88,4 +88,28 @@ class WornPlacerTest {
         Placement p = new Placement(1, 2, 3, 10, 0.5f, true).then(new Placement(1, 1, 1, 5, 0.5f, true));
         assertEquals(new Placement(2, 3, 4, 15, 0.25f, false), p);
     }
+
+    /** 3.9.0: the shrink is about the model's own middle, so what was at the sole, the hand or the hem stays there (within the shrink of half the model height). */
+    @Test
+    void contactFitKeepsTheMiddleOfAModelWhereItWas() {
+        for (WornAnchor a : new WornAnchor[]{WornAnchor.RIGHT_LEG, WornAnchor.LEFT_LEG, WornAnchor.BODY, WornAnchor.RIGHT_ARM, WornAnchor.LEFT_ARM}) {
+            Placement p = WornPlacer.fit(a, "boots_cuffed", 8.9f, true);
+            assertEquals(8.9f, p.dy() + p.scale() * 8.9f, 0.001f, a.name() + ": the middle stays");
+            float sole = p.dy() + p.scale() * 12.6f;
+            assertTrue(Math.abs(sole - 12.6f) <= 0.6f, a + " keeps the lower end close to where the file put it: " + sole);
+        }
+        Placement old = WornPlacer.fit(WornAnchor.RIGHT_LEG, "boots_cuffed");
+        assertTrue(old.scale() * 12.6f < 11.0f, "the 3.8 placement lifted the sole by more than a pixel");
+        assertEquals(old, WornPlacer.fit(WornAnchor.RIGHT_LEG, "boots_cuffed", 8.9f, false), "the switch off gives the 3.8 placement");
+        assertEquals(Placement.NONE, WornPlacer.fit(WornAnchor.HEAD, "crown_spired", -9f, true), "a head item is never touched");
+    }
+
+    @Test
+    void hipCharmsHangBesideTheThighNotInsideTheArm() {
+        assertTrue(WornPlacer.hipHung("charm_flask") && WornPlacer.hipHung("charm_tome") && WornPlacer.hipHung("charm_pouch") && WornPlacer.hipHung("charm_pouch_pair"));
+        assertFalse(WornPlacer.hipHung("charm_orbit") || WornPlacer.hipHung("amulet_medallion") || WornPlacer.hipHung(null));
+        float lowered = WornPlacer.fit(WornAnchor.BODY, "charm_flask", 12.6f, true).dy() - WornPlacer.fit(WornAnchor.BODY, "charm_flask", 12.6f, false).dy();
+        assertEquals(WornPlacer.HIP_DROP + 12.6f * (1f - WornPlacer.BODY_SCALE), lowered, 0.001f);
+        assertEquals(WornPlacer.fit(WornAnchor.BODY, "charm_flask"), WornPlacer.fit(WornAnchor.BODY, "charm_flask", 12.6f, false), "off = the 3.8 placement");
+    }
 }

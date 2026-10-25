@@ -47,6 +47,9 @@ public final class WornLibDraw {
      * skipped, at the low quality the nebula and halo passes are left out (squared distances).
      */
     public static final double LOD_SQ = UpgradeCaps.LOD_DISTANCE * UpgradeCaps.LOD_DISTANCE, ADDITIVE_SQ = UpgradeCaps.ADDITIVE_CUTOFF * UpgradeCaps.ADDITIVE_CUTOFF;
+    /** Armour relics whose first draw was logged (at most 256, so the log stays short). */
+    private static final java.util.Set<String> REPORTED_ARMOUR = new java.util.HashSet<>();
+
     private static final java.util.Map<String, ResourceLocation> TEX = new java.util.HashMap<>();
     private static final float PX = 1f / 16f, PUSH = 0.18f;
     private static final int FULL = LightTexture.FULL_BRIGHT, MAX_SETS = 24, POOL = 72;
@@ -142,12 +145,15 @@ public final class WornLibDraw {
         if (n == 0) return;
         boolean near = distSq <= WornFxPlan.EXTRAS_RANGE * WornFxPlan.EXTRAS_RANGE;
         boolean lowQ = q == FxQuality.LOW, farLod = UpgradeCaps.useLod(distSq, lowQ), noAdd = !UpgradeCaps.additive(distSq);
+        boolean x3Wanted = false;
+        if (!farLod) for (int i = 0; i < n && !x3Wanted; i++) x3Wanted = sets.get(i).x3;
+        boolean x3Denied = x3Wanted && !X3Gate.allow(System.nanoTime(), UpgradeCaps.X3_WEARERS);      // 3.9.0: at most the first four wearers of a frame at x3 detail
         for (int i = 0; i < n; i++) {
             WornLibrary.Ensemble e = sets.get(i);
             WornFxPlan p = plan(e.tier, q, near);
             PLAN_OF[i] = p;
             // an upgraded relic (either slice) is drawn as its low detail models beyond 12 blocks and at the low quality, and its additive passes stop beyond 24 blocks
-            boolean lod = e.upgraded && !e.lodPieces.isEmpty() && farLod;
+            boolean lod = e.upgraded && !e.lodPieces.isEmpty() && (farLod || (e.x3 && x3Denied));
             USE_LOD[i] = lod;
             NO_ADD[i] = e.upgraded && noAdd;
             BASE[i] = lod ? e.lodVerts : e.baseVerts;
@@ -179,6 +185,14 @@ public final class WornLibDraw {
             INDEX[i] = idx;
         }
 
+        for (int i = 0; i < n; i++) {                                                         // 3.9.0: one line per armour relic the first time it is drawn, so a log shows what the library did
+            WornLibrary.Ensemble e = sets.get(i);
+            if (DRAWN[i] && e.def != null && e.def.slot().isArmor() && REPORTED_ARMOUR.size() < 256 && REPORTED_ARMOUR.add(e.id)) {
+                com.mojang.logging.LogUtils.getLogger().info("[nusmp] armour relic {} ({}): {} model piece(s), {} vertices, contactFit {}, detail {}", e.id, e.slotKey, e.pieces.size(), e.baseVerts,
+                        RelicFxOptions.contactFit(), RelicFxOptions.detailX3() ? "x3" : "classic");
+            }
+        }
+
         // ---- pass 1: solid
         VertexConsumer vc = buffers.getBuffer(RenderType.entityCutoutNoCull(ATLAS));
         int used = 0;
@@ -202,7 +216,7 @@ public final class WornLibDraw {
                 s.n.set(pose.last().normal());
                 pose.popPose();
                 WornPlacer.Placement pl = e.exact ? WornPlacer.Placement.NONE      // an armour item or a mode: the garment's own size, where the garment stands
-                        : WornPlacer.fit(r.anchor(), r.mesh().name).then(WornPlacer.place(e.slotKey, INDEX[i], r.mesh().name));      // a relic: the smaller body fit, then the place among its slot-mates
+                        : WornPlacer.fit(r.anchor(), r.mesh().name, r.mesh().centreY(), RelicFxOptions.contactFit()).then(WornPlacer.place(e.slotKey, INDEX[i], r.mesh().name));      // a relic: the smaller body fit, then the place among its slot-mates
                 if (!e.exact && armInset != 0f && (r.anchor() == WornAnchor.RIGHT_ARM || r.anchor() == WornAnchor.LEFT_ARM)) {      // slim arms: toward the body (+x for the right arm, -x for the left)
                     pl = pl.then(new WornPlacer.Placement(r.anchor() == WornAnchor.RIGHT_ARM ? armInset : -armInset, 0f, 0f, 0f, 1f, false));
                 }

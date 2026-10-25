@@ -94,6 +94,25 @@ public final class WornPlacer {
         return new Placement(in, -0.3f, 0f, 0f, BODY_SCALE * 0.94f, false);
     }
 
+    /**
+     * 3.9.0 (contact fit): the same fit, but the shrink is about the model's own middle height {@code centreY} (layer pixels) instead of the joint of the body part. The draw applies
+     * {@code translate(d).scale(s)}, so a point p lands on d + s*p; choosing dy = centreY*(1-s) keeps the middle of the model where the file put it. Boots that ended on the soles still end
+     * on them, a glove stays on the hand, a hem stays on the hips. A head item is untouched; {@code contact} false gives the 3.8 placement.
+     */
+    public static Placement fit(WornAnchor anchor, String model, float centreY, boolean contact) {
+        Placement p = fit(anchor, model);
+        if (!contact || p == Placement.NONE) return p;
+        return new Placement(p.dx(), p.dy() + centreY * (1f - p.scale()) + (hipHung(model) ? HIP_DROP : 0f), p.dz(), p.rotY(), p.scale(), p.mirror());
+    }
+
+    /** How far a hip charm is lowered (model pixels): its file puts it at x 3.6..7.6, y 8.5..17, which is inside the arm that hangs there; lowered it hangs beside the thigh instead. */
+    public static final float HIP_DROP = 3.4f;
+
+    /** A flask, tome or pouch that hangs at the hip (the models of the CHARM looks POTION, TOME and BELT, and the pouch pair). */
+    public static boolean hipHung(String model) {
+        return model != null && (model.equals("charm_flask") || model.equals("charm_tome") || model.startsWith("charm_pouch"));
+    }
+
     /** The index of each entry among the entries of the same slot, in list order (["CHARM","NECK","CHARM"] gives [0,0,1]). */
     public static int[] indexes(java.util.List<String> slots) {
         int[] out = new int[slots.size()];

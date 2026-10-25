@@ -36,6 +36,7 @@ multiverse/MultiverseSync.java
 particle/fx/Fx.java
 relics/ArmorSlotSelfTests.java
 relics/ArmorVisibleSelfTests.java
+relics/Display39SelfTests.java
 relics/GradeDamage.java
 relics/RelicHolderSync.java
 relics/RelicPayloads.java

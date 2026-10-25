@@ -173,6 +173,24 @@ public final class WornMesh {
      */
     public static int corner(boolean mirrored, int j) { return mirrored ? 3 - j : j; }
 
+    private float centreY = Float.NaN;
+
+    /** The middle height of the solid shape in the model's own space (layer pixels, y down), without halo and additive-only quads; 0 for an empty model. Computed once. */
+    public float centreY() {
+        if (!Float.isNaN(centreY)) return centreY;
+        float lo = Float.MAX_VALUE, hi = -Float.MAX_VALUE;
+        for (int q = 0; q < quads; q++) {
+            if ((flags[q] & (HALO | ADD)) != 0) continue;
+            for (int v = 0; v < 4; v++) {
+                float y = pos[(q * 4 + v) * 3 + 1];
+                lo = Math.min(lo, y);
+                hi = Math.max(hi, y);
+            }
+        }
+        centreY = lo > hi ? 0f : (lo + hi) * 0.5f;
+        return centreY;
+    }
+
     /** Vertices of the solid pass (every quad), of the emissive pass and of the shell pass. */
     public int solidVertices() { return quads * 4; }
 

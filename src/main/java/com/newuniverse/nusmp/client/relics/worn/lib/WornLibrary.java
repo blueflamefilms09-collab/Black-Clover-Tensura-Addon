@@ -46,6 +46,8 @@ public final class WornLibrary {
         public final boolean upgraded;
         public final List<Resolved> lodPieces;
         public final int lodVerts;
+        /** 3.9.0: true when the pieces are the blocky x3 models of an armour relic (the classic ones are {@code lodPieces}); set once by the builder. */
+        public boolean x3;
 
         /** Blocks beyond which an upgraded relic is drawn as its low detail models, and past which (see {@link #ADDITIVE_CUTOFF}) its additive passes are skipped. */
         public static final double LOD_DISTANCE = com.newuniverse.nusmp.relics.upgrade.UpgradeCaps.LOD_DISTANCE, ADDITIVE_CUTOFF = com.newuniverse.nusmp.relics.upgrade.UpgradeCaps.ADDITIVE_CUTOFF;
@@ -124,13 +126,17 @@ public final class WornLibrary {
 
     private static final Map<String, Optional<Ensemble>> CACHE = new HashMap<>();
     private static int seenGeneration = -1;
+    private static boolean seenX3 = true, seenContact = true;
 
     /** The models of a relic, or null if the library has none for it (the layer then draws the old plain look). */
     public static Ensemble of(RelicDef def) {
         int gen = VuModels.generation();                                               // the visual upgrade switched on or off, or the resources reloaded: build again
-        if (gen != seenGeneration) {
+        boolean x3 = RelicFxOptions.detailX3(), contact = RelicFxOptions.contactFit();
+        if (gen != seenGeneration || x3 != seenX3 || contact != seenContact) {                // 3.9.0: a changed detail or fit setting builds again
             CACHE.clear();
             seenGeneration = gen;
+            seenX3 = x3;
+            seenContact = contact;
         }
         Optional<Ensemble> e = CACHE.get(def.id());
         if (e == null) {
@@ -158,11 +164,35 @@ public final class WornLibrary {
             WornMesh m = WornModels.mesh(p.model());
             if (m == null) continue;
             WornAnchor at = p.anchor() != null ? p.anchor() : m.anchor;
-            WornPlacer.Placement fit = WornPlacer.fit(at, p.model());
+            WornPlacer.Placement fit = WornPlacer.fit(at, p.model(), m.centreY(), RelicFxOptions.contactFit());
             m = m.clearOf(at, p.mirror(), fit.scale(), fit.dx(), fit.dy(), fit.dz());              // 1.71.0: never under the skin's second layer (hat, jacket, sleeves, pants)
             out.add(new Resolved(m, at, p.mirror()));
         }
         return out;
+    }
+
+    /**
+     * 3.9.0: the pieces with each model swapped for its x3 version where the index lists one (same anchor, mirror and fit); null when none of them has one, or when an x3 file cannot be loaded,
+     * or when the whole would pass the x3 ensemble cap (the relic then keeps its classic models).
+     */
+    private static List<Resolved> resolveX3(List<WornCatalog.Piece> wanted) {
+        java.util.Set<String> index = WornModels.x3Models();
+        if (index.isEmpty()) return null;
+        List<WornCatalog.Piece> swapped = new ArrayList<>(wanted.size());
+        boolean any = false;
+        for (WornCatalog.Piece p : wanted) {
+            if (index.contains(p.model()) && WornModels.mesh("x3/" + p.model()) != null) {
+                swapped.add(new WornCatalog.Piece("x3/" + p.model(), p.anchor(), p.mirror()));
+                any = true;
+            } else {
+                swapped.add(p);
+            }
+        }
+        if (!any) return null;
+        List<Resolved> out = resolve(swapped);
+        int verts = 0;
+        for (Resolved r : out) verts += r.mesh().totalVertices();
+        return out.size() == wanted.size() && verts <= com.newuniverse.nusmp.relics.upgrade.UpgradeCaps.X3_ENSEMBLE_VERTICES ? out : null;
     }
 
     private static Ensemble build(RelicDef def, boolean allowUpgrade) {
@@ -183,6 +213,15 @@ public final class WornLibrary {
         FxTheme theme = FxTheme.byName(cat.themeOf(def.id()));
         if (theme == null) theme = FxTheme.fromGlow(def.paletteGlow());
         List<Resolved> lod = src == UpgradeSource.GOD_CATALOG ? resolve(WornModels.upgrade().lod(def.id())) : List.of();   // an override model names its own lod in its file (WornMesh#lod)
+        if (src == UpgradeSource.NONE && def.slot() == com.newuniverse.nusmp.relics.RelicSlot.FEET && RelicFxOptions.detailX3()) {   // 3.9.0: a feet relic wears the blocky x3 version of each model that has one
+            List<Resolved> blocky = resolveX3(wanted);
+            if (blocky != null) {
+                Ensemble e = new Ensemble(def, def.id(), def.slot().name(), false, WornPalette.slots(def.paletteMain(), def.paletteTrim(), def.paletteGlow()), def.grade().tier(), List.copyOf(blocky), theme,
+                        true, List.copyOf(out));
+                e.x3 = true;
+                return e;
+            }
+        }
         return new Ensemble(def, def.id(), def.slot().name(), false, WornPalette.slots(def.paletteMain(), def.paletteTrim(), def.paletteGlow()), def.grade().tier(), List.copyOf(out), theme,
                 src != UpgradeSource.NONE, List.copyOf(lod));
     }

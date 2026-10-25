@@ -81,6 +81,32 @@ public final class WornModels {
         return upgrade;
     }
 
+    private static java.util.Set<String> x3Index;
+
+    /**
+     * 3.9.0: the models that have a blocky detailed version (assets/nusmp/relic_worn_x3/index.txt, written by tools/relics/gen_worn_x3.py), read once after a reload; empty when the file
+     * is missing (every armour relic then wears its 3.8 models). A read that failed because the resource manager was not ready is not remembered.
+     */
+    public static java.util.Set<String> x3Models() {
+        if (x3Index != null) return x3Index;
+        try {
+            Optional<Resource> res = Minecraft.getInstance().getResourceManager().getResource(rl("relic_worn_x3/index.txt"));
+            java.util.Set<String> set = new java.util.HashSet<>();
+            if (res.isPresent()) {
+                try (BufferedReader in = res.get().openAsReader()) {
+                    in.lines().map(String::trim).filter(l -> !l.isEmpty() && l.charAt(0) != '#').forEach(set::add);
+                }
+            }
+            x3Index = java.util.Set.copyOf(set);
+        } catch (IllegalStateException | NullPointerException notReady) {
+            return java.util.Set.of();
+        } catch (Exception ex) {
+            LogUtils.getLogger().error("[nusmp] the x3 model index could not be read; armour relics keep their 3.8 models", ex);
+            x3Index = java.util.Set.of();
+        }
+        return x3Index;
+    }
+
     /** The model of this name, or null. */
     public static WornMesh mesh(String name) {
         Optional<WornMesh> cached = MESHES.get(name);
@@ -88,7 +114,8 @@ public final class WornModels {
         WornMesh mesh = null;
         try {
             // 1.102.0: a name starting with "vu/" is a visual upgrade model (assets/nusmp/visual_upgrade/models/<rest>.txt); every other name is a library model as before
-            String file = name.startsWith("vu/") ? "visual_upgrade/models/" + name.substring(3) : "relic_worn/" + name;
+            // 3.9.0: a name starting with "x3/" is the blocky detailed version of an armour relic model (assets/nusmp/relic_worn_x3/<rest>.txt)
+            String file = name.startsWith("vu/") ? "visual_upgrade/models/" + name.substring(3) : name.startsWith("x3/") ? "relic_worn_x3/" + name.substring(3) : "relic_worn/" + name;
             Optional<Resource> res = Minecraft.getInstance().getResourceManager().getResource(rl(file + ".txt"));
             if (res.isPresent()) {
                 try (BufferedReader in = res.get().openAsReader()) {
@@ -115,6 +142,7 @@ public final class WornModels {
         MESHES.clear();
         catalog = null;
         upgrade = null;
+        x3Index = null;
         retryAt = 0L;
     }
 }

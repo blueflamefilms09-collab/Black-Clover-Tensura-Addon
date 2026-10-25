@@ -15,6 +15,12 @@ public final class UpgradeCaps {
     /** GOD: one model file, everything one relic wears (a mirrored pair counts twice), and the held form of one relic. */
     public static final int GOD_MODEL_VERTICES = 4800, GOD_ENSEMBLE_VERTICES = 16000, GOD_HELD_VERTICES = 2500;
 
+    /**
+     * 3.9.0 X3 (the blocky armour relic models, assets/nusmp/relic_worn_x3): one model file, and everything one wearer's armour relics wear at x3 detail. The classic model of the same piece is
+     * the LOD form (beyond {@link #LOD_DISTANCE} blocks, at the low quality, and for a wearer past the nearest {@link #X3_WEARERS}). Checked against the generated files by X3ModelsTest.
+     */
+    public static final int X3_MODEL_VERTICES = 6400, X3_ENSEMBLE_VERTICES = 14000, X3_WEARERS = 4;
+
     /** GOD: the LOD form is at most this share of the full vertices; it is drawn beyond {@link #LOD_DISTANCE} blocks and at the low quality; the additive passes stop beyond {@link #ADDITIVE_CUTOFF}. */
     public static final double GOD_LOD_FRACTION = 0.15, LOD_DISTANCE = 12.0, ADDITIVE_CUTOFF = 24.0;
 

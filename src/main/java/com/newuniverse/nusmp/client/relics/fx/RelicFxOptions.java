@@ -19,6 +19,8 @@ public final class RelicFxOptions {
     public static final ModConfigSpec.BooleanValue ROBE_ANIME_BARE;
     public static final ModConfigSpec.BooleanValue HAND_MODELS;
     public static final ModConfigSpec.BooleanValue SHOW_WORN;
+    public static final ModConfigSpec.BooleanValue CONTACT_FIT;
+    public static final ModConfigSpec.ConfigValue<String> MODEL_DETAIL;
 
     static {
         ModConfigSpec.Builder b = new ModConfigSpec.Builder();
@@ -45,6 +47,12 @@ public final class RelicFxOptions {
         SHOW_WORN = b.comment("Show the relics worn on the body (Curios and armour) on every player, yourself in third person and the inventory preview included. On by default. Off hides all of them at once; "
                         + "the Curios eye icon of one slot and relicfx.hideArmourRelics still switch single groups off while this is on. Also /multiverse relic show <on|off> and the 'Show or hide all worn relics' key.")
                 .define("showWorn", true);
+        CONTACT_FIT = b.comment("3.9.0: the smaller body fit of worn relics scales every model about its own middle instead of about the joint of its body part, so boots stay on the soles, gloves on the hands "
+                        + "and a hem on the hips. Off = the 3.8 placement (models shrink toward the hip, shoulder or neck).")
+                .define("contactFit", true);
+        MODEL_DETAIL = b.comment("3.9.0: 'x3' = relics that have a blocky detailed model (relic_worn_x3) wear it when you are near and one of the nearest four wearers; 'classic' = always the 3.8 models. "
+                        + "Capes, cloaks and mantles are never changed.")
+                .define("modelDetail", "x3", o -> o instanceof String s && (s.equals("x3") || s.equals("classic")));
         b.pop();
         SPEC = b.build();
     }
@@ -71,6 +79,14 @@ public final class RelicFxOptions {
     public static boolean robeAnimeBare() { return get(ROBE_ANIME_BARE); }
     /** Relics that are not weapons as 3D objects in hand, on the ground and in frames ({@code relicfx.handModels}). */
     public static boolean handModels() { return get(HAND_MODELS); }
+
+    /** True (default) when worn models are scaled about their own middle so they stay in contact with the body ({@code relicfx.contactFit}). */
+    public static boolean contactFit() { return get(CONTACT_FIT); }
+
+    /** True (default) when relics with a blocky detailed model wear it near the camera ({@code relicfx.modelDetail} = x3). */
+    public static boolean detailX3() {
+        try { return "x3".equals(MODEL_DETAIL.get()); } catch (IllegalStateException notLoaded) { return true; }
+    }
 
     /** True when the worn visuals of armour relics are switched off ({@code relicfx.hideArmourRelics}); false when the config is not loaded. */
     public static boolean hideArmourRelics() {

@@ -33,6 +33,7 @@ public final class RelicSystem {
         RelicWornSelfTests.register();                          // the self-test relic.worn_render (every worn relic has a worn model)
         com.newuniverse.nusmp.relics.ArmorSlotSelfTests.register();   // 1.110.0: the self-test visual.armor_slot_relics (every armour-slot relic and armour item has a way onto the body)
         com.newuniverse.nusmp.relics.ArmorVisibleSelfTests.register();   // 1.111.0: the self-test relic.armor_visible (the decision table: a worn armour relic is never invisible; painted layers non-empty)
+        com.newuniverse.nusmp.relics.Display39SelfTests.register();      // 3.9.0: the self-tests relic.display39 (contact fit, hip charms, x3 gate) and relic.x3 (the blocky armour models)
         com.newuniverse.nusmp.relics.vu.DuelDiskSelfTests.register();    // 1.110.0: the self-test visual.duel_disk (the deck relics: disk models, textures, kept floating cards, override table, fallback)
         com.newuniverse.nusmp.relics.vu.DeckSummonSelfTests.register();  // 1.110.0: the self-test visual.deck_summon (the summon timeline, geometry, atlas)
         com.newuniverse.nusmp.relics.vu.VuSelfTests.register();       // the self-test visual.charms_genesis_worn (the upgraded charms, gauntlet, crowns and crest: models, textures, fx, act effects, fallback)
