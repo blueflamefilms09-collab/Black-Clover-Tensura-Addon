@@ -59,15 +59,6 @@ jobs:
           timeout --signal=KILL 20m xvfb-run -a -s "-screen 0 1280x720x24" ./gradlew runClient -Pclientshot --no-daemon --console=plain 2>&1 | tee client.log || true
           pkill -9 java || true
 
-      - name: What the driver and the worn layer said
-        if: always()
-        run: |
-          grep -E "clientshot|\[CHAT\]|nusmp.*(WARN|ERROR)|Exception|armour relic" client.log | head -200 || true
-          echo "---- first errors and the mod loading failure ----"
-          grep -n -m 60 -E "ERROR|Mod loading has failed|ModLoading|Failed to|Caused by" client.log || true
-          echo "---- tail ----"
-          tail -n 60 client.log || true
-
       - name: Screenshots as text (base64 JPEG, decode with the SHOT lines)
         if: always()
         run: |
@@ -77,7 +68,7 @@ jobs:
           for p in sorted(glob.glob('run/client/clientshot/*.png')):
               im = Image.open(p).convert('RGB')
               w, h = im.size
-              for tag, box, scale in (('full', (0, 0, w, h), 1), ('mid', (w // 2 - 200, h // 2 - 180, w // 2 + 200, h // 2 + 180), 2)):
+              for tag, box, scale in (('mid', (w // 2 - 200, h // 2 - 180, w // 2 + 200, h // 2 + 180), 2)):
                   c = im.crop(box)
                   if scale != 1:
                       c = c.resize((c.width * scale, c.height * scale), Image.LANCZOS)
@@ -89,6 +80,17 @@ jobs:
                       print('SHOT', b[i:i + 200])
                   print('SHOTEND')
           PY
+
+      - name: What the driver and the worn layer said
+        if: always()
+        run: |
+          grep -E "clientshot|\[CHAT\]|nusmp.*(WARN|ERROR)|Exception|armour relic" client.log | grep -v "Saving chunks" | head -200 || true
+          echo "---- who emptied the slot ----"
+          grep -A32 "emptied by" client.log | head -150 || true
+          echo "---- first errors and the mod loading failure ----"
+          grep -n -m 60 -E "ERROR|Mod loading has failed|ModLoading|Failed to|Caused by" client.log || true
+          echo "---- tail ----"
+          tail -n 60 client.log || true
 
       - uses: actions/upload-artifact@v4
         if: always()
