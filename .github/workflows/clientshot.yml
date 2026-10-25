@@ -31,6 +31,22 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y xvfb libgl1-mesa-dri libglx-mesa0 libglu1-mesa mesa-utils libxxf86vm1 libxrandr2 libxinerama1 libxcursor1 libxi6 libopenal1 python3-pil
 
+      - name: TerraBlender jar (Tensura needs it; the project does not declare it)
+        run: |
+          mkdir -p run/client/mods
+          python3 - <<'PY2'
+          import json, urllib.parse, urllib.request
+          q = urllib.parse.urlencode({"loaders": json.dumps(["neoforge"]), "game_versions": json.dumps(["1.21.1"])})
+          req = urllib.request.Request("https://api.modrinth.com/v2/project/terrablender/version?" + q, headers={"User-Agent": "nusmp-ci-clientshot/1.0"})
+          for v in json.load(urllib.request.urlopen(req, timeout=60)):
+              for f in v.get("files", []):
+                  if f.get("primary", True) and f["filename"].endswith(".jar"):
+                      urllib.request.urlretrieve(f["url"], "run/client/mods/" + f["filename"])
+                      print("downloaded", f["filename"])
+                      raise SystemExit(0)
+          raise SystemExit("no TerraBlender jar found")
+          PY2
+
       - name: Run the client and take the screenshots
         run: |
           chmod +x gradlew
@@ -39,8 +55,8 @@ jobs:
           export LIBGL_ALWAYS_SOFTWARE=1 GALLIUM_DRIVER=llvmpipe MESA_GL_VERSION_OVERRIDE=4.5 MESA_GLSL_VERSION_OVERRIDE=450 ALSOFT_DRIVERS=null
           printf 'drivers = null\n' > "$HOME/.alsoftrc"
           set -o pipefail
-          # a hard limit: a game that failed to load must not hang the job for an hour
-          timeout --signal=KILL 25m xvfb-run -a -s "-screen 0 1280x720x24" ./gradlew runClient -Pclientshot --no-daemon --console=plain 2>&1 | tee client.log || true
+          # a hard 20 minute limit: a game that failed to load must not hang the job for an hour
+          timeout --signal=KILL 20m xvfb-run -a -s "-screen 0 1280x720x24" ./gradlew runClient -Pclientshot --no-daemon --console=plain 2>&1 | tee client.log || true
           pkill -9 java || true
 
       - name: What the driver and the worn layer said
