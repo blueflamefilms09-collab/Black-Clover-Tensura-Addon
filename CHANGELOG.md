@@ -1,5 +1,31 @@
 # Changelog
 
+## [3.6.0] — Mana Method: cost follows the charge, lightning grows with the charge, Body Rune (Gadjah) and Brush Rune (Rill)
+
+### NEW
+- **The price follows the charge**: a tap pays 40 % of the page's cost, a half hold (24 ticks) 76.8 %, a full hold 100 % (settings `manaMethod.costScalesWithCharge`, `minCostFraction` 0.40). The cooldown is not scaled, a cancelled hold costs nothing, Air Step is unscaled.
+- **Lightning grows with the charge**: the True Lightning strike is 1 to 3 visual bolts, 8 to 22 blocks tall and 0.9 to 1.8 wide, with a hit and splash radius of x1.0 to x1.35 (inside the existing caps); the held lightning rune draws 1, 2 or 3 arcs. The real vanilla bolt stays off (`trueMagic.lightningRealBolt`); the new bolts reuse the existing lightning spear effect. Setting `trueMagic.lightningChargeScale`.
+- **Body Rune** (page `mana_method_body`, Gadjah: the Heart Kingdom's Spirit Guardian writes runes on his own body): 10 % of the pool (at least 200), cooldown 600. Runes written on your body give temporary speed, attack, jump, step height (from the second ring tier), safe fall and knockback resistance (full-hold caps: +25 % speed, +25 % attack, +0.15 jump, +0.4 step, +5 fall, +0.4 knockback) and a full hold adds 60 ticks of slow falling. No flight and no damage shield. One session per player, 64 on the server; it ends by time (`bodySeconds`, 15), logout, death, dimension change or server stop. A chest rune (and a feet rune from the second tier) follows the body.
+- **Brush Rune** (page `mana_method_brush`, Rill Boismortier: the Painting Magic user learned the Mana Method in the Heart Kingdom): 9 % (at least 180), cooldown 240. Paints an array on the face you look at within 5 blocks (floor, wall or ceiling); armed after 14 ticks; a foe stepping in fires ONE bolt and the array is spent; it never triggers on or hurts you or an ally. Radius 1.3 to 2.4 blocks and life 0.5x to 1x `brushSeconds` (30) by charge; 3 per caster, 24 on the server. Only on loaded chunks, where you may build, never in the Labyrinth or a Dungeon Guard world. A small record, not an entity and not a block.
+- Both pages are appended last (fire, water, wind, earth, true, air step, dash, body, brush). Nine new server settings in `nusmp-mana-method-server.toml`, all default on: `costScalesWithCharge`, `minCostFraction`, `lightningChargeScale`, `bodyRunes`, `bodySeconds`, `brushRunes`, `brushSeconds`, `brushPerCaster`, `brushGlobal`.
+
+### REPLACED
+- The flat price (`costScalesWithCharge` off restores it) and the one-bolt fixed-radius lightning strike (`lightningChargeScale` off restores it).
+- Without a setting: a refused cast no longer costs mana (the grimoire used to take the price before the page ran), and the Air Step and hold sweeps now use the game clock their stamps were written with.
+
+### KEPT
+- The seven older Mana Method pages, their ids and order; the 28-byte rune packet and the hold packet; all older config keys; the balance law; Anti-Magic still cancels True Magic by default; the Air Step and Dash fall grace; the GUI; Time Magic and its VFX.
+
+### Cost (rule 11)
+- Price: one multiplication and one map read. Lightning: at most 3 strikes a second on the server, 9 small effect packets a second through the effect budget, 72 vertices per bolt (216 for three).
+- Body Rune: one session per player (64 at most), six modifiers, a sweep every 5 ticks only while a session exists, 2 packets per cast.
+- Brush Rune: 3 arrays per caster (hard cap 5) and 24 on the server (hard cap 64), one small entity query per array every 4 ticks and at most 8 queries per tick, no chunk load, no block access, 2 packets per array; the fired bolt counts inside the existing rune caps. Client: at most 8 painted runes drawn at once, none beyond 56 blocks, 680 vertices for a fully written one, nothing allocated per frame.
+
+### Not done / caveats
+- Nothing in this release has been seen in a game; the four new self-tests (`magic.mana_method.cost`, `.lightning_charge`, `.body`, `.brush`) have never run before CI. The previews are software renders with a capsule for the player or foe and no world or lighting.
+- A tap now costs 40 %, so four taps cost 1.6 full holds; only the unscaled cooldown limits the rate. A flying foe more than 2 blocks above a floor array does not trigger it. A wall array seen from behind can hit the wall at once. Other mods that read safe fall, step height or jump strength see the Body Rune bonus while it lasts.
+- Canon came from search summaries of the English wiki pages (Gadjah, Rill Boismortier, Potrof, Mana Method, Painting Magic, chapter 226, episode 155); the wiki host could not be fetched and the Japanese wiki was not fetched. Every number is the author's. Gadjah hovering without magic is a separate ability and only a short slow fall was built.
+
 ## [3.5.0] — Mana Method: hold to charge, command filter, True Magic as physical damage, True Lightning and Plant cage, Air Step and Dash runes
 
 ### NEW

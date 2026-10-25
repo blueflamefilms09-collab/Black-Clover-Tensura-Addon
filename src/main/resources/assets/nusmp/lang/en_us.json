@@ -18171,5 +18171,10 @@
   "nusmp.mana_method.page.mana_method_air_step.desc": "Mana Method, Air Step Rune: a small rune array forms under your feet and holds you up. Walk on air for a few seconds; sneak to drop. Works for any mage with the Mana Zone gate. Late-game: the Mana Zone gate applies.",
   "nusmp.mana_method.page.mana_method_dash.desc": "Mana Method, Dash Rune: a rune array bursts behind you and throws you forward in your look direction, with a short grace for the fall. Short cooldown. Late-game: the Mana Zone gate applies.",
   "nusmp.mana_method.air_step": "Air Step Rune: walk on air for %s s (sneak to drop)",
-  "nusmp.mana_method.air_step_end": "The Air Step Rune fades."
+  "nusmp.mana_method.air_step_end": "The Air Step Rune fades.",
+  "nusmp.mana_method.page.mana_method_body.desc": "Mana Method, Body Rune (Gadjah's way): rune arrays are written on your own body for a while. Small temporary gifts that grow with the hold: a little more speed, attack, jump, step height, a softer fall and knockback resistance; a full hold also lets you glide down slowly for a moment. It is not flight and not a shield. Costs by the hold. Late-game: the Mana Zone gate applies.",
+  "nusmp.mana_method.page.mana_method_brush.desc": "Mana Method, Brush Rune (Rill's way): paint a rune array on the surface you look at (floor, wall or ceiling, within 5 blocks). It waits for a while, and when a foe steps into it one bolt of your element leaves it toward them and the array is spent. It never hurts you or your allies. A few at a time; costs by the hold. Late-game: the Mana Zone gate applies.",
+  "nusmp.mana_method.body": "Body Rune: the runes settle on your body for %s s",
+  "nusmp.mana_method.body_end": "The Body Rune fades.",
+  "nusmp.mana_method.brush": "Brush Rune: the array is painted (%s s)"
 }
