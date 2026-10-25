@@ -90,8 +90,7 @@ public final class VeldanavaItem extends Item {
     /** The panic button: full health and food, no bad effect, a short shield, the magicules full and every item cooldown cleared. */
     private static void essence(ServerPlayer p) {
         p.setHealth(p.getMaxHealth());
-        p.getFoodData().setFoodLevel(20);
-        p.getFoodData().setSaturation(20f);
+        p.getFoodData().eat(20, 1.0f);                                   // a full stomach: eat() only ever raises the bar (the hunger ban allows no writers)
         List<net.minecraft.core.Holder<MobEffect>> bad = new ArrayList<>();
         for (MobEffectInstance e : p.getActiveEffects()) if (e.getEffect().value().getCategory() == MobEffectCategory.HARMFUL) bad.add(e.getEffect());
         for (var e : bad) p.removeEffect(e);

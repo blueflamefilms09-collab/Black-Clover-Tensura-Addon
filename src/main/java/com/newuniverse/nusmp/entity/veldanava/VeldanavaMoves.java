@@ -299,7 +299,7 @@ public final class VeldanavaMoves {
                 }
                 default -> {
                     p.addEffect(new MobEffectInstance(MobEffects.WITHER, 100, 0));
-                    p.addEffect(new MobEffectInstance(MobEffects.HUNGER, 140, 4));
+                    p.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 140, 1));
                 }
             }
         }

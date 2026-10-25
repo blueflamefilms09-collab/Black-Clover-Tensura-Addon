@@ -1,8 +1,10 @@
 package com.newuniverse.nusmp.entity.veldanava;
 
 import com.newuniverse.nusmp.blackclover.GrimoirePages;
+import com.newuniverse.nusmp.particle.fx.Fx;
+import com.newuniverse.nusmp.particle.fx.FxOld;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
 import net.minecraft.ChatFormatting;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.NbtUtils;
@@ -184,7 +186,7 @@ public final class WillOfTheCreator extends Entity {
         if (life % 20 == 0) {
             entityData.set(SECONDS_LEFT, Math.max(0, life / 20));
             updateWaiting();
-            sl.sendParticles(ParticleTypes.END_ROD, getX(), getY() + 0.5, getZ(), 6, 0.6, 0.6, 0.6, 0.02);
+            Fx.spray(sl, FxThemes.BOSS_CELESTIAL, FxOld.END_ROD, getX(), getY() + 0.5, getZ(), 6, 0.6, 0.6, 0.6, 0.02);
         }
         if (life > 0 && life % 600 == 0) {                          // every 30 seconds a reminder for the ones who have not chosen
             for (UUID id : fighters) {
@@ -211,7 +213,7 @@ public final class WillOfTheCreator extends Entity {
                 dropLoot(sl, id, p != null ? p.position() : position());
             }
         }
-        sl.sendParticles(ParticleTypes.END_ROD, getX(), getY(), getZ(), 40, 1.2, 1.2, 1.2, 0.1);
+        Fx.spray(sl, FxThemes.BOSS_CELESTIAL, FxOld.END_ROD, getX(), getY(), getZ(), 40, 1.2, 1.2, 1.2, 0.1);
         sl.playSound(null, blockPosition(), SoundEvents.BEACON_DEACTIVATE, SoundSource.HOSTILE, 3f, 1.2f);
         discard();
     }

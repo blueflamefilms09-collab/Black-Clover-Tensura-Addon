@@ -108,6 +108,17 @@ class VeldanavaSourceScanTest {
     }
 
     @Test
+    void theBossFollowsTheHungerBanAndTheParticleFacade() throws IOException {
+        for (Path p : serverFiles()) {
+            String c = code(Files.readString(p, StandardCharsets.UTF_8));
+            String n = p.getFileName().toString();
+            assertFalse(c.contains("MobEffects.HUNGER"), n + " applies the Hunger effect (the owner's hunger ban)");
+            assertFalse(c.contains("setFoodLevel(") || c.contains("setSaturation(") || c.contains("setExhaustion(") || c.contains("addExhaustion("), n + " writes the food bar (use FoodData.eat to restore it)");
+            assertFalse(c.contains("ParticleTypes."), n + " names a vanilla particle (go through particle.fx.Fx)");
+        }
+    }
+
+    @Test
     void theConfigIsAServerConfigWithItsOwnFileName() throws IOException {
         String main = code(Files.readString(SRC.resolve("NUSMP.java"), StandardCharsets.UTF_8));
         assertTrue(main.contains("ModConfig.Type.SERVER, com.newuniverse.nusmp.entity.veldanava.VeldanavaConfig.SPEC, \"nusmp-veldanava-server.toml\""), "Veldanava's settings change gameplay, so they are a SERVER config");
