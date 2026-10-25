@@ -36,14 +36,21 @@ jobs:
           chmod +x gradlew
           mkdir -p run/client
           printf 'onboardAccessibility:false\nguiScale:2\ntutorialStep:none\nskipMultiplayerWarning:true\nrenderDistance:4\nsimulationDistance:5\nmaxFps:30\nenableVsync:false\nfullscreen:false\n' > run/client/options.txt
-          export LIBGL_ALWAYS_SOFTWARE=1 GALLIUM_DRIVER=llvmpipe MESA_GL_VERSION_OVERRIDE=4.5 MESA_GLSL_VERSION_OVERRIDE=450
+          export LIBGL_ALWAYS_SOFTWARE=1 GALLIUM_DRIVER=llvmpipe MESA_GL_VERSION_OVERRIDE=4.5 MESA_GLSL_VERSION_OVERRIDE=450 ALSOFT_DRIVERS=null
+          printf 'drivers = null\n' > "$HOME/.alsoftrc"
           set -o pipefail
-          xvfb-run -a -s "-screen 0 1280x720x24" ./gradlew runClient -Pclientshot --no-daemon --console=plain 2>&1 | tee client.log || true
+          # a hard limit: a game that failed to load must not hang the job for an hour
+          timeout --signal=KILL 25m xvfb-run -a -s "-screen 0 1280x720x24" ./gradlew runClient -Pclientshot --no-daemon --console=plain 2>&1 | tee client.log || true
+          pkill -9 java || true
 
       - name: What the driver and the worn layer said
         if: always()
         run: |
           grep -E "clientshot|\[CHAT\]|nusmp.*(WARN|ERROR)|Exception|armour relic" client.log | head -200 || true
+          echo "---- first errors and the mod loading failure ----"
+          grep -n -m 60 -E "ERROR|Mod loading has failed|ModLoading|Failed to|Caused by" client.log || true
+          echo "---- tail ----"
+          tail -n 60 client.log || true
 
       - name: Screenshots as text (base64 JPEG, decode with the SHOT lines)
         if: always()
