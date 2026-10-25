@@ -31,7 +31,10 @@ import java.util.Map;
 public final class HeadFeetSelfTests {
     private HeadFeetSelfTests() {}
 
-    public static void register() { SelfTests.register("relic.headfeet", HeadFeetSelfTests::run); }
+    /** The smoke list expects the prefix {@code relic.headfeet}; the CI check counts keys that start with {@code relic.headfeet.}, so the key needs a part after the dot (3.12.1: it was the bare prefix before). */
+    public static final String KEY = "relic.headfeet.slots";
+
+    public static void register() { SelfTests.register(KEY, HeadFeetSelfTests::run); }
 
     static SelfTests.Result run(MinecraftServer server) {
         String rules = rules();

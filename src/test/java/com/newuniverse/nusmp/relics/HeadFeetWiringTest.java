@@ -56,6 +56,19 @@ class HeadFeetWiringTest {
         assertTrue(smoke.contains("relic.headfeet"), "the smoke test expects the new prefix");
     }
 
+    /** 3.12.0 registered the bare prefix, and the CI check (keys that start with "prefix.") reported it as "registry not wired". */
+    @Test
+    void theSelfTestKeyHasAPartAfterThePrefixTheSmokeCheckCounts() throws IOException {
+        String smoke = Files.readString(Path.of(".github/workflows/smoke.yml"));
+        java.util.regex.Matcher list = java.util.regex.Pattern.compile("SMOKE_EXPECT: \"([^\"]*)\"").matcher(smoke);
+        assertTrue(list.find(), "the smoke list is in smoke.yml");
+        assertTrue(java.util.List.of(list.group(1).split(",")).contains("relic.headfeet"), "the prefix is an entry of the smoke list");
+        java.util.regex.Matcher key = java.util.regex.Pattern.compile("String KEY = \"([^\"]+)\"").matcher(read("HeadFeetSelfTests.java"));
+        assertTrue(key.find(), "the self-test key is a constant");
+        assertTrue(key.group(1).startsWith("relic.headfeet.") && key.group(1).length() > "relic.headfeet.".length(), "the key must start with the prefix and a dot, else the CI count is zero: " + key.group(1));
+        assertTrue(read("HeadFeetSelfTests.java").contains("SelfTests.register(KEY,"), "the key constant is the one registered");
+    }
+
     @Test
     void theLangLinesExistInTheFragmentAndTheGameFile() throws IOException {
         String frag = Files.readString(Path.of("tools/lang/relics_wear.json")), lang = Files.readString(Path.of("src/main/resources/assets/nusmp/lang/en_us.json"));

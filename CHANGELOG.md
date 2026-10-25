@@ -1,5 +1,21 @@
 # Changelog
 
+## [3.12.1] — The head/feet self-test is counted by the CI smoke check
+
+### FIXED
+- The smoke self-test of 3.12.0 was registered as the bare prefix `relic.headfeet`; the CI check counts keys that start with `relic.headfeet.`, so it reported "registry is not wired" for it (the test itself ran and passed its data check). It is now `relic.headfeet.slots`. The same pin is in `HeadFeetWiringTest` (the key must have a part after the prefix and the prefix must be in the smoke list).
+- Nothing else changes: no gameplay, no setting, no asset.
+
+### KEPT
+- Everything in 3.12.0, unchanged.
+
+### Cost
+- None.
+
+### Not included
+- The other 118 entries of the smoke list with a bare name still report the same wiring FAIL (they were not renamed; this release only touches the head/feet test). The smoke step also pipes through `tee` without `pipefail`, so a FAIL row does not turn the job red; that is left as it is until the owner decides.
+- This commit also asks for the CI client run (`[clientshot]`), which casts the five numbered undead on the fixed code of 3.10.2 and logs what the real client sees.
+
 ## [3.12.0] — Head and feet relics move to the Curios slots
 
 ### NEW

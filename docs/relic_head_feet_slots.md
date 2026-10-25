@@ -32,8 +32,8 @@ Setting (SERVER): `relics.headFeetInCurios` in `nusmp-relicpower-server.toml`, `
 * **Chest relics** stay armour; only head and feet move.
 * An item older than the relics (an adopted item) is not in the `relic_head` / `relic_feet` tags and is never redirected.
 * The armour-slot display bug itself (the CI client run found the slot empty on the client a few seconds after the server set it) was **not** diagnosed; this change moves the relics out of the slot instead.
-* Not seen in a running game: the draw of a Curios-worn head or feet relic is the 3.10.0 worn-layer path and is covered by tests and the CI server smoke test (`relic.headfeet`), not by eye.
+* Not seen in a running game: the draw of a Curios-worn head or feet relic is the 3.10.0 worn-layer path and is covered by tests and the CI server smoke test (`relic.headfeet.slots`), not by eye.
 
 ## Files
 
-`relics/HeadFeetMoveRules` (pure rules), `relics/HeadFeetCurios` (the move and the kept armour), `relics/RelicCurioEquip` (right-click), `relics/RelicEngine` (the once-a-second call), `relics/RelicPowerConfig` (the setting), `relics/HeadFeetSelfTests` (`relic.headfeet`), tests `HeadFeetMoveRulesTest`, `HeadFeetWiringTest`, `HeadFeetCurioSlotsTest`.
+`relics/HeadFeetMoveRules` (pure rules), `relics/HeadFeetCurios` (the move and the kept armour), `relics/RelicCurioEquip` (right-click), `relics/RelicEngine` (the once-a-second call), `relics/RelicPowerConfig` (the setting), `relics/HeadFeetSelfTests` (`relic.headfeet.slots`), tests `HeadFeetMoveRulesTest`, `HeadFeetWiringTest`, `HeadFeetCurioSlotsTest`.
