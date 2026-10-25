@@ -11,7 +11,7 @@ import net.neoforged.neoforge.common.ModConfigSpec;
  */
 public final class StarConfig {
     public static final ModConfigSpec SPEC;
-    public static final ModConfigSpec.BooleanValue NODES, AUTO_QUARTET, CONJUNCTION_FALLBACK, NEVERLAND_CANON_GATE;
+    public static final ModConfigSpec.BooleanValue NODES, AUTO_QUARTET, CONJUNCTION_FALLBACK, NEVERLAND_CANON_GATE, VFX_FOR_ALL;
     public static final ModConfigSpec.IntValue PER_PLAYER, HEIR_PER_PLAYER, SERVER_CAP, LIFE_TICKS, PLACE_RANGE, SEED_COOLDOWN, CONJUNCTION_ALLIES;
     public static final ModConfigSpec.DoubleValue HEIR_MASTERY, DISPEL_CHANCE;
     public static final ModConfigSpec.EnumValue<StarRules.DualMode> DUAL_MODE;
@@ -41,6 +41,8 @@ public final class StarConfig {
                 .defineInRange(StarDispelRules.CONFIG_KEY, StarDispelRules.DEFAULT_CHANCE, StarDispelRules.MIN_CHANCE, StarDispelRules.MAX_CHANCE);
         NEVERLAND_CANON_GATE = b.comment("Black Neverland as the manga has it: besides the Grinberryall heir mark the caster must be bonded to the wind spirit Sylph (flag sylph_bond) and hold a Demon-Dweller-family sword or be the Anti-Magic Lord (flag anti_magic_source); the dome then cancels magic (silence, jammed skills, shattered barriers) for an Aura price. false = only the heir mark is needed (the dome without the anti-magic part, unless the caster has the anti-magic source anyway).")
                 .define(StarNeverlandRules.CONFIG_KEY, StarNeverlandRules.DEFAULT_CANON_GATE);
+        VFX_FOR_ALL = b.comment("Star Magic for everybody: the new Star pages and effects (Quartile Scutum / Hasta / Flagellum whip, the three Quintile pages) open for EVERY Star grimoire by the ordinary mastery order, whatever its kingdom cover, character or none. true (default) = as the owner asked; the Grinberryall heir keeps Black Neverland, the 8th star, the 1.15 Hasta damage and the halved chance to break to Anti-Magic. false = the 3.7.0 behaviour: those pages need the Grinberryall heir mark (a Spade cover + the cleared Spade Kingdom Raid + the signature mastery), a mage who is not an heir gets the old cone for the Flagellum. Changing it takes effect at once for casts and for opening pages.")
+                .define(StarAccess.CONFIG_KEY, StarAccess.DEFAULT_VFX_FOR_ALL);
         b.pop();
         SPEC = b.build();
     }
@@ -62,6 +64,7 @@ public final class StarConfig {
     public static int conjunctionAllies() { return StarRules.maxAllies(get(CONJUNCTION_ALLIES)); }
     public static double heirMastery() { return StarRules.heirMastery(get(HEIR_MASTERY)); }
     public static boolean neverlandCanonGate() { return get(NEVERLAND_CANON_GATE); }
+    public static boolean vfxForAll() { return get(VFX_FOR_ALL); }
     public static double dispelChance() { return StarDispelRules.clampChance(get(DISPEL_CHANCE)); }
     public static StarRules.DualMode dualMode() { return get(DUAL_MODE); }
 }

@@ -45,7 +45,7 @@ public final class StarCasts {
 
     private static boolean gate(Ctx c, String id) {
         if (!StarConfig.nodes()) return c.fail("Star nodes are switched off on this server.");
-        if (StarRules.needsHeir(id) && !StarGame.isHeir(c.caster)) return c.fail(NOT_HEIR);
+        if (StarAccess.needsHeir(id, StarConfig.vfxForAll()) && !StarGame.isHeir(c.caster)) return c.fail(NOT_HEIR);      // star.vfxForAll: only Black Neverland is heir-only; false = the 3.7.0 table
         return true;
     }
 
@@ -174,7 +174,7 @@ public final class StarCasts {
             ServerLevel level = p.serverLevel();
             List<StarMath.P> loop = StarMath.orderAround(positions(q));
             StarMath.P centre = StarMath.centroid(loop);
-            float raw = StarRules.hastaRaw(c.tier.hit, stars, c.book.masteryFrac(c.inst), true);
+            float raw = StarRules.hastaRaw(c.tier.hit, stars, c.book.masteryFrac(c.inst), StarGame.isHeir(p));      // the 1.15 stays the heir's (with star.vfxForAll = false only an heir gets here, so it is the 3.7.0 number)
             StarGame.consume(p, q);                                  // the stars overload at once: nothing else can use them while the spear charges
             c.circle(0.8f);
             StarFx.Budget budget = new StarFx.Budget();
@@ -201,7 +201,7 @@ public final class StarCasts {
             if (q == null) return cone.cast(c.book, c.inst, c.caster, c.mode);       // no room for four stars: the old cone
             return lash(c, q);
         });
-        return (b, i, p, mode) -> StarConfig.nodes() && StarGame.isHeir(p) ? whip.cast(b, i, p, mode) : cone.cast(b, i, p, mode);
+        return (b, i, p, mode) -> StarConfig.nodes() && (StarConfig.vfxForAll() || StarGame.isHeir(p)) ? whip.cast(b, i, p, mode) : cone.cast(b, i, p, mode);      // star.vfxForAll: every Star mage whips; false = only the heir (StarAccess.whip)
     }
 
     public static BookPage.Cast atrumFlagellum() {
