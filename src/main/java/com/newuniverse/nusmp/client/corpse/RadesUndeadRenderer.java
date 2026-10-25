@@ -1,8 +1,11 @@
 package com.newuniverse.nusmp.client.corpse;
 
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.mojang.logging.LogUtils;
 import com.mojang.math.Axis;
 import com.newuniverse.nusmp.client.geo.GeoAnim;
+import com.newuniverse.nusmp.client.geo.GeoModelData;
 import com.newuniverse.nusmp.client.geo.GeoModels;
 import com.newuniverse.nusmp.client.geo.GeoSpec;
 import com.newuniverse.nusmp.client.zogratis.ZogratisGlow;
@@ -10,14 +13,22 @@ import com.newuniverse.nusmp.client.zogratis.ZogratisPose;
 import com.newuniverse.nusmp.client.zogratis.ZogratisRenderer;
 import com.newuniverse.nusmp.corpse.CorpseDecay;
 import com.newuniverse.nusmp.corpse.CorpseEffects;
+import com.newuniverse.nusmp.corpse.CorpseLookRules;
 import com.newuniverse.nusmp.corpse.NamedCorpseEntity;
 import com.newuniverse.nusmp.corpse.NamedCorpses;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.model.HumanoidModel;
+import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.culling.Frustum;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.entity.LivingEntity;
+import org.slf4j.Logger;
 
 /**
  * Why: Rades Spirito's numbered undead have their own custom looks that follow the series art: No.4 Jimmy a bandaged crouching figure with golden spiral eyes, No.3 David a huge stitched
@@ -30,6 +41,10 @@ import net.minecraft.world.effect.MobEffectInstance;
  * Client only; every number it reads is synced entity data. Draw cost is bounded: nothing is drawn beyond {@link #DRAW_RANGE} blocks (the entity type also tracks only 8 chunks), the glow
  * pass (half of the vertices) is skipped beyond {@link #GLOW_RANGE} blocks, the pose frame is one reused object (no allocation per frame) and the models are 28 to 47 boxes (at most 2256
  * vertices with the glow pass, see docs/exclusive/rades_undead.md).
+ * <p>
+ * 3.7.1 (docs/magic/rades_cast_fix.md): a model or texture that fails to load used to draw NOTHING (the geo drawer returns at once for an empty model), which left only the name tag and the
+ * magic circle. {@link CorpseLookRules#draw} now decides once per kind (and again after a resource reload): the geo look, or a tinted zombie stand-in (the vanilla humanoid, the name tag stays),
+ * and one client-log line says which it is and which file failed. {@code corpse.fallbackLook = false} (client config) restores the old "draw nothing".
  */
 public class RadesUndeadRenderer extends ZogratisRenderer<NamedCorpseEntity> {
     private static final int STAGES = CorpseDecay.MAX_STAGE + 1;
@@ -42,6 +57,15 @@ public class RadesUndeadRenderer extends ZogratisRenderer<NamedCorpseEntity> {
     /** The one pose frame this renderer fills for every body it draws (the render thread draws one body at a time). */
     private final ZogratisPose.Frame scratch = new ZogratisPose.Frame();
 
+    private static final Logger LOG = LogUtils.getLogger();
+    /** What each kind is drawn as, decided against the model object that was loaded (a resource reload gives a new object, which decides again). Render thread only. */
+    private static final CorpseLookRules.Draw[] DRAW = new CorpseLookRules.Draw[NamedCorpses.values().length];
+    private static final GeoModelData[] DECIDED_FOR = new GeoModelData[NamedCorpses.values().length];
+    private static final ResourceLocation STAND_IN_TEXTURE = ResourceLocation.withDefaultNamespace("textures/entity/zombie/zombie.png");
+    /** The tint of the stand-in of each kind (0xRRGGBB), in the colours of its series art: Jimmy golden-brown, David blue-grey, Alfredo steel blue, Carl pale, Michael white. */
+    private static final int[] STAND_IN_RGB = {0xD9B26A, 0x8FA0C0, 0x7C93C9, 0xE8E4D8, 0xF4F4F4};
+    private final HumanoidModel<LivingEntity> standIn;
+
     static {
         for (NamedCorpses k : NamedCorpses.values()) {
             String name = modelName(k);
@@ -51,7 +75,43 @@ public class RadesUndeadRenderer extends ZogratisRenderer<NamedCorpseEntity> {
         }
     }
 
-    public RadesUndeadRenderer(EntityRendererProvider.Context ctx) { super(ctx, 0.6f); }
+    public RadesUndeadRenderer(EntityRendererProvider.Context ctx) {
+        super(ctx, 0.6f);
+        HumanoidModel<LivingEntity> m = null;
+        try {
+            m = new HumanoidModel<>(ctx.bakeLayer(ModelLayers.ZOMBIE));
+        } catch (RuntimeException ex) {
+            LOG.error("[nusmp] numbered undead: the zombie stand-in model could not be built, a failed geo model will draw nothing: {}", ex.toString());
+        }
+        this.standIn = m;
+    }
+
+    /**
+     * What this kind is drawn as: decided from the loaded model (has parts) and the base texture (exists), again whenever a resource reload gave a new model object, with one line in the client log
+     * each time the decision is made (info when the geo look is used, error when it is not and which file is the cause).
+     */
+    private static CorpseLookRules.Draw decide(NamedCorpses k) {
+        int i = k.ordinal();
+        GeoSpec spec = SKINS[i][0];
+        GeoModelData m = GeoModels.model(spec.model());
+        if (m == DECIDED_FOR[i] && DRAW[i] != null) return DRAW[i];
+        DECIDED_FOR[i] = m;
+        boolean parts = m != null && !m.roots.isEmpty();
+        boolean tex = textureExists(spec.texture());
+        CorpseLookRules.Draw d = CorpseLookRules.draw(parts, tex, CorpseClientConfig.fallbackLook());
+        DRAW[i] = d;
+        String what = k.id + " is drawn as " + CorpseLookRules.describe(d) + " (model " + spec.model() + ": " + (parts ? "ok" : "EMPTY or missing") + ", texture " + spec.texture() + ": " + (tex ? "ok" : "MISSING") + ")";
+        if (d == CorpseLookRules.Draw.GEO) LOG.info("[nusmp] numbered undead look: {}", what); else LOG.error("[nusmp] numbered undead look: {}", what);
+        return d;
+    }
+
+    private static boolean textureExists(ResourceLocation tex) {
+        try {
+            return Minecraft.getInstance().getResourceManager().getResource(tex).isPresent();
+        } catch (RuntimeException ex) {
+            return false;
+        }
+    }
 
     /** The file name part of a kind's model: rades_jimmy, rades_david, rades_alfredo, rades_carl, rades_michael. */
     public static String modelName(NamedCorpses k) {
@@ -133,8 +193,30 @@ public class RadesUndeadRenderer extends ZogratisRenderer<NamedCorpseEntity> {
         pose.pushPose();
         pose.mulPose(Axis.YP.rotationDegrees(-facing));
         int glowArgb = entityRenderDispatcher.distanceToSqr(e) > GLOW_RANGE_SQ ? 0 : ZogratisGlow.grey(glow);          // no glow pass far away
-        paint(pose, buffers, skin(e), clock.clip, clock.seconds, light, bodyRgb(e), fade, glowArgb);
+        CorpseLookRules.Draw how = decide(e.kind());
+        if (how == CorpseLookRules.Draw.GEO) paint(pose, buffers, skin(e), clock.clip, clock.seconds, light, bodyRgb(e), fade, glowArgb);
+        else if (how == CorpseLookRules.Draw.FALLBACK) standIn(e, partial, pose, buffers, light, head - body);
         pose.popPose();
         super.render(e, yaw, partial, pose, buffers, light);
+    }
+
+    /** The stand-in of a body whose geo look did not load: the vanilla humanoid in the zombie skin, tinted by kind, scaled to the body's height and width. The pose is already turned to the body's facing. */
+    private void standIn(NamedCorpseEntity e, float partial, PoseStack pose, MultiBufferSource buffers, int light, float headYaw) {
+        HumanoidModel<LivingEntity> m = standIn;
+        if (m == null) return;
+        float h = e.kind().height / 1.95f, w = e.kind().width / 0.6f;
+        pose.pushPose();
+        pose.mulPose(Axis.YP.rotationDegrees(180f));
+        if (e.deathTime > 0) {                                                       // lies down like any dying mob (vanilla: a quarter turn over about a second)
+            float f = Mth.sqrt(Math.min(1f, (e.deathTime + partial - 1f) / 20f * 1.6f));
+            pose.mulPose(Axis.ZP.rotationDegrees(f * 90f));
+        }
+        pose.scale(-w, -h, w);
+        pose.translate(0f, -1.501f, 0f);
+        m.setupAnim(e, e.walkAnimation.position(partial), e.walkAnimation.speed(partial), e.tickCount + partial, Mth.wrapDegrees(headYaw), e.getXRot());
+        int rgb = e.hurtTime > 0 || e.deathTime > 0 ? bodyRgb(e) : STAND_IN_RGB[e.kind().ordinal()];
+        VertexConsumer vc = buffers.getBuffer(RenderType.entityCutoutNoCull(STAND_IN_TEXTURE));
+        m.renderToBuffer(pose, vc, light, OverlayTexture.NO_OVERLAY, 0xFF000000 | rgb);
+        pose.popPose();
     }
 }
