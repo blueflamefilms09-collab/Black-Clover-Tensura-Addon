@@ -77,6 +77,7 @@ public class NamedCorpseEntity extends PathfinderMob implements OwnableEntity {
         this.kind = kind;
         this.xpReward = 0;
         setPersistenceRequired();
+        addGoals();                                           // the Mob constructor ran registerGoals() before 'kind' was set, so the goals are added here
     }
 
     public static AttributeSupplier.Builder createAttributes(NamedCorpses k) {
@@ -100,8 +101,13 @@ public class NamedCorpseEntity extends PathfinderMob implements OwnableEntity {
         b.define(CAST, 0);
     }
 
+    /** Called by the Mob constructor while {@code kind} is still null (that threw a NullPointerException and no numbered undead could be created): does nothing until {@link #addGoals()}. */
     @Override
     protected void registerGoals() {
+        if (kind != null) addGoals();
+    }
+
+    private void addGoals() {
         goalSelector.addGoal(0, new FloatGoal(this));
         if (kind.ranged()) goalSelector.addGoal(2, new CasterGoal(this));
         else goalSelector.addGoal(2, new MeleeAttackGoal(this, 1.15, true));

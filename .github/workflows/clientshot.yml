@@ -68,7 +68,7 @@ jobs:
           for p in sorted(glob.glob('run/client/clientshot/*.png')):
               im = Image.open(p).convert('RGB')
               w, h = im.size
-              for tag, box, scale in (('mid', (w // 2 - 200, h // 2 - 180, w // 2 + 200, h // 2 + 180), 2)):
+              for tag, box, scale in (('mid', (w // 2 - 200, h // 2 - 180, w // 2 + 200, h // 2 + 180), 2),):
                   c = im.crop(box)
                   if scale != 1:
                       c = c.resize((c.width * scale, c.height * scale), Image.LANCZOS)
