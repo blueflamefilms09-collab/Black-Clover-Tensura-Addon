@@ -57,8 +57,8 @@ public final class WornDebugClient {
             out.add(t("never", "LAYER NEVER REACHED for this wearer. Vanilla does not draw your own body in first person (press F5), the wearer may be out of view, or another renderer draws it."));
         } else {
             long age = gameNow - seen.tick;
-            if (age <= 40) out.add(t("reached", "Layer reached %s ticks ago (%s frames, layer %s, view %s, slim arms %s)", age, seen.frames, seen.layer, seen.view, yes(seen.slim)));
-            else out.add(t("stale", "Layer last reached %s ticks ago (%s frames, layer %s, view %s, slim arms %s): the wearer is not being drawn right now", age, seen.frames, seen.layer, seen.view, yes(seen.slim)));
+            if (age <= 40) out.add(t("reached", "Layer reached %s ticks ago (%s frames, layer %s, view %s, slim arms %s)", age, seen.frames, String.valueOf(seen.layer), String.valueOf(seen.view), yes(seen.slim)));
+            else out.add(t("stale", "Layer last reached %s ticks ago (%s frames, layer %s, view %s, slim arms %s): the wearer is not being drawn right now", age, seen.frames, String.valueOf(seen.layer), String.valueOf(seen.view), yes(seen.slim)));
         }
         CuriosProbe.Report probe = CuriosProbe.probe(who);
         out.add(t("client_curios", "This client's own read of the Curios inventory: %s", probe.ok() ? t("ok", "every step passed") : t("broken", "A STEP FAILED, see below")));

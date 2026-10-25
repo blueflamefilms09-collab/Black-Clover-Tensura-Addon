@@ -28,6 +28,7 @@ import net.minecraft.world.level.levelgen.WorldOptions;
 import net.minecraft.world.level.levelgen.presets.WorldPresets;
 import net.neoforged.neoforge.client.event.ClientTickEvent;
 import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.event.entity.living.LivingEquipmentChangeEvent;
 import org.slf4j.Logger;
 
 import java.io.File;
@@ -57,7 +58,22 @@ public final class ClientShot {
         if (!ON) return;
         started = System.nanoTime();
         NeoForge.EVENT_BUS.addListener(ClientShot::tick);
+        NeoForge.EVENT_BUS.addListener(ClientShot::equipmentChanged);
         LOG.info("[clientshot] driver on");
+    }
+
+    /** Every change of a player's head or feet piece, on the integrated server and the client: when a slot is emptied, the stack of the code that did it is written to the log. */
+    private static void equipmentChanged(LivingEquipmentChangeEvent e) {
+        EquipmentSlot slot = e.getSlot();
+        if (!(e.getEntity() instanceof Player) || (slot != EquipmentSlot.HEAD && slot != EquipmentSlot.FEET)) return;
+        String side = e.getEntity().level().isClientSide ? "client" : "server";
+        say(side + " " + slot + ": " + e.getFrom().getItem() + " -> " + e.getTo().getItem());
+        if (e.getTo().isEmpty() && !e.getFrom().isEmpty()) {
+            StringBuilder sb = new StringBuilder("   emptied by:");
+            StackTraceElement[] st = new Throwable().getStackTrace();
+            for (int i = 0; i < Math.min(st.length, 30); i++) sb.append("\n      ").append(st[i]);
+            say(sb.toString());
+        }
     }
 
     private static void say(String s) { LOG.info("[clientshot] {}", s); }
@@ -138,7 +154,11 @@ public final class ClientShot {
                 wait = 20;
             }
             case 6 -> {
-                WornDebugClient.report(p.getUUID(), List.of());
+                try {
+                    WornDebugClient.report(p.getUUID(), List.of());
+                } catch (RuntimeException ex) {
+                    LOG.error("[clientshot] the debug report threw", ex);
+                }
                 WornTrace.Seen seen = WornTrace.of(p.getUUID());
                 say("trace: " + (seen == null ? "LAYER NEVER REACHED" : "frames " + seen.frames + ", found " + seen.found + ", planned " + seen.planned + ", drawn " + seen.drawn + ", ensembles " + seen.ensembles));
                 stage = 7;
