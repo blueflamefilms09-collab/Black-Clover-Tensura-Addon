@@ -215,7 +215,7 @@ public abstract class GrimoireBook extends Skill {
         if (mode < familyCount()) return isUnlocked(i, mode);
         if (isDive(mode)) return e instanceof ServerPlayer p ? spiritGateOpen(p) : true;
         if (isUnion(mode)) return cover(i).isForbidden();
-        if (isMethodPage(mode)) return com.newuniverse.nusmp.mana.method.ManaMethodPages.usable(e, page(mode).id());      // Mana Method: the Mana Method pages: the same late-game gate as the Mana Zone, and the server setting manaMethod.enabled
+        if (isMethodPage(mode)) return com.newuniverse.nusmp.mana.method.ManaMethodPages.usable(this, i, e, page(mode).id());      // Mana Method: the Mana Method pages: 3.8.0 the server setting manaMethod.access (mastery of this grimoire / the Rune State / the Mana Zone gate) and the user's own element; manaMethod.enabled
         if (isZoneGated(mode)) return com.newuniverse.nusmp.mana.zone.ManaZoneManager.gateOpenFor(e);      // 1.99.0: before the instant-page rule below, which used to make the Mana Zone open to everyone
         if (isSpiritPage(mode)) return com.newuniverse.nusmp.spiritcontrol.SpiritControlPages.usable(this, i, e, page(mode).id());      // 3.0.0: shown only while a spirit of this book's magic answers the player (asked after the Mana Zone gate)
         if (instant(mode)) return true;

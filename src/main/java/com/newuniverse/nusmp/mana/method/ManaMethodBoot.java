@@ -31,6 +31,13 @@ public final class ManaMethodBoot {
         NeoForge.EVENT_BUS.addListener(AirStep::onLogout);
         NeoForge.EVENT_BUS.addListener(Dash::onLogout);
         NeoForge.EVENT_BUS.addListener((ServerStoppingEvent e) -> { AirStep.onServerStopping(e.getServer()); Dash.clearAll(); });
+        // 3.8.0: the TIMED rune state (each handler returns at once when no one is ON)
+        NeoForge.EVENT_BUS.addListener(RuneState::onServerTick);
+        NeoForge.EVENT_BUS.addListener(RuneState::onDeath);
+        NeoForge.EVENT_BUS.addListener(RuneState::onDimension);
+        NeoForge.EVENT_BUS.addListener(RuneState::onLogout);
+        NeoForge.EVENT_BUS.addListener(RuneState::onLogin);
+        NeoForge.EVENT_BUS.addListener((ServerStoppingEvent e) -> RuneState.onServerStopping(e.getServer()));
         ManaMethodSelfTests.register();
         if (FMLEnvironment.dist == Dist.CLIENT) com.newuniverse.nusmp.client.manamethod.RuneClient.init();
     }
