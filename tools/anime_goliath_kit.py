@@ -23,11 +23,12 @@ SS = 4
 # ------------------------------------------------------------------------------------------------------------------ palette: 5 hue families x 3 tones + an outline tone each, void, amber
 _DEF = [
     ("clear", (0, 0, 0, 0)),
-    ("S0", (38, 34, 60)), ("S1", (88, 84, 120)), ("S2", (132, 132, 160)), ("S3", (186, 186, 208)),          # slate: shadow shifted to violet, light to cool white
-    ("W0", (60, 44, 52)), ("W1", (118, 98, 100)), ("W2", (168, 148, 132)), ("W3", (220, 202, 166)),          # sandstone: warm, light shifted to yellow
+    ("S0", (46, 38, 62)), ("S1", (108, 98, 126)), ("S2", (164, 156, 168)), ("S3", (222, 214, 206)),          # slate: shadow shifted to violet, light to cool white
+    ("W0", (58, 42, 52)), ("W1", (108, 90, 94)), ("W2", (152, 134, 124)), ("W3", (204, 188, 156)),          # sandstone: warm, light shifted to yellow
     ("M0", (18, 50, 46)), ("M1", (44, 100, 68)), ("M2", (90, 154, 72)), ("M3", (160, 208, 96)),              # moss
     ("V0", (40, 26, 30)), ("V1", (88, 60, 52)), ("V2", (134, 96, 62)), ("V3", (182, 138, 88)),               # vine / root brown
     ("A0", (178, 58, 26)), ("A1", (252, 128, 38)), ("A2", (255, 198, 86)), ("A3", (255, 246, 200)),          # amber glow
+    ("B0", (22, 36, 52)), ("B1", (44, 76, 92)), ("B2", (76, 120, 130)), ("B3", (140, 184, 178)),            # teal slate: the cool armour plates
     ("D0", (14, 10, 26)), ("D1", (32, 26, 52)), ("D2", (56, 48, 82)),                                       # void (the eye slot, the joints, the rune flank)
 ]
 NAMES = [n for n, _ in _DEF]
@@ -37,13 +38,13 @@ for _k, (_n, _c) in enumerate(_DEF):
     LUT[_k] = (_c[0], _c[1], _c[2], _c[3] if len(_c) == 4 else 255)
 
 # family = (outline, shadow, base, light)
-FAM = {"slate": (I["S0"], I["S1"], I["S2"], I["S3"]), "sand": (I["W0"], I["W1"], I["W2"], I["W3"]), "moss": (I["M0"], I["M1"], I["M2"], I["M3"]),
+FAM = {"slate": (I["S0"], I["S1"], I["S2"], I["S3"]), "sand": (I["W0"], I["W1"], I["W2"], I["W3"]), "basalt": (I["B0"], I["B1"], I["B2"], I["B3"]), "moss": (I["M0"], I["M1"], I["M2"], I["M3"]),
        "vine": (I["V0"], I["V1"], I["V2"], I["V3"]), "amber": (I["A0"], I["A0"], I["A1"], I["A2"]), "dark": (I["D0"], I["D0"], I["D1"], I["D2"])}
 _N = len(_DEF)
 OUT = np.arange(_N, dtype=np.uint8)           # any colour -> the outline tone of its family
 DARKER = np.arange(_N, dtype=np.uint8)
 LIGHTER = np.arange(_N, dtype=np.uint8)
-for _f in ("slate", "sand", "moss", "vine", "dark"):
+for _f in ("slate", "sand", "basalt", "moss", "vine", "dark"):
     _o, _s, _b, _l = FAM[_f]
     ramp = [_o, _s, _b, _l] if _f != "dark" else [I["D0"], I["D1"], I["D2"]]
     for _t, _c in enumerate(ramp):
@@ -79,13 +80,14 @@ class Mat:
         self.drip = 0.0            # texels of moss hanging over the upper edge of the side faces
         self.crack = 0.0           # 0..1: the chance of a hairline crack on a face
         self.seam = None           # "brick" | "slab" | None
-        self.chip = 0.35           # chance of a chiselled corner facet
+        self.chip = 0.2           # chance of a chiselled corner facet
         self.ow = None             # outline width in texels (None: 2 on big faces, 1 on small)
         self.decals = []           # [{"face": "front", "kind": "sigil" | "runes", ...}]
         self.flat = False          # no light / shadow bands (a dark filler)
         self.moss_sides = ()       # side faces that get the drip (default: all sides when drip > 0)
         self.bandk = 1.0           # scale of both cel bands
         self.hot = 0.0             # chance of a glowing rune crack on a face
+        self.panel = False         # an inset bevelled panel with four rivets on faces of 14 texels or more
         self.__dict__.update(kw)
 
 
@@ -247,7 +249,7 @@ def stone_face(mat, face, fw, fh, seed):
     big = min(fw, fh) >= 12
     ow = mat.ow if mat.ow is not None else (2 if big else 1)
     sub = Sub(fw, fh, ba)
-    lit = face in ("front", "left")
+    lit = face in ("front", "left", "back")
     k = mat.bandk
     if mat.flat:
         pass
@@ -323,6 +325,18 @@ def stone_face(mat, face, fw, fh, seed):
     if face in SIDEF + ("top",) and fw >= 8 and fh >= 8 and rng.random() < mat.crack:
         for x, y in path_pts(crack_path(rng, fw, fh, rng.randint(max(3, fh // 2), max(4, int(fh * 0.9))))):
             put(x, y, OUT)
+    if mat.panel and face in SIDEF and fw >= 14 and fh >= 14:
+        m = 3 if min(fw, fh) < 24 else 4
+        for x in range(m, fw - m):
+            a[m, x] = LIGHTER[a[m, x]] if not MOSS_SET[a[m, x]] else a[m, x]
+            a[fh - 1 - m, x] = DARKER[a[fh - 1 - m, x]] if not MOSS_SET[a[fh - 1 - m, x]] else a[fh - 1 - m, x]
+        for y in range(m, fh - m):
+            a[y, m] = LIGHTER[a[y, m]] if not MOSS_SET[a[y, m]] else a[y, m]
+            a[y, fw - 1 - m] = DARKER[a[y, fw - 1 - m]] if not MOSS_SET[a[y, fw - 1 - m]] else a[y, fw - 1 - m]
+        for (rx_, ry_) in ((m + 2, m + 2), (fw - m - 4, m + 2), (m + 2, fh - m - 4), (fw - m - 4, fh - m - 4)):
+            if not MOSS_SET[a[ry_, rx_]]:
+                a[ry_:ry_ + 2, rx_:rx_ + 2] = FAM[mat.fam][3]
+                a[ry_ + 1, rx_:rx_ + 2] = FAM[mat.fam][1]
     # glowing rune cracks, shared by the decals (see _decal)
     for dc in mat.decals:
         if dc.get("face", face) == face or dc.get("faces") and face in dc["faces"]:
@@ -395,6 +409,22 @@ def _decal(a, g, dc, face, fw, fh, rng, mat):
             glow_line(a, g, [(u * (fw - 1), v * (fh - 1)) for u, v in line])
     elif kind == "sigil":
         sigil(a, g, dc.get("cx", 0.5) * fw, dc.get("cy", 0.5) * fh, dc["r"], mat)
+    elif kind == "mouth":                                                     # a dark grille mouth: a slot with a dim amber line and tooth seams
+        x0, x1 = int(dc.get("x0", 0.18) * fw), int(dc.get("x1", 0.82) * fw)
+        y0, y1 = int(dc.get("y0", 0.3) * fh), int(dc.get("y1", 0.78) * fh)
+        for y in range(y0, y1 + 1):
+            for x in range(x0, x1 + 1):
+                if inside(a, x, y):
+                    a[y, x] = I["D0"]
+        ym = (y0 + y1) // 2
+        for x in range(x0 + 1, x1):
+            if inside(a, x, ym):
+                a[ym, x] = I["A1"] if (x - x0) % 6 else I["D0"]
+                g[ym, x] = I["A0"] if (x - x0) % 6 else 0
+        for x in range(x0 + 3, x1 - 2, 6):
+            for y in range(y0, y1 + 1):
+                if inside(a, x, y) and y != ym:
+                    a[y, x] = I["D1"]
     elif kind == "bar":                                                       # a lit slot (a light seam in an armour joint)
         x0, y0, x1, y1 = dc["box"]
         for y in range(int(y0 * fh), int(y1 * fh) + 1):

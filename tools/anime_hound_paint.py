@@ -16,7 +16,7 @@ SS = 4                                                          # samples per te
 # five hue families, each a base / shadow (shifted to violet) / light (shifted to warm yellow) + an outline tone: charcoal fur, ember, bone, nose / mouth, eye.
 _COLS = [
     ("none", (0, 0, 0), "none"),
-    ("F_O", (14, 10, 24), "F_O"), ("F_S", (30, 25, 46), "F_O"), ("F_B", (55, 47, 72), "F_O"), ("F_L", (96, 80, 98), "F_O"),          # charcoal fur
+    ("F_O", (22, 18, 36), "F_O"), ("F_S", (56, 54, 84), "F_O"), ("F_B", (94, 96, 126), "F_O"), ("F_L", (150, 152, 178), "F_O"), ("F_H", (210, 206, 216), "F_O"),   # charcoal fur
     ("E_O", (58, 12, 22), "E_O"), ("E_0", (116, 28, 30), "E_O"), ("E_1", (204, 64, 24), "E_O"), ("E_2", (255, 136, 34), "E_O"),     # ember
     ("E_3", (255, 214, 94), "E_O"), ("E_W", (255, 246, 206), "E_O"),
     ("B_O", (62, 40, 50), "B_O"), ("B_S", (152, 124, 132), "B_O"), ("B_B", (218, 200, 176), "B_O"), ("B_L", (250, 238, 208), "B_O"),  # bone
@@ -92,7 +92,7 @@ def full(c, idx):
     return np.full(c.shape, idx, np.uint8)
 
 
-def tone3(c, shadow, base, light, lo=-0.2, hi=0.55):
+def tone3(c, shadow, base, light, lo=-0.2, hi=0.75):
     """The face decides the tone: lit from above and a little from the front, the back and the belly side in shade."""
     return shadow if c.light < lo else (light if c.light > hi else base)
 
@@ -104,7 +104,7 @@ def _zig(c, k=0.34, amp=0.9, salt=0.0):
 
 def m_fur(c):
     pa = c.pa
-    col = full(c, tone3(c, N["F_S"], N["F_B"], N["F_L"], lo=pa.get("lo", -0.2), hi=pa.get("hi", 0.55)))
+    col = full(c, tone3(c, N["F_S"], N["F_B"], N["F_L"], lo=pa.get("lo", -0.2), hi=pa.get("hi", 0.75)))
     glow = np.zeros(c.shape, np.uint8)
     zz = _zig(c, 0.30, pa.get("amp", 0.9), pa.get("salt", 0.0))
     if pa.get("li_y") is not None:                               # upper light band, a zigzag of fur tufts
@@ -113,6 +113,9 @@ def m_fur(c):
         col = np.where(c.Y < pa["sh_y"] + zz, N["F_S"], col)
     if pa.get("dark_y") is not None:                             # leg stocking: the darkest tone below a line
         col = np.where(c.Y < pa["dark_y"] + zz * 0.6, N["F_S"], col)
+    if pa.get("bib") is not None and c.face == "north":          # a pale bib on the chest
+        col = np.where(c.Y < pa["bib"] + zz, N["F_L"], col)
+        col = np.where(c.Y < pa["bib"] - 2.4 + zz, N["F_H"], col)
     if pa.get("em_y") is not None:                               # ember underglow: the belly is lit from inside
         em = c.Y < pa["em_y"] + zz * 0.9
         col = np.where(em, N["E_0"], col)
@@ -132,10 +135,10 @@ def m_fur(c):
         col = np.where(scorch & (col != N["F_L"]), np.where(col == N["F_B"], N["F_S"], col), col)
         core = on & (edge < wd)
         col = np.where(core, N["E_2"], col)
-        glow = np.where(core, N["E_2"], glow)
+        glow = np.where(core, N["E_0"], glow)
         hot = on & (edge < wd * 0.42)
         col = np.where(hot, N["E_3"], col)
-        glow = np.where(hot, N["E_3"], glow)
+        glow = np.where(hot, N["E_1"], glow)
     return col, glow, None
 
 
@@ -148,20 +151,27 @@ def _dot(c, col, glow, U, V, r, color, glow_color=None):
 
 
 def m_skull(c):
-    """The cranium: fur, the two ember brow dots, a brow line; faces only differ by their normal."""
+    """The cranium: fur; the forehead piece carries a jagged ember crack running up between the eyes."""
     col, glow, _ = m_fur(c)
-    if c.face == "north":
-        for sx in (-1, 1):
-            col, glow = _dot(c, col, glow, 0.5 + sx * 0.30, 0.20, 0.52, N["E_2"], N["E_2"])
-            col, glow = _dot(c, col, glow, 0.5 + sx * 0.30, 0.20, 0.26, N["E_3"], N["E_3"])
-        brow = (c.V > 0.30) & (c.V < 0.42) & (np.abs(c.U - 0.5) > 0.12)
-        col = np.where(brow, N["F_S"], col)
+    if c.pa.get("forehead") and c.face == "north":
+        zig = 0.5 + 0.09 * (tri(c.V * 3.4) - 0.5) * 2.0
+        ln = (np.abs(c.U - zig) < 0.075) & (c.V > 0.04) & (c.V < 0.62 + 0.0)
+        col = np.where(ln, N["E_2"], col)
+        glow = np.where(ln, N["E_0"], glow)
+        hot = (np.abs(c.U - zig) < 0.030) & (c.V > 0.10) & (c.V < 0.50)
+        col = np.where(hot, N["E_3"], col)
+        glow = np.where(hot, N["E_1"], glow)
     return col, glow, None
 
 
 def m_muzzle(c):
-    col, glow, _ = m_fur(c)
     pa = c.pa
+    col = full(c, N["F_B"] if c.face != "up" else N["F_L"])
+    glow = np.zeros(c.shape, np.uint8)
+    if c.face == "up":                                           # a pale bridge stripe down the middle of the snout
+        col = np.where(np.abs(c.U - 0.5) < 0.16, N["F_H"], col)
+    zz = _zig(c, 0.30, 0.8, 0.0)
+    col = np.where((c.Y < pa.get("sh_y", 15.8) + zz) & (c.face != "up"), N["F_S"], col)
     if c.face == "down":                                         # the roof of the mouth with the upper teeth along both edges
         col = full(c, N["M_I"])
         for t0 in (0.0, 1.0):
@@ -251,8 +261,9 @@ def m_card_fur(c):
     pa = c.pa
     root = c.V if pa.get("root_top", True) else 1 - c.V
     col = full(c, N["F_B"])
-    col = np.where(root > 0.55, N["F_S"], col)
-    col = np.where(root < 0.22, N["F_L"], col)
+    col = np.where(root > 0.62, N["F_S"], col)
+    col = np.where(root < 0.30, N["F_L"], col)
+    col = np.where(root < 0.10, N["F_H"], col)
     glow = np.zeros(c.shape, np.uint8)
     if pa.get("ember"):
         m = (np.abs(c.U - 0.5) < 0.09) & (root > 0.1) & (root < 0.75)
@@ -262,8 +273,13 @@ def m_card_fur(c):
     return col, glow, mask
 
 
+def ear_mask(c):
+    hw = 0.5 * np.clip(c.V, 0, 1) ** 0.62 * (1.0 - 0.10 * (1 - c.V))
+    return np.abs(c.U - 0.5 + 0.10 * (1 - c.V)) <= hw
+
+
 def m_ear_in(c):
-    m = shape_mask("tri", c)
+    m = ear_mask(c)
     col = full(c, N["E_0"])
     col = np.where(c.V > 0.45, N["E_1"], col)
     col = np.where((c.V > 0.78) & (np.abs(c.U - 0.5) < 0.2), N["E_2"], col)
@@ -272,7 +288,7 @@ def m_ear_in(c):
 
 
 def m_ear_out(c):
-    m = shape_mask("tri", c)
+    m = ear_mask(c)
     col = full(c, N["F_B"])
     col = np.where(c.V > 0.62, N["F_S"], col)
     col = np.where(np.abs(c.U - 0.5 - 0.0) < 0.5 * c.V ** 1.1 - 0.30, N["F_B"], col)
@@ -293,8 +309,12 @@ def m_flame(c):
     hw = 0.5 * (c.V ** 0.62) * (0.78 + 0.22 * np.cos(9.0 * c.V + c.pa.get("phase", 0.0)))
     core = (np.abs(c.U - xc) < hw * 0.38) & (t > 0.10) & (t < 0.82)
     col = np.where(core, np.where(t > 0.50, N["E_W"], N["E_3"]), col)
-    glow = col.copy()
-    return col, glow, m
+    glow = np.zeros(c.shape, np.uint8)
+    glow = np.where(col == N["E_1"], N["E_0"], glow)
+    glow = np.where(col == N["E_2"], N["E_0"], glow)
+    glow = np.where(col == N["E_3"], N["E_1"], glow)
+    glow = np.where(col == N["E_W"], N["E_2"], glow)
+    return col, glow.astype(np.uint8), m
 
 
 def m_claw(c):
@@ -414,7 +434,7 @@ def eye_plate(c):
         col = np.where(core, N["E_W"], col)
         glow = np.where(core, N["E_W"], glow)
         # the halo exists on the glow sheet only: opaque nothing on the base sheet
-        return col, glow, alpha | (glow > 0)
+        return col, glow, alpha
     return col, glow, alpha
 
 
@@ -442,7 +462,7 @@ def _erode(m):
     return m & p[:-2, 1:-1] & p[2:, 1:-1] & p[1:-1, :-2] & p[1:-1, 2:]
 
 
-def reduce_face(col4, glow4, alpha4, W, H, outline, edges, is_card, thick=1):
+def reduce_face(col4, glow4, alpha4, W, H, outline, edges, is_card, thick=1, glow_outside=False):
     """4x4 samples -> one texel each (mode); the alpha by majority; the outline at final resolution: the card's rim (inside the cut) or the face border."""
     S = SS
     if alpha4 is None:
@@ -453,7 +473,7 @@ def reduce_face(col4, glow4, alpha4, W, H, outline, edges, is_card, thick=1):
     col = _mode_reduce(col4, S, len(NAMES))
     glow = _mode_reduce(glow4, S, len(NAMES))
     col = np.where(a, np.where(col == 0, N["F_B"], col), 0).astype(np.uint8)
-    glow = np.where(a | (glow > 0), glow, 0).astype(np.uint8)
+    glow = np.where(a | glow_outside, glow, 0).astype(np.uint8)
     if outline:
         ring = np.zeros((H, W), bool)
         if is_card:
