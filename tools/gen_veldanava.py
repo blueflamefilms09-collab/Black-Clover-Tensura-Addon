@@ -462,6 +462,380 @@ def build_avatar():
     return b
 
 
+# ------------------------------------------------------------------------------------------------------------------ the True Dragon
+TEAL = ((8, 44, 56), (18, 86, 96), (34, 138, 138), (78, 190, 178), (146, 230, 212))
+CREAM = ((140, 116, 84), (196, 174, 130), (228, 210, 168), (248, 238, 200))
+CLAWC = ((96, 84, 64), (150, 136, 104), (204, 192, 156), (240, 232, 200))
+MEMB = ((18, 84, 92), (40, 130, 134), (86, 182, 174), (150, 228, 208))
+EYE_G = (255, 204, 72)
+D_DENS = 1
+
+
+def scales(cols, salt, cw=4, ch=3, lift=0.0):
+    """Overlapping rows of scales: a bright centre, a dark rim on the lower and one side edge, every other row shifted by half a scale."""
+    def p(face, i, j, fw, fh):
+        row = j // ch
+        ci = (i + (cw // 2 if row & 1 else 0)) % cw
+        cj = j % ch
+        t = 0.52 + lift + 0.14 * (hsh(i // cw + row * 7, row, salt) - 0.5) - 0.10 * (j / max(1, fh - 1)) + FACE_T[face] * 0.5
+        if cj == ch - 1 or ci == 0:
+            t -= 0.26
+        elif cj == 0 and 1 <= ci <= cw - 2:
+            t += 0.12
+        return px(pal(cols, t, i, j, 0.04)), None
+    return p
+
+
+def plates(cols, salt, band=3):
+    """Belly plates: broad horizontal scutes with a dark seam between them."""
+    def p(face, i, j, fw, fh):
+        t = 0.62 + 0.1 * (hsh(j // band, salt, 5) - 0.5) + FACE_T[face] * 0.4
+        if j % band == band - 1:
+            t -= 0.3
+        if (i % 9) == 0 and band > 2:
+            t -= 0.08
+        return px(pal(cols, t, i, j, 0.03)), None
+    return p
+
+
+def body_paint(salt, belly=0.62, cw=4):
+    """Teal scales on top and the flanks, the cream plates on the underside and the lower flank (a ragged boundary)."""
+    sc = scales(TEAL, salt, cw)
+    dark = scales(TEAL, salt + 1, cw, lift=-0.08)
+    pl = plates(CREAM, salt + 2)
+
+    def p(face, i, j, fw, fh):
+        if face == "bottom":
+            return pl(face, i, j, fw, fh)
+        if face == "top":
+            return dark(face, i, j, fw, fh)
+        if face in ("front", "back", "left", "right") and j / max(1, fh - 1) > belly + 0.12 * (hsh(i // 2, salt, 9) - 0.5):
+            return pl(face, i, j, fw, fh)
+        return sc(face, i, j, fw, fh)
+    return p
+
+
+def limb_paint(salt, cw=4, lift=0.0):
+    return scales(TEAL, salt, cw, lift=lift)
+
+
+def claw_paint(salt):
+    def p(face, i, j, fw, fh):
+        t = 0.74 - 0.5 * (j / max(1, fh - 1)) + FACE_T[face] * 0.4 + 0.06 * (hsh(i, j, salt) - 0.5)
+        if j % 4 == 0:
+            t -= 0.12
+        return px(pal(CLAWC, t, i, j, 0.03)), None
+    return p
+
+
+def membrane_paint(salt):
+    """A wing membrane: translucent-looking teal with dark veins running along the long side and a pale rim."""
+    def p(face, i, j, fw, fh):
+        t = 0.55 + 0.16 * nz(i * 0.25, j * 0.25, salt) + FACE_T[face] * 0.3
+        long_i = fw >= fh
+        k = i if not long_i else j
+        if k % 5 == 0 and 2 < k < (fw if not long_i else fh) - 2:
+            t -= 0.32
+        if (j if not long_i else i) in (0, (fh if not long_i else fw) - 1):
+            t += 0.2
+        return px(pal(MEMB, t, i, j, 0.04)), None
+    return p
+
+
+def eye_paint():
+    """A glowing amber eye with a dark vertical slit pupil."""
+    def p(face, i, j, fw, fh):
+        cx = (fw - 1) / 2.0
+        if abs(i - cx) < 0.6 and 0 < j < fh - 1:
+            return px((24, 10, 4)), px((60, 20, 4), 255)
+        t = 0.6 + 0.3 * (1 - abs(j - (fh - 1) / 2.0) / max(1.0, fh / 2.0))
+        return px((255 * t, 196 * t, 60 * t)), px((255, 196, 70), 255)
+    return p
+
+
+def build_dragon():
+    """The True Dragon: a teal serpentine dragon with a cream underside, four limbs, a long S-curved neck, a detailed horned head, bone-and-membrane wings and a long tail.
+    About 11.7 blocks head to tail, a wingspan of about 14 blocks, 5 blocks to the raised head. Everything is built straight along -z and bent by the bones' rest rotations."""
+    b = Build("true_dragon", 1024, 2048, dens=D_DENS)
+    A = b.A
+    CL = claw_paint(50)
+    bonep = claw_paint(51)
+
+    def seg(bone, x0, y0, z0, w, h, d, paint, **kw):
+        return b.box(bone, (x0, y0, z0), (w, h, d), paint, **kw)
+
+    # ----- bones
+    b.bone("root", None, (0, 0, 0))
+    b.bone("body", "root", (0, 44, 0))
+    NECK_Z = [-20.0, -32.0, -44.0, -56.0]
+    NECK_REL = [(62, 0, 0), (-8, 0, 0), (-26, 0, 0), (-26, 0, 0)]
+    prev = "body"
+    for k in range(4):
+        b.bone("neck%d" % (k + 1), prev, (0, 50, NECK_Z[k]), NECK_REL[k])
+        prev = "neck%d" % (k + 1)
+    b.bone("head", "neck4", (0, 50, -68))
+    b.bone("jaw", "head", (0, 47, -71))
+    TAIL_Z = [22.0 + 16 * k for k in range(5)]
+    TAIL_REL = [(6, 6, 0), (5, -12, 0), (5, 12, 0), (5, -12, 0), (5, 10, 0)]
+    prev = "body"
+    for k in range(5):
+        b.bone("tail%d" % (k + 1), prev, (0, 46, TAIL_Z[k]), TAIL_REL[k])
+        prev = "tail%d" % (k + 1)
+    FING = ((-6, 44.0), (16, 50.0), (40, 44.0), (66, 34.0))                 # (angle back from +x, length)
+    for suf, sg in (("_l", 1), ("_r", -1)):
+        b.bone("wing" + suf, "body", (sg * 11, 54, -8), (0, -sg * 8, sg * 18))
+        b.bone("wing2" + suf, "wing" + suf, (sg * 35, 54.5, -8), (0, -sg * 6, sg * 8))
+        for n, (phi, ln) in enumerate(FING):
+            b.bone("wf%d%s" % (n + 1, suf), "wing2" + suf, (sg * 69, 54.5, -8), (0, -sg * phi, 0))
+        b.bone("fleg" + suf, "body", (sg * 9, 38, -12), (-22, 0, 0))
+        b.bone("fleg2" + suf, "fleg" + suf, (sg * 9, 18, -12), (50, 0, 0))
+        b.bone("ffoot" + suf, "fleg2" + suf, (sg * 9, 1, -12), (-28, 0, 0))
+        b.bone("hleg" + suf, "body", (sg * 10, 38, 14), (35, 0, 0))
+        b.bone("hleg2" + suf, "hleg" + suf, (sg * 10, 18, 14), (-70, 0, 0))
+        b.bone("hfoot" + suf, "hleg2" + suf, (sg * 10, -2, 14), (35, 0, 0))
+
+    # ----- torso: a barrel chest, narrower hips, the dorsal row of spikes
+    seg("body", -11, 36, -22, 22, 20, 24, body_paint(1))
+    seg("body", -10, 37, 2, 20, 17, 20, body_paint(3))
+    for z in (-15, -7, 1, 9, 17):
+        b.spike("body", (0, 56.0 if z < 2 else 54.0, z), 3.0, 8.0, 16, 0, bonep, key="ds", fracs=(0.55, 0.45), taper=0.6)
+    # ----- the neck: four tapering segments, a cream throat, a row of back spikes
+    for k, (w, h) in enumerate(((16, 16), (14, 14), (12, 12), (10, 10))):
+        seg("neck%d" % (k + 1), -w / 2, 50 - h / 2, NECK_Z[k] - 12, w, h, 12, body_paint(10 + k, belly=0.66, cw=3))
+        b.spike("neck%d" % (k + 1), (0, 50 + h / 2 - 0.4, NECK_Z[k] - 6), 2.6, 6.0, 22, 0, bonep, key="nsp", fracs=(0.55, 0.45), taper=0.6)
+    # ----- the head: cranium, brow, snout with a raised nasal ridge and an upper lip, lower jaw on its own bone, fangs and teeth, horns, cheek spines, barbels, slit-pupil eyes
+    hp = body_paint(20, belly=0.8, cw=3)
+    seg("head", -7.0, 43.6, -85, 14, 13.4, 17, hp, dens=2)                                                    # the cranium
+    seg("head", -4.6, 45.4, -98, 9.2, 7.6, 13.5, hp, dens=2)                                                  # the snout
+    seg("head", -1.3, 52.8, -97, 2.6, 1.6, 12, claw_paint(57), dens=2)                                        # the nasal ridge
+    seg("head", -5.0, 44.6, -97.5, 10.0, 1.6, 12.5, scales(TEAL, 58, 3, lift=-0.1), dens=2)                   # the upper lip
+    seg("head", -5.4, 42.2, -80, 10.8, 2.6, 8.0, plates(CREAM, 59), dens=2)                                   # the throat under the cranium
+    seg("jaw", -4.9, 42.4, -96.5, 9.8, 4.4, 25.5, body_paint(21, belly=0.0, cw=3), dens=2)                   # the lower jaw
+    seg("jaw", -5.6, 42.2, -76, 11.2, 5.0, 7.0, body_paint(21, belly=0.0, cw=3), dens=2)                      # its hinge
+    tooth = solid((238, 234, 214))
+    for n in range(5):
+        z = -95.5 + n * 2.7
+        for sx in (-1, 1):
+            seg("head", sx * 3.9 - 0.6, 43.6, z, 1.2, 2.6, 1.5, tooth)
+            seg("jaw", sx * 4.2 - 0.6, 46.6, z + 1.2, 1.2, 2.4, 1.5, tooth)
+    for sx in (-1, 1):
+        seg("head", sx * 3.2 - 0.9, 41.0, -97.6, 1.8, 4.6, 1.8, tooth)                                        # the upper fangs
+        seg("jaw", sx * 3.0 - 0.8, 46.4, -96.0, 1.6, 4.0, 1.6, tooth)                                         # the lower fangs
+    for sx in (1, -1):
+        seg("head", sx * 5.6 - 2.0, 57.0, -84, 4.0, 2.2, 9.0, claw_paint(52))                                  # the brow ridge
+        b.spike("head", (sx * 5.0, 57.0, -74), 4.2, 28.0, 52, -sx * 14, claw_paint(53), key="horn", fracs=(0.4, 0.34, 0.26), taper=0.72, bend=(8, sx * 4))
+        b.spike("head", (sx * 6.8, 52.0, -72), 3.2, 14.0, 34, -sx * 62, claw_paint(54), key="cheek", fracs=(0.55, 0.45), taper=0.6, bend=(4, -sx * 6))
+        b.spike("head", (sx * 6.6, 47.0, -76), 2.6, 9.0, 20, -sx * 80, claw_paint(54), key="cheek2", fracs=(0.55, 0.45), taper=0.6)
+        seg("head", sx * 7.0 - (0.0 if sx > 0 else 0.6), 51.4, -82.0, 0.6, 3.2, 4.0, eye_paint())                # the eye
+        seg("head", sx * 7.1 - (0.0 if sx > 0 else 0.4), 55.2, -82.6, 0.4, 1.0, 5.2, solid((10, 28, 30)))         # the lid line
+        seg("head", sx * 2.0 - 0.8, 50.0, -98.4, 1.6, 1.6, 0.6, solid((10, 20, 24)))                              # the nostril
+        b.spike("jaw", (sx * 5.2, 44.4, -90.0), 1.2, 22.0, 80, -sx * 22, claw_paint(60), key="barb", fracs=(0.34, 0.33, 0.33), taper=0.8, bend=(-8, sx * 6))   # the barbels
+    for k in range(3):
+        b.spike("head", (0, 57.4, -82 + k * 4), 2.4, 6.0 - k, 30, 0, claw_paint(55), key="crest", fracs=(0.55, 0.45), taper=0.6)
+    # ----- the tail: five tapering segments, a cream underside, spikes and a blade at the tip
+    for k, (w, h) in enumerate(((14, 15), (11, 12), (8.5, 9), (6, 6.5), (4, 4.5))):
+        seg("tail%d" % (k + 1), -w / 2, 46 - h / 2, TAIL_Z[k], w, h, 16, body_paint(30 + k, belly=0.5, cw=3 if k < 3 else 2))
+        if k < 4:
+            b.spike("tail%d" % (k + 1), (0, 46 + h / 2 - 0.3, TAIL_Z[k] + 8), 2.8 - 0.3 * k, 7.0 - k, 18, 0, bonep, key="ts%d" % k, fracs=(0.55, 0.45), taper=0.6)
+    b.spike("tail5", (0, 46, TAIL_Z[4] + 15), 4.0, 15.0, 90, 0, bonep, key="tip", fracs=(0.5, 0.3, 0.2), taper=0.7)
+    seg("tail5", -0.8, 40.5, TAIL_Z[4] + 6, 1.6, 11, 9, claw_paint(56))                                            # the blade
+    # ----- the wings: arm bones, thumb claw, four fingers, and the membrane panels between them
+    for sg_name, suf in (("l", "_l"), ("r", "_r")):
+        pass
+    b.pair("wing_l", "wing_r", (11, 51.0, -11), (24, 6, 6), bonep)
+    b.pair("wing2_l", "wing2_r", (35, 52.0, -10.5), (18, 5, 5), bonep)
+    b.pair("wing2_l", "wing2_r", (53, 52.7, -9.8), (17, 3.6, 3.6), bonep)
+    b.spike("wing2_l", (69, 55.0, -8), 3.2, 8.0, -40, 0, CL, key="thumb", fracs=(0.6, 0.4), taper=0.55)
+    b.spike("wing2_r", (-69, 55.0, -8), 3.2, 8.0, -40, 0, CL, key="thumb", fracs=(0.6, 0.4), taper=0.55)
+    mem = [membrane_paint(60 + k) for k in range(8)]
+    for n, (phi, ln) in enumerate(FING):
+        nxt = FING[n + 1][0] if n + 1 < len(FING) else phi + 55
+        gap = math.radians(nxt - phi)
+        b.pair("wf%d_l" % (n + 1), "wf%d_r" % (n + 1), (69, 53.1, -9.4), (ln, 2.8, 2.8), bonep)
+        b.pair("wf%d_l" % (n + 1), "wf%d_r" % (n + 1), (69 + ln - 2.0, 53.1 + 0.4, -9.4 - 0.4), (5.0, 2.0, 3.6), CL)
+        for s in range(3):
+            r0 = ln * s / 3.0
+            wd = max(2.0, (ln * (s + 0.5) / 3.0) * gap * 0.97)
+            b.pair("wf%d_l" % (n + 1), "wf%d_r" % (n + 1), (69 + r0, 54.2 + 0.06 * n, -8 + 1.3), (ln / 3.0 + 0.8, 0.6, wd), mem[(n + s) % 8])
+    b.pair("wing_l", "wing_r", (12, 54.3, -5.5), (23, 0.6, 27), mem[5])
+    b.pair("wing2_l", "wing2_r", (35, 54.45, -5.5), (34, 0.6, 29), mem[6])
+    # ----- legs: shoulder / hip, shin, a paw with three clawed toes
+    for suf, sg in (("_l", 1), ("_r", -1)):
+        pass
+    b.pair("fleg_l", "fleg_r", (4.5, 18, -16.5), (9, 20, 9), limb_paint(70))
+    b.pair("fleg2_l", "fleg2_r", (5.5, 1, -15.5), (7, 17, 7), limb_paint(71, lift=-0.04))
+    b.pair("ffoot_l", "ffoot_r", (5.0, -4, -26), (8, 5, 17), limb_paint(72, lift=-0.06))
+    b.pair("hleg_l", "hleg_r", (4.0, 18, 8.0), (12, 20, 12), limb_paint(73))
+    b.pair("hleg2_l", "hleg2_r", (5.5, -2, 10.5), (9, 20, 7), limb_paint(74, lift=-0.04))
+    b.pair("hfoot_l", "hfoot_r", (5.5, -7, -2.0), (9, 5, 20), limb_paint(75, lift=-0.06))
+    for pre, px0, zt, bonepre in (("f", 9, -26, "ffoot"), ("h", 10, -2.0, "hfoot")):
+        for n, dx in enumerate((-2.6, 0.0, 2.6)):
+            for suf, sg in (("_l", 1), ("_r", -1)):
+                b.spike(bonepre + suf, (sg * px0 + dx, -4.0 if pre == "f" else -7.0 + 1.0, zt), 2.4, 6.5, -96, 0, CL, key=pre + "cl%d" % n, fracs=(0.6, 0.4), taper=0.55)
+
+    clips_dragon(A)
+    return b
+
+
+def clips_dragon(a):
+    S, C = SIN, COS
+    NECK = ("neck1", "neck2", "neck3", "neck4")
+    TAIL = ("tail1", "tail2", "tail3", "tail4", "tail5")
+
+    def wings(clip, L, amp, ph=0.0, base=(0, 0, 0), lag=(0.9, 1.6)):
+        for suf, sg in (("_l", 1), ("_r", -1)):
+            cyc(a, clip, "wing" + suf, "rot", L, lambda t, sg=sg: (base[0], base[1], sg * (base[2] + amp * S(t + ph))))
+            cyc(a, clip, "wing2" + suf, "rot", L, lambda t, sg=sg: (0, 0, sg * (-0.55 * amp * S(t + ph - lag[0]) + base[2] * -0.3)))
+            for n in range(4):
+                cyc(a, clip, "wf%d%s" % (n + 1, suf), "rot", L, lambda t, sg=sg, n=n: (0, 0, sg * (-0.3 * amp * S(t + ph - lag[1] - 0.15 * n))))
+
+    # idle (loop 4 s): breathing, a slow wing lift, the neck swaying, the tail trailing
+    L = 4.0
+    a.clip("idle", L, True)
+    cyc(a, "idle", "body", "pos", L, lambda t: (0, 0.7 * S(t), 0))
+    cyc(a, "idle", "body", "rot", L, swing((0, 0, 0), (0.6, 0.8, 0.4), 0.5))
+    for k, bn in enumerate(NECK):
+        cyc(a, "idle", bn, "rot", L, swing((0, 0, 0), (1.6 - 0.2 * k, 2.4, 0.4), 0.6 + 0.5 * k))
+    cyc(a, "idle", "head", "rot", L, swing((0, 0, 0), (2.0, 2.4, 0.5), 1.8))
+    cyc(a, "idle", "jaw", "rot", L, lambda t: (-3.5 - 2.5 * S(2 * t), 0, 0))
+    for k, bn in enumerate(TAIL):
+        cyc(a, "idle", bn, "rot", L, swing((0, 0, 0), (0.6, 4.0 + k, 0), 0.4 + 0.7 * k))
+    wings("idle", L, 6.0)
+    for suf, sg in (("_l", 1), ("_r", -1)):
+        cyc(a, "idle", "fleg" + suf, "rot", L, swing((0, 0, 0), (0.8, 0, 0), 0.3))
+
+    # walk (loop 1.6 s)
+    L = 1.6
+    a.clip("walk", L, True)
+    for suf, sg in (("_l", 1), ("_r", -1)):
+        ph_f = 0.0 if sg > 0 else math.pi
+        ph_h = math.pi if sg > 0 else 0.0
+        cyc(a, "walk", "fleg" + suf, "rot", L, lambda t, ph=ph_f: (20 * S(t + ph), 0, 0))
+        cyc(a, "walk", "fleg2" + suf, "rot", L, lambda t, ph=ph_f: (16 * max(0.0, S(t + ph + 1.2)), 0, 0))
+        cyc(a, "walk", "ffoot" + suf, "rot", L, lambda t, ph=ph_f: (-10 * max(0.0, S(t + ph + 1.2)), 0, 0))
+        cyc(a, "walk", "hleg" + suf, "rot", L, lambda t, ph=ph_h: (18 * S(t + ph), 0, 0))
+        cyc(a, "walk", "hleg2" + suf, "rot", L, lambda t, ph=ph_h: (-18 * max(0.0, S(t + ph + 1.2)), 0, 0))
+        cyc(a, "walk", "hfoot" + suf, "rot", L, lambda t, ph=ph_h: (12 * max(0.0, S(t + ph + 1.2)), 0, 0))
+    cyc(a, "walk", "body", "pos", L, lambda t: (0, 1.0 * C(2 * t), 0))
+    cyc(a, "walk", "body", "rot", L, lambda t: (0.8 * S(2 * t), 3.0 * S(t), 2.0 * S(t)))
+    for k, bn in enumerate(NECK):
+        cyc(a, "walk", bn, "rot", L, lambda t, k=k: (1.4 * S(2 * t + 0.4 * k), -3.5 * S(t + 0.5 * k), 0))
+    cyc(a, "walk", "head", "rot", L, lambda t: (1.5 * S(2 * t + 1.2), -3 * S(t + 2.0), 0))
+    cyc(a, "walk", "jaw", "rot", L, lambda t: (-3.0, 0, 0))
+    for k, bn in enumerate(TAIL):
+        cyc(a, "walk", bn, "rot", L, lambda t, k=k: (0.8 * S(2 * t + 0.6 * k), 8.0 * S(t - 0.55 * k), 0))
+    wings("walk", L, 5.0, base=(0, 0, 2.0))
+
+    # run (loop 0.9 s): a flapping, bounding gallop
+    L = 0.9
+    a.clip("run", L, True)
+    for suf, sg in (("_l", 1), ("_r", -1)):
+        ph_f = 0.0 if sg > 0 else 0.5
+        cyc(a, "run", "fleg" + suf, "rot", L, lambda t, ph=ph_f: (32 * S(t + ph), 0, 0))
+        cyc(a, "run", "fleg2" + suf, "rot", L, lambda t, ph=ph_f: (26 * max(0.0, S(t + ph + 1.2)), 0, 0))
+        cyc(a, "run", "hleg" + suf, "rot", L, lambda t, ph=ph_f: (-30 * S(t + ph), 0, 0))
+        cyc(a, "run", "hleg2" + suf, "rot", L, lambda t, ph=ph_f: (-22 * max(0.0, S(t + ph + 1.2)), 0, 0))
+    cyc(a, "run", "body", "pos", L, lambda t: (0, 3.0 * C(t), 0))
+    cyc(a, "run", "body", "rot", L, lambda t: (-4 + 3 * S(t), 2 * S(t), 0))
+    for k, bn in enumerate(NECK):
+        cyc(a, "run", bn, "rot", L, lambda t, k=k: (-3.0 + 2.5 * S(t + 0.4 * k), 0, 0))
+    cyc(a, "run", "head", "rot", L, lambda t: (-6 + 3 * S(t + 1.0), 0, 0))
+    cyc(a, "run", "jaw", "rot", L, lambda t: (-8 - 4 * S(t), 0, 0))
+    for k, bn in enumerate(TAIL):
+        cyc(a, "run", bn, "rot", L, lambda t, k=k: (-3.0 + 2 * S(t - 0.5 * k), 8.0 * S(t - 0.6 * k), 0))
+    wings("run", L, 24.0, base=(0, 0, 8.0))
+
+    # attack (one-shot 1.1 s): the neck coils back, then the head lunges and the jaws snap shut
+    L = 1.1
+    a.clip("attack", L, False)
+    T = (0.0, 0.34, 0.5, 0.7, 1.1)
+    seq(a, "attack", "rot", T,
+        neck1=[(0, 0, 0), (16, 0, 0), (-26, 0, 0), (-8, 0, 0), (0, 0, 0)],
+        neck2=[(0, 0, 0), (12, 0, 0), (-20, 0, 0), (-6, 0, 0), (0, 0, 0)],
+        neck3=[(0, 0, 0), (8, 0, 0), (-14, 0, 0), (-4, 0, 0), (0, 0, 0)],
+        neck4=[(0, 0, 0), (6, 0, 0), (-10, 0, 0), (-3, 0, 0), (0, 0, 0)],
+        head=[(0, 0, 0), (14, 0, 0), (-16, 0, 0), (-4, 0, 0), (0, 0, 0)],
+        jaw=[(0, 0, 0), (-42, 0, 0), (-50, 0, 0), (2, 0, 0), (0, 0, 0)],
+        body=[(0, 0, 0), (-5, 0, 0), (6, 0, 0), (2, 0, 0), (0, 0, 0)],
+        wing_l=[(0, 0, 0), (0, 0, 14), (0, 0, -6), (0, 0, 4), (0, 0, 0)],
+        wing_r=[(0, 0, 0), (0, 0, -14), (0, 0, 6), (0, 0, -4), (0, 0, 0)],
+        tail1=[(0, 0, 0), (0, 8, 0), (0, -10, 0), (0, 4, 0), (0, 0, 0)],
+        tail3=[(0, 0, 0), (0, 14, 0), (0, -18, 0), (0, 6, 0), (0, 0, 0)])
+
+    # cast (loop 1.8 s): the head raised, the jaws open on a held roar, the wings lifted
+    L = 1.8
+    a.clip("cast", L, True)
+    for k, bn in enumerate(NECK):
+        cyc(a, "cast", bn, "rot", L, lambda t, k=k: (8 - 2 * k + 1.5 * S(t + 0.4 * k), 0, 0))
+    cyc(a, "cast", "head", "rot", L, lambda t: (16 + 2 * S(t + 0.8), 0, 0))
+    cyc(a, "cast", "jaw", "rot", L, lambda t: (-26 - 5 * S(2 * t), 0, 0))
+    cyc(a, "cast", "body", "rot", L, lambda t: (4 + 0.8 * S(t), 0, 0))
+    cyc(a, "cast", "body", "pos", L, lambda t: (0, 1.2 + 0.5 * S(t), 0))
+    for k, bn in enumerate(TAIL):
+        cyc(a, "cast", bn, "rot", L, lambda t, k=k: (-2.0, 6.0 * S(t - 0.5 * k), 0))
+    wings("cast", L, 5.0, base=(0, 0, 16.0))
+
+    # cast_big (loop 2.4 s): the dragon rears, the wings flung wide and beating, a full roar
+    L = 2.4
+    a.clip("cast_big", L, True)
+    cyc(a, "cast_big", "body", "rot", L, lambda t: (14 + 1.5 * S(t), 0, 0))
+    cyc(a, "cast_big", "body", "pos", L, lambda t: (0, 8.0 + 1.5 * S(t), 0))
+    for k, bn in enumerate(NECK):
+        cyc(a, "cast_big", bn, "rot", L, lambda t, k=k: (6 + 2 * S(t + 0.5 * k), 0, 0))
+    cyc(a, "cast_big", "head", "rot", L, lambda t: (20 + 3 * S(t + 0.6), 0, 0))
+    cyc(a, "cast_big", "jaw", "rot", L, lambda t: (-48 - 4 * S(2 * t), 0, 0))
+    for suf in ("_l", "_r"):
+        cyc(a, "cast_big", "fleg" + suf, "rot", L, lambda t: (28 + 4 * S(t), 0, 0))
+        cyc(a, "cast_big", "fleg2" + suf, "rot", L, lambda t: (-20, 0, 0))
+        cyc(a, "cast_big", "hleg" + suf, "rot", L, lambda t: (-6, 0, 0))
+    for k, bn in enumerate(TAIL):
+        cyc(a, "cast_big", bn, "rot", L, lambda t, k=k: (-4.0, 5.0 * S(t - 0.5 * k), 0))
+    wings("cast_big", L, 26.0, base=(0, 0, 12.0))
+
+    # hurt (one-shot 0.5 s): the neck recoils, the jaws gape
+    L = 0.5
+    a.clip("hurt", L, False)
+    T = (0.0, 0.1, 0.5)
+    seq(a, "hurt", "rot", T, neck1=[(0, 0, 0), (-12, 0, 6), (0, 0, 0)], neck2=[(0, 0, 0), (-10, 0, 4), (0, 0, 0)], neck3=[(0, 0, 0), (-8, 0, 3), (0, 0, 0)],
+        head=[(0, 0, 0), (14, 0, -6), (0, 0, 0)], jaw=[(0, 0, 0), (-36, 0, 0), (0, 0, 0)], body=[(0, 0, 0), (4, 0, 2), (0, 0, 0)],
+        wing_l=[(0, 0, 0), (0, 0, 16), (0, 0, 0)], wing_r=[(0, 0, 0), (0, 0, -16), (0, 0, 0)],
+        tail2=[(0, 0, 0), (0, 14, 0), (0, 0, 0)])
+
+    # transform (one-shot 3.4 s): a shudder, the head thrown up in a roar, the wings flared, then everything slumps (the entity swaps to the Avatar at the end)
+    L = 3.4
+    a.clip("transform", L, False)
+    T = (0.0, 0.6, 1.2, 1.8, 2.4, 3.0, 3.4)
+    seq(a, "transform", "rot", T,
+        neck1=[(0, 0, 0), (-6, 0, 0), (12, 2, 0), (18, -2, 0), (14, 2, 0), (4, 0, 0), (0, 0, 0)],
+        neck2=[(0, 0, 0), (-4, 0, 0), (10, -2, 0), (14, 2, 0), (10, -2, 0), (3, 0, 0), (0, 0, 0)],
+        neck3=[(0, 0, 0), (-3, 0, 0), (8, 2, 0), (12, -2, 0), (8, 2, 0), (2, 0, 0), (0, 0, 0)],
+        head=[(0, 0, 0), (-8, 0, 0), (26, 0, 0), (32, 0, 0), (26, 0, 0), (8, 0, 0), (0, 0, 0)],
+        jaw=[(0, 0, 0), (-6, 0, 0), (-52, 0, 0), (-56, 0, 0), (-50, 0, 0), (-12, 0, 0), (0, 0, 0)],
+        body=[(0, 0, 0), (-6, 0, 0), (12, 0, 0), (16, 0, 0), (12, 0, 0), (4, 0, 0), (0, 0, 0)],
+        wing_l=[(0, 0, 0), (0, 0, 8), (0, 0, 34), (0, 0, 44), (0, 0, 30), (0, 0, 6), (0, 0, 0)],
+        wing_r=[(0, 0, 0), (0, 0, -8), (0, 0, -34), (0, 0, -44), (0, 0, -30), (0, 0, -6), (0, 0, 0)],
+        tail1=[(0, 0, 0), (0, 10, 0), (0, -14, 0), (0, 14, 0), (0, -10, 0), (0, 4, 0), (0, 0, 0)],
+        tail3=[(0, 0, 0), (0, -16, 0), (0, 20, 0), (0, -20, 0), (0, 14, 0), (0, -6, 0), (0, 0, 0)])
+    seq(a, "transform", "pos", T, body=[(0, 0, 0), (0, -1, 0), (0, 4, 0), (0, 6, 0), (0, 4, 0), (0, 1, 0), (0, 0, 0)])
+
+    # death (one-shot 3.0 s, holds): the legs buckle, the neck falls, the wings droop
+    L = 3.0
+    a.clip("death", L, False)
+    T = (0.0, 0.5, 1.2, 2.0, 3.0)
+    seq(a, "death", "rot", T,
+        neck1=[(0, 0, 0), (-10, 0, 0), (-30, 0, 4), (-44, 0, 6), (-48, 0, 6)],
+        neck2=[(0, 0, 0), (-6, 0, 0), (-14, 6, 0), (-18, 10, 0), (-20, 10, 0)],
+        neck3=[(0, 0, 0), (-4, 0, 0), (-10, 8, 0), (-14, 12, 0), (-14, 12, 0)],
+        head=[(0, 0, 0), (10, 0, 0), (-8, 0, 0), (-22, 0, 0), (-26, 0, 0)],
+        jaw=[(0, 0, 0), (-30, 0, 0), (-18, 0, 0), (-10, 0, 0), (-8, 0, 0)],
+        body=[(0, 0, 0), (4, 0, 0), (-4, 0, 4), (-6, 0, 8), (-6, 0, 10)],
+        fleg_l=[(0, 0, 0), (10, 0, 0), (34, 0, 0), (44, 0, 0), (44, 0, 0)], fleg_r=[(0, 0, 0), (10, 0, 0), (34, 0, 0), (44, 0, 0), (44, 0, 0)],
+        hleg_l=[(0, 0, 0), (-8, 0, 0), (-26, 0, 0), (-34, 0, 0), (-34, 0, 0)], hleg_r=[(0, 0, 0), (-8, 0, 0), (-26, 0, 0), (-34, 0, 0), (-34, 0, 0)],
+        wing_l=[(0, 0, 0), (0, 0, 14), (0, 0, -22), (0, 0, -44), (0, 0, -52)], wing_r=[(0, 0, 0), (0, 0, -14), (0, 0, 22), (0, 0, 44), (0, 0, 52)],
+        tail1=[(0, 0, 0), (0, 6, 0), (0, 14, 0), (0, 20, 0), (0, 22, 0)], tail3=[(0, 0, 0), (0, 10, 0), (0, 24, 0), (0, 32, 0), (0, 34, 0)])
+    seq(a, "death", "pos", T, body=[(0, 0, 0), (0, 1, 0), (0, -9, 0), (0, -17, 0), (0, -19, 0)])
+
+
 # ------------------------------------------------------------------------------------------------------------------ animation (shared by the two humanoid forms)
 CLIPS = ("idle", "walk", "run", "attack", "cast", "cast_big", "hurt", "transform", "death")
 HAIR_CHAIN = ("hair_b1", "hair_b2", "hair_b3")
@@ -638,10 +1012,11 @@ def run_build(b):
     return b.save(img, glow)
 
 
-MODELS = ("humanoid", "dark_avatar")
-BUILDERS = {"humanoid": build_humanoid, "dark_avatar": build_avatar}
-TOWER = {"humanoid": 2.0, "dark_avatar": 2.0}
-LOOK = {"humanoid": 1.0, "dark_avatar": 1.1}
+MODELS = ("humanoid", "dark_avatar", "true_dragon")
+BUILDERS = {"humanoid": build_humanoid, "dark_avatar": build_avatar, "true_dragon": build_dragon}
+TOWER = {"humanoid": 2.0, "dark_avatar": 2.0, "true_dragon": 5.0}
+DIST = {"true_dragon": 4.4}
+LOOK = {"humanoid": 1.0, "dark_avatar": 1.1, "true_dragon": 2.4}
 
 
 # ------------------------------------------------------------------------------------------------------------------ preview scenes
@@ -658,11 +1033,13 @@ def scenes_for(models=MODELS):
     sc = {}
     for m in models:
         h, ty = TOWER[m], LOOK[m]
-        d = h * 2.0
+        d = h * DIST.get(m, 2.0)
         full = "veldanava_" + m
         sc[m + "_front"] = scene(full, "idle", [0], [view("front", 0, 4, (0, ty, 0), d), view("front 3/4", 35, 8, (0, ty, 0), d)])
         sc[m + "_back"] = scene(full, "idle", [0], [view("back", 180, 5, (0, ty, 0), d), view("side", 90, 4, (0, ty, 0), d)])
         sc[m + "_face"] = scene(full, "idle", [0], [view("face", 0, 2, (0, h * 0.88, 0), 2.2), view("face 3/4", 32, 6, (0, h * 0.88, 0), 2.2)], (420, 420))
+        if m == "true_dragon":
+            sc[m + "_head"] = scene(full, "idle", [0], [view("head 3/4", 35, 8, (0, 4.7, 4.9), 3.6), view("head side", 90, 4, (0, 4.7, 4.9), 3.6)], (420, 420))
         for clip, secs, n in (("cast", 1.2, 4), ("cast_big", 2.0, 4), ("attack", 0.8, 5), ("transform", 3.2, 6), ("death", 2.8, 5), ("walk", 1.1, 4), ("run", 0.62, 4)):
             ages = [round(secs * 20.0 * k / n, 1) for k in range(n)]
             wide = 1.35 if clip in ("cast_big", "transform") else 1.05
