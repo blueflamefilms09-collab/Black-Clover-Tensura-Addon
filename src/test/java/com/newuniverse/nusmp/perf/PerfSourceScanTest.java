@@ -252,6 +252,19 @@ class PerfSourceScanTest {
     }
 
     @Test
+    void theManaMethodRuneStateTickIsIdleWithNobodyOnAndRunsOncePerSecond() throws IOException {
+        String tick = code(method("mana/method/RuneState.java", "onServerTick").body());
+        int empty = tick.indexOf("ACTIVE.isEmpty()"), modulo = tick.indexOf("% RuneAccess.SWEEP_TICKS"), sweep = tick.indexOf("sweep(");
+        assertTrue(empty >= 0 && empty < modulo && modulo < sweep, "RuneState.onServerTick must look at the empty map, then the once-a-second modulo, before it sweeps");
+        String sw = code(method("mana/method/RuneState.java", "sweep").body());
+        assertFalse(ENTITY_SCAN_ANY.matcher(sw).find() || sw.contains("getChunk") || sw.contains("setBlock"), "the rune state sweep reads only its own map and the players' stamps");
+        String net = code(read("mana/method/RuneState.java"));
+        assertFalse(net.contains("sendToAllPlayers") || net.contains("sendToPlayersNear"), "the rune state packet goes to the player themselves only");
+    }
+
+    private static final Pattern ENTITY_SCAN_ANY = Pattern.compile("getEntitiesOfClass|getEntities\\(|getNearbyEntities");
+
+    @Test
     void theFoundryAndAbyssalRenderersBuildNoStringsPerFrame() throws IOException {
         String foundry = code(method("client/labyrinth/foundry/FoundryRenderer.java", "render0").body());
         assertFalse(foundry.contains("+ \"|\" +") || foundry.contains(".toString()"), "FoundryRenderer.render builds strings per mob per frame again");
@@ -298,6 +311,7 @@ class PerfSourceScanTest {
         PROBES.put("mana/method/AirStep.java", "s.mana.airstep");
         PROBES.put("mana/method/BodyRunes.java", "s.mana.body");
         PROBES.put("mana/method/BrushRunes.java", "s.mana.brush");
+        PROBES.put("mana/method/RuneState.java", "s.mana.state");                                       // 3.8.0: the TIMED rune state sweep is measurable
         PROBES.put("shishou/ShishouService.java", "s.shishou.hold");                                    // Shishou: the holder tick, the casts, the blows and the server tick are measurable
     }
 

@@ -18,6 +18,11 @@ public final class ManaMethodConfig {
     public static final ModConfigSpec.BooleanValue COST_SCALES, LIGHTNING_CHARGE_SCALE, BODY_RUNES, BRUSH_RUNES, BODY_REDUCTION;
     public static final ModConfigSpec.DoubleValue MIN_COST_FRACTION;
     public static final ModConfigSpec.IntValue BODY_SECONDS, BRUSH_SECONDS, BRUSH_PER_CASTER, BRUSH_GLOBAL;
+    /** 3.8.0: who may use the pages (PASSIVE on mastery by default; TIMED = the Rune State page; MANA_ZONE_GATE = the 3.7.0 late-game gate) and whether a rune is only the user's own element. */
+    public static final ModConfigSpec.EnumValue<RuneAccess.Mode> ACCESS;
+    public static final ModConfigSpec.DoubleValue PASSIVE_MASTERY;
+    public static final ModConfigSpec.BooleanValue OWN_ELEMENT_ONLY;
+    public static final ModConfigSpec.IntValue TIMED_SECONDS, TIMED_COOLDOWN;
 
     static {
         ModConfigSpec.Builder b = new ModConfigSpec.Builder();
@@ -50,6 +55,15 @@ public final class ManaMethodConfig {
         BRUSH_SECONDS = b.comment("Seconds a painted rune array waits at a full hold (a tap waits half as long).").defineInRange("brushSeconds", BrushRules.DEFAULT_SECONDS, BrushRules.MIN_SECONDS, BrushRules.MAX_SECONDS);
         BRUSH_PER_CASTER = b.comment("Painted rune arrays one caster may have standing at once.").defineInRange("brushPerCaster", BrushRules.DEFAULT_PER_CASTER, 1, BrushRules.MAX_PER_CASTER);
         BRUSH_GLOBAL = b.comment("Painted rune arrays the whole server may have standing at once.").defineInRange("brushGlobal", BrushRules.DEFAULT_GLOBAL, BrushRules.MIN_GLOBAL, BrushRules.MAX_GLOBAL);
+        ACCESS = b.comment("Who may use the Mana Method pages. PASSIVE (default): no switching on, the pages are usable once the grimoire's mastery reaches passiveMastery. TIMED: the page 'Rune State' switches the runes on for timedSeconds, then timedCooldownSeconds must pass before it can be cast again. MANA_ZONE_GATE: the 3.7.0 behaviour, the late-game gate of the Mana Zone. The Mana Zone, Omni Volley and Pressure Space always keep the Mana Zone gate.")
+                .defineEnum("access", RuneAccess.Mode.PASSIVE);
+        PASSIVE_MASTERY = b.comment("PASSIVE: the share (0..1) of the grimoire's mastery at which the Mana Method pages open. 0.7 is about Stage 3, the lowest stage the canon lets use the Mana Method in combat.")
+                .defineInRange("passiveMastery", RuneAccess.DEFAULT_MASTERY, RuneAccess.MASTERY_MIN, RuneAccess.MASTERY_MAX);
+        TIMED_SECONDS = b.comment("TIMED: seconds the rune state stays on after the Rune State page is cast (480 = 8 minutes).").defineInRange("timedSeconds", RuneAccess.DEFAULT_SECONDS, RuneAccess.MIN_SECONDS, RuneAccess.MAX_SECONDS);
+        TIMED_COOLDOWN = b.comment("TIMED: seconds that must pass after the rune state ends before the Rune State page can be cast again (600 = 10 minutes). The cooldown survives logging out and in.")
+                .defineInRange("timedCooldownSeconds", RuneAccess.DEFAULT_COOLDOWN, RuneAccess.MIN_COOLDOWN, RuneAccess.MAX_COOLDOWN);
+        OWN_ELEMENT_ONLY = b.comment("A Flame, Water, Wind or Earth Rune page is listed and castable only in a grimoire of that element (a fused grimoire counts for both of its parents; other magics get no elemental rune page). false = every grimoire has all four, as in 3.7.0.")
+                .define("ownElementOnly", true);
         b.pop();
         b.push("trueMagic");
         TRUE_BLOCKS = b.comment("True Magic places real blocks on impact (water sources, stone, moss, fire). Off = it only deals its damage.").define("placeBlocks", true);
@@ -164,4 +178,23 @@ public final class ManaMethodConfig {
     public static int brushGlobal() {
         try { return BrushRules.clampGlobal(BRUSH_GLOBAL.get()); } catch (RuntimeException notLoaded) { return BrushRules.DEFAULT_GLOBAL; }
     }
+
+    // ---------------------------------------------------------------- 3.8.0
+    public static RuneAccess.Mode accessMode() {
+        try { return ACCESS.get(); } catch (RuntimeException notLoaded) { return RuneAccess.Mode.PASSIVE; }
+    }
+
+    public static double passiveMastery() {
+        try { return RuneAccess.mastery(PASSIVE_MASTERY.get()); } catch (RuntimeException notLoaded) { return RuneAccess.DEFAULT_MASTERY; }
+    }
+
+    public static int timedSeconds() {
+        try { return RuneAccess.seconds(TIMED_SECONDS.get()); } catch (RuntimeException notLoaded) { return RuneAccess.DEFAULT_SECONDS; }
+    }
+
+    public static int timedCooldownSeconds() {
+        try { return RuneAccess.cooldownSeconds(TIMED_COOLDOWN.get()); } catch (RuntimeException notLoaded) { return RuneAccess.DEFAULT_COOLDOWN; }
+    }
+
+    public static boolean ownElementOnly() { return flag(OWN_ELEMENT_ONLY, true); }
 }

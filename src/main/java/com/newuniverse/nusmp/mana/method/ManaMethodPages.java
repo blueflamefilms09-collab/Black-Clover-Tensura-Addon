@@ -47,7 +47,10 @@ public final class ManaMethodPages {
     public static final String BODY_ID = "mana_method_body", BRUSH_ID = "mana_method_brush";
     private static final List<String> RUNE_IDS = List.of(FIRE_ID, WATER_ID, WIND_ID, EARTH_ID, TRUE_ID);
     private static final List<String> IDS_35 = List.of(FIRE_ID, WATER_ID, WIND_ID, EARTH_ID, TRUE_ID, AIR_STEP_ID, DASH_ID);
-    private static final List<String> IDS = List.of(FIRE_ID, WATER_ID, WIND_ID, EARTH_ID, TRUE_ID, AIR_STEP_ID, DASH_ID, BODY_ID, BRUSH_ID);
+    /** 3.8.0: the Rune State page (TIMED access), appended LAST after the Brush Rune, so no mode number moves. */
+    public static final String STATE_ID = "mana_method_state";
+    private static final List<String> IDS_36 = List.of(FIRE_ID, WATER_ID, WIND_ID, EARTH_ID, TRUE_ID, AIR_STEP_ID, DASH_ID, BODY_ID, BRUSH_ID);
+    private static final List<String> IDS = List.of(FIRE_ID, WATER_ID, WIND_ID, EARTH_ID, TRUE_ID, AIR_STEP_ID, DASH_ID, BODY_ID, BRUSH_ID, STATE_ID);
 
     public static List<String> ids() { return IDS; }
 
@@ -62,12 +65,12 @@ public final class ManaMethodPages {
     public static boolean isCanon(String id) { return BODY_ID.equals(id) || BRUSH_ID.equals(id); }
 
     /**
-     * How many of the last pages of a book are Mana Method pages: all nine (3.6.0), the seven of 3.5.0, the five of 3.4.0, or none (an older list). The pinned "the last pages are the spirit
+     * How many of the last pages of a book are Mana Method pages: all ten (3.8.0), the nine of 3.6.0, the seven of 3.5.0, the five of 3.4.0, or none (an older list). The pinned "the last pages are the spirit
      * pages" checks use it to look past them.
      */
     public static int tailCount(List<BookPage> pages) {
         int n = pages.size();
-        for (List<String> ids : List.of(IDS, IDS_35, RUNE_IDS)) {
+        for (List<String> ids : List.of(IDS, IDS_36, IDS_35, RUNE_IDS)) {
             int k = ids.size();
             if (n < k) continue;
             boolean all = true;
@@ -88,7 +91,8 @@ public final class ManaMethodPages {
                 new BookPage(AIR_STEP_ID, "Air Step Rune", "Mana Method: Air Step", MobilityRules.COST_PERCENT_AIR_STEP, MobilityRules.COST_FLOOR_AIR_STEP, MobilityRules.COOLDOWN_AIR_STEP, ManaMethodPages::castAirStep),
                 new BookPage(DASH_ID, "Dash Rune", "Mana Method: Dash", MobilityRules.COST_PERCENT_DASH, MobilityRules.COST_FLOOR_DASH, MobilityRules.COOLDOWN_DASH, ManaMethodPages::castDash),
                 new BookPage(BODY_ID, "Body Rune", "Mana Method: Body", BodyRuneRules.COST_PERCENT, BodyRuneRules.COST_FLOOR, BodyRuneRules.COOLDOWN, ManaMethodPages::castBody),
-                new BookPage(BRUSH_ID, "Brush Rune", "Mana Method: Brush", BrushRules.COST_PERCENT, BrushRules.COST_FLOOR, BrushRules.COOLDOWN, ManaMethodPages::castBrush));
+                new BookPage(BRUSH_ID, "Brush Rune", "Mana Method: Brush", BrushRules.COST_PERCENT, BrushRules.COST_FLOOR, BrushRules.COOLDOWN, ManaMethodPages::castBrush),
+                new BookPage(STATE_ID, "Rune State", "Mana Method: Rune State", 0, 0, 0, ManaMethodPages::castState));
     }
 
     private static BookPage element(String id, String name, RuneElement e) {
@@ -96,12 +100,48 @@ public final class ManaMethodPages {
                 (b, i, p, m) -> castElement(b, i, p, m, e));
     }
 
-    /** Usable = the setting is on and the late-game gate of the Mana Zone is open for this entity. */
+    /** The 3.7.0 test: the setting is on and the late-game gate of the Mana Zone is open for this entity (kept: it is the MANA_ZONE_GATE answer). */
     public static boolean usable(LivingEntity e) { return ManaMethodConfig.enabled() && ManaZoneManager.gateOpenFor(e); }
 
-    /** As {@link #usable(LivingEntity)}, and the mobility pages also need the setting {@code manaMethod.mobility}. */
+    /** As {@link #usable(LivingEntity)}, and the mobility pages also need the setting {@code manaMethod.mobility} (the 3.7.0 test with its per-page settings). */
     public static boolean usable(LivingEntity e, String pageId) {
-        return usable(e) && (!isMobility(pageId) || ManaMethodConfig.mobility()) && (!BODY_ID.equals(pageId) || ManaMethodConfig.bodyRunes()) && (!BRUSH_ID.equals(pageId) || ManaMethodConfig.brushRunes());
+        return usable(e) && pageSettingsOn(pageId);
+    }
+
+    private static boolean pageSettingsOn(String pageId) {
+        return (!isMobility(pageId) || ManaMethodConfig.mobility()) && (!BODY_ID.equals(pageId) || ManaMethodConfig.bodyRunes()) && (!BRUSH_ID.equals(pageId) || ManaMethodConfig.brushRunes());
+    }
+
+    /**
+     * 3.8.0: the decision the grimoire asks (on the server when a page is cast and on the client when a menu lists it), for the page {@code pageId} of the grimoire {@code b} with the
+     * skill instance {@code i} (both may be null for a menu with no instance: then only the modes that need no instance can say yes).
+     * <ol>
+     *   <li>the setting {@code manaMethod.enabled} and the page's own setting (mobility, body, brush) must be on;</li>
+     *   <li>ACCESS ({@link RuneAccess#allowed}): PASSIVE = the mastery of THIS grimoire reaches {@code passiveMastery}; TIMED = the caster's rune state is ON (the Rune State page itself is
+     *       usable only in TIMED); MANA_ZONE_GATE = the 3.7.0 late-game gate;</li>
+     *   <li>ELEMENT ({@link RuneOwnElement#allowed}): with {@code ownElementOnly} the Flame / Water / Wind / Earth pages need a grimoire of that element (its magic or a parent of its fusion).</li>
+     * </ol>
+     * The mastery and the element are those of the grimoire the page belongs to, so a player with two grimoires gets the pages each grimoire earns; both are in the instance the client
+     * already has, so no packet is needed for them.
+     */
+    public static boolean usable(GrimoireBook b, ManasSkillInstance i, LivingEntity e, String pageId) {
+        if (!ManaMethodConfig.enabled() || !pageSettingsOn(pageId)) return false;
+        RuneAccess.Mode mode = ManaMethodConfig.accessMode();
+        boolean statePage = STATE_ID.equals(pageId);
+        if (mode == RuneAccess.Mode.PASSIVE && i == null && !statePage) return false;                  // a menu with no instance cannot know a mastery
+        double mastery = mode == RuneAccess.Mode.PASSIVE && b != null && i != null && !statePage ? b.masteryFrac(i) : 0.0;
+        boolean stateOn = mode == RuneAccess.Mode.TIMED && !statePage && RuneState.on(e);
+        boolean gate = RuneAccess.needsGate(mode) && !statePage && ManaZoneManager.gateOpenFor(e);
+        if (!RuneAccess.allowed(mode, statePage, mastery, ManaMethodConfig.passiveMastery(), stateOn, gate)) return false;
+        return elementOk(i, pageId);
+    }
+
+    /** Whether the grimoire of {@code i} may write the elemental rune page {@code pageId} (true for every other page, and for everything when {@code ownElementOnly} is off). */
+    public static boolean elementOk(ManasSkillInstance i, String pageId) {
+        if (RuneOwnElement.pageElement(pageId) == null || !ManaMethodConfig.ownElementOnly()) return true;
+        if (i == null) return false;
+        MagicType magic = GrimoirePages.magicOf(i);
+        return RuneOwnElement.allowed(true, pageId, magic == null ? null : magic.name(), i.getOrCreateTag().getString("Fusion"));
     }
 
     // ---------------------------------------------------------------- the price
@@ -147,6 +187,10 @@ public final class ManaMethodPages {
     // ---------------------------------------------------------------- the casts
     private static boolean castElement(GrimoireBook b, ManasSkillInstance i, ServerPlayer p, int mode, RuneElement e) {
         Charge ch = chargeOf(p, mode);
+        if (!elementOk(i, b.page(mode) == null ? null : b.page(mode).id())) {                  // 3.8.0: the grimoire has already asked usable(); this is the cast's own second look
+            GrimoireBook.fail(p, "A " + e.title + " Rune is not written in your magic.");
+            return paid(b, i, p, mode, ch, false);
+        }
         int mods = RuneCharge.modsFor(ch, e, p.isShiftKeyDown());                  // a basic (tapped) spell never writes the second rune
         return begin(b, i, p, mode, new RuneSpec(e, mods, false), ch);
     }
@@ -229,6 +273,13 @@ public final class ManaMethodPages {
         }
         refund(b, i, p, mode, charge);                                                      // 3.6.0: a refused cast gives its price back
         return false;
+    }
+
+    // ---------------------------------------------------------------- 3.8.0: the Rune State page
+    private static boolean castState(GrimoireBook b, ManasSkillInstance i, ServerPlayer p, int mode) {
+        RuneHold.take(p.getUUID(), mode, p.level().getGameTime());                          // there is nothing to charge; a waiting release is used up
+        if (ManaMethodConfig.accessMode() != RuneAccess.Mode.TIMED) { GrimoireBook.fail(p, "The runes are not switched on and off on this server."); return false; }
+        return RuneState.cast(p);
     }
 
     // ---------------------------------------------------------------- 3.6.0: the two canon pages

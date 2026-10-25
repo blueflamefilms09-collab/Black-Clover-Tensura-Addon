@@ -78,7 +78,7 @@ class ManaMethodSourceScanTest {
                 assertFalse(c.contains("playToServer") || c.contains("sendToServer") || c.contains("playBidirectional"), f.getFileName() + " sends something to the server");
             }
         String net = code(read(METHOD.resolve("RuneNet.java")));
-        assertEquals(4, count(net, "playToClient("), "the rune packet, the small hold packet (3.5.0), the body packet and the brush packet (3.6.0): all clientbound");
+        assertEquals(5, count(net, "playToClient("), "the rune packet, the small hold packet (3.5.0), the body packet and the brush packet (3.6.0), the rune-state packet (3.8.0): all clientbound");
         assertTrue(net.contains(".optional()"), "optional: a client without the mod still joins");
         assertTrue(net.contains("static boolean valid(") && read(CLIENT.resolve("RuneClient.java")).contains("RuneNet.valid(p)"), "the client validates what it receives");
         assertTrue(net.contains("static boolean validHold(") && read(CLIENT.resolve("RuneClient.java")).contains("RuneNet.validHold(p)"), "and so it does for the hold packet");
@@ -233,7 +233,7 @@ class ManaMethodSourceScanTest {
         Matcher m = Pattern.compile("(\\w+_ID) = \"([a-z_]+)\"").matcher(pages);
         List<String> ids = new ArrayList<>();
         while (m.find()) ids.add(m.group(2));
-        assertEquals(List.of("mana_method_fire", "mana_method_water", "mana_method_wind", "mana_method_earth", "mana_method_true", "mana_method_air_step", "mana_method_dash", "mana_method_body", "mana_method_brush"), ids, "the five rune pages of 3.4.0, the two mobility pages, then the Body and Brush pages (3.6.0) appended last");
+        assertEquals(List.of("mana_method_fire", "mana_method_water", "mana_method_wind", "mana_method_earth", "mana_method_true", "mana_method_air_step", "mana_method_dash", "mana_method_body", "mana_method_brush", "mana_method_state"), ids, "the five rune pages of 3.4.0, the two mobility pages, the Body and Brush pages (3.6.0), then the Rune State page (3.8.0) appended last");
         for (String id : ids) {
             assertFalse(AvatarSkillList.allowedPage(id, 10.0), "an Avatar never casts " + id);
             assertTrue(id.length() >= 3 && id.length() <= 48, "id length");
@@ -243,7 +243,7 @@ class ManaMethodSourceScanTest {
         assertTrue(RuneRules.COST_PERCENT == 12.0 && RuneRules.COST_FLOOR == 300.0 && RuneRules.COOLDOWN == 160, "the mid tier of the 15-spells recipe (12 %, floor 300, 160 ticks)");
         assertTrue(RuneRules.COST_PERCENT_TRUE == 20.0 && RuneRules.COST_FLOOR_TRUE == 600.0 && RuneRules.COOLDOWN_TRUE >= 300 && RuneRules.COOLDOWN_TRUE <= 1400, "True Magic is a zone-tier page (20 %, floor 600, cooldown inside 300..1400), below the signature tier");
         assertTrue(c.contains("TrueMagicRules.isNatural(") && c.contains("TrueMagicRules.controlEnough("), "True Magic reuses the rules of the older page: natural attribute, Stage 3 control");
-        assertEquals(6, count(c, "new BookPage("), "the True Magic page, the two mobility pages, the Body and Brush pages (3.6.0) and the one factory of the four element pages");
+        assertEquals(7, count(c, "new BookPage("), "the True Magic page, the two mobility pages, the Body and Brush pages (3.6.0), the one factory of the four element pages and the Rune State page (3.8.0)");
         assertFalse(c.contains("Pages15"), "the pages15 machinery is per family and mastery gated, so it is not used");
     }
 
@@ -295,7 +295,7 @@ class ManaMethodSourceScanTest {
         assertTrue(body(book, "onHeld").contains("if (isMethodPage(mode)) com.newuniverse.nusmp.mana.method.RuneHold.onHeld(this, instance, p, heldTicks, mode)"), "the hold hook, for Mana Method pages only");
         String rel = body(book, "onRelease");
         assertTrue(rel.indexOf("if (pendingUntil > now) return;") > 0 && rel.indexOf("RuneHold.onRelease(") > rel.indexOf("if (pendingUntil > now) return;"), "a repeat tap during the wind-up never overrides the pending charge");
-        assertTrue(book.contains("ManaMethodPages.usable(e, page(mode).id())"), "the mobility pages also need their own setting");
+        assertTrue(book.contains("ManaMethodPages.usable(this, i, e, page(mode).id())"), "the access mode, the element rule and the pages' own settings are asked in one place");
         String pages = code(read(METHOD.resolve("ManaMethodPages.java")));
         assertTrue(pages.contains("RuneHold.take(p.getUUID(), mode, p.level().getGameTime())"), "the cast takes the release's charge");
         assertFalse(pages.contains("KeyMapping"), "no key");
@@ -501,7 +501,7 @@ class ManaMethodSourceScanTest {
         assertTrue(net.contains("sendToPlayersNear(") && count(net, "PerfBudgets.effectPacket(") >= 4, "the new packets go to nearby players through the effect packet budget");
         String pages = code(read(METHOD.resolve("ManaMethodPages.java")));
         assertTrue(pages.contains("BODY_ID, BRUSH_ID);") && pages.contains("ManaMethodConfig.bodyRunes()") && pages.contains("ManaMethodConfig.brushRunes()"), "appended last and behind their own settings");
-        assertTrue(pages.contains("List.of(IDS, IDS_35, RUNE_IDS)"), "the older lists are still recognised at the tail");
+        assertTrue(pages.contains("List.of(IDS, IDS_36, IDS_35, RUNE_IDS)"), "the older lists are still recognised at the tail");
         assertFalse(AvatarSkillList.allowedPage("mana_method_body", BodyRuneRules.COST_PERCENT) || AvatarSkillList.allowedPage("mana_method_brush", BrushRules.COST_PERCENT), "an Avatar never casts the new pages");
         String cfg = code(read(METHOD.resolve("ManaMethodConfig.java")));
         for (String k : new String[]{"bodyRunes", "brushRunes", "bodySeconds", "brushSeconds", "brushPerCaster", "brushGlobal"})
@@ -537,5 +537,88 @@ class ManaMethodSourceScanTest {
         for (String png : new String[]{"rune_ingame.png", "rune_glyph_rings.png", "rune_glyph_writing.png", "rune_glyph_alphabet.png", "rune_glyph_charge.png", "rune_glyph_lod.png", "rune_hold_tap.png", "rune_hold_half.png", "rune_hold_full.png", "rune_hold_compare.png",
                 "rune_lightning_rune.png", "rune_lightning_strike.png", "rune_body.png", "rune_brush_floor.png", "rune_brush_surfaces.png"})
             assertTrue(Files.exists(Path.of("docs/previews/mana_method/" + png)), "preview " + png);
+    }
+
+    // ---------------------------------------------------------------- 3.8.0: access modes, the Rune State page, the user's own element
+    @Test
+    void theAccessDecisionIsAskedInOnePlaceAndTheOldGateIsKept() throws IOException {
+        String book = code(read(SRC.resolve("book/GrimoireBook.java")));
+        assertTrue(book.contains("if (isMethodPage(mode)) return com.newuniverse.nusmp.mana.method.ManaMethodPages.usable(this, i, e, page(mode).id());"), "the grimoire asks the Mana Method once, with its own instance");
+        assertTrue(book.contains("if (isZoneGated(mode)) return com.newuniverse.nusmp.mana.zone.ManaZoneManager.gateOpenFor(e);"), "the Mana Zone, Omni Volley and Pressure Space keep the Mana Zone gate");
+        assertTrue(book.indexOf("if (isMethodPage(mode)) return") < book.indexOf("if (isZoneGated(mode)) return"), "the Mana Method pages are decided before the zone-gated ones, as in 3.7.0");
+        String pages = code(read(METHOD.resolve("ManaMethodPages.java")));
+        String u = pages.substring(pages.indexOf("public static boolean usable(GrimoireBook b"));
+        u = u.substring(0, u.indexOf("public static boolean elementOk"));
+        assertTrue(u.contains("ManaMethodConfig.enabled()") && u.contains("RuneAccess.allowed(") && u.contains("elementOk(i, pageId)"), "enabled, then the access mode, then the element");
+        assertTrue(u.contains("RuneAccess.needsGate(mode) && !statePage && ManaZoneManager.gateOpenFor(e)"), "the late-game gate is only evaluated in its own mode");
+        assertTrue(u.contains("b.masteryFrac(i)") && u.contains("RuneState.on(e)"), "mastery of the page's own grimoire; the caster's own state");
+        assertTrue(pages.contains("public static boolean usable(LivingEntity e) { return ManaMethodConfig.enabled() && ManaZoneManager.gateOpenFor(e); }"), "the 3.7.0 test is still there, unchanged");
+        assertTrue(code(read(SRC.resolve("mana/zone/ManaZoneManager.java"))).contains("public static boolean gateOpenFor(LivingEntity e)"), "the gate itself was not touched");
+        assertFalse(u.contains("getUUID") || u.contains("static Player") || u.contains("Minecraft"), "no static current player: the decision reads the entity and the instance it is given");
+    }
+
+    @Test
+    void theElementRuleReadsOnlyWhatTheClientAlreadyHasAndTheCastChecksItAgain() throws IOException {
+        String pages = code(read(METHOD.resolve("ManaMethodPages.java")));
+        String el = pages.substring(pages.indexOf("public static boolean elementOk"));
+        el = el.substring(0, el.indexOf("public static double costFactor"));
+        assertTrue(el.contains("GrimoirePages.magicOf(i)") && el.contains("getString(\"Fusion\")") && el.contains("RuneOwnElement.allowed(true, pageId"), "the grimoire's magic and its fusion tag, both in the instance");
+        assertTrue(body(pages, "castElement").contains("elementOk(i,"), "the cast looks again (a second, server-side check)");
+        assertTrue(body(pages, "castElement").contains("paid(b, i, p, mode, ch, false)"), "a refused rune gives its price back");
+        assertFalse(code(read(METHOD.resolve("RuneOwnElement.java"))).contains("net.minecraft") || code(read(METHOD.resolve("RuneOwnElement.java"))).contains("neoforged"), "the element rule is pure");
+        assertFalse(code(read(METHOD.resolve("RuneAccess.java"))).contains("net.minecraft") || code(read(METHOD.resolve("RuneAccess.java"))).contains("neoforged"), "the access rule is pure");
+        assertFalse(code(read(METHOD.resolve("RuneStateGate.java"))).contains("net.minecraft"), "the client flag holds no Minecraft type");
+    }
+
+    @Test
+    void theRuneStateIsPerPlayerBoundedAndCleanedUpOnEveryExit() throws IOException {
+        String st = code(read(METHOD.resolve("RuneState.java")));
+        assertTrue(st.contains("Map<UUID, Long> ACTIVE") && !st.contains("static ServerPlayer") && !st.contains("static Player "), "keyed by the player's UUID, no static player");
+        assertTrue(body(st, "onServerTick").contains("if (ACTIVE.isEmpty()) return;") && body(st, "onServerTick").contains("% RuneAccess.SWEEP_TICKS"), "idle: one isEmpty check; busy: one pass a second");
+        assertTrue(body(st, "onServerTick").contains("server.overworld().getGameTime()") && st.contains("getServer().overworld().getGameTime()"), "the world clock, the one the stamps use");
+        assertTrue(st.contains("Player.PERSISTED_NBT_TAG") && st.contains("\"OnUntil\"") && st.contains("\"CooldownUntil\""), "the stamps live in the player's persisted data, so a relog cannot reset the cooldown");
+        for (String m : new String[]{"onDeath", "onDimension", "onLogout", "onLogin", "onServerStopping"})
+            assertTrue(st.contains("void " + m + "("), "RuneState." + m);
+        assertTrue(body(st, "onServerStopping").contains("endEarly(p, false)") && body(st, "onServerStopping").contains("clearAll()"), "the server stopping ends every state and forgets them");
+        String boot = code(read(METHOD.resolve("ManaMethodBoot.java")));
+        for (String m : new String[]{"RuneState::onServerTick", "RuneState::onDeath", "RuneState::onDimension", "RuneState::onLogout", "RuneState::onLogin", "RuneState.onServerStopping("})
+            assertTrue(boot.contains(m), "wired: " + m);
+        assertFalse(st.contains("getEntitiesOfClass") || st.contains("getChunk") || st.contains("setBlock") || st.contains("getBlockState"), "the state touches no world");
+        assertTrue(st.contains("PerfProbe.section(\"s.mana.state\")"), "measurable");
+    }
+
+    @Test
+    void theStatePacketIsTinyValidatedClientboundAndToThePlayerOnly() throws IOException {
+        String net = code(read(METHOD.resolve("RuneNet.java")));
+        assertTrue(net.contains("record StatePayload(boolean on, int secondsLeft)") && net.contains("static boolean validState("), "a boolean and a number of seconds, validated");
+        assertTrue(net.contains("if (validState(p)) RuneStateGate.set(p.on(), p.secondsLeft())"), "the client validates what it receives and touches no client class");
+        String st = code(read(METHOD.resolve("RuneState.java")));
+        assertTrue(st.contains("PacketDistributor.sendToPlayer(p, new RuneNet.StatePayload(") && !st.contains("sendToAllPlayers") && !st.contains("sendToPlayersNear"), "to the player themselves only");
+        assertTrue(count(st, "sendState(p, ") <= 8, "start, natural end, cut short, death: a handful of call sites, none per tick");
+        assertTrue(code(read(CLIENT.resolve("RuneClient.java"))).contains("RuneStateGate.clear()"), "the client forgets the state on logout");
+    }
+
+    @Test
+    void theRuneStatePageIsAppendedLastCostsNothingAndTheNewSettingsAreServerSettings() throws IOException {
+        String pages = code(read(METHOD.resolve("ManaMethodPages.java")));
+        assertTrue(pages.contains("new BookPage(STATE_ID, \"Rune State\", \"Mana Method: Rune State\", 0, 0, 0, ManaMethodPages::castState)"), "a free page");
+        assertTrue(pages.indexOf("new BookPage(STATE_ID") > pages.indexOf("new BookPage(BRUSH_ID"), "appended after the Brush Rune, so no mode number moves");
+        assertTrue(pages.contains("IDS = List.of(FIRE_ID, WATER_ID, WIND_ID, EARTH_ID, TRUE_ID, AIR_STEP_ID, DASH_ID, BODY_ID, BRUSH_ID, STATE_ID)") && pages.contains("IDS_36 = List.of(FIRE_ID, WATER_ID, WIND_ID, EARTH_ID, TRUE_ID, AIR_STEP_ID, DASH_ID, BODY_ID, BRUSH_ID)"), "the 3.6.0 order is kept as it was");
+        assertTrue(body(pages, "castState").contains("RuneState.cast(p)") && body(pages, "castState").contains("RuneHold.take("), "the cast uses up a waiting release and starts the state");
+        String cfg = code(read(METHOD.resolve("ManaMethodConfig.java")));
+        for (String k : new String[]{"\"access\"", "\"passiveMastery\"", "\"timedSeconds\"", "\"timedCooldownSeconds\"", "\"ownElementOnly\""}) assertTrue(cfg.contains(k), "setting " + k);
+        assertTrue(cfg.contains("defineEnum(\"access\", RuneAccess.Mode.PASSIVE)") && cfg.contains(".define(\"ownElementOnly\", true)"), "the owner's defaults: PASSIVE and own element only");
+        assertTrue(cfg.contains("ModConfigSpec.EnumValue<RuneAccess.Mode> ACCESS") && read(METHOD.resolve("ManaMethodBoot.java")).contains("ModConfig.Type.SERVER"), "gameplay settings are SERVER settings");
+        assertTrue(read(METHOD.resolve("RuneAccess.java")).contains("enum Mode { PASSIVE, TIMED, MANA_ZONE_GATE }"), "entries only ever appended");
+    }
+
+    @Test
+    void the380DocAndLangFragmentExist() throws IOException {
+        String doc = read(Path.of("docs/magic/mana_method.md"));
+        for (String must : new String[]{"## 3.8.0", "manaMethod.access", "PASSIVE", "TIMED", "MANA_ZONE_GATE", "passiveMastery", "timedSeconds", "timedCooldownSeconds", "ownElementOnly", "mana_method_state", "magic.mana_method.access", "magic.mana_method.element", "Owner decisions (3.8.0)"})
+            assertTrue(doc.contains(must), "the doc lacks " + must + " (3.8.0)");
+        String lang = read(Path.of("tools/lang/mana_method.json"));
+        for (String k : new String[]{"nusmp.mana_method.page.mana_method_state.desc", "nusmp.mana_method.state.start", "nusmp.mana_method.state.warn", "nusmp.mana_method.state.end", "nusmp.mana_method.state.cooling", "nusmp.mana_method.state.already", "nusmp.mana_method.state.cut"})
+            assertTrue(lang.contains("\"" + k + "\""), "lang key " + k);
     }
 }

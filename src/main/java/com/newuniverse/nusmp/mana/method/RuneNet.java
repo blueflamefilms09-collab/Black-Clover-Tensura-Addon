@@ -144,6 +144,26 @@ public final class RuneNet {
         @Override public Type<? extends CustomPacketPayload> type() { return TYPE; }
     }
 
+    /** 3.8.0: the TIMED rune state of the receiving player: on / off and the seconds left (0..3600). Sent to that player only, at most twice per ON period. About 3 bytes. */
+    public record StatePayload(boolean on, int secondsLeft) implements CustomPacketPayload {
+        public static final Type<StatePayload> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("nusmp", "mana_method_state"));
+        public static final StreamCodec<FriendlyByteBuf, StatePayload> CODEC = CustomPacketPayload.codec(StatePayload::write, StatePayload::read);
+
+        private void write(FriendlyByteBuf b) {
+            b.writeBoolean(on);
+            b.writeVarInt(secondsLeft);
+        }
+
+        private static StatePayload read(FriendlyByteBuf b) { return new StatePayload(b.readBoolean(), b.readVarInt()); }
+
+        @Override public Type<? extends CustomPacketPayload> type() { return TYPE; }
+    }
+
+    /** What the client may trust of a state packet: 0..{@link RuneAccess#MAX_SECONDS} seconds, and an ON state has some time left. */
+    public static boolean validState(StatePayload p) {
+        return p.secondsLeft() >= 0 && p.secondsLeft() <= RuneAccess.MAX_SECONDS && (!p.on() || p.secondsLeft() > 0);
+    }
+
     /** What the client may trust of a body packet: a known phase, a ring tier of 0..3, a life no longer than the longest the setting allows. */
     public static boolean validBody(BodyPayload p) {
         if (p.phase() < PHASE_START || p.phase() > PHASE_END || p.ownerId() < 0) return false;
@@ -195,5 +215,6 @@ public final class RuneNet {
         r.playToClient(HoldPayload.TYPE, HoldPayload.CODEC, (p, ctx) -> ctx.enqueueWork(() -> com.newuniverse.nusmp.client.manamethod.RuneClient.onHold(p)));
         r.playToClient(BodyPayload.TYPE, BodyPayload.CODEC, (p, ctx) -> ctx.enqueueWork(() -> com.newuniverse.nusmp.client.manamethod.RuneClient.onBody(p)));
         r.playToClient(BrushPayload.TYPE, BrushPayload.CODEC, (p, ctx) -> ctx.enqueueWork(() -> com.newuniverse.nusmp.client.manamethod.RuneClient.onBrush(p)));
+        r.playToClient(StatePayload.TYPE, StatePayload.CODEC, (p, ctx) -> ctx.enqueueWork(() -> { if (validState(p)) RuneStateGate.set(p.on(), p.secondsLeft()); }));      // 3.8.0: common code only (no client class): the menu's flag
     }
 }

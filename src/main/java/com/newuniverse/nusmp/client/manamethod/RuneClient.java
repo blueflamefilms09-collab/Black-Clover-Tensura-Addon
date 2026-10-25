@@ -134,7 +134,7 @@ public final class RuneClient {
         NeoForge.EVENT_BUS.addListener(RuneClient::onClientTick);
         NeoForge.EVENT_BUS.addListener(RuneClient::onRender);
         NeoForge.EVENT_BUS.addListener(RuneClient::onRenderBodies);
-        NeoForge.EVENT_BUS.addListener((ClientPlayerNetworkEvent.LoggingOut e) -> { RUNES.clear(); PAINTS.clear(); BODIES.clear(); RuneHoldView.forgetAll(); });
+        NeoForge.EVENT_BUS.addListener((ClientPlayerNetworkEvent.LoggingOut e) -> { RUNES.clear(); PAINTS.clear(); BODIES.clear(); RuneHoldView.forgetAll(); com.newuniverse.nusmp.mana.method.RuneStateGate.clear(); });
     }
 
     private static int paintedDrawn() {
