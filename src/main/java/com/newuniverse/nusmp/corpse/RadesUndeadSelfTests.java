@@ -57,6 +57,7 @@ public final class RadesUndeadSelfTests {
                 NamedCorpseEntity e = t.create(level);
                 if (e == null) return Result.fail(k.id + " could not be created");
                 if (e.kind() != k) return Result.fail(k.id + " was built with the row " + e.kind());
+                if (e.burnsInDaylight() || e.isSunBurnTick()) return Result.fail(k.id + " would burn in daylight");      // 3.7.1: every numbered undead is sun-safe
                 if (Math.abs(e.getAttributeValue(Attributes.MAX_HEALTH) - k.health) > 0.01) return Result.fail(k.id + " has health " + e.getAttributeValue(Attributes.MAX_HEALTH) + ", the row says " + k.health);
             }
             if (!CorpseEntities.SOUL_ZOMBIE.get().is(EntityTypeTags.UNDEAD)) return Result.fail("the soul zombie is not flagged undead");
