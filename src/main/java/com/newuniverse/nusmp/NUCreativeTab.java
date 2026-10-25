@@ -44,6 +44,7 @@ public final class NUCreativeTab {
                 for (var sc : com.newuniverse.nusmp.relics.socket.SocketItems.all()) output.accept(sc.get());                                 // Spirit and Devil Cores                                              // 1.25.0: Dark Rukh Shard
                 for (var egg : com.newuniverse.nusmp.entity.avatar.AvatarEntities.spawnEggs()) output.accept(egg.get());              // 1.22.0
                 for (var egg : com.newuniverse.nusmp.entity.zogratis.ZogratisEntities.spawnEggs()) output.accept(egg.get());      // 1.20.0: the Zogratis bosses
+                for (var vi : com.newuniverse.nusmp.entity.veldanava.VeldanavaEntities.creativeItems()) output.accept(vi.get());   // Veldanava: the spawn egg and the seven relics
                 for (var ai : com.newuniverse.nusmp.arena.ArenaSystem.creativeItems()) output.accept(ai.get());                  // 1.46.0: the Hourglass of the Final Hour and the Return Sigil
                 for (var ai : com.newuniverse.nusmp.arc.world.ArcWorldItems.creativeItems()) output.accept(ai.get());            // 1.61.0: the Chronicle Sigil
                 for (net.minecraft.world.item.ItemStack st : com.newuniverse.nusmp.skilltree.SkillBookSystem.creativeItems()) output.accept(st);     // 1.96.0: one Skill Book per unique skill

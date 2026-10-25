@@ -205,6 +205,7 @@ public final class MultiverseCommands {
         com.newuniverse.nusmp.dungeon.floor.charybdis.CharybdisCommand.addTo(bossNode);                                    // 1.23.0
         com.newuniverse.nusmp.entity.avatar.AvatarCommand.addTo(bossNode);                           // 1.22.0: avatar [lucifero|megicula]
         com.newuniverse.nusmp.entity.zogratis.ZogratisCommand.addTo(bossNode);                       // 1.20.0: dante | vanica | zenon | lucius | triad
+        com.newuniverse.nusmp.entity.veldanava.VeldanavaCommand.addTo(bossNode);                     // Veldanava, the Creator God
         com.newuniverse.nusmp.relics.RelicCommands.addTo(root);
         com.newuniverse.nusmp.relics.tier.TierCommands.addTo(root);                                                       // 1.30.0: relic tier                                                       // 1.24.0: relic list|info|give|attune|unattune|grade
         com.newuniverse.nusmp.item.ElsdociaCommand.addTo(root);                                                       // 1.97.0: relic elsdocia reset|owner|lineage
@@ -222,6 +223,7 @@ public final class MultiverseCommands {
         root.then(com.newuniverse.nusmp.arc.world.ArcWorldCommand.node());                                     // 1.61.0: arc dump | chronicle | arena | hub (merges into the core's arc node)
         root.then(com.newuniverse.nusmp.celestial.CelestialCommand.node());                                  // celestial give|bind|reset|king|gate|leave|info
         root.then(bossNode);
+        root.then(com.newuniverse.nusmp.entity.veldanava.VeldanavaCommand.node());                    // veldanava boon <0..3>: what the Will of the Creator's clickable lines run (any player)
         root.then(com.newuniverse.nusmp.labyrinth.mega.MegaCommands.node());                                           // 1.54.0: mega status|sector|tp|expand|regen|audit|plan|unseal|rooms|pools + dm|faction|rest|core|floors|system|flow|gear|selftest
 
         root.then(Commands.literal("antimode").requires(MultiverseCommands::admin).then(Commands.argument("player", EntityArgument.player())

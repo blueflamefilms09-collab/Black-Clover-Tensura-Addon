@@ -1,5 +1,33 @@
 # Changelog
 
+## [3.11.0] — Veldanava, the Creator God
+
+### NEW
+- **Veldanava, the Creator God** (boss, one entity with three bodies; owner request from the three reference images and the loot guide). Spawn with `/multiverse boss veldanava` (operators) or the **Veldanava Spawn Egg**; one per world.
+  - **Star King Dragon** (7.5 x 9 hitbox, drawn big): Stardust Sweep (a beam that turns one full circle), Gravity Pull + crush, Starfall (stars on every player), Dragon Roar, Bite. It cannot be killed: a lethal blow starts an 80-tick transformation into the Creator God with a second full health bar.
+  - **Creator God** (slim swordsman): God Speed, Genesis Slash, Justice King Michael (guard, projectiles sent back), Covenant King Uriel (prison), Law Manipulation (Weight / Fragility / Decay). At 10% health the Limiter is released.
+  - **Dark Avatar of God**: the same five moves, faster and harder, plus **Genesis: Creation of the World** (100-tick charge, one huge wave, leaves him exposed).
+  - **Soul Seizing** (server config, on by default): in the two human bodies a blow that would kill a player puts them in spectator mode until the fight ends instead; restored on boss death, removal, reset or login.
+  - Three GeoLite models with idle / walk / run / attack / cast / cast_big / hurt / transform / death clips and glow layers (`tools/gen_veldanava.py`).
+- **Will of the Creator**: an orb appears when he falls and gives every fighter (up to 8) three clickable boon lines: Magic King Solomon (+24 max health, +3 toughness), Martial King Hercules (+8 attack, +10% speed) or Wisdom King Raphael (+6 armor, +0.5 attack speed, +2 luck). One boon per player ever (`hasReceivedVeldanavaBoon`); `/multiverse veldanava boon <0..3>` is what the lines run (`0` = loot only).
+- **Seven drops** with icons and card text: Star King Dragon Core, Genesis Fragment (x3), Creator's Essence (full heal / clear / regeneration), Justice King Michael Fragment, Covenant King Uriel Fragment, Nihility Fragment (15% one of the three), Veldanava's Divine Core (1%).
+- Server config `nusmp-veldanava-server.toml`: `enabled`, `bossHealth`, `damageScale`, `soulSeizing`, `willOfTheCreatorSeconds`.
+- Tests: `VeldanavaRulesTest`, `VeldanavaBoonsTest`, `VeldanavaSourceScanTest`, and the smoke self-tests `veldanava.rules`, `veldanava.assets`, `veldanava.boss`, `veldanava.orb` (the smoke list now expects the `veldanava` prefix).
+
+### REPLACED
+- Nothing that was released. (The True Dragon model went through two drafts while building; only the second is in the jar.)
+
+### KEPT
+- Everything else is untouched: the Zogratis bosses, the dungeon, the relics, the Time Magic VFX, and every existing item, model, page and setting.
+
+### Cost
+- One boss per world, one orb afterwards. Per tick at most 24 targets hurt (the player list only, no entity or chunk scan), 12 effect packets (also under the global effect-packet budget, nearby players only), 24 blocks changed (only with `griefBlocks`, all put back), 12 falling stars per cast. Client: one pass plus a glow pass, culled beyond 220 blocks, nothing allocated per frame. Full table in `docs/veldanava.md`.
+
+### Not included
+- Not seen in a running game: the fight's feel, the renderer, Soul Seizing and the orb are covered by tests and the CI server smoke test only.
+- The guide's **Aura of the Creator** and **Nodens' sword**, the Dragon Core socketing, the Genesis anvil upgrade and the Divine Core's off-hand negation are not built (their materials drop and their cards describe them). The boon choice is chat lines, not a screen.
+- The head / feet armour relics (Mask of Mind Melting, Ruby Boots of Planestriding) are still open (see 3.10.2); the numbered undead fix of 3.10.2 has not been seen in a game either.
+
 ## [3.10.2] — The numbered undead can be created again
 
 ### FIXED

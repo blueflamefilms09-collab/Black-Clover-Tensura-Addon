@@ -43,6 +43,12 @@ public class NUSMP {
         com.newuniverse.nusmp.entity.zogratis.ZogratisEntities.ENTITIES.register(modEventBus);
         modEventBus.addListener(com.newuniverse.nusmp.entity.zogratis.ZogratisEntities::attributes);
         com.newuniverse.nusmp.entity.zogratis.ZogratisEffects.EFFECTS.register(modEventBus);
+        com.newuniverse.nusmp.entity.veldanava.VeldanavaEntities.init();                                  // Veldanava, the Creator God: the egg and the seven relics (before NUItems.ITEMS.register)
+        com.newuniverse.nusmp.entity.veldanava.VeldanavaEntities.ENTITIES.register(modEventBus);
+        modEventBus.addListener(com.newuniverse.nusmp.entity.veldanava.VeldanavaEntities::attributes);
+        modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.entity.veldanava.VeldanavaConfig.SPEC, "nusmp-veldanava-server.toml");   // Veldanava: enabled, bossHealth, damageScale, soulSeizing, willOfTheCreatorSeconds
+        com.newuniverse.nusmp.entity.veldanava.VeldanavaEvents.register(NeoForge.EVENT_BUS);                 // Michael barrier, Nihility rot, soul and boon housekeeping
+        com.newuniverse.nusmp.entity.veldanava.VeldanavaSelfTests.register();                                // self-tests veldanava.rules / assets / boss / orb
         com.newuniverse.nusmp.entity.zogratis.LuciusGodEffects.init();
         com.newuniverse.nusmp.entity.zogratis.LuciusGodEffects.EFFECTS.register(modEventBus);
         com.newuniverse.nusmp.entity.zogratis.LuciusEffects.init();
@@ -239,6 +245,7 @@ public class NUSMP {
             modEventBus.addListener(com.newuniverse.nusmp.client.dungeon.DungeonMobsClient::register);          // 1.18.0: the Living Dungeon's creatures
             modEventBus.addListener(com.newuniverse.nusmp.client.dungeon.DungeonSky::registerEffects);         // 1.19.0: the Dungeon's own sky and fog
             modEventBus.addListener(com.newuniverse.nusmp.client.zogratis.ZogratisClient::register);            // 1.20.0: the Zogratis renderers
+            modEventBus.addListener(com.newuniverse.nusmp.client.veldanava.VeldanavaClient::register);          // Veldanava: the three bodies and the Will of the Creator
             com.newuniverse.nusmp.client.relics.RelicClient.init(modEventBus);                                                   // 1.24.0
             com.newuniverse.nusmp.client.debug.ClientShot.init();                                                                // 3.9.2: CI only, does nothing without -Dnusmp.clientshot
             modEventBus.addListener(com.newuniverse.nusmp.client.relics.order.OrderClient::register);
