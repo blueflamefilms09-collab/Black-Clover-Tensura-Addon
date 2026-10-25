@@ -2,6 +2,8 @@ package com.newuniverse.nusmp.client.debug;
 
 import com.mojang.logging.LogUtils;
 import com.newuniverse.nusmp.client.relics.worn.WornDebugClient;
+import com.newuniverse.nusmp.corpse.NamedCorpseDebug;
+import com.newuniverse.nusmp.corpse.NamedCorpseEntity;
 import com.newuniverse.nusmp.client.relics.worn.WornTrace;
 import com.newuniverse.nusmp.client.relics.worn.lib.ArmorSlotClient;
 import com.newuniverse.nusmp.client.relics.worn.lib.WornLibrary;
@@ -14,6 +16,7 @@ import net.minecraft.client.gui.screens.TitleScreen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.Difficulty;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -47,6 +50,8 @@ public final class ClientShot {
     private static long started;
     private static int ticks, stage, wait, joinedTicks;
     private static boolean created;
+    private static int undeadI;
+    private static volatile String summonResult = "";
 
     public static void init() {
         if (!ON) return;
@@ -138,6 +143,44 @@ public final class ClientShot {
                 say("trace: " + (seen == null ? "LAYER NEVER REACHED" : "frames " + seen.frames + ", found " + seen.found + ", planned " + seen.planned + ", drawn " + seen.drawn + ", ensembles " + seen.ensembles));
                 stage = 7;
                 wait = 20;
+            }
+            case 7 -> {                                                                      // the numbered undead: cast on the integrated server, asked about on the real client
+                String[] ids = NamedCorpseDebug.ids();
+                if (undeadI >= ids.length) {
+                    stage = 9;
+                    break;
+                }
+                var server = mc.getSingleplayerServer();
+                if (server == null) {
+                    say("undead: no integrated server");
+                    stage = 9;
+                    break;
+                }
+                String id = ids[undeadI];
+                mc.options.setCameraType(CameraType.THIRD_PERSON_FRONT);
+                summonResult = "(pending)";
+                server.execute(() -> {
+                    var sp = server.getPlayerList().getPlayer(p.getUUID());
+                    summonResult = sp == null ? "no server player" : NamedCorpseDebug.summon(sp, id);
+                });
+                stage = 8;
+                wait = 60;
+            }
+            case 8 -> {
+                String id = NamedCorpseDebug.ids()[undeadI];
+                int seen = 0;
+                for (Entity en : mc.level.entitiesForRendering()) {
+                    if (!(en instanceof NamedCorpseEntity n) || !n.kind().id.equals(id)) continue;
+                    seen++;
+                    String r = mc.getEntityRenderDispatcher().getRenderer(en).getClass().getName();
+                    say("undead " + id + ": server says " + summonResult + "; client sees entity " + en.getId() + " alive " + en.isAlive() + " invisible " + en.isInvisible() + " dist "
+                            + Math.round(en.distanceTo(p) * 10) / 10.0 + " renderer " + r + " onFire " + en.isOnFire());
+                }
+                if (seen == 0) say("undead " + id + ": server says " + summonResult + "; the CLIENT SEES NOTHING");
+                shot(mc, "undead_" + id);
+                undeadI++;
+                stage = 7;
+                wait = 10;
             }
             default -> {
                 say("done");
