@@ -61,7 +61,7 @@ public final class StarPages {
     public static String block(GrimoireBook book, BookPage page, ServerPlayer p) {
         if (book == null || page == null || book.getRegistryName() == null || !BOOK.equals(book.getRegistryName().getPath()) || !StarRules.NEW_PAGES.contains(page.id())) return null;
         if (!StarConfig.nodes()) return "a server where Star nodes are switched on";
-        if (StarRules.HEIR_PAGES.contains(page.id()) && !StarGame.isHeir(p)) return "a Grinberryall heir (a Spade Star grimoire at full mastery, after the Spade Kingdom Raid)";
+        if (StarRules.HEIR_PAGES.contains(page.id()) && StarAccess.needsHeir(page.id(), StarConfig.vfxForAll()) && !StarGame.isHeir(p)) return "a Grinberryall heir (a Spade Star grimoire at full mastery, after the Spade Kingdom Raid)";      // star.vfxForAll (default): only Black Neverland still waits for the heir; false = the 3.7.0 table
         return null;
     }
 }
