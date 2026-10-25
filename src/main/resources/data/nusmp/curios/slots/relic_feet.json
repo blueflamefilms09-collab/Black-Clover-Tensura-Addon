@@ -1,6 +1,6 @@
 {
   "size": 1,
-  "order": 53,
+  "order": 56,
   "icon": "curios:slot/empty_curio_slot",
   "validators": ["curios:tag"]
 }
