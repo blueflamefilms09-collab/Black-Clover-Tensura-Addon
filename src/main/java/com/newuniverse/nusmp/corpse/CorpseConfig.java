@@ -14,6 +14,8 @@ public final class CorpseConfig {
     public static final ModConfigSpec.IntValue ZOMBIE_CAP, ZOMBIE_GLOBAL_CAP, NAMED_GLOBAL_CAP;
     public static final ModConfigSpec.BooleanValue ZOMBIES_INSTEAD_OF_PUPPETS;
     public static final ModConfigSpec.BooleanValue NUMBERED_FOR_ALL;
+    /** 3.7.1: the server log line with the reason when a numbered cast makes no body or a body vanishes within 5 seconds; and the sun guard of the old raised creatures. */
+    public static final ModConfigSpec.BooleanValue DIAGNOSE, NO_SUN_BURN;
     public static final ModConfigSpec.IntValue LEDGER_MAX, RAISE_MAX, MAX_ACTIVE, LIFE_SECONDS, NAMED_LIFE_SECONDS, TRUE_COOLDOWN_SECONDS,
             PACT_MINUTES, REVIVE_DECAY_SECONDS, PET_WINDOW_SECONDS, PACT_RANGE, LEDGER_RADIUS, REVIVE_MANA_PERCENT;
     public static final ModConfigSpec.DoubleValue DAMAGE_MULT, REVIVE_HEALTH, REVIVE_MAX_HEALTH_CUT;
@@ -75,6 +77,11 @@ public final class CorpseConfig {
                 .defineInRange("zombieGlobalCap", SoulZombieRules.GLOBAL_CAP_DEFAULT, 4, 512);
         NAMED_GLOBAL_CAP = b.comment("Most of Rades's numbered undead (Jimmy, David, Alfredo, Carl, Michael Caesal) on the whole server at once.")
                 .defineInRange("namedGlobalCap", SoulZombieRules.NAMED_GLOBAL_CAP_DEFAULT, 3, 256);
+        DIAGNOSE = b.comment("true (default): a refused numbered cast (Jimmy, David, Alfredo, Carl, Michael Caesal) and a numbered body that leaves the world within 5 seconds each write one line to the server log",
+                "with the reason (at most one line per player per second). false = silent, as before 3.7.1.").define("diagnose", true);
+        NO_SUN_BURN = b.comment("true (default): a creature raised the OLD way (corpse.zombiesInsteadOfPuppets = false: the dead creature's own kind, which can be a vanilla zombie or skeleton) is put out whenever",
+                "daylight sets it on fire, so it never burns away before its own clock ends. The Soul Zombie and the numbered undead never burn in daylight whatever this says. false = the old behaviour (they only get Fire Resistance).")
+                .define("noSunBurn", true);
         b.pop();
         SPEC = b.build();
     }
@@ -93,6 +100,8 @@ public final class CorpseConfig {
         try { return v.get(); } catch (IllegalStateException unloaded) { return fallback; }
     }
 
+    public static boolean diagnose() { return getb(DIAGNOSE, true); }
+    public static boolean noSunBurn() { return getb(NO_SUN_BURN, true); }
     public static boolean numberedForAll() { return getb(NUMBERED_FOR_ALL, true); }
     public static boolean zombiesInsteadOfPuppets() { return getb(ZOMBIES_INSTEAD_OF_PUPPETS, true); }
     public static int zombieGlobalCap() { return geti(ZOMBIE_GLOBAL_CAP, SoulZombieRules.GLOBAL_CAP_DEFAULT); }
