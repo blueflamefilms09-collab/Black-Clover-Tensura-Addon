@@ -1,0 +1,8 @@
+{
+  "nusmp.configuration.corpse.diagnose": "Soul Corpse cast diagnosis (server)",
+  "nusmp.configuration.corpse.diagnose.tooltip": "On: a refused numbered summon (No.4 Jimmy, No.3 David, No.2 Alfredo, No.1 Carl, No.0 Michael Caesal) and a numbered body that leaves the world within five seconds each write one line to the server log with the reason, at most one line per player per second. Off: silent.",
+  "nusmp.configuration.corpse.noSunBurn": "Raised undead never burn in daylight (server)",
+  "nusmp.configuration.corpse.noSunBurn.tooltip": "On: the zombies and skeletons raised by the older Soul Corpse spells are put out each sweep while their fire resistance lasts, so sunlight cannot burn them away. Soul Zombies and the numbered undead never burn in daylight regardless. Off: only the fire resistance effect protects them.",
+  "nusmp.configuration.corpse.fallbackLook": "Zombie stand-in for the numbered undead (client)",
+  "nusmp.configuration.corpse.fallbackLook.tooltip": "On: if the model or texture of a numbered undead failed to load, it is drawn as a tinted zombie (and the client log names the file) instead of as nothing. Off: the old behaviour, nothing is drawn."
+}
