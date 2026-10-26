@@ -583,8 +583,8 @@
       "icon": "minecraft:cod"
     },
     {
-      "id": "water_body",
-      "name": "Water Body",
+      "id": "water_body_form",
+      "name": "Water Body Form",
       "desc": "Let your body flow: your wounds close and you regenerate for a while.",
       "parents": [
         {
@@ -636,8 +636,8 @@
       "icon": "minecraft:potion"
     },
     {
-      "id": "water_body_shift",
-      "name": "Water Body: Shift",
+      "id": "water_body_form_shift",
+      "name": "Water Body Form: Shift",
       "desc": "Crouch to turn to water and flow a long way ahead.",
       "parents": [
         {
@@ -688,7 +688,7 @@
       "desc": "Crouch to send the blade along the ground as a wave that cuts everything on it.",
       "parents": [
         {
-          "node": "water_body",
+          "node": "water_body_form",
           "level": 2
         }
       ],
@@ -971,7 +971,7 @@
       "desc": "Fire struggles to burn a body of water: you take less fire damage.",
       "parents": [
         {
-          "node": "water_body",
+          "node": "water_body_form",
           "level": 2
         }
       ],
@@ -1006,7 +1006,7 @@
       "desc": "While you stand in water you breathe freely.",
       "parents": [
         {
-          "node": "water_body_shift",
+          "node": "water_body_form_shift",
           "level": 2
         }
       ],
@@ -1099,7 +1099,7 @@
       "desc": "The field floods: a huge blow to every foe around you plus many times all the water pressure stored on each of them.",
       "parents": [
         {
-          "node": "water_body_shift",
+          "node": "water_body_form_shift",
           "level": 3
         },
         {

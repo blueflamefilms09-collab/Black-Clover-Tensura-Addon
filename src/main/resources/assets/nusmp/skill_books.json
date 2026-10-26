@@ -3049,7 +3049,7 @@
     "Shrapnel-Proof Hide"
    ],
    "rarity": "rare",
-   "theme": ""
+   "theme": "iron"
   },
   "gildarts_crash": {
    "book": "nusmp:gildarts_crash_book",
@@ -3087,7 +3087,7 @@
     "S-Class Instinct"
    ],
    "rarity": "mythic",
-   "theme": ""
+   "theme": "ruin"
   },
   "go_gunhee_chairman": {
    "book": "nusmp:go_gunhee_chairman_book",
@@ -5447,8 +5447,8 @@
     "Water Cyclone",
     "Hydro Screw",
     "Water Jigsaw",
-    "Water Body",
-    "Water Body: Shift",
+    "Water Body Form",
+    "Water Body Form: Shift",
     "Water Slice: Shift",
     "Water Nebula: Barrier",
     "Water Body: Great Flood"
@@ -5466,7 +5466,7 @@
     "At Home in the Sea"
    ],
    "rarity": "rare",
-   "theme": ""
+   "theme": "ocean"
   },
   "kamish_wrath": {
    "book": "nusmp:kamish_wrath_book",
@@ -6485,7 +6485,7 @@
     "Demon Queen's Sting"
    ],
    "rarity": "epic",
-   "theme": ""
+   "theme": "blood"
   },
   "monarchs_domain": {
    "book": "nusmp:monarchs_domain_book",
