@@ -270,12 +270,13 @@ public abstract class GrimoireBook extends Skill {
         if (cover(instance).kingdom == com.newuniverse.nusmp.blackclover.Kingdom.HEART && pct >= 20) c *= 0.85; // Mana Method
         if (entity instanceof ServerPlayer sp) c *= com.newuniverse.nusmp.item.MagicGear.costMult(sp) * (1 + ForbiddenMagic.manaTax(sp)) * com.newuniverse.nusmp.mana.ManaLaw.costMult(sp);   // 1.5.0
         if (entity instanceof ServerPlayer mp && com.newuniverse.nusmp.mana.method.ManaMethodPages.isPage(p.id())) c *= com.newuniverse.nusmp.mana.method.ManaMethodPages.costFactor(mp, p.id(), mode);      // 3.6.0: a Mana Method page costs by the charge of the release that is being cast
+        if (entity instanceof ServerPlayer solomon) c = com.newuniverse.nusmp.entity.veldanava.skills.SolomonHooks.spellCost(solomon, c);      // 3.18.0: Solomon's Realm of Magic (free) and mastered Infinite Grimoire (half); unchanged for everyone else
         return c;
     }
 
     @Override public int getMaxHeldTime(ManasSkillInstance instance, LivingEntity entity) { return 200; }
 
-    public int castTicks(ManasSkillInstance i, LivingEntity e) { return i.isMastered(e) ? CAST_TICKS_MASTERED : CAST_TICKS; }
+    public int castTicks(ManasSkillInstance i, LivingEntity e) { return com.newuniverse.nusmp.entity.veldanava.skills.SolomonHooks.chantTicks(e, i.isMastered(e) ? CAST_TICKS_MASTERED : CAST_TICKS); }      // 3.18.0: Solomon's Infinite Grimoire / Realm of Magic shorten the chant (the base number for everyone else)
 
     /** Utility pages act on press; spell pages wait for release so the cast fires only after the key is let go. */
     @Override
@@ -426,6 +427,7 @@ public abstract class GrimoireBook extends Skill {
         MirrorWorks.echo(player);                                                 // 0.42: Real Doubles cast with you
         com.newuniverse.nusmp.mana.ManaLaw.onCast(player);                          // 1.5.0: negative mana corrupts
         com.newuniverse.nusmp.franchise.FranchiseEvents.onSpellCast(player);        // 1.111.0: franchise engravings of the held book (mana back, spell power)
+        com.newuniverse.nusmp.entity.veldanava.skills.SolomonCasts.record(player, this, mode);      // 3.18.0: the cast log Solomon's Grand Spell Copy and Spell Chain read (one record, two deque operations)
         exhaustion(player);
         instance.markDirty();
     }

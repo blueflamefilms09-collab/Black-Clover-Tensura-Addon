@@ -46,7 +46,7 @@ public final class EnergyBridge {
     /** Energy Drain: takes frac of the target's max magicules and gives what was taken to 'to' (may be null). Returns the amount. */
     public static double drain(LivingEntity from, LivingEntity to, double frac) {
         var ex = TensuraStorages.getExistenceFrom(from);
-        if (ex == null) return 0;
+        if (ex == null || com.newuniverse.nusmp.entity.veldanava.skills.SolomonHooks.antiMagicImmune(from)) return 0;      // 3.18.0: Infinite Grimoire is immune to mana depletion
         double take = Math.min(ex.getMagicule(), EnergyHelper.getMaxMagicule(from) * frac);
         if (take <= 0) return 0;
         ex.setMagicule(ex.getMagicule() - take);

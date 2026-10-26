@@ -266,7 +266,7 @@ public final class PaintStudio {
                 Vec3 away = t.position().subtract(p.position()).normalize();
                 t.knockback(0.5, -away.x, -away.z);
                 var ex = TensuraStorages.getExistenceFrom(t);
-                if (ex != null) { ex.setMagicule(Math.max(0, ex.getMagicule() - EnergyHelper.getMaxMagicule(t) * 0.03)); ex.markDirty(); }
+                if (ex != null && !com.newuniverse.nusmp.entity.veldanava.skills.SolomonHooks.antiMagicImmune(t)) { ex.setMagicule(Math.max(0, ex.getMagicule() - EnergyHelper.getMaxMagicule(t) * 0.03)); ex.markDirty(); }      // 3.18.0: Infinite Grimoire is immune to mana depletion
             }
             case ICE -> {
                 t.setTicksFrozen(Math.max(t.getTicksFrozen(), 160));

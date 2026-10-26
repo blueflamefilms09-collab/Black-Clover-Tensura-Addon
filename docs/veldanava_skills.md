@@ -267,3 +267,79 @@ Eight shapes appended after `TRIAL_RIFT` (`JIBRIL_COMMAND`, `_JUDGMENT`, `_PURGE
 
 ## Icons (3.17.0)
 The five Ultimate skill icons are animated medallions (see `docs/releases/3.17.0.md`). Files per skill under `textures/skill/veldanava/`: `<id>.png` (32 px still, the path the skill names), `<id>_anim.png` (32 x 32N strip), `<id>_anim_hd.png` (128 x 128N strip), their `.mcmeta` (frametime 2), and for Sandalphon, Israfil and Jibril the old sprite `<id>_classic.png`. Made by `tools/gen_<id>_icon_anim.py` with `tools/icon_anim_lib.py` (`python tools/gen_<id>_icon_anim.py`, previews to `/tmp/claude-0/icons/<id>/`). In the game `client/veldanava/AnimatedIcons` registers an `AnimatedIconTexture` at the still's path, so every ManasCore list animates; the card screen uses the HD strips, only while it is open. Client setting `icons.ultimateStyle` = ANIMATED / STILL / CLASSIC. Client only, no server work. When Solomon and Hercules become real skills, their icon is already there (`VeldanavaSkillBase` names `textures/skill/veldanava/<id>.png`).
+
+---
+
+# 3.18.0 - Solomon, Lord of Sorcery
+
+Source of the design: the owner's Solomon spec (ten modes, `docs/veldanava_spec/veldanava_skill_drops.txt`). Wiki sources: none needed (the numbers come from the owner's file); nothing was fetched.
+
+## How it is read in game
+Take **Solomon** from the Will of the Creator card screen (`/veldanava skill solomon` while an orb waits). Code: `SolomonRules` (numbers, pure), `SolomonSkill` (modes), `SolomonEvents` (passives that live in the game's events), `SolomonHooks` (the grimoire's chant and price, the drain guards), `SolomonState` (attribute modifiers, the Realm registry, absorb and message counters), `SolomonCasts` (the cast log and the stored copy), `SolomonSweep` (what Convergence and Erasure take), `SolomonPillars` and `SolomonTerrain` (the 72 Pillars), `SolomonFx` (effect packets).
+
+| # | Mode | Use | Cost (normal / mastered) | Cooldown (normal / mastered) |
+|---|---|---|---|---|
+| 0 | Infinite Grimoire | toggle | free | - |
+| 1 | Omnipotent Magic | toggle | free | - |
+| 2 | Mana Skin | toggle | free | - |
+| 3 | Elemental Sovereignty | toggle | free | - |
+| 4 | Grand Spell Copy | press | 4.5K / 3.0K MP | 30 / 18 s |
+| 5 | Arcane Convergence | crouch + press | 2.0K / 1.2K MP | 20 / 12 s |
+| 6 | Realm of Magic | held, up to 60 s | 2.5K / 1.5K MP **per second** | 90 / 60 s |
+| 7 | Spell Chain | press | 12K / 8.5K MP | 60 / 40 s |
+| 8 | Mana Zone Erasure | crouch + press | 15K / 10K MP | 90 / 60 s |
+| 9 | The 72 Pillars | press, **mastery only** | 80K MP | 240 s |
+
+### Passives
+- **Infinite Grimoire**: maximum Magicule +100% (+150% mastered) and Magicule regeneration +200% (+300%) as two transient attribute modifiers (put back once a second, so a login restores them); the chant of every grimoire cast is cut to 50% (35%), never below 2 ticks. Immunity to anti-magic and mana depletion: `SolomonHooks.antiMagicImmune` is checked at the drain points (`TensuraBridge.drainMagicule`, `NihilityZone`, `EnergyBridge.drain`, `WikiSpells.drainMana`, `ForbiddenBook`, `PaintStudio`, `LuciusCapabilities`), so those drains skip the wearer. Mastered: every grimoire spell costs 50%.
+- **Omnipotent Magic**: with `solomonMagicBypass` on, the owner's magic blows ignore armour and resistance (their damage reductions are ignored, the result still limited by the Balance Law; a cancelled or fully immune hit is not forced through). Foresight: 25% (40% mastered) of an enemy's magic blow is not taken, with a short "foreseen" line at most every 3 seconds. Presence sense: the 8 nearest enemies within 24 blocks glow for 2 seconds, renewed once a second.
+- **Mana Skin**: a blow that would kill is paid for with Magicule, 10 per point of damage, all of it when the pool allows, else as much as the pool pays for (the rest hurts). A blow that does not kill is left alone.
+- **Elemental Sovereignty**: fire, lava, hot floor, freezing and poison damage is cancelled; poison, flame and frost on the wearer are lifted once a second; up to 10 elemental projectiles a second are absorbed and each gives 1% of the maximum Magicule (at most 5,000).
+
+### Actives
+- **Grand Spell Copy**: reads the newest grimoire spell that somebody else cast within 40 blocks in the last 30 seconds and writes it into the Grimoire (it is stored on the player and survives a restart). The next press of the same mode casts it once, free, with no chant and no cooldown of its own (a short gap stops double presses). Only grimoire pages are copied.
+- **Arcane Convergence**: within 30 blocks up to 64 projectiles (spell bolts included) and 32 area clouds are drawn in, and fields of other owners end; each gives Magicule (250 / 400 / 1,500), one press never more than 25% of the maximum.
+- **Realm of Magic** (held): a field following you (40 blocks, at most 1,200 ticks). Each second it pays the per-second cost (or ends), renews the realm record, and silences (Event Silence 30 ticks) and locks (Action Lock, Balance Law time) up to 24 enemies. Inside it you and your allies cast every grimoire spell for 0 Magicule with a one-tick chant. Releasing the key, running out of Magicule, death, logout, dimension change and a server stop end it.
+- **Spell Chain**: the last three grimoire spells you cast are cast together, free. A replay is never logged, so a chain cannot feed itself.
+- **Mana Zone Erasure**: within 40 blocks the enemy's projectiles (96), clouds (32), bolts, fields and summons (24) are deleted, and up to 24 casters get Temporal Stutter (60 ticks base, Balance Law).
+- **The 72 Pillars**: up to 8 enemies within 60 blocks (players first, then the nearest) are marked, the 72 pillars are shared out between them, and they fall over about 6 seconds at the ground point fixed at cast time. Each pillar is a true hit (it bypasses Castle Guard) of 70 damage in a 2.8-block radius to at most 12 enemies, through the Balance Law and `activeDamageCap`, no creature taking more than 10 in one cast. Each impact may remove up to 10 blocks (600 per cast).
+
+### Conditions
+Event Silence, Action Lock, Temporal Stutter (Veldanava conditions already in the game), and the vanilla Glowing effect for the presence sense.
+
+## Server settings added
+`solomonTerrainDamage` (default true: the pillars dig craters; never in the Dungeon, never with `mobGriefing` off), `solomonSpellReplay` (default true: Grand Spell Copy and Spell Chain replay spells; off = both refused), `solomonMagicBypass` (default true: Omnipotent Magic ignores resistances) in `nusmp-veldanava-skills-server.toml` (SERVER config: they change gameplay).
+
+## Multiplayer and server rules (CLAUDE.md rule 9)
+The server decides everything; no client class is named (scanned by `JudgmentSourceScanTest`); per-player state is on the player or in UUID-keyed maps; the only effect path is `SolomonFx` -> `VfxSpawn`, one shape per packet; Solomon adds no tick hook (its second runs from the skill base); state is dropped at death, logout, forgetting and server stop. The replay is wrapped in `SafeCast`.
+
+## Cost and lag bounds (CLAUDE.md rule 11) for Solomon
+- **Per press**: Copy a walk of the 64-line log (no entity query); Convergence 2 box queries (64 projectiles, 32 clouds) and the bolt and field lists; Chain 3 grimoire spells (their own bounds); Erasure the same sweep plus one summon query (24 removed, 24 casters); Pillars one box query, at most 8 marks, 8 packets and one field.
+- **Pillars worst case**: one field, 31 pulses of the server (every 4 ticks), at most 72 impacts, each one box query, 12 creatures hit, 600 blocks removed in all and only in loaded chunks; no entity spawns; one packet per target.
+- **Per second per owner**: two attribute checks, one box query of 24 blocks for the presence sense (8 creatures marked); the Realm one box query of 40 blocks, 24 enemies touched.
+- **Events**: effect, incoming damage, pre-damage (lowest priority), projectile impact, death, logout, server stop; each returns on its first line for anyone who is not under Solomon.
+- **Memory**: the cast log holds 64 lines, each caster's list 3; both dropped at logout and server stop.
+- **Network**: one effect packet per press (Realm: one every 80 ticks while held; Pillars: one per target; Skin and Absorb one small packet each, absorb at most 10 a second per wearer).
+- **Client draw**: bounded per effect by the quad budget of `SolomonLayer` (see the VFX section).
+- **No** chunk loads (terrain only touches loaded chunks), no entity spawns, no food-bar writes.
+
+## VFX (Solomon layer)
+Nine shapes appended after `JIBRIL_WINGS` (`SOLOMON_COPY`, `_CONVERGENCE`, `_REALM`, `_CHAIN`, `_ERASURE`, `_MARK`, `_PILLAR`, `_SKIN`, `_ABSORB`), one client layer `vfx/client/layer/SolomonLayer.java`, 17 textures `textures/particle/solomon_*.png` from `tools/gen_solomon_vfx_textures.py`; violet and gold with an emerald accent: grimoires with turning pages, hexagrams and seals, nested magic circles, linked chains, and pillars of eight elements. The pillars of one target are drawn from one packet: its seed names how many pillars, and the client works out when, where and which element each one is with the same functions the server lands its impacts with. Preview scenes: `tools/vfx_preview/scenes.d/solomon.json`.
+
+## Tests
+`SolomonRulesTest` (pure), `JudgmentRulesTest` and `JudgmentSourceScanTest` (extended, including the terrain, replay and event-hook scans), `SolomonShapesTest`, smoke prefix `solomon` (`solomon.rules`, `solomon.skill`, `solomon.conditions`: registration, mask separation, the modifiers, the chant and price hooks, the Realm registry and field, hazards, foresight, Mana Skin, the absorb counter, the cast log and the copy, the sweep, the terrain on a stone platform in the sky and with `mobGriefing` off, the pillars landing and being forgotten).
+
+## NEW / REPLACED / KEPT
+- **NEW**: Solomon and its 10 modes, the Solomon VFX, three settings, `SolomonRules` and the supporting classes, tests, lang. The drain-immunity guard in seven existing drain points (a first line that returns for anyone without Infinite Grimoire).
+- **REPLACED**: nothing (the card was sealed; it is open now). The skill icon is the 3.17.0 animated one.
+- **KEPT**: everything of 3.17.0 and earlier; the Time Magic VFX untouched.
+
+## Not included / honest limits
+- Hercules stays sealed (3.19.0).
+- Not played in a real game.
+- Only grimoire pages are copied or chained (not Ultimate abilities or other skills), and a page that needs a held weapon is not replayed. A replay uses your own copy of the book, or a fresh default one if you have not learned it.
+- Omnipotent Magic ignores damage reductions (capped by the Balance Law); it cannot bypass a cancelled hit or an immunity that cancels the event.
+- The presence sense is the vanilla Glowing effect on the 8 nearest enemies.
+- The pillars land at the ground point fixed at cast time, so a target that runs away can dodge them; the effect shows the same point.
+- The skill list's displayed price does not show the Realm's free spells or the mastered half price.
+- The Realm's lock tapers with the Balance Law, so a boss or a long-held player is held for less.

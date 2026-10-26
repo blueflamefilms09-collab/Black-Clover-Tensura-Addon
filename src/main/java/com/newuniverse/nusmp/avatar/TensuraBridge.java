@@ -41,6 +41,7 @@ public final class TensuraBridge {
 
     /** Takes a fraction of the entity's maximum magicule from its current magicule (never below zero). */
     public static void drainMagicule(LivingEntity e, double fractionOfMax) {
+        if (com.newuniverse.nusmp.entity.veldanava.skills.SolomonHooks.antiMagicImmune(e)) return;      // 3.18.0: Infinite Grimoire is immune to mana depletion
         try {
             var ex = TensuraStorages.getExistenceFrom(e);
             if (ex == null) return;

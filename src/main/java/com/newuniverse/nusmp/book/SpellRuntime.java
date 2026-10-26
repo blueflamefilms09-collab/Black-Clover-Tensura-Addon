@@ -107,6 +107,19 @@ public final class SpellRuntime {
         return n;
     }
 
+    /** Solomon (3.18.0): the same, and {@code owners} is told the caster of every bolt that was dissolved (the casters of a Mana Zone Erasure stutter). */
+    public static int dissolveBolts(ServerLevel level, Vec3 at, double r, LivingEntity keeper, int max, java.util.function.Consumer<ServerPlayer> owners) {
+        int n = 0;
+        for (Bolt b : BOLTS) {
+            if (n >= max) break;
+            if (b.dead || b.level != level || b.owner == keeper || b.owner.isAlliedTo(keeper) || b.pos.distanceToSqr(at) > r * r) continue;
+            b.dead = true;
+            if (owners != null) owners.accept(b.owner);
+            n++;
+        }
+        return n;
+    }
+
     private static void end(Bolt b, Vec3 at) {
         if (b.dead) return;
         b.dead = true;

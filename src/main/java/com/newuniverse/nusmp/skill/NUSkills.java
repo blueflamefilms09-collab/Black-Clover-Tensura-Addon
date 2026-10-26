@@ -265,4 +265,8 @@ public final class NUSkills {
     // ---- 3.15.0: Jibril, Lord of Rigor (the third Veldanava ultimate skill) ----
     public static final DeferredHolder<ManasSkill, com.newuniverse.nusmp.entity.veldanava.skills.JibrilSkill> JIBRIL =
             SKILLS.register("jibril", com.newuniverse.nusmp.entity.veldanava.skills.JibrilSkill::new);
+
+    // ---- 3.18.0: Solomon, Lord of Sorcery (the fourth Veldanava ultimate skill) ----
+    public static final DeferredHolder<ManasSkill, com.newuniverse.nusmp.entity.veldanava.skills.SolomonSkill> SOLOMON =
+            SKILLS.register("solomon", com.newuniverse.nusmp.entity.veldanava.skills.SolomonSkill::new);
 }

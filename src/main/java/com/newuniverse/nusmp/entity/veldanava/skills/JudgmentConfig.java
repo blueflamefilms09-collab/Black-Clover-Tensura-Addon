@@ -8,7 +8,7 @@ import net.neoforged.neoforge.common.ModConfigSpec;
  */
 public final class JudgmentConfig {
     public static final ModConfigSpec SPEC;
-    public static final ModConfigSpec.BooleanValue ENABLED, REWARD_SCREEN, EXECUTE_PLAYERS, EXECUTE_BOSSES, POCKET_DIMENSION, STRICT_GOVERNANCE, WINGS_FLIGHT;
+    public static final ModConfigSpec.BooleanValue ENABLED, REWARD_SCREEN, EXECUTE_PLAYERS, EXECUTE_BOSSES, POCKET_DIMENSION, STRICT_GOVERNANCE, WINGS_FLIGHT, SOLOMON_TERRAIN, SOLOMON_REPLAY, SOLOMON_BYPASS;
     public static final ModConfigSpec.DoubleValue COST_SCALE, COOLDOWN_SCALE, DEBT_DAMAGE, FINAL_CAP, ACTIVE_DAMAGE_CAP;
     public static final ModConfigSpec.IntValue DEBT_MAX, FIELDS_PER_PLAYER, FIELDS_TOTAL;
 
@@ -45,6 +45,12 @@ public final class JudgmentConfig {
                 .defineInRange("fieldsPerPlayer", 2, 1, 8);
         FIELDS_TOTAL = b.comment("The most damage fields of all players together on the server.")
                 .defineInRange("fieldsTotal", 24, 1, 256);
+        SOLOMON_TERRAIN = b.comment("true = Solomon's The 72 Pillars dig craters in the ground (a few blocks a pillar, at most 600 a cast, never in the Dungeon, never with the mobGriefing rule off; default since 3.18.0). false = the pillars only hurt, the ground is left alone.")
+                .define("solomonTerrainDamage", true);
+        SOLOMON_REPLAY = b.comment("true = Solomon's Grand Spell Copy and Spell Chain replay grimoire spells for free (default since 3.18.0). false = both are refused, so no spell is ever cast by anyone but its caster.")
+                .define("solomonSpellReplay", true);
+        SOLOMON_BYPASS = b.comment("true = Solomon's Omnipotent Magic makes the owner's magic blows ignore armour and resistances (limited by the Balance Law; default since 3.18.0). false = the toggle only gives the foresight and the presence sense.")
+                .define("solomonMagicBypass", true);
         b.pop();
         SPEC = b.build();
     }
@@ -74,6 +80,12 @@ public final class JudgmentConfig {
     public static boolean strictGovernance() { return get(STRICT_GOVERNANCE); }
 
     public static boolean wingsFlight() { return get(WINGS_FLIGHT); }
+
+    public static boolean solomonTerrain() { return get(SOLOMON_TERRAIN); }
+
+    public static boolean solomonReplay() { return get(SOLOMON_REPLAY); }
+
+    public static boolean solomonBypass() { return get(SOLOMON_BYPASS); }
 
     public static int debtMax() { return get(DEBT_MAX); }
 

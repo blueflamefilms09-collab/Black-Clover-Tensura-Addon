@@ -399,7 +399,28 @@ public enum VfxShape {
     JIBRIL_WORD,
     JIBRIL_REFLECT,
     JIBRIL_KINGDOM,
-    JIBRIL_WINGS;
+    JIBRIL_WINGS,
+    // Solomon, Lord of Sorcery (Veldanava, vfx.client.layer.SolomonLayer): deep indigo and violet night, antique gold, parchment white, and a small prismatic accent for the six elements (flame orange, tide blue, wind green, earth amber, storm yellow, frost cyan);
+    // grimoires with turning pages, hexagrams and Solomon's seals, magic circles of nested runic rings, chains of linked circles, tall pillars of elemental light. It shares nothing with the white-gold Jibril set or the steel Sandalphon set; the colour of the packet is ignored (the palette is the layer's own).
+    // All nine are appended in this order (ordinals go over the network).
+    // SOLOMON_COPY: Grand Spell Copy, sent at the caster: from = the caster's centre, to = the centre of whoever cast the copied spell (1-40 blocks; the same as from when the spell is cast from the Grimoire), power = 1, 30 ticks: a scanning ring and glyph lines read the spell at `to`, streams of runes run to the caster and write themselves onto a floating page that closes into the Grimoire.
+    // SOLOMON_CONVERGENCE: Arcane Convergence, sent at the caster: from = its centre, power = radius (30 in game), 30 ticks: a wide ring on the floor closes in while motes, runes and light streams of every element run in from the whole radius and sink into the caster; a final flash and a mana ring.
+    // SOLOMON_REALM: Realm of Magic, sent FOLLOWING the caster and re-sent every 80 ticks while held: from = its centre, power = radius (40 in game), 100 ticks (fades in over 12 and out over 12): a dome edge of runes on the ground, a floor seal of nested rings and a hexagram, floating pages and rune lines, a crown of circles over the caster.
+    // SOLOMON_CHAIN: Spell Chain, sent at the caster: from = its centre, to = a point 6-12 blocks ahead along its look direction, power = 1, 24 ticks: three magic circles of three different elements open one behind the other along the line from `from` to `to`, linked by a light chain, and fire in rapid order with a flash each.
+    // SOLOMON_ERASURE: Mana Zone Erasure, sent at the caster: from = its centre, power = radius (40 in game), 30 ticks: a hexagram seal on the floor, then a wave sweeps out to the radius and everything it passes un-writes itself (glyph fragments and rune dust dissolve), a dome of three rings, a void-white flash.
+    // SOLOMON_MARK: the mark of the 72 Pillars, sent FOLLOWING the marked target: from = its centre, power = size (~1.5), 40 ticks: a hexagram seal closes on the ground under it and a ring of six small circles (one per element) spins round it.
+    // SOLOMON_PILLAR: The 72 Pillars on one marked target, sent at the ground point under the target: from = that point, power = the spread radius (~6), 120 ticks, seed = SolomonRules.packSeed (the low 16 bits name how many of the 72 pillars this target gets, 1-72, usually 9-24; the client works out when, where and in which element each one falls with pillarSpawnTick / pillarOffset / pillarElement, the same functions the server lands its impacts with): tall pillars of elemental light (flame, tide, wind, earth, storm, frost, light, dark) fall one after another at scattered points inside the radius, each with a ground ring, a burst, and a crater scar that fades; camera shake on the early ones.
+    // SOLOMON_SKIN: Mana Skin saved a life, sent at the wearer: from = its centre, power = size (~1.5), 16 ticks: a violet-gold shell snaps on over the body, cracks with light and drinks the blow as motes, then fades.
+    // SOLOMON_ABSORB: Elemental Sovereignty took an elemental projectile, sent at the projectile: from = the projectile's position, to = the wearer's chest, power = 1, 14 ticks: a small colour-tinted spark is pulled through a thin curved line into the wearer and a ring closes on the wearer's chest.
+    SOLOMON_COPY,
+    SOLOMON_CONVERGENCE,
+    SOLOMON_REALM,
+    SOLOMON_CHAIN,
+    SOLOMON_ERASURE,
+    SOLOMON_MARK,
+    SOLOMON_PILLAR,
+    SOLOMON_SKIN,
+    SOLOMON_ABSORB;
 
     public static VfxShape byId(int id) {
         VfxShape[] v = values();

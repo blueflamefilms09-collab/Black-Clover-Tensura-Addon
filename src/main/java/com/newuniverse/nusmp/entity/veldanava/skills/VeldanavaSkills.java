@@ -25,6 +25,7 @@ public final class VeldanavaSkills {
         if ("sandalphon".equals(id)) return NUSkills.SANDALPHON;
         if ("israfil".equals(id)) return NUSkills.ISRAFIL;
         if ("jibril".equals(id)) return NUSkills.JIBRIL;
+        if ("solomon".equals(id)) return NUSkills.SOLOMON;
         return null;
     }
 

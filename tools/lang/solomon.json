@@ -1,0 +1,15 @@
+{
+  "nusmp.skill.solomon": "Solomon, Lord of Sorcery",
+  "nusmp.skill.solomon.description": "The Magic King. Four passives (Infinite Grimoire, Omnipotent Magic, Mana Skin, Elemental Sovereignty), five spells of command (Grand Spell Copy, Arcane Convergence, Realm of Magic, Spell Chain, Mana Zone Erasure) and, once mastered, The 72 Pillars: seventy-two pillars of every element that rain on the creatures around you, break the ground and ignore Castle Guard.",
+  "nusmp.skill.solomon.mastered": "Solomon is mastered: The 72 Pillars answer you, every spell costs half, the spells of command cost less and cool down faster, and Infinite Grimoire, Omnipotent Magic and the chant grow stronger.",
+  "nusmp.skill.mode.solomon.infinite_grimoire": "Infinite Grimoire",
+  "nusmp.skill.mode.solomon.omnipotent_magic": "Omnipotent Magic",
+  "nusmp.skill.mode.solomon.mana_skin": "Mana Skin",
+  "nusmp.skill.mode.solomon.elemental_sovereignty": "Elemental Sovereignty",
+  "nusmp.skill.mode.solomon.grand_spell_copy": "Grand Spell Copy",
+  "nusmp.skill.mode.solomon.arcane_convergence": "Arcane Convergence",
+  "nusmp.skill.mode.solomon.realm_of_magic": "Realm of Magic",
+  "nusmp.skill.mode.solomon.spell_chain": "Spell Chain",
+  "nusmp.skill.mode.solomon.mana_zone_erasure": "Mana Zone Erasure",
+  "nusmp.skill.mode.solomon.the_72_pillars": "The 72 Pillars"
+}

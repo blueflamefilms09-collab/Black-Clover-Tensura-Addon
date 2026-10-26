@@ -86,7 +86,7 @@ public final class LuciusCapabilities {
      * never touching health. Creative and spectator players and players without a Tensura record are left alone. True if the pool went down.
      */
     public static boolean drainMagicule(ServerPlayer p, double fraction) {
-        if (p == null || p.isCreative() || p.isSpectator() || !(fraction > 0.0)) return false;
+        if (p == null || p.isCreative() || p.isSpectator() || !(fraction > 0.0) || com.newuniverse.nusmp.entity.veldanava.skills.SolomonHooks.antiMagicImmune(p)) return false;      // 3.18.0: Infinite Grimoire is immune to mana depletion
         try {
             var ex = TensuraStorages.getExistenceFrom(p);
             if (ex == null) return false;

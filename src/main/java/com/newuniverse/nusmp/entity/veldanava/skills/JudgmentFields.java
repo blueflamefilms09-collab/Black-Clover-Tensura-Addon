@@ -151,6 +151,25 @@ public final class JudgmentFields {
         return n;
     }
 
+    /**
+     * Solomon (3.18.0): ends every field that touches the sphere whose owner {@code keep} does not name (the owner's own and the owner's allies' fields stay), at most {@code max}; {@code owners} is told the owner of
+     * each field that ended. Returns how many.
+     */
+    static int clearHostile(ServerLevel level, Vec3 center, double radius, java.util.function.Predicate<UUID> keep, int max, java.util.function.Consumer<UUID> owners) {
+        int n = 0;
+        for (Iterator<Field> it = FIELDS.iterator(); it.hasNext() && n < max; ) {
+            Field f = it.next();
+            if (keep.test(f.owner)) continue;
+            if (f.dimension.equals(level.dimension()) && f.center.distanceTo(center) <= radius + f.radius) {
+                it.remove();
+                finish(level.getServer(), f);
+                if (owners != null) owners.accept(f.owner);
+                n++;
+            }
+        }
+        return n;
+    }
+
     public static void clearOf(UUID owner) {
         FIELDS.removeIf(f -> f.owner.equals(owner));
     }

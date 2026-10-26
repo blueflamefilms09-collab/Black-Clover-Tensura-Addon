@@ -56,7 +56,7 @@ class JudgmentSourceScanTest {
             String n = p.getFileName().toString();
             assertFalse(c.contains("ParticleTypes."), n + " names a vanilla particle (go through VfxSpawn)");
             assertFalse(c.contains("sendParticles("), n + " sends particles itself");
-            if (!n.equals("JudgmentFx.java") && !n.equals("TrialFx.java") && !n.equals("JibrilFx.java")) assertFalse(c.contains("VfxSpawn."), n + " sends an effect outside JudgmentFx, TrialFx and JibrilFx");
+            if (!n.equals("JudgmentFx.java") && !n.equals("TrialFx.java") && !n.equals("JibrilFx.java") && !n.equals("SolomonFx.java")) assertFalse(c.contains("VfxSpawn."), n + " sends an effect outside JudgmentFx, TrialFx, JibrilFx and SolomonFx");
         }
         String fx = file("JudgmentFx");
         assertEquals(Pattern.compile("VfxSpawn\\.send(Following)?\\(").matcher(fx).results().count(), Pattern.compile("VfxShape\\.JUDGMENT_").matcher(fx).results().count(), "each packet draws exactly one Judgment shape");
@@ -64,6 +64,8 @@ class JudgmentSourceScanTest {
         assertEquals(Pattern.compile("VfxSpawn\\.send(Following)?\\(").matcher(trial).results().count(), Pattern.compile("VfxShape\\.TRIAL_").matcher(trial).results().count(), "each packet draws exactly one Trial shape");
         String jibril = file("JibrilFx");
         assertEquals(Pattern.compile("VfxSpawn\\.send(Following)?\\(").matcher(jibril).results().count(), Pattern.compile("VfxShape\\.JIBRIL_").matcher(jibril).results().count(), "each packet draws exactly one Jibril shape");
+        String solomon = file("SolomonFx");
+        assertEquals(Pattern.compile("VfxSpawn\\.send(Following)?\\(").matcher(solomon).results().count(), Pattern.compile("VfxShape\\.SOLOMON_").matcher(solomon).results().count(), "each packet draws exactly one Solomon shape");
     }
 
     @Test
@@ -71,7 +73,7 @@ class JudgmentSourceScanTest {
         for (Path p : files()) {
             String c = code(read(p));
             String n = p.getFileName().toString();
-            if (n.equals("JudgmentSelfTests.java") || n.equals("IsrafilSelfTests.java") || n.equals("JibrilSelfTests.java")) continue;
+            if (n.equals("JudgmentSelfTests.java") || n.equals("IsrafilSelfTests.java") || n.equals("JibrilSelfTests.java") || n.equals("SolomonSelfTests.java") || n.equals("SolomonTerrain.java")) continue;
             for (String banned : new String[]{"getChunk(", "getChunkAt(", "setBlock(", "destroyBlock(", "addFreshEntity", "new ItemEntity", "setBlockAndUpdate(", "explode("})
                 assertFalse(c.contains(banned), n + " uses " + banned);
         }
@@ -141,7 +143,7 @@ class JudgmentSourceScanTest {
         String main = code(read(SRC.resolve("NUSMP.java")));
         assertTrue(main.contains("ModConfig.Type.SERVER, com.newuniverse.nusmp.entity.veldanava.skills.JudgmentConfig.SPEC, \"nusmp-veldanava-skills-server.toml\""), "the skill's settings change gameplay, so they are a SERVER config");
         String cfg = file("JudgmentConfig");
-        for (String key : new String[]{"enabled", "rewardScreen", "costScale", "cooldownScale", "debtDamage", "finalJudgmentCap", "activeDamageCap", "executePlayers", "executeBosses", "debtMax", "fieldsPerPlayer", "fieldsTotal", "pocketDimension", "strictGovernance", "wingsFlight"})
+        for (String key : new String[]{"enabled", "rewardScreen", "costScale", "cooldownScale", "debtDamage", "finalJudgmentCap", "activeDamageCap", "executePlayers", "executeBosses", "debtMax", "fieldsPerPlayer", "fieldsTotal", "pocketDimension", "strictGovernance", "wingsFlight", "solomonTerrainDamage", "solomonSpellReplay", "solomonMagicBypass"})
             assertTrue(cfg.contains("\"" + key + "\""), "config key missing: " + key);
         assertTrue(cfg.contains("executePlayers\", true") && cfg.contains("executeBosses\", false"), "players are executed by default (owner, 3.14.0), bosses are not");
     }
@@ -208,6 +210,33 @@ class JudgmentSourceScanTest {
         String jibrilTests = file("JibrilSelfTests");
         for (String key : new String[]{"jibril.rules", "jibril.skill", "jibril.conditions"}) assertTrue(jibrilTests.contains("\"" + key + "\""), "self-test missing: " + key);
         assertTrue(code(read(SRC.resolve("NUSMP.java"))).contains("JibrilSelfTests.register()") && code(read(SRC.resolve("NUSMP.java"))).contains("JibrilEvents.register("), "Jibril's tests and events are wired");
+        assertTrue(Files.exists(RES.resolve("assets/nusmp/textures/skill/veldanava/solomon.png")), "missing Solomon icon");
+        for (String k : new String[]{"nusmp.skill.solomon", "nusmp.skill.solomon.description", "nusmp.skill.solomon.mastered"})
+            assertTrue(lang.has(k), "missing lang key " + k);
+        for (JudgmentRules.Mode m : SolomonRules.SOLOMON.modes()) assertTrue(lang.has("nusmp.skill.mode.solomon." + m.id()), "missing lang key for mode " + m.id());
+        assertTrue(Pattern.compile("SMOKE_EXPECT:[^\\n]*[\", ]solomon[\",]").matcher(smoke).find(), "the smoke list must expect the solomon self-tests");
+        String solomonTests = file("SolomonSelfTests");
+        for (String key : new String[]{"solomon.rules", "solomon.skill", "solomon.conditions"}) assertTrue(solomonTests.contains("\"" + key + "\""), "self-test missing: " + key);
+        assertTrue(code(read(SRC.resolve("NUSMP.java"))).contains("SolomonSelfTests.register()") && code(read(SRC.resolve("NUSMP.java"))).contains("SolomonEvents.register("), "Solomon's tests and events are wired");
+    }
+
+    @Test
+    void solomonsAreaWorkTerrainAndReplayAreCappedAndBehindTheirSettings() throws IOException {
+        String skill = file("SolomonSkill");
+        assertFalse(skill.contains("getEntities(") || skill.contains("getAllEntities("), "an unbounded entity walk in Solomon");
+        assertTrue(skill.contains("JudgmentConfig.") || file("SolomonHooks").contains("JudgmentConfig."), "Solomon reads its settings");
+        String terrain = file("SolomonTerrain");
+        assertEquals(1, Pattern.compile("\\.setBlock\\(").matcher(terrain).results().count(), "one place removes blocks");
+        for (String guard : new String[]{"JudgmentConfig.solomonTerrain()", "RULE_MOBGRIEFING", "DungeonGuard.on(", "isLoaded(", "TERRAIN_MAX_HARDNESS", "getBlockEntity("})
+            assertTrue(terrain.contains(guard), "the terrain is guarded by " + guard);
+        String pillars = file("SolomonPillars");
+        assertTrue(pillars.contains("TERRAIN_MAX_BLOCKS") && pillars.contains("TERRAIN_PER_PILLAR") && pillars.contains("pillarDamage(") && pillars.contains("PILLAR_IMPACT_MAX_CREATURES"), "the pillars are capped in blocks, hits and creatures");
+        assertFalse(pillars.contains("setBlock(") || pillars.contains("destroyBlock("), "the pillars change blocks only through SolomonTerrain");
+        String casts = file("SolomonCasts");
+        assertTrue(casts.contains("JudgmentConfig.solomonReplay()") && casts.contains("SafeCast.run(") && casts.contains("LOG_SIZE") && casts.contains("OWN_LOG"), "replays are behind their setting, guarded and the log is capped");
+        String ev = file("SolomonEvents");
+        assertEquals(0, Pattern.compile("PlayerTickEvent|EntityTickEvent|LevelTickEvent|ServerTickEvent").matcher(ev.replaceAll("import [^;]+;", "")).results().count(), "Solomon's events add no tick hook (its second runs from the skill)");
+        for (String way : new String[]{"onDeath", "onLogout", "onServerStopping"}) assertTrue(ev.contains(way), "Solomon's state is cleaned up on " + way);
     }
 
     @Test

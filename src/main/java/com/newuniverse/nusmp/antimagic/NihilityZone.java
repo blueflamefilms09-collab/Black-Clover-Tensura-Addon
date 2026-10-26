@@ -80,6 +80,7 @@ public final class NihilityZone {
                     x -> x.isAlive() && !x.isSpectator() && x.distanceToSqr(z.c) <= z.r * z.r)) {
                 if (owner != null && (t == owner || t.isAlliedTo(owner))) continue;
                 if (t instanceof Player pl && pl.isCreative()) continue;
+                if (com.newuniverse.nusmp.entity.veldanava.skills.SolomonHooks.antiMagicImmune(t)) continue;      // 3.18.0: Solomon's Infinite Grimoire is immune to anti-magic zones
                 EnergyBridge.effect(t, "silence", 30, 0);
                 if (second) {
                     Nullification.jamAll(t, 3, 0.1f);

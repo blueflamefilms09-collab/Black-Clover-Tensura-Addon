@@ -50,7 +50,7 @@ public final class JudgmentRules {
             new Mode(9, "final_judgment", "Final Judgment", Kind.HELD, 45000, 45000, 120, false)));
 
     /** The skills this build has, in the order of the owner's file. Releases append one line. */
-    public static final List<Spec> SPECS = List.of(SANDALPHON, IsrafilRules.ISRAFIL, JibrilRules.JIBRIL);
+    public static final List<Spec> SPECS = List.of(SANDALPHON, IsrafilRules.ISRAFIL, JibrilRules.JIBRIL, SolomonRules.SOLOMON);
 
     /** The spec of a skill id, or null. */
     public static Spec spec(String id) {
@@ -81,7 +81,7 @@ public final class JudgmentRules {
             new Card("sandalphon", "Sandalphon", "Lord of Judgment", true),
             new Card("israfil", "Israfil", "Lord of Trials", true),
             new Card("jibril", "Jibril", "Lord of Rigor", true),
-            new Card("solomon", "Solomon", "Lord of Sorcery", false),
+            new Card("solomon", "Solomon", "Lord of Sorcery", true),
             new Card("hercules", "Hercules", "Lord of Martial Prowess", false));
 
     public static Card card(String id) {

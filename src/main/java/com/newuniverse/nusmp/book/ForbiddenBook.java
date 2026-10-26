@@ -184,7 +184,7 @@ public class ForbiddenBook extends GrimoireBook {
                     if (e.getEffect().value().isBeneficial()) { t.removeEffect(e.getEffect()); break; }
                 }
                 var ex = TensuraStorages.getExistenceFrom(t);
-                if (ex != null) { ex.setMagicule(Math.max(0, ex.getMagicule() - EnergyHelper.getMaxMagicule(t) * 0.02)); ex.markDirty(); }
+                if (ex != null && !com.newuniverse.nusmp.entity.veldanava.skills.SolomonHooks.antiMagicImmune(t)) { ex.setMagicule(Math.max(0, ex.getMagicule() - EnergyHelper.getMaxMagicule(t) * 0.02)); ex.markDirty(); }      // 3.18.0: Infinite Grimoire is immune to mana depletion
             }
         });
         return true;

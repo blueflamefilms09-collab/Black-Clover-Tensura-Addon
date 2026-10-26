@@ -47,7 +47,7 @@ public final class WikiSpells {
     /** Takes a fraction of the target's max magicule; returns how much was taken. */
     static double drainMana(LivingEntity t, double frac) {
         var ex = TensuraStorages.getExistenceFrom(t);
-        if (ex == null) return 0;
+        if (ex == null || com.newuniverse.nusmp.entity.veldanava.skills.SolomonHooks.antiMagicImmune(t)) return 0;      // 3.18.0: Infinite Grimoire is immune to mana depletion
         double take = Math.min(ex.getMagicule(), EnergyHelper.getMaxMagicule(t) * frac);
         ex.setMagicule(ex.getMagicule() - take);
         ex.markDirty();
