@@ -1,0 +1,690 @@
+{
+ "_comment": "3.21.0 Sandalphon 3D models (JudgmentModels): close-up and normal-camera scenes of the guillotine blade, the scales of judgment, the law tablet and its shards, the lance head and the sword of Final Judgment. Same dusk sky as judgment.json.",
+ "judgment_cleave_close": {
+  "layer": "JudgmentLayer",
+  "sky": [
+   0.07,
+   0.08,
+   0.13
+  ],
+  "horizon": [
+   0.22,
+   0.24,
+   0.3
+  ],
+  "floor": [
+   0.24,
+   0.23,
+   0.22
+  ],
+  "shape": "JUDGMENT_CLEAVE",
+  "from": [
+   0,
+   1.4,
+   0
+  ],
+  "to": [
+   0,
+   1.4,
+   5
+  ],
+  "power": 5,
+  "duration": 10,
+  "cam": [
+   1.5,
+   2.0,
+   -3.0
+  ],
+  "target": [
+   0,
+   1.9,
+   4.0
+  ],
+  "ages": [
+   0.5,
+   1.2,
+   2,
+   3,
+   4.5,
+   6.5
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ],
+   [
+    0,
+    0,
+    6,
+    1.8
+   ],
+   [
+    -2.5,
+    0,
+    5.5,
+    1.8
+   ]
+  ]
+ },
+ "judgment_cleave_side": {
+  "layer": "JudgmentLayer",
+  "sky": [
+   0.07,
+   0.08,
+   0.13
+  ],
+  "horizon": [
+   0.22,
+   0.24,
+   0.3
+  ],
+  "floor": [
+   0.24,
+   0.23,
+   0.22
+  ],
+  "shape": "JUDGMENT_CLEAVE",
+  "from": [
+   0,
+   1.4,
+   0
+  ],
+  "to": [
+   0,
+   1.4,
+   5
+  ],
+  "power": 5,
+  "duration": 10,
+  "cam": [
+   8.5,
+   2.6,
+   3.2
+  ],
+  "target": [
+   0,
+   2.0,
+   4.0
+  ],
+  "ages": [
+   0.8,
+   1.6,
+   2.4,
+   3.4,
+   4.6,
+   6.5
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ],
+   [
+    0,
+    0,
+    6,
+    1.8
+   ],
+   [
+    -2.5,
+    0,
+    5.5,
+    1.8
+   ]
+  ]
+ },
+ "judgment_field_close": {
+  "layer": "JudgmentLayer",
+  "sky": [
+   0.07,
+   0.08,
+   0.13
+  ],
+  "horizon": [
+   0.22,
+   0.24,
+   0.3
+  ],
+  "floor": [
+   0.24,
+   0.23,
+   0.22
+  ],
+  "shape": "JUDGMENT_FIELD",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   0,
+   0
+  ],
+  "power": 8,
+  "duration": 240,
+  "cam": [
+   5.5,
+   4.0,
+   -8.0
+  ],
+  "target": [
+   0,
+   4.2,
+   0
+  ],
+  "ages": [
+   3,
+   8,
+   14,
+   40,
+   100,
+   235
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ],
+   [
+    3,
+    0,
+    2,
+    1.8
+   ],
+   [
+    -4,
+    0,
+    -1,
+    1.8
+   ]
+  ]
+ },
+ "judgment_field_scales": {
+  "layer": "JudgmentLayer",
+  "sky": [
+   0.07,
+   0.08,
+   0.13
+  ],
+  "horizon": [
+   0.22,
+   0.24,
+   0.3
+  ],
+  "floor": [
+   0.24,
+   0.23,
+   0.22
+  ],
+  "shape": "JUDGMENT_FIELD",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   0,
+   0
+  ],
+  "power": 8,
+  "duration": 240,
+  "cam": [
+   3.0,
+   3.8,
+   -5.0
+  ],
+  "target": [
+   0,
+   4.2,
+   0
+  ],
+  "ages": [
+   10,
+   20,
+   35,
+   55,
+   90,
+   180
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "judgment_edict_close": {
+  "layer": "JudgmentLayer",
+  "sky": [
+   0.07,
+   0.08,
+   0.13
+  ],
+  "horizon": [
+   0.22,
+   0.24,
+   0.3
+  ],
+  "floor": [
+   0.24,
+   0.23,
+   0.22
+  ],
+  "shape": "JUDGMENT_EDICT",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   0,
+   0
+  ],
+  "power": 30,
+  "duration": 24,
+  "cam": [
+   4.5,
+   3.2,
+   -9.0
+  ],
+  "target": [
+   0,
+   2.6,
+   0
+  ],
+  "ages": [
+   1,
+   2.5,
+   4,
+   6,
+   7.5,
+   8.2
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ],
+   [
+    3,
+    0,
+    4,
+    1.8
+   ]
+  ]
+ },
+ "judgment_edict_shards": {
+  "layer": "JudgmentLayer",
+  "sky": [
+   0.07,
+   0.08,
+   0.13
+  ],
+  "horizon": [
+   0.22,
+   0.24,
+   0.3
+  ],
+  "floor": [
+   0.24,
+   0.23,
+   0.22
+  ],
+  "shape": "JUDGMENT_EDICT",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   0,
+   0
+  ],
+  "power": 30,
+  "duration": 24,
+  "cam": [
+   5,
+   4,
+   -10
+  ],
+  "target": [
+   0,
+   2.2,
+   0
+  ],
+  "ages": [
+   8.6,
+   9.5,
+   11,
+   13,
+   16,
+   20
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "judgment_bullet_close": {
+  "layer": "JudgmentLayer",
+  "sky": [
+   0.07,
+   0.08,
+   0.13
+  ],
+  "horizon": [
+   0.22,
+   0.24,
+   0.3
+  ],
+  "floor": [
+   0.24,
+   0.23,
+   0.22
+  ],
+  "shape": "JUDGMENT_BULLET",
+  "from": [
+   -6,
+   1.5,
+   0
+  ],
+  "to": [
+   18,
+   1.4,
+   0
+  ],
+  "power": 0.35,
+  "duration": 12,
+  "cam": [
+   6,
+   2.2,
+   -5
+  ],
+  "target": [
+   6,
+   1.5,
+   0
+  ],
+  "ages": [
+   0.6,
+   1.0,
+   1.4,
+   1.8,
+   2.2,
+   3.5
+  ],
+  "figures": [
+   [
+    18,
+    0,
+    0,
+    1.8
+   ],
+   [
+    -6,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "judgment_bullet_head": {
+  "layer": "JudgmentLayer",
+  "sky": [
+   0.07,
+   0.08,
+   0.13
+  ],
+  "horizon": [
+   0.22,
+   0.24,
+   0.3
+  ],
+  "floor": [
+   0.24,
+   0.23,
+   0.22
+  ],
+  "shape": "JUDGMENT_BULLET",
+  "from": [
+   -6,
+   1.5,
+   0
+  ],
+  "to": [
+   18,
+   1.4,
+   0
+  ],
+  "power": 0.35,
+  "duration": 12,
+  "cam": [
+   12,
+   2.4,
+   -4
+  ],
+  "target": [
+   12,
+   1.5,
+   0
+  ],
+  "ages": [
+   1.0,
+   1.4,
+   1.8,
+   2.2,
+   2.6,
+   3.2
+  ],
+  "figures": [
+   [
+    18,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "judgment_cross_close": {
+  "layer": "JudgmentLayer",
+  "sky": [
+   0.07,
+   0.08,
+   0.13
+  ],
+  "horizon": [
+   0.22,
+   0.24,
+   0.3
+  ],
+  "floor": [
+   0.24,
+   0.23,
+   0.22
+  ],
+  "shape": "JUDGMENT_CROSS",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   0,
+   0
+  ],
+  "power": 2,
+  "duration": 66,
+  "cam": [
+   4,
+   9,
+   -20
+  ],
+  "target": [
+   0,
+   9,
+   0
+  ],
+  "ages": [
+   8,
+   18,
+   28,
+   34,
+   36.5,
+   39
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ],
+   [
+    5,
+    0,
+    -3,
+    1.8
+   ]
+  ]
+ },
+ "judgment_cross_stand": {
+  "layer": "JudgmentLayer",
+  "sky": [
+   0.07,
+   0.08,
+   0.13
+  ],
+  "horizon": [
+   0.22,
+   0.24,
+   0.3
+  ],
+  "floor": [
+   0.24,
+   0.23,
+   0.22
+  ],
+  "shape": "JUDGMENT_CROSS",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   0,
+   0
+  ],
+  "power": 2,
+  "duration": 66,
+  "cam": [
+   0,
+   10,
+   -30
+  ],
+  "target": [
+   0,
+   10,
+   0
+  ],
+  "ages": [
+   37,
+   40,
+   46,
+   52,
+   58,
+   63
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ],
+   [
+    5,
+    0,
+    -3,
+    1.8
+   ]
+  ]
+ },
+ "judgment_cross_guard": {
+  "layer": "JudgmentLayer",
+  "sky": [
+   0.07,
+   0.08,
+   0.13
+  ],
+  "horizon": [
+   0.22,
+   0.24,
+   0.3
+  ],
+  "floor": [
+   0.24,
+   0.23,
+   0.22
+  ],
+  "shape": "JUDGMENT_CROSS",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   0,
+   0
+  ],
+  "power": 2,
+  "duration": 66,
+  "cam": [
+   5,
+   17,
+   -9
+  ],
+  "target": [
+   0,
+   17,
+   0
+  ],
+  "ages": [
+   24,
+   32,
+   36,
+   38,
+   44,
+   56
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ }
+}

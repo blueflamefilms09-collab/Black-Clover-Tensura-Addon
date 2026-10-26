@@ -30,6 +30,9 @@ import java.util.Set;
  * (minimums in brackets). Worst case quads per effect per frame: BULLET 37 (16 crack pieces + 1 glow ribbon + needle 2 + head flare/glow 3 + ghosts 6 + muzzle 5 + impact 4), SIGIL 17, EDICT 81 (glyph bands 30 + 20,
  * motes 22), CLEAVE 78 (measured; the engine hard-caps every activation at 100 quads / 400 vertices anyway), FIELD 40, CROSS 55. No effect allocates more than a few small vectors per frame (the same as the other layers); nothing is kept between frames, so nothing has to be cleaned up on logout,
  * death or dimension change; the server only sends one packet per effect (VfxSpawn) and nothing here runs on the server.
+ * <p>
+ * <b>3.21.0 with the 3D models on and the effect within 64 blocks</b> (setting {@code visual.judgmentModels}, see {@code JudgmentModels}; the numbers above are for the setting off or far away): measured worst quads per frame over dense age sweeps
+ * BULLET 49, CLEAVE 73, FIELD 90, EDICT 71, CROSS 76 (all under the 100-quad cap; every model asks the budget first and is skipped whole when it does not fit, the old flat part then stays).
  */
 public class JudgmentLayer extends AbstractVfxLayer {
     private static ResourceLocation t(String n) { return VfxTextures.byName(n); }
@@ -48,6 +51,8 @@ public class JudgmentLayer extends AbstractVfxLayer {
     public static final ResourceLocation CRACKS_GROUND = t("judgment_cracks_ground");
     public static final ResourceLocation SLASH = t("judgment_slash");
     public static final ResourceLocation BLADE = t("judgment_blade");
+    /** 3.21.0: the material atlas of the 3D models ({@link JudgmentModels}), 4 x 4 cells. */
+    public static final ResourceLocation MODEL_ATLAS = t("judgment_model_atlas");
 
     private static final int WHITE = 0xFFFFFFFF;
     private static final int STEEL = 0xFFAFC3DC;
@@ -55,6 +60,14 @@ public class JudgmentLayer extends AbstractVfxLayer {
     private static final int WHITE_GOLD = 0xFFFFE3A0;
     /** Glyph band texture is 16:1 (1024 x 64): one repeat covers 16 band widths. */
     private static final float GLYPH_ASPECT = 16f;
+
+    /** 3.21.0: the models are drawn within this distance (blocks) of the camera, further out the flat parts of 3.20.0 stand alone (they cost fewer quads). */
+    static final float MODEL_RANGE = 64f;
+    /** The tick the law tablet breaks into shards (the wave has left by then). */
+    static final float TABLET_SHATTER = 8.5f;
+
+    /** The poser / drawer of the 3D models (one per layer; render thread only). */
+    private final JudgmentMeshDraw mesh = new JudgmentMeshDraw();
 
     /** Scratch corners of the quad being drawn (the layer draws on the render thread only, one effect at a time). */
     private final Vector3f q0 = new Vector3f(), q1 = new Vector3f(), q2 = new Vector3f(), q3 = new Vector3f();
@@ -203,6 +216,31 @@ public class JudgmentLayer extends AbstractVfxLayer {
         buf.plane(RING, VfxBlend.ADD, pose, radius / 0.965f, argb);
     }
 
+    // ------------------------------------------------------------------ 3.21.0: the 3D models
+    /** True when the 3D models are drawn here: the setting is on, the particle setting is not minimal and the thing is within {@code range} blocks of the camera (else the 3.20.0 parts stand alone). */
+    private static boolean modelsOn(VfxRenderContext ctx, float x, float y, float z, float range) {
+        return JudgmentModels.enabled() && ctx.detail >= 0.5f && x * x + y * y + z * z < range * range;
+    }
+
+    /** The yaw that turns a model's local +Z towards the camera (the camera is at the origin) from the point (x, z). */
+    private static float faceYaw(float x, float z) {
+        return (float) Math.atan2(-x, -z);
+    }
+
+    /**
+     * Lance head: the faceted spear head rides the head of the needle (the tip a little ahead of it), spinning slowly about the line, scaled up with the distance so it still reads far away. At most 22 quads;
+     * returns the quads drawn (0 = the flat flare alone).
+     */
+    private int lanceHead(VfxVertexBuffer buf, float hx, float hy, float hz, float ix, float iy, float iz, float s, float age, float na) {
+        float dist = Mth.sqrt(hx * hx + hy * hy + hz * hz);
+        float sc = (0.8f + 1.0f * s) * (1f + dist / 60f) * Mth.clamp(0.4f + age / 1.2f, 0.4f, 1f);
+        JudgmentModels.Posed p = mesh.posed();
+        p.clearPose();
+        p.look(ix, iy, iz, 0f, 1f, 0f, age * 0.5f, sc);
+        float back = (JudgmentModels.LANCE_TIP - 0.3f) * sc;
+        return mesh.draw(buf, MODEL_ATLAS, JudgmentModels.LANCE, hx - ix * back, hy - iy * back, hz - iz * back, a(WHITE, na), 0.15f + 0.5f * na);
+    }
+
     // ================================================================== JUDGMENT_BULLET
     private void bullet(VfxInstance inst, VfxRenderContext ctx, VfxVertexBuffer buf) {
         float age = inst.ageTicks(ctx.partialTick);
@@ -279,8 +317,10 @@ public class JudgmentLayer extends AbstractVfxLayer {
             float hx = a.x + ix * headD, hy = a.y + iy * headD, hz = a.z + iz * headD;
             ribbon(buf, NEEDLE, VfxBlend.ADD, tx, ty, tz, hx, hy, hz, 0.7f * s + 0.06f, 0.7f * s + 0.06f, 1f, 0f, a(col, 0.6f * na), a(col, 0.9f * na));
             ribbon(buf, NEEDLE, VfxBlend.ADD, tx, ty, tz, hx, hy, hz, 0.26f * s + 0.04f, 0.26f * s + 0.04f, 1f, 0f, a(WHITE, 0.9f * na), a(WHITE, na));
+            int lance = 0;
+            if (age > 0.1f && modelsOn(ctx, hx, hy, hz, MODEL_RANGE)) lance = lanceHead(buf, hx, hy, hz, ix, iy, iz, s, age, na);        // 3.21.0: the 3D lance head (the flare behind it is dimmed so it shows)
             q0.set(hx, hy, hz);
-            flare(ctx, buf, q0, (0.9f + 1.5f * s) * (0.7f + 0.3f * na), age * 0.5f, a(hot, na));
+            flare(ctx, buf, q0, (0.9f + 1.5f * s) * (0.7f + 0.3f * na), age * 0.5f, a(hot, lance > 0 ? 0.55f * na : na));
             VfxBloom.glow(ctx, buf, q0, 0.5f * s + 0.35f, col, 0.7f * na);
         }
 
@@ -380,6 +420,45 @@ public class JudgmentLayer extends AbstractVfxLayer {
         }
     }
 
+    /**
+     * The law tablet of the Edict: a tall stone tablet with glowing glyph panels rises out of the caster's position in 4.5 ticks, flashes as the wave leaves (ticks 3.5 to 7.5), trembles, and at tick 8.5 breaks into
+     * shards that fly out and tumble. At most 14 quads for the tablet and 4 per shard (at most 8 shards); returns the quads drawn.
+     */
+    private int lawTablet(VfxVertexBuffer buf, VfxRenderContext ctx, Vector3f c, float age, float fade, long seed) {
+        float K = 1.7f;
+        JudgmentModels.Posed p = mesh.posed();
+        p.clearPose();
+        float gy = c.y - 0.07f;
+        if (age < TABLET_SHATTER) {
+            float rise = VfxAnim.easeOutCubic(Mth.clamp(age / 4.5f, 0f, 1f));
+            float oy = gy - 3.4f * K * (1f - rise);
+            float jit = age > 6.5f ? 0.03f * K * Mth.sin(age * 5f) * (age - 6.5f) / 2f : 0f;
+            float flash = Mth.clamp(1f - Math.abs(age - 5.2f) / 2.4f, 0f, 1f);
+            float heat = 0.15f + 0.85f * flash + 0.35f * smooth(7.2f, 8.5f, age);
+            p.upright(faceYaw(c.x, c.z) + 0.28f, 0f, K);
+            return mesh.draw(buf, MODEL_ATLAS, JudgmentModels.TABLET, c.x + jit, oy, c.z, a(WHITE, fade * Mth.clamp(0.35f + age / 2f, 0f, 1f)), Math.min(1f, heat));
+        }
+        float s = age - TABLET_SHATTER;
+        int n = ctx.seg(8, 4);
+        int drawn = 0;
+        float heat = 0.8f * (1f - smooth(0f, 7f, s));
+        for (int i = 0; i < n; i++) {
+            float hh = h(seed, i, 61), h2 = h(seed, i, 62), h3 = h(seed, i, 63), h4 = h(seed, i, 64);
+            float an = (i + 0.5f) / n * Mth.TWO_PI + (h2 - 0.5f) * 0.7f;
+            float spd = (0.2f + 0.2f * h3) * K / 1.7f, up = 0.14f + 0.2f * h4;
+            float px = c.x + Mth.cos(an) * (0.2f * K + spd * s), pz = c.z + Mth.sin(an) * (0.2f * K + spd * s);
+            float py = Math.max(gy + 0.1f, gy + (0.4f + 2.7f * hh) * K + up * s - 0.0175f * s * s);
+            float size = K * (0.45f + 0.5f * hh);
+            p.tumble(h(seed, i, 65) - 0.5f, 1f, h(seed, i, 66) - 0.5f, h4 * 6f + s * (0.25f + 0.3f * h3), size, size, size);
+            drawn += mesh.draw(buf, MODEL_ATLAS, JudgmentModels.SHARD, px, py, pz, a(WHITE, fade), heat);
+        }
+        if (s < 3f) {
+            q0.set(c.x, gy + 1.6f * K, c.z);
+            flare(ctx, buf, q0, 5f * (1f - s / 3f) + 1f, age * 0.3f, a(WHITE, 1f - s / 3f));
+        }
+        return drawn;
+    }
+
     // ================================================================== JUDGMENT_EDICT
     private void edict(VfxInstance inst, VfxRenderContext ctx, VfxVertexBuffer buf) {
         float age = inst.ageTicks(ctx.partialTick);
@@ -392,6 +471,7 @@ public class JudgmentLayer extends AbstractVfxLayer {
         long seed = inst.seed;
         Vector3f c = ctx.rel(inst.from(ctx)).add(0, 0.07f, 0);
         VfxPose floor = VfxPose.ground(c);
+        boolean models = modelsOn(ctx, c.x, c.y, c.z, MODEL_RANGE);                           // 3.21.0: the law tablet and its shards (the glyph bands and the motes are thinner while they are drawn)
 
         if (R > 0.3f) {
             // the erased band under the wave, the wave itself, and the bright leading ring
@@ -404,20 +484,21 @@ public class JudgmentLayer extends AbstractVfxLayer {
             float bw = Mth.clamp(0.08f * inst.power, 0.7f, 2.4f);
             float outer = R * 0.93f, inner = outer - bw;
             if (inner > 0.15f) {
-                int segs = ctx.seg(Mth.clamp(Math.round(R * 1.1f), 10, 30), 8);
+                int segs = ctx.seg(Mth.clamp(Math.round(R * 1.1f), 10, models ? 24 : 30), 8);
                 int reps = Math.max(1, Math.round(Mth.TWO_PI * (outer - bw * 0.5f) / (GLYPH_ASPECT * bw)));
                 buf.ring(GLYPHS, VfxBlend.ALPHA, floor, inner, outer, segs, reps, age * 0.012f, a(WHITE_GOLD, 0.97f * fade * lead));
             }
             float bw2 = bw * 0.8f, outer2 = R * 0.70f, inner2 = outer2 - bw2;
             if (inner2 > 0.15f) {
-                int segs2 = ctx.seg(Mth.clamp(Math.round(R * 0.8f), 8, 20), 6);
+                int segs2 = ctx.seg(Mth.clamp(Math.round(R * 0.8f), 8, models ? 14 : 20), 6);
                 int reps2 = Math.max(1, Math.round(Mth.TWO_PI * (outer2 - bw2 * 0.5f) / (GLYPH_ASPECT * bw2)));
                 buf.ring(GLYPHS, VfxBlend.ALPHA, floor, inner2, outer2, segs2, reps2, -age * 0.015f, a(WHITE, 0.7f * fade * lead));
             }
         }
 
+        int tablet = models ? lawTablet(buf, ctx, c, age, fade, seed) : 0;
         // things erased upward: motes that are born just behind the front and rise out of the ground
-        int mN = ctx.seg(22, 8);
+        int mN = tablet > 0 ? ctx.seg(10, 5) : ctx.seg(22, 8);
         float msize = 0.5f + 0.02f * inst.power;
         for (int i = 0; i < mN; i++) {
             float born = h(seed, i, 0) * 16f;
@@ -444,6 +525,26 @@ public class JudgmentLayer extends AbstractVfxLayer {
             q0.set(c.x, c.y + 0.5f, c.z);
             flare(ctx, buf, q0, 6f * (1f - t0) + 1f, age * 0.2f, a(WHITE, 1f - t0));
         }
+    }
+
+    /**
+     * Guillotine blade of the Cleave: a huge slanted blade (bevel, glowing edge, gold straps) rides the crescent, edge first, from the left end to the right end in 4.5 ticks (the broad face in the plane of the arc,
+     * the bevel towards the caster). At most 22 quads; returns the quads drawn (0 = the old falling-blade sprites are drawn instead).
+     */
+    private int guillotine(VfxVertexBuffer buf, float ox, float oy, float oz, Vector3f e1, Vector3f e2, Vector3f nrm, float R, float age, float fade) {
+        float prog = VfxAnim.easeOutCubic(Mth.clamp((age - 0.2f) / 4.4f, 0f, 1f));
+        float ang = -1.05f + 2.1f * prog;
+        float ca = Mth.cos(ang), sa = Mth.sin(ang);
+        float rx = e1.x * ca + e2.x * sa, ry = e1.y * ca + e2.y * sa, rz = e1.z * ca + e2.z * sa;          // outward along the radius
+        float tx = -e1.x * sa + e2.x * ca, ty = -e1.y * sa + e2.y * ca, tz = -e1.z * sa + e2.z * ca;       // the way the stroke travels
+        float K = 0.42f * R * (0.7f + 0.3f * Mth.clamp(age / 1.2f, 0f, 1f));
+        float back = 0.175f * K;
+        float px = ox + rx * R - tx * back, py = oy + ry * R - ty * back, pz = oz + rz * R - tz * back;
+        JudgmentModels.Posed p = mesh.posed();
+        p.clearPose();
+        p.axes(rx, ry, rz, -tx, -ty, -tz, nrm.x, nrm.y, nrm.z, K, K, K);
+        float heat = 0.15f + 0.5f * (1f - Mth.clamp((age - 2.5f) / 4f, 0f, 1f));
+        return mesh.draw(buf, MODEL_ATLAS, JudgmentModels.GUILLOTINE, px, py, pz, a(WHITE, fade * Mth.clamp(age / 0.7f, 0f, 1f)), heat);
     }
 
     // ================================================================== JUDGMENT_CLEAVE
@@ -479,11 +580,12 @@ public class JudgmentLayer extends AbstractVfxLayer {
         float mx = o.x + fx * hl, my = o.y + 0.9f, mz = o.z + fz * hl;
         VfxPose pose = new VfxPose(new Vector3f(mx - e1.x * R, my - e1.y * R, mz - e1.z * R), e1, e2, nrm);
         float a0 = -1.05f, a1 = 1.05f;
+        boolean models = modelsOn(ctx, mx, my, mz, MODEL_RANGE);                                // 3.21.0: the 3D guillotine blade (the arc is drawn a little coarser to leave it room)
 
         float headP = VfxAnim.easeOutCubic(Mth.clamp(age / 3.5f, 0, 1));
         float tailP = VfxAnim.easeInCubic(Mth.clamp((age - 1.5f) / 6.5f, 0, 1));
         float headA = a0 + (a1 - a0) * headP, tailA = a0 + (a1 - a0) * tailP;
-        int segs = ctx.seg(10, 5);
+        int segs = models ? ctx.seg(8, 5) : ctx.seg(10, 5);
         float wBody = 0.34f * R;
         float len = headA - tailA;
         if (len > 0.03f) {
@@ -494,7 +596,7 @@ public class JudgmentLayer extends AbstractVfxLayer {
             buf.arc(SLASH, VfxBlend.ADD, pose, R + wBody * 0.5f, wBody * 0.1f, tailA, len, segs, a(WHITE, fade));                         // the hot hair-line on the outer edge
         }
         // two stutter echoes behind it
-        int es = ctx.seg(6, 4);
+        int es = models ? ctx.seg(4, 3) : ctx.seg(6, 4);
         for (int k = 1; k <= 2; k++) {
             float ae = age - k * 1.6f;
             if (ae <= 0f) continue;
@@ -513,7 +615,8 @@ public class JudgmentLayer extends AbstractVfxLayer {
         }
         float drop = 6.5f * R / 5f;
         float bladeA = age < 3f ? 1f : 1f - Mth.clamp((age - 3f) / 4f, 0, 1);
-        for (int k = 0; k < 4; k++) {
+        int blade3d = models ? guillotine(buf, pose.origin().x, pose.origin().y, pose.origin().z, e1, e2, nrm, R, age, fade) : 0;
+        for (int k = 0; blade3d == 0 && k < 4; k++) {
             float ak = age - k * 0.45f;
             if (ak < 0f) continue;
             float yk = my + drop * (1f - VfxAnim.easeInCubic(Mth.clamp(ak / 3f, 0, 1)));
@@ -547,6 +650,32 @@ public class JudgmentLayer extends AbstractVfxLayer {
         }
     }
 
+    /**
+     * Scales of judgment over the field: a golden balance (pillar, ring, beam, two pans on chains) hovers above the centre, turned towards the viewer, rises and fades in over 14 ticks, tilts and settles (the right pan,
+     * holding a burning heart, ends lower than the left one, which holds a feather), breathes while the field lasts and fades with it. At most 56 quads; returns the quads drawn (0 = the flat field alone).
+     */
+    private int scalesOfJudgment(VfxVertexBuffer buf, VfxRenderContext ctx, Vector3f c, float age, float fade, float R, int col) {
+        float ins = smooth(0f, 14f, age);
+        float s = 1.7f * (0.45f + 0.55f * VfxAnim.easeOutBack(Mth.clamp(age / 12f, 0f, 1f))) * Mth.clamp(R / 8f, 0.75f, 1.35f);
+        float oy = c.y + 1.6f + 0.15f * Mth.sin(age * 0.07f) - 1.2f * (1f - ins);
+        float tilt = 0.5f * (float) Math.exp(-age / 55f) * Mth.cos(age * 0.11f) - 0.09f + 0.015f * Mth.sin(age * 0.05f);
+        float sway = 0.05f * Mth.sin(age * 0.09f + 1f) + 0.10f * (float) Math.exp(-age / 40f) * Mth.sin(age * 0.11f);
+        JudgmentModels.Posed p = mesh.posed();
+        p.clearPose();
+        p.roll()[JudgmentModels.S_BEAM] = tilt;
+        p.roll()[JudgmentModels.S_PAN_L] = -tilt + sway;
+        p.roll()[JudgmentModels.S_PAN_R] = -tilt - sway;
+        p.bend()[JudgmentModels.S_PAN_L] = 0.04f * Mth.sin(age * 0.07f + 0.5f);
+        p.bend()[JudgmentModels.S_PAN_R] = 0.04f * Mth.sin(age * 0.07f + 2.4f);
+        p.upright(faceYaw(c.x, c.z) + 0.4f * Mth.sin(age * 0.019f), 0f, s);
+        int n = mesh.draw(buf, MODEL_ATLAS, JudgmentModels.SCALES, c.x, oy, c.z, a(WHITE, 0.97f * fade * ins), 0.22f + 0.12f * Mth.sin(age * 0.1f));
+        if (n > 0) {
+            q0.set(c.x, oy + JudgmentModels.SCALES_PIVOT_Y * s, c.z);
+            VfxBloom.glow(ctx, buf, q0, 1.5f * s, col, 0.3f * fade * ins);
+        }
+        return n;
+    }
+
     // ================================================================== JUDGMENT_FIELD
     private void field(VfxInstance inst, VfxRenderContext ctx, VfxVertexBuffer buf) {
         float age = inst.ageTicks(ctx.partialTick);
@@ -569,6 +698,8 @@ public class JudgmentLayer extends AbstractVfxLayer {
         buf.plane(CRACKS_GROUND, VfxBlend.ALPHA, floor.spin(h(seed, 7, 0) * Mth.TWO_PI), R * 0.98f, a(BLACK, 0.8f * fade));
         buf.plane(CRACKS_GROUND, VfxBlend.ALPHA, floor.spin(h(seed, 8, 0) * Mth.TWO_PI + 2.1f), R * 0.62f, a(BLACK, 0.55f * fade));
 
+        // 3.21.0: the scales of judgment hover above the centre (the motes are fewer while they are drawn)
+        boolean scales = R > 2f && modelsOn(ctx, c.x, c.y, c.z, MODEL_RANGE) && scalesOfJudgment(buf, ctx, c, age, fade, R, col) > 0;
         // thin beams of light standing on the rim, each flickering slowly on its own
         int nb = ctx.seg(12, 6);
         for (int i = 0; i < nb; i++) {
@@ -580,12 +711,40 @@ public class JudgmentLayer extends AbstractVfxLayer {
             ribbon(buf, BEAM, VfxBlend.ADD, bx, c.y, bz, bx, c.y + top, bz, 0.34f, 0.22f, sc, sc + top / 6f, a(col, 0.36f * flick * fade), a(col, 0f));
             ribbon(buf, SHAFT, VfxBlend.ADD, bx, c.y, bz, bx, c.y + top * 0.9f, bz, 0.07f, 0.04f, sc, sc + top / 6f, a(WHITE, 0.7f * flick * fade), a(WHITE, 0f));
         }
-        int m = ctx.seg(8, 3);
+        int m = scales ? ctx.seg(4, 2) : ctx.seg(8, 3);
         for (int i = 0; i < m; i++) {
             float u = Mth.frac(age / 70f + h(seed, i, 5));
             float an = h(seed, i, 6) * Mth.TWO_PI, rr = (0.45f + 0.55f * h(seed, i, 7)) * R;
             mote(ctx, buf, c.x + Mth.cos(an) * rr, c.y + 0.1f + u * 3.2f, c.z + Mth.sin(an) * rr, 0.22f, a(WHITE, Mth.sin(u * Mth.PI) * 0.65f * fade));
         }
+    }
+
+    /**
+     * The sword of Final Judgment: a vertical great sword (long fullered blade, winged crossguard, wrapped hilt), point down, comes down out of the sky onto the target while the cross charges (slowly, ghostly at first,
+     * trembling when it hangs over the point), plunges in at the boom and stands in the ground while the cross glows, fading with it. The guard stands where the crossbar of light crosses the pillar. At most 36 quads;
+     * returns the quads drawn.
+     */
+    private int swordOfJudgment(VfxVertexBuffer buf, Vector3f g, float S, float d, float p, float age, float fadeAll, float nx, float nz) {
+        float K = 1.96f * S;
+        float gap, alpha, heat, roll;
+        if (d < 0f) {
+            gap = 3f * S + 28f * S * (float) Math.pow(1f - p, 2.2);
+            gap += 0.1f * S * Mth.sin(age * 0.9f) * p;
+            alpha = (0.35f + 0.6f * p) * smooth(0f, 0.16f, p);
+            heat = 0.12f + 0.4f * p;
+            roll = 0.3f * Mth.sin(age * 0.03f);
+        } else {
+            float pl = Mth.clamp(d / 2.2f, 0f, 1f);
+            gap = 3f * S - 3.5f * S * VfxAnim.easeInCubic(pl);
+            if (d > 2.2f) gap += 0.15f * S * (float) Math.exp(-(d - 2.2f) / 3f) * Mth.sin((d - 2.2f) * 2.2f);
+            alpha = fadeAll;
+            heat = 0.35f + 0.65f * (1f - Mth.clamp(d / 10f, 0f, 1f));
+            roll = 0.3f * Mth.sin(age * 0.03f) * (1f - 0.7f * pl);
+        }
+        JudgmentModels.Posed pz = mesh.posed();
+        pz.clearPose();
+        pz.look(0f, 1f, 0f, nx, 0f, nz, roll, K);
+        return mesh.draw(buf, MODEL_ATLAS, JudgmentModels.SWORD, g.x, g.y + gap, g.z, a(WHITE, alpha), heat);
     }
 
     // ================================================================== JUDGMENT_CROSS
@@ -622,6 +781,7 @@ public class JudgmentLayer extends AbstractVfxLayer {
         }
         VfxPose faceCam = VfxPose.facing(cen, new Vector3f(nx, 0, nz));
         float stutter = 0.8f + 0.2f * h(seed, (int) Math.floor(age), 7);
+        boolean models = modelsOn(ctx, g.x, g.y + 6f * S, g.z, MODEL_RANGE);                         // 3.21.0: the 3D sword of judgment (the motes are fewer while it is drawn)
 
         // ---- the clock rings: they spin down in stepping ticks and freeze at the detonation
         float ang = 16f * VfxAnim.easeOutCubic(p);
@@ -656,6 +816,7 @@ public class JudgmentLayer extends AbstractVfxLayer {
             VfxBloom.glow(ctx, buf, cen, (0.5f + 2.5f * p * p) * S, col, (0.3f + 0.7f * p) * stutter);
             flare(ctx, buf, cen, (0.3f + 3.2f * (float) Math.pow(p, 1.5)) * S, age * 0.03f, a(hot, (0.4f + 0.6f * p) * stutter));
             buf.plane(VfxTextures.GLOW, VfxBlend.ADD, floor, 3.5f * S * (0.4f + 0.6f * p), a(col, 0.5f * p));
+            if (models) swordOfJudgment(buf, g, S, d, p, age, fadeAll, nx, nz);
             return;
         }
 
@@ -725,9 +886,10 @@ public class JudgmentLayer extends AbstractVfxLayer {
         buf.plane(WAVE, VfxBlend.ADD, floor, 9f * S * VfxAnim.easeOutCubic(tw) / 0.955f, a(col, 0.5f * (1f - Mth.clamp(d / 18f, 0, 1))));
         if (d >= 0.5f) buf.plane(CRACKS_GROUND, VfxBlend.ALPHA, floor.spin(h(seed, 3, 3) * Mth.TWO_PI), 9f * S * VfxAnim.easeOutCubic(Mth.clamp(d / 5f, 0, 1)), a(BLACK, 0.92f * fadeAll));
         VfxBloom.planeGlow(buf, floor, 3f * S, col, 0.5f * fadeAll);
+        int sword = models ? swordOfJudgment(buf, g, S, d, p, age, fadeAll, nx, nz) : 0;
 
         // motes rising along the pillar
-        int mN = ctx.seg(16, 6);
+        int mN = sword > 0 ? ctx.seg(6, 3) : ctx.seg(16, 6);
         for (int i = 0; i < mN; i++) {
             float u = Mth.frac(d * 0.035f + h(seed, i, 20));
             float an = h(seed, i, 21) * Mth.TWO_PI, rr = (0.3f + 1.9f * h(seed, i, 22)) * S;
