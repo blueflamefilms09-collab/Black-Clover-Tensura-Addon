@@ -222,6 +222,7 @@ public class NUSMP {
             modContainer.registerConfig(ModConfig.Type.CLIENT, com.newuniverse.nusmp.vfx.client.portal.SpatialPortalConfig.SPEC, "nusmp-spatial-portal.toml");
             modContainer.registerConfig(ModConfig.Type.CLIENT, com.newuniverse.nusmp.vfx.client.VfxSafeBlendConfig.SPEC, "nusmp-vfx-client.toml");      // 1.105.0: vfx.safeBlend (the square bug fix)
             com.newuniverse.nusmp.vfx.client.FlatPropsConfig.init(modEventBus, modContainer);                                  // visual.flatProps (CLIENT, default off): the flat sword / axe / shield / paper-figure cut-outs stay hidden
+            com.newuniverse.nusmp.vfx.client.HerculesModelsConfig.init(modEventBus, modContainer);                           // 3.20.0: visual.herculesModels (CLIENT, default on): the 3D models of the Hercules ultimate; off = the flat sprites
             com.newuniverse.nusmp.client.labyrinth.LabyrinthClient.init(modEventBus);                                        // 1.35.0: Labyrinth renderers, sky
             com.newuniverse.nusmp.client.loot.LootClient.init(modEventBus);                                                  // 1.99.0: the dungeon armour hides its vanilla box under the worn 3D model
             com.newuniverse.nusmp.client.mega.system.SystemClient.init(modEventBus, modContainer);                           // 1.55.0: the System overlay layer, its key and client config

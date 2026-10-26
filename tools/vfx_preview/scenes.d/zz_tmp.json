@@ -1,0 +1,186 @@
+{
+ "zz_fa": {
+  "layer": "HerculesLayer",
+  "sky": [
+   0.09,
+   0.07,
+   0.08
+  ],
+  "horizon": [
+   0.4,
+   0.27,
+   0.18
+  ],
+  "floor": [
+   0.25,
+   0.2,
+   0.16
+  ],
+  "shape": "HERCULES_STRIKE",
+  "from": [
+   0,
+   0.9,
+   0
+  ],
+  "to": [
+   0,
+   1.2,
+   -6
+  ],
+  "power": 1,
+  "duration": 44,
+  "cam": [
+   2.6,
+   0.7,
+   -3.2
+  ],
+  "target": [
+   0,
+   1.2,
+   1.0
+  ],
+  "ages": [
+   10,
+   13
+  ],
+  "figures": []
+ },
+ "zz_fb": {
+  "layer": "HerculesLayer",
+  "sky": [
+   0.09,
+   0.07,
+   0.08
+  ],
+  "horizon": [
+   0.4,
+   0.27,
+   0.18
+  ],
+  "floor": [
+   0.25,
+   0.2,
+   0.16
+  ],
+  "shape": "HERCULES_STRIKE",
+  "from": [
+   0,
+   0.9,
+   0
+  ],
+  "to": [
+   0,
+   1.2,
+   -6
+  ],
+  "power": 1,
+  "duration": 44,
+  "cam": [
+   1.5,
+   5.5,
+   -1.0
+  ],
+  "target": [
+   0,
+   1.2,
+   1.0
+  ],
+  "ages": [
+   10,
+   13
+  ],
+  "figures": []
+ },
+ "zz_fc": {
+  "layer": "HerculesLayer",
+  "sky": [
+   0.09,
+   0.07,
+   0.08
+  ],
+  "horizon": [
+   0.4,
+   0.27,
+   0.18
+  ],
+  "floor": [
+   0.25,
+   0.2,
+   0.16
+  ],
+  "shape": "HERCULES_STRIKE",
+  "from": [
+   0,
+   0.9,
+   0
+  ],
+  "to": [
+   0,
+   1.2,
+   -6
+  ],
+  "power": 1,
+  "duration": 44,
+  "cam": [
+   5.0,
+   1.3,
+   1.0
+  ],
+  "target": [
+   0,
+   1.2,
+   1.0
+  ],
+  "ages": [
+   10,
+   13
+  ],
+  "figures": []
+ },
+ "zz_fd": {
+  "layer": "HerculesLayer",
+  "sky": [
+   0.09,
+   0.07,
+   0.08
+  ],
+  "horizon": [
+   0.4,
+   0.27,
+   0.18
+  ],
+  "floor": [
+   0.25,
+   0.2,
+   0.16
+  ],
+  "shape": "HERCULES_STRIKE",
+  "from": [
+   0,
+   0.9,
+   0
+  ],
+  "to": [
+   0,
+   1.2,
+   -6
+  ],
+  "power": 1,
+  "duration": 44,
+  "cam": [
+   -2.5,
+   2.8,
+   5.5
+  ],
+  "target": [
+   0,
+   1.2,
+   1.0
+  ],
+  "ages": [
+   10,
+   13
+  ],
+  "figures": []
+ }
+}

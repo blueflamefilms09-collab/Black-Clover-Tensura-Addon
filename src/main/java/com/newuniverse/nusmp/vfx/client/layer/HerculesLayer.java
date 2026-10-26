@@ -65,6 +65,9 @@ public class HerculesLayer extends AbstractVfxLayer {
     public static final ResourceLocation PLATES = t("hercules_plates");
     public static final ResourceLocation FLAME = t("hercules_flame");
     public static final ResourceLocation CRATER = t("hercules_crater");
+    /** 3.20.0: the material atlas of the 3D models (bronze plates, marble, rock, laurel leaves; {@link HerculesModels}) and the ground fissure strip. */
+    public static final ResourceLocation MODEL_ATLAS = t("hercules_model_atlas");
+    public static final ResourceLocation FISSURE = t("hercules_model_fissure");
 
     private static final int WHITE = 0xFFFFFFFF;
     private static final int GOLD = 0xFFFFD660;
@@ -83,6 +86,16 @@ public class HerculesLayer extends AbstractVfxLayer {
     static final int STRIKE_IMPACT = 18, STRIKE_HOLD = 3;
     /** Ticks the thrown creature takes to cross: 6 + 0.2 per block, 6..14, after the 2 ticks of the throw itself. */
     static final int THROW_START = 2;
+
+    /** 3.20.0: the models are drawn within these distances (blocks) of the camera, further out the flat sprites of 3.19.0 stand in (they cost a quarter of the quads). */
+    static final float MODEL_RANGE = 64f, CHUNK_RANGE = 44f, WREATH_RANGE = 36f;
+    /** The tremor that is the aftershock (and any tremor this small) is the lighter, quieter variant: power (radius) at most this. */
+    static final float AFTERSHOCK_MAX = 10f;
+    /** Power of HERCULES_THROW that means "a chunk of ground is hurled" (the boulder is drawn); 1 = a creature is hurled (it flies itself). */
+    static final float THROW_CHUNK_POWER = 2f;
+
+    /** The poser / drawer of the 3D models (one per layer; render thread only). */
+    private final HerculesMeshDraw mesh = new HerculesMeshDraw();
 
     /** Scratch corners of the quad being drawn (the layer draws on the render thread only, one effect at a time). */
     private final Vector3f q0 = new Vector3f(), q1 = new Vector3f(), q2 = new Vector3f(), q3 = new Vector3f();
@@ -331,6 +344,40 @@ public class HerculesLayer extends AbstractVfxLayer {
         return (float) Math.atan2(-px, py);
     }
 
+    // ------------------------------------------------------------------ 3.20.0: the 3D models and the ground fissures
+    /** True when the 3D models are drawn here: the setting is on, the particle setting is not minimal and the thing is within {@code range} blocks of the camera (else the 3.19.0 sprites stand in). */
+    private static boolean modelsOn(VfxRenderContext ctx, float x, float y, float z, float range) {
+        return HerculesModels.enabled() && ctx.detail >= 0.5f && x * x + y * y + z * z < range * range;
+    }
+
+    /** A chunk of rock (the 3D rock of the ground, at most 4 quads) tumbling about an axis; returns the quads drawn (0 = nothing, the caller may draw the old sprite). */
+    private int chunk(VfxVertexBuffer buf, float x, float y, float z, float size, float spin, long seed, int i, float alpha, float heat) {
+        if (alpha <= 0.03f || size <= 0.02f) return 0;
+        mesh.posed().tumble(h(seed, i, 40) - 0.5f, 1f, h(seed, i, 41) - 0.5f, spin, size, size * 0.9f, size);
+        return mesh.draw(buf, MODEL_ATLAS, HerculesModels.CHUNK, x, y, z, a(WHITE, alpha), heat);
+    }
+
+    /**
+     * A ground fissure: a jagged strip of two quads lying on the ground from radius {@code r0} to {@code r1} out of (cx, gy, cz) along the angle {@code an}, {@code w} wide at the start and narrowing to a point, a dark
+     * broken lip round a glowing core ({@code argb} tints it: white-gold when it opens, ember and crimson as it cools). Two quads each, no textures but the strip, nothing allocated.
+     */
+    private void fissure(VfxVertexBuffer buf, float cx, float gy, float cz, float an, float r0, float r1, float w, float jag, int argb) {
+        if ((argb >>> 24) < 4 || r1 - r0 < 0.3f || !buf.hasBudget(8)) return;
+        float ca = Mth.cos(an), sa = Mth.sin(an), rm = (r0 + r1) * 0.5f;
+        float x0 = cx + ca * r0, z0 = cz + sa * r0;
+        float x1 = cx + ca * rm - sa * jag, z1 = cz + sa * rm + ca * jag;
+        float x2 = cx + ca * r1 + sa * jag * 0.6f, z2 = cz + sa * r1 - ca * jag * 0.6f;
+        float d0x = x1 - x0, d0z = z1 - z0, l0 = Mth.sqrt(d0x * d0x + d0z * d0z) + 1e-4f;
+        float d1x = x2 - x1, d1z = z2 - z1, l1 = Mth.sqrt(d1x * d1x + d1z * d1z) + 1e-4f;
+        float p0x = -d0z / l0, p0z = d0x / l0, p1x = -d1z / l1, p1z = d1x / l1;
+        float pmx = p0x + p1x, pmz = p0z + p1z, pml = Mth.sqrt(pmx * pmx + pmz * pmz) + 1e-4f;
+        pmx /= pml;
+        pmz /= pml;
+        float w1 = w * 0.85f, w2 = w * 0.12f;
+        quad(buf, FISSURE, VfxBlend.ALPHA, x0 - p0x * w, gy, z0 - p0z * w, x0 + p0x * w, gy, z0 + p0z * w, x1 + pmx * w1, gy, z1 + pmz * w1, x1 - pmx * w1, gy, z1 - pmz * w1, 0f, 0.45f, 1f, 1f, argb, argb);
+        quad(buf, FISSURE, VfxBlend.ALPHA, x1 - pmx * w1, gy, z1 - pmz * w1, x1 + pmx * w1, gy, z1 + pmz * w1, x2 + p1x * w2, gy, z2 + p1z * w2, x2 - p1x * w2, gy, z2 - p1z * w2, 0f, 0f, 1f, 0.45f, argb, argb);
+    }
+
     // ================================================================== HERCULES_LEAP
     private void leap(VfxInstance inst, VfxRenderContext ctx, VfxVertexBuffer buf) {
         float age = inst.ageTicks(ctx.partialTick);
@@ -577,26 +624,33 @@ public class HerculesLayer extends AbstractVfxLayer {
         float handSize = 4.4f * openIn * (1f - 0.12f * close);
         float fistSize = (4.0f - 0.8f * close) + sq * 2f;
 
-        // 1. the hand opens round the target and closes into a fist on it
+        // 1. the hand opens round the target and closes into a fist on it: a 3D bronze Titan's hand (3.20.0), or the flat sprite of 3.19.0 (setting off, far away, thin particles)
         float ha = (1f - close) * fade, fa = close * fade;
-        sprite(ctx, buf, HAND, VfxBlend.ALPHA, t.x, t.y + 0.1f, t.z, handSize, rot, a(WHITE, 0.92f * ha));
-        sprite(ctx, buf, HAND, VfxBlend.ADD, t.x, t.y + 0.1f, t.z, handSize * 1.04f, rot, a(GOLD, 0.45f * ha));
-        sprite(ctx, buf, FIST, VfxBlend.ALPHA, t.x, t.y + 0.1f, t.z, fistSize * smooth(8f, 10f, age), rot, a(WHITE, 0.95f * fa));
-        sprite(ctx, buf, FIST, VfxBlend.ADD, t.x, t.y + 0.1f, t.z, fistSize * 1.04f * smooth(8f, 10f, age), rot, a(GOLD, 0.5f * fa));
+        float flashK = smooth(10.5f, 12f, age) * (1f - smooth(12f, 17f, age));
+        boolean drawnHand = false;
+        if (modelsOn(ctx, t.x, t.y, t.z, MODEL_RANGE)) drawnHand = titanHand(buf, t, -ux, -uy, -uz, close, openIn, sq, fade, flashK) > 0;
+        if (!drawnHand) {
+            sprite(ctx, buf, HAND, VfxBlend.ALPHA, t.x, t.y + 0.1f, t.z, handSize, rot, a(WHITE, 0.92f * ha));
+            sprite(ctx, buf, HAND, VfxBlend.ADD, t.x, t.y + 0.1f, t.z, handSize * 1.04f, rot, a(GOLD, 0.45f * ha));
+            sprite(ctx, buf, FIST, VfxBlend.ALPHA, t.x, t.y + 0.1f, t.z, fistSize * smooth(8f, 10f, age), rot, a(WHITE, 0.95f * fa));
+            sprite(ctx, buf, FIST, VfxBlend.ADD, t.x, t.y + 0.1f, t.z, fistSize * 1.04f * smooth(8f, 10f, age), rot, a(GOLD, 0.5f * fa));
+        }
         glow(ctx, buf, t.x, t.y + 0.1f, t.z, 2.6f + 1.4f * close, EMBER, 0.7f * fade);
 
         // 2. the closing: a flash, a ring and a web of cracks round the fist
         float fl = smooth(10.5f, 12f, age) * (1f - smooth(12f, 17f, age));
         if (fl > 0.01f) {
-            flash(ctx, buf, t.x, t.y + 0.1f, t.z, 7.5f * (0.5f + 0.5f * fl), 0.2f, a(WHITE, fl));
+            float fk = drawnHand ? 0.55f : 1f;                                                      // with the 3D fist the flash is softer, so the fist stays readable
+            flash(ctx, buf, t.x, t.y + 0.1f, t.z, 7.5f * fk * (0.5f + 0.5f * fl), 0.2f, a(WHITE, fl * fk));
             VfxPose rp = across(t.x, t.y + 0.1f, t.z, -t.x, -t.y, -t.z);
             ringAt(buf, rp, 1.2f + 3.2f * eo((age - 11.5f) / 6f), a(GOLD, fl * 0.95f));
         }
         float web = smooth(12f, 13.5f, age) * (1f - smooth(19f, 24f, age));
         if (web > 0.01f) {
             VfxPose wp = across(t.x, t.y + 0.1f, t.z, -t.x, -t.y, -t.z).spin(h(seed, 0, 1) * Mth.TWO_PI);
-            buf.plane(WEB, VfxBlend.ALPHA, wp, 2.0f + 0.4f * eo((age - 12f) / 4f), a(WHITE, 0.6f * web));
-            buf.plane(WEB, VfxBlend.ADD, wp.lift(0.01f), 2.0f + 0.4f * eo((age - 12f) / 4f), a(GOLD, 0.5f * web));
+            float wk = drawnHand ? 0.6f : 1f;
+            buf.plane(WEB, VfxBlend.ALPHA, wp, 2.0f + 0.4f * eo((age - 12f) / 4f), a(WHITE, 0.6f * wk * web));
+            buf.plane(WEB, VfxBlend.ADD, wp.lift(0.01f), 2.0f + 0.4f * eo((age - 12f) / 4f), a(GOLD, 0.5f * wk * web));
         }
         float gy = t.y - 0.9f;
         float cl = eo((age - 3f) / 10f);
@@ -655,6 +709,26 @@ public class HerculesLayer extends AbstractVfxLayer {
                 mote(ctx, buf, t.x + ctx.camRight.x * Mth.cos(an) * rr, t.y + 1.2f - u * 2.4f + Mth.sin(an) * 0.4f, t.z + ctx.camRight.z * Mth.cos(an) * rr, 0.26f, a(mix(GOLD, EMBER, u), Mth.sin(u * Mth.PI) * 0.9f * fade * near));
             }
         }
+    }
+
+    /**
+     * 3.20.0, Titan's Grip: the huge bronze hand ({@link HerculesModels#HAND}, at most 40 quads). Its fingers point along the line caster -> target (dir), its back faces up and a little toward the camera, it grows out of
+     * the caster's side in 7 ticks with the fingers fanned, then {@code close} (0..1) curls them into a fist whose centre lies on the target. Returns the quads drawn (0 = the caller draws the flat sprite).
+     */
+    private int titanHand(VfxVertexBuffer buf, Vector3f t, float dirx, float diry, float dirz, float close, float openIn, float sq, float fade, float flashK) {
+        float S = 1.5f * Math.max(0.05f, openIn) * (1f - 0.1f * close) * (1f + sq);
+        HerculesModels.Posed p = mesh.posed();
+        p.clearPose();
+        HerculesModels.handPose(close, 1f + 0.6f * (1f - Mth.clamp(openIn, 0f, 1f)), p.bend(), p.spread());
+        float tl = Mth.sqrt(t.x * t.x + t.y * t.y + t.z * t.z) + 1e-3f;
+        p.look(dirx, diry, dirz, -t.x / tl * 0.8f, 0.9f - t.y / tl * 0.8f, -t.z / tl * 0.8f, 0f, S);
+        float fy = HerculesModels.HAND_FIST_Y, fz = HerculesModels.HAND_FIST_Z;
+        float lift = 0.55f * (1f - close);                                           // the open hand holds a little above the target, the fist closes onto it
+        float reach = 1.4f * (1f - Mth.clamp(openIn, 0f, 1f));                        // and comes in from the caster's side
+        float ox = t.x - p.wx(0f, fy - lift, fz) - dirx * reach * S;
+        float oy = t.y + 0.1f - p.wy(0f, fy - lift, fz) - diry * reach * S;
+        float oz = t.z - p.wz(0f, fy - lift, fz) - dirz * reach * S;
+        return mesh.draw(buf, MODEL_ATLAS, HerculesModels.HAND, ox, oy, oz, a(WHITE, 0.97f * fade), 0.85f * flashK);
     }
 
     // ================================================================== HERCULES_THROW
@@ -900,10 +974,15 @@ public class HerculesLayer extends AbstractVfxLayer {
         float fx = Mth.lerp(trav, wx, e.x), fy = Mth.lerp(trav, wy, e.y), fz = Mth.lerp(trav, wz, e.z);
         float fs = grow * (1f + 0.2f * trav) * (hit ? 1.12f : 1f);
         float fa = smooth(0f, 5f, age) * (1f - smooth(STRIKE_IMPACT + STRIKE_HOLD + 6f, 34f, age));
+        boolean drawnFist = false;
         if (fa > 0.01f) {
-            sprite(ctx, buf, FIST, VfxBlend.ALPHA, fx, fy, fz, fs, rot, a(WHITE, 0.97f * fa));
-            sprite(ctx, buf, FIST, VfxBlend.ADD, fx, fy, fz, fs * 1.05f, rot, a(mix(GOLD, WHITE, trav), (0.4f + 0.4f * trav) * fa));
-            glow(ctx, buf, fx, fy, fz, 1.6f + fs * 0.6f, EMBER, (0.35f + 0.5f * smooth(0f, 14f, age)) * fa);
+            // the clenched fist: a 3D bronze fist (3.20.0) that trembles behind the shoulder and holds on the impact, or the flat sprite of 3.19.0
+            if (modelsOn(ctx, fx, fy, fz, MODEL_RANGE)) drawnFist = punchFist(buf, fx, fy, fz, nx, ny, nz, fs, age, trav, hit ? smooth(STRIKE_IMPACT + STRIKE_HOLD, STRIKE_IMPACT + STRIKE_HOLD + 6f, te) : 0f, a(WHITE, 0.97f * fa), seed) > 0;
+            if (!drawnFist) {
+                sprite(ctx, buf, FIST, VfxBlend.ALPHA, fx, fy, fz, fs, rot, a(WHITE, 0.97f * fa));
+                sprite(ctx, buf, FIST, VfxBlend.ADD, fx, fy, fz, fs * 1.05f, rot, a(mix(GOLD, WHITE, trav), (0.4f + 0.4f * trav) * fa));
+            }
+            glow(ctx, buf, fx, fy, fz, 1.6f + fs * 0.6f, EMBER, (0.35f + 0.5f * smooth(0f, 14f, age)) * fa * (drawnFist ? 0.2f : 1f));
         }
 
         // 1. the gather: light and leaves are drawn into the fist, the ground ring closes under the feet, embers rise
@@ -952,8 +1031,9 @@ public class HerculesLayer extends AbstractVfxLayer {
         if (hit) {
             float fl = 1f - smooth(STRIKE_IMPACT + STRIKE_HOLD, STRIKE_IMPACT + STRIKE_HOLD + 6f, age);
             if (fl > 0.01f) {
-                flash(ctx, buf, e.x, e.y, e.z, 11f * (0.55f + 0.45f * fl), 0.1f, a(WHITE, 0.8f * fl));
-                flash(ctx, buf, e.x, e.y, e.z, 6.5f * (0.5f + 0.5f * fl), 0.78f, a(GOLD_L, 0.7f * fl));
+                float fk = drawnFist ? 0.62f : 1f;                                              // with the 3D fist the flash lets it show through
+                flash(ctx, buf, e.x, e.y, e.z, 11f * (0.55f + 0.45f * fl), 0.1f, a(WHITE, 0.8f * fk * fl));
+                flash(ctx, buf, e.x, e.y, e.z, 6.5f * (0.5f + 0.5f * fl), 0.78f, a(GOLD_L, 0.7f * fk * fl));
                 glow(ctx, buf, e.x, e.y, e.z, 4.5f * fl, GOLD, 0.8f * fl);
             }
             // 4. the air cracks like glass: a web in a disc facing the caster, two layers, lit from within
@@ -1018,6 +1098,21 @@ public class HerculesLayer extends AbstractVfxLayer {
                 }
             }
         }
+    }
+
+    /**
+     * 3.20.0, World-Breaking Strike: the clenched 3D fist ({@link HerculesModels#FIST}, at most 30 quads) with its centre at (fx, fy, fz), knuckles toward (nx, ny, nz), back of the hand up. {@code fs} is the sprite size of 3.19.0
+     * (the fist is about 0.46 of it long per unit); it shakes with a roll while it gathers, glows hotter as it crosses ({@code trav}) and cools after the impact frame ({@code cool}). Returns the quads drawn (0 = draw the sprite).
+     */
+    private int punchFist(VfxVertexBuffer buf, float fx, float fy, float fz, float nx, float ny, float nz, float fs, float age, float trav, float cool, int tint, long seed) {
+        float S = Math.max(0.3f, fs * 0.46f);
+        float shake = smooth(2f, 14f, age) * (1f - trav);
+        float roll = (h(seed, (int) age, 5) - 0.5f) * 0.16f * shake;
+        HerculesModels.Posed p = mesh.posed();
+        p.clearPose();
+        p.look(nx, ny, nz, 0f, 1f, 0f, roll, S);
+        float heat = Math.max(0.15f + 0.3f * smooth(0f, 14f, age) * (1f - trav), 0.95f * trav) * (1f - 0.7f * cool);
+        return mesh.draw(buf, MODEL_ATLAS, HerculesModels.FIST, fx - nx * 0.2f * S, fy - ny * 0.2f * S, fz - nz * 0.2f * S, tint, heat);
     }
 
     // ================================================================== HERCULES_SHOCKWAVE
