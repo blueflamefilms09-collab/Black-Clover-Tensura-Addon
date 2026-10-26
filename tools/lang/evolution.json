@@ -1,0 +1,9 @@
+{
+  "msg.nusmp.evolution.locked": "%s is locked: %s (%s).",
+  "msg.nusmp.evolution.needs_mastery": "%s needs the skill fully mastered.",
+  "msg.nusmp.evolution.evolved": "%s has evolved: %s awakens.",
+  "nusmp.evolution.mode_progress": "%s (%s)",
+  "nusmp.evolution.mode_needs_mastery": "%s (master the skill)",
+  "nusmp.evolution.requirement": "Evolution: %s",
+  "nusmp.evolution.evolved_name": "Evolves into: %s"
+}

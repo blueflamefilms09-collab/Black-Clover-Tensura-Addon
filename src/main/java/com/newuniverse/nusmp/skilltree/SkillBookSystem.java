@@ -2,6 +2,7 @@ package com.newuniverse.nusmp.skilltree;
 
 import com.newuniverse.nusmp.skilltree.hk.HeavyKnightSkills;
 import com.newuniverse.nusmp.skilltree.item.ItemsSystem;
+import com.newuniverse.nusmp.skilltree.line.EvolutionConfig;
 import com.newuniverse.nusmp.skilltree.line.LineSystem;
 import com.newuniverse.nusmp.skilltree.shop.ShopSystem;
 import com.newuniverse.nusmp.skilltree.state.SkillTreeAttachments;
@@ -11,6 +12,7 @@ import com.newuniverse.nusmp.skilltree.unique.UniqueSkills;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
+import net.neoforged.fml.config.ModConfig;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +37,7 @@ public final class SkillBookSystem {
         UniqueSkills.init(modBus);                                  // one Unique skill per book, in Tensura's Ability Selection screen (docs/skillbooks_unique.md)
         HeavyKnightSkills.SKILLS.register(modBus);                  // the technique classes of the four Heavy Knight books (run as modes of their unique skills)
         LineSystem.init();                                          // the arts and passives engine
+        modContainer.registerConfig(ModConfig.Type.SERVER, EvolutionConfig.SPEC, "nusmp-evolution-server.toml");   // 3.26.0: evolutionSkills (counters, Ultimate gate, evolved passives, Debt)
         UniqueEvents.register();                                    // the data reload, the login migration
         ItemsSystem.init(modBus, modContainer);
         ShopSystem.init(modBus, modContainer);

@@ -11,9 +11,7 @@
   "class_id": "fixture_line_1",
   "duplicate_sp": 3,
   "loot_weight": 1,
-  "gui_background": "nusmp:textures/gui/skill_trees/fixture_line_1.png",
   "book_texture": "nusmp:item/skill_book_3d/tensura",
-  "background_theme": "void",
   "nodes": [
     {
       "id": "fixture_stance_1_a",
@@ -299,9 +297,9 @@
       "icon": "minecraft:iron_ingot"
     },
     {
-      "id": "fixture_drain_bite_8",
-      "name": "Fixture Drain Bite 8",
-      "desc": "A test art of kind drain_bite.",
+      "id": "fixture_debuff_cone_8",
+      "name": "Fixture Debuff Cone 8",
+      "desc": "A test art of kind debuff_cone.",
       "parents": [
         {
           "node": "fixture_stance_1_a",
@@ -317,9 +315,82 @@
       ],
       "max_level": 4,
       "type": "active_ability",
+      "kind": "debuff_cone",
+      "params": {
+        "effect": "speed",
+        "effect2": "none",
+        "vfx": "SPATIAL_RIFT"
+      },
+      "values": {
+        "range": [
+          5.0,
+          5.4,
+          5.8,
+          6.2
+        ],
+        "half_angle": [
+          40.0,
+          44.0,
+          48.0,
+          52.0
+        ],
+        "seconds": [
+          6.0,
+          7.0,
+          8.0,
+          9.0
+        ],
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "seconds2": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          220.0,
+          202.0,
+          185.0,
+          167.0
+        ]
+      },
+      "x": 4,
+      "y": 0,
+      "icon": "minecraft:blaze_rod"
+    },
+    {
+      "id": "fixture_drain_bite_9",
+      "name": "Fixture Drain Bite 9",
+      "desc": "A test art of kind drain_bite.",
+      "parents": [
+        {
+          "node": "fixture_stance_1_b",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
       "kind": "drain_bite",
       "params": {
-        "vfx": "SPATIAL_RIFT"
+        "vfx": "MIRROR_PANE"
       },
       "values": {
         "damage": [
@@ -354,17 +425,17 @@
         ]
       },
       "x": 4,
-      "y": 0,
+      "y": 2,
       "icon": "minecraft:blaze_rod"
     },
     {
-      "id": "fixture_execute_9",
-      "name": "Fixture Execute 9",
+      "id": "fixture_execute_10",
+      "name": "Fixture Execute 10",
       "desc": "A test art of kind execute.",
       "parents": [
         {
-          "node": "fixture_stance_1_b",
-          "level": 1
+          "node": "fixture_debuff_cone_8",
+          "level": 2
         }
       ],
       "cost": 1,
@@ -378,7 +449,7 @@
       "type": "active_ability",
       "kind": "execute",
       "params": {
-        "vfx": "MIRROR_PANE"
+        "vfx": "DEVIL_CIRCLE"
       },
       "values": {
         "damage": [
@@ -412,32 +483,32 @@
           152.0
         ]
       },
-      "x": 4,
-      "y": 2,
+      "x": 6,
+      "y": 0,
       "icon": "minecraft:blaze_rod"
     },
     {
-      "id": "fixture_ground_wave_10",
-      "name": "Fixture Ground Wave 10",
+      "id": "fixture_ground_wave_11",
+      "name": "Fixture Ground Wave 11",
       "desc": "A test art of kind ground_wave.",
       "parents": [
         {
-          "node": "fixture_drain_bite_8",
+          "node": "fixture_drain_bite_9",
           "level": 2
         }
       ],
-      "cost": 1,
+      "cost": 2,
       "costs": [
-        1,
         2,
-        2,
-        3
+        3,
+        3,
+        4
       ],
       "max_level": 4,
       "type": "active_ability",
       "kind": "ground_wave",
       "params": {
-        "vfx": "DEVIL_CIRCLE"
+        "vfx": "MAGIC_CIRCLE"
       },
       "values": {
         "damage": [
@@ -478,16 +549,16 @@
         ]
       },
       "x": 6,
-      "y": 0,
+      "y": 2,
       "icon": "minecraft:blaze_rod"
     },
     {
-      "id": "fixture_heal_pulse_11",
-      "name": "Fixture Heal Pulse 11",
+      "id": "fixture_heal_pulse_12",
+      "name": "Fixture Heal Pulse 12",
       "desc": "A test art of kind heal_pulse.",
       "parents": [
         {
-          "node": "fixture_execute_9",
+          "node": "fixture_execute_10",
           "level": 2
         }
       ],
@@ -502,7 +573,7 @@
       "type": "active_ability",
       "kind": "heal_pulse",
       "params": {
-        "vfx": "MAGIC_CIRCLE"
+        "vfx": "ELF_CIRCLE"
       },
       "values": {
         "radius": [
@@ -530,17 +601,17 @@
           410.0
         ]
       },
-      "x": 6,
-      "y": 2,
+      "x": 8,
+      "y": 0,
       "icon": "minecraft:blaze_rod"
     },
     {
-      "id": "fixture_heal_self_12",
-      "name": "Fixture Heal Self 12",
+      "id": "fixture_heal_self_13",
+      "name": "Fixture Heal Self 13",
       "desc": "A test art of kind heal_self.",
       "parents": [
         {
-          "node": "fixture_ground_wave_10",
+          "node": "fixture_ground_wave_11",
           "level": 2
         }
       ],
@@ -555,7 +626,7 @@
       "type": "active_ability",
       "kind": "heal_self",
       "params": {
-        "vfx": "ELF_CIRCLE"
+        "vfx": "SHADOW_POOL"
       },
       "values": {
         "amount": [
@@ -584,31 +655,31 @@
         ]
       },
       "x": 8,
-      "y": 0,
+      "y": 2,
       "icon": "minecraft:blaze_rod"
     },
     {
-      "id": "fixture_leap_slam_13",
-      "name": "Fixture Leap Slam 13",
+      "id": "fixture_leap_slam_14",
+      "name": "Fixture Leap Slam 14",
       "desc": "A test art of kind leap_slam.",
       "parents": [
         {
-          "node": "fixture_heal_pulse_11",
+          "node": "fixture_heal_pulse_12",
           "level": 2
         }
       ],
-      "cost": 2,
+      "cost": 3,
       "costs": [
-        2,
         3,
-        3,
-        4
+        4,
+        4,
+        5
       ],
       "max_level": 4,
       "type": "active_ability",
       "kind": "leap_slam",
       "params": {
-        "vfx": "SHADOW_POOL"
+        "vfx": "POISON_BREATH"
       },
       "values": {
         "height": [
@@ -648,17 +719,17 @@
           152.0
         ]
       },
-      "x": 8,
-      "y": 2,
+      "x": 10,
+      "y": 0,
       "icon": "minecraft:blaze_rod"
     },
     {
-      "id": "fixture_mark_14",
-      "name": "Fixture Mark 14",
+      "id": "fixture_mark_15",
+      "name": "Fixture Mark 15",
       "desc": "A test art of kind mark.",
       "parents": [
         {
-          "node": "fixture_heal_self_12",
+          "node": "fixture_heal_self_13",
           "level": 2
         }
       ],
@@ -673,7 +744,7 @@
       "type": "active_ability",
       "kind": "mark",
       "params": {
-        "vfx": "POISON_BREATH"
+        "vfx": "SEAL_CHAINS"
       },
       "values": {
         "range": [
@@ -708,81 +779,48 @@
         ]
       },
       "x": 10,
-      "y": 0,
-      "icon": "minecraft:blaze_rod"
-    },
-    {
-      "id": "fixture_meteor_drop_15",
-      "name": "Fixture Meteor Drop 15",
-      "desc": "A test art of kind meteor_drop.",
-      "parents": [
-        {
-          "node": "fixture_leap_slam_13",
-          "level": 2
-        }
-      ],
-      "cost": 3,
-      "costs": [
-        3,
-        4,
-        4,
-        5
-      ],
-      "max_level": 4,
-      "type": "active_ability",
-      "kind": "meteor_drop",
-      "params": {
-        "vfx": "SEAL_CHAINS"
-      },
-      "values": {
-        "delay": [
-          20.0,
-          19.0,
-          18.0,
-          17.0
-        ],
-        "damage": [
-          12.0,
-          15.0,
-          18.0,
-          21.0
-        ],
-        "radius": [
-          4.0,
-          4.4,
-          4.8,
-          5.2
-        ],
-        "range": [
-          18.0,
-          19.44,
-          20.88,
-          22.32
-        ],
-        "cost": [
-          0.03,
-          0.0324,
-          0.0348,
-          0.0372
-        ],
-        "cooldown": [
-          360.0,
-          331.0,
-          302.0,
-          274.0
-        ]
-      },
-      "x": 10,
       "y": 6,
       "icon": "minecraft:blaze_rod"
     },
     {
-      "id": "fixture_passive_execute_threshold_7",
-      "name": "Fixture Passive Execute Threshold 7",
+      "id": "fixture_passive_drop_bonus_7",
+      "name": "Fixture Passive Drop Bonus 7",
+      "desc": "A test passive of kind drop_bonus.",
+      "parents": [
+        {
+          "node": "fixture_debuff_cone_8",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "drop_bonus",
+      "values": {
+        "chance": [
+          0.08,
+          0.096,
+          0.112,
+          0.128
+        ]
+      },
+      "x": 10,
+      "y": 2,
+      "icon": "minecraft:amethyst_shard"
+    },
+    {
+      "id": "fixture_passive_execute_threshold_8",
+      "name": "Fixture Passive Execute Threshold 8",
       "desc": "A test passive of kind execute_threshold.",
       "parents": [
         {
-          "node": "fixture_drain_bite_8",
+          "node": "fixture_drain_bite_9",
           "level": 2
         }
       ],
@@ -811,16 +849,16 @@
         ]
       },
       "x": 10,
-      "y": 2,
+      "y": 4,
       "icon": "minecraft:amethyst_shard"
     },
     {
-      "id": "fixture_passive_fall_guard_8",
-      "name": "Fixture Passive Fall Guard 8",
+      "id": "fixture_passive_fall_guard_9",
+      "name": "Fixture Passive Fall Guard 9",
       "desc": "A test passive of kind fall_guard.",
       "parents": [
         {
-          "node": "fixture_execute_9",
+          "node": "fixture_execute_10",
           "level": 2
         }
       ],
@@ -842,26 +880,26 @@
           0.48
         ]
       },
-      "x": 10,
-      "y": 4,
+      "x": 12,
+      "y": 0,
       "icon": "minecraft:amethyst_shard"
     },
     {
-      "id": "fixture_passive_hunger_saver_9",
-      "name": "Fixture Passive Hunger Saver 9",
+      "id": "fixture_passive_hunger_saver_10",
+      "name": "Fixture Passive Hunger Saver 10",
       "desc": "A test passive of kind hunger_saver.",
       "parents": [
         {
-          "node": "fixture_ground_wave_10",
+          "node": "fixture_ground_wave_11",
           "level": 2
         }
       ],
-      "cost": 1,
+      "cost": 2,
       "costs": [
-        1,
         2,
-        2,
-        3
+        3,
+        3,
+        4
       ],
       "max_level": 4,
       "type": "passive_toggle",
@@ -875,16 +913,16 @@
         ]
       },
       "x": 12,
-      "y": 0,
+      "y": 2,
       "icon": "minecraft:amethyst_shard"
     },
     {
-      "id": "fixture_passive_kill_reward_10",
-      "name": "Fixture Passive Kill Reward 10",
+      "id": "fixture_passive_kill_reward_11",
+      "name": "Fixture Passive Kill Reward 11",
       "desc": "A test passive of kind kill_reward.",
       "parents": [
         {
-          "node": "fixture_heal_pulse_11",
+          "node": "fixture_heal_pulse_12",
           "level": 2
         }
       ],
@@ -899,7 +937,7 @@
       "type": "passive_toggle",
       "kind": "kill_reward",
       "params": {
-        "effect": "weakness"
+        "effect": "fire_resistance"
       },
       "values": {
         "heal": [
@@ -921,17 +959,17 @@
           0.0
         ]
       },
-      "x": 12,
-      "y": 2,
+      "x": 14,
+      "y": 0,
       "icon": "minecraft:amethyst_shard"
     },
     {
-      "id": "fixture_passive_knockback_on_hit_11",
-      "name": "Fixture Passive Knockback On Hit 11",
+      "id": "fixture_passive_knockback_on_hit_12",
+      "name": "Fixture Passive Knockback On Hit 12",
       "desc": "A test passive of kind knockback_on_hit.",
       "parents": [
         {
-          "node": "fixture_heal_self_12",
+          "node": "fixture_heal_self_13",
           "level": 2
         }
       ],
@@ -960,25 +998,25 @@
         ]
       },
       "x": 14,
-      "y": 0,
+      "y": 2,
       "icon": "minecraft:amethyst_shard"
     },
     {
-      "id": "fixture_passive_last_stand_12",
-      "name": "Fixture Passive Last Stand 12",
+      "id": "fixture_passive_last_stand_13",
+      "name": "Fixture Passive Last Stand 13",
       "desc": "A test passive of kind last_stand.",
       "parents": [
         {
-          "node": "fixture_leap_slam_13",
+          "node": "fixture_leap_slam_14",
           "level": 2
         }
       ],
-      "cost": 2,
+      "cost": 3,
       "costs": [
-        2,
         3,
-        3,
-        4
+        4,
+        4,
+        5
       ],
       "max_level": 4,
       "type": "passive_toggle",
@@ -1003,17 +1041,17 @@
           1260.0
         ]
       },
-      "x": 14,
-      "y": 2,
+      "x": 16,
+      "y": 0,
       "icon": "minecraft:amethyst_shard"
     },
     {
-      "id": "fixture_passive_lifesteal_13",
-      "name": "Fixture Passive Lifesteal 13",
+      "id": "fixture_passive_lifesteal_14",
+      "name": "Fixture Passive Lifesteal 14",
       "desc": "A test passive of kind lifesteal.",
       "parents": [
         {
-          "node": "fixture_mark_14",
+          "node": "fixture_mark_15",
           "level": 2
         }
       ],
@@ -1036,58 +1074,82 @@
         ]
       },
       "x": 16,
-      "y": 0,
-      "icon": "minecraft:amethyst_shard"
-    },
-    {
-      "id": "fixture_passive_mending_14",
-      "name": "Fixture Passive Mending 14",
-      "desc": "A test passive of kind mending.",
-      "parents": [
-        {
-          "node": "fixture_meteor_drop_15",
-          "level": 2
-        }
-      ],
-      "cost": 3,
-      "costs": [
-        3,
-        4,
-        4,
-        5
-      ],
-      "max_level": 4,
-      "type": "passive_toggle",
-      "kind": "mending",
-      "values": {
-        "seconds": [
-          20.0,
-          18.0,
-          16.0,
-          14.0
-        ],
-        "amount": [
-          1,
-          1.25,
-          1.5,
-          1.75
-        ]
-      },
-      "x": 16,
       "y": 2,
       "icon": "minecraft:amethyst_shard"
     },
     {
-      "id": "fixture_pull_16",
-      "name": "Fixture Pull 16",
-      "desc": "A test art of kind pull.",
+      "id": "fixture_meteor_drop_16",
+      "name": "Fixture Meteor Drop 16",
+      "desc": "A test art of kind meteor_drop.",
       "parents": [
         {
-          "node": "fixture_meteor_drop_15",
+          "node": "fixture_mark_15",
           "level": 3
         },
         {
-          "node": "fixture_passive_mending_14",
+          "node": "fixture_passive_lifesteal_14",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "meteor_drop",
+      "params": {
+        "vfx": "THREAD_LINE"
+      },
+      "values": {
+        "delay": [
+          20.0,
+          19.0,
+          18.0
+        ],
+        "damage": [
+          12.0,
+          15.0,
+          18.0
+        ],
+        "radius": [
+          4.0,
+          4.4,
+          4.8
+        ],
+        "range": [
+          18.0,
+          19.44,
+          20.88
+        ],
+        "cost": [
+          0.03,
+          0.0324,
+          0.0348
+        ],
+        "cooldown": [
+          1500.0,
+          1380.0,
+          1260.0
+        ]
+      },
+      "x": 16,
+      "y": 4,
+      "icon": "minecraft:blaze_rod"
+    },
+    {
+      "id": "fixture_pull_17",
+      "name": "Fixture Pull 17",
+      "desc": "A test art of kind pull.",
+      "parents": [
+        {
+          "node": "fixture_leap_slam_14",
+          "level": 3
+        },
+        {
+          "node": "fixture_passive_last_stand_13",
           "level": 2
         }
       ],
@@ -1101,7 +1163,7 @@
       "type": "active_ability",
       "kind": "pull",
       "params": {
-        "vfx": "THREAD_LINE"
+        "vfx": "WEAPON_CONSTRUCTS"
       },
       "values": {
         "radius": [
@@ -1136,65 +1198,10 @@
         ]
       },
       "x": 16,
-      "y": 4,
-      "icon": "minecraft:blaze_rod"
-    },
-    {
-      "id": "fixture_ray_shot_17",
-      "name": "Fixture Ray Shot 17",
-      "desc": "A test art of kind ray_shot.",
-      "parents": [
-        {
-          "node": "fixture_mark_14",
-          "level": 3
-        },
-        {
-          "node": "fixture_passive_lifesteal_13",
-          "level": 2
-        }
-      ],
-      "cost": 4,
-      "costs": [
-        4,
-        5,
-        6
-      ],
-      "max_level": 3,
-      "type": "active_ability",
-      "kind": "ray_shot",
-      "params": {
-        "vfx": "WEAPON_CONSTRUCTS"
-      },
-      "values": {
-        "damage": [
-          7.0,
-          8.75,
-          10.5
-        ],
-        "range": [
-          14.0,
-          15.4,
-          16.8
-        ],
-        "pierce": [
-          1.0,
-          1.0,
-          2.0
-        ],
-        "cost": [
-          0.02,
-          0.0216,
-          0.0232
-        ],
-        "cooldown": [
-          1500.0,
-          1380.0,
-          1260.0
-        ]
-      },
-      "x": 16,
       "y": 6,
       "icon": "minecraft:blaze_rod"
     }
-  ]
+  ],
+  "gui_background": "nusmp:textures/gui/skill_trees/fixture_line_1.png",
+  "background_theme": "void"
 }

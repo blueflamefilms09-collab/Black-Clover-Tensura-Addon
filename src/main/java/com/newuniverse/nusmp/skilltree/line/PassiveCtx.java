@@ -16,13 +16,18 @@ public final class PassiveCtx {
     public final SkillNode node;
     public final int level;
     public final long now;
+    /** 3.26.0 (Evolution skills): true when the line has evolved and this passive carries an {@code evolved} block, so its numbers and words come from that block and it counts at its top level. */
+    public final boolean evolved;
     private final String key;
 
-    public PassiveCtx(ServerPlayer p, SkillRoute route, SkillNode node, int level) {
+    public PassiveCtx(ServerPlayer p, SkillRoute route, SkillNode node, int level) { this(p, route, node, level, false); }
+
+    public PassiveCtx(ServerPlayer p, SkillRoute route, SkillNode node, int level, boolean evolved) {
         this.p = p;
         this.route = route;
         this.node = node;
-        this.level = Math.max(1, level);
+        this.evolved = evolved && node.hasEvolved();
+        this.level = this.evolved ? Math.max(1, Math.max(level, node.maxLevel())) : Math.max(1, level);
         this.now = p.serverLevel().getGameTime();
         this.key = SkillRoute.key(route.id(), node.id());
     }
@@ -31,12 +36,18 @@ public final class PassiveCtx {
     public String key() { return key; }
 
     /** A number of the node's tables at its level; the catalogue's base value when the node has no such table. */
-    public double num(String name) { return node.value(name, level, LineCatalog.get().base(node.kind(), name, 0.0)); }
+    public double num(String name) {
+        Double over = evolved ? node.evolved().num(name) : null;
+        return over != null ? over : node.value(name, level, LineCatalog.get().base(node.kind(), name, 0.0));
+    }
 
     public int whole(String name) { return (int) Math.round(num(name)); }
 
     /** An enum word of the node. */
-    public String str(String name, String fallback) { return node.param(name, fallback); }
+    public String str(String name, String fallback) {
+        String over = evolved ? node.evolved().str(name) : null;
+        return over != null && !over.isEmpty() ? over : node.param(name, fallback);
+    }
 
     /** One roll against a probability given as a fraction (0 never, 1 always). */
     public boolean roll(double chance) { return chance > 0 && p.getRandom().nextDouble() < chance; }

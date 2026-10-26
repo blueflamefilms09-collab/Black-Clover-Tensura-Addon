@@ -11,6 +11,7 @@ import net.neoforged.neoforge.event.entity.living.LivingDropsEvent;
 import net.neoforged.neoforge.event.entity.living.LivingExperienceDropEvent;
 import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
+import net.neoforged.neoforge.event.server.ServerStoppingEvent;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 import org.slf4j.Logger;
 
@@ -43,6 +44,24 @@ public final class LineEvents {
         bus.addListener(LineEvents::onDrops);
         bus.addListener(LineEvents::onPlayerTick);
         bus.addListener(LineEvents::onLogout);
+        bus.addListener(LineEvents::onDamagedEvolution);              // 3.26.0 (Evolution skills): the counters and the Debt cleanup
+        bus.addListener(LineEvents::onDimension);
+        bus.addListener(LineEvents::onClone);
+        bus.addListener(LineEvents::onStopping);
+    }
+
+    /**
+     * 3.26.0 (Evolution skills): hurts {@code victim} for {@code amount} with the owner as the source, for the Debt (a tick of the Debt, a Debt burst), without the passives reacting to it (so a Debt blow never
+     * stores more Debt, reflects, or steals life). The damage is magic (it passes armour: the Debt was already measured after armour when it was stored). False when it did not land.
+     */
+    public static boolean debtHurt(ServerPlayer owner, LivingEntity victim, float amount) {
+        if (busy || amount <= 0f || victim == null || !victim.isAlive()) return false;
+        busy = true;
+        try {
+            return victim.hurt(owner.damageSources().indirectMagic(owner, owner), amount);
+        } finally {
+            busy = false;
+        }
     }
 
     /** Hurts {@code victim} for {@code amount} on behalf of {@code owner} (thorns, a ward) without letting the passives react to it. */
@@ -101,9 +120,27 @@ public final class LineEvents {
     // ------------------------------------------------------------------ kills
     private static void onDeath(LivingDeathEvent e) {
         try {
-            if (e.getSource().getEntity() instanceof ServerPlayer killer && killer != e.getEntity()) LinePassives.kill(killer, e.getEntity());
+            Debts.onDeath(e.getEntity());                                           // 3.26.0: nobody owes through a dead foe, a dead player owes nothing
+            if (e.getSource().getEntity() instanceof ServerPlayer killer && killer != e.getEntity()) {
+                LinePassives.kill(killer, e.getEntity());
+                Evolution.onKill(killer, e.getEntity());
+            }
         } catch (Throwable t) {
             LOG.warn("[nusmp] line passive failed on a kill: {}", t.toString());
+        }
+    }
+
+    /** 3.26.0 (Evolution skills): what a blow dealt or taken adds to the evolution counters. */
+    private static void onDamagedEvolution(LivingDamageEvent.Post e) {
+        try {
+            if (busy) return;
+            LivingEntity victim = e.getEntity();
+            if (victim.level().isClientSide) return;
+            DamageSource src = e.getSource();
+            if (src.getEntity() instanceof ServerPlayer attacker && attacker != victim) Evolution.onDealt(attacker, victim, e.getNewDamage());
+            if (victim instanceof ServerPlayer vp) Evolution.onTaken(vp, src, e.getNewDamage());
+        } catch (Throwable t) {
+            LOG.warn("[nusmp] evolution counter failed on damage: {}", t.toString());
         }
     }
 
@@ -137,9 +174,30 @@ public final class LineEvents {
             if (e.getEntity() instanceof ServerPlayer p) {
                 LineAttrs.clear(p);
                 LineStances.clear(p);
+                Debts.forgetOwner(p);
             }
         } catch (Throwable t) {
             LOG.warn("[nusmp] line cleanup failed: {}", t.toString());
         }
+    }
+
+    private static void onDimension(PlayerEvent.PlayerChangedDimensionEvent e) {
+        try {
+            if (e.getEntity() instanceof ServerPlayer p) Debts.forgetOwner(p);
+        } catch (Throwable t) {
+            LOG.warn("[nusmp] debt cleanup failed on a dimension change: {}", t.toString());
+        }
+    }
+
+    private static void onClone(PlayerEvent.Clone e) {
+        try {
+            if (e.getOriginal() instanceof ServerPlayer from && e.getEntity() instanceof ServerPlayer to) Evolution.onClone(from, to);
+        } catch (Throwable t) {
+            LOG.warn("[nusmp] evolution progress copy failed: {}", t.toString());
+        }
+    }
+
+    private static void onStopping(ServerStoppingEvent e) {
+        Debts.clear();
     }
 }

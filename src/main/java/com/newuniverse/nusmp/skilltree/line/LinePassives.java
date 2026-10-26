@@ -26,7 +26,13 @@ public final class LinePassives {
     private LinePassives() {}
 
     /** A passive or attribute node that counts right now, with its bought level. */
-    public record ActiveNode(SkillRoute route, SkillNode node, int level) {}
+    public record ActiveNode(SkillRoute route, SkillNode node, int level, boolean evolved) {
+        /** The 3-component form before 3.26.0 (no evolution). Add the new, keep the old. */
+        public ActiveNode(SkillRoute route, SkillNode node, int level) { this(route, node, level, false); }
+
+        /** The context an executor of this node runs with. */
+        PassiveCtx ctx(ServerPlayer p) { return new PassiveCtx(p, route, node, level, evolved); }
+    }
 
     private static final Map<SkillRoute, List<SkillNode>> TOGGLE_NODES = Collections.synchronizedMap(new WeakHashMap<>());
 
@@ -52,11 +58,13 @@ public final class LinePassives {
             SkillRoute route = RouteRegistry.byId(o.skill().routeId());
             if (route == null || !route.isLine()) continue;
             double frac = o.fraction();
+            boolean evolved = route.hasEvolution() && Evolution.evolvedNow(p, route);              // 3.26.0: a passive with an evolved block takes it over once the line has evolved
             for (SkillNode n : toggleNodes(route)) {
                 int lv = LineGate.passiveLevel(true, n, frac);
                 if (lv < 1) continue;
+                boolean useEvolved = evolved && n.hasEvolved();
                 if (out == null) out = new ArrayList<>(8);
-                out.add(new ActiveNode(route, n, lv));
+                out.add(new ActiveNode(route, n, useEvolved ? Math.max(lv, n.maxLevel()) : lv, useEvolved));
             }
         }
         return out == null ? List.of() : out;
@@ -68,7 +76,7 @@ public final class LinePassives {
         for (ActiveNode a : active(p)) {
             PassiveExecutors.Passive ex = PassiveExecutors.get(a.node().kind());
             if (ex == null || ex.taken() == null) continue;
-            amount = ex.taken().apply(new PassiveCtx(p, a.route(), a.node(), a.level()), src, amount);
+            amount = ex.taken().apply(a.ctx(p), src, amount);
             if (amount <= 0f) return 0f;
         }
         return amount;
@@ -79,7 +87,7 @@ public final class LinePassives {
         for (ActiveNode a : active(p)) {
             PassiveExecutors.Passive ex = PassiveExecutors.get(a.node().kind());
             if (ex == null || ex.dealt() == null) continue;
-            amount = ex.dealt().apply(new PassiveCtx(p, a.route(), a.node(), a.level()), target, src, amount);
+            amount = ex.dealt().apply(a.ctx(p), target, src, amount);
         }
         LineStances.View stance = LineStances.current(p);
         if (stance != null) {
@@ -93,7 +101,7 @@ public final class LinePassives {
     public static void dealtPost(ServerPlayer p, LivingEntity target, float dealt) {
         for (ActiveNode a : active(p)) {
             PassiveExecutors.Passive ex = PassiveExecutors.get(a.node().kind());
-            if (ex != null && ex.post() != null) ex.post().apply(new PassiveCtx(p, a.route(), a.node(), a.level()), target, dealt);
+            if (ex != null && ex.post() != null) ex.post().apply(a.ctx(p), target, dealt);
         }
     }
 
@@ -101,7 +109,7 @@ public final class LinePassives {
     public static void kill(ServerPlayer p, LivingEntity victim) {
         for (ActiveNode a : active(p)) {
             PassiveExecutors.Passive ex = PassiveExecutors.get(a.node().kind());
-            if (ex != null && ex.kill() != null) ex.kill().apply(new PassiveCtx(p, a.route(), a.node(), a.level()), victim);
+            if (ex != null && ex.kill() != null) ex.kill().apply(a.ctx(p), victim);
         }
     }
 
@@ -109,7 +117,7 @@ public final class LinePassives {
     public static int xp(ServerPlayer p, int xp) {
         for (ActiveNode a : active(p)) {
             PassiveExecutors.Passive ex = PassiveExecutors.get(a.node().kind());
-            if (ex != null && ex.xp() != null) xp = ex.xp().apply(new PassiveCtx(p, a.route(), a.node(), a.level()), xp);
+            if (ex != null && ex.xp() != null) xp = ex.xp().apply(a.ctx(p), xp);
         }
         return xp;
     }
@@ -118,7 +126,7 @@ public final class LinePassives {
     public static void drops(ServerPlayer p, LivingDropsEvent e) {
         for (ActiveNode a : active(p)) {
             PassiveExecutors.Passive ex = PassiveExecutors.get(a.node().kind());
-            if (ex != null && ex.drops() != null) ex.drops().apply(new PassiveCtx(p, a.route(), a.node(), a.level()), e);
+            if (ex != null && ex.drops() != null) ex.drops().apply(a.ctx(p), e);
         }
     }
 
@@ -126,10 +134,11 @@ public final class LinePassives {
     public static void beat(ServerPlayer p) {
         for (ActiveNode a : active(p)) {
             PassiveExecutors.Passive ex = PassiveExecutors.get(a.node().kind());
-            if (ex != null && ex.beat() != null) ex.beat().apply(new PassiveCtx(p, a.route(), a.node(), a.level()));
+            if (ex != null && ex.beat() != null) ex.beat().apply(a.ctx(p));
         }
         LineAttrs.sync(p);
         LineStances.sync(p);
+        Evolution.beat(p);
         LineStances.View stance = LineStances.current(p);
         if (stance != null && stance.regen() > 0 && p.getHealth() < p.getMaxHealth()) p.heal((float) (stance.regen() * PassiveExecutors.BEAT_TICKS / 20.0));
     }

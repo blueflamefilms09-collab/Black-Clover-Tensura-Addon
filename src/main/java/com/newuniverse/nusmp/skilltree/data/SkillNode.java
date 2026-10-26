@@ -25,9 +25,12 @@ import java.util.Map;
  * @param type      1.82.0 (Unique Skill Lines): {@code active_ability}, {@code passive_toggle} or {@code attribute_modifier}; an empty string for a node written before the field existed (see {@link #nodeType})
  * @param kind      the effect kind of the catalogue ({@code cone_strike}, {@code lifesteal}, {@code stance}, {@code attr}, ...) the line engine runs for this node, or an empty string for a classic node
  * @param params    the string (enum) parameters of the kind ({@code vfx}, {@code effect}, {@code condition}, ...); the numbers are in {@code values}
+ * @param ultimate  3.26.0 (Evolution skills): this art is the Ultimate Evolution art, locked until the line's evolution requirement is met and the skill is mastered
+ * @param evolved   3.26.0: the parameters that replace this passive's numbers and words once the line has evolved (empty for every other node)
  */
 public record SkillNode(String id, String name, String desc, List<Parent> parents, int cost, List<Integer> costs, int maxLevel, String skill, List<String> passives,
-                        Map<String, List<Double>> values, int x, int y, String icon, String type, String kind, Map<String, String> params) {
+                        Map<String, List<Double>> values, int x, int y, String icon, String type, String kind, Map<String, String> params,
+                        boolean ultimate, EvolvedParams evolved) {
 
     public static final String TYPE_ACTIVE = "active_ability", TYPE_PASSIVE = "passive_toggle", TYPE_ATTR = "attribute_modifier";
 
@@ -35,12 +38,20 @@ public record SkillNode(String id, String name, String desc, List<Parent> parent
     public enum NodeType { ACTIVE, PASSIVE, ATTR, PLAIN }
 
     /**
+     * Why: the 16-argument form of the record before 3.26.0 (no ultimate flag, no evolved block). Every old call site keeps compiling and means a node with neither. Add the new, keep the old.
+     */
+    public SkillNode(String id, String name, String desc, List<Parent> parents, int cost, List<Integer> costs, int maxLevel, String skill, List<String> passives,
+                     Map<String, List<Double>> values, int x, int y, String icon, String type, String kind, Map<String, String> params) {
+        this(id, name, desc, parents, cost, costs, maxLevel, skill, passives, values, x, y, icon, type, kind, params, false, EvolvedParams.NONE);
+    }
+
+    /**
      * Why: the 13-argument form of the record before 1.82.0 (no type, no kind, no params). Every old call site keeps compiling and means exactly what it meant: a classic node whose ability is a
      * registered ManasCore skill or a hand-written passive. Add the new, keep the old.
      */
     public SkillNode(String id, String name, String desc, List<Parent> parents, int cost, List<Integer> costs, int maxLevel, String skill, List<String> passives,
                      Map<String, List<Double>> values, int x, int y, String icon) {
-        this(id, name, desc, parents, cost, costs, maxLevel, skill, passives, values, x, y, icon, "", "", Map.of());
+        this(id, name, desc, parents, cost, costs, maxLevel, skill, passives, values, x, y, icon, "", "", Map.of(), false, EvolvedParams.NONE);
     }
 
     /**
@@ -61,6 +72,9 @@ public record SkillNode(String id, String name, String desc, List<Parent> parent
 
     /** True for a node that gets a switch in the Passives panel: a line node of type passive_toggle or attribute_modifier. */
     public boolean hasToggle() { return isLineNode() && (TYPE_PASSIVE.equals(type) || TYPE_ATTR.equals(type)); }
+
+    /** True when this passive carries an {@code evolved} block (its numbers change once the line has evolved). */
+    public boolean hasEvolved() { return evolved != null && !evolved.isEmpty(); }
 
     /** An enum parameter of the node ({@code vfx}, {@code effect}, ...), or {@code fallback} when it has none. */
     public String param(String key, String fallback) {

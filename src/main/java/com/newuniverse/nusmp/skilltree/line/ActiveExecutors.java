@@ -81,6 +81,7 @@ public final class ActiveExecutors {
         reg("ward_reflect", ActiveExecutors::wardReflect);
         reg("meteor_drop", ActiveExecutors::meteorDrop);
         reg("stance", ActiveExecutors::stance);
+        reg("debt_burst", c -> Debts.canBurst(c), ActiveExecutors::debtBurst);   // 3.26.0 (Evolution skills): consumes the Debt on the foes around and bursts it
     }
 
     /** The registered kind, or null. */
@@ -224,11 +225,13 @@ public final class ActiveExecutors {
     private static void buffAura(ActiveCtx c) {
         double radius = c.num("radius");
         int ticks = Math.max(20, c.whole("seconds") * 20);
-        int given = 0;
+        int given = 0, allies = 0;
         for (LivingEntity e : KitAllies.around(c.p, c.p.position(), radius)) {
             if (given++ >= MAX_TARGETS) break;
             LineLookups.give(e, c.str("effect", ""), ticks, c.whole("amp"), true);
+            if (e != c.p) allies++;
         }
+        Evolution.onAllyBuffs(c.p, c.route, allies);                                    // 3.26.0: the "ally_buffs" evolution counter
         c.fx(c.p.position(), c.p.position(), 18, (float) radius);
         c.rukh(chest(c.p), 8);
         sound(c, SoundEvents.BEACON_ACTIVATE, 1.2f);
@@ -245,11 +248,13 @@ public final class ActiveExecutors {
 
     private static void healPulse(ActiveCtx c) {
         double radius = c.num("radius");
-        int healed = 0;
+        int healed = 0, allies = 0;
         for (LivingEntity e : KitAllies.around(c.p, c.p.position(), radius)) {
             if (healed++ >= MAX_TARGETS) break;
             AbilityKit.heal(e, (float) c.num("amount"));
+            if (e != c.p) allies++;
         }
+        Evolution.onAllyBuffs(c.p, c.route, allies);                                    // 3.26.0: the "ally_buffs" evolution counter
         c.fx(c.p.position(), c.p.position(), 18, (float) radius);
         c.rukh(chest(c.p), 8);
         sound(c, SoundEvents.PLAYER_LEVELUP, 1.0f);
@@ -465,6 +470,9 @@ public final class ActiveExecutors {
             c.rukh(point.add(0, 0.5, 0), 10);
         });
     }
+
+    /** 3.26.0 (Evolution skills): the art that takes the Debt the player's blows stored on the foes around and bursts it; the work and its bounds are in {@link Debts#burst}. */
+    private static void debtBurst(ActiveCtx c) { Debts.burst(c); }
 
     private static void stance(ActiveCtx c) {
         boolean on = LineStances.toggle(c);

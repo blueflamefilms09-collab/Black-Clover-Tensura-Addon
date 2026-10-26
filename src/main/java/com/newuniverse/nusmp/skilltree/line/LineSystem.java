@@ -18,5 +18,6 @@ public final class LineSystem {
         done = true;
         KitClock.init();
         LineEvents.register();
+        EvolutionSelfTests.register();                              // 3.26.0: evolution.counters, evolution.debt
     }
 }

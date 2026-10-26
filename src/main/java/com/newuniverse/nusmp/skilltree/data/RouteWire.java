@@ -71,6 +71,29 @@ public final class RouteWire {
         out.utf(nz(r.backgroundTheme()), RouteSchema.LEN_KEY);
         out.varInt(r.nodes().size());
         for (SkillNode n : r.nodes()) writeNode(out, n);
+        writeEvolution(out, r.evolution());                                   // 3.26.0: appended, after the nodes
+    }
+
+    /** 3.26.0: the Evolution block of a line: a flag, then the five fields (nothing more for a route without one). */
+    public static void writeEvolution(Sink out, RouteEvolution e) {
+        out.varInt(e == null ? 0 : 1);
+        if (e == null) return;
+        out.utf(e.requirement(), RouteSchema.LEN_KEY);
+        out.varInt(e.count());
+        out.utf(e.text(), RouteEvolution.LEN_TEXT);
+        out.utf(e.ultimateName(), RouteSchema.LEN_NAME);
+        out.utf(e.damageKind(), RouteSchema.LEN_KEY);
+    }
+
+    public static RouteEvolution readEvolution(Source in) {
+        int flag = range(in.varInt(), 0, 1, "evolution flag");
+        if (flag == 0) return null;
+        String requirement = in.utf(RouteSchema.LEN_KEY);
+        int count = range(in.varInt(), 1, RouteEvolution.MAX_COUNT, "evolution count");
+        String text = in.utf(RouteEvolution.LEN_TEXT);
+        String ultimateName = in.utf(RouteSchema.LEN_NAME);
+        String damageKind = in.utf(RouteSchema.LEN_KEY);
+        return new RouteEvolution(requirement, count, text, ultimateName, damageKind);
     }
 
     private static void writeNode(Sink out, SkillNode n) {
@@ -106,6 +129,18 @@ public final class RouteWire {
             out.utf(e.getKey(), RouteSchema.LEN_KEY);
             out.utf(e.getValue(), RouteSchema.LEN_PARAM);
         }
+        out.varInt(n.ultimate() ? 1 : 0);                                     // 3.26.0: the Ultimate Evolution flag and the evolved block of a passive
+        EvolvedParams ev = n.evolved() == null ? EvolvedParams.NONE : n.evolved();
+        out.varInt(ev.nums().size());
+        for (Map.Entry<String, Double> e : ev.nums().entrySet()) {
+            out.utf(e.getKey(), RouteSchema.LEN_KEY);
+            out.f64(e.getValue());
+        }
+        out.varInt(ev.strs().size());
+        for (Map.Entry<String, String> e : ev.strs().entrySet()) {
+            out.utf(e.getKey(), RouteSchema.LEN_KEY);
+            out.utf(e.getValue(), RouteSchema.LEN_PARAM);
+        }
     }
 
     private static String nz(String s) { return s == null ? "" : s; }
@@ -138,8 +173,9 @@ public final class RouteWire {
         int n = range(in.varInt(), 1, RouteSchema.MAX_NODES, "nodes");
         List<SkillNode> nodes = new ArrayList<>(n);
         for (int i = 0; i < n; i++) nodes.add(readNode(in, extended));
+        RouteEvolution evolution = readEvolution(in);
         return new SkillRoute(id, magic, name, desc, book, bookName, bookLore, color, icon, classId, duplicateSp, lootWeight, Collections.unmodifiableList(nodes),
-                franchise, guiBackground, bookTexture, backgroundTheme);
+                franchise, guiBackground, bookTexture, backgroundTheme, evolution);
     }
 
     private static SkillNode readNode(Source in, boolean extended) {
@@ -175,8 +211,16 @@ public final class RouteWire {
         int np2 = count(in.varInt(), RouteSchema.MAX_PARAMS, "params");
         Map<String, String> params = new LinkedHashMap<>();
         for (int i = 0; i < np2; i++) params.put(in.utf(RouteSchema.LEN_KEY), in.utf(RouteSchema.LEN_PARAM));
+        boolean ultimate = range(in.varInt(), 0, 1, "ultimate flag") == 1;
+        int nen = count(in.varInt(), RouteSchema.MAX_PARAMS, "evolved numbers");
+        Map<String, Double> evNums = new LinkedHashMap<>();
+        for (int i = 0; i < nen; i++) evNums.put(in.utf(RouteSchema.LEN_KEY), in.f64());
+        int nes = count(in.varInt(), RouteSchema.MAX_PARAMS, "evolved words");
+        Map<String, String> evStrs = new LinkedHashMap<>();
+        for (int i = 0; i < nes; i++) evStrs.put(in.utf(RouteSchema.LEN_KEY), in.utf(RouteSchema.LEN_PARAM));
         return new SkillNode(id, name, desc, Collections.unmodifiableList(parents), cost, Collections.unmodifiableList(costs), maxLevel, skill,
-                Collections.unmodifiableList(passives), Collections.unmodifiableMap(values), x, y, icon, type, kind, Collections.unmodifiableMap(params));
+                Collections.unmodifiableList(passives), Collections.unmodifiableMap(values), x, y, icon, type, kind, Collections.unmodifiableMap(params), ultimate,
+                new EvolvedParams(evNums, evStrs));
     }
 
     /** All routes: a count (at most {@value #MAX_ROUTES}), then each route. */

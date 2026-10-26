@@ -32,6 +32,8 @@ class LineKindsTest {
 
     private static String source(String name) throws IOException { return Files.readString(JAVA.resolve(name), StandardCharsets.UTF_8); }
 
+    private static String debtsSource() throws IOException { return source("Debts.java"); }
+
     private static Set<String> regs(String src) {
         Set<String> out = new LinkedHashSet<>();
         Matcher m = Pattern.compile("reg\\(\"([a-z_]+)\"").matcher(src);
@@ -60,8 +62,8 @@ class LineKindsTest {
         Set<String> attr = new LinkedHashSet<>();
         while (m.find()) attr.add(m.group(1));
         sameSet("attr", new LinkedHashSet<>(cat.attrKinds()), attr);
-        assertEquals(26 + 1, active.size(), "26 arts and finishers plus the stance");
-        assertEquals(25, cat.passiveKinds().size());
+        assertEquals(27 + 1, active.size(), "27 arts and finishers (debt_burst since 3.26.0) plus the stance");
+        assertEquals(26, cat.passiveKinds().size(), "25 passives plus debt_store (3.26.0)");
     }
 
     /** The text of the method (or lambda argument) body that starts at {@code from}: up to the matching closing brace. */
@@ -104,10 +106,15 @@ class LineKindsTest {
             assertTrue(at > 0, "method " + m.group(3) + " of " + kind);
             Set<String> used = literals(body(src, at));
             if (m.group(2) != null) used.addAll(literals(m.group(2)));
+            if (kind.equals("debt_burst")) {                       // 3.26.0: the art is a one-line hand-over to Debts.burst, which is where the numbers are read
+                String debts = debtsSource();
+                used.addAll(literals(body(debts, debts.indexOf("public static void burst("))));
+                used.addAll(literals(body(debts, debts.indexOf("public static boolean canBurst("))));
+            }
             for (String u : used) if (!names(k).contains(u)) bad.add(kind + " reads '" + u + "', which is not a parameter of the kind (it has " + names(k) + ")");
             checked++;
         }
-        assertEquals(27, checked, "all 26 arts and the stance were found and checked");
+        assertEquals(28, checked, "all 27 arts and the stance were found and checked");
         assertTrue(bad.isEmpty(), String.join("\n", bad));
     }
 
@@ -124,7 +131,7 @@ class LineKindsTest {
             kinds.add(m.group(1));
             starts.add(m.start());
         }
-        assertEquals(25, kinds.size());
+        assertEquals(26, kinds.size());
         List<String> bad = new ArrayList<>();
         for (int i = 0; i < kinds.size(); i++) {
             int end = i + 1 < starts.size() ? starts.get(i + 1) : src.indexOf("    /** The hooks of a kind", starts.get(i));
@@ -134,6 +141,10 @@ class LineKindsTest {
             if (ref.find()) {
                 int at = src.indexOf("private static void " + ref.group(1) + "(");
                 text += body(src, at);
+            }
+            if (kinds.get(i).equals("debt_store")) {               // 3.26.0: the passive hands over to Debts.store (the blow) and Debts.tickFor (the beat), where the numbers are read
+                String debts = debtsSource();
+                text += body(debts, debts.indexOf("public static void store(")) + body(debts, debts.indexOf("public static void tickFor("));
             }
             LineCatalog.Kind k = cat.kind(LineCatalog.Group.PASSIVE, kinds.get(i));
             for (String u : literals(text)) if (!names(k).contains(u)) bad.add(kinds.get(i) + " reads '" + u + "', which is not a parameter of the kind (it has " + names(k) + ")");

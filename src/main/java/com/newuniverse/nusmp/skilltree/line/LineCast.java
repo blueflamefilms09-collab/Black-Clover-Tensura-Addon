@@ -44,6 +44,13 @@ public final class LineCast {
                 refuse(p, LineText.CAST_LOCKED);
                 return Result.LOCKED;
             }
+            if (node.ultimate()) {                                                  // 3.26.0 (Evolution skills): the Ultimate art needs the evolution AND full mastery
+                EvolutionRules.Gate gate = Evolution.gate(p, route, node);
+                if (gate != EvolutionRules.Gate.OPEN) {
+                    Evolution.refuse(p, route, node, gate);
+                    return Result.LOCKED;
+                }
+            }
             String key = SkillRoute.key(routeId, node.id());
             long now = p.serverLevel().getGameTime();
             long ready = LineState.cooldownEnd(p, key);
@@ -66,6 +73,7 @@ public final class LineCast {
             }
             LineState.setCooldownEnd(p, key, now + cooldownTicks(node, level));
             LineState.addCast(p, key);
+            Evolution.onArtCast(p, route, node);                                    // 3.26.0: the "arts_cast" evolution counter
             return Result.OK;
         } catch (RuntimeException e) {
             LOG.warn("[nusmp] line cast failed for {} {}", routeId, node == null ? "?" : node.id(), e);

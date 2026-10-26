@@ -64,9 +64,10 @@ public final class RouteSchema {
     private static final Pattern COLOR = Pattern.compile("#[0-9a-fA-F]{6}");
 
     private static final Set<String> ROUTE_FIELDS = Set.of("magic", "name", "desc", "book", "book_name", "book_lore", "color", "icon", "class_id", "duplicate_sp", "loot_weight", "nodes",
-            "franchise", "gui_background", "book_texture", "background_theme");
+            "franchise", "gui_background", "book_texture", "background_theme", "evolution");
+    private static final Set<String> EVOLUTION_FIELDS = Set.of("requirement", "count", "text", "ultimate_name", "params");
     private static final Set<String> NODE_FIELDS = Set.of("id", "name", "desc", "parents", "cost", "costs", "max_level", "skill", "passives", "values", "x", "y", "icon",
-            "type", "kind", "params");
+            "type", "kind", "params", "ultimate", "evolved");
     private static final Set<String> NODE_TYPES = Set.of(SkillNode.TYPE_ACTIVE, SkillNode.TYPE_PASSIVE, SkillNode.TYPE_ATTR);
     private static final Pattern PARAM_VALUE = Pattern.compile("[A-Za-z0-9_]+");
 
@@ -203,6 +204,7 @@ public final class RouteSchema {
             if (nodes.isEmpty()) problems.add("nodes: no node could be loaded");
             else if (nodes.stream().noneMatch(SkillNode::isRoot)) problems.add("nodes: no root node (a node without parents) could be loaded, so nothing in the route could ever be bought");
         }
+        RouteEvolution evolution = readEvolution(o, extended, nodes, ctx);                // 3.26.0: the Evolution block and its Ultimate art
         if (extended && ctx.catalogProblems > 0) {                                   // a line with a node outside the catalogue is refused as a whole: half a line would be a different line
             problems.add("this line is skipped: " + ctx.catalogProblems + " node(s) break the effect catalogue (tools/lines/catalog.json), see the lines above");
             return new Parsed(null, problems, warnings);
@@ -211,7 +213,7 @@ public final class RouteSchema {
         boolean routeBroken = r.errors > 0 || nodes.isEmpty() || nodes.stream().noneMatch(SkillNode::isRoot);
         if (routeBroken) return new Parsed(null, problems, warnings);
         SkillRoute route = new SkillRoute(routeId, magic, name, desc, book, bookName, bookLore, color, icon, classId, duplicateSp, lootWeight, List.copyOf(nodes),
-                franchise, guiBackground, bookTexture, backgroundTheme);
+                franchise, guiBackground, bookTexture, backgroundTheme, evolution);
         return new Parsed(route, problems, warnings);
     }
 
@@ -302,6 +304,15 @@ public final class RouteSchema {
             String resolved = checkEffect(type, kind, params, values, own, c.warnings, label, c.extended);
             if (resolved != null) type = resolved;
         }
+        // 3.26.0 (Evolution skills): the Ultimate flag of an art and the evolved block of a passive
+        boolean ultimate = false;
+        if (o.has("ultimate") && !o.get("ultimate").isJsonNull()) {
+            JsonElement ue = o.get("ultimate");
+            if (!ue.isJsonPrimitive() || !ue.getAsJsonPrimitive().isBoolean()) own.add("ultimate: must be true or false");
+            else ultimate = ue.getAsBoolean();
+        }
+        if (ultimate && !SkillNode.TYPE_ACTIVE.equals(type)) own.add("ultimate: only an art (an active_ability node) can be the Ultimate Evolution art");
+        EvolvedParams evolved = readEvolved(o, type, kind, own);
         boolean catalogBroken = own.size() > ownBefore;
 
         for (SkillNode.Parent p : parents) {
@@ -325,7 +336,124 @@ public final class RouteSchema {
             return null;
         }
         if (!skill.isEmpty()) c.skillOwner.put(skill, id);
-        return new SkillNode(id, name, desc, List.copyOf(parents), cost, List.copyOf(costs), maxLevel, skill, List.copyOf(passives), values, x, y, icon, type, kind, params);
+        return new SkillNode(id, name, desc, List.copyOf(parents), cost, List.copyOf(costs), maxLevel, skill, List.copyOf(passives), values, x, y, icon, type, kind, params, ultimate, evolved);
+    }
+
+    // ---------------------------------------------------------------- 3.26.0: Evolution
+    /**
+     * Why: the route's {@code evolution} block is the contract between the generator and the engine for the Evolution skills: which counter, how many, the card's sentence, the name after the evolution. A
+     * block outside the catalogue (an unknown counter, a count out of range, a damage kind no damage event knows) would make a skill that can never evolve, so a line with such a block is refused with a
+     * sentence, exactly like a node outside the catalogue. The block also needs its Ultimate art: exactly ONE node of the line flagged {@code ultimate}. A line with an Ultimate art but no block only gets a warning
+     * (the art is then never locked). On a classic route (no franchise) the block is ignored with a warning. Returns null when the route has none.
+     */
+    private static RouteEvolution readEvolution(JsonObject o, boolean extended, List<SkillNode> nodes, Ctx c) {
+        int ultimates = 0;
+        for (SkillNode n : nodes) if (n.ultimate()) ultimates++;
+        JsonElement e = o.get("evolution");
+        if (e == null || e.isJsonNull()) {
+            if (ultimates > 0) c.warnings.add("evolution: " + ultimates + " node(s) are flagged ultimate but the route has no evolution block (the art is never locked)");
+            return null;
+        }
+        if (!extended) {
+            c.warnings.add("evolution: only a generated line (one with a franchise) has an evolution, the block is ignored");
+            return null;
+        }
+        List<String> own = new ArrayList<>();
+        if (!e.isJsonObject()) {
+            own.add("must be an object with requirement, count, text and ultimate_name");
+        } else {
+            JsonObject eo = e.getAsJsonObject();
+            unknownFields(eo, EVOLUTION_FIELDS, "evolution", c.warnings);
+            Reader r = new Reader(eo, own);
+            r.warnings = c.warnings;
+            String requirement = r.requiredSnake("requirement", LEN_KEY);
+            int count = r.integer("count", 0, 1, RouteEvolution.MAX_COUNT);
+            if (!eo.has("count")) own.add("count: is required");
+            String text = r.text("text", "", RouteEvolution.LEN_TEXT, true);
+            String ultimateName = r.text("ultimate_name", "", LEN_NAME, true);
+            if (own.isEmpty() && text.isBlank()) own.add("text: is required (the sentence the skill card shows)");
+            if (own.isEmpty() && ultimateName.isBlank()) own.add("ultimate_name: is required");
+            String damageKind = "";
+            JsonElement pe = eo.get("params");
+            if (pe != null && !pe.isJsonNull()) {
+                if (!pe.isJsonObject()) own.add("params: must be an object");
+                else for (Map.Entry<String, JsonElement> en : pe.getAsJsonObject().entrySet()) {
+                    if (!en.getKey().equals("damage_kind") || !en.getValue().isJsonPrimitive() || !en.getValue().getAsJsonPrimitive().isString()) own.add("params." + shorten(en.getKey()) + ": only damage_kind (text) is allowed");
+                    else damageKind = en.getValue().getAsString();
+                }
+            }
+            LineCatalog cat = LineCatalog.get();
+            if (own.isEmpty() && cat.loaded()) {
+                LineCatalog.Kind k = cat.evolution().get(requirement);
+                if (k == null) own.add("requirement: '" + shorten(requirement) + "' is not an evolution counter of the catalogue " + cat.evolution().keySet());
+                else if (!damageKind.isEmpty()) {
+                    List<String> allowed = k.enums().get("damage_kind");
+                    if (allowed == null) own.add("params.damage_kind: the counter '" + requirement + "' takes no damage kind");
+                    else if (!allowed.contains(damageKind)) own.add("params.damage_kind: '" + shorten(damageKind) + "' is not allowed " + allowed);
+                }
+            }
+            if (own.isEmpty()) {
+                if (ultimates != 1) {
+                    own.add("an evolution needs exactly one node flagged ultimate (the Ultimate Evolution art), this route has " + ultimates);
+                } else {
+                    SkillNode last = null;
+                    for (SkillNode n : nodes) if (n.nodeType() == SkillNode.NodeType.ACTIVE) last = n;
+                    if (last != null && !last.ultimate()) c.warnings.add("evolution: the ultimate art is not the last art of the line (the skill card marks the LAST mode as the ultimate)");
+                }
+            }
+            if (own.isEmpty()) return new RouteEvolution(requirement, count, text, ultimateName, damageKind);
+        }
+        for (String p : own) c.problems.add("evolution." + p);
+        c.catalogProblems++;
+        return null;
+    }
+
+    /**
+     * The {@code evolved} block of a passive: the numbers (each inside the range of the kind) and words (each one of the kind's enum values) that replace the passive's own once the line has evolved. Only a
+     * passive_toggle node may carry one. Problems go to {@code own} (the node is refused, so the line is).
+     */
+    private static EvolvedParams readEvolved(JsonObject o, String type, String kind, List<String> own) {
+        JsonElement e = o.get("evolved");
+        if (e == null || e.isJsonNull()) return EvolvedParams.NONE;
+        if (!SkillNode.TYPE_PASSIVE.equals(type)) {
+            own.add("evolved: only a passive (a passive_toggle node) can have an evolved block");
+            return EvolvedParams.NONE;
+        }
+        if (!e.isJsonObject()) {
+            own.add("evolved: must be an object of numbers and words");
+            return EvolvedParams.NONE;
+        }
+        JsonObject eo = e.getAsJsonObject();
+        if (eo.size() > MAX_PARAMS) {
+            own.add("evolved: " + eo.size() + " entries, the limit is " + MAX_PARAMS);
+            return EvolvedParams.NONE;
+        }
+        LineCatalog cat = LineCatalog.get();
+        LineCatalog.Kind k = cat.loaded() ? cat.kind(LineCatalog.Group.PASSIVE, kind) : null;
+        Map<String, Double> nums = new LinkedHashMap<>();
+        Map<String, String> strs = new LinkedHashMap<>();
+        for (Map.Entry<String, JsonElement> en : eo.entrySet()) {
+            String key = en.getKey();
+            JsonElement v = en.getValue();
+            if (!validSnake(key) || key.length() > LEN_KEY) {
+                own.add("evolved." + shorten(key) + ": the name must be lower-case snake text of at most " + LEN_KEY + " characters");
+            } else if (v != null && v.isJsonPrimitive() && v.getAsJsonPrimitive().isNumber()) {
+                Double d = finite(v);
+                LineCatalog.Num num = k == null ? null : k.nums().get(key);
+                if (d == null) own.add("evolved." + key + ": must be a finite number");
+                else if (k != null && num == null) own.add("evolved." + key + ": is not a number of kind '" + kind + "'");
+                else if (num != null && !num.accepts(d)) own.add("evolved." + key + ": " + trim(d) + " is outside [" + trim(num.min()) + ", " + trim(num.max()) + "] for kind '" + kind + "'");
+                else nums.put(key, d);
+            } else if (v != null && v.isJsonPrimitive() && v.getAsJsonPrimitive().isString() && PARAM_VALUE.matcher(v.getAsString()).matches() && v.getAsString().length() <= LEN_PARAM) {
+                List<String> allowed = k == null ? null : k.enums().get(key);
+                if (k != null && allowed == null) own.add("evolved." + key + ": is not a word parameter of kind '" + kind + "'");
+                else if (allowed != null && !allowed.contains(v.getAsString())) own.add("evolved." + key + ": '" + shorten(v.getAsString()) + "' is not allowed for kind '" + kind + "'");
+                else strs.put(key, v.getAsString());
+            } else {
+                own.add("evolved." + key + ": must be a number or a word of letters, numbers and _");
+            }
+        }
+        return new EvolvedParams(nums, strs);
     }
 
     /**

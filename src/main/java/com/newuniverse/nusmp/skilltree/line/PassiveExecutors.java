@@ -192,6 +192,8 @@ public final class PassiveExecutors {
             if (dealt > 0f && t.isAlive() && c.roll(c.num("chance"))) LineGeo.shove(c.p, t, c.num("strength"));
         }));
         reg("execute_threshold", on().dealt((c, t, src, amount) -> t.getHealth() <= t.getMaxHealth() * c.num("threshold") ? (float) (amount * (1.0 + c.num("bonus"))) : amount));
+        // 3.26.0 (Evolution skills): the Debt a blow stores on the foe, and the beat that ticks it (docs/skills/evolution_engine.md)
+        reg("debt_store", on().post((c, t, dealt) -> Debts.store(c, t, dealt)).beat(c -> Debts.tickFor(c)));
         reg("mending", on().beat(c -> {
             String k = "mend." + c.key();
             if (c.now < LineState.getLong(c.p, k)) return;

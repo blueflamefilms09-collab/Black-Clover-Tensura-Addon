@@ -11,9 +11,7 @@
   "class_id": "fixture_line_3",
   "duplicate_sp": 3,
   "loot_weight": 1,
-  "gui_background": "nusmp:textures/gui/skill_trees/fixture_line_3.png",
   "book_texture": "nusmp:item/skill_book_3d/tensura",
-  "background_theme": "forest",
   "nodes": [
     {
       "id": "fixture_stance_3_a",
@@ -299,9 +297,9 @@
       "icon": "minecraft:iron_ingot"
     },
     {
-      "id": "fixture_ward_reflect_24",
-      "name": "Fixture Ward Reflect 24",
-      "desc": "A test art of kind ward_reflect.",
+      "id": "fixture_uppercut_24",
+      "name": "Fixture Uppercut 24",
+      "desc": "A test art of kind uppercut.",
       "parents": [
         {
           "node": "fixture_stance_3_a",
@@ -317,9 +315,68 @@
       ],
       "max_level": 4,
       "type": "active_ability",
-      "kind": "ward_reflect",
+      "kind": "uppercut",
       "params": {
         "vfx": "WIND_TORNADO"
+      },
+      "values": {
+        "damage": [
+          7.0,
+          8.75,
+          10.5,
+          12.25
+        ],
+        "range": [
+          3.2,
+          3.392,
+          3.584,
+          3.776
+        ],
+        "launch": [
+          0.6,
+          0.66,
+          0.72,
+          0.78
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          120.0,
+          110.0,
+          101.0,
+          91.0
+        ]
+      },
+      "x": 4,
+      "y": 0,
+      "icon": "minecraft:blaze_rod"
+    },
+    {
+      "id": "fixture_ward_reflect_25",
+      "name": "Fixture Ward Reflect 25",
+      "desc": "A test art of kind ward_reflect.",
+      "parents": [
+        {
+          "node": "fixture_stance_3_b",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "ward_reflect",
+      "params": {
+        "vfx": "WIND_SLASH"
       },
       "values": {
         "seconds": [
@@ -348,17 +405,17 @@
         ]
       },
       "x": 4,
-      "y": 0,
+      "y": 2,
       "icon": "minecraft:blaze_rod"
     },
     {
-      "id": "fixture_whirlwind_25",
-      "name": "Fixture Whirlwind 25",
+      "id": "fixture_whirlwind_26",
+      "name": "Fixture Whirlwind 26",
       "desc": "A test art of kind whirlwind.",
       "parents": [
         {
-          "node": "fixture_stance_3_b",
-          "level": 1
+          "node": "fixture_uppercut_24",
+          "level": 2
         }
       ],
       "cost": 1,
@@ -372,7 +429,7 @@
       "type": "active_ability",
       "kind": "whirlwind",
       "params": {
-        "vfx": "WIND_SLASH"
+        "vfx": "WIND_RING"
       },
       "values": {
         "damage": [
@@ -412,32 +469,32 @@
           198.0
         ]
       },
-      "x": 4,
-      "y": 2,
+      "x": 6,
+      "y": 0,
       "icon": "minecraft:blaze_rod"
     },
     {
-      "id": "fixture_barrage_26",
-      "name": "Fixture Barrage 26",
+      "id": "fixture_barrage_27",
+      "name": "Fixture Barrage 27",
       "desc": "A test art of kind barrage.",
       "parents": [
         {
-          "node": "fixture_ward_reflect_24",
+          "node": "fixture_ward_reflect_25",
           "level": 2
         }
       ],
-      "cost": 1,
+      "cost": 2,
       "costs": [
-        1,
         2,
-        2,
-        3
+        3,
+        3,
+        4
       ],
       "max_level": 4,
       "type": "active_ability",
       "kind": "barrage",
       "params": {
-        "vfx": "WIND_RING"
+        "vfx": "SPIRIT_AURA"
       },
       "values": {
         "damage": [
@@ -478,16 +535,16 @@
         ]
       },
       "x": 6,
-      "y": 0,
+      "y": 2,
       "icon": "minecraft:blaze_rod"
     },
     {
-      "id": "fixture_blink_27",
-      "name": "Fixture Blink 27",
+      "id": "fixture_blink_28",
+      "name": "Fixture Blink 28",
       "desc": "A test art of kind blink.",
       "parents": [
         {
-          "node": "fixture_whirlwind_25",
+          "node": "fixture_whirlwind_26",
           "level": 2
         }
       ],
@@ -502,7 +559,7 @@
       "type": "active_ability",
       "kind": "blink",
       "params": {
-        "vfx": "SPIRIT_AURA"
+        "vfx": "FLAME_EXPLOSION"
       },
       "values": {
         "distance": [
@@ -524,17 +581,17 @@
           106.0
         ]
       },
-      "x": 6,
-      "y": 2,
+      "x": 8,
+      "y": 0,
       "icon": "minecraft:blaze_rod"
     },
     {
-      "id": "fixture_buff_aura_28",
-      "name": "Fixture Buff Aura 28",
+      "id": "fixture_buff_aura_29",
+      "name": "Fixture Buff Aura 29",
       "desc": "A test art of kind buff_aura.",
       "parents": [
         {
-          "node": "fixture_barrage_26",
+          "node": "fixture_barrage_27",
           "level": 2
         }
       ],
@@ -549,8 +606,8 @@
       "type": "active_ability",
       "kind": "buff_aura",
       "params": {
-        "effect": "jump_boost",
-        "vfx": "FLAME_EXPLOSION"
+        "effect": "poison",
+        "vfx": "FIRE_BURST"
       },
       "values": {
         "radius": [
@@ -585,33 +642,33 @@
         ]
       },
       "x": 8,
-      "y": 0,
+      "y": 2,
       "icon": "minecraft:blaze_rod"
     },
     {
-      "id": "fixture_buff_self_29",
-      "name": "Fixture Buff Self 29",
+      "id": "fixture_buff_self_30",
+      "name": "Fixture Buff Self 30",
       "desc": "A test art of kind buff_self.",
       "parents": [
         {
-          "node": "fixture_blink_27",
+          "node": "fixture_blink_28",
           "level": 2
         }
       ],
-      "cost": 2,
+      "cost": 3,
       "costs": [
-        2,
         3,
-        3,
-        4
+        4,
+        4,
+        5
       ],
       "max_level": 4,
       "type": "active_ability",
       "kind": "buff_self",
       "params": {
-        "effect": "poison",
+        "effect": "hunger",
         "effect2": "none",
-        "vfx": "FIRE_BURST"
+        "vfx": "WATER_BURST"
       },
       "values": {
         "seconds": [
@@ -645,17 +702,17 @@
           328.0
         ]
       },
-      "x": 8,
-      "y": 2,
+      "x": 10,
+      "y": 0,
       "icon": "minecraft:blaze_rod"
     },
     {
-      "id": "fixture_chain_hit_30",
-      "name": "Fixture Chain Hit 30",
+      "id": "fixture_chain_hit_31",
+      "name": "Fixture Chain Hit 31",
       "desc": "A test art of kind chain_hit.",
       "parents": [
         {
-          "node": "fixture_buff_aura_28",
+          "node": "fixture_buff_aura_29",
           "level": 2
         }
       ],
@@ -670,7 +727,7 @@
       "type": "active_ability",
       "kind": "chain_hit",
       "params": {
-        "vfx": "WATER_BURST"
+        "vfx": "LIGHTNING_SPEAR"
       },
       "values": {
         "damage": [
@@ -711,87 +768,51 @@
         ]
       },
       "x": 10,
-      "y": 0,
-      "icon": "minecraft:blaze_rod"
-    },
-    {
-      "id": "fixture_cone_strike_31",
-      "name": "Fixture Cone Strike 31",
-      "desc": "A test art of kind cone_strike.",
-      "parents": [
-        {
-          "node": "fixture_buff_self_29",
-          "level": 2
-        }
-      ],
-      "cost": 3,
-      "costs": [
-        3,
-        4,
-        4,
-        5
-      ],
-      "max_level": 4,
-      "type": "active_ability",
-      "kind": "cone_strike",
-      "params": {
-        "vfx": "LIGHTNING_SPEAR"
-      },
-      "values": {
-        "damage": [
-          6.0,
-          7.5,
-          9.0,
-          10.5
-        ],
-        "range": [
-          3.5,
-          3.78,
-          4.06,
-          4.34
-        ],
-        "half_angle": [
-          40.0,
-          44.0,
-          48.0,
-          52.0
-        ],
-        "targets": [
-          2.0,
-          3.0,
-          4.0,
-          4.0
-        ],
-        "knockback": [
-          0.4,
-          0.44,
-          0.48,
-          0.52
-        ],
-        "cost": [
-          0.015,
-          0.0162,
-          0.0174,
-          0.0186
-        ],
-        "cooldown": [
-          100.0,
-          92.0,
-          84.0,
-          76.0
-        ]
-      },
-      "x": 10,
       "y": 6,
       "icon": "minecraft:blaze_rod"
     },
     {
-      "id": "fixture_passive_self_effect_when_21",
-      "name": "Fixture Passive Self Effect When 21",
+      "id": "fixture_passive_resist_21",
+      "name": "Fixture Passive Resist 21",
+      "desc": "A test passive of kind resist.",
+      "parents": [
+        {
+          "node": "fixture_uppercut_24",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "resist",
+      "params": {
+        "damage_kind": "explosion"
+      },
+      "values": {
+        "pct": [
+          0.15,
+          0.18,
+          0.21,
+          0.24
+        ]
+      },
+      "x": 10,
+      "y": 2,
+      "icon": "minecraft:amethyst_shard"
+    },
+    {
+      "id": "fixture_passive_self_effect_when_22",
+      "name": "Fixture Passive Self Effect When 22",
       "desc": "A test passive of kind self_effect_when.",
       "parents": [
         {
-          "node": "fixture_ward_reflect_24",
+          "node": "fixture_ward_reflect_25",
           "level": 2
         }
       ],
@@ -806,8 +827,8 @@
       "type": "passive_toggle",
       "kind": "self_effect_when",
       "params": {
-        "effect": "poison",
-        "condition": "airborne"
+        "effect": "hunger",
+        "condition": "raining"
       },
       "values": {
         "amp": [
@@ -818,16 +839,16 @@
         ]
       },
       "x": 10,
-      "y": 2,
+      "y": 4,
       "icon": "minecraft:amethyst_shard"
     },
     {
-      "id": "fixture_passive_sprint_bonus_22",
-      "name": "Fixture Passive Sprint Bonus 22",
+      "id": "fixture_passive_sprint_bonus_23",
+      "name": "Fixture Passive Sprint Bonus 23",
       "desc": "A test passive of kind sprint_bonus.",
       "parents": [
         {
-          "node": "fixture_whirlwind_25",
+          "node": "fixture_whirlwind_26",
           "level": 2
         }
       ],
@@ -849,26 +870,26 @@
           0.32
         ]
       },
-      "x": 10,
-      "y": 4,
+      "x": 12,
+      "y": 0,
       "icon": "minecraft:amethyst_shard"
     },
     {
-      "id": "fixture_passive_thorns_23",
-      "name": "Fixture Passive Thorns 23",
+      "id": "fixture_passive_thorns_24",
+      "name": "Fixture Passive Thorns 24",
       "desc": "A test passive of kind thorns.",
       "parents": [
         {
-          "node": "fixture_barrage_26",
+          "node": "fixture_barrage_27",
           "level": 2
         }
       ],
-      "cost": 1,
+      "cost": 2,
       "costs": [
-        1,
         2,
-        2,
-        3
+        3,
+        3,
+        4
       ],
       "max_level": 4,
       "type": "passive_toggle",
@@ -888,16 +909,16 @@
         ]
       },
       "x": 12,
-      "y": 0,
+      "y": 2,
       "icon": "minecraft:amethyst_shard"
     },
     {
-      "id": "fixture_passive_xp_bonus_24",
-      "name": "Fixture Passive Xp Bonus 24",
+      "id": "fixture_passive_xp_bonus_25",
+      "name": "Fixture Passive Xp Bonus 25",
       "desc": "A test passive of kind xp_bonus.",
       "parents": [
         {
-          "node": "fixture_blink_27",
+          "node": "fixture_blink_28",
           "level": 2
         }
       ],
@@ -919,17 +940,17 @@
           0.16
         ]
       },
-      "x": 12,
-      "y": 2,
+      "x": 14,
+      "y": 0,
       "icon": "minecraft:amethyst_shard"
     },
     {
-      "id": "fixture_passive_aura_25",
-      "name": "Fixture Passive Aura 25",
+      "id": "fixture_passive_aura_26",
+      "name": "Fixture Passive Aura 26",
       "desc": "A test passive of kind aura.",
       "parents": [
         {
-          "node": "fixture_buff_aura_28",
+          "node": "fixture_buff_aura_29",
           "level": 2
         }
       ],
@@ -944,8 +965,8 @@
       "type": "passive_toggle",
       "kind": "aura",
       "params": {
-        "effect": "mining_fatigue",
-        "target": "allies"
+        "effect": "resistance",
+        "target": "enemies"
       },
       "values": {
         "radius": [
@@ -962,25 +983,25 @@
         ]
       },
       "x": 14,
-      "y": 0,
+      "y": 2,
       "icon": "minecraft:amethyst_shard"
     },
     {
-      "id": "fixture_passive_combo_26",
-      "name": "Fixture Passive Combo 26",
+      "id": "fixture_passive_combo_27",
+      "name": "Fixture Passive Combo 27",
       "desc": "A test passive of kind combo.",
       "parents": [
         {
-          "node": "fixture_buff_self_29",
+          "node": "fixture_buff_self_30",
           "level": 2
         }
       ],
-      "cost": 2,
+      "cost": 3,
       "costs": [
-        2,
         3,
-        3,
-        4
+        4,
+        4,
+        5
       ],
       "max_level": 4,
       "type": "passive_toggle",
@@ -999,17 +1020,17 @@
           0.8
         ]
       },
-      "x": 14,
-      "y": 2,
+      "x": 16,
+      "y": 0,
       "icon": "minecraft:amethyst_shard"
     },
     {
-      "id": "fixture_passive_crit_27",
-      "name": "Fixture Passive Crit 27",
+      "id": "fixture_passive_crit_28",
+      "name": "Fixture Passive Crit 28",
       "desc": "A test passive of kind crit.",
       "parents": [
         {
-          "node": "fixture_chain_hit_30",
+          "node": "fixture_chain_hit_31",
           "level": 2
         }
       ],
@@ -1038,55 +1059,87 @@
         ]
       },
       "x": 16,
-      "y": 0,
-      "icon": "minecraft:amethyst_shard"
-    },
-    {
-      "id": "fixture_passive_dmg_vs_28",
-      "name": "Fixture Passive Dmg Vs 28",
-      "desc": "A test passive of kind dmg_vs.",
-      "parents": [
-        {
-          "node": "fixture_cone_strike_31",
-          "level": 2
-        }
-      ],
-      "cost": 3,
-      "costs": [
-        3,
-        4,
-        4,
-        5
-      ],
-      "max_level": 4,
-      "type": "passive_toggle",
-      "kind": "dmg_vs",
-      "params": {
-        "category": "monster"
-      },
-      "values": {
-        "bonus": [
-          0.15,
-          0.18,
-          0.21,
-          0.24
-        ]
-      },
-      "x": 16,
       "y": 2,
       "icon": "minecraft:amethyst_shard"
     },
     {
-      "id": "fixture_dash_strike_32",
-      "name": "Fixture Dash Strike 32",
-      "desc": "A test art of kind dash_strike.",
+      "id": "fixture_cone_strike_32",
+      "name": "Fixture Cone Strike 32",
+      "desc": "A test art of kind cone_strike.",
       "parents": [
         {
-          "node": "fixture_cone_strike_31",
+          "node": "fixture_chain_hit_31",
           "level": 3
         },
         {
-          "node": "fixture_passive_dmg_vs_28",
+          "node": "fixture_passive_crit_28",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "cone_strike",
+      "params": {
+        "vfx": "EARTH_SPIKES"
+      },
+      "values": {
+        "damage": [
+          6.0,
+          7.5,
+          9.0
+        ],
+        "range": [
+          3.5,
+          3.78,
+          4.06
+        ],
+        "half_angle": [
+          40.0,
+          44.0,
+          48.0
+        ],
+        "targets": [
+          2.0,
+          3.0,
+          4.0
+        ],
+        "knockback": [
+          0.4,
+          0.44,
+          0.48
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174
+        ],
+        "cooldown": [
+          1500.0,
+          1380.0,
+          1260.0
+        ]
+      },
+      "x": 16,
+      "y": 4,
+      "icon": "minecraft:blaze_rod"
+    },
+    {
+      "id": "fixture_dash_strike_33",
+      "name": "Fixture Dash Strike 33",
+      "desc": "A test art of kind dash_strike.",
+      "parents": [
+        {
+          "node": "fixture_buff_self_30",
+          "level": 3
+        },
+        {
+          "node": "fixture_passive_combo_27",
           "level": 2
         }
       ],
@@ -1100,7 +1153,7 @@
       "type": "active_ability",
       "kind": "dash_strike",
       "params": {
-        "vfx": "EARTH_SPIKES"
+        "vfx": "SPATIAL_RIFT"
       },
       "values": {
         "distance": [
@@ -1130,77 +1183,10 @@
         ]
       },
       "x": 16,
-      "y": 4,
-      "icon": "minecraft:blaze_rod"
-    },
-    {
-      "id": "fixture_debuff_cone_33",
-      "name": "Fixture Debuff Cone 33",
-      "desc": "A test art of kind debuff_cone.",
-      "parents": [
-        {
-          "node": "fixture_chain_hit_30",
-          "level": 3
-        },
-        {
-          "node": "fixture_passive_crit_27",
-          "level": 2
-        }
-      ],
-      "cost": 4,
-      "costs": [
-        4,
-        5,
-        6
-      ],
-      "max_level": 3,
-      "type": "active_ability",
-      "kind": "debuff_cone",
-      "params": {
-        "effect": "mining_fatigue",
-        "effect2": "none",
-        "vfx": "SPATIAL_RIFT"
-      },
-      "values": {
-        "range": [
-          5.0,
-          5.4,
-          5.8
-        ],
-        "half_angle": [
-          40.0,
-          44.0,
-          48.0
-        ],
-        "seconds": [
-          6.0,
-          7.0,
-          8.0
-        ],
-        "amp": [
-          0.0,
-          0.0,
-          0.0
-        ],
-        "seconds2": [
-          0.0,
-          0.0,
-          0.0
-        ],
-        "cost": [
-          0.02,
-          0.0216,
-          0.0232
-        ],
-        "cooldown": [
-          1500.0,
-          1380.0,
-          1260.0
-        ]
-      },
-      "x": 16,
       "y": 6,
       "icon": "minecraft:blaze_rod"
     }
-  ]
+  ],
+  "gui_background": "nusmp:textures/gui/skill_trees/fixture_line_3.png",
+  "background_theme": "forest"
 }

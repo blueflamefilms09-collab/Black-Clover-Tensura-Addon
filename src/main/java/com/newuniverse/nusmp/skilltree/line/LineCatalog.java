@@ -40,13 +40,15 @@ public final class LineCatalog {
     private static volatile LineCatalog instance;
 
     private final Map<String, Kind> active, passive, stance, attr;
+    private final Map<String, Kind> evolution;
     private final List<String> backgrounds, vfx;
     private final Map<String, String> franchises;
     private final boolean loaded;
 
-    private LineCatalog(Map<String, Kind> active, Map<String, Kind> passive, Map<String, Kind> stance, Map<String, Kind> attr, List<String> backgrounds, Map<String, String> franchises,
-                        List<String> vfx, boolean loaded) {
+    private LineCatalog(Map<String, Kind> active, Map<String, Kind> passive, Map<String, Kind> stance, Map<String, Kind> attr, Map<String, Kind> evolution, List<String> backgrounds,
+                        Map<String, String> franchises, List<String> vfx, boolean loaded) {
         this.active = active;
+        this.evolution = evolution;
         this.passive = passive;
         this.stance = stance;
         this.attr = attr;
@@ -78,7 +80,7 @@ public final class LineCatalog {
     }
 
     private static LineCatalog empty() {
-        return new LineCatalog(Map.of(), Map.of(), Map.of(), Map.of(), List.of(), Map.of(), List.of(), false);
+        return new LineCatalog(Map.of(), Map.of(), Map.of(), Map.of(), Map.of(), List.of(), Map.of(), List.of(), false);
     }
 
     /** Parses the text of {@code catalog.json}. Never throws: unreadable text gives the empty catalogue. */
@@ -88,7 +90,7 @@ public final class LineCatalog {
             Map<String, String> fr = new LinkedHashMap<>();
             if (o.has("franchises")) for (Map.Entry<String, JsonElement> e : o.getAsJsonObject("franchises").entrySet()) fr.put(e.getKey(), e.getValue().getAsString());
             return new LineCatalog(kinds(o, "active", Group.ACTIVE), kinds(o, "passive", Group.PASSIVE), kinds(o, "stance", Group.STANCE), kinds(o, "attr", Group.ATTR),
-                    strings(o, "backgrounds"), Collections.unmodifiableMap(fr), strings(o, "vfx"), true);
+                    evolutionKinds(o), strings(o, "backgrounds"), Collections.unmodifiableMap(fr), strings(o, "vfx"), true);
         } catch (RuntimeException e) {
             return empty();
         }
@@ -98,6 +100,28 @@ public final class LineCatalog {
         List<String> out = new ArrayList<>();
         if (o.has(key) && o.get(key).isJsonArray()) for (JsonElement e : o.getAsJsonArray(key)) out.add(e.getAsString());
         return Collections.unmodifiableList(out);
+    }
+
+    /**
+     * 3.26.0 (Evolution skills): the counters a line's {@code evolution} block may watch ({@code kills}, {@code damage_taken}, ...). They have no numbers (the count is the route's own) and at most one enum
+     * (the damage kind of {@code damage_taken}), so they are read as kinds of the ATTR group's shape with an empty number table; a catalogue file from before 3.26.0 simply has none.
+     */
+    private static Map<String, Kind> evolutionKinds(JsonObject root) {
+        Map<String, Kind> out = new LinkedHashMap<>();
+        if (!root.has("evolution") || !root.get("evolution").isJsonObject()) return Collections.unmodifiableMap(out);
+        for (Map.Entry<String, JsonElement> e : root.getAsJsonObject("evolution").entrySet()) {
+            JsonObject k = e.getValue().getAsJsonObject();
+            Map<String, List<String>> enums = new LinkedHashMap<>();
+            if (k.has("enums")) {
+                for (Map.Entry<String, JsonElement> p : k.getAsJsonObject("enums").entrySet()) {
+                    List<String> vals = new ArrayList<>();
+                    for (JsonElement v : p.getValue().getAsJsonArray()) vals.add(v.getAsString());
+                    enums.put(p.getKey(), Collections.unmodifiableList(vals));
+                }
+            }
+            out.put(e.getKey(), new Kind(e.getKey(), Group.ATTR, Map.of(), Collections.unmodifiableMap(enums), k.has("desc") ? k.get("desc").getAsString() : ""));
+        }
+        return Collections.unmodifiableMap(out);
     }
 
     private static Map<String, Kind> kinds(JsonObject root, String group, Group g) {
@@ -168,6 +192,9 @@ public final class LineCatalog {
             case ATTR -> "attribute_modifier";
         };
     }
+
+    /** 3.26.0: the evolution counters of the catalogue (a requirement must be one of these), with their enums (the damage kind of {@code damage_taken}). Empty for an old catalogue file. */
+    public Map<String, Kind> evolution() { return evolution; }
 
     public Set<String> activeKinds() { return active.keySet(); }
 

@@ -1,9 +1,16 @@
 package com.newuniverse.nusmp.skilltree.unique;
 
+import com.newuniverse.nusmp.skilltree.data.RouteEvolution;
+import com.newuniverse.nusmp.skilltree.data.RouteRegistry;
+import com.newuniverse.nusmp.skilltree.data.SkillRoute;
+import com.newuniverse.nusmp.skilltree.line.EvolutionConfig;
+import com.newuniverse.nusmp.skilltree.line.EvolutionRules;
+import com.newuniverse.nusmp.skilltree.line.EvolutionText;
 import com.newuniverse.nusmp.skilltree.line.LineText;
 import io.github.manasmods.manascore.skill.api.ManasSkillInstance;
 import io.github.manasmods.tensura.ability.skill.Skill;
 import net.minecraft.ChatFormatting;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
@@ -41,7 +48,41 @@ public final class LineUniqueSkill extends Skill {
 
     @Override public MutableComponent getName() { return Component.translatableWithFallback(SkillTexts.nameKey(line.bare()), line.name()); }
 
-    @Override public MutableComponent getSkillDescription() { return Component.translatableWithFallback(SkillTexts.descKey(line.bare()), SkillTexts.description(line)); }
+    @Override
+    public MutableComponent getSkillDescription() {
+        MutableComponent base = Component.translatableWithFallback(SkillTexts.descKey(line.bare()), SkillTexts.description(line));
+        RouteEvolution ev = evolution();
+        if (ev == null) return base;
+        base.append(Component.literal("\n")).append(EvolutionText.tr(EvolutionText.REQUIREMENT, ev.text()).withStyle(ChatFormatting.GOLD));       // 3.26.0 (Evolution skills): what the skill asks and what it becomes
+        if (!ev.ultimateName().isEmpty()) base.append(Component.literal("\n")).append(EvolutionText.tr(EvolutionText.EVOLVED_NAME, ev.ultimateName()).withStyle(ChatFormatting.YELLOW));
+        return base;
+    }
+
+    /** 3.26.0 (Evolution skills): the line's evolution requirement (the server has the whole route, a client the card of it), or null for a line without one or when the feature is off. */
+    private RouteEvolution evolution() {
+        SkillRoute r = RouteRegistry.byId(line.routeId());
+        return r != null && r.hasEvolution() && EvolutionConfig.enabled() ? r.evolution() : null;
+    }
+
+    /**
+     * The mode name of the Ultimate art while its skill has an evolution: the requirement and its progress ("n / count", mirrored by the server into the instance's own tag, see {@code Evolution#mirror}),
+     * then "needs mastery", then the evolved name once it can be cast. Null for every other mode.
+     */
+    private Component evolutionLabel(ManasSkillInstance instance, int m, String name) {
+        RouteEvolution ev = evolution();
+        CompoundTag tag = instance.getTag();
+        if (ev == null || tag == null || !tag.contains(EvolutionRules.TAG_ULTIMATE) || tag.getInt(EvolutionRules.TAG_ULTIMATE) != m) return null;
+        int progress = tag.getInt(EvolutionRules.TAG_PROGRESS);
+        String evolved = ev.ultimateName().isEmpty() ? name : ev.ultimateName();
+        return switch (EvolutionRules.card(progress, ev.count(), MasteryLevels.mastered(UniqueBooks.fraction(instance)))) {
+            case PROGRESS -> EvolutionText.tr(EvolutionText.MODE_PROGRESS, name, EvolutionRules.progressText(progress, ev.count()));
+            case NEEDS_MASTERY -> EvolutionText.tr(EvolutionText.MODE_NEEDS_MASTERY, evolved);
+            case READY -> {
+                int cd = instance.getCoolDown(m);
+                yield Component.literal(cd > 0 ? evolved + " (" + cd + "s)" : evolved);
+            }
+        };
+    }
 
     // ---------------------------------------------------------------- the arts are the modes
     @Override public int getModes(ManasSkillInstance instance) { return SkillTexts.modeNames(line).size(); }
@@ -59,6 +100,8 @@ public final class LineUniqueSkill extends Skill {
         var names = SkillTexts.modeNames(line);
         int m = Math.floorMod(mode, names.size());
         String name = names.get(m);
+        Component evo = evolutionLabel(instance, m, name);
+        if (evo != null) return evo;
         if (!line.arts().isEmpty() && !MasteryLevels.awake(m, names.size(), UniqueBooks.fraction(instance))) {
             return LineText.tr(LineText.MODE_LOCKED, name);
         }

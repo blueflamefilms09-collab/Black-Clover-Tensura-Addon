@@ -37,6 +37,9 @@ public final class MasteryLevels {
         return f + 1e-9 >= threshold(index, count);
     }
 
+    /** 3.26.0 (Evolution skills): true when the skill is MASTERED, i.e. at its full mastery (what the Ultimate Evolution art asks for on top of the evolution requirement). */
+    public static boolean mastered(double fraction) { return !Double.isNaN(fraction) && fraction + 1e-9 >= 1.0; }
+
     /** The whole percent of mastery art {@code index} of {@code count} needs (0 to 100), rounded up. */
     public static int percentNeeded(int index, int count) { return (int) Math.ceil(threshold(index, count) * 100.0 - 1e-9); }
 

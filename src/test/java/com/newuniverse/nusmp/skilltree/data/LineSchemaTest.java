@@ -59,8 +59,8 @@ class LineSchemaTest {
         String jar = Files.readString(Path.of("src/main/resources/nusmp_lines/catalog.json"), StandardCharsets.UTF_8);
         assertEquals(tool, jar, "tools/lines/catalog.json changed: copy it to src/main/resources/nusmp_lines/catalog.json (the engine reads the copy)");
         assertTrue(LineCatalog.get().loaded(), "the catalogue resource must load from the classpath");
-        assertEquals(26, LineCatalog.get().activeKinds().size());
-        assertEquals(25, LineCatalog.get().passiveKinds().size());
+        assertEquals(27, LineCatalog.get().activeKinds().size());   // 3.26.0: debt_burst
+        assertEquals(26, LineCatalog.get().passiveKinds().size());   // 3.26.0: debt_store
         assertTrue(LineCatalog.get().stanceKinds().contains("stance") && LineCatalog.get().attrKinds().contains("attr"));
     }
 
@@ -158,7 +158,7 @@ class LineSchemaTest {
         files.put("nusmp:fixture_line_1", broken);
         files.put("nusmp:fixture_line_9", JsonParser.parseString("[1,2,3]"));
         RouteIndex idx = RouteIndex.build(files, List.of("nusmp:fixture_line_unreadable"), RouteIndex.Caps.REGISTRY);
-        assertEquals(3, idx.all().size(), "the three good lines load");
+        assertEquals(4, idx.all().size(), "the four good lines load (the fifth fixture line, which carries the Evolution block, is among them)");
         int bad = 0;
         for (RouteIndex.Entry e : idx.report()) if (!e.loaded()) { bad++; assertFalse(e.problems().isEmpty(), e.id() + " says why"); }
         assertEquals(3, bad, "the broken line, the non-object and the unreadable file are reported, not loaded");

@@ -80,6 +80,15 @@ public final class LineState {
         else putString(e, STANCE, key);
     }
 
+    // ---------------------------------------------------------------- evolution (3.26.0)
+    /** The progress counter of a skill's evolution requirement ({@code evo.<skill id>}), the carried fraction of damage ({@code evoc.}) and the last time the client mirror was sent ({@code evom.}). */
+    static final String EVO = "evo.", EVO_CARRY = "evoc.", EVO_MIRROR = "evom.";
+
+    /** The evolution counter of this skill, 0 when it never counted (never negative). */
+    public static int evolution(LivingEntity e, String skillId) { return Math.max(0, getInt(e, EVO + skillId)); }
+
+    public static void setEvolution(LivingEntity e, String skillId, int value) { putInt(e, EVO + skillId, Math.max(0, value)); }
+
     // ---------------------------------------------------------------- combat
     /** Stamps "a blow was dealt or taken now". */
     public static void markCombat(LivingEntity e, long now) { putLong(e, COMBAT, now); }

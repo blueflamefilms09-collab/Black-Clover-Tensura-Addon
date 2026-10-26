@@ -26,9 +26,19 @@ import java.util.List;
  * @param guiBackground the texture drawn behind the tree canvas ({@code nusmp:textures/gui/skill_trees/<id>.png}), or an empty string for the classic look
  * @param bookTexture the item texture of the route's 3D book cover ({@code nusmp:item/skill_book_3d/<franchise>}), or an empty string
  * @param backgroundTheme the theme of the generated background ({@code magma}, {@code void}, ...), used for the fallback colour when the texture is missing, or an empty string
+ * @param evolution   3.26.0 (Evolution skills): what the player must do before the Ultimate Evolution art and the evolved passives unlock, or null for every other line
  */
 public record SkillRoute(String id, String magic, String name, String desc, String book, String bookName, String bookLore, int color, String icon, String classId,
-                         int duplicateSp, int lootWeight, List<SkillNode> nodes, String franchise, String guiBackground, String bookTexture, String backgroundTheme) {
+                         int duplicateSp, int lootWeight, List<SkillNode> nodes, String franchise, String guiBackground, String bookTexture, String backgroundTheme,
+                         RouteEvolution evolution) {
+
+    /**
+     * Why: the 17-argument form of the record before 3.26.0 (no evolution). Every old call site keeps compiling and means a line with no evolution. Add the new, keep the old.
+     */
+    public SkillRoute(String id, String magic, String name, String desc, String book, String bookName, String bookLore, int color, String icon, String classId,
+                      int duplicateSp, int lootWeight, List<SkillNode> nodes, String franchise, String guiBackground, String bookTexture, String backgroundTheme) {
+        this(id, magic, name, desc, book, bookName, bookLore, color, icon, classId, duplicateSp, lootWeight, nodes, franchise, guiBackground, bookTexture, backgroundTheme, null);
+    }
 
     /**
      * Why: the 13-argument form of the record before 1.82.0. Every old call site (the loader, the tests, the hand-built routes) keeps compiling and means exactly what it meant: a classic route
@@ -36,11 +46,20 @@ public record SkillRoute(String id, String magic, String name, String desc, Stri
      */
     public SkillRoute(String id, String magic, String name, String desc, String book, String bookName, String bookLore, int color, String icon, String classId,
                       int duplicateSp, int lootWeight, List<SkillNode> nodes) {
-        this(id, magic, name, desc, book, bookName, bookLore, color, icon, classId, duplicateSp, lootWeight, nodes, "", "", "", "");
+        this(id, magic, name, desc, book, bookName, bookLore, color, icon, classId, duplicateSp, lootWeight, nodes, "", "", "", "", null);
     }
 
     /** True for a generated Unique Skill Line (it names a franchise); false for a classic route. */
     public boolean isLine() { return franchise != null && !franchise.isEmpty(); }
+
+    /** True for a line that has an Evolution requirement (3.26.0). */
+    public boolean hasEvolution() { return evolution != null; }
+
+    /** The node flagged as the Ultimate Evolution art, or null. */
+    public SkillNode ultimateNode() {
+        for (SkillNode n : nodes) if (n.ultimate()) return n;
+        return null;
+    }
 
     /** The node with this id, or null. */
     public SkillNode node(String nodeId) {

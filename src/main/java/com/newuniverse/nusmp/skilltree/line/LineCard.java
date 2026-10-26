@@ -1,5 +1,6 @@
 package com.newuniverse.nusmp.skilltree.line;
 
+import com.newuniverse.nusmp.skilltree.data.RouteEvolution;
 import com.newuniverse.nusmp.skilltree.data.RouteSchema;
 import com.newuniverse.nusmp.skilltree.data.RouteWire;
 import com.newuniverse.nusmp.skilltree.data.SkillRoute;
@@ -17,18 +18,26 @@ import java.util.List;
  * Pure: the byte layout is written on the same three primitives as {@link RouteWire}, so the tests count and round-trip it without a game.
  */
 public record LineCard(String id, String magic, String franchise, String name, String book, String bookName, String bookLore, int color, String icon, String classId,
-                       String bookTexture, String backgroundTheme, int nodeCount) {
+                       String bookTexture, String backgroundTheme, int nodeCount, RouteEvolution evolution) {
+    /**
+     * Why: the 13-component form of the card before 3.26.0 (no evolution). Every old call site keeps compiling and means a card of a line with no evolution. Add the new, keep the old.
+     */
+    public LineCard(String id, String magic, String franchise, String name, String book, String bookName, String bookLore, int color, String icon, String classId,
+                    String bookTexture, String backgroundTheme, int nodeCount) {
+        this(id, magic, franchise, name, book, bookName, bookLore, color, icon, classId, bookTexture, backgroundTheme, nodeCount, null);
+    }
+
     /** At most this many cards in one payload (283 lines is about 100 KB; the cap keeps a payload far under the 1 MiB limit). */
     public static final int MAX_CARDS = 2048;
 
     public static LineCard of(SkillRoute r) {
         return new LineCard(r.id(), r.magic(), r.franchise() == null ? "" : r.franchise(), r.name(), r.book(), r.bookName(), r.bookLore(), r.color() & 0xFFFFFF, r.icon(), r.classId(),
-                r.bookTexture() == null ? "" : r.bookTexture(), r.backgroundTheme() == null ? "" : r.backgroundTheme(), r.nodes().size());
+                r.bookTexture() == null ? "" : r.bookTexture(), r.backgroundTheme() == null ? "" : r.backgroundTheme(), r.nodes().size(), r.evolution());
     }
 
     /** A route with no nodes that stands for this line on a client that does not own it (see the class comment). */
     public SkillRoute toStub() {
-        return new SkillRoute(id, magic, name, "", book, bookName, bookLore, color, icon, classId, 0, 0, List.of(), franchise, "", bookTexture, backgroundTheme);
+        return new SkillRoute(id, magic, name, "", book, bookName, bookLore, color, icon, classId, 0, 0, List.of(), franchise, "", bookTexture, backgroundTheme, evolution);
     }
 
     // ---------------------------------------------------------------- wire
@@ -46,6 +55,7 @@ public record LineCard(String id, String magic, String franchise, String name, S
         out.utf(c.bookTexture, RouteSchema.LEN_PATH);
         out.utf(c.backgroundTheme, RouteSchema.LEN_KEY);
         out.varInt(c.nodeCount);
+        RouteWire.writeEvolution(out, c.evolution);                          // 3.26.0: the requirement text, count and the name after the evolution (a flag only for a line without one)
     }
 
     public static LineCard read(RouteWire.Source in) {
@@ -55,7 +65,7 @@ public record LineCard(String id, String magic, String franchise, String name, S
         String icon = in.utf(RouteSchema.LEN_RESOURCE), classId = in.utf(RouteSchema.LEN_ID), bookTexture = in.utf(RouteSchema.LEN_PATH), theme = in.utf(RouteSchema.LEN_KEY);
         int nodes = in.varInt();
         if (nodes < 0 || nodes > RouteSchema.MAX_NODES) throw new IllegalArgumentException("a line card carries nodeCount = " + nodes);
-        return new LineCard(id, magic, franchise, name, book, bookName, bookLore, color, icon, classId, bookTexture, theme, nodes);
+        return new LineCard(id, magic, franchise, name, book, bookName, bookLore, color, icon, classId, bookTexture, theme, nodes, RouteWire.readEvolution(in));
     }
 
     public static void writeAll(RouteWire.Sink out, List<LineCard> cards) {

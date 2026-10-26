@@ -1831,6 +1831,76 @@
     ]
    },
    "desc": "Call a strike down on the place you look at after a short delay."
+  },
+  "debt_burst": {
+   "params": {
+    "damage": {
+     "base": 8,
+     "min": 2,
+     "max": 120,
+     "grow": 0.25
+    },
+    "mult": {
+     "base": 1.5,
+     "min": 0.5,
+     "max": 5.0,
+     "grow": 0.1
+    },
+    "radius": {
+     "base": 5,
+     "min": 2,
+     "max": 24,
+     "grow": 0.1
+    },
+    "targets": {
+     "base": 5,
+     "min": 1,
+     "max": 20,
+     "grow": 0.4
+    },
+    "cost": {
+     "base": 0.03,
+     "min": 0.01,
+     "max": 0.1,
+     "grow": 0.08
+    },
+    "cooldown": {
+     "base": 260,
+     "min": 100,
+     "max": 18000,
+     "grow": -0.08
+    }
+   },
+   "enums": {
+    "vfx": [
+     "WIND_SLASH",
+     "WIND_RING",
+     "SPIRIT_AURA",
+     "FLAME_EXPLOSION",
+     "FIRE_BURST",
+     "WATER_BURST",
+     "LIGHTNING_SPEAR",
+     "EARTH_SPIKES",
+     "SPATIAL_RIFT",
+     "MIRROR_PANE",
+     "DEVIL_CIRCLE",
+     "MAGIC_CIRCLE",
+     "ELF_CIRCLE",
+     "SHADOW_POOL",
+     "POISON_BREATH",
+     "SEAL_CHAINS",
+     "THREAD_LINE",
+     "WEAPON_CONSTRUCTS",
+     "FIRE_SPIRAL",
+     "LIGHTNING_FIEND",
+     "WATER_RING",
+     "ASH_FORMATION",
+     "FLAME_TRAIL",
+     "STONE_SPIKES",
+     "WIND_TORNADO"
+    ]
+   },
+   "desc": "Detonate the Debt stored on the foes around you: a blow plus a multiple of all the Debt it consumes."
   }
  },
  "passive": {
@@ -2470,6 +2540,64 @@
    },
    "enums": {},
    "desc": "Your wounds close over time, even out of combat."
+  },
+  "debt_store": {
+   "params": {
+    "store_pct": {
+     "base": 0.25,
+     "min": 0.1,
+     "max": 0.8,
+     "grow": 0.2
+    },
+    "tick_seconds": {
+     "base": 3,
+     "min": 0,
+     "max": 10,
+     "grow": 0
+    },
+    "max_pct": {
+     "base": 0.5,
+     "min": 0.1,
+     "max": 1.0,
+     "grow": 0
+    },
+    "hold_seconds": {
+     "base": 12,
+     "min": 4,
+     "max": 30,
+     "grow": 0
+    }
+   },
+   "enums": {
+    "vfx": [
+     "WIND_SLASH",
+     "WIND_RING",
+     "SPIRIT_AURA",
+     "FLAME_EXPLOSION",
+     "FIRE_BURST",
+     "WATER_BURST",
+     "LIGHTNING_SPEAR",
+     "EARTH_SPIKES",
+     "SPATIAL_RIFT",
+     "MIRROR_PANE",
+     "DEVIL_CIRCLE",
+     "MAGIC_CIRCLE",
+     "ELF_CIRCLE",
+     "SHADOW_POOL",
+     "POISON_BREATH",
+     "SEAL_CHAINS",
+     "THREAD_LINE",
+     "WEAPON_CONSTRUCTS",
+     "FIRE_SPIRAL",
+     "LIGHTNING_FIEND",
+     "WATER_RING",
+     "ASH_FORMATION",
+     "FLAME_TRAIL",
+     "STONE_SPIKES",
+     "WIND_TORNADO"
+    ]
+   },
+   "desc": "Your blows store delayed damage on the foe (Debt). It ticks while it waits, and your Debt arts consume it for a burst."
   }
  },
  "stance": {
@@ -2617,7 +2745,8 @@
   "tbate": "The Beginning After the End",
   "tower_of_god": "Tower of God",
   "god_of_high_school": "The God of High School",
-  "omniscient_readers_viewpoint": "Omniscient Reader's Viewpoint"
+  "omniscient_readers_viewpoint": "Omniscient Reader's Viewpoint",
+  "fairy_tail": "Fairy Tail"
  },
  "vfx": [
   "WIND_SLASH",
@@ -2645,5 +2774,51 @@
   "FLAME_TRAIL",
   "STONE_SPIKES",
   "WIND_TORNADO"
- ]
+ ],
+ "evolution": {
+  "kills": {
+   "desc": "Kills made while the skill is on.",
+   "enums": {}
+  },
+  "elite_kills": {
+   "desc": "Kills of elite or boss creatures (a boss tag, or at least 100 maximum health).",
+   "enums": {}
+  },
+  "boss_kills": {
+   "desc": "Kills of boss creatures.",
+   "enums": {}
+  },
+  "damage_dealt": {
+   "desc": "Damage dealt to hostile creatures while the skill is on.",
+   "enums": {}
+  },
+  "damage_taken": {
+   "desc": "Damage taken (optionally only of one kind: params.damage_kind).",
+   "enums": {
+    "damage_kind": [
+     "fire",
+     "magic",
+     "explosion",
+     "projectile",
+     "fall",
+     "freeze",
+     "lightning",
+     "wither",
+     "any"
+    ]
+   }
+  },
+  "lethal_survived": {
+   "desc": "Blows that would have left the player at 2 health or less, survived (at most one every 5 seconds).",
+   "enums": {}
+  },
+  "arts_cast": {
+   "desc": "Arts of this skill cast.",
+   "enums": {}
+  },
+  "ally_buffs": {
+   "desc": "Allies reached by a buffing or healing art of this skill.",
+   "enums": {}
+  }
+ }
 }
