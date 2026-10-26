@@ -1,5 +1,29 @@
 # Changelog
 
+## [3.23.0] — Jibril: abilities that hurt and 3D models
+
+### NEW
+- **Jibril, abilities that should hurt now do** (setting `jibrilUpgrades`, default true; every holy blow goes through the Balance Law and the active-damage cap):
+  - **Judgment of Heaven** smites the unholy: the undead, demons and creatures carrying Temporal Debt take half as much again (330 instead of 220 base).
+  - **Heavenly Purge** burns the unholy within 14 blocks of you: 120 holy damage to the 12 nearest foes that are undead, demonic or in debt. Peaceful creatures and allies are spared.
+  - **Holy Shackles** bite: 40 holy damage plus 25 for every good effect they take from the target (at most 8 count).
+  - **Kingdom of God** wears its enemies down: each second every enemy inside (at most 24) loses 1% of its maximum health.
+- **Jibril 3D models in the effects** (client setting `visual.jibrilModels`, default true, file `nusmp-jibril-client.toml`): hinged golden cuffs and chain links for the Holy Shackles; a Spear of Heaven that falls through the light and stays in the pillar for Judgment of Heaven; an open tome of law for Word of Law; a crown with six crystal spikes for Absolute Command; a halo with three orbiting law plates for the Kingdom of God and the Wings. See `docs/vfx_remake/jibril_models.md`.
+- Tests: `JibrilModelsTest`, extended `JudgmentRulesTest` and `JudgmentSourceScanTest`; self-test `jibril.upgrades`.
+
+### REPLACED
+- Nothing removed. Only while the models setting is on, the particle detail is not minimal and the effect is near (64 blocks; 42 for the Kingdom and Wings halo, plates and cuffs): the upper and lower flat chain rings of the Shackles, the flat scroll panel and two nested halos of Word of Law, the inner peach halo of Command, and the two flat halos, orbiting feathers and prism bloom of the Kingdom are drawn as models instead. Some petals, motes, sparks and feathers are thinned while a model is drawn, to stay under the caps.
+
+### KEPT
+- Everything of 3.22.0: every old texture and draw call (the fallback when `visual.jibrilModels` is off, far away or out of budget), the toggle bits and old saves, the master toggle, the Time Magic VFX (untouched). With `jibrilUpgrades` off the abilities behave as in 3.22.0.
+
+### Cost (CLAUDE.md rule 11)
+- Server: no new packets, entity spawns or chunk loads. Judgment's smite is a multiplier on the blow it already makes; the Purge burn is one more 14-block box query per press, at most 12 creatures; the Shackles' bite is one blow on one creature; the Kingdom's wear is one `share` call per enemy it already touches each second (at most 24).
+- Client: at most 100 quads / 400 vertices per effect (the engine cap). Measured worst cases with models on: Command 66 quads, Judgment 76, Shackles 79, Word 53, Kingdom 44 of 50, Wings 47 of 50. Judgment beyond 64 blocks draws the old flat effect. Every model asks the budget first and is skipped whole; no allocation per frame.
+
+### Not included
+- Not played in a real game, previews are headless only. Known weaknesses: the cuffs read as golden hexagonal bands, not round manacles; the chain links read as flat picture frames (the weakest model); the spear reads well only while falling, then the bright pillar swallows most of it; the law plates are small at range and the tome is blown out in the first ticks of the flash; the models use a fixed sun, not world lighting; the decorative extras are visibly fewer while a model is drawn.
+
 ## [3.22.0] — Israfil: abilities that hurt and 3D models
 
 ### NEW

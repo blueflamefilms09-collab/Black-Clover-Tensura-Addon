@@ -435,3 +435,9 @@ Ten shapes appended after `SOLOMON_ABSORB` (`HERCULES_LEAP`, `_TREMOR`, `_INVICT
 - **Israfil (setting `israfilUpgrades`).** Grand Trumpet: `TRUMPET_DAMAGE` 150 falling to `TRUMPET_FALLOFF_MIN` 25% at the 100-block rim (`IsrafilRules.trumpetDamage`), one blow per creature of the 48 it already touches. Coordinate Shift: `SHIFT_SHEAR_DAMAGE` 70 on a hostile creature it trades places with. Spatial Collapse: when the Nihility field ends by running out (not evicted, cleared or ownerless) it implodes for `NIHILITY_FINAL_SHARE` 8% of maximum health on creatures inside, one box query, at most `MAX_FIELD_TARGETS`, with a pull. All blows go through the Balance Law and the active-damage cap; setting off restores 3.21.0.
 - **Models.** `IsrafilModels`, `IsrafilMeshDraw`, `IsrafilModelsConfig` (client). See `docs/vfx_remake/israfil_models.md`.
 - **Cost.** No new packets; one box query only at a natural Nihility end; worst client case 98 quads (Trumpet) of the 100 cap.
+
+## 3.23.0 - the Jibril upgrades
+
+- **Jibril (setting `jibrilUpgrades`).** Judgment of Heaven: `JudgmentRules`-style multiplier `JUDGMENT_SMITE_BONUS` 0.5 when the target `burns` (undead, demonic, in debt) (`JibrilRules.judgmentDamage`). Heavenly Purge: `PURGE_BURN_DAMAGE` 120 holy on the `PURGE_BURN_MAX` 12 nearest foes that burn, within `PURGE_BURN_RADIUS` 14, one box query. Holy Shackles: `SHACKLE_BITE_BASE` 40 + `SHACKLE_BITE_PER_EFFECT` 25 per stolen effect, at most 8 (`shackleBite`). Kingdom of God: each pulse `KINGDOM_PULSE_SHARE` 1% of maximum health on the enemies already touched (at most 24). All blows go through the Balance Law and the active-damage cap; setting off restores 3.22.0.
+- **Models.** `JibrilModels`, `JibrilMeshDraw`, `JibrilModelsConfig` (client). See `docs/vfx_remake/jibril_models.md`.
+- **Cost.** No new packets; one extra box query per Purge; worst client case 79 quads (Shackles) of the 100 cap.
