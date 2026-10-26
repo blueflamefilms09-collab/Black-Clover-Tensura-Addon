@@ -11,6 +11,7 @@
   "class_id": "cha_hae_in_sword",
   "duplicate_sp": 3,
   "loot_weight": 1,
+  "book_texture": "nusmp:item/skill_book_3d/solo_leveling",
   "nodes": [
     {
       "id": "hunter_s_poise",

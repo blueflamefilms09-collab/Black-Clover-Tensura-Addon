@@ -11,6 +11,7 @@
   "class_id": "tog_rak_wraithraiser",
   "duplicate_sp": 3,
   "loot_weight": 1,
+  "book_texture": "nusmp:item/skill_book_3d/tower_of_god",
   "nodes": [
     {
       "id": "giant_s_stance",

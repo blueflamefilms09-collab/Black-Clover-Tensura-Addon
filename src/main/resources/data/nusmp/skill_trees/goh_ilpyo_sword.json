@@ -11,6 +11,7 @@
   "class_id": "goh_ilpyo_sword",
   "duplicate_sp": 3,
   "loot_weight": 1,
+  "book_texture": "nusmp:item/skill_book_3d/god_of_high_school",
   "nodes": [
     {
       "id": "taekkyeon_sway_stance",
