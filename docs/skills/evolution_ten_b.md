@@ -24,3 +24,6 @@ No weapon items are added, so none are needed.
 
 ## Server and lag cost (rule 11), worst case per player
 Identical to `docs/skills/evolution_ten.md`: counters O(1) per event; at most 20 Debt foes per player, at most 16 foes per burst, cooldown 10 to 15 minutes, no entities, no per-tick scans, no new packet type. Data only.
+
+## Final (3.27.0)
+Released as 3.27.0. Skill names in game: Fire Dragon Slayer, Lightning Dragon Slayer, Sky Dragon Slayer, Ais the Sword Princess, Cha Hae-In's Sword, Baran Monarch of Demons, Anak Zahard, Rak Wraithraiser, Ilpyo's Family Blade, Taejin's Renewal Charyeok. Laxus's art "Fairy Law" is "Fairy Law Dome" (the id `fairy_law` belongs to a removed magic). Test sweep: no new failure against the baseline; the classes added in 3.26.0 fail only in the stub harness in a full run and pass individually.
