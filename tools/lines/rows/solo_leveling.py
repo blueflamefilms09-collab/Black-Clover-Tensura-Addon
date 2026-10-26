@@ -1212,3 +1212,97 @@ LINES.append(Line(
                "text": "Deal 80000 damage to hostile creatures while Baran, Monarch of Demons is switched on.",
                "ultimate_name": "Ultimate Skill, Monarch of Demons"},
 ))
+
+# ---------------------------------------------------------------------------------------------------------------------------------- 30 (3.28.0, Evolution skill, docs/skills/evolution_ten_c.md row 5)
+LINES.append(Line(
+    id="ashborn_shadow_monarch", name="Ashborn, the Shadow Monarch", franchise=F,
+    desc="The original Monarch of Shadows and King of the Dead, the greatest fragment of Brilliant Light turned to dark: rays of black light, a sweep that raises the grave, the blow that once felled a rival Monarch and a grudge that stores every wound for the day the king rises in full. Evolves after twelve boss kills.",
+    color="#5b2a9d", background="holy", icon="minecraft:wither_skeleton_skull",
+    book_name="Testament of the Betrayed King", book_lore="He was left for dead by those he had fought beside. The dead remember who did the leaving.",
+    stances=[
+        S("Mantle of the Shadow Monarch", "The king's dark light wraps around you: much harder blows, but you stop guarding yourself.", "minecraft:soul_lantern", damage_pct=0.3, armor=-2, vfx="ASH_FORMATION"),
+        S("Throne of the Dead King", "Sit enthroned among the fallen: heavy, hard to shove and slowly mending, but slow.", "minecraft:crying_obsidian", armor=4, knockback_res=0.4, regen=0.8, speed_pct=-0.1, vfx="SPIRIT_AURA"),
+    ],
+    stats=[
+        T("Fragment of Brilliant Light", "A king's raw might in every blow.", "attack_damage", 1.5, "minecraft:netherite_sword"),
+        T("Heart of the Undying", "A heart that has outlived a war of gods: more maximum health.", "max_health", 3, "minecraft:enchanted_golden_apple"),
+        T("Shroud of the Fallen", "The dead lend their weight to your hide.", "armor_toughness", 1, "minecraft:netherite_chestplate"),
+        T("Unmoved King", "A body no blow can shove aside.", "knockback_resistance", 0.1, "minecraft:lodestone"),
+    ],
+    arts=[
+        A("Black Ray of the Fragment", "A lance of dark light leaves your hand and pierces every foe along your line of sight.", "ray_shot", "minecraft:end_rod", damage=12, range=28, pierce=3, vfx="SPIRIT_AURA"),
+        A("Black Ray: Shift", "Crouching, the ray shatters into a volley of dark shards that hammer the foe you look at.", "barrage", "minecraft:amethyst_shard", damage=3, shots=9, range=18, vfx="SPIRIT_AURA"),
+        A("King of the Dead's Sweep", "Spin and cut down everything around you again and again as the ash of the fallen rises.", "whirlwind", "minecraft:netherite_axe", damage=5, radius=4.5, hits=6, vfx="ASH_FORMATION"),
+        A("Grave Quake", "Crouching, you drive your will into the ground and a wave of broken stone races ahead of you.", "ground_wave", "minecraft:deepslate_bricks", damage=10, length=12, width=3, knockback=0.9, vfx="STONE_SPIKES"),
+        A("Baran's Bane", "A killing blow that bites deeper the weaker the foe: the stroke that once felled a rival Monarch.", "execute", "minecraft:bone", damage=12, bonus=1.2, range=3.8, vfx="LIGHTNING_FIEND"),
+        A("Hand of the Fallen", "Crouching, the dead heave up under the foe in front of you and fling it into the air.", "uppercut", "minecraft:skeleton_skull", damage=9, launch=1.0, vfx="ASH_FORMATION"),
+        A("Standard of the Undying", "Plant a banner of the dead: you and the allies around you are healed.", "heal_pulse", "minecraft:white_banner", radius=8, amount=9, vfx="SPIRIT_AURA"),
+        A("Shroud of the Deathless", "Crouching, a mantle of dark light closes around you as a thick shield of absorption.", "shield", "minecraft:shield", absorb_hearts=8, seconds=10, resist_amp=1, vfx="ASH_FORMATION"),
+    ],
+    passives=[
+        PE("Grudge of the Betrayed", "Your blows store a share of their damage on the foe as a grudge (Debt). It ticks while it waits, and the Ultimate collects it all at once.", "debt_store", "minecraft:wither_rose",
+           {"store_pct": 0.6, "max_pct": 0.9, "hold_seconds": 20}, store_pct=0.3, tick_seconds=3, max_pct=0.5, hold_seconds=14, vfx="ASH_FORMATION"),
+        PE("Slayer of Monarchs", "You deal much more damage to bosses.", "dmg_vs", "minecraft:nether_star", {"bonus": 0.6}, category="boss", bonus=0.3),
+        PE("Mantle of the Dead", "Withering and decay barely touch you: you take much less wither damage.", "resist", "minecraft:wither_skeleton_skull", {"pct": 0.65}, damage_kind="wither", pct=0.4),
+        P("Touch of Death", "Your blows may wither the foe.", "on_hit_effect", "minecraft:coal", effect="wither", seconds=4, chance=0.3),
+        P("Never Stay Dead", "When a blow would have ended you, the dead close ranks around you and shield you.", "last_stand", "minecraft:totem_of_undying", seconds=7),
+        P("Rise from the Fallen", "A kill heals you and fills you with regeneration.", "kill_reward", "minecraft:glow_ink_sac", heal=3, effect="regeneration", seconds=5),
+        P("Reaper's Mercy", "You deal much more damage to nearly dead foes.", "execute_threshold", "minecraft:iron_nugget", threshold=0.25, bonus=0.7),
+        P("Sight of the Grave", "Deep underground the king sees everything in the dark.", "self_effect_when", "minecraft:sculk_catalyst", effect="night_vision", condition="underground"),
+    ],
+    finishers=[
+        A("Fall of the Betrayed King", "A column of ash and dark light crashes onto the place you look at.", "meteor_drop", "minecraft:crying_obsidian", damage=34, radius=7, range=26, delay=18, cooldown=1500, vfx="ASH_FORMATION"),
+        AU("Monarch of Shadows", "The king takes his throne: every grudge stored on the foes around you comes due in one blast of dark light.", "debt_burst", "minecraft:dragon_head",
+           damage=52, mult=4.0, radius=14, targets=10, cost=0.08, cooldown=18000, vfx="SPIRIT_AURA"),
+    ],
+    evolution={"requirement": "boss_kills", "count": 12,
+               "text": "Slay 12 bosses while Ashborn, the Shadow Monarch is switched on to take the throne of the Monarch of Shadows.",
+               "ultimate_name": "Ultimate Skill, Monarch of Shadows"},
+))
+
+# ---------------------------------------------------------------------------------------------------------------------------------- 31 (3.28.0, Evolution skill, docs/skills/evolution_ten_c.md row 6)
+LINES.append(Line(
+    id="go_gunhee_chairman", name="Chairman Go's Fist", franchise=F,
+    desc="The old S-rank who now chairs the Hunters Association: a veteran's strength and speed, a beam of brilliant light, a voice that rallies hunters and a patience that stores every blow until the chairman steps back onto the field. Evolves after forty elite kills.",
+    color="#d4a64a", background="iron", icon="minecraft:golden_helmet",
+    book_name="Chairman's Field Manual", book_lore="Retired from the front line and still the one the front line calls when the gate will not close.",
+    stances=[
+        S("Veteran's Stance", "Years of fighting settle into one steady guard: harder blows and a firm footing.", "minecraft:golden_sword", damage_pct=0.2, armor=2, speed_pct=-0.05, vfx="SPIRIT_AURA"),
+        S("Chairman's Composure", "Hold still and command the room: slow, sturdy and slowly healing, with softer blows.", "minecraft:gold_block", armor=4, knockback_res=0.4, regen=0.8, damage_pct=-0.1, vfx="MAGIC_CIRCLE"),
+    ],
+    stats=[
+        T("S-Rank Strength", "The strength that made him an S-rank, still there under the grey hair.", "attack_damage", 1.5, "minecraft:golden_sword"),
+        T("Old Soldier's Constitution", "Maximum health of a man who has survived forty years of gates.", "max_health", 3, "minecraft:golden_apple"),
+        T("Chairman's Stride", "Quick, economical steps.", "movement_speed", 0.04, "minecraft:golden_boots", op="mult"),
+        T("Weight of Office", "Armour and bearing of the Association's chairman.", "armor", 1.5, "minecraft:iron_helmet"),
+    ],
+    arts=[
+        A("Veteran's Straight", "A blinding straight punch that carries you through every monster in your path.", "dash_strike", "minecraft:golden_sword", distance=8, damage=9, targets=4, vfx="WIND_SLASH"),
+        A("Veteran's Charge: Shift", "Crouching, you leap high and come down fist-first on the monsters below.", "leap_slam", "minecraft:gold_ingot", damage=11, radius=3.8, height=1.2, knockback=1.0, vfx="WIND_RING"),
+        A("Chairman's Will", "Gather the power of brilliant light and loose it as a beam through every foe in a line.", "ray_shot", "minecraft:glowstone_dust", damage=10, range=24, pierce=3, vfx="MAGIC_CIRCLE"),
+        A("Brilliant Light: Shift", "Crouching, the light breaks into a hail of glowing needles at the foe you look at.", "barrage", "minecraft:gold_nugget", damage=2.5, shots=8, range=16, vfx="MAGIC_CIRCLE"),
+        A("Iron Fist", "A heavy swing that smashes the cone of foes in front of you.", "cone_strike", "minecraft:iron_axe", damage=9, range=4, half_angle=55, targets=5, knockback=0.8, vfx="WIND_SLASH"),
+        A("Iron Fist: Shift", "Crouching, you pound the ground and a shockwave hurls back everything around you.", "ring_burst", "minecraft:anvil", damage=8, radius=4.5, knockback=1.3, targets=7, vfx="EARTH_SPIKES"),
+        A("Hunter's Directive", "Name the monster the Association wants gone: it takes extra damage for a while.", "mark", "minecraft:name_tag", range=22, seconds=10, bonus=0.35, vfx="SPIRIT_AURA"),
+        A("Rally the Hunters: Shift", "Crouching, a call across the room: you and your allies are healed.", "heal_pulse", "minecraft:bell", radius=9, amount=8, vfx="MAGIC_CIRCLE"),
+    ],
+    passives=[
+        PE("Weight of Experience", "Your blows store a share of their damage on the foe as the weight of years (Debt). It ticks while it waits, and the Ultimate collects it.", "debt_store", "minecraft:redstone",
+           {"store_pct": 0.55, "max_pct": 0.85, "hold_seconds": 20}, store_pct=0.28, tick_seconds=3, max_pct=0.5, hold_seconds=14, vfx="SPIRIT_AURA"),
+        PE("Monster Hunter of Forty Years", "You deal more damage to monsters.", "dmg_vs", "minecraft:iron_sword", {"bonus": 0.45}, category="monster", bonus=0.22),
+        PE("Retirement Postponed", "When a blow would have ended you, the old S-rank digs in and a light shield catches you.", "last_stand", "minecraft:totem_of_undying", {"seconds": 10, "rest": 1500}, seconds=6, rest=2700),
+        P("Veteran's Composure", "When badly hurt you stay calm and take less damage.", "reduce_when", "minecraft:iron_chestplate", condition="low_health", pct=0.18),
+        P("Chairman's Presence", "Hunters near you are bolstered by the chairman's presence: Resistance.", "aura", "minecraft:white_banner", effect="resistance", target="allies", radius=7),
+        P("Healer's Patience", "He went looking for healing magic and never stopped: your wounds close slowly, even out of combat.", "mending", "minecraft:glistering_melon_slice", seconds=15, amount=1),
+        P("Heavy Fists", "Your blows may shove the foe back.", "knockback_on_hit", "minecraft:piston", strength=0.5, chance=0.3),
+        P("Association Spoils", "A kill may drop an extra stack of loot for the Association's stores.", "drop_bonus", "minecraft:chest", chance=0.1),
+    ],
+    finishers=[
+        A("Chairman's Order: Hold the Line", "A command that carries across the whole field: you and every hunter around you gain a long surge of Resistance.", "buff_aura", "minecraft:white_banner", effect="resistance", radius=14, seconds=22, amp=1, cooldown=1500, vfx="MAGIC_CIRCLE"),
+        AU("Chairman's Last Stand", "The old chairman steps onto the field one more time: a thunderous charge in brilliant light, and every weight of years stored on the foes comes due at once.", "debt_burst", "minecraft:golden_helmet",
+           damage=36, mult=3.0, radius=10, targets=10, cost=0.07, cooldown=15000, vfx="SPIRIT_AURA"),
+    ],
+    evolution={"requirement": "elite_kills", "count": 40,
+               "text": "Slay 40 elite or boss creatures while Chairman Go's Fist is switched on to bring the chairman back to the front line.",
+               "ultimate_name": "Ultimate Skill, Chairman's Last Stand"},
+))

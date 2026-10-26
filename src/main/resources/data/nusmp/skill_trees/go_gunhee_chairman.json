@@ -1,0 +1,1251 @@
+{
+  "magic": "solo_leveling",
+  "franchise": "solo_leveling",
+  "name": "Chairman Go's Fist",
+  "desc": "The old S-rank who now chairs the Hunters Association: a veteran's strength and speed, a beam of brilliant light, a voice that rallies hunters and a patience that stores every blow until the chairman steps back onto the field. Evolves after forty elite kills.",
+  "book": "nusmp:go_gunhee_chairman_book",
+  "book_name": "Chairman's Field Manual",
+  "book_lore": "Retired from the front line and still the one the front line calls when the gate will not close.",
+  "color": "#D4A64A",
+  "icon": "minecraft:golden_helmet",
+  "class_id": "go_gunhee_chairman",
+  "duplicate_sp": 3,
+  "loot_weight": 1,
+  "nodes": [
+    {
+      "id": "veteran_s_stance",
+      "name": "Veteran's Stance",
+      "desc": "Years of fighting settle into one steady guard: harder blows and a firm footing.",
+      "parents": [],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "SPIRIT_AURA"
+      },
+      "values": {
+        "damage_pct": [
+          0.2,
+          0.24,
+          0.28
+        ],
+        "armor": [
+          2.0,
+          2.5,
+          3.0
+        ],
+        "speed_pct": [
+          -0.05,
+          -0.06,
+          -0.07
+        ],
+        "knockback_res": [
+          0,
+          0,
+          0
+        ],
+        "regen": [
+          0,
+          0,
+          0
+        ],
+        "crit_chance": [
+          0,
+          0,
+          0
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 0,
+      "icon": "minecraft:golden_sword"
+    },
+    {
+      "id": "chairman_s_composure",
+      "name": "Chairman's Composure",
+      "desc": "Hold still and command the room: slow, sturdy and slowly healing, with softer blows.",
+      "parents": [
+        {
+          "node": "veteran_s_stance",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "MAGIC_CIRCLE"
+      },
+      "values": {
+        "damage_pct": [
+          -0.1,
+          -0.12,
+          -0.14
+        ],
+        "armor": [
+          4.0,
+          5.0,
+          6.0
+        ],
+        "speed_pct": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "knockback_res": [
+          0.4,
+          0.48,
+          0.56
+        ],
+        "regen": [
+          0.8,
+          0.96,
+          1.12
+        ],
+        "crit_chance": [
+          0,
+          0,
+          0
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 2,
+      "icon": "minecraft:gold_block"
+    },
+    {
+      "id": "s_rank_strength",
+      "name": "S-Rank Strength",
+      "desc": "The strength that made him an S-rank, still there under the grey hair.",
+      "parents": [
+        {
+          "node": "veteran_s_stance",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "attack_damage",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          1.5,
+          1.875,
+          2.25,
+          2.625,
+          3.0
+        ]
+      },
+      "x": 2,
+      "y": 0,
+      "icon": "minecraft:golden_sword"
+    },
+    {
+      "id": "old_soldier_s_constitution",
+      "name": "Old Soldier's Constitution",
+      "desc": "Maximum health of a man who has survived forty years of gates.",
+      "parents": [
+        {
+          "node": "chairman_s_composure",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "max_health",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          3.0,
+          3.75,
+          4.5,
+          5.25,
+          6.0
+        ]
+      },
+      "x": 2,
+      "y": 2,
+      "icon": "minecraft:golden_apple"
+    },
+    {
+      "id": "chairman_s_stride",
+      "name": "Chairman's Stride",
+      "desc": "Quick, economical steps.",
+      "parents": [
+        {
+          "node": "veteran_s_stance",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "movement_speed",
+        "op": "mult"
+      },
+      "values": {
+        "amount": [
+          0.04,
+          0.05,
+          0.06,
+          0.07,
+          0.08
+        ]
+      },
+      "x": 2,
+      "y": 4,
+      "icon": "minecraft:golden_boots"
+    },
+    {
+      "id": "weight_of_office",
+      "name": "Weight of Office",
+      "desc": "Armour and bearing of the Association's chairman.",
+      "parents": [
+        {
+          "node": "chairman_s_composure",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "armor",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          1.5,
+          1.875,
+          2.25,
+          2.625,
+          3.0
+        ]
+      },
+      "x": 2,
+      "y": 6,
+      "icon": "minecraft:iron_helmet"
+    },
+    {
+      "id": "veteran_s_straight",
+      "name": "Veteran's Straight",
+      "desc": "A blinding straight punch that carries you through every monster in your path.",
+      "parents": [
+        {
+          "node": "veteran_s_stance",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "dash_strike",
+      "params": {
+        "vfx": "WIND_SLASH"
+      },
+      "values": {
+        "distance": [
+          8.0,
+          8.8,
+          9.6,
+          10.4
+        ],
+        "damage": [
+          9.0,
+          11.25,
+          13.5,
+          15.75
+        ],
+        "targets": [
+          4.0,
+          5.0,
+          6.0,
+          8.0
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          120.0,
+          110.0,
+          101.0,
+          91.0
+        ]
+      },
+      "x": 4,
+      "y": 0,
+      "icon": "minecraft:golden_sword"
+    },
+    {
+      "id": "veteran_s_charge_shift",
+      "name": "Veteran's Charge: Shift",
+      "desc": "Crouching, you leap high and come down fist-first on the monsters below.",
+      "parents": [
+        {
+          "node": "chairman_s_composure",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "leap_slam",
+      "params": {
+        "vfx": "WIND_RING"
+      },
+      "values": {
+        "height": [
+          1.2,
+          1.296,
+          1.392,
+          1.4
+        ],
+        "damage": [
+          11.0,
+          13.75,
+          16.5,
+          19.25
+        ],
+        "radius": [
+          3.8,
+          4.18,
+          4.56,
+          4.94
+        ],
+        "knockback": [
+          1.0,
+          1.1,
+          1.2,
+          1.3
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          200.0,
+          184.0,
+          168.0,
+          152.0
+        ]
+      },
+      "x": 4,
+      "y": 2,
+      "icon": "minecraft:gold_ingot"
+    },
+    {
+      "id": "chairman_s_will",
+      "name": "Chairman's Will",
+      "desc": "Gather the power of brilliant light and loose it as a beam through every foe in a line.",
+      "parents": [
+        {
+          "node": "veteran_s_straight",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "ray_shot",
+      "params": {
+        "vfx": "MAGIC_CIRCLE"
+      },
+      "values": {
+        "damage": [
+          10.0,
+          12.5,
+          15.0,
+          17.5
+        ],
+        "range": [
+          24.0,
+          26.4,
+          28.8,
+          31.2
+        ],
+        "pierce": [
+          3.0,
+          4.0,
+          5.0,
+          6.0
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          120.0,
+          110.0,
+          101.0,
+          91.0
+        ]
+      },
+      "x": 6,
+      "y": 0,
+      "icon": "minecraft:glowstone_dust"
+    },
+    {
+      "id": "brilliant_light_shift",
+      "name": "Brilliant Light: Shift",
+      "desc": "Crouching, the light breaks into a hail of glowing needles at the foe you look at.",
+      "parents": [
+        {
+          "node": "veteran_s_charge_shift",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "barrage",
+      "params": {
+        "vfx": "MAGIC_CIRCLE"
+      },
+      "values": {
+        "damage": [
+          2.5,
+          3.125,
+          3.75,
+          4.375
+        ],
+        "shots": [
+          8.0,
+          11.0,
+          14.0,
+          16.0
+        ],
+        "range": [
+          16.0,
+          17.28,
+          18.56,
+          19.84
+        ],
+        "interval": [
+          3.0,
+          3.0,
+          3.0,
+          3.0
+        ],
+        "cost": [
+          0.025,
+          0.027,
+          0.029,
+          0.031
+        ],
+        "cooldown": [
+          240.0,
+          221.0,
+          202.0,
+          182.0
+        ]
+      },
+      "x": 6,
+      "y": 2,
+      "icon": "minecraft:gold_nugget"
+    },
+    {
+      "id": "iron_fist",
+      "name": "Iron Fist",
+      "desc": "A heavy swing that smashes the cone of foes in front of you.",
+      "parents": [
+        {
+          "node": "chairman_s_will",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "cone_strike",
+      "params": {
+        "vfx": "WIND_SLASH"
+      },
+      "values": {
+        "damage": [
+          9.0,
+          11.25,
+          13.5,
+          15.75
+        ],
+        "range": [
+          4.0,
+          4.32,
+          4.64,
+          4.96
+        ],
+        "half_angle": [
+          55.0,
+          60.5,
+          66.0,
+          71.5
+        ],
+        "targets": [
+          5.0,
+          7.0,
+          9.0,
+          11.0
+        ],
+        "knockback": [
+          0.8,
+          0.88,
+          0.96,
+          1.04
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          100.0,
+          92.0,
+          84.0,
+          76.0
+        ]
+      },
+      "x": 8,
+      "y": 0,
+      "icon": "minecraft:iron_axe"
+    },
+    {
+      "id": "iron_fist_shift",
+      "name": "Iron Fist: Shift",
+      "desc": "Crouching, you pound the ground and a shockwave hurls back everything around you.",
+      "parents": [
+        {
+          "node": "brilliant_light_shift",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "ring_burst",
+      "params": {
+        "vfx": "EARTH_SPIKES"
+      },
+      "values": {
+        "damage": [
+          8.0,
+          10.0,
+          12.0,
+          14.0
+        ],
+        "radius": [
+          4.5,
+          4.95,
+          5.4,
+          5.85
+        ],
+        "targets": [
+          7.0,
+          10.0,
+          13.0,
+          15.0
+        ],
+        "knockback": [
+          1.3,
+          1.43,
+          1.56,
+          1.69
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          140.0,
+          129.0,
+          118.0,
+          106.0
+        ]
+      },
+      "x": 8,
+      "y": 2,
+      "icon": "minecraft:anvil"
+    },
+    {
+      "id": "hunter_s_directive",
+      "name": "Hunter's Directive",
+      "desc": "Name the monster the Association wants gone: it takes extra damage for a while.",
+      "parents": [
+        {
+          "node": "iron_fist",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "mark",
+      "params": {
+        "vfx": "SPIRIT_AURA"
+      },
+      "values": {
+        "range": [
+          22.0,
+          24.2,
+          26.4,
+          28.6
+        ],
+        "seconds": [
+          10.0,
+          12.0,
+          13.0,
+          14.0
+        ],
+        "bonus": [
+          0.35,
+          0.42,
+          0.49,
+          0.56
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          200.0,
+          184.0,
+          168.0,
+          152.0
+        ]
+      },
+      "x": 10,
+      "y": 0,
+      "icon": "minecraft:name_tag"
+    },
+    {
+      "id": "rally_the_hunters_shift",
+      "name": "Rally the Hunters: Shift",
+      "desc": "Crouching, a call across the room: you and your allies are healed.",
+      "parents": [
+        {
+          "node": "iron_fist_shift",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "heal_pulse",
+      "params": {
+        "vfx": "MAGIC_CIRCLE"
+      },
+      "values": {
+        "radius": [
+          9.0,
+          9.9,
+          10.8,
+          11.7
+        ],
+        "amount": [
+          8.0,
+          10.0,
+          12.0,
+          14.0
+        ],
+        "cost": [
+          0.03,
+          0.0324,
+          0.0348,
+          0.0372
+        ],
+        "cooldown": [
+          500.0,
+          470.0,
+          440.0,
+          410.0
+        ]
+      },
+      "x": 10,
+      "y": 6,
+      "icon": "minecraft:bell"
+    },
+    {
+      "id": "weight_of_experience",
+      "name": "Weight of Experience",
+      "desc": "Your blows store a share of their damage on the foe as the weight of years (Debt). It ticks while it waits, and the Ultimate collects it.",
+      "parents": [
+        {
+          "node": "veteran_s_straight",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "debt_store",
+      "params": {
+        "vfx": "SPIRIT_AURA"
+      },
+      "values": {
+        "store_pct": [
+          0.28,
+          0.336,
+          0.392,
+          0.448
+        ],
+        "tick_seconds": [
+          3.0,
+          3.0,
+          3.0,
+          3.0
+        ],
+        "max_pct": [
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ],
+        "hold_seconds": [
+          14.0,
+          14.0,
+          14.0,
+          14.0
+        ]
+      },
+      "x": 10,
+      "y": 2,
+      "icon": "minecraft:redstone",
+      "evolved": {
+        "store_pct": 0.55,
+        "max_pct": 0.85,
+        "hold_seconds": 20
+      }
+    },
+    {
+      "id": "monster_hunter_of_forty_years",
+      "name": "Monster Hunter of Forty Years",
+      "desc": "You deal more damage to monsters.",
+      "parents": [
+        {
+          "node": "veteran_s_charge_shift",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "dmg_vs",
+      "params": {
+        "category": "monster"
+      },
+      "values": {
+        "bonus": [
+          0.22,
+          0.264,
+          0.308,
+          0.352
+        ]
+      },
+      "x": 10,
+      "y": 4,
+      "icon": "minecraft:iron_sword",
+      "evolved": {
+        "bonus": 0.45
+      }
+    },
+    {
+      "id": "retirement_postponed",
+      "name": "Retirement Postponed",
+      "desc": "When a blow would have ended you, the old S-rank digs in and a light shield catches you.",
+      "parents": [
+        {
+          "node": "chairman_s_will",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "last_stand",
+      "values": {
+        "threshold": [
+          0.3,
+          0.3,
+          0.3,
+          0.3
+        ],
+        "seconds": [
+          6.0,
+          7.0,
+          8.0,
+          9.0
+        ],
+        "rest": [
+          2700.0,
+          2430.0,
+          2160.0,
+          1890.0
+        ]
+      },
+      "x": 12,
+      "y": 0,
+      "icon": "minecraft:totem_of_undying",
+      "evolved": {
+        "seconds": 10,
+        "rest": 1500
+      }
+    },
+    {
+      "id": "veteran_s_composure",
+      "name": "Veteran's Composure",
+      "desc": "When badly hurt you stay calm and take less damage.",
+      "parents": [
+        {
+          "node": "brilliant_light_shift",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "reduce_when",
+      "params": {
+        "condition": "low_health"
+      },
+      "values": {
+        "pct": [
+          0.18,
+          0.216,
+          0.252,
+          0.288
+        ]
+      },
+      "x": 12,
+      "y": 2,
+      "icon": "minecraft:iron_chestplate"
+    },
+    {
+      "id": "chairman_s_presence",
+      "name": "Chairman's Presence",
+      "desc": "Hunters near you are bolstered by the chairman's presence: Resistance.",
+      "parents": [
+        {
+          "node": "iron_fist",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "aura",
+      "params": {
+        "effect": "resistance",
+        "target": "allies"
+      },
+      "values": {
+        "radius": [
+          7.0,
+          7.7,
+          8.4,
+          9.1
+        ],
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "x": 14,
+      "y": 0,
+      "icon": "minecraft:white_banner"
+    },
+    {
+      "id": "healer_s_patience",
+      "name": "Healer's Patience",
+      "desc": "He went looking for healing magic and never stopped: your wounds close slowly, even out of combat.",
+      "parents": [
+        {
+          "node": "iron_fist_shift",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "mending",
+      "values": {
+        "seconds": [
+          15.0,
+          14.0,
+          12.0,
+          10.0
+        ],
+        "amount": [
+          1,
+          1.25,
+          1.5,
+          1.75
+        ]
+      },
+      "x": 14,
+      "y": 2,
+      "icon": "minecraft:glistering_melon_slice"
+    },
+    {
+      "id": "heavy_fists",
+      "name": "Heavy Fists",
+      "desc": "Your blows may shove the foe back.",
+      "parents": [
+        {
+          "node": "hunter_s_directive",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "knockback_on_hit",
+      "values": {
+        "strength": [
+          0.5,
+          0.575,
+          0.65,
+          0.725
+        ],
+        "chance": [
+          0.3,
+          0.345,
+          0.39,
+          0.435
+        ]
+      },
+      "x": 16,
+      "y": 0,
+      "icon": "minecraft:piston"
+    },
+    {
+      "id": "association_spoils",
+      "name": "Association Spoils",
+      "desc": "A kill may drop an extra stack of loot for the Association's stores.",
+      "parents": [
+        {
+          "node": "rally_the_hunters_shift",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "drop_bonus",
+      "values": {
+        "chance": [
+          0.1,
+          0.12,
+          0.14,
+          0.16
+        ]
+      },
+      "x": 16,
+      "y": 2,
+      "icon": "minecraft:chest"
+    },
+    {
+      "id": "chairman_s_order_hold_the_line",
+      "name": "Chairman's Order: Hold the Line",
+      "desc": "A command that carries across the whole field: you and every hunter around you gain a long surge of Resistance.",
+      "parents": [
+        {
+          "node": "rally_the_hunters_shift",
+          "level": 3
+        },
+        {
+          "node": "association_spoils",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "buff_aura",
+      "params": {
+        "effect": "resistance",
+        "vfx": "MAGIC_CIRCLE"
+      },
+      "values": {
+        "radius": [
+          14.0,
+          15.4,
+          16
+        ],
+        "seconds": [
+          22.0,
+          25.0,
+          29.0
+        ],
+        "amp": [
+          1.0,
+          2.0,
+          2.0
+        ],
+        "cost": [
+          0.03,
+          0.0324,
+          0.0348
+        ],
+        "cooldown": [
+          1500.0,
+          1410.0,
+          1320.0
+        ]
+      },
+      "x": 16,
+      "y": 4,
+      "icon": "minecraft:white_banner"
+    },
+    {
+      "id": "chairman_s_last_stand",
+      "name": "Chairman's Last Stand",
+      "desc": "The old chairman steps onto the field one more time: a thunderous charge in brilliant light, and every weight of years stored on the foes comes due at once.",
+      "parents": [
+        {
+          "node": "hunter_s_directive",
+          "level": 3
+        },
+        {
+          "node": "heavy_fists",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "debt_burst",
+      "params": {
+        "vfx": "SPIRIT_AURA"
+      },
+      "values": {
+        "damage": [
+          36.0,
+          45.0,
+          54.0
+        ],
+        "mult": [
+          3.0,
+          3.3,
+          3.6
+        ],
+        "radius": [
+          10.0,
+          11.0,
+          12.0
+        ],
+        "targets": [
+          10.0,
+          14.0,
+          18.0
+        ],
+        "cost": [
+          0.07,
+          0.0756,
+          0.0812
+        ],
+        "cooldown": [
+          15000.0,
+          13800.0,
+          12600.0
+        ]
+      },
+      "x": 16,
+      "y": 6,
+      "icon": "minecraft:golden_helmet",
+      "ultimate": true
+    }
+  ],
+  "evolution": {
+    "requirement": "elite_kills",
+    "count": 40,
+    "text": "Slay 40 elite or boss creatures while Chairman Go's Fist is switched on to bring the chairman back to the front line.",
+    "ultimate_name": "Ultimate Skill, Chairman's Last Stand"
+  }
+}
