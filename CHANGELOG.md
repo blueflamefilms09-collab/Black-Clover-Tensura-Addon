@@ -24,6 +24,9 @@
 ### Checked
 - Unit and source-scan tests (new: 25; Veldanava: 28; sweep of 137 repo-reading test classes against a clean HEAD: no new failure). The sweep ran against type stubs, not the real game classes, so the real run is the CI build and the `sandalphon` smoke test.
 
+### Also fixed (found by CI)
+- `GeoAssetsTest` failed on the unwired Phase E preview assets of 3.12.x work: the Hell Hound's `lod1`, `lod2` and `fx` models had no texture of their own (copies of `anime_hound.png` and its glow were added) and the Goliath glow map was half the size of its texture (scaled up 2x, nearest). Nothing is wired to them yet; the mob remake is still waiting for the owner's style notes.
+
 ### Not included
 - The other four skills (one per release), the Nihility Collapse item (with Israfil), aim assist for the bullet, Mana Zone cancelling by the Edict, a lock on hotbar swapping, a real-game check of the visuals (previews only).
 
