@@ -441,3 +441,9 @@ Ten shapes appended after `SOLOMON_ABSORB` (`HERCULES_LEAP`, `_TREMOR`, `_INVICT
 - **Jibril (setting `jibrilUpgrades`).** Judgment of Heaven: `JudgmentRules`-style multiplier `JUDGMENT_SMITE_BONUS` 0.5 when the target `burns` (undead, demonic, in debt) (`JibrilRules.judgmentDamage`). Heavenly Purge: `PURGE_BURN_DAMAGE` 120 holy on the `PURGE_BURN_MAX` 12 nearest foes that burn, within `PURGE_BURN_RADIUS` 14, one box query. Holy Shackles: `SHACKLE_BITE_BASE` 40 + `SHACKLE_BITE_PER_EFFECT` 25 per stolen effect, at most 8 (`shackleBite`). Kingdom of God: each pulse `KINGDOM_PULSE_SHARE` 1% of maximum health on the enemies already touched (at most 24). All blows go through the Balance Law and the active-damage cap; setting off restores 3.22.0.
 - **Models.** `JibrilModels`, `JibrilMeshDraw`, `JibrilModelsConfig` (client). See `docs/vfx_remake/jibril_models.md`.
 - **Cost.** No new packets; one extra box query per Purge; worst client case 79 quads (Shackles) of the 100 cap.
+
+## 3.24.0 - the Solomon upgrades
+
+- **Solomon (setting `solomonUpgrades`).** Arcane Convergence: `SolomonRules.burstDamage(drawn)` = 40 + 8 per thing drawn in, capped at `BURST_MAX` 240, one true hit (`JudgmentDamage.hit`) on each of the `BURST_MAX_FOES` 8 nearest foes within `BURST_RADIUS` 16 (`SolomonSkill.burst`). Mana Zone Erasure: `BACKLASH_SHARE` 5% of maximum health on each stuttering caster (`JudgmentDamage.share`, at most `ERASURE_MAX_CASTERS` 24). Realm of Magic: `REALM_PULSE_SHARE` 1% of maximum health on every enemy its pulse already touches (at most 24 a second).
+- **Models.** `SolomonModels`, `SolomonMeshDraw`, `SolomonModelsConfig` (client). See `docs/vfx_remake/solomon_models.md`.
+- **Cost.** No new packets; one extra box query per Convergence; worst client case 99 quads (72 pillars) of the 100 cap.
