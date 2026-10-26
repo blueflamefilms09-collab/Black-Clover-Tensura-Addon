@@ -1,0 +1,1 @@
+{"loader":"neoforge:separate_transforms","gui_light":"front","textures":{"particle":"nusmp:item/skill_book_v2/trim_rare"},"base":{"parent":"nusmp:item/skill_book_v2_solo_leveling_rare"},"perspectives":{"gui":{"parent":"nusmp:item/skill_book_icon_solo_leveling_rare"}}}

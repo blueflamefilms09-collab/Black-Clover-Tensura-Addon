@@ -1,0 +1,1 @@
+{"loader":"neoforge:separate_transforms","gui_light":"front","textures":{"particle":"nusmp:item/skill_book_v2/trim_epic"},"base":{"parent":"nusmp:item/skill_book_v2_fairy_tail_epic"},"perspectives":{"gui":{"parent":"nusmp:item/skill_book_icon_fairy_tail_epic"}}}

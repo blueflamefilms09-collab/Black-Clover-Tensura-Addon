@@ -5,6 +5,8 @@ import com.google.gson.JsonParser;
 import com.mojang.logging.LogUtils;
 import com.newuniverse.nusmp.NUSMP;
 import com.newuniverse.nusmp.skilltree.item.BookLook;
+import com.newuniverse.nusmp.skilltree.item.BookLookStack;
+import com.newuniverse.nusmp.skilltree.item.LegacyLook;
 import com.newuniverse.nusmp.skilltree.item.SkillItems;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.resources.ResourceLocation;
@@ -12,6 +14,7 @@ import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.ResourceManagerReloadListener;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.bus.api.IEventBus;
+import net.neoforged.fml.ModLoadingContext;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.RegisterClientReloadListenersEvent;
 import org.slf4j.Logger;
@@ -24,7 +27,7 @@ import java.io.Reader;
  * (2) The item property {@code nusmp:franchise} that the item model's overrides read to pick the franchise's cover model ({@code (index + 1) / 20}, see {@link BookLook}); the
  * known route's own {@code magic} is the fall-back when the table has no entry, so a datapack line of an existing franchise still gets its cover. (3) {@link #coverColor}, the tint of
  * the cover (tint index 1 of the 3D model AND of the old 2D sprite): the route's colour when the client has the route, else the table's, else a neutral grey. Client only; started
- * from {@link ItemsClient#init}. A failure to read the table is logged once and leaves it empty (books then fall back to the grey generic cover, never a crash).
+ * from {@link ItemsClient#init}. 3.26.0 adds the properties {@code nusmp:rarity} ((rank + 1) / 6) and {@code nusmp:look} (0 painted, 1 legacy) and starts the look's config and drop shimmer. A failure to read the table is logged once and leaves it empty (books then fall back to the grey generic cover, never a crash).
  */
 public final class BookClient {
     private BookClient() {}
@@ -37,6 +40,8 @@ public final class BookClient {
     public static void init(IEventBus modBus) {
         modBus.addListener((RegisterClientReloadListenersEvent e) -> e.registerReloadListener((ResourceManagerReloadListener) BookClient::reload));
         modBus.addListener((FMLClientSetupEvent e) -> e.enqueueWork(BookClient::registerProperty));
+        BookLookConfig.init(modBus, ModLoadingContext.get().getActiveContainer());   // 3.26.0: nusmp-skillbook-look-client.toml (legacyLook, dropShimmer)
+        BookDropFx.init();                                                          // 3.26.0: the slow shimmer of rare and better dropped books
     }
 
     private static void reload(ResourceManager manager) {
@@ -57,6 +62,10 @@ public final class BookClient {
             String bookId = SkillItems.bookIdOf(stack);
             return BookLook.franchiseValue(bookId, null);
         });
+        // 3.26.0: the rarity of the book, (rank + 1) / 6: the stack's own component when it has one, else the shipped table's rank of the book id. One cached registry lookup, no allocation.
+        ItemProperties.register(SkillItems.SKILL_BOOK.get(), ResourceLocation.fromNamespaceAndPath(NUSMP.MODID, "rarity"), (stack, level, entity, seed) -> BookLookStack.rarityValue(stack, SkillItems.bookIdOf(stack)));
+        // 3.26.0: 0 = the painted look, 1 = the legacy look (the client setting legacyLook): the model's last overrides point at the unchanged 1.82.0 models
+        ItemProperties.register(SkillItems.SKILL_BOOK.get(), ResourceLocation.fromNamespaceAndPath(NUSMP.MODID, "look"), (stack, level, entity, seed) -> LegacyLook.lookValue());
     }
 
     /** The cover tint of a Skill Book stack (0xRRGGBB): the route's colour, else the shipped table's, else grey. */

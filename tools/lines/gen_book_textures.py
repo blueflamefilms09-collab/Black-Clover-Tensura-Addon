@@ -34,7 +34,7 @@ from lines_lib import FRANCHISES  # noqa: E402
 
 TEX_DIR = os.path.join(ASSETS, "textures", "item", "skill_book_3d")
 MODEL_DIR = os.path.join(ASSETS, "models", "item")
-FRANCHISE_ORDER = list(FRANCHISES.keys())          # the order IS the value of the item property nusmp:franchise (index + 1) / PROP_STEPS: new franchises are only ever appended
+FRANCHISE_ORDER = list(FRANCHISES.keys())[:10]     # 3.26.0: only the ten franchises that had a 1.82.0 cover (fairy_tail has none, its look is skill_book_v2). The order IS the value of the item property nusmp:franchise (index + 1) / PROP_STEPS: new franchises are only ever appended
 assert len(FRANCHISE_ORDER) + 1 <= 20, "the item property (index + 1) / 20 must stay at or below 1: raise PROP_STEPS in gen_book_textures.py and gen_book_index.py before adding the 20th franchise"
 PROP_STEPS = 20.0
 # the 1.62.0 model of the Skill Book, kept as skill_book_2d.json (its text must stay what it was)
@@ -426,7 +426,8 @@ def main():
         write_json(os.path.join(MODEL_DIR, "skill_book_st_%s.json" % f), separate("nusmp:item/skill_book_3d_%s" % f, "nusmp:item/skill_book_2d"), check, problems)
         overrides.append({"predicate": {"nusmp:franchise": round((i + 1) / PROP_STEPS - 0.5 / PROP_STEPS, 6)}, "model": "nusmp:item/skill_book_st_%s" % f})
     top = separate("nusmp:item/skill_book_3d", "nusmp:item/skill_book_2d")
-    top["overrides"] = overrides
+    import book_model_v2 as V2                           # 3.26.0: the new look's overrides are listed after the old ones (the game keeps the last match) and the legacy ones last
+    top["overrides"] = V2.skill_book_overrides(overrides, list(FRANCHISES.keys()))
     write_json(os.path.join(MODEL_DIR, "skill_book.json"), top, check, problems)
     if check and problems:
         print("STALE:\n  " + "\n  ".join(problems))

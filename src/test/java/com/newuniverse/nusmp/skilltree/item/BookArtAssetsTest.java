@@ -67,31 +67,40 @@ class BookArtAssetsTest {
         assertEquals("nusmp:item/skill_book_cover", old.getAsJsonObject("textures").get("layer1").getAsString());
     }
 
+    /** 3.26.0: the 1.82.0 grey covers exist for the first ten franchises only; later ones (fairy_tail) have only the painted look (BookLookV2AssetsTest). */
+    private static List<String> legacyFranchises() throws Exception {
+        List<String> all = franchises();
+        return all.subList(0, Math.min(BookLookFiles.LEGACY_FRANCHISES, all.size()));
+    }
+
     @Test
-    void oneOverridePerFranchiseWithHalfStepThresholdsAndTheRightCover() throws Exception {
+    void oneOverridePerLegacyFranchiseWithHalfStepThresholdsAndTheRightCover() throws Exception {
         List<String> fr = franchises();
+        List<String> legacy = legacyFranchises();
         JsonObject table = json(ASSETS + "skill_books.json");
         int steps = table.get("prop_steps").getAsInt();
         assertTrue(fr.size() + 1 <= steps, "the property value (index + 1) / steps must stay at or below 1: " + fr.size() + " franchises, " + steps + " steps");
         JsonArray overrides = model("skill_book").getAsJsonArray("overrides");
-        assertEquals(fr.size(), overrides.size(), "one override per franchise");
+        // 3.26.0: the 1.82.0 overrides stay first (lowest priority), then the 55 painted ones, then one legacy override per franchise (nusmp:look = 1); BookLookV2AssetsTest pins the whole list
+        assertEquals(legacy.size() + fr.size() * 5 + fr.size(), overrides.size(), "old ones + 55 new ones + legacy ones");
         double previous = 0;
-        for (int i = 0; i < fr.size(); i++) {
+        for (int i = 0; i < legacy.size(); i++) {
             JsonObject o = overrides.get(i).getAsJsonObject();
+            assertEquals(1, o.getAsJsonObject("predicate").size(), "an old override only reads the franchise");
             double threshold = o.getAsJsonObject("predicate").get("nusmp:franchise").getAsDouble();
-            assertEquals((i + 1.0) / steps - 0.5 / steps, threshold, 1e-5, "threshold of " + fr.get(i));
+            assertEquals((i + 1.0) / steps - 0.5 / steps, threshold, 1e-5, "threshold of " + legacy.get(i));
             assertTrue(threshold > previous, "thresholds ascend (the last matching override wins)");
             previous = threshold;
             String target = local(o.get("model").getAsString());
-            assertEquals("item/skill_book_st_" + fr.get(i), target);
-            JsonObject st = model("skill_book_st_" + fr.get(i));
+            assertEquals("item/skill_book_st_" + legacy.get(i), target);
+            JsonObject st = model("skill_book_st_" + legacy.get(i));
             assertEquals("neoforge:separate_transforms", st.get("loader").getAsString());
             assertEquals("nusmp:item/skill_book_2d", st.getAsJsonObject("perspectives").getAsJsonObject("gui").get("parent").getAsString(), "the GUI icon stays the old sprite for every franchise");
-            assertEquals("nusmp:item/skill_book_3d_" + fr.get(i), st.getAsJsonObject("base").get("parent").getAsString());
-            JsonObject body = model("skill_book_3d_" + fr.get(i));
+            assertEquals("nusmp:item/skill_book_3d_" + legacy.get(i), st.getAsJsonObject("base").get("parent").getAsString());
+            JsonObject body = model("skill_book_3d_" + legacy.get(i));
             assertEquals("nusmp:item/skill_book_3d", body.get("parent").getAsString());
-            assertEquals("nusmp:item/skill_book_3d/" + fr.get(i), body.getAsJsonObject("textures").get("cover").getAsString());
-            assertTrue(new File(ASSETS + "textures/item/skill_book_3d/" + fr.get(i) + ".png").isFile(), "missing cover of " + fr.get(i));
+            assertEquals("nusmp:item/skill_book_3d/" + legacy.get(i), body.getAsJsonObject("textures").get("cover").getAsString());
+            assertTrue(new File(ASSETS + "textures/item/skill_book_3d/" + legacy.get(i) + ".png").isFile(), "missing cover of " + legacy.get(i));
         }
     }
 
@@ -172,7 +181,7 @@ class BookArtAssetsTest {
 
     @Test
     void theCoversAreGreyAtLeast104WithAWhiteHighlight() throws Exception {
-        List<String> names = new ArrayList<>(franchises());
+        List<String> names = new ArrayList<>(legacyFranchises());          // 3.26.0: the grey covers are the first ten franchises; fairy_tail only has the painted look
         names.add("generic");
         for (String n : names) {
             BufferedImage img = ImageIO.read(new File(ASSETS + "textures/item/skill_book_3d/" + n + ".png"));

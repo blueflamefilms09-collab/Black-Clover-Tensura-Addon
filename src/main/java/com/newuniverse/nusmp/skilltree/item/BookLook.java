@@ -49,6 +49,8 @@ public final class BookLook {
         private final Map<String, Entry> byBook;
         private final Map<String, Entry> byLine;
         private final Map<String, Integer> franchiseIndex;
+        /** 3.26.0: book id -> rarity rank (0 common .. 4 mythic), from the optional {@code rarity} field of a line; a book with no field is common. Set once by {@link #parse}. */
+        private volatile Map<String, Integer> ranks = Map.of();
 
         Index(List<String> franchises, int steps, Map<String, Entry> byLine) {
             this.franchises = Collections.unmodifiableList(new ArrayList<>(franchises));
@@ -78,6 +80,17 @@ public final class BookLook {
             if (e == null && lineId.startsWith("nusmp:")) e = byLine.get(lineId.substring(6));
             return e;
         }
+
+        /** The rarity rank (0 common .. 4 mythic) of a book id; 0 when the book or its field is unknown. */
+        public int rankOf(String bookId) {
+            Integer r = bookId == null ? null : ranks.get(bookId);
+            return r == null ? 0 : r;
+        }
+
+        /** The value of the item property {@code nusmp:rarity} of a book id: {@code (rank + 1) / 6}, so 1/6 for common (and for an unknown book) up to 5/6 for mythic. */
+        public float rarityValue(String bookId) { return rarityStep(rankOf(bookId)); }
+
+        void setRanks(Map<String, Integer> r) { this.ranks = Collections.unmodifiableMap(new HashMap<>(r)); }
 
         /** The model property value of a franchise key: {@code (index + 1) / steps}, or 0 when the key is empty or has no cover. */
         public float franchiseValue(String franchise) {
@@ -125,6 +138,30 @@ public final class BookLook {
         return e == null ? 0f : e.rarity().modelValue();
     }
 
+    // ------------------------------------------------------------------------------------------------------------------ rarity (3.26.0, the look)
+    /** The rarity ids in rank order; the item property {@code nusmp:rarity} is {@code (rank + 1) / RARITY_STEPS}. */
+    public static final List<String> RARITY_IDS = List.of("common", "uncommon", "rare", "epic", "mythic");
+    public static final float RARITY_STEPS = 6f;
+
+    /** The rank of a rarity id (case-insensitive, with or without the {@code nusmp:} prefix); 0 (common) for anything unknown. */
+    public static int rankOfId(String id) {
+        if (id == null) return 0;
+        String t = id.strip().toLowerCase(java.util.Locale.ROOT);
+        if (t.startsWith("nusmp:")) t = t.substring(6);
+        int i = RARITY_IDS.indexOf(t);
+        return i < 0 ? 0 : i;
+    }
+
+    /** The rank held by a component value: -1 for none (null), the clamped number for a number, else the rank of its text. Pure, so the guarded stack reader can be tested without a stack. */
+    public static int rankOfValue(Object v) {
+        if (v == null) return -1;
+        if (v instanceof Number n) return Math.max(0, Math.min(RARITY_IDS.size() - 1, n.intValue()));
+        return rankOfId(v.toString());
+    }
+
+    /** {@code (rank + 1) / 6} for a rank clamped to 0..4. */
+    public static float rarityStep(int rank) { return (Math.max(0, Math.min(RARITY_IDS.size() - 1, rank)) + 1) / RARITY_STEPS; }
+
     // ------------------------------------------------------------------------------------------------------------------ parsing
     /** Parses the shipped json. Tolerant: a line without a usable book or colour is skipped, a bad colour becomes white; never throws for shape problems. */
     public static Index parse(JsonObject root) {
@@ -134,6 +171,7 @@ public final class BookLook {
         }
         int steps = root.has("prop_steps") && root.get("prop_steps").isJsonPrimitive() ? root.get("prop_steps").getAsInt() : 20;
         Map<String, Entry> lines = new HashMap<>();
+        Map<String, Integer> ranks = new HashMap<>();
         if (root.has("lines") && root.get("lines").isJsonObject()) {
             for (Map.Entry<String, JsonElement> me : root.getAsJsonObject("lines").entrySet()) {
                 if (!me.getValue().isJsonObject()) continue;
@@ -144,9 +182,13 @@ public final class BookLook {
                 String bookName = str(o, "book_name");
                 lines.put(me.getKey(), new Entry(me.getKey(), book, name.isEmpty() ? me.getKey() : name, bookName.isEmpty() ? name : bookName, color(str(o, "color")), str(o, "franchise"),
                         BookRarity.fromId(str(o, "rarity"))));
+                String rarity = str(o, "rarity");
+                if (!rarity.isEmpty()) ranks.putIfAbsent(book, rankOfId(rarity));
             }
         }
-        return new Index(franchises, steps, lines);
+        Index idx = new Index(franchises, steps, lines);
+        idx.setRanks(ranks);
+        return idx;
     }
 
     private static String str(JsonObject o, String key) {

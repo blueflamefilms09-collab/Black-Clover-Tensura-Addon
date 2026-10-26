@@ -42,6 +42,7 @@ public final class SkillBookSystem {
         ItemsSystem.init(modBus, modContainer);
         ShopSystem.init(modBus, modContainer);
         SkillBookSelfTests.register();
+        com.newuniverse.nusmp.skilltree.item.BookLookSelfTests.register();      // 3.26.0: skillbook.look.files (the packed look files, the rarity values, the shimmer cap)
     }
 
     /** What the creative tab offers: one Skill Book per unique skill. */

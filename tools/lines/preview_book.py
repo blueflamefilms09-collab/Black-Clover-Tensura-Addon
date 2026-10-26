@@ -89,11 +89,22 @@ def load_model(name, seen=None):
 _TEX = {}
 
 
+ANIM_FRAME = 0                      # which frame of an animated texture (.mcmeta next to it) the preview draws
+
+
 def texture(ref):
     key = ref.split(":", 1)[1] if ":" in ref else ref
-    if key not in _TEX:
-        _TEX[key] = np.asarray(Image.open(os.path.join(ASSETS, "textures", key + ".png")).convert("RGBA"), np.float32) / 255.0
-    return _TEX[key]
+    ck = (key, ANIM_FRAME)
+    if ck not in _TEX:
+        path = os.path.join(ASSETS, "textures", key + ".png")
+        arr = np.asarray(Image.open(path).convert("RGBA"), np.float32) / 255.0
+        if os.path.exists(path + ".mcmeta") and arr.shape[0] > arr.shape[1]:          # an animation strip: square frames below each other
+            fh = arr.shape[1]
+            n = arr.shape[0] // fh
+            f = ANIM_FRAME % n
+            arr = arr[f * fh:(f + 1) * fh]
+        _TEX[ck] = arr
+    return _TEX[ck]
 
 
 FACE_CORNERS = {        # TL, TR, BR, BL as (x, y, z) selectors: 0 = from, 1 = to  (see book_model.py)
@@ -113,8 +124,18 @@ def default_uv(face, frm, to):
             "west": [f[2], 16 - t[1], t[2], 16 - f[1]], "up": [f[0], f[2], t[0], t[2]], "down": [f[0], 16 - t[2], t[0], 16 - f[2]]}[face]
 
 
+def rot_matrix(axis, angle_deg):
+    a = math.radians(angle_deg)
+    c, s_ = math.cos(a), math.sin(a)
+    if axis == "x":
+        return np.array([[1, 0, 0], [0, c, -s_], [0, s_, c]])
+    if axis == "y":
+        return np.array([[c, 0, s_], [0, 1, 0], [-s_, 0, c]])
+    return np.array([[c, -s_, 0], [s_, c, 0], [0, 0, 1]])
+
+
 def quads(model):
-    """[(world corners 4x3 in model units, uv corners 4x2, texture array, tintindex, normal)]"""
+    """[(world corners 4x3 in model units, uv corners 4x2, texture array, tintindex, normal, glow)]; honours element rotation and neoforge_data full-bright light."""
     out = []
     tex = model["textures"]
 
@@ -124,12 +145,20 @@ def quads(model):
         return ref
     for e in model["elements"]:
         frm, to = e["from"], e["to"]
+        glow = (e.get("neoforge_data", {}).get("block_light", 0) or 0) >= 12
+        rot = e.get("rotation")
+        R = rot_matrix(rot["axis"], rot["angle"]) if rot else None
+        origin = np.array(rot["origin"], float) if rot else None
         for fname, f in e["faces"].items():
             uvr = f.get("uv") or default_uv(fname, frm, to)
             u0, v0, u1, v1 = uvr
             P = np.array([[(to if sel[0] else frm)[0], (to if sel[1] else frm)[1], (to if sel[2] else frm)[2]] for sel in FACE_CORNERS[fname]], float)
+            n = np.array(NORMALS[fname], float)
+            if R is not None:
+                P = (P - origin) @ R.T + origin
+                n = R @ n
             UV = np.array([[u0, v0], [u1, v0], [u1, v1], [u0, v1]], float)
-            out.append((P, UV, texture(resolve(f["texture"])), f.get("tintindex", -1), np.array(NORMALS[fname], float)))
+            out.append((P, UV, texture(resolve(f["texture"])), f.get("tintindex", -1), n, glow))
     return out
 
 
@@ -175,11 +204,20 @@ def draw_tri(cv, P, UV, tex, shade, tint, solid=None):
         py = np.clip((v / 16.0 * th).astype(int), 0, th - 1)
         texel = tex[py, px]
         col = texel[..., :3] * np.array(tint, np.float32)
-        alpha = texel[..., 3] > 0.1
-    ok &= alpha
+        alpha = texel[..., 3]
+    if solid is not None:
+        ok &= alpha
+        sub = cv.img[y0:y1 + 1, x0:x1 + 1]
+        sub[ok] = (col * shade)[ok]
+        region[ok] = depth[ok]
+        return
+    ok &= alpha > 0.03                                      # translucent texels blend over what is behind (the game's item sheet is translucent); only solid ones write depth
     sub = cv.img[y0:y1 + 1, x0:x1 + 1]
-    sub[ok] = (col * shade)[ok]
-    region[ok] = depth[ok]
+    a3 = alpha[..., None]
+    blended = col * shade * a3 + sub * (1 - a3)
+    sub[ok] = blended[ok]
+    solid_ok = ok & (alpha > 0.5)
+    region[solid_ok] = depth[solid_ok]
 
 
 LIGHT0 = np.array([0.2, 1.0, -0.7]); LIGHT0 /= np.linalg.norm(LIGHT0)
@@ -188,7 +226,7 @@ LIGHT1 = np.array([-0.2, 1.0, 0.7]); LIGHT1 /= np.linalg.norm(LIGHT1)
 
 def render_quads(cv, qs, model_m, view, proj_k, tint_rgb, fov_scale=None, ortho=None):
     """model_m: 4x4 from the model's 0..1 block space to world. view: world -> camera. Perspective with focal length proj_k (pixels)."""
-    for (P, UV, tex, tint, n) in qs:
+    for (P, UV, tex, tint, n, glow) in qs:
         pts = np.c_[P / 16.0, np.ones(4)] @ model_m.T            # world
         nw = (model_m[:3, :3] @ n)
         nw /= np.linalg.norm(nw) + 1e-9
@@ -200,7 +238,7 @@ def render_quads(cv, qs, model_m, view, proj_k, tint_rgb, fov_scale=None, ortho=
         if area <= 0:
             continue                                               # back face (screen y is down, so a face seen from outside, TL-TR-BR, has a positive area)
         mixed = max(0.0, nw @ LIGHT0) + max(0.0, nw @ LIGHT1)
-        shade = min(1.0, mixed * 0.6 + 0.4)
+        shade = 1.0 if glow else min(1.0, mixed * 0.6 + 0.4)
         t = tint_rgb if tint == 1 else (1, 1, 1)
         for tri in ((0, 1, 2), (0, 2, 3)):
             draw_tri(cv, scr[list(tri)], UV[list(tri)], tex, shade, t)
@@ -307,7 +345,7 @@ def view_scene(model, qs, name, tint, left=False):
         disp = d["ground"]
         sy = disp.get("scale", [1, 1, 1])[1]
         m = T(0, 0.25 * sy + 0.06, 0) @ Ry(spin) @ display_matrix(disp, False)
-        eye = {"mid": (0.0, 0.62, 0.7), "top": (0.0, 1.0, 0.02), "low": (0.0, 0.14, 0.8)}[mode]
+        eye = {"mid": (0.0, 0.62, 0.7), "top": (0.0, 1.0, 0.02), "low": (0.0, 0.14, 0.8), "far": (0.0, 1.0, 1.25)}[mode]
         view = look_at(eye, (0, 0.08, 0))
         k = (H / 2) / math.tan(math.radians(24))
         # the ground: a checker of two greens
@@ -315,6 +353,13 @@ def view_scene(model, qs, name, tint, left=False):
             for gz in range(-4, 4):
                 lo = (gx * 16, -1, gz * 16); hi = (gx * 16 + 16, 0, gz * 16 + 16)
                 render_box(cv, lo, hi, np.eye(4), view, k, (84, 120, 70) if (gx + gz) % 2 == 0 else (92, 132, 76))
+        render_quads(cv, qs, m, view, k, tint)
+        return Image.fromarray((np.clip(cv.img, 0, 1) * 255).astype(np.uint8))
+    if name.startswith("z_"):                      # the bare model, zoomed in (the book fills the tile): z_front, z_back, z_34, z_34b, z_east, z_west, z_top, z_low
+        eyes = {"front": (0, 0, 1.0), "back": (0, 0, -1.0), "east": (1.0, 0, 0), "west": (-1.0, 0, 0), "top": (0, 1.0, 0.001), "34": (0.5, 0.3, 0.72), "34b": (-0.5, 0.3, -0.72), "low": (0.5, -0.3, 0.72), "34w": (-0.55, 0.3, 0.7)}
+        m = T(-0.5, -0.5, -0.5)
+        view = look_at(eyes[name[2:]], (0, 0, 0))
+        k = (H / 2) / math.tan(math.radians(28))
         render_quads(cv, qs, m, view, k, tint)
         return Image.fromarray((np.clip(cv.img, 0, 1) * 255).astype(np.uint8))
     if name.startswith("m_"):                      # the bare model, no display transform: m_front, m_back, m_east, m_west, m_top, m_34
@@ -352,6 +397,151 @@ def gui_sprite(tint):
     return bg.convert("RGB")
 
 
+# ---------------------------------------------------------------------------------------------------------- 3.26.0: the painted books (skill_book_v2_<franchise>_<rarity>.json)
+RARITY_NAMES = ["common", "uncommon", "rare", "epic", "mythic"]
+_MODELS = {}
+
+
+def v2_model(f, r):
+    key = (f, r)
+    if key not in _MODELS:
+        m = load_model("skill_book_v2_%s_%s.json" % (f, r))
+        _MODELS[key] = (m, quads(m))
+    return _MODELS[key]
+
+
+def parse_model_name(name):
+    """'skill_book_v2_<franchise>_<rarity>.json' -> (franchise, rarity) or None."""
+    base = name[:-5] if name.endswith(".json") else name
+    if not base.startswith("skill_book_v2_"):
+        return None
+    rest = base[len("skill_book_v2_"):]
+    for r in RARITY_NAMES:
+        if rest.endswith("_" + r):
+            return rest[:-(len(r) + 1)], r
+    return None
+
+
+def line_color(franchise):
+    """The colour of the first line of a franchise in the shipped table (a real tint for the previews), else the default orange."""
+    try:
+        t = json.load(open(os.path.join(ASSETS, "skill_books.json"), encoding="utf-8"))
+        for lid, l in t["lines"].items():
+            if l.get("franchise") == franchise:
+                return l["color"].lstrip("#")
+    except Exception:
+        pass
+    return "E8541C"
+
+
+def icon_image(f, r, tint_hex, size=192, bg=(0.36, 0.40, 0.46)):
+    """The painted icon as the inventory draws it: layer 0 plus the tint layer multiplied by the line colour, on a flat background."""
+    base = Image.open(os.path.join(ASSETS, "textures", "item", "skill_book_icons", "%s_%s.png" % (f, r))).convert("RGBA")
+    tintp = os.path.join(ASSETS, "textures", "item", "skill_book_icons", "%s_%s_tint.png" % (f, r))
+    out = Image.new("RGBA", base.size, tuple(int(c * 255) for c in bg) + (255,))
+    out.alpha_composite(base)
+    if os.path.exists(tintp):
+        t = np.asarray(Image.open(tintp).convert("RGBA"), np.float32)
+        col = np.array([int(tint_hex[i:i + 2], 16) for i in (0, 2, 4)], np.float32) / 255.0
+        t[..., :3] *= col
+        out.alpha_composite(Image.fromarray(np.clip(t, 0, 255).astype(np.uint8), "RGBA"))
+    return out.convert("RGB").resize((size, size), Image.NEAREST)
+
+
+def render_tile(f, r, view, tint_hex, ss=2, frame=0):
+    """One view of one book, supersampled and reduced to W x H of the module (340)."""
+    global W, H, ANIM_FRAME
+    w0, h0, a0 = W, H, ANIM_FRAME
+    ANIM_FRAME = frame
+    W = H = w0 * ss
+    try:
+        if frame:
+            _TEX.clear()
+        model, qs = v2_model(f, r)
+        if frame:
+            qs = quads(model)
+        tint = tuple(int(tint_hex[i:i + 2], 16) / 255.0 for i in (0, 2, 4))
+        img = view_scene(model, qs, view, tint, left=view.endswith("left") if view.startswith("fp") else False)
+        img = img.resize((w0, h0), Image.LANCZOS)
+    finally:
+        W, H, ANIM_FRAME = w0, h0, a0
+    return img
+
+
+def labelled(img, text):
+    dr = ImageDraw.Draw(img)
+    dr.text((6, 4), text, fill=(255, 255, 255))
+    return img
+
+
+def franchise_sheet(f, out, ss=2):
+    """One franchise, the five rarities side by side: the inventory icon, the book zoomed in at a three-quarter angle, in the first-person hand, and on the ground."""
+    col = line_color(f)
+    views = [("z_34", "34"), ("fp_right", "hand"), ("tp_right_front", "third person"), ("ground_20_far", "ground")]
+    icon_h = 200
+    sheet = Image.new("RGB", (5 * W, icon_h + len(views) * H), (30, 32, 38))
+    for j, r in enumerate(RARITY_NAMES):
+        ic = icon_image(f, r, col, icon_h, (0.2, 0.22, 0.27))
+        sheet.paste(ic, (j * W + (W - icon_h) // 2, 0))
+        ImageDraw.Draw(sheet).text((j * W + 8, 6), "%s %s" % (f, r), fill=(255, 255, 255))
+        for i, (v, label) in enumerate(views):
+            sheet.paste(labelled(render_tile(f, r, v, col, ss), label), (j * W, icon_h + i * H))
+    path = os.path.join(out, "franchise_%s.png" % f)
+    sheet.save(path)
+    return path
+
+
+def overview_sheet(franchises, out, size=128):
+    """The whole 11 x 5 matrix of icons in one picture."""
+    pad = 6
+    label_w = 190
+    sheet = Image.new("RGB", (label_w + 5 * (size + pad), len(franchises) * (size + pad) + 22), (30, 32, 38))
+    dr = ImageDraw.Draw(sheet)
+    for j, r in enumerate(RARITY_NAMES):
+        dr.text((label_w + j * (size + pad) + 8, 5), r, fill=(255, 255, 255))
+    for i, f in enumerate(franchises):
+        dr.text((6, 22 + i * (size + pad) + size // 2 - 6), f, fill=(255, 255, 255))
+        col = line_color(f)
+        for j, r in enumerate(RARITY_NAMES):
+            sheet.paste(icon_image(f, r, col, size, (0.2, 0.22, 0.27)), (label_w + j * (size + pad), 22 + i * (size + pad)))
+    path = os.path.join(out, "overview_matrix.png")
+    sheet.save(path)
+    return path
+
+
+def hand_ground_sheet(out, picks, ss=2):
+    """Hand and ground views of a few books: rows = book, columns = first person right, left, third person front, side, ground (two spins), item frame."""
+    views = ["fp_right", "fp_left", "tp_right_front", "tp_right_side", "ground_20_far", "ground_130_far", "fixed"]
+    sheet = Image.new("RGB", (len(views) * W, len(picks) * H), (30, 32, 38))
+    for i, (f, r) in enumerate(picks):
+        col = line_color(f)
+        for j, v in enumerate(views):
+            sheet.paste(labelled(render_tile(f, r, v, col, ss), "%s %s %s" % (f, r, v)), (j * W, i * H))
+    path = os.path.join(out, "hand_ground_views.png")
+    sheet.save(path)
+    return path
+
+
+def main_v2(a):
+    import time
+    t0 = time.time()
+    fr = json.load(open(os.path.join(ASSETS, "skill_books.json"), encoding="utf-8"))["franchises"]
+    os.makedirs(a.out, exist_ok=True)
+    wanted = a.franchises.split(",") if a.franchises else fr
+    written = []
+    if "overview" in a.sheets:
+        written.append(overview_sheet(fr, a.out))
+    if "franchise" in a.sheets:
+        for f in wanted:
+            written.append(franchise_sheet(f, a.out, a.ss))
+    if "hand" in a.sheets:
+        picks = [("exiled_heavy_knight", "common"), ("tensura", "uncommon"), ("black_clover", "rare"), ("magi", "epic"), ("exiled_heavy_knight", "mythic"), ("fairy_tail", "mythic")]
+        written.append(hand_ground_sheet(a.out, picks, a.ss))
+    for w in written:
+        print("wrote", w)
+    print("%.1fs" % (time.time() - t0))
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--franchise", default="generic")
@@ -359,7 +549,14 @@ def main():
     ap.add_argument("--out", default=os.path.join(ROOT, "build", "book_preview"))
     ap.add_argument("--model", default="skill_book_3d.json")
     ap.add_argument("--views", default="")
+    ap.add_argument("--matrix", action="store_true", help="3.26.0: render the contact sheets of all 55 painted books (overview, one per franchise, hand and ground) into --out")
+    ap.add_argument("--sheets", default="overview,franchise,hand", help="with --matrix: which sheets")
+    ap.add_argument("--franchises", default="", help="with --matrix: only these franchises")
+    ap.add_argument("--ss", type=int, default=2, help="supersampling of the tiles")
     a = ap.parse_args()
+    if a.matrix:
+        return main_v2(a)
+    v2 = parse_model_name(a.model)
     model_name = a.model if a.franchise == "generic" else "skill_book_3d_%s.json" % a.franchise
     model = load_model(model_name)
     qs = quads(model)
@@ -370,8 +567,12 @@ def main():
     os.makedirs(a.out, exist_ok=True)
     tiles = []
     for v in views:
-        if v == "gui":
+        if v == "gui" and v2:
+            img = icon_image(v2[0], v2[1], a.color, W)
+        elif v == "gui":
             img = gui_sprite(tint)
+        elif v2:
+            img = render_tile(v2[0], v2[1], v, a.color, a.ss)
         else:
             img = view_scene(model, qs, v, tint, left=v.endswith("left") if v.startswith("fp") else False)
         dr = ImageDraw.Draw(img)
