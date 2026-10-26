@@ -57,8 +57,7 @@ class UniqueBooksFilesTest {
     private static List<String> removedTokens() {
         List<String> out = removedIds();
         out.addAll(LegacyIds.REMOVED_LINES);
-        out.add("fairy_tail");
-        out.add("Fairy Tail");
+        // 3.26.0: Fairy Tail came back as a franchise (gray_ice_make, erza_requip_knight), so the franchise words are no longer banned; the removed line ids above still are
         return out;
     }
 
