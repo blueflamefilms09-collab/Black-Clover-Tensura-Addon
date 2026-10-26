@@ -266,6 +266,8 @@ public final class VfxManager {
         register(new com.newuniverse.nusmp.vfx.client.layer.JibrilLayer());
         // Solomon, Lord of Sorcery (Veldanava): its own nine shapes (SOLOMON_COPY ... SOLOMON_ABSORB), appended after JIBRIL_WINGS; nothing else is touched
         register(new com.newuniverse.nusmp.vfx.client.layer.SolomonLayer());
+        // Hercules, Lord of Martial Prowess (Veldanava): its own ten shapes (HERCULES_LEAP ... HERCULES_MOMENTUM), appended after SOLOMON_ABSORB; nothing else is touched
+        register(new com.newuniverse.nusmp.vfx.client.layer.HerculesLayer());
     }
 
     public void register(AbstractVfxLayer layer) { for (VfxShape s : layer.shapes()) layers.put(s, layer); }
