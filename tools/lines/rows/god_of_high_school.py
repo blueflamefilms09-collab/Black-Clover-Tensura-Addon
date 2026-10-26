@@ -1,7 +1,8 @@
-"""The God of High School: 25 unique skill lines (martial arts, Ki, Charyeok and the gods that lend it, tournament roles).
+"""The God of High School: 27 unique skill lines (martial arts, Ki, Charyeok and the gods that lend it, tournament roles).
 
 Canon note: martial arts (Taekwondo, Muay Thai, Capoeira, Judo, Hapkido, Kendo ...) are real styles written as game arts; Charyeok (borrowed power) lines
 follow the story's idea of a being or god lending its strength, while the exact moves are invented in its spirit (what the art looks and feels like in the game).
+Lines 26 and 27 (3.26.0) are Evolution skills (docs/skills/evolution_ten.md rows 9 and 10): they carry an `evolution` block, evolved passives and an Ultimate finisher.
 """
 from lines_lib import Line, Stance, Stat, Art, Pas
 
@@ -1028,4 +1029,107 @@ LINES.append(Line(
         A("Hundred Tiger Claws", "A sweeping tiger strike that rips a huge cone in front of you.", "cone_strike", "minecraft:netherite_sword", vfx="WIND_SLASH", damage=28, range=5.5, half_angle=70, targets=9, cost=0.06, cooldown=1700),
         A("Crane's Soaring Fall", "Leap high on the crane's wing and come down like a stone.", "leap_slam", "minecraft:elytra", vfx="WIND_RING", damage=26, radius=5, knockback=1.7, height=1.2, cost=0.06, cooldown=1600),
     ],
+))
+
+# 3.26.0 helpers for the Evolution lines: a passive with an `evolved` override and the Ultimate finisher
+def PE(name, desc, kind, icon, evolved=None, **p):
+    return Pas(name, desc, kind, p, icon, evolved or {})
+
+
+def AU(name, desc, kind, icon, **p):
+    return Art(name, desc, kind, p, icon, ultimate=True)
+
+
+# ---------------------------------------------------------------------------------------------------------------- 26  (3.26.0, Evolution skill, design row 9)
+LINES.append(Line(
+    id="goh_haetae_jade", name="Haetae to Jade Emperor", franchise=F,
+    desc="Han Daewi's water Charyeok: the young Haetae's bubbles, waves and hard water grow, through a direct contract, into the Jade Emperor's Wisdom of the Sage. Endure enough punishment and the water becomes gravity itself.",
+    color="#3FB6FF", background="ocean", icon="minecraft:heart_of_the_sea",
+    book_name="Haetae's Water Ledger", book_lore="The first pages are damp and written in a child's hand; the last ones are dry, heavy, and press down on the desk.",
+    stances=[
+        S("Haetae's Tide Stance", "Let the young Haetae's water flow around you: you heal and move lightly, while your blows stay ordinary.", "minecraft:heart_of_the_sea", regen=1.0, speed_pct=0.06, vfx="WATER_RING"),
+        S("Hard Water Barrier", "Thicken the water around you into a firm shell: strong armor and footing, but you move slowly and strike softer.", "minecraft:prismarine_shard", armor=4, knockback_res=0.4, speed_pct=-0.1, damage_pct=-0.05, vfx="WATER_RING"),
+    ],
+    stats=[
+        T("Haetae's Bond", "A bond with a water creature keeps you well.", "max_health", 2, "minecraft:heart_of_the_sea"),
+        T("Karate Fist", "A full-contact karate base behind every swing.", "attack_damage", 1, "minecraft:iron_sword"),
+        T("Tide Stride", "You step as lightly as a wave.", "movement_speed", 0.04, "minecraft:kelp", op="mult"),
+        T("Sage's Patience", "The water in you does not give way.", "armor_toughness", 1, "minecraft:prismarine_crystals"),
+    ],
+    arts=[
+        A("Water Arrows", "Loose a rapid volley of water arrows at the foe in front of you.", "barrage", "minecraft:tipped_arrow", vfx="WATER_BURST", damage=3, shots=6, range=14),
+        A("Water Arrows: Shift", "Crouch to compress the volley into one piercing arrow of hard water that runs through a line of foes.", "ray_shot", "minecraft:spectral_arrow", vfx="WATER_BURST", damage=8, range=24, pierce=3),
+        A("Water Wave", "Send a wall of water rolling along the ground ahead of you.", "ground_wave", "minecraft:water_bucket", vfx="WATER_RING", damage=6, length=11, width=3, knockback=0.7),
+        A("Water Wave: Shift", "Crouch to let the wave burst outward around you as a defensive ring that throws foes back.", "ring_burst", "minecraft:nautilus_shell", vfx="WATER_RING", damage=5, radius=4.5, targets=6, knockback=1.2),
+        A("Bubble Lift", "Wrap yourself in bubbles: you drift down softly and leap far.", "buff_self", "minecraft:glass_bottle", vfx="WATER_BURST", effect="slow_falling", effect2="jump_boost", seconds=14),
+        A("Healing Mist", "A faint healing mist rises: you and the allies near you recover health.", "heal_pulse", "minecraft:potion", vfx="WATER_RING", radius=7, amount=6),
+        A("Haetae's Breath", "After the direct contract the Haetae lends its breath: a cold, hard-water gust that rakes a cone ahead.", "cone_strike", "minecraft:conduit", vfx="WATER_BURST", damage=9, range=5, half_angle=55, targets=5, knockback=0.9),
+        A("Haetae's Breath: Shift", "Crouch to hold the breath longer: foes in the cone are chilled and slowed by hard water.", "debuff_cone", "minecraft:blue_ice", vfx="WATER_RING", range=7, half_angle=45, seconds=8, effect="slowness", effect2="weakness", seconds2=5),
+    ],
+    passives=[
+        PE("Tidal Pressure", "Your blows press water into the foe: part of the damage is stored as Debt, ticks while it waits, and is called in by your Ultimate.", "debt_store", "minecraft:prismarine_bricks",
+          store_pct=0.3, tick_seconds=3, max_pct=0.5, hold_seconds=12, vfx="WATER_RING", evolved={"store_pct": 0.45, "max_pct": 0.75, "hold_seconds": 20}),
+        PE("Hard Water Skin", "While you are fighting, water thickens over your skin and you take less damage.", "reduce_when", "minecraft:prismarine_shard", condition="in_combat", pct=0.1, evolved={"pct": 0.22}),
+        PE("Water Barrier", "Your barrier blunts magic and borrowed power, even another Charyeok.", "resist", "minecraft:heart_of_the_sea", damage_kind="magic", pct=0.2, evolved={"pct": 0.4}),
+        PE("Haetae's Mending Water", "While you stand in water your wounds close quickly.", "regen_when", "minecraft:kelp", condition="in_water", per_second=1.5),
+        PE("Soaking Blow", "Your blows may leave the foe sodden and slow.", "on_hit_effect", "minecraft:cod", effect="slowness", chance=0.25),
+        PE("Haetae's Swim", "In water you breathe freely.", "self_effect_when", "minecraft:turtle_helmet", effect="water_breathing", condition="in_water"),
+        PE("Second Life", "When nearly dead, a brief shield of water holds you up, as the Haetae brought you back once before.", "last_stand", "minecraft:totem_of_undying", threshold=0.3, seconds=6),
+        PE("Tide Mending", "Your wounds slowly close over time, even out of combat.", "mending", "minecraft:glow_ink_sac", seconds=16, amount=1),
+    ],
+    finishers=[
+        A("Haetae's Deluge", "Call the grown Haetae's whole tide: a great ring of water that throws every foe around you.", "ring_burst", "minecraft:trident", vfx="WATER_BURST", damage=22, radius=7, targets=10, knockback=1.8, cost=0.06, cooldown=1700),
+        AU("Wisdom of the Sage", "The Jade Emperor's Wisdom: gravity bears down on every foe around you, and all the Debt stored in them is called in at once.", "debt_burst", "minecraft:nether_star", vfx="SPATIAL_RIFT",
+          damage=30, mult=2.5, radius=9, targets=20, cost=0.08, cooldown=16000),
+    ],
+    evolution={"requirement": "damage_taken", "count": 3000, "params": {"damage_kind": "any"},
+               "text": "Take 3000 damage of any kind while this skill is on: the Haetae grows, the contract deepens and the Wisdom of the Sage opens.",
+               "ultimate_name": "Ultimate Skill, Wisdom of the Sage"},
+))
+
+# ---------------------------------------------------------------------------------------------------------------- 27  (3.26.0, Evolution skill, design row 10)
+LINES.append(Line(
+    id="goh_lu_bu_moonlight", name="Yeo-Po Bong-Seon", franchise=F,
+    desc="Yoo Mira's Moonlight Sword Style, a wooden blade that cuts steel, joined to the Charyeok of Lu Bu and his flying horse Red Hare. Cut down enough foes and the hero of legend rides with you.",
+    color="#F0E6A0", background="stellar", icon="minecraft:wooden_sword",
+    book_name="Bongseon Master's Scroll", book_lore="The twenty-fifth name on the scroll is still wet; a horse's hoofprint is pressed into the last page.",
+    stances=[
+        S("Moonlight Stance", "Hold the blade low, in either hand: quick, sharp and prone to critical cuts, with a lighter guard.", "minecraft:wooden_sword", speed_pct=0.06, crit_chance=0.08, damage_pct=0.04, armor=-1, vfx="WIND_RING"),
+        S("Mountain Stance", "Plant yourself like a mountain: firm armor and footing, but slower to act.", "minecraft:iron_horse_armor", armor=4, knockback_res=0.5, speed_pct=-0.12, vfx="EARTH_SPIKES"),
+    ],
+    stats=[
+        T("Bongseon's Edge", "A wooden sword that cuts steel and concrete.", "attack_damage", 1, "minecraft:wooden_sword"),
+        T("Either-Hand Mastery", "The blade swings as fast from the left hand as from the right.", "attack_speed", 0.2, "minecraft:feather"),
+        T("Red Hare's Stride", "A horse's pace is in your legs.", "movement_speed", 0.04, "minecraft:saddle", op="mult"),
+        T("Master's Bearing", "Twenty-five masters stand behind your back.", "armor_toughness", 1, "minecraft:iron_horse_armor"),
+    ],
+    arts=[
+        A("Moonlight Slash", "A wide crescent cut of moonlight across the cone in front of you.", "cone_strike", "minecraft:wooden_sword", vfx="WIND_SLASH", damage=8, range=4, half_angle=55, targets=4, knockback=0.5),
+        A("Moonlight Slash: Shift", "Crouch to stretch the crescent into a long wave of moonlight along the ground.", "ground_wave", "minecraft:end_rod", vfx="WIND_SLASH", damage=7, length=14, width=2, knockback=0.4),
+        A("Sky Piercer Lunge", "Lunge forward with the point of the blade, hitting everything in your path.", "dash_strike", "minecraft:iron_sword", vfx="WIND_SLASH", damage=8, distance=9, targets=4),
+        A("Sky Piercer Lunge: Shift", "Crouch to loose the lunge as one long beam that pierces a whole line of foes.", "ray_shot", "minecraft:spectral_arrow", vfx="WIND_SLASH", damage=9, range=26, pierce=4),
+        A("Red Hare Charge", "Call Red Hare and gallop a long way forward in a single breath.", "blink", "minecraft:saddle", vfx="WIND_RING", distance=13),
+        A("Return the Blade", "For a short while, part of every blow against you is returned to the attacker by the blade.", "ward_reflect", "minecraft:shield", vfx="MIRROR_PANE", seconds=7, reflect_pct=0.4),
+        A("Steel-Cutting Stroke", "One clean stroke, far deadlier against a foe already wounded.", "execute", "minecraft:golden_sword", vfx="WIND_SLASH", damage=10, bonus=1.0),
+        A("Lu Bu's Might", "Borrow the hero's strength: raised power and speed for a while, and feathers in your hair.", "buff_self", "minecraft:golden_horse_armor", vfx="SPIRIT_AURA", effect="strength", effect2="speed", seconds=16),
+    ],
+    passives=[
+        PE("Moonlit Wounds", "Your cuts store part of their damage on the foe as Debt: it ticks while it waits, and your Ultimate calls it in.", "debt_store", "minecraft:amethyst_shard",
+          store_pct=0.25, tick_seconds=3, max_pct=0.5, hold_seconds=12, vfx="WIND_SLASH"),
+        PE("Moonlit Edge", "Your cuts land critically more often.", "crit", "minecraft:glowstone_dust", chance=0.12, mult=1.7, evolved={"chance": 0.22, "mult": 2.1}),
+        PE("Two-Handed Flow", "Every few cuts in a row hit much harder.", "combo", "minecraft:clock", hits=4, bonus=0.6, evolved={"hits": 3, "bonus": 1.0}),
+        PE("Willow Step", "You may slip a blow completely.", "dodge", "minecraft:feather", chance=0.1),
+        PE("Duel by Night", "You deal more damage at night, under the moon.", "dmg_when", "minecraft:ender_eye", condition="night", bonus=0.15),
+        PE("Red Hare's Momentum", "You deal more damage while sprinting.", "sprint_bonus", "minecraft:golden_carrot", bonus=0.2, evolved={"bonus": 0.4}),
+        PE("Tally of the Slain", "Every kill restores some health.", "kill_reward", "minecraft:bone", heal=3, effect="none"),
+        PE("Finishing Eye", "You deal much more damage to nearly dead foes.", "execute_threshold", "minecraft:iron_sword", threshold=0.2, bonus=0.6),
+    ],
+    finishers=[
+        A("Moonlight Final Cut", "Gather the whole style into one stroke, devastating against a wounded foe.", "execute", "minecraft:netherite_sword", vfx="WIND_SLASH", damage=28, bonus=2.2, cost=0.06, cooldown=1700),
+        AU("Sky Piercer on Red Hare", "Ride Red Hare through the whole field and pierce the sky: every foe in reach takes the blow plus all the Debt stored in it.", "debt_burst", "minecraft:diamond_horse_armor", vfx="LIGHTNING_SPEAR",
+          damage=28, mult=2.4, radius=9, targets=20, cost=0.07, cooldown=15000),
+    ],
+    evolution={"requirement": "kills", "count": 666,
+               "text": "Defeat 666 foes while this skill is on: the hero of legend answers and the Sky Piercer on Red Hare opens.",
+               "ultimate_name": "Ultimate Skill, Sky Piercer Red Hare"},
 ))
