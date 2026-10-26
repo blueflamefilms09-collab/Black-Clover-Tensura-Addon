@@ -1111,3 +1111,49 @@ LINES.append(Line(
                "text": "Cast the arts of this skill 400 times.",
                "ultimate_name": "Ultimate Skill, Luminous Wind: Aria of Justice"},
 ))
+
+# ---------------------------------------------------------------------------------------------------------------------------------- 28 (3.27.0, Evolution skill, docs/skills/evolution_ten_b.md row 4)
+LINES.append(Line(
+    id="ais_sword_princess", name="Ais, the Sword Princess", franchise=F,
+    desc="The Loki Familia's Sword Princess: a wind barrier that sharpens every step, a storm that answers her chant, a blade that never wastes a stroke and a toll the wind collects later. Evolves after eight hundred kills.",
+    color="#f2d56b", background="storm", icon="minecraft:golden_sword",
+    book_name="Sword Princess's Field Journal", book_lore="She has never said what she is chasing. The wind around her says it for her, and it says it very fast.",
+    stances=[
+        S("Sword Princess Poise", "Light feet, a cool head and a clean edge: faster, sharper crits and a little more damage.", "minecraft:golden_sword", speed_pct=0.12, crit_chance=0.1, damage_pct=0.1, vfx="WIND_RING"),
+        S("Wind Barrier", "Hold the wind close around you: sturdy, hard to shove and slowly healing, at the price of speed.", "minecraft:breeze_rod", armor=3, knockback_res=0.4, regen=0.5, speed_pct=-0.08, vfx="WIND_TORNADO"),
+    ],
+    stats=[
+        T("Level Six Strength", "A veteran's raw cutting power.", "attack_damage", 1.5, "minecraft:iron_sword"),
+        T("Swordswoman's Tempo", "Quicker, cleaner strokes.", "attack_speed", 0.07, "minecraft:clock", op="mult"),
+        T("Wind-Touched Stride", "The wind carries your steps.", "movement_speed", 0.04, "minecraft:feather", op="mult"),
+        T("Adventurer's Vitality", "More maximum health from years in the dungeon.", "max_health", 2, "minecraft:golden_carrot"),
+    ],
+    arts=[
+        A("Ariel", "Wrap yourself in a wind barrier: Speed and Resistance for a while.", "buff_self", "minecraft:wind_charge", effect="speed", effect2="resistance", seconds=14, amp=1, vfx="WIND_TORNADO"),
+        A("Ariel: Shift", "Crouching, the wind throws you a long way forward in one step.", "blink", "minecraft:feather", distance=11, vfx="WIND_SLASH"),
+        A("Tempest", "The storm answers: a burst of wind-blades around you that throws the monsters back.", "ring_burst", "minecraft:breeze_rod", damage=8, radius=4.5, knockback=1.1, targets=6, vfx="WIND_TORNADO"),
+        A("Tempest: Shift", "Crouching, the storm turns inward and drags the monsters around you onto your blade.", "pull", "minecraft:phantom_membrane", radius=8, strength=1.0, targets=6, damage=4, vfx="WIND_RING"),
+        A("Sword Princess's Cut", "A wide, flawless cut through the monsters in front of you.", "cone_strike", "minecraft:iron_sword", damage=9, range=4, half_angle=50, targets=4, vfx="WIND_SLASH"),
+        A("Rising Gale", "Crouching, you cut upward on a rising gust and launch the foe in front of you.", "uppercut", "minecraft:elytra", damage=9, launch=0.9, vfx="WIND_SLASH"),
+        A("Avenger", "Fix your eyes on one monster: it takes more damage for a while.", "mark", "minecraft:spyglass", range=22, seconds=10, bonus=0.35, vfx="SPIRIT_AURA"),
+        A("Avenger: Shift", "Crouching, one decisive stroke: it hits far harder the weaker the monster already is.", "execute", "minecraft:netherite_sword", damage=11, bonus=1.2, range=4, vfx="WIND_SLASH"),
+    ],
+    passives=[
+        PE("Wind's Toll", "Your blows store delayed damage on the foe as the wind keeps cutting after you, and your Debt arts collect it.", "debt_store", "minecraft:echo_shard", {"store_pct": 0.45, "max_pct": 0.75, "hold_seconds": 18}, store_pct=0.25, tick_seconds=3, max_pct=0.5, hold_seconds=12, vfx="WIND_SLASH"),
+        PE("Sword Princess's Footwork", "You may slip a blow completely.", "dodge", "minecraft:rabbit_foot", {"chance": 0.22}, chance=0.12),
+        PE("Avenger's Resolve", "You deal more damage to hostile monsters.", "dmg_vs", "minecraft:wither_skeleton_skull", {"bonus": 0.5}, category="monster", bonus=0.25),
+        PE("Swordsman's Mastery", "You hit harder while wielding a sword.", "dmg_when", "minecraft:diamond_sword", {"bonus": 0.4}, condition="holding_sword", bonus=0.2),
+        P("Wind Deflection", "Arrows and bolts bend around you: much less projectile damage.", "resist", "minecraft:shield", damage_kind="projectile", pct=0.35),
+        P("Feather Landing", "You take much less fall damage.", "fall_guard", "minecraft:phantom_membrane", pct=0.6),
+        P("Dungeon Diver's Stamina", "You tire more slowly.", "hunger_saver", "minecraft:bread", pct=0.25),
+        P("Trophy of the Hunt", "A kill heals you and fills you with speed.", "kill_reward", "minecraft:bone", heal=2, effect="speed", seconds=4),
+    ],
+    finishers=[
+        A("Hundred Winds", "The wind-blades multiply into a whirl of cuts all around you.", "whirlwind", "minecraft:netherite_sword", damage=5, hits=8, radius=4.5, interval=3, cooldown=1400, vfx="WIND_TORNADO"),
+        AU("Tempest Unbound", "The storm is let go: every toll the wind has left on the monsters around you comes due in a single gale.", "debt_burst", "minecraft:nether_star",
+           damage=22, mult=2.3, radius=13, targets=12, cost=0.07, cooldown=16000, vfx="WIND_TORNADO"),
+    ],
+    evolution={"requirement": "kills", "count": 800,
+               "text": "Slay 800 creatures while Ais, the Sword Princess is switched on.",
+               "ultimate_name": "Ultimate Skill, Tempest Unbound"},
+))
