@@ -128,6 +128,7 @@ class PerfSourceScanTest {
             "vfx/client/layer/FireV2Layer.java",       // the Fire V2 look: the same, its textures are static finals resolved once
             "client/mode/ModeArmorValkyrieV2.java", "client/mode/ModeArmorValkyrieWorld.java", "client/mode/ModeArmorValkyrieEvents.java",       // the Valkyrie armour v2: static textures, a plan once a frame, no location built per frame
             "vfx/client/layer/StarMagicLayer.java", "client/prop/StarPropPainter.java",
+            "vfx/client/layer/JudgmentLayer.java",       // the Judgment effects: static final textures, no location built per frame
             "vfx/client/layer/RuneWritingLayer.java", "client/manamethod/RuneClient.java");       // the Mana Method rune (3.5.0, the held rune is drawn from a view every frame): static textures, no location built per frame or per tick       // the Star V2 look: the layer's textures are static finals, the painter resolves its textures once in register()
 
     @Test

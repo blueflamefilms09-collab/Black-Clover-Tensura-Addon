@@ -69,7 +69,19 @@ Temporal Stutter, Temporal Debt (stacks, 30 s from the last stack, +1% magic dam
 - **No** terrain damage, no chunk loads, no entity spawns, no block changes, no food-bar writes.
 
 ## VFX
-VFX_SECTION_PLACEHOLDER
+Six shapes, appended at the end of `VfxShape` (ordinals 453-458; nothing moved), drawn by one new client layer `vfx/client/layer/JudgmentLayer.java` with 14 new textures (`textures/particle/judgment_*.png`, made by `tools/gen_judgment_vfx_textures.py`). They are our own work from scratch (pale gold, white and a hairline of black); the Time Magic VFX is not touched and not copied. Previews: `python tools/vfx_preview/preview.py judgment_bullet judgment_sigil judgment_edict judgment_cleave judgment_field judgment_cross`.
+
+| Effect | Used by | Lasts | Worst case (quads / vertices) |
+|---|---|---|---|
+| JUDGMENT_BULLET | Judgment Bullet: needle, muzzle flash, impact ring, thin black crack trail | 12 ticks | 27 / 108 (33 / 132 on a 64-block line) |
+| JUDGMENT_SIGIL | Condemnation: seal, ticking clock ring, hovering blade glyph on the target | up to 30 s, follows the target | 17 / 68 |
+| JUDGMENT_EDICT | Supreme Edict: flat wave with glyph bands and ground cracks | 24 ticks | 73 / 292 |
+| JUDGMENT_CLEAVE | Guillotine Cleave: crescent with a black core | 10 ticks | 78 / 312 |
+| JUDGMENT_FIELD | Verdict of Ruin: ground field, follows its target | up to 12 s | 40 / 160 |
+| JUDGMENT_CROSS | Final Judgment: charge, pillar, cross, flash, rings, cracks | 70 ticks | 55 / 220 |
+
+The engine caps every effect activation at 100 quads / 400 vertices on top of that, and the layer goes through the normal `VfxManager` distance cull and LOD; it keeps nothing between frames (nothing to clean up on logout) and allocates nothing per frame beyond the scratch vectors the other layers use.
+Known soft spots in the previews: the bullet's black trail is thin on a long shot, the cleave looks edge-on from the sides, the edict's rising motes are sparse, the cross bar is a little thinner than its pillar.
 
 ## Tests
 `JudgmentRulesTest` (13 pure checks of the numbers and geometry), `JudgmentSourceScanTest` (server-safety, bounds, validated packet, SERVER config, assets and lang keys, smoke prefix, Time Magic untouched, boons kept), CI smoke prefix `sandalphon` (`sandalphon.rules`, `sandalphon.skill`, `sandalphon.conditions`) and the rewritten `veldanava.orb`.

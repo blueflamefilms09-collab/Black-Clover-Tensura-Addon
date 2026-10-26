@@ -155,6 +155,7 @@ public final class GuiMoveRegistry {
         fixed("client/ui/GuiSizeScreen.java", "the GUI Size settings screen, the tool that sizes things");
         fixed("client/mega/system/SystemEditScreen.java", "the System window's own edit tool (kept; global edit mode moves the same place)");
         fixed("client/companion/TalkScreen.java", "the companion talk screen: a modal conversation window that opens centred and is laid out by TalkLayout (the GUI Size framework scales it)");
+        fixed("client/veldanava/VeldanavaSkillScreen.java", "the Will of the Creator card screen: a modal one-time choice window that opens centred and is laid out by its own panel (the GUI Size framework scales it)");
         fixed("client/companion/gs/GsTalkScreen.java", "the Great Spirit companion talk screen: a modal conversation window that opens centred and is laid out by GsTalkLayout (the GUI Size framework scales it)");
         fixed("client/mega/system/SystemStatsScreen.java", "a full-window stat screen: nothing to move");
         fixed("client/multiverse/MultiverseStatusScreen.java", "a full-window status book: nothing to move");

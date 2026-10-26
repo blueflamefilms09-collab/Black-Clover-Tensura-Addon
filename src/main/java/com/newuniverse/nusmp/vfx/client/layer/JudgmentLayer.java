@@ -28,7 +28,7 @@ import java.util.Set;
  * </ul>
  * <b>Budgets (rule 11).</b> Every effect draws through the 400-vertex (100-quad) activation cap of the vertex buffer and is far below it; counts are at full detail, {@code ctx.seg} thins them by distance and the particle setting
  * (minimums in brackets). Worst case quads per effect per frame: BULLET 37 (16 crack pieces + 1 glow ribbon + needle 2 + head flare/glow 3 + ghosts 6 + muzzle 5 + impact 4), SIGIL 17, EDICT 81 (glyph bands 30 + 20,
- * motes 22), CLEAVE 68, FIELD 40, CROSS 57. No effect allocates more than a few small vectors per frame (the same as the other layers); nothing is kept between frames, so nothing has to be cleaned up on logout,
+ * motes 22), CLEAVE 78 (measured; the engine hard-caps every activation at 100 quads / 400 vertices anyway), FIELD 40, CROSS 55. No effect allocates more than a few small vectors per frame (the same as the other layers); nothing is kept between frames, so nothing has to be cleaned up on logout,
  * death or dimension change; the server only sends one packet per effect (VfxSpawn) and nothing here runs on the server.
  */
 public class JudgmentLayer extends AbstractVfxLayer {

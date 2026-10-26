@@ -21,7 +21,8 @@ class StarV2Test {
         assertEquals(List.of(VfxShape.STAR_NODE, VfxShape.STAR_LINK, VfxShape.STAR_CONJ, VfxShape.STAR_PANE, VfxShape.STAR_LANCE, VfxShape.STAR_WHIP, VfxShape.STAR_DOME), StarV2.SHAPES);
         assertFalse(StarV2.owns(VfxShape.STAR_MAGIC));
         VfxShape[] all = VfxShape.values();
-        assertEquals(VfxShape.STAR_DOME, all[all.length - 1], "appended last");
+        assertEquals(VfxShape.STAR_NODE.ordinal() + 6, VfxShape.STAR_DOME.ordinal(), "the seven star shapes are one block, the last of them is STAR_DOME (later families, e.g. JUDGMENT_*, are appended after it)");
+        assertTrue(all.length > VfxShape.STAR_DOME.ordinal());
         assertEquals(VfxShape.STAR_NODE.ordinal(), VfxShape.RUNE_WRITING.ordinal() + 1);
         assertTrue(VfxShape.STAR_MAGIC.ordinal() < VfxShape.STORM_CANCEL.ordinal(), "the old shape did not move");
         assertTrue(StarV2.isCel(VfxShape.STAR_NODE) && StarV2.isCel(VfxShape.STAR_LINK) && StarV2.isCel(VfxShape.STAR_PANE) && StarV2.isCel(VfxShape.STAR_WHIP), "A is the base of the star, lines, pane and whip");
