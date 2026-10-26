@@ -1133,3 +1133,97 @@ LINES.append(Line(
                "text": "Defeat 666 foes while this skill is on: the hero of legend answers and the Sky Piercer on Red Hare opens.",
                "ultimate_name": "Ultimate Skill, Sky Piercer Red Hare"},
 ))
+
+# ---------------------------------------------------------------------------------------------------------------- 28  (3.27.0, Evolution skill, design row 9 of evolution_ten_b.md)
+LINES.append(Line(
+    id="goh_ilpyo_sword", name="Ilpyo's Family Blade", franchise=F,
+    desc="Park Ilpyo's sword of the Park family, drawn on Ssam-su Taekkyeon footwork and lit by the fox flame of the Nine-Tails Guardian. Cut down enough foes and the ninth tail is let loose.",
+    color="#D0D8E0", background="iron", icon="minecraft:iron_sword",
+    book_name="Park Family Blade Record", book_lore="Every page is a name struck through in silver ink; the last one is singed at the edge, and nine thin fox hairs are pressed into the spine.",
+    stances=[
+        S("Taekkyeon Sway Stance", "Rock on the balls of your feet with the blade low, as Taekkyeon does: quick, evasive and a little reckless.", "minecraft:iron_sword", speed_pct=0.07, crit_chance=0.05, damage_pct=0.03, armor=-1, vfx="WIND_RING"),
+        S("Nine-Tails Guard", "Let the fox flame wrap the blade and your arms: firm armor and footing, but slow to move.", "minecraft:blaze_powder", armor=3, knockback_res=0.4, regen=0.5, speed_pct=-0.1, vfx="FIRE_SPIRAL"),
+    ],
+    stats=[
+        T("Family Blade Edge", "A sword that has been kept in the Park family for generations.", "attack_damage", 1, "minecraft:iron_sword"),
+        T("Taekkyeon Footwork", "The Taekkyeon beat is in your heels.", "movement_speed", 0.04, "minecraft:leather_boots", op="mult"),
+        T("Flexible Frame", "A body bent far past ordinary limits swings the blade faster.", "attack_speed", 0.2, "minecraft:feather"),
+        T("Fox-Eyed Reach", "You judge a foe's distance like a fox.", "entity_interaction_range", 0.5, "minecraft:spyglass"),
+    ],
+    arts=[
+        A("Family Blade Draw", "Draw the blade in one breath and cut a wide arc across the cone in front of you.", "cone_strike", "minecraft:iron_sword", vfx="WIND_SLASH", damage=8, range=4, half_angle=50, targets=4, knockback=0.4),
+        A("Family Blade Draw: Shift", "Crouch to let the cut skip from foe to foe, each a little weaker than the last.", "chain_hit", "minecraft:iron_nugget", vfx="WIND_SLASH", damage=7, jumps=4, jump_range=6),
+        A("Falling Leaf Inferno", "Spin through the foes around you, the blade leaving leaves of fire in its wake.", "whirlwind", "minecraft:fire_charge", vfx="FIRE_SPIRAL", damage=3, radius=4, hits=4),
+        A("Falling Leaf Inferno: Shift", "Crouch to leap high and come down in a ring of burning leaves.", "leap_slam", "minecraft:campfire", vfx="FLAME_EXPLOSION", damage=8, height=1.0, radius=3.5, knockback=0.7),
+        A("Third Stance Hwachook", "Burn forward on the third Taekkyeon stance, hitting everything in your path.", "dash_strike", "minecraft:golden_boots", vfx="FLAME_TRAIL", damage=8, distance=9, targets=4),
+        A("Third Stance Hwachook: Shift", "Crouch to hook the blade up under the foe and fling it into the air.", "uppercut", "minecraft:blaze_rod", vfx="FLAME_TRAIL", damage=8, launch=0.8),
+        A("Pumbalgi Step", "Step on the Taekkyeon beat and slip a short way ahead.", "blink", "minecraft:rabbit_foot", vfx="WIND_RING", distance=8),
+        A("Fox-Fire Volley", "Loose a volley of small fox flames at the foe you look at.", "barrage", "minecraft:blaze_powder", vfx="FIRE_SPIRAL", damage=3, shots=6, range=14),
+    ],
+    passives=[
+        PE("Silver Ledger", "Your cuts store part of their damage on the foe as Debt: it ticks while it waits, and your Ultimate calls it in.", "debt_store", "minecraft:iron_ingot",
+          store_pct=0.25, tick_seconds=3, max_pct=0.5, hold_seconds=12, vfx="FIRE_SPIRAL", evolved={"store_pct": 0.4, "max_pct": 0.7, "hold_seconds": 20}),
+        PE("Taekkyeon Rhythm", "Blows in a row grow stronger until you stop fighting.", "momentum", "minecraft:clock", per_stack=0.04, max_stacks=6, evolved={"per_stack": 0.07, "max_stacks": 9}),
+        PE("Sway Away", "You may sway out of a blow completely.", "dodge", "minecraft:feather", chance=0.1),
+        PE("Fox-Flame Skin", "The Nine-Tails flame blunts fire.", "resist", "minecraft:magma_cream", damage_kind="fire", pct=0.2, evolved={"pct": 0.45}),
+        PE("Silver Thirst", "Your blade drinks a share of the damage it deals.", "lifesteal", "minecraft:redstone", pct=0.05, evolved={"pct": 0.1}),
+        PE("Tally of Names", "Every kill restores some health and quickens your step.", "kill_reward", "minecraft:name_tag", heal=3, effect="speed", seconds=4),
+        PE("Shoving Cut", "Your blows may shove the foe back.", "knockback_on_hit", "minecraft:piston", strength=0.4, chance=0.3),
+        PE("Foxfire Veil", "Fire clings to the blade while you fight, searing the foe.", "on_hit_effect", "minecraft:flint_and_steel", effect="wither", chance=0.2),
+    ],
+    finishers=[
+        A("Triple Destruction Infernal Fang", "Three fox-fang cuts in one breath rip a huge cone of fire in front of you.", "cone_strike", "minecraft:netherite_sword", vfx="FLAME_EXPLOSION", damage=28, range=5.5, half_angle=70, targets=9, knockback=1.2, cost=0.06, cooldown=1700),
+        AU("Ninth Tail Unleashed", "Let the ninth tail loose: white hair, fox eyes and a flame that finds every foe around you, calling in all the Debt stored in them at once.", "debt_burst", "minecraft:nether_star", vfx="FIRE_SPIRAL",
+          damage=28, mult=2.4, radius=9, targets=20, cost=0.07, cooldown=15000),
+    ],
+    evolution={"requirement": "kills", "count": 1500,
+               "text": "Defeat 1500 foes while this skill is on: the Nine-Tails Guardian answers and the Ninth Tail Unleashed opens.",
+               "ultimate_name": "Ultimate Skill, Ninth Tail Unleashed"},
+))
+
+# ---------------------------------------------------------------------------------------------------------------- 29  (3.27.0, Evolution skill, design row 10 of evolution_ten_b.md)
+LINES.append(Line(
+    id="goh_taejin_charyeok", name="Taejin's Renewal Charyeok", franchise=F,
+    desc="Jin Taejin, the old master of Renewal Taekwondo, a style made to kill gods, and a man who bears borrowed power's price. Survive enough blows that should have killed you and the old master's miracle answers.",
+    color="#E8A23A", background="tower", icon="minecraft:golden_boots",
+    book_name="Old Master's Mountain Notes", book_lore="The handwriting is shaky and the margins are full of kick diagrams; one line, underlined twice, says that a god can bleed like anyone.",
+    stances=[
+        S("Renewal Taekwondo Stance", "The god-killing stance of the old master: heavy, precise kicks, with a thinner guard.", "minecraft:golden_boots", damage_pct=0.12, crit_chance=0.05, armor=-1, vfx="SPIRIT_AURA"),
+        S("Mountain Hermit's Breath", "Breathe as you did on the mountain: wounds close and the body holds firm, but you strike softer and slower.", "minecraft:honey_bottle", armor=3, regen=1.2, knockback_res=0.3, speed_pct=-0.08, damage_pct=-0.05, vfx="SPIRIT_AURA"),
+    ],
+    stats=[
+        T("Old Master's Constitution", "A body that has outlived many fights.", "max_health", 3, "minecraft:golden_apple"),
+        T("God-Slayer's Heel", "Every kick is meant to drop a god.", "attack_damage", 1, "minecraft:golden_boots"),
+        T("Mountain Hide", "Years in the mountains toughened your skin.", "armor", 1, "minecraft:iron_chestplate"),
+        T("Unmoved", "You do not give ground.", "knockback_resistance", 0.1, "minecraft:anvil"),
+    ],
+    arts=[
+        A("Recoilless Kick", "A precise kick whose force does not rebound: a shock line that pierces a row of foes.", "ray_shot", "minecraft:spectral_arrow", vfx="SPIRIT_AURA", damage=8, range=20, pierce=3),
+        A("Recoilless Kick: Shift", "Crouch to kick low and shake the brain: every foe around you is stunned for a moment.", "stun_ring", "minecraft:golden_boots", vfx="WIND_RING", radius=4, seconds=2, targets=5),
+        A("God-Slayer Heel Drop", "Mark the place you look at: after a short breath a heel from above comes down on it.", "meteor_drop", "minecraft:anvil", vfx="SPIRIT_AURA", delay=20, damage=14, radius=4, range=18),
+        A("God-Slayer Heel Drop: Shift", "Crouch to stamp the ground and send a shock wave rolling ahead of you.", "ground_wave", "minecraft:gold_ingot", vfx="EARTH_SPIKES", damage=7, length=11, width=3, knockback=0.6),
+        A("Hermit's Breath", "Breathe slowly the way you did on the mountain: you heal and regenerate for a while.", "heal_self", "minecraft:honey_bottle", vfx="SPIRIT_AURA", amount=8, regen_seconds=8),
+        A("Hermit's Breath: Shift", "Crouch to harden the body: strength and resistance for a while.", "buff_self", "minecraft:enchanted_golden_apple", vfx="SPIRIT_AURA", effect="resistance", effect2="strength", seconds=14),
+        A("Old Master's Gaze", "Read the foe in front of you: it is marked and takes more damage for a while.", "mark", "minecraft:ender_eye", vfx="MAGIC_CIRCLE", range=18, seconds=10, bonus=0.3),
+        A("Break Borrowed Power", "Meet a god's strength with your own: for a while part of every blow against you is thrown back.", "ward_reflect", "minecraft:shield", vfx="MIRROR_PANE", seconds=7, reflect_pct=0.4),
+    ],
+    passives=[
+        PE("Master's Ledger", "Your kicks store part of their damage on the foe as Debt: it ticks while it waits, and your Ultimate calls it in.", "debt_store", "minecraft:gold_ingot",
+          store_pct=0.25, tick_seconds=3, max_pct=0.5, hold_seconds=12, vfx="SPIRIT_AURA", evolved={"store_pct": 0.42, "max_pct": 0.75, "hold_seconds": 22}),
+        PE("Not Yet", "When nearly dead, a brief shield of will holds you up.", "last_stand", "minecraft:totem_of_undying", threshold=0.3, seconds=5, rest=1800, evolved={"seconds": 9, "rest": 1200}),
+        PE("Hard Old Bones", "While you are badly hurt you take less damage.", "reduce_when", "minecraft:bone", condition="low_health", pct=0.12, evolved={"pct": 0.28}),
+        PE("Against Borrowed Power", "Renewal Taekwondo was made against gods: you take less magic and borrowed-power damage.", "resist", "minecraft:amethyst_shard", damage_kind="magic", pct=0.2, evolved={"pct": 0.45}),
+        PE("Old Master's Rebuke", "Part of the damage you take is returned to the attacker.", "thorns", "minecraft:iron_chestplate", pct=0.15),
+        PE("Second Wind", "While you fight, you slowly recover.", "regen_when", "minecraft:golden_carrot", condition="in_combat", per_second=0.6),
+        PE("Cornered Master", "You deal more damage while you are badly hurt.", "dmg_when", "minecraft:redstone", condition="low_health", bonus=0.2),
+        PE("Mountain Mending", "Your wounds close over time, even out of combat.", "mending", "minecraft:glow_berries", seconds=16, amount=1),
+    ],
+    finishers=[
+        A("Heaven-Splitting Heel", "The old master's whole weight in one stamp: a great ring of force that throws every foe around you.", "ring_burst", "minecraft:netherite_boots", vfx="WIND_RING", damage=24, radius=7, targets=10, knockback=1.9, cost=0.06, cooldown=1700),
+        AU("God-Killing Form", "Renewal Taekwondo in full, the form made to kill gods: every foe around you takes the blow plus all the Debt stored in it.", "debt_burst", "minecraft:nether_star", vfx="SPIRIT_AURA",
+          damage=30, mult=2.5, radius=9, targets=20, cost=0.08, cooldown=16000),
+    ],
+    evolution={"requirement": "lethal_survived", "count": 10,
+               "text": "Survive 10 blows that would have left you at 2 health or less while this skill is on: the old master's miracle answers and the God-Killing Form opens.",
+               "ultimate_name": "Ultimate Skill, God-Killing Form"},
+))
