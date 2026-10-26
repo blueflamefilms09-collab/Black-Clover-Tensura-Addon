@@ -783,7 +783,14 @@ public class HerculesLayer extends AbstractVfxLayer {
                 pz = z;
             }
             // the tail is drawn from head back, so the loop above went tail-ward: nothing more to do for the line itself
-            glow(ctx, buf, hx, hy, hz, 1.8f, GOLD, 0.95f * al);
+            // 3.20.0: a chunk of ground is hurled (power 2): a spinning 3D boulder rides the head of the streak and breaks on the landing; a creature (power 1) flies itself
+            boolean boulder = false;
+            float bal = al * (1f - smooth(land - 1f, land + 0.5f, age));
+            if (inst.power >= THROW_CHUNK_POWER - 0.5f && bal > 0.03f && modelsOn(ctx, hx, hy, hz, MODEL_RANGE)) {
+                mesh.posed().tumble(h(seed, 0, 30) - 0.5f, h(seed, 0, 31) * 0.4f, 1f, age * 0.55f, 1.15f, 1.05f, 1.15f);
+                boulder = mesh.draw(buf, MODEL_ATLAS, HerculesModels.BOULDER, hx, hy, hz, a(WHITE, bal), 0.35f * smooth(0f, 3f, age)) > 0;
+            }
+            glow(ctx, buf, hx, hy, hz, boulder ? 2.2f : 1.8f, GOLD, (boulder ? 0.4f : 0.95f) * al);
             // the cone of shock: rings across the flight direction, behind the head, wider and fainter the further back; two lines of the cone seen from the side
             float tdx = dx + arcH * 4f * (1f - 2f * u) * 0f, tdy = dy + arcH * 4f * (1f - 2f * u), tdz = dz;
             for (int k = 0; k < 3 && buf.hasBudget(4); k++) {
@@ -843,7 +850,11 @@ public class HerculesLayer extends AbstractVfxLayer {
                 float vy = 0.4f + 0.35f * h(seed, i, 9);
                 float y = vy * tt - 0.03f * tt * tt;
                 if (y < 0f) continue;
-                slab(ctx, buf, i, e.x + Mth.cos(an) * (rr + 0.12f * tt), gy + 0.3f + y, e.z + Mth.sin(an) * (rr + 0.12f * tt), 0.5f + 0.9f * h(seed, i, 10), tt * 0.14f * (i % 2 == 0 ? 1f : -1f) + h(seed, i, 11) * 6f, 1f - smooth(20f, 30f, age));
+                float sx0 = e.x + Mth.cos(an) * (rr + 0.12f * tt), sy0 = gy + 0.3f + y, sz0 = e.z + Mth.sin(an) * (rr + 0.12f * tt), ssz = 0.5f + 0.9f * h(seed, i, 10), sal = 1f - smooth(20f, 30f, age);
+                // 3.20.0: the first four are 3D chunks of ground (4 quads each), the rest the flat slabs of 3.19.0 (only three of them when the chunks are drawn)
+                if (i < 4 && modelsOn(ctx, sx0, sy0, sz0, CHUNK_RANGE) && buf.hasBudget(20) && chunk(buf, sx0, sy0, sz0, ssz * 0.7f, tt * 0.22f * (i % 2 == 0 ? 1f : -1f) + h(seed, i, 11) * 6f, seed, i, sal, 0.5f * (1f - smooth(0f, 14f, tt))) > 0) continue;
+                if (i >= 7 && HerculesModels.enabled() && ctx.detail >= 0.5f) break;
+                slab(ctx, buf, i, sx0, sy0, sz0, ssz, tt * 0.14f * (i % 2 == 0 ? 1f : -1f) + h(seed, i, 11) * 6f, sal);
             }
             if (near > 0.01f) {
                 int nd = ctx.seg(8, 4);
@@ -1105,7 +1116,7 @@ public class HerculesLayer extends AbstractVfxLayer {
      * (the fist is about 0.46 of it long per unit); it shakes with a roll while it gathers, glows hotter as it crosses ({@code trav}) and cools after the impact frame ({@code cool}). Returns the quads drawn (0 = draw the sprite).
      */
     private int punchFist(VfxVertexBuffer buf, float fx, float fy, float fz, float nx, float ny, float nz, float fs, float age, float trav, float cool, int tint, long seed) {
-        float S = Math.max(0.3f, fs * 0.46f);
+        float S = Math.max(0.3f, fs * 0.42f);
         float shake = smooth(2f, 14f, age) * (1f - trav);
         float roll = (h(seed, (int) age, 5) - 0.5f) * 0.16f * shake;
         HerculesModels.Posed p = mesh.posed();

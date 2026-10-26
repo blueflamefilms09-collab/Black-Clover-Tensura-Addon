@@ -288,7 +288,8 @@ public final class HerculesModels {
         b.part(-1, 0f, 0f, 0f);
         // the back of the hand (metacarpals) with an armoured plate; a short flared wrist guard and a laurel band
         b.block(0f, 0.04f, -0.50f, 0f, 0.04f, 0.28f, 0.60f, 0.28f, 0.68f, 0.30f, 0f, 1f, 0f, Builder.ALL & ~Builder.END, new int[]{PLATE_DARK, PLATE, PLATE_LIGHT, PLATE, PLATE, 0}, 0.1f);
-        b.block(0f, 0.01f, -1.02f, 0f, 0.02f, -0.50f, 0.56f, 0.30f, 0.56f, 0.28f, 0f, 1f, 0f, Builder.ALL & ~Builder.END, new int[]{PLATE_DARK, PLATE, PLATE, PLATE, PLATE, 0}, 0.05f);
+        b.block(0f, 0.01f, -1.02f, 0f, 0.02f, -0.50f, 0.56f, 0.30f, 0.56f, 0.28f, 0f, 1f, 0f, Builder.ALL & ~Builder.END & ~Builder.START, new int[]{PLATE_DARK, PLATE, PLATE, PLATE, 0, 0}, 0.05f);
+        b.face(HOT, 1f, false, null, -0.56f, -0.29f, -1.02f, 0.56f, -0.29f, -1.02f, 0.56f, 0.31f, -1.02f, -0.56f, 0.31f, -1.02f, 0f, 0.02f, -0.5f);   // the wrist burns where the arm would be
         b.block(0f, 0.015f, -0.80f, 0f, 0.015f, -0.62f, 0.62f, 0.33f, 0.62f, 0.33f, 0f, 1f, 0f, Builder.BOT | Builder.RIGHT | Builder.TOP | Builder.LEFT, new int[]{BAND, BAND, BAND, BAND, 0, 0}, 0.22f);
         b.leaf(LEAF_B, 0.3f, 0.52f, 0.30f, -0.78f, 0.55f, 0.35f, -0.62f, 0f, 1f, 0f, 0.62f, 0.12f, 0.06f);
         b.leaf(LEAF_B, 0.3f, -0.52f, 0.30f, -0.78f, -0.55f, 0.35f, -0.62f, 0f, 1f, 0f, 0.62f, 0.12f, 0.06f);
