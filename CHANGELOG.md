@@ -21,6 +21,9 @@
 - Client draw: at most 78 quads (73 edict, 55 cross, 40 field, 27 bullet, 17 sigil) per effect, through the existing distance cull and LOD.
 - Per tick: the field manager only, which does nothing when no field exists; at most 24 fields on a server, 12 box queries and 288 hits a second worst case. Two passive scans per player per second (12 and 16 targets).
 
+### Checked
+- Unit and source-scan tests (new: 25; Veldanava: 28; sweep of 137 repo-reading test classes against a clean HEAD: no new failure). The sweep ran against type stubs, not the real game classes, so the real run is the CI build and the `sandalphon` smoke test.
+
 ### Not included
 - The other four skills (one per release), the Nihility Collapse item (with Israfil), aim assist for the bullet, Mana Zone cancelling by the Edict, a lock on hotbar swapping, a real-game check of the visuals (previews only).
 
