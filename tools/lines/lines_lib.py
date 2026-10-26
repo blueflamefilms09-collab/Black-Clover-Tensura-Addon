@@ -78,4 +78,5 @@ FRANCHISES = {
     "tower_of_god": "Tower of God",
     "god_of_high_school": "The God of High School",
     "omniscient_readers_viewpoint": "Omniscient Reader's Viewpoint",
+    "fairy_tail": "Fairy Tail",
 }
