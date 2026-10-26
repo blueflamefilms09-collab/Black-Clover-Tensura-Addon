@@ -328,11 +328,11 @@ def tex_fissure():
     x = (u - 0.5) * 2
     wob = (n - 0.5) * 0.35
     ax = np.abs(x - wob)
-    core = g.smooth(0.20, 0.04, ax)                                                  # the glowing gap
-    lip_w = 0.55 + 0.35 * n2
+    core = g.smooth(0.36, 0.08, ax)                                                  # the glowing gap
+    lip_w = 0.70 + 0.28 * n2
     lip = g.smooth(lip_w, 0.18, ax) * (1 - core)                                     # broken dark lips
     ends = g.smooth(0.0, 0.10, v) * g.smooth(1.0, 0.86, v)
-    inner = np.exp(-(ax / 0.07) ** 2)
+    inner = np.exp(-(ax / 0.14) ** 2)
     rgb = g.col((30, 20, 14))[None, None, :] * (lip * (0.6 + 0.6 * n2))[..., None]
     glow = g.ramp(0.62 + 0.38 * inner)
     rgb = rgb * (1 - core[..., None]) + glow * core[..., None]

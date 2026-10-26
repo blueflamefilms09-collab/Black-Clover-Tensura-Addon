@@ -77,6 +77,8 @@ public class HerculesLayer extends AbstractVfxLayer {
     private static final int EMBER = 0xFFFF7A2A;
     private static final int CRIMSON = 0xFFB4262C;
     private static final int DUST_TINT = 0xFFE6D2AE;
+    /** The tint of the rock models (the atlas rock is pale stone; this warms and darkens it toward the dusty ground). */
+    private static final int ROCK_TINT = 0xFFC4A688;
 
     /** Where the bright circle of the ring / the front of the wave / the reach of the cracks lies, as a fraction of the half size of its texture. */
     private static final float RING_R = 0.93f, WAVE_R = 0.95f, CRACK_R = 0.97f;
@@ -140,7 +142,10 @@ public class HerculesLayer extends AbstractVfxLayer {
 
     @Override
     public void onSpawn(VfxInstance inst) {
-        if (inst.shape == VfxShape.HERCULES_TREMOR) VfxShake.add(inst.payload.from(), Mth.clamp(inst.power / 14f * 1.7f, 0.8f, 2.6f), 18);
+        if (inst.shape == VfxShape.HERCULES_TREMOR) {
+            if (inst.power <= AFTERSHOCK_MAX) VfxShake.add(inst.payload.from(), 0.45f, 10);              // 3.20.0: the aftershock rumbles, it does not shake the screen
+            else VfxShake.add(inst.payload.from(), Mth.clamp(inst.power / 14f * 1.7f, 0.8f, 2.6f), 18);
+        }
     }
 
     @Override
@@ -354,7 +359,7 @@ public class HerculesLayer extends AbstractVfxLayer {
     private int chunk(VfxVertexBuffer buf, float x, float y, float z, float size, float spin, long seed, int i, float alpha, float heat) {
         if (alpha <= 0.03f || size <= 0.02f) return 0;
         mesh.posed().tumble(h(seed, i, 40) - 0.5f, 1f, h(seed, i, 41) - 0.5f, spin, size, size * 0.9f, size);
-        return mesh.draw(buf, MODEL_ATLAS, HerculesModels.CHUNK, x, y, z, a(WHITE, alpha), heat);
+        return mesh.draw(buf, MODEL_ATLAS, HerculesModels.CHUNK, x, y, z, a(ROCK_TINT, alpha), heat);
     }
 
     /**
@@ -397,6 +402,15 @@ public class HerculesLayer extends AbstractVfxLayer {
         // 1. the crater press and the cracks that the take-off leaves, the shock rings that run out of it
         buf.plane(CRATER, VfxBlend.ALPHA, floor.spin(h(seed, 0, 1) * Mth.TWO_PI), 2.1f, a(WHITE, 0.95f * smooth(0f, 1.5f, age) * (1f - smooth(10f, 16f, age))));
         cracksAt(buf, floor.lift(0.004f).spin(h(seed, 0, 2) * Mth.TWO_PI), 3.0f * eo(age / 5f), 0.9f * (1f - smooth(9f, 16f, age)), a(heat(age / 20f), 0.8f * (1f - smooth(8f, 16f, age))));
+        // 3.20.0: three ground fissures split open round the take-off (two quads each)
+        if (HerculesModels.enabled() && ctx.detail >= 0.5f && near > 0.05f) {
+            int nfis = Math.min(3, ctx.seg(3, 2));
+            float fa = 0.95f * smooth(0f, 2f, age) * (1f - smooth(9f, 16f, age));
+            for (int i = 0; i < nfis; i++) {
+                float an = h(seed, 0, 2) * Mth.TWO_PI + Mth.TWO_PI * (i + 0.4f * h(seed, i, 41)) / nfis;
+                fissure(buf, f.x, gy + 0.012f, f.z, an, 0.5f, 0.5f + (1.6f + 1.2f * h(seed, i, 42)) * eo(age / 5f), 0.42f, 0.3f + 0.3f * h(seed, i, 43), a(mix(WHITE, 0xFF8A4A38, age / 16f), fa));
+            }
+        }
         float r1 = eo(age / 9f), r2 = eo((age - 2f) / 8f);
         ringAt(buf, floor.lift(0.02f), 0.6f + 3.4f * r1, a(GOLD, (1f - r1) * 0.95f * fade));
         ringAt(buf, floor.lift(0.025f), 0.4f + 2.3f * r2, a(IVORY, (1f - r2) * 0.8f * fade));
@@ -425,6 +439,8 @@ public class HerculesLayer extends AbstractVfxLayer {
             dust(ctx, buf, i, f.x + Mth.cos(an) * rr, gy + 0.2f + 0.8f * p * (0.6f + 0.6f * h(seed, i, 6)), f.z + Mth.sin(an) * rr, 0.9f + 1.5f * p, h(seed, i, 7) * 6f + age * 0.05f, 0.85f * (1f - p * p) * near * smooth(0f, 1f, age));
         }
         int nc = ctx.seg(6, 3);
+        boolean chunks = HerculesModels.enabled() && ctx.detail >= 0.5f;
+        if (chunks) nc = Math.min(nc, 4);                                    // 3.20.0: up to four of them are 3D chunks of ground (four quads each)
         for (int i = 0; i < nc && buf.hasBudget(4); i++) {
             float tt = age - 0.5f;
             if (tt <= 0f) break;
@@ -432,7 +448,9 @@ public class HerculesLayer extends AbstractVfxLayer {
             float sp = 0.10f + 0.12f * h(seed, i, 9), vy = 0.34f + 0.2f * h(seed, i, 10);
             float y = vy * tt - 0.02f * tt * tt;
             if (y < -0.05f) continue;
-            slab(ctx, buf, i, f.x + Mth.cos(an) * (0.4f + sp * tt), gy + 0.15f + y, f.z + Mth.sin(an) * (0.4f + sp * tt), 0.35f + 0.35f * h(seed, i, 11), tt * (0.3f + h(seed, i, 12) * 0.4f) * (i % 2 == 0 ? 1 : -1), 1f - smooth(11f, 16f, age));
+            float sx0 = f.x + Mth.cos(an) * (0.4f + sp * tt), sy0 = gy + 0.15f + y, sz0 = f.z + Mth.sin(an) * (0.4f + sp * tt), ssz = 0.35f + 0.35f * h(seed, i, 11), sal = 1f - smooth(11f, 16f, age);
+            if (chunks && modelsOn(ctx, sx0, sy0, sz0, CHUNK_RANGE) && buf.hasBudget(20) && chunk(buf, sx0, sy0, sz0, ssz * 1.3f, tt * (0.3f + h(seed, i, 12) * 0.4f) * (i % 2 == 0 ? 1 : -1), seed, i, sal, 0.45f * (1f - smooth(0f, 10f, age))) > 0) continue;
+            slab(ctx, buf, i, sx0, sy0, sz0, ssz, tt * (0.3f + h(seed, i, 12) * 0.4f) * (i % 2 == 0 ? 1 : -1), sal);
         }
 
         // 4. the speed lines that trail the rising body: streaks that shoot up round the axis, leaning to the aim point
@@ -463,21 +481,26 @@ public class HerculesLayer extends AbstractVfxLayer {
         float t = Math.max(0f, age - 2f);                                     // the blow stops for two ticks on the ground, then everything runs
         float rot = h(seed, 0, 1) * Mth.TWO_PI;
         float k = Mth.clamp(Rv / 14f, 0.5f, 1.8f);
+        // 3.20.0: the aftershock (the small tremor the server sends 14 ticks after the landing) is the lighter, quieter variant: a half flash, one ring and wave, one layer of cracks, no column of light, fewer rocks
+        boolean after = inst.power <= AFTERSHOCK_MAX;
+        float lq = after ? 0.55f : 1f;
 
         // 1. the impact frame: a white-gold flash, then the crater press that stays
         float fl = 1f - smooth(0f, 5f, age);
         if (fl > 0.01f) {
-            flash(ctx, buf, g.x, gy + 0.8f, g.z, (6f + 4f * k) * (0.6f + 0.4f * fl), 0.2f, a(WHITE, fl));
-            glow(ctx, buf, g.x, gy + 0.6f, g.z, 3.2f * k * fl, GOLD, fl);
+            flash(ctx, buf, g.x, gy + 0.8f, g.z, (6f + 4f * k) * (after ? 0.5f : 1f) * (0.6f + 0.4f * fl), 0.2f, a(WHITE, fl * lq));
+            glow(ctx, buf, g.x, gy + 0.6f, g.z, 3.2f * k * fl * (after ? 0.6f : 1f), GOLD, fl * lq);
         }
         buf.plane(CRATER, VfxBlend.ALPHA, floor.spin(rot), Math.min(Rv * 0.36f, 5.2f), a(WHITE, 0.95f * smooth(0f, 1.5f, age) * (1f - smooth(30f, 44f, age))));
 
         // 2. the three shock rings with the wave behind the first and a bronze sheet of dust on the ground
         float p0 = eo(t / 20f), p1 = eo((t - 3f) / 20f), p2 = eo((t - 6f) / 20f);
-        ringAt(buf, floor.lift(0.03f), Rv * p0, a(GOLD, (1f - p0 * p0) * 0.95f * fade));
-        ringAt(buf, floor.lift(0.035f), Rv * p1, a(IVORY, (1f - p1 * p1) * 0.85f * fade));
-        ringAt(buf, floor.lift(0.04f), Rv * p2, a(BRONZE, (1f - p2 * p2) * 0.8f * fade));
-        waveAt(buf, VfxBlend.ADD, floor.lift(0.02f), Rv * p0 * 0.98f, a(GOLD, (1f - p0) * 0.7f * fade));
+        ringAt(buf, floor.lift(0.03f), Rv * p0, a(GOLD, (1f - p0 * p0) * 0.95f * fade * lq));
+        if (!after) {
+            ringAt(buf, floor.lift(0.035f), Rv * p1, a(IVORY, (1f - p1 * p1) * 0.85f * fade));
+            ringAt(buf, floor.lift(0.04f), Rv * p2, a(BRONZE, (1f - p2 * p2) * 0.8f * fade));
+        }
+        waveAt(buf, VfxBlend.ADD, floor.lift(0.02f), Rv * p0 * 0.98f, a(GOLD, (1f - p0) * 0.7f * fade * lq));
         waveAt(buf, VfxBlend.ALPHA, floor.lift(0.01f), Rv * p0 * 0.96f, a(DUST_TINT, (1f - p0) * 0.55f * fade));
 
         // 3. the cracks: two layers that run out fast, glow gold and cool down to ember and crimson
@@ -485,24 +508,38 @@ public class HerculesLayer extends AbstractVfxLayer {
         float cool = Mth.clamp(age / 44f, 0f, 1f);
         float glowA = (0.55f + 0.45f * smooth(0f, 4f, age)) * (1f - smooth(26f, 44f, age));
         float scar = 0.94f * (1f - smooth(30f, 44f, age));
-        cracksAt(buf, floor.lift(0.005f).spin(rot), Rv * 0.94f * cr, scar, a(heat(cool), glowA));
-        cracksAt(buf, floor.lift(0.008f).spin(rot + 1.9f), Rv * 0.6f * cr, scar * 0.8f, a(heat(Math.min(1f, cool + 0.12f)), glowA * 0.9f));
+        cracksAt(buf, floor.lift(0.005f).spin(rot), Rv * 0.94f * cr, scar, a(heat(cool), glowA * lq));
+        if (!after) cracksAt(buf, floor.lift(0.008f).spin(rot + 1.9f), Rv * 0.6f * cr, scar * 0.8f, a(heat(Math.min(1f, cool + 0.12f)), glowA * 0.9f));
+        // 3.20.0: ground fissures (two quads each, lying on the crater floor): jagged glowing lips that open wide and cool to a dark red scar
+        if (HerculesModels.enabled() && ctx.detail >= 0.5f && near > 0.05f) {
+            int nfis = Math.min(after ? 3 : 6, ctx.seg(6, 3));
+            float fa = glowA * (1f - smooth(30f, 44f, age)) * (after ? 0.8f : 1f);
+            for (int i = 0; i < nfis && buf.hasBudget(8 + 4); i++) {
+                float an = rot + Mth.TWO_PI * (i + 0.5f * h(seed, i, 41)) / nfis;
+                float r0 = 0.8f + 0.5f * h(seed, i, 42), reach = (Rv * 0.62f + 1.6f) * (0.65f + 0.35f * h(seed, i, 43));
+                fissure(buf, g.x, gy + 0.012f, g.z, an, r0, r0 + reach * cr, 0.75f + 0.45f * k * h(seed, i, 44), 0.4f + 0.7f * h(seed, i, 45), a(mix(WHITE, 0xFF8A4A38, cool), fa));
+            }
+        }
 
         // 4. the column of light and the column of dust over the crater
-        float colA = 1f - smooth(2f, 12f, age);
+        float colA = (1f - smooth(2f, 12f, age)) * (after ? 0f : 1f);
         if (colA > 0.01f) {
             float hgt = (7f + 5f * k) * eo(age / 5f);
             ribbon(buf, STREAK, VfxBlend.ADD, g.x, gy + hgt, g.z, g.x, gy, g.z, 0.3f, 1.5f * k * colA, 0f, 1f, a(GOLD, 0f), a(GOLD, 0.95f * colA));
             ribbon(buf, STREAK, VfxBlend.ADD, g.x, gy + hgt * 0.85f, g.z, g.x, gy, g.z, 0.15f, 0.7f * k * colA, 0f, 1f, a(IVORY, 0f), a(WHITE, colA));
         }
-        for (int j = 0; j < 6 && buf.hasBudget(4); j++) {
+        for (int j = 0; j < (after ? 3 : 6) && buf.hasBudget(4); j++) {
             float p = Mth.clamp((t - j * 0.5f) / 16f, 0f, 1f);
             if (p <= 0f) continue;
             dust(ctx, buf, j, g.x + (h(seed, j, 2) - 0.5f) * 1.2f * k, gy + (0.5f + j * 0.95f * k) * eo(p) + 0.3f, g.z + (h(seed, j, 3) - 0.5f) * 1.2f * k, (2.2f + 0.7f * j) * k * (0.5f + 0.5f * p), h(seed, j, 4) * 6f + age * 0.02f, 0.85f * (1f - smooth(16f, 40f, age)) * (0.5f + 0.5f * (1f - j / 6f)));
         }
 
         // 5. slabs of rock lifted out of the glowing ground, thrown up and falling back
+        // 3.20.0: up to eight of them are 3D chunks of ground (four quads each; three in the aftershock), further away than CHUNK_RANGE the flat slabs of 3.19.0 stand in
         int ns = ctx.seg(10, 5);
+        boolean chunks = HerculesModels.enabled() && ctx.detail >= 0.5f;
+        if (chunks) ns = Math.min(ns, after ? 3 : 8);
+        else if (after) ns = Math.min(ns, 4);
         for (int i = 0; i < ns && buf.hasBudget(4); i++) {
             float t0 = 1.5f + h(seed, i, 5) * 5f;
             float tt = age - t0;
@@ -513,12 +550,14 @@ public class HerculesLayer extends AbstractVfxLayer {
             float y = vy * tt - 0.025f * tt * tt;
             if (y < 0f) continue;                                             // it has landed again
             float drift = 0.06f * tt * (h(seed, i, 9) - 0.5f);
-            slab(ctx, buf, i, g.x + Mth.cos(an) * (rr + drift * 4f), gy + 0.3f + y, g.z + Mth.sin(an) * (rr + drift * 4f), (0.7f + 0.9f * h(seed, i, 10)) * (0.7f + 0.3f * k), tt * 0.12f * (i % 2 == 0 ? 1f : -1f) + h(seed, i, 11) * 6f, 1f - smooth(30f, 44f, age));
+            float sx0 = g.x + Mth.cos(an) * (rr + drift * 4f), sy0 = gy + 0.3f + y, sz0 = g.z + Mth.sin(an) * (rr + drift * 4f), ssz = (0.7f + 0.9f * h(seed, i, 10)) * (0.7f + 0.3f * k), sal = 1f - smooth(30f, 44f, age);
+            if (chunks && modelsOn(ctx, sx0, sy0, sz0, CHUNK_RANGE) && buf.hasBudget(20) && chunk(buf, sx0, sy0, sz0, ssz * (0.9f + 0.25f * k), tt * 0.16f * (i % 2 == 0 ? 1f : -1f) + h(seed, i, 11) * 6f, seed, i, sal, 0.55f * (1f - smooth(0f, 26f, age))) > 0) continue;
+            slab(ctx, buf, i, sx0, sy0, sz0, ssz, tt * 0.12f * (i % 2 == 0 ? 1f : -1f) + h(seed, i, 11) * 6f, sal);
         }
 
         // 6. the dust that billows at the front of the first ring, and the embers that rise out of the cracks
         if (near > 0.01f) {
-            int nr = ctx.seg(10, 4);
+            int nr = after ? ctx.seg(5, 3) : ctx.seg(10, 4);
             for (int i = 0; i < nr && buf.hasBudget(4); i++) {
                 float p = Mth.clamp(t / 22f, 0f, 1f);
                 if (p <= 0f || p >= 1f) break;
@@ -526,7 +565,7 @@ public class HerculesLayer extends AbstractVfxLayer {
                 float rr = Rv * eo(t / 20f) * (0.86f + 0.1f * h(seed, i, 13));
                 dust(ctx, buf, i + 1, g.x + Mth.cos(an) * rr, gy + 0.35f + 0.9f * p, g.z + Mth.sin(an) * rr, 1.2f + Rv * 0.13f * (0.6f + 0.6f * h(seed, i, 14)), h(seed, i, 15) * 6f + age * 0.03f, 0.8f * (1f - p * p) * near);
             }
-            int ne = ctx.seg(12, 4);
+            int ne = after ? ctx.seg(5, 2) : ctx.seg(12, 4);
             for (int i = 0; i < ne && buf.hasBudget(4); i++) {
                 float u = Mth.frac((age - 3f) / 30f + h(seed, i, 16));
                 if (age < 3f) break;
@@ -558,13 +597,17 @@ public class HerculesLayer extends AbstractVfxLayer {
 
         // 2. the crown: a laurel wreath turns over the head, a ring of gold under it, a glow over it
         float hy = c.y + 1.12f * hs;
-        buf.plane(LAUREL, VfxBlend.ADD, tilted(c.x, hy, c.z, 0.85f).spin(age * 0.03f), 0.68f * hs, a(WHITE, 0.95f * fade));
-        buf.plane(RING, VfxBlend.ADD, tilted(c.x, hy - 0.04f * hs, c.z, 0.85f).spin(-age * 0.05f), 0.66f * hs / RING_R, a(GOLD, 0.75f * fade * pulse));
+        boolean crown3d = false;
+        if (modelsOn(ctx, c.x, c.y, c.z, WREATH_RANGE)) crown3d = laurelCrown(buf, c.x, hy - 0.16f * hs, c.z, hs, age, fade, smooth(0f, 4f, age) * (1f - smooth(5f, 20f, age))) > 0;   // 3.20.0: a 3D laurel crown (at most 24 quads)
+        if (!crown3d) {
+            buf.plane(LAUREL, VfxBlend.ADD, tilted(c.x, hy, c.z, 0.85f).spin(age * 0.03f), 0.68f * hs, a(WHITE, 0.95f * fade));
+            buf.plane(RING, VfxBlend.ADD, tilted(c.x, hy - 0.04f * hs, c.z, 0.85f).spin(-age * 0.05f), 0.66f * hs / RING_R, a(GOLD, 0.75f * fade * pulse));
+        }
         glow(ctx, buf, c.x, hy + 0.1f * hs, c.z, 1.1f * hs, GOLD, 0.55f * fade);
         flash(ctx, buf, c.x, hy + 0.15f * hs, c.z, 0.9f * hs * (0.8f + 0.2f * Mth.sin(age * 0.23f)), age * 0.04f, a(IVORY, 0.8f * fade));
 
         // 3. the aura: tongues of bronze and gold flame stand along the body and lick upward; white-gold cores in the middle of the nearer ones
-        int nf = ctx.seg(4, 2);
+        int nf = crown3d ? ctx.seg(3, 2) : ctx.seg(4, 2);
         for (int i = 0; i < nf && buf.hasBudget(8); i++) {
             float an = Mth.TWO_PI * i / nf + age * 0.012f + h(seed, i, 1);
             float x = c.x + Mth.cos(an) * 0.45f * hs, z = c.z + Mth.sin(an) * 0.45f * hs;
@@ -577,7 +620,12 @@ public class HerculesLayer extends AbstractVfxLayer {
         // 4. the floor: a ring and a laurel ring turning under the feet, a glow
         VfxPose floor = ground(c.x, gy + 0.04f, c.z);
         ringAt(buf, floor, 1.25f * hs * (0.95f + 0.05f * Mth.sin(age * 0.2f)), a(GOLD, 0.8f * fade));
-        buf.plane(LAUREL, VfxBlend.ADD, floor.lift(0.01f).spin(age * 0.025f), 1.5f * hs, a(WHITE, 0.6f * fade));
+        boolean ring3d = false;
+        if (modelsOn(ctx, c.x, c.y, c.z, WREATH_RANGE) && buf.hasBudget(4 * HerculesModels.RING_MAX + 8)) {          // 3.20.0: a 3D laurel ring turns on the floor (at most 16 quads)
+            mesh.posed().upright(-age * 0.03f, 0f, 0f, 0f, 1.25f * hs);
+            ring3d = mesh.draw(buf, MODEL_ATLAS, HerculesModels.RING, c.x, gy + 0.07f, c.z, a(WHITE, 0.95f * fade), 0.15f * pulse) > 0;
+        }
+        if (!ring3d) buf.plane(LAUREL, VfxBlend.ADD, floor.lift(0.01f).spin(age * 0.025f), 1.5f * hs, a(WHITE, 0.6f * fade));
         VfxBloom.planeGlow(buf, floor, 1.5f * hs, EMBER, 0.55f * fade);
 
         // 5. embers and golden leaves rise round the body
@@ -603,6 +651,16 @@ public class HerculesLayer extends AbstractVfxLayer {
         if (fp > 0.01f) {
             sprite(ctx, buf, FIST, VfxBlend.ADD, c.x - c.x / cl * 0.5f, c.y + 0.1f * hs, c.z - c.z / cl * 0.5f, 1.4f * hs * (0.75f + 0.25f * fp), 0f, a(WHITE, 0.8f * fp));
         }
+    }
+
+    /**
+     * 3.20.0, Invictus: the 3D laurel crown ({@link HerculesModels#CROWN}, at most 24 quads) turning over the head at (x, y, z), leaning toward the camera so its leaves show; {@code flare} (0..1) lights it on every (re)cast.
+     * Returns the quads drawn (0 = the caller draws the flat wreath).
+     */
+    private int laurelCrown(VfxVertexBuffer buf, float x, float y, float z, float hs, float age, float fade, float flare) {
+        float hl = Mth.sqrt(x * x + z * z) + 1e-3f;
+        mesh.posed().upright(age * 0.05f, 0.4f, -x / hl, -z / hl, 0.52f * hs);
+        return mesh.draw(buf, MODEL_ATLAS, HerculesModels.CROWN, x, y, z, a(WHITE, 0.97f * fade), 0.2f + 0.6f * flare);
     }
 
     // ================================================================== HERCULES_GRIP
@@ -787,8 +845,8 @@ public class HerculesLayer extends AbstractVfxLayer {
             boolean boulder = false;
             float bal = al * (1f - smooth(land - 1f, land + 0.5f, age));
             if (inst.power >= THROW_CHUNK_POWER - 0.5f && bal > 0.03f && modelsOn(ctx, hx, hy, hz, MODEL_RANGE)) {
-                mesh.posed().tumble(h(seed, 0, 30) - 0.5f, h(seed, 0, 31) * 0.4f, 1f, age * 0.55f, 1.15f, 1.05f, 1.15f);
-                boulder = mesh.draw(buf, MODEL_ATLAS, HerculesModels.BOULDER, hx, hy, hz, a(WHITE, bal), 0.35f * smooth(0f, 3f, age)) > 0;
+                mesh.posed().tumble(h(seed, 0, 30) - 0.5f, h(seed, 0, 31) * 0.4f, 1f, age * 0.55f, 1.5f, 1.35f, 1.5f);
+                boulder = mesh.draw(buf, MODEL_ATLAS, HerculesModels.BOULDER, hx, hy, hz, a(ROCK_TINT, bal), 0.18f * smooth(0f, 3f, age)) > 0;
             }
             glow(ctx, buf, hx, hy, hz, boulder ? 2.2f : 1.8f, GOLD, (boulder ? 0.4f : 0.95f) * al);
             // the cone of shock: rings across the flight direction, behind the head, wider and fainter the further back; two lines of the cone seen from the side
@@ -852,7 +910,7 @@ public class HerculesLayer extends AbstractVfxLayer {
                 if (y < 0f) continue;
                 float sx0 = e.x + Mth.cos(an) * (rr + 0.12f * tt), sy0 = gy + 0.3f + y, sz0 = e.z + Mth.sin(an) * (rr + 0.12f * tt), ssz = 0.5f + 0.9f * h(seed, i, 10), sal = 1f - smooth(20f, 30f, age);
                 // 3.20.0: the first four are 3D chunks of ground (4 quads each), the rest the flat slabs of 3.19.0 (only three of them when the chunks are drawn)
-                if (i < 4 && modelsOn(ctx, sx0, sy0, sz0, CHUNK_RANGE) && buf.hasBudget(20) && chunk(buf, sx0, sy0, sz0, ssz * 0.7f, tt * 0.22f * (i % 2 == 0 ? 1f : -1f) + h(seed, i, 11) * 6f, seed, i, sal, 0.5f * (1f - smooth(0f, 14f, tt))) > 0) continue;
+                if (i < 4 && modelsOn(ctx, sx0, sy0, sz0, CHUNK_RANGE) && buf.hasBudget(20) && chunk(buf, sx0, sy0, sz0, ssz * 0.9f, tt * 0.22f * (i % 2 == 0 ? 1f : -1f) + h(seed, i, 11) * 6f, seed, i, sal, 0.5f * (1f - smooth(0f, 14f, tt))) > 0) continue;
                 if (i >= 7 && HerculesModels.enabled() && ctx.detail >= 0.5f) break;
                 slab(ctx, buf, i, sx0, sy0, sz0, ssz, tt * 0.14f * (i % 2 == 0 ? 1f : -1f) + h(seed, i, 11) * 6f, sal);
             }
@@ -927,6 +985,25 @@ public class HerculesLayer extends AbstractVfxLayer {
             if (t > 3f) waveAt(buf, VfxBlend.ADD, floor.lift(0.02f), Rv * (0.12f + 0.4f * q), a(GOLD, Mth.sin(q * Mth.PI) * 0.4f * fade));
         }
         cracksAt(buf, floor.lift(0.005f).spin(h(seed, 0, 1) * Mth.TWO_PI), Math.min(Rv * 0.25f, 6f) * eo(t / 8f), 0.85f * (1f - smooth(22f, 30f, age)), a(heat(Mth.clamp(age / 36f, 0f, 1f)), 0.7f * (1f - smooth(18f, 30f, age))));
+        // 3.20.0: fissures split the ground round the feet (two quads each) and chunks of it are thrown up under the dome (four quads each)
+        if (HerculesModels.enabled() && ctx.detail >= 0.5f && near > 0.05f) {
+            int nfis = Math.min(4, ctx.seg(4, 2));
+            float fa = 0.9f * smooth(0f, 2f, t) * (1f - smooth(22f, 34f, age));
+            for (int i = 0; i < nfis && buf.hasBudget(12); i++) {
+                float an = h(seed, 0, 1) * Mth.TWO_PI + 0.8f + Mth.TWO_PI * (i + 0.4f * h(seed, i, 41)) / nfis;
+                fissure(buf, c.x, gy + 0.09f, c.z, an, 0.9f, 0.9f + (Math.min(Rv * 0.25f, 6f) + 1.2f) * eo(t / 8f), 0.55f, 0.35f + 0.4f * h(seed, i, 42), a(mix(WHITE, 0xFF8A4A38, age / 36f), fa));
+            }
+            int ncs = Math.min(3, ctx.seg(3, 2));
+            for (int i = 0; i < ncs; i++) {
+                float tt = t - 1f - i * 0.8f;
+                if (tt <= 0f) continue;
+                float an = h(seed, 0, 1) * Mth.TWO_PI + Mth.TWO_PI * (i + 0.3f) / ncs, y = 0.5f * tt - 0.03f * tt * tt;
+                if (y < 0f) continue;
+                float rr = 1.6f + 0.9f * i + 0.18f * tt;
+                float sx0 = c.x + Mth.cos(an) * rr, sy0 = gy + 0.3f + y, sz0 = c.z + Mth.sin(an) * rr;
+                if (modelsOn(ctx, sx0, sy0, sz0, CHUNK_RANGE) && buf.hasBudget(20)) chunk(buf, sx0, sy0, sz0, 0.7f + 0.2f * i, tt * 0.2f * (i % 2 == 0 ? 1f : -1f) + i, seed, i, 1f - smooth(22f, 32f, age), 0.4f * (1f - smooth(0f, 14f, tt)));
+            }
+        }
 
         // 3. rays that fly out of the chest, laurel leaves torn from the caster and blown outward, dust at the front of the first ring
         int nr = ctx.seg(10, 5);
@@ -1147,6 +1224,10 @@ public class HerculesLayer extends AbstractVfxLayer {
             glow(ctx, buf, g.x, gy + 0.3f, g.z, Rv * 0.6f * fl, GOLD, 0.9f * fl);
         }
         cracksAt(buf, floor.lift(0.004f).spin(h(seed, 0, 1) * Mth.TWO_PI), Rv * 0.85f * eo(age / 3f), 0.85f * (1f - smooth(5f, 12f, age)), a(heat(age / 12f), 0.7f * (1f - smooth(4f, 12f, age))));
+        if (HerculesModels.enabled() && ctx.detail >= 0.5f && near > 0.05f) {                    // 3.20.0: two ground fissures (two quads each)
+            float fa = 0.9f * smooth(0f, 1.5f, age) * (1f - smooth(6f, 12f, age));
+            for (int i = 0; i < 2; i++) fissure(buf, g.x, gy + 0.01f, g.z, h(seed, 0, 1) * Mth.TWO_PI + 3.1f * i + 0.8f * h(seed, i, 44), 0.3f, 0.3f + Rv * 0.7f * eo(age / 3f), 0.12f + 0.05f * Rv, 0.2f, a(mix(WHITE, 0xFF8A4A38, age / 12f), fa));
+        }
         if (near > 0.01f) {
             int nd = ctx.seg(4, 2);
             for (int i = 0; i < nd && buf.hasBudget(4); i++) {
@@ -1155,13 +1236,17 @@ public class HerculesLayer extends AbstractVfxLayer {
                 dust(ctx, buf, i, g.x + Mth.cos(an) * rr, gy + 0.2f + 0.5f * p, g.z + Mth.sin(an) * rr, 0.6f + Rv * 0.16f, h(seed, i, 3) * 6f, 0.75f * (1f - p * p) * near);
             }
             int ns = ctx.seg(4, 2);
+            boolean chunks = HerculesModels.enabled() && ctx.detail >= 0.5f;
+            if (chunks) ns = Math.min(ns, 3);                                // 3.20.0: up to three small 3D chunks of ground (four quads each) instead of the flat stones
             for (int i = 0; i < ns && buf.hasBudget(4); i++) {
                 float tt = age - 0.3f;
                 if (tt <= 0f) break;
                 float an = Mth.TWO_PI * (i + h(seed, i, 4)) / ns;
                 float y = (0.2f + 0.2f * h(seed, i, 5)) * tt - 0.018f * tt * tt;
                 if (y < 0f) continue;
-                slab(ctx, buf, i, g.x + Mth.cos(an) * (0.3f + 0.1f * tt * Rv * 0.3f), gy + 0.1f + y, g.z + Mth.sin(an) * (0.3f + 0.1f * tt * Rv * 0.3f), 0.3f + 0.25f * h(seed, i, 6), tt * 0.4f * (i % 2 == 0 ? 1f : -1f), 1f - smooth(8f, 12f, age));
+                float sx0 = g.x + Mth.cos(an) * (0.3f + 0.1f * tt * Rv * 0.3f), sy0 = gy + 0.1f + y, sz0 = g.z + Mth.sin(an) * (0.3f + 0.1f * tt * Rv * 0.3f), ssz = 0.3f + 0.25f * h(seed, i, 6), sal = 1f - smooth(8f, 12f, age);
+                if (chunks && modelsOn(ctx, sx0, sy0, sz0, CHUNK_RANGE) && buf.hasBudget(20) && chunk(buf, sx0, sy0, sz0, ssz * 1.1f, tt * 0.4f * (i % 2 == 0 ? 1f : -1f), seed, i, sal, 0.4f * (1f - smooth(0f, 8f, age))) > 0) continue;
+                slab(ctx, buf, i, sx0, sy0, sz0, ssz, tt * 0.4f * (i % 2 == 0 ? 1f : -1f), sal);
             }
         }
     }

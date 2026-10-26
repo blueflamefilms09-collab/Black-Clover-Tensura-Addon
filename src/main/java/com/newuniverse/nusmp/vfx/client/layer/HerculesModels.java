@@ -391,13 +391,13 @@ public final class HerculesModels {
             for (int i = 0; i < segs; i++) {
                 double a0 = Math.PI * 2 * i / segs, a1 = Math.PI * 2 * (i + 1) / segs;
                 float x0 = (float) Math.sin(a0), z0 = (float) Math.cos(a0), x1 = (float) Math.sin(a1), z1 = (float) Math.cos(a1);
-                float ro = 1.03f, ri = 0.93f, yt = 0.05f, yb = -0.05f;
+                float ro = 1.07f, ri = 0.91f, yt = 0.10f, yb = -0.10f;
                 b.face(BAND, 0.25f, false, null, x0 * ro, yb, z0 * ro, x1 * ro, yb, z1 * ro, x1 * ro, yt, z1 * ro, x0 * ro, yt, z0 * ro, 0f, 0f, 0f);
                 b.face(BAND, 0.2f, false, null, x0 * ri, yb, z0 * ri, x1 * ri, yb, z1 * ri, x1 * ri, yt, z1 * ri, x0 * ri, yt, z0 * ri, 0f, 0f, 0f);
             }
             b.face(CRIMSON, 0.1f, true, null, -0.06f, -0.02f, -1.0f, 0.06f, -0.02f, -1.0f, 0.16f, -0.30f, -1.12f, -0.16f, -0.30f, -1.12f, 0f, 0f, 0f);
         }
-        float len = band ? 0.52f : 0.50f;
+        float len = band ? 0.66f : 0.58f;
         for (int side = -1; side <= 1; side += 2) {
             for (int k = 0; k < perBranch; k++) {
                 float t = (k + 0.5f) / perBranch;                                          // 0 at the back, 1 at the front
@@ -410,7 +410,7 @@ public final class HerculesModels {
                 float ox = s, oz = c;                                                      // outward
                 float dirx = tx + ox * 0.35f, diry = pitch, dirz = tz + oz * 0.35f;
                 float nx = -ox * 0.3f, ny = 1f, nz = -oz * 0.3f;
-                b.leaf((k + (side > 0 ? 0 : 1)) % 2 == 0 ? LEAF : LEAF_B, 0.32f, bx, 0f, bz, dirx, diry, dirz, nx, ny, nz, len * (0.78f + 0.3f * t), 0.15f, 0.07f);
+                b.leaf((k + (side > 0 ? 0 : 1)) % 2 == 0 ? LEAF : LEAF_B, 0.32f, bx, 0f, bz, dirx, diry, dirz, nx, ny, nz, len * (0.78f + 0.3f * t), 0.21f, 0.10f);
             }
         }
         return b.build(name, max);
