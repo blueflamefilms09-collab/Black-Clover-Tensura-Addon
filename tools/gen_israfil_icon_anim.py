@@ -412,7 +412,7 @@ def pulses(t):
     for j in range(3):
         p = (2 * t + j / 3.0) % 1.0
         Rj = 8 + p * 150
-        half = 0.95 + 1.55 * p
+        half = min(3.0, 1.9 + 1.1 * p)
         win = np.clip((cosd - math.cos(half)) / (1 - math.cos(half)) * 2.2, 0, 1) ** 0.8
         al = math.sin(math.pi * p) ** 1.1
         g = np.exp(-(((dd - Rj) / (2.3 + 1.2 * p)) ** 2)) * smooth(108, 96, RR)
@@ -541,7 +541,7 @@ def draw(t, S):
     # maze, with dark depth halo and bloom
     maze, cov = maze_layer(t, boost * 1.3)
     halo = blur(cov * 255, 3.0) / 255.0
-    img *= (1 - 0.7 * halo)[..., None]
+    img *= (1 - 0.45 * halo)[..., None]
     img += blur(maze, 6.0) * 0.26 + blur(maze, 2.2) * 0.12
     img = img * (1 - cov[..., None]) + np.minimum(maze, 255)
 
