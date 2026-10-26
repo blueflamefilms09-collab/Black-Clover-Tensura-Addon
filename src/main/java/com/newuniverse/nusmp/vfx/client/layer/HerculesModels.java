@@ -325,7 +325,7 @@ public final class HerculesModels {
     private static Mesh buildBoulder() {
         Builder b = new Builder();
         b.part(-1, 0f, 0f, 0f);
-        int lon = 7;
+        int lon = 6;
         float[] lat = {52f, 10f, -42f};
         Random rnd = new Random(2024);
         float[][] top = new float[lon][3], mid = new float[lon][3], low = new float[lon][3], pole = {{0f, 1.02f, 0f}, {0f, -0.92f, 0f}};

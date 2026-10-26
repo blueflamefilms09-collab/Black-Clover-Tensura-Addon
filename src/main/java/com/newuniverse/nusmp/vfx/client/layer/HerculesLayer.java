@@ -40,8 +40,13 @@ import java.util.Set;
  * <b>Budgets (rule 11).</b> The engine hard-caps every effect at 100 quads (400 vertices) per activation; INVICTUS asks for 50 quads (200 vertices) because it is re-sent every 80 ticks for a 100-tick life and two
  * instances overlap for 20 ticks. Counts are quads at full detail ({@code ctx.seg} thins them by distance and by the particle setting; minimums in the code); a glow counts as 2 quads, a ring or plane of any radius is one
  * quad. Worst case quads per effect per frame (measured in the preview at every tick, see tools/vfx_preview/scenes.d/hercules.json and docs/vfx_remake/hercules_fx_calls.md):
- * LEAP 33, TREMOR 50, INVICTUS 33 (two overlap for 20 ticks: 65), GRIP 41, THROW 64, ROAR 46, STRIKE 54, SHOCKWAVE 15, BODY 20, MOMENTUM 36. Each is one activation; no collections or arrays are built per frame (only the small
+ * LEAP 45, TREMOR 76, INVICTUS 50 (two overlap for 20 ticks: 100), GRIP 70, THROW 70, ROAR 63, STRIKE 70, SHOCKWAVE 24, BODY 20, MOMENTUM 36. Each is one activation; no collections or arrays are built per frame (only the small
  * short-lived pose vectors every layer makes), every loop count is a constant or a {@code ctx.seg} of at most 16, and every optional group checks {@code hasBudget} first so the buffer can never be pushed past its cap.
+ * <p><b>3.20.0 3D models.</b> With the client setting {@code herculesModels} on (the default; see {@link HerculesModelsConfig}) the hand of the GRIP (at most 40 quads), the fist of the STRIKE (30), the boulder of the THROW (16, only when
+ * the server sends power 2 for a hurled chunk of ground), the crown (24) and floor ring (16) of the INVICTUS and the rock chunks (4 each, at most 8 in the TREMOR) are real 3D meshes ({@link HerculesModels}, posed and drawn without
+ * allocation by {@link HerculesMeshDraw}, textured from one 512 x 512 atlas); ground fissures (two quads each) open in the LEAP, TREMOR, ROAR and SHOCKWAVE. A model that does not fit the remaining budget is skipped whole and the
+ * flat sprite of 3.19.0 is drawn instead; so are all of them further than 64 blocks (44 for rocks, 36 for the wreath), with the particle setting at minimum, and with the setting off, which restores 3.19.0 exactly. A
+ * HERCULES_TREMOR with power at most 10 (the aftershock) is the lighter variant: half flash, one ring and wave, one layer of cracks, no column of light, three rocks, a faint shake.</p>
  * Decorative extras (embers, leaves, dust) fall away with the camera distance (the manager already drops an effect that is out of range and thins the rest by its distance level of detail). No effect keeps anything between
  * frames, so nothing has to be cleaned up on logout, death or dimension change; the server sends one packet per effect (VfxSpawn) and nothing here runs on the server.
  */
@@ -779,7 +784,7 @@ public class HerculesLayer extends AbstractVfxLayer {
         p.clearPose();
         HerculesModels.handPose(close, 1f + 0.6f * (1f - Mth.clamp(openIn, 0f, 1f)), p.bend(), p.spread());
         float tl = Mth.sqrt(t.x * t.x + t.y * t.y + t.z * t.z) + 1e-3f;
-        p.look(dirx, diry, dirz, -t.x / tl * 0.8f, 0.9f - t.y / tl * 0.8f, -t.z / tl * 0.8f, 0f, S);
+        p.look(dirx, diry, dirz, -t.x / tl, 0.4f - t.y / tl, -t.z / tl, 0f, S);
         float fy = HerculesModels.HAND_FIST_Y, fz = HerculesModels.HAND_FIST_Z;
         float lift = 0.55f * (1f - close);                                           // the open hand holds a little above the target, the fist closes onto it
         float reach = 1.4f * (1f - Mth.clamp(openIn, 0f, 1f));                        // and comes in from the caster's side

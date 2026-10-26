@@ -45,3 +45,17 @@ Client only: no server work, no extra packets (one `VfxSpawn` per effect, sent t
 ## Not seen in a game
 
 Everything above was checked in the headless preview (`tools/vfx_preview`, contact sheets of 6 frames per shape) and by the source-scan test; none of it was seen in a running game, so lighting, depth against blocks, bloom and the camera shake feel may look different in game. The preview does not run `onTick` (the shake beats) and has no follow state, so INVICTUS and MOMENTUM were previewed as fixed spawns (MOMENTUM from `from` towards `to`).
+
+## 3.20.0: 3D models, the hurled chunk and the aftershock
+
+New drawing only, the packets are the same; details, quad counts and the setting are in `docs/vfx_remake/hercules_models.md`.
+
+- HERCULES_GRIP: the hand is a 3D bronze Titan's hand (palm, cuff, back plate, four fingers of three segments, thumb; at most 40 quads) that curls into a fist on the target; the old flat HAND / FIST sprites are the fallback.
+- HERCULES_STRIKE: the fist is a 3D clenched fist (at most 30 quads) that trembles, crosses in 2 ticks and holds on the impact frame.
+- HERCULES_THROW: `power = 1` (a creature is hurled, as before) draws no boulder; `power = 2` (a chunk of ground is hurled) draws a spinning 3D boulder (at most 16 quads) on the arc. The landing throws up to four 3D rock chunks.
+- HERCULES_INVICTUS: a 3D laurel crown (at most 24 quads) over the head and a 3D laurel ring (at most 16) on the floor, inside the same 200-vertex budget.
+- HERCULES_TREMOR: `power` is still the radius. A tremor of `power <= 10` (the server sends 9 for the aftershock, 14 ticks after the landing) is the lighter variant: half flash, one ring, one layer of cracks, no column of light, three chunks, a faint shake. A full tremor has up to eight 3D rock chunks and six ground fissures.
+- HERCULES_LEAP, ROAR, SHOCKWAVE: ground fissures (two quads each) and 3D rock chunks; BODY and MOMENTUM are unchanged.
+- Setting: CLIENT `visual.herculesModels` in `nusmp-hercules-client.toml` (default true); false = exactly the 3.19.0 sprites.
+- New worst case (quads, measured): LEAP 45, TREMOR 76 (34 for the aftershock), INVICTUS 50 (100 overlapping), GRIP 70, THROW 70, ROAR 63, STRIKE 70, SHOCKWAVE 24, BODY 20, MOMENTUM 17 / 26 / 36; all inside the 100-quad cap.
+- Preview scenes added: `hercules_throw_chunk` (power 2), `hercules_aftershock` (power 9), `hercules_grip_close`, `hercules_strike_close`, `hercules_throw_close`, `hercules_invictus_close`, `hercules_tremor_close`.

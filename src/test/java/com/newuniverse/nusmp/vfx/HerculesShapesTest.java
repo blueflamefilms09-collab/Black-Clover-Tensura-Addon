@@ -173,7 +173,7 @@ class HerculesShapesTest {
     @Test
     void theMartialLookHasItsOwnTexturesAndNothingOfTheOtherLooks() throws IOException {
         String src = layer();
-        for (String n : List.of("hercules_fist", "hercules_hand", "hercules_laurel", "hercules_leaf", "hercules_ring", "hercules_wave", "hercules_cracks", "hercules_web", "hercules_dust", "hercules_chips", "hercules_streak", "hercules_chain", "hercules_flash", "hercules_mote", "hercules_plates", "hercules_flame", "hercules_crater"))
+        for (String n : List.of("hercules_fist", "hercules_hand", "hercules_laurel", "hercules_leaf", "hercules_ring", "hercules_wave", "hercules_cracks", "hercules_web", "hercules_dust", "hercules_chips", "hercules_streak", "hercules_chain", "hercules_flash", "hercules_mote", "hercules_plates", "hercules_flame", "hercules_crater", "hercules_model_atlas", "hercules_model_fissure"))
             assertTrue(src.contains("\"" + n + "\""), "the martial look uses " + n);
         for (String n : List.of("hercules_dust", "hercules_chips")) {
             BufferedImage img = ImageIO.read(TEX.resolve(n + ".png").toFile());
@@ -208,6 +208,31 @@ class HerculesShapesTest {
         for (String s : TEN) {
             assertTrue(scenes.contains("\"" + s + "\""), "a preview scene for " + s);
             assertTrue(doc.contains(s), "the call doc lists " + s);
+        }
+        for (String sc : List.of("hercules_throw_chunk", "hercules_aftershock", "hercules_grip_close", "hercules_strike_close", "hercules_throw_close", "hercules_invictus_close", "hercules_tremor_close"))
+            assertTrue(scenes.contains("\"" + sc + "\""), "3.20.0 preview scene " + sc);
+        assertTrue(doc.contains("3.20.0"), "the call doc has a 3.20.0 section");
+    }
+
+    @Test
+    void the3dModelsOfTheUltimateAreWiredIn() throws IOException {
+        String code = code();
+        String raw = layer();
+        assertTrue(code.contains("HerculesModels.enabled()"), "the 3D models sit behind the client setting");
+        assertTrue(code.contains("private final HerculesMeshDraw mesh = new HerculesMeshDraw();"), "one drawer per layer, no per-frame object");
+        assertTrue(Pattern.compile("THROW_CHUNK_POWER = 2f").matcher(raw).find(), "power 2 of HERCULES_THROW = a hurled chunk of ground (the boulder)");
+        assertTrue(Pattern.compile("AFTERSHOCK_MAX = 10f").matcher(raw).find(), "a tremor of power 10 or less = the aftershock (lighter, quieter)");
+        assertTrue(code.contains("modelsOn(ctx"), "every model checks the setting and the distance first");
+        assertTrue(Pattern.compile("hasBudget\\(").matcher(code).results().count() >= 20, "the optional groups still check the activation budget");
+        assertTrue(raw.contains("3.20.0 3D models"), "the class comment tells about the models");
+        for (String n : List.of("hercules_model_atlas", "hercules_model_fissure")) {
+            Path png = TEX.resolve(n + ".png");
+            assertTrue(Files.exists(png), n + ".png exists");
+            try {
+                BufferedImage img = ImageIO.read(png.toFile());
+                assertTrue(pow2(img.getWidth()) && pow2(img.getHeight()) && img.getWidth() <= 1024 && img.getHeight() <= 1024, n + " is power-of-two and at most 1024: " + img.getWidth() + "x" + img.getHeight());
+                assertTrue(Math.max(img.getWidth(), img.getHeight()) <= 8 * Math.min(img.getWidth(), img.getHeight()), n + " aspect at most 8:1");
+            } catch (IOException e) { fail(n + " unreadable"); }
         }
     }
 

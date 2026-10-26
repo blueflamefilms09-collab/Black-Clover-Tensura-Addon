@@ -1,5 +1,5 @@
 {
- "_comment": "Hercules, Lord of Martial Prowess (HerculesLayer): the ten HERCULES_* shapes. A dusk of burnt umber so burnished bronze, bright gold, ivory and ember read; a figure is the caster / target (1.8 tall). Ground-point shapes (TREMOR, SHOCKWAVE, THROW landing) are sent at ground level y=0. Frames show: gather, strike / impact, resolve, afterglow. INVICTUS runs on the 200-vertex budget the layer asks for.",
+ "_comment": "Hercules, Lord of Martial Prowess (HerculesLayer): the ten HERCULES_* shapes. A dusk of burnt umber so burnished bronze, bright gold, ivory and ember read; a figure is the caster / target (1.8 tall). Ground-point shapes (TREMOR, SHOCKWAVE, THROW landing) are sent at ground level y=0. Frames show: gather, strike / impact, resolve, afterglow. INVICTUS runs on the 200-vertex budget the layer asks for. 3.20.0 adds close-ups of the 3D models (hercules_grip_close, hercules_strike_close, hercules_throw_close, hercules_invictus_close, hercules_tremor_close from a low camera), a hurled chunk of ground (hercules_throw_chunk, power 2: the boulder) and the aftershock (hercules_aftershock, power 9: the lighter tremor).",
  "hercules_leap": {
   "layer": "HerculesLayer",
   "shape": "HERCULES_LEAP",
