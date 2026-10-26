@@ -1,4 +1,3 @@
-franchise.nusmp.fairy_tail
 gui.nusmp.lines.arts.hint
 gui.nusmp.lines.arts.ready
 gui.nusmp.lines.arts.stance_on

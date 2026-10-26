@@ -99,12 +99,6 @@ class UniqueBooksFilesTest {
     void noFairyTailIdIsLeftInTheShippedTableOrTheLangFragment() throws IOException {
         for (Path p : List.of(TABLE, FRAGMENT)) {
             List<String> h = hits(p, removedTokens());
-            if (p.equals(TABLE)) {
-                // 3.26.0: "fairy_tail" is a franchise of the painted covers now (the eleventh entry of the table's franchise list); the 29 removed magics stay removed, and no line may use it
-                h.remove("fairy_tail");
-                String text = Files.readString(p, StandardCharsets.UTF_8);
-                assertEquals(1, text.split("\"fairy_tail\"", -1).length - 1, "fairy_tail may appear once, in the franchises list, and in no line");
-            }
             assertTrue(h.isEmpty(), p + " names the removed magics " + h);
         }
     }

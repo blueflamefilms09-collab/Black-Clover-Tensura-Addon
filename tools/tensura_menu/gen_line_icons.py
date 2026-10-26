@@ -81,6 +81,9 @@ def glyph(d, kind, c, dark):
     elif kind == "exiled_heavy_knight":                     # a heavy helm / shield
         poly(d, [(8, 8), (24, 8), (24, 18), (16, 26), (8, 18)], c)
         d.line([(16 * SS, 10 * SS), (16 * SS, 23 * SS)], fill=dark, width=SS)
+    elif kind == "fairy_tail":                              # 3.26.0: a swallow-tailed guild flag with a star
+        poly(d, [(9, 8), (23, 8), (23, 24), (19, 20), (16, 24), (13, 20), (9, 24)], c)
+        poly(d, star(cx, 14, 4.2, 1.8, 5), dark)
     else:                                                   # classic routes: a book
         poly(d, [(8, 9), (16, 11), (24, 9), (24, 23), (16, 25), (8, 23)], c)
         d.line([(16 * SS, 11 * SS), (16 * SS, 25 * SS)], fill=dark, width=SS)

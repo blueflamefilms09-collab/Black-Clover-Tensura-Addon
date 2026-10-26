@@ -89,7 +89,7 @@ def removed_keys():
     removed_line_keys = {"nusmp.skill.line_" + b for b in REMOVED_LINES}
     pats = [r"^tree\.", r"^gui\.nusmp\.skilltree", r"^gui\.nusmp\.lines\.", r"^gui\.nusmp\.tmenu", r"^key\.nusmp\.line_", r"^message\.nusmp\.tree\.", r"^title\.nusmp\.tree\.",
             r"^nusmp\.skill\.ft_", r"^item\.nusmp\.sp_book\.[a-z_]+$", r"^tooltip\.nusmp\.sp_book\.(?!removed)", r"^tooltip\.nusmp\.skill_book\.(opens|duplicate|known)$",
-            r"^franchise\.nusmp\.fairy_tail$", r"^msg\.nusmp\.line\.(locked|toggle_refused|inspect_refused)$"]
+            r"^msg\.nusmp\.line\.(locked|toggle_refused|inspect_refused)$"]
     rx = [re.compile(p) for p in pats]
     keys = [k for k in lang if k in removed_line_keys or any(r.search(k) for r in rx)]
     return sorted(keys)
