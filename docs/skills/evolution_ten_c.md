@@ -24,3 +24,6 @@ No weapon items are added, so none are needed.
 
 ## Server and lag cost (rule 11), worst case per player
 Identical to `docs/skills/evolution_ten.md`: counters O(1) per event; at most 20 Debt foes per player, at most 16 foes per burst, cooldown 10 to 15 minutes, no entities, no per-tick scans, no new packet type. Data only.
+
+## Final (3.28.0)
+Released as 3.28.0. Skill names in game: Iron Dragon Slayer, Take Over: Satan Soul, Crash Magic, Water Body, Ashborn the Shadow Monarch, Chairman Go's Fist, Regis Leywin the Devouring Shadow, Lee Seolhwa Needle and Blade, Shin Yoosung Monster Gate, Lefiya Viridis the Thousand Elf. Juvia's art "Water Body" is "Water Body Form" (id `water_body` belongs to a removed magic). Test sweep: no new failure against 3.27.0.
