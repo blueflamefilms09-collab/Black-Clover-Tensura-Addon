@@ -50,6 +50,7 @@ public final class SolomonSelfTests {
         SelfTests.register("solomon.rules", SolomonSelfTests::rules);
         SelfTests.register("solomon.skill", SolomonSelfTests::skill);
         SelfTests.register("solomon.conditions", SolomonSelfTests::conditions);
+        SelfTests.register("solomon.upgrades", SolomonSelfTests::upgrades);
     }
 
     private static Result rules(MinecraftServer server) {
@@ -329,4 +330,42 @@ public final class SolomonSelfTests {
     }
 
     private static boolean magiculeIsZero(FakePlayer p) { return com.newuniverse.nusmp.avatar.TensuraBridge.magicule(p) <= 0.0; }
+
+    // ---------------------------------------------------------------- 3.24.0: the numbers of the upgrades, and the convergence burst hurting a zombie
+    private static Result upgrades(MinecraftServer server) {
+        if (SolomonRules.burstDamage(0) != SolomonRules.BURST_BASE || SolomonRules.burstDamage(-5) != SolomonRules.BURST_BASE
+                || SolomonRules.burstDamage(4) != SolomonRules.BURST_BASE + 4 * SolomonRules.BURST_PER_THING || SolomonRules.burstDamage(100000) != SolomonRules.BURST_MAX)
+            return Result.fail("the convergence burst is wrong or not capped");
+        if (SolomonRules.BURST_MAX_FOES > 16 || SolomonRules.BURST_RADIUS > SolomonRules.CONVERGENCE_RADIUS || SolomonRules.BURST_MAX >= SolomonRules.PILLAR_DAMAGE * SolomonRules.PILLAR_MAX_HITS)
+            return Result.fail("the burst is not small or bounded");
+        if (SolomonRules.BACKLASH_SHARE <= 0 || SolomonRules.BACKLASH_SHARE > 0.1 || SolomonRules.REALM_PULSE_SHARE <= 0 || SolomonRules.REALM_PULSE_SHARE > 0.05)
+            return Result.fail("the backlash or the Realm's wear is out of range");
+        if (!JudgmentConfig.solomonUpgrades()) return Result.ok("the numbers hold; the upgrades are off in this config, so the live check was skipped");
+
+        ServerLevel sl = server.overworld();
+        BlockPos at = sl.getSharedSpawnPos().above(3);
+        FakePlayer p = SelfTests.standIn(sl, "solomon_up", at.getX() + 0.5, at.getY(), at.getZ() + 0.5);
+        VeldanavaSkills.revoke(p);
+        Mob zombie = EntityType.ZOMBIE.create(sl), far = EntityType.ZOMBIE.create(sl);
+        if (zombie == null || far == null) return Result.fail("could not make the test creatures");
+        zombie.moveTo(at.getX() + 5.5, at.getY(), at.getZ() + 0.5);
+        far.moveTo(at.getX() + 28.5, at.getY(), at.getZ() + 0.5);
+        sl.addFreshEntity(zombie);
+        sl.addFreshEntity(far);
+        try {
+            if (!VeldanavaSkills.grant(p, "solomon")) return Result.fail("Solomon could not be granted");
+            float farHealth = far.getHealth();
+            int hit = SolomonSkill.burst(p, 6);
+            if (hit != 1) return Result.fail("the burst should have hit the one zombie within sixteen blocks, it hit " + hit);
+            if (zombie.isAlive() && zombie.getHealth() >= zombie.getMaxHealth()) return Result.fail("the burst did not hurt the zombie (it still has " + zombie.getHealth() + " HP)");
+            if (far.getHealth() < farHealth) return Result.fail("the burst reached a zombie twenty-eight blocks away");
+            return Result.ok("the numbers hold; the burst hurt the near zombie and spared the far one");
+        } finally {
+            zombie.discard();
+            far.discard();
+            JudgmentFields.clearAll();
+            JudgmentState.write(p, 0);
+            VeldanavaSkills.revoke(p);
+        }
+    }
 }

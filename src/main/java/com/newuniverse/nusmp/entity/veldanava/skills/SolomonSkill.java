@@ -26,7 +26,9 @@ import java.util.List;
  * <p>Worst case per press (rule 11): Grand Spell Copy a walk of the 64-line cast log, no entity query; replaying the copy one grimoire spell (its own bounds); Arcane Convergence one box query of projectiles (at
  * most 64 discarded), one of clouds (32), the bolt list, the field list, no more than 96 things touched; Spell Chain three grimoire spells (their own bounds); Mana Zone Erasure the same sweep plus one summon
  * query (24 removed) and at most 24 casters stuttered; Realm of Magic one field and, once a second, one box query with at most 24 enemies touched; The 72 Pillars one box query, at most 8 targets marked (8 marks,
- * 8 pillar packets), one field of 31 pulses that lands at most 72 impacts in all (a box query each, at most 12 creatures hit, at most 600 blocks removed). The passives run once a second per owner: two attribute
+ * 8 pillar packets), one field of 31 pulses that lands at most 72 impacts in all (a box query each, at most 12 creatures hit, at most 600 blocks removed). 3.24.0 adds to that: the Convergence's burst one
+ * more box query (16 blocks, at most 8 true hits), the Erasure's backlash at most 24 hits on the casters it already holds, the Realm's wear at most 24 hits a second on the enemies its pulse already loops over (no
+ * new query). The passives run once a second per owner: two attribute
  * checks, one box query of 24 blocks for the presence sense (8 creatures marked). One effect packet per press (the Realm: one every 80 ticks while it lasts).
  */
 public class SolomonSkill extends VeldanavaSkillBase {
@@ -129,8 +131,25 @@ public class SolomonSkill extends VeldanavaSkillBase {
         double gain = SolomonRules.convergenceGain(r.projectiles(), r.clouds(), r.fields(), TensuraBridge.maxMagicule(p));
         TensuraBridge.refundMagicule(p, gain);
         SolomonFx.convergence(p.serverLevel(), p);
-        p.displayClientMessage(Component.literal("Drew in " + r.total() + " (+" + (long) gain + " magicules).").withStyle(ChatFormatting.GOLD), true);
+        int burst = JudgmentConfig.solomonUpgrades() ? burst(p, r.total()) : 0;
+        p.displayClientMessage(Component.literal("Drew in " + r.total() + " (+" + (long) gain + " magicules)" + (burst > 0 ? "; flung back at " + burst + "." : ".")).withStyle(ChatFormatting.GOLD), true);
         return true;
+    }
+
+    /** 3.24.0: the power that was drawn in is flung back, one true hit on each of the (at most {@link SolomonRules#BURST_MAX_FOES}) nearest foes within {@link SolomonRules#BURST_RADIUS} blocks. One box query. Returns the foes hit. */
+    static int burst(ServerPlayer p, int drawn) {
+        double r = SolomonRules.BURST_RADIUS, r2 = r * r;
+        List<LivingEntity> near = new ArrayList<>(p.serverLevel().getEntitiesOfClass(LivingEntity.class, p.getBoundingBox().inflate(r),
+                x -> x != p && x.isAlive() && !x.isSpectator() && x.distanceToSqr(p) <= r2 && Foes.isFoe(p, x)));
+        near.sort(Comparator.comparingDouble(x -> x.distanceToSqr(p)));
+        float damage = (float) SolomonRules.burstDamage(drawn);
+        double mastery = JudgmentState.mastered(p) ? 1.0 : 0.4;
+        int hit = 0;
+        for (LivingEntity t : near) {
+            if (hit >= SolomonRules.BURST_MAX_FOES) break;
+            if (JudgmentDamage.hit(p, t, damage, mastery)) hit++;
+        }
+        return hit;
     }
 
     /** Spell Chain: the last three grimoire spells the caster cast are cast together, free (a replay is never logged, so a chain does not feed itself). */
@@ -150,8 +169,10 @@ public class SolomonSkill extends VeldanavaSkillBase {
     private static boolean erasure(ServerPlayer p) {
         SolomonSweep.Result r = SolomonSweep.sweep(p, SolomonRules.ERASURE_RADIUS, SolomonRules.ERASURE_MAX_PROJECTILES, SolomonRules.ERASURE_MAX_CLOUDS, SolomonRules.ERASURE_MAX_SUMMONS, true);
         if (r.total() <= 0) { fail(p, "Nothing of the enemy's within " + (int) SolomonRules.ERASURE_RADIUS + " blocks to erase."); return false; }
+        boolean backlash = JudgmentConfig.solomonUpgrades();
         for (LivingEntity c : r.casters()) {
             c.addEffect(new MobEffectInstance(JudgmentEffects.TEMPORAL_STUTTER, BalanceLaw.controlTicks(c, SolomonRules.ERASURE_STUTTER_TICKS), 0, false, true, true));
+            if (backlash && c != p && c.isAlive() && Foes.isFoe(p, c)) JudgmentDamage.share(p, c, SolomonRules.BACKLASH_SHARE);
         }
         SolomonFx.erasure(p.serverLevel(), p);
         p.displayClientMessage(Component.literal("Erased " + r.total() + "; " + r.casters().size() + " casters stutter.").withStyle(ChatFormatting.GOLD), true);
@@ -249,12 +270,14 @@ public class SolomonSkill extends VeldanavaSkillBase {
             List<LivingEntity> near = level.getEntitiesOfClass(LivingEntity.class, owner.getBoundingBox().inflate(r, Math.min(r, 48.0), r),
                     x -> x != owner && x.isAlive() && !x.isSpectator() && x.distanceToSqr(owner) <= r2);
             int n = 0;
+            boolean wear = JudgmentConfig.solomonUpgrades();
             for (LivingEntity t : near) {
                 if (n >= SolomonRules.REALM_MAX_ENEMIES) break;
                 if (!Foes.isFoe(owner, t)) continue;
                 n++;
                 JudgmentEffects.silence(t, SolomonRules.REALM_SILENCE_TICKS);
                 t.addEffect(new MobEffectInstance(JudgmentEffects.ACTION_LOCK, BalanceLaw.controlTicks(t, SolomonRules.REALM_LOCK_TICKS), 0, false, true, true));
+                if (wear) JudgmentDamage.share(owner, t, SolomonRules.REALM_PULSE_SHARE);
             }
         }
 

@@ -269,4 +269,16 @@ class JudgmentRulesTest {
         assertTrue(JibrilRules.PURGE_BURN_DAMAGE < JibrilRules.JUDGMENT_DAMAGE && JibrilRules.PURGE_BURN_RADIUS < JibrilRules.PURGE_RADIUS && JibrilRules.PURGE_BURN_MAX <= 24);
         assertTrue(JibrilRules.KINGDOM_PULSE_SHARE > 0 && JibrilRules.KINGDOM_PULSE_SHARE <= 0.05, "the Kingdom wears enemies down slowly");
     }
+
+    @Test
+    void theSolomonUpgradesOfThreeTwentyFourAreSmallAndBounded() {
+        assertEquals(SolomonRules.BURST_BASE, SolomonRules.burstDamage(0), 1.0E-9);
+        assertEquals(SolomonRules.BURST_BASE, SolomonRules.burstDamage(-9), 1.0E-9);
+        assertEquals(SolomonRules.BURST_BASE + 5 * SolomonRules.BURST_PER_THING, SolomonRules.burstDamage(5), 1.0E-9);
+        assertEquals(SolomonRules.BURST_MAX, SolomonRules.burstDamage(1_000_000), 1.0E-9, "the burst never passes its cap");
+        assertTrue(SolomonRules.BURST_MAX < SolomonRules.PILLAR_DAMAGE * 4, "the burst is less than four pillars");
+        assertTrue(SolomonRules.BURST_RADIUS < SolomonRules.CONVERGENCE_RADIUS && SolomonRules.BURST_MAX_FOES <= 16);
+        assertTrue(SolomonRules.BACKLASH_SHARE > 0 && SolomonRules.BACKLASH_SHARE <= 0.1, "the backlash is a small share");
+        assertTrue(SolomonRules.REALM_PULSE_SHARE > 0 && SolomonRules.REALM_PULSE_SHARE <= 0.05, "the Realm wears enemies down slowly");
+    }
 }

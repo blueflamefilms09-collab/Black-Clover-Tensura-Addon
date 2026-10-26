@@ -145,7 +145,7 @@ class JudgmentSourceScanTest {
         String main = code(read(SRC.resolve("NUSMP.java")));
         assertTrue(main.contains("ModConfig.Type.SERVER, com.newuniverse.nusmp.entity.veldanava.skills.JudgmentConfig.SPEC, \"nusmp-veldanava-skills-server.toml\""), "the skill's settings change gameplay, so they are a SERVER config");
         String cfg = file("JudgmentConfig");
-        for (String key : new String[]{"enabled", "rewardScreen", "costScale", "cooldownScale", "debtDamage", "finalJudgmentCap", "activeDamageCap", "executePlayers", "executeBosses", "debtMax", "fieldsPerPlayer", "fieldsTotal", "masterToggle", "herculesUpgrades", "sandalphonUpgrades", "israfilUpgrades", "jibrilUpgrades", "pocketDimension", "strictGovernance", "wingsFlight", "solomonTerrainDamage", "solomonSpellReplay", "solomonMagicBypass", "herculesTerrainDamage", "herculesBlockBreak", "herculesShockwave"})
+        for (String key : new String[]{"enabled", "rewardScreen", "costScale", "cooldownScale", "debtDamage", "finalJudgmentCap", "activeDamageCap", "executePlayers", "executeBosses", "debtMax", "fieldsPerPlayer", "fieldsTotal", "masterToggle", "herculesUpgrades", "sandalphonUpgrades", "israfilUpgrades", "jibrilUpgrades", "solomonUpgrades", "pocketDimension", "strictGovernance", "wingsFlight", "solomonTerrainDamage", "solomonSpellReplay", "solomonMagicBypass", "herculesTerrainDamage", "herculesBlockBreak", "herculesShockwave"})
             assertTrue(cfg.contains("\"" + key + "\""), "config key missing: " + key);
         assertTrue(cfg.contains("executePlayers\", true") && cfg.contains("executeBosses\", false"), "players are executed by default (owner, 3.14.0), bosses are not");
     }
@@ -221,7 +221,7 @@ class JudgmentSourceScanTest {
         for (JudgmentRules.Mode m : SolomonRules.SOLOMON.modes()) assertTrue(lang.has("nusmp.skill.mode.solomon." + m.id()), "missing lang key for mode " + m.id());
         assertTrue(Pattern.compile("SMOKE_EXPECT:[^\\n]*[\", ]solomon[\",]").matcher(smoke).find(), "the smoke list must expect the solomon self-tests");
         String solomonTests = file("SolomonSelfTests");
-        for (String key : new String[]{"solomon.rules", "solomon.skill", "solomon.conditions"}) assertTrue(solomonTests.contains("\"" + key + "\""), "self-test missing: " + key);
+        for (String key : new String[]{"solomon.rules", "solomon.skill", "solomon.conditions", "solomon.upgrades"}) assertTrue(solomonTests.contains("\"" + key + "\""), "self-test missing: " + key);
         assertTrue(code(read(SRC.resolve("NUSMP.java"))).contains("SolomonSelfTests.register()") && code(read(SRC.resolve("NUSMP.java"))).contains("SolomonEvents.register("), "Solomon's tests and events are wired");
         assertTrue(Files.exists(RES.resolve("assets/nusmp/textures/skill/veldanava/hercules.png")), "missing Hercules icon");
         for (String k : new String[]{"nusmp.skill.hercules", "nusmp.skill.hercules.description", "nusmp.skill.hercules.mastered", "effect.nusmp.armor_break"})

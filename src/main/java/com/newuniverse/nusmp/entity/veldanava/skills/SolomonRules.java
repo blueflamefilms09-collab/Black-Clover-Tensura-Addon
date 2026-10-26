@@ -110,6 +110,21 @@ public final class SolomonRules {
         return Math.min(raw, Math.max(0.0, maxMagicule) * CONVERGENCE_CAP_SHARE);
     }
 
+    // ---------------------------------------------------------------- 3.24.0 upgrades (setting solomonUpgrades)
+    /**
+     * Arcane Convergence's return burst: what was drawn in is flung back at the foes near the caster. The reach (blocks), the foes it can hit, the base damage, the damage for each thing drawn in and the most
+     * the burst can deal to one foe.
+     */
+    public static final double BURST_RADIUS = 16.0, BURST_BASE = 40.0, BURST_PER_THING = 8.0, BURST_MAX = 240.0;
+    public static final int BURST_MAX_FOES = 8;
+    /** Mana Zone Erasure's backlash: the share of its maximum health a stuttering caster loses (the Balance Law and the cap of one press still apply). */
+    public static final double BACKLASH_SHARE = 0.05;
+    /** The Realm of Magic's wear: the share of its maximum health an enemy inside loses on every pulse. */
+    public static final double REALM_PULSE_SHARE = 0.01;
+
+    /** The damage of the convergence burst for {@code drawn} things taken in: the base and a little for each, never above {@link #BURST_MAX}. */
+    public static double burstDamage(int drawn) { return Math.min(BURST_MAX, BURST_BASE + Math.max(0, drawn) * BURST_PER_THING); }
+
     // ---------------------------------------------------------------- Realm of Magic (6)
     /** The radius, the longest it stands (ticks), the second between pulses, the enemies a pulse touches, the redraw interval and the grace after the last pulse; what a pulse does to an enemy. */
     public static final double REALM_RADIUS = 40.0;
