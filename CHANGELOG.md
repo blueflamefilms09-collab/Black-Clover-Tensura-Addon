@@ -1,5 +1,31 @@
 # Changelog
 
+## [3.28.0] — Third Evolution batch: ten more Unique skills (Fairy Tail, Solo Leveling, Omniscient Reader's Viewpoint, TBATE, DanMachi)
+
+### NEW
+- **Ten more Evolution Unique skills** (10 new books, 284 in all), same format and same engine as 3.26.0 and 3.27.0 (no engine change). Fairy Tail gets four: Iron Dragon Slayer (Gajeel; Ultimate "Iron Shadow Dragon Mode"), Take Over: Satan Soul (Mirajane; "Satan Soul: Hell's Core"), Crash Magic (Gildarts; "All Crush") and Water Body (Juvia; "Water Body: Great Flood"). Solo Leveling: Ashborn, the Shadow Monarch ("Monarch of Shadows") and Chairman Go's Fist (Go Gun-hee; "Chairman's Last Stand"; his team buff "Hold the Line" sits on a normal finisher). Omniscient Reader's Viewpoint: Lee Seolhwa, Needle and Blade ("Final Dose") and Shin Yoosung, Monster Gate ("Disaster of Floods"; her team buff on a normal finisher). TBATE: Regis Leywin, the Devouring Shadow ("Devouring Shadow"). DanMachi: Lefiya Viridis, the Thousand Elf ("Elf Ring: Thousand Elf"). Each has 2 stances, 3-4 stats, 8 arts, 7-8 passives (one Debt store, 2-3 evolved), 2 finishers and a locked Ultimate Evolution.
+- Evolution requirements: Gajeel 4,000 damage taken, Mirajane 600 arts cast, Gildarts 120,000 damage dealt, Juvia 12 lethal blows survived, Ashborn 12 boss kills, Go Gun-hee 40 elite kills, Regis 900 kills, Lee Seolhwa 700 kills, Shin Yoosung 350 ally buffs, Lefiya 500 arts cast.
+- Rarities: 2 mythic (Gildarts, Ashborn), 4 epic (Mirajane, Go Gun-hee, Regis, Lefiya), 4 rare (Gajeel, Juvia, Lee Seolhwa, Shin Yoosung); each book uses the franchise look of 3.26.0. Ten new 32x32 skill icons, lang keys, research notes in `docs/skills/research/*_c.md`, plan in `docs/skills/evolution_ten_c.md`.
+
+### REPLACED
+- Nothing. (All ten are new; no line of the mod covered these characters.)
+
+### KEPT
+- Everything of 3.27.0 and before: all 274 earlier books and lines, all looks, the engine, all settings and saves. Juvia's art is "Water Body Form" and Laxus's stays "Fairy Law Dome" because the ids `water_body` and `fairy_law` belong to removed old magics (kept banned).
+
+### Cost (CLAUDE.md rule 11)
+- Identical to 3.27.0: counters O(1) per event; Debt tracks at most 20 foes per player and one burst touches at most 16 foes, cooldown 12000 to 18000 ticks; no entities, no per-tick scans, no new packet type. Data only: ten route files read once at load.
+
+### Not included / caveats
+- Nothing has run in a real game or under Gradle on this machine; CI builds and runs the server smoke test.
+- The wikis could not be opened from the build environment (host unreachable). Canon came from search summaries only: English first, the Japanese searches added little. Many art and passive names are invented in the spirit of the character (marked per skill in `docs/skills/research/*_c.md`); all numbers are the mod's own.
+- Canon is thin for Go Gun-hee (mostly invented arts), Regis (no confirmed Shadow technique: shadow arts are invented) and Shin Yoosung (the area form of Beast King's Breath is invented).
+- Lee Seolhwa turned out to be the Company's doctor and poison specialist, not a swordswoman as first planned; the id `lee_seolhwa_sword` stays (her blade is invented).
+- The characters were chosen by me because no names were given; swapping any is a small change in `tools/lines/rows/`.
+
+### Checked
+- Line schema, text, asset, rarity, lang and file tests for all 284 lines; source scans, `ServerSafetyTest`, `ConfigFileNamesTest`; CI server smoke test (existing `skillbook` and `evolution` prefixes cover the new lines).
+
 ## [3.27.0] — Another Evolution batch: ten more Unique skills (Fairy Tail, DanMachi, Solo Leveling, Tower of God, God of High School)
 
 ### NEW
