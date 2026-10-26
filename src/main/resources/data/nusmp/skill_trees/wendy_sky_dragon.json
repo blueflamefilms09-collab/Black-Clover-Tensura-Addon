@@ -1,0 +1,1184 @@
+{
+  "magic": "fairy_tail",
+  "franchise": "fairy_tail",
+  "name": "Sky Dragon Slayer",
+  "desc": "Wendy Marvell's Sky Dragon Slayer magic: healing breath, and the Troia, Vernier, Arms and Armor enchantments that make a whole party faster, stronger and tougher. Her blows are gentle but patient, and her Debt is wind that waits, until the Shattering Light brings it all down.",
+  "book": "nusmp:wendy_sky_dragon_book",
+  "book_name": "Primer of the Sky Dragon Slayer",
+  "book_lore": "Grandeeney taught her that the sky is no weapon: it holds the wounded up, until the day it must hold the enemy down.",
+  "color": "#7FD6FF",
+  "icon": "minecraft:feather",
+  "class_id": "wendy_sky_dragon",
+  "duplicate_sp": 3,
+  "loot_weight": 1,
+  "nodes": [
+    {
+      "id": "sky_dragon_s_blessing",
+      "name": "Sky Dragon's Blessing",
+      "desc": "Clean air gathers around you: you heal slowly and move faster, but your blows are lighter.",
+      "parents": [],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "WIND_RING"
+      },
+      "values": {
+        "damage_pct": [
+          -0.05,
+          -0.06,
+          -0.07
+        ],
+        "armor": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "speed_pct": [
+          0.08,
+          0.096,
+          0.112
+        ],
+        "knockback_res": [
+          0,
+          0,
+          0
+        ],
+        "regen": [
+          1.0,
+          1.2,
+          1.4
+        ],
+        "crit_chance": [
+          0,
+          0,
+          0
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 0,
+      "icon": "minecraft:feather"
+    },
+    {
+      "id": "healer_s_prayer",
+      "name": "Healer's Prayer",
+      "desc": "Kneel and hold the wind close: much harder to hurt and to push around, but slow and weak in attack.",
+      "parents": [
+        {
+          "node": "sky_dragon_s_blessing",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "SPIRIT_AURA"
+      },
+      "values": {
+        "damage_pct": [
+          -0.15,
+          -0.18,
+          -0.21
+        ],
+        "armor": [
+          6.0,
+          7.5,
+          9.0
+        ],
+        "speed_pct": [
+          -0.2,
+          -0.24,
+          -0.28
+        ],
+        "knockback_res": [
+          0.5,
+          0.6,
+          0.7
+        ],
+        "regen": [
+          0,
+          0,
+          0
+        ],
+        "crit_chance": [
+          0,
+          0,
+          0
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 2,
+      "icon": "minecraft:shield"
+    },
+    {
+      "id": "grandeeney_s_breath",
+      "name": "Grandeeney's Breath",
+      "desc": "A dragon's lessons strengthen your body.",
+      "parents": [
+        {
+          "node": "sky_dragon_s_blessing",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "max_health",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          2.0,
+          2.5,
+          3.0,
+          3.5,
+          4.0
+        ]
+      },
+      "x": 2,
+      "y": 0,
+      "icon": "minecraft:golden_apple"
+    },
+    {
+      "id": "light_as_the_wind",
+      "name": "Light as the Wind",
+      "desc": "A small, quick girl is quick on her feet.",
+      "parents": [
+        {
+          "node": "healer_s_prayer",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "movement_speed",
+        "op": "mult"
+      },
+      "values": {
+        "amount": [
+          0.04,
+          0.05,
+          0.06,
+          0.07,
+          0.08
+        ]
+      },
+      "x": 2,
+      "y": 2,
+      "icon": "minecraft:leather_boots"
+    },
+    {
+      "id": "wind_cushion",
+      "name": "Wind Cushion",
+      "desc": "Air slows your falls.",
+      "parents": [
+        {
+          "node": "sky_dragon_s_blessing",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "safe_fall_distance",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          1.0,
+          1.25,
+          1.5,
+          1.75,
+          2.0
+        ]
+      },
+      "x": 2,
+      "y": 4,
+      "icon": "minecraft:feather"
+    },
+    {
+      "id": "healer_s_resolve",
+      "name": "Healer's Resolve",
+      "desc": "Resolve under a gentle manner stiffens your guard.",
+      "parents": [
+        {
+          "node": "healer_s_prayer",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "armor_toughness",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          1.0,
+          1.25,
+          1.5,
+          1.75,
+          2.0
+        ]
+      },
+      "x": 2,
+      "y": 6,
+      "icon": "minecraft:iron_chestplate"
+    },
+    {
+      "id": "troia",
+      "name": "Troia",
+      "desc": "A ball of healing magic that mends you and the allies around you.",
+      "parents": [
+        {
+          "node": "sky_dragon_s_blessing",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "heal_pulse",
+      "params": {
+        "vfx": "SPIRIT_AURA"
+      },
+      "values": {
+        "radius": [
+          7.0,
+          7.7,
+          8.4,
+          9.1
+        ],
+        "amount": [
+          6.0,
+          7.5,
+          9.0,
+          10.5
+        ],
+        "cost": [
+          0.03,
+          0.0324,
+          0.0348,
+          0.0372
+        ],
+        "cooldown": [
+          500.0,
+          470.0,
+          440.0,
+          410.0
+        ]
+      },
+      "x": 4,
+      "y": 0,
+      "icon": "minecraft:glistering_melon_slice"
+    },
+    {
+      "id": "vernier",
+      "name": "Vernier",
+      "desc": "Chant the enchantment: you and your allies around you move much faster for a while.",
+      "parents": [
+        {
+          "node": "healer_s_prayer",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "buff_aura",
+      "params": {
+        "effect": "speed",
+        "vfx": "WIND_RING"
+      },
+      "values": {
+        "radius": [
+          8.0,
+          8.8,
+          9.6,
+          10.4
+        ],
+        "seconds": [
+          14.0,
+          16.0,
+          18.0,
+          20.0
+        ],
+        "amp": [
+          1.0,
+          2.0,
+          2.0,
+          2.0
+        ],
+        "cost": [
+          0.03,
+          0.0324,
+          0.0348,
+          0.0372
+        ],
+        "cooldown": [
+          600.0,
+          564.0,
+          528.0,
+          492.0
+        ]
+      },
+      "x": 4,
+      "y": 2,
+      "icon": "minecraft:sugar"
+    },
+    {
+      "id": "arms",
+      "name": "Arms",
+      "desc": "Chant the enchantment: you and your allies around you hit harder for a while.",
+      "parents": [
+        {
+          "node": "troia",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "buff_aura",
+      "params": {
+        "effect": "strength",
+        "vfx": "MAGIC_CIRCLE"
+      },
+      "values": {
+        "radius": [
+          8.0,
+          8.8,
+          9.6,
+          10.4
+        ],
+        "seconds": [
+          14.0,
+          16.0,
+          18.0,
+          20.0
+        ],
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "cost": [
+          0.03,
+          0.0324,
+          0.0348,
+          0.0372
+        ],
+        "cooldown": [
+          600.0,
+          564.0,
+          528.0,
+          492.0
+        ]
+      },
+      "x": 6,
+      "y": 0,
+      "icon": "minecraft:iron_sword"
+    },
+    {
+      "id": "armor",
+      "name": "Armor",
+      "desc": "Chant the enchantment: you and your allies around you take less damage for a while.",
+      "parents": [
+        {
+          "node": "vernier",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "buff_aura",
+      "params": {
+        "effect": "resistance",
+        "vfx": "MIRROR_PANE"
+      },
+      "values": {
+        "radius": [
+          8.0,
+          8.8,
+          9.6,
+          10.4
+        ],
+        "seconds": [
+          14.0,
+          16.0,
+          18.0,
+          20.0
+        ],
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "cost": [
+          0.03,
+          0.0324,
+          0.0348,
+          0.0372
+        ],
+        "cooldown": [
+          600.0,
+          564.0,
+          528.0,
+          492.0
+        ]
+      },
+      "x": 6,
+      "y": 2,
+      "icon": "minecraft:iron_chestplate"
+    },
+    {
+      "id": "sky_dragon_s_roar",
+      "name": "Sky Dragon's Roar",
+      "desc": "Breathe a hurricane along your line of sight that tears through the foes in front of you.",
+      "parents": [
+        {
+          "node": "arms",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "ray_shot",
+      "params": {
+        "vfx": "WIND_TORNADO"
+      },
+      "values": {
+        "damage": [
+          7.0,
+          8.75,
+          10.5,
+          12.25
+        ],
+        "range": [
+          18.0,
+          19.8,
+          21.6,
+          23.4
+        ],
+        "pierce": [
+          3.0,
+          4.0,
+          5.0,
+          6.0
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          120.0,
+          110.0,
+          101.0,
+          91.0
+        ]
+      },
+      "x": 8,
+      "y": 0,
+      "icon": "minecraft:white_banner"
+    },
+    {
+      "id": "sky_dragon_s_wing_attack",
+      "name": "Sky Dragon's Wing Attack",
+      "desc": "Whirlwinds twist off both arms and hit everything near you.",
+      "parents": [
+        {
+          "node": "armor",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "ring_burst",
+      "params": {
+        "vfx": "WIND_RING"
+      },
+      "values": {
+        "damage": [
+          5.0,
+          6.25,
+          7.5,
+          8.75
+        ],
+        "radius": [
+          4.5,
+          4.95,
+          5.4,
+          5.85
+        ],
+        "targets": [
+          6.0,
+          8.0,
+          11.0,
+          13.0
+        ],
+        "knockback": [
+          1.2,
+          1.32,
+          1.44,
+          1.56
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          140.0,
+          129.0,
+          118.0,
+          106.0
+        ]
+      },
+      "x": 8,
+      "y": 2,
+      "icon": "minecraft:elytra"
+    },
+    {
+      "id": "sky_dragon_s_breath_shift",
+      "name": "Sky Dragon's Breath: Shift",
+      "desc": "Crouch to breathe healing air over your own wounds: you heal and regenerate for a while.",
+      "parents": [
+        {
+          "node": "sky_dragon_s_roar",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "heal_self",
+      "params": {
+        "vfx": "SPIRIT_AURA"
+      },
+      "values": {
+        "amount": [
+          10.0,
+          12.5,
+          15.0,
+          17.5
+        ],
+        "regen_seconds": [
+          8.0,
+          9.0,
+          10.0,
+          12.0
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          400.0,
+          376.0,
+          352.0,
+          328.0
+        ]
+      },
+      "x": 10,
+      "y": 0,
+      "icon": "minecraft:glass_bottle"
+    },
+    {
+      "id": "sky_dragon_s_claw_shift",
+      "name": "Sky Dragon's Claw: Shift",
+      "desc": "Crouch to leap and bring a leg down in a gust that crashes onto the foes below.",
+      "parents": [
+        {
+          "node": "sky_dragon_s_wing_attack",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "leap_slam",
+      "params": {
+        "vfx": "WIND_SLASH"
+      },
+      "values": {
+        "height": [
+          1.0,
+          1.08,
+          1.16,
+          1.24
+        ],
+        "damage": [
+          8.0,
+          10.0,
+          12.0,
+          14.0
+        ],
+        "radius": [
+          3.5,
+          3.85,
+          4.2,
+          4.55
+        ],
+        "knockback": [
+          0.6,
+          0.66,
+          0.72,
+          0.78
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          200.0,
+          184.0,
+          168.0,
+          152.0
+        ]
+      },
+      "x": 10,
+      "y": 6,
+      "icon": "minecraft:leather_boots"
+    },
+    {
+      "id": "waiting_wind",
+      "name": "Waiting Wind",
+      "desc": "Your blows leave a pressure of wind on the foe (Debt). It builds while it waits, and your Debt arts cash it in.",
+      "parents": [
+        {
+          "node": "troia",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "debt_store",
+      "params": {
+        "vfx": "WIND_RING"
+      },
+      "values": {
+        "store_pct": [
+          0.3,
+          0.36,
+          0.42,
+          0.48
+        ],
+        "tick_seconds": [
+          3.0,
+          3.0,
+          3.0,
+          3.0
+        ],
+        "max_pct": [
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ],
+        "hold_seconds": [
+          12.0,
+          12.0,
+          12.0,
+          12.0
+        ]
+      },
+      "x": 10,
+      "y": 2,
+      "icon": "minecraft:string",
+      "evolved": {
+        "store_pct": 0.5,
+        "max_pct": 0.8
+      }
+    },
+    {
+      "id": "healing_air",
+      "name": "Healing Air",
+      "desc": "A gentle wind surrounds you and the allies near you, and keeps them regenerating.",
+      "parents": [
+        {
+          "node": "vernier",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "aura",
+      "params": {
+        "effect": "regeneration",
+        "target": "allies"
+      },
+      "values": {
+        "radius": [
+          7.0,
+          7.7,
+          8.4,
+          9.1
+        ],
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "x": 10,
+      "y": 4,
+      "icon": "minecraft:glistering_melon_slice",
+      "evolved": {
+        "radius": 10,
+        "amp": 1
+      }
+    },
+    {
+      "id": "clean_air_heals",
+      "name": "Clean Air Heals",
+      "desc": "High in the open air you heal faster.",
+      "parents": [
+        {
+          "node": "arms",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "regen_when",
+      "params": {
+        "condition": "airborne"
+      },
+      "values": {
+        "per_second": [
+          0.8,
+          0.96,
+          1.12,
+          1.28
+        ]
+      },
+      "x": 12,
+      "y": 0,
+      "icon": "minecraft:feather",
+      "evolved": {
+        "per_second": 1.6
+      }
+    },
+    {
+      "id": "mending_breath",
+      "name": "Mending Breath",
+      "desc": "Your wounds close over time, even out of combat.",
+      "parents": [
+        {
+          "node": "armor",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "mending",
+      "values": {
+        "seconds": [
+          18.0,
+          16.0,
+          14.0,
+          13.0
+        ],
+        "amount": [
+          1,
+          1.25,
+          1.5,
+          1.75
+        ]
+      },
+      "x": 12,
+      "y": 2,
+      "icon": "minecraft:honey_bottle",
+      "evolved": {
+        "seconds": 10,
+        "amount": 2
+      }
+    },
+    {
+      "id": "catching_wind",
+      "name": "Catching Wind",
+      "desc": "The wind catches you: you take far less fall damage.",
+      "parents": [
+        {
+          "node": "sky_dragon_s_roar",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "fall_guard",
+      "values": {
+        "pct": [
+          0.6,
+          0.72,
+          0.84,
+          0.96
+        ]
+      },
+      "x": 14,
+      "y": 0,
+      "icon": "minecraft:phantom_membrane"
+    },
+    {
+      "id": "riding_the_updraft",
+      "name": "Riding the Updraft",
+      "desc": "While in the air you fall slowly, as the sky holds you up.",
+      "parents": [
+        {
+          "node": "sky_dragon_s_wing_attack",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "self_effect_when",
+      "params": {
+        "effect": "slow_falling",
+        "condition": "airborne"
+      },
+      "values": {
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "x": 14,
+      "y": 2,
+      "icon": "minecraft:elytra"
+    },
+    {
+      "id": "eating_the_air",
+      "name": "Eating the Air",
+      "desc": "A Sky Dragon Slayer feeds on air: you tire more slowly.",
+      "parents": [
+        {
+          "node": "sky_dragon_s_breath_shift",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "hunger_saver",
+      "values": {
+        "pct": [
+          0.3,
+          0.36,
+          0.42,
+          0.48
+        ]
+      },
+      "x": 16,
+      "y": 0,
+      "icon": "minecraft:bread"
+    },
+    {
+      "id": "ile_armor",
+      "name": "Ile Armor",
+      "desc": "Chant the strengthened enchantment twice over: you and your allies in a wide ring take far less damage for a long while.",
+      "parents": [
+        {
+          "node": "sky_dragon_s_claw_shift",
+          "level": 3
+        },
+        {
+          "node": "eating_the_air",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "buff_aura",
+      "params": {
+        "effect": "resistance",
+        "vfx": "MAGIC_CIRCLE"
+      },
+      "values": {
+        "radius": [
+          13.0,
+          14.3,
+          15.6
+        ],
+        "seconds": [
+          24.0,
+          28.0,
+          31.0
+        ],
+        "amp": [
+          2.0,
+          3.0,
+          3.0
+        ],
+        "cost": [
+          0.05,
+          0.054,
+          0.058
+        ],
+        "cooldown": [
+          1800.0,
+          1692.0,
+          1584.0
+        ]
+      },
+      "x": 16,
+      "y": 2,
+      "icon": "minecraft:diamond_chestplate"
+    },
+    {
+      "id": "shattering_light_sky_drill",
+      "name": "Shattering Light: Sky Drill",
+      "desc": "A barrier of wind closes in on every foe around you and drills down: a huge blow plus many times all the wind pressure stored on each of them.",
+      "parents": [
+        {
+          "node": "sky_dragon_s_breath_shift",
+          "level": 3
+        },
+        {
+          "node": "riding_the_updraft",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "debt_burst",
+      "params": {
+        "vfx": "WIND_TORNADO"
+      },
+      "values": {
+        "damage": [
+          32.0,
+          40.0,
+          48.0
+        ],
+        "mult": [
+          3.0,
+          3.3,
+          3.6
+        ],
+        "radius": [
+          11.0,
+          12.1,
+          13.2
+        ],
+        "targets": [
+          10.0,
+          14.0,
+          18.0
+        ],
+        "cost": [
+          0.08,
+          0.0864,
+          0.0928
+        ],
+        "cooldown": [
+          18000.0,
+          16560.0,
+          15120.0
+        ]
+      },
+      "x": 16,
+      "y": 4,
+      "icon": "minecraft:nether_star",
+      "ultimate": true
+    }
+  ],
+  "evolution": {
+    "requirement": "ally_buffs",
+    "count": 400,
+    "text": "Reach 400 allies with the buffs and healing of Sky Dragon Slayer to awaken the Shattering Light and unlock it.",
+    "ultimate_name": "Ultimate Skill, Shattering Light: Sky Drill"
+  }
+}
