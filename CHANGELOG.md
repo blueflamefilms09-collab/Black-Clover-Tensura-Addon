@@ -24,6 +24,9 @@
 ### Not included
 - Not played in a real game, previews are headless only. Known weaknesses: the cuffs read as golden hexagonal bands, not round manacles; the chain links read as flat picture frames (the weakest model); the spear reads well only while falling, then the bright pillar swallows most of it; the law plates are small at range and the tome is blown out in the first ticks of the flash; the models use a fixed sun, not world lighting; the decorative extras are visibly fewer while a model is drawn.
 
+### Checked
+- The whole test sweep (every test class that reads the repo's files, the source scans, `ServerSafetyTest`, `ConfigFileNamesTest`, the particle and texture tests): nothing new failed against the baseline (1783 passed; the only differences are the stub-classpath artefacts of `AnimatedIconsTest`); `JibrilModelsTest`, `JudgmentRulesTest` and `JudgmentSourceScanTest` pass. CI build and server smoke test are run by this release.
+
 ## [3.22.0] — Israfil: abilities that hurt and 3D models
 
 ### NEW
