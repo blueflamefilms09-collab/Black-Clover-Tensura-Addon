@@ -1083,8 +1083,8 @@
       "icon": "minecraft:wither_skeleton_skull"
     },
     {
-      "id": "fairy_law",
-      "name": "Fairy Law",
+      "id": "fairy_law_dome",
+      "name": "Fairy Law Dome",
       "desc": "Light gathers into a great dome over the field and strikes everyone in it: foes around you are stunned in place for a few seconds.",
       "parents": [
         {

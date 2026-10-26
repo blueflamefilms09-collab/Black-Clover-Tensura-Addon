@@ -290,7 +290,7 @@ LINES.append(Line(
           category="boss", bonus=0.2),
     ],
     finishers=[
-        A("Fairy Law", "Light gathers into a great dome over the field and strikes everyone in it: foes around you are stunned in place for a few seconds.", "stun_ring", "minecraft:beacon",
+        A("Fairy Law Dome", "Light gathers into a great dome over the field and strikes everyone in it: foes around you are stunned in place for a few seconds.", "stun_ring", "minecraft:beacon",
           radius=9, seconds=4, targets=10, cooldown=1500, vfx="MAGIC_CIRCLE"),
         U("Red Lightning Dragon Mode", "Lightning beyond lightning: a huge blow to every foe around you plus many times all the static stored on each of them.", "debt_burst", "minecraft:nether_star",
           damage=36, mult=3.0, radius=12, targets=10, cost=0.08, cooldown=18000, vfx="LIGHTNING_SPEAR"),
