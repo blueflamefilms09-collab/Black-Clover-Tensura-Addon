@@ -247,6 +247,9 @@ def build_line(L, problems):
         "book_texture": "nusmp:item/skill_book_3d/%s" % L.franchise,
         "nodes": nodes,
     }
+    # 3.26.0: only a franchise with a 1.82.0 cover names it; Fairy Tail's look is skill_book_v2 and no old cover exists, so the key is dropped (the order of the other keys is kept)
+    if not os.path.isfile(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "src", "main", "resources", "assets", "nusmp", "textures", "item", "skill_book_3d", "%s.png" % L.franchise)):
+        del route["book_texture"]
     if L.evolution is not None:
         route["evolution"] = dict(L.evolution)
     return route
