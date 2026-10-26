@@ -24,6 +24,7 @@ public final class VeldanavaSkills {
     public static DeferredHolder<ManasSkill, ? extends ManasSkill> holder(String id) {
         if ("sandalphon".equals(id)) return NUSkills.SANDALPHON;
         if ("israfil".equals(id)) return NUSkills.ISRAFIL;
+        if ("jibril".equals(id)) return NUSkills.JIBRIL;
         return null;
     }
 

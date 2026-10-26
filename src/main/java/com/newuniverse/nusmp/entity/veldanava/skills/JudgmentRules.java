@@ -4,7 +4,7 @@ import java.util.List;
 
 /**
  * Why: the numbers of the Veldanava ultimate skills (docs/veldanava_skills.md) in one place that names no Minecraft type, so the skill, the events, the unit tests and the CI self-test all read the
- * same table. This release holds Sandalphon, Lord of Judgment; the four skills that follow (Israfil, Jibril, Solomon, Hercules) add their own {@link Spec} next to it and reuse the helpers.
+ * same table. Sandalphon, Lord of Judgment is defined here; the four skills that follow (Israfil, Jibril, Solomon, Hercules) add their own {@link Spec} in their own rules file (Israfil and Jibril are in) and reuse the helpers.
  *
  * <p>A skill has ten modes. Mode 0..3 are toggle passives, 4..8 are actives (a press, or a crouch + press), and 9 is the mastery active with a cooldown. Every active has a Magicule cost,
  * and a lower one once the skill is mastered; the server's {@code costScale} multiplies both.
@@ -50,7 +50,7 @@ public final class JudgmentRules {
             new Mode(9, "final_judgment", "Final Judgment", Kind.HELD, 45000, 45000, 120, false)));
 
     /** The skills this build has, in the order of the owner's file. Releases append one line. */
-    public static final List<Spec> SPECS = List.of(SANDALPHON, IsrafilRules.ISRAFIL);
+    public static final List<Spec> SPECS = List.of(SANDALPHON, IsrafilRules.ISRAFIL, JibrilRules.JIBRIL);
 
     /** The spec of a skill id, or null. */
     public static Spec spec(String id) {
@@ -80,7 +80,7 @@ public final class JudgmentRules {
     public static final List<Card> CARDS = List.of(
             new Card("sandalphon", "Sandalphon", "Lord of Judgment", true),
             new Card("israfil", "Israfil", "Lord of Trials", true),
-            new Card("jibril", "Jibril", "Lord of Rigor", false),
+            new Card("jibril", "Jibril", "Lord of Rigor", true),
             new Card("solomon", "Solomon", "Lord of Sorcery", false),
             new Card("hercules", "Hercules", "Lord of Martial Prowess", false));
 

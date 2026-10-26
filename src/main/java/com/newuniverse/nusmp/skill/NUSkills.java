@@ -261,4 +261,8 @@ public final class NUSkills {
     // ---- 3.14.0: Israfil, Lord of Trials (the second Veldanava ultimate skill) ----
     public static final DeferredHolder<ManasSkill, com.newuniverse.nusmp.entity.veldanava.skills.IsrafilSkill> ISRAFIL =
             SKILLS.register("israfil", com.newuniverse.nusmp.entity.veldanava.skills.IsrafilSkill::new);
+
+    // ---- 3.15.0: Jibril, Lord of Rigor (the third Veldanava ultimate skill) ----
+    public static final DeferredHolder<ManasSkill, com.newuniverse.nusmp.entity.veldanava.skills.JibrilSkill> JIBRIL =
+            SKILLS.register("jibril", com.newuniverse.nusmp.entity.veldanava.skills.JibrilSkill::new);
 }

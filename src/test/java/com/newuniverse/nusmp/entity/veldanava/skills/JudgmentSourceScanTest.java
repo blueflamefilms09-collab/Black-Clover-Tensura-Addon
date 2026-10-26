@@ -56,12 +56,14 @@ class JudgmentSourceScanTest {
             String n = p.getFileName().toString();
             assertFalse(c.contains("ParticleTypes."), n + " names a vanilla particle (go through VfxSpawn)");
             assertFalse(c.contains("sendParticles("), n + " sends particles itself");
-            if (!n.equals("JudgmentFx.java") && !n.equals("TrialFx.java")) assertFalse(c.contains("VfxSpawn."), n + " sends an effect outside JudgmentFx and TrialFx");
+            if (!n.equals("JudgmentFx.java") && !n.equals("TrialFx.java") && !n.equals("JibrilFx.java")) assertFalse(c.contains("VfxSpawn."), n + " sends an effect outside JudgmentFx, TrialFx and JibrilFx");
         }
         String fx = file("JudgmentFx");
         assertEquals(Pattern.compile("VfxSpawn\\.send(Following)?\\(").matcher(fx).results().count(), Pattern.compile("VfxShape\\.JUDGMENT_").matcher(fx).results().count(), "each packet draws exactly one Judgment shape");
         String trial = file("TrialFx");
         assertEquals(Pattern.compile("VfxSpawn\\.send(Following)?\\(").matcher(trial).results().count(), Pattern.compile("VfxShape\\.TRIAL_").matcher(trial).results().count(), "each packet draws exactly one Trial shape");
+        String jibril = file("JibrilFx");
+        assertEquals(Pattern.compile("VfxSpawn\\.send(Following)?\\(").matcher(jibril).results().count(), Pattern.compile("VfxShape\\.JIBRIL_").matcher(jibril).results().count(), "each packet draws exactly one Jibril shape");
     }
 
     @Test
@@ -69,7 +71,7 @@ class JudgmentSourceScanTest {
         for (Path p : files()) {
             String c = code(read(p));
             String n = p.getFileName().toString();
-            if (n.equals("JudgmentSelfTests.java") || n.equals("IsrafilSelfTests.java")) continue;
+            if (n.equals("JudgmentSelfTests.java") || n.equals("IsrafilSelfTests.java") || n.equals("JibrilSelfTests.java")) continue;
             for (String banned : new String[]{"getChunk(", "getChunkAt(", "setBlock(", "destroyBlock(", "addFreshEntity", "new ItemEntity", "setBlockAndUpdate(", "explode("})
                 assertFalse(c.contains(banned), n + " uses " + banned);
         }
@@ -139,7 +141,7 @@ class JudgmentSourceScanTest {
         String main = code(read(SRC.resolve("NUSMP.java")));
         assertTrue(main.contains("ModConfig.Type.SERVER, com.newuniverse.nusmp.entity.veldanava.skills.JudgmentConfig.SPEC, \"nusmp-veldanava-skills-server.toml\""), "the skill's settings change gameplay, so they are a SERVER config");
         String cfg = file("JudgmentConfig");
-        for (String key : new String[]{"enabled", "rewardScreen", "costScale", "cooldownScale", "debtDamage", "finalJudgmentCap", "activeDamageCap", "executePlayers", "executeBosses", "debtMax", "fieldsPerPlayer", "fieldsTotal"})
+        for (String key : new String[]{"enabled", "rewardScreen", "costScale", "cooldownScale", "debtDamage", "finalJudgmentCap", "activeDamageCap", "executePlayers", "executeBosses", "debtMax", "fieldsPerPlayer", "fieldsTotal", "pocketDimension", "strictGovernance", "wingsFlight"})
             assertTrue(cfg.contains("\"" + key + "\""), "config key missing: " + key);
         assertTrue(cfg.contains("executePlayers\", true") && cfg.contains("executeBosses\", false"), "players are executed by default (owner, 3.14.0), bosses are not");
     }
@@ -198,6 +200,32 @@ class JudgmentSourceScanTest {
         String israfilTests = file("IsrafilSelfTests");
         for (String key : new String[]{"israfil.rules", "israfil.skill", "israfil.conditions"}) assertTrue(israfilTests.contains("\"" + key + "\""), "self-test missing: " + key);
         assertTrue(code(read(SRC.resolve("NUSMP.java"))).contains("IsrafilSelfTests.register()") && code(read(SRC.resolve("NUSMP.java"))).contains("IsrafilEvents.register("), "Israfil's tests and events are wired");
+        assertTrue(Files.exists(RES.resolve("assets/nusmp/textures/skill/veldanava/jibril.png")), "missing Jibril icon");
+        for (String k : new String[]{"nusmp.skill.jibril", "nusmp.skill.jibril.description", "nusmp.skill.jibril.mastered"})
+            assertTrue(lang.has(k), "missing lang key " + k);
+        for (JudgmentRules.Mode m : JibrilRules.JIBRIL.modes()) assertTrue(lang.has("nusmp.skill.mode.jibril." + m.id()), "missing lang key for mode " + m.id());
+        assertTrue(Pattern.compile("SMOKE_EXPECT:[^\\n]*[\", ]jibril[\",]").matcher(smoke).find(), "the smoke list must expect the jibril self-tests");
+        String jibrilTests = file("JibrilSelfTests");
+        for (String key : new String[]{"jibril.rules", "jibril.skill", "jibril.conditions"}) assertTrue(jibrilTests.contains("\"" + key + "\""), "self-test missing: " + key);
+        assertTrue(code(read(SRC.resolve("NUSMP.java"))).contains("JibrilSelfTests.register()") && code(read(SRC.resolve("NUSMP.java"))).contains("JibrilEvents.register("), "Jibril's tests and events are wired");
+    }
+
+    @Test
+    void jibrilsAreaWorkIsCappedAndItsOnlyPerTickWorkIsTheHotbarHold() throws IOException {
+        String skill = file("JibrilSkill");
+        for (String cap : new String[]{"PRESENCE_MAX_TARGETS", "GOVERNANCE_MAX_PLAYERS", "PURGE_MAX_CLOUDS", "PURGE_MAX_ALLIES", "KINGDOM_MAX_ENEMIES", "JUDGMENT_MAX_SPLASH", "SHACKLE_STEAL_MAX"})
+            assertTrue(skill.contains(cap), "Jibril's area work is capped by " + cap);
+        assertFalse(skill.contains("getEntities(") || skill.contains("getAllEntities("), "an unbounded entity walk in Jibril");
+        String state = file("JibrilState");
+        assertTrue(state.contains("GOVERNANCE_MAX_SKILLS") && state.contains("GOVERNANCE_MAX_MODES") && state.contains("MAX_HOTBAR_LOCKS"), "the governance walk and the hotbar locks are capped");
+        assertFalse(state.contains("getEntities(") || state.contains("getAllEntities("), "an unbounded entity walk in Jibril's state");
+        String ev = file("JibrilEvents");
+        assertEquals(1, Pattern.compile("ServerTickEvent").matcher(ev.replaceAll("import [^;]+;", "")).results().count(), "one tick hook in Jibril's events");
+        assertFalse(ev.contains("PlayerTickEvent") || ev.contains("EntityTickEvent") || ev.contains("LevelTickEvent"), "a per-player or per-entity tick hook");
+        for (String way : new String[]{"onDeath", "onLogout", "onLogin", "onServerStopping"}) assertTrue(ev.contains(way), "Jibril's state is cleaned up on " + way);
+        String tick = state.substring(state.indexOf("static void tickHotbar"));
+        assertTrue(tick.substring(0, tick.indexOf('\n', tick.indexOf('\n') + 1)).contains("isEmpty()") || tick.contains("if (HOTBAR.isEmpty()) return;"), "an idle hotbar hold does nothing");
+        assertTrue(skill.contains("JudgmentConfig.strictGovernance()") && skill.contains("JudgmentConfig.wingsFlight()"), "the two new toggles sit behind their settings");
     }
 
     @Test

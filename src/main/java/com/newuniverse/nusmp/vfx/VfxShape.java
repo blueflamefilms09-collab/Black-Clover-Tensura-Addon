@@ -381,7 +381,25 @@ public enum VfxShape {
     TRIAL_COLLAPSE,
     TRIAL_SHIFT,
     TRIAL_TRUMPET,
-    TRIAL_RIFT;
+    TRIAL_RIFT,
+    // Jibril, Lord of Rigor (Veldanava, vfx.client.layer.JibrilLayer): white and warm gold light, pale sky-blue shadow, small rose-white accents; halos, law glyphs, chains of light, feathers, wings, a pillar from the sky.
+    // All eight are appended in this order (ordinals go over the network); the colour of the packet is ignored (the palette is the layer's own).
+    // JIBRIL_COMMAND: Absolute Command, sent FOLLOWING the target: from = its centre, power = size (~1.5 = the target's width x 1.6), 100 ticks: a halt glyph (an open palm in a halo) over its head, chains of light lock the limbs, a lock ring on the floor.
+    // JIBRIL_JUDGMENT: Judgment of Heaven, sent at a point: from = the ground point under the target, to = from + (0,1,0), power = pillar radius (~2.5), 40 ticks: a column of divine light from the sky (64+ blocks high) pierces the ground, halos slide down it, a ground burst ring, flash and camera shake.
+    // JIBRIL_PURGE: Heavenly Purge, sent at the caster: from = its centre, power = radius (50 in game), 36 ticks: holy wave rings sweep out to the radius on the ground and as a dome, feathers and motes rise, a cleansing sparkle.
+    // JIBRIL_SHACKLES: Holy Shackles, sent FOLLOWING the target: from = its centre, to = the caster's chest (where the stolen buffs flow), power = size (~1.5), 60 ticks: rings of chain wrap the target and lock shut, then streams of gold sparks flow from the target to `to`.
+    // JIBRIL_WORD: Word of Law, sent FOLLOWING the caster: from = its centre, power = reach (~1.8), 12-16 ticks (the parry window): a law glyph disc stands in front of the caster (in its facing), runes ring it, a thin bright edge flashes at the start.
+    // JIBRIL_REFLECT: the parry lands, sent at the caster: from = the caster's centre, to = the attacker's centre (1-48 blocks), power = 1, 14 ticks: a flash and parry ring at `from`, then three bright beams of reflected light run to `to`, a burst at `to`.
+    // JIBRIL_KINGDOM: Kingdom of God, sent FOLLOWING the caster and re-sent by the server every 80 ticks while held: from = its centre, power = radius (50 in game), 100 ticks (fades in over 12 ticks and out over 12): a sanctuary dome edge on the ground, a ring of tall light curtains, a floor seal of concentric rings, drifting feathers, a halo over the caster.
+    // JIBRIL_WINGS: Wings of Revelation, sent FOLLOWING the player and re-sent every 80 ticks while the toggle is on and the player is in the air: from = its centre, power = span scale (1.0 = about 3 blocks per wing), 100 ticks: two pairs of feathered wings of light behind the body (behind the facing of the followed entity), a halo over the head, loose feathers.
+    JIBRIL_COMMAND,
+    JIBRIL_JUDGMENT,
+    JIBRIL_PURGE,
+    JIBRIL_SHACKLES,
+    JIBRIL_WORD,
+    JIBRIL_REFLECT,
+    JIBRIL_KINGDOM,
+    JIBRIL_WINGS;
 
     public static VfxShape byId(int id) {
         VfxShape[] v = values();

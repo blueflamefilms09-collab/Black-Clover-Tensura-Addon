@@ -54,7 +54,8 @@ class JudgmentRulesTest {
         assertEquals("sandalphon", JudgmentRules.CARDS.get(0).id());
         assertTrue(JudgmentRules.claimable("sandalphon"));
         assertTrue(JudgmentRules.claimable("israfil"), "Israfil opens in 3.14.0");
-        for (String id : new String[]{"jibril", "solomon", "hercules"}) {
+        assertTrue(JudgmentRules.claimable("jibril"), "Jibril opens in 3.15.0");
+        for (String id : new String[]{"solomon", "hercules"}) {
             assertNotNull(JudgmentRules.card(id), id + " is on the screen");
             assertFalse(JudgmentRules.claimable(id), id + " is sealed");
         }
@@ -74,7 +75,9 @@ class JudgmentRulesTest {
         assertEquals(0, JudgmentRules.code(null));
         assertSame(JudgmentRules.SANDALPHON, JudgmentRules.spec("sandalphon"));
         assertSame(IsrafilRules.ISRAFIL, JudgmentRules.spec("israfil"));
-        assertNull(JudgmentRules.spec("jibril"), "a sealed skill has no spec yet");
+        assertEquals(3, JudgmentRules.code("jibril"));
+        assertSame(JibrilRules.JIBRIL, JudgmentRules.spec("jibril"));
+        assertNull(JudgmentRules.spec("solomon"), "a sealed skill has no spec yet");
         assertNull(JudgmentRules.spec(null));
         for (JudgmentRules.Spec sp : JudgmentRules.SPECS) assertNotNull(JudgmentRules.card(sp.id()), sp.id() + " is on the screen");
     }

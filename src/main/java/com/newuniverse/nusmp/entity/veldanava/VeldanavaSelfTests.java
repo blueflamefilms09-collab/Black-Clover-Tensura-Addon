@@ -146,7 +146,7 @@ public final class VeldanavaSelfTests {
             if (!orb.isFighter(p.getUUID())) return Result.fail("the fighter is not on the orb's list");
             if (!orb.claimSkill(p, "").startsWith("Choose")) return Result.fail("a player without a skill was allowed the loot-only choice");
             if (!orb.claimSkill(p, "nonsense").startsWith("That is not")) return Result.fail("an invalid card was accepted");
-            if (!orb.claimSkill(p, "jibril").contains("sealed")) return Result.fail("a sealed card was accepted");
+            if (!orb.claimSkill(p, "solomon").contains("sealed")) return Result.fail("a sealed card was accepted");
             if (JudgmentConfig.rewardScreen() && !orb.claim(p, 2).startsWith("The Creator now offers")) return Result.fail("a boon was offered while the skill screen is on");
             if (orb.hasClaimed(p.getUUID())) return Result.fail("a refused claim used up the player's share");
             String ok = orb.claimSkill(p, "sandalphon");

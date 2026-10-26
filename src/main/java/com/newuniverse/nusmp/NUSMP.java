@@ -51,11 +51,13 @@ public class NUSMP {
         com.newuniverse.nusmp.entity.veldanava.VeldanavaSelfTests.register();                                // self-tests veldanava.rules / assets / boss / orb
         com.newuniverse.nusmp.entity.veldanava.skills.JudgmentSelfTests.register();                          // self-tests sandalphon.rules / skill / conditions
         com.newuniverse.nusmp.entity.veldanava.skills.IsrafilSelfTests.register();                           // self-tests israfil.rules / skill / conditions
+        com.newuniverse.nusmp.entity.veldanava.skills.JibrilSelfTests.register();                            // 3.15.0: self-tests jibril.rules / skill / conditions
         com.newuniverse.nusmp.entity.veldanava.skills.JudgmentEffects.init();                                 // 3.13.0: Sandalphon's six conditions (Temporal Stutter, Temporal Debt, Event Silence, Future Rejection, Movement Interference, Action Lock)
         com.newuniverse.nusmp.entity.veldanava.skills.JudgmentEffects.EFFECTS.register(modEventBus);
         modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.entity.veldanava.skills.JudgmentConfig.SPEC, "nusmp-veldanava-skills-server.toml");   // the Veldanava ultimate skills: enabled, rewardScreen, costScale, caps
         com.newuniverse.nusmp.entity.veldanava.skills.JudgmentEvents.register(NeoForge.EVENT_BUS);           // Sandalphon's passives, the conditions, the sigil's execution
         com.newuniverse.nusmp.entity.veldanava.skills.IsrafilEvents.register(NeoForge.EVENT_BUS);             // 3.14.0: Israfil's passives (fall, blink, store, mind), Rift Walk housekeeping
+        com.newuniverse.nusmp.entity.veldanava.skills.JibrilEvents.register(NeoForge.EVENT_BUS);              // 3.15.0: Jibril's passives (rigor, wings, parry, the Kingdom's floor), the hotbar lock
         com.newuniverse.nusmp.entity.veldanava.pocket.PocketLabyrinth.register(NeoForge.EVENT_BUS);             // 3.14.0: Dimensional Labyrinth's pocket maze (nusmp:trial)
         com.newuniverse.nusmp.entity.zogratis.LuciusGodEffects.init();
         com.newuniverse.nusmp.entity.zogratis.LuciusGodEffects.EFFECTS.register(modEventBus);

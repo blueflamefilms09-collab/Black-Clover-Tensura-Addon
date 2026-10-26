@@ -1,4 +1,4 @@
-# Veldanava's ultimate skills (3.13.0 onward): Sandalphon, Lord of Judgment, and Israfil, Lord of Trials (3.14.0)
+# Veldanava's ultimate skills (3.13.0 onward): Sandalphon, Lord of Judgment, Israfil, Lord of Trials (3.14.0) and Jibril, Lord of Rigor (3.15.0)
 
 Source of the design: the owner's `veldanava_skill_drops.txt` (five skills, ten modes each). The reference jar `tensuramoreskills-0.0.4.9.3.jar` (All Rights Reserved) was read for ideas only; no code and no asset of it is used.
 Wiki sources: none needed (the numbers come from the owner's file); nothing was fetched.
@@ -198,3 +198,69 @@ Code: `entity/veldanava/pocket/PocketMaze` (pure: the grid, the walls, the shift
 - **The stay**: a player 400 ticks (600 mastered), a mob 600 (900); 1% of maximum health a second; +5 Temporal Debt. Then, or when the caster dies, logs out, forgets the skill or is hit by another Grand Trumpet, everyone is put back where they stood (same dimension, same spot; a different dimension too). A creature that has left cannot be pulled in again for 30 s.
 - **Rules inside**: no block can be broken, placed or blown up; ender pearls and chorus fruit do nothing; the maze takes a creature that falls or is thrown out of it back to the start; a player who logs out inside is sent back at the next login; a server stop puts everyone back and takes the maze down.
 - **Cost (rule 11)**: at most 8 mazes on a server (one per caster, 3 creatures each, 9 forced chunks each at most). Open and close: about 12,000 block reads and 6,500 writes once each (flags 2|16, no neighbour updates). While open: 24 block writes and 2 effect packets per shift (a wall every 1.8-3 s), a look at each member 5 times a second, one hit and one action-bar line a second. With no maze open: one empty-map check per tick.
+
+---
+
+# 3.15.0 - Jibril, Lord of Rigor
+
+Source of the design: the owner's Jibril spec (ten modes). Wiki sources: none needed (the numbers come from the owner's file); nothing was fetched.
+
+## How it is read in game
+Take **Jibril** from the Will of the Creator card screen (`/veldanava skill jibril` while an orb waits). Code: `JibrilRules` (numbers, pure), `JibrilSkill` (modes), `JibrilEvents` (passives that live in the game's events), `JibrilState` (wings, hotbar holds, sanctuary registry, parry, steal, cleanse), `JibrilFx` (effect packets).
+
+| # | Mode | Use | Cost (normal / mastered) | Cooldown (normal / mastered) |
+|---|---|---|---|---|
+| 0 | Divine Rigor | toggle | free | - |
+| 1 | Heavenly Presence | toggle | free | - |
+| 2 | Strict Governance | toggle | free | - |
+| 3 | Wings of Revelation | toggle | free | - |
+| 4 | Absolute Command | press | 5.0K / 3.5K MP | 25 / 15 s |
+| 5 | Judgment of Heaven | crouch + press | 8.5K / 6.0K MP | 30 / 20 s |
+| 6 | Heavenly Purge | press | 7.0K / 5.0K MP | 40 / 25 s |
+| 7 | Holy Shackles | crouch + press | 4.5K / 3.0K MP | 20 / 12 s |
+| 8 | Word of Law | press | 6.0K / 4.0K MP | 18 / 10 s |
+| 9 | Kingdom of God | held, up to 60 s, **mastery only** | 4.0K / 2.5K MP **per second** | 90 / 60 s |
+
+### Passives
+- **Divine Rigor**: no effect of the harmful category lands on you (`MobEffectEvent.Applicable` is denied), the ones you carry are lifted once a second (8 at most). This includes the Veldanava conditions (Temporal Debt, Event Silence, Action Lock, ...). Mastered: a registry of Jibrils (one entry per owner, valid 40 ticks) lets an ally within 16 blocks take every debuff at half length (the half-length effect is re-applied through the same event, guarded by a flag).
+- **Heavenly Presence**: once a second up to 12 creatures within 16 blocks that are undead (the vanilla undead tag), carry Temporal Debt, or have a demon word in their type id (word-matched, so "chimp" is not a demon) take holy (magic) damage: 14 + 0.5 per debt stack, the debt part capped at 20; the Balance Law applies.
+- **Strict Governance** (needs `strictGovernance`): once a second, every other game-second, every running cooldown of up to 24 skills x 16 modes of each of up to 16 enemy players within 30 blocks gets +1 s, so their cooldowns run at half speed. At most once a second per target whatever the number of Jibrils. Mobs and allies are never touched.
+- **Wings of Revelation** (needs `wingsFlight` for the flight): `mayfly` and fly speed 0.16 are given while on and taken back when off (only if this skill gave them; creative and spectator players are left alone; settled at login). A blow with a direct source, an explosion or a projectile taken while airborne is dodged with 70% (85% mastered); an ability's true hit and bypass-invulnerability damage are never dodged. Drawn every 80 ticks while airborne.
+
+### Actives
+- **Absolute Command**: creature in sight (40 blocks): `BalanceLaw.controlTicks` (100 ticks base; caps 3 s player, 5 s mob, 1 s boss), Action Lock and Event Silence for that time; a player's hotbar is held on its slot (re-sent only if moved, at most 64 players, 200 ticks).
+- **Judgment of Heaven**: creature in sight (64 blocks): 220 holy damage (capped by `activeDamageCap`, Balance Law), good effects stripped, 50% to up to 6 creatures within 3 blocks of it.
+- **Heavenly Purge**: within 50 blocks: up to 64 `AreaEffectCloud` removed, other owners' Veldanava fields ended, pocket mazes near ended, you and up to 24 allied players cleansed (8 effects each), fire put out. Never scans or changes blocks.
+- **Holy Shackles**: creature in sight (40 blocks): Movement Interference (120 ticks base) and up to 8 good effects moved to you (each at most 5 minutes; an endless one becomes 5 minutes).
+- **Word of Law**: opens the parry window on you (12 ticks, 20 mastered). The first blow with a living source is cancelled and returns as 300% raw damage to the attacker (capped by `activeDamageCap` and the Balance Law). Never parries true damage or bypass-invulnerability sources.
+- **Kingdom of God** (held): one field of kind `kingdom` following you (50 blocks, at most 1,200 ticks, no renewal). Each second it pays the per-second cost (or ends), refreshes the sanctuary registry, strips 4 good effects and applies Gravity Crush for 30 ticks to up to 24 enemies. Inside it you and allies cannot be reduced below 1 HP by a blow (enforced at the lowest priority of the incoming and pre-damage events). Releasing the key, running out of Magicule, death, logout, dimension change and a server stop end it.
+
+## Server settings added
+`strictGovernance` (default true) and `wingsFlight` (default true), in `nusmp-veldanava-skills-server.toml` (SERVER config: they change gameplay).
+
+## Multiplayer and server rules (CLAUDE.md rule 9)
+Server decides everything; no client class is named (scanned by `JudgmentSourceScanTest`); per-player state is on the player or in UUID-keyed maps; the only effect path is `JibrilFx` -> `VfxSpawn`, one shape per packet; the only tick hook is the server tick that holds the hotbars; state is dropped at death, logout, login and server stop.
+
+## Cost and lag bounds (CLAUDE.md rule 11) for Jibril
+- **Per press**: Command 1 line query; Judgment 1 line query + 1 box query (7 hits); Purge 2 box queries (64 clouds, 24 players) + field sweep; Shackles 1 line query (8 effects); Word of Law none. All on cooldowns of 10 s or more.
+- **Per second per owner**: one 30-block box query for Presence and Governance together (12 burned; 16 players x 24 skills x 16 modes walked at most), 8 cleansed, one ability refresh; Kingdom one box query, 24 enemies.
+- **Per tick**: the field manager and the hotbar hold, which returns on its first line when empty.
+- **Events**: effect, incoming damage (x2), pre-damage, death, logout, login; each returns on its first line for anyone who is not under Jibril.
+- **Network**: one effect packet per press; Kingdom and wings one every 80 ticks; one tiny slot packet to a commanded player only when they move the slot.
+- **Client draw**: at most 44 quads per effect (Command 35, Judgment 44, Purge 29, Shackles 35, Word 17, Reflect 23, Kingdom 24, Wings 19; engine cap 100).
+- **No** chunk loads, block changes, entity spawns or food-bar writes.
+
+## VFX (Jibril layer)
+Eight shapes appended after `TRIAL_RIFT` (`JIBRIL_COMMAND`, `_JUDGMENT`, `_PURGE`, `_SHACKLES`, `_WORD`, `_REFLECT`, `_KINGDOM`, `_WINGS`), one client layer `vfx/client/layer/JibrilLayer.java`, 16 textures `textures/particle/jibril_*.png` from `tools/gen_jibril_vfx_textures.py`. Our own work: white and warm gold, pale sky-blue shadow, halos, law glyphs, chains, feathers, wings, a pillar from the sky. Nothing of the Time Magic layer is touched or copied. The layer keeps nothing between frames. Previews: `python tools/vfx_preview/preview.py` (scenes in `tools/vfx_preview/scenes.d/jibril.json`).
+
+## Tests
+`JibrilRulesTest` (pure), `JudgmentSourceScanTest` (extended), `JibrilShapesTest`, smoke prefix `jibril` (`jibril.rules`, `jibril.skill`, `jibril.conditions`: registration, mask separation, wings, rigor, the parry event driven directly, holy hit, steal, hotbar lock, sanctuary registry, governance stretch, the Kingdom field cap and end).
+
+## NEW / REPLACED / KEPT
+- **NEW**: Jibril and its 10 modes, the Jibril VFX, two settings, the icon, tests.
+- **REPLACED**: nothing (the card was sealed; it is open now).
+- **KEPT**: everything of 3.14.0 and earlier.
+
+## Not included / honest limits
+- Solomon and Hercules stay sealed (3.16.0, 3.17.0).
+- Not played in a real game. ManasCore cooldown units (seconds, counted down once a second) are assumed from the Israfil code. The Kingdom's floor does not stop `/kill` or the void. Divine Rigor blocks the Veldanava conditions too.

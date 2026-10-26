@@ -1,0 +1,15 @@
+{
+  "nusmp.skill.jibril": "Jibril, Lord of Rigor",
+  "nusmp.skill.jibril.description": "The Archangel of Law. Four passives (Divine Rigor, Heavenly Presence, Strict Governance, Wings of Revelation), five edicts (Absolute Command, Judgment of Heaven, Heavenly Purge, Holy Shackles, Word of Law) and, once mastered, Kingdom of God: a held sanctuary of fifty blocks where allies cannot fall below 1 HP and enemies are stripped of their blessings and crushed by gravity.",
+  "nusmp.skill.jibril.mastered": "Jibril is mastered: Kingdom of God answers you, the edicts cost less and cool down faster, Divine Rigor shelters your allies, and the parry of Word of Law lasts longer.",
+  "nusmp.skill.mode.jibril.divine_rigor": "Divine Rigor",
+  "nusmp.skill.mode.jibril.heavenly_presence": "Heavenly Presence",
+  "nusmp.skill.mode.jibril.strict_governance": "Strict Governance",
+  "nusmp.skill.mode.jibril.wings_of_revelation": "Wings of Revelation",
+  "nusmp.skill.mode.jibril.absolute_command": "Absolute Command",
+  "nusmp.skill.mode.jibril.judgment_of_heaven": "Judgment of Heaven",
+  "nusmp.skill.mode.jibril.heavenly_purge": "Heavenly Purge",
+  "nusmp.skill.mode.jibril.holy_shackles": "Holy Shackles",
+  "nusmp.skill.mode.jibril.word_of_law": "Word of Law",
+  "nusmp.skill.mode.jibril.kingdom_of_god": "Kingdom of God"
+}

@@ -8,7 +8,7 @@ import net.neoforged.neoforge.common.ModConfigSpec;
  */
 public final class JudgmentConfig {
     public static final ModConfigSpec SPEC;
-    public static final ModConfigSpec.BooleanValue ENABLED, REWARD_SCREEN, EXECUTE_PLAYERS, EXECUTE_BOSSES, POCKET_DIMENSION;
+    public static final ModConfigSpec.BooleanValue ENABLED, REWARD_SCREEN, EXECUTE_PLAYERS, EXECUTE_BOSSES, POCKET_DIMENSION, STRICT_GOVERNANCE, WINGS_FLIGHT;
     public static final ModConfigSpec.DoubleValue COST_SCALE, COOLDOWN_SCALE, DEBT_DAMAGE, FINAL_CAP, ACTIVE_DAMAGE_CAP;
     public static final ModConfigSpec.IntValue DEBT_MAX, FIELDS_PER_PLAYER, FIELDS_TOTAL;
 
@@ -35,6 +35,10 @@ public final class JudgmentConfig {
                 .define("executeBosses", false);
         POCKET_DIMENSION = b.comment("true = Dimensional Labyrinth (Israfil) pulls its target into a pocket dimension, an ever-shifting maze (default since 3.14.0). false = the old cage of walls round the target, as in the first 3.14.0 builds. A boss is always caged, never pulled in.")
                 .define("pocketDimension", true);
+        STRICT_GOVERNANCE = b.comment("true = Jibril's Strict Governance doubles the cooldowns of the skills and spells of enemy players within 30 blocks (default since 3.15.0). false = the toggle does nothing, so no player's cooldowns are ever touched by another player's skill.")
+                .define("strictGovernance", true);
+        WINGS_FLIGHT = b.comment("true = Jibril's Wings of Revelation give creative-style flight and a faster flight speed (default since 3.15.0). false = the wings only dodge blows in the air and are drawn, they give no flight.")
+                .define("wingsFlight", true);
         DEBT_MAX = b.comment("The most Temporal Debt stacks one creature can carry.")
                 .defineInRange("debtMax", 200, 1, 1000);
         FIELDS_PER_PLAYER = b.comment("The most damage fields (Verdict of Ruin) one player can keep up at once; a new one replaces the oldest.")
@@ -66,6 +70,10 @@ public final class JudgmentConfig {
     public static boolean executeBosses() { return get(EXECUTE_BOSSES); }
 
     public static boolean pocketDimension() { return get(POCKET_DIMENSION); }
+
+    public static boolean strictGovernance() { return get(STRICT_GOVERNANCE); }
+
+    public static boolean wingsFlight() { return get(WINGS_FLIGHT); }
 
     public static int debtMax() { return get(DEBT_MAX); }
 

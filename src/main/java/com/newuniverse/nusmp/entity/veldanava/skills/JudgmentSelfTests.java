@@ -58,7 +58,8 @@ public final class JudgmentSelfTests {
         if (JudgmentRules.CARDS.size() != 5) return Result.fail("the reward screen does not have five cards");
         if (!JudgmentRules.claimable("sandalphon")) return Result.fail("Sandalphon cannot be claimed");
         if (!JudgmentRules.claimable("israfil")) return Result.fail("Israfil cannot be claimed");
-        for (String sealed : new String[]{"jibril", "solomon", "hercules", "", "nonsense", null})
+        if (!JudgmentRules.claimable("jibril")) return Result.fail("Jibril cannot be claimed");
+        for (String sealed : new String[]{"solomon", "hercules", "", "nonsense", null})
             if (JudgmentRules.claimable(sealed)) return Result.fail("'" + sealed + "' should not be claimable in this release");
         for (JudgmentRules.Spec sp : JudgmentRules.SPECS)
             for (JudgmentRules.Mode m : sp.modes()) {
@@ -99,7 +100,8 @@ public final class JudgmentSelfTests {
             for (JudgmentRules.Mode m : JudgmentRules.SANDALPHON.modes())
                 if (!m.id().equals(sk.getModeId(i, m.index()))) return Result.fail("mode " + m.index() + " is '" + sk.getModeId(i, m.index()) + "' not '" + m.id() + "'");
             if (VeldanavaSkills.grant(p, "sandalphon")) return Result.fail("a second grant went through");
-            if (VeldanavaSkills.grant(p, "jibril")) return Result.fail("a sealed skill was granted");
+            if (VeldanavaSkills.grant(p, "jibril")) return Result.fail("a second skill was granted to the same player");
+            if (VeldanavaSkills.grant(p, "solomon")) return Result.fail("a sealed skill was granted");
             JudgmentState.setToggles(i, 0b1010);
             if (JudgmentState.toggles(i) != 0b1010) return Result.fail("the toggles were not kept in the skill");
             JudgmentState.setToggles(i, 0xFFFF);
