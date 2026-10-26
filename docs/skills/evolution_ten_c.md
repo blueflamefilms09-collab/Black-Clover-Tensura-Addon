@@ -12,7 +12,7 @@ The characters were picked by the lead because the owner did not name any ("make
 | 5 | `ashborn_shadow_monarch` | Ashborn, the original Shadow Monarch | solo_leveling | 12 `boss_kills` | mythic | #5b2a9d |
 | 6 | `go_gunhee_chairman` | Go Gun-hee, Hunters Association chairman (S-rank) | solo_leveling | 40 `elite_kills` | epic | #d4a64a |
 | 7 | `regis_leywin_devour` | Regis Leywin, Asura lance-beast (Devour, Shadow) | tbate | 900 `kills` | epic | #6a5acd |
-| 8 | `lee_seolhwa_sword` | Lee Seolhwa, Sword of the Constellation party | omniscient_readers_viewpoint | 700 `kills` | rare | #c9e0ff |
+| 8 | `lee_seolhwa_sword` | Lee Seolhwa, the Company's doctor and poison specialist (found by the builder: not a swordswoman; the id stays) | omniscient_readers_viewpoint | 700 `kills` | rare | #c9e0ff |
 | 9 | `shin_yoosung_child` | Shin Yoosung, the child of the party | omniscient_readers_viewpoint | 350 `ally_buffs` | rare | #ffb3d1 |
 | 10 | `lefiya_viridis_mage` | Lefiya Viridis, Elf mage of the Loki Familia | danmachi | 500 `arts_cast` | epic | #4ccf9a |
 
