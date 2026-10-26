@@ -343,3 +343,76 @@ Nine shapes appended after `JIBRIL_WINGS` (`SOLOMON_COPY`, `_CONVERGENCE`, `_REA
 - The pillars land at the ground point fixed at cast time, so a target that runs away can dodge them; the effect shows the same point.
 - The skill list's displayed price does not show the Realm's free spells or the mastered half price.
 - The Realm's lock tapers with the Balance Law, so a boss or a long-held player is held for less.
+
+---
+
+# 3.19.0 - Hercules, Lord of Martial Prowess
+
+Source of the design: the owner's Hercules spec (ten modes, `docs/veldanava_spec/veldanava_skill_drops.txt`). Wiki sources: none needed (the numbers come from the owner's file); nothing was fetched.
+
+## How it is read in game
+Take **Hercules** from the Will of the Creator card screen (`/veldanava skill hercules` while an orb waits). Code: `HerculesRules` (numbers, pure), `HerculesSkill` (modes), `HerculesEvents` (passives that live in the game's events), `HerculesState` (the leap, the momentum run and its two modifiers, Invictus, the picture gaps), `HerculesDamage` (the owner's blows through the Balance Law), `HerculesTerrain` (the only place a block is removed), `HerculesThrow` (the field that carries a throw), `HerculesFx` (effect packets).
+
+| # | Mode | Use | Cost (normal / mastered) | Cooldown (normal / mastered) |
+|---|---|---|---|---|
+| 0 | Adamantine Body | toggle | free | - |
+| 1 | God of Strength | toggle | free | - |
+| 2 | Unstoppable Momentum | toggle | free | - |
+| 3 | Colossal Vigor | toggle | free | - |
+| 4 | Earth-Shattering Tremor | press | 3.0K / 2.0K MP | 25 / 15 s |
+| 5 | Invictus | crouch + press | 8.0K / 5.5K MP | 90 / 60 s |
+| 6 | Titan's Grip | press | 2.5K / 1.5K MP | 20 / 12 s |
+| 7 | Devastating Throw | crouch + press | 4.0K / 2.5K MP | 30 / 18 s |
+| 8 | Battle Roar | press | 5.0K / 3.2K MP | 45 / 30 s |
+| 9 | World-Breaking Strike | press, **mastery only** | 15K MP | 180 s |
+
+### Passives
+- **Adamantine Body**: a physical blow is taken at 10% (90% less), a magical blow at 50%; fire, lava and burning blows are cancelled and flame is put out once a second; Temporal Stutter cannot be put on you and one that was on is lifted; no knockback; no fall damage. A true hit (Sandalphon's) steps past the body (it checks `JudgmentDamage.trueActive`), and a blow that bypasses invulnerability is not touched. A reduction of 3 points or more draws the plates, at most once every 10 ticks.
+- **God of Strength**: your melee blows (the player's own attack, not a spell or an arrow) do x3 damage (x4.5 mastered), the growth limited by the Balance Law (`BalanceLaw.cap`, so a player takes at most the PvP hit cap). `herculesBlockBreak` on: blocks of hardness up to 50 (obsidian) break in one hit (the server raises the break speed in `PlayerEvent.BreakSpeed`; bedrock and other unbreakable blocks never, nothing at all in the Dungeon). `herculesShockwave` on: a blow also hurts up to 6 other enemies within 3 blocks of the one struck for 35% of the blow, at most once every 6 ticks.
+- **Unstoppable Momentum**: once a second the server counts the distance covered; more than 3 seconds of continuous movement (2 or more blocks a second) gives stage 1, then stage 2 at 6 s and stage 3 at 9 s. Each stage adds 12% attack speed and 7% movement speed (two transient attribute modifiers) and gives back 15% (20% mastered) of the damage the armour took off a blow. Standing still ends the run. New stages draw one picture.
+- **Colossal Vigor**: out of combat (100 ticks without a blow given or taken) 2% (4% mastered) of the maximum health a second; in combat 15% (25% mastered) of the damage of a melee blow comes back as health, at most 8% of the maximum for one blow.
+
+### Actives
+- **Earth-Shattering Tremor**: a leap (1.35 blocks a tick forward, 1.0 up). When you land within 6 seconds (the fall event), every enemy within 14 blocks (at most 24) takes 140 damage (full at the centre, 40% at the rim, Balance Law), is thrown up (a boss much less) and loses its footing (Movement Interference, Balance Law time), and the ground under you is broken in a bowl of radius 6 and depth 2, at most 240 blocks. The landing costs you no fall damage.
+- **Invictus** (crouch + press): for 10 seconds your health cannot fall below 1 (health and absorption count; a blow that bypasses invulnerability still does) and your melee damage grows with the health you lack (up to x3, x4 mastered, at the last point). One field follows you, pulses once a second, draws the laurel again every 4 s and ends it; its end, death and logout clear the mark.
+- **Titan's Grip**: the enemy in sight within 40 blocks (a flying boss too) is pulled to 2.2 blocks in front of you (a free spot is looked for), and Action Lock is laid on it (Balance Law time). One ray, one move.
+- **Devastating Throw** (crouch + press): the enemy in sight within 12 blocks is hurled along your look direction at 2.4 blocks a tick; with none, a chunk of up to 12 blocks of the ground you look at (within 8 blocks) is lifted and hurled. One field of 2-tick pulses (at most 9) carries it: a path sweep hurts up to 8 creatures for 90 on the way; on landing the thrown creature takes 200, a blast of radius 4.5 hurts up to 12 for 130 and a crater of radius 3 removes at most 60 blocks (terrain only with the setting on, `mobGriefing` on and outside the Dungeon).
+- **Battle Roar**: your own debuffs are cleansed (at most 24), and every enemy within 30 blocks (at most 32) gets Fear (Tensura's) and Temporal Stutter, both limited per target by the Balance Law.
+- **World-Breaking Strike** (mastery only): one punch at the enemy in sight (or the point 5.6 blocks ahead). Barriers within 24 blocks end: the pockets of other players' Labyrinths (Israfil), the fields of the enemy, a player's Michael Castle Guard (spent for the day), the guard of a Seraphim and Uriel's prison. Of the (at most 8) enemies within 6 blocks, each has its armour broken (new effect Shattered Armour, 400 ticks, half that on a player or a boss), 60 stacks of Temporal Debt laid on it and takes 600 (the others half), through the Balance Law.
+
+### Conditions
+Movement Interference, Action Lock, Temporal Stutter, Temporal Debt (Veldanava conditions already in the game), Tensura's Fear, and the new **Shattered Armour** (armour and toughness fall to nothing).
+
+## Server settings added
+`herculesTerrainDamage` (default true: the tremor, the throw's crater and a lifted chunk remove blocks; never in the Dungeon, never with `mobGriefing` off), `herculesBlockBreak` (default true: God of Strength breaks blocks in one hit), `herculesShockwave` (default true: a heavy blow hurts the enemies around the one struck) in `nusmp-veldanava-skills-server.toml` (SERVER config: they change gameplay).
+
+## Multiplayer and server rules (CLAUDE.md rule 9)
+The server decides everything, including the one-hit mining (the client has no mask; the server raises the break speed, vanilla then breaks the block at once); no client class is named (scanned by `JudgmentSourceScanTest`); per-player state is on the player or in UUID-keyed maps; the only effect path is `HerculesFx` -> `VfxSpawn`, one shape per packet; Hercules adds no tick hook (its second runs from the skill base); state is dropped at death, logout, forgetting and server stop.
+
+## Cost and lag bounds (CLAUDE.md rule 11) for Hercules
+- **Per press**: Tremor one jump and, on the landing, one box query (24 creatures hurt and lifted, at most 24 effects) and a bowl of at most 240 blocks; Invictus one field and one packet now plus one every 80 ticks for 10 s; Grip one ray, one move, one effect; Throw one ray, one field running 9 pulses, per pulse at most one box query (8 creatures hurt on the way), on landing one box query (12 blasted) and 60 blocks; Roar one box query (32 enemies, 64 effects) and at most 24 effects cleansed; Strike one ray, one box query (8 creatures, 8 each of debt and broken armour) and the pockets and fields within 24 blocks ended.
+- **Per second per owner**: two attribute checks, one heal, at most one picture when Momentum reaches a new stage; no box query.
+- **Events**: effect, incoming damage, knockback, fall, pre- and post-damage, break speed, death, logout, server stop; each returns on its first line for anyone who is not under Hercules. A shockwave costs one 3-block box query, at most once every 6 ticks per owner (6 creatures hurt), and a shockwave never starts another.
+- **Memory**: three small UUID maps (leap, run, picture gaps), dropped at death, logout, forgetting and server stop.
+- **Network**: one effect packet per press (Invictus: one more every 80 ticks); the body picture at most once every 10 ticks per wearer, the shockwave picture at most every 6 ticks per owner.
+- **Terrain**: loaded chunks only, never loaded for the cast, never blocks with an inventory or any block entity, never over hardness 50, never fluids; no drops and no break particles (the picture is the client's); one block write each (`HerculesTerrain.remove`).
+- **No** chunk loads, no entity spawns (a thrown chunk is a moving point, not an entity), no food-bar writes.
+
+## VFX (Hercules layer)
+Ten shapes appended after `SOLOMON_ABSORB` (`HERCULES_LEAP`, `_TREMOR`, `_INVICTUS`, `_GRIP`, `_THROW`, `_ROAR`, `_STRIKE`, `_SHOCKWAVE`, `_BODY`, `_MOMENTUM`; the from / to / power / duration contract of each is in the enum's comments), one client layer `vfx/client/layer/HerculesLayer.java`, 17 textures `textures/particle/hercules_*.png` from `tools/gen_hercules_vfx_textures.py`; antique gold with bronze and white-hot flashes: fists, laurels, cracked ground, shock rings, chains and plates of adamantine. The call list is `docs/vfx_remake/hercules_fx_calls.md`. Preview scenes: `tools/vfx_preview/scenes.d/hercules.json`.
+
+## Tests
+`HerculesRulesTest` (pure), `JudgmentRulesTest` and `JudgmentSourceScanTest` (extended, including the terrain, throw and event-hook scans), `HerculesShapesTest`, smoke prefix `hercules` (`hercules.rules`, `hercules.skill`, `hercules.conditions`: registration, mask separation, the body's reductions, fire, Stutter and fall, strength, Invictus' floor, the leap and its landing, the terrain on a stone platform in the sky and with `mobGriefing` off, the throw's field ending inside its bound, the Castle Guard spent once, Shattered Armour, and the clean-up).
+
+## NEW / REPLACED / KEPT
+- **NEW**: Hercules and its 10 modes, the Hercules VFX, three settings, the Shattered Armour effect, `VeldanavaBoss.shatterSpatial`, `HerculesRules` and the supporting classes, tests, lang.
+- **REPLACED**: nothing (the card was sealed; it is open now). The skill icon is the 3.17.0 animated one.
+- **KEPT**: everything of 3.18.0 and earlier; the Time Magic VFX untouched.
+
+## Not included / honest limits
+- Not played in a real game.
+- One-hit mining is decided by the server (the client has no mask), so the swing animation may show the block cracking for a moment before it breaks.
+- The tremor needs a landing that raises Minecraft's fall event: a landing in water or on a slime block does not trigger it (the leap's window is 6 seconds, then it is forgotten).
+- World-Breaking Strike shatters the barriers this mod defines (Michael's Castle Guard, Uriel's prison, the Seraphim's guard, Israfil's pockets, the enemy's fields); another mod's barrier is not touched.
+- Adamantine Body does not stop a true hit (Sandalphon's) or a blow that bypasses invulnerability (the void, `/kill`).
+- Devastating Throw's chunk is a moving point drawn by the effect, not an entity; it is stopped by the first solid block on its path.

@@ -524,6 +524,22 @@ public final class VeldanavaBoss extends Monster implements BudgetedBoss {
 
     public void expose(int ticks) { exposedUntil = level().getGameTime() + ticks; }
 
+    /**
+     * 3.19.0 (Hercules' World-Breaking Strike): Michael's guard and Uriel's prison are shattered. The guard drops at once and the running move (Seraphim Guard, Uriel's Prison) is cancelled as if it were interrupted.
+     * Returns true when one of the two was standing.
+     */
+    public boolean shatterSpatial() {
+        if (!(level() instanceof ServerLevel sl)) return false;
+        boolean broke = guarding() || guardUntil > sl.getGameTime();
+        guardUntil = 0;
+        if (entityData.get(GUARD)) entityData.set(GUARD, false);
+        if (casting != null && (casting.id() == VeldanavaRules.URIEL || casting.id() == VeldanavaRules.SERAPH_GUARD)) {
+            endCast(sl.getGameTime(), true);
+            broke = true;
+        }
+        return broke;
+    }
+
     /** The floor near 'p': the first spot with two blocks of air above solid ground, searching from 3 above to 6 below (p itself if none). */
     public static Vec3 ground(Level level, Vec3 p) {
         BlockPos base = BlockPos.containing(p);

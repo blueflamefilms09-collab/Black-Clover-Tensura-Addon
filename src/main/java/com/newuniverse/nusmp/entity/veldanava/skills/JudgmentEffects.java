@@ -50,6 +50,9 @@ public final class JudgmentEffects {
     /** 3.14.0 (Israfil): Nihility Collapse - the mark of standing in the collapsed place. Slower, and no healing (the events read it). */
     public static final DeferredHolder<MobEffect, MobEffect> NIHILITY_COLLAPSE = EFFECTS.register("nihility_collapse", Collapse::new);
 
+    /** 3.19.0 (Hercules): Shattered Armour - the armour and the armour toughness of the creature are gone while it lasts (World-Breaking Strike). */
+    public static final DeferredHolder<MobEffect, MobEffect> ARMOR_BREAK = EFFECTS.register("armor_break", Shattered::new);
+
     /** Loads this class before the registry event; call it from the NUSMP constructor. */
     public static void init() {}
 
@@ -164,6 +167,15 @@ public final class JudgmentEffects {
         Collapse() {
             super(MobEffectCategory.HARMFUL, 0x2A1E44);
             addAttributeModifier(Attributes.MOVEMENT_SPEED, id("nihility_collapse_speed"), -0.25, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);
+        }
+    }
+
+    /** The armour is broken: every point of armour and of toughness is taken away, so a blow lands as if the creature wore nothing. */
+    private static final class Shattered extends MobEffect {
+        Shattered() {
+            super(MobEffectCategory.HARMFUL, 0xB07A2A);
+            addAttributeModifier(Attributes.ARMOR, id("armor_break_armor"), -1.0, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);
+            addAttributeModifier(Attributes.ARMOR_TOUGHNESS, id("armor_break_toughness"), -1.0, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);
         }
     }
 }

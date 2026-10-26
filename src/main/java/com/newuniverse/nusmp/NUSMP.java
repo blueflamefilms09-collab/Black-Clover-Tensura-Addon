@@ -53,6 +53,7 @@ public class NUSMP {
         com.newuniverse.nusmp.entity.veldanava.skills.IsrafilSelfTests.register();                           // self-tests israfil.rules / skill / conditions
         com.newuniverse.nusmp.entity.veldanava.skills.JibrilSelfTests.register();                            // 3.15.0: self-tests jibril.rules / skill / conditions
         com.newuniverse.nusmp.entity.veldanava.skills.SolomonSelfTests.register();                            // 3.18.0: self-tests solomon.rules / skill / conditions
+        com.newuniverse.nusmp.entity.veldanava.skills.HerculesSelfTests.register();                            // 3.19.0: self-tests hercules.rules / skill / conditions
         com.newuniverse.nusmp.entity.veldanava.skills.JudgmentEffects.init();                                 // 3.13.0: Sandalphon's six conditions (Temporal Stutter, Temporal Debt, Event Silence, Future Rejection, Movement Interference, Action Lock)
         com.newuniverse.nusmp.entity.veldanava.skills.JudgmentEffects.EFFECTS.register(modEventBus);
         modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.entity.veldanava.skills.JudgmentConfig.SPEC, "nusmp-veldanava-skills-server.toml");   // the Veldanava ultimate skills: enabled, rewardScreen, costScale, caps
@@ -60,6 +61,7 @@ public class NUSMP {
         com.newuniverse.nusmp.entity.veldanava.skills.IsrafilEvents.register(NeoForge.EVENT_BUS);             // 3.14.0: Israfil's passives (fall, blink, store, mind), Rift Walk housekeeping
         com.newuniverse.nusmp.entity.veldanava.skills.JibrilEvents.register(NeoForge.EVENT_BUS);              // 3.15.0: Jibril's passives (rigor, wings, parry, the Kingdom's floor), the hotbar lock
         com.newuniverse.nusmp.entity.veldanava.skills.SolomonEvents.register(NeoForge.EVENT_BUS);             // 3.18.0: Solomon's passives (mana skin, hazards, elemental absorption, magic bypass, foresight)
+        com.newuniverse.nusmp.entity.veldanava.skills.HerculesEvents.register(NeoForge.EVENT_BUS);            // 3.19.0: Hercules' passives (adamantine body, strength, momentum, vigor)
         com.newuniverse.nusmp.entity.veldanava.pocket.PocketLabyrinth.register(NeoForge.EVENT_BUS);             // 3.14.0: Dimensional Labyrinth's pocket maze (nusmp:trial)
         com.newuniverse.nusmp.entity.zogratis.LuciusGodEffects.init();
         com.newuniverse.nusmp.entity.zogratis.LuciusGodEffects.EFFECTS.register(modEventBus);

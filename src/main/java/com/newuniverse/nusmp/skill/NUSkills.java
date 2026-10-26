@@ -269,4 +269,6 @@ public final class NUSkills {
     // ---- 3.18.0: Solomon, Lord of Sorcery (the fourth Veldanava ultimate skill) ----
     public static final DeferredHolder<ManasSkill, com.newuniverse.nusmp.entity.veldanava.skills.SolomonSkill> SOLOMON =
             SKILLS.register("solomon", com.newuniverse.nusmp.entity.veldanava.skills.SolomonSkill::new);
+    public static final DeferredHolder<ManasSkill, com.newuniverse.nusmp.entity.veldanava.skills.HerculesSkill> HERCULES =
+            SKILLS.register("hercules", com.newuniverse.nusmp.entity.veldanava.skills.HerculesSkill::new);
 }

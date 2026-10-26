@@ -1,5 +1,33 @@
 # Changelog
 
+## [3.19.0] — Hercules, Lord of Martial Prowess (the fifth and last Veldanava Ultimate skill)
+
+### NEW
+- **Hercules, Lord of Martial Prowess** (owner: "Solomon and Hercules as actual skills come next ... yes make them"), ten modes from the owner's spec, taken from the Will of the Creator screen (the card is open now) or `/veldanava skill hercules`:
+  - **Passives (toggles)**: Adamantine Body (90% less physical, 50% less magic damage; immune to knockback, fire, fall damage and Temporal Stutter), God of Strength (melee x3, x4.5 mastered; blocks up to obsidian break in one hit; a blow's shockwave hurts the enemies around the one struck), Unstoppable Momentum (more than 3 s of movement gives three stages of attack speed, move speed and armour pierce), Colossal Vigor (out-of-combat regeneration, melee blows heal in combat).
+  - **Actives**: Earth-Shattering Tremor (leap, and the landing shatters the ground and unbalances enemies within 14 blocks), Invictus (crouch + press; 10 s with a health floor of 1 and melee that grows as health falls), Titan's Grip (pulls the enemy in sight, a flying boss too, into melee range and locks it), Devastating Throw (crouch + press; hurls an enemy or a chunk of ground along your look), Battle Roar (cleanses you, Fear and Temporal Stutter on enemies within 30 blocks).
+  - **Mastery**: World-Breaking Strike (15K MP, 180 s): one punch that shatters Michael's Castle Guard, Uriel's prison, a Seraphim's guard, other players' pockets and the enemy's fields, breaks armour (new effect **Shattered Armour**), lays a heavy Temporal Debt and hits up to eight enemies.
+  - Costs and cooldowns by mastery like the other four skills (see `docs/veldanava_skills.md`).
+- **Hercules VFX** (`HerculesLayer`, ten new shapes, 17 textures): golden fists and laurels, cracking ground, shock rings, chains and plates of adamantine.
+- **Three server settings** in `nusmp-veldanava-skills-server.toml`, each restoring the plain behaviour: `herculesTerrainDamage` (tremor, throw crater and lifted chunk remove blocks), `herculesBlockBreak` (one-hit mining), `herculesShockwave` (a heavy blow hurts the enemies around).
+- **Shattered Armour** effect (`nusmp:armor_break`): armour and toughness fall to nothing.
+- Tests: `HerculesRulesTest`, `HerculesShapesTest`, the extended `JudgmentRulesTest` and `JudgmentSourceScanTest`, and the smoke prefix `hercules` (`hercules.rules`, `hercules.skill`, `hercules.conditions`).
+
+### REPLACED
+- Nothing. (The Hercules card was sealed; it is open now. The old "Hercules is sealed" test lines were changed to match, as all five cards are open.)
+
+### KEPT
+- Everything of 3.18.0 and earlier: the other four skills, their numbers, the animated icons (default ANIMATED), and the Time Magic VFX (untouched).
+
+### Cost (CLAUDE.md rule 11)
+- Per press at most one box query (landing, roar, strike, throw's blast) and one effect packet; Throw: one field of at most 9 pulses, at most 8 creatures on the way, 12 in the blast, 60 blocks; Tremor at most 24 creatures and 240 blocks; Strike at most 8 creatures. Per second per owner: two attribute checks and one heal, no box query. Memory: three small UUID maps. No entity spawns, no chunk loads. Full list in `docs/veldanava_skills.md`.
+
+### Touched shared files
+- `VeldanavaBoss` gains `shatterSpatial()` (drops the Seraphim guard and ends Uriel's prison); `JudgmentEffects` gains Shattered Armour; `JudgmentConfig` gains three keys; `JudgmentRules` lists Hercules; `VfxShape` is appended to.
+
+### Not included
+- Not played in a real game. The client does not predict one-hit mining (the server decides). The leap's tremor fires on a landing that raises a fall event (a landing in water wastes it). The Strike shatters only the barriers this mod defines. See the honest limits in `docs/veldanava_skills.md`.
+
 ## [3.18.0] — Solomon, Lord of Sorcery (the fourth Veldanava Ultimate skill)
 
 ### NEW

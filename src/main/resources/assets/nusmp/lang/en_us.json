@@ -18290,5 +18290,19 @@
   "nusmp.skill.mode.solomon.realm_of_magic": "Realm of Magic",
   "nusmp.skill.mode.solomon.spell_chain": "Spell Chain",
   "nusmp.skill.mode.solomon.mana_zone_erasure": "Mana Zone Erasure",
-  "nusmp.skill.mode.solomon.the_72_pillars": "The 72 Pillars"
+  "nusmp.skill.mode.solomon.the_72_pillars": "The 72 Pillars",
+  "nusmp.skill.hercules": "Hercules, Lord of Martial Prowess",
+  "nusmp.skill.hercules.description": "The Lord of Martial Prowess. Four passives (Adamantine Body, God of Strength, Unstoppable Momentum, Colossal Vigor), five feats of arms (Earth-Shattering Tremor, Invictus, Titan's Grip, Devastating Throw, Battle Roar) and, once mastered, World-Breaking Strike: one punch that shatters the barriers of the world, breaks armour and lays a heavy Temporal Debt on what it hits.",
+  "nusmp.skill.hercules.mastered": "Hercules is mastered: World-Breaking Strike answers you, every feat costs less and cools down faster, and your blows, your regeneration and your momentum grow stronger.",
+  "nusmp.skill.mode.hercules.adamantine_body": "Adamantine Body",
+  "nusmp.skill.mode.hercules.god_of_strength": "God of Strength",
+  "nusmp.skill.mode.hercules.unstoppable_momentum": "Unstoppable Momentum",
+  "nusmp.skill.mode.hercules.colossal_vigor": "Colossal Vigor",
+  "nusmp.skill.mode.hercules.earth_shattering_tremor": "Earth-Shattering Tremor",
+  "nusmp.skill.mode.hercules.invictus": "Invictus",
+  "nusmp.skill.mode.hercules.titans_grip": "Titan's Grip",
+  "nusmp.skill.mode.hercules.devastating_throw": "Devastating Throw",
+  "nusmp.skill.mode.hercules.battle_roar": "Battle Roar",
+  "nusmp.skill.mode.hercules.world_breaking_strike": "World-Breaking Strike",
+  "effect.nusmp.armor_break": "Shattered Armour"
 }

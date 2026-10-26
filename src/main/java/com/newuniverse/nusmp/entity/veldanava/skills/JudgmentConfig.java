@@ -8,7 +8,7 @@ import net.neoforged.neoforge.common.ModConfigSpec;
  */
 public final class JudgmentConfig {
     public static final ModConfigSpec SPEC;
-    public static final ModConfigSpec.BooleanValue ENABLED, REWARD_SCREEN, EXECUTE_PLAYERS, EXECUTE_BOSSES, POCKET_DIMENSION, STRICT_GOVERNANCE, WINGS_FLIGHT, SOLOMON_TERRAIN, SOLOMON_REPLAY, SOLOMON_BYPASS;
+    public static final ModConfigSpec.BooleanValue ENABLED, REWARD_SCREEN, EXECUTE_PLAYERS, EXECUTE_BOSSES, POCKET_DIMENSION, STRICT_GOVERNANCE, WINGS_FLIGHT, SOLOMON_TERRAIN, SOLOMON_REPLAY, SOLOMON_BYPASS, HERCULES_TERRAIN, HERCULES_BREAK, HERCULES_SHOCKWAVE;
     public static final ModConfigSpec.DoubleValue COST_SCALE, COOLDOWN_SCALE, DEBT_DAMAGE, FINAL_CAP, ACTIVE_DAMAGE_CAP;
     public static final ModConfigSpec.IntValue DEBT_MAX, FIELDS_PER_PLAYER, FIELDS_TOTAL;
 
@@ -51,6 +51,12 @@ public final class JudgmentConfig {
                 .define("solomonSpellReplay", true);
         SOLOMON_BYPASS = b.comment("true = Solomon's Omnipotent Magic makes the owner's magic blows ignore armour and resistances (limited by the Balance Law; default since 3.18.0). false = the toggle only gives the foresight and the presence sense.")
                 .define("solomonMagicBypass", true);
+        HERCULES_TERRAIN = b.comment("true = Hercules' Earth-Shattering Tremor, Devastating Throw (a chunk of ground and the place it lands) dig craters (at most 240 blocks a tremor, 60 a throw, never in the Dungeon, never with the mobGriefing rule off; default since 3.19.0). false = they only hurt, the ground is left alone and no chunk can be lifted.")
+                .define("herculesTerrainDamage", true);
+        HERCULES_BREAK = b.comment("true = Hercules' God of Strength breaks any block of hardness up to 50 in one hit (never in the Dungeon; default since 3.19.0). false = the owner mines at the normal speed.")
+                .define("herculesBlockBreak", true);
+        HERCULES_SHOCKWAVE = b.comment("true = Hercules' God of Strength throws a shockwave from every melee hit that hurts up to six more enemies within 3 blocks (default since 3.19.0). false = a melee hit hurts only the one it lands on.")
+                .define("herculesShockwave", true);
         b.pop();
         SPEC = b.build();
     }
@@ -86,6 +92,12 @@ public final class JudgmentConfig {
     public static boolean solomonReplay() { return get(SOLOMON_REPLAY); }
 
     public static boolean solomonBypass() { return get(SOLOMON_BYPASS); }
+
+    public static boolean herculesTerrain() { return get(HERCULES_TERRAIN); }
+
+    public static boolean herculesBreak() { return get(HERCULES_BREAK); }
+
+    public static boolean herculesShockwave() { return get(HERCULES_SHOCKWAVE); }
 
     public static int debtMax() { return get(DEBT_MAX); }
 

@@ -56,7 +56,7 @@ class JudgmentSourceScanTest {
             String n = p.getFileName().toString();
             assertFalse(c.contains("ParticleTypes."), n + " names a vanilla particle (go through VfxSpawn)");
             assertFalse(c.contains("sendParticles("), n + " sends particles itself");
-            if (!n.equals("JudgmentFx.java") && !n.equals("TrialFx.java") && !n.equals("JibrilFx.java") && !n.equals("SolomonFx.java")) assertFalse(c.contains("VfxSpawn."), n + " sends an effect outside JudgmentFx, TrialFx, JibrilFx and SolomonFx");
+            if (!n.equals("JudgmentFx.java") && !n.equals("TrialFx.java") && !n.equals("JibrilFx.java") && !n.equals("SolomonFx.java") && !n.equals("HerculesFx.java")) assertFalse(c.contains("VfxSpawn."), n + " sends an effect outside JudgmentFx, TrialFx, JibrilFx, SolomonFx and HerculesFx");
         }
         String fx = file("JudgmentFx");
         assertEquals(Pattern.compile("VfxSpawn\\.send(Following)?\\(").matcher(fx).results().count(), Pattern.compile("VfxShape\\.JUDGMENT_").matcher(fx).results().count(), "each packet draws exactly one Judgment shape");
@@ -66,6 +66,8 @@ class JudgmentSourceScanTest {
         assertEquals(Pattern.compile("VfxSpawn\\.send(Following)?\\(").matcher(jibril).results().count(), Pattern.compile("VfxShape\\.JIBRIL_").matcher(jibril).results().count(), "each packet draws exactly one Jibril shape");
         String solomon = file("SolomonFx");
         assertEquals(Pattern.compile("VfxSpawn\\.send(Following)?\\(").matcher(solomon).results().count(), Pattern.compile("VfxShape\\.SOLOMON_").matcher(solomon).results().count(), "each packet draws exactly one Solomon shape");
+        String hercules = file("HerculesFx");
+        assertEquals(Pattern.compile("VfxSpawn\\.send(Following)?\\(").matcher(hercules).results().count(), Pattern.compile("VfxShape\\.HERCULES_").matcher(hercules).results().count(), "each packet draws exactly one Hercules shape");
     }
 
     @Test
@@ -73,7 +75,7 @@ class JudgmentSourceScanTest {
         for (Path p : files()) {
             String c = code(read(p));
             String n = p.getFileName().toString();
-            if (n.equals("JudgmentSelfTests.java") || n.equals("IsrafilSelfTests.java") || n.equals("JibrilSelfTests.java") || n.equals("SolomonSelfTests.java") || n.equals("SolomonTerrain.java")) continue;
+            if (n.equals("JudgmentSelfTests.java") || n.equals("IsrafilSelfTests.java") || n.equals("JibrilSelfTests.java") || n.equals("SolomonSelfTests.java") || n.equals("SolomonTerrain.java") || n.equals("HerculesSelfTests.java") || n.equals("HerculesTerrain.java")) continue;
             for (String banned : new String[]{"getChunk(", "getChunkAt(", "setBlock(", "destroyBlock(", "addFreshEntity", "new ItemEntity", "setBlockAndUpdate(", "explode("})
                 assertFalse(c.contains(banned), n + " uses " + banned);
         }
@@ -143,7 +145,7 @@ class JudgmentSourceScanTest {
         String main = code(read(SRC.resolve("NUSMP.java")));
         assertTrue(main.contains("ModConfig.Type.SERVER, com.newuniverse.nusmp.entity.veldanava.skills.JudgmentConfig.SPEC, \"nusmp-veldanava-skills-server.toml\""), "the skill's settings change gameplay, so they are a SERVER config");
         String cfg = file("JudgmentConfig");
-        for (String key : new String[]{"enabled", "rewardScreen", "costScale", "cooldownScale", "debtDamage", "finalJudgmentCap", "activeDamageCap", "executePlayers", "executeBosses", "debtMax", "fieldsPerPlayer", "fieldsTotal", "pocketDimension", "strictGovernance", "wingsFlight", "solomonTerrainDamage", "solomonSpellReplay", "solomonMagicBypass"})
+        for (String key : new String[]{"enabled", "rewardScreen", "costScale", "cooldownScale", "debtDamage", "finalJudgmentCap", "activeDamageCap", "executePlayers", "executeBosses", "debtMax", "fieldsPerPlayer", "fieldsTotal", "pocketDimension", "strictGovernance", "wingsFlight", "solomonTerrainDamage", "solomonSpellReplay", "solomonMagicBypass", "herculesTerrainDamage", "herculesBlockBreak", "herculesShockwave"})
             assertTrue(cfg.contains("\"" + key + "\""), "config key missing: " + key);
         assertTrue(cfg.contains("executePlayers\", true") && cfg.contains("executeBosses\", false"), "players are executed by default (owner, 3.14.0), bosses are not");
     }
@@ -218,6 +220,14 @@ class JudgmentSourceScanTest {
         String solomonTests = file("SolomonSelfTests");
         for (String key : new String[]{"solomon.rules", "solomon.skill", "solomon.conditions"}) assertTrue(solomonTests.contains("\"" + key + "\""), "self-test missing: " + key);
         assertTrue(code(read(SRC.resolve("NUSMP.java"))).contains("SolomonSelfTests.register()") && code(read(SRC.resolve("NUSMP.java"))).contains("SolomonEvents.register("), "Solomon's tests and events are wired");
+        assertTrue(Files.exists(RES.resolve("assets/nusmp/textures/skill/veldanava/hercules.png")), "missing Hercules icon");
+        for (String k : new String[]{"nusmp.skill.hercules", "nusmp.skill.hercules.description", "nusmp.skill.hercules.mastered", "effect.nusmp.armor_break"})
+            assertTrue(lang.has(k), "missing lang key " + k);
+        for (JudgmentRules.Mode m : HerculesRules.HERCULES.modes()) assertTrue(lang.has("nusmp.skill.mode.hercules." + m.id()), "missing lang key for mode " + m.id());
+        assertTrue(Pattern.compile("SMOKE_EXPECT:[^\\n]*[\", ]hercules[\",]").matcher(smoke).find(), "the smoke list must expect the hercules self-tests");
+        String herculesTests = file("HerculesSelfTests");
+        for (String key : new String[]{"hercules.rules", "hercules.skill", "hercules.conditions"}) assertTrue(herculesTests.contains("\"" + key + "\""), "self-test missing: " + key);
+        assertTrue(code(read(SRC.resolve("NUSMP.java"))).contains("HerculesSelfTests.register()") && code(read(SRC.resolve("NUSMP.java"))).contains("HerculesEvents.register("), "Hercules' tests and events are wired");
     }
 
     @Test
@@ -237,6 +247,28 @@ class JudgmentSourceScanTest {
         String ev = file("SolomonEvents");
         assertEquals(0, Pattern.compile("PlayerTickEvent|EntityTickEvent|LevelTickEvent|ServerTickEvent").matcher(ev.replaceAll("import [^;]+;", "")).results().count(), "Solomon's events add no tick hook (its second runs from the skill)");
         for (String way : new String[]{"onDeath", "onLogout", "onServerStopping"}) assertTrue(ev.contains(way), "Solomon's state is cleaned up on " + way);
+    }
+
+    @Test
+    void herculesAreaWorkTerrainAndThrowAreCappedAndBehindTheirSettings() throws IOException {
+        String skill = file("HerculesSkill");
+        for (String cap : new String[]{"TREMOR_MAX_CREATURES", "TREMOR_MAX_BLOCKS", "ROAR_MAX", "STRIKE_MAX", "ROAR_CLEANSE_MAX"})
+            assertTrue(skill.contains(cap), "Hercules' area work is capped by " + cap);
+        assertFalse(skill.contains("getEntities(") || skill.contains("getAllEntities("), "an unbounded entity walk in Hercules");
+        assertEquals(1, Pattern.compile("getEntitiesOfClass\\(").matcher(skill).results().count(), "one shared box query helper");
+        assertFalse(skill.contains("setBlock(") || skill.contains("destroyBlock(") || skill.contains("addFreshEntity"), "Hercules' skill changes blocks only through HerculesTerrain and spawns nothing");
+        String terrain = file("HerculesTerrain");
+        assertEquals(1, Pattern.compile("\\.setBlock\\(").matcher(terrain).results().count(), "one place removes blocks");
+        for (String guard : new String[]{"JudgmentConfig.herculesTerrain()", "RULE_MOBGRIEFING", "DungeonGuard.on(", "isLoaded(", "SolomonTerrain.breakable("})
+            assertTrue(terrain.contains(guard), "the terrain is guarded by " + guard);
+        String thrown = file("HerculesThrow");
+        assertTrue(thrown.contains("THROW_MAX_HITS") && thrown.contains("THROW_BLAST_MAX") && thrown.contains("THROW_CRATER_BLOCKS") && thrown.contains("THROW_MAX_TICKS"), "the throw is capped in hits, blast, crater and time");
+        assertFalse(thrown.contains("setBlock(") || thrown.contains("destroyBlock(") || thrown.contains("addFreshEntity"), "the throw changes blocks only through HerculesTerrain and spawns nothing");
+        String ev = file("HerculesEvents");
+        assertEquals(0, Pattern.compile("PlayerTickEvent|EntityTickEvent|LevelTickEvent|ServerTickEvent").matcher(ev.replaceAll("import [^;]+;", "")).results().count(), "Hercules' events add no tick hook (its second runs from the skill)");
+        for (String way : new String[]{"onDeath", "onLogout", "onServerStopping"}) assertTrue(ev.contains(way), "Hercules' state is cleaned up on " + way);
+        assertTrue(ev.contains("JudgmentConfig.herculesBreak()") && ev.contains("JudgmentConfig.herculesShockwave()"), "block breaking and the shockwave sit behind their settings");
+        assertTrue(ev.contains("HerculesState.take("), "the shockwave and the body picture are spaced");
     }
 
     @Test

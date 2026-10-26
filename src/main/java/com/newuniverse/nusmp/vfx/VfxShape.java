@@ -420,7 +420,27 @@ public enum VfxShape {
     SOLOMON_MARK,
     SOLOMON_PILLAR,
     SOLOMON_SKIN,
-    SOLOMON_ABSORB;
+    // HERCULES_LEAP: Earth-Shattering Tremor take-off, sent at the caster's feet: from = its feet, to = the point the leap is aimed at (up to 24 blocks ahead; the same as from for a straight jump), power = 1, 16 ticks: a ring of dust and bronze shards blown out of the ground, a short upward shock column, speed lines that trail the rising body.
+    // HERCULES_TREMOR: Earth-Shattering Tremor landing, sent at the ground point of the landing: from = that point, power = radius (14 in game), 44 ticks: a crater press, three shock rings that run out over the ground to the radius, cracks that radiate and glow gold, slabs of rock lifted and falling back, a column of dust; camera shake.
+    // HERCULES_INVICTUS: Invictus, sent FOLLOWING the caster and re-sent every 80 ticks for the ten seconds it lasts: from = its centre, power = size (~1.6), 100 ticks (fades in over 10 and out over 10): a laurel crown of gold over the head, a flame-like aura of bronze and gold along the body, motes of embers.
+    // HERCULES_GRIP: Titan's Grip, sent at the caster: from = its centre, to = the centre of the creature that is pulled (1-40 blocks), power = 1, 24 ticks: a huge bronze hand of light opens round the target, closes on it, and heavy force chains of gold run from it to the caster with a pull of speed lines along the line.
+    // HERCULES_THROW: Devastating Throw, sent at the thrown creature or the lifted block: from = where it is hurled from, to = the point it lands (up to 40 blocks away), power = 1, 30 ticks: a hurled streak with a cone of shock and torn-up dust along the flight, and a heavy burst of rock and light where it lands.
+    // HERCULES_ROAR: Battle Roar, sent at the caster: from = its centre, power = radius (30 in game), 36 ticks: a lion's roar drawn as three thick rings that run out to the radius with a bronze dome behind them, laurel leaves torn from the caster and blown outward, the ground ringing; camera shake.
+    // HERCULES_STRIKE: World-Breaking Strike, sent at the caster: from = its centre, to = the point of the punch, 4-8 blocks ahead along its look direction, power = 1, 44 ticks: the whole body winds up into one giant fist of gold and bronze, the punch lands and the air itself cracks like glass (a web of bright cracks in a disc facing the caster), shards of space fly out, a white-gold flash and a shock ring; camera shake.
+    // HERCULES_SHOCKWAVE: God of Strength, sent at the point a heavy blow lands: from = that point, power = radius (3 in game), 12 ticks: a flat ring of dust and light with a few stones thrown up. Cheap; the server sends at most one per player every 6 ticks.
+    // HERCULES_BODY: Adamantine Body turned a blow aside, sent at the wearer: from = its centre, power = size (~1.5), 12 ticks: bronze plates flash on the body for an instant and ring out, with sparks. At most one every 10 ticks per wearer.
+    // HERCULES_MOMENTUM: Unstoppable Momentum has grown to the next stage, sent FOLLOWING the runner: from = its centre, power = stage (1, 2 or 3), 40 ticks: speed lines and a trail of afterimages behind the body, a wind ring at the feet; the higher the stage, the more lines.
+    SOLOMON_ABSORB,
+    HERCULES_LEAP,
+    HERCULES_TREMOR,
+    HERCULES_INVICTUS,
+    HERCULES_GRIP,
+    HERCULES_THROW,
+    HERCULES_ROAR,
+    HERCULES_STRIKE,
+    HERCULES_SHOCKWAVE,
+    HERCULES_BODY,
+    HERCULES_MOMENTUM;
 
     public static VfxShape byId(int id) {
         VfxShape[] v = values();
