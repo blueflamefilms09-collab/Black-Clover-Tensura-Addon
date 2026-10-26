@@ -18251,7 +18251,7 @@
   "nusmp.veldanava.skills.sealed": "Sealed",
   "nusmp.veldanava.skills.yours": "Yours",
   "nusmp.skill.israfil": "Israfil, Lord of Trials",
-  "nusmp.skill.israfil.description": "The Archangel of the Trial. Four passives (Spatial Domination, Trial of Endurance, Labyrinthian Mind, Weight of Consequence), five trials (Dimensional Labyrinth, Weight of Sins, Spatial Collapse, Coordinate Shift, Rift Walk) and, once mastered, The Grand Trumpet: a sound that silences everything within a hundred blocks. The four passives are one switch: turn the skill ON in Tensura's skill toggle and all four run together; OFF stops them all.",
+  "nusmp.skill.israfil.description": "The Archangel of the Trial. Four passives (Spatial Domination, Trial of Endurance, Labyrinthian Mind, Weight of Consequence), five trials (Dimensional Labyrinth, Weight of Sins, Spatial Collapse, Coordinate Shift, Rift Walk) and, once mastered, The Grand Trumpet: a sound that silences everything within a hundred blocks. The four passives are one switch: turn the skill ON in Tensura's skill toggle and all four run together; OFF stops them all. Since 3.22.0 the trials hit: the Grand Trumpet is a blast that falls off with distance, Coordinate Shift shears the creature it trades places with, and a Spatial Collapse that runs out implodes once more for a last share of everyone inside.",
   "nusmp.skill.israfil.mastered": "Israfil is mastered: The Grand Trumpet answers you, the trials cost less and cool down faster, and blows that reach you are bent aside.",
   "nusmp.skill.mode.israfil.spatial_domination": "Spatial Domination",
   "nusmp.skill.mode.israfil.trial_of_endurance": "Trial of Endurance",

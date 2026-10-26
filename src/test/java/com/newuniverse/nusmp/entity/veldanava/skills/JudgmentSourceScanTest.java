@@ -145,7 +145,7 @@ class JudgmentSourceScanTest {
         String main = code(read(SRC.resolve("NUSMP.java")));
         assertTrue(main.contains("ModConfig.Type.SERVER, com.newuniverse.nusmp.entity.veldanava.skills.JudgmentConfig.SPEC, \"nusmp-veldanava-skills-server.toml\""), "the skill's settings change gameplay, so they are a SERVER config");
         String cfg = file("JudgmentConfig");
-        for (String key : new String[]{"enabled", "rewardScreen", "costScale", "cooldownScale", "debtDamage", "finalJudgmentCap", "activeDamageCap", "executePlayers", "executeBosses", "debtMax", "fieldsPerPlayer", "fieldsTotal", "masterToggle", "herculesUpgrades", "sandalphonUpgrades", "pocketDimension", "strictGovernance", "wingsFlight", "solomonTerrainDamage", "solomonSpellReplay", "solomonMagicBypass", "herculesTerrainDamage", "herculesBlockBreak", "herculesShockwave"})
+        for (String key : new String[]{"enabled", "rewardScreen", "costScale", "cooldownScale", "debtDamage", "finalJudgmentCap", "activeDamageCap", "executePlayers", "executeBosses", "debtMax", "fieldsPerPlayer", "fieldsTotal", "masterToggle", "herculesUpgrades", "sandalphonUpgrades", "israfilUpgrades", "pocketDimension", "strictGovernance", "wingsFlight", "solomonTerrainDamage", "solomonSpellReplay", "solomonMagicBypass", "herculesTerrainDamage", "herculesBlockBreak", "herculesShockwave"})
             assertTrue(cfg.contains("\"" + key + "\""), "config key missing: " + key);
         assertTrue(cfg.contains("executePlayers\", true") && cfg.contains("executeBosses\", false"), "players are executed by default (owner, 3.14.0), bosses are not");
     }
@@ -205,7 +205,7 @@ class JudgmentSourceScanTest {
         for (JudgmentRules.Mode m : IsrafilRules.ISRAFIL.modes()) assertTrue(lang.has("nusmp.skill.mode.israfil." + m.id()), "missing lang key for mode " + m.id());
         assertTrue(Pattern.compile("SMOKE_EXPECT:[^\\n]*[\", ]israfil[\",]").matcher(smoke).find(), "the smoke list must expect the israfil self-tests");
         String israfilTests = file("IsrafilSelfTests");
-        for (String key : new String[]{"israfil.rules", "israfil.skill", "israfil.conditions"}) assertTrue(israfilTests.contains("\"" + key + "\""), "self-test missing: " + key);
+        for (String key : new String[]{"israfil.rules", "israfil.skill", "israfil.conditions", "israfil.upgrades"}) assertTrue(israfilTests.contains("\"" + key + "\""), "self-test missing: " + key);
         assertTrue(code(read(SRC.resolve("NUSMP.java"))).contains("IsrafilSelfTests.register()") && code(read(SRC.resolve("NUSMP.java"))).contains("IsrafilEvents.register("), "Israfil's tests and events are wired");
         assertTrue(Files.exists(RES.resolve("assets/nusmp/textures/skill/veldanava/jibril.png")), "missing Jibril icon");
         for (String k : new String[]{"nusmp.skill.jibril", "nusmp.skill.jibril.description", "nusmp.skill.jibril.mastered"})

@@ -245,4 +245,16 @@ class JudgmentRulesTest {
         assertTrue(JudgmentRules.GUILLOTINE_BELOW > JudgmentRules.EXECUTE_BELOW, "the blade finishes sooner than Condemnation does, only on a sigil");
         assertTrue(JudgmentRules.VERDICT_TOLL_SHARE > 0 && JudgmentRules.VERDICT_TOLL_SHARE <= 0.1);
     }
+
+    @Test
+    void theIsrafilUpgradesOfThreeTwentyTwoAreBoundedAndFallOff() {
+        assertEquals(IsrafilRules.TRUMPET_DAMAGE, IsrafilRules.trumpetDamage(0.0), 1.0E-9);
+        assertEquals(IsrafilRules.TRUMPET_DAMAGE * IsrafilRules.TRUMPET_FALLOFF_MIN, IsrafilRules.trumpetDamage(IsrafilRules.TRUMPET_RADIUS), 1.0E-9, "a quarter of the blow at the rim");
+        assertEquals(0.0, IsrafilRules.trumpetDamage(IsrafilRules.TRUMPET_RADIUS + 0.5));
+        assertEquals(0.0, IsrafilRules.trumpetDamage(-2.0));
+        assertTrue(IsrafilRules.trumpetDamage(10.0) > IsrafilRules.trumpetDamage(50.0), "the blast falls off with distance");
+        assertTrue(IsrafilRules.TRUMPET_DAMAGE < IsrafilRules.COLLAPSE_DAMAGE * 1.5, "the Trumpet's blow is not above a Collapse's");
+        assertTrue(IsrafilRules.SHIFT_SHEAR_DAMAGE < IsrafilRules.SINS_BASE_DAMAGE * 1.5);
+        assertTrue(IsrafilRules.NIHILITY_FINAL_SHARE > IsrafilRules.NIHILITY_PULSE_SHARE && IsrafilRules.NIHILITY_FINAL_SHARE <= 0.15);
+    }
 }

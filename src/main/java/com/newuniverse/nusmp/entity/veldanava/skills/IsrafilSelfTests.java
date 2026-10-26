@@ -37,6 +37,7 @@ public final class IsrafilSelfTests {
         SelfTests.register("israfil.skill", IsrafilSelfTests::skill);
         SelfTests.register("israfil.conditions", IsrafilSelfTests::conditions);
         SelfTests.register("israfil.pocket", IsrafilSelfTests::pocket);
+        SelfTests.register("israfil.upgrades", IsrafilSelfTests::upgrades);
     }
 
     private static Result rules(MinecraftServer server) {
@@ -181,6 +182,40 @@ public final class IsrafilSelfTests {
             IsrafilState.clear(p);
             JudgmentState.write(p, 0);
             z.discard();
+        }
+    }
+    // ---------------------------------------------------------------- 3.22.0: the numbers of the upgrades, and the Trumpet's blast on a live zombie
+    private static Result upgrades(MinecraftServer server) {
+        if (IsrafilRules.trumpetDamage(0.0) != IsrafilRules.TRUMPET_DAMAGE) return Result.fail("the Trumpet is not at full strength close in");
+        double rim = IsrafilRules.trumpetDamage(IsrafilRules.TRUMPET_RADIUS);
+        if (Math.abs(rim - IsrafilRules.TRUMPET_DAMAGE * IsrafilRules.TRUMPET_FALLOFF_MIN) > 1.0E-9) return Result.fail("the Trumpet's rim blow is wrong: " + rim);
+        if (IsrafilRules.trumpetDamage(IsrafilRules.TRUMPET_RADIUS + 1.0) != 0.0 || IsrafilRules.trumpetDamage(-1.0) != 0.0) return Result.fail("the Trumpet hurts outside its radius");
+        if (IsrafilRules.trumpetDamage(30.0) <= IsrafilRules.trumpetDamage(60.0)) return Result.fail("the Trumpet does not fall off with distance");
+        if (IsrafilRules.NIHILITY_FINAL_SHARE <= 0 || IsrafilRules.NIHILITY_FINAL_SHARE > 0.15 || IsrafilRules.SHIFT_SHEAR_DAMAGE <= 0) return Result.fail("the last implosion or the shear is out of range");
+        if (!JudgmentConfig.israfilUpgrades()) return Result.ok("the numbers hold; the upgrades are off in this config, so the live check was skipped");
+
+        ServerLevel sl = server.overworld();
+        BlockPos at = sl.getSharedSpawnPos().above(3);
+        FakePlayer p = SelfTests.standIn(sl, "israfil_up", at.getX() + 0.5, at.getY(), at.getZ() + 0.5);
+        VeldanavaSkills.revoke(p);
+        Mob zombie = EntityType.ZOMBIE.create(sl);
+        if (zombie == null) return Result.fail("could not make the test creature");
+        zombie.moveTo(at.getX() + 6.5, at.getY(), at.getZ() + 0.5);
+        sl.addFreshEntity(zombie);
+        try {
+            var holder = VeldanavaSkills.holder("israfil");
+            if (holder == null || !VeldanavaSkills.grant(p, "israfil")) return Result.fail("Israfil could not be granted");
+            ManasSkillInstance i = SkillAPI.getSkillsFrom(p).getSkill(holder.getId()).orElse(null);
+            if (i == null) return Result.fail("no skill instance");
+            IsrafilSkill.trumpet(i, p);
+            if (zombie.isAlive()) return Result.fail("the Trumpet's blast did not hurt a hostile creature (it still has " + zombie.getHealth() + " HP)");
+            if (JudgmentDamage.trueActive()) return Result.fail("the true-damage flag is stuck on");
+            return Result.ok("the numbers hold; the Trumpet's blast killed a zombie");
+        } finally {
+            zombie.discard();
+            JudgmentFields.clearAll();
+            JudgmentState.write(p, 0);
+            VeldanavaSkills.revoke(p);
         }
     }
 }

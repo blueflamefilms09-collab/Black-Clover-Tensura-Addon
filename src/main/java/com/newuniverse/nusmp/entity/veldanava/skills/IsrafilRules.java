@@ -79,6 +79,17 @@ public final class IsrafilRules {
     public static final double TRUMPET_RADIUS = 100.0;
     public static final int TRUMPET_MAX_TARGETS = 48, TRUMPET_SILENCE_TICKS = 200, TRUMPET_COOLDOWN_SECONDS = 60, TRUMPET_MAX_MODES = 16;
 
+    // ---------------------------------------------------------------- 3.22.0 upgrades (setting israfilUpgrades)
+    /** The Trumpet's blast (true damage, falls off with distance to a share of this at the rim), Coordinate Shift's shear on the creature it trades places with, the last implosion of a Nihility Collapse that runs out (share of maximum health). */
+    public static final double TRUMPET_DAMAGE = 150.0, TRUMPET_FALLOFF_MIN = 0.25, SHIFT_SHEAR_DAMAGE = 70.0, NIHILITY_FINAL_SHARE = 0.08;
+
+    /** The Trumpet's blow at a distance: full close in, falling in a straight line to {@link #TRUMPET_FALLOFF_MIN} of it at the radius; zero outside the radius. */
+    public static double trumpetDamage(double distance) {
+        if (distance < 0.0 || distance > TRUMPET_RADIUS) return 0.0;
+        double k = 1.0 - (1.0 - TRUMPET_FALLOFF_MIN) * (distance / TRUMPET_RADIUS);
+        return TRUMPET_DAMAGE * k;
+    }
+
     // ---------------------------------------------------------------- pure helpers
     /** The part of a blow that Trial of Endurance stores: a share of the blow, never above what still fits. */
     public static double stored(double blow, double alreadyStored) {

@@ -93,8 +93,8 @@ public class IsrafilSkill extends VeldanavaSkillBase {
             case 4 -> labyrinth(p, mastered);
             case 5 -> sins(i, p);
             case 6 -> collapse(i, p);
-            case 7 -> shift(p);
-            default -> trumpet(p);
+            case 7 -> shift(i, p);
+            default -> trumpet(i, p);
         };
     }
 
@@ -216,11 +216,32 @@ public class IsrafilSkill extends VeldanavaSkillBase {
                 JudgmentDamage.share(owner, t, IsrafilRules.NIHILITY_PULSE_SHARE);
             }
         }
+
+        /** The last implosion: only when the field runs out by itself (not evicted, cleared or ownerless), the owner online and alive in this level; one bounded box query. */
+        @Override
+        public void end(ServerLevel level, JudgmentFields.Field f) {
+            if (!JudgmentConfig.israfilUpgrades() || level.getGameTime() < f.endsAt) return;
+            ServerPlayer owner = level.getServer().getPlayerList().getPlayer(f.owner);
+            if (owner == null || !owner.isAlive() || owner.serverLevel() != level) return;
+            AABB box = new AABB(f.center, f.center).inflate(f.radius, 3.0, f.radius);
+            double r2 = f.radius * f.radius;
+            int hit = 0;
+            for (LivingEntity t : level.getEntitiesOfClass(LivingEntity.class, box, x -> x.isAlive() && !x.isSpectator() && x != owner && !x.isAlliedTo(owner))) {
+                if (hit >= JudgmentRules.MAX_FIELD_TARGETS) break;
+                double dx = t.getX() - f.center.x, dz = t.getZ() - f.center.z;
+                if (dx * dx + dz * dz > r2) continue;
+                hit++;
+                JudgmentDamage.share(owner, t, IsrafilRules.NIHILITY_FINAL_SHARE);
+                IsrafilState.pull(t, f.center, IsrafilRules.COLLAPSE_PULL);
+            }
+            if (hit > 0) TrialFx.collapse(level, f.center, (float) (f.radius * 0.6), 10);
+        }
     };
 
     /** Coordinate Shift: swaps places with the creature in the line of sight, or with the projectile nearest to it; every mob that was after the owner forgets who it was fighting. */
-    private static boolean shift(ServerPlayer p) {
+    private static boolean shift(ManasSkillInstance i, ServerPlayer p) {
         ServerLevel l = p.serverLevel();
+        boolean shear = JudgmentConfig.israfilUpgrades();
         Entity other = JudgmentState.first(p, IsrafilRules.SHIFT_RANGE, 1.2);
         if (other == null) other = projectile(p);
         if (other == null) { fail(p, "Nothing in your sight to trade places with."); return false; }
@@ -231,6 +252,7 @@ public class IsrafilSkill extends VeldanavaSkillBase {
         TrialFx.shift(l, mine, theirs);
         IsrafilState.place(other, l, mine);
         IsrafilState.place(p, l, theirs);
+        if (shear && other instanceof LivingEntity le && le.isAlive() && !le.isAlliedTo(p)) JudgmentDamage.hit(p, le, (float) IsrafilRules.SHIFT_SHEAR_DAMAGE, mastery(p, i));
         return true;
     }
 
@@ -287,8 +309,10 @@ public class IsrafilSkill extends VeldanavaSkillBase {
 
     // ---------------------------------------------------------------- The Grand Trumpet (mastery)
     /** Every creature within a hundred blocks (the forty-eight nearest) falls silent, every skill of an enemy player is put on a cooldown of at least a minute, and every field of another owner there ends. */
-    private static boolean trumpet(ServerPlayer p) {
+    static boolean trumpet(ManasSkillInstance i, ServerPlayer p) {
         ServerLevel l = p.serverLevel();
+        boolean blast = JudgmentConfig.israfilUpgrades();
+        double mastery = mastery(p, i);
         double r = IsrafilRules.TRUMPET_RADIUS;
         List<LivingEntity> near = new ArrayList<>(l.getEntitiesOfClass(LivingEntity.class, p.getBoundingBox().inflate(r, Math.min(r, 64.0), r),
                 x -> x != p && x.isAlive() && !x.isSpectator() && !x.isAlliedTo(p) && x.distanceToSqr(p) <= r * r));
@@ -298,6 +322,7 @@ public class IsrafilSkill extends VeldanavaSkillBase {
             if (n++ >= IsrafilRules.TRUMPET_MAX_TARGETS) break;
             JudgmentEffects.silence(t, IsrafilRules.TRUMPET_SILENCE_TICKS);
             if (t instanceof ServerPlayer sp) resetCooldowns(sp);
+            if (blast) JudgmentDamage.hit(p, t, (float) IsrafilRules.trumpetDamage(Math.sqrt(t.distanceToSqr(p))), mastery);
         }
         JudgmentFields.clearAround(l, p.position(), r, p.getUUID());
         PocketLabyrinth.endNear(l, p.position(), r, p.getUUID());
