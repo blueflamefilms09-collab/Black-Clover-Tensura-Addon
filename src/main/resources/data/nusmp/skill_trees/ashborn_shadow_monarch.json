@@ -11,6 +11,7 @@
   "class_id": "ashborn_shadow_monarch",
   "duplicate_sp": 3,
   "loot_weight": 1,
+  "book_texture": "nusmp:item/skill_book_3d/solo_leveling",
   "nodes": [
     {
       "id": "mantle_of_the_shadow_monarch",

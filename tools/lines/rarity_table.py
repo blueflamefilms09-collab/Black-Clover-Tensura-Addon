@@ -42,6 +42,10 @@ NEW_SKILLS = {
     "ais_sword_princess": "epic", "cha_hae_in_sword": "epic", "baran_demon_monarch": "mythic",
     "tog_anak_zahard": "epic", "tog_rak_wraithraiser": "rare",
     "goh_ilpyo_sword": "rare", "goh_taejin_charyeok": "epic",
+    # 3.28.0: the third batch (docs/skills/evolution_ten_c.md)
+    "gajeel_iron_dragon": "rare", "mirajane_satan_soul": "epic", "gildarts_crash": "mythic", "juvia_water_body": "rare",
+    "ashborn_shadow_monarch": "mythic", "go_gunhee_chairman": "epic", "regis_leywin_devour": "epic",
+    "lee_seolhwa_sword": "rare", "shin_yoosung_child": "rare", "lefiya_viridis_mage": "epic",
 }
 
 # Hand-written rarities. MYTHIC = the monarch / god / sovereign / ultimate-tier lines (about 6 percent of all lines); EPIC = story-level lines; the four hand-built classics.

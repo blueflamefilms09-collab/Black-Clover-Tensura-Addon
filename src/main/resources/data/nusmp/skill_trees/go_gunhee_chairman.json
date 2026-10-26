@@ -11,6 +11,7 @@
   "class_id": "go_gunhee_chairman",
   "duplicate_sp": 3,
   "loot_weight": 1,
+  "book_texture": "nusmp:item/skill_book_3d/solo_leveling",
   "nodes": [
     {
       "id": "veteran_s_stance",
