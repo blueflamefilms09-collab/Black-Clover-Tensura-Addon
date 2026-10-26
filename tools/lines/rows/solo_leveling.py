@@ -1120,3 +1120,95 @@ LINES.append(Line(
                "text": "Survive 15 blows that would have left you at 2 health or less while Tiger's Claws is switched on to awaken the White Tiger.",
                "ultimate_name": "Ultimate Skill, White Tiger Awakened"},
 ))
+
+# ---------------------------------------------------------------------------------------------------------------------------------- 28 (3.27.0, Evolution skill, docs/skills/evolution_ten_b.md row 5)
+LINES.append(Line(
+    id="cha_hae_in_sword", name="Cha Hae-In's Sword", franchise=F,
+    desc="The S-rank sword hunter who smells mana the way others hear a voice: she reads her prey before it moves, marks the weak point and finishes it with a single thrust. Evolves after thirty elite kills.",
+    color="#c2e6ff", background="city", icon="minecraft:iron_sword",
+    book_name="Vice Guild Master's Sword Log", book_lore="She smells the fight before she sees it, and she has never once been wrong about who is lying.",
+    stances=[
+        S("Hunter's Poise", "A swordswoman's balanced stance: faster, sharper crits and a little more damage.", "minecraft:iron_sword", speed_pct=0.1, crit_chance=0.1, damage_pct=0.1, vfx="WIND_SLASH"),
+        S("Mana Sense", "Breathe in and read the room: slow, patient and healing, with a very keen eye for the weak point.", "minecraft:spider_eye", speed_pct=-0.1, crit_chance=0.15, regen=0.6, armor=2, vfx="SPIRIT_AURA"),
+    ],
+    stats=[
+        T("S-Rank Edge", "Cutting power of a hunter few can match.", "attack_damage", 1.5, "minecraft:iron_sword"),
+        T("Hunter's Speed", "Quick, certain steps.", "movement_speed", 0.04, "minecraft:leather_boots", op="mult"),
+        T("Mana Reserves", "More maximum health from a deep mana pool.", "max_health", 2, "minecraft:golden_apple"),
+        T("Long Blade Reach", "A little more reach with the long sword.", "entity_interaction_range", 0.4, "minecraft:spyglass"),
+    ],
+    arts=[
+        A("Mana Scent", "Breathe in the mana of one monster: it takes more damage for a while.", "mark", "minecraft:fermented_spider_eye", range=24, seconds=10, bonus=0.35, vfx="SPIRIT_AURA"),
+        A("Mana Scent: Shift", "Crouching, the scent reveals every weak point in front of you: the monsters are weakened and made to glow.", "debuff_cone", "minecraft:glowstone_dust", effect="weakness", effect2="glowing", seconds=7, seconds2=7, amp=1, range=6, vfx="SPIRIT_AURA"),
+        A("Swift Thrust", "A lightning thrust that goes through every monster in your path.", "dash_strike", "minecraft:iron_sword", distance=8, damage=8, targets=4, vfx="WIND_SLASH"),
+        A("Falling Blade", "Crouching, you leap high and come down point-first on the monsters below.", "leap_slam", "minecraft:feather", damage=10, radius=3.5, height=1.2, knockback=0.8, vfx="WIND_RING"),
+        A("Mana Blade Wave", "A thin crescent of mana flies from the sword and pierces a line of foes.", "ray_shot", "minecraft:light_blue_dye", damage=8, range=24, pierce=3, vfx="WIND_SLASH"),
+        A("Needle Flurry", "Crouching, a swarm of mana needles flies at the monster you look at.", "barrage", "minecraft:iron_nugget", damage=2.5, shots=8, range=16, vfx="WIND_SLASH"),
+        A("Guard and Counter", "Meet the blow with the flat of the blade: for a moment a share of the damage you take is flung back.", "ward_reflect", "minecraft:shield", seconds=5, reflect_pct=0.45, vfx="MIRROR_PANE"),
+        A("Moonrise Cut", "Crouching, a rising cut that launches the foe in front of you.", "uppercut", "minecraft:prismarine_shard", damage=9, launch=0.8, vfx="WIND_SLASH"),
+    ],
+    passives=[
+        PE("Scent of Weakness", "Your blows store delayed damage on the foe, the weak points she smelled, and your Debt arts collect it.", "debt_store", "minecraft:fermented_spider_eye", {"store_pct": 0.45, "max_pct": 0.75, "hold_seconds": 18}, store_pct=0.25, tick_seconds=3, max_pct=0.5, hold_seconds=12, vfx="SPIRIT_AURA"),
+        PE("Precise Strike", "Your blows may strike critically.", "crit", "minecraft:flint", {"chance": 0.28, "mult": 2.1}, chance=0.15, mult=1.8),
+        PE("Finishing Instinct", "You deal much more damage to nearly dead foes.", "execute_threshold", "minecraft:iron_nugget", {"threshold": 0.3, "bonus": 1.0}, threshold=0.2, bonus=0.6),
+        P("Swordswoman's Guard", "While you hold a sword you take less damage.", "reduce_when", "minecraft:iron_chestplate", condition="holding_sword", pct=0.12),
+        P("Keen Senses", "While you hold a sword you are quick: Speed.", "self_effect_when", "minecraft:sugar", effect="speed", condition="holding_sword"),
+        P("Tagged by Scent", "Your blows may make the foe glow where she can follow it.", "on_hit_effect", "minecraft:glowstone_dust", effect="glowing", seconds=8, chance=0.35),
+        P("Trained Against Mana", "You take much less magic damage.", "resist", "minecraft:enchanted_book", damage_kind="magic", pct=0.3),
+        P("Hunter's Reward", "A kill heals you and may grant a moment of speed.", "kill_reward", "minecraft:bone", heal=2, effect="speed", seconds=4),
+    ],
+    finishers=[
+        A("Radiant Blade Dance", "A flurry of blinding cuts spins up around you.", "whirlwind", "minecraft:diamond_sword", damage=5, hits=8, radius=4.5, interval=3, cooldown=1400, vfx="WIND_TORNADO"),
+        AU("Vice Master's Verdict", "The weak points she has smelled all open at once: every Debt left on the foes around you comes due in a single sweeping thrust.", "debt_burst", "minecraft:diamond_sword",
+           damage=24, mult=2.4, radius=12, targets=12, cost=0.07, cooldown=16000, vfx="WIND_SLASH"),
+    ],
+    evolution={"requirement": "elite_kills", "count": 30,
+               "text": "Slay 30 elite or boss creatures while Cha Hae-In's Sword is switched on.",
+               "ultimate_name": "Ultimate Skill, Vice Master's Verdict"},
+))
+
+# ---------------------------------------------------------------------------------------------------------------------------------- 29 (3.27.0, Evolution skill, docs/skills/evolution_ten_b.md row 6)
+LINES.append(Line(
+    id="baran_demon_monarch", name="Baran, Monarch of Demons", franchise=F,
+    desc="The king of the Demon Castle: lightning that tears the air, a charge in white flame, a legion that pours from hell-portals and a hunger that feeds on blood. Evolves after eighty thousand damage dealt.",
+    color="#9b2d5e", background="ruin", icon="minecraft:netherite_helmet",
+    book_name="Chronicle of the Demon Castle's King", book_lore="He does not ask the weak to kneel. He waits, and the castle does the asking.",
+    stances=[
+        S("Demon King's Wrath", "The castle's king in full fury: much harder blows, with the guard let down.", "minecraft:crying_obsidian", damage_pct=0.3, armor=-3, vfx="DEVIL_CIRCLE"),
+        S("Blood Throne", "Sit enthroned in blood-red armour: heavy, hard to shove and slowly healing, but slow.", "minecraft:netherite_chestplate", armor=5, knockback_res=0.5, regen=0.6, speed_pct=-0.1, vfx="SEAL_CHAINS"),
+    ],
+    stats=[
+        T("Demon King's Might", "A monarch's crushing strength.", "attack_damage", 1.5, "minecraft:netherite_sword"),
+        T("Castle Lord's Vitality", "Maximum health of a king no wound can unseat.", "max_health", 3, "minecraft:golden_apple"),
+        T("Infernal Plate", "Armour forged in the Demon Castle.", "armor", 1.5, "minecraft:netherite_chestplate"),
+        T("Lord of Lightning", "Faster, hungrier blows.", "attack_speed", 0.06, "minecraft:lightning_rod", op="mult"),
+    ],
+    arts=[
+        A("Lightning Breath", "Exhale a torrent of lightning in a cone in front of you.", "cone_strike", "minecraft:lightning_rod", damage=10, range=5, half_angle=50, targets=5, vfx="LIGHTNING_SPEAR"),
+        A("Lightning Breath: Shift", "Crouching, the breath becomes a bolt that leaps from foe to foe.", "chain_hit", "minecraft:copper_ingot", damage=6, jumps=5, jump_range=6, vfx="LIGHTNING_FIEND"),
+        A("White Flame Charge", "Turn into a streak of white flame and tear through every monster in your path.", "dash_strike", "minecraft:fire_charge", distance=9, damage=9, targets=4, vfx="FLAME_TRAIL"),
+        A("White Flame Charge: Shift", "Crouching, you hurl yourself high and crash down in a ring of white fire.", "leap_slam", "minecraft:blaze_rod", damage=11, radius=4, height=1.2, knockback=1.0, vfx="FLAME_EXPLOSION"),
+        A("Hell's Army", "Portals tear open around you and the legion bursts out, hurling the monsters back.", "ring_burst", "minecraft:wither_skeleton_skull", damage=9, radius=5, knockback=1.2, targets=7, vfx="DEVIL_CIRCLE"),
+        A("Hell's Army: Shift", "Crouching, the legion's terror freezes the creatures around you in place.", "stun_ring", "minecraft:skeleton_skull", radius=6, seconds=2.5, targets=8, vfx="DEVIL_CIRCLE"),
+        A("Blood Crystal", "Bite into a foe and drain its blood into the crystal: you heal for a share of the damage.", "drain_bite", "minecraft:ghast_tear", damage=9, heal_pct=0.5, range=3.6, vfx="SHADOW_POOL"),
+        A("Doppelganger", "A blood-born double stands in your place: you gain a shield of absorption.", "shield", "minecraft:ender_eye", absorb_hearts=7, seconds=10, resist_amp=1, vfx="SHADOW_POOL"),
+    ],
+    passives=[
+        PE("Blood Tithe", "Your blows store delayed damage on the foe as a tithe of blood, and your Debt arts collect it.", "debt_store", "minecraft:redstone", {"store_pct": 0.6, "max_pct": 0.9, "hold_seconds": 20}, store_pct=0.3, tick_seconds=3, max_pct=0.5, hold_seconds=14, vfx="DEVIL_CIRCLE"),
+        PE("Hunger of the Blood Crystal", "Your blows heal you.", "lifesteal", "minecraft:red_dye", {"pct": 0.15}, pct=0.07),
+        PE("Lightning-Born", "You take much less lightning damage.", "resist", "minecraft:lightning_rod", {"pct": 0.6}, damage_kind="lightning", pct=0.4),
+        P("Demon's Brand", "Your blows may slow the foe as if chained.", "on_hit_effect", "minecraft:chain", effect="slowness", seconds=4, chance=0.3),
+        P("Undying King", "When nearly dead your wounds close quickly.", "regen_when", "minecraft:glistering_melon_slice", condition="low_health", per_second=1.6),
+        P("Soul Harvest", "A kill heals you and fills you with strength.", "kill_reward", "minecraft:soul_lantern", heal=3, effect="strength", seconds=5),
+        P("Lord of the Castle", "Underground, in your own halls, you deal more damage.", "dmg_when", "minecraft:deepslate_bricks", condition="underground", bonus=0.3),
+        P("Dread Presence", "Enemies near you are slowed by the weight of the Demon King.", "aura", "minecraft:wither_rose", effect="slowness", target="enemies", radius=6),
+    ],
+    finishers=[
+        A("Castle's Judgment", "A column of demonic lightning falls on the place you look at.", "meteor_drop", "minecraft:nether_star", damage=32, radius=7, range=24, delay=18, cooldown=1500, vfx="DEVIL_CIRCLE"),
+        AU("Monarch of Demons", "The king takes the field: every tithe of blood stored on the foes around you is called in at once.", "debt_burst", "minecraft:dragon_head",
+           damage=55, mult=4.0, radius=15, targets=12, cost=0.08, cooldown=18000, vfx="DEVIL_CIRCLE"),
+    ],
+    evolution={"requirement": "damage_dealt", "count": 80000,
+               "text": "Deal 80000 damage to hostile creatures while Baran, Monarch of Demons is switched on.",
+               "ultimate_name": "Ultimate Skill, Monarch of Demons"},
+))

@@ -1,0 +1,1264 @@
+{
+  "magic": "solo_leveling",
+  "franchise": "solo_leveling",
+  "name": "Cha Hae-In's Sword",
+  "desc": "The S-rank sword hunter who smells mana the way others hear a voice: she reads her prey before it moves, marks the weak point and finishes it with a single thrust. Evolves after thirty elite kills.",
+  "book": "nusmp:cha_hae_in_sword_book",
+  "book_name": "Vice Guild Master's Sword Log",
+  "book_lore": "She smells the fight before she sees it, and she has never once been wrong about who is lying.",
+  "color": "#C2E6FF",
+  "icon": "minecraft:iron_sword",
+  "class_id": "cha_hae_in_sword",
+  "duplicate_sp": 3,
+  "loot_weight": 1,
+  "nodes": [
+    {
+      "id": "hunter_s_poise",
+      "name": "Hunter's Poise",
+      "desc": "A swordswoman's balanced stance: faster, sharper crits and a little more damage.",
+      "parents": [],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "WIND_SLASH"
+      },
+      "values": {
+        "damage_pct": [
+          0.1,
+          0.12,
+          0.14
+        ],
+        "armor": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "speed_pct": [
+          0.1,
+          0.12,
+          0.14
+        ],
+        "knockback_res": [
+          0,
+          0,
+          0
+        ],
+        "regen": [
+          0,
+          0,
+          0
+        ],
+        "crit_chance": [
+          0.1,
+          0.12,
+          0.14
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 0,
+      "icon": "minecraft:iron_sword"
+    },
+    {
+      "id": "mana_sense",
+      "name": "Mana Sense",
+      "desc": "Breathe in and read the room: slow, patient and healing, with a very keen eye for the weak point.",
+      "parents": [
+        {
+          "node": "hunter_s_poise",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "SPIRIT_AURA"
+      },
+      "values": {
+        "damage_pct": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "armor": [
+          2.0,
+          2.5,
+          3.0
+        ],
+        "speed_pct": [
+          -0.1,
+          -0.12,
+          -0.14
+        ],
+        "knockback_res": [
+          0,
+          0,
+          0
+        ],
+        "regen": [
+          0.6,
+          0.72,
+          0.84
+        ],
+        "crit_chance": [
+          0.15,
+          0.18,
+          0.21
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 2,
+      "icon": "minecraft:spider_eye"
+    },
+    {
+      "id": "s_rank_edge",
+      "name": "S-Rank Edge",
+      "desc": "Cutting power of a hunter few can match.",
+      "parents": [
+        {
+          "node": "hunter_s_poise",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "attack_damage",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          1.5,
+          1.875,
+          2.25,
+          2.625,
+          3.0
+        ]
+      },
+      "x": 2,
+      "y": 0,
+      "icon": "minecraft:iron_sword"
+    },
+    {
+      "id": "hunter_s_speed",
+      "name": "Hunter's Speed",
+      "desc": "Quick, certain steps.",
+      "parents": [
+        {
+          "node": "mana_sense",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "movement_speed",
+        "op": "mult"
+      },
+      "values": {
+        "amount": [
+          0.04,
+          0.05,
+          0.06,
+          0.07,
+          0.08
+        ]
+      },
+      "x": 2,
+      "y": 2,
+      "icon": "minecraft:leather_boots"
+    },
+    {
+      "id": "mana_reserves",
+      "name": "Mana Reserves",
+      "desc": "More maximum health from a deep mana pool.",
+      "parents": [
+        {
+          "node": "hunter_s_poise",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "max_health",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          2.0,
+          2.5,
+          3.0,
+          3.5,
+          4.0
+        ]
+      },
+      "x": 2,
+      "y": 4,
+      "icon": "minecraft:golden_apple"
+    },
+    {
+      "id": "long_blade_reach",
+      "name": "Long Blade Reach",
+      "desc": "A little more reach with the long sword.",
+      "parents": [
+        {
+          "node": "mana_sense",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "entity_interaction_range",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8
+        ]
+      },
+      "x": 2,
+      "y": 6,
+      "icon": "minecraft:spyglass"
+    },
+    {
+      "id": "mana_scent",
+      "name": "Mana Scent",
+      "desc": "Breathe in the mana of one monster: it takes more damage for a while.",
+      "parents": [
+        {
+          "node": "hunter_s_poise",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "mark",
+      "params": {
+        "vfx": "SPIRIT_AURA"
+      },
+      "values": {
+        "range": [
+          24.0,
+          26.4,
+          28.8,
+          31.2
+        ],
+        "seconds": [
+          10.0,
+          12.0,
+          13.0,
+          14.0
+        ],
+        "bonus": [
+          0.35,
+          0.42,
+          0.49,
+          0.56
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          200.0,
+          184.0,
+          168.0,
+          152.0
+        ]
+      },
+      "x": 4,
+      "y": 0,
+      "icon": "minecraft:fermented_spider_eye"
+    },
+    {
+      "id": "mana_scent_shift",
+      "name": "Mana Scent: Shift",
+      "desc": "Crouching, the scent reveals every weak point in front of you: the monsters are weakened and made to glow.",
+      "parents": [
+        {
+          "node": "mana_sense",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "debuff_cone",
+      "params": {
+        "effect": "weakness",
+        "effect2": "glowing",
+        "vfx": "SPIRIT_AURA"
+      },
+      "values": {
+        "range": [
+          6.0,
+          6.48,
+          6.96,
+          7.44
+        ],
+        "half_angle": [
+          40.0,
+          44.0,
+          48.0,
+          52.0
+        ],
+        "seconds": [
+          7.0,
+          8.0,
+          9.0,
+          10.0
+        ],
+        "amp": [
+          1.0,
+          2.0,
+          2.0,
+          2.0
+        ],
+        "seconds2": [
+          7.0,
+          8.0,
+          9.0,
+          10.0
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          220.0,
+          202.0,
+          185.0,
+          167.0
+        ]
+      },
+      "x": 4,
+      "y": 2,
+      "icon": "minecraft:glowstone_dust"
+    },
+    {
+      "id": "swift_thrust",
+      "name": "Swift Thrust",
+      "desc": "A lightning thrust that goes through every monster in your path.",
+      "parents": [
+        {
+          "node": "mana_scent",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "dash_strike",
+      "params": {
+        "vfx": "WIND_SLASH"
+      },
+      "values": {
+        "distance": [
+          8.0,
+          8.8,
+          9.6,
+          10.4
+        ],
+        "damage": [
+          8.0,
+          10.0,
+          12.0,
+          14.0
+        ],
+        "targets": [
+          4.0,
+          5.0,
+          6.0,
+          8.0
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          120.0,
+          110.0,
+          101.0,
+          91.0
+        ]
+      },
+      "x": 6,
+      "y": 0,
+      "icon": "minecraft:iron_sword"
+    },
+    {
+      "id": "falling_blade",
+      "name": "Falling Blade",
+      "desc": "Crouching, you leap high and come down point-first on the monsters below.",
+      "parents": [
+        {
+          "node": "mana_scent_shift",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "leap_slam",
+      "params": {
+        "vfx": "WIND_RING"
+      },
+      "values": {
+        "height": [
+          1.2,
+          1.296,
+          1.392,
+          1.4
+        ],
+        "damage": [
+          10.0,
+          12.5,
+          15.0,
+          17.5
+        ],
+        "radius": [
+          3.5,
+          3.85,
+          4.2,
+          4.55
+        ],
+        "knockback": [
+          0.8,
+          0.88,
+          0.96,
+          1.04
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          200.0,
+          184.0,
+          168.0,
+          152.0
+        ]
+      },
+      "x": 6,
+      "y": 2,
+      "icon": "minecraft:feather"
+    },
+    {
+      "id": "mana_blade_wave",
+      "name": "Mana Blade Wave",
+      "desc": "A thin crescent of mana flies from the sword and pierces a line of foes.",
+      "parents": [
+        {
+          "node": "swift_thrust",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "ray_shot",
+      "params": {
+        "vfx": "WIND_SLASH"
+      },
+      "values": {
+        "damage": [
+          8.0,
+          10.0,
+          12.0,
+          14.0
+        ],
+        "range": [
+          24.0,
+          26.4,
+          28.8,
+          31.2
+        ],
+        "pierce": [
+          3.0,
+          4.0,
+          5.0,
+          6.0
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          120.0,
+          110.0,
+          101.0,
+          91.0
+        ]
+      },
+      "x": 8,
+      "y": 0,
+      "icon": "minecraft:light_blue_dye"
+    },
+    {
+      "id": "needle_flurry",
+      "name": "Needle Flurry",
+      "desc": "Crouching, a swarm of mana needles flies at the monster you look at.",
+      "parents": [
+        {
+          "node": "falling_blade",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "barrage",
+      "params": {
+        "vfx": "WIND_SLASH"
+      },
+      "values": {
+        "damage": [
+          2.5,
+          3.125,
+          3.75,
+          4.375
+        ],
+        "shots": [
+          8.0,
+          11.0,
+          14.0,
+          16.0
+        ],
+        "range": [
+          16.0,
+          17.28,
+          18.56,
+          19.84
+        ],
+        "interval": [
+          3.0,
+          3.0,
+          3.0,
+          3.0
+        ],
+        "cost": [
+          0.025,
+          0.027,
+          0.029,
+          0.031
+        ],
+        "cooldown": [
+          240.0,
+          221.0,
+          202.0,
+          182.0
+        ]
+      },
+      "x": 8,
+      "y": 2,
+      "icon": "minecraft:iron_nugget"
+    },
+    {
+      "id": "guard_and_counter",
+      "name": "Guard and Counter",
+      "desc": "Meet the blow with the flat of the blade: for a moment a share of the damage you take is flung back.",
+      "parents": [
+        {
+          "node": "mana_blade_wave",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "ward_reflect",
+      "params": {
+        "vfx": "MIRROR_PANE"
+      },
+      "values": {
+        "seconds": [
+          5.0,
+          6.0,
+          6.0,
+          6.0
+        ],
+        "reflect_pct": [
+          0.45,
+          0.54,
+          0.63,
+          0.72
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          400.0,
+          376.0,
+          352.0,
+          328.0
+        ]
+      },
+      "x": 10,
+      "y": 0,
+      "icon": "minecraft:shield"
+    },
+    {
+      "id": "moonrise_cut",
+      "name": "Moonrise Cut",
+      "desc": "Crouching, a rising cut that launches the foe in front of you.",
+      "parents": [
+        {
+          "node": "needle_flurry",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "uppercut",
+      "params": {
+        "vfx": "WIND_SLASH"
+      },
+      "values": {
+        "damage": [
+          9.0,
+          11.25,
+          13.5,
+          15.75
+        ],
+        "range": [
+          3.2,
+          3.392,
+          3.584,
+          3.776
+        ],
+        "launch": [
+          0.8,
+          0.88,
+          0.96,
+          1.04
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          120.0,
+          110.0,
+          101.0,
+          91.0
+        ]
+      },
+      "x": 10,
+      "y": 6,
+      "icon": "minecraft:prismarine_shard"
+    },
+    {
+      "id": "scent_of_weakness",
+      "name": "Scent of Weakness",
+      "desc": "Your blows store delayed damage on the foe, the weak points she smelled, and your Debt arts collect it.",
+      "parents": [
+        {
+          "node": "mana_scent",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "debt_store",
+      "params": {
+        "vfx": "SPIRIT_AURA"
+      },
+      "values": {
+        "store_pct": [
+          0.25,
+          0.3,
+          0.35,
+          0.4
+        ],
+        "tick_seconds": [
+          3.0,
+          3.0,
+          3.0,
+          3.0
+        ],
+        "max_pct": [
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ],
+        "hold_seconds": [
+          12.0,
+          12.0,
+          12.0,
+          12.0
+        ]
+      },
+      "x": 10,
+      "y": 2,
+      "icon": "minecraft:fermented_spider_eye",
+      "evolved": {
+        "store_pct": 0.45,
+        "max_pct": 0.75,
+        "hold_seconds": 18
+      }
+    },
+    {
+      "id": "precise_strike",
+      "name": "Precise Strike",
+      "desc": "Your blows may strike critically.",
+      "parents": [
+        {
+          "node": "mana_scent_shift",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "crit",
+      "values": {
+        "chance": [
+          0.15,
+          0.18,
+          0.21,
+          0.24
+        ],
+        "mult": [
+          1.8,
+          1.944,
+          2.088,
+          2.232
+        ]
+      },
+      "x": 10,
+      "y": 4,
+      "icon": "minecraft:flint",
+      "evolved": {
+        "chance": 0.28,
+        "mult": 2.1
+      }
+    },
+    {
+      "id": "finishing_instinct",
+      "name": "Finishing Instinct",
+      "desc": "You deal much more damage to nearly dead foes.",
+      "parents": [
+        {
+          "node": "swift_thrust",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "execute_threshold",
+      "values": {
+        "threshold": [
+          0.2,
+          0.22,
+          0.24,
+          0.26
+        ],
+        "bonus": [
+          0.6,
+          0.72,
+          0.84,
+          0.96
+        ]
+      },
+      "x": 12,
+      "y": 0,
+      "icon": "minecraft:iron_nugget",
+      "evolved": {
+        "threshold": 0.3,
+        "bonus": 1.0
+      }
+    },
+    {
+      "id": "swordswoman_s_guard",
+      "name": "Swordswoman's Guard",
+      "desc": "While you hold a sword you take less damage.",
+      "parents": [
+        {
+          "node": "falling_blade",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "reduce_when",
+      "params": {
+        "condition": "holding_sword"
+      },
+      "values": {
+        "pct": [
+          0.12,
+          0.144,
+          0.168,
+          0.192
+        ]
+      },
+      "x": 12,
+      "y": 2,
+      "icon": "minecraft:iron_chestplate"
+    },
+    {
+      "id": "keen_senses",
+      "name": "Keen Senses",
+      "desc": "While you hold a sword you are quick: Speed.",
+      "parents": [
+        {
+          "node": "mana_blade_wave",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "self_effect_when",
+      "params": {
+        "effect": "speed",
+        "condition": "holding_sword"
+      },
+      "values": {
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "x": 14,
+      "y": 0,
+      "icon": "minecraft:sugar"
+    },
+    {
+      "id": "tagged_by_scent",
+      "name": "Tagged by Scent",
+      "desc": "Your blows may make the foe glow where she can follow it.",
+      "parents": [
+        {
+          "node": "needle_flurry",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "on_hit_effect",
+      "params": {
+        "effect": "glowing"
+      },
+      "values": {
+        "seconds": [
+          8.0,
+          9.0,
+          10.0,
+          12.0
+        ],
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "chance": [
+          0.35,
+          0.42,
+          0.49,
+          0.56
+        ]
+      },
+      "x": 14,
+      "y": 2,
+      "icon": "minecraft:glowstone_dust"
+    },
+    {
+      "id": "trained_against_mana",
+      "name": "Trained Against Mana",
+      "desc": "You take much less magic damage.",
+      "parents": [
+        {
+          "node": "guard_and_counter",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "resist",
+      "params": {
+        "damage_kind": "magic"
+      },
+      "values": {
+        "pct": [
+          0.3,
+          0.36,
+          0.42,
+          0.48
+        ]
+      },
+      "x": 16,
+      "y": 0,
+      "icon": "minecraft:enchanted_book"
+    },
+    {
+      "id": "hunter_s_reward",
+      "name": "Hunter's Reward",
+      "desc": "A kill heals you and may grant a moment of speed.",
+      "parents": [
+        {
+          "node": "moonrise_cut",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "kill_reward",
+      "params": {
+        "effect": "speed"
+      },
+      "values": {
+        "heal": [
+          2.0,
+          2.5,
+          3.0,
+          3.5
+        ],
+        "seconds": [
+          4.0,
+          5.0,
+          5.0,
+          6.0
+        ],
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "x": 16,
+      "y": 2,
+      "icon": "minecraft:bone"
+    },
+    {
+      "id": "radiant_blade_dance",
+      "name": "Radiant Blade Dance",
+      "desc": "A flurry of blinding cuts spins up around you.",
+      "parents": [
+        {
+          "node": "moonrise_cut",
+          "level": 3
+        },
+        {
+          "node": "hunter_s_reward",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "whirlwind",
+      "params": {
+        "vfx": "WIND_TORNADO"
+      },
+      "values": {
+        "damage": [
+          5.0,
+          6.25,
+          7.5
+        ],
+        "radius": [
+          4.5,
+          4.86,
+          5.22
+        ],
+        "hits": [
+          8.0,
+          10.0,
+          12.0
+        ],
+        "interval": [
+          3.0,
+          3.0,
+          3.0
+        ],
+        "cost": [
+          0.025,
+          0.027,
+          0.029
+        ],
+        "cooldown": [
+          1400.0,
+          1288.0,
+          1176.0
+        ]
+      },
+      "x": 16,
+      "y": 4,
+      "icon": "minecraft:diamond_sword"
+    },
+    {
+      "id": "vice_master_s_verdict",
+      "name": "Vice Master's Verdict",
+      "desc": "The weak points she has smelled all open at once: every Debt left on the foes around you comes due in a single sweeping thrust.",
+      "parents": [
+        {
+          "node": "guard_and_counter",
+          "level": 3
+        },
+        {
+          "node": "trained_against_mana",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "debt_burst",
+      "params": {
+        "vfx": "WIND_SLASH"
+      },
+      "values": {
+        "damage": [
+          24.0,
+          30.0,
+          36.0
+        ],
+        "mult": [
+          2.4,
+          2.64,
+          2.88
+        ],
+        "radius": [
+          12.0,
+          13.2,
+          14.4
+        ],
+        "targets": [
+          12.0,
+          17.0,
+          20.0
+        ],
+        "cost": [
+          0.07,
+          0.0756,
+          0.0812
+        ],
+        "cooldown": [
+          16000.0,
+          14720.0,
+          13440.0
+        ]
+      },
+      "x": 16,
+      "y": 6,
+      "icon": "minecraft:diamond_sword",
+      "ultimate": true
+    }
+  ],
+  "evolution": {
+    "requirement": "elite_kills",
+    "count": 30,
+    "text": "Slay 30 elite or boss creatures while Cha Hae-In's Sword is switched on.",
+    "ultimate_name": "Ultimate Skill, Vice Master's Verdict"
+  }
+}
