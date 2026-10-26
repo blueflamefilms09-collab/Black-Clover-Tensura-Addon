@@ -1,0 +1,1212 @@
+{
+  "magic": "fairy_tail",
+  "franchise": "fairy_tail",
+  "name": "Lightning Dragon Slayer",
+  "desc": "Laxus Dreyar's Lightning Dragon Slayer magic: fast, heavy and loud, with a body that eats lightning and a storm that answers every blow. Each hit leaves a static charge on the foe, until the Red Lightning Dragon Mode discharges every one of them.",
+  "book": "nusmp:laxus_lightning_dragon_book",
+  "book_name": "Lacrima of the Lightning Dragon",
+  "book_lore": "A grandson's grudge, a dragon's heart and a storm that never ran dry: thunder has to be earned.",
+  "color": "#FFE14A",
+  "icon": "minecraft:lightning_rod",
+  "class_id": "laxus_lightning_dragon",
+  "duplicate_sp": 3,
+  "loot_weight": 1,
+  "nodes": [
+    {
+      "id": "lightning_body_stance",
+      "name": "Lightning Body Stance",
+      "desc": "Lightning runs through your limbs: you strike harder, may land critical hits and move faster, but wear your guard thin.",
+      "parents": [],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "LIGHTNING_FIEND"
+      },
+      "values": {
+        "damage_pct": [
+          0.18,
+          0.216,
+          0.252
+        ],
+        "armor": [
+          -1.0,
+          -1.25,
+          -1.5
+        ],
+        "speed_pct": [
+          0.08,
+          0.096,
+          0.112
+        ],
+        "knockback_res": [
+          0,
+          0,
+          0
+        ],
+        "regen": [
+          0,
+          0,
+          0
+        ],
+        "crit_chance": [
+          0.1,
+          0.12,
+          0.14
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 0,
+      "icon": "minecraft:lightning_rod"
+    },
+    {
+      "id": "lightning_eater_s_posture",
+      "name": "Lightning Eater's Posture",
+      "desc": "Stand still and swallow the storm: you are heavily armoured and heal steadily, but slow and weak in attack.",
+      "parents": [
+        {
+          "node": "lightning_body_stance",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "LIGHTNING_SPEAR"
+      },
+      "values": {
+        "damage_pct": [
+          -0.1,
+          -0.12,
+          -0.14
+        ],
+        "armor": [
+          6.0,
+          7.5,
+          9.0
+        ],
+        "speed_pct": [
+          -0.15,
+          -0.18,
+          -0.21
+        ],
+        "knockback_res": [
+          0,
+          0,
+          0
+        ],
+        "regen": [
+          1.0,
+          1.2,
+          1.4
+        ],
+        "crit_chance": [
+          0,
+          0,
+          0
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 2,
+      "icon": "minecraft:copper_block"
+    },
+    {
+      "id": "dragon_lacrima_heart",
+      "name": "Dragon Lacrima Heart",
+      "desc": "A dragon's heart beats in your chest: more maximum health.",
+      "parents": [
+        {
+          "node": "lightning_body_stance",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "max_health",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          2.0,
+          2.5,
+          3.0,
+          3.5,
+          4.0
+        ]
+      },
+      "x": 2,
+      "y": 0,
+      "icon": "minecraft:heart_of_the_sea"
+    },
+    {
+      "id": "thunder_fists",
+      "name": "Thunder Fists",
+      "desc": "Fists charged with lightning hit harder.",
+      "parents": [
+        {
+          "node": "lightning_eater_s_posture",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "attack_damage",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          1.2,
+          1.5,
+          1.8,
+          2.1,
+          2.4
+        ]
+      },
+      "x": 2,
+      "y": 2,
+      "icon": "minecraft:iron_sword"
+    },
+    {
+      "id": "lightning_reflexes",
+      "name": "Lightning Reflexes",
+      "desc": "Lightning-fast hands strike faster.",
+      "parents": [
+        {
+          "node": "lightning_body_stance",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "attack_speed",
+        "op": "mult"
+      },
+      "values": {
+        "amount": [
+          0.06,
+          0.075,
+          0.09,
+          0.105,
+          0.12
+        ]
+      },
+      "x": 2,
+      "y": 4,
+      "icon": "minecraft:golden_sword"
+    },
+    {
+      "id": "heavy_frame",
+      "name": "Heavy Frame",
+      "desc": "A big man is hard to push around.",
+      "parents": [
+        {
+          "node": "lightning_eater_s_posture",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "knockback_resistance",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          0.05,
+          0.0625,
+          0.075,
+          0.0875,
+          0.1
+        ]
+      },
+      "x": 2,
+      "y": 6,
+      "icon": "minecraft:iron_chestplate"
+    },
+    {
+      "id": "lightning_dragon_s_roar",
+      "name": "Lightning Dragon's Roar",
+      "desc": "Breathe a bolt of lightning in front of you: foes in the cone are slowed and weakened as the current locks their muscles.",
+      "parents": [
+        {
+          "node": "lightning_body_stance",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "debuff_cone",
+      "params": {
+        "effect": "slowness",
+        "effect2": "weakness",
+        "vfx": "LIGHTNING_FIEND"
+      },
+      "values": {
+        "range": [
+          7.0,
+          7.56,
+          8.12,
+          8.68
+        ],
+        "half_angle": [
+          45.0,
+          49.5,
+          54.0,
+          58.5
+        ],
+        "seconds": [
+          6.0,
+          7.0,
+          8.0,
+          9.0
+        ],
+        "amp": [
+          1.0,
+          2.0,
+          2.0,
+          2.0
+        ],
+        "seconds2": [
+          6.0,
+          7.0,
+          8.0,
+          9.0
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          220.0,
+          202.0,
+          185.0,
+          167.0
+        ]
+      },
+      "x": 4,
+      "y": 0,
+      "icon": "minecraft:lightning_rod"
+    },
+    {
+      "id": "lightning_dragon_s_iron_fist",
+      "name": "Lightning Dragon's Iron Fist",
+      "desc": "Wrap a fist in lightning and punch the foe in front of you; the weaker it is, the harder you hit.",
+      "parents": [
+        {
+          "node": "lightning_eater_s_posture",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "execute",
+      "params": {
+        "vfx": "LIGHTNING_SPEAR"
+      },
+      "values": {
+        "damage": [
+          10.0,
+          12.5,
+          15.0,
+          17.5
+        ],
+        "range": [
+          3.5,
+          3.71,
+          3.92,
+          4.13
+        ],
+        "bonus": [
+          0.8,
+          0.92,
+          1.04,
+          1.16
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          200.0,
+          184.0,
+          168.0,
+          152.0
+        ]
+      },
+      "x": 4,
+      "y": 2,
+      "icon": "minecraft:iron_ingot"
+    },
+    {
+      "id": "lightning_dragon_s_jaw",
+      "name": "Lightning Dragon's Jaw",
+      "desc": "Join your hands, leap and bring them down on the foes below in a crater of lightning.",
+      "parents": [
+        {
+          "node": "lightning_dragon_s_roar",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "leap_slam",
+      "params": {
+        "vfx": "LIGHTNING_FIEND"
+      },
+      "values": {
+        "height": [
+          0.8,
+          0.864,
+          0.928,
+          0.992
+        ],
+        "damage": [
+          11.0,
+          13.75,
+          16.5,
+          19.25
+        ],
+        "radius": [
+          3.5,
+          3.85,
+          4.2,
+          4.55
+        ],
+        "knockback": [
+          0.8,
+          0.88,
+          0.96,
+          1.04
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          200.0,
+          184.0,
+          168.0,
+          152.0
+        ]
+      },
+      "x": 6,
+      "y": 0,
+      "icon": "minecraft:iron_axe"
+    },
+    {
+      "id": "lightning_dragon_s_breakdown_fist",
+      "name": "Lightning Dragon's Breakdown Fist",
+      "desc": "A giant fist of pure lightning shoots out of your hand and pierces the foes ahead.",
+      "parents": [
+        {
+          "node": "lightning_dragon_s_iron_fist",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "ray_shot",
+      "params": {
+        "vfx": "LIGHTNING_SPEAR"
+      },
+      "values": {
+        "damage": [
+          9.0,
+          11.25,
+          13.5,
+          15.75
+        ],
+        "range": [
+          18.0,
+          19.8,
+          21.6,
+          23.4
+        ],
+        "pierce": [
+          3.0,
+          4.0,
+          5.0,
+          6.0
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          120.0,
+          110.0,
+          101.0,
+          91.0
+        ]
+      },
+      "x": 6,
+      "y": 2,
+      "icon": "minecraft:copper_ingot"
+    },
+    {
+      "id": "roaring_thunder",
+      "name": "Roaring Thunder",
+      "desc": "Charge forward and punch through everything in the way with a lightning-charged fist.",
+      "parents": [
+        {
+          "node": "lightning_dragon_s_jaw",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "dash_strike",
+      "params": {
+        "vfx": "LIGHTNING_FIEND"
+      },
+      "values": {
+        "distance": [
+          9.0,
+          9.9,
+          10.8,
+          11.7
+        ],
+        "damage": [
+          9.0,
+          11.25,
+          13.5,
+          15.75
+        ],
+        "targets": [
+          4.0,
+          5.0,
+          6.0,
+          8.0
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          120.0,
+          110.0,
+          101.0,
+          91.0
+        ]
+      },
+      "x": 8,
+      "y": 0,
+      "icon": "minecraft:glowstone_dust"
+    },
+    {
+      "id": "raging_bolt",
+      "name": "Raging Bolt",
+      "desc": "Gather the storm above you and call a huge bolt down on the place you look at after a short delay.",
+      "parents": [
+        {
+          "node": "lightning_dragon_s_breakdown_fist",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "meteor_drop",
+      "params": {
+        "vfx": "LIGHTNING_SPEAR"
+      },
+      "values": {
+        "delay": [
+          26.0,
+          25.0,
+          23.0,
+          22.0
+        ],
+        "damage": [
+          15.0,
+          18.75,
+          22.5,
+          26.25
+        ],
+        "radius": [
+          4.5,
+          4.95,
+          5.4,
+          5.85
+        ],
+        "range": [
+          18.0,
+          19.44,
+          20.88,
+          22.32
+        ],
+        "cost": [
+          0.03,
+          0.0324,
+          0.0348,
+          0.0372
+        ],
+        "cooldown": [
+          360.0,
+          331.0,
+          302.0,
+          274.0
+        ]
+      },
+      "x": 8,
+      "y": 2,
+      "icon": "minecraft:lightning_rod"
+    },
+    {
+      "id": "lightning_dragon_s_roar_shift",
+      "name": "Lightning Dragon's Roar: Shift",
+      "desc": "Crouch to throw the roar in an arc: a lightning blast bursts all around you instead of ahead.",
+      "parents": [
+        {
+          "node": "roaring_thunder",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "ring_burst",
+      "params": {
+        "vfx": "LIGHTNING_FIEND"
+      },
+      "values": {
+        "damage": [
+          7.0,
+          8.75,
+          10.5,
+          12.25
+        ],
+        "radius": [
+          5.0,
+          5.5,
+          6.0,
+          6.5
+        ],
+        "targets": [
+          7.0,
+          10.0,
+          13.0,
+          15.0
+        ],
+        "knockback": [
+          1.0,
+          1.1,
+          1.2,
+          1.3
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          140.0,
+          129.0,
+          118.0,
+          106.0
+        ]
+      },
+      "x": 10,
+      "y": 0,
+      "icon": "minecraft:amethyst_shard"
+    },
+    {
+      "id": "lightning_body_shift",
+      "name": "Lightning Body: Shift",
+      "desc": "Crouch to turn into lightning and reappear a long way ahead.",
+      "parents": [
+        {
+          "node": "raging_bolt",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "blink",
+      "params": {
+        "vfx": "LIGHTNING_SPEAR"
+      },
+      "values": {
+        "distance": [
+          11.0,
+          12.32,
+          13.64,
+          14.96
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          140.0,
+          129.0,
+          118.0,
+          106.0
+        ]
+      },
+      "x": 10,
+      "y": 6,
+      "icon": "minecraft:ender_pearl"
+    },
+    {
+      "id": "static_debt",
+      "name": "Static Debt",
+      "desc": "Your blows leave a static charge on the foe (Debt). It crackles while it waits, and your Debt arts cash it in.",
+      "parents": [
+        {
+          "node": "lightning_dragon_s_roar",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "debt_store",
+      "params": {
+        "vfx": "LIGHTNING_FIEND"
+      },
+      "values": {
+        "store_pct": [
+          0.3,
+          0.36,
+          0.42,
+          0.48
+        ],
+        "tick_seconds": [
+          3.0,
+          3.0,
+          3.0,
+          3.0
+        ],
+        "max_pct": [
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ],
+        "hold_seconds": [
+          12.0,
+          12.0,
+          12.0,
+          12.0
+        ]
+      },
+      "x": 10,
+      "y": 2,
+      "icon": "minecraft:copper_ingot",
+      "evolved": {
+        "store_pct": 0.5,
+        "max_pct": 0.8
+      }
+    },
+    {
+      "id": "lightning_eater",
+      "name": "Lightning Eater",
+      "desc": "A Lightning Dragon Slayer feeds on the storm: you take much less lightning damage.",
+      "parents": [
+        {
+          "node": "lightning_dragon_s_iron_fist",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "resist",
+      "params": {
+        "damage_kind": "lightning"
+      },
+      "values": {
+        "pct": [
+          0.6,
+          0.72,
+          0.8,
+          0.8
+        ]
+      },
+      "x": 10,
+      "y": 4,
+      "icon": "minecraft:lightning_rod"
+    },
+    {
+      "id": "static_shock",
+      "name": "Static Shock",
+      "desc": "Whoever strikes you is jolted and may be slowed.",
+      "parents": [
+        {
+          "node": "lightning_dragon_s_jaw",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "on_hurt_retaliate",
+      "params": {
+        "effect": "slowness"
+      },
+      "values": {
+        "seconds": [
+          3.0,
+          3.0,
+          4.0,
+          4.0
+        ],
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "chance": [
+          0.3,
+          0.36,
+          0.42,
+          0.48
+        ],
+        "rest": [
+          100.0,
+          90.0,
+          80.0,
+          70.0
+        ]
+      },
+      "x": 12,
+      "y": 0,
+      "icon": "minecraft:redstone",
+      "evolved": {
+        "chance": 0.5,
+        "seconds": 5
+      }
+    },
+    {
+      "id": "faster_than_thunder",
+      "name": "Faster than Thunder",
+      "desc": "You may slip out of the way of a blow at lightning speed.",
+      "parents": [
+        {
+          "node": "lightning_dragon_s_breakdown_fist",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "dodge",
+      "values": {
+        "chance": [
+          0.1,
+          0.12,
+          0.14,
+          0.16
+        ],
+        "rest": [
+          100.0,
+          90.0,
+          80.0,
+          70.0
+        ]
+      },
+      "x": 12,
+      "y": 2,
+      "icon": "minecraft:sugar",
+      "evolved": {
+        "chance": 0.18
+      }
+    },
+    {
+      "id": "charging_bolt",
+      "name": "Charging Bolt",
+      "desc": "You deal more damage while sprinting.",
+      "parents": [
+        {
+          "node": "roaring_thunder",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "sprint_bonus",
+      "values": {
+        "bonus": [
+          0.25,
+          0.3,
+          0.35,
+          0.4
+        ]
+      },
+      "x": 14,
+      "y": 0,
+      "icon": "minecraft:feather"
+    },
+    {
+      "id": "storm_hearted_crits",
+      "name": "Storm-Hearted Crits",
+      "desc": "Your blows may strike with a thunderclap.",
+      "parents": [
+        {
+          "node": "raging_bolt",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "crit",
+      "values": {
+        "chance": [
+          0.12,
+          0.144,
+          0.168,
+          0.192
+        ],
+        "mult": [
+          1.6,
+          1.728,
+          1.856,
+          1.984
+        ]
+      },
+      "x": 14,
+      "y": 2,
+      "icon": "minecraft:glowstone_dust"
+    },
+    {
+      "id": "grandson_of_the_master",
+      "name": "Grandson of the Master",
+      "desc": "Strong foes bring out your best: you deal more damage to bosses.",
+      "parents": [
+        {
+          "node": "lightning_dragon_s_roar_shift",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "dmg_vs",
+      "params": {
+        "category": "boss"
+      },
+      "values": {
+        "bonus": [
+          0.2,
+          0.24,
+          0.28,
+          0.32
+        ]
+      },
+      "x": 16,
+      "y": 0,
+      "icon": "minecraft:wither_skeleton_skull"
+    },
+    {
+      "id": "fairy_law",
+      "name": "Fairy Law",
+      "desc": "Light gathers into a great dome over the field and strikes everyone in it: foes around you are stunned in place for a few seconds.",
+      "parents": [
+        {
+          "node": "lightning_body_shift",
+          "level": 3
+        },
+        {
+          "node": "grandson_of_the_master",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stun_ring",
+      "params": {
+        "vfx": "MAGIC_CIRCLE"
+      },
+      "values": {
+        "radius": [
+          9.0,
+          9.9,
+          10
+        ],
+        "seconds": [
+          4.0,
+          5.0,
+          6.0
+        ],
+        "targets": [
+          10.0,
+          14.0,
+          14.0
+        ],
+        "cost": [
+          0.025,
+          0.027,
+          0.029
+        ],
+        "cooldown": [
+          1500.0,
+          1380.0,
+          1260.0
+        ]
+      },
+      "x": 16,
+      "y": 2,
+      "icon": "minecraft:beacon"
+    },
+    {
+      "id": "red_lightning_dragon_mode",
+      "name": "Red Lightning Dragon Mode",
+      "desc": "Lightning beyond lightning: a huge blow to every foe around you plus many times all the static stored on each of them.",
+      "parents": [
+        {
+          "node": "lightning_dragon_s_roar_shift",
+          "level": 3
+        },
+        {
+          "node": "storm_hearted_crits",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "debt_burst",
+      "params": {
+        "vfx": "LIGHTNING_SPEAR"
+      },
+      "values": {
+        "damage": [
+          36.0,
+          45.0,
+          54.0
+        ],
+        "mult": [
+          3.0,
+          3.3,
+          3.6
+        ],
+        "radius": [
+          12.0,
+          13.2,
+          14.4
+        ],
+        "targets": [
+          10.0,
+          14.0,
+          18.0
+        ],
+        "cost": [
+          0.08,
+          0.0864,
+          0.0928
+        ],
+        "cooldown": [
+          18000.0,
+          16560.0,
+          15120.0
+        ]
+      },
+      "x": 16,
+      "y": 4,
+      "icon": "minecraft:nether_star",
+      "ultimate": true
+    }
+  ],
+  "evolution": {
+    "requirement": "boss_kills",
+    "count": 8,
+    "text": "Defeat 8 boss creatures while Lightning Dragon Slayer is switched on to wake the Red Lightning Dragon Mode and unlock it.",
+    "ultimate_name": "Ultimate Skill, Red Lightning Dragon Mode"
+  }
+}

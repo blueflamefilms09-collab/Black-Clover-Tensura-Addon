@@ -1,0 +1,1232 @@
+{
+  "magic": "fairy_tail",
+  "franchise": "fairy_tail",
+  "name": "Fire Dragon Slayer",
+  "desc": "Natsu Dragneel's Fire Dragon Slayer magic: breathe, punch and ram your way through a fight with flame, eat fire to keep going, and never stay down. Every blow leaves embers smouldering on the foe, until the Lightning Fire Dragon Mode sets them all off at once.",
+  "book": "nusmp:natsu_fire_dragon_book",
+  "book_name": "Scale of the Fire Dragon Slayer",
+  "book_lore": "Igneel's lesson was short: eat the flame, and the flame will do what you tell it.",
+  "color": "#FF5A1F",
+  "icon": "minecraft:blaze_powder",
+  "class_id": "natsu_fire_dragon",
+  "duplicate_sp": 3,
+  "loot_weight": 1,
+  "nodes": [
+    {
+      "id": "fire_dragon_stance",
+      "name": "Fire Dragon Stance",
+      "desc": "Flame rolls over your fists: your blows hit harder and may strike critically, and you run a little hotter and faster.",
+      "parents": [],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "FIRE_SPIRAL"
+      },
+      "values": {
+        "damage_pct": [
+          0.2,
+          0.24,
+          0.28
+        ],
+        "armor": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "speed_pct": [
+          0.04,
+          0.048,
+          0.056
+        ],
+        "knockback_res": [
+          0,
+          0,
+          0
+        ],
+        "regen": [
+          0,
+          0,
+          0
+        ],
+        "crit_chance": [
+          0.08,
+          0.096,
+          0.112
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 0,
+      "icon": "minecraft:fire_charge"
+    },
+    {
+      "id": "flame_eater_s_posture",
+      "name": "Flame-Eater's Posture",
+      "desc": "Plant your feet and swallow the fire around you: you heal steadily and are hard to shift, but your blows are weaker.",
+      "parents": [
+        {
+          "node": "fire_dragon_stance",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "FLAME_TRAIL"
+      },
+      "values": {
+        "damage_pct": [
+          -0.1,
+          -0.12,
+          -0.14
+        ],
+        "armor": [
+          4.0,
+          5.0,
+          6.0
+        ],
+        "speed_pct": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "knockback_res": [
+          0.4,
+          0.48,
+          0.56
+        ],
+        "regen": [
+          1.0,
+          1.2,
+          1.4
+        ],
+        "crit_chance": [
+          0,
+          0,
+          0
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 2,
+      "icon": "minecraft:magma_block"
+    },
+    {
+      "id": "igneel_s_training",
+      "name": "Igneel's Training",
+      "desc": "Years of dragon training toughen your frame.",
+      "parents": [
+        {
+          "node": "fire_dragon_stance",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "max_health",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          2.0,
+          2.5,
+          3.0,
+          3.5,
+          4.0
+        ]
+      },
+      "x": 2,
+      "y": 0,
+      "icon": "minecraft:golden_apple"
+    },
+    {
+      "id": "dragon_fists",
+      "name": "Dragon Fists",
+      "desc": "Fists that live in flame hit harder.",
+      "parents": [
+        {
+          "node": "flame_eater_s_posture",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "attack_damage",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          1.0,
+          1.25,
+          1.5,
+          1.75,
+          2.0
+        ]
+      },
+      "x": 2,
+      "y": 2,
+      "icon": "minecraft:blaze_rod"
+    },
+    {
+      "id": "hot_blooded_stride",
+      "name": "Hot-Blooded Stride",
+      "desc": "A fighter who never stops is quick on his feet.",
+      "parents": [
+        {
+          "node": "fire_dragon_stance",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "movement_speed",
+        "op": "mult"
+      },
+      "values": {
+        "amount": [
+          0.03,
+          0.0375,
+          0.045,
+          0.0525,
+          0.06
+        ]
+      },
+      "x": 2,
+      "y": 4,
+      "icon": "minecraft:leather_boots"
+    },
+    {
+      "id": "salamander_s_hide",
+      "name": "Salamander's Hide",
+      "desc": "Heat-hardened skin turns blows aside.",
+      "parents": [
+        {
+          "node": "flame_eater_s_posture",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "armor",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          1.0,
+          1.25,
+          1.5,
+          1.75,
+          2.0
+        ]
+      },
+      "x": 2,
+      "y": 6,
+      "icon": "minecraft:iron_chestplate"
+    },
+    {
+      "id": "fire_dragon_s_roar",
+      "name": "Fire Dragon's Roar",
+      "desc": "Breathe a blast of flame along your line of sight that burns through the foes in front of you.",
+      "parents": [
+        {
+          "node": "fire_dragon_stance",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "ray_shot",
+      "params": {
+        "vfx": "FLAME_EXPLOSION"
+      },
+      "values": {
+        "damage": [
+          8.0,
+          10.0,
+          12.0,
+          14.0
+        ],
+        "range": [
+          16.0,
+          17.6,
+          19.2,
+          20.8
+        ],
+        "pierce": [
+          2.0,
+          3.0,
+          3.0,
+          4.0
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          120.0,
+          110.0,
+          101.0,
+          91.0
+        ]
+      },
+      "x": 4,
+      "y": 0,
+      "icon": "minecraft:fire_charge"
+    },
+    {
+      "id": "fire_dragon_s_iron_fist",
+      "name": "Fire Dragon's Iron Fist",
+      "desc": "Wrap your fist in flame and punch the foes in front of you.",
+      "parents": [
+        {
+          "node": "flame_eater_s_posture",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "cone_strike",
+      "params": {
+        "vfx": "FIRE_BURST"
+      },
+      "values": {
+        "damage": [
+          9.0,
+          11.25,
+          13.5,
+          15.75
+        ],
+        "range": [
+          3.5,
+          3.78,
+          4.06,
+          4.34
+        ],
+        "half_angle": [
+          45.0,
+          49.5,
+          54.0,
+          58.5
+        ],
+        "targets": [
+          3.0,
+          4.0,
+          5.0,
+          7.0
+        ],
+        "knockback": [
+          0.6,
+          0.66,
+          0.72,
+          0.78
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          100.0,
+          92.0,
+          84.0,
+          76.0
+        ]
+      },
+      "x": 4,
+      "y": 2,
+      "icon": "minecraft:blaze_rod"
+    },
+    {
+      "id": "fire_dragon_s_wing_attack",
+      "name": "Fire Dragon's Wing Attack",
+      "desc": "Sweep both arms out in a wave of flame that hits everything around you.",
+      "parents": [
+        {
+          "node": "fire_dragon_s_roar",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "ring_burst",
+      "params": {
+        "vfx": "FIRE_SPIRAL"
+      },
+      "values": {
+        "damage": [
+          6.0,
+          7.5,
+          9.0,
+          10.5
+        ],
+        "radius": [
+          4.5,
+          4.95,
+          5.4,
+          5.85
+        ],
+        "targets": [
+          6.0,
+          8.0,
+          11.0,
+          13.0
+        ],
+        "knockback": [
+          1.0,
+          1.1,
+          1.2,
+          1.3
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          140.0,
+          129.0,
+          118.0,
+          106.0
+        ]
+      },
+      "x": 6,
+      "y": 0,
+      "icon": "minecraft:feather"
+    },
+    {
+      "id": "fire_dragon_s_sword_horn",
+      "name": "Fire Dragon's Sword Horn",
+      "desc": "Set your head alight and ram forward, striking everything in the way.",
+      "parents": [
+        {
+          "node": "fire_dragon_s_iron_fist",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "dash_strike",
+      "params": {
+        "vfx": "FLAME_TRAIL"
+      },
+      "values": {
+        "distance": [
+          8.0,
+          8.8,
+          9.6,
+          10.4
+        ],
+        "damage": [
+          8.0,
+          10.0,
+          12.0,
+          14.0
+        ],
+        "targets": [
+          4.0,
+          5.0,
+          6.0,
+          8.0
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          120.0,
+          110.0,
+          101.0,
+          91.0
+        ]
+      },
+      "x": 6,
+      "y": 2,
+      "icon": "minecraft:iron_sword"
+    },
+    {
+      "id": "fire_dragon_s_claw",
+      "name": "Fire Dragon's Claw",
+      "desc": "A flaming kick that launches the foe in front of you into the air.",
+      "parents": [
+        {
+          "node": "fire_dragon_s_wing_attack",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "uppercut",
+      "params": {
+        "vfx": "FIRE_BURST"
+      },
+      "values": {
+        "damage": [
+          8.0,
+          10.0,
+          12.0,
+          14.0
+        ],
+        "range": [
+          3.2,
+          3.392,
+          3.584,
+          3.776
+        ],
+        "launch": [
+          0.9,
+          0.99,
+          1.08,
+          1.17
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          120.0,
+          110.0,
+          101.0,
+          91.0
+        ]
+      },
+      "x": 8,
+      "y": 0,
+      "icon": "minecraft:magma_cream"
+    },
+    {
+      "id": "fire_dragon_s_brilliant_flame",
+      "name": "Fire Dragon's Brilliant Flame",
+      "desc": "Press your hands together and drop a great ball of fire on the place you look at after a short delay.",
+      "parents": [
+        {
+          "node": "fire_dragon_s_sword_horn",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "meteor_drop",
+      "params": {
+        "vfx": "FLAME_EXPLOSION"
+      },
+      "values": {
+        "delay": [
+          22.0,
+          21.0,
+          20.0,
+          19.0
+        ],
+        "damage": [
+          14.0,
+          17.5,
+          21.0,
+          24.5
+        ],
+        "radius": [
+          4.5,
+          4.95,
+          5.4,
+          5.85
+        ],
+        "range": [
+          18.0,
+          19.44,
+          20.88,
+          22.32
+        ],
+        "cost": [
+          0.03,
+          0.0324,
+          0.0348,
+          0.0372
+        ],
+        "cooldown": [
+          360.0,
+          331.0,
+          302.0,
+          274.0
+        ]
+      },
+      "x": 8,
+      "y": 2,
+      "icon": "minecraft:fire_charge"
+    },
+    {
+      "id": "fire_dragon_s_roar_shift",
+      "name": "Fire Dragon's Roar: Shift",
+      "desc": "Crouch to roar a long wall of fire along the ground that scorches every foe on it.",
+      "parents": [
+        {
+          "node": "fire_dragon_s_claw",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "ground_wave",
+      "params": {
+        "vfx": "FLAME_TRAIL"
+      },
+      "values": {
+        "damage": [
+          8.0,
+          10.0,
+          12.0,
+          14.0
+        ],
+        "length": [
+          12.0,
+          13.2,
+          14.4,
+          15.6
+        ],
+        "width": [
+          3.0,
+          3.3,
+          3.6,
+          3.9
+        ],
+        "knockback": [
+          0.5,
+          0.55,
+          0.6,
+          0.65
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          180.0,
+          166.0,
+          151.0,
+          137.0
+        ]
+      },
+      "x": 10,
+      "y": 0,
+      "icon": "minecraft:lava_bucket"
+    },
+    {
+      "id": "crimson_lotus_flame_blade_shift",
+      "name": "Crimson Lotus: Flame Blade: Shift",
+      "desc": "Crouch to spin in a blade of flame that cuts down everything around you several times.",
+      "parents": [
+        {
+          "node": "fire_dragon_s_brilliant_flame",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "whirlwind",
+      "params": {
+        "vfx": "FIRE_SPIRAL"
+      },
+      "values": {
+        "damage": [
+          4.0,
+          5.0,
+          6.0,
+          7.0
+        ],
+        "radius": [
+          4.0,
+          4.32,
+          4.64,
+          4.96
+        ],
+        "hits": [
+          5.0,
+          6.0,
+          8.0,
+          10.0
+        ],
+        "interval": [
+          5.0,
+          5.0,
+          5.0,
+          5.0
+        ],
+        "cost": [
+          0.025,
+          0.027,
+          0.029,
+          0.031
+        ],
+        "cooldown": [
+          260.0,
+          239.0,
+          218.0,
+          198.0
+        ]
+      },
+      "x": 10,
+      "y": 6,
+      "icon": "minecraft:netherite_sword"
+    },
+    {
+      "id": "smouldering_debt",
+      "name": "Smouldering Debt",
+      "desc": "Your blows leave embers on the foe (Debt). They keep burning while they wait, and your Debt arts cash them in.",
+      "parents": [
+        {
+          "node": "fire_dragon_s_roar",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "debt_store",
+      "params": {
+        "vfx": "FIRE_BURST"
+      },
+      "values": {
+        "store_pct": [
+          0.3,
+          0.36,
+          0.42,
+          0.48
+        ],
+        "tick_seconds": [
+          3.0,
+          3.0,
+          3.0,
+          3.0
+        ],
+        "max_pct": [
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ],
+        "hold_seconds": [
+          12.0,
+          12.0,
+          12.0,
+          12.0
+        ]
+      },
+      "x": 10,
+      "y": 2,
+      "icon": "minecraft:campfire",
+      "evolved": {
+        "store_pct": 0.5,
+        "max_pct": 0.8
+      }
+    },
+    {
+      "id": "eating_the_flame",
+      "name": "Eating the Flame",
+      "desc": "While you are burning, the fire feeds you: you hit with the strength of a dragon.",
+      "parents": [
+        {
+          "node": "fire_dragon_s_iron_fist",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "self_effect_when",
+      "params": {
+        "effect": "strength",
+        "condition": "on_fire"
+      },
+      "values": {
+        "amp": [
+          1.0,
+          2.0,
+          2.0,
+          2.0
+        ]
+      },
+      "x": 10,
+      "y": 4,
+      "icon": "minecraft:blaze_powder"
+    },
+    {
+      "id": "dragon_s_immunity_to_fire",
+      "name": "Dragon's Immunity to Fire",
+      "desc": "Fire barely touches a Fire Dragon Slayer: you take much less fire damage.",
+      "parents": [
+        {
+          "node": "fire_dragon_s_wing_attack",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "resist",
+      "params": {
+        "damage_kind": "fire"
+      },
+      "values": {
+        "pct": [
+          0.5,
+          0.6,
+          0.7,
+          0.8
+        ]
+      },
+      "x": 12,
+      "y": 0,
+      "icon": "minecraft:magma_block"
+    },
+    {
+      "id": "rising_heat",
+      "name": "Rising Heat",
+      "desc": "Blows in a row grow stronger the longer the fight goes on.",
+      "parents": [
+        {
+          "node": "fire_dragon_s_sword_horn",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "momentum",
+      "values": {
+        "per_stack": [
+          0.05,
+          0.0575,
+          0.065,
+          0.0725
+        ],
+        "max_stacks": [
+          5.0,
+          6.0,
+          8.0,
+          10.0
+        ]
+      },
+      "x": 12,
+      "y": 2,
+      "icon": "minecraft:fire_charge",
+      "evolved": {
+        "per_stack": 0.08,
+        "max_stacks": 8
+      }
+    },
+    {
+      "id": "fists_that_send_you_flying",
+      "name": "Fists That Send You Flying",
+      "desc": "Your blows may knock the foe back in a burst of flame.",
+      "parents": [
+        {
+          "node": "fire_dragon_s_claw",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "knockback_on_hit",
+      "values": {
+        "strength": [
+          0.5,
+          0.575,
+          0.65,
+          0.725
+        ],
+        "chance": [
+          0.35,
+          0.4025,
+          0.455,
+          0.5075
+        ]
+      },
+      "x": 14,
+      "y": 0,
+      "icon": "minecraft:slime_ball"
+    },
+    {
+      "id": "salamander_s_finish",
+      "name": "Salamander's Finish",
+      "desc": "You deal much more damage to nearly beaten foes.",
+      "parents": [
+        {
+          "node": "fire_dragon_s_brilliant_flame",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "execute_threshold",
+      "values": {
+        "threshold": [
+          0.2,
+          0.22,
+          0.24,
+          0.26
+        ],
+        "bonus": [
+          0.6,
+          0.72,
+          0.84,
+          0.96
+        ]
+      },
+      "x": 14,
+      "y": 2,
+      "icon": "minecraft:blaze_rod",
+      "evolved": {
+        "threshold": 0.3,
+        "bonus": 1.2
+      }
+    },
+    {
+      "id": "never_gives_up",
+      "name": "Never Gives Up",
+      "desc": "When you are close to falling, a flame wall of will briefly shields you.",
+      "parents": [
+        {
+          "node": "fire_dragon_s_roar_shift",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "last_stand",
+      "values": {
+        "threshold": [
+          0.3,
+          0.3,
+          0.3,
+          0.3
+        ],
+        "seconds": [
+          5.0,
+          6.0,
+          6.0,
+          7.0
+        ],
+        "rest": [
+          1800.0,
+          1620.0,
+          1440.0,
+          1260.0
+        ]
+      },
+      "x": 16,
+      "y": 0,
+      "icon": "minecraft:totem_of_undying"
+    },
+    {
+      "id": "crimson_lotus_exploding_flame_blade",
+      "name": "Crimson Lotus: Exploding Flame Blade",
+      "desc": "Spin in a ring of crimson flame, then burst it outward: a huge blow to every foe around you.",
+      "parents": [
+        {
+          "node": "crimson_lotus_flame_blade_shift",
+          "level": 3
+        },
+        {
+          "node": "never_gives_up",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "ring_burst",
+      "params": {
+        "vfx": "FLAME_EXPLOSION"
+      },
+      "values": {
+        "damage": [
+          24.0,
+          30.0,
+          36.0
+        ],
+        "radius": [
+          7.0,
+          7.7,
+          8.4
+        ],
+        "targets": [
+          8.0,
+          11.0,
+          14.0
+        ],
+        "knockback": [
+          1.5,
+          1.65,
+          1.8
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232
+        ],
+        "cooldown": [
+          1400.0,
+          1288.0,
+          1176.0
+        ]
+      },
+      "x": 16,
+      "y": 2,
+      "icon": "minecraft:netherite_axe"
+    },
+    {
+      "id": "lightning_fire_dragon_mode",
+      "name": "Lightning Fire Dragon Mode",
+      "desc": "Wrap yourself in lightning-charged flame: a huge blow to every foe around you plus many times all the embers stored on each of them.",
+      "parents": [
+        {
+          "node": "fire_dragon_s_roar_shift",
+          "level": 3
+        },
+        {
+          "node": "salamander_s_finish",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "debt_burst",
+      "params": {
+        "vfx": "FIRE_SPIRAL"
+      },
+      "values": {
+        "damage": [
+          36.0,
+          45.0,
+          54.0
+        ],
+        "mult": [
+          3.0,
+          3.3,
+          3.6
+        ],
+        "radius": [
+          11.0,
+          12.1,
+          13.2
+        ],
+        "targets": [
+          10.0,
+          14.0,
+          18.0
+        ],
+        "cost": [
+          0.08,
+          0.0864,
+          0.0928
+        ],
+        "cooldown": [
+          18000.0,
+          16560.0,
+          15120.0
+        ]
+      },
+      "x": 16,
+      "y": 4,
+      "icon": "minecraft:nether_star",
+      "ultimate": true
+    }
+  ],
+  "evolution": {
+    "requirement": "elite_kills",
+    "count": 150,
+    "text": "Defeat 150 elite or boss creatures while Fire Dragon Slayer is switched on to ignite the Lightning Fire Dragon Mode and unlock it.",
+    "ultimate_name": "Ultimate Skill, Lightning Fire Dragon Mode"
+  }
+}
