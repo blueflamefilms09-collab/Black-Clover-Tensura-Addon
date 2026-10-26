@@ -40,6 +40,7 @@ public final class JibrilSelfTests {
         SelfTests.register("jibril.rules", JibrilSelfTests::rules);
         SelfTests.register("jibril.skill", JibrilSelfTests::skill);
         SelfTests.register("jibril.conditions", JibrilSelfTests::conditions);
+        SelfTests.register("jibril.upgrades", JibrilSelfTests::upgrades);
     }
 
     private static Result rules(MinecraftServer server) {
@@ -237,6 +238,40 @@ public final class JibrilSelfTests {
             JudgmentState.write(p, 0);
             VeldanavaSkills.revoke(p);
             z.discard();
+        }
+    }
+    // ---------------------------------------------------------------- 3.23.0: the numbers of the upgrades, and the Purge's light burning a zombie
+    private static Result upgrades(MinecraftServer server) {
+        if (JibrilRules.judgmentDamage(false) != JibrilRules.JUDGMENT_DAMAGE) return Result.fail("Judgment of Heaven changed for the holy");
+        if (Math.abs(JibrilRules.judgmentDamage(true) - JibrilRules.JUDGMENT_DAMAGE * (1.0 + JibrilRules.JUDGMENT_SMITE_BONUS)) > 1.0E-9) return Result.fail("Judgment of Heaven does not smite the unholy");
+        if (JibrilRules.shackleBite(0) != JibrilRules.SHACKLE_BITE_BASE || JibrilRules.shackleBite(99) != JibrilRules.SHACKLE_BITE_BASE + JibrilRules.SHACKLE_STEAL_MAX * JibrilRules.SHACKLE_BITE_PER_EFFECT || JibrilRules.shackleBite(-2) != JibrilRules.SHACKLE_BITE_BASE)
+            return Result.fail("the Shackles' bite is wrong or not capped");
+        if (JibrilRules.KINGDOM_PULSE_SHARE <= 0 || JibrilRules.KINGDOM_PULSE_SHARE > 0.05 || JibrilRules.PURGE_BURN_MAX > 24) return Result.fail("the Kingdom's wear or the Purge's burn is out of range");
+        if (!JudgmentConfig.jibrilUpgrades()) return Result.ok("the numbers hold; the upgrades are off in this config, so the live check was skipped");
+
+        ServerLevel sl = server.overworld();
+        BlockPos at = sl.getSharedSpawnPos().above(3);
+        FakePlayer p = SelfTests.standIn(sl, "jibril_up", at.getX() + 0.5, at.getY(), at.getZ() + 0.5);
+        VeldanavaSkills.revoke(p);
+        Mob zombie = EntityType.ZOMBIE.create(sl), cow = EntityType.COW.create(sl);
+        if (zombie == null || cow == null) return Result.fail("could not make the test creatures");
+        zombie.moveTo(at.getX() + 5.5, at.getY(), at.getZ() + 0.5);
+        cow.moveTo(at.getX() - 5.5, at.getY(), at.getZ() + 0.5);
+        sl.addFreshEntity(zombie);
+        sl.addFreshEntity(cow);
+        try {
+            if (!VeldanavaSkills.grant(p, "jibril")) return Result.fail("Jibril could not be granted");
+            float cowHealth = cow.getHealth();
+            JibrilSkill.purge(p);
+            if (zombie.isAlive()) return Result.fail("the Purge's light did not burn an undead creature (it still has " + zombie.getHealth() + " HP)");
+            if (!cow.isAlive() || cow.getHealth() < cowHealth) return Result.fail("the Purge's light hurt a peaceful creature");
+            return Result.ok("the numbers hold; the Purge burnt a zombie and spared a cow");
+        } finally {
+            zombie.discard();
+            cow.discard();
+            JudgmentFields.clearAll();
+            JudgmentState.write(p, 0);
+            VeldanavaSkills.revoke(p);
         }
     }
 }

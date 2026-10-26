@@ -91,6 +91,17 @@ public final class JibrilRules {
         return false;
     }
 
+    // ---------------------------------------------------------------- 3.23.0 upgrades (setting jibrilUpgrades)
+    /** Judgment of Heaven smites the unholy for this much more; Heavenly Purge burns the unholy within this radius for this much (most creatures); the Shackles bite (a base and a share per stolen effect); the Kingdom's pulse takes this share of an enemy's maximum health. */
+    public static final double JUDGMENT_SMITE_BONUS = 0.5, PURGE_BURN_RADIUS = 14.0, PURGE_BURN_DAMAGE = 120.0, SHACKLE_BITE_BASE = 40.0, SHACKLE_BITE_PER_EFFECT = 25.0, KINGDOM_PULSE_SHARE = 0.01;
+    public static final int PURGE_BURN_MAX = 12;
+
+    /** The base holy damage of Judgment of Heaven: more for the unholy (the undead, a demon, a creature in debt). */
+    public static double judgmentDamage(boolean unholy) { return JUDGMENT_DAMAGE * (unholy ? 1.0 + JUDGMENT_SMITE_BONUS : 1.0); }
+
+    /** The bite of the Holy Shackles: a base and a share per good effect taken (at most {@link #SHACKLE_STEAL_MAX} count). */
+    public static double shackleBite(int stolen) { return SHACKLE_BITE_BASE + Math.min(SHACKLE_STEAL_MAX, Math.max(0, stolen)) * SHACKLE_BITE_PER_EFFECT; }
+
     private static final String[] DEMON_WORDS = {"demon", "devil", "daemon", "fiend", "succub", "incub", "infernal", "hellhound", "hellspawn"};
 
     /** The holy damage a second of Heavenly Presence deals to a creature with this much Temporal Debt. */

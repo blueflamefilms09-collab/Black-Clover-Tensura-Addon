@@ -257,4 +257,16 @@ class JudgmentRulesTest {
         assertTrue(IsrafilRules.SHIFT_SHEAR_DAMAGE < IsrafilRules.SINS_BASE_DAMAGE * 1.5);
         assertTrue(IsrafilRules.NIHILITY_FINAL_SHARE > IsrafilRules.NIHILITY_PULSE_SHARE && IsrafilRules.NIHILITY_FINAL_SHARE <= 0.15);
     }
+
+    @Test
+    void theJibrilUpgradesOfThreeTwentyThreeAreSmallAndBounded() {
+        assertEquals(JibrilRules.JUDGMENT_DAMAGE, JibrilRules.judgmentDamage(false), 1.0E-9);
+        assertEquals(JibrilRules.JUDGMENT_DAMAGE * 1.5, JibrilRules.judgmentDamage(true), 1.0E-9, "the unholy take half as much again");
+        assertEquals(JibrilRules.SHACKLE_BITE_BASE, JibrilRules.shackleBite(0), 1.0E-9);
+        assertEquals(JibrilRules.SHACKLE_BITE_BASE + JibrilRules.SHACKLE_STEAL_MAX * JibrilRules.SHACKLE_BITE_PER_EFFECT, JibrilRules.shackleBite(500), 1.0E-9, "only eight effects count");
+        assertEquals(JibrilRules.SHACKLE_BITE_BASE, JibrilRules.shackleBite(-3), 1.0E-9);
+        assertTrue(JibrilRules.shackleBite(99) < JibrilRules.JUDGMENT_DAMAGE * 1.5, "the bite is never a bigger blow than a smiting Judgment");
+        assertTrue(JibrilRules.PURGE_BURN_DAMAGE < JibrilRules.JUDGMENT_DAMAGE && JibrilRules.PURGE_BURN_RADIUS < JibrilRules.PURGE_RADIUS && JibrilRules.PURGE_BURN_MAX <= 24);
+        assertTrue(JibrilRules.KINGDOM_PULSE_SHARE > 0 && JibrilRules.KINGDOM_PULSE_SHARE <= 0.05, "the Kingdom wears enemies down slowly");
+    }
 }

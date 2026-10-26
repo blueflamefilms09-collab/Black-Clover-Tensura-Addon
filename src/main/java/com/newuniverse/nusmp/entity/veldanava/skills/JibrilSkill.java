@@ -141,7 +141,8 @@ public class JibrilSkill extends VeldanavaSkillBase {
         ServerLevel l = p.serverLevel();
         double mastery = mastery(p, i);
         Vec3 ground = t.position();
-        JibrilState.holy(p, t, (float) JibrilRules.JUDGMENT_DAMAGE, mastery);
+        boolean upgrades = JudgmentConfig.jibrilUpgrades();
+        JibrilState.holy(p, t, (float) (upgrades ? JibrilRules.judgmentDamage(burns(t)) : JibrilRules.JUDGMENT_DAMAGE), mastery);
         if (t.isAlive()) JudgmentDamage.stripBeneficial(t, JudgmentRules.STRIP_MAX);
         List<LivingEntity> splash = new ArrayList<>(l.getEntitiesOfClass(LivingEntity.class, new AABB(ground, ground).inflate(JibrilRules.JUDGMENT_SPLASH_RADIUS, 3.0, JibrilRules.JUDGMENT_SPLASH_RADIUS),
                 x -> x != t && x.isAlive() && !x.isSpectator() && Foes.isFoe(p, x) && x.distanceToSqr(ground) <= JibrilRules.JUDGMENT_SPLASH_RADIUS * JibrilRules.JUDGMENT_SPLASH_RADIUS));
@@ -159,7 +160,7 @@ public class JibrilSkill extends VeldanavaSkillBase {
      * Heavenly Purge: within fifty blocks every lingering cloud is gone (at most 64), every field of another owner ends (Verdict of Ruin, Nihility Collapse, a cage), every pocket maze there ends, and the
      * caster and the allied players nearby (at most 24) are cleansed of harmful effects. Blocks are never scanned or changed: "environmental corruption" is what the fields and clouds are.
      */
-    private static boolean purge(ServerPlayer p) {
+    static boolean purge(ServerPlayer p) {
         ServerLevel l = p.serverLevel();
         double r = JibrilRules.PURGE_RADIUS;
         Vec3 at = p.position();
@@ -179,8 +180,23 @@ public class JibrilSkill extends VeldanavaSkillBase {
             JibrilState.cleanse(o, JibrilRules.PURGE_CLEANSE_MAX);
             o.clearFire();
         }
+        if (JudgmentConfig.jibrilUpgrades()) burnTheUnholy(p, l, at);
         JibrilFx.purge(l, at, (float) r);
         return true;
+    }
+
+    /** The Purge's light burns the unholy near the caster: one box query, the nearest {@link JibrilRules#PURGE_BURN_MAX} foes that {@link #burns}, one holy blow each. */
+    private static void burnTheUnholy(ServerPlayer p, ServerLevel l, Vec3 at) {
+        double r = JibrilRules.PURGE_BURN_RADIUS;
+        List<LivingEntity> near = new ArrayList<>(l.getEntitiesOfClass(LivingEntity.class, new AABB(at, at).inflate(r, 4.0, r),
+                x -> x != p && x.isAlive() && !x.isSpectator() && Foes.isFoe(p, x) && burns(x) && x.distanceToSqr(at) <= r * r));
+        near.sort(Comparator.comparingDouble(x -> x.distanceToSqr(at)));
+        double mastery = JudgmentState.mastered(p) ? 1.0 : 0.4;
+        int n = 0;
+        for (LivingEntity t : near) {
+            if (n++ >= JibrilRules.PURGE_BURN_MAX) break;
+            JibrilState.holy(p, t, (float) JibrilRules.PURGE_BURN_DAMAGE, mastery);
+        }
     }
 
     /** Holy Shackles: the creature is bound (Movement Interference for the control time the Balance Law allows) and up to eight of its good effects are taken and given to the caster. */
@@ -188,7 +204,8 @@ public class JibrilSkill extends VeldanavaSkillBase {
         LivingEntity t = target(p, JibrilRules.SHACKLE_RANGE, "bind");
         if (t == null) return false;
         t.addEffect(new MobEffectInstance(JudgmentEffects.MOVEMENT_INTERFERENCE, BalanceLaw.controlTicks(t, JibrilRules.SHACKLE_TICKS), 0, false, true, true));
-        JibrilState.steal(t, p, JibrilRules.SHACKLE_STEAL_MAX);
+        int stolen = JibrilState.steal(t, p, JibrilRules.SHACKLE_STEAL_MAX);
+        if (JudgmentConfig.jibrilUpgrades()) JibrilState.holy(p, t, (float) JibrilRules.shackleBite(stolen), JudgmentState.mastered(p) ? 1.0 : 0.4);
         JibrilFx.shackles(p.serverLevel(), t, p);
         return true;
     }
@@ -253,6 +270,7 @@ public class JibrilSkill extends VeldanavaSkillBase {
             }
             JibrilState.kingdom(owner);
             if (++pulses % (JibrilRules.KINGDOM_FX_EVERY_TICKS / JibrilRules.KINGDOM_PULSE_TICKS) == 0) JibrilFx.kingdom(level, owner, false);
+            boolean wear = JudgmentConfig.jibrilUpgrades();
             double r = f.radius, r2 = r * r;
             List<LivingEntity> near = level.getEntitiesOfClass(LivingEntity.class, owner.getBoundingBox().inflate(r, Math.min(r, 48.0), r),
                     x -> x != owner && x.isAlive() && !x.isSpectator() && x.distanceToSqr(owner) <= r2);
@@ -262,6 +280,7 @@ public class JibrilSkill extends VeldanavaSkillBase {
                 if (!Foes.isFoe(owner, t)) continue;
                 n++;
                 JudgmentDamage.stripBeneficial(t, JibrilRules.KINGDOM_STRIP);
+                if (wear) JudgmentDamage.share(owner, t, JibrilRules.KINGDOM_PULSE_SHARE);
                 t.addEffect(new MobEffectInstance(JudgmentEffects.GRAVITY_CRUSH, JibrilRules.KINGDOM_CRUSH_TICKS, 0, false, true, true));      // a weight, not a hold: renewed each second, so the Balance Law's control limits are not spent on it
             }
         }

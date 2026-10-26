@@ -8,7 +8,7 @@ import net.neoforged.neoforge.common.ModConfigSpec;
  */
 public final class JudgmentConfig {
     public static final ModConfigSpec SPEC;
-    public static final ModConfigSpec.BooleanValue ENABLED, REWARD_SCREEN, EXECUTE_PLAYERS, EXECUTE_BOSSES, POCKET_DIMENSION, STRICT_GOVERNANCE, WINGS_FLIGHT, SOLOMON_TERRAIN, SOLOMON_REPLAY, SOLOMON_BYPASS, HERCULES_TERRAIN, HERCULES_BREAK, HERCULES_SHOCKWAVE, HERCULES_UPGRADES, MASTER_TOGGLE, SANDALPHON_UPGRADES, ISRAFIL_UPGRADES;
+    public static final ModConfigSpec.BooleanValue ENABLED, REWARD_SCREEN, EXECUTE_PLAYERS, EXECUTE_BOSSES, POCKET_DIMENSION, STRICT_GOVERNANCE, WINGS_FLIGHT, SOLOMON_TERRAIN, SOLOMON_REPLAY, SOLOMON_BYPASS, HERCULES_TERRAIN, HERCULES_BREAK, HERCULES_SHOCKWAVE, HERCULES_UPGRADES, MASTER_TOGGLE, SANDALPHON_UPGRADES, ISRAFIL_UPGRADES, JIBRIL_UPGRADES;
     public static final ModConfigSpec.DoubleValue COST_SCALE, COOLDOWN_SCALE, DEBT_DAMAGE, FINAL_CAP, ACTIVE_DAMAGE_CAP;
     public static final ModConfigSpec.IntValue DEBT_MAX, FIELDS_PER_PLAYER, FIELDS_TOTAL;
 
@@ -65,6 +65,8 @@ public final class JudgmentConfig {
                 .define("sandalphonUpgrades", true);
         ISRAFIL_UPGRADES = b.comment("true = Israfil has the abilities of 3.22.0: the Grand Trumpet's blast, the shear of Coordinate Shift and the last implosion of Spatial Collapse. false = the abilities of 3.21.0, without them.")
                 .define("israfilUpgrades", true);
+        JIBRIL_UPGRADES = b.comment("true = Jibril has the abilities of 3.23.0: Judgment of Heaven smites the unholy, Heavenly Purge burns them, the Holy Shackles bite and the Kingdom of God wears its enemies down. false = the abilities of 3.22.0, without them.")
+                .define("jibrilUpgrades", true);
         b.pop();
         SPEC = b.build();
     }
@@ -114,6 +116,8 @@ public final class JudgmentConfig {
     public static boolean sandalphonUpgrades() { return get(SANDALPHON_UPGRADES); }
 
     public static boolean israfilUpgrades() { return get(ISRAFIL_UPGRADES); }
+
+    public static boolean jibrilUpgrades() { return get(JIBRIL_UPGRADES); }
 
     public static int debtMax() { return get(DEBT_MAX); }
 
