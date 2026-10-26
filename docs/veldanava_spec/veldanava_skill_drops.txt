@@ -1,0 +1,291 @@
+Sandalphon, Lord of Judgment
+Information
+Type: Ultimate Skill
+Modes: 10
+
+Passive
+[Passive - Toggle]
+Executioner's Authority:
+Increases critical strike chance, armor penetration, and ranged attack speed.
+Grants presence sense, absolute accuracy, and magic resistance degradation on hit.
+On Mastery, attacks passively seal the enemy's movement and spatial abilities.
+
+[Passive - Toggle]
+Absolute Severance:
+Melee attacks and projectiles ignore standard armor, barriers, and Castle Guard shields.
+This effect also completely suppresses target regeneration and beneficial healing effects.
+
+[Passive - Toggle]
+Inevitable Demise:
+Damage dealt scales inversely with the target's missing health. 
+On Mastery, targets below 15% HP passively gain Temporal Stutter and cannot be healed.
+
+[Passive - Toggle]
+Judgment Gaze:
+Enemies that look directly at the user suffer from action lock and rapidly accumulate Temporal Debt.
+
+Active
+[Active - Press]
+Judgment Bullet:
+Fires an un-dodgeable, high-velocity projectile that pierces through blocks and entities.
+Applies Temporal Stutter and instantly suppresses enemy beneficial effects.
+Costs 2.5K MP, 1.8K on Mastery.
+
+[Active - Crouch + Press]
+Condemnation:
+Marks an enemy with a Judgment Sigil and stores Temporal Debt.
+If the marked target's health falls below 20%, they are instantly executed, bypassing Totems of Undying.
+Costs 4.2K MP, 3.1K on Mastery.
+
+[Active - Press]
+Supreme Edict:
+Cancels all active magical effects, buffs, and domains within a 30-block radius.
+Costs 5.5K MP, 4.0K on Mastery.
+
+[Active - Crouch + Press]
+Guillotine Cleave:
+A devastating, short-range melee sweep that deals true damage and applies Future Rejection to anyone hit.
+Costs 3.8K MP, 2.5K on Mastery.
+
+[Active - Press]
+Verdict of Ruin:
+Spawns a massive AoE field of true damage that follows the target. 
+Enemies inside are silenced and cannot use spatial abilities.
+Costs 8.0K MP, 5.5K on Mastery.
+
+[Mastery, Active - Held]
+Final Judgment:
+Locks onto a single target, freezing them in time. Calls down a world-ending cross of light that detonates all Temporal Debt at a 5x multiplier. 
+Costs 45K MP. Cooldown 120s.
+
+
+Israfil, Lord of Trials
+Information
+Type: Ultimate Skill
+Modes: 10
+
+Passive
+[Passive - Toggle]
+Spatial Domination:
+Increases movement speed and grants natural teleportation abilities.
+Grants immunity to fall damage, spatial displacement, and entrapment.
+On Mastery, passively bends incoming physical attacks and projectiles away from the user.
+
+[Passive - Toggle]
+Trial of Endurance:
+Taking damage stores a portion of the impact, converting it into temporary maximum HP, armor toughness, and Temporal Debt applied to the attacker.
+
+[Passive - Toggle]
+Labyrinthian Mind:
+Renders the user completely immune to mind-altering effects, presence scans, and future-prediction abilities.
+
+[Passive - Toggle]
+Weight of Consequence:
+Enemies moving within a 20-block radius of the user naturally accumulate Temporal Debt and suffer from slow movement.
+
+Active
+[Active - Press]
+Dimensional Labyrinth:
+Traps a targeted entity in an ever-shifting pocket dimension of barrier blocks.
+Enemies inside suffer from spatial disorientation, Movement Interference, and action lock.
+Costs 6.5K MP, 4.8K on Mastery.
+
+[Active - Crouch + Press]
+Weight of Sins:
+Subjects a target to localized gravity manipulation based on their accumulated Temporal Debt and kill count.
+Heavily damages and permanently grounds flying targets.
+Costs 4.0K MP, 2.9K on Mastery.
+
+[Active - Press]
+Spatial Collapse:
+Crushes the spatial coordinates around a target, imploding the area.
+Deals massive true damage and briefly creates a Nihility Collapse damage field.
+Costs 9.5K MP, 7.2K on Mastery.
+
+[Active - Crouch + Press]
+Coordinate Shift:
+Instantly swaps physical locations with a targeted entity or projectile, shedding all aggro.
+Costs 3.0K MP, 1.5K on Mastery.
+
+[Active - Held]
+Rift Walk:
+The user phases out of reality, becoming intangible and able to walk freely through solid blocks for a short duration. 
+Costs 1.2K MP/s, 800 on Mastery.
+
+[Mastery, Active - Press]
+The Grand Trumpet:
+Emits a cataclysmic soundwave that shatters all barrier blocks in a 100-block radius, applies Event Silence to all enemies, and resets enemy cooldowns to maximum. 
+Costs 60K MP. Cooldown 180s.
+
+
+Jibril, Lord of Rigor
+Information
+Type: Ultimate Skill
+Modes: 10
+
+Passive
+[Passive - Toggle]
+Divine Rigor:
+Renders the user completely immune to status debuffs, movement impairments, and Temporal Stutter.
+On Mastery, nearby allies also receive 50% of this resistance.
+
+[Passive - Toggle]
+Heavenly Presence:
+Constantly burns nearby demonic entities, undead, and targets burdened with Temporal Debt with pure holy damage.
+
+[Passive - Toggle]
+Strict Governance:
+Enemy skill and spell cooldowns are doubled while they are within 30 blocks of the user.
+
+[Passive - Toggle]
+Wings of Revelation:
+Grants creative-style flight, vastly increased aerial movement speed, and dodge invulnerability while airborne.
+
+Active
+[Active - Press]
+Absolute Command:
+Forces a targeted entity to immediately halt all actions, locking their hotbar and preventing skill casting for 5 seconds.
+Costs 5.0K MP, 3.5K on Mastery.
+
+[Active - Crouch + Press]
+Judgment of Heaven:
+Calls down a massive pillar of divine light from the sky, piercing all blocks to strike the target.
+Purges all beneficial effects from the target and deals heavy magic damage.
+Costs 8.5K MP, 6.0K on Mastery.
+
+[Active - Press]
+Heavenly Purge:
+Cleanses a 50-block area of all lingering hazards, magical zones, Nihility fields, and environmental corruption.
+Costs 7.0K MP, 5.0K on Mastery.
+
+[Active - Crouch + Press]
+Holy Shackles:
+Binds a target in chains of light, applying Movement Interference and stealing their buffs to give to the user.
+Costs 4.5K MP, 3.0K on Mastery.
+
+[Active - Press]
+Word of Law:
+The user speaks a word of power, creating a split-second perfect parry window. If hit, the damage is completely negated and reflected at 300% power.
+Costs 6.0K MP, 4.0K on Mastery.
+
+[Mastery, Active - Held]
+Kingdom of God:
+Expands a 50-block sanctuary domain. Within this domain, allies cannot be reduced below 1 HP, and enemies are constantly purged of buffs and subjected to gravity crush.
+Costs 4.0K MP/s, 2.5K on Mastery.
+
+
+Solomon, Lord of Sorcery
+Information
+Type: Ultimate Skill (Black Clover Crossover Boon)
+Modes: 10
+
+Passive
+[Passive - Toggle]
+Infinite Grimoire:
+Drastically increases max MP, mana regeneration, and chant speed.
+Grants immunity to anti-magic zones and mana depletion effects.
+On Mastery, all spells cost 50% less MP.
+
+[Passive - Toggle]
+Omnipotent Magic:
+All elemental spells bypass standard magic resistance and immunity.
+Grants presence sense and prediction of enemy magical attacks.
+
+[Passive - Toggle]
+Mana Skin:
+Lethal damage is automatically negated by draining MP instead of HP. (1 HP = 10 MP).
+
+[Passive - Toggle]
+Elemental Sovereignty:
+Grants total immunity to environmental hazards (fire, lava, poison, freezing) and absorbs elemental projectiles to restore MP.
+
+Active
+[Active - Press]
+Grand Spell Copy:
+Analyzes and duplicates the last spell or ultimate ability cast by an enemy or ally.
+The copied spell is stored in the Grimoire and can be cast once without MP cost.
+Costs 4.5K MP, 3.0K on Mastery.
+
+[Active - Crouch + Press]
+Arcane Convergence:
+Draws in all active projectiles and magical effects in a 30-block radius, converting them into pure MP for the user.
+Costs 2.0K MP, 1.2K on Mastery.
+
+[Active - Held]
+Realm of Magic:
+Expands a massive domain around the user.
+Within this domain, allies have 0 MP costs and instant chant speed, while enemies suffer from Event Silence and action lock.
+Costs 2.5K MP/s, 1.5K on Mastery.
+
+[Active - Press]
+Spell Chain:
+Instantly rapid-fires the last three spells the user cast simultaneously without paying their MP costs.
+Costs 12K MP, 8.5K on Mastery.
+
+[Active - Crouch + Press]
+Mana Zone Erasure:
+Instantly deletes all enemy projectiles, summons, and AoE fields within a 40-block radius, applying Temporal Stutter to the casters.
+Costs 15K MP, 10K on Mastery.
+
+[Mastery, Active - Press]
+The 72 Pillars:
+Summons a cataclysmic barrage of 72 magical pillars representing all elements. They rain down on marked targets, destroying terrain and bypassing all Castle Guard effects.
+Costs 80K MP. Cooldown 240s.
+
+
+Hercules, Lord of Martial Prowess
+Information
+Type: Ultimate Skill (Solo Leveling/Melee Crossover Boon)
+Modes: 10
+
+Passive
+[Passive - Toggle]
+Adamantine Body:
+Reduces all incoming physical damage by 90% and magical damage by 50%.
+Grants absolute immunity to knockback, fire, fall damage, and Temporal Stutter.
+
+[Passive - Toggle]
+God of Strength:
+Base melee damage is exponentially multiplied.
+Breaking non-protected blocks takes only one hit, and melee attacks generate shockwaves that hit nearby enemies.
+
+[Passive - Toggle]
+Unstoppable Momentum:
+Moving continuously for more than 3 seconds grants scaling bonuses to attack speed, movement speed, and armor penetration.
+
+[Passive - Toggle]
+Colossal Vigor:
+Grants massive out-of-combat HP regeneration. In combat, melee damage dealt heals the user for a percentage of the damage.
+
+Active
+[Active - Press]
+Earth-Shattering Tremor:
+A massive leap attack. Upon landing, creates a huge shockwave that destroys non-protected blocks, knocks enemies into the air, and applies Movement Interference.
+Costs 3.0K MP, 2.0K on Mastery.
+
+[Active - Crouch + Press]
+Invictus:
+For 10 seconds, the user's HP cannot fall below 1.
+During this time, melee damage scales inversely with missing HP (lower HP = higher damage).
+Costs 8.0K MP, 5.5K on Mastery.
+
+[Active - Press]
+Titan's Grip:
+Uses raw physical force to pull a targeted enemy or flying boss directly into melee range, inflicting action lock.
+Costs 2.5K MP, 1.5K on Mastery.
+
+[Active - Crouch + Press]
+Devastating Throw:
+Picks up a targeted entity (even bosses) or a chunk of the terrain and hurls it forward like a high-speed projectile.
+Costs 4.0K MP, 2.5K on Mastery.
+
+[Active - Press]
+Battle Roar:
+Lets out a mighty roar that instantly removes all debuffs from the user and inflicts Fear and Temporal Stutter on all enemies within 30 blocks.
+Costs 5.0K MP, 3.2K on Mastery.
+
+[Mastery, Active - Press] 
+World-Breaking Strike:
+Channels all physical power into a single, devastating punch that shatters spatial barriers (including Uriel's Infinity Prison and Michael's Castle Guard).
+Applies massive Temporal Debt and instantly breaks enemy armor values.
+Costs 15K MP. Cooldown 180s.
