@@ -23,6 +23,9 @@
 ### Not included
 - Not played in a real game, previews are headless only. Known weaknesses: the Trumpet's bell goes pale and over-exposed in the burst of light and its tube is slender next to it; the weight plate is dark navy and reads somewhat like a thin tray; the coordinate gates are small and plain; the shard textures are small at range; the Trumpet peaks at 98 of 100 quads (a view that needs more than the reserve falls back to the flat horn).
 
+### Checked
+- The whole test sweep (every test class that reads the repo's files, the source scans, `ServerSafetyTest`, `ConfigFileNamesTest`, the particle and texture tests): nothing new failed against the baseline; `IsrafilModelsTest` 10/10, `JudgmentRulesTest` and `JudgmentSourceScanTest` 36/36. CI build and server smoke test are run by this release.
+
 ## [3.21.0] — Sandalphon: abilities that hurt and 3D models
 
 ### NEW
