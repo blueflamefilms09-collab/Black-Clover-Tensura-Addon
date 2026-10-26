@@ -225,4 +225,24 @@ class JudgmentRulesTest {
         assertFalse(JudgmentRules.migrateToMaster(0));
         assertEquals((1 << JudgmentRules.TOGGLE_MODES) - 1, JudgmentRules.masterBits(true), "the four bits of the mask are the four passives");
     }
+
+    @Test
+    void theSandalphonUpgradesOfThreeTwentyOneAreSmallAndBounded() {
+        assertEquals(0.0, JudgmentRules.shatterBonus(0));
+        assertEquals(0.0, JudgmentRules.shatterBonus(-5));
+        assertEquals(JudgmentRules.SHATTER_PER_EFFECT, JudgmentRules.shatterBonus(1));
+        assertEquals(JudgmentRules.SHATTER_MAX * JudgmentRules.SHATTER_PER_EFFECT, JudgmentRules.shatterBonus(50), "only a few boons count");
+        assertEquals(JudgmentRules.EDICT_DAMAGE, JudgmentRules.decreeDamage(0));
+        assertEquals(JudgmentRules.EDICT_DAMAGE + JudgmentRules.DECREE_EFFECTS_MAX * JudgmentRules.DECREE_PER_EFFECT, JudgmentRules.decreeDamage(50));
+        assertTrue(JudgmentRules.decreeDamage(50) < JudgmentRules.BULLET_DAMAGE * 3, "the decree is not a bigger blow than three bullets");
+        assertEquals(100.0, JudgmentRules.cleaveDamage(100, 0), 1.0E-9);
+        assertEquals(110.0, JudgmentRules.cleaveDamage(100, 10), 1.0E-9);
+        assertEquals(130.0, JudgmentRules.cleaveDamage(100, 100000), 1.0E-9, "the debt bonus stops at +30%");
+        assertEquals(100.0, JudgmentRules.cleaveDamage(100, -4), 1.0E-9);
+        assertTrue(JudgmentRules.guillotineFalls(35, 100));
+        assertFalse(JudgmentRules.guillotineFalls(36, 100));
+        assertFalse(JudgmentRules.guillotineFalls(1, 0));
+        assertTrue(JudgmentRules.GUILLOTINE_BELOW > JudgmentRules.EXECUTE_BELOW, "the blade finishes sooner than Condemnation does, only on a sigil");
+        assertTrue(JudgmentRules.VERDICT_TOLL_SHARE > 0 && JudgmentRules.VERDICT_TOLL_SHARE <= 0.1);
+    }
 }

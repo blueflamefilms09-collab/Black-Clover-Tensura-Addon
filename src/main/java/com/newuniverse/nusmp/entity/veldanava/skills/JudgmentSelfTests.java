@@ -36,6 +36,7 @@ public final class JudgmentSelfTests {
         SelfTests.register("sandalphon.rules", JudgmentSelfTests::rules);
         SelfTests.register("sandalphon.skill", JudgmentSelfTests::skill);
         SelfTests.register("sandalphon.conditions", JudgmentSelfTests::conditions);
+        SelfTests.register("sandalphon.upgrades", JudgmentSelfTests::upgrades);
     }
 
     // ---------------------------------------------------------------- rules (pure)
@@ -189,6 +190,48 @@ public final class JudgmentSelfTests {
             JudgmentDamage.clearSigil(z);
             TemporalDebt.clear(z);
             z.discard();
+        }
+    }
+
+    // ---------------------------------------------------------------- 3.21.0: the Edict hurts the hostile and spares the peaceful, the numbers of the upgrades
+    private static Result upgrades(MinecraftServer server) {
+        if (JudgmentRules.shatterBonus(0) != 0 || JudgmentRules.shatterBonus(1) != JudgmentRules.SHATTER_PER_EFFECT || JudgmentRules.shatterBonus(99) != JudgmentRules.SHATTER_MAX * JudgmentRules.SHATTER_PER_EFFECT || JudgmentRules.shatterBonus(-3) != 0)
+            return Result.fail("the shattered-boon bonus is wrong");
+        if (JudgmentRules.decreeDamage(0) != JudgmentRules.EDICT_DAMAGE || JudgmentRules.decreeDamage(99) != JudgmentRules.EDICT_DAMAGE + JudgmentRules.DECREE_EFFECTS_MAX * JudgmentRules.DECREE_PER_EFFECT)
+            return Result.fail("the decree's damage is wrong");
+        if (JudgmentRules.cleaveDamage(100, 0) != 100.0 || Math.abs(JudgmentRules.cleaveDamage(100, 10) - 110.0) > 1.0E-9 || Math.abs(JudgmentRules.cleaveDamage(100, 9999) - 130.0) > 1.0E-9)
+            return Result.fail("the Cleave's debt bonus is not capped at +30%");
+        if (!JudgmentRules.guillotineFalls(35, 100) || JudgmentRules.guillotineFalls(36, 100) || JudgmentRules.guillotineFalls(1, 0)) return Result.fail("the guillotine threshold is wrong");
+        if (JudgmentRules.VERDICT_TOLL_SHARE <= 0 || JudgmentRules.VERDICT_TOLL_SHARE > 0.1) return Result.fail("the last toll is not a small share");
+        if (!JudgmentConfig.sandalphonUpgrades()) return Result.ok("the numbers hold; the upgrades are off in this config, so the live check was skipped");
+
+        ServerLevel sl = server.overworld();
+        BlockPos at = sl.getSharedSpawnPos().above(3);
+        FakePlayer p = SelfTests.standIn(sl, "sandalphon_up", at.getX() + 0.5, at.getY(), at.getZ() + 0.5);
+        VeldanavaSkills.revoke(p);
+        Mob zombie = EntityType.ZOMBIE.create(sl), cow = EntityType.COW.create(sl);
+        if (zombie == null || cow == null) return Result.fail("could not make the test creatures");
+        zombie.moveTo(at.getX() + 4.5, at.getY(), at.getZ() + 0.5);
+        cow.moveTo(at.getX() - 4.5, at.getY(), at.getZ() + 0.5);
+        sl.addFreshEntity(zombie);
+        sl.addFreshEntity(cow);
+        try {
+            var holder = VeldanavaSkills.holder("sandalphon");
+            if (holder == null || !VeldanavaSkills.grant(p, "sandalphon")) return Result.fail("Sandalphon could not be granted");
+            ManasSkillInstance i = SkillAPI.getSkillsFrom(p).getSkill(holder.getId()).orElse(null);
+            if (i == null) return Result.fail("no skill instance");
+            float cowHealth = cow.getHealth();
+            SandalphonSkill.edict(i, p);
+            if (zombie.isAlive()) return Result.fail("the decree did not hurt a hostile creature (it still has " + zombie.getHealth() + " HP)");
+            if (!cow.isAlive() || cow.getHealth() < cowHealth) return Result.fail("the decree hurt a peaceful creature");
+            if (JudgmentDamage.trueActive()) return Result.fail("the true-damage flag is stuck on");
+            return Result.ok("the numbers hold; the Edict's decree killed a zombie and spared a cow");
+        } finally {
+            zombie.discard();
+            cow.discard();
+            JudgmentFields.clearAll();
+            JudgmentState.write(p, 0);
+            VeldanavaSkills.revoke(p);
         }
     }
 }

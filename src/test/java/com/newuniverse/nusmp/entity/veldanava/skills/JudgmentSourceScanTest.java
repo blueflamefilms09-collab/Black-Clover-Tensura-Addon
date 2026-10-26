@@ -90,7 +90,7 @@ class JudgmentSourceScanTest {
             assertFalse(c.contains("getAllEntities("), "a walk over every entity");
         }
         assertTrue(fields.contains("JudgmentRules.MAX_FIELD_TARGETS"), "a field pulse is capped");
-        assertEquals(1, Pattern.compile("getEntitiesOfClass\\(").matcher(fields).results().count(), "one box query per pulse");
+        assertEquals(2, Pattern.compile("getEntitiesOfClass\\(").matcher(fields).results().count(), "one box query per pulse and one for the last toll when a field runs out");
         assertTrue(skill.contains("MAX_EDICT_TARGETS") && skill.contains("MAX_CLEAVE_TARGETS") && skill.contains("MAX_PRESENCE_TARGETS") && skill.contains("MAX_GAZE_TARGETS"), "every area press is capped");
         assertTrue(file("JudgmentState").contains("max"), "the line-of-sight list is capped");
         String isra = file("IsrafilSkill");
@@ -145,7 +145,7 @@ class JudgmentSourceScanTest {
         String main = code(read(SRC.resolve("NUSMP.java")));
         assertTrue(main.contains("ModConfig.Type.SERVER, com.newuniverse.nusmp.entity.veldanava.skills.JudgmentConfig.SPEC, \"nusmp-veldanava-skills-server.toml\""), "the skill's settings change gameplay, so they are a SERVER config");
         String cfg = file("JudgmentConfig");
-        for (String key : new String[]{"enabled", "rewardScreen", "costScale", "cooldownScale", "debtDamage", "finalJudgmentCap", "activeDamageCap", "executePlayers", "executeBosses", "debtMax", "fieldsPerPlayer", "fieldsTotal", "masterToggle", "herculesUpgrades", "pocketDimension", "strictGovernance", "wingsFlight", "solomonTerrainDamage", "solomonSpellReplay", "solomonMagicBypass", "herculesTerrainDamage", "herculesBlockBreak", "herculesShockwave"})
+        for (String key : new String[]{"enabled", "rewardScreen", "costScale", "cooldownScale", "debtDamage", "finalJudgmentCap", "activeDamageCap", "executePlayers", "executeBosses", "debtMax", "fieldsPerPlayer", "fieldsTotal", "masterToggle", "herculesUpgrades", "sandalphonUpgrades", "pocketDimension", "strictGovernance", "wingsFlight", "solomonTerrainDamage", "solomonSpellReplay", "solomonMagicBypass", "herculesTerrainDamage", "herculesBlockBreak", "herculesShockwave"})
             assertTrue(cfg.contains("\"" + key + "\""), "config key missing: " + key);
         assertTrue(cfg.contains("executePlayers\", true") && cfg.contains("executeBosses\", false"), "players are executed by default (owner, 3.14.0), bosses are not");
     }
@@ -193,8 +193,11 @@ class JudgmentSourceScanTest {
         String smoke = read(Path.of(".github/workflows/smoke.yml"));
         assertTrue(Pattern.compile("SMOKE_EXPECT:[^\\n]*[\", ]sandalphon[\",]").matcher(smoke).find(), "the smoke list must expect the sandalphon self-tests");
         String tests = file("JudgmentSelfTests");
-        for (String key : new String[]{"sandalphon.rules", "sandalphon.skill", "sandalphon.conditions"}) assertTrue(tests.contains("\"" + key + "\""), "self-test missing: " + key);
+        for (String key : new String[]{"sandalphon.rules", "sandalphon.skill", "sandalphon.conditions", "sandalphon.upgrades"}) assertTrue(tests.contains("\"" + key + "\""), "self-test missing: " + key);
         assertTrue(code(read(SRC.resolve("NUSMP.java"))).contains("JudgmentSelfTests.register()"), "the self-tests are registered");
+        String fields = code(file("JudgmentFields"));
+        assertTrue(fields.contains("level.getGameTime() < f.endsAt") && fields.contains("JudgmentConfig.sandalphonUpgrades()"), "the last toll only comes when a Verdict of Ruin runs out by itself and the setting is on");
+        assertTrue(fields.contains("MAX_FIELD_TARGETS") && fields.contains("getEntitiesOfClass"), "the last toll is one bounded query");
 
         assertTrue(Files.exists(RES.resolve("assets/nusmp/textures/skill/veldanava/israfil.png")), "missing Israfil icon");
         for (String k : new String[]{"nusmp.skill.israfil", "nusmp.skill.israfil.description", "nusmp.skill.israfil.mastered", "effect.nusmp.gravity_crush", "effect.nusmp.nihility_collapse"})

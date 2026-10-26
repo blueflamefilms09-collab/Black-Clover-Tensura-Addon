@@ -58,6 +58,11 @@ public final class JudgmentFx {
         sound(l, at, SoundEvents.BEACON_ACTIVATE, 2.0f, 0.5f);
     }
 
+    /** The last toll of a Verdict of Ruin that ran out (3.21.0): a bell, no packet. */
+    public static void toll(ServerLevel l, Vec3 at) {
+        sound(l, at, SoundEvents.BELL_BLOCK, 1.6f, 0.5f);
+    }
+
     public static void boom(ServerLevel l, Vec3 at) {
         sound(l, at, SoundEvents.GENERIC_EXPLODE.value(), 2.0f, 0.6f);
     }

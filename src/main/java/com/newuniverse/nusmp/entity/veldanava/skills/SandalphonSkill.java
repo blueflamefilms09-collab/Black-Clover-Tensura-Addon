@@ -75,7 +75,7 @@ public class SandalphonSkill extends VeldanavaSkillBase {
         return switch (m.index()) {
             case 4 -> bullet(i, p, mastered);
             case 5 -> condemnation(p);
-            case 6 -> edict(p);
+            case 6 -> edict(i, p);
             case 7 -> cleave(i, p, mastered);
             default -> verdict(p);
         };
@@ -90,7 +90,11 @@ public class SandalphonSkill extends VeldanavaSkillBase {
         for (LivingEntity t : JudgmentState.along(p, JudgmentRules.BULLET_RANGE, JudgmentRules.BULLET_WIDTH, JudgmentRules.MAX_BULLET_HITS)) {
             JudgmentDamage.hit(p, t, (float) JudgmentRules.BULLET_DAMAGE, mastery);
             if (!t.isAlive()) continue;
-            JudgmentDamage.stripBeneficial(t, JudgmentRules.STRIP_MAX);
+            int stripped = JudgmentDamage.stripBeneficial(t, JudgmentRules.STRIP_MAX);
+            if (stripped > 0 && JudgmentConfig.sandalphonUpgrades()) {                       // 3.21.0: every boon torn off is a wound
+                JudgmentDamage.hit(p, t, (float) JudgmentRules.shatterBonus(stripped), mastery);
+                if (!t.isAlive()) continue;
+            }
             t.addEffect(new MobEffectInstance(JudgmentEffects.TEMPORAL_STUTTER, BalanceLaw.controlTicks(t, JudgmentRules.STUTTER_BULLET_TICKS), 0, false, true, true));
             TemporalDebt.add(t, JudgmentRules.DEBT_BULLET);
             JudgmentDamage.markNoHeal(t, JudgmentRules.NO_HEAL_BULLET_TICKS);
@@ -120,20 +124,29 @@ public class SandalphonSkill extends VeldanavaSkillBase {
     }
 
     /** Supreme Edict: every foe within thirty blocks (the thirty-two nearest) loses its good effects, and every domain of another owner there ends. */
-    private static boolean edict(ServerPlayer p) {
+    static boolean edict(ManasSkillInstance i, ServerPlayer p) {
         ServerLevel l = p.serverLevel();
         double r = JudgmentRules.EDICT_RADIUS;
         List<LivingEntity> near = new ArrayList<>(l.getEntitiesOfClass(LivingEntity.class, p.getBoundingBox().inflate(r),
                 x -> x != p && x.isAlive() && !x.isSpectator() && !x.isAlliedTo(p) && x.distanceToSqr(p) <= r * r));
         near.sort(Comparator.comparingDouble(x -> x.distanceToSqr(p)));
         int n = 0;
+        boolean decree = JudgmentConfig.sandalphonUpgrades();
+        double mastery = mastery(p, i);
         for (LivingEntity t : near) {
             if (n++ >= JudgmentRules.MAX_EDICT_TARGETS) break;
-            JudgmentDamage.stripBeneficial(t, JudgmentRules.STRIP_MAX);
+            int stripped = JudgmentDamage.stripBeneficial(t, JudgmentRules.STRIP_MAX);
+            if (decree && decreeTarget(p, t)) JudgmentDamage.hit(p, t, (float) JudgmentRules.decreeDamage(stripped), mastery);      // 3.21.0: the decree hurts
         }
         JudgmentFields.clearAround(l, p.position(), r, p.getUUID());
         JudgmentFx.edict(l, p.position());
         return true;
+    }
+
+    /** The decree hurts those who mean harm: monsters, other players and whatever is hunting the owner; the peaceful (villagers, animals, pets) only lose their good effects, as before. */
+    private static boolean decreeTarget(ServerPlayer p, LivingEntity t) {
+        return t instanceof Enemy || t instanceof net.minecraft.world.entity.player.Player
+                || (t instanceof net.minecraft.world.entity.Mob m && m.getTarget() == p);
     }
 
     /** Guillotine Cleave: a short sweep in front (reach 5.5, 130 degrees, twelve creatures): true damage, Future Rejection, five seconds of debt. */
@@ -149,7 +162,10 @@ public class SandalphonSkill extends VeldanavaSkillBase {
         int n = 0;
         for (LivingEntity t : near) {
             if (n++ >= JudgmentRules.MAX_CLEAVE_TARGETS) break;
-            JudgmentDamage.hit(p, t, (float) JudgmentRules.CLEAVE_DAMAGE, mastery);
+            boolean upgrades = JudgmentConfig.sandalphonUpgrades();
+            double base = upgrades ? JudgmentRules.cleaveDamage(JudgmentRules.CLEAVE_DAMAGE, TemporalDebt.get(t)) : JudgmentRules.CLEAVE_DAMAGE;
+            JudgmentDamage.hit(p, t, (float) base, mastery);
+            if (t.isAlive() && upgrades && sigilBy(t) != null && sigilBy(t).equals(p.getUUID()) && JudgmentRules.guillotineFalls(t.getHealth(), t.getMaxHealth())) JudgmentDamage.execute(p, t);   // 3.21.0
             if (!t.isAlive()) continue;
             t.addEffect(new MobEffectInstance(JudgmentEffects.FUTURE_REJECTION, JudgmentRules.REJECTION_TICKS, 0, false, true, true));
             TemporalDebt.add(t, JudgmentRules.DEBT_CLEAVE);

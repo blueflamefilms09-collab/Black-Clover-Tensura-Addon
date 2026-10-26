@@ -135,6 +135,7 @@ public final class JudgmentFields {
     static final Behavior VERDICT = new Behavior() {
         @Override public int period() { return JudgmentRules.FIELD_PULSE_TICKS; }
         @Override public void pulse(ServerPlayer owner, ServerLevel level, Field f) { pulseVerdict(owner, level, f); }
+        @Override public void end(ServerLevel level, Field f) { tollVerdict(level, f); }
     };
 
     /** Ends every field that touches the sphere (the Supreme Edict cancels domains). Returns how many were ended. */
@@ -223,6 +224,27 @@ public final class JudgmentFields {
             t.addEffect(new MobEffectInstance(JudgmentEffects.MOVEMENT_INTERFERENCE, 30, 0, false, true, true));
             JudgmentDamage.share(owner, t, JudgmentRules.VERDICT_PULSE_SHARE);
         }
+    }
+
+    /**
+     * 3.21.0 (setting sandalphonUpgrades): the last toll. When a Verdict of Ruin runs out by itself (its time is up and its owner is still here, not when an edict, a death, a logout or a newer field ended it) it takes
+     * {@link JudgmentRules#VERDICT_TOLL_SHARE} of the maximum health of every foe still inside, one bounding-box query, at most {@link JudgmentRules#MAX_FIELD_TARGETS} creatures, one sound and no packet.
+     */
+    private static void tollVerdict(ServerLevel level, Field f) {
+        if (!f.kind.equals("verdict") || !JudgmentConfig.sandalphonUpgrades() || level.getGameTime() < f.endsAt) return;
+        ServerPlayer owner = level.getServer().getPlayerList().getPlayer(f.owner);
+        if (owner == null || !owner.isAlive() || owner.serverLevel() != level) return;
+        AABB box = new AABB(f.center, f.center).inflate(f.radius, 4.0, f.radius);
+        double r2 = f.radius * f.radius;
+        int hit = 0;
+        for (LivingEntity t : level.getEntitiesOfClass(LivingEntity.class, box, x -> x.isAlive() && !x.isSpectator() && x != owner && !x.isAlliedTo(owner))) {
+            if (hit >= JudgmentRules.MAX_FIELD_TARGETS) break;
+            double dx = t.getX() - f.center.x, dz = t.getZ() - f.center.z;
+            if (dx * dx + dz * dz > r2) continue;
+            hit++;
+            JudgmentDamage.share(owner, t, JudgmentRules.VERDICT_TOLL_SHARE);
+        }
+        if (hit > 0) JudgmentFx.toll(level, f.center);
     }
 
     public static void onLogout(UUID owner) { clearOf(owner); }

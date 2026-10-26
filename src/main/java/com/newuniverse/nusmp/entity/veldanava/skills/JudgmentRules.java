@@ -204,6 +204,30 @@ public final class JudgmentRules {
         return cos >= Math.cos(Math.toRadians(halfAngleDeg));
     }
 
+    // ---------------------------------------------------------------- the upgrades of 3.21.0 (setting sandalphonUpgrades)
+    /** Judgment Bullet: every good effect it tears off adds this much true damage (at most {@link #SHATTER_MAX} effects count). */
+    public static final double SHATTER_PER_EFFECT = 12.0;
+    public static final int SHATTER_MAX = 3;
+    /** Supreme Edict: the decree's hit on every foe in reach, plus this much for every good effect it tears off (at most {@link #DECREE_EFFECTS_MAX} count). */
+    public static final double EDICT_DAMAGE = 60.0, DECREE_PER_EFFECT = 20.0;
+    public static final int DECREE_EFFECTS_MAX = 4;
+    /** Guillotine Cleave: +1% per stack of Temporal Debt on the target (at most +30%), and the blade finishes a creature that carries the caster's sigil at or below this share of its health. */
+    public static final double CLEAVE_DEBT_BONUS_MAX = 0.30, GUILLOTINE_BELOW = 0.35;
+    /** Verdict of Ruin: when the field runs out by itself the last toll takes this share of the maximum health of every foe still inside. */
+    public static final double VERDICT_TOLL_SHARE = 0.06;
+
+    /** The true damage the Bullet adds for the good effects it tore off. */
+    public static double shatterBonus(int stripped) { return Math.min(Math.max(0, stripped), SHATTER_MAX) * SHATTER_PER_EFFECT; }
+
+    /** The true damage of the Supreme Edict's decree on one foe that lost {@code stripped} good effects. */
+    public static double decreeDamage(int stripped) { return EDICT_DAMAGE + Math.min(Math.max(0, stripped), DECREE_EFFECTS_MAX) * DECREE_PER_EFFECT; }
+
+    /** The damage of a Cleave on a target that carries {@code debt} stacks of Temporal Debt. */
+    public static double cleaveDamage(double base, int debt) { return base * (1.0 + Math.min(CLEAVE_DEBT_BONUS_MAX, Math.max(0, debt) * 0.01)); }
+
+    /** True when the falling blade finishes a sigil-bearing creature. */
+    public static boolean guillotineFalls(double health, double max) { return atOrBelow(health, max, GUILLOTINE_BELOW); }
+
     // ---------------------------------------------------------------- toggle bits
     /** Bit of a toggle mode in the mask the skill keeps on the player (modes 0..3). */
     public static int bit(int mode) { return mode >= 0 && mode < 4 ? 1 << mode : 0; }

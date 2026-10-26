@@ -8,7 +8,7 @@ import net.neoforged.neoforge.common.ModConfigSpec;
  */
 public final class JudgmentConfig {
     public static final ModConfigSpec SPEC;
-    public static final ModConfigSpec.BooleanValue ENABLED, REWARD_SCREEN, EXECUTE_PLAYERS, EXECUTE_BOSSES, POCKET_DIMENSION, STRICT_GOVERNANCE, WINGS_FLIGHT, SOLOMON_TERRAIN, SOLOMON_REPLAY, SOLOMON_BYPASS, HERCULES_TERRAIN, HERCULES_BREAK, HERCULES_SHOCKWAVE, HERCULES_UPGRADES, MASTER_TOGGLE;
+    public static final ModConfigSpec.BooleanValue ENABLED, REWARD_SCREEN, EXECUTE_PLAYERS, EXECUTE_BOSSES, POCKET_DIMENSION, STRICT_GOVERNANCE, WINGS_FLIGHT, SOLOMON_TERRAIN, SOLOMON_REPLAY, SOLOMON_BYPASS, HERCULES_TERRAIN, HERCULES_BREAK, HERCULES_SHOCKWAVE, HERCULES_UPGRADES, MASTER_TOGGLE, SANDALPHON_UPGRADES;
     public static final ModConfigSpec.DoubleValue COST_SCALE, COOLDOWN_SCALE, DEBT_DAMAGE, FINAL_CAP, ACTIVE_DAMAGE_CAP;
     public static final ModConfigSpec.IntValue DEBT_MAX, FIELDS_PER_PLAYER, FIELDS_TOTAL;
 
@@ -61,6 +61,8 @@ public final class JudgmentConfig {
                 .define("herculesUpgrades", true);
         MASTER_TOGGLE = b.comment("true = the four passives of every Veldanava ultimate skill sit under Tensura's own ON/OFF toggle of the skill (ON = all four on together, OFF = all four off) and leave the mode wheel (default since 3.20.0). false = the old wheel, one toggle mode for each passive.")
                 .define("masterToggle", true);
+        SANDALPHON_UPGRADES = b.comment("true = Sandalphon has the abilities of 3.21.0: the Bullet's shattered boons, the Edict's decree (it hurts), the Cleave's debt bonus and falling guillotine, and the last toll of Verdict of Ruin. false = the abilities of 3.20.0, without them.")
+                .define("sandalphonUpgrades", true);
         b.pop();
         SPEC = b.build();
     }
@@ -106,6 +108,8 @@ public final class JudgmentConfig {
     public static boolean herculesUpgrades() { return get(HERCULES_UPGRADES); }
 
     public static boolean masterToggle() { return get(MASTER_TOGGLE); }
+
+    public static boolean sandalphonUpgrades() { return get(SANDALPHON_UPGRADES); }
 
     public static int debtMax() { return get(DEBT_MAX); }
 
