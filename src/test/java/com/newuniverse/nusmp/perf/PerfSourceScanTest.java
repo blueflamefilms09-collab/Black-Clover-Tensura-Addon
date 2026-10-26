@@ -131,6 +131,7 @@ class PerfSourceScanTest {
             "vfx/client/layer/JudgmentLayer.java",       // the Judgment effects: static final textures, no location built per frame
             "vfx/client/layer/TrialLayer.java",          // the Trial effects (Israfil): static final textures, no location built per frame
             "vfx/client/layer/JibrilLayer.java",         // the Jibril effects (Lord of Rigor): static final textures, no location built per frame
+            "client/veldanava/AnimatedIcons.java", "client/veldanava/AnimatedIconTexture.java",       // 3.17.0 the animated Ultimate icons: locations built once in static maps, the tick and the check build none
             "vfx/client/layer/RuneWritingLayer.java", "client/manamethod/RuneClient.java");       // the Mana Method rune (3.5.0, the held rune is drawn from a view every frame): static textures, no location built per frame or per tick       // the Star V2 look: the layer's textures are static finals, the painter resolves its textures once in register()
 
     @Test

@@ -223,6 +223,7 @@ public class NUSMP {
             com.newuniverse.nusmp.client.mega.system.SystemClient.init(modEventBus, modContainer);                           // 1.55.0: the System overlay layer, its key and client config
             com.newuniverse.nusmp.client.music.ThemedMusicEngine.init(modEventBus, modContainer);                            // 1.107.0: the themed dungeon music engine, nusmp-music-client.toml (music.themed)
             com.newuniverse.nusmp.client.voice.VoiceClient.init(modContainer);                                               // 1.110.0: the spoken voices, nusmp-voice-client.toml (voice.enabled, voice.volume)
+            com.newuniverse.nusmp.client.veldanava.AnimatedIcons.init(modEventBus, modContainer);                           // 3.17.0: the animated Ultimate skill icons, nusmp-icons-client.toml (icons.ultimateStyle)
             com.newuniverse.nusmp.labyrinth.mega.floors.FloorsClient.init();                                                 // 1.55.0: the client side of the alignment sync
             com.newuniverse.nusmp.client.discovery.DiscoveryClient.init();                                                    // 1.27.0
             com.newuniverse.nusmp.client.ui.theme.UiThemeClient.init(modEventBus);                                           // 1.27.0: the anime GUI theme

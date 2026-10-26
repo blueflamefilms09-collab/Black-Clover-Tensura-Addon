@@ -47,11 +47,18 @@ public class VeldanavaSkillScreen extends Screen {
 
     @Override
     protected void init() {
+        AnimatedIcons.openCards();                                       // 3.17.0: the animated HD icons tick only while this screen is open
         int y = py() + panelH() - 28;
         if (already()) {
             addRenderableWidget(new ThemedButton(px() + PAD, y, 150, 16, Component.translatable("nusmp.veldanava.skills.loot"), b -> send("loot")));
         }
         addRenderableWidget(new ThemedButton(px() + panelW() - PAD - 100, y, 100, 16, Component.translatable("nusmp.veldanava.skills.later"), b -> onClose()));
+    }
+
+    @Override
+    public void removed() {
+        AnimatedIcons.closeCards();
+        super.removed();
     }
 
     private void send(String id) {
@@ -103,7 +110,11 @@ public class VeldanavaSkillScreen extends Screen {
             if (i == hover && c.available()) UiPanel.hover(g, x, y, CARD_W, CARD_H, 0.6f, 0xE8C468);
             if (mine) UiPanel.brackets(g, x, y, CARD_W, CARD_H, 8, UiTheme.GREEN);
             int cx = x + CARD_W / 2;
-            MagicCircle.draw(g, cx, y + 44, 22f, now + i * 7f, accent, c.available() ? 0.55f : 0.2f, MagicCircle.CALM, 1f);
+            MagicCircle.draw(g, cx, y + 44, 29f, now + i * 7f, accent, c.available() ? 0.55f : 0.2f, MagicCircle.CALM, 1f);
+            AnimatedIcons.Pick icon = AnimatedIcons.cardIcon(c.id());                    // 3.17.0: the painted icon in the ring (animated, still or classic by the client option)
+            if (!c.available()) g.setColor(0.42f, 0.42f, 0.52f, 1f);                     // a sealed card shows its icon dimmed
+            g.blit(icon.texture(), cx - 24, y + 20, 48, 48, 0f, 0f, icon.size(), icon.size(), icon.size(), icon.size());
+            g.setColor(1f, 1f, 1f, 1f);
             g.drawCenteredString(font, Component.literal(c.title()), cx, y + 78, c.available() ? UiTheme.TEXT : UiTheme.TEXT_FAINT);
             int ty = y + 92;
             for (var line : font.split(Component.literal(c.epithet()), CARD_W - 8)) {
