@@ -8,7 +8,7 @@ import net.neoforged.neoforge.common.ModConfigSpec;
  */
 public final class JudgmentConfig {
     public static final ModConfigSpec SPEC;
-    public static final ModConfigSpec.BooleanValue ENABLED, REWARD_SCREEN, EXECUTE_PLAYERS, EXECUTE_BOSSES, POCKET_DIMENSION, STRICT_GOVERNANCE, WINGS_FLIGHT, SOLOMON_TERRAIN, SOLOMON_REPLAY, SOLOMON_BYPASS, HERCULES_TERRAIN, HERCULES_BREAK, HERCULES_SHOCKWAVE;
+    public static final ModConfigSpec.BooleanValue ENABLED, REWARD_SCREEN, EXECUTE_PLAYERS, EXECUTE_BOSSES, POCKET_DIMENSION, STRICT_GOVERNANCE, WINGS_FLIGHT, SOLOMON_TERRAIN, SOLOMON_REPLAY, SOLOMON_BYPASS, HERCULES_TERRAIN, HERCULES_BREAK, HERCULES_SHOCKWAVE, HERCULES_UPGRADES, MASTER_TOGGLE;
     public static final ModConfigSpec.DoubleValue COST_SCALE, COOLDOWN_SCALE, DEBT_DAMAGE, FINAL_CAP, ACTIVE_DAMAGE_CAP;
     public static final ModConfigSpec.IntValue DEBT_MAX, FIELDS_PER_PLAYER, FIELDS_TOTAL;
 
@@ -57,6 +57,10 @@ public final class JudgmentConfig {
                 .define("herculesBlockBreak", true);
         HERCULES_SHOCKWAVE = b.comment("true = Hercules' God of Strength throws a shockwave from every melee hit that hurts up to six more enemies within 3 blocks (default since 3.19.0). false = a melee hit hurts only the one it lands on.")
                 .define("herculesShockwave", true);
+        HERCULES_UPGRADES = b.comment("true = Hercules has the abilities of 3.20.0: Tremor's aftershock, the crush of Titan's Grip, the thunder of Battle Roar and Invictus' second wind. false = the abilities of 3.19.0, without them.")
+                .define("herculesUpgrades", true);
+        MASTER_TOGGLE = b.comment("true = the four passives of every Veldanava ultimate skill sit under Tensura's own ON/OFF toggle of the skill (ON = all four on together, OFF = all four off) and leave the mode wheel (default since 3.20.0). false = the old wheel, one toggle mode for each passive.")
+                .define("masterToggle", true);
         b.pop();
         SPEC = b.build();
     }
@@ -98,6 +102,10 @@ public final class JudgmentConfig {
     public static boolean herculesBreak() { return get(HERCULES_BREAK); }
 
     public static boolean herculesShockwave() { return get(HERCULES_SHOCKWAVE); }
+
+    public static boolean herculesUpgrades() { return get(HERCULES_UPGRADES); }
+
+    public static boolean masterToggle() { return get(MASTER_TOGGLE); }
 
     public static int debtMax() { return get(DEBT_MAX); }
 

@@ -190,4 +190,28 @@ public final class HerculesRules {
 
     /** The damage of the Strike on the creature of rank {@code index} of the ones it hits (0 = the one the fist lands on): all of it, then half. */
     public static double strikeDamage(int index) { return index <= 0 ? STRIKE_DAMAGE : STRIKE_DAMAGE * STRIKE_SIDE_SHARE; }
+
+    // ---------------------------------------------------------------- the upgrades of 3.20.0 (setting herculesUpgrades)
+    /** Earth-Shattering Tremor's aftershock: the ground heaves again this many ticks after the landing, within this reach, hurting at most this many creatures for this share of the tremor. */
+    public static final int AFTERSHOCK_DELAY_TICKS = 14, AFTERSHOCK_MAX = 24;
+    public static final double AFTERSHOCK_RADIUS = 9.0, AFTERSHOCK_SHARE = 0.5;
+    /** Titan's Grip crushes what it pulls: the base damage of the squeeze. */
+    public static final double GRIP_CRUSH_DAMAGE = 160.0;
+    /** Battle Roar's thunder: the base damage at the owner's side, the reach of it (the fear still reaches {@link #ROAR_RADIUS}) and the creatures it hurts at most. */
+    public static final double ROAR_DAMAGE = 110.0, ROAR_DAMAGE_RADIUS = 12.0;
+    public static final int ROAR_DAMAGE_MAX = 16;
+    /** Invictus' second wind: the share of the maximum health that comes back when it runs out (normal / mastered). */
+    public static final double RALLY_SHARE = 0.10, RALLY_SHARE_MASTERED = 0.20;
+
+    /** The damage of the aftershock on a creature {@code distance} blocks from the landing: half the tremor, falling off to the rim of {@link #AFTERSHOCK_RADIUS}. */
+    public static double aftershockDamage(double distance) { return TREMOR_DAMAGE * AFTERSHOCK_SHARE * tremorFalloff(distance, AFTERSHOCK_RADIUS); }
+
+    /** The damage of the roar's thunder on a creature {@code distance} blocks away: all of it at the owner, half at the rim, none beyond {@link #ROAR_DAMAGE_RADIUS}. */
+    public static double roarDamage(double distance) {
+        if (distance > ROAR_DAMAGE_RADIUS) return 0.0;
+        return ROAR_DAMAGE * (1.0 - 0.5 * Math.max(0.0, distance) / ROAR_DAMAGE_RADIUS);
+    }
+
+    /** The Hit Points Invictus gives back when it runs out. */
+    public static float rally(float maxHealth, boolean mastered) { return (float) (Math.max(0f, maxHealth) * (mastered ? RALLY_SHARE_MASTERED : RALLY_SHARE)); }
 }

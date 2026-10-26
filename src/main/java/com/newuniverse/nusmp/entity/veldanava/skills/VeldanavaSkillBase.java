@@ -34,18 +34,54 @@ public abstract class VeldanavaSkillBase extends Skill {
     }
 
     @Override public ResourceLocation getSkillIcon() { return icon; }
-    @Override public int getModes(ManasSkillInstance i) { return spec.count(); }
-    @Override public int nextMode(LivingEntity e, ManasSkillInstance i, int mode, boolean reverse) { return Math.floorMod(mode + (reverse ? -1 : 1), spec.count()); }
-    @Override public String getModeId(ManasSkillInstance i, int mode) { return spec.mode(mode).id(); }
+    @Override public int getModes(ManasSkillInstance i) { return wheel(); }
+    @Override public int nextMode(LivingEntity e, ManasSkillInstance i, int mode, boolean reverse) { return Math.floorMod(mode + (reverse ? -1 : 1), wheel()); }
+    @Override public String getModeId(ManasSkillInstance i, int mode) { return spec.mode(slot(mode)).id(); }
+
+    // ---------------------------------------------------------------- the master toggle (3.20.0)
+    /** True when the four passives sit under Tensura's own ON/OFF toggle of the skill (setting {@code masterToggle}); false = the old ten-mode wheel with a toggle mode for each passive. */
+    protected static boolean master() { return JudgmentConfig.masterToggle(); }
+
+    /** The number of modes on the wheel: with the master toggle the four passive entries leave it (their bits stay in the mask and the skill tag, so old saves keep working). */
+    protected final int wheel() { return JudgmentRules.wheelCount(master(), spec.count()); }
+
+    /** The mode of the table ({@link JudgmentRules.Spec#mode}) a wheel position stands for. A position saved by an older build is wrapped into the wheel. */
+    protected final int slot(int wheelMode) { return JudgmentRules.slot(master(), spec.count(), wheelMode); }
+
+    /** The cooldown slot of a mode: the wheel position the game shows it at, so the game's own cooldown display and the cooldown copies of other skills line up. */
+    protected final int cdSlot(JudgmentRules.Mode m) { return JudgmentRules.cooldownSlot(master(), m.index()); }
+
+    @Override public boolean canBeToggled(ManasSkillInstance i, LivingEntity e) { return master(); }
+
+    @Override public void onToggleOn(ManasSkillInstance i, LivingEntity e) { masterTo(i, e, true); }
+
+    @Override public void onToggleOff(ManasSkillInstance i, LivingEntity e) { masterTo(i, e, false); }
+
+    /** The master toggle moved: all four passives go on (or off) together, through the same bits the old toggle modes used. */
+    private void masterTo(ManasSkillInstance i, LivingEntity e, boolean on) {
+        if (!(e instanceof ServerPlayer p)) return;
+        JudgmentState.setToggles(i, JudgmentRules.masterBits(on));
+        syncMask(i, p);
+        for (int k = 0; k < JudgmentRules.TOGGLE_MODES; k++) toggled(i, p, spec.mode(k), on);
+        p.displayClientMessage(Component.literal(spec.title() + " passives " + (on ? "on" : "off")).withStyle(on ? ChatFormatting.GOLD : ChatFormatting.GRAY), true);
+    }
+
+    /** An older save (passives switched on one by one) or a setting that was just turned on: a skill with any passive on is toggled ON with all four; a toggled one is kept at all four. */
+    final void settleMaster(ManasSkillInstance i) {
+        if (!master()) return;
+        int t = JudgmentState.toggles(i);
+        if (i.isToggled()) { if (t != JudgmentState.TOGGLES) JudgmentState.setToggles(i, JudgmentState.TOGGLES); }
+        else if (JudgmentRules.migrateToMaster(t)) { i.setToggled(true); JudgmentState.setToggles(i, JudgmentRules.masterBits(true)); }
+    }
     @Override public double getMagiculeCost(LivingEntity entity, ManasSkillInstance instance, int mode) { return 0; }
     @Override public boolean canTick(ManasSkillInstance i, LivingEntity e) { return true; }
 
     @Override
     public Component getModeName(ManasSkillInstance i, int mode) {
-        JudgmentRules.Mode m = spec.mode(mode);
+        JudgmentRules.Mode m = spec.mode(slot(mode));
         Component name = Component.translatable("nusmp.skill.mode." + spec.id() + "." + m.id());
         if (m.toggle()) return name.copy().append(Component.literal(JudgmentRules.on(JudgmentState.toggles(i), m.index()) ? " [ON]" : " [OFF]"));
-        int cd = i.getCoolDown(m.index());
+        int cd = i.getCoolDown(cdSlot(m));
         return cd > 0 ? name.copy().append(Component.literal(" (" + cd + "s)")) : name;
     }
 
@@ -82,6 +118,7 @@ public abstract class VeldanavaSkillBase extends Skill {
     @Override
     public void onTick(ManasSkillInstance i, LivingEntity e) {
         if (!(e instanceof ServerPlayer p) || p.tickCount % JudgmentRules.GAZE_PERIOD_TICKS != 0) return;
+        settleMaster(i);
         syncMask(i, p);
         if (!JudgmentConfig.enabled() || !p.isAlive()) return;
         secondTick(i, p, JudgmentState.toggles(i), i.isMastered(p));
@@ -97,11 +134,11 @@ public abstract class VeldanavaSkillBase extends Skill {
     @Override
     public void onPressed(ManasSkillInstance i, LivingEntity e, int key, int mode) {
         if (!(e instanceof ServerPlayer p) || !JudgmentConfig.enabled()) return;
-        JudgmentRules.Mode m = spec.mode(mode);
+        JudgmentRules.Mode m = spec.mode(slot(mode));
         if (m.toggle()) { toggle(i, p, m); return; }
         boolean mastered = i.isMastered(p);
         if (m.masteryOnly() && !mastered) { fail(p, m.name() + " answers only a mastered " + spec.title() + "."); return; }
-        if (i.onCoolDown(m.index())) { fail(p, m.name() + " is recharging (" + i.getCoolDown(m.index()) + "s)."); return; }
+        if (i.onCoolDown(cdSlot(m))) { fail(p, m.name() + " is recharging (" + i.getCoolDown(cdSlot(m)) + "s)."); return; }
         if (m.kind() == JudgmentRules.Kind.HELD) { startHeld(i, p, m, mastered); return; }
         if (m.crouch() && !p.isShiftKeyDown()) { fail(p, "Crouch and press to use " + m.name() + "."); return; }
         long now = p.level().getGameTime();
@@ -124,7 +161,7 @@ public abstract class VeldanavaSkillBase extends Skill {
     /** Puts a mode on its cooldown: the mastered one when mastered, times the server's {@code cooldownScale}. */
     protected final void startCooldown(ManasSkillInstance i, JudgmentRules.Mode m, boolean mastered) {
         int seconds = JudgmentRules.cooldownSeconds(m, mastered, JudgmentConfig.cooldownScale());
-        if (seconds > 0) i.setCoolDown(seconds, m.index());
+        if (seconds > 0) i.setCoolDown(seconds, cdSlot(m));
     }
 
     private void toggle(ManasSkillInstance i, ServerPlayer p, JudgmentRules.Mode m) {
@@ -154,14 +191,14 @@ public abstract class VeldanavaSkillBase extends Skill {
 
     @Override
     public boolean onHeld(ManasSkillInstance i, LivingEntity e, int heldTicks, int mode) {
-        JudgmentRules.Mode m = spec.mode(mode);
+        JudgmentRules.Mode m = spec.mode(slot(mode));
         if (!(e instanceof ServerPlayer p) || m.kind() != JudgmentRules.Kind.HELD) return true;
         return held(i, p, m, heldTicks, i.isMastered(p));
     }
 
     @Override
     public void onRelease(ManasSkillInstance i, LivingEntity e, int heldTicks, int keyNumber, int mode) {
-        JudgmentRules.Mode m = spec.mode(mode);
+        JudgmentRules.Mode m = spec.mode(slot(mode));
         if (e instanceof ServerPlayer p && m.kind() == JudgmentRules.Kind.HELD) released(i, p, m, heldTicks);
     }
 

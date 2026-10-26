@@ -21,7 +21,7 @@ import java.util.List;
 
 /**
  * Hercules, Lord of Martial Prowess: the fifth and last of the Veldanava ultimate skills (the numbers are in {@link HerculesRules}, the passive rules in {@link HerculesEvents}). Ten modes: four toggle passives
- * (Adamantine Body, God of Strength, Unstoppable Momentum, Colossal Vigor), five actives (Earth-Shattering Tremor, Invictus, Titan's Grip, Devastating Throw, Battle Roar) and the mastery active World-Breaking Strike.
+ * (Adamantine Body, God of Strength, Unstoppable Momentum, Colossal Vigor; under the master toggle since 3.20.0), five actives (Earth-Shattering Tremor, Invictus, Titan's Grip, Devastating Throw, Battle Roar) and the mastery active World-Breaking Strike.
  * The press, cost, cooldown and toggle code is {@link VeldanavaSkillBase}.
  *
  * <p>Worst case per press (rule 11): Tremor one jump (no query) and, at the landing, one box query (at most 24 creatures hurt and lifted, at most 24 effects) and a bowl of at most 240 blocks; Invictus one field and
@@ -130,6 +130,22 @@ public class HerculesSkill extends VeldanavaSkillBase {
         }
         HerculesTerrain.bowl(l, HerculesTerrain.under(at), HerculesRules.TREMOR_BOWL_RADIUS, HerculesRules.TREMOR_BOWL_DEPTH, HerculesRules.TREMOR_MAX_BLOCKS);
         HerculesFx.tremor(l, at, radius);
+        if (JudgmentConfig.herculesUpgrades()) HerculesState.aftershock(p, at);
+    }
+
+    /** The aftershock of a tremor ({@link HerculesState#tickAftershocks}): the ground heaves again; every foe within {@link HerculesRules#AFTERSHOCK_RADIUS} (at most 24) takes half a tremor and is lifted a little. No blocks are broken. */
+    static void aftershock(ServerPlayer p, ServerLevel l, Vec3 at) {
+        if (!JudgmentConfig.enabled() || JudgmentState.skill(p) != HerculesRules.CODE) return;
+        double mastery = HerculesDamage.mastery(p);
+        for (LivingEntity t : foesAround(p, l, at, HerculesRules.AFTERSHOCK_RADIUS, HerculesRules.AFTERSHOCK_MAX)) {
+            double d = Math.sqrt(t.position().distanceToSqr(at));
+            HerculesDamage.blow(p, t, HerculesRules.aftershockDamage(d), mastery);
+            if (t.isAlive() && !JudgmentState.onFor(t, HerculesRules.CODE, 0)) {
+                t.setDeltaMovement(t.getDeltaMovement().x, HerculesRules.KNOCK_UP * 0.5 * (BalanceLaw.isBoss(t) ? 0.4 : 1.0), t.getDeltaMovement().z);
+                t.hurtMarked = true;
+            }
+        }
+        HerculesFx.tremor(l, at, HerculesRules.AFTERSHOCK_RADIUS);
     }
 
     // ---------------------------------------------------------------- Invictus
@@ -159,7 +175,14 @@ public class HerculesSkill extends VeldanavaSkillBase {
         @Override
         public void end(ServerLevel level, JudgmentFields.Field f) {
             ServerPlayer owner = level.getServer().getPlayerList().getPlayer(f.owner);
-            if (owner != null) HerculesState.endInvictus(owner);
+            if (owner == null) return;
+            long until = owner.getPersistentData().getLong(HerculesState.INVICTUS_UNTIL);
+            boolean ranOut = until > 0L && until <= owner.level().getGameTime();
+            HerculesState.endInvictus(owner);
+            if (ranOut && owner.isAlive() && JudgmentConfig.herculesUpgrades() && JudgmentState.skill(owner) == HerculesRules.CODE) {
+                owner.heal(HerculesRules.rally(owner.getMaxHealth(), JudgmentState.mastered(owner)));
+                HerculesFx.invictus(level, owner, false);
+            }
         }
     }
 
@@ -180,6 +203,7 @@ public class HerculesSkill extends VeldanavaSkillBase {
         HerculesFx.grip(l, p, t);
         IsrafilState.place(t, l, stop);
         t.addEffect(new MobEffectInstance(JudgmentEffects.ACTION_LOCK, BalanceLaw.controlTicks(t, HerculesRules.GRIP_LOCK_TICKS), 0, false, true, true));
+        if (JudgmentConfig.herculesUpgrades()) HerculesDamage.blow(p, t, HerculesRules.GRIP_CRUSH_DAMAGE, HerculesDamage.mastery(p));
         return true;
     }
 
@@ -214,22 +238,25 @@ public class HerculesSkill extends VeldanavaSkillBase {
             t.hurtMarked = true;
             t.addEffect(new MobEffectInstance(JudgmentEffects.ACTION_LOCK, HerculesRules.THROW_MAX_TICKS, 0, false, true, true));
         }
-        HerculesFx.thrown(l, start, landing);
+        HerculesFx.thrown(l, start, landing, t == null);
         return true;
     }
 
     // ---------------------------------------------------------------- Battle Roar
-    /** Battle Roar: the owner's debuffs are lifted; every foe within thirty blocks (at most 32) is seized by Fear and Temporal Stutter (both limited per target by the Balance Law). */
+    /** Battle Roar: the owner's debuffs are lifted; every foe within thirty blocks (at most 32) is seized by Fear and Temporal Stutter (both limited per target by the Balance Law); since 3.20.0 the nearest sixteen within twelve blocks also take the thunder of the roar. */
     private static boolean roar(ServerPlayer p) {
         ServerLevel l = p.serverLevel();
         JibrilState.cleanse(p, HerculesRules.ROAR_CLEANSE_MAX);
-        int n = 0;
+        int n = 0, thunder = 0;
+        boolean upgrades = JudgmentConfig.herculesUpgrades();
+        double mastery = HerculesDamage.mastery(p);
         for (LivingEntity t : foesAround(p, l, p.position(), HerculesRules.ROAR_RADIUS, HerculesRules.ROAR_MAX)) {
             int ticks = BalanceLaw.controlTicks(t, HerculesRules.ROAR_FEAR_TICKS);
             EnergyBridge.effect(t, "fear", ticks, 0);
             t.addEffect(new MobEffectInstance(JudgmentEffects.TEMPORAL_STUTTER, Math.min(ticks, HerculesRules.ROAR_STUTTER_TICKS), 0, false, true, true));
             n++;
         }
+
         HerculesFx.roar(l, p);
         p.displayClientMessage(Component.literal(n == 0 ? "The roar rings out; nothing hears it." : "The roar shakes " + n + (n == 1 ? " enemy." : " enemies.")).withStyle(ChatFormatting.GOLD), true);
         return true;

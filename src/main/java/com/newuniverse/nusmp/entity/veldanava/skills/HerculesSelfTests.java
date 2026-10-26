@@ -44,6 +44,7 @@ public final class HerculesSelfTests {
         SelfTests.register("hercules.rules", HerculesSelfTests::rules);
         SelfTests.register("hercules.skill", HerculesSelfTests::skill);
         SelfTests.register("hercules.conditions", HerculesSelfTests::conditions);
+        SelfTests.register("hercules.master", HerculesSelfTests::master);
     }
 
     private static Result rules(MinecraftServer server) {
@@ -102,9 +103,9 @@ public final class HerculesSelfTests {
             if (inst.isEmpty()) return Result.fail("the granted skill is not on the player");
             ManasSkillInstance i = inst.get();
             if (!(i.getSkill() instanceof HerculesSkill sk)) return Result.fail("the instance is not a Hercules skill");
-            if (sk.getModes(i) != JudgmentRules.MODES) return Result.fail("the skill reports " + sk.getModes(i) + " modes");
+            if (sk.getModes(i) != JudgmentRules.wheelCount(JudgmentConfig.masterToggle(), JudgmentRules.MODES)) return Result.fail("the skill reports " + sk.getModes(i) + " modes");
             for (JudgmentRules.Mode m : HerculesRules.HERCULES.modes())
-                if (!m.id().equals(sk.getModeId(i, m.index()))) return Result.fail("mode " + m.index() + " is '" + sk.getModeId(i, m.index()) + "' not '" + m.id() + "'");
+                if ((!JudgmentConfig.masterToggle() || !m.toggle()) && !m.id().equals(sk.getModeId(i, JudgmentRules.cooldownSlot(JudgmentConfig.masterToggle(), m.index())))) return Result.fail("mode " + m.index() + " is '" + sk.getModeId(i, JudgmentRules.cooldownSlot(JudgmentConfig.masterToggle(), m.index())) + "' not '" + m.id() + "'");
             if (VeldanavaSkills.grant(p, "hercules")) return Result.fail("a second grant went through");
             if (VeldanavaSkills.grant(p, "solomon")) return Result.fail("a second skill was granted to the same player");
 
@@ -126,6 +127,50 @@ public final class HerculesSelfTests {
                 if (!lang.has("nusmp.skill.mode.hercules." + m.id())) return Result.fail("missing lang key for mode " + m.id());
             return Result.ok("registered, learned once, 10 modes named, the mask keeps the skills apart, icon and lang are in the jar");
         } finally {
+            JudgmentState.write(p, 0);
+            VeldanavaSkills.revoke(p);
+        }
+    }
+
+    /** 3.20.0: the master toggle moves all four passives together, an old save comes up ON, the wheel has six modes, and the aftershock waits, fires once and cleans up. */
+    private static Result master(MinecraftServer server) throws Exception {
+        ServerLevel sl = server.overworld();
+        BlockPos at = sl.getSharedSpawnPos().above(3);
+        FakePlayer p = SelfTests.standIn(sl, "hercules_master", at.getX() + 0.5, at.getY(), at.getZ() + 0.5);
+        VeldanavaSkills.revoke(p);
+        try {
+            var holder = VeldanavaSkills.holder("hercules");
+            if (holder == null || !VeldanavaSkills.grant(p, "hercules")) return Result.fail("Hercules could not be granted");
+            ManasSkillInstance i = SkillAPI.getSkillsFrom(p).getSkill(holder.getId()).orElse(null);
+            if (i == null || !(i.getSkill() instanceof HerculesSkill sk)) return Result.fail("the instance is not a Hercules skill");
+            if (!JudgmentConfig.masterToggle()) return Result.ok("the master toggle is off in this config; nothing to check");
+            if (!sk.canBeToggled(i, p)) return Result.fail("Hercules cannot be toggled with the master toggle on");
+            if (sk.getModes(i) != 6) return Result.fail("the wheel has " + sk.getModes(i) + " modes, not 6");
+            if (!"earth_shattering_tremor".equals(sk.getModeId(i, 0)) || !"world_breaking_strike".equals(sk.getModeId(i, 5))) return Result.fail("the wheel does not start at the Tremor and end at the Strike");
+
+            i.setToggled(true);
+            sk.onToggleOn(i, p);
+            for (int k = 0; k < 4; k++) if (!JudgmentState.onFor(p, HerculesRules.CODE, k)) return Result.fail("passive " + k + " is not on after the master went ON");
+            i.setToggled(false);
+            sk.onToggleOff(i, p);
+            for (int k = 0; k < 4; k++) if (JudgmentState.onFor(p, HerculesRules.CODE, k)) return Result.fail("passive " + k + " is still on after the master went OFF");
+
+            JudgmentState.setToggles(i, 0b0100);                                   // an old save: Unstoppable Momentum alone was on
+            i.setToggled(false);
+            sk.settleMaster(i);
+            if (!i.isToggled() || JudgmentState.toggles(i) != 15) return Result.fail("an old save did not come up with the master ON and all four passives");
+
+            // the aftershock: one waits per owner, it is not due at once, and the death of the owner takes it away
+            HerculesState.aftershock(p, p.position());
+            HerculesState.aftershock(p, p.position());
+            if (HerculesState.aftershockCount() != 1) return Result.fail("a second tremor did not replace the waiting aftershock (" + HerculesState.aftershockCount() + ")");
+            HerculesState.tickAftershocks(server);
+            if (HerculesState.aftershockCount() != 1) return Result.fail("the aftershock fired before its time");
+            HerculesState.leave(p);
+            if (HerculesState.aftershockCount() != 0) return Result.fail("leaving did not take the aftershock away");
+            return Result.ok("the master toggle, the six-mode wheel, the old-save migration and the aftershock hold");
+        } finally {
+            HerculesState.clear(p);
             JudgmentState.write(p, 0);
             VeldanavaSkills.revoke(p);
         }

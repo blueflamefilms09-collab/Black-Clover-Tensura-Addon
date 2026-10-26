@@ -190,4 +190,39 @@ class JudgmentRulesTest {
         assertTrue(JudgmentRules.ACTIVE_GAP_TICKS >= 4, "actives cannot be spammed every tick");
         assertTrue(JudgmentRules.BULLET_RANGE <= 128 && JudgmentRules.FINAL_RANGE <= 128 && JudgmentRules.EDICT_RADIUS <= 64);
     }
+
+    // ---------------------------------------------------------------- the master toggle (3.20.0)
+    @Test
+    void theMasterToggleTakesTheFourPassivesOffTheWheelAndKeepsTheOrderOfTheActives() {
+        for (JudgmentRules.Spec sp : JudgmentRules.SPECS) {
+            int n = sp.count();
+            assertEquals(n - 4, JudgmentRules.wheelCount(true, n));
+            assertEquals(n, JudgmentRules.wheelCount(false, n), "the old wheel is kept behind the setting");
+            for (int w = 0; w < n - 4; w++) {
+                int slot = JudgmentRules.slot(true, n, w);
+                assertEquals(w + 4, slot);
+                assertFalse(sp.mode(slot).toggle(), sp.id() + " wheel position " + w + " is an active");
+                assertEquals(w, JudgmentRules.cooldownSlot(true, slot), "the cooldown sits where the game shows the mode");
+            }
+            for (int w = 0; w < n; w++) assertEquals(w, JudgmentRules.slot(false, n, w));
+        }
+    }
+
+    @Test
+    void aPositionSavedByAnOlderBuildWrapsIntoTheShorterWheel() {
+        for (int saved = 0; saved < 10; saved++) {
+            int slot = JudgmentRules.slot(true, 10, saved);
+            assertTrue(slot >= 4 && slot < 10, "saved " + saved + " -> " + slot);
+        }
+        assertEquals(9, JudgmentRules.slot(true, 10, -1));
+    }
+
+    @Test
+    void theMasterSwitchesAllFourPassivesTogetherAndAnOldSaveWithAnyPassiveOnComesUpOn() {
+        assertEquals(15, JudgmentRules.masterBits(true));
+        assertEquals(0, JudgmentRules.masterBits(false));
+        for (int bits = 1; bits < 16; bits++) assertTrue(JudgmentRules.migrateToMaster(bits));
+        assertFalse(JudgmentRules.migrateToMaster(0));
+        assertEquals((1 << JudgmentRules.TOGGLE_MODES) - 1, JudgmentRules.masterBits(true), "the four bits of the mask are the four passives");
+    }
 }

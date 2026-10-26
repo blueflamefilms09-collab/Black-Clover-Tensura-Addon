@@ -24,6 +24,7 @@ import net.neoforged.neoforge.event.entity.living.LivingKnockBackEvent;
 import net.neoforged.neoforge.event.entity.living.MobEffectEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.server.ServerStoppingEvent;
+import net.neoforged.neoforge.event.tick.ServerTickEvent;
 
 import java.util.List;
 
@@ -38,9 +39,9 @@ import java.util.List;
  *   <li><b>Unstoppable Momentum</b>: at each stage a melee blow takes back part of what the armour saved (the speeds are attribute modifiers, set once a second by the skill).</li>
  *   <li><b>Colossal Vigor</b>: a melee blow heals the owner for a share of the damage (the calm regeneration is the skill's second).</li>
  *   <li><b>Invictus</b>: no blow can leave less than one Hit Point; a melee blow grows as the health falls.</li>
- *   <li><b>Earth-Shattering Tremor</b>: the landing of the leap is a tremor ({@link HerculesSkill#land}).</li>
+ *   <li><b>Earth-Shattering Tremor</b>: the landing of the leap is a tremor ({@link HerculesSkill#land}); an aftershock follows ({@link HerculesState#tickAftershocks}).</li>
  * </ul>
- * Everything is dropped at death, logout and server stop. No tick hook.
+ * Everything is dropped at death, logout and server stop. One tick hook, idle unless an aftershock waits.
  */
 public final class HerculesEvents {
     private HerculesEvents() {}
@@ -58,6 +59,7 @@ public final class HerculesEvents {
         bus.addListener(HerculesEvents::onDeath);
         bus.addListener(HerculesEvents::onLogout);
         bus.addListener(HerculesEvents::onServerStopping);
+        bus.addListener(HerculesEvents::onServerTick);
     }
 
     private static boolean serverSide(LivingEntity e) { return !e.level().isClientSide; }
@@ -182,4 +184,7 @@ public final class HerculesEvents {
     }
 
     static void onServerStopping(ServerStoppingEvent e) { HerculesState.clearAll(); }
+
+    /** The only tick hook: an emptiness test unless an aftershock is waiting ({@link HerculesState#tickAftershocks}). */
+    static void onServerTick(ServerTickEvent.Post e) { HerculesState.tickAftershocks(e.getServer()); }
 }

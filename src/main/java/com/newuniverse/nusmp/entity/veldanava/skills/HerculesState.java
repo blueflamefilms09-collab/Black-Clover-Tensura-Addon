@@ -4,6 +4,8 @@ import com.newuniverse.nusmp.NUSMP;
 import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
@@ -12,7 +14,10 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.level.Level;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -52,6 +57,39 @@ public final class HerculesState {
     static void expireLeap(ServerPlayer p) {
         Leap l = LEAPS.get(p.getUUID());
         if (l != null && l.until() < p.level().getGameTime()) LEAPS.remove(p.getUUID());
+    }
+
+    // ---------------------------------------------------------------- the aftershock that waits its turn
+    private record After(long at, ResourceKey<Level> dimension, double x, double y, double z) {}
+
+    private static final Map<UUID, After> AFTER = new HashMap<>();
+
+    /** The tremor landed at {@code at}: the ground heaves again {@link HerculesRules#AFTERSHOCK_DELAY_TICKS} ticks later (one pending aftershock per owner; a new tremor replaces it). */
+    public static void aftershock(ServerPlayer p, net.minecraft.world.phys.Vec3 at) {
+        AFTER.put(p.getUUID(), new After(p.level().getGameTime() + HerculesRules.AFTERSHOCK_DELAY_TICKS, p.level().dimension(), at.x, at.y, at.z));
+    }
+
+    public static int aftershockCount() { return AFTER.size(); }
+
+    /** Every server tick: nothing when no aftershock is waiting (one emptiness test); otherwise the ones that are due are resolved (at most one per owner). */
+    static void tickAftershocks(MinecraftServer server) {
+        if (AFTER.isEmpty()) return;
+        long now = server.overworld().getGameTime();
+        List<Map.Entry<UUID, After>> due = null;
+        for (Iterator<Map.Entry<UUID, After>> it = AFTER.entrySet().iterator(); it.hasNext(); ) {
+            Map.Entry<UUID, After> e = it.next();
+            if (e.getValue().at() > now) continue;
+            if (due == null) due = new ArrayList<>(4);
+            due.add(e);
+            it.remove();
+        }
+        if (due == null) return;
+        for (Map.Entry<UUID, After> e : due) {
+            ServerPlayer p = server.getPlayerList().getPlayer(e.getKey());
+            ServerLevel l = server.getLevel(e.getValue().dimension());
+            if (p == null || l == null || !p.isAlive() || p.level() != l) continue;
+            HerculesSkill.aftershock(p, l, new net.minecraft.world.phys.Vec3(e.getValue().x(), e.getValue().y(), e.getValue().z()));
+        }
     }
 
     // ---------------------------------------------------------------- Unstoppable Momentum
@@ -155,6 +193,7 @@ public final class HerculesState {
         LEAPS.remove(p.getUUID());
         RUNS.remove(p.getUUID());
         GAPS.remove(p.getUUID());
+        AFTER.remove(p.getUUID());
         endInvictus(p);
     }
 
@@ -163,8 +202,9 @@ public final class HerculesState {
         LEAPS.clear();
         RUNS.clear();
         GAPS.clear();
+        AFTER.clear();
     }
 
     /** The number of entries kept (the self-test checks it empties). */
-    public static int kept() { return LEAPS.size() + RUNS.size() + GAPS.size(); }
+    public static int kept() { return LEAPS.size() + RUNS.size() + GAPS.size() + AFTER.size(); }
 }

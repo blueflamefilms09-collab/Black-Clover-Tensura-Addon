@@ -36,6 +36,27 @@ public final class JudgmentRules {
 
     public static final int MODES = 10;
 
+    /** The first four modes of every skill are the passives; with the master toggle (3.20.0) they leave the mode wheel. */
+    public static final int TOGGLE_MODES = 4;
+
+    /** The modes on the wheel of a skill with {@code count} modes: all of them, or without the four passives under the master toggle. */
+    public static int wheelCount(boolean master, int count) { return master ? count - TOGGLE_MODES : count; }
+
+    /** The mode of the table a wheel position stands for (a position saved by an older build wraps into the wheel). */
+    public static int slot(boolean master, int count, int wheelMode) {
+        int w = Math.floorMod(wheelMode, wheelCount(master, count));
+        return master ? w + TOGGLE_MODES : w;
+    }
+
+    /** The cooldown slot of a mode of the table: the wheel position the game shows it at. */
+    public static int cooldownSlot(boolean master, int modeIndex) { return master ? modeIndex - TOGGLE_MODES : modeIndex; }
+
+    /** The toggle bits of the master toggle: all four passives, or none. */
+    public static int masterBits(boolean on) { return on ? 15 : 0; }
+
+    /** What an older save's toggle bits become under the master toggle: ON (all four) when any passive was on, else OFF. */
+    public static boolean migrateToMaster(int oldBits) { return (oldBits & 15) != 0; }
+
     /** Sandalphon, Lord of Judgment (the Archangel of the Executioner): see the skill drop file of the owner. */
     public static final Spec SANDALPHON = new Spec("sandalphon", "Sandalphon", "Lord of Judgment", List.of(
             new Mode(0, "executioners_authority", "Executioner's Authority", Kind.TOGGLE, 0, 0, 0, false),

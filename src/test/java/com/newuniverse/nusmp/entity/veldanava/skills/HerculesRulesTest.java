@@ -168,4 +168,38 @@ class HerculesRulesTest {
         assertTrue(HerculesRules.ROAR_MAX <= 32 && HerculesRules.ROAR_CLEANSE_MAX <= 24 && HerculesRules.STRIKE_MAX <= 8 && HerculesRules.SHOCK_MAX <= 6);
         assertTrue(HerculesRules.INVICTUS_TICKS <= MAX_FIELD_TICKS);
     }
+
+    // ---------------------------------------------------------------- the upgrades of 3.20.0
+    @Test
+    void theAftershockIsHalfATremorThatFallsOffToItsRim() {
+        assertEquals(HerculesRules.TREMOR_DAMAGE * 0.5, HerculesRules.aftershockDamage(0.0), 1e-9);
+        assertEquals(HerculesRules.TREMOR_DAMAGE * 0.5 * 0.4, HerculesRules.aftershockDamage(HerculesRules.AFTERSHOCK_RADIUS), 1e-9);
+        assertTrue(HerculesRules.aftershockDamage(3.0) > HerculesRules.aftershockDamage(7.0));
+        assertTrue(HerculesRules.AFTERSHOCK_RADIUS < HerculesRules.TREMOR_RADIUS, "the aftershock is smaller than the tremor");
+        assertTrue(HerculesRules.AFTERSHOCK_DELAY_TICKS > 0 && HerculesRules.AFTERSHOCK_DELAY_TICKS < HerculesRules.INVICTUS_TICKS);
+        assertTrue(HerculesRules.AFTERSHOCK_MAX <= HerculesRules.TREMOR_MAX_CREATURES, "never more creatures than the tremor itself");
+    }
+
+    @Test
+    void theRoarsThunderReachesTwelveBlocksAndFadesToHalf() {
+        assertEquals(HerculesRules.ROAR_DAMAGE, HerculesRules.roarDamage(0.0), 1e-9);
+        assertEquals(HerculesRules.ROAR_DAMAGE * 0.5, HerculesRules.roarDamage(HerculesRules.ROAR_DAMAGE_RADIUS), 1e-9);
+        assertEquals(0.0, HerculesRules.roarDamage(HerculesRules.ROAR_DAMAGE_RADIUS + 0.01), 1e-9);
+        assertTrue(HerculesRules.ROAR_DAMAGE_RADIUS < HerculesRules.ROAR_RADIUS, "the fear reaches further than the thunder");
+        assertTrue(HerculesRules.ROAR_DAMAGE_MAX <= HerculesRules.ROAR_MAX);
+    }
+
+    @Test
+    void theSecondWindIsATenthAndAFifthOfTheMaximum() {
+        assertEquals(20f, HerculesRules.rally(200f, false), 1e-4);
+        assertEquals(40f, HerculesRules.rally(200f, true), 1e-4);
+        assertEquals(0f, HerculesRules.rally(-5f, true), 1e-4);
+    }
+
+    @Test
+    void theNewBlowsStayBelowTheStrikeAndInsideTheCap() {
+        assertTrue(HerculesRules.GRIP_CRUSH_DAMAGE < HerculesRules.STRIKE_DAMAGE);
+        assertTrue(HerculesRules.ROAR_DAMAGE < HerculesRules.GRIP_CRUSH_DAMAGE, "a roar is lighter than a crush");
+        assertTrue(HerculesRules.aftershockDamage(0.0) < HerculesRules.TREMOR_DAMAGE);
+    }
 }

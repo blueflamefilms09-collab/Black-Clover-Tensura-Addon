@@ -90,9 +90,9 @@ public final class JibrilSelfTests {
             if (inst.isEmpty()) return Result.fail("the granted skill is not on the player");
             ManasSkillInstance i = inst.get();
             if (!(i.getSkill() instanceof JibrilSkill sk)) return Result.fail("the instance is not a Jibril skill");
-            if (sk.getModes(i) != JudgmentRules.MODES) return Result.fail("the skill reports " + sk.getModes(i) + " modes");
+            if (sk.getModes(i) != JudgmentRules.wheelCount(JudgmentConfig.masterToggle(), JudgmentRules.MODES)) return Result.fail("the skill reports " + sk.getModes(i) + " modes");
             for (JudgmentRules.Mode m : JibrilRules.JIBRIL.modes())
-                if (!m.id().equals(sk.getModeId(i, m.index()))) return Result.fail("mode " + m.index() + " is '" + sk.getModeId(i, m.index()) + "' not '" + m.id() + "'");
+                if ((!JudgmentConfig.masterToggle() || !m.toggle()) && !m.id().equals(sk.getModeId(i, JudgmentRules.cooldownSlot(JudgmentConfig.masterToggle(), m.index())))) return Result.fail("mode " + m.index() + " is '" + sk.getModeId(i, JudgmentRules.cooldownSlot(JudgmentConfig.masterToggle(), m.index())) + "' not '" + m.id() + "'");
             if (VeldanavaSkills.grant(p, "jibril")) return Result.fail("a second grant went through");
             if (VeldanavaSkills.grant(p, "israfil")) return Result.fail("a second skill was granted to the same player");
 

@@ -145,7 +145,7 @@ class JudgmentSourceScanTest {
         String main = code(read(SRC.resolve("NUSMP.java")));
         assertTrue(main.contains("ModConfig.Type.SERVER, com.newuniverse.nusmp.entity.veldanava.skills.JudgmentConfig.SPEC, \"nusmp-veldanava-skills-server.toml\""), "the skill's settings change gameplay, so they are a SERVER config");
         String cfg = file("JudgmentConfig");
-        for (String key : new String[]{"enabled", "rewardScreen", "costScale", "cooldownScale", "debtDamage", "finalJudgmentCap", "activeDamageCap", "executePlayers", "executeBosses", "debtMax", "fieldsPerPlayer", "fieldsTotal", "pocketDimension", "strictGovernance", "wingsFlight", "solomonTerrainDamage", "solomonSpellReplay", "solomonMagicBypass", "herculesTerrainDamage", "herculesBlockBreak", "herculesShockwave"})
+        for (String key : new String[]{"enabled", "rewardScreen", "costScale", "cooldownScale", "debtDamage", "finalJudgmentCap", "activeDamageCap", "executePlayers", "executeBosses", "debtMax", "fieldsPerPlayer", "fieldsTotal", "masterToggle", "herculesUpgrades", "pocketDimension", "strictGovernance", "wingsFlight", "solomonTerrainDamage", "solomonSpellReplay", "solomonMagicBypass", "herculesTerrainDamage", "herculesBlockBreak", "herculesShockwave"})
             assertTrue(cfg.contains("\"" + key + "\""), "config key missing: " + key);
         assertTrue(cfg.contains("executePlayers\", true") && cfg.contains("executeBosses\", false"), "players are executed by default (owner, 3.14.0), bosses are not");
     }
@@ -265,7 +265,12 @@ class JudgmentSourceScanTest {
         assertTrue(thrown.contains("THROW_MAX_HITS") && thrown.contains("THROW_BLAST_MAX") && thrown.contains("THROW_CRATER_BLOCKS") && thrown.contains("THROW_MAX_TICKS"), "the throw is capped in hits, blast, crater and time");
         assertFalse(thrown.contains("setBlock(") || thrown.contains("destroyBlock(") || thrown.contains("addFreshEntity"), "the throw changes blocks only through HerculesTerrain and spawns nothing");
         String ev = file("HerculesEvents");
-        assertEquals(0, Pattern.compile("PlayerTickEvent|EntityTickEvent|LevelTickEvent|ServerTickEvent").matcher(ev.replaceAll("import [^;]+;", "")).results().count(), "Hercules' events add no tick hook (its second runs from the skill)");
+        String noImports = ev.replaceAll("import [^;]+;", "");
+        assertEquals(0, Pattern.compile("PlayerTickEvent|EntityTickEvent|LevelTickEvent").matcher(noImports).results().count(), "Hercules' events add no per-player or per-entity tick hook (its second runs from the skill)");
+        assertEquals(1, Pattern.compile("ServerTickEvent\\.Post").matcher(noImports).results().count(), "one server tick hook, for the aftershock only");
+        String after = code(read(SRC.resolve("entity/veldanava/skills/HerculesState.java")));
+        int tick = after.indexOf("static void tickAftershocks");
+        assertTrue(tick >= 0 && after.indexOf("AFTER.isEmpty()", tick) > 0 && after.indexOf("AFTER.isEmpty()", tick) < after.indexOf("getPlayerList", tick), "the aftershock tick looks at the empty map first");
         for (String way : new String[]{"onDeath", "onLogout", "onServerStopping"}) assertTrue(ev.contains(way), "Hercules' state is cleaned up on " + way);
         assertTrue(ev.contains("JudgmentConfig.herculesBreak()") && ev.contains("JudgmentConfig.herculesShockwave()"), "block breaking and the shockwave sit behind their settings");
         assertTrue(ev.contains("HerculesState.take("), "the shockwave and the body picture are spaced");

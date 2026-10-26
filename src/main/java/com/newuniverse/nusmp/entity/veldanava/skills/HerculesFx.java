@@ -53,8 +53,11 @@ public final class HerculesFx {
     }
 
     /** Devastating Throw: the streak from where the creature or chunk was lifted to where it will land. */
-    public static void thrown(ServerLevel l, Vec3 from, Vec3 to) {
-        VfxSpawn.send(l, VfxShape.HERCULES_THROW, from, to, GOLD, 30, 1.0f);
+    public static void thrown(ServerLevel l, Vec3 from, Vec3 to) { thrown(l, from, to, false); }
+
+    /** Devastating Throw; {@code chunk} = a lump of ground is hurled (power 2: the client draws the boulder), not a creature (power 1). */
+    public static void thrown(ServerLevel l, Vec3 from, Vec3 to, boolean chunk) {
+        VfxSpawn.send(l, VfxShape.HERCULES_THROW, from, to, GOLD, 30, chunk ? 2.0f : 1.0f);
         sound(l, from, SoundEvents.PLAYER_ATTACK_KNOCKBACK, 2.0f, 0.5f);
     }
 
