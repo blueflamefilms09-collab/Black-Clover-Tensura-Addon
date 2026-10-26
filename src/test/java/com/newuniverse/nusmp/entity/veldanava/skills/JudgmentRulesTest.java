@@ -49,11 +49,12 @@ class JudgmentRulesTest {
     }
 
     @Test
-    void onlySandalphonCanBeClaimedInThisRelease() {
+    void onlyTheOpenedSkillsCanBeClaimed() {
         assertEquals(5, JudgmentRules.CARDS.size());
         assertEquals("sandalphon", JudgmentRules.CARDS.get(0).id());
         assertTrue(JudgmentRules.claimable("sandalphon"));
-        for (String id : new String[]{"israfil", "jibril", "solomon", "hercules"}) {
+        assertTrue(JudgmentRules.claimable("israfil"), "Israfil opens in 3.14.0");
+        for (String id : new String[]{"jibril", "solomon", "hercules"}) {
             assertNotNull(JudgmentRules.card(id), id + " is on the screen");
             assertFalse(JudgmentRules.claimable(id), id + " is sealed");
         }
@@ -62,6 +63,38 @@ class JudgmentRulesTest {
         assertFalse(JudgmentRules.claimable("SANDALPHON"), "ids are exact");
         assertFalse(JudgmentRules.claimable("sandalphon "));
         assertNull(JudgmentRules.card("anything_else"));
+    }
+
+    @Test
+    void skillCodesFollowTheCardsAndSpecsAreFound() {
+        assertEquals(1, JudgmentRules.code("sandalphon"));
+        assertEquals(2, JudgmentRules.code("israfil"));
+        assertEquals(5, JudgmentRules.code("hercules"));
+        assertEquals(0, JudgmentRules.code("nonsense"));
+        assertEquals(0, JudgmentRules.code(null));
+        assertSame(JudgmentRules.SANDALPHON, JudgmentRules.spec("sandalphon"));
+        assertSame(IsrafilRules.ISRAFIL, JudgmentRules.spec("israfil"));
+        assertNull(JudgmentRules.spec("jibril"), "a sealed skill has no spec yet");
+        assertNull(JudgmentRules.spec(null));
+        for (JudgmentRules.Spec sp : JudgmentRules.SPECS) assertNotNull(JudgmentRules.card(sp.id()), sp.id() + " is on the screen");
+    }
+
+    @Test
+    void everyActiveCoolsDownAndMasteryShortensIt() {
+        for (JudgmentRules.Spec sp : JudgmentRules.SPECS)
+            for (JudgmentRules.Mode m : sp.modes()) {
+                if (m.toggle()) { assertEquals(0, m.cooldownSeconds()); continue; }
+                assertTrue(m.cooldownSeconds() > 0, sp.id() + " " + m.id() + " has a cooldown");
+                assertTrue(m.masteredCooldownSeconds() <= m.cooldownSeconds(), sp.id() + " " + m.id() + " cools down faster once mastered");
+                assertTrue(m.cooldownSeconds() <= 300, "no cooldown longer than five minutes");
+            }
+        JudgmentRules.Mode bullet = S.mode(4);
+        assertEquals(6, JudgmentRules.cooldownSeconds(bullet, false, 1.0));
+        assertEquals(3, JudgmentRules.cooldownSeconds(bullet, true, 1.0));
+        assertEquals(12, JudgmentRules.cooldownSeconds(bullet, false, 2.0));
+        assertEquals(0, JudgmentRules.cooldownSeconds(bullet, false, 0.0));
+        assertEquals(0, JudgmentRules.cooldownSeconds(bullet, false, -4.0), "a negative scale never gives a negative cooldown");
+        assertTrue(S.mode(9).masteryOnly() && !S.mode(8).masteryOnly());
     }
 
     @Test

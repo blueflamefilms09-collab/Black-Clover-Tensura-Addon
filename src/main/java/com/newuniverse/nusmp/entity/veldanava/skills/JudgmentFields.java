@@ -18,29 +18,49 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * Why: Verdict of Ruin is a field of true damage that follows its target, and the skills that come after it (Spatial Collapse, Realm of Magic, Kingdom of God) are fields too. This is the one
- * manager of them: a small list, ticked once per server tick, with hard limits so no number of players can make it expensive.
+ * Why: Verdict of Ruin is a field of true damage that follows its target, and the skills that come after it (Israfil's cage and Nihility Collapse, Jibril's sanctuary, Solomon's realm) are fields
+ * too. This is the one manager of them: a small list, ticked once per server tick, with hard limits so no number of players can make it expensive. A field has a {@link Behavior} (what one
+ * pulse does and how often it pulses); the manager owns the list, the limits and the cleanup.
  *
- * <p>Limits: at most {@code fieldsPerPlayer} per owner (a new one replaces the owner's oldest) and {@code fieldsTotal} on the server (a new one over that is refused); a field lasts at most
- * {@link JudgmentRules#VERDICT_TICKS}; it pulses every {@link JudgmentRules#FIELD_PULSE_TICKS} ticks and each pulse touches at most {@link JudgmentRules#MAX_FIELD_TARGETS} creatures with one
- * bounding-box query; it sends no packets (the client draws the field from the one effect packet the skill sent when it was raised). A field ends when its time is up, when its owner dies, logs out or leaves the dimension, when
- * the creature it follows dies or leaves, and when the server stops. With no field, the tick returns on its first line.
+ * <p>Limits: at most {@code fieldsPerPlayer} per owner of all kinds together (a new one replaces the owner's oldest) and {@code fieldsTotal} on the server (a new one over that is refused); a field
+ * lasts at most {@link #MAX_TICKS}; it pulses on its own period and each pulse touches at most the number of creatures its behavior allows (all of them use one bounding-box query); it sends no packets
+ * (the client draws the field from the one effect packet the skill sent when it was raised). A field ends when its time is up, when its owner dies, logs out or leaves the dimension, when
+ * the creature it follows dies or leaves, and when the server stops; the behavior is told ({@link Behavior#end}). With no field, the tick returns on its first line.
  */
 public final class JudgmentFields {
     private JudgmentFields() {}
 
     private static final PerfProbe.Section SECTION = PerfProbe.section("s.veldanava.fields");
 
+    /** The longest any field lives (ticks), whatever a skill asks for. */
+    public static final int MAX_TICKS = 1200;
+
+    /** What a kind of field does: how often it pulses, what a pulse does, and what happens when it ends. */
+    interface Behavior {
+        /** Ticks between two pulses (at least 1). */
+        int period();
+
+        /** One pulse: touches at most a bounded number of creatures. Runs on the server thread. */
+        void pulse(ServerPlayer owner, ServerLevel level, Field f);
+
+        /** The field is over (time up, owner gone, edict, server stop). */
+        default void end(ServerLevel level, Field f) {}
+    }
+
     /** One live field. */
     static final class Field {
+        final Behavior behavior;
+        final String kind;
         final UUID owner;
         final ResourceKey<Level> dimension;
         final UUID follow;                                    // the creature it follows, or null for a field fixed in the ground
         Vec3 center;
         final double radius;
-        final long endsAt;
+        long endsAt;
 
-        Field(UUID owner, ResourceKey<Level> dimension, UUID follow, Vec3 center, double radius, long endsAt) {
+        Field(Behavior behavior, String kind, UUID owner, ResourceKey<Level> dimension, UUID follow, Vec3 center, double radius, long endsAt) {
+            this.behavior = behavior;
+            this.kind = kind;
             this.owner = owner;
             this.dimension = dimension;
             this.follow = follow;
@@ -60,20 +80,62 @@ public final class JudgmentFields {
         return n;
     }
 
-    /** Raises a field. {@code follow} may be null. Returns false when the server-wide limit refuses it. Server thread only. */
+    /** Raises a Verdict of Ruin field. {@code follow} may be null. Returns false when the server-wide limit refuses it. Server thread only. */
     public static boolean add(ServerPlayer owner, ServerLevel level, LivingEntity follow, Vec3 center, double radius, int ticks) {
+        return add(owner, level, follow, center, radius, Math.min(ticks, JudgmentRules.VERDICT_TICKS), VERDICT, "verdict");
+    }
+
+    /** Raises a field of any kind. Returns false when the server-wide limit refuses it. The field's life is cut to {@link #MAX_TICKS}. Server thread only. */
+    static boolean add(ServerPlayer owner, ServerLevel level, LivingEntity follow, Vec3 center, double radius, int ticks, Behavior behavior, String kind) {
         int perPlayer = Math.max(1, JudgmentConfig.fieldsPerPlayer());
-        while (countOf(owner.getUUID()) >= perPlayer) removeOldestOf(owner.getUUID());
+        while (countOf(owner.getUUID()) >= perPlayer) removeOldestOf(level.getServer(), owner.getUUID());
         if (FIELDS.size() >= Math.max(1, JudgmentConfig.fieldsTotal())) return false;
-        FIELDS.add(new Field(owner.getUUID(), level.dimension(), follow == null ? null : follow.getUUID(), center, radius, level.getGameTime() + Math.min(ticks, JudgmentRules.VERDICT_TICKS)));
+        FIELDS.add(new Field(behavior, kind, owner.getUUID(), level.dimension(), follow == null ? null : follow.getUUID(), center, radius, level.getGameTime() + Math.max(1, Math.min(ticks, MAX_TICKS))));
         return true;
     }
 
-    private static void removeOldestOf(UUID owner) {
+    private static void removeOldestOf(MinecraftServer server, UUID owner) {
         for (Iterator<Field> it = FIELDS.iterator(); it.hasNext(); ) {
-            if (it.next().owner.equals(owner)) { it.remove(); return; }
+            Field f = it.next();
+            if (f.owner.equals(owner)) { it.remove(); finish(server, f); return; }
         }
     }
+
+    /** Tells the behavior its field is over. A behavior that throws must not break the tick. */
+    private static void finish(MinecraftServer server, Field f) {
+        if (server == null) return;
+        try {
+            ServerLevel l = server.getLevel(f.dimension);
+            if (l != null) f.behavior.end(l, f);
+        } catch (RuntimeException ignored) {
+            // an ending is best effort
+        }
+    }
+
+    /** The first live field of this owner and kind, or null. */
+    static Field find(UUID owner, String kind) {
+        for (Field f : FIELDS) if (f.owner.equals(owner) && f.kind.equals(kind)) return f;
+        return null;
+    }
+
+    /** Keeps a field alive until {@code until} (a held domain renews itself every tick it is still held). */
+    static void renew(Field f, long until) { f.endsAt = Math.min(until, f.endsAt + MAX_TICKS); }
+
+    /** Ends the owner's fields of one kind. Returns how many. */
+    static int clearKind(MinecraftServer server, UUID owner, String kind) {
+        int n = 0;
+        for (Iterator<Field> it = FIELDS.iterator(); it.hasNext(); ) {
+            Field f = it.next();
+            if (f.owner.equals(owner) && f.kind.equals(kind)) { it.remove(); finish(server, f); n++; }
+        }
+        return n;
+    }
+
+    /** The default behavior: Verdict of Ruin. */
+    static final Behavior VERDICT = new Behavior() {
+        @Override public int period() { return JudgmentRules.FIELD_PULSE_TICKS; }
+        @Override public void pulse(ServerPlayer owner, ServerLevel level, Field f) { pulseVerdict(owner, level, f); }
+    };
 
     /** Ends every field that touches the sphere (the Supreme Edict cancels domains). Returns how many were ended. */
     public static int clearAround(ServerLevel level, Vec3 center, double radius) { return clearAround(level, center, radius, null); }
@@ -84,7 +146,7 @@ public final class JudgmentFields {
         for (Iterator<Field> it = FIELDS.iterator(); it.hasNext(); ) {
             Field f = it.next();
             if (keep != null && f.owner.equals(keep)) continue;
-            if (f.dimension.equals(level.dimension()) && f.center.distanceTo(center) <= radius + f.radius) { it.remove(); n++; }
+            if (f.dimension.equals(level.dimension()) && f.center.distanceTo(center) <= radius + f.radius) { it.remove(); finish(level.getServer(), f); n++; }
         }
         return n;
     }
@@ -104,7 +166,7 @@ public final class JudgmentFields {
             long now = server.overworld().getGameTime();
             for (Iterator<Field> it = FIELDS.iterator(); it.hasNext(); ) {
                 Field f = it.next();
-                if (!step(server, f, now)) it.remove();
+                if (!step(server, f, now)) { it.remove(); finish(server, f); }
             }
         } finally {
             PerfProbe.end(SECTION, t0);
@@ -124,12 +186,12 @@ public final class JudgmentFields {
             f.center = target.position().add(0.0, 0.1, 0.0);
         }
         long left = f.endsAt - now;
-        if (left % JudgmentRules.FIELD_PULSE_TICKS != 0) return true;
-        pulse(owner, level, f);
+        if (left % Math.max(1, f.behavior.period()) != 0) return true;
+        f.behavior.pulse(owner, level, f);
         return true;
     }
 
-    private static void pulse(ServerPlayer owner, ServerLevel level, Field f) {
+    private static void pulseVerdict(ServerPlayer owner, ServerLevel level, Field f) {
         AABB box = new AABB(f.center, f.center).inflate(f.radius, 4.0, f.radius);
         double r2 = f.radius * f.radius;
         int hit = 0;

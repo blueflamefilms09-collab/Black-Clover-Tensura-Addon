@@ -19,7 +19,7 @@ public final class JudgmentState {
     private JudgmentState() {}
 
     public static final String MASK = "nusmp_judgment_mask";
-    public static final int MASTERED_BIT = 16, TOGGLES = 15;
+    public static final int MASTERED_BIT = 16, TOGGLES = 15, SKILL_SHIFT = 5, SKILL_BITS = 0xE0;
 
     /** The toggles and the mastered bit of a creature (0 for everything that is not a player). */
     public static int mask(LivingEntity e) {
@@ -28,7 +28,24 @@ public final class JudgmentState {
         return d.contains(MASK) ? d.getInt(MASK) : 0;
     }
 
-    public static boolean on(LivingEntity e, int mode) { return (mask(e) & JudgmentRules.bit(mode)) != 0; }
+    /** The code of the skill whose toggles the mask holds (see {@link JudgmentRules#code}); 0 = none, or a mask written before 3.14.0, which was always Sandalphon's. */
+    public static int skill(LivingEntity e) { return (mask(e) & SKILL_BITS) >> SKILL_SHIFT; }
+
+    /** The mask a skill writes: its toggles, the mastered bit and its own code. */
+    public static int compose(int code, int toggles, boolean mastered) {
+        return (toggles & TOGGLES) | (mastered ? MASTERED_BIT : 0) | ((code << SKILL_SHIFT) & SKILL_BITS);
+    }
+
+    /** True when toggle {@code mode} of Sandalphon is on (the passives of 3.13.0 read this; another skill's toggles never switch them on). */
+    public static boolean on(LivingEntity e, int mode) {
+        int c = skill(e);
+        return (c == 0 || c == 1) && (mask(e) & JudgmentRules.bit(mode)) != 0;
+    }
+
+    /** True when toggle {@code mode} of the skill with this code is on. */
+    public static boolean onFor(LivingEntity e, int code, int mode) {
+        return skill(e) == code && (mask(e) & JudgmentRules.bit(mode)) != 0;
+    }
 
     public static boolean mastered(LivingEntity e) { return (mask(e) & MASTERED_BIT) != 0; }
 

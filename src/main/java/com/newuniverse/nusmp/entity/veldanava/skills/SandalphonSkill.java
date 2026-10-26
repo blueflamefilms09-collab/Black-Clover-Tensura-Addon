@@ -1,14 +1,11 @@
 package com.newuniverse.nusmp.entity.veldanava.skills;
 
-import com.newuniverse.nusmp.NUSMP;
 import com.newuniverse.nusmp.avatar.TensuraBridge;
 import com.newuniverse.nusmp.balance.BalanceLaw;
 import com.newuniverse.nusmp.book.GrimoireBook;
 import io.github.manasmods.manascore.skill.api.ManasSkillInstance;
-import io.github.manasmods.tensura.ability.skill.Skill;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -32,65 +29,15 @@ import java.util.UUID;
  * second per owner and touch at most 12 + 16 creatures. Everything here runs on the server thread, and every piece of state is the player's own (keyed by the player), so any number of
  * players can hold the skill at once.
  */
-public class SandalphonSkill extends Skill {
-    private static final ResourceLocation ICON = ResourceLocation.fromNamespaceAndPath(NUSMP.MODID, "textures/skill/veldanava/sandalphon.png");
-    private static final JudgmentRules.Spec SPEC = JudgmentRules.SANDALPHON;
-    private static final String GAP = "nusmp_judgment_gap", TAG_STATE = "final_state", TAG_TARGET = "final_target";
+public class SandalphonSkill extends VeldanavaSkillBase {
+    private static final String TAG_STATE = "final_state", TAG_TARGET = "final_target";
     private static final int FINAL_MODE = 9;
 
-    public SandalphonSkill() { super(SkillType.ULTIMATE); }
+    public SandalphonSkill() { super(JudgmentRules.SANDALPHON); }
 
-    @Override public ResourceLocation getSkillIcon() { return ICON; }
-    @Override public int getModes(ManasSkillInstance i) { return SPEC.count(); }
-    @Override public int nextMode(LivingEntity e, ManasSkillInstance i, int mode, boolean reverse) { return Math.floorMod(mode + (reverse ? -1 : 1), SPEC.count()); }
-    @Override public String getModeId(ManasSkillInstance i, int mode) { return SPEC.mode(mode).id(); }
-    @Override public double getMagiculeCost(LivingEntity entity, ManasSkillInstance instance, int mode) { return 0; }
-    @Override public boolean canTick(ManasSkillInstance i, LivingEntity e) { return true; }
-
+    // ---------------------------------------------------------------- the passives that need a look once a second
     @Override
-    public Component getModeName(ManasSkillInstance i, int mode) {
-        JudgmentRules.Mode m = SPEC.mode(mode);
-        Component name = Component.translatable("nusmp.skill.mode." + SPEC.id() + "." + m.id());
-        if (m.toggle()) return name.copy().append(Component.literal(JudgmentRules.on(JudgmentState.toggles(i), m.index()) ? " [ON]" : " [OFF]"));
-        int cd = i.getCoolDown(m.index());
-        return cd > 0 ? name.copy().append(Component.literal(" (" + cd + "s)")) : name;
-    }
-
-    // ---------------------------------------------------------------- learn / forget / tick
-    @Override
-    public void onLearnSkill(ManasSkillInstance i, LivingEntity e) {
-        super.onLearnSkill(i, e);
-        if (e instanceof ServerPlayer p) syncMask(i, p);
-    }
-
-    @Override
-    public void onForgetSkill(ManasSkillInstance i, LivingEntity e) {
-        super.onForgetSkill(i, e);
-        if (e instanceof ServerPlayer p) {
-            JudgmentState.write(p, 0);
-            JudgmentFields.clearOf(p.getUUID());
-        }
-    }
-
-    @Override
-    public void onSkillMastered(ManasSkillInstance i, LivingEntity e) {
-        super.onSkillMastered(i, e);
-        if (e instanceof ServerPlayer p) {
-            syncMask(i, p);
-            p.sendSystemMessage(Component.translatable("nusmp.skill.sandalphon.mastered").withStyle(ChatFormatting.GOLD, ChatFormatting.BOLD));
-        }
-    }
-
-    private static void syncMask(ManasSkillInstance i, ServerPlayer p) {
-        JudgmentState.write(p, JudgmentState.toggles(i) | (i.isMastered(p) ? JudgmentState.MASTERED_BIT : 0));
-    }
-
-    @Override
-    public void onTick(ManasSkillInstance i, LivingEntity e) {
-        if (!(e instanceof ServerPlayer p) || p.tickCount % JudgmentRules.GAZE_PERIOD_TICKS != 0) return;
-        syncMask(i, p);
-        if (!JudgmentConfig.enabled() || !p.isAlive()) return;
-        int toggles = JudgmentState.toggles(i);
+    protected void secondTick(ManasSkillInstance i, ServerPlayer p, int toggles, boolean mastered) {
         if (JudgmentRules.on(toggles, 0)) presence(p);
         if (JudgmentRules.on(toggles, 3)) gaze(p);
     }
@@ -99,7 +46,7 @@ public class SandalphonSkill extends Skill {
     private static void presence(ServerPlayer p) {
         double r = JudgmentRules.PRESENCE_RANGE;
         List<LivingEntity> near = p.serverLevel().getEntitiesOfClass(LivingEntity.class, p.getBoundingBox().inflate(r),
-                x -> x != p && x.isAlive() && x instanceof Enemy && !x.isAlliedTo(p) && x.distanceToSqr(p) <= r * r);
+                x -> x != p && x.isAlive() && x instanceof Enemy && !x.isAlliedTo(p) && !VeldanavaGuard.mindImmune(x) && x.distanceToSqr(p) <= r * r);
         near.sort(Comparator.comparingDouble(x -> x.distanceToSqr(p)));
         for (int n = 0; n < Math.min(near.size(), JudgmentRules.MAX_PRESENCE_TARGETS); n++) near.get(n).addEffect(new MobEffectInstance(MobEffects.GLOWING, 30, 0, false, false, false));
     }
@@ -124,47 +71,15 @@ public class SandalphonSkill extends Skill {
 
     // ---------------------------------------------------------------- the press
     @Override
-    public void onPressed(ManasSkillInstance i, LivingEntity e, int key, int mode) {
-        if (!(e instanceof ServerPlayer p) || !JudgmentConfig.enabled()) return;
-        JudgmentRules.Mode m = SPEC.mode(mode);
-        if (m.toggle()) { toggle(i, p, m); return; }
-        if (m.kind() == JudgmentRules.Kind.HELD) { beginFinal(i, p, m); return; }
-        if (m.crouch() && !p.isShiftKeyDown()) { fail(p, "Crouch and press to use " + m.name() + "."); return; }
-        long now = p.level().getGameTime();
-        if (now < p.getPersistentData().getLong(GAP)) return;
-
-        boolean mastered = i.isMastered(p);
-        double cost = JudgmentRules.cost(m, mastered, JudgmentConfig.costScale());
-        boolean free = p.isCreative();
-        if (!free && !TensuraBridge.spendMagicule(p, cost)) { fail(p, "Not enough magicules (need " + (long) cost + ")."); return; }
-        boolean done = switch (m.index()) {
+    protected boolean activate(ManasSkillInstance i, ServerPlayer p, JudgmentRules.Mode m, boolean mastered) {
+        return switch (m.index()) {
             case 4 -> bullet(i, p, mastered);
             case 5 -> condemnation(p);
             case 6 -> edict(p);
             case 7 -> cleave(i, p, mastered);
             default -> verdict(p);
         };
-        if (!done) {
-            if (!free) TensuraBridge.refundMagicule(p, cost);
-            return;
-        }
-        p.getPersistentData().putLong(GAP, now + JudgmentRules.ACTIVE_GAP_TICKS);
-        addMasteryPoint(i, p);
-        i.markDirty();
     }
-
-    private static void toggle(ManasSkillInstance i, ServerPlayer p, JudgmentRules.Mode m) {
-        int t = JudgmentRules.flip(JudgmentState.toggles(i), m.index());
-        JudgmentState.setToggles(i, t);
-        syncMask(i, p);
-        boolean on = JudgmentRules.on(t, m.index());
-        p.displayClientMessage(Component.translatable("nusmp.skill.mode." + SPEC.id() + "." + m.id()).append(Component.literal(on ? " on" : " off"))
-                .withStyle(on ? ChatFormatting.GOLD : ChatFormatting.GRAY), true);
-    }
-
-    private static void fail(ServerPlayer p, String text) { p.displayClientMessage(Component.literal(text).withStyle(ChatFormatting.RED), true); }
-
-    private static double mastery(ServerPlayer p, ManasSkillInstance i) { return i.isMastered(p) ? 1.0 : 0.4; }
 
     // ---------------------------------------------------------------- the five actives
     /** Judgment Bullet: instant, pierces blocks and up to eight creatures along sixty-four blocks; each loses its good effects, stutters, cannot heal for five seconds and owes ten seconds. */
@@ -257,11 +172,10 @@ public class SandalphonSkill extends Skill {
     }
 
     // ---------------------------------------------------------------- Final Judgment (held)
-    private void beginFinal(ManasSkillInstance i, ServerPlayer p, JudgmentRules.Mode m) {
+    @Override
+    protected void startHeld(ManasSkillInstance i, ServerPlayer p, JudgmentRules.Mode m, boolean mastered) {
         var tag = i.getOrCreateTag();
         tag.putInt(TAG_STATE, 0);
-        if (!i.isMastered(p)) { fail(p, "Final Judgment answers only a mastered Judgment."); return; }
-        if (i.onCoolDown(m.index())) { fail(p, "Final Judgment is recharging (" + i.getCoolDown(m.index()) + "s)."); return; }
         double cost = JudgmentRules.cost(m, true, JudgmentConfig.costScale());
         if (!p.isCreative() && TensuraBridge.magicule(p) < cost) { fail(p, "Not enough magicules (need " + (long) cost + ")."); return; }
         LivingEntity t = JudgmentState.first(p, JudgmentRules.FINAL_RANGE, 1.2);
@@ -282,8 +196,8 @@ public class SandalphonSkill extends Skill {
     }
 
     @Override
-    public boolean onHeld(ManasSkillInstance i, LivingEntity e, int heldTicks, int mode) {
-        if (!(e instanceof ServerPlayer p) || SPEC.mode(mode).index() != FINAL_MODE) return true;
+    protected boolean held(ManasSkillInstance i, ServerPlayer p, JudgmentRules.Mode m, int heldTicks, boolean mastered) {
+        if (m.index() != FINAL_MODE) return true;
         var tag = i.getOrCreateTag();
         if (tag.getInt(TAG_STATE) != 1) return false;
         Entity found = tag.hasUUID(TAG_TARGET) ? p.serverLevel().getEntity(tag.getUUID(TAG_TARGET)) : null;
@@ -294,7 +208,6 @@ public class SandalphonSkill extends Skill {
         if (heldTicks % 10 == 0) lock(t);
         if (heldTicks < JudgmentRules.FINAL_CHANNEL_TICKS) return true;
 
-        JudgmentRules.Mode m = SPEC.mode(FINAL_MODE);
         double cost = JudgmentRules.cost(m, true, JudgmentConfig.costScale());
         if (!p.isCreative() && !TensuraBridge.spendMagicule(p, cost)) {
             endFinal(i, p, "Not enough magicules (need " + (long) cost + ").");
@@ -303,15 +216,15 @@ public class SandalphonSkill extends Skill {
         double damage = TemporalDebt.detonate(t, JudgmentRules.FINAL_DEBT_MULTIPLIER, JudgmentRules.FINAL_MIN_DAMAGE, JudgmentConfig.finalCap());
         JudgmentDamage.detonation(p, t, damage);
         JudgmentFx.boom(p.serverLevel(), t.position());
-        i.setCoolDown(NUSMP.ticksToSeconds(m.cooldownSeconds() * 20), FINAL_MODE);
+        startCooldown(i, m, true);
         addMasteryPoint(i, p);
         endFinal(i, p, null);
         return false;
     }
 
     @Override
-    public void onRelease(ManasSkillInstance i, LivingEntity e, int heldTicks, int keyNumber, int mode) {
-        if (e instanceof ServerPlayer p && SPEC.mode(mode).index() == FINAL_MODE && i.getOrCreateTag().getInt(TAG_STATE) == 1) endFinal(i, p, "Final Judgment is let go.");
+    protected void released(ManasSkillInstance i, ServerPlayer p, JudgmentRules.Mode m, int heldTicks) {
+        if (m.index() == FINAL_MODE && i.getOrCreateTag().getInt(TAG_STATE) == 1) endFinal(i, p, "Final Judgment is let go.");
     }
 
     private static void endFinal(ManasSkillInstance i, ServerPlayer p, String message) {

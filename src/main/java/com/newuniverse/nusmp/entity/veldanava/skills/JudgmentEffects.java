@@ -44,6 +44,12 @@ public final class JudgmentEffects {
 
     public static final DeferredHolder<MobEffect, MobEffect> ACTION_LOCK = EFFECTS.register("action_lock", ActionLock::new);
 
+    /** 3.14.0 (Israfil): a crushing weight. Falls fast, cannot fly (a flying player is brought down, a flying mob feels the pull). Lasts until its time is up, a milk bucket or death. */
+    public static final DeferredHolder<MobEffect, MobEffect> GRAVITY_CRUSH = EFFECTS.register("gravity_crush", Crush::new);
+
+    /** 3.14.0 (Israfil): Nihility Collapse - the mark of standing in the collapsed place. Slower, and no healing (the events read it). */
+    public static final DeferredHolder<MobEffect, MobEffect> NIHILITY_COLLAPSE = EFFECTS.register("nihility_collapse", Collapse::new);
+
     /** Loads this class before the registry event; call it from the NUSMP constructor. */
     public static void init() {}
 
@@ -121,6 +127,43 @@ public final class JudgmentEffects {
             if (e.isUsingItem()) e.stopUsingItem();
             if (e instanceof Mob m && m.getTarget() != null) m.setTarget(null);
             return true;
+        }
+    }
+
+    /** A weight on the body: gravity pulls harder, and anything that flies is pressed down. */
+    private static final class Crush extends MobEffect {
+        Crush() {
+            super(MobEffectCategory.HARMFUL, 0x3A2F4A);
+            addAttributeModifier(Attributes.GRAVITY, id("gravity_crush_pull"), 1.5, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);
+            addAttributeModifier(Attributes.MOVEMENT_SPEED, id("gravity_crush_speed"), -0.2, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);
+        }
+
+        @Override public boolean shouldApplyEffectTickThisTick(int duration, int amplifier) { return duration % 4 == 0; }
+
+        @Override
+        public boolean applyEffectTick(LivingEntity e, int amplifier) {
+            if (e.level().isClientSide) return true;
+            if (e instanceof net.minecraft.world.entity.player.Player p) {
+                if (p.getAbilities().flying && !p.isCreative() && !p.isSpectator()) {
+                    p.getAbilities().flying = false;
+                    p.onUpdateAbilities();
+                }
+                if (p.isFallFlying()) p.stopFallFlying();
+            }
+            if (!e.onGround()) {
+                var v = e.getDeltaMovement();
+                e.setDeltaMovement(v.x, Math.min(v.y, 0.0) - 0.12, v.z);
+                e.hurtMarked = true;
+            }
+            return true;
+        }
+    }
+
+    /** The collapsed place: slower. (No healing there: {@code IsrafilEvents} reads the effect.) */
+    private static final class Collapse extends MobEffect {
+        Collapse() {
+            super(MobEffectCategory.HARMFUL, 0x2A1E44);
+            addAttributeModifier(Attributes.MOVEMENT_SPEED, id("nihility_collapse_speed"), -0.25, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);
         }
     }
 }

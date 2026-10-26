@@ -57,8 +57,15 @@ public final class JudgmentSelfTests {
         if (JudgmentRules.cost(s.mode(4), false, 0.0) != 0 || JudgmentRules.cost(s.mode(4), false, -3.0) != 0) return Result.fail("a zero or negative cost scale gives a cost");
         if (JudgmentRules.CARDS.size() != 5) return Result.fail("the reward screen does not have five cards");
         if (!JudgmentRules.claimable("sandalphon")) return Result.fail("Sandalphon cannot be claimed");
-        for (String sealed : new String[]{"israfil", "jibril", "solomon", "hercules", "", "nonsense", null})
+        if (!JudgmentRules.claimable("israfil")) return Result.fail("Israfil cannot be claimed");
+        for (String sealed : new String[]{"jibril", "solomon", "hercules", "", "nonsense", null})
             if (JudgmentRules.claimable(sealed)) return Result.fail("'" + sealed + "' should not be claimable in this release");
+        for (JudgmentRules.Spec sp : JudgmentRules.SPECS)
+            for (JudgmentRules.Mode m : sp.modes()) {
+                if (m.toggle()) continue;
+                if (m.cooldownSeconds() <= 0) return Result.fail(sp.id() + " " + m.id() + " has no cooldown");
+                if (m.masteredCooldownSeconds() > m.cooldownSeconds()) return Result.fail(sp.id() + " " + m.id() + " cools down slower once mastered");
+            }
         if (JudgmentRules.demiseMultiplier(1.0) != 1.0 || JudgmentRules.demiseMultiplier(0.0) != 2.0 || JudgmentRules.demiseMultiplier(-4) != 2.0 || JudgmentRules.demiseMultiplier(9) != 1.0) return Result.fail("the Demise multiplier is wrong");
         if (JudgmentRules.magicVulnerability(0) != 1.0 || JudgmentRules.magicVulnerability(1000) != 1.5) return Result.fail("the magic vulnerability is not capped at +50%");
         if (JudgmentRules.armourPierce(1000) != JudgmentRules.ARMOUR_PIERCE_MAX || JudgmentRules.armourPierce(-5) != 0) return Result.fail("the armour pierce is not clamped");
@@ -71,7 +78,7 @@ public final class JudgmentSelfTests {
         mask = JudgmentRules.flip(mask, 3);
         if (!JudgmentRules.on(mask, 1) || !JudgmentRules.on(mask, 3) || JudgmentRules.on(mask, 0) || JudgmentRules.flip(JudgmentRules.flip(mask, 1), 1) != mask) return Result.fail("the toggle bits are wrong");
         if (JudgmentRules.bit(4) != 0 || JudgmentRules.bit(-1) != 0) return Result.fail("an active mode has a toggle bit");
-        return Result.ok("10 modes (4/5/1), 5 cards (1 open), numbers and caps hold");
+        return Result.ok("10 modes (4/5/1), 5 cards (2 open), cooldowns, numbers and caps hold");
     }
 
     // ---------------------------------------------------------------- the skill
@@ -92,12 +99,12 @@ public final class JudgmentSelfTests {
             for (JudgmentRules.Mode m : JudgmentRules.SANDALPHON.modes())
                 if (!m.id().equals(sk.getModeId(i, m.index()))) return Result.fail("mode " + m.index() + " is '" + sk.getModeId(i, m.index()) + "' not '" + m.id() + "'");
             if (VeldanavaSkills.grant(p, "sandalphon")) return Result.fail("a second grant went through");
-            if (VeldanavaSkills.grant(p, "israfil")) return Result.fail("a sealed skill was granted");
+            if (VeldanavaSkills.grant(p, "jibril")) return Result.fail("a sealed skill was granted");
             JudgmentState.setToggles(i, 0b1010);
             if (JudgmentState.toggles(i) != 0b1010) return Result.fail("the toggles were not kept in the skill");
             JudgmentState.setToggles(i, 0xFFFF);
             if (JudgmentState.toggles(i) != JudgmentState.TOGGLES) return Result.fail("an out-of-range toggle bit was kept");
-            JudgmentState.write(p, 0b10101);
+            JudgmentState.write(p, JudgmentState.compose(1, 0b0101, true));
             if (!JudgmentState.on(p, 0) || JudgmentState.on(p, 1) || !JudgmentState.on(p, 2) || !JudgmentState.mastered(p)) return Result.fail("the player mask reads wrong");
             JudgmentState.write(p, 0);
             if (JudgmentState.mask(p) != 0) return Result.fail("a zero mask was kept");

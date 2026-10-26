@@ -16,9 +16,16 @@ public final class JudgmentRules {
     public enum Kind { TOGGLE, PRESS, CROUCH_PRESS, HELD }
 
     /** One mode: its registry-safe id, its English name, how it is used, its cost (normal and mastered), its cooldown in seconds (0 = none) and whether a held cost is per second. */
-    public record Mode(int index, String id, String name, Kind kind, int cost, int masteredCost, int cooldownSeconds, boolean perSecond) {
+    public record Mode(int index, String id, String name, Kind kind, int cost, int masteredCost, int cooldownSeconds, int masteredCooldownSeconds, boolean perSecond) {
+        /** The form of 3.13.0 (one cooldown for both states); kept so older callers and tests compile unchanged. */
+        public Mode(int index, String id, String name, Kind kind, int cost, int masteredCost, int cooldownSeconds, boolean perSecond) {
+            this(index, id, name, kind, cost, masteredCost, cooldownSeconds, cooldownSeconds, perSecond);
+        }
+
         public boolean toggle() { return kind == Kind.TOGGLE; }
         public boolean crouch() { return kind == Kind.CROUCH_PRESS; }
+        /** The tenth mode of every skill answers only a mastered skill. */
+        public boolean masteryOnly() { return index == MODES - 1; }
     }
 
     /** One skill of the reward: its id (the path of the skill registered in the mod), its title, and its ten modes. */
@@ -35,12 +42,32 @@ public final class JudgmentRules {
             new Mode(1, "absolute_severance", "Absolute Severance", Kind.TOGGLE, 0, 0, 0, false),
             new Mode(2, "inevitable_demise", "Inevitable Demise", Kind.TOGGLE, 0, 0, 0, false),
             new Mode(3, "judgment_gaze", "Judgment Gaze", Kind.TOGGLE, 0, 0, 0, false),
-            new Mode(4, "judgment_bullet", "Judgment Bullet", Kind.PRESS, 2500, 1800, 0, false),
-            new Mode(5, "condemnation", "Condemnation", Kind.CROUCH_PRESS, 4200, 3100, 0, false),
-            new Mode(6, "supreme_edict", "Supreme Edict", Kind.PRESS, 5500, 4000, 0, false),
-            new Mode(7, "guillotine_cleave", "Guillotine Cleave", Kind.CROUCH_PRESS, 3800, 2500, 0, false),
-            new Mode(8, "verdict_of_ruin", "Verdict of Ruin", Kind.PRESS, 8000, 5500, 0, false),
+            new Mode(4, "judgment_bullet", "Judgment Bullet", Kind.PRESS, 2500, 1800, 6, 3, false),
+            new Mode(5, "condemnation", "Condemnation", Kind.CROUCH_PRESS, 4200, 3100, 20, 12, false),
+            new Mode(6, "supreme_edict", "Supreme Edict", Kind.PRESS, 5500, 4000, 30, 20, false),
+            new Mode(7, "guillotine_cleave", "Guillotine Cleave", Kind.CROUCH_PRESS, 3800, 2500, 8, 4, false),
+            new Mode(8, "verdict_of_ruin", "Verdict of Ruin", Kind.PRESS, 8000, 5500, 40, 25, false),
             new Mode(9, "final_judgment", "Final Judgment", Kind.HELD, 45000, 45000, 120, false)));
+
+    /** The skills this build has, in the order of the owner's file. Releases append one line. */
+    public static final List<Spec> SPECS = List.of(SANDALPHON, IsrafilRules.ISRAFIL);
+
+    /** The spec of a skill id, or null. */
+    public static Spec spec(String id) {
+        if (id == null) return null;
+        for (Spec sp : SPECS) if (sp.id().equals(id)) return sp;
+        return null;
+    }
+
+    /**
+     * The code of a skill in the player's mask (bits 5..7 of {@link JudgmentState#mask}): 1 = Sandalphon, 2 = Israfil, 3 = Jibril, 4 = Solomon, 5 = Hercules. 0 = none. A passive reads the mask
+     * only for its own code, so a creature that somehow holds two of the skills never has one skill's passives switch on with the other's toggles.
+     */
+    public static int code(String id) {
+        if (id == null) return 0;
+        for (int i = 0; i < CARDS.size(); i++) if (CARDS.get(i).id().equals(id)) return i + 1;
+        return 0;
+    }
 
     // ---------------------------------------------------------------- the five reward cards
     /** One card of the reward screen: the skill id, the title, the epithet, and whether this build can already give it. */
@@ -52,7 +79,7 @@ public final class JudgmentRules {
      */
     public static final List<Card> CARDS = List.of(
             new Card("sandalphon", "Sandalphon", "Lord of Judgment", true),
-            new Card("israfil", "Israfil", "Lord of Trials", false),
+            new Card("israfil", "Israfil", "Lord of Trials", true),
             new Card("jibril", "Jibril", "Lord of Rigor", false),
             new Card("solomon", "Solomon", "Lord of Sorcery", false),
             new Card("hercules", "Hercules", "Lord of Martial Prowess", false));
@@ -73,6 +100,12 @@ public final class JudgmentRules {
     /** The Magicule a mode costs: the mastered price once mastered, times the server's scale, never negative. */
     public static double cost(Mode m, boolean mastered, double scale) {
         return Math.max(0.0, (mastered ? m.masteredCost() : m.cost()) * Math.max(0.0, scale));
+    }
+
+    /** The cooldown of a mode in seconds: the mastered one once mastered, times the server's {@code cooldownScale}, rounded, never negative (0 = none). */
+    public static int cooldownSeconds(Mode m, boolean mastered, double scale) {
+        double base = mastered ? m.masteredCooldownSeconds() : m.cooldownSeconds();
+        return (int) Math.max(0L, Math.round(base * Math.max(0.0, scale)));
     }
 
     // ---------------------------------------------------------------- numbers of Sandalphon

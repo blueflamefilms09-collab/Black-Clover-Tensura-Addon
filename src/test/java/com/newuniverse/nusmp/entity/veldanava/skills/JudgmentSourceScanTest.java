@@ -56,10 +56,12 @@ class JudgmentSourceScanTest {
             String n = p.getFileName().toString();
             assertFalse(c.contains("ParticleTypes."), n + " names a vanilla particle (go through VfxSpawn)");
             assertFalse(c.contains("sendParticles("), n + " sends particles itself");
-            if (!n.equals("JudgmentFx.java")) assertFalse(c.contains("VfxSpawn."), n + " sends an effect outside JudgmentFx");
+            if (!n.equals("JudgmentFx.java") && !n.equals("TrialFx.java")) assertFalse(c.contains("VfxSpawn."), n + " sends an effect outside JudgmentFx and TrialFx");
         }
         String fx = file("JudgmentFx");
         assertEquals(Pattern.compile("VfxSpawn\\.send(Following)?\\(").matcher(fx).results().count(), Pattern.compile("VfxShape\\.JUDGMENT_").matcher(fx).results().count(), "each packet draws exactly one Judgment shape");
+        String trial = file("TrialFx");
+        assertEquals(Pattern.compile("VfxSpawn\\.send(Following)?\\(").matcher(trial).results().count(), Pattern.compile("VfxShape\\.TRIAL_").matcher(trial).results().count(), "each packet draws exactly one Trial shape");
     }
 
     @Test
@@ -67,7 +69,7 @@ class JudgmentSourceScanTest {
         for (Path p : files()) {
             String c = code(read(p));
             String n = p.getFileName().toString();
-            if (n.equals("JudgmentSelfTests.java")) continue;
+            if (n.equals("JudgmentSelfTests.java") || n.equals("IsrafilSelfTests.java")) continue;
             for (String banned : new String[]{"getChunk(", "getChunkAt(", "setBlock(", "destroyBlock(", "addFreshEntity", "new ItemEntity", "setBlockAndUpdate(", "explode("})
                 assertFalse(c.contains(banned), n + " uses " + banned);
         }
@@ -85,6 +87,25 @@ class JudgmentSourceScanTest {
         assertEquals(1, Pattern.compile("getEntitiesOfClass\\(").matcher(fields).results().count(), "one box query per pulse");
         assertTrue(skill.contains("MAX_EDICT_TARGETS") && skill.contains("MAX_CLEAVE_TARGETS") && skill.contains("MAX_PRESENCE_TARGETS") && skill.contains("MAX_GAZE_TARGETS"), "every area press is capped");
         assertTrue(file("JudgmentState").contains("max"), "the line-of-sight list is capped");
+        String isra = file("IsrafilSkill");
+        for (String cap : new String[]{"MAX_WEIGHT_TARGETS", "COLLAPSE_MAX_TARGETS", "TRUMPET_MAX_TARGETS", "SHIFT_MAX_AGGRO", "MAX_FIELD_TARGETS"})
+            assertTrue(isra.contains(cap), "Israfil's area work is capped by " + cap);
+        assertFalse(isra.contains("getEntities(") || isra.contains("getAllEntities("), "an unbounded entity walk in Israfil");
+    }
+
+    @Test
+    void israfilsOnlyPerTickWorkIsTheRiftWalkMapAndItReturnsEarlyWhenIdle() throws IOException {
+        String rift = file("RiftWalk");
+        String tick = rift.substring(rift.indexOf("public static void onServerTick"));
+        assertTrue(tick.contains("if (SESSIONS.isEmpty()) return;"), "an idle rift manager does nothing");
+        assertTrue(rift.contains("Map<UUID, Session>"), "walks are keyed by the player's UUID");
+        assertTrue(rift.contains("RIFT_SECONDS_MASTERED") || rift.contains("endsAt"), "a walk has a hard time limit");
+        String ev = file("IsrafilEvents");
+        assertEquals(1, Pattern.compile("ServerTickEvent").matcher(ev.replaceAll("import [^;]+;", "")).results().count(), "one tick hook in Israfil's events");
+        assertFalse(ev.contains("PlayerTickEvent") || ev.contains("EntityTickEvent") || ev.contains("LevelTickEvent"), "a per-player or per-entity tick hook");
+        for (String way : new String[]{"onDeath", "onLogout", "onLogin", "onServerStopping"}) assertTrue(ev.contains(way), "the rift is cleaned up on " + way);
+        String skill = file("IsrafilSkill");
+        assertTrue(skill.contains("RiftWalk.begin(") && skill.contains("RiftWalk.end("), "Rift Walk starts and ends through the one manager");
     }
 
     @Test
@@ -118,9 +139,9 @@ class JudgmentSourceScanTest {
         String main = code(read(SRC.resolve("NUSMP.java")));
         assertTrue(main.contains("ModConfig.Type.SERVER, com.newuniverse.nusmp.entity.veldanava.skills.JudgmentConfig.SPEC, \"nusmp-veldanava-skills-server.toml\""), "the skill's settings change gameplay, so they are a SERVER config");
         String cfg = file("JudgmentConfig");
-        for (String key : new String[]{"enabled", "rewardScreen", "costScale", "debtDamage", "finalJudgmentCap", "activeDamageCap", "executePlayers", "executeBosses", "debtMax", "fieldsPerPlayer", "fieldsTotal"})
+        for (String key : new String[]{"enabled", "rewardScreen", "costScale", "cooldownScale", "debtDamage", "finalJudgmentCap", "activeDamageCap", "executePlayers", "executeBosses", "debtMax", "fieldsPerPlayer", "fieldsTotal"})
             assertTrue(cfg.contains("\"" + key + "\""), "config key missing: " + key);
-        assertTrue(cfg.contains("executePlayers\", false") && cfg.contains("executeBosses\", false"), "players and bosses are not executed by default");
+        assertTrue(cfg.contains("executePlayers\", true") && cfg.contains("executeBosses\", false"), "players are executed by default (owner, 3.14.0), bosses are not");
     }
 
     @Test
@@ -168,6 +189,15 @@ class JudgmentSourceScanTest {
         String tests = file("JudgmentSelfTests");
         for (String key : new String[]{"sandalphon.rules", "sandalphon.skill", "sandalphon.conditions"}) assertTrue(tests.contains("\"" + key + "\""), "self-test missing: " + key);
         assertTrue(code(read(SRC.resolve("NUSMP.java"))).contains("JudgmentSelfTests.register()"), "the self-tests are registered");
+
+        assertTrue(Files.exists(RES.resolve("assets/nusmp/textures/skill/veldanava/israfil.png")), "missing Israfil icon");
+        for (String k : new String[]{"nusmp.skill.israfil", "nusmp.skill.israfil.description", "nusmp.skill.israfil.mastered", "effect.nusmp.gravity_crush", "effect.nusmp.nihility_collapse"})
+            assertTrue(lang.has(k), "missing lang key " + k);
+        for (JudgmentRules.Mode m : IsrafilRules.ISRAFIL.modes()) assertTrue(lang.has("nusmp.skill.mode.israfil." + m.id()), "missing lang key for mode " + m.id());
+        assertTrue(Pattern.compile("SMOKE_EXPECT:[^\\n]*[\", ]israfil[\",]").matcher(smoke).find(), "the smoke list must expect the israfil self-tests");
+        String israfilTests = file("IsrafilSelfTests");
+        for (String key : new String[]{"israfil.rules", "israfil.skill", "israfil.conditions"}) assertTrue(israfilTests.contains("\"" + key + "\""), "self-test missing: " + key);
+        assertTrue(code(read(SRC.resolve("NUSMP.java"))).contains("IsrafilSelfTests.register()") && code(read(SRC.resolve("NUSMP.java"))).contains("IsrafilEvents.register("), "Israfil's tests and events are wired");
     }
 
     @Test

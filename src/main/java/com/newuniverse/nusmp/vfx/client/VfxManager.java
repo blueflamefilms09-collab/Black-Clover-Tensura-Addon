@@ -260,6 +260,8 @@ public final class VfxManager {
         register(new com.newuniverse.nusmp.vfx.client.layer.StarMagicLayer());
         // Sandalphon, Lord of Judgment (Veldanava): its own six shapes (JUDGMENT_BULLET ... JUDGMENT_CROSS), appended after STAR_DOME; nothing else is touched
         register(new com.newuniverse.nusmp.vfx.client.layer.JudgmentLayer());
+        // Israfil, Lord of Trials (Veldanava): its own six shapes (TRIAL_LABYRINTH ... TRIAL_RIFT), appended after JUDGMENT_CROSS; nothing else is touched
+        register(new com.newuniverse.nusmp.vfx.client.layer.TrialLayer());
     }
 
     public void register(AbstractVfxLayer layer) { for (VfxShape s : layer.shapes()) layers.put(s, layer); }

@@ -23,6 +23,7 @@ public final class VeldanavaSkills {
     /** The skill for a card id, or null when this build has none (a sealed card). Releases add one line per skill. */
     public static DeferredHolder<ManasSkill, ? extends ManasSkill> holder(String id) {
         if ("sandalphon".equals(id)) return NUSkills.SANDALPHON;
+        if ("israfil".equals(id)) return NUSkills.ISRAFIL;
         return null;
     }
 

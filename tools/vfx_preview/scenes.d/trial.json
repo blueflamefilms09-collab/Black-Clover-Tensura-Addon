@@ -1,0 +1,441 @@
+{
+ "_comment": "Israfil, Lord of Trials (TrialLayer): the six TRIAL_* shapes. Dark midnight sky so the cyan-white light, the brass and the black voids all read.",
+ "trial_labyrinth": {
+  "layer": "TrialLayer",
+  "shape": "TRIAL_LABYRINTH",
+  "from": [
+   0,
+   0.9,
+   0
+  ],
+  "to": [
+   0,
+   0.9,
+   0
+  ],
+  "power": 4.5,
+  "duration": 160,
+  "sky": [
+   0.035,
+   0.045,
+   0.11
+  ],
+  "horizon": [
+   0.1,
+   0.14,
+   0.25
+  ],
+  "floor": [
+   0.11,
+   0.12,
+   0.16
+  ],
+  "cam": [
+   3.6,
+   3.0,
+   -8.4
+  ],
+  "target": [
+   0,
+   1.8,
+   0
+  ],
+  "ages": [
+   3,
+   8,
+   21,
+   24,
+   60,
+   101,
+   142,
+   152
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "trial_gravity": {
+  "layer": "TrialLayer",
+  "shape": "TRIAL_GRAVITY",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   1,
+   0
+  ],
+  "power": 1.5,
+  "duration": 40,
+  "sky": [
+   0.035,
+   0.045,
+   0.11
+  ],
+  "horizon": [
+   0.1,
+   0.14,
+   0.25
+  ],
+  "floor": [
+   0.11,
+   0.12,
+   0.16
+  ],
+  "cam": [
+   5,
+   3.4,
+   -6.5
+  ],
+  "target": [
+   0,
+   1.6,
+   0
+  ],
+  "ages": [
+   3,
+   9,
+   15,
+   21,
+   27,
+   29,
+   32,
+   36,
+   39
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "trial_collapse": {
+  "layer": "TrialLayer",
+  "shape": "TRIAL_COLLAPSE",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   1,
+   0
+  ],
+  "power": 6.5,
+  "duration": 120,
+  "sky": [
+   0.035,
+   0.045,
+   0.11
+  ],
+  "horizon": [
+   0.1,
+   0.14,
+   0.25
+  ],
+  "floor": [
+   0.11,
+   0.12,
+   0.16
+  ],
+  "cam": [
+   10,
+   6.5,
+   -14
+  ],
+  "target": [
+   0,
+   1.8,
+   0
+  ],
+  "ages": [
+   3,
+   8,
+   13,
+   17,
+   19,
+   22,
+   30,
+   60,
+   100,
+   115
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ],
+   [
+    3,
+    0,
+    2,
+    1.8
+   ]
+  ]
+ },
+ "trial_shift": {
+  "layer": "TrialLayer",
+  "shape": "TRIAL_SHIFT",
+  "from": [
+   -14,
+   0,
+   0
+  ],
+  "to": [
+   14,
+   0,
+   3
+  ],
+  "power": 1,
+  "duration": 14,
+  "sky": [
+   0.035,
+   0.045,
+   0.11
+  ],
+  "horizon": [
+   0.1,
+   0.14,
+   0.25
+  ],
+  "floor": [
+   0.11,
+   0.12,
+   0.16
+  ],
+  "cam": [
+   0,
+   4.5,
+   -24
+  ],
+  "target": [
+   0,
+   1.2,
+   1.5
+  ],
+  "ages": [
+   0.5,
+   2,
+   3.5,
+   5,
+   7,
+   9,
+   11,
+   13
+  ],
+  "figures": [
+   [
+    -14,
+    0,
+    0,
+    1.8
+   ],
+   [
+    14,
+    0,
+    3,
+    1.8
+   ]
+  ]
+ },
+ "trial_trumpet": {
+  "layer": "TrialLayer",
+  "shape": "TRIAL_TRUMPET",
+  "from": [
+   0,
+   0.9,
+   0
+  ],
+  "to": [
+   0,
+   0.9,
+   0
+  ],
+  "power": 100,
+  "duration": 50,
+  "sky": [
+   0.035,
+   0.045,
+   0.11
+  ],
+  "horizon": [
+   0.1,
+   0.14,
+   0.25
+  ],
+  "floor": [
+   0.11,
+   0.12,
+   0.16
+  ],
+  "cam": [
+   7,
+   3.4,
+   -12
+  ],
+  "target": [
+   0,
+   5,
+   0
+  ],
+  "ages": [
+   1,
+   3,
+   6,
+   10,
+   16,
+   24,
+   32,
+   44
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ],
+   [
+    6,
+    0,
+    5,
+    1.8
+   ],
+   [
+    -7,
+    0,
+    8,
+    1.8
+   ]
+  ]
+ },
+ "trial_trumpet_far": {
+  "layer": "TrialLayer",
+  "shape": "TRIAL_TRUMPET",
+  "from": [
+   0,
+   0.9,
+   0
+  ],
+  "to": [
+   0,
+   0.9,
+   0
+  ],
+  "power": 100,
+  "duration": 50,
+  "sky": [
+   0.035,
+   0.045,
+   0.11
+  ],
+  "horizon": [
+   0.1,
+   0.14,
+   0.25
+  ],
+  "floor": [
+   0.11,
+   0.12,
+   0.16
+  ],
+  "cam": [
+   0,
+   22,
+   -70
+  ],
+  "target": [
+   0,
+   3,
+   10
+  ],
+  "ages": [
+   2,
+   6,
+   12,
+   20,
+   30,
+   42
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "trial_rift": {
+  "layer": "TrialLayer",
+  "shape": "TRIAL_RIFT",
+  "from": [
+   0,
+   0.9,
+   0
+  ],
+  "to": [
+   0,
+   0.9,
+   0
+  ],
+  "power": 1,
+  "duration": 100,
+  "sky": [
+   0.035,
+   0.045,
+   0.11
+  ],
+  "horizon": [
+   0.1,
+   0.14,
+   0.25
+  ],
+  "floor": [
+   0.11,
+   0.12,
+   0.16
+  ],
+  "cam": [
+   5.5,
+   1.5,
+   -1.0
+  ],
+  "target": [
+   0,
+   1.0,
+   -1.0
+  ],
+  "ages": [
+   4,
+   10,
+   25,
+   40,
+   55,
+   70,
+   88,
+   96
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ }
+}

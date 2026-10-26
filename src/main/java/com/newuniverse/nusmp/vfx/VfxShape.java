@@ -367,7 +367,21 @@ public enum VfxShape {
     JUDGMENT_EDICT,
     JUDGMENT_CLEAVE,
     JUDGMENT_FIELD,
-    JUDGMENT_CROSS;
+    JUDGMENT_CROSS,
+    // Israfil, Lord of Trials (Veldanava, vfx.client.layer.TrialLayer): deep indigo and midnight teal, cyan-white edges, brass accents; maze lines, coordinate ticks, folded-space shards, a trumpet and its sound rings, ghostly
+    // afterimages. All six are appended in this order (ordinals go over the network); the colour of the packet is ignored (the palette is the layer's own).
+    // TRIAL_LABYRINTH: Dimensional Labyrinth, sent FOLLOWING the trapped creature: from = its centre (the floor is drawn 0.9 below), power = cage radius (~4.5), 160 ticks. A ring of maze-patterned panes that re-shuffles every 20 ticks.
+    // TRIAL_GRAVITY: Weight of Sins, sent FOLLOWING the target: from = its feet, power = size (~1.5), 40 ticks (the crush): a coordinate plate comes down on a dark disc, light streaks and chains sink, the ground cracks, a thud ring ends it.
+    // TRIAL_COLLAPSE: Spatial Collapse, sent at a point: from = the ground point, to = from + (0,1,0), power = implosion radius (~6.5), 120 ticks: shards and rings are pulled in, a pinch flash and shock ring, then a lingering Nihility Collapse field.
+    // TRIAL_SHIFT: Coordinate Shift: from = where the caster was, to = where they arrive (1-48 blocks apart), power = 1, 14 ticks: a flipping coordinate ring at both ends, a dashed folded line and swapped afterimages.
+    // TRIAL_TRUMPET: The Grand Trumpet, sent at the caster: from = its centre, power = radius (100 in game), 50 ticks: a horn of light rays, sound rings reaching the radius in ~30 ticks, shattering glass shards, a screen shake.
+    // TRIAL_RIFT: Rift Walk, sent FOLLOWING the player while it is held (re-sent by the server): from = its centre, power = 1, 100 ticks: a ghostly intangible look of rift lines, feet rings and afterimages.
+    TRIAL_LABYRINTH,
+    TRIAL_GRAVITY,
+    TRIAL_COLLAPSE,
+    TRIAL_SHIFT,
+    TRIAL_TRUMPET,
+    TRIAL_RIFT;
 
     public static VfxShape byId(int id) {
         VfxShape[] v = values();

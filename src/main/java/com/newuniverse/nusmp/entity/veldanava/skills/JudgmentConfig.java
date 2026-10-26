@@ -9,7 +9,7 @@ import net.neoforged.neoforge.common.ModConfigSpec;
 public final class JudgmentConfig {
     public static final ModConfigSpec SPEC;
     public static final ModConfigSpec.BooleanValue ENABLED, REWARD_SCREEN, EXECUTE_PLAYERS, EXECUTE_BOSSES;
-    public static final ModConfigSpec.DoubleValue COST_SCALE, DEBT_DAMAGE, FINAL_CAP, ACTIVE_DAMAGE_CAP;
+    public static final ModConfigSpec.DoubleValue COST_SCALE, COOLDOWN_SCALE, DEBT_DAMAGE, FINAL_CAP, ACTIVE_DAMAGE_CAP;
     public static final ModConfigSpec.IntValue DEBT_MAX, FIELDS_PER_PLAYER, FIELDS_TOTAL;
 
     static {
@@ -21,14 +21,16 @@ public final class JudgmentConfig {
                 .define("rewardScreen", true);
         COST_SCALE = b.comment("Multiplier of every Magicule cost of the Veldanava skills (1 = the cost in the skill description, 0 = free).")
                 .defineInRange("costScale", 1.0, 0.0, 10.0);
+        COOLDOWN_SCALE = b.comment("Multiplier of every cooldown of the Veldanava skills (1 = the cooldown in the skill description: the normal one, or the shorter one once the skill is mastered; 0 = no cooldowns).")
+                .defineInRange("cooldownScale", 1.0, 0.0, 10.0);
         DEBT_DAMAGE = b.comment("Damage (HP) one stack of Temporal Debt is worth when it is detonated, before the multiplier of the skill that detonates it.")
                 .defineInRange("debtDamage", 20.0, 0.0, 10000.0);
         FINAL_CAP = b.comment("The most damage one Final Judgment can deal to a mob (a player is limited by the Balance Law's per-hit cap on top).")
                 .defineInRange("finalJudgmentCap", 50000.0, 1.0, 1.0E7);
         ACTIVE_DAMAGE_CAP = b.comment("The most damage one press of a Sandalphon active (Bullet, Cleave, a field pulse) can deal to a mob before the Balance Law.")
                 .defineInRange("activeDamageCap", 4000.0, 1.0, 1.0E6);
-        EXECUTE_PLAYERS = b.comment("Condemnation executes a PLAYER who falls below 20% health. false = a player is dealt the damage of a hit instead (the Balance Law's no-one-shot rule).")
-                .define("executePlayers", false);
+        EXECUTE_PLAYERS = b.comment("Condemnation executes a PLAYER who falls below 20% health (default since 3.14.0). false = a player is dealt the damage of a hit instead (the Balance Law's no-one-shot rule).")
+                .define("executePlayers", true);
         EXECUTE_BOSSES = b.comment("Condemnation executes a boss (the c:bosses tag or a very large health pool) who falls below 20% health. false = a boss takes a hit of 10% of its maximum health instead.")
                 .define("executeBosses", false);
         DEBT_MAX = b.comment("The most Temporal Debt stacks one creature can carry.")
@@ -48,6 +50,8 @@ public final class JudgmentConfig {
     public static boolean rewardScreen() { return get(REWARD_SCREEN); }
 
     public static double costScale() { return get(COST_SCALE); }
+
+    public static double cooldownScale() { return get(COOLDOWN_SCALE); }
 
     public static double debtDamage() { return get(DEBT_DAMAGE); }
 

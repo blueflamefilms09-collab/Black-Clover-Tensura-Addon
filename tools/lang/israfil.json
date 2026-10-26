@@ -1,0 +1,17 @@
+{
+  "nusmp.skill.israfil": "Israfil, Lord of Trials",
+  "nusmp.skill.israfil.description": "The Archangel of the Trial. Four passives (Spatial Domination, Trial of Endurance, Labyrinthian Mind, Weight of Consequence), five trials (Dimensional Labyrinth, Weight of Sins, Spatial Collapse, Coordinate Shift, Rift Walk) and, once mastered, The Grand Trumpet: a sound that silences everything within a hundred blocks.",
+  "nusmp.skill.israfil.mastered": "Israfil is mastered: The Grand Trumpet answers you, the trials cost less and cool down faster, and blows that reach you are bent aside.",
+  "nusmp.skill.mode.israfil.spatial_domination": "Spatial Domination",
+  "nusmp.skill.mode.israfil.trial_of_endurance": "Trial of Endurance",
+  "nusmp.skill.mode.israfil.labyrinthian_mind": "Labyrinthian Mind",
+  "nusmp.skill.mode.israfil.weight_of_consequence": "Weight of Consequence",
+  "nusmp.skill.mode.israfil.dimensional_labyrinth": "Dimensional Labyrinth",
+  "nusmp.skill.mode.israfil.weight_of_sins": "Weight of Sins",
+  "nusmp.skill.mode.israfil.spatial_collapse": "Spatial Collapse",
+  "nusmp.skill.mode.israfil.coordinate_shift": "Coordinate Shift",
+  "nusmp.skill.mode.israfil.rift_walk": "Rift Walk",
+  "nusmp.skill.mode.israfil.grand_trumpet": "The Grand Trumpet",
+  "effect.nusmp.gravity_crush": "Gravity Crush",
+  "effect.nusmp.nihility_collapse": "Nihility Collapse"
+}

@@ -257,4 +257,8 @@ public final class NUSkills {
     // ---- 3.13.0: the Veldanava ultimate skills (the Will of the Creator's reward; each arrives in its own release) ----
     public static final DeferredHolder<ManasSkill, com.newuniverse.nusmp.entity.veldanava.skills.SandalphonSkill> SANDALPHON =
             SKILLS.register("sandalphon", com.newuniverse.nusmp.entity.veldanava.skills.SandalphonSkill::new);
+
+    // ---- 3.14.0: Israfil, Lord of Trials (the second Veldanava ultimate skill) ----
+    public static final DeferredHolder<ManasSkill, com.newuniverse.nusmp.entity.veldanava.skills.IsrafilSkill> ISRAFIL =
+            SKILLS.register("israfil", com.newuniverse.nusmp.entity.veldanava.skills.IsrafilSkill::new);
 }
