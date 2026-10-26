@@ -1,0 +1,1236 @@
+{
+  "magic": "omniscient_readers_viewpoint",
+  "franchise": "omniscient_readers_viewpoint",
+  "name": "Shin Yoosung, Monster Gate",
+  "desc": "The youngest of the Company and the strongest bond-keeper: tamed beasts answered through a gate, a shield that nothing gets through, a breath for those who threaten the party and, far down the road, a flood. Evolves once you have reached three hundred and fifty allies with your buffs and healing.",
+  "book": "nusmp:shin_yoosung_child_book",
+  "book_name": "Little Beast Lord's Picture Book",
+  "book_lore": "Every monster she ever tamed came when she called. Most of them were only afraid of being alone.",
+  "color": "#FFB3D1",
+  "icon": "minecraft:pink_petals",
+  "class_id": "shin_yoosung_child",
+  "duplicate_sp": 3,
+  "loot_weight": 1,
+  "book_texture": "nusmp:item/skill_book_3d/omniscient_readers_viewpoint",
+  "nodes": [
+    {
+      "id": "little_commander",
+      "name": "Little Commander",
+      "desc": "Stand at the head of the party: a gentle regeneration and a lighter step, with softer blows.",
+      "parents": [],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "SPIRIT_AURA"
+      },
+      "values": {
+        "damage_pct": [
+          -0.15,
+          -0.18,
+          -0.21
+        ],
+        "armor": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "speed_pct": [
+          0.05,
+          0.06,
+          0.07
+        ],
+        "knockback_res": [
+          0,
+          0,
+          0
+        ],
+        "regen": [
+          0.8,
+          0.96,
+          1.12
+        ],
+        "crit_chance": [
+          0,
+          0,
+          0
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 0,
+      "icon": "minecraft:lead"
+    },
+    {
+      "id": "beast_king_s_sensitivity",
+      "name": "Beast King's Sensitivity",
+      "desc": "Close your eyes and let the gate stand guard: a great guard that is hard to shove, but you can barely move.",
+      "parents": [
+        {
+          "node": "little_commander",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "MAGIC_CIRCLE"
+      },
+      "values": {
+        "damage_pct": [
+          -0.2,
+          -0.24,
+          -0.28
+        ],
+        "armor": [
+          5.0,
+          6.25,
+          7.5
+        ],
+        "speed_pct": [
+          -0.3,
+          -0.36,
+          -0.42
+        ],
+        "knockback_res": [
+          0.6,
+          0.72,
+          0.84
+        ],
+        "regen": [
+          0,
+          0,
+          0
+        ],
+        "crit_chance": [
+          0,
+          0,
+          0
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 2,
+      "icon": "minecraft:shield"
+    },
+    {
+      "id": "child_s_quick_feet",
+      "name": "Child's Quick Feet",
+      "desc": "Small, quick, hard to catch.",
+      "parents": [
+        {
+          "node": "little_commander",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "movement_speed",
+        "op": "mult"
+      },
+      "values": {
+        "amount": [
+          0.04,
+          0.05,
+          0.06,
+          0.07,
+          0.08
+        ]
+      },
+      "x": 2,
+      "y": 0,
+      "icon": "minecraft:leather_boots"
+    },
+    {
+      "id": "hearty_appetite",
+      "name": "Hearty Appetite",
+      "desc": "A growing child eats well: more maximum health.",
+      "parents": [
+        {
+          "node": "beast_king_s_sensitivity",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "max_health",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          2.0,
+          2.5,
+          3.0,
+          3.5,
+          4.0
+        ]
+      },
+      "x": 2,
+      "y": 2,
+      "icon": "minecraft:cooked_beef"
+    },
+    {
+      "id": "beast_whisperer_s_luck",
+      "name": "Beast Whisperer's Luck",
+      "desc": "Animals tend to like her: bonus luck.",
+      "parents": [
+        {
+          "node": "little_commander",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "luck",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          1.0,
+          1.25,
+          1.5,
+          1.75,
+          2.0
+        ]
+      },
+      "x": 2,
+      "y": 4,
+      "icon": "minecraft:rabbit_foot"
+    },
+    {
+      "id": "brave_little_heart",
+      "name": "Brave Little Heart",
+      "desc": "She does not back down: bonus armor toughness.",
+      "parents": [
+        {
+          "node": "beast_king_s_sensitivity",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "armor_toughness",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          1.0,
+          1.25,
+          1.5,
+          1.75,
+          2.0
+        ]
+      },
+      "x": 2,
+      "y": 6,
+      "icon": "minecraft:iron_ingot"
+    },
+    {
+      "id": "monster_gate",
+      "name": "Monster Gate",
+      "desc": "The gate opens: you and your allies around you gain Strength for a while.",
+      "parents": [
+        {
+          "node": "little_commander",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "buff_aura",
+      "params": {
+        "effect": "strength",
+        "vfx": "MAGIC_CIRCLE"
+      },
+      "values": {
+        "radius": [
+          9.0,
+          9.9,
+          10.8,
+          11.7
+        ],
+        "seconds": [
+          20.0,
+          23.0,
+          26.0,
+          29.0
+        ],
+        "amp": [
+          1.0,
+          2.0,
+          2.0,
+          2.0
+        ],
+        "cost": [
+          0.03,
+          0.0324,
+          0.0348,
+          0.0372
+        ],
+        "cooldown": [
+          600.0,
+          564.0,
+          528.0,
+          492.0
+        ]
+      },
+      "x": 4,
+      "y": 0,
+      "icon": "minecraft:goat_horn"
+    },
+    {
+      "id": "monster_gate_shift",
+      "name": "Monster Gate: Shift",
+      "desc": "Crouching, a wider but shorter call: Speed for you and every ally in a big circle.",
+      "parents": [
+        {
+          "node": "beast_king_s_sensitivity",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "buff_aura",
+      "params": {
+        "effect": "speed",
+        "vfx": "WIND_RING"
+      },
+      "values": {
+        "radius": [
+          14.0,
+          15.4,
+          16,
+          16
+        ],
+        "seconds": [
+          9.0,
+          10.0,
+          12.0,
+          13.0
+        ],
+        "amp": [
+          1.0,
+          2.0,
+          2.0,
+          2.0
+        ],
+        "cost": [
+          0.03,
+          0.0324,
+          0.0348,
+          0.0372
+        ],
+        "cooldown": [
+          600.0,
+          564.0,
+          528.0,
+          492.0
+        ]
+      },
+      "x": 4,
+      "y": 2,
+      "icon": "minecraft:sugar"
+    },
+    {
+      "id": "tamed_pack_s_mending",
+      "name": "Tamed Pack's Mending",
+      "desc": "The tamed pack licks the party's wounds: you and your allies heal.",
+      "parents": [
+        {
+          "node": "monster_gate",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "heal_pulse",
+      "params": {
+        "vfx": "SPIRIT_AURA"
+      },
+      "values": {
+        "radius": [
+          9.0,
+          9.9,
+          10.8,
+          11.7
+        ],
+        "amount": [
+          7.0,
+          8.75,
+          10.5,
+          12.25
+        ],
+        "cost": [
+          0.03,
+          0.0324,
+          0.0348,
+          0.0372
+        ],
+        "cooldown": [
+          500.0,
+          470.0,
+          440.0,
+          410.0
+        ]
+      },
+      "x": 6,
+      "y": 0,
+      "icon": "minecraft:honey_bottle"
+    },
+    {
+      "id": "shield_of_the_pack",
+      "name": "Shield of the Pack",
+      "desc": "The pack closes ranks: a shield of absorption hearts snaps into place around you.",
+      "parents": [
+        {
+          "node": "monster_gate_shift",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "shield",
+      "params": {
+        "vfx": "MAGIC_CIRCLE"
+      },
+      "values": {
+        "absorb_hearts": [
+          6.0,
+          8.0,
+          9.0,
+          10.0
+        ],
+        "seconds": [
+          9.0,
+          10.0,
+          11.0,
+          12.0
+        ],
+        "resist_amp": [
+          1.0,
+          2.0,
+          2.0,
+          2.0
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          400.0,
+          376.0,
+          352.0,
+          328.0
+        ]
+      },
+      "x": 6,
+      "y": 2,
+      "icon": "minecraft:shield"
+    },
+    {
+      "id": "beast_king_s_breath",
+      "name": "Beast King's Breath",
+      "desc": "A roaring breath along your line of sight that pierces a line of foes.",
+      "parents": [
+        {
+          "node": "tamed_pack_s_mending",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "ray_shot",
+      "params": {
+        "vfx": "FIRE_BURST"
+      },
+      "values": {
+        "damage": [
+          8.0,
+          10.0,
+          12.0,
+          14.0
+        ],
+        "range": [
+          22.0,
+          24.2,
+          26.4,
+          28.6
+        ],
+        "pierce": [
+          3.0,
+          4.0,
+          5.0,
+          6.0
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          120.0,
+          110.0,
+          101.0,
+          91.0
+        ]
+      },
+      "x": 8,
+      "y": 0,
+      "icon": "minecraft:blaze_powder"
+    },
+    {
+      "id": "beast_king_s_breath_shift",
+      "name": "Beast King's Breath: Shift",
+      "desc": "Crouching, the breath is let out in every direction at once and throws the monsters back.",
+      "parents": [
+        {
+          "node": "shield_of_the_pack",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "ring_burst",
+      "params": {
+        "vfx": "FIRE_BURST"
+      },
+      "values": {
+        "damage": [
+          8.0,
+          10.0,
+          12.0,
+          14.0
+        ],
+        "radius": [
+          4.5,
+          4.95,
+          5.4,
+          5.85
+        ],
+        "targets": [
+          6.0,
+          8.0,
+          11.0,
+          13.0
+        ],
+        "knockback": [
+          1.2,
+          1.32,
+          1.44,
+          1.56
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          140.0,
+          129.0,
+          118.0,
+          106.0
+        ]
+      },
+      "x": 8,
+      "y": 2,
+      "icon": "minecraft:fire_charge"
+    },
+    {
+      "id": "calm_the_wild",
+      "name": "Calm the Wild",
+      "desc": "A firm, kind word: the creatures around you stop in their tracks for a moment.",
+      "parents": [
+        {
+          "node": "beast_king_s_breath",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "stun_ring",
+      "params": {
+        "vfx": "SPIRIT_AURA"
+      },
+      "values": {
+        "radius": [
+          5.0,
+          5.5,
+          6.0,
+          6.5
+        ],
+        "seconds": [
+          3.0,
+          4.0,
+          4.0,
+          5.0
+        ],
+        "targets": [
+          6.0,
+          8.0,
+          11.0,
+          13.0
+        ],
+        "cost": [
+          0.025,
+          0.027,
+          0.029,
+          0.031
+        ],
+        "cooldown": [
+          300.0,
+          276.0,
+          252.0,
+          228.0
+        ]
+      },
+      "x": 10,
+      "y": 0,
+      "icon": "minecraft:bone"
+    },
+    {
+      "id": "rush_of_the_gate",
+      "name": "Rush of the Gate",
+      "desc": "The beasts pour out all at once in a heavy wave along the ground.",
+      "parents": [
+        {
+          "node": "beast_king_s_breath_shift",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "ground_wave",
+      "params": {
+        "vfx": "STONE_SPIKES"
+      },
+      "values": {
+        "damage": [
+          9.0,
+          11.25,
+          13.5,
+          15.75
+        ],
+        "length": [
+          14.0,
+          15.4,
+          16.8,
+          18.2
+        ],
+        "width": [
+          4.0,
+          4.4,
+          4.8,
+          5.2
+        ],
+        "knockback": [
+          1.2,
+          1.32,
+          1.44,
+          1.56
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          180.0,
+          166.0,
+          151.0,
+          137.0
+        ]
+      },
+      "x": 10,
+      "y": 6,
+      "icon": "minecraft:saddle"
+    },
+    {
+      "id": "flood_s_toll",
+      "name": "Flood's Toll",
+      "desc": "Your blows store delayed damage on the foe as the tide keeps rising, and your Debt arts collect it.",
+      "parents": [
+        {
+          "node": "monster_gate",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "debt_store",
+      "params": {
+        "vfx": "WATER_BURST"
+      },
+      "values": {
+        "store_pct": [
+          0.25,
+          0.3,
+          0.35,
+          0.4
+        ],
+        "tick_seconds": [
+          3.0,
+          3.0,
+          3.0,
+          3.0
+        ],
+        "max_pct": [
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ],
+        "hold_seconds": [
+          12.0,
+          12.0,
+          12.0,
+          12.0
+        ]
+      },
+      "x": 10,
+      "y": 2,
+      "icon": "minecraft:prismarine_crystals",
+      "evolved": {
+        "store_pct": 0.4,
+        "max_pct": 0.7,
+        "hold_seconds": 18
+      }
+    },
+    {
+      "id": "companions_close_by",
+      "name": "Companions Close By",
+      "desc": "Allies near you slowly regenerate.",
+      "parents": [
+        {
+          "node": "monster_gate_shift",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "aura",
+      "params": {
+        "effect": "regeneration",
+        "target": "allies"
+      },
+      "values": {
+        "radius": [
+          8.0,
+          8.8,
+          9.6,
+          10.4
+        ],
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "x": 10,
+      "y": 4,
+      "icon": "minecraft:lead",
+      "evolved": {
+        "radius": 12,
+        "amp": 1
+      }
+    },
+    {
+      "id": "small_and_quick",
+      "name": "Small and Quick",
+      "desc": "You may slip a blow completely.",
+      "parents": [
+        {
+          "node": "tamed_pack_s_mending",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "dodge",
+      "values": {
+        "chance": [
+          0.12,
+          0.144,
+          0.168,
+          0.192
+        ],
+        "rest": [
+          100.0,
+          90.0,
+          80.0,
+          70.0
+        ]
+      },
+      "x": 12,
+      "y": 0,
+      "icon": "minecraft:feather",
+      "evolved": {
+        "chance": 0.2
+      }
+    },
+    {
+      "id": "stay_close_to_the_party",
+      "name": "Stay Close to the Party",
+      "desc": "When nearly dead you are briefly shielded.",
+      "parents": [
+        {
+          "node": "shield_of_the_pack",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "last_stand",
+      "values": {
+        "threshold": [
+          0.3,
+          0.3,
+          0.3,
+          0.3
+        ],
+        "seconds": [
+          6.0,
+          7.0,
+          8.0,
+          9.0
+        ],
+        "rest": [
+          1800.0,
+          1620.0,
+          1440.0,
+          1260.0
+        ]
+      },
+      "x": 12,
+      "y": 2,
+      "icon": "minecraft:totem_of_undying"
+    },
+    {
+      "id": "lively_in_the_fray",
+      "name": "Lively in the Fray",
+      "desc": "While in a fight you heal steadily.",
+      "parents": [
+        {
+          "node": "beast_king_s_breath",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "regen_when",
+      "params": {
+        "condition": "in_combat"
+      },
+      "values": {
+        "per_second": [
+          0.6,
+          0.72,
+          0.84,
+          0.96
+        ]
+      },
+      "x": 14,
+      "y": 0,
+      "icon": "minecraft:sweet_berries"
+    },
+    {
+      "id": "beast_lord_s_hide",
+      "name": "Beast Lord's Hide",
+      "desc": "You take much less magic damage.",
+      "parents": [
+        {
+          "node": "beast_king_s_breath_shift",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "resist",
+      "params": {
+        "damage_kind": "magic"
+      },
+      "values": {
+        "pct": [
+          0.3,
+          0.36,
+          0.42,
+          0.48
+        ]
+      },
+      "x": 14,
+      "y": 2,
+      "icon": "minecraft:leather"
+    },
+    {
+      "id": "eager_student",
+      "name": "Eager Student",
+      "desc": "Your kills give more experience.",
+      "parents": [
+        {
+          "node": "calm_the_wild",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "xp_bonus",
+      "values": {
+        "pct": [
+          0.2,
+          0.24,
+          0.28,
+          0.32
+        ]
+      },
+      "x": 16,
+      "y": 0,
+      "icon": "minecraft:experience_bottle"
+    },
+    {
+      "id": "gentle_mending",
+      "name": "Gentle Mending",
+      "desc": "Your wounds close slowly over time, even out of combat.",
+      "parents": [
+        {
+          "node": "rush_of_the_gate",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "mending",
+      "values": {
+        "seconds": [
+          14.0,
+          13.0,
+          11.0,
+          10.0
+        ],
+        "amount": [
+          1,
+          1.25,
+          1.5,
+          1.75
+        ]
+      },
+      "x": 16,
+      "y": 2,
+      "icon": "minecraft:honeycomb"
+    },
+    {
+      "id": "monster_gate_wide_open",
+      "name": "Monster Gate: Wide Open",
+      "desc": "Every gate at once: a long, strong Regeneration for you and every ally in a wide circle.",
+      "parents": [
+        {
+          "node": "rush_of_the_gate",
+          "level": 3
+        },
+        {
+          "node": "gentle_mending",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "buff_aura",
+      "params": {
+        "effect": "regeneration",
+        "vfx": "SPIRIT_AURA"
+      },
+      "values": {
+        "radius": [
+          13.0,
+          14.3,
+          15.6
+        ],
+        "seconds": [
+          25.0,
+          29.0,
+          32.0
+        ],
+        "amp": [
+          2.0,
+          3.0,
+          3.0
+        ],
+        "cost": [
+          0.03,
+          0.0324,
+          0.0348
+        ],
+        "cooldown": [
+          1600.0,
+          1504.0,
+          1408.0
+        ]
+      },
+      "x": 16,
+      "y": 4,
+      "icon": "minecraft:nether_star"
+    },
+    {
+      "id": "disaster_of_floods",
+      "name": "Disaster of Floods",
+      "desc": "The flood let loose: every debt your blows left on the foes around you comes due in a single tide of monsters.",
+      "parents": [
+        {
+          "node": "calm_the_wild",
+          "level": 3
+        },
+        {
+          "node": "eager_student",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "debt_burst",
+      "params": {
+        "vfx": "WATER_BURST"
+      },
+      "values": {
+        "damage": [
+          20.0,
+          25.0,
+          30.0
+        ],
+        "mult": [
+          2.2,
+          2.42,
+          2.64
+        ],
+        "radius": [
+          13.0,
+          14.3,
+          15.6
+        ],
+        "targets": [
+          12.0,
+          17.0,
+          20.0
+        ],
+        "cost": [
+          0.07,
+          0.0756,
+          0.0812
+        ],
+        "cooldown": [
+          16000.0,
+          14720.0,
+          13440.0
+        ]
+      },
+      "x": 16,
+      "y": 6,
+      "icon": "minecraft:heart_of_the_sea",
+      "ultimate": true
+    }
+  ],
+  "evolution": {
+    "requirement": "ally_buffs",
+    "count": 350,
+    "text": "Reach 350 allies with the buffing and healing arts of this skill.",
+    "ultimate_name": "Ultimate Skill, Disaster of Floods"
+  }
+}
