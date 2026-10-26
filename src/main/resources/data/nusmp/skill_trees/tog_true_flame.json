@@ -1,0 +1,1266 @@
+{
+  "magic": "tower_of_god",
+  "franchise": "tower_of_god",
+  "name": "True Flame",
+  "desc": "Yeon Yihwa's Yeon-family fire: Hwayeomsa flames that are hard to aim and harder to calm, and beneath them the True Flame that guards her life. Fire that has burned you teaches you to keep it.",
+  "book": "nusmp:tog_true_flame_book",
+  "book_name": "Hwayeomsa: The Flame Girl's Primer",
+  "book_lore": "Once a century the Yeon house bears a girl the fire does not refuse.",
+  "color": "#FF7A1A",
+  "icon": "minecraft:blaze_powder",
+  "class_id": "tog_true_flame",
+  "duplicate_sp": 3,
+  "loot_weight": 1,
+  "book_texture": "nusmp:item/skill_book_3d/tower_of_god",
+  "nodes": [
+    {
+      "id": "yeon_flame_stance",
+      "name": "Yeon Flame Stance",
+      "desc": "Let the family flame rise: your blows hit harder, but you keep your guard thin.",
+      "parents": [],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "FIRE_SPIRAL"
+      },
+      "values": {
+        "damage_pct": [
+          0.12,
+          0.144,
+          0.168
+        ],
+        "armor": [
+          -1.0,
+          -1.25,
+          -1.5
+        ],
+        "speed_pct": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "knockback_res": [
+          0,
+          0,
+          0
+        ],
+        "regen": [
+          0.2,
+          0.24,
+          0.28
+        ],
+        "crit_chance": [
+          0,
+          0,
+          0
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 0,
+      "icon": "minecraft:blaze_powder"
+    },
+    {
+      "id": "flame_veil_guard",
+      "name": "Flame Veil Guard",
+      "desc": "Hold a veil of flame around your body: heavy damage reduction and steadiness, slower on your feet.",
+      "parents": [
+        {
+          "node": "yeon_flame_stance",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "ASH_FORMATION"
+      },
+      "values": {
+        "damage_pct": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "armor": [
+          5.0,
+          6.25,
+          7.5
+        ],
+        "speed_pct": [
+          -0.12,
+          -0.144,
+          -0.168
+        ],
+        "knockback_res": [
+          0.35,
+          0.42,
+          0.49
+        ],
+        "regen": [
+          0,
+          0,
+          0
+        ],
+        "crit_chance": [
+          0,
+          0,
+          0
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 2,
+      "icon": "minecraft:magma_cream"
+    },
+    {
+      "id": "flame_born_vitality",
+      "name": "Flame-Born Vitality",
+      "desc": "The Yeon blood runs hot and strong.",
+      "parents": [
+        {
+          "node": "yeon_flame_stance",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "max_health",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          2.0,
+          2.5,
+          3.0,
+          3.5,
+          4.0
+        ]
+      },
+      "x": 2,
+      "y": 0,
+      "icon": "minecraft:magma_cream"
+    },
+    {
+      "id": "hwayeomsa_strength",
+      "name": "Hwayeomsa Strength",
+      "desc": "Your flame-charged Shinsu strikes harder.",
+      "parents": [
+        {
+          "node": "flame_veil_guard",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "attack_damage",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          1.0,
+          1.25,
+          1.5,
+          1.75,
+          2.0
+        ]
+      },
+      "x": 2,
+      "y": 2,
+      "icon": "minecraft:blaze_rod"
+    },
+    {
+      "id": "flame_barrier",
+      "name": "Flame Barrier",
+      "desc": "A thin barrier of flame toughens your guard.",
+      "parents": [
+        {
+          "node": "yeon_flame_stance",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "armor_toughness",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          1.0,
+          1.25,
+          1.5,
+          1.75,
+          2.0
+        ]
+      },
+      "x": 2,
+      "y": 4,
+      "icon": "minecraft:netherite_ingot"
+    },
+    {
+      "id": "scorched_stride",
+      "name": "Scorched Stride",
+      "desc": "Embers carry you faster over the ground.",
+      "parents": [
+        {
+          "node": "flame_veil_guard",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "movement_speed",
+        "op": "mult"
+      },
+      "values": {
+        "amount": [
+          0.04,
+          0.05,
+          0.06,
+          0.07,
+          0.08
+        ]
+      },
+      "x": 2,
+      "y": 6,
+      "icon": "minecraft:charcoal"
+    },
+    {
+      "id": "flame_bolt",
+      "name": "Flame Bolt",
+      "desc": "Fire a bolt of Yeon flame along your line of sight.",
+      "parents": [
+        {
+          "node": "yeon_flame_stance",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "ray_shot",
+      "params": {
+        "vfx": "FIRE_BURST"
+      },
+      "values": {
+        "damage": [
+          8.0,
+          10.0,
+          12.0,
+          14.0
+        ],
+        "range": [
+          18.0,
+          19.8,
+          21.6,
+          23.4
+        ],
+        "pierce": [
+          2.0,
+          3.0,
+          3.0,
+          4.0
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          120.0,
+          110.0,
+          101.0,
+          91.0
+        ]
+      },
+      "x": 4,
+      "y": 0,
+      "icon": "minecraft:fire_charge"
+    },
+    {
+      "id": "fire_pillar",
+      "name": "Fire Pillar",
+      "desc": "Call a pillar of flame down on the place you look at after a short delay.",
+      "parents": [
+        {
+          "node": "flame_veil_guard",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "meteor_drop",
+      "params": {
+        "vfx": "FLAME_EXPLOSION"
+      },
+      "values": {
+        "delay": [
+          22.0,
+          21.0,
+          20.0,
+          19.0
+        ],
+        "damage": [
+          13.0,
+          16.25,
+          19.5,
+          22.75
+        ],
+        "radius": [
+          4.5,
+          4.95,
+          5.4,
+          5.85
+        ],
+        "range": [
+          18.0,
+          19.44,
+          20.88,
+          22.32
+        ],
+        "cost": [
+          0.03,
+          0.0324,
+          0.0348,
+          0.0372
+        ],
+        "cooldown": [
+          360.0,
+          331.0,
+          302.0,
+          274.0
+        ]
+      },
+      "x": 4,
+      "y": 2,
+      "icon": "minecraft:lava_bucket"
+    },
+    {
+      "id": "flame_wall",
+      "name": "Flame Wall",
+      "desc": "Send a wide wall of flame rolling along the ground in front of you.",
+      "parents": [
+        {
+          "node": "flame_bolt",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "ground_wave",
+      "params": {
+        "vfx": "FLAME_TRAIL"
+      },
+      "values": {
+        "damage": [
+          7.0,
+          8.75,
+          10.5,
+          12.25
+        ],
+        "length": [
+          10.0,
+          11.0,
+          12.0,
+          13.0
+        ],
+        "width": [
+          3.5,
+          3.85,
+          4.2,
+          4.55
+        ],
+        "knockback": [
+          0.5,
+          0.55,
+          0.6,
+          0.65
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          180.0,
+          166.0,
+          151.0,
+          137.0
+        ]
+      },
+      "x": 6,
+      "y": 0,
+      "icon": "minecraft:campfire"
+    },
+    {
+      "id": "ignite_mark",
+      "name": "Ignite Mark",
+      "desc": "Set a flame mark on a foe: it takes more damage for a while.",
+      "parents": [
+        {
+          "node": "fire_pillar",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "mark",
+      "params": {
+        "vfx": "FIRE_BURST"
+      },
+      "values": {
+        "range": [
+          16.0,
+          17.6,
+          19.2,
+          20.8
+        ],
+        "seconds": [
+          10.0,
+          12.0,
+          13.0,
+          14.0
+        ],
+        "bonus": [
+          0.3,
+          0.36,
+          0.42,
+          0.48
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          200.0,
+          184.0,
+          168.0,
+          152.0
+        ]
+      },
+      "x": 6,
+      "y": 2,
+      "icon": "minecraft:flint_and_steel"
+    },
+    {
+      "id": "hwayeomsa_shift",
+      "name": "Hwayeomsa: Shift",
+      "desc": "Let the flame go in a great ring of fire around you.",
+      "parents": [
+        {
+          "node": "flame_wall",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "ring_burst",
+      "params": {
+        "vfx": "FIRE_SPIRAL"
+      },
+      "values": {
+        "damage": [
+          10.0,
+          12.5,
+          15.0,
+          17.5
+        ],
+        "radius": [
+          5.5,
+          6.05,
+          6.6,
+          7.15
+        ],
+        "targets": [
+          8.0,
+          11.0,
+          14.0,
+          16.0
+        ],
+        "knockback": [
+          1.2,
+          1.32,
+          1.44,
+          1.56
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          140.0,
+          129.0,
+          118.0,
+          106.0
+        ]
+      },
+      "x": 8,
+      "y": 0,
+      "icon": "minecraft:blaze_powder"
+    },
+    {
+      "id": "flame_step",
+      "name": "Flame Step",
+      "desc": "Burst forward on a trail of fire and scorch everything in your path.",
+      "parents": [
+        {
+          "node": "ignite_mark",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "dash_strike",
+      "params": {
+        "vfx": "FLAME_TRAIL"
+      },
+      "values": {
+        "distance": [
+          8.0,
+          8.8,
+          9.6,
+          10.4
+        ],
+        "damage": [
+          8.0,
+          10.0,
+          12.0,
+          14.0
+        ],
+        "targets": [
+          4.0,
+          5.0,
+          6.0,
+          8.0
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          120.0,
+          110.0,
+          101.0,
+          91.0
+        ]
+      },
+      "x": 8,
+      "y": 2,
+      "icon": "minecraft:leather_boots"
+    },
+    {
+      "id": "ember_volley",
+      "name": "Ember Volley",
+      "desc": "Loose a volley of small fireballs at the foe you look at.",
+      "parents": [
+        {
+          "node": "hwayeomsa_shift",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "barrage",
+      "params": {
+        "vfx": "FIRE_BURST"
+      },
+      "values": {
+        "damage": [
+          3.0,
+          3.75,
+          4.5,
+          5.25
+        ],
+        "shots": [
+          6.0,
+          8.0,
+          10.0,
+          12.0
+        ],
+        "range": [
+          14.0,
+          15.12,
+          16.24,
+          17.36
+        ],
+        "interval": [
+          3.0,
+          3.0,
+          3.0,
+          3.0
+        ],
+        "cost": [
+          0.025,
+          0.027,
+          0.029,
+          0.031
+        ],
+        "cooldown": [
+          240.0,
+          221.0,
+          202.0,
+          182.0
+        ]
+      },
+      "x": 10,
+      "y": 2,
+      "icon": "minecraft:magma_block"
+    },
+    {
+      "id": "flame_flight",
+      "name": "Flame Flight",
+      "desc": "The flame barrier lifts you: you leap higher and fall slowly for a while.",
+      "parents": [
+        {
+          "node": "flame_step",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "buff_self",
+      "params": {
+        "effect": "jump_boost",
+        "effect2": "slow_falling",
+        "vfx": "FLAME_TRAIL"
+      },
+      "values": {
+        "seconds": [
+          14.0,
+          16.0,
+          18.0,
+          20.0
+        ],
+        "amp": [
+          1.0,
+          2.0,
+          2.0,
+          2.0
+        ],
+        "amp2": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          400.0,
+          376.0,
+          352.0,
+          328.0
+        ]
+      },
+      "x": 10,
+      "y": 6,
+      "icon": "minecraft:feather"
+    },
+    {
+      "id": "burn_ledger",
+      "name": "Burn Ledger",
+      "desc": "Your blows store fire on the foe: part of the damage is kept as a burn that ticks while it waits, and the Ultimate Skill releases it all.",
+      "parents": [
+        {
+          "node": "flame_bolt",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "debt_store",
+      "params": {
+        "vfx": "FIRE_SPIRAL"
+      },
+      "values": {
+        "store_pct": [
+          0.3,
+          0.36,
+          0.42,
+          0.48
+        ],
+        "tick_seconds": [
+          3.0,
+          3.0,
+          3.0,
+          3.0
+        ],
+        "max_pct": [
+          0.6,
+          0.6,
+          0.6,
+          0.6
+        ],
+        "hold_seconds": [
+          14.0,
+          14.0,
+          14.0,
+          14.0
+        ]
+      },
+      "x": 10,
+      "y": 0,
+      "icon": "minecraft:charcoal",
+      "evolved": {
+        "store_pct": 0.5,
+        "max_pct": 0.9,
+        "hold_seconds": 22
+      }
+    },
+    {
+      "id": "yeon_hide",
+      "name": "Yeon Hide",
+      "desc": "Family flames do not harm the Yeon girl as they harm others: you take less fire damage.",
+      "parents": [
+        {
+          "node": "fire_pillar",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "resist",
+      "params": {
+        "damage_kind": "fire"
+      },
+      "values": {
+        "pct": [
+          0.2,
+          0.24,
+          0.28,
+          0.32
+        ]
+      },
+      "x": 10,
+      "y": 4,
+      "icon": "minecraft:magma_block",
+      "evolved": {
+        "pct": 0.55
+      }
+    },
+    {
+      "id": "burning_resolve",
+      "name": "Burning Resolve",
+      "desc": "You deal more damage while you are on fire.",
+      "parents": [
+        {
+          "node": "flame_wall",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "dmg_when",
+      "params": {
+        "condition": "on_fire"
+      },
+      "values": {
+        "bonus": [
+          0.2,
+          0.24,
+          0.28,
+          0.32
+        ]
+      },
+      "x": 12,
+      "y": 0,
+      "icon": "minecraft:fire_charge",
+      "evolved": {
+        "bonus": 0.5
+      }
+    },
+    {
+      "id": "true_flame_protects",
+      "name": "True Flame Protects",
+      "desc": "When you are nearly dead, the True Flame wakes by itself and shields you for a moment.",
+      "parents": [
+        {
+          "node": "ignite_mark",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "last_stand",
+      "values": {
+        "threshold": [
+          0.3,
+          0.3,
+          0.3,
+          0.3
+        ],
+        "seconds": [
+          6.0,
+          7.0,
+          8.0,
+          9.0
+        ],
+        "rest": [
+          1800.0,
+          1620.0,
+          1440.0,
+          1260.0
+        ]
+      },
+      "x": 12,
+      "y": 2,
+      "icon": "minecraft:totem_of_undying"
+    },
+    {
+      "id": "fear_mastered",
+      "name": "Fear Mastered",
+      "desc": "At low health the fear turns to fury: you gain strength.",
+      "parents": [
+        {
+          "node": "hwayeomsa_shift",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "self_effect_when",
+      "params": {
+        "effect": "strength",
+        "condition": "low_health"
+      },
+      "values": {
+        "amp": [
+          1.0,
+          2.0,
+          2.0,
+          2.0
+        ]
+      },
+      "x": 14,
+      "y": 0,
+      "icon": "minecraft:blaze_rod"
+    },
+    {
+      "id": "searing_touch",
+      "name": "Searing Touch",
+      "desc": "Your blows may sap the foe's strength with heat.",
+      "parents": [
+        {
+          "node": "flame_step",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "on_hit_effect",
+      "params": {
+        "effect": "weakness"
+      },
+      "values": {
+        "seconds": [
+          4.0,
+          5.0,
+          5.0,
+          6.0
+        ],
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "chance": [
+          0.2,
+          0.24,
+          0.28,
+          0.32
+        ]
+      },
+      "x": 14,
+      "y": 2,
+      "icon": "minecraft:blaze_powder"
+    },
+    {
+      "id": "flame_barrier_regrowth",
+      "name": "Flame Barrier Regrowth",
+      "desc": "While you are on fire the barrier mends you slowly.",
+      "parents": [
+        {
+          "node": "ember_volley",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "regen_when",
+      "params": {
+        "condition": "on_fire"
+      },
+      "values": {
+        "per_second": [
+          0.6,
+          0.72,
+          0.84,
+          0.96
+        ]
+      },
+      "x": 16,
+      "y": 0,
+      "icon": "minecraft:campfire"
+    },
+    {
+      "id": "finishing_blaze",
+      "name": "Finishing Blaze",
+      "desc": "You deal much more damage to nearly dead foes.",
+      "parents": [
+        {
+          "node": "flame_flight",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "execute_threshold",
+      "values": {
+        "threshold": [
+          0.2,
+          0.22,
+          0.24,
+          0.26
+        ],
+        "bonus": [
+          0.6,
+          0.72,
+          0.84,
+          0.96
+        ]
+      },
+      "x": 16,
+      "y": 2,
+      "icon": "minecraft:lava_bucket"
+    },
+    {
+      "id": "pillar_of_primeval_flame",
+      "name": "Pillar of Primeval Flame",
+      "desc": "The flame that burns anything: a huge pillar falls on the place you look at and scorches everything around it.",
+      "parents": [
+        {
+          "node": "flame_flight",
+          "level": 3
+        },
+        {
+          "node": "finishing_blaze",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "meteor_drop",
+      "params": {
+        "vfx": "FLAME_EXPLOSION"
+      },
+      "values": {
+        "delay": [
+          28.0,
+          27.0,
+          25.0
+        ],
+        "damage": [
+          28.0,
+          35.0,
+          42.0
+        ],
+        "radius": [
+          8.0,
+          8.8,
+          9.6
+        ],
+        "range": [
+          26.0,
+          28.08,
+          30.16
+        ],
+        "cost": [
+          0.06,
+          0.0648,
+          0.0696
+        ],
+        "cooldown": [
+          1600.0,
+          1472.0,
+          1344.0
+        ]
+      },
+      "x": 16,
+      "y": 4,
+      "icon": "minecraft:lava_bucket"
+    },
+    {
+      "id": "true_flame",
+      "name": "True Flame",
+      "desc": "The stored fire erupts from every burning foe at once, a blaze that does not burn you.",
+      "parents": [
+        {
+          "node": "ember_volley",
+          "level": 3
+        },
+        {
+          "node": "flame_barrier_regrowth",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "debt_burst",
+      "params": {
+        "vfx": "FLAME_EXPLOSION"
+      },
+      "values": {
+        "damage": [
+          28.0,
+          35.0,
+          42.0
+        ],
+        "mult": [
+          3.2,
+          3.52,
+          3.84
+        ],
+        "radius": [
+          11.0,
+          12.1,
+          13.2
+        ],
+        "targets": [
+          20.0,
+          20.0,
+          20.0
+        ],
+        "cost": [
+          0.07,
+          0.0756,
+          0.0812
+        ],
+        "cooldown": [
+          14000.0,
+          12880.0,
+          11760.0
+        ]
+      },
+      "x": 16,
+      "y": 6,
+      "icon": "minecraft:blaze_rod",
+      "ultimate": true
+    }
+  ],
+  "evolution": {
+    "requirement": "damage_taken",
+    "count": 2000,
+    "params": {
+      "damage_kind": "fire"
+    },
+    "text": "Endure 2,000 points of fire damage while this skill is on to wake the True Flame and unlock the Ultimate Skill.",
+    "ultimate_name": "Ultimate Skill, Flame That Does Not Burn the Self"
+  }
+}

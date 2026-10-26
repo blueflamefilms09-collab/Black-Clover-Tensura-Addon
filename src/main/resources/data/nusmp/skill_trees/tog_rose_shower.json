@@ -1,0 +1,1279 @@
+{
+  "magic": "tower_of_god",
+  "franchise": "tower_of_god",
+  "name": "Rose Shower",
+  "desc": "Ha Yuri Zahard's Shinsu roses: a red-velvet blade of packed Shinsu, petals that gather into pillars and a rain that covers the whole field. Every wound she leaves blooms later.",
+  "book": "nusmp:tog_rose_shower_book",
+  "book_name": "Rose Shower: The Princess's Bloom",
+  "book_lore": "The petals fall slowly. The people under them do not.",
+  "color": "#D6204A",
+  "icon": "minecraft:rose_bush",
+  "class_id": "tog_rose_shower",
+  "duplicate_sp": 3,
+  "loot_weight": 1,
+  "book_texture": "nusmp:item/skill_book_3d/tower_of_god",
+  "nodes": [
+    {
+      "id": "shinsu_flower_stance",
+      "name": "Shinsu Flower Stance",
+      "desc": "Wrap yourself in a red Shinsu rose: thicker guard and a slow regeneration, blows a little lighter.",
+      "parents": [],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "MAGIC_CIRCLE"
+      },
+      "values": {
+        "damage_pct": [
+          -0.04,
+          -0.048,
+          -0.056
+        ],
+        "armor": [
+          3.0,
+          3.75,
+          4.5
+        ],
+        "speed_pct": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "knockback_res": [
+          0,
+          0,
+          0
+        ],
+        "regen": [
+          0.4,
+          0.48,
+          0.56
+        ],
+        "crit_chance": [
+          0,
+          0,
+          0
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 0,
+      "icon": "minecraft:poppy"
+    },
+    {
+      "id": "shinsu_bubble_guard",
+      "name": "Shinsu Bubble Guard",
+      "desc": "Hold a bubble of Shinsu around you: heavy damage resistance and no knockback, at the cost of speed.",
+      "parents": [
+        {
+          "node": "shinsu_flower_stance",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "SPIRIT_AURA"
+      },
+      "values": {
+        "damage_pct": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "armor": [
+          6.0,
+          7.5,
+          9.0
+        ],
+        "speed_pct": [
+          -0.18,
+          -0.216,
+          -0.252
+        ],
+        "knockback_res": [
+          0.5,
+          0.6,
+          0.7
+        ],
+        "regen": [
+          0,
+          0,
+          0
+        ],
+        "crit_chance": [
+          0,
+          0,
+          0
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 2,
+      "icon": "minecraft:glass_bottle"
+    },
+    {
+      "id": "zahard_bloodline",
+      "name": "Zahard Bloodline",
+      "desc": "A Princess of Zahard carries a great deal of life.",
+      "parents": [
+        {
+          "node": "shinsu_flower_stance",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "max_health",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          3.0,
+          3.75,
+          4.5,
+          5.25,
+          6.0
+        ]
+      },
+      "x": 2,
+      "y": 0,
+      "icon": "minecraft:golden_apple"
+    },
+    {
+      "id": "body_strengthening_heritage",
+      "name": "Body Strengthening Heritage",
+      "desc": "The Ha family tempers the body above all others.",
+      "parents": [
+        {
+          "node": "shinsu_bubble_guard",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "armor",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          1.0,
+          1.25,
+          1.5,
+          1.75,
+          2.0
+        ]
+      },
+      "x": 2,
+      "y": 2,
+      "icon": "minecraft:iron_chestplate"
+    },
+    {
+      "id": "red_velvet_edge",
+      "name": "Red Velvet Edge",
+      "desc": "Your blows carry the weight of a packed Shinsu blade.",
+      "parents": [
+        {
+          "node": "shinsu_flower_stance",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "attack_damage",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          1.0,
+          1.25,
+          1.5,
+          1.75,
+          2.0
+        ]
+      },
+      "x": 2,
+      "y": 4,
+      "icon": "minecraft:red_dye"
+    },
+    {
+      "id": "petal_step",
+      "name": "Petal Step",
+      "desc": "Light on your feet, like a falling petal.",
+      "parents": [
+        {
+          "node": "shinsu_bubble_guard",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "movement_speed",
+        "op": "mult"
+      },
+      "values": {
+        "amount": [
+          0.04,
+          0.05,
+          0.06,
+          0.07,
+          0.08
+        ]
+      },
+      "x": 2,
+      "y": 6,
+      "icon": "minecraft:pink_petals"
+    },
+    {
+      "id": "red_velvet_sword",
+      "name": "Red Velvet Sword",
+      "desc": "Pack red Shinsu into a blade of pressure and cut the cone in front of you.",
+      "parents": [
+        {
+          "node": "shinsu_flower_stance",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "cone_strike",
+      "params": {
+        "vfx": "WIND_SLASH"
+      },
+      "values": {
+        "damage": [
+          9.0,
+          11.25,
+          13.5,
+          15.75
+        ],
+        "range": [
+          4.5,
+          4.86,
+          5.22,
+          5.58
+        ],
+        "half_angle": [
+          45.0,
+          49.5,
+          54.0,
+          58.5
+        ],
+        "targets": [
+          2.0,
+          3.0,
+          4.0,
+          4.0
+        ],
+        "knockback": [
+          0.4,
+          0.44,
+          0.48,
+          0.52
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          100.0,
+          92.0,
+          84.0,
+          76.0
+        ]
+      },
+      "x": 4,
+      "y": 0,
+      "icon": "minecraft:iron_sword"
+    },
+    {
+      "id": "rose_shower",
+      "name": "Rose Shower",
+      "desc": "Petals gather into rising pillars, then burst in a ring of white light and red petals around you.",
+      "parents": [
+        {
+          "node": "shinsu_bubble_guard",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "ring_burst",
+      "params": {
+        "vfx": "MAGIC_CIRCLE"
+      },
+      "values": {
+        "damage": [
+          9.0,
+          11.25,
+          13.5,
+          15.75
+        ],
+        "radius": [
+          5.0,
+          5.5,
+          6.0,
+          6.5
+        ],
+        "targets": [
+          8.0,
+          11.0,
+          14.0,
+          16.0
+        ],
+        "knockback": [
+          1.0,
+          1.1,
+          1.2,
+          1.3
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          140.0,
+          129.0,
+          118.0,
+          106.0
+        ]
+      },
+      "x": 4,
+      "y": 2,
+      "icon": "minecraft:rose_bush"
+    },
+    {
+      "id": "shinsu_pull",
+      "name": "Shinsu Pull",
+      "desc": "Thread Shinsu around the creatures near you and drag them in.",
+      "parents": [
+        {
+          "node": "red_velvet_sword",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "pull",
+      "params": {
+        "vfx": "THREAD_LINE"
+      },
+      "values": {
+        "radius": [
+          8.0,
+          8.8,
+          9.6,
+          10.4
+        ],
+        "strength": [
+          1.0,
+          1.1,
+          1.2,
+          1.3
+        ],
+        "targets": [
+          6.0,
+          8.0,
+          11.0,
+          13.0
+        ],
+        "damage": [
+          4.0,
+          5.0,
+          6.0,
+          7.0
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          200.0,
+          184.0,
+          168.0,
+          152.0
+        ]
+      },
+      "x": 6,
+      "y": 0,
+      "icon": "minecraft:string"
+    },
+    {
+      "id": "rose_mark",
+      "name": "Rose Mark",
+      "desc": "Plant a Shinsu rose on a foe: it takes more damage for a while.",
+      "parents": [
+        {
+          "node": "rose_shower",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "mark",
+      "params": {
+        "vfx": "MAGIC_CIRCLE"
+      },
+      "values": {
+        "range": [
+          16.0,
+          17.6,
+          19.2,
+          20.8
+        ],
+        "seconds": [
+          10.0,
+          12.0,
+          13.0,
+          14.0
+        ],
+        "bonus": [
+          0.3,
+          0.36,
+          0.42,
+          0.48
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          200.0,
+          184.0,
+          168.0,
+          152.0
+        ]
+      },
+      "x": 6,
+      "y": 2,
+      "icon": "minecraft:poppy"
+    },
+    {
+      "id": "rose_shower_shift",
+      "name": "Rose Shower: Shift",
+      "desc": "Hold the petals back and let them loose in a very wide cone in front of you.",
+      "parents": [
+        {
+          "node": "shinsu_pull",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "cone_strike",
+      "params": {
+        "vfx": "WIND_RING"
+      },
+      "values": {
+        "damage": [
+          8.0,
+          10.0,
+          12.0,
+          14.0
+        ],
+        "range": [
+          6.5,
+          7.02,
+          7.54,
+          8
+        ],
+        "half_angle": [
+          75.0,
+          80,
+          80,
+          80
+        ],
+        "targets": [
+          6.0,
+          8.0,
+          11.0,
+          12.0
+        ],
+        "knockback": [
+          0.4,
+          0.44,
+          0.48,
+          0.52
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          100.0,
+          92.0,
+          84.0,
+          76.0
+        ]
+      },
+      "x": 8,
+      "y": 0,
+      "icon": "minecraft:pink_petals"
+    },
+    {
+      "id": "red_velvet_sword_shift",
+      "name": "Red Velvet Sword: Shift",
+      "desc": "Dash through the foes with the red blade drawn and cut everything in your path.",
+      "parents": [
+        {
+          "node": "rose_mark",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "dash_strike",
+      "params": {
+        "vfx": "WIND_SLASH"
+      },
+      "values": {
+        "distance": [
+          9.0,
+          9.9,
+          10.8,
+          11.7
+        ],
+        "damage": [
+          9.0,
+          11.25,
+          13.5,
+          15.75
+        ],
+        "targets": [
+          5.0,
+          6.0,
+          8.0,
+          10.0
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          120.0,
+          110.0,
+          101.0,
+          91.0
+        ]
+      },
+      "x": 8,
+      "y": 2,
+      "icon": "minecraft:red_banner"
+    },
+    {
+      "id": "petal_barrage",
+      "name": "Petal Barrage",
+      "desc": "Loose a volley of Shinsu petals at the foe you look at.",
+      "parents": [
+        {
+          "node": "rose_shower_shift",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "barrage",
+      "params": {
+        "vfx": "SPIRIT_AURA"
+      },
+      "values": {
+        "damage": [
+          3.0,
+          3.75,
+          4.5,
+          5.25
+        ],
+        "shots": [
+          7.0,
+          9.0,
+          12.0,
+          14.0
+        ],
+        "range": [
+          16.0,
+          17.28,
+          18.56,
+          19.84
+        ],
+        "interval": [
+          3.0,
+          3.0,
+          3.0,
+          3.0
+        ],
+        "cost": [
+          0.025,
+          0.027,
+          0.029,
+          0.031
+        ],
+        "cooldown": [
+          240.0,
+          221.0,
+          202.0,
+          182.0
+        ]
+      },
+      "x": 10,
+      "y": 0,
+      "icon": "minecraft:cherry_leaves"
+    },
+    {
+      "id": "shinsu_bubble_ward",
+      "name": "Shinsu Bubble Ward",
+      "desc": "A bubble of Shinsu closes over you and soaks up the next blows.",
+      "parents": [
+        {
+          "node": "red_velvet_sword_shift",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "shield",
+      "params": {
+        "vfx": "WATER_RING"
+      },
+      "values": {
+        "absorb_hearts": [
+          5.0,
+          6.0,
+          8.0,
+          9.0
+        ],
+        "seconds": [
+          8.0,
+          9.0,
+          10.0,
+          10.0
+        ],
+        "resist_amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          400.0,
+          376.0,
+          352.0,
+          328.0
+        ]
+      },
+      "x": 10,
+      "y": 6,
+      "icon": "minecraft:heart_of_the_sea"
+    },
+    {
+      "id": "wounds_that_bloom",
+      "name": "Wounds That Bloom",
+      "desc": "Your blows plant a rose in the foe: part of the damage is stored and bleeds out later, and the Ultimate Skill can bloom all of it at once.",
+      "parents": [
+        {
+          "node": "red_velvet_sword",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "debt_store",
+      "params": {
+        "vfx": "MAGIC_CIRCLE"
+      },
+      "values": {
+        "store_pct": [
+          0.3,
+          0.36,
+          0.42,
+          0.48
+        ],
+        "tick_seconds": [
+          3.0,
+          3.0,
+          3.0,
+          3.0
+        ],
+        "max_pct": [
+          0.6,
+          0.6,
+          0.6,
+          0.6
+        ],
+        "hold_seconds": [
+          14.0,
+          14.0,
+          14.0,
+          14.0
+        ]
+      },
+      "x": 10,
+      "y": 2,
+      "icon": "minecraft:crimson_roots",
+      "evolved": {
+        "store_pct": 0.5,
+        "max_pct": 0.9,
+        "hold_seconds": 22
+      }
+    },
+    {
+      "id": "thorned_stems",
+      "name": "Thorned Stems",
+      "desc": "Part of the damage you take is returned to the attacker as thorns.",
+      "parents": [
+        {
+          "node": "rose_shower",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "thorns",
+      "values": {
+        "pct": [
+          0.2,
+          0.24,
+          0.28,
+          0.32
+        ],
+        "rest": [
+          20.0,
+          20.0,
+          20.0,
+          20.0
+        ]
+      },
+      "x": 10,
+      "y": 4,
+      "icon": "minecraft:sweet_berries",
+      "evolved": {
+        "pct": 0.45
+      }
+    },
+    {
+      "id": "miraculous_resistance",
+      "name": "Miraculous Resistance",
+      "desc": "Your Shinsu resists magic far better than most: you take less magic damage.",
+      "parents": [
+        {
+          "node": "shinsu_pull",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "resist",
+      "params": {
+        "damage_kind": "magic"
+      },
+      "values": {
+        "pct": [
+          0.15,
+          0.18,
+          0.21,
+          0.24
+        ]
+      },
+      "x": 12,
+      "y": 0,
+      "icon": "minecraft:amethyst_shard",
+      "evolved": {
+        "pct": 0.35
+      }
+    },
+    {
+      "id": "shinsu_injection",
+      "name": "Shinsu Injection",
+      "desc": "Your blows may inject Shinsu into the foe and wither it from the inside.",
+      "parents": [
+        {
+          "node": "rose_mark",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "on_hit_effect",
+      "params": {
+        "effect": "wither"
+      },
+      "values": {
+        "seconds": [
+          3.0,
+          3.0,
+          4.0,
+          4.0
+        ],
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "chance": [
+          0.18,
+          0.216,
+          0.252,
+          0.288
+        ]
+      },
+      "x": 12,
+      "y": 2,
+      "icon": "minecraft:fermented_spider_eye"
+    },
+    {
+      "id": "princess_s_bearing",
+      "name": "Princess's Bearing",
+      "desc": "You take less damage while you are in a fight.",
+      "parents": [
+        {
+          "node": "rose_shower_shift",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "reduce_when",
+      "params": {
+        "condition": "in_combat"
+      },
+      "values": {
+        "pct": [
+          0.08,
+          0.096,
+          0.112,
+          0.128
+        ]
+      },
+      "x": 14,
+      "y": 0,
+      "icon": "minecraft:golden_chestplate"
+    },
+    {
+      "id": "elite_hunter",
+      "name": "Elite Hunter",
+      "desc": "You deal more damage to bosses.",
+      "parents": [
+        {
+          "node": "red_velvet_sword_shift",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "dmg_vs",
+      "params": {
+        "category": "boss"
+      },
+      "values": {
+        "bonus": [
+          0.2,
+          0.24,
+          0.28,
+          0.32
+        ]
+      },
+      "x": 14,
+      "y": 2,
+      "icon": "minecraft:netherite_sword"
+    },
+    {
+      "id": "falling_petals",
+      "name": "Falling Petals",
+      "desc": "Blows in a row grow stronger until you stop fighting.",
+      "parents": [
+        {
+          "node": "petal_barrage",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "momentum",
+      "values": {
+        "per_stack": [
+          0.04,
+          0.046,
+          0.052,
+          0.058
+        ],
+        "max_stacks": [
+          6.0,
+          8.0,
+          10.0,
+          11.0
+        ]
+      },
+      "x": 16,
+      "y": 0,
+      "icon": "minecraft:pink_petals"
+    },
+    {
+      "id": "red_harvest",
+      "name": "Red Harvest",
+      "desc": "Each kill restores some health.",
+      "parents": [
+        {
+          "node": "shinsu_bubble_ward",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "kill_reward",
+      "params": {
+        "effect": "none"
+      },
+      "values": {
+        "heal": [
+          3.0,
+          3.75,
+          4.5,
+          5.25
+        ],
+        "seconds": [
+          4.0,
+          5.0,
+          5.0,
+          6.0
+        ],
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "x": 16,
+      "y": 2,
+      "icon": "minecraft:sweet_berries"
+    },
+    {
+      "id": "red_velvet_sword_great_wave_blast",
+      "name": "Red Velvet Sword: Great Wave Blast",
+      "desc": "Charge a red orb between both hands and loose it as one huge wave that tears through every foe in line.",
+      "parents": [
+        {
+          "node": "shinsu_bubble_ward",
+          "level": 3
+        },
+        {
+          "node": "red_harvest",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "ray_shot",
+      "params": {
+        "vfx": "WIND_SLASH"
+      },
+      "values": {
+        "damage": [
+          26.0,
+          32.5,
+          39.0
+        ],
+        "range": [
+          24.0,
+          26.4,
+          28.8
+        ],
+        "pierce": [
+          5.0,
+          6.0,
+          6.0
+        ],
+        "cost": [
+          0.06,
+          0.0648,
+          0.0696
+        ],
+        "cooldown": [
+          1500.0,
+          1380.0,
+          1260.0
+        ]
+      },
+      "x": 16,
+      "y": 4,
+      "icon": "minecraft:red_dye"
+    },
+    {
+      "id": "crimson_rose_of_zahard",
+      "name": "Crimson Rose of Zahard",
+      "desc": "Every rose planted on every foe in range blooms at once: the stored wounds burst out together in a storm of red petals.",
+      "parents": [
+        {
+          "node": "petal_barrage",
+          "level": 3
+        },
+        {
+          "node": "falling_petals",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "debt_burst",
+      "params": {
+        "vfx": "MAGIC_CIRCLE"
+      },
+      "values": {
+        "damage": [
+          30.0,
+          37.5,
+          45.0
+        ],
+        "mult": [
+          3.0,
+          3.3,
+          3.6
+        ],
+        "radius": [
+          12.0,
+          13.2,
+          14.4
+        ],
+        "targets": [
+          20.0,
+          20.0,
+          20.0
+        ],
+        "cost": [
+          0.07,
+          0.0756,
+          0.0812
+        ],
+        "cooldown": [
+          15000.0,
+          13800.0,
+          12600.0
+        ]
+      },
+      "x": 16,
+      "y": 6,
+      "icon": "minecraft:rose_bush",
+      "ultimate": true
+    }
+  ],
+  "evolution": {
+    "requirement": "elite_kills",
+    "count": 25,
+    "text": "Slay 25 elite or boss creatures while this skill is on to let the rose bloom fully and awaken the Ultimate Skill.",
+    "ultimate_name": "Ultimate Skill, Crimson Rose of Zahard"
+  }
+}

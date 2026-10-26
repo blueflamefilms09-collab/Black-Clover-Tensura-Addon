@@ -1,4 +1,4 @@
-"""Tower of God: 25 unique skill lines (Shinsu, Positions, roles, Ranker arts, Families, the Tower's own systems).
+"""Tower of God: 27 unique skill lines (Shinsu, Positions, roles, Ranker arts, Families, the Tower's own systems; the last two are the 3.26.0 Evolution skills Rose Shower and True Flame).
 
 Canon note: names of Positions, Shinsu control and the big characters' tools follow the story; where the story is vague the
 technique itself is invented in its spirit (the descriptions say what the art looks and feels like in the game, not what an official text says).
@@ -1025,5 +1025,109 @@ LINES.append(Line(
     finishers=[
         A("Stampede", "Charge with the whole herd behind you: a long rush that tramples a huge number of foes.", "dash_strike", "minecraft:saddle", vfx="WIND_SLASH", damage=24, distance=12, targets=8, cost=0.06, cooldown=1600),
         A("Alpha's Howl", "The alpha cry bursts out as a huge ring that hurls every foe nearby.", "ring_burst", "minecraft:goat_horn", vfx="WIND_RING", damage=22, radius=6.5, targets=9, knockback=1.8, cost=0.06, cooldown=1800),
+    ],
+))
+
+# ---------------------------------------------------------------------------------------------------------------- 26 (3.26.0 Evolution skill)
+def PE(name, desc, kind, icon, evolved=None, **p):
+    """A passive that carries an `evolved` override (the numbers it has once the line has evolved)."""
+    return Pas(name, desc, kind, p, icon, evolved or {})
+
+
+def AU(name, desc, kind, icon, **p):
+    """The Ultimate Evolution art (the last finisher of an Evolution line)."""
+    return Art(name, desc, kind, p, icon, ultimate=True)
+
+
+LINES.append(Line(
+    id="tog_rose_shower", name="Rose Shower", franchise=F,
+    desc="Ha Yuri Zahard's Shinsu roses: a red-velvet blade of packed Shinsu, petals that gather into pillars and a rain that covers the whole field. Every wound she leaves blooms later.",
+    color="#D6204A", background="blood", icon="minecraft:rose_bush",
+    book_name="Rose Shower: The Princess's Bloom", book_lore="The petals fall slowly. The people under them do not.",
+    evolution={"requirement": "elite_kills", "count": 25,
+               "text": "Slay 25 elite or boss creatures while this skill is on to let the rose bloom fully and awaken the Ultimate Skill.",
+               "ultimate_name": "Ultimate Skill, Crimson Rose of Zahard"},
+    stances=[
+        S("Shinsu Flower Stance", "Wrap yourself in a red Shinsu rose: thicker guard and a slow regeneration, blows a little lighter.", "minecraft:poppy", armor=3, regen=0.4, damage_pct=-0.04, vfx="MAGIC_CIRCLE"),
+        S("Shinsu Bubble Guard", "Hold a bubble of Shinsu around you: heavy damage resistance and no knockback, at the cost of speed.", "minecraft:glass_bottle", armor=6, knockback_res=0.5, speed_pct=-0.18, vfx="SPIRIT_AURA"),
+    ],
+    stats=[
+        T("Zahard Bloodline", "A Princess of Zahard carries a great deal of life.", "max_health", 3, "minecraft:golden_apple"),
+        T("Body Strengthening Heritage", "The Ha family tempers the body above all others.", "armor", 1, "minecraft:iron_chestplate"),
+        T("Red Velvet Edge", "Your blows carry the weight of a packed Shinsu blade.", "attack_damage", 1, "minecraft:red_dye"),
+        T("Petal Step", "Light on your feet, like a falling petal.", "movement_speed", 0.04, "minecraft:pink_petals", op="mult"),
+    ],
+    arts=[
+        A("Red Velvet Sword", "Pack red Shinsu into a blade of pressure and cut the cone in front of you.", "cone_strike", "minecraft:iron_sword", vfx="WIND_SLASH", damage=9, range=4.5, half_angle=45),
+        A("Rose Shower", "Petals gather into rising pillars, then burst in a ring of white light and red petals around you.", "ring_burst", "minecraft:rose_bush", vfx="MAGIC_CIRCLE", damage=9, radius=5, targets=8, knockback=1.0),
+        A("Shinsu Pull", "Thread Shinsu around the creatures near you and drag them in.", "pull", "minecraft:string", vfx="THREAD_LINE", radius=8, strength=1.0, targets=6, damage=4),
+        A("Rose Mark", "Plant a Shinsu rose on a foe: it takes more damage for a while.", "mark", "minecraft:poppy", vfx="MAGIC_CIRCLE", bonus=0.3, seconds=10),
+        A("Rose Shower: Shift", "Hold the petals back and let them loose in a very wide cone in front of you.", "cone_strike", "minecraft:pink_petals", vfx="WIND_RING", damage=8, range=6.5, half_angle=75, targets=6),
+        A("Red Velvet Sword: Shift", "Dash through the foes with the red blade drawn and cut everything in your path.", "dash_strike", "minecraft:red_banner", vfx="WIND_SLASH", damage=9, distance=9, targets=5),
+        A("Petal Barrage", "Loose a volley of Shinsu petals at the foe you look at.", "barrage", "minecraft:cherry_leaves", vfx="SPIRIT_AURA", damage=3, shots=7, range=16),
+        A("Shinsu Bubble Ward", "A bubble of Shinsu closes over you and soaks up the next blows.", "shield", "minecraft:heart_of_the_sea", vfx="WATER_RING", absorb_hearts=5, seconds=8),
+    ],
+    passives=[
+        PE("Wounds That Bloom", "Your blows plant a rose in the foe: part of the damage is stored and bleeds out later, and the Ultimate Skill can bloom all of it at once.", "debt_store", "minecraft:crimson_roots", store_pct=0.3, tick_seconds=3, max_pct=0.6, hold_seconds=14, vfx="MAGIC_CIRCLE",
+          evolved={"store_pct": 0.5, "max_pct": 0.9, "hold_seconds": 22}),
+        PE("Thorned Stems", "Part of the damage you take is returned to the attacker as thorns.", "thorns", "minecraft:sweet_berries", pct=0.2, rest=20, evolved={"pct": 0.45}),
+        PE("Miraculous Resistance", "Your Shinsu resists magic far better than most: you take less magic damage.", "resist", "minecraft:amethyst_shard", damage_kind="magic", pct=0.15, evolved={"pct": 0.35}),
+        P("Shinsu Injection", "Your blows may inject Shinsu into the foe and wither it from the inside.", "on_hit_effect", "minecraft:fermented_spider_eye", effect="wither", seconds=3, chance=0.18),
+        P("Princess's Bearing", "You take less damage while you are in a fight.", "reduce_when", "minecraft:golden_chestplate", condition="in_combat", pct=0.08),
+        P("Elite Hunter", "You deal more damage to bosses.", "dmg_vs", "minecraft:netherite_sword", category="boss", bonus=0.2),
+        P("Falling Petals", "Blows in a row grow stronger until you stop fighting.", "momentum", "minecraft:pink_petals", per_stack=0.04, max_stacks=6),
+        P("Red Harvest", "Each kill restores some health.", "kill_reward", "minecraft:sweet_berries", heal=3, effect="none"),
+    ],
+    finishers=[
+        A("Red Velvet Sword: Great Wave Blast", "Charge a red orb between both hands and loose it as one huge wave that tears through every foe in line.", "ray_shot", "minecraft:red_dye", vfx="WIND_SLASH", damage=26, range=24, pierce=5, cost=0.06, cooldown=1500),
+        AU("Crimson Rose of Zahard", "Every rose planted on every foe in range blooms at once: the stored wounds burst out together in a storm of red petals.", "debt_burst", "minecraft:rose_bush", vfx="MAGIC_CIRCLE",
+          damage=30, mult=3.0, radius=12, targets=20, cost=0.07, cooldown=15000),
+    ],
+))
+
+# ---------------------------------------------------------------------------------------------------------------- 27 (3.26.0 Evolution skill)
+LINES.append(Line(
+    id="tog_true_flame", name="True Flame", franchise=F,
+    desc="Yeon Yihwa's Yeon-family fire: Hwayeomsa flames that are hard to aim and harder to calm, and beneath them the True Flame that guards her life. Fire that has burned you teaches you to keep it.",
+    color="#FF7A1A", background="magma", icon="minecraft:blaze_powder",
+    book_name="Hwayeomsa: The Flame Girl's Primer", book_lore="Once a century the Yeon house bears a girl the fire does not refuse.",
+    evolution={"requirement": "damage_taken", "count": 2000, "params": {"damage_kind": "fire"},
+               "text": "Endure 2,000 points of fire damage while this skill is on to wake the True Flame and unlock the Ultimate Skill.",
+               "ultimate_name": "Ultimate Skill, Flame That Does Not Burn the Self"},
+    stances=[
+        S("Yeon Flame Stance", "Let the family flame rise: your blows hit harder, but you keep your guard thin.", "minecraft:blaze_powder", damage_pct=0.12, armor=-1, regen=0.2, vfx="FIRE_SPIRAL"),
+        S("Flame Veil Guard", "Hold a veil of flame around your body: heavy damage reduction and steadiness, slower on your feet.", "minecraft:magma_cream", armor=5, knockback_res=0.35, speed_pct=-0.12, vfx="ASH_FORMATION"),
+    ],
+    stats=[
+        T("Flame-Born Vitality", "The Yeon blood runs hot and strong.", "max_health", 2, "minecraft:magma_cream"),
+        T("Hwayeomsa Strength", "Your flame-charged Shinsu strikes harder.", "attack_damage", 1, "minecraft:blaze_rod"),
+        T("Flame Barrier", "A thin barrier of flame toughens your guard.", "armor_toughness", 1, "minecraft:netherite_ingot"),
+        T("Scorched Stride", "Embers carry you faster over the ground.", "movement_speed", 0.04, "minecraft:charcoal", op="mult"),
+    ],
+    arts=[
+        A("Flame Bolt", "Fire a bolt of Yeon flame along your line of sight.", "ray_shot", "minecraft:fire_charge", vfx="FIRE_BURST", damage=8, range=18, pierce=2),
+        A("Fire Pillar", "Call a pillar of flame down on the place you look at after a short delay.", "meteor_drop", "minecraft:lava_bucket", vfx="FLAME_EXPLOSION", damage=13, radius=4.5, delay=22),
+        A("Flame Wall", "Send a wide wall of flame rolling along the ground in front of you.", "ground_wave", "minecraft:campfire", vfx="FLAME_TRAIL", damage=7, length=10, width=3.5),
+        A("Ignite Mark", "Set a flame mark on a foe: it takes more damage for a while.", "mark", "minecraft:flint_and_steel", vfx="FIRE_BURST", bonus=0.3, seconds=10),
+        A("Hwayeomsa: Shift", "Let the flame go in a great ring of fire around you.", "ring_burst", "minecraft:blaze_powder", vfx="FIRE_SPIRAL", damage=10, radius=5.5, targets=8, knockback=1.2),
+        A("Flame Step", "Burst forward on a trail of fire and scorch everything in your path.", "dash_strike", "minecraft:leather_boots", vfx="FLAME_TRAIL", damage=8, distance=8, targets=4),
+        A("Ember Volley", "Loose a volley of small fireballs at the foe you look at.", "barrage", "minecraft:magma_block", vfx="FIRE_BURST", damage=3, shots=6, range=14),
+        A("Flame Flight", "The flame barrier lifts you: you leap higher and fall slowly for a while.", "buff_self", "minecraft:feather", vfx="FLAME_TRAIL", effect="jump_boost", effect2="slow_falling", seconds=14, amp=1),
+    ],
+    passives=[
+        PE("Burn Ledger", "Your blows store fire on the foe: part of the damage is kept as a burn that ticks while it waits, and the Ultimate Skill releases it all.", "debt_store", "minecraft:charcoal", store_pct=0.3, tick_seconds=3, max_pct=0.6, hold_seconds=14, vfx="FIRE_SPIRAL",
+          evolved={"store_pct": 0.5, "max_pct": 0.9, "hold_seconds": 22}),
+        PE("Yeon Hide", "Family flames do not harm the Yeon girl as they harm others: you take less fire damage.", "resist", "minecraft:magma_block", damage_kind="fire", pct=0.2, evolved={"pct": 0.55}),
+        PE("Burning Resolve", "You deal more damage while you are on fire.", "dmg_when", "minecraft:fire_charge", condition="on_fire", bonus=0.2, evolved={"bonus": 0.5}),
+        P("True Flame Protects", "When you are nearly dead, the True Flame wakes by itself and shields you for a moment.", "last_stand", "minecraft:totem_of_undying", threshold=0.3, seconds=6, rest=1800),
+        P("Fear Mastered", "At low health the fear turns to fury: you gain strength.", "self_effect_when", "minecraft:blaze_rod", effect="strength", condition="low_health", amp=1),
+        P("Searing Touch", "Your blows may sap the foe's strength with heat.", "on_hit_effect", "minecraft:blaze_powder", effect="weakness", seconds=4, chance=0.2),
+        P("Flame Barrier Regrowth", "While you are on fire the barrier mends you slowly.", "regen_when", "minecraft:campfire", condition="on_fire", per_second=0.6),
+        P("Finishing Blaze", "You deal much more damage to nearly dead foes.", "execute_threshold", "minecraft:lava_bucket", threshold=0.2, bonus=0.6),
+    ],
+    finishers=[
+        A("Pillar of Primeval Flame", "The flame that burns anything: a huge pillar falls on the place you look at and scorches everything around it.", "meteor_drop", "minecraft:lava_bucket", vfx="FLAME_EXPLOSION", damage=28, radius=8, range=26, delay=28, cost=0.06, cooldown=1600),
+        AU("True Flame", "The stored fire erupts from every burning foe at once, a blaze that does not burn you.", "debt_burst", "minecraft:blaze_rod", vfx="FLAME_EXPLOSION",
+          damage=28, mult=3.2, radius=11, targets=20, cost=0.07, cooldown=14000),
     ],
 ))
