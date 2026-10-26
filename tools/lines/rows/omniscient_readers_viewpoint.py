@@ -1088,3 +1088,103 @@ LINES += [
         ],
     ),
 ]
+
+
+# ---------------------------------------------------------------------------------------------------------------------------------- 26 and 27 (3.28.0, Evolution skills, docs/skills/evolution_ten_c.md rows 8 and 9)
+def PE(name, desc, kind, icon, evolved, **p):
+    """A passive with an `evolved` override (the stronger numbers it uses once the line has evolved)."""
+    return Pas(name, desc, kind, p, icon, evolved)
+
+
+def AU(name, desc, kind, icon, **p):
+    """The Ultimate Evolution art (flag `ultimate`, kind debt_burst)."""
+    return Art(name, desc, kind, p, icon, ultimate=True)
+
+
+LINES.append(Line(
+    id="lee_seolhwa_sword", name="Lee Seolhwa, Needle and Blade", franchise=F,
+    desc="The white-haired doctor of the Company, who keeps the sickbay and knows exactly how much of a poison it takes: a thin clean blade, a poison that works slowly, a mending hand and a dose that always comes due. Evolves after seven hundred kills.",
+    color="#c9e0ff", background="holy", icon="minecraft:iron_sword",
+    book_name="Sickbay Casebook of the Company", book_lore="She heals everyone in the party. It is only the people she is not healing who should worry.",
+    stances=[
+        S("Poisoner's Poise", "A cool hand and a sharp edge: surer crits and a little more damage, with the guard lowered.", "minecraft:fermented_spider_eye", crit_chance=0.1, damage_pct=0.1, armor=-1, vfx="POISON_BREATH"),
+        S("Sickbay Vigil", "Stand watch over the ward: steady healing and a firm guard, but slow on your feet.", "minecraft:white_bed", regen=0.8, armor=3, knockback_res=0.3, speed_pct=-0.2, vfx="SPIRIT_AURA"),
+    ],
+    stats=[
+        T("Surgeon's Hand", "A steady, exact hand behind every cut.", "attack_damage", 1, "minecraft:iron_sword"),
+        T("Quick Fingers", "Quicker recovery between strokes.", "attack_speed", 0.06, "minecraft:clock", op="mult"),
+        T("Long Night Shifts", "More maximum health from years in the sickbay.", "max_health", 2, "minecraft:golden_carrot"),
+        T("Clinical Judgement", "A cool head that picks the right moment: bonus luck.", "luck", 1, "minecraft:rabbit_foot"),
+    ],
+    arts=[
+        A("Scalpel Cut", "A clean, narrow cut through everything in front of you.", "cone_strike", "minecraft:iron_sword", damage=7, range=3.6, half_angle=35, targets=3, vfx="WIND_SLASH"),
+        A("Scalpel Cut: Shift", "Crouching, you step through the line of foes in one thin stroke.", "dash_strike", "minecraft:iron_boots", distance=8, damage=8, targets=4, vfx="WIND_SLASH"),
+        A("Deadly Poison Drop", "A pale drop on the blade: everything in the cone is poisoned and weakened.", "debuff_cone", "minecraft:fermented_spider_eye", effect="poison", effect2="weakness", seconds=8, seconds2=5, amp=1, range=4.5, vfx="POISON_BREATH"),
+        A("Anaesthetic Mist: Shift", "Crouching, a sweet-smelling mist blinds the creatures around you while you slip back.", "smoke", "minecraft:glass_bottle", radius=5, seconds=6, vfx="POISON_BREATH"),
+        A("Emergency Treatment", "A fast, practiced bandage: heal yourself and regenerate for a while.", "heal_self", "minecraft:honey_bottle", amount=9, regen_seconds=7, vfx="SPIRIT_AURA"),
+        A("Silver Needles", "A volley of thin needles at the foe you are looking at.", "barrage", "minecraft:spectral_arrow", damage=2.5, shots=8, range=15, vfx="LIGHTNING_SPEAR"),
+        A("Mark the Wound", "Fix your eyes on one foe and find its weak point: it takes more damage for a while.", "mark", "minecraft:spyglass", range=20, seconds=10, bonus=0.35, vfx="MAGIC_CIRCLE"),
+        A("Mercy Stroke: Shift", "Crouching, one decisive stroke: it hits far harder the weaker the foe already is.", "execute", "minecraft:netherite_sword", damage=11, bonus=1.2, range=4, vfx="WIND_SLASH"),
+    ],
+    passives=[
+        PE("Slow Dose", "Your blows store delayed damage on the foe as the poison keeps working, and your Debt arts collect it.", "debt_store", "minecraft:poisonous_potato", {"store_pct": 0.45, "max_pct": 0.75, "hold_seconds": 18}, store_pct=0.25, tick_seconds=3, max_pct=0.5, hold_seconds=12, vfx="POISON_BREATH"),
+        PE("Poison Master", "Struck foes are sometimes poisoned.", "on_hit_effect", "minecraft:spider_eye", {"chance": 0.45, "seconds": 7}, effect="poison", chance=0.25, seconds=4),
+        PE("Exact Incision", "Your blows sometimes strike critically.", "crit", "minecraft:flint", {"chance": 0.22, "mult": 1.8}, chance=0.12, mult=1.5),
+        P("Swordswoman's Steadiness", "You hit harder while wielding a sword.", "dmg_when", "minecraft:diamond_sword", condition="holding_sword", bonus=0.2),
+        P("Built-up Tolerance", "You take much less wither damage.", "resist", "minecraft:milk_bucket", damage_kind="wither", pct=0.4),
+        P("Self-Prescribed Rest", "Your wounds close slowly over time, even out of combat.", "mending", "minecraft:honeycomb", seconds=14, amount=1),
+        P("Spoils of the Ward", "A kill heals you.", "kill_reward", "minecraft:sweet_berries", heal=2, effect="none", seconds=0),
+        P("Spotting the Weakness", "You deal much more damage to nearly dead foes.", "execute_threshold", "minecraft:wither_skeleton_skull"),
+    ],
+    finishers=[
+        A("Triage Sweep", "A whirl of thin cuts all around you, every one in the right place.", "whirlwind", "minecraft:shears", damage=5, hits=8, radius=4.5, interval=3, cooldown=1400, vfx="WIND_TORNADO"),
+        AU("Final Dose", "The last dose: every drop of poison your blows left on the foes around you comes due in one pale burst.", "debt_burst", "minecraft:dragon_breath", damage=20, mult=2.2, radius=12, targets=12, cost=0.07, cooldown=16000, vfx="POISON_BREATH"),
+    ],
+    evolution={"requirement": "kills", "count": 700,
+               "text": "Slay 700 creatures while Lee Seolhwa, Needle and Blade is switched on.",
+               "ultimate_name": "Ultimate Skill, Final Dose"},
+))
+
+LINES.append(Line(
+    id="shin_yoosung_child", name="Shin Yoosung, Monster Gate", franchise=F,
+    desc="The youngest of the Company and the strongest bond-keeper: tamed beasts answered through a gate, a shield that nothing gets through, a breath for those who threaten the party and, far down the road, a flood. Evolves once you have reached three hundred and fifty allies with your buffs and healing.",
+    color="#ffb3d1", background="dream", icon="minecraft:pink_petals",
+    book_name="Little Beast Lord's Picture Book", book_lore="Every monster she ever tamed came when she called. Most of them were only afraid of being alone.",
+    stances=[
+        S("Little Commander", "Stand at the head of the party: a gentle regeneration and a lighter step, with softer blows.", "minecraft:lead", regen=0.8, speed_pct=0.05, damage_pct=-0.15, vfx="SPIRIT_AURA"),
+        S("Beast King's Sensitivity", "Close your eyes and let the gate stand guard: a great guard that is hard to shove, but you can barely move.", "minecraft:shield", armor=5, knockback_res=0.6, speed_pct=-0.3, damage_pct=-0.2, vfx="MAGIC_CIRCLE"),
+    ],
+    stats=[
+        T("Child's Quick Feet", "Small, quick, hard to catch.", "movement_speed", 0.04, "minecraft:leather_boots", op="mult"),
+        T("Hearty Appetite", "A growing child eats well: more maximum health.", "max_health", 2, "minecraft:cooked_beef"),
+        T("Beast Whisperer's Luck", "Animals tend to like her: bonus luck.", "luck", 1, "minecraft:rabbit_foot"),
+        T("Brave Little Heart", "She does not back down: bonus armor toughness.", "armor_toughness", 1, "minecraft:iron_ingot"),
+    ],
+    arts=[
+        A("Monster Gate", "The gate opens: you and your allies around you gain Strength for a while.", "buff_aura", "minecraft:goat_horn", effect="strength", radius=9, seconds=20, amp=1, vfx="MAGIC_CIRCLE"),
+        A("Monster Gate: Shift", "Crouching, a wider but shorter call: Speed for you and every ally in a big circle.", "buff_aura", "minecraft:sugar", effect="speed", radius=14, seconds=9, amp=1, vfx="WIND_RING"),
+        A("Tamed Pack's Mending", "The tamed pack licks the party's wounds: you and your allies heal.", "heal_pulse", "minecraft:honey_bottle", amount=7, radius=9, vfx="SPIRIT_AURA"),
+        A("Shield of the Pack", "The pack closes ranks: a shield of absorption hearts snaps into place around you.", "shield", "minecraft:shield", absorb_hearts=6, seconds=9, resist_amp=1, vfx="MAGIC_CIRCLE"),
+        A("Beast King's Breath", "A roaring breath along your line of sight that pierces a line of foes.", "ray_shot", "minecraft:blaze_powder", damage=8, range=22, pierce=3, vfx="FIRE_BURST"),
+        A("Beast King's Breath: Shift", "Crouching, the breath is let out in every direction at once and throws the monsters back.", "ring_burst", "minecraft:fire_charge", damage=8, radius=4.5, knockback=1.2, targets=6, vfx="FIRE_BURST"),
+        A("Calm the Wild", "A firm, kind word: the creatures around you stop in their tracks for a moment.", "stun_ring", "minecraft:bone", radius=5, seconds=3, targets=6, vfx="SPIRIT_AURA"),
+        A("Rush of the Gate", "The beasts pour out all at once in a heavy wave along the ground.", "ground_wave", "minecraft:saddle", damage=9, length=14, width=4, knockback=1.2, vfx="STONE_SPIKES"),
+    ],
+    passives=[
+        PE("Flood's Toll", "Your blows store delayed damage on the foe as the tide keeps rising, and your Debt arts collect it.", "debt_store", "minecraft:prismarine_crystals", {"store_pct": 0.4, "max_pct": 0.7, "hold_seconds": 18}, store_pct=0.25, tick_seconds=3, max_pct=0.5, hold_seconds=12, vfx="WATER_BURST"),
+        PE("Companions Close By", "Allies near you slowly regenerate.", "aura", "minecraft:lead", {"radius": 12, "amp": 1}, effect="regeneration", target="allies", radius=8),
+        PE("Small and Quick", "You may slip a blow completely.", "dodge", "minecraft:feather", {"chance": 0.2}, chance=0.12),
+        P("Stay Close to the Party", "When nearly dead you are briefly shielded.", "last_stand", "minecraft:totem_of_undying", seconds=6),
+        P("Lively in the Fray", "While in a fight you heal steadily.", "regen_when", "minecraft:sweet_berries", condition="in_combat", per_second=0.6),
+        P("Beast Lord's Hide", "You take much less magic damage.", "resist", "minecraft:leather", damage_kind="magic", pct=0.3),
+        P("Eager Student", "Your kills give more experience.", "xp_bonus", "minecraft:experience_bottle", pct=0.2),
+        P("Gentle Mending", "Your wounds close slowly over time, even out of combat.", "mending", "minecraft:honeycomb", seconds=14, amount=1),
+    ],
+    finishers=[
+        A("Monster Gate: Wide Open", "Every gate at once: a long, strong Regeneration for you and every ally in a wide circle.", "buff_aura", "minecraft:nether_star", effect="regeneration", radius=13, seconds=25, amp=2, cooldown=1600, vfx="SPIRIT_AURA"),
+        AU("Disaster of Floods", "The flood let loose: every debt your blows left on the foes around you comes due in a single tide of monsters.", "debt_burst", "minecraft:heart_of_the_sea", damage=20, mult=2.2, radius=13, targets=12, cost=0.07, cooldown=16000, vfx="WATER_BURST"),
+    ],
+    evolution={"requirement": "ally_buffs", "count": 350,
+               "text": "Reach 350 allies with the buffing and healing arts of this skill.",
+               "ultimate_name": "Ultimate Skill, Disaster of Floods"},
+))
