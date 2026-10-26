@@ -49,6 +49,11 @@ public class NUSMP {
         modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.entity.veldanava.VeldanavaConfig.SPEC, "nusmp-veldanava-server.toml");   // Veldanava: enabled, bossHealth, damageScale, soulSeizing, willOfTheCreatorSeconds
         com.newuniverse.nusmp.entity.veldanava.VeldanavaEvents.register(NeoForge.EVENT_BUS);                 // Michael barrier, Nihility rot, soul and boon housekeeping
         com.newuniverse.nusmp.entity.veldanava.VeldanavaSelfTests.register();                                // self-tests veldanava.rules / assets / boss / orb
+        com.newuniverse.nusmp.entity.veldanava.skills.JudgmentSelfTests.register();                          // self-tests sandalphon.rules / skill / conditions
+        com.newuniverse.nusmp.entity.veldanava.skills.JudgmentEffects.init();                                 // 3.13.0: Sandalphon's six conditions (Temporal Stutter, Temporal Debt, Event Silence, Future Rejection, Movement Interference, Action Lock)
+        com.newuniverse.nusmp.entity.veldanava.skills.JudgmentEffects.EFFECTS.register(modEventBus);
+        modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.entity.veldanava.skills.JudgmentConfig.SPEC, "nusmp-veldanava-skills-server.toml");   // the Veldanava ultimate skills: enabled, rewardScreen, costScale, caps
+        com.newuniverse.nusmp.entity.veldanava.skills.JudgmentEvents.register(NeoForge.EVENT_BUS);           // Sandalphon's passives, the conditions, the sigil's execution
         com.newuniverse.nusmp.entity.zogratis.LuciusGodEffects.init();
         com.newuniverse.nusmp.entity.zogratis.LuciusGodEffects.EFFECTS.register(modEventBus);
         com.newuniverse.nusmp.entity.zogratis.LuciusEffects.init();
@@ -113,6 +118,7 @@ public class NUSMP {
         com.newuniverse.nusmp.requip.RequipSystem.init(modEventBus);                                                       // Requip: The Knight (Erza Scarlet's Ultimate skill, the book Titania's Requip, six weapons, the self-test skill.erza_requip)
         com.newuniverse.nusmp.item.ShieldBoot.init();                                                                      // 1.110.0: shields are used like vanilla's: axes disable any shield, visual.shields self-tests
         modEventBus.addListener(com.newuniverse.nusmp.charter.CharterNet::registerPayloads);
+        modEventBus.addListener(com.newuniverse.nusmp.entity.veldanava.skills.VeldanavaSkillNet::registerPayloads);          // 3.13.0: the skill card screen of the Will of the Creator
         modEventBus.addListener(com.newuniverse.nusmp.boss.bar.BossBarNet::registerPayloads);
         modEventBus.addListener(com.newuniverse.nusmp.relics.wave.WaveBossNet::register);
         modEventBus.addListener(com.newuniverse.nusmp.relics.RelicHolderSync::registerPayload);
@@ -392,6 +398,8 @@ public class NUSMP {
         io.github.manasmods.manascore.skill.api.SkillEvents.ACTIVATE_SKILL.register((sealSkill, sealUser, sealKey, sealMode) -> com.newuniverse.nusmp.entity.zogratis.SpellSeal.vetoesSkill(sealSkill.get(), sealUser) ? dev.architectury.event.EventResult.interruptFalse() : dev.architectury.event.EventResult.pass());
         io.github.manasmods.manascore.skill.api.SkillEvents.RELEASE_SKILL.register((sealSkill, sealUser, sealKey, sealMode, sealHeld) -> com.newuniverse.nusmp.entity.zogratis.SpellSeal.vetoesSkill(sealSkill.get(), sealUser) ? dev.architectury.event.EventResult.interruptFalse() : dev.architectury.event.EventResult.pass());
         io.github.manasmods.manascore.skill.api.SkillEvents.TOGGLE_SKILL.register((sealSkill, sealUser) -> com.newuniverse.nusmp.entity.zogratis.SpellSeal.vetoesSkill(sealSkill.get(), sealUser) ? dev.architectury.event.EventResult.interruptFalse() : dev.architectury.event.EventResult.pass());
+        io.github.manasmods.manascore.skill.api.SkillEvents.ACTIVATE_SKILL.register((jSkill, jUser, jKey, jMode) -> com.newuniverse.nusmp.entity.veldanava.skills.JudgmentEvents.vetoesSkill(jSkill.get(), jUser) ? dev.architectury.event.EventResult.interruptFalse() : dev.architectury.event.EventResult.pass());      // 3.13.0: Event Silence and Action Lock
+        io.github.manasmods.manascore.skill.api.SkillEvents.TOGGLE_SKILL.register((jSkill, jUser) -> com.newuniverse.nusmp.entity.veldanava.skills.JudgmentEvents.vetoesSkill(jSkill.get(), jUser) ? dev.architectury.event.EventResult.interruptFalse() : dev.architectury.event.EventResult.pass());
         NeoForge.EVENT_BUS.addListener(net.neoforged.bus.api.EventPriority.HIGHEST, com.newuniverse.nusmp.dungeon.DungeonGuard::onBreak);                // 1.19.0: the unbreakable Dungeon
         NeoForge.EVENT_BUS.addListener(net.neoforged.bus.api.EventPriority.HIGHEST, com.newuniverse.nusmp.dungeon.DungeonGuard::onBreakSpeed);
         NeoForge.EVENT_BUS.addListener(net.neoforged.bus.api.EventPriority.HIGHEST, com.newuniverse.nusmp.dungeon.DungeonGuard::onLeftClick);

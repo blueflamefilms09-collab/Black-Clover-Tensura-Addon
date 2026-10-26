@@ -357,7 +357,17 @@ public enum VfxShape {
     STAR_PANE,
     STAR_LANCE,
     STAR_WHIP,
-    STAR_DOME;
+    STAR_DOME,
+    // Sandalphon, Lord of Judgment (Veldanava, vfx.client.layer.JudgmentLayer): cold white-gold light, pale steel, thin black cracks, ticking clock / stutter motifs, a cross of light. All six are appended in this order
+    // (ordinals go over the network). JUDGMENT_BULLET: from -> to, one needle shot (power = width, ~12 ticks). JUDGMENT_SIGIL: at from (the marked creature's feet), a rotating seal with a hovering blade glyph (power = size, up to 600 ticks).
+    // JUDGMENT_EDICT: at from, a flat wave that sweeps out to radius power (~30) in ~20 ticks (~24 ticks). JUDGMENT_CLEAVE: from = the caster (at the height of the sweep), to = a point ~5 ahead, power = reach (~10 ticks).
+    // JUDGMENT_FIELD: at from, a ground field of radius power (~8), up to 240 ticks. JUDGMENT_CROSS: Final Judgment, at from (the target): the cross of light, charge then detonation (60-70 ticks, power = size ~2).
+    JUDGMENT_BULLET,
+    JUDGMENT_SIGIL,
+    JUDGMENT_EDICT,
+    JUDGMENT_CLEAVE,
+    JUDGMENT_FIELD,
+    JUDGMENT_CROSS;
 
     public static VfxShape byId(int id) {
         VfxShape[] v = values();

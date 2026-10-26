@@ -1,6 +1,7 @@
 package com.newuniverse.nusmp.entity.veldanava;
 
 import com.mojang.brigadier.arguments.IntegerArgumentType;
+import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
 import net.minecraft.commands.CommandSourceStack;
@@ -10,7 +11,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 
 /**
- * {@code /multiverse boss veldanava} (permission 2) spawns the Creator God at the executor with the arena there; {@code /multiverse veldanava boon <0..3>} (any player) is
+ * {@code /multiverse boss veldanava} (permission 2) spawns the Creator God at the executor with the arena there; {@code /multiverse veldanava boon <0..3>} and {@code /multiverse veldanava skill <id>} (any player) are
  * what the clickable lines of the Will of the Creator run. The second one is validated on the server: the sender must be a player, the orb must be waiting for them, the
  * choice must be 0 (loot only, for a player who already holds a boon) or 1..3, and the boon is given once in the player's life ({@link VeldanavaBoons#grant}).
  */
@@ -24,7 +25,8 @@ public final class VeldanavaCommand {
     /** The player-level node, added under {@code /multiverse}. */
     public static LiteralArgumentBuilder<CommandSourceStack> node() {
         return Commands.literal("veldanava")
-                .then(Commands.literal("boon").then(Commands.argument("choice", IntegerArgumentType.integer(0, VeldanavaBoons.COUNT)).executes(VeldanavaCommand::boon)));
+                .then(Commands.literal("boon").then(Commands.argument("choice", IntegerArgumentType.integer(0, VeldanavaBoons.COUNT)).executes(VeldanavaCommand::boon)))
+                .then(Commands.literal("skill").then(Commands.argument("id", StringArgumentType.word()).executes(VeldanavaCommand::skill)));      // 3.13.0: the card the player clicked in chat
     }
 
     private static int summon(CommandContext<CommandSourceStack> ctx) {
@@ -47,6 +49,12 @@ public final class VeldanavaCommand {
         if (ok) ctx.getSource().sendSuccess(() -> Component.literal(answer), false);
         else ctx.getSource().sendFailure(Component.literal(answer));
         return ok ? 1 : 0;
+    }
+
+    private static int skill(CommandContext<CommandSourceStack> ctx) {
+        if (!(ctx.getSource().getEntity() instanceof ServerPlayer p)) return fail(ctx, "Only a player can take a skill.");
+        String id = StringArgumentType.getString(ctx, "id");
+        return com.newuniverse.nusmp.entity.veldanava.skills.VeldanavaSkillNet.onClaim(p, id.length() > com.newuniverse.nusmp.entity.veldanava.skills.VeldanavaSkillNet.ID_MAX ? "" : id) ? 1 : 0;
     }
 
     private static int fail(CommandContext<CommandSourceStack> ctx, String msg) {

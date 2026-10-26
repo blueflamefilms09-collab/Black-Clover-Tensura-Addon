@@ -258,6 +258,8 @@ public final class VfxManager {
         register(new com.newuniverse.nusmp.vfx.client.layer.FireV2Layer());
         // Star Magic nodes (anime cel + volumetric glow): its own seven shapes (STAR_NODE ... STAR_DOME), appended after STAR_MAGIC; STAR_MAGIC and ElementIdentityLayer are untouched. V1 draws them as the old starlight beam.
         register(new com.newuniverse.nusmp.vfx.client.layer.StarMagicLayer());
+        // Sandalphon, Lord of Judgment (Veldanava): its own six shapes (JUDGMENT_BULLET ... JUDGMENT_CROSS), appended after STAR_DOME; nothing else is touched
+        register(new com.newuniverse.nusmp.vfx.client.layer.JudgmentLayer());
     }
 
     public void register(AbstractVfxLayer layer) { for (VfxShape s : layer.shapes()) layers.put(s, layer); }

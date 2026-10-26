@@ -253,4 +253,8 @@ public final class NUSkills {
     public static final DeferredHolder<ManasSkill, ShishouUltimateSkill> SHISHOU = SKILLS.register("shishou", ShishouUltimateSkill::new);
 
     private NUSkills() {}
+
+    // ---- 3.13.0: the Veldanava ultimate skills (the Will of the Creator's reward; each arrives in its own release) ----
+    public static final DeferredHolder<ManasSkill, com.newuniverse.nusmp.entity.veldanava.skills.SandalphonSkill> SANDALPHON =
+            SKILLS.register("sandalphon", com.newuniverse.nusmp.entity.veldanava.skills.SandalphonSkill::new);
 }

@@ -21,6 +21,9 @@ import java.util.List;
  * received" flag is the player's own NBT key {@code hasReceivedVeldanavaBoon} (set once, kept through death).
  *
  * <p>These are this mod's own boons named after the guide's ultimate skills; they are not Tensura skills (the mod has no API to grant those safely).
+ *
+ * <p>Since 3.13.0 the Will of the Creator offers real ultimate skills instead (see {@code skills.VeldanavaSkills}; Sandalphon first). The boons stay here, working, for old saves and for
+ * the server setting {@code rewardScreen = false}, but they are no longer offered by default.
  */
 public final class VeldanavaBoons {
     private VeldanavaBoons() {}

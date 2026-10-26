@@ -67,7 +67,7 @@ public final class VeldanavaEvents {
         if (e.getSource().getEntity() instanceof ServerPlayer hitter && holdsNihility(hitter) && victim != hitter)
             markVoidRot(victim.getUUID(), victim.level().getGameTime());
         // Michael: one fatal blow a day, for a player who consumed the fragment
-        if (victim instanceof ServerPlayer p && p.getPersistentData().getBoolean(VeldanavaItem.TAG_MICHAEL)
+        if (victim instanceof ServerPlayer p && p.getPersistentData().getBoolean(VeldanavaItem.TAG_MICHAEL) && !com.newuniverse.nusmp.entity.veldanava.skills.JudgmentDamage.trueActive()   // Sandalphon's true hits and executions step past the barrier
                 && VeldanavaRules.isFatal(p.getHealth(), p.getAbsorptionAmount(), e.getAmount())) {
             long day = p.level().getDayTime() / 24000L;
             if (p.getPersistentData().getLong(VeldanavaItem.TAG_MICHAEL_DAY) != day + 1) {          // stored as day + 1 so that 0 means never

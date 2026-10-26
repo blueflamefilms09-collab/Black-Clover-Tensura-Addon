@@ -2,6 +2,8 @@ package com.newuniverse.nusmp.entity.veldanava;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.newuniverse.nusmp.entity.veldanava.skills.JudgmentConfig;
+import com.newuniverse.nusmp.entity.veldanava.skills.VeldanavaSkills;
 import com.newuniverse.nusmp.labyrinth.mega.SelfTests;
 import com.newuniverse.nusmp.labyrinth.mega.SelfTests.Result;
 import net.minecraft.core.BlockPos;
@@ -26,7 +28,7 @@ import java.util.Set;
  * The CI server smoke test of Veldanava (prefix {@code veldanava} in SMOKE_EXPECT): {@code veldanava.rules} (the move table, the choice, the damage and loot numbers, the
  * caps), {@code veldanava.assets} (the three models, their animations, their textures and the lang keys are in the jar), {@code veldanava.boss} (the entity spawns on the
  * real server with the dragon's hitbox, the saved form brings back the right hitbox, the hard-control immunity, the arena rule) and {@code veldanava.orb} (the Will of the
- * Creator gives one boon once, drops the loot for the fighter, and goes away when everybody has taken their share). They run on the throw-away world and clean up after
+ * Creator gives one skill card once, drops the loot for the fighter, and goes away when everybody has taken their share). They run on the throw-away world and clean up after
  * themselves.
  */
 public final class VeldanavaSelfTests {
@@ -136,18 +138,22 @@ public final class VeldanavaSelfTests {
         FakePlayer p = SelfTests.standIn(sl, "veldanava_orb", at.getX() + 0.5, at.getY(), at.getZ() + 0.5);
         p.getPersistentData().remove(VeldanavaBoons.TAG_RECEIVED);
         p.getPersistentData().remove(VeldanavaBoons.TAG_CHOICE);
+        VeldanavaSkills.revoke(p);
         WillOfTheCreator orb = WillOfTheCreator.spawn(sl, Vec3.atBottomCenterOf(at), Set.of(p.getUUID()));
         if (orb == null) return Result.fail("the orb could not be raised");
         AABB around = new AABB(at).inflate(8);
         try {
             if (!orb.isFighter(p.getUUID())) return Result.fail("the fighter is not on the orb's list");
-            if (!orb.claim(p, 0).startsWith("Choose")) return Result.fail("a player without a boon was allowed the loot-only choice");
-            if (!orb.claim(p, 9).startsWith("That is not")) return Result.fail("an invalid boon number was accepted");
-            String ok = orb.claim(p, 2);
-            if (!orb.hasClaimed(p.getUUID()) || !VeldanavaBoons.received(p)) return Result.fail("the boon was not granted: " + ok);
-            if (p.getPersistentData().getInt(VeldanavaBoons.TAG_CHOICE) != 2) return Result.fail("the choice was not remembered");
-            if (!orb.claim(p, 3).startsWith("You have already")) return Result.fail("a second claim was allowed");
-            if (VeldanavaBoons.grant(p, 1)) return Result.fail("a second boon was granted to the same player");
+            if (!orb.claimSkill(p, "").startsWith("Choose")) return Result.fail("a player without a skill was allowed the loot-only choice");
+            if (!orb.claimSkill(p, "nonsense").startsWith("That is not")) return Result.fail("an invalid card was accepted");
+            if (!orb.claimSkill(p, "israfil").contains("sealed")) return Result.fail("a sealed card was accepted");
+            if (JudgmentConfig.rewardScreen() && !orb.claim(p, 2).startsWith("The Creator now offers")) return Result.fail("a boon was offered while the skill screen is on");
+            if (orb.hasClaimed(p.getUUID())) return Result.fail("a refused claim used up the player's share");
+            String ok = orb.claimSkill(p, "sandalphon");
+            if (!orb.hasClaimed(p.getUUID()) || !VeldanavaSkills.received(p)) return Result.fail("the skill was not granted: " + ok);
+            if (!"sandalphon".equals(VeldanavaSkills.chosen(p))) return Result.fail("the choice was not remembered");
+            if (!orb.claimSkill(p, "sandalphon").startsWith("You have already")) return Result.fail("a second claim was allowed");
+            if (VeldanavaSkills.grant(p, "sandalphon")) return Result.fail("a second skill was granted to the same player");
             List<ItemEntity> drops = sl.getEntitiesOfClass(ItemEntity.class, around);
             int core = 0, frag = 0, essence = 0;
             for (ItemEntity e : drops) {
@@ -158,11 +164,12 @@ public final class VeldanavaSelfTests {
             }
             if (core < 1 || frag < 3 || essence < 1) return Result.fail("the guaranteed loot is incomplete: core " + core + ", fragments " + frag + ", essence " + essence);
             if (!orb.isRemoved()) return Result.fail("the orb stayed after everybody took their share");
-            return Result.ok("one boon, once; loot " + core + "/" + frag + "/" + essence + "; the orb dissolved");
+            return Result.ok("one skill, once; loot " + core + "/" + frag + "/" + essence + "; the orb dissolved");
         } finally {
             for (ItemEntity e : sl.getEntitiesOfClass(ItemEntity.class, around)) e.discard();
             if (!orb.isRemoved()) orb.discard();
             VeldanavaBoons.revoke(p);
+            VeldanavaSkills.revoke(p);
         }
     }
 }

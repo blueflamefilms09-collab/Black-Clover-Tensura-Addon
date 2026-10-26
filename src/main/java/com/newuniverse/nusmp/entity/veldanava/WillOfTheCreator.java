@@ -1,6 +1,10 @@
 package com.newuniverse.nusmp.entity.veldanava;
 
 import com.newuniverse.nusmp.blackclover.GrimoirePages;
+import com.newuniverse.nusmp.entity.veldanava.skills.JudgmentConfig;
+import com.newuniverse.nusmp.entity.veldanava.skills.JudgmentRules;
+import com.newuniverse.nusmp.entity.veldanava.skills.VeldanavaSkillNet;
+import com.newuniverse.nusmp.entity.veldanava.skills.VeldanavaSkills;
 import com.newuniverse.nusmp.particle.fx.Fx;
 import com.newuniverse.nusmp.particle.fx.FxOld;
 import com.newuniverse.nusmp.particle.fx.FxThemes;
@@ -116,6 +120,7 @@ public final class WillOfTheCreator extends Entity {
     public String claim(ServerPlayer p, int choice) {
         if (finished || !fighters.contains(p.getUUID())) return "The Will of the Creator is not waiting for you.";
         if (claimed.contains(p.getUUID())) return "You have already taken your share.";
+        if (choice != 0 && JudgmentConfig.rewardScreen()) return "The Creator now offers an ultimate skill instead of a boon: use the skill cards.";      // 3.13.0: the three boons stay in code, but are not offered
         boolean had = VeldanavaBoons.received(p);
         if (choice == 0) {
             if (!had) return "Choose one of the three boons.";
@@ -125,6 +130,33 @@ public final class WillOfTheCreator extends Entity {
             return "You already hold a boon from the Creator. Take your loot with choice 0.";
         } else if (!VeldanavaBoons.grant(p, choice)) {
             return "The boon could not be given.";
+        }
+        claimed.add(p.getUUID());
+        updateWaiting();
+        if (level() instanceof ServerLevel sl) dropLoot(sl, p.getUUID(), p.position());
+        if (claimed.size() >= fighters.size()) finish();
+        return "Your share is on the ground.";
+    }
+
+    /**
+     * 3.13.0: a fighter takes their share with a skill card. {@code id} is a card of {@link JudgmentRules#CARDS} that this build can give (once in the player's life), or "" /
+     * "loot" for a player who already holds their skill and only wants the loot. Returns a short answer for the player. Server side; validates the sender, the card and the state.
+     */
+    public String claimSkill(ServerPlayer p, String id) {
+        if (finished || !fighters.contains(p.getUUID())) return "The Will of the Creator is not waiting for you.";
+        if (claimed.contains(p.getUUID())) return "You have already taken your share.";
+        boolean lootOnly = id == null || id.isEmpty() || id.equals("loot");
+        boolean had = VeldanavaSkills.received(p);
+        if (lootOnly) {
+            if (!had) return "Choose one of the five skills.";
+        } else if (JudgmentRules.card(id) == null) {
+            return "That is not one of the five skills.";
+        } else if (!JudgmentRules.claimable(id)) {
+            return JudgmentRules.card(id).title() + " is still sealed: it comes in a later release.";
+        } else if (had) {
+            return "You already hold a skill from the Creator. Take your loot alone.";
+        } else if (!VeldanavaSkills.grant(p, id)) {
+            return "The skill could not be given.";
         }
         claimed.add(p.getUUID());
         updateWaiting();
@@ -146,6 +178,7 @@ public final class WillOfTheCreator extends Entity {
 
     // ================================================================ the menu (clickable chat lines)
     public void menu(ServerPlayer p) {
+        if (JudgmentConfig.rewardScreen()) { skillMenu(p); return; }
         boolean had = VeldanavaBoons.received(p);
         p.sendSystemMessage(Component.literal("=== Will of the Creator ===").withStyle(ChatFormatting.AQUA, ChatFormatting.BOLD));
         if (had) {
@@ -160,6 +193,27 @@ public final class WillOfTheCreator extends Entity {
             if (b.id() == rec) line.append(Component.literal(" (suits you)").withStyle(ChatFormatting.GREEN));
             p.sendSystemMessage(line);
         }
+    }
+
+    /** 3.13.0: the five skill cards. Opens the screen on a client that has the mod, and always writes the same choice as clickable chat lines (a client without the mod, or a closed screen). */
+    private void skillMenu(ServerPlayer p) {
+        VeldanavaSkillNet.sendOpen(p);
+        p.sendSystemMessage(Component.literal("=== Will of the Creator ===").withStyle(ChatFormatting.AQUA, ChatFormatting.BOLD));
+        if (VeldanavaSkills.received(p)) {
+            p.sendSystemMessage(skillLink("[Take your share]", "loot", "You already hold a skill from the Creator: this takes only your loot."));
+            return;
+        }
+        p.sendSystemMessage(Component.literal("Choose one ultimate skill. It is yours for good, and it can only be chosen once.").withStyle(ChatFormatting.GRAY));
+        for (JudgmentRules.Card c : JudgmentRules.CARDS) {
+            if (!c.available()) { p.sendSystemMessage(Component.literal(c.title() + ", " + c.epithet() + " (sealed: a later release)").withStyle(ChatFormatting.DARK_GRAY)); continue; }
+            p.sendSystemMessage(skillLink("[" + c.title() + ", " + c.epithet() + "]", c.id(), "Take " + c.title() + ", " + c.epithet() + "."));
+        }
+    }
+
+    private static MutableComponent skillLink(String label, String id, String hover) {
+        return Component.literal(label).withStyle(s -> s.withColor(ChatFormatting.GOLD).withBold(true)
+                .withClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/multiverse veldanava skill " + id))
+                .withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, Component.literal(hover))));
     }
 
     private static MutableComponent link(String label, int choice, String hover) {
