@@ -1131,3 +1131,97 @@ LINES.append(Line(
           damage=28, mult=3.2, radius=11, targets=20, cost=0.07, cooldown=14000),
     ],
 ))
+
+# ---------------------------------------------------------------------------------------------------------------- 28 (3.27.0 Evolution skill)
+LINES.append(Line(
+    id="tog_anak_zahard", name="Anak Zahard", franchise=F,
+    desc="Anak Zahard, a half-Princess of Zahard climbing the Tower for revenge: Shinsu-strengthened legs that cover the field in a blink and the Green April, a hook that stretches, whips and splits when it is ignited. What she hooks, she keeps.",
+    color="#5FD0C0", background="forest", icon="minecraft:lead",
+    book_name="Green April: The Half-Princess's Hook", book_lore="A diluted bloodline, a stolen name and one very long hook. The Tower has been warned.",
+    evolution={"requirement": "damage_dealt", "count": 60000,
+               "text": "Deal 60,000 points of damage to hostile creatures while this skill is on to ignite the Green April fully and awaken the Ultimate Skill.",
+               "ultimate_name": "Ultimate Skill, Green April Ignited"},
+    stances=[
+        S("Reinforced Stride", "Pour Shinsu into your legs: you are faster and strike a little harder, but you leave your guard thin.", "minecraft:leather_boots", damage_pct=0.07, speed_pct=0.12, armor=-1, vfx="WIND_RING"),
+        S("Half-Princess Guard", "Plant your feet and keep the hook coiled around you: a firm guard and no knockback, slow to move.", "minecraft:chain", armor=4, knockback_res=0.4, speed_pct=-0.1, vfx="THREAD_LINE"),
+    ],
+    stats=[
+        T("Diluted Zahard Blood", "Only a half-Princess, but the blood still runs strong.", "max_health", 2, "minecraft:golden_apple"),
+        T("Reinforced Legs", "Shinsu in the soles of the feet makes you quick.", "movement_speed", 0.05, "minecraft:iron_boots", op="mult"),
+        T("Hook Mastery", "A long weapon rewards a long reach and a hard pull.", "attack_damage", 1, "minecraft:fishing_rod"),
+        T("Climber's Resolve", "Revenge does not tire; it hardens.", "armor_toughness", 1, "minecraft:emerald"),
+    ],
+    arts=[
+        A("Green April Lash", "Crack the hook along the ground in front of you like a whip.", "ground_wave", "minecraft:vine", vfx="THREAD_LINE", damage=8, length=11, width=2.5),
+        A("Hook Pull", "Throw the hook around the creatures near you and haul them in.", "pull", "minecraft:tripwire_hook", vfx="THREAD_LINE", radius=9, strength=1.1, targets=5, damage=4),
+        A("Foot Reinforcement Dash", "Pour Shinsu into your feet and burst through the foes in front of you.", "dash_strike", "minecraft:golden_boots", vfx="WIND_SLASH", damage=8, distance=10, targets=4),
+        A("Ignition Branches", "Ignite the hook and let it split into branches that lash at the foe you look at.", "barrage", "minecraft:glow_berries", vfx="SPIRIT_AURA", damage=3, shots=8, range=16),
+        A("Half-Princess Ward", "Your diluted royal blood answers: a ward of absorption closes over you.", "shield", "minecraft:totem_of_undying", vfx="MAGIC_CIRCLE", absorb_hearts=5, seconds=8),
+        A("Green April Lash: Shift", "Spin and let the whole length of the hook whip around you in one wide ring.", "ring_burst", "minecraft:green_dye", vfx="WIND_RING", damage=9, radius=6, targets=8, knockback=1.2),
+        A("Hook Pull: Shift", "Strike a foe with the hook and let the blow jump along the line to the next, and the next.", "chain_hit", "minecraft:slime_ball", vfx="THREAD_LINE", damage=7, jumps=5, jump_range=6),
+        A("Foot Reinforcement Dash: Shift", "Coil your legs and throw yourself up and onto the foes, crashing down on them.", "leap_slam", "minecraft:feather", vfx="WIND_TORNADO", height=1.0, damage=9, radius=4),
+    ],
+    passives=[
+        PE("Hooked Vengeance", "Your blows set the hook in the foe: part of the damage is stored and ticks later, and the Ultimate Skill pulls all of it out at once.", "debt_store", "minecraft:lead", store_pct=0.3, tick_seconds=3, max_pct=0.6, hold_seconds=14, vfx="THREAD_LINE",
+          evolved={"store_pct": 0.5, "max_pct": 0.9, "hold_seconds": 22}),
+        PE("Half-Princess", "When you are nearly dead the Zahard blood shields you for a moment.", "last_stand", "minecraft:golden_chestplate", threshold=0.3, seconds=5, rest=3000, evolved={"seconds": 8, "rest": 2000}),
+        PE("Shinsu Legs", "While you sprint your legs carry you faster.", "self_effect_when", "minecraft:iron_boots", effect="speed", condition="sprinting", amp=0, evolved={"amp": 1}),
+        P("Slip the Blow", "You may slip a blow completely.", "dodge", "minecraft:feather", chance=0.1, rest=160),
+        P("Chained Lashes", "Every few blows in a row hit much harder.", "combo", "minecraft:chain", hits=4, bonus=0.5),
+        P("Climber's Finish", "You deal much more damage to nearly dead foes.", "execute_threshold", "minecraft:iron_sword", threshold=0.2, bonus=0.6),
+        P("Running Hook", "You deal more damage while you sprint.", "sprint_bonus", "minecraft:leather_boots", bonus=0.2),
+        P("Hook Venom", "Your blows may sap the foe's strength.", "on_hit_effect", "minecraft:fermented_spider_eye", effect="weakness", seconds=4, chance=0.2),
+    ],
+    finishers=[
+        A("Green April Ignition: Whip Storm", "Ignite the Green April and swing it through the whole line: every foe the whip touches is struck again by the next branch.", "chain_hit", "minecraft:green_dye", vfx="THREAD_LINE", damage=24, jumps=8, jump_range=8, cost=0.06, cooldown=1500),
+        AU("Green April, Full Ignition", "The Green April ignites to its full length and splits into a forest of lashes: every hook set in every foe in range pulls its stored damage out at once.", "debt_burst", "minecraft:lead", vfx="THREAD_LINE",
+          damage=28, mult=3.0, radius=12, targets=20, cost=0.07, cooldown=14500),
+    ],
+))
+
+# ---------------------------------------------------------------------------------------------------------------- 29 (3.27.0 Evolution skill)
+LINES.append(Line(
+    id="tog_rak_wraithraiser", name="Rak Wraithraiser", franchise=F,
+    desc="Rak Wraithraiser, the loud and proud Spear Bearer of the Wraithraiser giants: spears thrown like thunderbolts, the Mad Shocker from the Workshop and a Compression Licenser's trick of shrinking to a handy size and growing back in the middle of a fight.",
+    color="#44AAFF", background="storm", icon="minecraft:trident",
+    book_name="A Giant's Guide to Throwing Spears", book_lore="Page one, in huge letters: if you can hear him, you are already in range.",
+    evolution={"requirement": "arts_cast", "count": 700,
+               "text": "Cast the arts of this skill 700 times to throw the Mad Shocker as a true Spear Bearer and awaken the Ultimate Skill.",
+               "ultimate_name": "Ultimate Skill, Mad Shocker"},
+    stances=[
+        S("Giant's Stance", "Stand at your full Wraithraiser height: your blows land hard and push foes back, but you are slower on your feet.", "minecraft:iron_block", damage_pct=0.16, armor=1, speed_pct=-0.06, vfx="SPIRIT_AURA"),
+        S("Compressed Guard", "Compress yourself to a small, dense frame: nimble and hard to hit, but you give up some power.", "minecraft:iron_nugget", speed_pct=0.1, armor=3, knockback_res=0.25, damage_pct=-0.08, vfx="WIND_RING"),
+    ],
+    stats=[
+        T("Wraithraiser Frame", "A giant's body holds a great deal of life.", "max_health", 3, "minecraft:turtle_helmet"),
+        T("Spear Thrower's Arm", "Years of throwing give your blows weight.", "attack_damage", 1, "minecraft:arrow"),
+        T("Long Reach", "A Spear Bearer fights from the far side of the room.", "entity_interaction_range", 0.5, "minecraft:stick"),
+        T("Giant's Stomp", "Heavy feet land softly.", "safe_fall_distance", 2, "minecraft:turtle_scute"),
+    ],
+    arts=[
+        A("Spear Throw", "Hurl a spear in a straight line through everything in front of you.", "ray_shot", "minecraft:trident", vfx="LIGHTNING_SPEAR", damage=9, range=22, pierce=3),
+        A("Mad Shocker Strike", "Throw the Mad Shocker high and let it drop on the place you look at with a crack of lightning.", "meteor_drop", "minecraft:lightning_rod", vfx="LIGHTNING_SPEAR", damage=14, radius=4.5, delay=20),
+        A("Giant Form", "Grow to full size: you hit harder and shrug off blows for a while.", "buff_self", "minecraft:copper_ingot", vfx="SPIRIT_AURA", effect="strength", effect2="resistance", seconds=14, amp=0),
+        A("Spear Bearer's Boast", "Roar your name across the field: hostile creatures near you turn on you.", "taunt", "minecraft:goat_horn", vfx="WIND_RING", radius=9, targets=6, resist_seconds=3),
+        A("Compression Step", "Shrink, slip forward a short way and grow back to size.", "blink", "minecraft:ender_pearl", vfx="SPATIAL_RIFT", distance=10),
+        A("Spear Throw: Shift", "Loose a volley of spears at the foe you look at.", "barrage", "minecraft:arrow", vfx="LIGHTNING_SPEAR", damage=3, shots=7, range=18),
+        A("Mad Shocker: Shift", "Slam the Mad Shocker into the ground: a ring of shock freezes the foes around you in place.", "stun_ring", "minecraft:copper_block", vfx="LIGHTNING_FIEND", radius=4.5, seconds=2, targets=6),
+        A("Compression: Shift", "Shrink, jump, then grow back mid-fall: a Wraithraiser crashes down on the foes below.", "leap_slam", "minecraft:anvil", vfx="STONE_SPIKES", height=1.1, damage=10, radius=4.5, knockback=1.2),
+    ],
+    passives=[
+        PE("Shock Left Behind", "Your blows leave a charge in the foe: part of the damage is stored and ticks later, and the Ultimate Skill discharges all of it at once.", "debt_store", "minecraft:lightning_rod", store_pct=0.3, tick_seconds=3, max_pct=0.6, hold_seconds=14, vfx="LIGHTNING_SPEAR",
+          evolved={"store_pct": 0.5, "max_pct": 0.9, "hold_seconds": 22}),
+        PE("Giant's Heft", "Your blows may shove the foe back a long way.", "knockback_on_hit", "minecraft:piston", strength=0.5, chance=0.3, evolved={"strength": 0.9, "chance": 0.5}),
+        PE("Thrower's Eye", "Your blows may strike critically.", "crit", "minecraft:spyglass", chance=0.1, mult=1.5, evolved={"chance": 0.22, "mult": 1.9}),
+        P("Proud Warrior's Bravado", "You take less damage while you are in a fight.", "reduce_when", "minecraft:shield", condition="in_combat", pct=0.08),
+        P("Bigger Than You", "You deal more damage to bosses.", "dmg_vs", "minecraft:netherite_sword", category="boss", bonus=0.2),
+        P("Victory Roar", "Each kill restores some health.", "kill_reward", "minecraft:goat_horn", heal=3, effect="none"),
+        P("Ancient Endurance", "Your wounds close over time, even out of combat.", "mending", "minecraft:turtle_scute", seconds=20, amount=1),
+        P("Heavy Landing", "You take much less fall damage.", "fall_guard", "minecraft:anvil", pct=0.5),
+    ],
+    finishers=[
+        A("Mad Shocker: Thunderclap Throw", "Throw the Mad Shocker with the whole body: one great spear of lightning tears through every foe in line.", "ray_shot", "minecraft:trident", vfx="LIGHTNING_SPEAR", damage=26, range=28, pierce=6, cost=0.06, cooldown=1500),
+        AU("Mad Shocker", "Every charge the Mad Shocker left in every foe in range goes off at once: the stored wounds crack out together in a storm of lightning spears.", "debt_burst", "minecraft:lightning_rod", vfx="LIGHTNING_SPEAR",
+          damage=26, mult=2.8, radius=11, targets=20, cost=0.07, cooldown=13500),
+    ],
+))
