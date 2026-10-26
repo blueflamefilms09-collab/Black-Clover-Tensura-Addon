@@ -1,0 +1,1274 @@
+{
+  "magic": "god_of_high_school",
+  "franchise": "god_of_high_school",
+  "name": "Ilpyo's Family Blade",
+  "desc": "Park Ilpyo's sword of the Park family, drawn on Ssam-su Taekkyeon footwork and lit by the fox flame of the Nine-Tails Guardian. Cut down enough foes and the ninth tail is let loose.",
+  "book": "nusmp:goh_ilpyo_sword_book",
+  "book_name": "Park Family Blade Record",
+  "book_lore": "Every page is a name struck through in silver ink; the last one is singed at the edge, and nine thin fox hairs are pressed into the spine.",
+  "color": "#D0D8E0",
+  "icon": "minecraft:iron_sword",
+  "class_id": "goh_ilpyo_sword",
+  "duplicate_sp": 3,
+  "loot_weight": 1,
+  "nodes": [
+    {
+      "id": "taekkyeon_sway_stance",
+      "name": "Taekkyeon Sway Stance",
+      "desc": "Rock on the balls of your feet with the blade low, as Taekkyeon does: quick, evasive and a little reckless.",
+      "parents": [],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "WIND_RING"
+      },
+      "values": {
+        "damage_pct": [
+          0.03,
+          0.036,
+          0.042
+        ],
+        "armor": [
+          -1.0,
+          -1.25,
+          -1.5
+        ],
+        "speed_pct": [
+          0.07,
+          0.084,
+          0.098
+        ],
+        "knockback_res": [
+          0,
+          0,
+          0
+        ],
+        "regen": [
+          0,
+          0,
+          0
+        ],
+        "crit_chance": [
+          0.05,
+          0.06,
+          0.07
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 0,
+      "icon": "minecraft:iron_sword"
+    },
+    {
+      "id": "nine_tails_guard",
+      "name": "Nine-Tails Guard",
+      "desc": "Let the fox flame wrap the blade and your arms: firm armor and footing, but slow to move.",
+      "parents": [
+        {
+          "node": "taekkyeon_sway_stance",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "FIRE_SPIRAL"
+      },
+      "values": {
+        "damage_pct": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "armor": [
+          3.0,
+          3.75,
+          4.5
+        ],
+        "speed_pct": [
+          -0.1,
+          -0.12,
+          -0.14
+        ],
+        "knockback_res": [
+          0.4,
+          0.48,
+          0.56
+        ],
+        "regen": [
+          0.5,
+          0.6,
+          0.7
+        ],
+        "crit_chance": [
+          0,
+          0,
+          0
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 2,
+      "icon": "minecraft:blaze_powder"
+    },
+    {
+      "id": "family_blade_edge",
+      "name": "Family Blade Edge",
+      "desc": "A sword that has been kept in the Park family for generations.",
+      "parents": [
+        {
+          "node": "taekkyeon_sway_stance",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "attack_damage",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          1.0,
+          1.25,
+          1.5,
+          1.75,
+          2.0
+        ]
+      },
+      "x": 2,
+      "y": 0,
+      "icon": "minecraft:iron_sword"
+    },
+    {
+      "id": "taekkyeon_footwork",
+      "name": "Taekkyeon Footwork",
+      "desc": "The Taekkyeon beat is in your heels.",
+      "parents": [
+        {
+          "node": "nine_tails_guard",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "movement_speed",
+        "op": "mult"
+      },
+      "values": {
+        "amount": [
+          0.04,
+          0.05,
+          0.06,
+          0.07,
+          0.08
+        ]
+      },
+      "x": 2,
+      "y": 2,
+      "icon": "minecraft:leather_boots"
+    },
+    {
+      "id": "flexible_frame",
+      "name": "Flexible Frame",
+      "desc": "A body bent far past ordinary limits swings the blade faster.",
+      "parents": [
+        {
+          "node": "taekkyeon_sway_stance",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "attack_speed",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          0.2,
+          0.25,
+          0.3,
+          0.35,
+          0.4
+        ]
+      },
+      "x": 2,
+      "y": 4,
+      "icon": "minecraft:feather"
+    },
+    {
+      "id": "fox_eyed_reach",
+      "name": "Fox-Eyed Reach",
+      "desc": "You judge a foe's distance like a fox.",
+      "parents": [
+        {
+          "node": "nine_tails_guard",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "entity_interaction_range",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          0.5,
+          0.625,
+          0.75,
+          0.875,
+          1.0
+        ]
+      },
+      "x": 2,
+      "y": 6,
+      "icon": "minecraft:spyglass"
+    },
+    {
+      "id": "family_blade_draw",
+      "name": "Family Blade Draw",
+      "desc": "Draw the blade in one breath and cut a wide arc across the cone in front of you.",
+      "parents": [
+        {
+          "node": "taekkyeon_sway_stance",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "cone_strike",
+      "params": {
+        "vfx": "WIND_SLASH"
+      },
+      "values": {
+        "damage": [
+          8.0,
+          10.0,
+          12.0,
+          14.0
+        ],
+        "range": [
+          4.0,
+          4.32,
+          4.64,
+          4.96
+        ],
+        "half_angle": [
+          50.0,
+          55.0,
+          60.0,
+          65.0
+        ],
+        "targets": [
+          4.0,
+          6.0,
+          7.0,
+          9.0
+        ],
+        "knockback": [
+          0.4,
+          0.44,
+          0.48,
+          0.52
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          100.0,
+          92.0,
+          84.0,
+          76.0
+        ]
+      },
+      "x": 4,
+      "y": 0,
+      "icon": "minecraft:iron_sword"
+    },
+    {
+      "id": "family_blade_draw_shift",
+      "name": "Family Blade Draw: Shift",
+      "desc": "Crouch to let the cut skip from foe to foe, each a little weaker than the last.",
+      "parents": [
+        {
+          "node": "nine_tails_guard",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "chain_hit",
+      "params": {
+        "vfx": "WIND_SLASH"
+      },
+      "values": {
+        "damage": [
+          7.0,
+          8.75,
+          10.5,
+          12.25
+        ],
+        "jumps": [
+          4.0,
+          6.0,
+          7.0,
+          9.0
+        ],
+        "jump_range": [
+          6.0,
+          6.0,
+          7.0,
+          7.0
+        ],
+        "falloff": [
+          0.15,
+          0.15,
+          0.15,
+          0.15
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          160.0,
+          147.0,
+          134.0,
+          122.0
+        ]
+      },
+      "x": 4,
+      "y": 2,
+      "icon": "minecraft:iron_nugget"
+    },
+    {
+      "id": "falling_leaf_inferno",
+      "name": "Falling Leaf Inferno",
+      "desc": "Spin through the foes around you, the blade leaving leaves of fire in its wake.",
+      "parents": [
+        {
+          "node": "family_blade_draw",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "whirlwind",
+      "params": {
+        "vfx": "FIRE_SPIRAL"
+      },
+      "values": {
+        "damage": [
+          3.0,
+          3.75,
+          4.5,
+          5.25
+        ],
+        "radius": [
+          4.0,
+          4.32,
+          4.64,
+          4.96
+        ],
+        "hits": [
+          4.0,
+          5.0,
+          6.0,
+          8.0
+        ],
+        "interval": [
+          5.0,
+          5.0,
+          5.0,
+          5.0
+        ],
+        "cost": [
+          0.025,
+          0.027,
+          0.029,
+          0.031
+        ],
+        "cooldown": [
+          260.0,
+          239.0,
+          218.0,
+          198.0
+        ]
+      },
+      "x": 6,
+      "y": 0,
+      "icon": "minecraft:fire_charge"
+    },
+    {
+      "id": "falling_leaf_inferno_shift",
+      "name": "Falling Leaf Inferno: Shift",
+      "desc": "Crouch to leap high and come down in a ring of burning leaves.",
+      "parents": [
+        {
+          "node": "family_blade_draw_shift",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "leap_slam",
+      "params": {
+        "vfx": "FLAME_EXPLOSION"
+      },
+      "values": {
+        "height": [
+          1.0,
+          1.08,
+          1.16,
+          1.24
+        ],
+        "damage": [
+          8.0,
+          10.0,
+          12.0,
+          14.0
+        ],
+        "radius": [
+          3.5,
+          3.85,
+          4.2,
+          4.55
+        ],
+        "knockback": [
+          0.7,
+          0.77,
+          0.84,
+          0.91
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          200.0,
+          184.0,
+          168.0,
+          152.0
+        ]
+      },
+      "x": 6,
+      "y": 2,
+      "icon": "minecraft:campfire"
+    },
+    {
+      "id": "third_stance_hwachook",
+      "name": "Third Stance Hwachook",
+      "desc": "Burn forward on the third Taekkyeon stance, hitting everything in your path.",
+      "parents": [
+        {
+          "node": "falling_leaf_inferno",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "dash_strike",
+      "params": {
+        "vfx": "FLAME_TRAIL"
+      },
+      "values": {
+        "distance": [
+          9.0,
+          9.9,
+          10.8,
+          11.7
+        ],
+        "damage": [
+          8.0,
+          10.0,
+          12.0,
+          14.0
+        ],
+        "targets": [
+          4.0,
+          5.0,
+          6.0,
+          8.0
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          120.0,
+          110.0,
+          101.0,
+          91.0
+        ]
+      },
+      "x": 8,
+      "y": 0,
+      "icon": "minecraft:golden_boots"
+    },
+    {
+      "id": "third_stance_hwachook_shift",
+      "name": "Third Stance Hwachook: Shift",
+      "desc": "Crouch to hook the blade up under the foe and fling it into the air.",
+      "parents": [
+        {
+          "node": "falling_leaf_inferno_shift",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "uppercut",
+      "params": {
+        "vfx": "FLAME_TRAIL"
+      },
+      "values": {
+        "damage": [
+          8.0,
+          10.0,
+          12.0,
+          14.0
+        ],
+        "range": [
+          3.2,
+          3.392,
+          3.584,
+          3.776
+        ],
+        "launch": [
+          0.8,
+          0.88,
+          0.96,
+          1.04
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          120.0,
+          110.0,
+          101.0,
+          91.0
+        ]
+      },
+      "x": 8,
+      "y": 2,
+      "icon": "minecraft:blaze_rod"
+    },
+    {
+      "id": "pumbalgi_step",
+      "name": "Pumbalgi Step",
+      "desc": "Step on the Taekkyeon beat and slip a short way ahead.",
+      "parents": [
+        {
+          "node": "third_stance_hwachook",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "blink",
+      "params": {
+        "vfx": "WIND_RING"
+      },
+      "values": {
+        "distance": [
+          8.0,
+          8.96,
+          9.92,
+          10.88
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          140.0,
+          129.0,
+          118.0,
+          106.0
+        ]
+      },
+      "x": 10,
+      "y": 0,
+      "icon": "minecraft:rabbit_foot"
+    },
+    {
+      "id": "fox_fire_volley",
+      "name": "Fox-Fire Volley",
+      "desc": "Loose a volley of small fox flames at the foe you look at.",
+      "parents": [
+        {
+          "node": "third_stance_hwachook_shift",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "barrage",
+      "params": {
+        "vfx": "FIRE_SPIRAL"
+      },
+      "values": {
+        "damage": [
+          3.0,
+          3.75,
+          4.5,
+          5.25
+        ],
+        "shots": [
+          6.0,
+          8.0,
+          10.0,
+          12.0
+        ],
+        "range": [
+          14.0,
+          15.12,
+          16.24,
+          17.36
+        ],
+        "interval": [
+          3.0,
+          3.0,
+          3.0,
+          3.0
+        ],
+        "cost": [
+          0.025,
+          0.027,
+          0.029,
+          0.031
+        ],
+        "cooldown": [
+          240.0,
+          221.0,
+          202.0,
+          182.0
+        ]
+      },
+      "x": 10,
+      "y": 6,
+      "icon": "minecraft:blaze_powder"
+    },
+    {
+      "id": "silver_ledger",
+      "name": "Silver Ledger",
+      "desc": "Your cuts store part of their damage on the foe as Debt: it ticks while it waits, and your Ultimate calls it in.",
+      "parents": [
+        {
+          "node": "family_blade_draw",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "debt_store",
+      "params": {
+        "vfx": "FIRE_SPIRAL"
+      },
+      "values": {
+        "store_pct": [
+          0.25,
+          0.3,
+          0.35,
+          0.4
+        ],
+        "tick_seconds": [
+          3.0,
+          3.0,
+          3.0,
+          3.0
+        ],
+        "max_pct": [
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ],
+        "hold_seconds": [
+          12.0,
+          12.0,
+          12.0,
+          12.0
+        ]
+      },
+      "x": 10,
+      "y": 2,
+      "icon": "minecraft:iron_ingot",
+      "evolved": {
+        "store_pct": 0.4,
+        "max_pct": 0.7,
+        "hold_seconds": 20
+      }
+    },
+    {
+      "id": "taekkyeon_rhythm",
+      "name": "Taekkyeon Rhythm",
+      "desc": "Blows in a row grow stronger until you stop fighting.",
+      "parents": [
+        {
+          "node": "family_blade_draw_shift",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "momentum",
+      "values": {
+        "per_stack": [
+          0.04,
+          0.046,
+          0.052,
+          0.058
+        ],
+        "max_stacks": [
+          6.0,
+          8.0,
+          10.0,
+          11.0
+        ]
+      },
+      "x": 10,
+      "y": 4,
+      "icon": "minecraft:clock",
+      "evolved": {
+        "per_stack": 0.07,
+        "max_stacks": 9
+      }
+    },
+    {
+      "id": "sway_away",
+      "name": "Sway Away",
+      "desc": "You may sway out of a blow completely.",
+      "parents": [
+        {
+          "node": "falling_leaf_inferno",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "dodge",
+      "values": {
+        "chance": [
+          0.1,
+          0.12,
+          0.14,
+          0.16
+        ],
+        "rest": [
+          100.0,
+          90.0,
+          80.0,
+          70.0
+        ]
+      },
+      "x": 12,
+      "y": 0,
+      "icon": "minecraft:feather"
+    },
+    {
+      "id": "fox_flame_skin",
+      "name": "Fox-Flame Skin",
+      "desc": "The Nine-Tails flame blunts fire.",
+      "parents": [
+        {
+          "node": "falling_leaf_inferno_shift",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "resist",
+      "params": {
+        "damage_kind": "fire"
+      },
+      "values": {
+        "pct": [
+          0.2,
+          0.24,
+          0.28,
+          0.32
+        ]
+      },
+      "x": 12,
+      "y": 2,
+      "icon": "minecraft:magma_cream",
+      "evolved": {
+        "pct": 0.45
+      }
+    },
+    {
+      "id": "silver_thirst",
+      "name": "Silver Thirst",
+      "desc": "Your blade drinks a share of the damage it deals.",
+      "parents": [
+        {
+          "node": "third_stance_hwachook",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "lifesteal",
+      "values": {
+        "pct": [
+          0.05,
+          0.06,
+          0.07,
+          0.08
+        ]
+      },
+      "x": 14,
+      "y": 0,
+      "icon": "minecraft:redstone",
+      "evolved": {
+        "pct": 0.1
+      }
+    },
+    {
+      "id": "tally_of_names",
+      "name": "Tally of Names",
+      "desc": "Every kill restores some health and quickens your step.",
+      "parents": [
+        {
+          "node": "third_stance_hwachook_shift",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "kill_reward",
+      "params": {
+        "effect": "speed"
+      },
+      "values": {
+        "heal": [
+          3.0,
+          3.75,
+          4.5,
+          5.25
+        ],
+        "seconds": [
+          4.0,
+          5.0,
+          5.0,
+          6.0
+        ],
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "x": 14,
+      "y": 2,
+      "icon": "minecraft:name_tag"
+    },
+    {
+      "id": "shoving_cut",
+      "name": "Shoving Cut",
+      "desc": "Your blows may shove the foe back.",
+      "parents": [
+        {
+          "node": "pumbalgi_step",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "knockback_on_hit",
+      "values": {
+        "strength": [
+          0.4,
+          0.46,
+          0.52,
+          0.58
+        ],
+        "chance": [
+          0.3,
+          0.345,
+          0.39,
+          0.435
+        ]
+      },
+      "x": 16,
+      "y": 0,
+      "icon": "minecraft:piston"
+    },
+    {
+      "id": "foxfire_veil",
+      "name": "Foxfire Veil",
+      "desc": "Fire clings to the blade while you fight, searing the foe.",
+      "parents": [
+        {
+          "node": "fox_fire_volley",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "on_hit_effect",
+      "params": {
+        "effect": "wither"
+      },
+      "values": {
+        "seconds": [
+          3.0,
+          3.0,
+          4.0,
+          4.0
+        ],
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "chance": [
+          0.2,
+          0.24,
+          0.28,
+          0.32
+        ]
+      },
+      "x": 16,
+      "y": 2,
+      "icon": "minecraft:flint_and_steel"
+    },
+    {
+      "id": "triple_destruction_infernal_fang",
+      "name": "Triple Destruction Infernal Fang",
+      "desc": "Three fox-fang cuts in one breath rip a huge cone of fire in front of you.",
+      "parents": [
+        {
+          "node": "fox_fire_volley",
+          "level": 3
+        },
+        {
+          "node": "foxfire_veil",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "cone_strike",
+      "params": {
+        "vfx": "FLAME_EXPLOSION"
+      },
+      "values": {
+        "damage": [
+          28.0,
+          35.0,
+          42.0
+        ],
+        "range": [
+          5.5,
+          5.94,
+          6.38
+        ],
+        "half_angle": [
+          70.0,
+          77.0,
+          80
+        ],
+        "targets": [
+          9.0,
+          12.0,
+          12.0
+        ],
+        "knockback": [
+          1.2,
+          1.32,
+          1.44
+        ],
+        "cost": [
+          0.06,
+          0.0648,
+          0.0696
+        ],
+        "cooldown": [
+          1700.0,
+          1564.0,
+          1428.0
+        ]
+      },
+      "x": 16,
+      "y": 4,
+      "icon": "minecraft:netherite_sword"
+    },
+    {
+      "id": "ninth_tail_unleashed",
+      "name": "Ninth Tail Unleashed",
+      "desc": "Let the ninth tail loose: white hair, fox eyes and a flame that finds every foe around you, calling in all the Debt stored in them at once.",
+      "parents": [
+        {
+          "node": "pumbalgi_step",
+          "level": 3
+        },
+        {
+          "node": "shoving_cut",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "debt_burst",
+      "params": {
+        "vfx": "FIRE_SPIRAL"
+      },
+      "values": {
+        "damage": [
+          28.0,
+          35.0,
+          42.0
+        ],
+        "mult": [
+          2.4,
+          2.64,
+          2.88
+        ],
+        "radius": [
+          9.0,
+          9.9,
+          10.8
+        ],
+        "targets": [
+          20.0,
+          20.0,
+          20.0
+        ],
+        "cost": [
+          0.07,
+          0.0756,
+          0.0812
+        ],
+        "cooldown": [
+          15000.0,
+          13800.0,
+          12600.0
+        ]
+      },
+      "x": 16,
+      "y": 6,
+      "icon": "minecraft:nether_star",
+      "ultimate": true
+    }
+  ],
+  "evolution": {
+    "requirement": "kills",
+    "count": 1500,
+    "text": "Defeat 1500 foes while this skill is on: the Nine-Tails Guardian answers and the Ninth Tail Unleashed opens.",
+    "ultimate_name": "Ultimate Skill, Ninth Tail Unleashed"
+  }
+}
