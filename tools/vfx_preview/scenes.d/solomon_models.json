@@ -1,0 +1,1271 @@
+{
+ "_comment": "Solomon 3D models (SolomonModels, SolomonMeshDraw, textures/particle/solomon_model_atlas.png): close-ups of every model and normal-camera scenes of every effect that carries one. Pillar scenes use packSeed(12345, 18) = 12944670738 and packSeed(12345, 72) = 12944670792. Written for the preview only; the game reads nothing here.",
+ "solomon_models_pillar_close": {
+  "layer": "SolomonLayer",
+  "shape": "SOLOMON_PILLAR",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   1,
+   0
+  ],
+  "power": 6,
+  "duration": 120,
+  "sky": [
+   0.05,
+   0.04,
+   0.17
+  ],
+  "horizon": [
+   0.22,
+   0.16,
+   0.42
+  ],
+  "floor": [
+   0.12,
+   0.1,
+   0.22
+  ],
+  "cam": [
+   5.5,
+   2.4,
+   -9.5
+  ],
+  "target": [
+   0,
+   1.7,
+   0
+  ],
+  "ages": [
+   8,
+   14,
+   20,
+   28,
+   40,
+   60,
+   100,
+   114
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ],
+  "seed": 12944670738
+ },
+ "solomon_models_pillar_detail": {
+  "layer": "SolomonLayer",
+  "shape": "SOLOMON_PILLAR",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   1,
+   0
+  ],
+  "power": 6,
+  "duration": 120,
+  "sky": [
+   0.05,
+   0.04,
+   0.17
+  ],
+  "horizon": [
+   0.22,
+   0.16,
+   0.42
+  ],
+  "floor": [
+   0.12,
+   0.1,
+   0.22
+  ],
+  "cam": [
+   1.2,
+   2.6,
+   -7.0
+  ],
+  "target": [
+   0.5,
+   2.3,
+   -4.0
+  ],
+  "ages": [
+   14,
+   20,
+   26,
+   34,
+   60,
+   112
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ],
+  "seed": 12944670738
+ },
+ "solomon_models_pillar": {
+  "layer": "SolomonLayer",
+  "shape": "SOLOMON_PILLAR",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   1,
+   0
+  ],
+  "power": 6,
+  "duration": 120,
+  "sky": [
+   0.05,
+   0.04,
+   0.17
+  ],
+  "horizon": [
+   0.22,
+   0.16,
+   0.42
+  ],
+  "floor": [
+   0.12,
+   0.1,
+   0.22
+  ],
+  "cam": [
+   2,
+   6,
+   -20
+  ],
+  "target": [
+   0,
+   3,
+   0
+  ],
+  "ages": [
+   10,
+   20,
+   34,
+   58,
+   90,
+   116
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ],
+  "seed": 12944670738
+ },
+ "solomon_models_pillar_72": {
+  "layer": "SolomonLayer",
+  "shape": "SOLOMON_PILLAR",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   1,
+   0
+  ],
+  "power": 6,
+  "duration": 120,
+  "sky": [
+   0.05,
+   0.04,
+   0.17
+  ],
+  "horizon": [
+   0.22,
+   0.16,
+   0.42
+  ],
+  "floor": [
+   0.12,
+   0.1,
+   0.22
+  ],
+  "cam": [
+   4,
+   5,
+   -17
+  ],
+  "target": [
+   0,
+   3,
+   0
+  ],
+  "ages": [
+   10,
+   30,
+   50,
+   70,
+   100,
+   118
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ],
+  "seed": 12944670792
+ },
+ "solomon_models_pillar_far": {
+  "layer": "SolomonLayer",
+  "shape": "SOLOMON_PILLAR",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   1,
+   0
+  ],
+  "power": 6,
+  "duration": 120,
+  "sky": [
+   0.05,
+   0.04,
+   0.17
+  ],
+  "horizon": [
+   0.22,
+   0.16,
+   0.42
+  ],
+  "floor": [
+   0.12,
+   0.1,
+   0.22
+  ],
+  "cam": [
+   0,
+   14,
+   -62
+  ],
+  "target": [
+   0,
+   2,
+   0
+  ],
+  "ages": [
+   20,
+   50,
+   70,
+   100
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ],
+  "seed": 12944670738
+ },
+ "solomon_models_copy_close": {
+  "layer": "SolomonLayer",
+  "shape": "SOLOMON_COPY",
+  "from": [
+   0,
+   0.9,
+   0
+  ],
+  "to": [
+   0,
+   0.9,
+   0
+  ],
+  "power": 1,
+  "duration": 30,
+  "sky": [
+   0.05,
+   0.04,
+   0.17
+  ],
+  "horizon": [
+   0.22,
+   0.16,
+   0.42
+  ],
+  "floor": [
+   0.12,
+   0.1,
+   0.22
+  ],
+  "cam": [
+   1.4,
+   1.6,
+   -3.2
+  ],
+  "target": [
+   -0.2,
+   1.2,
+   -0.8
+  ],
+  "ages": [
+   6,
+   9,
+   12,
+   15,
+   18,
+   21,
+   24,
+   27
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "solomon_models_copy": {
+  "layer": "SolomonLayer",
+  "shape": "SOLOMON_COPY",
+  "from": [
+   0,
+   0.9,
+   0
+  ],
+  "to": [
+   -5.5,
+   0.9,
+   -1
+  ],
+  "power": 1,
+  "duration": 30,
+  "sky": [
+   0.05,
+   0.04,
+   0.17
+  ],
+  "horizon": [
+   0.22,
+   0.16,
+   0.42
+  ],
+  "floor": [
+   0.12,
+   0.1,
+   0.22
+  ],
+  "cam": [
+   -2.8,
+   1.9,
+   -5.2
+  ],
+  "target": [
+   -2.8,
+   1.2,
+   0
+  ],
+  "ages": [
+   2,
+   8,
+   13,
+   17,
+   22,
+   27
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ],
+   [
+    -5.5,
+    0,
+    -1,
+    1.8
+   ]
+  ]
+ },
+ "solomon_models_realm_close": {
+  "layer": "SolomonLayer",
+  "shape": "SOLOMON_REALM",
+  "from": [
+   0,
+   0.9,
+   0
+  ],
+  "to": [
+   0,
+   0.9,
+   0
+  ],
+  "power": 40,
+  "duration": 100,
+  "sky": [
+   0.05,
+   0.04,
+   0.17
+  ],
+  "horizon": [
+   0.22,
+   0.16,
+   0.42
+  ],
+  "floor": [
+   0.12,
+   0.1,
+   0.22
+  ],
+  "cam": [
+   1.6,
+   4.5,
+   -5.0
+  ],
+  "target": [
+   0,
+   4.1,
+   0
+  ],
+  "ages": [
+   10,
+   14,
+   18,
+   24,
+   30,
+   36,
+   60,
+   84
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "solomon_models_realm": {
+  "layer": "SolomonLayer",
+  "shape": "SOLOMON_REALM",
+  "from": [
+   0,
+   0.9,
+   0
+  ],
+  "to": [
+   0,
+   0.9,
+   0
+  ],
+  "power": 40,
+  "duration": 100,
+  "sky": [
+   0.05,
+   0.04,
+   0.17
+  ],
+  "horizon": [
+   0.22,
+   0.16,
+   0.42
+  ],
+  "floor": [
+   0.12,
+   0.1,
+   0.22
+  ],
+  "cam": [
+   0,
+   5,
+   -12
+  ],
+  "target": [
+   0,
+   2,
+   12
+  ],
+  "ages": [
+   8,
+   14,
+   40,
+   70,
+   96
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "solomon_models_realm_far": {
+  "layer": "SolomonLayer",
+  "shape": "SOLOMON_REALM",
+  "from": [
+   0,
+   0.9,
+   0
+  ],
+  "to": [
+   0,
+   0.9,
+   0
+  ],
+  "power": 40,
+  "duration": 100,
+  "sky": [
+   0.05,
+   0.04,
+   0.17
+  ],
+  "horizon": [
+   0.22,
+   0.16,
+   0.42
+  ],
+  "floor": [
+   0.12,
+   0.1,
+   0.22
+  ],
+  "cam": [
+   0,
+   16,
+   -34
+  ],
+  "target": [
+   0,
+   2,
+   0
+  ],
+  "ages": [
+   14,
+   40,
+   70
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "solomon_models_chain_close": {
+  "layer": "SolomonLayer",
+  "shape": "SOLOMON_CHAIN",
+  "from": [
+   0,
+   0.9,
+   0
+  ],
+  "to": [
+   2,
+   1.2,
+   9
+  ],
+  "power": 1,
+  "duration": 24,
+  "sky": [
+   0.05,
+   0.04,
+   0.17
+  ],
+  "horizon": [
+   0.22,
+   0.16,
+   0.42
+  ],
+  "floor": [
+   0.12,
+   0.1,
+   0.22
+  ],
+  "cam": [
+   -6.0,
+   2.2,
+   4.5
+  ],
+  "target": [
+   1.0,
+   1.3,
+   4.5
+  ],
+  "ages": [
+   5,
+   8,
+   11,
+   14,
+   17,
+   20
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "solomon_models_chain_head": {
+  "layer": "SolomonLayer",
+  "shape": "SOLOMON_CHAIN",
+  "from": [
+   0,
+   0.9,
+   0
+  ],
+  "to": [
+   2,
+   1.2,
+   9
+  ],
+  "power": 1,
+  "duration": 24,
+  "sky": [
+   0.05,
+   0.04,
+   0.17
+  ],
+  "horizon": [
+   0.22,
+   0.16,
+   0.42
+  ],
+  "floor": [
+   0.12,
+   0.1,
+   0.22
+  ],
+  "cam": [
+   -3.2,
+   1.9,
+   7.6
+  ],
+  "target": [
+   1.6,
+   1.2,
+   8.6
+  ],
+  "ages": [
+   9,
+   12,
+   16,
+   18,
+   20,
+   22
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "solomon_models_chain": {
+  "layer": "SolomonLayer",
+  "shape": "SOLOMON_CHAIN",
+  "from": [
+   0,
+   0.9,
+   0
+  ],
+  "to": [
+   2,
+   1.2,
+   9
+  ],
+  "power": 1,
+  "duration": 24,
+  "sky": [
+   0.05,
+   0.04,
+   0.17
+  ],
+  "horizon": [
+   0.22,
+   0.16,
+   0.42
+  ],
+  "floor": [
+   0.12,
+   0.1,
+   0.22
+  ],
+  "cam": [
+   -7,
+   2.6,
+   2.0
+  ],
+  "target": [
+   1,
+   1.2,
+   4.5
+  ],
+  "ages": [
+   2,
+   5,
+   9,
+   12,
+   16,
+   21
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "solomon_models_chain_back": {
+  "layer": "SolomonLayer",
+  "shape": "SOLOMON_CHAIN",
+  "from": [
+   0,
+   0.9,
+   0
+  ],
+  "to": [
+   0,
+   1.2,
+   10
+  ],
+  "power": 1,
+  "duration": 24,
+  "sky": [
+   0.05,
+   0.04,
+   0.17
+  ],
+  "horizon": [
+   0.22,
+   0.16,
+   0.42
+  ],
+  "floor": [
+   0.12,
+   0.1,
+   0.22
+  ],
+  "cam": [
+   -1.8,
+   2.0,
+   -5.0
+  ],
+  "target": [
+   1,
+   1.2,
+   5.5
+  ],
+  "ages": [
+   3,
+   6,
+   9,
+   13,
+   17,
+   22
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "solomon_models_chain_long": {
+  "layer": "SolomonLayer",
+  "shape": "SOLOMON_CHAIN",
+  "from": [
+   0,
+   0.9,
+   0
+  ],
+  "to": [
+   3,
+   1.2,
+   12
+  ],
+  "power": 1,
+  "duration": 24,
+  "sky": [
+   0.05,
+   0.04,
+   0.17
+  ],
+  "horizon": [
+   0.22,
+   0.16,
+   0.42
+  ],
+  "floor": [
+   0.12,
+   0.1,
+   0.22
+  ],
+  "cam": [
+   -6,
+   3.2,
+   -1.5
+  ],
+  "target": [
+   1.5,
+   1.3,
+   6.5
+  ],
+  "ages": [
+   4,
+   8,
+   12,
+   16,
+   20,
+   23
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "solomon_models_mark_close": {
+  "layer": "SolomonLayer",
+  "shape": "SOLOMON_MARK",
+  "from": [
+   0,
+   0.9,
+   0
+  ],
+  "to": [
+   0,
+   0.9,
+   0
+  ],
+  "power": 1.5,
+  "duration": 40,
+  "sky": [
+   0.05,
+   0.04,
+   0.17
+  ],
+  "horizon": [
+   0.22,
+   0.16,
+   0.42
+  ],
+  "floor": [
+   0.12,
+   0.1,
+   0.22
+  ],
+  "cam": [
+   1.7,
+   2.3,
+   -3.0
+  ],
+  "target": [
+   0,
+   1.8,
+   0
+  ],
+  "ages": [
+   3,
+   6,
+   10,
+   16,
+   22,
+   28,
+   34,
+   38
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "solomon_models_mark_ring": {
+  "layer": "SolomonLayer",
+  "shape": "SOLOMON_MARK",
+  "from": [
+   0,
+   0.9,
+   0
+  ],
+  "to": [
+   0,
+   0.9,
+   0
+  ],
+  "power": 1.5,
+  "duration": 40,
+  "sky": [
+   0.05,
+   0.04,
+   0.17
+  ],
+  "horizon": [
+   0.22,
+   0.16,
+   0.42
+  ],
+  "floor": [
+   0.12,
+   0.1,
+   0.22
+  ],
+  "cam": [
+   1.0,
+   2.5,
+   -2.2
+  ],
+  "target": [
+   0,
+   2.3,
+   0
+  ],
+  "ages": [
+   12,
+   18,
+   24,
+   28,
+   32,
+   36
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "solomon_models_mark": {
+  "layer": "SolomonLayer",
+  "shape": "SOLOMON_MARK",
+  "from": [
+   0,
+   0.9,
+   0
+  ],
+  "to": [
+   0,
+   0.9,
+   0
+  ],
+  "power": 1.5,
+  "duration": 40,
+  "sky": [
+   0.05,
+   0.04,
+   0.17
+  ],
+  "horizon": [
+   0.22,
+   0.16,
+   0.42
+  ],
+  "floor": [
+   0.12,
+   0.1,
+   0.22
+  ],
+  "cam": [
+   2.2,
+   1.7,
+   -3.6
+  ],
+  "target": [
+   0,
+   0.9,
+   0
+  ],
+  "ages": [
+   3,
+   7,
+   10,
+   16,
+   28,
+   37
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "solomon_models_convergence_close": {
+  "layer": "SolomonLayer",
+  "shape": "SOLOMON_CONVERGENCE",
+  "from": [
+   0,
+   0.9,
+   0
+  ],
+  "to": [
+   0,
+   0.9,
+   0
+  ],
+  "power": 30,
+  "duration": 30,
+  "sky": [
+   0.05,
+   0.04,
+   0.17
+  ],
+  "horizon": [
+   0.22,
+   0.16,
+   0.42
+  ],
+  "floor": [
+   0.12,
+   0.1,
+   0.22
+  ],
+  "cam": [
+   1.8,
+   1.6,
+   -3.4
+  ],
+  "target": [
+   0,
+   1.1,
+   0
+  ],
+  "ages": [
+   4,
+   8,
+   11,
+   14,
+   17,
+   20,
+   23
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "solomon_models_convergence": {
+  "layer": "SolomonLayer",
+  "shape": "SOLOMON_CONVERGENCE",
+  "from": [
+   0,
+   0.9,
+   0
+  ],
+  "to": [
+   0,
+   0.9,
+   0
+  ],
+  "power": 30,
+  "duration": 30,
+  "sky": [
+   0.05,
+   0.04,
+   0.17
+  ],
+  "horizon": [
+   0.22,
+   0.16,
+   0.42
+  ],
+  "floor": [
+   0.12,
+   0.1,
+   0.22
+  ],
+  "cam": [
+   0,
+   8,
+   -21
+  ],
+  "target": [
+   0,
+   0.5,
+   0
+  ],
+  "ages": [
+   3,
+   8,
+   12,
+   15,
+   19,
+   26
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "solomon_models_erasure_close": {
+  "layer": "SolomonLayer",
+  "shape": "SOLOMON_ERASURE",
+  "from": [
+   0,
+   0.9,
+   0
+  ],
+  "to": [
+   0,
+   0.9,
+   0
+  ],
+  "power": 40,
+  "duration": 30,
+  "sky": [
+   0.05,
+   0.04,
+   0.17
+  ],
+  "horizon": [
+   0.22,
+   0.16,
+   0.42
+  ],
+  "floor": [
+   0.12,
+   0.1,
+   0.22
+  ],
+  "cam": [
+   0,
+   3,
+   -8
+  ],
+  "target": [
+   0,
+   2.5,
+   10
+  ],
+  "ages": [
+   9,
+   11,
+   13,
+   16,
+   19,
+   23
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "solomon_models_erasure": {
+  "layer": "SolomonLayer",
+  "shape": "SOLOMON_ERASURE",
+  "from": [
+   0,
+   0.9,
+   0
+  ],
+  "to": [
+   0,
+   0.9,
+   0
+  ],
+  "power": 40,
+  "duration": 30,
+  "sky": [
+   0.05,
+   0.04,
+   0.17
+  ],
+  "horizon": [
+   0.22,
+   0.16,
+   0.42
+  ],
+  "floor": [
+   0.12,
+   0.1,
+   0.22
+  ],
+  "cam": [
+   0,
+   10,
+   -30
+  ],
+  "target": [
+   0,
+   2,
+   4
+  ],
+  "ages": [
+   8,
+   11,
+   14,
+   18,
+   22,
+   27
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ }
+}

@@ -155,7 +155,7 @@ def build(layers):
     if any(l.split(".")[-1] == "SolomonLayer" for l in layers):               # Solomon: the pure rules of the 72 Pillars (when and where each pillar lands) the layer reads
         sk_dst = os.path.join(gen, "com", "newuniverse", "nusmp", "entity", "veldanava", "skills")
         os.makedirs(sk_dst, exist_ok=True)
-        for name in ("SolomonRules.java", "JudgmentRules.java", "IsrafilRules.java", "JibrilRules.java"):      # JudgmentRules lists every Veldanava spec
+        for name in ("SolomonRules.java", "JudgmentRules.java", "IsrafilRules.java", "JibrilRules.java", "HerculesRules.java"):      # JudgmentRules lists every Veldanava spec
             shutil.copy(os.path.join(SRC, "com", "newuniverse", "nusmp", "entity", "veldanava", "skills", name), sk_dst)
     shutil.copy(os.path.join(HERE, "Preview.java"), gen)
     classes = os.path.join(BUILD, "classes")

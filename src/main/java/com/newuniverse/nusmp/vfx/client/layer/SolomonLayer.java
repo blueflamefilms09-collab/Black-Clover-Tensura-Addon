@@ -39,8 +39,14 @@ import java.util.Set;
  * <b>Budgets (rule 11).</b> The engine hard-caps every effect at 100 quads (400 vertices) per activation; REALM asks for 50 quads (200 vertices) because it is re-sent every 80 ticks for a 100-tick life and two
  * instances overlap for 20 ticks. Counts below are quads at full detail ({@code ctx.seg} thins them by distance and by the particle setting; minimums in the code); a glow counts as 2 quads, a ring or plane of any
  * radius is one quad. Worst case quads per effect per frame (measured in the preview at every tick, see tools/vfx_preview/scenes.d/solomon.json and docs/vfx_remake/solomon_fx_calls.md):
- * COPY 32, CONVERGENCE 71, REALM 39 (two overlap for 20 ticks: 78), CHAIN 37, ERASURE 50, MARK 30, PILLAR 34 for the usual 18 pillars on one target and 90 for 72 pillars on one target (the buffer stops adding at
+ * COPY 41, CONVERGENCE 81, REALM 42 (two overlap for 20 ticks: 84), CHAIN 75, ERASURE 72, MARK 53, PILLAR 88 for the usual 18 pillars on one target and 99 for 72 pillars on one target (the buffer stops adding at
  * 100 quads, the layer checks {@code hasBudget} before every pillar part), SKIN 23, ABSORB 16. Each is one activation; no collections or arrays are built per frame (only the small short-lived pose vectors every layer makes, and the two-number offset of a pillar, at most ~30 per frame), every loop count is a constant or a {@code ctx.seg} of at most 16 and the pillar loop only walks the pure SolomonRules schedule (72 steps of integer maths).
+ * <p><b>3D models.</b> With the client setting {@code solomonModels} on (the default; see {@link SolomonModelsConfig}) the COPY and REALM draw a floating open Grimoire (at most 19 quads; it replaces the flat page / book
+ * sheets and the drifting pages), the CHAIN draws rune-engraved links (at most 10 quads each, 4 at most) and a faceted sigil head (10) in place of the flat chain strip, the MARK a spinning signet ring (32), the PILLAR a ring
+ * of 6 real pillars (12 each) rising one after another (the old falling / landing light stays, capped to 3 + 3 and 4 scars while the ring is drawn), the CONVERGENCE a few rune crystals (5 each, one stream in five) and the
+ * ERASURE up to 8 falling glass shards (4 each). All of them are {@link SolomonModels}, posed and drawn without allocation by {@link SolomonMeshDraw}, textured from one 1024 x 1024 atlas. Each asks {@code hasBudget} first
+ * and is skipped whole when it does not fit, and the flat sprite is drawn instead; so are all of them further than 56 blocks (72 for the pillars), with the particle setting at minimum, and with the setting off, which
+ * draws exactly what the layer drew before.</p>
  * Decorative extras (motes, drifting pages, rune cells) fall away with the camera distance (the manager already drops an effect that is out of range and thins the rest by its distance level of detail), the Realm only
  * draws the five rune veils nearest to the camera, the Pillar draws at most six falling and six landing pillars and keeps scars only while the budget allows. No effect keeps anything between frames, so nothing has to be
  * cleaned up on logout, death or dimension change; the server sends one packet per effect (VfxSpawn) and nothing here runs on the server.
@@ -87,8 +93,23 @@ public class SolomonLayer extends AbstractVfxLayer {
     /** The pillars drawn falling and landing at once (thinned by the particle setting). */
     static final int PILLARS_FALLING = 6, PILLARS_LANDING = 6;
 
+    /** The material atlas of the 3D models (marble, fluted shafts, sigil bands, grimoire cover and pages, chain links, signet ring, glass shards; {@link SolomonModels}). */
+    public static final ResourceLocation MODEL_ATLAS = t("solomon_model_atlas");
+    /** How far (blocks, horizontally) the models are drawn: further away the flat sprites of the older versions stay alone. */
+    static final float MODEL_RANGE = 56f, PILLAR_MODEL_RANGE = 72f;
+    /** The ring of 3D pillars round a marked target: the most pillars, the radius of the ring (blocks), the ticks a pillar takes to rise and the ticks between two of them. */
+    static final int RING_PILLARS = 6;
+    static final float RING_RADIUS = 4.2f, RING_RISE = 9f, RING_STEP = 5f, RING_START = 6f;
+
     /** Scratch corners of the quad being drawn (the layer draws on the render thread only, one effect at a time). */
     private final Vector3f q0 = new Vector3f(), q1 = new Vector3f(), q2 = new Vector3f(), q3 = new Vector3f();
+    /** Draws the 3D models (the poser and the sort scratch are allocated once). */
+    private final SolomonMeshDraw mesh = new SolomonMeshDraw();
+
+    /** The 3D models are on (setting, particle detail) and the point (camera-relative) is within {@code range} blocks. */
+    private static boolean modelsOn(VfxRenderContext ctx, float x, float y, float z, float range) {
+        return SolomonModels.enabled() && ctx.detail >= 0.5f && x * x + y * y + z * z < range * range;
+    }
 
     @Override
     public Set<VfxShape> shapes() {
@@ -375,6 +396,121 @@ public class SolomonLayer extends AbstractVfxLayer {
         return VfxPose.facing(new Vector3f(x, y, z), new Vector3f(nx, ny, nz));
     }
 
+    // ================================================================== the 3D models (SolomonModels / SolomonMeshDraw): every one asks the budget first and is skipped whole
+    /**
+     * The open Grimoire ({@link SolomonModels#GRIMOIRE}, at most 19 quads, about 14 seen) with its centre at the camera-relative point; its pages look at the camera (turned {@code yawBias} about the vertical so the thickness
+     * shows). {@code open} 0 = closed .. 1 = open, {@code turnA} / {@code turnB} are the two turning pages, {@code hide} the parts left out (the light version).
+     */
+    private int grimoire(VfxVertexBuffer buf, float x, float y, float z, float scale, float open, float turnA, float turnB, float sway, int hide, float yawBias, int tint, float heat) {
+        float cs = Mth.cos(yawBias), sn = Mth.sin(yawBias);
+        float dx = -x * cs + z * sn, dz = -x * sn - z * cs, dy = -y * 0.3f;
+        SolomonModels.Posed p = mesh.posed();
+        p.clearPose();
+        SolomonModels.grimoirePose(open, turnA, turnB, sway, p.bend(), p.spread());
+        p.look(dx, dy, dz, 0f, 1f, 0f, 0f, scale);
+        float k = SolomonModels.BOOK_HALF_W * 0.5f * (1f - Mth.clamp(open, 0f, 1f));    // a closing book lies on the back half: keep its middle on the point
+        p.hide = hide;
+        return mesh.draw(buf, MODEL_ATLAS, SolomonModels.GRIMOIRE, x - p.wx(k, 0f, 0f), y - p.wy(k, 0f, 0f), z - p.wz(k, 0f, 0f), tint, heat);
+    }
+
+    /** The angle of ring pillar j of n round the target. */
+    private static float ringAngle(long seed, int j, int n) { return Mth.TWO_PI * j / n + h(seed, 0, 17) * Mth.TWO_PI; }
+
+    /** How far pillar j has risen (0 = under the floor, 1 = standing) and how much of it has sunk back at the end of the effect (0..1). */
+    private static float ringRise(float age, int j) { return VfxAnim.easeOutCubic(Mth.clamp((age - RING_START - j * RING_STEP) / RING_RISE, 0f, 1f)); }
+
+    /**
+     * The ring of 3D pillars round the marked target ({@link SolomonModels#PILLAR}, at most 12 quads each, about 11 seen, at most 6 of them): they rise out of the floor one after another, each with a sigil band of a
+     * different element, and sink again at the end. {@code g} is the ground point under the target (camera-relative). Returns the quads drawn.
+     */
+    private int pillarRing(VfxInstance inst, VfxRenderContext ctx, VfxVertexBuffer buf, Vector3f g, float age) {
+        long seed = inst.seed;
+        int n = ctx.seg(RING_PILLARS, 3);
+        float sinkAt = inst.duration - 16f;
+        float sink = smooth(sinkAt, sinkAt + 12f, age);
+        float al = 1f - smooth(sinkAt + 5f, sinkAt + 16f, age);
+        if (al <= 0.02f) return 0;
+        int e0 = (int) (h(seed, 0, 7) * 8f);
+        float S = 1.6f;
+        for (int j = 0; j < n; j++) {
+            float an = ringAngle(seed, j, n);
+            float x = g.x + Mth.cos(an) * RING_RADIUS, z = g.z + Mth.sin(an) * RING_RADIUS;
+            float rise = ringRise(age, j) * (1f - 0.9f * sink);
+            float y = g.y - (1f - rise) * (SolomonModels.PILLAR_TOP + 0.4f) * S;
+            mesh.ringKey(j, x * x + (y + 1.5f) * (y + 1.5f) + z * z);
+        }
+        mesh.ringSort(n);
+        int quads = 0;
+        for (int s = 0; s < n; s++) {
+            int j = mesh.ringAt(s);
+            float an = ringAngle(seed, j, n);
+            float x = g.x + Mth.cos(an) * RING_RADIUS, z = g.z + Mth.sin(an) * RING_RADIUS;
+            float rise = ringRise(age, j) * (1f - 0.9f * sink);
+            if (rise <= 0.001f) continue;
+            float y = g.y - (1f - rise) * (SolomonModels.PILLAR_TOP + 0.4f) * S;
+            int el = (e0 + j) & 7;
+            float since = age - RING_START - j * RING_STEP - RING_RISE;
+            float flash = 1f - Mth.clamp(since / 7f, 0f, 1f);
+            float heat = 0.3f + 0.12f * Mth.sin(age * 0.16f + j * 1.7f) + (since > -2f ? 0.55f * flash : 0f);
+            SolomonModels.Posed p = mesh.posed();
+            p.stand(-an + 0.6f, S, S, S).accent(ELEM[el] & 0xFFFFFF);
+            p.cellShift = el;
+            quads += mesh.draw(buf, MODEL_ATLAS, SolomonModels.PILLAR, x, y, z, a(WHITE, 0.98f * al), heat);
+        }
+        return quads;
+    }
+
+    /**
+     * The links of the spell chain ({@link SolomonModels#LINK}, at most 9 quads each, about 8 seen) from {@code d0} to {@code d1} blocks along (nx, ny, nz) from the camera-relative point c, each turned a quarter
+     * round from the one before, with a travelling pulse. {@code reach} is how far (blocks) the chain has grown. Returns the quads drawn.
+     */
+    private int chainLinks(VfxRenderContext ctx, VfxVertexBuffer buf, Vector3f c, float nx, float ny, float nz, float d0, float d1, float reach, float age, float fade, int e0, int count) {
+        int n = Math.max(2, count);
+        float pitch = (d1 - d0) / (n - 1);
+        float s = Mth.clamp(pitch / 1.05f, 0.95f, 1.9f);
+        float tNear = -(c.x * nx + c.y * ny + c.z * nz);                       // where on the line the camera is nearest
+        boolean up = tNear > (d0 + d1) * 0.5f;                                  // the far end is the nearer one: draw the near end first, so the far end ends up on top
+        int quads = 0;
+        for (int i = 0; i < n; i++) {
+            int j = up ? i : n - 1 - i;
+            float d = d0 + pitch * j;
+            float grow = VfxAnim.easeOutCubic(Mth.clamp((reach - d) / 1.2f + 0.2f, 0f, 1f));
+            if (grow <= 0.02f) continue;
+            float wob = 0.07f * Mth.sin(age * 0.35f + j * 1.3f);
+            float pulse = Math.max(0f, Mth.sin(age * 0.55f - j * 0.8f));
+            int ec = elem(e0 + 2 * Math.min(2, j * 3 / n));
+            SolomonModels.Posed p = mesh.posed();
+            p.look(nx, ny, nz, 0f, 1f, 0f, ((j & 1) == 0 ? 0.75f : -0.75f), s * (0.55f + 0.45f * grow)).accent(ec & 0xFFFFFF);
+            quads += mesh.draw(buf, MODEL_ATLAS, SolomonModels.LINK, c.x + nx * d, c.y + ny * d + wob, c.z + nz * d, a(WHITE, 0.97f * fade * grow), 0.22f + 0.5f * pulse);
+        }
+        return quads;
+    }
+
+    /** The faceted sigil head ({@link SolomonModels#HEAD}, at most 8 quads) at the camera-relative point, its crystal pointing along (nx, ny, nz). */
+    private int chainHead(VfxVertexBuffer buf, float x, float y, float z, float nx, float ny, float nz, float scale, float fade, int ec, float heat, float roll) {
+        mesh.posed().look(nx, ny, nz, 0f, 1f, 0f, roll, scale).accent(ec & 0xFFFFFF);
+        return mesh.draw(buf, MODEL_ATLAS, SolomonModels.HEAD, x, y, z, a(WHITE, 0.97f * fade), heat);
+    }
+
+    /** The signet ring ({@link SolomonModels#RING}, at most 22 quads, about 20 seen) spinning about the vertical over the camera-relative point (gem on top, leaning back a little), so the band, the gem and the rune halo show from every side. */
+    private int signet(VfxVertexBuffer buf, float x, float y, float z, float scale, float age, float fade, float heat) {
+        float t = age * 0.085f;                                                   // it spins about the vertical, the gem always on top, leaning a little back so its table shows
+        mesh.posed().look(Mth.sin(t), 0.3f + 0.12f * Mth.sin(age * 0.11f), Mth.cos(t), 0f, 1f, 0f, 0.1f * Mth.sin(age * 0.13f), scale).accent(0xFFD27A);
+        return mesh.draw(buf, MODEL_ATLAS, SolomonModels.RING, x, y, z, a(WHITE, 0.97f * fade), heat);
+    }
+
+    /** One floating rune crystal ({@link SolomonModels#CRYSTAL}, at most 5 quads) tumbling at the camera-relative point. */
+    private int crystal(VfxVertexBuffer buf, float x, float y, float z, float scale, float ang, float fade, int ec, float heat) {
+        mesh.posed().tumble(0.3f, 1f, 0.2f, ang, scale, scale * 1.35f, scale).accent(ec & 0xFFFFFF);
+        return mesh.draw(buf, MODEL_ATLAS, SolomonModels.CRYSTAL, x, y, z, a(WHITE, 0.95f * fade), heat);
+    }
+
+    /** One falling shard of glass of the erased circle ({@code mesh} of {@link SolomonModels}, at most 4 quads) tumbling at the camera-relative point. */
+    private int shard(VfxVertexBuffer buf, SolomonModels.Mesh shape, float x, float y, float z, float scale, float ax, float ay, float az, float ang, float fade, float heat) {
+        mesh.posed().tumble(ax, ay, az, ang, scale, scale, scale).accent(0xCFB8FF);
+        return mesh.draw(buf, MODEL_ATLAS, shape, x, y, z, a(WHITE, 0.95f * fade), heat);
+    }
+
     // ================================================================== SOLOMON_COPY
     private void copy(VfxInstance inst, VfxRenderContext ctx, VfxVertexBuffer buf) {
         float age = inst.ageTicks(ctx.partialTick);
@@ -458,8 +594,17 @@ public class SolomonLayer extends AbstractVfxLayer {
         if (pin > 0.02f) {
             glow(ctx, buf, bx, by, bz, 1.8f * pin, VIOLET, 0.4f * pa);
             float bob = 0.04f * Mth.sin(age * 0.3f);
-            sheet(ctx, buf, PAGE, bx, by + bob, bz, hh * (1f - cl), hh, wr, Mth.sin(age * 0.2f) * 0.08f, a(WHITE, 0.62f * pa));
-            if (cl > 0.02f) sheet(ctx, buf, BOOK, bx, by + bob, bz, hh * cl, hh, 1f, 0f, a(WHITE, 0.95f * pa));
+            boolean book3d = false;
+            if (modelsOn(ctx, bx, by, bz, MODEL_RANGE) && pa > 0.03f && buf.hasBudget(4 * SolomonModels.GRIMOIRE_MAX + 8)) {
+                // the 3D grimoire (at most 19 quads) opens beside the caster, its pages turn as the spell is written, then it closes and sinks into the caster
+                float open = smooth(7.5f, 12.5f, age) * (1f - smooth(21f, 26f, age));
+                float sc3 = 1.7f * Math.min(pin, 1f) * (1f - 0.5f * sink);
+                book3d = grimoire(buf, bx, by + bob, bz, sc3, open, smooth(11.5f, 16.5f, age), smooth(15.5f, 20.5f, age), 0.16f * Mth.sin(age * 0.4f), 0, 0.42f, a(WHITE, 0.97f * pa), 0.2f + 0.5f * wr * (1f - cl)) > 0;
+            }
+            if (!book3d) {
+                sheet(ctx, buf, PAGE, bx, by + bob, bz, hh * (1f - cl), hh, wr, Mth.sin(age * 0.2f) * 0.08f, a(WHITE, 0.62f * pa));
+                if (cl > 0.02f) sheet(ctx, buf, BOOK, bx, by + bob, bz, hh * cl, hh, 1f, 0f, a(WHITE, 0.95f * pa));
+            }
         }
 
         // 4. the close: a ring shuts on the floor and a flare winks out where the book went in; gold motes rise
@@ -497,6 +642,7 @@ public class SolomonLayer extends AbstractVfxLayer {
         circleAt(buf, floor.lift(0.02f).spin(-age * 0.07f), 3.2f * (0.5f + 0.5f * wake), a(WHITE, 0.85f * wake * fade * (1f - 0.4f * smooth(23f, 30f, age))));
 
         // 2. the streams: light of the six elements runs in from the whole radius and sinks into the caster; runes and motes ride them
+        boolean crystals = modelsOn(ctx, c.x, c.y, c.z, MODEL_RANGE);                 // the 3D rune crystals (three streams carry one)
         int ns = ctx.seg(14, 6);
         for (int i = 0; i < ns; i++) {
             float an = Mth.TWO_PI * (i + h(seed, i, 1) * 0.6f) / ns;
@@ -515,6 +661,10 @@ public class SolomonLayer extends AbstractVfxLayer {
             float al = (1f - smooth(1.0f, 1.25f, p)) * fade;
             ribbon(buf, BEAM, tx2, ty2, tz2, hx, hy, hz, 0.04f, 0.3f, -age * 0.12f, -age * 0.12f + 1f, a(ec, 0f), a(mix(ec, WHITE, 0.3f), 0.95f * al));
             if (near > 0.01f && ph > 0.02f) { glow(ctx, buf, hx, hy, hz, 0.6f, ec, 0.7f * al); mote(ctx, buf, hx, hy, hz, 0.6f, a(mix(ec, WHITE, 0.55f), al)); }
+            if (crystals && i % 5 == 0 && ph > 0.02f && al > 0.03f && buf.hasBudget(4 * SolomonModels.CRYSTAL_MAX + 4)) {
+                // a floating rune crystal (at most 5 quads, three at most) rides the stream in place of its flat rune
+                if (crystal(buf, hx, hy + 0.05f, hz, 0.85f + 0.3f * ph, age * 0.22f + i, al, ec, 0.55f + 0.4f * ph) > 0) continue;
+            }
             if ((i & 1) == 0 && near > 0.01f && ph > 0.02f) rune(ctx, buf, i, hx, hy + 0.05f, hz, 0.85f, age * 0.1f + i, a(mix(ec, WHITE, 0.4f), 0.85f * al));
         }
 
@@ -591,6 +741,16 @@ public class SolomonLayer extends AbstractVfxLayer {
             sigil(ctx, buf, i, c.x + Mth.cos(an) * 1.35f, cy + 0.08f * Mth.sin(age * 0.12f + i) + Mth.sin(an) * 0.35f, c.z + Mth.sin(an) * 1.35f * 0.9f, 0.4f, 0f, a(WHITE, 0.95f * fade));
         }
 
+        // 3b. the 3D grimoire hovers above the crown, open, its pages fluttering one after the other (the light version, without pages and ribbon, when far or at low detail)
+        boolean book3d = false;
+        if (modelsOn(ctx, c.x, cy + 1.9f, c.z, MODEL_RANGE) && buf.hasBudget(4 * SolomonModels.GRIMOIRE_MAX + 8)) {
+            float u = Mth.frac(age / 44f);
+            float ta = smooth(0f, 0.25f, u) - smooth(0.5f, 0.75f, u), tb = smooth(0.12f, 0.37f, u) - smooth(0.62f, 0.87f, u);
+            int hide = ctx.detail < 0.75f || horizontal(c) > 24f ? SolomonModels.G_LIVELY : 0;
+            book3d = grimoire(buf, c.x, cy + 1.9f + 0.1f * Mth.sin(age * 0.09f), c.z, 1.85f * (0.4f + 0.6f * VfxAnim.easeOutCubic(fade)), 1f, ta, tb, 0.14f * Mth.sin(age * 0.17f), hide, 0.3f * Mth.sin(age * 0.03f) + 0.25f, a(WHITE, 0.97f * fade), 0.3f + 0.12f * Mth.sin(age * 0.15f)) > 0;
+            if (book3d) glow(ctx, buf, c.x, cy + 1.9f, c.z, 2.8f, GOLD_D, 0.22f * fade);                      // a soft gold light round the open book
+        }
+
         // 4. pages and runes drift up through the realm, rune lines rise from the seal
         if (near > 0.01f) {
             int np = ctx.seg(3, 2);
@@ -601,8 +761,10 @@ public class SolomonLayer extends AbstractVfxLayer {
                 float x = c.x + Mth.cos(an) * rr, z = c.z + Mth.sin(an) * rr, y = gy + 0.8f + u * 4.5f + 0.15f * Mth.sin(age * 0.1f + i);
                 float al = Mth.sin(u * Mth.PI) * fade * near;
                 float rot = Mth.sin(age * 0.05f + i * 2f) * 0.45f;
-                glow(ctx, buf, x, y, z, 0.7f, GOLD_D, 0.25f * al);
-                sheet(ctx, buf, PAGE, x, y, z, 0.42f, 0.42f, 1f, rot, a(WHITE, 0.9f * al));
+                if (!book3d) {                                                         // the 3D grimoire takes the place of the loose pages' sheets
+                    glow(ctx, buf, x, y, z, 0.7f, GOLD_D, 0.25f * al);
+                    sheet(ctx, buf, PAGE, x, y, z, 0.42f, 0.42f, 1f, rot, a(WHITE, 0.9f * al));
+                }
                 rune(ctx, buf, i * 2 + 3, x + Mth.cos(an + 1.2f) * 1.6f, y + 0.8f + Mth.sin(u * 5f) * 0.3f, z + Mth.sin(an + 1.2f) * 1.6f, 0.4f, rot * 2f + age * 0.05f, a(i % 2 == 0 ? GOLD : LILAC, 0.9f * al));
             }
             int nb = ctx.seg(3, 2);
@@ -630,6 +792,8 @@ public class SolomonLayer extends AbstractVfxLayer {
         float nx = dx / len, ny = dy / len, nz = dz / len;
         float near = 1f - smooth(40f, 90f, horizontal(c));
         int e0 = (int) (h(seed, 0, 1) * 6f);
+        int nLinks = ctx.seg(4, 3);
+        boolean links3d = modelsOn(ctx, c.x, c.y, c.z, MODEL_RANGE) && len > 4f && buf.hasBudget(4 * (nLinks * SolomonModels.LINK_MAX + SolomonModels.HEAD_MAX) + 4 * 40);   // 3D links + head (at most 50 quads) in place of the flat chain strip
         float pxPrev = c.x + nx * 1.2f, pyPrev = c.y + 0.1f, pzPrev = c.z + nz * 1.2f;
         float prevOpen = 1f;
         for (int i = 0; i < 3; i++) {
@@ -655,7 +819,7 @@ public class SolomonLayer extends AbstractVfxLayer {
                 float seg = Mth.sqrt((bx - pxPrev) * (bx - pxPrev) + (by - pyPrev) * (by - pyPrev) + (bz - pzPrev) * (bz - pzPrev));
                 float shimmer = 0.75f + 0.25f * Mth.sin(age * 0.8f + i * 2f);
                 ribbon(buf, BEAM, pxPrev, pyPrev, pzPrev, bx, by, bz, 0.22f, 0.22f, -age * 0.15f, -age * 0.15f + seg * 0.5f, a(ec, 0.55f * fade * prevOpen), a(ec, 0.55f * fade));
-                ribbon(buf, CHAIN, pxPrev, pyPrev, pzPrev, bx, by, bz, 0.15f, 0.15f, age * 0.03f, age * 0.03f + seg * 0.9f, a(WHITE, 0.95f * shimmer * fade), a(WHITE, 0.95f * shimmer * fade));
+                if (!links3d) ribbon(buf, CHAIN, pxPrev, pyPrev, pzPrev, bx, by, bz, 0.15f, 0.15f, age * 0.03f, age * 0.03f + seg * 0.9f, a(WHITE, 0.95f * shimmer * fade), a(WHITE, 0.95f * shimmer * fade));
             }
             // the shot: a flash, a shock ring and a lance of light through the circle
             if (since > -0.5f && since < 9f) {
@@ -674,6 +838,19 @@ public class SolomonLayer extends AbstractVfxLayer {
             pyPrev = y;
             pzPrev = z;
             prevOpen = charge;
+        }
+        if (links3d) {
+            // the 3D chain: rune-engraved links grow out from the caster along the line (each turned a quarter round from the one before) and a faceted sigil head sits in the last circle
+            float reach = len * VfxAnim.easeOutCubic(Mth.clamp((age - 1f) / 11f, 0f, 1f));
+            float tNear = -(c.x * nx + c.y * ny + c.z * nz);
+            boolean headFirst = tNear < len * 0.5f;                                // the caster end is the nearer one: the far head is drawn first
+            float openH = VfxAnim.easeOutBack(Mth.clamp((age - 7f) / 5f, 0f, 1f));
+            float sinceH = age - 18f;
+            float flashH = sinceH > -1f ? 1f - Mth.clamp(sinceH / 6f, 0f, 1f) : 0f;
+            int ecH = elem(e0 + 4);
+            if (headFirst && openH > 0.02f) chainHead(buf, c.x + nx * (len + 0.3f), c.y + ny * (len + 0.3f), c.z + nz * (len + 0.3f), nx, ny, nz, 1.4f * openH * (1f + 0.2f * flashH), fade, ecH, 0.3f + 0.7f * flashH, age * 0.12f);
+            chainLinks(ctx, buf, c, nx, ny, nz, 1.35f, Math.max(3f, len - 1.25f), reach, age, fade, e0, nLinks);
+            if (!headFirst && openH > 0.02f) chainHead(buf, c.x + nx * (len + 0.3f), c.y + ny * (len + 0.3f), c.z + nz * (len + 0.3f), nx, ny, nz, 1.4f * openH * (1f + 0.2f * flashH), fade, ecH, 0.3f + 0.7f * flashH, age * 0.12f);
         }
         if (near > 0.01f) drift(ctx, buf, ctx.seg(6, 2), c.x + nx * len * 0.5f, c.z + nz * len * 0.5f, 0.3f, 2.5f, c.y - 0.6f, c.y + 2.2f, age, 18f, seed, 31, 0.3f, GOLD, LILAC, 0.9f * fade * near);
     }
@@ -756,6 +933,22 @@ public class SolomonLayer extends AbstractVfxLayer {
         if (near > 0.01f && age > T0) {
             drift(ctx, buf, ctx.seg(10, 4), c.x, c.z, 1f, Math.max(2f, waveR), gy + 4f, gy + 0.2f, since, 16f, seed, 51, 0.32f, LILAC, GOLD, 0.8f * fade * near * (1f - smooth(0.7f, 1f, sweep)));
         }
+
+        // 5. the glass: pieces of the broken magic circle fall out of the sky and shatter on the floor (3D shards, at most 4 quads each, at most 8 of them)
+        if (age > T0 && modelsOn(ctx, c.x, c.y, c.z, MODEL_RANGE)) {
+            int nsh = ctx.seg(8, 4);
+            for (int i = 0; i < nsh; i++) {
+                float u = (age - (T0 + 1f + 7f * h(seed, i, 8))) / 13f;
+                if (u <= 0f || u >= 1f || !buf.hasBudget(4 * SolomonModels.SHARD_MAX + 4)) continue;
+                float an = Mth.TWO_PI * (i + h(seed, i, 9) * 0.6f) / nsh, rr = 2.2f + 0.5f * Rv * h(seed, i, 10);
+                float top = gy + 9f + 5f * h(seed, i, 11);
+                float y = Mth.lerp(u * u, top, gy + 0.35f);
+                float sc = (1.9f + 1.3f * h(seed, i, 12)) * (1f - 0.7f * smooth(0.88f, 1f, u));
+                float ang = age * (0.18f + 0.2f * h(seed, i, 13)) + i;
+                SolomonModels.Mesh shape = i % 3 == 0 ? SolomonModels.SHARD_TRI : i % 3 == 1 ? SolomonModels.SHARD_QUAD : SolomonModels.SHARD_LONG;
+                shard(buf, shape, c.x + Mth.cos(an) * rr, y, c.z + Mth.sin(an) * rr, sc, h(seed, i, 14) - 0.5f, 1f, h(seed, i, 15) - 0.5f, ang, fade * (1f - smooth(0.9f, 1f, u)), 0.55f + 0.4f * (1f - u));
+            }
+        }
     }
 
     // ================================================================== SOLOMON_MARK
@@ -798,6 +991,12 @@ public class SolomonLayer extends AbstractVfxLayer {
             glow(ctx, buf, x, y, z, 0.55f * hs, elem(i), 0.35f * fade * grow);
             sigil(ctx, buf, i, x, y, z, 0.52f * hs * grow, 0f, a(WHITE, 0.98f * fade));
         }
+        // 3. the signet ring: a thick gold band with a big gem and a rune halo turns over the head of the marked one (3D, at most 22 quads)
+        if (modelsOn(ctx, c.x, c.y, c.z, MODEL_RANGE) && buf.hasBudget(4 * SolomonModels.RING_MAX + 4)) {
+            float sg = VfxAnim.easeOutBack(Mth.clamp((age - 2f) / 8f, 0, 1));
+            float lockFlash = locked ? 1f - Mth.clamp(since / 8f, 0, 1) : 0f;
+            signet(buf, c.x, c.y + 1.5f * hs + 0.06f * Mth.sin(age * 0.13f), c.z, 1.15f * hs * sg, age, fade, 0.32f + 0.12f * Mth.sin(age * 0.25f) + 0.5f * lockFlash);
+        }
         if (near > 0.01f) drift(ctx, buf, ctx.seg(6, 2), c.x, c.z, 0.4f * S, 1.1f * S, gy + 0.1f, gy + 2.4f * hs, age, 24f, seed, 61, 0.26f, GOLD, LILAC, 0.9f * fade * near);
     }
 
@@ -810,6 +1009,15 @@ public class SolomonLayer extends AbstractVfxLayer {
         Vector3f g = ctx.rel(inst.from(ctx));
         float near = 1f - smooth(60f, 120f, horizontal(g));
         int capFall = ctx.seg(PILLARS_FALLING, 3), capLand = ctx.seg(PILLARS_LANDING, 3);
+        int capScar = ctx.seg(16, 6);
+        // 0. the ring of 3D pillars round the target (at most 6 of them, 66 quads seen); with them standing the falling and landing light keeps to three of each so the whole stays inside the 100 quads
+        if (modelsOn(ctx, g.x, g.y, g.z, PILLAR_MODEL_RANGE) && buf.hasBudget(4 * 3 * SolomonModels.PILLAR_MAX)) {
+            if (pillarRing(inst, ctx, buf, g, age) > 0) {
+                capFall = Math.min(capFall, 3);
+                capLand = Math.min(capLand, 3);
+                capScar = Math.min(capScar, 4);
+            }
+        }
 
         // 1. the telegraphs and the falling streaks, the newest first (what is drawn is what the budget allows)
         int drawn = 0;
@@ -831,7 +1039,7 @@ public class SolomonLayer extends AbstractVfxLayer {
         }
         // 3. the scars of the older ones, while the budget lasts (the nearest ones first by being the newest)
         if (near > 0.01f) {
-            int cap = ctx.seg(16, 6);
+            int cap = capScar;
             int n = 0;
             for (int k = m - 1; k >= 0 && n < cap; k--) {
                 float t = age - SolomonRules.pillarSpawnTick(k, m) - FALL;
