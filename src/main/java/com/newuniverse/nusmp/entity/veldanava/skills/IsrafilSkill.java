@@ -3,6 +3,7 @@ package com.newuniverse.nusmp.entity.veldanava.skills;
 import com.newuniverse.nusmp.avatar.TensuraBridge;
 import com.newuniverse.nusmp.balance.BalanceLaw;
 import com.newuniverse.nusmp.book.GrimoireBook;
+import com.newuniverse.nusmp.entity.veldanava.pocket.PocketLabyrinth;
 import io.github.manasmods.manascore.skill.api.ManasSkillInstance;
 import io.github.manasmods.manascore.skill.api.SkillAPI;
 import net.minecraft.ChatFormatting;
@@ -66,6 +67,7 @@ public class IsrafilSkill extends VeldanavaSkillBase {
     protected void forgotten(ServerPlayer p) {
         IsrafilState.clear(p);
         RiftWalk.end(p, true, null);
+        PocketLabyrinth.endOf(p.getServer(), p.getUUID());
     }
 
     /** Weight of Consequence: whoever MOVES within twenty blocks (the sixteen nearest) owes one more second and is slowed. */
@@ -88,7 +90,7 @@ public class IsrafilSkill extends VeldanavaSkillBase {
     @Override
     protected boolean activate(ManasSkillInstance i, ServerPlayer p, JudgmentRules.Mode m, boolean mastered) {
         return switch (m.index()) {
-            case 4 -> labyrinth(p);
+            case 4 -> labyrinth(p, mastered);
             case 5 -> sins(i, p);
             case 6 -> collapse(i, p);
             case 7 -> shift(p);
@@ -96,11 +98,19 @@ public class IsrafilSkill extends VeldanavaSkillBase {
         };
     }
 
-    /** Dimensional Labyrinth: the creature in the line of sight is caged for eight seconds. See {@link Cage}. */
-    private static boolean labyrinth(ServerPlayer p) {
+    /**
+     * Dimensional Labyrinth: the creature in the line of sight is pulled into a pocket dimension, an ever-shifting maze ({@link PocketLabyrinth}); with the skill mastered, up to two creatures next to it
+     * come too. A boss, a server whose setting {@code pocketDimension} is off, or a server without the {@code nusmp:trial} dimension gets the old cage instead ({@link Cage}).
+     */
+    private static boolean labyrinth(ServerPlayer p, boolean mastered) {
         LivingEntity t = JudgmentState.first(p, IsrafilRules.LABYRINTH_RANGE, 1.0);
         if (t == null) { fail(p, "Nothing in your sight to trap."); return false; }
         if (VeldanavaGuard.entrapmentImmune(t)) { fail(p, t.getDisplayName().getString() + " slips out of the labyrinth."); return false; }
+        if (JudgmentConfig.pocketDimension() && !BalanceLaw.isBoss(t) && PocketLabyrinth.available(p.getServer())) {
+            String why = PocketLabyrinth.open(p, t, mastered);
+            if (why != null) { fail(p, why); return false; }
+            return true;
+        }
         ServerLevel l = p.serverLevel();
         Vec3 center = t.position();
         if (!JudgmentFields.add(p, l, null, center, IsrafilRules.LABYRINTH_RADIUS, IsrafilRules.LABYRINTH_TICKS, new Cage(t.getUUID(), BalanceLaw.controlTicks(t, IsrafilRules.LABYRINTH_TICKS)), "labyrinth")) {
@@ -290,6 +300,7 @@ public class IsrafilSkill extends VeldanavaSkillBase {
             if (t instanceof ServerPlayer sp) resetCooldowns(sp);
         }
         JudgmentFields.clearAround(l, p.position(), r, p.getUUID());
+        PocketLabyrinth.endNear(l, p.position(), r, p.getUUID());
         TrialFx.trumpet(l, p.position(), (float) r);
         return true;
     }

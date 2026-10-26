@@ -31,7 +31,7 @@ import java.util.Set;
  * </ul>
  * <b>Budgets (rule 11).</b> Every effect draws through the 400-vertex (100-quad) activation cap of the vertex buffer and is far below it; counts are at full detail, {@code ctx.seg} thins them by distance and the particle
  * setting (minimums in brackets); decorative extras (motes, floating shards) also drop out with the camera distance. Worst case quads per effect per frame (measured in the preview, see tools/vfx_preview/scenes.d/trial.json):
- * LABYRINTH 45, GRAVITY 33, COLLAPSE 63, SHIFT 40, TRUMPET 66, RIFT 29. No effect allocates more than a few small vectors and poses per frame (the same as the other layers); nothing is kept between frames, so nothing has to be cleaned
+ * LABYRINTH 43, GRAVITY 31, COLLAPSE 35, SHIFT 35 (30 for a short shift), TRUMPET 62, RIFT 27 (39 ages per scene scanned; the cap is 100). No effect allocates more than a few small vectors and poses per frame (the same as the other layers); nothing is kept between frames, so nothing has to be cleaned
  * up on logout, death or dimension change; the server only sends one packet per effect (VfxSpawn) and nothing here runs on the server. A ring or plane of any radius is one quad.
  */
 public class TrialLayer extends AbstractVfxLayer {
@@ -375,7 +375,7 @@ public class TrialLayer extends AbstractVfxLayer {
             float ca = Mth.clamp((age - 0.3f * tThud) / 6f, 0, 1) * fade;
             buf.plane(CRACKS, VfxBlend.ALPHA, floor.lift(0.02f).spin(h(seed, 9, 0) * Mth.TWO_PI), crack, a(CRACK_C, 0.88f * ca));
             buf.plane(CRACKS, VfxBlend.ALPHA, floor.lift(0.025f).spin(h(seed, 10, 0) * Mth.TWO_PI + 2f), crack * 0.62f, a(CRACK_C, 0.7f * ca));
-            if (tt > 0f) buf.plane(CRACKS, VfxBlend.ADD, floor.lift(0.03f).spin(h(seed, 9, 0) * Mth.TWO_PI), crack, a(CYAN, 0.55f * (1f - tt) * fade));
+            buf.plane(CRACKS, VfxBlend.ADD, floor.lift(0.03f).spin(h(seed, 9, 0) * Mth.TWO_PI), crack, a(CYAN, (tt > 0f ? 0.6f * (1f - tt) : 0.16f + 0.3f * press) * fade));
         }
 
         // falling dust motes before the thud, dust pushed outwards after it
@@ -469,7 +469,7 @@ public class TrialLayer extends AbstractVfxLayer {
         if (open <= 0f) return;
         float field = open * out;
         float pulse = 0.85f + 0.15f * Mth.sin(age * 0.12f);
-        float rs = R * 0.30f * open * (0.96f + 0.04f * Mth.sin(age * 0.2f));        // the radius of the void sphere
+        float rs = R * 0.36f * open * (0.96f + 0.04f * Mth.sin(age * 0.2f));        // the radius of the void sphere
         buf.plane(VOID, VfxBlend.ALPHA, floor.spin(age * 0.012f), R * open * 1.02f, a(VOID_C, 0.82f * field));
         buf.plane(VOID, VfxBlend.ALPHA, floor.lift(0.01f).spin(-age * 0.02f + 1.3f), R * open * 0.62f, a(DEEP, 0.55f * field));
         float cr = R * (0.35f + 0.65f * VfxAnim.easeOutCubic(Mth.clamp(d / 70f, 0, 1)));
@@ -646,8 +646,8 @@ public class TrialLayer extends AbstractVfxLayer {
         }
         float hornIn = VfxAnim.easeOutBack(Mth.clamp(age / 5f, 0, 1));
         float hornA = Math.min(Mth.clamp(age / 3f, 0, 1), 1f - smooth(14f, 24f, age));
-        float hy = g.y + 2.5f;
-        float hs = 1.6f * hornIn;
+        float hy = g.y + 3.0f;
+        float hs = 2.3f * hornIn;
         if (hornA > 0.01f) {
             sprite(buf, HORN, VfxBlend.ADD, g.x, hy, g.z, 0, 1, 0, rx, 0, rz, hs, hs * 0.5f, a(WHITE, hornA));
             glow(ctx, buf, g.x, hy, g.z, 2.6f * hornIn, BRASS_HI, 0.5f * hornA);
@@ -668,6 +668,8 @@ public class TrialLayer extends AbstractVfxLayer {
                 float ex = g.x + Mth.sin(th) * Mth.cos(ph) * len, ey = mouthY + Mth.cos(th) * len, ez = g.z + Mth.sin(th) * Mth.sin(ph) * len;
                 ribbon(buf, BEAM, VfxBlend.ADD, g.x, mouthY, g.z, ex, ey, ez, 0.16f + 0.1f * h(seed, i, 5), 0.5f + 0.5f * h(seed, i, 6), sc, sc + len / 7f, a(ICE, 0.75f * rf * fade), a(i % 3 == 0 ? BRASS_HI : CYAN, 0f));
             }
+            // the horn of light itself: a wide soft cone that opens from the mouth
+            ribbon(buf, BEAM, VfxBlend.ADD, g.x, mouthY, g.z, g.x, mouthY + 26f * burst, g.z, 0.5f, 9f * burst + 0.5f, 0f, 1f, a(BRASS_HI, 0.42f * rf * fade), a(TEAL, 0.05f * rf * fade));
             float sh = 60f * burst;
             ribbon(buf, BEAM, VfxBlend.ADD, g.x, mouthY, g.z, g.x, mouthY + sh, g.z, 1.3f, 0.35f, 0f, 3f, a(CYAN, 0.55f * rf * fade), a(INDIGO, 0f));
             ribbon(buf, BEAM, VfxBlend.ADD, g.x, mouthY, g.z, g.x, mouthY + sh, g.z, 0.38f, 0.12f, -age * 0.08f, -age * 0.08f + 3f, a(ICE, 0.9f * rf * fade), a(CYAN, 0f));
@@ -689,7 +691,7 @@ public class TrialLayer extends AbstractVfxLayer {
             float tt = Mth.clamp((age - 1f - k * 4f) / 24f, 0, 1);
             if (tt <= 0f || tt >= 1f) continue;
             float r = domeR * VfxAnim.easeOutCubic(tt);
-            ringAt(buf, faceCamera(g.x, g.y, g.z).spin(k * 0.7f), r, a(k == 0 ? WHITE : CYAN, (float) Math.pow(1f - tt, 1.2) * 0.8f * fade * (0.3f + 0.7f * (1f - smooth(20f, 110f, Math.abs(dist - r * 0.2f)))) ));
+            soundAt(buf, faceCamera(g.x, g.y, g.z).spin(k * 0.7f), r, a(k == 0 ? WHITE : CYAN, (float) Math.pow(1f - tt, 1.2) * 0.8f * fade));
         }
 
         // ---- glass shards of the broken barriers fly out, turning
@@ -743,15 +745,15 @@ public class TrialLayer extends AbstractVfxLayer {
         int ng = ctx.seg(4, 2);
         for (int k = 1; k <= ng; k++) {
             float back = 0.85f * k + 0.12f * Mth.sin(age * 0.2f + k);
-            float sway = Mth.sin(age * 0.11f + k * 1.7f) * 0.14f;
-            float al = (0.62f - 0.12f * k) * fade * (0.75f + 0.25f * Mth.sin(age * 0.5f + k * 2f));
+            float sway = Mth.sin(age * 0.11f + k * 1.7f) * (0.12f + 0.12f * k);
+            float al = (0.52f - 0.11f * k) * fade * (0.7f + 0.3f * Mth.sin(age * 0.5f + k * 2f));
             float vx = -c.x, vz = -c.z, vl = Mth.sqrt(vx * vx + vz * vz);
             float rx = 1f, rz = 0f;
             if (vl > 1e-3f) {
                 rx = vz / vl;
                 rz = -vx / vl;
             }
-            sprite(buf, GHOST, VfxBlend.ADD, c.x - fx * back + sx * sway, c.y + 0.02f, c.z - fz * back + sz * sway, rx, 0, rz, 0, 1, 0, 0.30f, 1.0f, a(k % 2 == 0 ? VIOLET : WHITE, al));
+            sprite(buf, GHOST, VfxBlend.ADD, c.x - fx * back + sx * sway, c.y + 0.02f, c.z - fz * back + sz * sway, rx, 0, rz, 0, 1, 0, 0.30f + 0.04f * k, 1.0f, a(k % 2 == 0 ? VIOLET : WHITE, al));
         }
 
         // ---- rift lines round the body: vertical tears that shimmer and jump a little on whole frames
@@ -782,7 +784,7 @@ public class TrialLayer extends AbstractVfxLayer {
             float hw = 0.30f;
             float cx = c.x + rx * off, cz = c.z + rz * off;
             quad(buf, GHOST, VfxBlend.ADD, cx - rx * hw, yB, cz - rz * hw, cx + rx * hw, yB, cz + rz * hw, cx + rx * hw, yT, cz + rz * hw, cx - rx * hw, yT, cz - rz * hw,
-                    0f, vTop, 1f, vBot, a(CYAN, 0.9f * fade), a(CYAN, 0.9f * fade));
+                    0f, vTop, 1f, vBot, a(ICE, 0.45f * fade), a(CYAN, 0.45f * fade));
         }
 
         // ---- motes drifting through the body

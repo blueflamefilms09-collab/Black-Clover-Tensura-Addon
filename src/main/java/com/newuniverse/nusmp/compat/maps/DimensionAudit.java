@@ -23,7 +23,7 @@ public final class DimensionAudit {
     private DimensionAudit() {}
 
     /** The dimensions of the mod, by path in {@code nusmp:}. A unit test compares this list with the folder, so a new dimension has to be added here. */
-    public static final List<String> NAMES = List.of("mega_dungeon", "sanctuary", "labyrinth", "living_dungeon", "grimoire_library", "arc_arena", "zogratis_arena", "dream", "spirit_world");
+    public static final List<String> NAMES = List.of("mega_dungeon", "sanctuary", "labyrinth", "living_dungeon", "grimoire_library", "arc_arena", "zogratis_arena", "dream", "spirit_world", "trial");
 
     /** How a map mod will most likely see the dimension (cave style layer under a roof, or a plain top-down surface). */
     public enum Profile {

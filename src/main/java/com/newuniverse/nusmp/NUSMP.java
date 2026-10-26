@@ -56,6 +56,7 @@ public class NUSMP {
         modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.entity.veldanava.skills.JudgmentConfig.SPEC, "nusmp-veldanava-skills-server.toml");   // the Veldanava ultimate skills: enabled, rewardScreen, costScale, caps
         com.newuniverse.nusmp.entity.veldanava.skills.JudgmentEvents.register(NeoForge.EVENT_BUS);           // Sandalphon's passives, the conditions, the sigil's execution
         com.newuniverse.nusmp.entity.veldanava.skills.IsrafilEvents.register(NeoForge.EVENT_BUS);             // 3.14.0: Israfil's passives (fall, blink, store, mind), Rift Walk housekeeping
+        com.newuniverse.nusmp.entity.veldanava.pocket.PocketLabyrinth.register(NeoForge.EVENT_BUS);             // 3.14.0: Dimensional Labyrinth's pocket maze (nusmp:trial)
         com.newuniverse.nusmp.entity.zogratis.LuciusGodEffects.init();
         com.newuniverse.nusmp.entity.zogratis.LuciusGodEffects.EFFECTS.register(modEventBus);
         com.newuniverse.nusmp.entity.zogratis.LuciusEffects.init();

@@ -131,11 +131,11 @@ Take **Israfil** from the Will of the Creator card screen (`/veldanava skill isr
 ### The passives (toggles)
 - **Spatial Domination**: +30% movement speed; no fall damage; a melee blow aimed at you is dodged by a blink to a free spot 3-7 blocks away (at most once every 6 s); nothing can pull, swap, cage or throw you (the checks are inside this mod's own pulls, swaps and cages, and Movement Interference and Gravity Crush do not land on you). **Mastered:** a physical blow that still lands does half damage, and a projectile about to hit you is bent away (once per projectile). *Limit:* it cannot stop another mod's own teleport or knockback; it covers this mod's effects and the vanilla fall.
 - **Trial of Endurance**: 35% of every blow you take is stored (at most 120 points, draining 2 a second). Each stored point gives +0.5 maximum health (at most +40) and +0.1 armour toughness (at most +8) for as long as it lasts, and whoever struck you gains Temporal Debt (1 per 10 damage, 1 to 6). Death or turning it off empties the store.
-- **Labyrinthian Mind**: no mind-altering effect lands on you (any effect whose id names charm, fear, confusion, nausea, hypnosis, domination, mind, control, sleep, terror, madness, taming or possession); your own passives' presence scan and Sandalphon's presence scan skip you.
+- **Labyrinthian Mind**: no mind-altering effect lands on you (any effect whose id names charm, fear, confusion, nausea, hypnosis, domination, mind, control, sleep, terror, madness, taming or possession); Sandalphon's presence scan skips you.
 - **Weight of Consequence**: once a second, every foe within 20 blocks that is **moving** (the 16 nearest) gains +1 Temporal Debt and Slowness for 2 s.
 
 ### The actives
-- **Dimensional Labyrinth**: the creature in your sight (40 blocks) is caged for 8 s in a virtual maze of radius 4.5: held inside the walls (a boss is not moved, it is only disoriented), confused, Action-Locked and Movement-Interfered for the time the Balance Law allows (3 s players, 5 s mobs, 1 s bosses), 1% of its maximum health every second, +5 debt. The maze is drawn, not built: **no block is placed or removed**. A target with Spatial Domination slips out.
+- **Dimensional Labyrinth**: the creature in your sight (40 blocks) is pulled out of the world into a pocket dimension, an ever-shifting maze (see "The pocket dimension" below); mastered, up to two creatures within 6 blocks of it come too. A boss is never pulled in: it is caged in the old way for 8 s (a virtual ring of radius 4.5, held inside, confused, Action-Locked and Movement-Interfered for the time the Balance Law allows, 1% of maximum health a second, +5 debt, no block placed). A target with Spatial Domination slips out of both.
 - **Weight of Sins**: heavy true damage to the creature in sight (40 blocks): 60 + 8 per Temporal Debt stack + 0.4 per mob the target has killed (players only, at most +80), then **Gravity Crush** (falls fast, cannot fly, -20% speed) for 10 minutes (10 s on a boss); death or a milk bucket clears it. +8 debt.
 - **Spatial Collapse**: the place under the target (or where you aim) implodes: up to 16 creatures within 6.5 blocks take 140 true damage and are pulled in, then a **Nihility Collapse field** stands for 6 s: every half second up to 24 foes inside carry the Nihility Collapse condition (slower, **no healing**) and lose 2% of maximum health.
 - **Coordinate Shift**: swap places with the creature in your sight (48 blocks) or, if none, the nearest projectile (32 blocks). Every mob within 32 blocks (the 24 nearest) that was after you forgets you. Refuses a target that cannot be moved.
@@ -152,7 +152,7 @@ Gravity Crush, Nihility Collapse (potion icons). Event Silence, Action Lock and 
 Same as Sandalphon: every decision is on the server; the passives read the player's mask int and return on the first line for anyone else; per-player state is on the player (store, blink time, saved game mode) or in UUID-keyed maps (fields, rift sessions); nothing is a static current player; no new packet except the effect packets through `VfxSpawn`.
 
 ## Cost and lag bounds (CLAUDE.md rule 11) for Israfil
-- **Per press** (actives are 8 ticks apart, and every one has a cooldown of 5 s or more): Labyrinth 1 line query + 1 field; Weight of Sins 1 query + 1 hit; Spatial Collapse 1 query + at most 16 hits + 1 field; Coordinate Shift 1 query + at most 8 projectiles + one box query of at most 24 mobs; Rift Walk 1 session; Grand Trumpet 1 box query (100 blocks), at most 48 creatures touched, at most 48 players' skills walked once (16 modes each) and one field sweep.
+- **Per press** (actives are 8 ticks apart, and every one has a cooldown of 5 s or more): Labyrinth 1 line query (+ one box query of at most 2 creatures mastered) and one maze; Weight of Sins 1 query + 1 hit; Spatial Collapse 1 query + at most 16 hits + 1 field; Coordinate Shift 1 query + at most 8 projectiles + one box query of at most 24 mobs; Rift Walk 1 session; Grand Trumpet 1 box query (100 blocks), at most 48 creatures touched, at most 48 players' skills walked once (16 modes each) and one field sweep.
 - **Per second per owner**: Spatial Domination and Trial of Endurance refresh 2 attribute modifiers (only written when the value changes); Weight of Consequence touches at most 16 creatures with one box query.
 - **Per tick**: the field manager (does nothing when empty; global cap 24 fields, each field pulsing at most 4 times a second; the cage is one creature, the Nihility field at most 24) and the Rift Walk manager, which returns on its first line when nobody walks and otherwise does one comparison per walker (a server holds a handful at most) plus one Magicule charge per walker per second.
 - **Events**: seven handlers (fall, incoming damage, post damage, effect, projectile impact, heal, and the housekeeping events); each returns on its first line for anyone who is not an owner of Israfil or does not carry the condition.
@@ -160,7 +160,19 @@ Same as Sandalphon: every decision is on the server; the passives read the playe
 - **No** terrain damage, no chunk loads, no entity spawns, no block changes, no food-bar writes.
 
 ## VFX (Trial layer)
-VFX_PLACEHOLDER
+Six shapes, appended at the end of `VfxShape` after `JUDGMENT_CROSS` (nothing moved; the order goes over the network), drawn by one new client layer `vfx/client/layer/TrialLayer.java` with 18 new textures (`textures/particle/trial_*.png`, made by `tools/gen_trial_vfx_textures.py`). They are our own work from scratch (deep indigo, midnight teal, cyan-white edges, a little brass; maze lines, coordinate ticks, folded-space shards, a trumpet and sound rings); the packet colour is ignored. The Time Magic VFX is not touched and not copied. Calls: `docs/vfx_remake/trial_fx_calls.md`. Previews: `python tools/vfx_preview/preview.py trial_labyrinth trial_gravity trial_collapse trial_shift trial_trumpet trial_rift`.
+
+| Effect | Used by | Lasts | Worst case quads (cap 100) |
+|---|---|---|---|
+| TRIAL_LABYRINTH | Dimensional Labyrinth: a ring of maze panes that reshuffles every second, a maze floor, drifting cubes | 160 ticks | 43 |
+| TRIAL_GRAVITY | Weight of Sins: a coordinate plate pressing down on a dark disc, streaks and chains sinking, ground cracks, a thud ring | 40 ticks | 31 |
+| TRIAL_COLLAPSE | Spatial Collapse: shards and rings pulled in, a pinch flash and shock ring, then the lingering Nihility field | 120 ticks | 35 |
+| TRIAL_SHIFT | Coordinate Shift and the natural blink: flipping coordinate rings at both ends, a dashed folded line, swapped afterimages | 14 ticks | 35 (48-block shift) |
+| TRIAL_TRUMPET | The Grand Trumpet: a horn of light, rays, sound rings out to the radius, shattering glass, a screen shake | 50 ticks | 62 |
+| TRIAL_RIFT | Rift Walk: ghostly rift lines, feet rings and afterimages on the walker | 26 ticks, re-sent each second | 27 |
+
+The layer keeps nothing between frames (nothing to clean up on logout, death or dimension change), allocates nothing per frame beyond a few scratch vectors, thins its counts with distance and the particle setting, and goes through the normal `VfxManager` distance cull and LOD. The screen shakes use `VfxShake`, which falls off to nothing at 32 blocks.
+Known soft spots in the previews (nothing was seen in a real game): additive glow looks stronger on the preview's dark sky than on a daytime world, the shift and rift afterimages are soft light-blue and may wash out in bright daylight, the rift lines jitter slightly at each re-send, the Collapse sphere assumes the server sends a ground point, and the rift trail direction (the walker's body yaw) could not be checked in the preview.
 
 ## Tests
 `JudgmentRulesTest` (extended: skill codes, spec list, cooldowns), `JudgmentSourceScanTest` (extended: Israfil's caps, Rift Walk manager, `TrialFx` one shape per packet, config keys, assets, lang, smoke prefix), `TrialShapesTest` (agent), CI smoke prefix `israfil` (`israfil.rules`, `israfil.skill`, `israfil.conditions`), and the `veldanava.orb` test (a still-sealed card is now Jibril).
@@ -172,6 +184,17 @@ VFX_PLACEHOLDER
 
 ## Not included / honest limits
 - Jibril, Solomon, Hercules (sealed; 3.15.0, 3.16.0, 3.17.0).
-- The labyrinth is virtual (no blocks); the Trumpet ends other Veldanava fields, not real barrier blocks.
+- The Trumpet ends other Veldanava fields and other casters' labyrinths, not real barrier blocks. The pocket maze has not been walked in a real client (the CI test paints, shifts and removes it block by block).
 - Spatial Domination cannot stop another mod's own teleports or knockback.
 - Not seen in a real game session: the CI smoke test proves the registry, grant, state and caps on a real server; the visuals were checked in the preview harness only. Rift Walk's spectator hand-over has not been played with two clients.
+
+## The pocket dimension (Dimensional Labyrinth, 3.14.0)
+
+Code: `entity/veldanava/pocket/PocketMaze` (pure: the grid, the walls, the shift) and `PocketLabyrinth` (the world: the dimension `nusmp:trial`, sessions, events). Data: `dimension/trial.json`, `dimension_type/trial.json` (a void, roofed, no sky, fixed night, 128 high). Server setting `pocketDimension` (default on; off = the old cage).
+
+- **The maze**: 9 x 9 cells (11 x 11 mastered), a corridor 3 blocks wide and 4 high, walls and ceiling of black stone, floor of checkered deepslate with a sea lantern in every fourth cell (dim on purpose). It starts as a random perfect maze (depth-first, one way between two cells).
+- **The shift**: every 60 ticks (36 mastered) a closed wall is picked; opening it makes one loop; one wall of that loop closes. The flash `TRIAL_SHIFT` runs between the two walls 16 ticks before they change. A wall is never closed while anyone stands in it or within a body's width of it (then that shift is skipped). The maze therefore stays one connected maze with a single way between two cells, whatever happens (`PocketMazeTest` runs 2,000 shifts and checks it).
+- **The exit**: a 3 x 3 patch of crying obsidian in one cell; it moves to a random cell every third shift. Standing on it ends the stay at once.
+- **The stay**: a player 400 ticks (600 mastered), a mob 600 (900); 1% of maximum health a second; +5 Temporal Debt. Then, or when the caster dies, logs out, forgets the skill or is hit by another Grand Trumpet, everyone is put back where they stood (same dimension, same spot; a different dimension too). A creature that has left cannot be pulled in again for 30 s.
+- **Rules inside**: no block can be broken, placed or blown up; ender pearls and chorus fruit do nothing; the maze takes a creature that falls or is thrown out of it back to the start; a player who logs out inside is sent back at the next login; a server stop puts everyone back and takes the maze down.
+- **Cost (rule 11)**: at most 8 mazes on a server (one per caster, 3 creatures each, 9 forced chunks each at most). Open and close: about 12,000 block reads and 6,500 writes once each (flags 2|16, no neighbour updates). While open: 24 block writes and 2 effect packets per shift (a wall every 1.8-3 s), a look at each member 5 times a second, one hit and one action-bar line a second. With no maze open: one empty-map check per tick.

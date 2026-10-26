@@ -30,6 +30,12 @@ public final class TrialFx {
         sound(l, at, SoundEvents.AMETHYST_CLUSTER_BREAK, 1.6f, 0.5f);
     }
 
+    /** The door of the pocket maze: the labyrinth closing round a spot (where a creature is taken in, and where it arrives). Sent to the players near that spot only. */
+    public static void pocket(ServerLevel l, Vec3 at, float radius, int ticks) {
+        VfxSpawn.send(l, VfxShape.TRIAL_LABYRINTH, at.add(0.0, 1.0, 0.0), at.add(0.0, 2.0, 0.0), CYAN, ticks, radius);
+        sound(l, at, SoundEvents.AMETHYST_CLUSTER_BREAK, 1.6f, 0.5f);
+    }
+
     /** Weight of Sins: the crush on the target. */
     public static void gravity(ServerLevel l, LivingEntity target) {
         Vec3 at = target.position();

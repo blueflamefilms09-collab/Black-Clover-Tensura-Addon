@@ -8,7 +8,7 @@ import net.neoforged.neoforge.common.ModConfigSpec;
  */
 public final class JudgmentConfig {
     public static final ModConfigSpec SPEC;
-    public static final ModConfigSpec.BooleanValue ENABLED, REWARD_SCREEN, EXECUTE_PLAYERS, EXECUTE_BOSSES;
+    public static final ModConfigSpec.BooleanValue ENABLED, REWARD_SCREEN, EXECUTE_PLAYERS, EXECUTE_BOSSES, POCKET_DIMENSION;
     public static final ModConfigSpec.DoubleValue COST_SCALE, COOLDOWN_SCALE, DEBT_DAMAGE, FINAL_CAP, ACTIVE_DAMAGE_CAP;
     public static final ModConfigSpec.IntValue DEBT_MAX, FIELDS_PER_PLAYER, FIELDS_TOTAL;
 
@@ -33,6 +33,8 @@ public final class JudgmentConfig {
                 .define("executePlayers", true);
         EXECUTE_BOSSES = b.comment("Condemnation executes a boss (the c:bosses tag or a very large health pool) who falls below 20% health. false = a boss takes a hit of 10% of its maximum health instead.")
                 .define("executeBosses", false);
+        POCKET_DIMENSION = b.comment("true = Dimensional Labyrinth (Israfil) pulls its target into a pocket dimension, an ever-shifting maze (default since 3.14.0). false = the old cage of walls round the target, as in the first 3.14.0 builds. A boss is always caged, never pulled in.")
+                .define("pocketDimension", true);
         DEBT_MAX = b.comment("The most Temporal Debt stacks one creature can carry.")
                 .defineInRange("debtMax", 200, 1, 1000);
         FIELDS_PER_PLAYER = b.comment("The most damage fields (Verdict of Ruin) one player can keep up at once; a new one replaces the oldest.")
@@ -62,6 +64,8 @@ public final class JudgmentConfig {
     public static boolean executePlayers() { return get(EXECUTE_PLAYERS); }
 
     public static boolean executeBosses() { return get(EXECUTE_BOSSES); }
+
+    public static boolean pocketDimension() { return get(POCKET_DIMENSION); }
 
     public static int debtMax() { return get(DEBT_MAX); }
 

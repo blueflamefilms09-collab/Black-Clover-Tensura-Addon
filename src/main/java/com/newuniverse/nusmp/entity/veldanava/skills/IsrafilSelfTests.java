@@ -36,6 +36,7 @@ public final class IsrafilSelfTests {
         SelfTests.register("israfil.rules", IsrafilSelfTests::rules);
         SelfTests.register("israfil.skill", IsrafilSelfTests::skill);
         SelfTests.register("israfil.conditions", IsrafilSelfTests::conditions);
+        SelfTests.register("israfil.pocket", IsrafilSelfTests::pocket);
     }
 
     private static Result rules(MinecraftServer server) {
@@ -110,6 +111,17 @@ public final class IsrafilSelfTests {
             JudgmentState.write(p, 0);
             VeldanavaSkills.revoke(p);
         }
+    }
+
+    /** Dimensional Labyrinth's pocket dimension: the dimension is loaded, a maze is painted, shifted thirty times and taken down block-exact, and the setting and the old cage are still there. */
+    private static Result pocket(MinecraftServer server) {
+        if (server.getLevel(com.newuniverse.nusmp.entity.veldanava.pocket.PocketLabyrinth.DIMENSION) == null) return Result.fail("the nusmp:trial dimension is not loaded");
+        if (!JudgmentConfig.pocketDimension()) return Result.fail("pocketDimension is not on by default");
+        if (com.newuniverse.nusmp.entity.veldanava.pocket.PocketLabyrinth.sessions() != 0) return Result.fail("a labyrinth is open on a fresh world");
+        String bad = com.newuniverse.nusmp.entity.veldanava.pocket.PocketLabyrinth.check(server);
+        if (bad != null) return Result.fail(bad);
+        if (new IsrafilSkill.Cage(java.util.UUID.randomUUID(), 20).period() < 1) return Result.fail("the old cage is gone");
+        return Result.ok("the trial dimension is loaded; a mastered maze painted, shifted 30 times and taken down block-exact; the old cage is kept");
     }
 
     private static Result conditions(MinecraftServer server) {

@@ -43,6 +43,27 @@ public final class IsrafilRules {
     /** Dimensional Labyrinth: the range to the target, the cage radius, how long it holds (ticks), the pulse (ticks), and the damage share of one pulse. */
     public static final double LABYRINTH_RANGE = 40.0, LABYRINTH_RADIUS = 4.5, LABYRINTH_PULSE_SHARE = 0.01;
     public static final int LABYRINTH_TICKS = 160, LABYRINTH_PULSE_TICKS = 20;
+    /**
+     * Dimensional Labyrinth as a pocket dimension (3.14.0): the maze is {@code cells} x {@code cells} (normal / mastered), a wall moves every {@code shift} ticks (normal / mastered) after a warning of
+     * {@link #POCKET_WARN_TICKS}, a player stays {@code ticks} (a mob longer), the exit moves every {@link #POCKET_EXIT_EVERY} shifts, at most {@link #POCKET_SLOTS} mazes stand on a server, and a creature
+     * that has left one cannot be pulled into another for {@link #POCKET_IMMUNE_TICKS}.
+     */
+    public static final int POCKET_CELLS = 9, POCKET_CELLS_MASTERED = 11, POCKET_SHIFT_TICKS = 60, POCKET_SHIFT_TICKS_MASTERED = 36, POCKET_WARN_TICKS = 16, POCKET_EXIT_EVERY = 3;
+    public static final int POCKET_PLAYER_TICKS = 400, POCKET_MOB_TICKS = 600, POCKET_MASTERED_PERCENT = 150, POCKET_SLOTS = 8, POCKET_IMMUNE_TICKS = 600;
+    public static final int POCKET_MEMBERS = 1, POCKET_MEMBERS_MASTERED = 3, POCKET_DEBT = 5;
+    public static final double POCKET_GATHER_RADIUS = 6.0, POCKET_PULSE_SHARE = 0.01;
+
+    public static int pocketCells(boolean mastered) { return mastered ? POCKET_CELLS_MASTERED : POCKET_CELLS; }
+
+    public static int pocketShiftTicks(boolean mastered) { return mastered ? POCKET_SHIFT_TICKS_MASTERED : POCKET_SHIFT_TICKS; }
+
+    public static int pocketMembers(boolean mastered) { return mastered ? POCKET_MEMBERS_MASTERED : POCKET_MEMBERS; }
+
+    /** How long one creature stays in the maze: a player's time is shorter than a mob's, and mastery lengthens both by half. */
+    public static int pocketTicks(boolean player, boolean mastered) {
+        int base = player ? POCKET_PLAYER_TICKS : POCKET_MOB_TICKS;
+        return mastered ? base * POCKET_MASTERED_PERCENT / 100 : base;
+    }
     /** Weight of Sins: range, base damage, damage per stack of debt, per kill of the target (a player), the cap of that last part, and how long the crush lasts (ticks; "permanent" is ten minutes, a death clears it). */
     public static final double SINS_RANGE = 40.0, SINS_BASE_DAMAGE = 60.0, SINS_PER_DEBT = 8.0, SINS_PER_KILL = 0.4, SINS_KILL_CAP = 80.0;
     public static final int SINS_CRUSH_TICKS = 12000;
