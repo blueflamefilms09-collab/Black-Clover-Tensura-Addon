@@ -31,7 +31,13 @@ ROUTES = os.path.join(ROOT, "src", "main", "resources", "data", "nusmp", "skill_
 RARITIES = ["common", "uncommon", "rare", "epic", "mythic"]
 
 # The ten Evolution skills (3.26.0). The lead adds {"<line id>": "<rarity>"} here once the design doc fixes them; ids that do not exist yet are ignored.
-NEW_SKILLS = {}
+NEW_SKILLS = {
+    "tog_rose_shower": "epic", "tog_true_flame": "rare",
+    "dragon_king_antares": "mythic", "white_tiger_baek": "rare",
+    "haruhime_uchide": "rare", "ryuu_astrea_blade": "rare",
+    "gray_ice_make": "epic", "erza_requip_knight": "epic",
+    "goh_haetae_jade": "epic", "goh_lu_bu_moonlight": "rare",
+}
 
 # Hand-written rarities. MYTHIC = the monarch / god / sovereign / ultimate-tier lines (about 6 percent of all lines); EPIC = story-level lines; the four hand-built classics.
 EXPLICIT = {

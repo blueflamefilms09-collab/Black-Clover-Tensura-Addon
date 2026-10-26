@@ -2007,7 +2007,9 @@
     "Ashes of Destruction",
     "Scorching Scales",
     "Last Roar of the King"
-   ]
+   ],
+   "rarity": "mythic",
+   "theme": "blood"
   },
   "dragon_nova_milim": {
    "book": "nusmp:dragon_nova_milim_book",
@@ -2485,7 +2487,9 @@
     "Swordswoman's Rhythm",
     "Pandemonium Veteran",
     "Monster-Slayer's Habit"
-   ]
+   ],
+   "rarity": "epic",
+   "theme": "iron"
   },
   "extreme_magic_adept": {
    "book": "nusmp:extreme_magic_adept_book",
@@ -3147,7 +3151,9 @@
     "Haetae's Swim",
     "Second Life",
     "Tide Mending"
-   ]
+   ],
+   "rarity": "epic",
+   "theme": "ocean"
   },
   "goh_hapkido": {
    "book": "nusmp:goh_hapkido_book",
@@ -3480,7 +3486,9 @@
     "Red Hare's Momentum",
     "Tally of the Slain",
     "Finishing Eye"
-   ]
+   ],
+   "rarity": "rare",
+   "theme": "stellar"
   },
   "goh_mighty_style": {
    "book": "nusmp:goh_mighty_style_book",
@@ -4001,7 +4009,9 @@
     "Ice Eater's Appetite",
     "Unburdened Ice-Maker",
     "Devil Slayer's Bane"
-   ]
+   ],
+   "rarity": "epic",
+   "theme": "frost"
   },
   "great_sage_analysis": {
    "book": "nusmp:great_sage_analysis_book",
@@ -4297,7 +4307,9 @@
     "Prayer Beads",
     "Last Prayer",
     "Spiritual Ward"
-   ]
+   ],
+   "rarity": "rare",
+   "theme": "dream"
   },
   "heart_kingdom_lifebinder": {
    "book": "nusmp:heart_kingdom_lifebinder_book",
@@ -6910,7 +6922,9 @@
     "Sworn Guard",
     "Magic Defense Training",
     "Hunter's Eye"
-   ]
+   ],
+   "rarity": "rare",
+   "theme": "ruin"
   },
   "sangah_war_room": {
    "book": "nusmp:sangah_war_room_book",
@@ -8884,7 +8898,9 @@
     "Elite Hunter",
     "Falling Petals",
     "Red Harvest"
-   ]
+   ],
+   "rarity": "epic",
+   "theme": "blood"
   },
   "tog_scout": {
    "book": "nusmp:tog_scout_book",
@@ -9105,7 +9121,9 @@
     "Searing Touch",
     "Flame Barrier Regrowth",
     "Finishing Blaze"
-   ]
+   ],
+   "rarity": "rare",
+   "theme": "magma"
   },
   "tog_wave_controller": {
    "book": "nusmp:tog_wave_controller_book",
@@ -9586,7 +9604,9 @@
     "Scent of Blood",
     "Relentless Claws",
     "Trophy of the Hunt"
-   ]
+   ],
+   "rarity": "rare",
+   "theme": "frost"
   },
   "wizard_king_sovereign": {
    "book": "nusmp:wizard_king_sovereign_book",
