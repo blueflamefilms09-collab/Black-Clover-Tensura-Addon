@@ -1291,3 +1291,74 @@ LINES.append(Line(
           damage=34, radius=7, range=24, delay=34, cooldown=1600, cost=.07),
     ],
 ))
+
+# ---------------------------------------------------------------------------------------------------------------------------------------------
+# 3.28.0 Evolution skill (docs/skills/evolution_ten_c.md row 7; canon notes in docs/skills/research/tbate_c.md)
+def PE(name, desc, kind, icon, evolved, **p):
+    """A passive with an `evolved` override (the stronger numbers it uses once the line has evolved)."""
+    return Pas(name, desc, kind, p, icon, evolved)
+
+
+def AU(name, desc, kind, icon, vfx="WIND_SLASH", **p):
+    """The Ultimate Evolution art (flag `ultimate`, kind debt_burst)."""
+    return Art(name, desc, kind, dict(p, vfx=vfx), icon, ultimate=True)
+
+
+LINES.append(Line(
+    id="regis_leywin_devour", name="Regis Leywin, the Devouring Shadow", franchise=F,
+    desc="The beast born of an Acclorite: a horned wolf that slips through shadow, eats the magic thrown at it, fits into Arthur's fist and howls fear into everything near. Every bite leaves a hunger that the Devouring Shadow collects later. Evolves after nine hundred kills.",
+    color="#6a5acd", background="void", icon="minecraft:wither_skeleton_skull",
+    book_name="Regis's Hunger Ledger", book_lore="He keeps saying he is not hungry. The shadow under him says otherwise, and it has a long memory.",
+    stances=[
+        S("Wolf Form", "Step out as the horned wolf: faster and harder-hitting, but thin-skinned.", "minecraft:bone", "SHADOW_POOL",
+          damage_pct=.18, speed_pct=.1, armor=-1),
+        S("Gauntlet Form", "Lie along Arthur's fist and channel the aether: sturdy and healing, slower to strike.", "minecraft:netherite_chestplate", "SPIRIT_AURA",
+          armor=4, knockback_res=.35, regen=.5, speed_pct=-.06),
+    ],
+    stats=[
+        T("Acclorite Heart", "A sturdy core grown from the Acclorite: more maximum health.", "max_health", 3, "add", "minecraft:heart_of_the_sea"),
+        T("Beast's Fangs", "Sharper bites.", "attack_damage", 1.5, "add", "minecraft:bone"),
+        T("Shadow Stride", "A wolf's long, quiet legs.", "movement_speed", .04, "mult", "minecraft:leather_boots"),
+        T("Aether-Dense Hide", "A hide that blunts the worst blows.", "armor_toughness", 1, "add", "minecraft:iron_ingot"),
+    ],
+    arts=[
+        A("Shadow Step", "Melt into the shadow and step out several blocks ahead.", "blink", "minecraft:ender_pearl", "SHADOW_POOL",
+          distance=10),
+        A("Shadow Step: Shift", "Crouching, you run through the shadow itself and bite every monster in your path.", "dash_strike", "minecraft:black_wool", "SHADOW_POOL",
+          distance=12, damage=9, targets=4),
+        A("Devour", "Sink your fangs in: the bite heals you for a share of the damage.", "drain_bite", "minecraft:bone", "SHADOW_POOL",
+          damage=8, range=3.4, heal_pct=.5),
+        A("Devour: Shift", "Crouching, the jaws close for good: a bite that hits far harder the weaker the monster already is.", "execute", "minecraft:skeleton_skull", "SHADOW_POOL",
+          damage=11, range=3.8, bonus=1.3),
+        A("Destruction Breath", "A black-violet breath along your line of sight that eats through every monster in a line.", "ray_shot", "minecraft:dragon_breath", "SHADOW_POOL",
+          damage=9, range=22, pierce=4),
+        A("Dread Howl", "A howl that sours the nerve of everything in front of you: Weakness and Slowness.", "debuff_cone", "minecraft:goat_horn", "SHADOW_POOL",
+          range=6, half_angle=55, seconds=8, effect="weakness", effect2="slowness", seconds2=6),
+        A("Gauntlet Strike: Shift", "Crouching, the gauntlet form drives a heavy blow upward and launches the monster in front of you.", "uppercut", "minecraft:iron_boots", "SPIRIT_AURA",
+          damage=10, range=3.4, launch=.95),
+        A("Wisp Veil", "Fall back into the incorporeal wisp: a shield of absorption that nothing can touch for a moment.", "shield", "minecraft:soul_lantern", "SPIRIT_AURA",
+          absorb_hearts=6, seconds=8, resist_amp=1),
+    ],
+    passives=[
+        PE("Hunger Owed", "Your blows store delayed damage on the foe, a hunger the shadow remembers, and your Debt arts collect it.", "debt_store", "minecraft:sculk_catalyst", {"store_pct": .45, "max_pct": .75, "hold_seconds": 18},
+           store_pct=.25, tick_seconds=3, max_pct=.5, hold_seconds=12, vfx="SHADOW_POOL"),
+        PE("Mana Devourer", "You eat the magic thrown at you: much less magic damage.", "resist", "minecraft:enchanted_book", {"pct": .5},
+           damage_kind="magic", pct=.3),
+        PE("Mind-Link Warning", "Arthur's mental voice warns you: you may slip a blow completely.", "dodge", "minecraft:ender_eye", {"chance": .22},
+           chance=.12),
+        P("Vivum Mending", "When badly hurt, the aether closes your wounds fast.", "regen_when", "minecraft:glistering_melon_slice", condition="low_health", per_second=1.3),
+        P("Aether Absorption", "Heal for a share of the damage you deal.", "lifesteal", "minecraft:amethyst_shard", pct=.07),
+        P("Shadow Hunter", "At night you deal more damage.", "dmg_when", "minecraft:black_dye", condition="night", bonus=.22),
+        P("Fed", "Each kill heals you and fills you with strength.", "kill_reward", "minecraft:rotten_flesh", heal=3, effect="strength", seconds=5),
+        P("Dread Presence", "Hostile creatures near you are weakened by your presence.", "aura", "minecraft:wither_rose", effect="weakness", target="enemies", radius=6),
+    ],
+    finishers=[
+        A("Destruction Fusion", "Merge with Arthur into one towering form and crash down on the monsters below.", "leap_slam", "minecraft:crying_obsidian", "SHADOW_POOL",
+          damage=32, radius=7, height=1.3, knockback=2, cooldown=1500, cost=.07),
+        AU("Devouring Shadow", "The shadow opens its whole mouth: every hunger your blows left on the monsters around you comes due in one bite.", "debt_burst", "minecraft:nether_star", "SHADOW_POOL",
+           damage=24, mult=2.3, radius=13, targets=12, cost=.07, cooldown=16000),
+    ],
+    evolution={"requirement": "kills", "count": 900,
+               "text": "Slay 900 creatures while Regis Leywin, the Devouring Shadow is switched on.",
+               "ultimate_name": "Ultimate Skill, Devouring Shadow"},
+))
