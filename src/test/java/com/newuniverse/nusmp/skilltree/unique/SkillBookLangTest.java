@@ -42,6 +42,13 @@ class SkillBookLangTest {
     @Test
     void everyLiteralFallbackKeyOfTheBooksIsInTheFragmentOrTheMainFileWithTheSameWords() throws IOException {
         JsonObject fragment = read(Path.of("tools/lang/skillbooks_unique.json"));
+        // 3.26.0: the other fragments of the books (skillbooks_rarity.json ...) count too; the unique one wins on a clash
+        try (Stream<Path> others = Files.list(Path.of("tools/lang"))) {
+            for (Path p : (Iterable<Path>) others.filter(q -> q.getFileName().toString().startsWith("skillbooks_") && q.toString().endsWith(".json")).sorted()::iterator) {
+                JsonObject extra = read(p);
+                for (String k : extra.keySet()) if (!fragment.has(k)) fragment.add(k, extra.get(k));
+            }
+        }
         JsonObject main = read(Path.of("src/main/resources/assets/nusmp/lang/en_us.json"));
         List<String> bad = new ArrayList<>();
         int checked = 0;

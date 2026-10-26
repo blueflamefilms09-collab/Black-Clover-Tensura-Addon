@@ -4,6 +4,7 @@ import com.mojang.logging.LogUtils;
 import com.newuniverse.nusmp.skilltree.data.RouteRegistry;
 import com.newuniverse.nusmp.skilltree.data.SkillRoute;
 import com.newuniverse.nusmp.skilltree.item.SkillBookItem;
+import com.newuniverse.nusmp.skilltree.rarity.BookFacts;
 import com.newuniverse.nusmp.skilltree.unique.LineIndex;
 import net.minecraft.world.item.ItemStack;
 import org.slf4j.Logger;
@@ -47,10 +48,13 @@ public final class ShopGoods {
         }
     }
 
-    /** The ids of the routes that exist right now, in registry order. */
+    /**
+     * The ids of the routes that exist right now, in registry order, minus (3.26.0) the lines of a blocked franchise ({@code blockedFranchises} with {@code hideBlockedFranchises} on): the Black Market
+     * neither stocks nor restocks them. A book already held still reads, and the commands and the creative tab are unchanged.
+     */
     public static List<String> routeIds() {
         List<String> out = new ArrayList<>();
-        for (SkillRoute r : RouteRegistry.all()) if (LineIndex.known(r.id())) out.add(r.id());
+        for (SkillRoute r : RouteRegistry.all()) if (LineIndex.known(r.id()) && !BookFacts.isBlocked(r.id())) out.add(r.id());
         return out;
     }
 }

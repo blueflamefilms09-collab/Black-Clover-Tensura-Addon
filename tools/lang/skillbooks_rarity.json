@@ -1,0 +1,10 @@
+{
+  "message.nusmp.skillbook.already_comprehended": "You have already comprehended this path.",
+  "tooltip.nusmp.skill_book.rarity": "Rarity: %s",
+  "tooltip.nusmp.skill_book.mythic_tag": "Mythic",
+  "rarity.nusmp.common": "Common",
+  "rarity.nusmp.uncommon": "Uncommon",
+  "rarity.nusmp.rare": "Rare",
+  "rarity.nusmp.epic": "Epic",
+  "rarity.nusmp.mythic": "Mythic"
+}

@@ -48,7 +48,9 @@
     "Heat Haze",
     "Ashes of the Slain",
     "Black Flame Brand"
-   ]
+   ],
+   "rarity": "rare",
+   "theme": "magma"
   },
   "aether_bow": {
    "book": "nusmp:aether_bow_book",
@@ -83,7 +85,9 @@
     "Quick Roll",
     "Quiver Salvage",
     "Packed Lunch"
-   ]
+   ],
+   "rarity": "epic",
+   "theme": "storm"
   },
   "aether_destruction": {
    "book": "nusmp:aether_destruction_book",
@@ -117,7 +121,9 @@
     "Ruinous Rhythm",
     "Last Spark",
     "Withering Touch"
-   ]
+   ],
+   "rarity": "epic",
+   "theme": "ruin"
   },
   "aether_step": {
    "book": "nusmp:aether_step_book",
@@ -152,7 +158,9 @@
     "Light Foot",
     "Hidden Step",
     "Fleeting Edge"
-   ]
+   ],
+   "rarity": "epic",
+   "theme": "void"
   },
   "aevum_hourglass": {
    "book": "nusmp:aevum_hourglass_book",
@@ -186,7 +194,9 @@
     "Borrowed Moment",
     "Quiet Hour",
     "Perfect Moment"
-   ]
+   ],
+   "rarity": "rare",
+   "theme": "sand"
   },
   "aggro_manipulation": {
    "book": "nusmp:aggro_manipulation_book",
@@ -221,7 +231,9 @@
     "Healer's Overtime",
     "Bash Knockback Rider",
     "Slow the Attacker"
-   ]
+   ],
+   "rarity": "common",
+   "theme": "iron"
   },
   "airiel_wind_maiden": {
    "book": "nusmp:airiel_wind_maiden_book",
@@ -256,7 +268,9 @@
     "Aerial Strike",
     "Gale Push",
     "Wind Deflection"
-   ]
+   ],
+   "rarity": "common",
+   "theme": "holy"
   },
   "amazon_berserker": {
    "book": "nusmp:amazon_berserker_book",
@@ -290,7 +304,9 @@
     "Cleaver's Shove",
     "Fighter's Reprieve",
     "Rising Fury"
-   ]
+   ],
+   "rarity": "common",
+   "theme": "blood"
   },
   "animation_cancel": {
    "book": "nusmp:animation_cancel_book",
@@ -325,7 +341,9 @@
     "Canceled Combo Counter",
     "Soft Landing Cancel",
     "Shove Cancel"
-   ]
+   ],
+   "rarity": "uncommon",
+   "theme": "storm"
   },
   "anti_magic_blade_dancer": {
    "book": "nusmp:anti_magic_blade_dancer_book",
@@ -360,7 +378,9 @@
     "Spot the Opening",
     "Running Start",
     "Stubborn Wounds"
-   ]
+   ],
+   "rarity": "uncommon",
+   "theme": "void"
   },
   "argonaut_charge": {
    "book": "nusmp:argonaut_charge_book",
@@ -394,7 +414,9 @@
     "Finish What You Start",
     "Not Backing Down",
     "Run-Up Bonus"
-   ]
+   ],
+   "rarity": "common",
+   "theme": "tower"
   },
   "asura_ascension": {
    "book": "nusmp:asura_ascension_book",
@@ -429,7 +451,9 @@
     "Hungry Gods",
     "Pride Spikes",
     "Thunderous Fist"
-   ]
+   ],
+   "rarity": "mythic",
+   "theme": "tower"
   },
   "basic_swordsmanship": {
    "book": "nusmp:basic_swordsmanship_book",
@@ -447,7 +471,9 @@
    "passives": [
     "Sword Mastery",
     "Riposte"
-   ]
+   ],
+   "rarity": "common",
+   "theme": "ruin"
   },
   "beast_communion": {
    "book": "nusmp:beast_communion_book",
@@ -482,7 +508,9 @@
     "Forager's Appetite",
     "Cat's Landing",
     "Wounded Beast"
-   ]
+   ],
+   "rarity": "common",
+   "theme": "forest"
   },
   "beast_monarch": {
    "book": "nusmp:beast_monarch_book",
@@ -517,7 +545,9 @@
     "Pack Bond",
     "Fresh Kill",
     "Shoulder-Shove"
-   ]
+   ],
+   "rarity": "epic",
+   "theme": "forest"
   },
   "beast_will": {
    "book": "nusmp:beast_will_book",
@@ -552,7 +582,9 @@
     "Sixth Sense",
     "Apex Predator",
     "Hunting Rhythm"
-   ]
+   ],
+   "rarity": "rare",
+   "theme": "blood"
   },
   "beastkin_lord_carrion": {
    "book": "nusmp:beastkin_lord_carrion_book",
@@ -587,7 +619,9 @@
     "Hunt Rhythm",
     "Pack Instinct",
     "Night Hunter"
-   ]
+   ],
+   "rarity": "rare",
+   "theme": "forest"
   },
   "bell_firebolt": {
    "book": "nusmp:bell_firebolt_book",
@@ -621,7 +655,9 @@
     "Blast Shove",
     "Running Rookie",
     "No Chant Needed"
-   ]
+   ],
+   "rarity": "common",
+   "theme": "storm"
   },
   "beru_ant_king": {
    "book": "nusmp:beru_ant_king_book",
@@ -657,7 +693,9 @@
     "Self-Mending Shell",
     "Spiked Exoskeleton",
     "Devour the Fallen"
-   ]
+   ],
+   "rarity": "rare",
+   "theme": "ruin"
   },
   "beta_tester_insight": {
    "book": "nusmp:beta_tester_insight_book",
@@ -692,7 +730,9 @@
     "Glowing Outline",
     "Rolling Experience",
     "Lucky Dodge"
-   ]
+   ],
+   "rarity": "uncommon",
+   "theme": "tower"
   },
   "black_bulls_vanguard": {
    "book": "nusmp:black_bulls_vanguard_book",
@@ -726,7 +766,9 @@
     "Monster Hunter's Grudge",
     "Never Backing Down",
     "Squad Spirit"
-   ]
+   ],
+   "rarity": "uncommon",
+   "theme": "city"
   },
   "black_heavenly_demon_sword": {
    "book": "nusmp:black_heavenly_demon_sword_book",
@@ -761,7 +803,9 @@
     "Feast of the Fallen",
     "Qi-Hardened Body",
     "Overwhelming Edge"
-   ]
+   ],
+   "rarity": "uncommon",
+   "theme": "blood"
   },
   "bloodlust_pressure": {
    "book": "nusmp:bloodlust_pressure_book",
@@ -795,7 +839,9 @@
     "Cornered Beast",
     "Hardened by Fights",
     "Blood Memory"
-   ]
+   ],
+   "rarity": "rare",
+   "theme": "storm"
   },
   "blue_rose_cavalier": {
    "book": "nusmp:blue_rose_cavalier_book",
@@ -830,7 +876,9 @@
     "Banner of the Rose",
     "Dewy Rejuvenation",
     "Order Against Raiders"
-   ]
+   ],
+   "rarity": "uncommon",
+   "theme": "frost"
   },
   "boar_warrior_might": {
    "book": "nusmp:boar_warrior_might_book",
@@ -865,7 +913,9 @@
     "Unbowed Champion",
     "Planted Landing",
     "Strength Feeds Strength"
-   ]
+   ],
+   "rarity": "common",
+   "theme": "sand"
   },
   "bonded_beast": {
    "book": "nusmp:bonded_beast_book",
@@ -899,7 +949,9 @@
     "Hearth Bond",
     "Sunny Spirits",
     "Protective Flare"
-   ]
+   ],
+   "rarity": "rare",
+   "theme": "forest"
   },
   "bookmark": {
    "book": "nusmp:bookmark_book",
@@ -933,7 +985,9 @@
     "Chapter Skip",
     "Rest at the Marked Page",
     "Light Reading"
-   ]
+   ],
+   "rarity": "common",
+   "theme": "ruin"
   },
   "borg_barrier_adept": {
    "book": "nusmp:borg_barrier_adept_book",
@@ -968,7 +1022,9 @@
     "Shared Field",
     "Repelling Field",
     "Calm Field"
-   ]
+   ],
+   "rarity": "rare",
+   "theme": "tower"
   },
   "boss_pattern_reader": {
    "book": "nusmp:boss_pattern_reader_book",
@@ -1002,7 +1058,9 @@
     "Blast Mitigation",
     "Learning Curve",
     "Phase Shift Reprieve"
-   ]
+   ],
+   "rarity": "rare",
+   "theme": "stellar"
   },
   "braver_command": {
    "book": "nusmp:braver_command_book",
@@ -1037,7 +1095,9 @@
     "Close the Opening",
     "Field Dressing",
     "Shielded Advance"
-   ]
+   ],
+   "rarity": "uncommon",
+   "theme": "tower"
   },
   "breaking_the_sky_sword": {
    "book": "nusmp:breaking_the_sky_sword_book",
@@ -1071,7 +1131,9 @@
     "Landing from Above",
     "Cutting Down the Weak",
     "Calm Eye of the Storm"
-   ]
+   ],
+   "rarity": "epic",
+   "theme": "storm"
   },
   "cauldron_witch_alchemist": {
    "book": "nusmp:cauldron_witch_alchemist_book",
@@ -1106,7 +1168,9 @@
     "Asbestos Apron",
     "Well-Fed",
     "Mild Mutation"
-   ]
+   ],
+   "rarity": "rare",
+   "theme": "forest"
   },
   "character_list": {
    "book": "nusmp:character_list_book",
@@ -1140,7 +1204,9 @@
     "Typecast Weapon",
     "Character Development",
     "Curtain Call"
-   ]
+   ],
+   "rarity": "common",
+   "theme": "city"
   },
   "cheese_strategy": {
    "book": "nusmp:cheese_strategy_book",
@@ -1175,7 +1241,9 @@
     "Hidden Spot Cloak",
     "Webbing Strikes",
     "Opportunist's Loot"
-   ]
+   ],
+   "rarity": "rare",
+   "theme": "forest"
   },
   "cinder_ella": {
    "book": "nusmp:cinder_ella_book",
@@ -1209,7 +1277,9 @@
     "Midnight Strength",
     "Dizzy Glamour",
     "Cat's Landing"
-   ]
+   ],
+   "rarity": "common",
+   "theme": "stellar"
   },
   "constellation_patronage": {
    "book": "nusmp:constellation_patronage_book",
@@ -1243,7 +1313,9 @@
     "Moonlit Patronage",
     "Star's Last Mercy",
     "Under the Stars"
-   ]
+   ],
+   "rarity": "mythic",
+   "theme": "stellar"
   },
   "consumable_optimization": {
    "book": "nusmp:consumable_optimization_book",
@@ -1277,7 +1349,9 @@
     "Magic Resistance Elixir",
     "Salvage Rations",
     "Shared Flask Aura"
-   ]
+   ],
+   "rarity": "common",
+   "theme": "ocean"
   },
   "coral_peacock_trickster": {
    "book": "nusmp:coral_peacock_trickster_book",
@@ -1311,7 +1385,9 @@
     "Critical Flourish",
     "Audience Cheers",
     "Backstage Prep"
-   ]
+   ],
+   "rarity": "uncommon",
+   "theme": "stellar"
   },
   "core_refinement": {
    "book": "nusmp:core_refinement_book",
@@ -1346,7 +1422,9 @@
     "Full Core",
     "Breath Control",
     "Tidy Aftermath"
-   ]
+   ],
+   "rarity": "rare",
+   "theme": "stellar"
   },
   "crimson_lion_blazeguard": {
    "book": "nusmp:crimson_lion_blazeguard_book",
@@ -1381,7 +1459,9 @@
     "Dominant Blaze",
     "Roaring Lion",
     "Banked Fires"
-   ]
+   ],
+   "rarity": "rare",
+   "theme": "magma"
   },
   "crimson_sovereign": {
    "book": "nusmp:crimson_sovereign_book",
@@ -1415,7 +1495,9 @@
     "Last Stand of the Throne",
     "Throne's Return",
     "Ancient Resilience"
-   ]
+   ],
+   "rarity": "epic",
+   "theme": "blood"
   },
   "crozzo_magic_sword": {
    "book": "nusmp:crozzo_magic_sword_book",
@@ -1449,7 +1531,9 @@
     "Backlash",
     "Ore Sense",
     "Break the Weak"
-   ]
+   ],
+   "rarity": "uncommon",
+   "theme": "magma"
   },
   "cursed_equipment_mastery": {
    "book": "nusmp:cursed_equipment_mastery_book",
@@ -1483,7 +1567,9 @@
     "Collected Debt",
     "Curse Reflection",
     "Blood Frenzy"
-   ]
+   ],
+   "rarity": "uncommon",
+   "theme": "blood"
   },
   "damage_rotation": {
    "book": "nusmp:damage_rotation_book",
@@ -1517,7 +1603,9 @@
     "Weakness Applied",
     "Lifesteal Rating",
     "Burn Phase Bonus"
-   ]
+   ],
+   "rarity": "common",
+   "theme": "magma"
   },
   "dark_rukh_fallen_magi": {
    "book": "nusmp:dark_rukh_fallen_magi_book",
@@ -1552,7 +1640,9 @@
     "Fall From Grace",
     "Depraved Luck",
     "Black Dusk"
-   ]
+   ],
+   "rarity": "epic",
+   "theme": "blood"
   },
   "dark_triad_hexer": {
    "book": "nusmp:dark_triad_hexer_book",
@@ -1586,7 +1676,9 @@
     "Coup de Grace",
     "Spoils of the Fallen",
     "Night's Veil"
-   ]
+   ],
+   "rarity": "uncommon",
+   "theme": "void"
   },
   "debuff_stack_doctrine": {
    "book": "nusmp:debuff_stack_doctrine_book",
@@ -1621,7 +1713,9 @@
     "Drain Leech",
     "Cull the Weakened",
     "Feed on the Fallen"
-   ]
+   ],
+   "rarity": "common",
+   "theme": "forest"
   },
   "demon_king_of_salvation": {
    "book": "nusmp:demon_king_of_salvation_book",
@@ -1655,7 +1749,9 @@
     "Savior's Instinct",
     "Mask of Ward",
     "Moonlit Wrath"
-   ]
+   ],
+   "rarity": "epic",
+   "theme": "void"
   },
   "devil_union_vessel": {
    "book": "nusmp:devil_union_vessel_book",
@@ -1690,7 +1786,9 @@
     "Cursed Hide",
     "Devil's Luck",
     "Vessel Refuses to Die"
-   ]
+   ],
+   "rarity": "mythic",
+   "theme": "blood"
   },
   "diamond_crystal_bulwark": {
    "book": "nusmp:diamond_crystal_bulwark_book",
@@ -1725,7 +1823,9 @@
     "Shield Bash Recoil",
     "Regrowing Facets",
     "Garrison Banner"
-   ]
+   ],
+   "rarity": "common",
+   "theme": "iron"
   },
   "dian_cecht_healer": {
    "book": "nusmp:dian_cecht_healer_book",
@@ -1759,7 +1859,9 @@
     "Poison and Rot Training",
     "Steady Under Stress",
     "Anathema to the Dead"
-   ]
+   ],
+   "rarity": "common",
+   "theme": "dream"
   },
   "djinn_mirage": {
    "book": "nusmp:djinn_mirage_book",
@@ -1793,7 +1895,9 @@
     "Lucky Glance",
     "Dry Throat",
     "Smoke Away"
-   ]
+   ],
+   "rarity": "uncommon",
+   "theme": "dream"
   },
   "dokkaebi_bundle": {
    "book": "nusmp:dokkaebi_bundle_book",
@@ -1827,7 +1931,9 @@
     "Booby-Trapped Package",
     "Bouncy Landing",
     "Market Haggler"
-   ]
+   ],
+   "rarity": "common",
+   "theme": "forest"
   },
   "double_dungeon_survivor": {
    "book": "nusmp:double_dungeon_survivor_book",
@@ -1862,7 +1968,9 @@
     "Slip the Strike",
     "Roll with the Fall",
     "Rationed Strength"
-   ]
+   ],
+   "rarity": "common",
+   "theme": "sand"
   },
   "dragon_king_antares": {
    "book": "nusmp:dragon_king_antares_book",
@@ -1934,7 +2042,9 @@
     "Tireless Appetite",
     "Hot Streak",
     "Dragon Soul Recovery"
-   ]
+   ],
+   "rarity": "mythic",
+   "theme": "stellar"
   },
   "dragon_will": {
    "book": "nusmp:dragon_will_book",
@@ -1969,7 +2079,9 @@
     "Wings Open",
     "Sunlit Scales",
     "Heavy Claws"
-   ]
+   ],
+   "rarity": "epic",
+   "theme": "storm"
   },
   "dryad_world_tree": {
    "book": "nusmp:dryad_world_tree_book",
@@ -2004,7 +2116,9 @@
     "Rain Drinker",
     "Thorn Bark",
     "Daylight Vigor"
-   ]
+   ],
+   "rarity": "uncommon",
+   "theme": "forest"
   },
   "dungeon_conqueror_captain": {
    "book": "nusmp:dungeon_conqueror_captain_book",
@@ -2039,7 +2153,9 @@
     "Go Down With the Ship",
     "Sea Rations",
     "Plunder"
-   ]
+   ],
+   "rarity": "common",
+   "theme": "ruin"
   },
   "dungeon_supporter": {
    "book": "nusmp:dungeon_supporter_book",
@@ -2073,7 +2189,9 @@
     "Slippery Porter",
     "Fortune in the Pack",
     "Patching Up"
-   ]
+   ],
+   "rarity": "common",
+   "theme": "ocean"
   },
   "dwarf_guardian": {
    "book": "nusmp:dwarf_guardian_book",
@@ -2108,7 +2226,9 @@
     "Stand Your Ground",
     "Shield Check",
     "Prospector's Eye"
-   ]
+   ],
+   "rarity": "common",
+   "theme": "ruin"
   },
   "dwarven_forge": {
    "book": "nusmp:dwarven_forge_book",
@@ -2143,7 +2263,9 @@
     "Hearty Dwarf",
     "Hammer Thump",
     "Master Smith"
-   ]
+   ],
+   "rarity": "rare",
+   "theme": "ruin"
   },
   "elemental_resist_meta": {
    "book": "nusmp:elemental_resist_meta_book",
@@ -2177,7 +2299,9 @@
     "Wardstone Aura",
     "Burning Fury",
     "Slow Cooling"
-   ]
+   ],
+   "rarity": "common",
+   "theme": "frost"
   },
   "elenoir_wind_weaver": {
    "book": "nusmp:elenoir_wind_weaver_book",
@@ -2212,7 +2336,9 @@
     "Springing Aura",
     "Keen Edge",
     "Forest Patience"
-   ]
+   ],
+   "rarity": "uncommon",
+   "theme": "forest"
   },
   "elven_rite_bearer": {
    "book": "nusmp:elven_rite_bearer_book",
@@ -2247,7 +2373,9 @@
     "Wise Memory",
     "Radiant Poise",
     "Reverence for Life"
-   ]
+   ],
+   "rarity": "epic",
+   "theme": "ruin"
   },
   "ember_flame_art": {
    "book": "nusmp:ember_flame_art_book",
@@ -2281,7 +2409,9 @@
     "Hearth Warmth",
     "Cooking Fire",
     "Ashes to Strength"
-   ]
+   ],
+   "rarity": "rare",
+   "theme": "magma"
   },
   "endure_ability": {
    "book": "nusmp:endure_ability_book",
@@ -2316,7 +2446,9 @@
     "Stone-Faced",
     "Padded Landing",
     "Marathon Lungs"
-   ]
+   ],
+   "rarity": "common",
+   "theme": "city"
   },
   "erza_requip_knight": {
    "book": "nusmp:erza_requip_knight_book",
@@ -2388,7 +2520,9 @@
     "Magoi Recovery",
     "Frugal Caster",
     "Backlash Ward"
-   ]
+   ],
+   "rarity": "epic",
+   "theme": "stellar"
   },
   "fanalis_brawler": {
    "book": "nusmp:fanalis_brawler_book",
@@ -2423,7 +2557,9 @@
     "Kick Rhythm",
     "Heavy Kicks",
     "Finishing Instinct"
-   ]
+   ],
+   "rarity": "uncommon",
+   "theme": "sand"
   },
   "flame_djinn_swordsman": {
    "book": "nusmp:flame_djinn_swordsman_book",
@@ -2458,7 +2594,9 @@
     "Fire Rhythm",
     "Victory Flame",
     "Finishing Heat"
-   ]
+   ],
+   "rarity": "epic",
+   "theme": "magma"
   },
   "flame_spirit_ifrit": {
    "book": "nusmp:flame_spirit_ifrit_book",
@@ -2492,7 +2630,9 @@
     "Scorched Armor",
     "Smoke in the Eyes",
     "Eternal Embers"
-   ]
+   ],
+   "rarity": "rare",
+   "theme": "magma"
   },
   "flute_magi_prodigy": {
    "book": "nusmp:flute_magi_prodigy_book",
@@ -2527,7 +2667,9 @@
     "Floating Tune",
     "Friend of Many",
     "Bottomless Well"
-   ]
+   ],
+   "rarity": "rare",
+   "theme": "dream"
   },
   "fog_troupe_bandit": {
    "book": "nusmp:fog_troupe_bandit_book",
@@ -2562,7 +2704,9 @@
     "Rooftop Roll",
     "Crime Pays",
     "Dirty Finish"
-   ]
+   ],
+   "rarity": "uncommon",
+   "theme": "city"
   },
   "fourth_wall": {
    "book": "nusmp:fourth_wall_book",
@@ -2596,7 +2740,9 @@
     "Last Page Barrier",
     "Behind the Wall",
     "Landing on the Spine"
-   ]
+   ],
+   "rarity": "uncommon",
+   "theme": "tower"
   },
   "freya_charm": {
    "book": "nusmp:freya_charm_book",
@@ -2630,7 +2776,9 @@
     "Basking in Daylight",
     "Elusive Muse",
     "Tribute"
-   ]
+   ],
+   "rarity": "mythic",
+   "theme": "dream"
   },
   "frost_djinn_blade": {
    "book": "nusmp:frost_djinn_blade_book",
@@ -2665,7 +2813,9 @@
     "Frozen Mail",
     "Last Frost",
     "Cold Composure"
-   ]
+   ],
+   "rarity": "epic",
+   "theme": "frost"
   },
   "frost_monarch": {
    "book": "nusmp:frost_monarch_book",
@@ -2699,7 +2849,9 @@
     "Frostbite Touch",
     "Rime Thorns",
     "Winter's Foe"
-   ]
+   ],
+   "rarity": "epic",
+   "theme": "frost"
   },
   "goh_apollo_charyeok": {
    "book": "nusmp:goh_apollo_charyeok_book",
@@ -2734,7 +2886,9 @@
     "Bright Salve",
     "Smite the Dead",
     "Sun-Tempered"
-   ]
+   ],
+   "rarity": "uncommon",
+   "theme": "holy"
   },
   "goh_ares_charyeok": {
    "book": "nusmp:goh_ares_charyeok_book",
@@ -2769,7 +2923,9 @@
     "Axe Rhythm",
     "Brutal Blow",
     "Fireproof Hide"
-   ]
+   ],
+   "rarity": "uncommon",
+   "theme": "blood"
   },
   "goh_artemis_charyeok": {
    "book": "nusmp:goh_artemis_charyeok_book",
@@ -2804,7 +2960,9 @@
     "Quarry's End",
     "Owl Eyes",
     "Trophy Skinning"
-   ]
+   ],
+   "rarity": "uncommon",
+   "theme": "forest"
   },
   "goh_athena_charyeok": {
    "book": "nusmp:goh_athena_charyeok_book",
@@ -2839,7 +2997,9 @@
     "Anticipation",
     "Monster Study",
     "Hold the Standard"
-   ]
+   ],
+   "rarity": "uncommon",
+   "theme": "holy"
   },
   "goh_capoeira": {
    "book": "nusmp:goh_capoeira_book",
@@ -2874,7 +3034,9 @@
     "Heel Catch",
     "Dance Breath",
     "Sandy Heels"
-   ]
+   ],
+   "rarity": "common",
+   "theme": "city"
   },
   "goh_charyeok_vessel": {
    "book": "nusmp:goh_charyeok_vessel_book",
@@ -2909,7 +3071,9 @@
     "Settling of the Spirit",
     "Spirit Bones",
     "Hex Ward"
-   ]
+   ],
+   "rarity": "epic",
+   "theme": "dream"
   },
   "goh_hades_charyeok": {
    "book": "nusmp:goh_hades_charyeok_book",
@@ -2944,7 +3108,9 @@
     "Last Rites",
     "Elude Fate",
     "Night Mending"
-   ]
+   ],
+   "rarity": "uncommon",
+   "theme": "void"
   },
   "goh_haetae_jade": {
    "book": "nusmp:goh_haetae_jade_book",
@@ -3016,7 +3182,9 @@
     "Calm Breathing",
     "Controlled Fall",
     "Studied Opening"
-   ]
+   ],
+   "rarity": "common",
+   "theme": "stellar"
   },
   "goh_hephaestus_charyeok": {
    "book": "nusmp:goh_hephaestus_charyeok_book",
@@ -3051,7 +3219,9 @@
     "Anvil Ring",
     "Quenched Edge",
     "Cooling Down"
-   ]
+   ],
+   "rarity": "epic",
+   "theme": "magma"
   },
   "goh_heracles_labors": {
    "book": "nusmp:goh_heracles_labors_book",
@@ -3086,7 +3256,9 @@
     "Spoils of the Labor",
     "Unbowed Hero",
     "Trophy of the Hunt"
-   ]
+   ],
+   "rarity": "uncommon",
+   "theme": "ruin"
   },
   "goh_hermes_charyeok": {
    "book": "nusmp:goh_hermes_charyeok_book",
@@ -3121,7 +3293,9 @@
     "Sandal Cushion",
     "Light Meals",
     "Wingtip Reflex"
-   ]
+   ],
+   "rarity": "common",
+   "theme": "sand"
   },
   "goh_judo": {
    "book": "nusmp:goh_judo_book",
@@ -3156,7 +3330,9 @@
     "Mat Endurance",
     "Ippon Instinct",
     "Unmovable Foundation"
-   ]
+   ],
+   "rarity": "common",
+   "theme": "iron"
   },
   "goh_jumeok_fist": {
    "book": "nusmp:goh_jumeok_fist_book",
@@ -3191,7 +3367,9 @@
     "Taste of Blood",
     "Dig In",
     "Brawler's Pride"
-   ]
+   ],
+   "rarity": "rare",
+   "theme": "magma"
   },
   "goh_kendo": {
    "book": "nusmp:goh_kendo_book",
@@ -3226,7 +3404,9 @@
     "Flow of Strikes",
     "Evasive Footwork",
     "Do Resolve"
-   ]
+   ],
+   "rarity": "uncommon",
+   "theme": "ruin"
   },
   "goh_ki_cultivation": {
    "book": "nusmp:goh_ki_cultivation_book",
@@ -3261,7 +3441,9 @@
     "Frugal Body",
     "Ki Veil",
     "Ki Presence"
-   ]
+   ],
+   "rarity": "rare",
+   "theme": "dream"
   },
   "goh_lu_bu_moonlight": {
    "book": "nusmp:goh_lu_bu_moonlight_book",
@@ -3333,7 +3515,9 @@
     "Not Going Down",
     "Gorging Appetite",
     "Tireless"
-   ]
+   ],
+   "rarity": "uncommon",
+   "theme": "magma"
   },
   "goh_monkey_king": {
    "book": "nusmp:goh_monkey_king_book",
@@ -3369,7 +3553,9 @@
     "Peach Tree Mending",
     "Ledge Hopper",
     "Sprinting Sage"
-   ]
+   ],
+   "rarity": "mythic",
+   "theme": "magma"
   },
   "goh_muay_thai": {
    "book": "nusmp:goh_muay_thai_book",
@@ -3404,7 +3590,9 @@
     "Combination Rhythm",
     "Knee Shove",
     "Fight Fuel"
-   ]
+   ],
+   "rarity": "common",
+   "theme": "blood"
   },
   "goh_nyuh_weapon_forms": {
    "book": "nusmp:goh_nyuh_weapon_forms_book",
@@ -3441,7 +3629,9 @@
     "Spiked Form",
     "Weapon Rhythm",
     "Salvaged Ki"
-   ]
+   ],
+   "rarity": "epic",
+   "theme": "storm"
   },
   "goh_pankration_grappler": {
    "book": "nusmp:goh_pankration_grappler_book",
@@ -3476,7 +3666,9 @@
     "Pin Rhythm",
     "Mat Breath",
     "Hold Your Ground"
-   ]
+   ],
+   "rarity": "common",
+   "theme": "iron"
   },
   "goh_poseidon": {
    "book": "nusmp:goh_poseidon_book",
@@ -3511,7 +3703,9 @@
     "Salt Spray",
     "Riptide Shove",
     "Breaker Fall"
-   ]
+   ],
+   "rarity": "uncommon",
+   "theme": "ocean"
   },
   "goh_taekwondo": {
    "book": "nusmp:goh_taekwondo_book",
@@ -3546,7 +3740,9 @@
     "Rhythm of the Match",
     "Light Landing",
     "Heel Drive"
-   ]
+   ],
+   "rarity": "common",
+   "theme": "storm"
   },
   "goh_tiger_crane_kungfu": {
    "book": "nusmp:goh_tiger_crane_kungfu_book",
@@ -3581,7 +3777,9 @@
     "Snake Venom",
     "Breath of the Dragon",
     "Fighting Spirit"
-   ]
+   ],
+   "rarity": "common",
+   "theme": "forest"
   },
   "goh_tournament_contender": {
    "book": "nusmp:goh_tournament_contender_book",
@@ -3616,7 +3814,9 @@
     "Final Round Grit",
     "Spotlight Strike",
     "Bracket Momentum"
-   ]
+   ],
+   "rarity": "uncommon",
+   "theme": "city"
   },
   "goh_zeus_charyeok": {
    "book": "nusmp:goh_zeus_charyeok_book",
@@ -3652,7 +3852,9 @@
     "Numbing Shock",
     "Storm Sprint",
     "Crackling Air"
-   ]
+   ],
+   "rarity": "mythic",
+   "theme": "storm"
   },
   "golden_dawn_prodigy": {
    "book": "nusmp:golden_dawn_prodigy_book",
@@ -3687,7 +3889,9 @@
     "Overflowing Tide",
     "Gifted Student",
     "Refined Evasion"
-   ]
+   ],
+   "rarity": "epic",
+   "theme": "holy"
   },
   "goldsmith_radiance": {
    "book": "nusmp:goldsmith_radiance_book",
@@ -3722,7 +3926,9 @@
     "Dazzling Blow",
     "Rising Sun",
     "Noble Training"
-   ]
+   ],
+   "rarity": "rare",
+   "theme": "holy"
   },
   "goliath_colossal_fist": {
    "book": "nusmp:goliath_colossal_fist_book",
@@ -3757,7 +3963,9 @@
     "Blood of the Strong",
     "Not Done Yet",
     "Spoils of a Giant"
-   ]
+   ],
+   "rarity": "uncommon",
+   "theme": "city"
   },
   "gray_ice_make": {
    "book": "nusmp:gray_ice_make_book",
@@ -3828,7 +4036,9 @@
     "Rapid Learning",
     "Optimized Strikes",
     "Calm Mind"
-   ]
+   ],
+   "rarity": "uncommon",
+   "theme": "tower"
   },
   "greatsword_doctrine": {
    "book": "nusmp:greatsword_doctrine_book",
@@ -3863,7 +4073,9 @@
     "Slayer of Beasts",
     "Arm Fatigue Recovery",
     "Brace Block"
-   ]
+   ],
+   "rarity": "rare",
+   "theme": "city"
   },
   "green_mantis_ambusher": {
    "book": "nusmp:green_mantis_ambusher_book",
@@ -3898,7 +4110,9 @@
     "Branch Dodge",
     "Treetop Landing",
     "Hunter's Patience"
-   ]
+   ],
+   "rarity": "rare",
+   "theme": "forest"
   },
   "grimoire_page_scholar": {
    "book": "nusmp:grimoire_page_scholar_book",
@@ -3933,7 +4147,9 @@
     "Light Reader",
     "Trial by Fire",
     "Pop Quiz"
-   ]
+   ],
+   "rarity": "epic",
+   "theme": "dream"
   },
   "grinding_protocol": {
    "book": "nusmp:grinding_protocol_book",
@@ -3968,7 +4184,9 @@
     "Between-Fights Recovery",
     "Resource Leech",
     "Daylight Efficiency"
-   ]
+   ],
+   "rarity": "uncommon",
+   "theme": "ruin"
   },
   "guardian_absolute_defense": {
    "book": "nusmp:guardian_absolute_defense_book",
@@ -4003,7 +4221,9 @@
     "Guardian's Aura",
     "Mending Barrier",
     "Patient Guardian"
-   ]
+   ],
+   "rarity": "uncommon",
+   "theme": "holy"
   },
   "hakurou_blade_way": {
    "book": "nusmp:hakurou_blade_way_book",
@@ -4038,7 +4258,9 @@
     "Flow of Steel",
     "Finishing Instinct",
     "Running Draw"
-   ]
+   ],
+   "rarity": "uncommon",
+   "theme": "forest"
   },
   "haruhime_uchide": {
    "book": "nusmp:haruhime_uchide_book",
@@ -4110,7 +4332,9 @@
     "Last Petal",
     "Rain Bloom",
     "Nourishing Harvest"
-   ]
+   ],
+   "rarity": "rare",
+   "theme": "holy"
   },
   "heewon_righteous_knight": {
    "book": "nusmp:heewon_righteous_knight_book",
@@ -4144,7 +4368,9 @@
     "Purified Spirit",
     "Mercy for the Fallen",
     "Lessons of the Road"
-   ]
+   ],
+   "rarity": "uncommon",
+   "theme": "holy"
   },
   "hellflare_flame_lord": {
    "book": "nusmp:hellflare_flame_lord_book",
@@ -4178,7 +4404,9 @@
     "Drilled Rhythm",
     "Flame Scorch",
     "Heat Recovery"
-   ]
+   ],
+   "rarity": "rare",
+   "theme": "magma"
   },
   "hephaistos_forge": {
    "book": "nusmp:hephaistos_forge_book",
@@ -4213,7 +4441,9 @@
     "Steady Breath at the Bellows",
     "Cellar Dweller's Haste",
     "Cool in the Cellar"
-   ]
+   ],
+   "rarity": "rare",
+   "theme": "iron"
   },
   "hestia_falna": {
    "book": "nusmp:hestia_falna_book",
@@ -4248,7 +4478,9 @@
     "The Goddess's Whisper",
     "Growing Resolve",
     "Falna Guard"
-   ]
+   ],
+   "rarity": "common",
+   "theme": "city"
   },
   "hestia_knife": {
    "book": "nusmp:hestia_knife_book",
@@ -4282,7 +4514,9 @@
     "Final Thrust",
     "Parrying Edge",
     "Blessing Leeches Life"
-   ]
+   ],
+   "rarity": "rare",
+   "theme": "void"
   },
   "hidden_class_berserker": {
    "book": "nusmp:hidden_class_berserker_book",
@@ -4317,7 +4551,9 @@
     "Feast on the Fallen",
     "Not Yet",
     "Gut Punch Crits"
-   ]
+   ],
+   "rarity": "rare",
+   "theme": "blood"
   },
   "hinata_moonlit_blade": {
    "book": "nusmp:hinata_moonlit_blade_book",
@@ -4352,7 +4588,9 @@
     "Sword-Bearer",
     "Faith's Ward",
     "Rehearsed Flow"
-   ]
+   ],
+   "rarity": "rare",
+   "theme": "holy"
   },
   "hoarfrost_art": {
    "book": "nusmp:hoarfrost_art_book",
@@ -4387,7 +4625,9 @@
     "Frozen Air",
     "Snow Skip",
     "Thaw Resolve"
-   ]
+   ],
+   "rarity": "epic",
+   "theme": "frost"
   },
   "household_vessel_wielder": {
    "book": "nusmp:household_vessel_wielder_book",
@@ -4422,7 +4662,9 @@
     "Warm Hearth",
     "Dodge the Dishes",
     "Kitchen Brawler"
-   ]
+   ],
+   "rarity": "uncommon",
+   "theme": "city"
   },
   "hunter_ability": {
    "book": "nusmp:hunter_ability_book",
@@ -4457,7 +4699,9 @@
     "Veteran's Eye",
     "Hunting Rhythm",
     "Spiked Gear"
-   ]
+   ],
+   "rarity": "common",
+   "theme": "ruin"
   },
   "hunter_healer": {
    "book": "nusmp:hunter_healer_book",
@@ -4492,7 +4736,9 @@
     "Prayer in Peril",
     "Student of the Raid",
     "Economy of Mana"
-   ]
+   ],
+   "rarity": "common",
+   "theme": "holy"
   },
   "hunter_mage": {
    "book": "nusmp:hunter_mage_book",
@@ -4526,7 +4772,9 @@
     "Finishing Spell",
     "Study of the Gates",
     "Barrier Flicker"
-   ]
+   ],
+   "rarity": "rare",
+   "theme": "tower"
   },
   "hunter_ranger": {
    "book": "nusmp:hunter_ranger_book",
@@ -4561,7 +4809,9 @@
     "Treetop Landing",
     "Daylight Marksman",
     "Calm Breath"
-   ]
+   ],
+   "rarity": "uncommon",
+   "theme": "forest"
   },
   "hunter_sword_dance": {
    "book": "nusmp:hunter_sword_dance_book",
@@ -4595,7 +4845,9 @@
     "Sword Focus",
     "Blade Breath",
     "Economy of Motion"
-   ]
+   ],
+   "rarity": "common",
+   "theme": "ocean"
   },
   "igris_blood_red": {
    "book": "nusmp:igris_blood_red_book",
@@ -4631,7 +4883,9 @@
     "Shield-Splitting Blow",
     "Knight of the Monarch",
     "Unbowed"
-   ]
+   ],
+   "rarity": "uncommon",
+   "theme": "blood"
   },
   "imperial_fan_dancer": {
    "book": "nusmp:imperial_fan_dancer_book",
@@ -4665,7 +4919,9 @@
     "Quiet Interval",
     "Sharp Fan Edge",
     "Dance Tempo"
-   ]
+   ],
+   "rarity": "uncommon",
+   "theme": "holy"
   },
   "invincibility_frames": {
    "book": "nusmp:invincibility_frames_book",
@@ -4699,7 +4955,9 @@
     "Airborne Recovery",
     "Slow Mend",
     "Spiked Roll"
-   ]
+   ],
+   "rarity": "common",
+   "theme": "dream"
   },
   "iron_body_monarch": {
    "book": "nusmp:iron_body_monarch_book",
@@ -4734,7 +4992,9 @@
     "Spiked Knuckles",
     "Iron Recovery",
     "Pinpoint Impact"
-   ]
+   ],
+   "rarity": "epic",
+   "theme": "iron"
   },
   "iron_shadow_guard": {
    "book": "nusmp:iron_shadow_guard_book",
@@ -4769,7 +5029,9 @@
     "Self-Repairing Plate",
     "Shield Bash Reflex",
     "Fall Like a Boulder"
-   ]
+   ],
+   "rarity": "common",
+   "theme": "iron"
   },
   "jihye_twin_blades": {
    "book": "nusmp:jihye_twin_blades_book",
@@ -4804,7 +5066,9 @@
     "Victory Dash",
     "Eye for the Opening",
     "Looted Trophies"
-   ]
+   ],
+   "rarity": "rare",
+   "theme": "sand"
   },
   "kamish_wrath": {
    "book": "nusmp:kamish_wrath_book",
@@ -4839,7 +5103,9 @@
     "Dragon's Last Breath",
     "Tyrant's Eye",
     "Hardened by the Hoard"
-   ]
+   ],
+   "rarity": "epic",
+   "theme": "magma"
   },
   "kasaka_venom_fang": {
    "book": "nusmp:kasaka_venom_fang_book",
@@ -4873,7 +5139,9 @@
     "Poisoned Reprisal",
     "Sap the Dying",
     "Quick Silence"
-   ]
+   ],
+   "rarity": "rare",
+   "theme": "forest"
   },
   "labyrinth_maker_ramiris": {
    "book": "nusmp:labyrinth_maker_ramiris_book",
@@ -4908,7 +5176,9 @@
     "Trap Spoils",
     "Floor Mender",
     "Sticky Corridor"
-   ]
+   ],
+   "rarity": "rare",
+   "theme": "tower"
   },
   "lady_luck": {
    "book": "nusmp:lady_luck_book",
@@ -4927,7 +5197,9 @@
     "Cat's Paw",
     "Lucky Strike",
     "Treasure Nose"
-   ]
+   ],
+   "rarity": "uncommon",
+   "theme": "city"
   },
   "lance_bulwark": {
    "book": "nusmp:lance_bulwark_book",
@@ -4962,7 +5234,9 @@
     "Steady Landing",
     "The Wall Holds",
     "Wall's Shove"
-   ]
+   ],
+   "rarity": "common",
+   "theme": "iron"
   },
   "lance_shadowblade": {
    "book": "nusmp:lance_shadowblade_book",
@@ -4997,7 +5271,9 @@
     "Cloak of Dark",
     "Coated Blade",
     "Clean Exit"
-   ]
+   ],
+   "rarity": "uncommon",
+   "theme": "void"
   },
   "lance_vanguard": {
    "book": "nusmp:lance_vanguard_book",
@@ -5032,7 +5308,9 @@
     "Never Retreat",
     "Spiked Plate",
     "Spoils of the Line"
-   ]
+   ],
+   "rarity": "uncommon",
+   "theme": "city"
   },
   "legionary_phalanx_shield": {
    "book": "nusmp:legionary_phalanx_shield_book",
@@ -5067,7 +5345,9 @@
     "Last Rank",
     "Field Surgeon",
     "Steady Thrust"
-   ]
+   ],
+   "rarity": "uncommon",
+   "theme": "iron"
   },
   "liaris_freese": {
    "book": "nusmp:liaris_freese_book",
@@ -5102,7 +5382,9 @@
     "Light Stomach",
     "Self-Healing Spirit",
     "Lucky Hit"
-   ]
+   ],
+   "rarity": "common",
+   "theme": "dream"
   },
   "little_rookie": {
    "book": "nusmp:little_rookie_book",
@@ -5136,7 +5418,9 @@
     "Beginner's Crit",
     "Quick Duck",
     "Learn Fast"
-   ]
+   ],
+   "rarity": "uncommon",
+   "theme": "holy"
   },
   "loot_duplication_glitch": {
    "book": "nusmp:loot_duplication_glitch_book",
@@ -5170,7 +5454,9 @@
     "Lucky Crits",
     "Day-Trader's Glow",
     "Frugal Gut"
-   ]
+   ],
+   "rarity": "common",
+   "theme": "sand"
   },
   "luminous_wind": {
    "book": "nusmp:luminous_wind_book",
@@ -5204,7 +5490,9 @@
     "Meditative Breath",
     "Forest Landing",
     "Merciless Moment"
-   ]
+   ],
+   "rarity": "common",
+   "theme": "forest"
   },
   "magic_broom_aerialist": {
    "book": "nusmp:magic_broom_aerialist_book",
@@ -5239,7 +5527,9 @@
     "Building Gale",
     "Hard to Catch",
     "Buffeting Strikes"
-   ]
+   ],
+   "rarity": "uncommon",
+   "theme": "storm"
   },
   "magic_carpet_rider": {
    "book": "nusmp:magic_carpet_rider_book",
@@ -5274,7 +5564,9 @@
     "Steady Flight",
     "Lazy Afternoon",
     "Seasoned Traveler"
-   ]
+   ],
+   "rarity": "uncommon",
+   "theme": "dream"
   },
   "magic_knight_duelist": {
    "book": "nusmp:magic_knight_duelist_book",
@@ -5309,7 +5601,9 @@
     "Blade Guard",
     "Riposte Recovery",
     "Sharp Eye"
-   ]
+   ],
+   "rarity": "uncommon",
+   "theme": "tower"
   },
   "magic_tool_artificer": {
    "book": "nusmp:magic_tool_artificer_book",
@@ -5343,7 +5637,9 @@
     "Self-Repair",
     "Hot-Swapping",
     "Lab Learning"
-   ]
+   ],
+   "rarity": "rare",
+   "theme": "city"
   },
   "magnostadt_staff_wizard": {
    "book": "nusmp:magnostadt_staff_wizard_book",
@@ -5378,7 +5674,9 @@
     "Specimen Collection",
     "Theory of Feeding",
     "Light Lessons"
-   ]
+   ],
+   "rarity": "rare",
+   "theme": "tower"
   },
   "magoi_siphoner": {
    "book": "nusmp:magoi_siphoner_book",
@@ -5412,7 +5710,9 @@
     "Thin Cut",
     "Drawing Strength",
     "Spell Insulation"
-   ]
+   ],
+   "rarity": "uncommon",
+   "theme": "dream"
   },
   "mana_beast_hunter": {
    "book": "nusmp:mana_beast_hunter_book",
@@ -5447,7 +5747,9 @@
     "Camp Rest",
     "Dive Aside",
     "Lantern Eyes"
-   ]
+   ],
+   "rarity": "rare",
+   "theme": "forest"
   },
   "mana_rotation": {
    "book": "nusmp:mana_rotation_book",
@@ -5481,7 +5783,9 @@
     "On the Move",
     "Drill Reward",
     "Unbroken Cycle"
-   ]
+   ],
+   "rarity": "uncommon",
+   "theme": "dream"
   },
   "mana_skin_brawler": {
    "book": "nusmp:mana_skin_brawler_book",
@@ -5517,7 +5821,9 @@
     "Victory Roar",
     "Skin Mending",
     "Charging Bull Rush"
-   ]
+   ],
+   "rarity": "uncommon",
+   "theme": "iron"
   },
   "mana_zone_sentinel": {
    "book": "nusmp:mana_zone_sentinel_book",
@@ -5551,7 +5857,9 @@
     "Spotting the Dying",
     "Studied Opponents",
     "Calm Breath"
-   ]
+   ],
+   "rarity": "common",
+   "theme": "dream"
   },
   "metal_vessel_conqueror": {
    "book": "nusmp:metal_vessel_conqueror_book",
@@ -5586,7 +5894,9 @@
     "Spoils of the Dungeon",
     "Vessel Renewal",
     "Djinn's Edge"
-   ]
+   ],
+   "rarity": "rare",
+   "theme": "holy"
   },
   "min_max_build": {
    "book": "nusmp:min_max_build_book",
@@ -5621,7 +5931,9 @@
     "Low-HP Passive",
     "Strength Aura",
     "Stamina Curve"
-   ]
+   ],
+   "rarity": "rare",
+   "theme": "tower"
   },
   "monarchs_domain": {
    "book": "nusmp:monarchs_domain_book",
@@ -5655,7 +5967,9 @@
     "Calm of the Throne Room",
     "Crushing Weight",
     "Unyielding Law"
-   ]
+   ],
+   "rarity": "mythic",
+   "theme": "stellar"
   },
   "monster_tamer": {
    "book": "nusmp:monster_tamer_book",
@@ -5689,7 +6003,9 @@
     "Bond's Protection",
     "Trail Rations",
     "Beast's Instinct"
-   ]
+   ],
+   "rarity": "common",
+   "theme": "forest"
   },
   "multi_vessel_warlord": {
    "book": "nusmp:multi_vessel_warlord_book",
@@ -5724,7 +6040,9 @@
     "Titan Hunter",
     "Veteran's Eye",
     "Camp Mending"
-   ]
+   ],
+   "rarity": "epic",
+   "theme": "blood"
   },
   "new_game_plus_memory": {
    "book": "nusmp:new_game_plus_memory_book",
@@ -5759,7 +6077,9 @@
     "Rehearsed Combo",
     "Fed by Foresight",
     "Landing Memory"
-   ]
+   ],
+   "rarity": "uncommon",
+   "theme": "stellar"
   },
   "oath_of_the_heavy_armor": {
    "book": "nusmp:heavy_armor_book",
@@ -5778,7 +6098,9 @@
     "Iron Hide",
     "Bulwark",
     "Unyielding"
-   ]
+   ],
+   "rarity": "rare",
+   "theme": "iron"
   },
   "ogre_lord_might": {
    "book": "nusmp:ogre_lord_might_book",
@@ -5813,7 +6135,9 @@
     "Refuse to Fall",
     "Feast Victory",
     "Return Blow"
-   ]
+   ],
+   "rarity": "rare",
+   "theme": "blood"
   },
   "omniscient_viewpoint": {
    "book": "nusmp:omniscient_viewpoint_book",
@@ -5847,7 +6171,9 @@
     "Margin Annotation",
     "Chapter Recap",
     "Spoiled Opponents"
-   ]
+   ],
+   "rarity": "mythic",
+   "theme": "stellar"
   },
   "orc_lord_famine": {
    "book": "nusmp:orc_lord_famine_book",
@@ -5882,7 +6208,9 @@
     "Hoarded Experience",
     "Poison Stomach",
     "Painful Meal"
-   ]
+   ],
+   "rarity": "common",
+   "theme": "ruin"
   },
   "overweight_build": {
    "book": "nusmp:overweight_build_book",
@@ -5917,7 +6245,9 @@
     "Meditation in Plate",
     "Bulldozer",
     "Not Going Down"
-   ]
+   ],
+   "rarity": "common",
+   "theme": "iron"
   },
   "party_support_rotation": {
    "book": "nusmp:party_support_rotation_book",
@@ -5951,7 +6281,9 @@
     "Shared Experience",
     "Bell Dodge",
     "Pushback"
-   ]
+   ],
+   "rarity": "common",
+   "theme": "city"
   },
   "perfect_parry_timing": {
    "book": "nusmp:perfect_parry_timing_book",
@@ -5986,7 +6318,9 @@
     "Blade-In-Hand Focus",
     "Dizzying Counter",
     "Calm After the Clash"
-   ]
+   ],
+   "rarity": "common",
+   "theme": "holy"
   },
   "plague_monarch": {
    "book": "nusmp:plague_monarch_book",
@@ -6020,7 +6354,9 @@
     "Feast on the Fallen",
     "Rot in the Wound",
     "Grave Vitality"
-   ]
+   ],
+   "rarity": "epic",
+   "theme": "ruin"
   },
   "predator_gluttony": {
    "book": "nusmp:predator_gluttony_book",
@@ -6055,7 +6391,9 @@
     "Slime Regeneration",
     "Hunger Aura",
     "Harvested Materials"
-   ]
+   ],
+   "rarity": "common",
+   "theme": "void"
   },
   "primordial_black_diablo": {
    "book": "nusmp:primordial_black_diablo_book",
@@ -6090,7 +6428,9 @@
     "Dark Cloak",
     "Offering Taken",
     "Abyssal Resilience"
-   ]
+   ],
+   "rarity": "epic",
+   "theme": "dream"
   },
   "primordial_red_destruction": {
    "book": "nusmp:primordial_red_destruction_book",
@@ -6125,7 +6465,9 @@
     "Withering Presence",
     "Stolen Vigor",
     "Desperate Elegance"
-   ]
+   ],
+   "rarity": "epic",
+   "theme": "stellar"
   },
   "prisoner_golden_headband": {
    "book": "nusmp:prisoner_golden_headband_book",
@@ -6162,7 +6504,9 @@
     "Heaven-Defying Brawler",
     "Staff Sweep",
     "Weightless Leap"
-   ]
+   ],
+   "rarity": "common",
+   "theme": "sand"
   },
   "probability_stories": {
    "book": "nusmp:probability_stories_book",
@@ -6196,7 +6540,9 @@
     "Fate Smiles",
     "Streak of Luck",
     "Unlikely Finish"
-   ]
+   ],
+   "rarity": "common",
+   "theme": "tower"
   },
   "puppet_master_clayman": {
    "book": "nusmp:puppet_master_clayman_book",
@@ -6231,7 +6577,9 @@
     "Out of Reach",
     "Final Curtain",
     "Applause"
-   ]
+   ],
+   "rarity": "uncommon",
+   "theme": "city"
   },
   "purple_orca_tidecaller": {
    "book": "nusmp:purple_orca_tidecaller_book",
@@ -6267,7 +6615,9 @@
     "Lungs of the Orca",
     "Barnacle Shell",
     "Mending Swell"
-   ]
+   ],
+   "rarity": "uncommon",
+   "theme": "ocean"
   },
   "quicksilver_rush": {
    "book": "nusmp:quicksilver_rush_book",
@@ -6302,7 +6652,9 @@
     "Wasn't There",
     "Flurry Rhythm",
     "Speed Feeds Speed"
-   ]
+   ],
+   "rarity": "common",
+   "theme": "storm"
   },
   "raid_captain_command": {
    "book": "nusmp:raid_captain_command_book",
@@ -6337,7 +6689,9 @@
     "Loot Split",
     "Drilled Combination",
     "Captain Goes Last"
-   ]
+   ],
+   "rarity": "uncommon",
+   "theme": "city"
   },
   "rea_laevateinn": {
    "book": "nusmp:rea_laevateinn_book",
@@ -6371,7 +6725,9 @@
     "Magic Experience",
     "Flame Against the Dead",
     "Verse of Defiance"
-   ]
+   ],
+   "rarity": "rare",
+   "theme": "magma"
   },
   "realmheart_physique": {
    "book": "nusmp:realmheart_physique_book",
@@ -6406,7 +6762,9 @@
     "Mana-Hardened Fall",
     "Steady Blood",
     "Last Wall"
-   ]
+   ],
+   "rarity": "uncommon",
+   "theme": "holy"
   },
   "regressor_hundred_lives": {
    "book": "nusmp:regressor_hundred_lives_book",
@@ -6441,7 +6799,9 @@
     "Memorised Pattern",
     "Practised Combo",
     "Scarred but Whole"
-   ]
+   ],
+   "rarity": "common",
+   "theme": "void"
   },
   "rukh_caller_priest": {
    "book": "nusmp:rukh_caller_priest_book",
@@ -6475,7 +6835,9 @@
     "Last Feather",
     "Faith in Birds",
     "Ward of the White"
-   ]
+   ],
+   "rarity": "rare",
+   "theme": "holy"
   },
   "rulers_authority": {
    "book": "nusmp:rulers_authority_book",
@@ -6509,7 +6871,9 @@
     "Effortless Will",
     "Heavy Hand",
     "Meditative Focus"
-   ]
+   ],
+   "rarity": "common",
+   "theme": "tower"
   },
   "ryuu_astrea_blade": {
    "book": "nusmp:ryuu_astrea_blade_book",
@@ -6581,7 +6945,9 @@
     "Steady Under Pressure",
     "Scouting Report",
     "Tidy Minds"
-   ]
+   ],
+   "rarity": "rare",
+   "theme": "city"
   },
   "save_point_anchor": {
    "book": "nusmp:save_point_anchor_book",
@@ -6615,7 +6981,9 @@
     "Warm Light Aura",
     "Soft Retry Landing",
     "Loop Reprisal"
-   ]
+   ],
+   "rarity": "common",
+   "theme": "holy"
   },
   "scenario_clearer": {
    "book": "nusmp:scenario_clearer_book",
@@ -6650,7 +7018,9 @@
     "Pace of the Clearer",
     "Bonus Reward",
     "Scenario Resilience"
-   ]
+   ],
+   "rarity": "rare",
+   "theme": "ruin"
   },
   "scythe_reaper": {
    "book": "nusmp:scythe_reaper_book",
@@ -6684,7 +7054,9 @@
     "Night Cloak",
     "Aura of Decay",
     "Man-Hunter"
-   ]
+   ],
+   "rarity": "rare",
+   "theme": "blood"
   },
   "sea_of_stories": {
    "book": "nusmp:sea_of_stories_book",
@@ -6719,7 +7091,9 @@
     "Swell of Allies",
     "Wave Crest Shove",
     "Tide Mending"
-   ]
+   ],
+   "rarity": "uncommon",
+   "theme": "ocean"
   },
   "secretive_plotter": {
    "book": "nusmp:secretive_plotter_book",
@@ -6753,7 +7127,9 @@
     "Contingency Reward",
     "Lean Supplies",
     "Escape Route"
-   ]
+   ],
+   "rarity": "common",
+   "theme": "dream"
   },
   "sequence_break_route": {
    "book": "nusmp:sequence_break_route_book",
@@ -6788,7 +7164,9 @@
     "Airborne Spring",
     "Quick Kill Bonus",
     "Route Crit"
-   ]
+   ],
+   "rarity": "uncommon",
+   "theme": "city"
   },
   "seven_seas_swordmaster": {
    "book": "nusmp:seven_seas_swordmaster_book",
@@ -6823,7 +7201,9 @@
     "Captain's Appetite",
     "Rising Tide of Blows",
     "Eye for Weakness"
-   ]
+   ],
+   "rarity": "epic",
+   "theme": "storm"
   },
   "shadow_djinn_assassin": {
    "book": "nusmp:shadow_djinn_assassin_book",
@@ -6858,7 +7238,9 @@
     "Slip Away",
     "Taking the Spoils",
     "Drinking Shadow"
-   ]
+   ],
+   "rarity": "rare",
+   "theme": "void"
   },
   "shadow_exchange": {
    "book": "nusmp:shadow_exchange_book",
@@ -6892,7 +7274,9 @@
     "Vital Flicker",
     "Unseen While Crouched",
     "Ambush Predator"
-   ]
+   ],
+   "rarity": "uncommon",
+   "theme": "dream"
   },
   "shadow_extraction": {
    "book": "nusmp:shadow_extraction_book",
@@ -6927,7 +7311,9 @@
     "Shadows Mend Shadows",
     "Last Shade Standing",
     "Harvest of Souls"
-   ]
+   ],
+   "rarity": "mythic",
+   "theme": "void"
   },
   "shadow_ninja_souei": {
    "book": "nusmp:shadow_ninja_souei_book",
@@ -6962,7 +7348,9 @@
     "Poisoned Edge",
     "Silent Landing",
     "Quick Chain"
-   ]
+   ],
+   "rarity": "uncommon",
+   "theme": "void"
   },
   "shield_throw_art": {
    "book": "nusmp:shield_throw_art_book",
@@ -6996,7 +7384,9 @@
     "Hard Ring Crits",
     "Held Position Armor",
     "Return Trip Mending"
-   ]
+   ],
+   "rarity": "uncommon",
+   "theme": "ocean"
   },
   "shuna_holy_weaving": {
    "book": "nusmp:shuna_holy_weaving_book",
@@ -7030,7 +7420,9 @@
     "Fraying Stitches",
     "Protective Prayer",
     "Warm Reward"
-   ]
+   ],
+   "rarity": "uncommon",
+   "theme": "dream"
   },
   "siege_calculation": {
    "book": "nusmp:siege_calculation_book",
@@ -7065,7 +7457,9 @@
     "Salvaged Drops",
     "Boss-Breaker",
     "Counter-Battery Warning"
-   ]
+   ],
+   "rarity": "rare",
+   "theme": "sand"
   },
   "silver_eagle_marksman": {
    "book": "nusmp:silver_eagle_marksman_book",
@@ -7100,7 +7494,9 @@
     "Soft Landing",
     "Floating Descent",
     "Stalking Gait"
-   ]
+   ],
+   "rarity": "rare",
+   "theme": "storm"
   },
   "slime_body_shapeshift": {
    "book": "nusmp:slime_body_shapeshift_book",
@@ -7135,7 +7531,9 @@
     "Sticky Surface",
     "Boing Back",
     "Pliant Hide"
-   ]
+   ],
+   "rarity": "rare",
+   "theme": "ocean"
   },
   "smoldering_fang_of_insanity": {
    "book": "nusmp:smoldering_fang_book",
@@ -7154,7 +7552,9 @@
    "passives": [
     "Rabid Fangs",
     "Ash Skin"
-   ]
+   ],
+   "rarity": "mythic",
+   "theme": "magma"
   },
   "solomon_wisdom_sage": {
    "book": "nusmp:solomon_wisdom_sage_book",
@@ -7188,7 +7588,9 @@
     "Old Memory",
     "Warm Light",
     "Fate's Turn"
-   ]
+   ],
+   "rarity": "mythic",
+   "theme": "stellar"
   },
   "spade_beastblood_hunter": {
    "book": "nusmp:spade_beastblood_hunter_book",
@@ -7223,7 +7625,9 @@
     "Running Down the Prey",
     "Bloodscent",
     "Rooftop Landing"
-   ]
+   ],
+   "rarity": "uncommon",
+   "theme": "sand"
   },
   "spatial_manipulation": {
    "book": "nusmp:spatial_manipulation_book",
@@ -7258,7 +7662,9 @@
     "Pocket Reserve",
     "Step Between Fights",
     "Void Sense"
-   ]
+   ],
+   "rarity": "uncommon",
+   "theme": "stellar"
   },
   "spirit_dive_rider": {
    "book": "nusmp:spirit_dive_rider_book",
@@ -7293,7 +7699,9 @@
     "Sunlit Vigour",
     "Feather Fall",
     "Spirit Regeneration"
-   ]
+   ],
+   "rarity": "rare",
+   "theme": "storm"
   },
   "stealth_skill": {
    "book": "nusmp:stealth_skill_book",
@@ -7327,7 +7735,9 @@
     "Pickpocket's Eye",
     "Sprint Skill",
     "Lean Hunter"
-   ]
+   ],
+   "rarity": "common",
+   "theme": "city"
   },
   "steel_bulwark": {
    "book": "nusmp:steel_bulwark_book",
@@ -7362,7 +7772,9 @@
     "Second Wind",
     "Guardian's Presence",
     "Deflect the Arrows"
-   ]
+   ],
+   "rarity": "common",
+   "theme": "iron"
   },
   "stigma_bearer": {
    "book": "nusmp:stigma_bearer_book",
@@ -7396,7 +7808,9 @@
     "Closing Scars",
     "Brand's Backlash",
     "Pain Becomes Strength"
-   ]
+   ],
+   "rarity": "common",
+   "theme": "blood"
   },
   "stone_djinn_bulwark": {
    "book": "nusmp:stone_djinn_bulwark_book",
@@ -7431,7 +7845,9 @@
     "Weight on the Land",
     "Last Boulder",
     "Quiet Mountain"
-   ]
+   ],
+   "rarity": "rare",
+   "theme": "sand"
   },
   "storm_dragon_veldora": {
    "book": "nusmp:storm_dragon_veldora_book",
@@ -7466,7 +7882,9 @@
     "Not Dead Yet",
     "Oppressive Aura",
     "Stormy Weather"
-   ]
+   ],
+   "rarity": "mythic",
+   "theme": "storm"
   },
   "storm_wolf_ranga": {
    "book": "nusmp:storm_wolf_ranga_book",
@@ -7501,7 +7919,9 @@
     "Night Prowler",
     "Fed on the Hunt",
     "Scent of Weakness"
-   ]
+   ],
+   "rarity": "common",
+   "theme": "storm"
   },
   "storyteller": {
    "book": "nusmp:storyteller_book",
@@ -7535,7 +7955,9 @@
     "Feeding on Stories",
     "Fable's Shield",
     "Three-Act Structure"
-   ]
+   ],
+   "rarity": "uncommon",
+   "theme": "dream"
   },
   "sword_saint_style": {
    "book": "nusmp:sword_saint_style_book",
@@ -7570,7 +7992,9 @@
     "Flow State",
     "Blade Posture",
     "Last Breath Cut"
-   ]
+   ],
+   "rarity": "rare",
+   "theme": "iron"
   },
   "system_daily_quest": {
    "book": "nusmp:system_daily_quest_book",
@@ -7605,7 +8029,9 @@
     "Combo Counter",
     "Stamina Management",
     "Penalty Avoided"
-   ]
+   ],
+   "rarity": "common",
+   "theme": "stellar"
   },
   "takemikazuchi_bushi": {
    "book": "nusmp:takemikazuchi_bushi_book",
@@ -7640,7 +8066,9 @@
     "Willow in the Wind",
     "Even Breathing",
     "Scroll Study"
-   ]
+   ],
+   "rarity": "uncommon",
+   "theme": "storm"
   },
   "temple_delver": {
    "book": "nusmp:temple_delver_book",
@@ -7675,7 +8103,9 @@
     "Sidestep",
     "Loot and Scoot",
     "Cave Fighter"
-   ]
+   ],
+   "rarity": "rare",
+   "theme": "ruin"
   },
   "thunder_art": {
    "book": "nusmp:thunder_art_book",
@@ -7710,7 +8140,9 @@
     "Storm Rider",
     "Flash Crit",
     "Building Charge"
-   ]
+   ],
+   "rarity": "epic",
+   "theme": "storm"
   },
   "thunder_djinn_duelist": {
    "book": "nusmp:thunder_djinn_duelist_book",
@@ -7745,7 +8177,9 @@
     "Spark Crits",
     "Charge Reserve",
     "Lightning Rod"
-   ]
+   ],
+   "rarity": "rare",
+   "theme": "storm"
   },
   "tide_djinn_dancer": {
    "book": "nusmp:tide_djinn_dancer_book",
@@ -7779,7 +8213,9 @@
     "Flowing Wounds",
     "Smoother than Fire",
     "Wave Rider"
-   ]
+   ],
+   "rarity": "common",
+   "theme": "ocean"
   },
   "tog_agnis_ice": {
    "book": "nusmp:tog_agnis_ice_book",
@@ -7814,7 +8250,9 @@
     "Thaw Hunter",
     "Snowfall Recovery",
     "Perfect Facet"
-   ]
+   ],
+   "rarity": "rare",
+   "theme": "frost"
   },
   "tog_beast_tamer": {
    "book": "nusmp:tog_beast_tamer_book",
@@ -7849,7 +8287,9 @@
     "Thick Hide",
     "Kill and Feed",
     "Salvaged Pelts"
-   ]
+   ],
+   "rarity": "common",
+   "theme": "forest"
   },
   "tog_black_march": {
    "book": "nusmp:tog_black_march_book",
@@ -7884,7 +8324,9 @@
     "Midnight Hunger",
     "Rising Dark",
     "Final Cut"
-   ]
+   ],
+   "rarity": "uncommon",
+   "theme": "ruin"
   },
   "tog_faerie": {
    "book": "nusmp:tog_faerie_book",
@@ -7919,7 +8361,9 @@
     "Gentle Landing",
     "Glitter Blind",
     "Petal Mending"
-   ]
+   ],
+   "rarity": "uncommon",
+   "theme": "dream"
   },
   "tog_fisherman": {
    "book": "nusmp:tog_fisherman_book",
@@ -7955,7 +8399,9 @@
     "Bait and Wait",
     "Hook in the Flesh",
     "Fresh Haul"
-   ]
+   ],
+   "rarity": "uncommon",
+   "theme": "ocean"
   },
   "tog_floor_guard": {
    "book": "nusmp:tog_floor_guard_book",
@@ -7991,7 +8437,9 @@
     "Trespasser Hunter",
     "Watch Rations",
     "Answer in Kind"
-   ]
+   ],
+   "rarity": "uncommon",
+   "theme": "ruin"
   },
   "tog_fug_assassin": {
    "book": "nusmp:tog_fug_assassin_book",
@@ -8026,7 +8474,9 @@
     "Artery Finder",
     "Spoils of the Hunt",
     "Prey on Rivals"
-   ]
+   ],
+   "rarity": "common",
+   "theme": "void"
   },
   "tog_guide": {
    "book": "nusmp:tog_guide_book",
@@ -8061,7 +8511,9 @@
     "Read the Strike",
     "First Aid",
     "Sure Footing"
-   ]
+   ],
+   "rarity": "common",
+   "theme": "dream"
   },
   "tog_headon_channel": {
    "book": "nusmp:tog_headon_channel_book",
@@ -8096,7 +8548,9 @@
     "Live Wire",
     "Overload Finish",
     "Siphoned Charge"
-   ]
+   ],
+   "rarity": "rare",
+   "theme": "magma"
   },
   "tog_inventory": {
    "book": "nusmp:tog_inventory_book",
@@ -8131,7 +8585,9 @@
     "Self-Repair Kit",
     "Folded Landing",
     "Out of Reach"
-   ]
+   ],
+   "rarity": "common",
+   "theme": "stellar"
   },
   "tog_irregular": {
    "book": "nusmp:tog_irregular_book",
@@ -8167,7 +8623,9 @@
     "No Record of the Blow",
     "Cornered Surge",
     "Unclassified Hide"
-   ]
+   ],
+   "rarity": "rare",
+   "theme": "blood"
   },
   "tog_jahad_royal": {
    "book": "nusmp:tog_jahad_royal_book",
@@ -8202,7 +8660,9 @@
     "The Crown Does Not Fall",
     "Throne Weight",
     "Spoils of the Realm"
-   ]
+   ],
+   "rarity": "epic",
+   "theme": "city"
   },
   "tog_light_bearer": {
    "book": "nusmp:tog_light_bearer_book",
@@ -8237,7 +8697,9 @@
     "Anathema of the Dead",
     "Lit Victory",
     "Warding Glow"
-   ]
+   ],
+   "rarity": "common",
+   "theme": "holy"
   },
   "tog_lighthouse_keeper": {
    "book": "nusmp:tog_lighthouse_keeper_book",
@@ -8272,7 +8734,9 @@
     "Ghost Ward",
     "Night Vigil",
     "Hold the Light"
-   ]
+   ],
+   "rarity": "common",
+   "theme": "ocean"
   },
   "tog_ranker_authority": {
    "book": "nusmp:tog_ranker_authority_book",
@@ -8307,7 +8771,9 @@
     "Climber's Wisdom",
     "Last Floor Standing",
     "Taking the Spoils"
-   ]
+   ],
+   "rarity": "uncommon",
+   "theme": "tower"
   },
   "tog_regular_climber": {
    "book": "nusmp:tog_regular_climber_book",
@@ -8343,7 +8809,9 @@
     "Eat Anything",
     "Survivor's Spoils",
     "School of Hard Floors"
-   ]
+   ],
+   "rarity": "common",
+   "theme": "sand"
   },
   "tog_reverse_flow_control": {
    "book": "nusmp:tog_reverse_flow_control_book",
@@ -8377,7 +8845,9 @@
     "Calm Under Pressure",
     "Weightless Fall",
     "Lowered Pressure"
-   ]
+   ],
+   "rarity": "common",
+   "theme": "void"
   },
   "tog_rose_shower": {
    "book": "nusmp:tog_rose_shower_book",
@@ -8449,7 +8919,9 @@
     "Weak Point Eye",
     "Opportunist",
     "Pickpocket"
-   ]
+   ],
+   "rarity": "common",
+   "theme": "city"
   },
   "tog_shinsu_reinforcement": {
    "book": "nusmp:tog_shinsu_reinforcement_book",
@@ -8484,7 +8956,9 @@
     "Resilient Metabolism",
     "Shoulder Check",
     "Slow to Tire"
-   ]
+   ],
+   "rarity": "common",
+   "theme": "iron"
   },
   "tog_shinsu_shooting": {
    "book": "nusmp:tog_shinsu_shooting_book",
@@ -8518,7 +8992,9 @@
     "Recirculation",
     "Tower Study",
     "Pressure Tolerance"
-   ]
+   ],
+   "rarity": "common",
+   "theme": "tower"
   },
   "tog_spear_bearer": {
    "book": "nusmp:tog_spear_bearer_book",
@@ -8553,7 +9029,9 @@
     "Finishing Point",
     "Blood on the Shaft",
     "Chain of Thrusts"
-   ]
+   ],
+   "rarity": "rare",
+   "theme": "storm"
   },
   "tog_suspendium_arms": {
    "book": "nusmp:tog_suspendium_arms_book",
@@ -8588,7 +9066,9 @@
     "Fine Edge",
     "Arrow Plating",
     "Last Hammer Blow"
-   ]
+   ],
+   "rarity": "uncommon",
+   "theme": "iron"
   },
   "tog_true_flame": {
    "book": "nusmp:tog_true_flame_book",
@@ -8660,7 +9140,9 @@
     "Ground Static",
     "Storm Insulation",
     "Wave Rhythm"
-   ]
+   ],
+   "rarity": "common",
+   "theme": "storm"
   },
   "tog_wolhaiguk_moon": {
    "book": "nusmp:tog_wolhaiguk_moon_book",
@@ -8695,7 +9177,9 @@
     "Thin Edge",
     "Wave Step",
     "Cold Thirst"
-   ]
+   ],
+   "rarity": "rare",
+   "theme": "frost"
   },
   "tog_zahard_decree": {
    "book": "nusmp:tog_zahard_decree_book",
@@ -8730,7 +9214,9 @@
     "Barred from Decay",
     "Review of Cases",
     "Presumption of Armor"
-   ]
+   ],
+   "rarity": "mythic",
+   "theme": "stellar"
   },
   "tundra_harpoon_hunter": {
    "book": "nusmp:tundra_harpoon_hunter_book",
@@ -8765,7 +9251,9 @@
     "Lean Winters",
     "Hardened Skin",
     "Hunter's Eye"
-   ]
+   ],
+   "rarity": "rare",
+   "theme": "frost"
   },
   "tyrant_dark_mirror": {
    "book": "nusmp:tyrant_dark_mirror_book",
@@ -8799,7 +9287,9 @@
     "Author's Instinct",
     "Reflected Blow",
     "Spell-Turning Glass"
-   ]
+   ],
+   "rarity": "common",
+   "theme": "frost"
   },
   "vampire_queen_night": {
    "book": "nusmp:vampire_queen_night_book",
@@ -8834,7 +9324,9 @@
     "Drained Spoils",
     "Charmed Sidestep",
     "Undead Bloodline"
-   ]
+   ],
+   "rarity": "rare",
+   "theme": "dream"
   },
   "velzard_frost_dragon": {
    "book": "nusmp:velzard_frost_dragon_book",
@@ -8869,7 +9361,9 @@
     "Cold Resolve",
     "Brittle Counter",
     "Dragon Frost Healing"
-   ]
+   ],
+   "rarity": "epic",
+   "theme": "frost"
   },
   "vritra_blood_rite": {
    "book": "nusmp:vritra_blood_rite_book",
@@ -8903,7 +9397,9 @@
     "Cornered Predator",
     "Wounded Fury",
     "Blood Oath"
-   ]
+   ],
+   "rarity": "rare",
+   "theme": "blood"
   },
   "wall_clip_glitch": {
    "book": "nusmp:wall_clip_glitch_book",
@@ -8938,7 +9434,9 @@
     "Void Landing",
     "Gravity Seep",
     "Hidden Loot"
-   ]
+   ],
+   "rarity": "uncommon",
+   "theme": "void"
   },
   "way_of_the_wind": {
    "book": "nusmp:way_of_the_wind_book",
@@ -8975,7 +9473,9 @@
     "Cutting Draft",
     "Entangling Breeze",
     "Light as Air"
-   ]
+   ],
+   "rarity": "uncommon",
+   "theme": "forest"
   },
   "werewolf_gale_kick": {
    "book": "nusmp:werewolf_gale_kick_book",
@@ -9010,7 +9510,9 @@
     "Moon-Chaser",
     "Monster Hunter's Pride",
     "Wolf's Reflexes"
-   ]
+   ],
+   "rarity": "common",
+   "theme": "storm"
   },
   "white_flame_sovereign": {
    "book": "nusmp:white_flame_sovereign_book",
@@ -9045,7 +9547,9 @@
     "Revealing Light",
     "Hearth of the Flame",
     "Lantern-Bearer's Luck"
-   ]
+   ],
+   "rarity": "mythic",
+   "theme": "holy"
   },
   "white_tiger_baek": {
    "book": "nusmp:white_tiger_baek_book",
@@ -9117,7 +9621,9 @@
     "Duty to the Realm",
     "Dignified Recovery",
     "Ward of Legends"
-   ]
+   ],
+   "rarity": "mythic",
+   "theme": "tower"
   },
   "wynn_fimbulvetr": {
    "book": "nusmp:wynn_fimbulvetr_book",
@@ -9152,7 +9658,9 @@
     "Hoarfrost Thorns",
     "Thaw Recovery",
     "Foe of Flame"
-   ]
+   ],
+   "rarity": "common",
+   "theme": "frost"
   }
  }
 }

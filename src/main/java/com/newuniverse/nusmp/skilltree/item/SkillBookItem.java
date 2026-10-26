@@ -1,5 +1,6 @@
 package com.newuniverse.nusmp.skilltree.item;
 
+import com.newuniverse.nusmp.skilltree.rarity.BookRarity;
 import com.newuniverse.nusmp.skilltree.unique.LegacyIds;
 import com.newuniverse.nusmp.skilltree.unique.LineIndex;
 import com.newuniverse.nusmp.skilltree.unique.UniqueBooks;
@@ -24,7 +25,7 @@ import java.util.List;
  * ({@link LineIndex}): the name is the book's name, the cover tint its colour, the lore its lore, so a book looks right on both sides and in any chest, with no data pack and no server round trip. A stack whose
  * book is unknown (a book id from a removed pack) reads as blank pages, never a crash; a stack of a REMOVED magic (an old stack a world still holds) says so and is swapped for a book the reader does not own
  * when read. Reading is decided on the SERVER only ({@link #use} hands over to {@link BookUse}); the client just plays the arm swing, because the server is the only one allowed to touch the player's skills. The
- * item glints like an enchanted book so a stack of knowledge is never mistaken for a plain item. {@link #stack} is the factory the creative tab, the dungeon drops and the Black Market all use, so a book is built the
+ * item glints like an enchanted book only when it is Epic or Mythic (3.26.0; the old always-glint is the client setting {@code legacyLook}), and its name wears the rarity colour. {@link #stack} is the factory the creative tab, the dungeon drops and the Black Market all use, so a book is built the
  * same way everywhere.
  */
 public class SkillBookItem extends Item {
@@ -50,19 +51,24 @@ public class SkillBookItem extends Item {
     public Component getName(ItemStack stack) {
         String bookId = SkillItems.bookIdOf(stack);
         LineIndex.Line line = UniqueSkills.lineOfBook(bookId);
-        if (line != null && !line.bookName().isEmpty()) return Component.literal(line.bookName()).withStyle(Style.EMPTY.withColor(line.color()));
+        if (line != null && !line.bookName().isEmpty()) return Component.literal(line.bookName()).withStyle(Style.EMPTY.withColor(SkillItems.rarityOf(stack).color()));      // 3.26.0: the name wears the RARITY colour, the line's own colour stays on the "Teaches" row
         if (LegacyIds.isRemovedBook(bookId)) return Component.translatableWithFallback("item.nusmp.skill_book.faded", "Faded Skill Book").withStyle(ChatFormatting.DARK_GRAY);
         return Component.translatableWithFallback("item.nusmp.skill_book", "Skill Book");
     }
 
+    /** 3.26.0: epic and mythic books glint; the client setting {@code legacyLook} (read through {@link LegacyLook}, never a client class) brings back the old always-glint. */
     @Override
-    public boolean isFoil(ItemStack stack) { return true; }
+    public boolean isFoil(ItemStack stack) { return LegacyLook.enabled() || SkillItems.rarityOf(stack).glint(); }
 
     @Override
     public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
         String bookId = SkillItems.bookIdOf(stack);
         LineIndex.Line line = UniqueSkills.lineOfBook(bookId);
         if (line != null) {
+            BookRarity rarity = SkillItems.rarityOf(stack);
+            tooltip.add(Component.translatableWithFallback("tooltip.nusmp.skill_book.rarity", "Rarity: %s",
+                    Component.translatableWithFallback(rarity.langKey(), rarity.label()).withStyle(Style.EMPTY.withColor(rarity.color()))).withStyle(ChatFormatting.GRAY));
+            if (rarity == BookRarity.MYTHIC) tooltip.add(Component.translatableWithFallback("tooltip.nusmp.skill_book.mythic_tag", "Mythic").withStyle(ChatFormatting.RED, ChatFormatting.BOLD));
             if (!line.lore().isEmpty()) tooltip.add(Component.literal(line.lore()).withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
             tooltip.add(Component.translatableWithFallback("tooltip.nusmp.skill_book.teaches", "Teaches the unique skill: %s",
                     Component.literal(line.name()).withStyle(Style.EMPTY.withColor(line.color()))).withStyle(ChatFormatting.GRAY));

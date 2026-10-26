@@ -6,6 +6,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.newuniverse.nusmp.NUSMP;
 import com.newuniverse.nusmp.dungeon.sentient.Dice;
 import com.newuniverse.nusmp.labyrinth.mega.MegaDungeon;
+import com.newuniverse.nusmp.skilltree.rarity.RarityConfig;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -79,6 +80,14 @@ public final class SkillBookLootModifier extends LootModifier {
      * @return the number of stacks added
      */
     public static int add(ObjectArrayList<ItemStack> loot, LootContext context, LootRules.Chances chances, Dice dice) {
+        return add(loot, context, chances, LootConfig.rarity(), dice);
+    }
+
+    /**
+     * The same with the rarity settings given (3.26.0): {@code rarityTiers} off is the 3.25 rule untouched; on, the chance is the base chance times the Luck and Looting multiplier (read once, here) and the book's rarity is
+     * drawn from the tier-1 weights. The Guardian is still refused (it is {@link BossBookDrops}'), so one death never pays twice.
+     */
+    public static int add(ObjectArrayList<ItemStack> loot, LootContext context, LootRules.Chances chances, RarityConfig rarity, Dice dice) {
         ServerLevel level = context.getLevel();
         if (level == null || !MegaDungeon.in(level) || !LootConfig.get(LootConfig.ENABLED)) return 0;
         Entity entity = context.getParamOrNull(LootContextParams.THIS_ENTITY);
@@ -88,7 +97,9 @@ public final class SkillBookLootModifier extends LootModifier {
         ServerPlayer killer = LootVictims.killer(context);
         Dice d = dice != null ? dice : context.getRandom()::nextDouble;
         LootRules.Victim victim = new LootRules.Victim(true, killer != null, kind, LootVictims.polarityAt(level, dead), LootVictims.floorAt(level, dead));
-        List<ItemStack> stacks = LootDrops.materialize(LootRules.decide(victim, chances, d), d, killer);
+        double luck = rarity.tiers() ? LootStats.luckOf(killer) : 0.0;                           // read once per drop, and only when the tiers use it
+        int looting = rarity.tiers() ? LootStats.lootingOf(level, killer, context.getParamOrNull(LootContextParams.DAMAGE_SOURCE)) : 0;
+        List<ItemStack> stacks = LootDrops.materialize(LootRules.plan(victim, chances, rarity, luck, looting, d), d, killer, null);
         for (ItemStack s : stacks) loot.add(s);
         return stacks.size();
     }

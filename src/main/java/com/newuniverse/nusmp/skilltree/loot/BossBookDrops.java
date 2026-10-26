@@ -4,6 +4,7 @@ import com.mojang.logging.LogUtils;
 import com.newuniverse.nusmp.dungeon.sentient.Dice;
 import com.newuniverse.nusmp.labyrinth.mega.MegaDungeon;
 import com.newuniverse.nusmp.labyrinth.mega.guard.LabyrinthGuardianEntity;
+import com.newuniverse.nusmp.skilltree.rarity.RarityConfig;
 import com.newuniverse.nusmp.skilltree.item.SkillBookItem;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
@@ -55,6 +56,15 @@ public final class BossBookDrops {
      * @return the number of stacks added
      */
     public static int process(LivingDropsEvent event, Dice dice, LootRules.Chances chances, LootVictims.Site site) {
+        return process(event, dice, chances, LootConfig.rarity(), site);
+    }
+
+    /**
+     * The same with the rarity settings given (3.26.0). {@code rarityTiers} off: the 3.25 rule untouched. On: the Guardian drops ONE themed book at {@code guardianBookChance} (1.0 = guaranteed), of the
+     * rarity its boss floor asks for, picked deterministically from the sector's Region Theme and the floor ({@link LootDrops#guardianBook}); this door is the only one that serves a Guardian (the loot
+     * modifier refuses it), so a death never pays twice.
+     */
+    public static int process(LivingDropsEvent event, Dice dice, LootRules.Chances chances, RarityConfig rarity, LootVictims.Site site) {
         LivingEntity dead = event.getEntity();
         if (!(dead.level() instanceof ServerLevel level) || !MegaDungeon.in(level)) return 0;
         if (!dead.getTags().contains(LabyrinthGuardianEntity.SECTOR_TAG)) return 0;
@@ -65,7 +75,7 @@ public final class BossBookDrops {
         if (where == null) return 0;
         Dice d = dice != null ? dice : level.getRandom()::nextDouble;
         LootRules.Victim victim = new LootRules.Victim(true, true, LootRules.Kind.GUARDIAN, where.polarity(), where.floor());
-        List<ItemStack> stacks = LootDrops.materialize(LootRules.decide(victim, chances, d), d, killer);
+        List<ItemStack> stacks = LootDrops.materialize(LootRules.plan(victim, chances, rarity, 0.0, 0, d), d, killer, where);       // the Guardian's book does not depend on Luck or Looting
         ItemStack routeBook = ItemStack.EMPTY;
         for (ItemStack stack : stacks) {
             ItemEntity drop = new ItemEntity(level, dead.getX(), dead.getY() + 0.3, dead.getZ(), stack);

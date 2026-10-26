@@ -66,6 +66,7 @@ public final class ShopSelfTests {
         }
         List<StockBoard.Offer> shelf = ShopService.shelf(server);
         for (SkillRoute r : RouteRegistry.all()) {
+            if (com.newuniverse.nusmp.skilltree.rarity.BookFacts.isBlocked(r.id())) continue;       // 3.26.0: a blocked franchise's book is deliberately not on the shelf
             StockEntry line = lineFor(r.id());
             boolean always = line != null && line.weight() >= 100;
             boolean listed = false;

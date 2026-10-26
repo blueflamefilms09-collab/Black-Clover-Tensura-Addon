@@ -1,6 +1,9 @@
 package com.newuniverse.nusmp.skilltree.item;
 
 import com.mojang.logging.LogUtils;
+import com.newuniverse.nusmp.skilltree.loot.LootConfig;
+import com.newuniverse.nusmp.skilltree.rarity.BookFacts;
+import com.newuniverse.nusmp.skilltree.rarity.BookRarity;
 import com.newuniverse.nusmp.skilltree.unique.LegacyIds;
 import com.newuniverse.nusmp.skilltree.unique.LineIndex;
 import com.newuniverse.nusmp.skilltree.unique.UniqueBooks;
@@ -65,10 +68,12 @@ public final class BookUse {
                     say(player, blank());
                     return Result.BLANK;
                 }
+                BookRarity rarity = SkillItems.rarityOf(stack);                                    // read before the stack is shrunk (a stack of one is empty afterwards)
                 if (BookRules.usesUp(plan, creative)) stack.shrink(1);
                 tell(player, Component.translatableWithFallback("message.nusmp.skillbook.learned", "You have learned the unique skill: %s.",
                         Component.literal(line.name()).withStyle(Style.EMPTY.withColor(line.color()))).withStyle(ChatFormatting.GOLD));
-                UnlockFx.play(player, line.routeId(), line.color(), true);
+                toast(player, rarity);
+                UnlockFx.play(player, line.routeId(), line.color(), true, rarity);                 // the burst is in the rarity's colour
                 return Result.LEARNED;
             }
             case ALREADY_OWNED:
@@ -101,7 +106,9 @@ public final class BookUse {
 
     // ------------------------------------------------------------------ small helpers
     private static Result replace(ServerPlayer player, ItemStack stack, boolean creative) {
-        String bare = BookRules.pickUnowned(UniqueSkills.bares(), b -> UniqueBooks.owns(player, b), player.getRandom()::nextDouble);
+        boolean tiers = LootConfig.get(LootConfig.RARITY_TIERS);
+        // a swap is a pick path too: it never hands out a book of a blacklisted franchise, and with the rarity tiers on it keeps the mythic books out (they come from the rifts only)
+        String bare = BookRules.pickUnowned(UniqueSkills.bares(), b -> UniqueBooks.owns(player, b) || BookFacts.isBlocked(b) || (tiers && BookFacts.rarityOf(b) == BookRarity.MYTHIC), player.getRandom()::nextDouble);
         LineIndex.Line line = bare == null ? null : UniqueSkills.line(bare);
         if (line == null) {
             say(player, Component.translatableWithFallback("message.nusmp.skillbook.nothing_left", "You already know every skill a book could teach. The book stays closed.").withStyle(ChatFormatting.GRAY));
@@ -117,9 +124,20 @@ public final class BookUse {
         return Result.REPLACED;
     }
 
+    /** The refusal of 3.26.0 (the older {@code message.nusmp.skillbook.already_owned} key stays in the lang file, unused): the book is NOT consumed. */
+    public static final String ALREADY_COMPREHENDED = "You have already comprehended this path.";
+
     private static void alreadyOwned(ServerPlayer player, LineIndex.Line line) {
-        say(player, Component.translatableWithFallback("message.nusmp.skillbook.already_owned", "You already know %s. The book stays closed.",
-                line == null ? "" : line.name()).withStyle(ChatFormatting.GRAY));
+        say(player, Component.translatableWithFallback("message.nusmp.skillbook.already_comprehended", ALREADY_COMPREHENDED).withStyle(ChatFormatting.GRAY));
+    }
+
+    /** The success sound of a reading: the toast fanfare, a little higher for each rank. */
+    private static void toast(ServerPlayer player, BookRarity rarity) {
+        try {
+            player.serverLevel().playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.UI_TOAST_CHALLENGE_COMPLETE, SoundSource.PLAYERS, 1.0f, 0.9f + 0.08f * rarity.rank());
+        } catch (RuntimeException ignored) {
+            // a missing sound is not an error
+        }
     }
 
     private static Component blank() { return Component.translatableWithFallback("message.nusmp.skillbook.blank", "The pages are blank.").withStyle(ChatFormatting.GRAY); }

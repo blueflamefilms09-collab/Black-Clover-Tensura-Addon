@@ -7,6 +7,8 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.newuniverse.nusmp.NUSMP;
 import com.newuniverse.nusmp.dungeon.sentient.Dice;
 import com.newuniverse.nusmp.labyrinth.mega.MegaDungeon;
+import com.newuniverse.nusmp.skilltree.rarity.RarityConfig;
+import com.newuniverse.nusmp.skilltree.rarity.RarityRules;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
@@ -90,18 +92,29 @@ public final class RiftBookLootModifier extends LootModifier {
      * @return the number of stacks added (0 or 1)
      */
     public static int add(ObjectArrayList<ItemStack> loot, LootContext context, Map<String, Double> tables, double scale, Dice dice) {
+        return add(loot, context, tables, scale, LootConfig.rarity(), dice);
+    }
+
+    /**
+     * The same with the rarity settings given (3.26.0). {@code rarityTiers} off: the 3.25 rule untouched (the chance as listed, a weighted pick of any line). On: the chance is multiplied by
+     * {@code min(3, 1 + 0.1 * Luck)} of the opening player and the book is a MYTHIC line the opener does not own yet, an epic one when none is left ({@link LootDrops#riftBook}). The Luck is read only after the
+     * table, the pocket and the config have said yes, so an ordinary chest costs nothing.
+     */
+    public static int add(ObjectArrayList<ItemStack> loot, LootContext context, Map<String, Double> tables, double scale, RarityConfig rarity, Dice dice) {
         ServerLevel level = context.getLevel();
         if (level == null || !MegaDungeon.in(level) || !LootConfig.get(LootConfig.ENABLED) || !LootConfig.get(LootConfig.RIFT_BOOKS)) return 0;
         ResourceLocation table = context.getQueriedLootTableId();
         if (table == null) return 0;
-        double chance = RiftBookRules.chance(tables, table.toString(), scale);
-        if (chance <= 0.0) return 0;
+        double base = RiftBookRules.chance(tables, table.toString(), scale);
+        if (base <= 0.0) return 0;
         Vec3 origin = context.getParamOrNull(LootContextParams.ORIGIN);
-        if (origin == null) return 0;
+        if (origin == null || !RiftBookRules.inPocket(origin.x, origin.z)) return 0;
         Dice d = dice != null ? dice : context.getRandom()::nextDouble;
-        if (!RiftBookRules.decide(true, RiftBookRules.inPocket(origin.x, origin.z), chance, d)) return 0;
-        Entity opener = context.getParamOrNull(LootContextParams.THIS_ENTITY);
-        ItemStack book = LootDrops.routeBook(d, opener instanceof ServerPlayer p ? p : null);
+        Entity entity = context.getParamOrNull(LootContextParams.THIS_ENTITY);
+        ServerPlayer opener = entity instanceof ServerPlayer p ? p : null;
+        double chance = rarity.tiers() ? RarityRules.riftChance(base, LootStats.luckOf(opener)) : base;
+        if (!RiftBookRules.decide(true, true, chance, d)) return 0;
+        ItemStack book = rarity.tiers() ? LootDrops.riftBook(d, opener) : LootDrops.routeBook(d, opener);
         if (book.isEmpty()) return 0;
         loot.add(book);
         return 1;

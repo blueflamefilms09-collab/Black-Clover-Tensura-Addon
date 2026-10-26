@@ -20,6 +20,7 @@ public final class LinesLoot {
     public static synchronized void init(IEventBus modBus) {
         if (done) return;
         done = true;
+        com.newuniverse.nusmp.skilltree.rarity.BlockedFranchises.setSource(LootConfig::effectiveBlocked);   // 3.26.0: the blacklist reads the server config, the pure rules never do
         RiftBookLootModifier.register(modBus);
         NeoForge.EVENT_BUS.addListener((PlayerEvent.PlayerLoggedOutEvent e) -> BookPity.GLOBAL.forget(e.getEntity().getUUID()));
         NeoForge.EVENT_BUS.addListener((ServerStoppedEvent e) -> {
@@ -27,5 +28,6 @@ public final class LinesLoot {
             RouteTable.clear();
         });
         LinesLootSelfTests.register();
+        RaritySelfTests.register();
     }
 }

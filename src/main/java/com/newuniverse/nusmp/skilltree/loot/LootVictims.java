@@ -42,8 +42,18 @@ public final class LootVictims {
 
     private static final ResourceLocation WARDEN = ResourceLocation.tryParse(TurfMarks.WARDEN_ID);
 
-    /** Where a sector Guardian stands in the dungeon's order: the road and the last (boss) floor of the sector it guards. */
-    public record Site(Polarity polarity, int floor) {}
+    /**
+     * Where a sector Guardian stands in the dungeon's order: the road and the last (boss) floor of the sector it guards, and (3.26.0) the id of the sector's Region Theme
+     * ({@code flame}, {@code necropolis} ...), which the themed Guardian book is matched against ("" when unknown).
+     */
+    public record Site(Polarity polarity, int floor, String themeId) {
+        public Site {
+            themeId = themeId == null ? "" : themeId;
+        }
+
+        /** The two-argument form of 3.25 (no theme: the Guardian's book is then drawn from the whole rarity); kept so old callers and tests compile. */
+        public Site(Polarity polarity, int floor) { this(polarity, floor, ""); }
+    }
 
     // ------------------------------------------------------------------ who
     /** The player that killed (or last hurt) the thing, from a damage source and the entity's own credit; null when no player did. */
@@ -110,6 +120,6 @@ public final class LootVictims {
         Sector sector = tag.contains(LabyrinthGuardianEntity.SECTOR_KEY, Tag.TAG_ANY_NUMERIC)
                 ? data.sector(tag.getInt(LabyrinthGuardianEntity.SECTOR_KEY))
                 : data.sectorAt(guardian.blockPosition());
-        return sector == null ? null : new Site(sector.polarity, sector.lastFloor());
+        return sector == null ? null : new Site(sector.polarity, sector.lastFloor(), sector.theme == null ? "" : sector.theme.id());
     }
 }

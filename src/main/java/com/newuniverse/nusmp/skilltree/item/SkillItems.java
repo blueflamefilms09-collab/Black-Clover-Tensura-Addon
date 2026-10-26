@@ -9,6 +9,8 @@ import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
+import com.newuniverse.nusmp.skilltree.rarity.BookRarity;
+import com.newuniverse.nusmp.skilltree.unique.UniqueSkills;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredItem;
@@ -41,6 +43,14 @@ public final class SkillItems {
     public static final DeferredHolder<DataComponentType<?>, DataComponentType<String>> SP_KIND =
             COMPONENTS.registerComponentType("sp_kind", b -> b.persistent(Codec.STRING).networkSynchronized(ByteBufCodecs.STRING_UTF8));
 
+    /**
+     * {@code nusmp:skill_book_rarity} (3.26.0, APPENDED so no older registration moves): the optional rarity of ONE stack, the saved id of a {@link BookRarity} ({@code epic}). When a stack carries it, it wins over
+     * the rarity of the book's line in the shipped table ({@link #rarityOf}); a stack without it (every older book) simply reads the table. Persistent and network-synchronised, so the tooltip and the name
+     * colour are right on a client that has no table entry.
+     */
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<String>> BOOK_RARITY =
+            COMPONENTS.registerComponentType("skill_book_rarity", b -> b.persistent(Codec.STRING).networkSynchronized(ByteBufCodecs.STRING_UTF8));
+
     /** {@code nusmp:skill_book}: the Skill Book. Sixteen to a stack at most, rare, enchanted-looking (see {@link SkillBookItem#isFoil}). */
     public static final DeferredItem<SkillBookItem> SKILL_BOOK = ITEMS.register("skill_book", () -> new SkillBookItem(new Item.Properties().stacksTo(16).rarity(Rarity.RARE)));
 
@@ -60,5 +70,18 @@ public final class SkillItems {
         if (stack == null || stack.isEmpty()) return "";
         String id = stack.get(BOOK_ID.get());
         return id == null ? "" : id;
+    }
+
+    /**
+     * The rarity of a Skill Book stack, the one reader: the stack's own component {@code nusmp:skill_book_rarity} when it has a known id, else the rarity of the book's line in the shipped table, else common.
+     * An empty stack, a stack of another item and an unknown book are common. Never null, never throws; two map lookups.
+     */
+    public static BookRarity rarityOf(ItemStack stack) {
+        if (stack == null || stack.isEmpty()) return BookRarity.COMMON;
+        String own = stack.get(BOOK_RARITY.get());
+        BookRarity r = BookRarity.byId(own);
+        if (r != null) return r;
+        var line = UniqueSkills.lineOfBook(bookIdOf(stack));
+        return line == null ? BookRarity.COMMON : line.rarity();
     }
 }

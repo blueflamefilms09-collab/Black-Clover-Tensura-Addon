@@ -1,6 +1,7 @@
 package com.newuniverse.nusmp.skilltree.item;
 
 import com.mojang.logging.LogUtils;
+import com.newuniverse.nusmp.skilltree.rarity.BookRarity;
 import com.newuniverse.nusmp.vfx.VfxPayload;
 import com.newuniverse.nusmp.vfx.VfxShape;
 import com.newuniverse.nusmp.vfx.VfxSpawn;
@@ -39,27 +40,38 @@ public final class UnlockFx {
 
     private static final Logger LOG = LogUtils.getLogger();
 
-    /** The second stage of one show: when it is due (server tick), for whom, in which colour. */
-    private record Pending(int due, UUID player, int argb) {}
+    /** The second stage of one show: when it is due (server tick), for whom, in which colour, whether the fanfare toast is part of it, and how strong the burst is (1.0 = the 3.25 show). */
+    private record Pending(int due, UUID player, int argb, boolean toast, float power) {}
 
     private static final List<Pending> PENDING = new ArrayList<>();
+    /** At most this many second stages wait at once (a reader waits one second and the read has a cooldown: this is only a safety net against a flood). */
+    private static final int MAX_PENDING = 512;
 
     /** The listener the skill-tree API calls after every unlock: plays the show for {@code announce}, nothing otherwise. */
     public static void play(ServerPlayer player, String routeId, int rgb, boolean announce) {
+        play(player, routeId, rgb, announce, null);
+    }
+
+    /**
+     * The same show for a book of a rarity (3.26.0): the circle, the motes, the pillar, the flare and the aura are drawn in the RARITY's colour and a little stronger for each rank (the number of
+     * effects is the same, so the cost is the same); the fanfare toast is left out of stage two because {@code BookUse} plays it at the moment of reading. A null rarity is the old show exactly.
+     */
+    public static void play(ServerPlayer player, String routeId, int rgb, boolean announce, BookRarity rarity) {
         if (!announce || player == null || routeId == null) return;
         try {
-            stageOne(player, routeId, rgb);
+            if (rarity == null) stageOne(player, routeId, rgb, true, 1.0f);
+            else stageOne(player, routeId, rarity.particleColor(), false, 1.0f + 0.12f * rarity.rank());
         } catch (RuntimeException | LinkageError e) {
             LOG.warn("[nusmp] the skill-learned show failed (the skill is learned all the same)", e);
         }
     }
 
-    private static void stageOne(ServerPlayer player, String routeId, int rgb) {
+    private static void stageOne(ServerPlayer player, String routeId, int rgb, boolean toast, float power) {
         ServerLevel level = player.serverLevel();
         int argb = 0xFF000000 | (rgb & 0xFFFFFF);
         Vec3 feet = player.position();
         MinecraftServer server = level.getServer();
-        if (server != null) PENDING.add(new Pending(server.getTickCount() + UnlockTiming.BURST_TICK, player.getUUID(), argb));     // first: the payoff comes even if a build effect fails
+        if (server != null && PENDING.size() < MAX_PENDING) PENDING.add(new Pending(server.getTickCount() + UnlockTiming.BURST_TICK, player.getUUID(), argb, toast, power));     // first: the payoff comes even if a build effect fails
         try {
             PacketDistributor.sendToPlayer(player, new RouteUnlockedPayload(routeId));                                             // second: the banner is the part the reader cannot miss
         } catch (RuntimeException | LinkageError e) {
@@ -68,8 +80,8 @@ public final class UnlockFx {
         sound(level, feet, SoundEvents.BOOK_PAGE_TURN, 1.0f, 0.9f);
         sound(level, feet, SoundEvents.ENCHANTMENT_TABLE_USE, 1.2f, 0.8f);
         // the circle charges for 60% of its life and bursts: its length is chosen so the burst lands on the second stage
-        fx(level, VfxShape.MAGIC_CIRCLE_EXPLOSION, feet.add(0, 0.05, 0), feet.add(0, 1.05, 0), argb, UnlockTiming.circleTicks(), 1.45f, -1);
-        fx(level, VfxShape.MANA_CHARGE, feet.add(0, 0.95, 0), feet.add(0, 1.95, 0), argb, UnlockTiming.BURST_TICK, 1.2f, player.getId());
+        fx(level, VfxShape.MAGIC_CIRCLE_EXPLOSION, feet.add(0, 0.05, 0), feet.add(0, 1.05, 0), argb, UnlockTiming.circleTicks(), 1.45f * power, -1);
+        fx(level, VfxShape.MANA_CHARGE, feet.add(0, 0.95, 0), feet.add(0, 1.95, 0), argb, UnlockTiming.BURST_TICK, 1.2f * power, player.getId());
     }
 
     public static void onServerTick(ServerTickEvent.Post event) {
@@ -82,7 +94,7 @@ public final class UnlockFx {
             it.remove();
             try {
                 ServerPlayer player = server.getPlayerList().getPlayer(p.player());
-                if (player != null && player.isAlive()) stageTwo(player, p.argb());
+                if (player != null && player.isAlive()) stageTwo(player, p.argb(), p.toast(), p.power());
             } catch (RuntimeException | LinkageError e) {
                 LOG.warn("[nusmp] the second stage of the route-unlocked show failed", e);
             }
@@ -92,14 +104,14 @@ public final class UnlockFx {
     /** Forgets the queue when the server stops, so nothing outlives the world. */
     public static void onServerStopped(ServerStoppedEvent event) { PENDING.clear(); }
 
-    private static void stageTwo(ServerPlayer player, int argb) {
+    private static void stageTwo(ServerPlayer player, int argb, boolean toast, float power) {
         ServerLevel level = player.serverLevel();
         Vec3 feet = player.position();
         // the strike form of the pillar (an even seed): the full column and flash, not the dim telegraph
-        fx(level, VfxShape.DIVINE_PILLAR, feet, feet.add(0, 1, 0), argb, 26, 1.3f, -1);
-        fx(level, VfxShape.LIGHT_FLARE, feet.add(0, 1.0, 0), feet.add(0, 1.0, 0), argb, 16, 2.0f, -1);
-        fx(level, VfxShape.SPIRIT_AURA, feet.add(0, 1.0, 0), feet.add(0, 1.0, 0), argb, UnlockTiming.AURA_TICKS, 1.2f, player.getId());
-        sound(level, feet, SoundEvents.UI_TOAST_CHALLENGE_COMPLETE, 1.0f, 1.0f);
+        fx(level, VfxShape.DIVINE_PILLAR, feet, feet.add(0, 1, 0), argb, 26, 1.3f * power, -1);
+        fx(level, VfxShape.LIGHT_FLARE, feet.add(0, 1.0, 0), feet.add(0, 1.0, 0), argb, 16, 2.0f * power, -1);
+        fx(level, VfxShape.SPIRIT_AURA, feet.add(0, 1.0, 0), feet.add(0, 1.0, 0), argb, UnlockTiming.AURA_TICKS, 1.2f * power, player.getId());
+        if (toast) sound(level, feet, SoundEvents.UI_TOAST_CHALLENGE_COMPLETE, 1.0f, 1.0f);
         sound(level, feet, SoundEvents.AMETHYST_BLOCK_CHIME, 1.4f, 0.5f);
         sound(level, feet, SoundEvents.BEACON_POWER_SELECT, 0.7f, 1.3f);
     }

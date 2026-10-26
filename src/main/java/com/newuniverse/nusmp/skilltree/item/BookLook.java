@@ -2,6 +2,7 @@ package com.newuniverse.nusmp.skilltree.item;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.newuniverse.nusmp.skilltree.rarity.BookRarity;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -25,8 +26,19 @@ import java.util.Map;
 public final class BookLook {
     private BookLook() {}
 
-    /** One line's book as the client sees it. {@code franchise} is the key (empty when none), {@code color} is 0xRRGGBB. */
-    public record Entry(String line, String book, String name, String bookName, int color, String franchise) {}
+    /**
+     * One line's book as the client sees it. {@code franchise} is the key (empty when none), {@code color} is 0xRRGGBB, {@code rarity} the book's rarity (3.26.0; a table without the field reads as common).
+     */
+    public record Entry(String line, String book, String name, String bookName, int color, String franchise, BookRarity rarity) {
+        public Entry {
+            rarity = rarity == null ? BookRarity.COMMON : rarity;
+        }
+
+        /** The six-argument form of 3.25 (common); kept so old callers and tables compile. */
+        public Entry(String line, String book, String name, String bookName, int color, String franchise) {
+            this(line, book, name, bookName, color, franchise, BookRarity.COMMON);
+        }
+    }
 
     /** An immutable snapshot of the table. */
     public static final class Index {
@@ -101,6 +113,18 @@ public final class BookLook {
         return idx.franchiseValue(routeFranchise);
     }
 
+    /** The rarity of a book id in the table in force (common for an unknown book): the stack's own component, when it has one, wins in {@code SkillItems.rarityOf}. */
+    public static BookRarity rarityOf(String bookId) {
+        Entry e = current.byBook(bookId);
+        return e == null ? BookRarity.COMMON : e.rarity();
+    }
+
+    /** The value of the item property {@code nusmp:rarity} for a book id: {@code (rank + 1) / 6}, 0 for a book the table does not know (the base look). */
+    public static float rarityValue(String bookId) {
+        Entry e = current.byBook(bookId);
+        return e == null ? 0f : e.rarity().modelValue();
+    }
+
     // ------------------------------------------------------------------------------------------------------------------ parsing
     /** Parses the shipped json. Tolerant: a line without a usable book or colour is skipped, a bad colour becomes white; never throws for shape problems. */
     public static Index parse(JsonObject root) {
@@ -118,7 +142,8 @@ public final class BookLook {
                 if (book.isEmpty()) continue;
                 String name = str(o, "name");
                 String bookName = str(o, "book_name");
-                lines.put(me.getKey(), new Entry(me.getKey(), book, name.isEmpty() ? me.getKey() : name, bookName.isEmpty() ? name : bookName, color(str(o, "color")), str(o, "franchise")));
+                lines.put(me.getKey(), new Entry(me.getKey(), book, name.isEmpty() ? me.getKey() : name, bookName.isEmpty() ? name : bookName, color(str(o, "color")), str(o, "franchise"),
+                        BookRarity.fromId(str(o, "rarity"))));
             }
         }
         return new Index(franchises, steps, lines);

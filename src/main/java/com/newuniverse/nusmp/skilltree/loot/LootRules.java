@@ -3,6 +3,9 @@ package com.newuniverse.nusmp.skilltree.loot;
 import com.newuniverse.nusmp.dungeon.sentient.Dice;
 import com.newuniverse.nusmp.labyrinth.mega.FloorMap;
 import com.newuniverse.nusmp.labyrinth.mega.Polarity;
+import com.newuniverse.nusmp.skilltree.rarity.BookRarity;
+import com.newuniverse.nusmp.skilltree.rarity.RarityConfig;
+import com.newuniverse.nusmp.skilltree.rarity.RarityRules;
 
 /**
  * Why: the owner wants the Skill Books to be a REWARD OF THE DEEP: the hidden knowledge of the Abyssal descent, trickling out of its monsters at a very low chance
@@ -86,6 +89,61 @@ public final class LootRules {
         public static final Plan NOTHING = new Plan(false, 0, false);
 
         public boolean isEmpty() { return !routeBook && spBooks <= 0; }
+    }
+
+    /**
+     * 3.26.0: what the rarity tiers add to a death, instead of a {@link Plan}: ONE book of this rarity ({@code null} = no book).
+     *
+     * @param rarity the rarity of the book to hand out, or null for nothing
+     * @param boss   the drop comes from a decennial Guardian (its book is the deterministic themed pick) and not from a monster (its book is a weighted pick of the rarity)
+     */
+    public record TieredPlan(BookRarity rarity, boolean boss) {
+        /** Nothing to add. */
+        public static final TieredPlan NOTHING = new TieredPlan(null, false);
+
+        public boolean isEmpty() { return rarity == null; }
+    }
+
+    /**
+     * What one death decides: the old {@link Plan} (rarity tiers off: exactly the rule of 3.25, {@code tiered} is null) or the {@link TieredPlan} (tiers on, {@code old} is {@link Plan#NOTHING}).
+     */
+    public record Decision(Plan old, TieredPlan tiered) {
+        public boolean isEmpty() { return tiered == null ? old.isEmpty() : tiered.isEmpty(); }
+    }
+
+    /**
+     * The single entry point of the three loot doors: with {@code rc.tiers()} off it returns {@link #decide} untouched (the same dice draws in the same order, so 3.25's drops are reproduced
+     * exactly); with it on it returns {@link #decideTiered}. {@code luck} and {@code looting} are read once per drop by the caller and only used by the tiers.
+     */
+    public static Decision plan(Victim v, Chances c, RarityConfig rc, double luck, int looting, Dice dice) {
+        if (rc == null || !rc.tiers()) return new Decision(decide(v, c, dice), null);
+        return new Decision(Plan.NOTHING, decideTiered(v, c, rc, luck, looting, dice));
+    }
+
+    /**
+     * The tiered rule. The gates are the same as {@link #decide} (the Mega-Dungeon, a player kill, the road, a boss floor, the Holy switch). A MONSTER of the Abyssal road adds a book at
+     * {@code rarityBaseChance} times the Luck and Looting multiplier ({@link RarityRules#abyssalBookChance}), and its rarity is drawn from the tier-1 weights ({@link RarityRules#drawMonsterRarity}, never
+     * mythic). A GUARDIAN of a boss floor adds one themed book at {@code guardianBookChance}, of the rarity its depth asks for ({@link RarityRules#guardianRarity}). No SP Books (they are gone).
+     * The order of the draws: the chance, then the rarity.
+     */
+    public static TieredPlan decideTiered(Victim v, Chances c, RarityConfig rc, double luck, int looting, Dice dice) {
+        if (v == null || c == null || rc == null || dice == null || !v.inMega() || !v.playerKill()) return TieredPlan.NOTHING;
+        switch (v.kind()) {
+            case MONSTER: {
+                if (v.polarity() != Polarity.ABYSSAL) return TieredPlan.NOTHING;
+                if (!dice.chance(RarityRules.abyssalBookChance(rc.baseChance(), looting, luck))) return TieredPlan.NOTHING;
+                return new TieredPlan(RarityRules.drawMonsterRarity(luck, dice), false);
+            }
+            case GUARDIAN: {
+                if (!FloorMap.isBossFloor(v.floor())) return TieredPlan.NOTHING;
+                boolean road = v.polarity() == Polarity.ABYSSAL || (v.polarity() == Polarity.HOLY && c.holyBosses());
+                if (!road) return TieredPlan.NOTHING;
+                if (rc.guardianChance() < 1.0 && !dice.chance(rc.guardianChance())) return TieredPlan.NOTHING;       // 1.0 is "guaranteed": no draw is spent
+                return new TieredPlan(RarityRules.guardianRarity(v.floor(), dice), true);
+            }
+            default:
+                return TieredPlan.NOTHING;
+        }
     }
 
     /** Decides one death. Pure; the order of the draws is: the route book, then the SP Books. */

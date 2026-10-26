@@ -4,6 +4,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.newuniverse.nusmp.skilltree.rarity.BookRarity;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -36,13 +37,22 @@ public final class LineIndex {
 
     /**
      * One book as the registry needs it: {@code bare} is the file stem ({@code lady_luck}), {@code routeId} the route id ({@code nusmp:lady_luck}), {@code arts} the names of the skill's modes in route-file order,
-     * {@code passives} the names of the passives and stat bonuses that work while the skill is on.
+     * {@code passives} the names of the passives and stat bonuses that work while the skill is on. 3.26.0: {@code rarity} is the book's rarity (the table's {@code rarity} field; a table without it reads as common) and
+     * {@code theme} its background theme (one of the 15 backgrounds, "" when the table has none), which the themed Guardian drop matches against the dungeon sector's theme.
      */
     public record Line(String bare, String routeId, String name, int color, String franchise, String book, String bookName, String desc, String lore,
-                       List<String> arts, List<String> passives) {
+                       List<String> arts, List<String> passives, BookRarity rarity, String theme) {
         public Line {
             arts = List.copyOf(arts);
             passives = List.copyOf(passives);
+            rarity = rarity == null ? BookRarity.COMMON : rarity;
+            theme = theme == null ? "" : theme;
+        }
+
+        /** The eleven-argument form of 3.25 (no rarity, no theme: common); kept so old callers and tests compile. */
+        public Line(String bare, String routeId, String name, int color, String franchise, String book, String bookName, String desc, String lore,
+                    List<String> arts, List<String> passives) {
+            this(bare, routeId, name, color, franchise, book, bookName, desc, lore, arts, passives, BookRarity.COMMON, "");
         }
 
         /** The five-argument form of the stand-in era; kept so old callers compile. */
@@ -85,7 +95,7 @@ public final class LineIndex {
                 String shownName = name.isEmpty() ? e.getKey() : name;
                 sorted.put(e.getKey(), new Line(e.getKey(), routeId(e.getKey()), shownName, color(str(o, "color")), str(o, "franchise"),
                         book.isEmpty() ? "nusmp:" + e.getKey() + "_book" : book, bookName.isEmpty() ? shownName : bookName, str(o, "desc"), str(o, "book_lore"),
-                        strings(o, "arts"), strings(o, "passives")));
+                        strings(o, "arts"), strings(o, "passives"), BookRarity.fromId(str(o, "rarity")), str(o, "theme")));
             }
         }
         return Collections.unmodifiableList(new ArrayList<>(sorted.values()));

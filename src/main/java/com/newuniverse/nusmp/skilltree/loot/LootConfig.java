@@ -1,5 +1,7 @@
 package com.newuniverse.nusmp.skilltree.loot;
 
+import com.newuniverse.nusmp.skilltree.rarity.BlockedFranchises;
+import com.newuniverse.nusmp.skilltree.rarity.RarityConfig;
 import net.neoforged.neoforge.common.ModConfigSpec;
 
 /**
@@ -19,6 +21,10 @@ public final class LootConfig {
     public static final ModConfigSpec.BooleanValue RIFT_BOOKS, PITY;
     public static final ModConfigSpec.DoubleValue RIFT_BOOK_SCALE;
     public static final ModConfigSpec.IntValue PITY_REROLLS;
+    /** 3.26.0: the rarity tiers and the franchise blacklist (section {@code [rarity]}). */
+    public static final ModConfigSpec.BooleanValue RARITY_TIERS, HIDE_BLOCKED_FRANCHISES;
+    public static final ModConfigSpec.DoubleValue GUARDIAN_BOOK_CHANCE, RARITY_BASE_CHANCE;
+    public static final ModConfigSpec.ConfigValue<String> BLOCKED_FRANCHISES;
 
     static {
         ModConfigSpec.Builder b = new ModConfigSpec.Builder();
@@ -48,6 +54,19 @@ public final class LootConfig {
         PITY_REROLLS = b.comment("How many times the pity rule redraws by weight before it scans the lines for one the player does not own.")
                 .defineInRange("pityRerolls", 12, 1, 200);
         b.pop();
+        b.push("rarity");
+        RARITY_TIERS = b.comment("Rarity-weighted drops (3.26.0): Abyssal monsters drop a mostly common book at a very small chance, Luck and Looting make it better, the decennial Guardians drop ONE themed book that grows rarer with depth,",
+                        "and the rift chests hand out mythic books only. Off: the old flat pick and the old numbers (abyssalBookChance 0.004, bossBookChance 0.30), exactly as in 3.25.")
+                .define("rarityTiers", true);
+        GUARDIAN_BOOK_CHANCE = b.comment("Chance, as a fraction (1.0 = guaranteed), that a decennial Guardian drops its themed book. Only used while rarityTiers is on.")
+                .defineInRange("guardianBookChance", 1.0, 0.0, 1.0);
+        RARITY_BASE_CHANCE = b.comment("Chance per kill, as a fraction (0.001 = 0.1%), that an ordinary Abyssal monster drops a book, before Luck and Looting multiply it (at most ten times). Only used while rarityTiers is on.")
+                .defineInRange("rarityBaseChance", 0.001, 0.0, 1.0);
+        HIDE_BLOCKED_FRANCHISES = b.comment("The franchises of blockedFranchises stop dropping and being sold as Skill Books (the books, the files and the commands stay; a book a player already holds still reads).")
+                .define("hideBlockedFranchises", true);
+        BLOCKED_FRANCHISES = b.comment("The franchise keys of the blacklist, one comma separated text (not a list): tensura, black_clover, magi, solo_leveling, danmachi, tbate, tower_of_god, god_of_high_school, omniscient_readers_viewpoint, exiled_heavy_knight, fairy_tail.")
+                .define("blockedFranchises", BlockedFranchises.DEFAULT);
+        b.pop();
         SPEC = b.build();
     }
 
@@ -56,6 +75,16 @@ public final class LootConfig {
     /** The value, or its default while the config is not loaded yet. */
     public static <T> T get(ModConfigSpec.ConfigValue<T> v) {
         try { return v.get(); } catch (IllegalStateException notLoaded) { return v.getDefault(); }
+    }
+
+    /** The rarity and blacklist settings as the pure rules want them (read once per drop; the defaults while the config is not loaded). */
+    public static RarityConfig rarity() {
+        return new RarityConfig(get(RARITY_TIERS), get(GUARDIAN_BOOK_CHANCE), get(RARITY_BASE_CHANCE), get(HIDE_BLOCKED_FRANCHISES), get(BLOCKED_FRANCHISES));
+    }
+
+    /** The blacklist text in force: the setting while {@code hideBlockedFranchises} is on, "" (nothing blocked) while it is off. Installed into {@link BlockedFranchises} by {@code LinesLoot.init}. */
+    public static String effectiveBlocked() {
+        return get(HIDE_BLOCKED_FRANCHISES) ? get(BLOCKED_FRANCHISES) : "";
     }
 
     /** The odds as the pure rule wants them. */
