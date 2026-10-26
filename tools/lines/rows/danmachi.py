@@ -1,4 +1,4 @@
-"""DanMachi: 25 unique skill lines (familia Blessings and Statuses, adventurer Skills and Magic, chant magic, Developmental Abilities, Argonaut, familia roles).
+"""DanMachi: 27 unique skill lines (familia Blessings and Statuses, adventurer Skills and Magic, chant magic, Developmental Abilities, Argonaut, familia roles).
 
 Canon note: names follow the story's vocabulary; every numeric effect and wording is this mod's own design. Where a detail was uncertain it is invented in the story's spirit.
 """
@@ -1010,4 +1010,104 @@ LINES.append(Line(
         A("Impossible Strike", "The attack that should not work: a leap that comes down like a falling star.", "leap_slam", "minecraft:nether_star", damage=30, radius=6, height=1.3, knockback=1.8, cooldown=1400, vfx="FLAME_EXPLOSION"),
         A("Overcharged Spark", "Everything you have, pushed out in one line of light.", "ray_shot", "minecraft:end_crystal", damage=27, range=30, pierce=4, cooldown=1300, vfx="LIGHTNING_SPEAR"),
     ],
+))
+
+# ---------------------------------------------------------------------------------------------------------------------------------- 26 (3.26.0, Evolution skill)
+def PE(name, desc, kind, icon, evolved, **p):
+    """A passive with an `evolved` override (the stronger numbers it uses once the line has evolved)."""
+    return Pas(name, desc, kind, p, icon, evolved)
+
+
+def AU(name, desc, kind, icon, **p):
+    """The Ultimate Evolution art (flag `ultimate`, kind debt_burst)."""
+    return Art(name, desc, kind, p, icon, ultimate=True)
+
+
+LINES.append(Line(
+    id="haruhime_uchide", name="Uchide no Kozuchi", franchise=F,
+    desc="The Renard priestess's Level Boost: a chanted prayer that lifts every ally near you one step beyond their limit, fox-tails that carry the blessing to many at once, and a quiet debt that the borrowed strength always asks back. Evolves once you have reached three hundred allies with your blessings.",
+    color="#ffb6e0", background="dream", icon="minecraft:pink_petals",
+    book_name="Haruhime's Prayer Scroll", book_lore="She cannot lift herself. She has never needed to; she lifts everyone else, and then asks them kindly to come home.",
+    stances=[
+        S("Fox Prayer", "Fold your hands and keep a prayer ready: gentle regeneration and a lighter step, with softer blows.", "minecraft:sweet_berries", regen=0.8, speed_pct=0.05, damage_pct=-0.15, vfx="SPIRIT_AURA"),
+        S("Chanting", "Stand still and chant: slow and sheltered, while the allies near you grow strong.", "minecraft:bell", speed_pct=-0.25, armor=3, knockback_res=0.3, regen=0.4, vfx="MAGIC_CIRCLE"),
+    ],
+    stats=[
+        T("Renard's Light Step", "A fox's quick, quiet feet.", "movement_speed", 0.03, "minecraft:leather_boots", op="mult"),
+        T("Quiet Resolve", "More maximum health than a priestess should need.", "max_health", 2, "minecraft:golden_carrot"),
+        T("Far-Reaching Prayer", "Your blessings reach a little further.", "entity_interaction_range", 0.4, "minecraft:spyglass"),
+        T("Shrine Maiden's Fortune", "A small luck that rides with the prayer.", "luck", 1, "minecraft:rabbit_foot"),
+    ],
+    arts=[
+        A("Uchide no Kozuchi", "Level Boost: you and your allies around you gain Strength for a while, as if one level higher.", "buff_aura", "minecraft:blaze_powder", effect="strength", radius=9, seconds=20, amp=1, vfx="MAGIC_CIRCLE"),
+        A("Uchide no Kozuchi: Shift", "A wider but shorter boost: Speed for you and every ally in a big circle.", "buff_aura", "minecraft:sugar", effect="speed", radius=14, seconds=9, amp=1, vfx="WIND_RING"),
+        A("Kokonoe Tails", "Fox-tails carry the blessing: you and your allies gain Resistance for a while.", "buff_aura", "minecraft:white_wool", effect="resistance", radius=10, seconds=14, vfx="SPIRIT_AURA"),
+        A("Healing Prayer", "A soft prayer heals you and the allies around you.", "heal_pulse", "minecraft:honey_bottle", amount=7, radius=9, vfx="SPIRIT_AURA"),
+        A("Quiet Prayer: Shift", "Kneel and pray for yourself, since the boost never reaches you: a heal and a little regeneration.", "heal_self", "minecraft:glistering_melon_slice", amount=9, regen_seconds=7, vfx="SPIRIT_AURA"),
+        A("Sacred Sword Blessing", "A thin blade of blessed light gathers on your hands: Haste and Resistance for a while.", "buff_self", "minecraft:amethyst_shard", effect="haste", effect2="resistance", seconds=14, vfx="MAGIC_CIRCLE"),
+        A("Fox-Fire Bolt", "A bolt of pale fox-fire along your line of sight.", "ray_shot", "minecraft:fire_charge", damage=7, range=20, pierce=2, vfx="FIRE_BURST"),
+        A("Fox-Fire: Shift", "A scatter of fox-fire sparks at the monster you look at.", "barrage", "minecraft:glowstone_dust", damage=2.5, shots=8, range=15, vfx="FLAME_TRAIL"),
+    ],
+    passives=[
+        PE("Prayer Radiance", "Allies near you slowly regenerate.", "aura", "minecraft:honey_block", {"radius": 12, "amp": 1}, effect="regeneration", target="allies", radius=8),
+        P("Boost Afterglow", "Allies near you run a little faster.", "aura", "minecraft:feather", effect="speed", target="allies", radius=6),
+        PE("Borrowed Strength", "Your blows store delayed damage on the foe: the strength you lend always asks for something back, and your Debt arts collect it.", "debt_store", "minecraft:amethyst_cluster", {"store_pct": 0.4, "max_pct": 0.7, "hold_seconds": 18}, store_pct=0.25, tick_seconds=3, max_pct=0.5, hold_seconds=12, vfx="MAGIC_CIRCLE"),
+        P("Shrine Maiden's Calm", "Crouched, your wounds close.", "regen_when", "minecraft:glow_berries", condition="sneaking", per_second=0.9),
+        PE("Fox's Flight", "You may slip a blow completely.", "dodge", "minecraft:phantom_membrane", {"chance": 0.2}, chance=0.12),
+        P("Prayer Beads", "Your wounds close slowly, even out of combat.", "mending", "minecraft:honeycomb", seconds=12, amount=1),
+        P("Last Prayer", "When nearly dead you are briefly shielded.", "last_stand", "minecraft:totem_of_undying", seconds=6),
+        P("Spiritual Ward", "You take much less magic damage.", "resist", "minecraft:enchanted_book", damage_kind="magic", pct=0.3),
+    ],
+    finishers=[
+        A("Kokonoe: Nine-Tail Blessing", "All your tails at once: a long, strong Strength for you and every ally in a wide circle.", "buff_aura", "minecraft:nether_star", effect="strength", radius=13, seconds=25, amp=2, cooldown=1600, vfx="MAGIC_CIRCLE"),
+        AU("Uchide no Kozuchi: Full Moon", "The moon-bright limit of the Level Boost: every Debt your blows left on the foes around you comes due in one blast.", "debt_burst", "minecraft:end_crystal", damage=18, mult=2.0, radius=12, targets=12, cost=0.07, cooldown=15000, vfx="SPIRIT_AURA"),
+    ],
+    evolution={"requirement": "ally_buffs", "count": 300,
+               "text": "Reach 300 allies with the buffing and healing arts of this skill.",
+               "ultimate_name": "Ultimate Skill, Uchide no Kozuchi: Full Moon"},
+))
+
+# ---------------------------------------------------------------------------------------------------------------------------------- 27 (3.26.0, Evolution skill)
+LINES.append(Line(
+    id="ryuu_astrea_blade", name="Astraea's Wooden Sword", franchise=F,
+    desc="The elf blade dancer's justice: a wooden sword that parries and strikes back, a clean dash, a charged aria and a debt of justice that waits to be paid. Evolves after four hundred arts of this skill.",
+    color="#66d9a0", background="ruin", icon="minecraft:wooden_sword",
+    book_name="Ledger of the Last Astraea Blade", book_lore="Justice is not a feeling. It is a debt, and she has never once defaulted.",
+    stances=[
+        S("Elf Poise", "Light on the toes and ready to parry: faster, sharper, a little more damage.", "minecraft:feather", speed_pct=0.1, crit_chance=0.08, damage_pct=0.1, vfx="WIND_RING"),
+        S("Wind Guard", "Plant the wooden sword and let the wind hold the line: sturdy and hard to push, slower to strike.", "minecraft:shield", armor=4, knockback_res=0.4, damage_pct=-0.1, speed_pct=-0.05, vfx="ELF_CIRCLE"),
+    ],
+    stats=[
+        T("Blade Dancer's Strength", "Clean, practiced strokes.", "attack_damage", 1.5, "minecraft:wooden_sword"),
+        T("Duelist's Tempo", "Quicker recovery between cuts.", "attack_speed", 0.06, "minecraft:clock", op="mult"),
+        T("Elven Stride", "Light, long steps.", "movement_speed", 0.03, "minecraft:leather_boots", op="mult"),
+        T("Ironed Resolve", "A hide that blunts the worst hits.", "armor_toughness", 1, "minecraft:iron_ingot"),
+    ],
+    arts=[
+        A("Wooden-Sword Combo", "A fast cone of cuts through the monsters in front of you.", "cone_strike", "minecraft:wooden_sword", damage=7, range=3.6, half_angle=40, targets=3, vfx="WIND_SLASH"),
+        A("Gale Sweep", "Spin the wooden sword in a wide circle and cut everything near you several times.", "whirlwind", "minecraft:stick", damage=3, radius=3.6, hits=4, vfx="WIND_TORNADO"),
+        A("Star-Dust Arrow", "A single green arrow of wind and light that pierces the monsters in a line.", "ray_shot", "minecraft:arrow", damage=7, range=22, pierce=3, vfx="ELF_CIRCLE"),
+        A("Parry and Riposte", "Turn the blade just so: for a moment a big share of the damage you take is flung back.", "ward_reflect", "minecraft:iron_sword", seconds=5, reflect_pct=0.5, vfx="MIRROR_PANE"),
+        A("Bleeding Cut", "A thin, deep cut that poisons and slows everything in a cone.", "debuff_cone", "minecraft:string", effect="poison", effect2="slowness", seconds=6, seconds2=4, range=4, vfx="WIND_SLASH"),
+        A("Dash Strike", "Dash forward and cut every monster in your path.", "dash_strike", "minecraft:leather_boots", distance=7, damage=7, vfx="WIND_SLASH"),
+        A("Dash Strike: Shift", "A much longer dash, ending in a harder cut.", "dash_strike", "minecraft:golden_boots", distance=12, damage=10, targets=4, vfx="WIND_RING"),
+        A("Aria of Justice: Shift", "Hold the verse, then bring a charged pillar of green light down where you look.", "meteor_drop", "minecraft:amethyst_shard", delay=24, damage=16, radius=5, range=18, vfx="ELF_CIRCLE"),
+    ],
+    passives=[
+        PE("Justice Owed", "Your blows store delayed damage on the foe, a debt of justice that your Debt arts collect.", "debt_store", "minecraft:written_book", {"store_pct": 0.4, "max_pct": 0.7, "hold_seconds": 18}, store_pct=0.25, tick_seconds=3, max_pct=0.5, hold_seconds=12, vfx="ELF_CIRCLE"),
+        PE("Parry Reflex", "You may turn a blow aside completely.", "dodge", "minecraft:rabbit_foot", {"chance": 0.22}, chance=0.12),
+        PE("Riposte Edge", "A share of the damage you take returns to the attacker.", "thorns", "minecraft:pointed_dripstone", {"pct": 0.4}, pct=0.2),
+        P("Blade Dancer's Rhythm", "Blows in a row grow stronger.", "momentum", "minecraft:flint", max_stacks=6),
+        P("Wooden-Sword Discipline", "Every few blows in a row hit much harder.", "combo", "minecraft:wooden_sword", hits=4, bonus=0.5),
+        P("Sworn Guard", "While you hold a sword you take less damage.", "reduce_when", "minecraft:shield", condition="holding_sword", pct=0.12),
+        P("Magic Defense Training", "You take much less magic damage.", "resist", "minecraft:enchanted_book", damage_kind="magic", pct=0.3),
+        P("Hunter's Eye", "You deal more damage to hostile monsters.", "dmg_vs", "minecraft:spyglass", category="monster", bonus=0.25),
+    ],
+    finishers=[
+        A("Ten Comrades' Strike", "Ten remembered blows leap from foe to foe, one for every comrade who fell before you.", "chain_hit", "minecraft:totem_of_undying", damage=14, jumps=9, jump_range=6, vfx="ELF_CIRCLE", cooldown=1400),
+        AU("Luminous Wind: Aria of Justice", "The full aria: every Debt of justice your blows left on the foes around you comes due in a single storm of green light.", "debt_burst", "minecraft:nether_star", damage=20, mult=2.2, radius=13, targets=12, cost=0.07, cooldown=16000, vfx="ELF_CIRCLE"),
+    ],
+    evolution={"requirement": "arts_cast", "count": 400,
+               "text": "Cast the arts of this skill 400 times.",
+               "ultimate_name": "Ultimate Skill, Luminous Wind: Aria of Justice"},
 ))

@@ -1,0 +1,1256 @@
+{
+  "magic": "danmachi",
+  "franchise": "danmachi",
+  "name": "Astraea's Wooden Sword",
+  "desc": "The elf blade dancer's justice: a wooden sword that parries and strikes back, a clean dash, a charged aria and a debt of justice that waits to be paid. Evolves after four hundred arts of this skill.",
+  "book": "nusmp:ryuu_astrea_blade_book",
+  "book_name": "Ledger of the Last Astraea Blade",
+  "book_lore": "Justice is not a feeling. It is a debt, and she has never once defaulted.",
+  "color": "#66D9A0",
+  "icon": "minecraft:wooden_sword",
+  "class_id": "ryuu_astrea_blade",
+  "duplicate_sp": 3,
+  "loot_weight": 1,
+  "book_texture": "nusmp:item/skill_book_3d/danmachi",
+  "nodes": [
+    {
+      "id": "elf_poise",
+      "name": "Elf Poise",
+      "desc": "Light on the toes and ready to parry: faster, sharper, a little more damage.",
+      "parents": [],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "WIND_RING"
+      },
+      "values": {
+        "damage_pct": [
+          0.1,
+          0.12,
+          0.14
+        ],
+        "armor": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "speed_pct": [
+          0.1,
+          0.12,
+          0.14
+        ],
+        "knockback_res": [
+          0,
+          0,
+          0
+        ],
+        "regen": [
+          0,
+          0,
+          0
+        ],
+        "crit_chance": [
+          0.08,
+          0.096,
+          0.112
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 0,
+      "icon": "minecraft:feather"
+    },
+    {
+      "id": "wind_guard",
+      "name": "Wind Guard",
+      "desc": "Plant the wooden sword and let the wind hold the line: sturdy and hard to push, slower to strike.",
+      "parents": [
+        {
+          "node": "elf_poise",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "ELF_CIRCLE"
+      },
+      "values": {
+        "damage_pct": [
+          -0.1,
+          -0.12,
+          -0.14
+        ],
+        "armor": [
+          4.0,
+          5.0,
+          6.0
+        ],
+        "speed_pct": [
+          -0.05,
+          -0.06,
+          -0.07
+        ],
+        "knockback_res": [
+          0.4,
+          0.48,
+          0.56
+        ],
+        "regen": [
+          0,
+          0,
+          0
+        ],
+        "crit_chance": [
+          0,
+          0,
+          0
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 2,
+      "icon": "minecraft:shield"
+    },
+    {
+      "id": "blade_dancer_s_strength",
+      "name": "Blade Dancer's Strength",
+      "desc": "Clean, practiced strokes.",
+      "parents": [
+        {
+          "node": "elf_poise",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "attack_damage",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          1.5,
+          1.875,
+          2.25,
+          2.625,
+          3.0
+        ]
+      },
+      "x": 2,
+      "y": 0,
+      "icon": "minecraft:wooden_sword"
+    },
+    {
+      "id": "duelist_s_tempo",
+      "name": "Duelist's Tempo",
+      "desc": "Quicker recovery between cuts.",
+      "parents": [
+        {
+          "node": "wind_guard",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "attack_speed",
+        "op": "mult"
+      },
+      "values": {
+        "amount": [
+          0.06,
+          0.075,
+          0.09,
+          0.105,
+          0.12
+        ]
+      },
+      "x": 2,
+      "y": 2,
+      "icon": "minecraft:clock"
+    },
+    {
+      "id": "elven_stride",
+      "name": "Elven Stride",
+      "desc": "Light, long steps.",
+      "parents": [
+        {
+          "node": "elf_poise",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "movement_speed",
+        "op": "mult"
+      },
+      "values": {
+        "amount": [
+          0.03,
+          0.0375,
+          0.045,
+          0.0525,
+          0.06
+        ]
+      },
+      "x": 2,
+      "y": 4,
+      "icon": "minecraft:leather_boots"
+    },
+    {
+      "id": "ironed_resolve",
+      "name": "Ironed Resolve",
+      "desc": "A hide that blunts the worst hits.",
+      "parents": [
+        {
+          "node": "wind_guard",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "armor_toughness",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          1.0,
+          1.25,
+          1.5,
+          1.75,
+          2.0
+        ]
+      },
+      "x": 2,
+      "y": 6,
+      "icon": "minecraft:iron_ingot"
+    },
+    {
+      "id": "wooden_sword_combo",
+      "name": "Wooden-Sword Combo",
+      "desc": "A fast cone of cuts through the monsters in front of you.",
+      "parents": [
+        {
+          "node": "elf_poise",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "cone_strike",
+      "params": {
+        "vfx": "WIND_SLASH"
+      },
+      "values": {
+        "damage": [
+          7.0,
+          8.75,
+          10.5,
+          12.25
+        ],
+        "range": [
+          3.6,
+          3.888,
+          4.176,
+          4.464
+        ],
+        "half_angle": [
+          40.0,
+          44.0,
+          48.0,
+          52.0
+        ],
+        "targets": [
+          3.0,
+          4.0,
+          5.0,
+          7.0
+        ],
+        "knockback": [
+          0.4,
+          0.44,
+          0.48,
+          0.52
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          100.0,
+          92.0,
+          84.0,
+          76.0
+        ]
+      },
+      "x": 4,
+      "y": 0,
+      "icon": "minecraft:wooden_sword"
+    },
+    {
+      "id": "gale_sweep",
+      "name": "Gale Sweep",
+      "desc": "Spin the wooden sword in a wide circle and cut everything near you several times.",
+      "parents": [
+        {
+          "node": "wind_guard",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "whirlwind",
+      "params": {
+        "vfx": "WIND_TORNADO"
+      },
+      "values": {
+        "damage": [
+          3.0,
+          3.75,
+          4.5,
+          5.25
+        ],
+        "radius": [
+          3.6,
+          3.888,
+          4.176,
+          4.464
+        ],
+        "hits": [
+          4.0,
+          5.0,
+          6.0,
+          8.0
+        ],
+        "interval": [
+          5.0,
+          5.0,
+          5.0,
+          5.0
+        ],
+        "cost": [
+          0.025,
+          0.027,
+          0.029,
+          0.031
+        ],
+        "cooldown": [
+          260.0,
+          239.0,
+          218.0,
+          198.0
+        ]
+      },
+      "x": 4,
+      "y": 2,
+      "icon": "minecraft:stick"
+    },
+    {
+      "id": "star_dust_arrow",
+      "name": "Star-Dust Arrow",
+      "desc": "A single green arrow of wind and light that pierces the monsters in a line.",
+      "parents": [
+        {
+          "node": "wooden_sword_combo",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "ray_shot",
+      "params": {
+        "vfx": "ELF_CIRCLE"
+      },
+      "values": {
+        "damage": [
+          7.0,
+          8.75,
+          10.5,
+          12.25
+        ],
+        "range": [
+          22.0,
+          24.2,
+          26.4,
+          28.6
+        ],
+        "pierce": [
+          3.0,
+          4.0,
+          5.0,
+          6.0
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          120.0,
+          110.0,
+          101.0,
+          91.0
+        ]
+      },
+      "x": 6,
+      "y": 0,
+      "icon": "minecraft:arrow"
+    },
+    {
+      "id": "parry_and_riposte",
+      "name": "Parry and Riposte",
+      "desc": "Turn the blade just so: for a moment a big share of the damage you take is flung back.",
+      "parents": [
+        {
+          "node": "gale_sweep",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "ward_reflect",
+      "params": {
+        "vfx": "MIRROR_PANE"
+      },
+      "values": {
+        "seconds": [
+          5.0,
+          6.0,
+          6.0,
+          6.0
+        ],
+        "reflect_pct": [
+          0.5,
+          0.6,
+          0.7,
+          0.8
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          400.0,
+          376.0,
+          352.0,
+          328.0
+        ]
+      },
+      "x": 6,
+      "y": 2,
+      "icon": "minecraft:iron_sword"
+    },
+    {
+      "id": "bleeding_cut",
+      "name": "Bleeding Cut",
+      "desc": "A thin, deep cut that poisons and slows everything in a cone.",
+      "parents": [
+        {
+          "node": "star_dust_arrow",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "debuff_cone",
+      "params": {
+        "effect": "poison",
+        "effect2": "slowness",
+        "vfx": "WIND_SLASH"
+      },
+      "values": {
+        "range": [
+          4.0,
+          4.32,
+          4.64,
+          4.96
+        ],
+        "half_angle": [
+          40.0,
+          44.0,
+          48.0,
+          52.0
+        ],
+        "seconds": [
+          6.0,
+          7.0,
+          8.0,
+          9.0
+        ],
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "seconds2": [
+          4.0,
+          5.0,
+          5.0,
+          6.0
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          220.0,
+          202.0,
+          185.0,
+          167.0
+        ]
+      },
+      "x": 8,
+      "y": 0,
+      "icon": "minecraft:string"
+    },
+    {
+      "id": "dash_strike",
+      "name": "Dash Strike",
+      "desc": "Dash forward and cut every monster in your path.",
+      "parents": [
+        {
+          "node": "parry_and_riposte",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "dash_strike",
+      "params": {
+        "vfx": "WIND_SLASH"
+      },
+      "values": {
+        "distance": [
+          7.0,
+          7.7,
+          8.4,
+          9.1
+        ],
+        "damage": [
+          7.0,
+          8.75,
+          10.5,
+          12.25
+        ],
+        "targets": [
+          3.0,
+          4.0,
+          5.0,
+          6.0
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          120.0,
+          110.0,
+          101.0,
+          91.0
+        ]
+      },
+      "x": 8,
+      "y": 2,
+      "icon": "minecraft:leather_boots"
+    },
+    {
+      "id": "dash_strike_shift",
+      "name": "Dash Strike: Shift",
+      "desc": "A much longer dash, ending in a harder cut.",
+      "parents": [
+        {
+          "node": "bleeding_cut",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "dash_strike",
+      "params": {
+        "vfx": "WIND_RING"
+      },
+      "values": {
+        "distance": [
+          12.0,
+          13.2,
+          14,
+          14
+        ],
+        "damage": [
+          10.0,
+          12.5,
+          15.0,
+          17.5
+        ],
+        "targets": [
+          4.0,
+          5.0,
+          6.0,
+          8.0
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          120.0,
+          110.0,
+          101.0,
+          91.0
+        ]
+      },
+      "x": 10,
+      "y": 0,
+      "icon": "minecraft:golden_boots"
+    },
+    {
+      "id": "aria_of_justice_shift",
+      "name": "Aria of Justice: Shift",
+      "desc": "Hold the verse, then bring a charged pillar of green light down where you look.",
+      "parents": [
+        {
+          "node": "dash_strike",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "meteor_drop",
+      "params": {
+        "vfx": "ELF_CIRCLE"
+      },
+      "values": {
+        "delay": [
+          24.0,
+          23.0,
+          22.0,
+          20.0
+        ],
+        "damage": [
+          16.0,
+          20.0,
+          24.0,
+          28.0
+        ],
+        "radius": [
+          5.0,
+          5.5,
+          6.0,
+          6.5
+        ],
+        "range": [
+          18.0,
+          19.44,
+          20.88,
+          22.32
+        ],
+        "cost": [
+          0.03,
+          0.0324,
+          0.0348,
+          0.0372
+        ],
+        "cooldown": [
+          360.0,
+          331.0,
+          302.0,
+          274.0
+        ]
+      },
+      "x": 10,
+      "y": 6,
+      "icon": "minecraft:amethyst_shard"
+    },
+    {
+      "id": "justice_owed",
+      "name": "Justice Owed",
+      "desc": "Your blows store delayed damage on the foe, a debt of justice that your Debt arts collect.",
+      "parents": [
+        {
+          "node": "wooden_sword_combo",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "debt_store",
+      "params": {
+        "vfx": "ELF_CIRCLE"
+      },
+      "values": {
+        "store_pct": [
+          0.25,
+          0.3,
+          0.35,
+          0.4
+        ],
+        "tick_seconds": [
+          3.0,
+          3.0,
+          3.0,
+          3.0
+        ],
+        "max_pct": [
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ],
+        "hold_seconds": [
+          12.0,
+          12.0,
+          12.0,
+          12.0
+        ]
+      },
+      "x": 10,
+      "y": 2,
+      "icon": "minecraft:written_book",
+      "evolved": {
+        "store_pct": 0.4,
+        "max_pct": 0.7,
+        "hold_seconds": 18
+      }
+    },
+    {
+      "id": "parry_reflex",
+      "name": "Parry Reflex",
+      "desc": "You may turn a blow aside completely.",
+      "parents": [
+        {
+          "node": "gale_sweep",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "dodge",
+      "values": {
+        "chance": [
+          0.12,
+          0.144,
+          0.168,
+          0.192
+        ],
+        "rest": [
+          100.0,
+          90.0,
+          80.0,
+          70.0
+        ]
+      },
+      "x": 10,
+      "y": 4,
+      "icon": "minecraft:rabbit_foot",
+      "evolved": {
+        "chance": 0.22
+      }
+    },
+    {
+      "id": "riposte_edge",
+      "name": "Riposte Edge",
+      "desc": "A share of the damage you take returns to the attacker.",
+      "parents": [
+        {
+          "node": "star_dust_arrow",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "thorns",
+      "values": {
+        "pct": [
+          0.2,
+          0.24,
+          0.28,
+          0.32
+        ],
+        "rest": [
+          20.0,
+          20.0,
+          20.0,
+          20.0
+        ]
+      },
+      "x": 12,
+      "y": 0,
+      "icon": "minecraft:pointed_dripstone",
+      "evolved": {
+        "pct": 0.4
+      }
+    },
+    {
+      "id": "blade_dancer_s_rhythm",
+      "name": "Blade Dancer's Rhythm",
+      "desc": "Blows in a row grow stronger.",
+      "parents": [
+        {
+          "node": "parry_and_riposte",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "momentum",
+      "values": {
+        "per_stack": [
+          0.04,
+          0.046,
+          0.052,
+          0.058
+        ],
+        "max_stacks": [
+          6.0,
+          8.0,
+          10.0,
+          11.0
+        ]
+      },
+      "x": 12,
+      "y": 2,
+      "icon": "minecraft:flint"
+    },
+    {
+      "id": "wooden_sword_discipline",
+      "name": "Wooden-Sword Discipline",
+      "desc": "Every few blows in a row hit much harder.",
+      "parents": [
+        {
+          "node": "bleeding_cut",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "combo",
+      "values": {
+        "hits": [
+          4.0,
+          4.0,
+          3.0,
+          3.0
+        ],
+        "bonus": [
+          0.5,
+          0.6,
+          0.7,
+          0.8
+        ]
+      },
+      "x": 14,
+      "y": 0,
+      "icon": "minecraft:wooden_sword"
+    },
+    {
+      "id": "sworn_guard",
+      "name": "Sworn Guard",
+      "desc": "While you hold a sword you take less damage.",
+      "parents": [
+        {
+          "node": "dash_strike",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "reduce_when",
+      "params": {
+        "condition": "holding_sword"
+      },
+      "values": {
+        "pct": [
+          0.12,
+          0.144,
+          0.168,
+          0.192
+        ]
+      },
+      "x": 14,
+      "y": 2,
+      "icon": "minecraft:shield"
+    },
+    {
+      "id": "magic_defense_training",
+      "name": "Magic Defense Training",
+      "desc": "You take much less magic damage.",
+      "parents": [
+        {
+          "node": "dash_strike_shift",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "resist",
+      "params": {
+        "damage_kind": "magic"
+      },
+      "values": {
+        "pct": [
+          0.3,
+          0.36,
+          0.42,
+          0.48
+        ]
+      },
+      "x": 16,
+      "y": 0,
+      "icon": "minecraft:enchanted_book"
+    },
+    {
+      "id": "hunter_s_eye",
+      "name": "Hunter's Eye",
+      "desc": "You deal more damage to hostile monsters.",
+      "parents": [
+        {
+          "node": "aria_of_justice_shift",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "dmg_vs",
+      "params": {
+        "category": "monster"
+      },
+      "values": {
+        "bonus": [
+          0.25,
+          0.3,
+          0.35,
+          0.4
+        ]
+      },
+      "x": 16,
+      "y": 2,
+      "icon": "minecraft:spyglass"
+    },
+    {
+      "id": "ten_comrades_strike",
+      "name": "Ten Comrades' Strike",
+      "desc": "Ten remembered blows leap from foe to foe, one for every comrade who fell before you.",
+      "parents": [
+        {
+          "node": "aria_of_justice_shift",
+          "level": 3
+        },
+        {
+          "node": "hunter_s_eye",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "chain_hit",
+      "params": {
+        "vfx": "ELF_CIRCLE"
+      },
+      "values": {
+        "damage": [
+          14.0,
+          17.5,
+          21.0
+        ],
+        "jumps": [
+          9.0,
+          10.0,
+          10.0
+        ],
+        "jump_range": [
+          6.0,
+          6.0,
+          7.0
+        ],
+        "falloff": [
+          0.15,
+          0.15,
+          0.15
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232
+        ],
+        "cooldown": [
+          1400.0,
+          1288.0,
+          1176.0
+        ]
+      },
+      "x": 16,
+      "y": 4,
+      "icon": "minecraft:totem_of_undying"
+    },
+    {
+      "id": "luminous_wind_aria_of_justice",
+      "name": "Luminous Wind: Aria of Justice",
+      "desc": "The full aria: every Debt of justice your blows left on the foes around you comes due in a single storm of green light.",
+      "parents": [
+        {
+          "node": "dash_strike_shift",
+          "level": 3
+        },
+        {
+          "node": "magic_defense_training",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "debt_burst",
+      "params": {
+        "vfx": "ELF_CIRCLE"
+      },
+      "values": {
+        "damage": [
+          20.0,
+          25.0,
+          30.0
+        ],
+        "mult": [
+          2.2,
+          2.42,
+          2.64
+        ],
+        "radius": [
+          13.0,
+          14.3,
+          15.6
+        ],
+        "targets": [
+          12.0,
+          17.0,
+          20.0
+        ],
+        "cost": [
+          0.07,
+          0.0756,
+          0.0812
+        ],
+        "cooldown": [
+          16000.0,
+          14720.0,
+          13440.0
+        ]
+      },
+      "x": 16,
+      "y": 6,
+      "icon": "minecraft:nether_star",
+      "ultimate": true
+    }
+  ],
+  "evolution": {
+    "requirement": "arts_cast",
+    "count": 400,
+    "text": "Cast the arts of this skill 400 times.",
+    "ultimate_name": "Ultimate Skill, Luminous Wind: Aria of Justice"
+  }
+}
