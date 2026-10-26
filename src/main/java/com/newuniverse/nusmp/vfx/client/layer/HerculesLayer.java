@@ -40,7 +40,7 @@ import java.util.Set;
  * <b>Budgets (rule 11).</b> The engine hard-caps every effect at 100 quads (400 vertices) per activation; INVICTUS asks for 50 quads (200 vertices) because it is re-sent every 80 ticks for a 100-tick life and two
  * instances overlap for 20 ticks. Counts are quads at full detail ({@code ctx.seg} thins them by distance and by the particle setting; minimums in the code); a glow counts as 2 quads, a ring or plane of any radius is one
  * quad. Worst case quads per effect per frame (measured in the preview at every tick, see tools/vfx_preview/scenes.d/hercules.json and docs/vfx_remake/hercules_fx_calls.md):
- * LEAP 0, TREMOR 0, INVICTUS 0 (two overlap for 20 ticks: 0), GRIP 0, THROW 0, ROAR 0, STRIKE 0, SHOCKWAVE 0, BODY 0, MOMENTUM 0. Each is one activation; no collections or arrays are built per frame (only the small
+ * LEAP 33, TREMOR 50, INVICTUS 33 (two overlap for 20 ticks: 65), GRIP 41, THROW 64, ROAR 46, STRIKE 54, SHOCKWAVE 15, BODY 20, MOMENTUM 36. Each is one activation; no collections or arrays are built per frame (only the small
  * short-lived pose vectors every layer makes), every loop count is a constant or a {@code ctx.seg} of at most 16, and every optional group checks {@code hasBudget} first so the buffer can never be pushed past its cap.
  * Decorative extras (embers, leaves, dust) fall away with the camera distance (the manager already drops an effect that is out of range and thins the rest by its distance level of detail). No effect keeps anything between
  * frames, so nothing has to be cleaned up on logout, death or dimension change; the server sends one packet per effect (VfxSpawn) and nothing here runs on the server.
@@ -506,7 +506,7 @@ public class HerculesLayer extends AbstractVfxLayer {
         float bx = c.x + c.x / cl * 0.9f * hs, by = c.y + 0.1f * hs + c.y / cl * 0.9f * hs, bz = c.z + c.z / cl * 0.9f * hs;
         float wz = 3.5f * hs * (0.97f + 0.03f * Mth.sin(age * 0.1f));
         sprite(ctx, buf, LAUREL, VfxBlend.ADD, bx, by, bz, wz, 0f, a(WHITE, 0.62f * fade * pulse));
-        sprite(ctx, buf, FIST, VfxBlend.ADD, bx, by + 0.12f * hs, bz, wz * 0.5f, 0f, a(WHITE, 0.5f * fade * pulse));
+        sprite(ctx, buf, FIST, VfxBlend.ADD, bx, by + 0.12f * hs, bz, wz * 0.56f, 0f, a(WHITE, 0.8f * fade * pulse));
         glow(ctx, buf, bx, by, bz, 2.4f * hs, EMBER, 0.35f * fade);
 
         // 2. the crown: a laurel wreath turns over the head, a ring of gold under it, a glow over it
@@ -523,8 +523,8 @@ public class HerculesLayer extends AbstractVfxLayer {
             float x = c.x + Mth.cos(an) * 0.45f * hs, z = c.z + Mth.sin(an) * 0.45f * hs;
             float top = gy + (1.7f + 0.9f * h(seed, i, 2) + 0.2f * Mth.sin(age * 0.31f + i * 2.1f)) * hs;
             float sw = Mth.sin(age * 0.19f + i * 1.7f) * 0.14f * hs;
-            ribbon(buf, FLAME, VfxBlend.ADD, x, gy + 0.05f, z, x + sw, top, z + sw * 0.7f, 0.42f * hs, 0.34f * hs, 1f, 0f, a(BRONZE, 0.9f * fade), a(EMBER, 0.55f * fade));
-            if ((i & 1) == 0) ribbon(buf, FLAME, VfxBlend.ADD, x, gy + 0.1f, z, x + sw * 0.8f, top * 0.0f + gy + (top - gy) * 0.78f, z + sw * 0.5f, 0.26f * hs, 0.2f * hs, 1f, 0f, a(GOLD_L, 0.85f * fade), a(GOLD, 0.45f * fade));
+            ribbon(buf, FLAME, VfxBlend.ADD, x, gy + 0.05f, z, x + sw, top, z + sw * 0.7f, 0.42f * hs, 0.34f * hs, 1f, 0f, a(BRONZE, 0.55f * fade), a(EMBER, 0.3f * fade));
+            if ((i & 1) == 0) ribbon(buf, FLAME, VfxBlend.ADD, x, gy + 0.1f, z, x + sw * 0.8f, gy + (top - gy) * 0.78f, z + sw * 0.5f, 0.26f * hs, 0.2f * hs, 1f, 0f, a(GOLD_L, 0.5f * fade), a(GOLD, 0.25f * fade));
         }
 
         // 4. the floor: a ring and a laurel ring turning under the feet, a glow
@@ -575,7 +575,7 @@ public class HerculesLayer extends AbstractVfxLayer {
         float openIn = VfxAnim.easeOutBack(Mth.clamp(age / 7f, 0, 1));
         float sq = Mth.sin(Math.max(0f, age - 13f) * 0.9f) * 0.06f * smooth(13f, 15f, age);
         float handSize = 4.4f * openIn * (1f - 0.12f * close);
-        float fistSize = (4.0f - 1.6f * close) + sq * 2f;
+        float fistSize = (4.0f - 0.8f * close) + sq * 2f;
 
         // 1. the hand opens round the target and closes into a fist on it
         float ha = (1f - close) * fade, fa = close * fade;
@@ -595,8 +595,8 @@ public class HerculesLayer extends AbstractVfxLayer {
         float web = smooth(12f, 13.5f, age) * (1f - smooth(19f, 24f, age));
         if (web > 0.01f) {
             VfxPose wp = across(t.x, t.y + 0.1f, t.z, -t.x, -t.y, -t.z).spin(h(seed, 0, 1) * Mth.TWO_PI);
-            buf.plane(WEB, VfxBlend.ALPHA, wp, 2.0f + 0.4f * eo((age - 12f) / 4f), a(WHITE, 0.85f * web));
-            buf.plane(WEB, VfxBlend.ADD, wp.lift(0.01f), 2.0f + 0.4f * eo((age - 12f) / 4f), a(GOLD, 0.8f * web));
+            buf.plane(WEB, VfxBlend.ALPHA, wp, 2.0f + 0.4f * eo((age - 12f) / 4f), a(WHITE, 0.6f * web));
+            buf.plane(WEB, VfxBlend.ADD, wp.lift(0.01f), 2.0f + 0.4f * eo((age - 12f) / 4f), a(GOLD, 0.5f * web));
         }
         float gy = t.y - 0.9f;
         float cl = eo((age - 3f) / 10f);
@@ -611,7 +611,6 @@ public class HerculesLayer extends AbstractVfxLayer {
             for (int k = 0; k < 3 && reach > 0.02f; k++) {
                 float off = (k - 1) * 0.5f;
                 float sag = (1f - taut) * (0.5f + 0.5f * h(seed, k, 2)) * Math.min(2.4f, len * 0.12f);
-                float pxp = t.x + sx * off * 0.8f, pyp = t.y + 0.1f + (k - 1) * 0.25f, pzp = t.z + sz * off * 0.8f;
                 for (int sgm = 0; sgm < 4 && buf.hasBudget(4); sgm++) {
                     float u0 = reach * sgm / 4f, u1 = reach * (sgm + 1) / 4f;
                     float x0 = t.x + (c.x - t.x) * u0 + sx * off * (1f - u0) * 0.8f, y0 = t.y + 0.1f + (c.y - t.y) * u0 + (k - 1) * 0.25f * (1f - u0) - sag * 4f * u0 * (1f - u0);
@@ -621,9 +620,6 @@ public class HerculesLayer extends AbstractVfxLayer {
                     float segLen = Mth.sqrt((x1 - x0) * (x1 - x0) + (y1 - y0) * (y1 - y0) + (z1 - z0) * (z1 - z0));
                     float v0 = u0 * len * 0.48f - age * 0.09f * taut, v1 = v0 + segLen * 0.48f;
                     ribbon(buf, CHAIN, VfxBlend.ALPHA, x0, y0, z0, x1, y1, z1, 0.24f, 0.24f, v0, v1, a(WHITE, 0.95f * fade), a(WHITE, 0.95f * fade));
-                    pxp = x1;
-                    pyp = y1;
-                    pzp = z1;
                 }
             }
             // a glow runs along the middle chain, and streaks of pull run along the line towards the caster
@@ -705,7 +701,7 @@ public class HerculesLayer extends AbstractVfxLayer {
             for (int s = 1; s <= 3 && buf.hasBudget(8); s++) {
                 float us = uTail + (u - uTail) * (3 - s) / 3f;
                 float x = f.x + dx * us, y = f.y + dy * us + arcH * 4f * us * (1f - us), z = f.z + dz * us;
-                float w = 0.12f + 0.38f * (1f - s / 3f);
+                float w = 0.2f + 0.55f * (1f - s / 3f);
                 streak(buf, x, y, z, px, py, pz, w * 1.4f, a(EMBER, 0.85f * al));
                 streak(buf, x, y, z, px, py, pz, w * 0.7f, a(IVORY, al));
                 px = x;
@@ -713,7 +709,7 @@ public class HerculesLayer extends AbstractVfxLayer {
                 pz = z;
             }
             // the tail is drawn from head back, so the loop above went tail-ward: nothing more to do for the line itself
-            glow(ctx, buf, hx, hy, hz, 1.1f, GOLD, 0.9f * al);
+            glow(ctx, buf, hx, hy, hz, 1.8f, GOLD, 0.95f * al);
             // the cone of shock: rings across the flight direction, behind the head, wider and fainter the further back; two lines of the cone seen from the side
             float tdx = dx + arcH * 4f * (1f - 2f * u) * 0f, tdy = dy + arcH * 4f * (1f - 2f * u), tdz = dz;
             for (int k = 0; k < 3 && buf.hasBudget(4); k++) {
@@ -837,7 +833,7 @@ public class HerculesLayer extends AbstractVfxLayer {
         for (int k = 0; k < 4; k++) {
             float ph = 0.25f * k;                                              // 0, 0.25, 0.5, 0.75 of the way up the dome
             float rk = Rv * pd * Mth.cos(ph * 1.45f), yk = Rv * pd * 0.36f * Mth.sin(ph * 1.45f);
-            waveAt(buf, VfxBlend.ADD, ground(c.x, gy + 0.1f + yk, c.z), rk, a(mix(BRONZE, GOLD, 1f - ph), (1f - pd) * (0.55f - 0.1f * k) * fade));
+            waveAt(buf, VfxBlend.ADD, ground(c.x, gy + 0.1f + yk, c.z), rk, a(mix(BRONZE, GOLD, 1f - ph), (1f - pd) * (0.85f - 0.14f * k) * fade));
         }
         waveAt(buf, VfxBlend.ALPHA, floor.lift(0.01f), Rv * p0 * 0.96f, a(DUST_TINT, (1f - p0) * 0.5f * fade));
         // the ground rings: two faint waves that go out and back
@@ -956,9 +952,9 @@ public class HerculesLayer extends AbstractVfxLayer {
         if (hit) {
             float fl = 1f - smooth(STRIKE_IMPACT + STRIKE_HOLD, STRIKE_IMPACT + STRIKE_HOLD + 6f, age);
             if (fl > 0.01f) {
-                flash(ctx, buf, e.x, e.y, e.z, 17f * (0.55f + 0.45f * fl), 0.1f, a(WHITE, fl));
-                flash(ctx, buf, e.x, e.y, e.z, 10f * (0.5f + 0.5f * fl), 0.78f, a(GOLD_L, 0.85f * fl));
-                glow(ctx, buf, e.x, e.y, e.z, 5.5f * fl, GOLD, fl);
+                flash(ctx, buf, e.x, e.y, e.z, 11f * (0.55f + 0.45f * fl), 0.1f, a(WHITE, 0.8f * fl));
+                flash(ctx, buf, e.x, e.y, e.z, 6.5f * (0.5f + 0.5f * fl), 0.78f, a(GOLD_L, 0.7f * fl));
+                glow(ctx, buf, e.x, e.y, e.z, 4.5f * fl, GOLD, 0.8f * fl);
             }
             // 4. the air cracks like glass: a web in a disc facing the caster, two layers, lit from within
             VfxPose wp = across(e.x, e.y, e.z, -nx, -ny, -nz);

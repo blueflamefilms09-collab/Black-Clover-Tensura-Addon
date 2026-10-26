@@ -579,9 +579,10 @@ def tex_web():
     edge = 1 - smooth(0.93, 1.0, r)
     glowb = blur(gm, 4.0) * 0.5
     # fills: a cell that fell out is a black void with a crimson depth, a frosted cell keeps a faint ivory sheen
-    a_void = np.clip(vm * 0.62 + hm * 0.88, 0, 1)
-    a_frost = fm * 0.07 * (1 - a_void)
-    void_rgb = col((22, 8, 14))[None, None, :] + col(CRIMSON)[None, None, :] * (0.7 * (1 - smooth(0.0, 0.8, r)))[..., None] * (hm[..., None] * 0.0 + 1.0)
+    cell_fade = 1 - smooth(0.3, 0.72, r)                          # the fallen-out pieces are near the middle, the rim is only cracks
+    a_void = np.clip(vm * 0.5 + hm * 0.8, 0, 1) * cell_fade
+    a_frost = fm * 0.07 * (1 - a_void) * cell_fade
+    void_rgb = col((22, 8, 14))[None, None, :] + col(CRIMSON)[None, None, :] * (0.42 * (1 - smooth(0.0, 0.8, r)))[..., None] * (hm[..., None] * 0.0 + 1.0)
     fill_a = np.clip(a_void + a_frost, 0, 1)
     fill_rgb = (void_rgb * a_void[..., None] + col(IVORY)[None, None, :] * a_frost[..., None]) / np.maximum(fill_a, 1e-4)[..., None]
     line_a = np.clip(lm + glowb * 0.55, 0, 1)
