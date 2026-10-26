@@ -1157,3 +1157,50 @@ LINES.append(Line(
                "text": "Slay 800 creatures while Ais, the Sword Princess is switched on.",
                "ultimate_name": "Ultimate Skill, Tempest Unbound"},
 ))
+
+# ---------------------------------------------------------------------------------------------------------------------------------- 29 (3.28.0, Evolution skill, docs/skills/evolution_ten_c.md row 10; canon notes in docs/skills/research/danmachi_c.md)
+LINES.append(Line(
+    id="lefiya_viridis_mage", name="Lefiya Viridis, the Thousand Elf", franchise=F,
+    desc="The Loki Familia's young elf mage: homing arrows of light, a rain of fire spheres, a ring that borrows the spells of other elves and a chant held crouched and still. Every unfinished verse leaves a debt that the Thousand Elf collects. Evolves after five hundred arts of this skill.",
+    color="#4ccf9a", background="forest", icon="minecraft:amethyst_shard",
+    book_name="Lefiya's Chant Notebook", book_lore="Every margin is full of other people's spells, copied out in a very careful hand. She swears she understands all of them.",
+    stances=[
+        S("Elf Ring Ready", "Keep a borrowed circle on your arm: your spells hit harder and your feet are lighter, with a thinner guard.", "minecraft:glow_berries", damage_pct=0.18, speed_pct=0.06, armor=-2, vfx="ELF_CIRCLE"),
+        S("Long Chant", "Stand still and let the verse run: slow, sheltered and slowly healing.", "minecraft:enchanted_book", speed_pct=-0.25, armor=3, knockback_res=0.3, regen=0.5, vfx="MAGIC_CIRCLE"),
+    ],
+    stats=[
+        T("Mage's Endurance", "A little more maximum health for a caster who is always in the middle of a chant.", "max_health", 2, "minecraft:golden_carrot"),
+        T("Magic Stat Growth", "A cleaner, stronger strike from the staff.", "attack_damage", 1.2, "minecraft:blaze_rod"),
+        T("Nimble Chanter", "Quicker feet when the chant is done.", "movement_speed", 0.03, "minecraft:leather_boots", op="mult"),
+        T("Elf Dust Reach", "The long staff's reach.", "entity_interaction_range", 0.4, "minecraft:spyglass"),
+    ],
+    arts=[
+        A("Arcs Ray", "Homing arrows of light: the blow jumps from monster to monster.", "chain_hit", "minecraft:spectral_arrow", damage=6, jumps=5, jump_range=6, vfx="ELF_CIRCLE"),
+        A("Arcs Ray: Shift", "Crouching, the arrows join into one long, piercing ray of light.", "ray_shot", "minecraft:end_rod", damage=9, range=26, pierce=4, vfx="LIGHTNING_SPEAR"),
+        A("Fusillade Fallarica", "A volley of fire spheres at the monster you look at.", "barrage", "minecraft:fire_charge", damage=3, shots=8, range=18, vfx="FIRE_BURST"),
+        A("Fusillade Fallarica: Shift", "Crouching, the whole fusillade drops on the one place you look at after a short delay.", "meteor_drop", "minecraft:magma_cream", delay=26, damage=15, radius=5, range=22, vfx="FLAME_EXPLOSION"),
+        A("Fairy Canon", "The fairy echo doubles the force of your attack magic: Strength and Haste for a while.", "buff_self", "minecraft:glowstone_dust", effect="strength", effect2="haste", seconds=14, vfx="MAGIC_CIRCLE"),
+        A("Elf Ring: Borrowed Winter", "Cast an elder elf's frost chant with the ring: the monsters around you freeze in place.", "stun_ring", "minecraft:blue_ice", radius=5, seconds=3, targets=6, vfx="WATER_RING"),
+        A("Elf Ring: Borrowed Ward", "Crouching, borrow a warding verse: a shield of absorption around you.", "shield", "minecraft:lapis_lazuli", absorb_hearts=6, seconds=9, vfx="MIRROR_PANE"),
+        A("Elf Dust Short Staff", "When they get too close, the short staff strikes a cone of monsters.", "cone_strike", "minecraft:stick", damage=7, range=3.4, half_angle=45, targets=3, vfx="WIND_SLASH"),
+    ],
+    passives=[
+        PE("Unfinished Verse", "Your blows store delayed damage on the foe, a verse left half-sung, and your Debt arts collect it.", "debt_store", "minecraft:written_book", {"store_pct": 0.45, "max_pct": 0.75, "hold_seconds": 18},
+           store_pct=0.25, tick_seconds=3, max_pct=0.5, hold_seconds=12, vfx="ELF_CIRCLE"),
+        PE("Chant Posture", "Crouched and still, your spells hit harder.", "dmg_when", "minecraft:lectern", {"bonus": 0.45}, condition="sneaking", bonus=0.25),
+        PE("Magic Ward Training", "You take much less magic damage.", "resist", "minecraft:shield", {"pct": 0.5}, damage_kind="magic", pct=0.3),
+        P("Thousand Elf's Memory", "Kills give more experience: every chant you see goes in the notebook.", "xp_bonus", "minecraft:experience_bottle", pct=0.25),
+        P("Mind Recovery", "Crouched, your wounds close faster.", "regen_when", "minecraft:glistering_melon_slice", condition="sneaking", per_second=0.9),
+        P("Elf Dust Resonance", "Your blows may strike critically as the twin staves ring.", "crit", "minecraft:prismarine_crystals", chance=0.14, mult=1.8),
+        P("Elven Ward Aura", "Allies near you resist a bit more, covered by your chant.", "aura", "minecraft:white_wool", effect="resistance", target="allies", radius=7),
+        P("Mending Verse", "Your wounds close slowly, even out of combat.", "mending", "minecraft:honeycomb", seconds=14, amount=1),
+    ],
+    finishers=[
+        A("Double Canon: Twin Release", "Both held circles let go at once: a huge burst of force around you.", "ring_burst", "minecraft:end_crystal", damage=28, radius=9, targets=14, knockback=2, cooldown=1500, cost=0.07, vfx="ELF_CIRCLE"),
+        AU("Elf Ring: Thousand Elf", "Every verse left unfinished on the monsters around you is finished at once, in a chorus of borrowed spells.", "debt_burst", "minecraft:nether_star",
+           damage=22, mult=2.3, radius=13, targets=12, cost=0.07, cooldown=16000, vfx="ELF_CIRCLE"),
+    ],
+    evolution={"requirement": "arts_cast", "count": 500,
+               "text": "Cast the arts of this skill 500 times.",
+               "ultimate_name": "Ultimate Skill, Elf Ring: Thousand Elf"},
+))

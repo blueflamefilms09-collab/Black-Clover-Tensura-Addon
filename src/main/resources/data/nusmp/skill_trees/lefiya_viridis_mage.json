@@ -1,0 +1,1254 @@
+{
+  "magic": "danmachi",
+  "franchise": "danmachi",
+  "name": "Lefiya Viridis, the Thousand Elf",
+  "desc": "The Loki Familia's young elf mage: homing arrows of light, a rain of fire spheres, a ring that borrows the spells of other elves and a chant held crouched and still. Every unfinished verse leaves a debt that the Thousand Elf collects. Evolves after five hundred arts of this skill.",
+  "book": "nusmp:lefiya_viridis_mage_book",
+  "book_name": "Lefiya's Chant Notebook",
+  "book_lore": "Every margin is full of other people's spells, copied out in a very careful hand. She swears she understands all of them.",
+  "color": "#4CCF9A",
+  "icon": "minecraft:amethyst_shard",
+  "class_id": "lefiya_viridis_mage",
+  "duplicate_sp": 3,
+  "loot_weight": 1,
+  "book_texture": "nusmp:item/skill_book_3d/danmachi",
+  "nodes": [
+    {
+      "id": "elf_ring_ready",
+      "name": "Elf Ring Ready",
+      "desc": "Keep a borrowed circle on your arm: your spells hit harder and your feet are lighter, with a thinner guard.",
+      "parents": [],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "ELF_CIRCLE"
+      },
+      "values": {
+        "damage_pct": [
+          0.18,
+          0.216,
+          0.252
+        ],
+        "armor": [
+          -2.0,
+          -2.5,
+          -3.0
+        ],
+        "speed_pct": [
+          0.06,
+          0.072,
+          0.084
+        ],
+        "knockback_res": [
+          0,
+          0,
+          0
+        ],
+        "regen": [
+          0,
+          0,
+          0
+        ],
+        "crit_chance": [
+          0,
+          0,
+          0
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 0,
+      "icon": "minecraft:glow_berries"
+    },
+    {
+      "id": "long_chant",
+      "name": "Long Chant",
+      "desc": "Stand still and let the verse run: slow, sheltered and slowly healing.",
+      "parents": [
+        {
+          "node": "elf_ring_ready",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "MAGIC_CIRCLE"
+      },
+      "values": {
+        "damage_pct": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "armor": [
+          3.0,
+          3.75,
+          4.5
+        ],
+        "speed_pct": [
+          -0.25,
+          -0.3,
+          -0.35
+        ],
+        "knockback_res": [
+          0.3,
+          0.36,
+          0.42
+        ],
+        "regen": [
+          0.5,
+          0.6,
+          0.7
+        ],
+        "crit_chance": [
+          0,
+          0,
+          0
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 2,
+      "icon": "minecraft:enchanted_book"
+    },
+    {
+      "id": "mage_s_endurance",
+      "name": "Mage's Endurance",
+      "desc": "A little more maximum health for a caster who is always in the middle of a chant.",
+      "parents": [
+        {
+          "node": "elf_ring_ready",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "max_health",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          2.0,
+          2.5,
+          3.0,
+          3.5,
+          4.0
+        ]
+      },
+      "x": 2,
+      "y": 0,
+      "icon": "minecraft:golden_carrot"
+    },
+    {
+      "id": "magic_stat_growth",
+      "name": "Magic Stat Growth",
+      "desc": "A cleaner, stronger strike from the staff.",
+      "parents": [
+        {
+          "node": "long_chant",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "attack_damage",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          1.2,
+          1.5,
+          1.8,
+          2.1,
+          2.4
+        ]
+      },
+      "x": 2,
+      "y": 2,
+      "icon": "minecraft:blaze_rod"
+    },
+    {
+      "id": "nimble_chanter",
+      "name": "Nimble Chanter",
+      "desc": "Quicker feet when the chant is done.",
+      "parents": [
+        {
+          "node": "elf_ring_ready",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "movement_speed",
+        "op": "mult"
+      },
+      "values": {
+        "amount": [
+          0.03,
+          0.0375,
+          0.045,
+          0.0525,
+          0.06
+        ]
+      },
+      "x": 2,
+      "y": 4,
+      "icon": "minecraft:leather_boots"
+    },
+    {
+      "id": "elf_dust_reach",
+      "name": "Elf Dust Reach",
+      "desc": "The long staff's reach.",
+      "parents": [
+        {
+          "node": "long_chant",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "entity_interaction_range",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8
+        ]
+      },
+      "x": 2,
+      "y": 6,
+      "icon": "minecraft:spyglass"
+    },
+    {
+      "id": "arcs_ray",
+      "name": "Arcs Ray",
+      "desc": "Homing arrows of light: the blow jumps from monster to monster.",
+      "parents": [
+        {
+          "node": "elf_ring_ready",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "chain_hit",
+      "params": {
+        "vfx": "ELF_CIRCLE"
+      },
+      "values": {
+        "damage": [
+          6.0,
+          7.5,
+          9.0,
+          10.5
+        ],
+        "jumps": [
+          5.0,
+          7.0,
+          9.0,
+          10.0
+        ],
+        "jump_range": [
+          6.0,
+          6.0,
+          7.0,
+          7.0
+        ],
+        "falloff": [
+          0.15,
+          0.15,
+          0.15,
+          0.15
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          160.0,
+          147.0,
+          134.0,
+          122.0
+        ]
+      },
+      "x": 4,
+      "y": 0,
+      "icon": "minecraft:spectral_arrow"
+    },
+    {
+      "id": "arcs_ray_shift",
+      "name": "Arcs Ray: Shift",
+      "desc": "Crouching, the arrows join into one long, piercing ray of light.",
+      "parents": [
+        {
+          "node": "long_chant",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "ray_shot",
+      "params": {
+        "vfx": "LIGHTNING_SPEAR"
+      },
+      "values": {
+        "damage": [
+          9.0,
+          11.25,
+          13.5,
+          15.75
+        ],
+        "range": [
+          26.0,
+          28.6,
+          31.2,
+          33.8
+        ],
+        "pierce": [
+          4.0,
+          5.0,
+          6.0,
+          6.0
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          120.0,
+          110.0,
+          101.0,
+          91.0
+        ]
+      },
+      "x": 4,
+      "y": 2,
+      "icon": "minecraft:end_rod"
+    },
+    {
+      "id": "fusillade_fallarica",
+      "name": "Fusillade Fallarica",
+      "desc": "A volley of fire spheres at the monster you look at.",
+      "parents": [
+        {
+          "node": "arcs_ray",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "barrage",
+      "params": {
+        "vfx": "FIRE_BURST"
+      },
+      "values": {
+        "damage": [
+          3.0,
+          3.75,
+          4.5,
+          5.25
+        ],
+        "shots": [
+          8.0,
+          11.0,
+          14.0,
+          16.0
+        ],
+        "range": [
+          18.0,
+          19.44,
+          20.88,
+          22.32
+        ],
+        "interval": [
+          3.0,
+          3.0,
+          3.0,
+          3.0
+        ],
+        "cost": [
+          0.025,
+          0.027,
+          0.029,
+          0.031
+        ],
+        "cooldown": [
+          240.0,
+          221.0,
+          202.0,
+          182.0
+        ]
+      },
+      "x": 6,
+      "y": 0,
+      "icon": "minecraft:fire_charge"
+    },
+    {
+      "id": "fusillade_fallarica_shift",
+      "name": "Fusillade Fallarica: Shift",
+      "desc": "Crouching, the whole fusillade drops on the one place you look at after a short delay.",
+      "parents": [
+        {
+          "node": "arcs_ray_shift",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "meteor_drop",
+      "params": {
+        "vfx": "FLAME_EXPLOSION"
+      },
+      "values": {
+        "delay": [
+          26.0,
+          25.0,
+          23.0,
+          22.0
+        ],
+        "damage": [
+          15.0,
+          18.75,
+          22.5,
+          26.25
+        ],
+        "radius": [
+          5.0,
+          5.5,
+          6.0,
+          6.5
+        ],
+        "range": [
+          22.0,
+          23.76,
+          25.52,
+          27.28
+        ],
+        "cost": [
+          0.03,
+          0.0324,
+          0.0348,
+          0.0372
+        ],
+        "cooldown": [
+          360.0,
+          331.0,
+          302.0,
+          274.0
+        ]
+      },
+      "x": 6,
+      "y": 2,
+      "icon": "minecraft:magma_cream"
+    },
+    {
+      "id": "fairy_canon",
+      "name": "Fairy Canon",
+      "desc": "The fairy echo doubles the force of your attack magic: Strength and Haste for a while.",
+      "parents": [
+        {
+          "node": "fusillade_fallarica",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "buff_self",
+      "params": {
+        "effect": "strength",
+        "effect2": "haste",
+        "vfx": "MAGIC_CIRCLE"
+      },
+      "values": {
+        "seconds": [
+          14.0,
+          16.0,
+          18.0,
+          20.0
+        ],
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "amp2": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          400.0,
+          376.0,
+          352.0,
+          328.0
+        ]
+      },
+      "x": 8,
+      "y": 0,
+      "icon": "minecraft:glowstone_dust"
+    },
+    {
+      "id": "elf_ring_borrowed_winter",
+      "name": "Elf Ring: Borrowed Winter",
+      "desc": "Cast an elder elf's frost chant with the ring: the monsters around you freeze in place.",
+      "parents": [
+        {
+          "node": "fusillade_fallarica_shift",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "stun_ring",
+      "params": {
+        "vfx": "WATER_RING"
+      },
+      "values": {
+        "radius": [
+          5.0,
+          5.5,
+          6.0,
+          6.5
+        ],
+        "seconds": [
+          3.0,
+          4.0,
+          4.0,
+          5.0
+        ],
+        "targets": [
+          6.0,
+          8.0,
+          11.0,
+          13.0
+        ],
+        "cost": [
+          0.025,
+          0.027,
+          0.029,
+          0.031
+        ],
+        "cooldown": [
+          300.0,
+          276.0,
+          252.0,
+          228.0
+        ]
+      },
+      "x": 8,
+      "y": 2,
+      "icon": "minecraft:blue_ice"
+    },
+    {
+      "id": "elf_ring_borrowed_ward",
+      "name": "Elf Ring: Borrowed Ward",
+      "desc": "Crouching, borrow a warding verse: a shield of absorption around you.",
+      "parents": [
+        {
+          "node": "fairy_canon",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "shield",
+      "params": {
+        "vfx": "MIRROR_PANE"
+      },
+      "values": {
+        "absorb_hearts": [
+          6.0,
+          8.0,
+          9.0,
+          10.0
+        ],
+        "seconds": [
+          9.0,
+          10.0,
+          11.0,
+          12.0
+        ],
+        "resist_amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          400.0,
+          376.0,
+          352.0,
+          328.0
+        ]
+      },
+      "x": 10,
+      "y": 0,
+      "icon": "minecraft:lapis_lazuli"
+    },
+    {
+      "id": "elf_dust_short_staff",
+      "name": "Elf Dust Short Staff",
+      "desc": "When they get too close, the short staff strikes a cone of monsters.",
+      "parents": [
+        {
+          "node": "elf_ring_borrowed_winter",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "cone_strike",
+      "params": {
+        "vfx": "WIND_SLASH"
+      },
+      "values": {
+        "damage": [
+          7.0,
+          8.75,
+          10.5,
+          12.25
+        ],
+        "range": [
+          3.4,
+          3.672,
+          3.944,
+          4.216
+        ],
+        "half_angle": [
+          45.0,
+          49.5,
+          54.0,
+          58.5
+        ],
+        "targets": [
+          3.0,
+          4.0,
+          5.0,
+          7.0
+        ],
+        "knockback": [
+          0.4,
+          0.44,
+          0.48,
+          0.52
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          100.0,
+          92.0,
+          84.0,
+          76.0
+        ]
+      },
+      "x": 10,
+      "y": 6,
+      "icon": "minecraft:stick"
+    },
+    {
+      "id": "unfinished_verse",
+      "name": "Unfinished Verse",
+      "desc": "Your blows store delayed damage on the foe, a verse left half-sung, and your Debt arts collect it.",
+      "parents": [
+        {
+          "node": "arcs_ray",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "debt_store",
+      "params": {
+        "vfx": "ELF_CIRCLE"
+      },
+      "values": {
+        "store_pct": [
+          0.25,
+          0.3,
+          0.35,
+          0.4
+        ],
+        "tick_seconds": [
+          3.0,
+          3.0,
+          3.0,
+          3.0
+        ],
+        "max_pct": [
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ],
+        "hold_seconds": [
+          12.0,
+          12.0,
+          12.0,
+          12.0
+        ]
+      },
+      "x": 10,
+      "y": 2,
+      "icon": "minecraft:written_book",
+      "evolved": {
+        "store_pct": 0.45,
+        "max_pct": 0.75,
+        "hold_seconds": 18
+      }
+    },
+    {
+      "id": "chant_posture",
+      "name": "Chant Posture",
+      "desc": "Crouched and still, your spells hit harder.",
+      "parents": [
+        {
+          "node": "arcs_ray_shift",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "dmg_when",
+      "params": {
+        "condition": "sneaking"
+      },
+      "values": {
+        "bonus": [
+          0.25,
+          0.3,
+          0.35,
+          0.4
+        ]
+      },
+      "x": 10,
+      "y": 4,
+      "icon": "minecraft:lectern",
+      "evolved": {
+        "bonus": 0.45
+      }
+    },
+    {
+      "id": "magic_ward_training",
+      "name": "Magic Ward Training",
+      "desc": "You take much less magic damage.",
+      "parents": [
+        {
+          "node": "fusillade_fallarica",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "resist",
+      "params": {
+        "damage_kind": "magic"
+      },
+      "values": {
+        "pct": [
+          0.3,
+          0.36,
+          0.42,
+          0.48
+        ]
+      },
+      "x": 12,
+      "y": 0,
+      "icon": "minecraft:shield",
+      "evolved": {
+        "pct": 0.5
+      }
+    },
+    {
+      "id": "thousand_elf_s_memory",
+      "name": "Thousand Elf's Memory",
+      "desc": "Kills give more experience: every chant you see goes in the notebook.",
+      "parents": [
+        {
+          "node": "fusillade_fallarica_shift",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "xp_bonus",
+      "values": {
+        "pct": [
+          0.25,
+          0.3,
+          0.35,
+          0.4
+        ]
+      },
+      "x": 12,
+      "y": 2,
+      "icon": "minecraft:experience_bottle"
+    },
+    {
+      "id": "mind_recovery",
+      "name": "Mind Recovery",
+      "desc": "Crouched, your wounds close faster.",
+      "parents": [
+        {
+          "node": "fairy_canon",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "regen_when",
+      "params": {
+        "condition": "sneaking"
+      },
+      "values": {
+        "per_second": [
+          0.9,
+          1.08,
+          1.26,
+          1.44
+        ]
+      },
+      "x": 14,
+      "y": 0,
+      "icon": "minecraft:glistering_melon_slice"
+    },
+    {
+      "id": "elf_dust_resonance",
+      "name": "Elf Dust Resonance",
+      "desc": "Your blows may strike critically as the twin staves ring.",
+      "parents": [
+        {
+          "node": "elf_ring_borrowed_winter",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "crit",
+      "values": {
+        "chance": [
+          0.14,
+          0.168,
+          0.196,
+          0.224
+        ],
+        "mult": [
+          1.8,
+          1.944,
+          2.088,
+          2.232
+        ]
+      },
+      "x": 14,
+      "y": 2,
+      "icon": "minecraft:prismarine_crystals"
+    },
+    {
+      "id": "elven_ward_aura",
+      "name": "Elven Ward Aura",
+      "desc": "Allies near you resist a bit more, covered by your chant.",
+      "parents": [
+        {
+          "node": "elf_ring_borrowed_ward",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "aura",
+      "params": {
+        "effect": "resistance",
+        "target": "allies"
+      },
+      "values": {
+        "radius": [
+          7.0,
+          7.7,
+          8.4,
+          9.1
+        ],
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "x": 16,
+      "y": 0,
+      "icon": "minecraft:white_wool"
+    },
+    {
+      "id": "mending_verse",
+      "name": "Mending Verse",
+      "desc": "Your wounds close slowly, even out of combat.",
+      "parents": [
+        {
+          "node": "elf_dust_short_staff",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "mending",
+      "values": {
+        "seconds": [
+          14.0,
+          13.0,
+          11.0,
+          10.0
+        ],
+        "amount": [
+          1,
+          1.25,
+          1.5,
+          1.75
+        ]
+      },
+      "x": 16,
+      "y": 2,
+      "icon": "minecraft:honeycomb"
+    },
+    {
+      "id": "double_canon_twin_release",
+      "name": "Double Canon: Twin Release",
+      "desc": "Both held circles let go at once: a huge burst of force around you.",
+      "parents": [
+        {
+          "node": "elf_dust_short_staff",
+          "level": 3
+        },
+        {
+          "node": "mending_verse",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "ring_burst",
+      "params": {
+        "vfx": "ELF_CIRCLE"
+      },
+      "values": {
+        "damage": [
+          28.0,
+          35.0,
+          42.0
+        ],
+        "radius": [
+          9.0,
+          9.9,
+          10.8
+        ],
+        "targets": [
+          14.0,
+          16.0,
+          16.0
+        ],
+        "knockback": [
+          2.0,
+          2.2,
+          2.4
+        ],
+        "cost": [
+          0.07,
+          0.0756,
+          0.08
+        ],
+        "cooldown": [
+          1500.0,
+          1380.0,
+          1260.0
+        ]
+      },
+      "x": 16,
+      "y": 4,
+      "icon": "minecraft:end_crystal"
+    },
+    {
+      "id": "elf_ring_thousand_elf",
+      "name": "Elf Ring: Thousand Elf",
+      "desc": "Every verse left unfinished on the monsters around you is finished at once, in a chorus of borrowed spells.",
+      "parents": [
+        {
+          "node": "elf_ring_borrowed_ward",
+          "level": 3
+        },
+        {
+          "node": "elven_ward_aura",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "debt_burst",
+      "params": {
+        "vfx": "ELF_CIRCLE"
+      },
+      "values": {
+        "damage": [
+          22.0,
+          27.5,
+          33.0
+        ],
+        "mult": [
+          2.3,
+          2.53,
+          2.76
+        ],
+        "radius": [
+          13.0,
+          14.3,
+          15.6
+        ],
+        "targets": [
+          12.0,
+          17.0,
+          20.0
+        ],
+        "cost": [
+          0.07,
+          0.0756,
+          0.0812
+        ],
+        "cooldown": [
+          16000.0,
+          14720.0,
+          13440.0
+        ]
+      },
+      "x": 16,
+      "y": 6,
+      "icon": "minecraft:nether_star",
+      "ultimate": true
+    }
+  ],
+  "evolution": {
+    "requirement": "arts_cast",
+    "count": 500,
+    "text": "Cast the arts of this skill 500 times.",
+    "ultimate_name": "Ultimate Skill, Elf Ring: Thousand Elf"
+  }
+}
