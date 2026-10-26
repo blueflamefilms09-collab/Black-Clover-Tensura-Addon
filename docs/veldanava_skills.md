@@ -264,3 +264,6 @@ Eight shapes appended after `TRIAL_RIFT` (`JIBRIL_COMMAND`, `_JUDGMENT`, `_PURGE
 ## Not included / honest limits
 - Solomon and Hercules stay sealed (3.16.0, 3.17.0).
 - Not played in a real game. ManasCore cooldown units (seconds, counted down once a second) are assumed from the Israfil code. The Kingdom's floor does not stop `/kill` or the void. Divine Rigor blocks the Veldanava conditions too.
+
+## Icons (3.17.0)
+The five Ultimate skill icons are animated medallions (see `docs/releases/3.17.0.md`). Files per skill under `textures/skill/veldanava/`: `<id>.png` (32 px still, the path the skill names), `<id>_anim.png` (32 x 32N strip), `<id>_anim_hd.png` (128 x 128N strip), their `.mcmeta` (frametime 2), and for Sandalphon, Israfil and Jibril the old sprite `<id>_classic.png`. Made by `tools/gen_<id>_icon_anim.py` with `tools/icon_anim_lib.py` (`python tools/gen_<id>_icon_anim.py`, previews to `/tmp/claude-0/icons/<id>/`). In the game `client/veldanava/AnimatedIcons` registers an `AnimatedIconTexture` at the still's path, so every ManasCore list animates; the card screen uses the HD strips, only while it is open. Client setting `icons.ultimateStyle` = ANIMATED / STILL / CLASSIC. Client only, no server work. When Solomon and Hercules become real skills, their icon is already there (`VeldanavaSkillBase` names `textures/skill/veldanava/<id>.png`).

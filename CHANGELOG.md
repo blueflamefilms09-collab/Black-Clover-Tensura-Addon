@@ -1,5 +1,42 @@
 # Changelog
 
+## [3.17.0] — The five Ultimate skill icons, remade and animated
+
+### NEW
+- **Animated, painted icons for all five Ultimate skills** (owner request: "Remake all the Ultimate skills icons to be animated and look 10x better"). Each is a round medallion drawn from scratch in code (`tools/gen_<id>_icon_anim.py`, shared helper `tools/icon_anim_lib.py`): 32 frames, a 3.2 second seamless loop, five to seven layers moving at different speeds, bevelled gold or bronze rims, bloom and light sweeps.
+  - **Sandalphon**: midnight navy and white-gold; a blade of light lowers into a balance with shock rings, black cracks open and heal, four clock rings turn the other way round each other.
+  - **Israfil**: indigo and cyan; a lit brass trumpet over five broken maze rings that turn at different speeds so the gaps line up and part, sound-wave arcs pulse outward.
+  - **Jibril**: the dawn palette of the 3.16.0 VFX; layered wings, a counter-rotating double halo with tiny orbiting feathers, golden scales that tilt and settle, falling petals, an iridescent rim (pink, gold, aqua, violet).
+  - **Solomon** (new art, there was no icon and no spec): violet medallion, turning rune ring, an interlaced gold and emerald hexagram, an open grimoire under a glowing orb, seven orbiting spell lights.
+  - **Hercules** (new art, same): a bronze and gold fist in a laurel wreath between two pillars, a power pulse with shock rings, rising embers, heat shimmer, twelve rim studs that light in order.
+- **Where they animate**: in every ManasCore skill list (the animation is registered at the skill's own icon path, so the skills and ManasCore are untouched) and in the five cards of the Will of the Creator screen, which now show the icon at 48 px (128 px source, smooth) inside the old ring; sealed cards show it dimmed.
+- **New client setting** `icons.ultimateStyle` in `nusmp-icons-client.toml`: `ANIMATED` (default), `STILL` (the new art as one frame, nothing ticks) or `CLASSIC` (the old 32 px sprites; Solomon and Hercules never had one, so they show the still). It only changes looks, so it is a CLIENT config; the server never reads it.
+- New files per icon under `textures/skill/veldanava/`: `<id>_anim.png` (32 x 1024 strip), `<id>_anim_hd.png` (128 x 4096), two `.mcmeta` (frametime 2), and `<id>.png` is now the still hero frame.
+- Code (client only): `IconStrip` (pure arithmetic), `AnimatedIconTexture` (a dynamic texture that swaps a frame as the game ticks), `AnimatedIcons` (registration, once-a-second check, card screen), `AnimatedIconOptions`. Test `AnimatedIconsTest` (10 checks: strip geometry, frame loop, mcmeta, five icons with matching frame counts, the still is a frame of the strip, no colour under transparent pixels, clean corners, seamless loop, client-only and allocation-free tick); `PerfSourceScanTest` lists the two classes.
+
+### REPLACED
+- The art of `sandalphon.png`, `israfil.png` and `jibril.png` (owner request). The old sprites are kept as `<id>_classic.png` and are what `CLASSIC` shows.
+- The small plain ring behind each card of the Will of the Creator screen is now a larger ring around the icon.
+
+### KEPT
+- Everything else: all skills, modes, numbers, settings, the Jibril 3.16.0 VFX, and the Time Magic VFX (untouched). The generator scripts of the old icons (`gen_sandalphon_icon.py`, `gen_israfil_icon.py`, `gen_jibril_icon.py`) stay.
+
+### Cost (CLAUDE.md rule 11)
+- Server: none, no packet, nothing read by the server.
+- Client per tick: five integer divisions; every second tick a 32 x 32 copy and upload per icon (4 KB each, 10 uploads a second at most). Nothing is allocated per tick; locations are built once. While the card screen is open five more 128 x 128 uploads (64 KB) every second tick; those textures are released when it closes. A once-a-second check (five map lookups) puts the animation back after a resource reload.
+- Memory: about 5 x (4 KB strip x 32) for the small strips and 10 MB of decoded strips while the card screen is open.
+
+### Checked
+- `AnimatedIconsTest`, `PerfSourceScanTest`, typecheck of the new client files, the whole sweep, CI build and server smoke test (nothing here is on the server; the server boots the same).
+
+### Not included
+- Nothing was seen in a real game: how the animated texture behaves under ManasCore's own blit, and whether a resource reload leaves the animation in place, are checked by reading the stubs only. The 32 px versions lose fine detail (Israfil's maze turns to blue noise; the Jibril wings read as one soft mass); Solomon's and Hercules' designs are my own, with no wiki spec. Hercules' laurel is olive-bronze.
+- Solomon and Hercules the skills (3.18.0, 3.19.0).
+
+### Decisions for the owner
+- Keep the animation default on (`ANIMATED`)?
+- Solomon and Hercules icons: happy with the designs (hexagram and grimoire; fist and laurel), or something else?
+
 ## [3.16.0] — Jibril's new look: the "dawn" VFX, about five times richer
 
 ### NEW

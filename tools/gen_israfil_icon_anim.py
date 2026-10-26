@@ -403,22 +403,32 @@ def maze_layer(t, boost):
 
 
 def pulses(t):
-    """Three cyan arcs leave the bell mouth, 2 pulses per loop. Returns (arc light, boost for the maze)."""
-    sx, sy = XX - SRC[0], YY - SRC[1]
-    dd = np.hypot(sx, sy)
-    cosd = (sx * AXIS[0] + sy * AXIS[1]) / np.maximum(dd, 1e-6)
+    """Sound-rings: 3 big arcs per pulse spread from near the horn through every maze ring (2 pulses per loop, strongest
+    towards the bell axis), plus short bright arcs that leave the bell mouth. Returns (arc light, boost for the maze)."""
+    Q = np.array([CEN, CEN]) + 0.3 * (SRC - np.array([CEN, CEN]))
+    qx, qy = XX - Q[0], YY - Q[1]
+    qd = np.hypot(qx, qy)
+    qcos = (qx * AXIS[0] + qy * AXIS[1]) / np.maximum(qd, 1e-6)
     arc = np.zeros((S0, S0))
     boost = np.zeros((S0, S0))
+    wide = 0.4 + 0.6 * smooth(-0.7, 0.85, qcos)
     for j in range(3):
         p = (2 * t + j / 3.0) % 1.0
-        Rj = 8 + p * 150
-        half = min(3.0, 1.9 + 1.1 * p)
-        win = np.clip((cosd - math.cos(half)) / (1 - math.cos(half)) * 2.2, 0, 1) ** 0.8
-        al = math.sin(math.pi * p) ** 1.1
-        g = np.exp(-(((dd - Rj) / (2.3 + 1.2 * p)) ** 2)) * smooth(108, 96, RR)
-        arc += g * win * al
-        gb = np.exp(-(((dd - Rj) / 10.0) ** 2)) * smooth(108, 96, RR)
-        boost += gb * win * al
+        Rj = 6 + p * 126
+        al = math.sin(math.pi * p) ** 1.2
+        g = np.exp(-(((qd - Rj) / (2.4 + 1.3 * p)) ** 2)) * smooth(110, 99, RR)
+        arc += g * wide * al * 0.85
+        gb = np.exp(-(((qd - Rj) / 9.0) ** 2)) * smooth(110, 99, RR)
+        boost += gb * wide * al
+    sx, sy = XX - SRC[0], YY - SRC[1]
+    sd = np.hypot(sx, sy)
+    scos = (sx * AXIS[0] + sy * AXIS[1]) / np.maximum(sd, 1e-6)
+    for j in range(2):
+        p = (2 * t + j / 2.0) % 1.0
+        Rj = 5 + p * 34
+        win = np.clip((scos - 0.15) / 0.5, 0, 1)
+        al = math.sin(math.pi * p) ** 1.2
+        arc += np.exp(-(((sd - Rj) / (1.8 + 0.8 * p)) ** 2)) * win * al * 1.1 * smooth(108, 97, RR)
     return arc, boost
 
 
@@ -539,7 +549,7 @@ def draw(t, S):
     img += core_glow(t)
 
     # maze, with dark depth halo and bloom
-    maze, cov = maze_layer(t, boost * 1.3)
+    maze, cov = maze_layer(t, boost * 0.9)
     halo = blur(cov * 255, 3.0) / 255.0
     img *= (1 - 0.45 * halo)[..., None]
     img += blur(maze, 6.0) * 0.26 + blur(maze, 2.2) * 0.12
@@ -547,7 +557,7 @@ def draw(t, S):
 
     # sound rings
     arc_rgb = arc[..., None] * np.array([110, 235, 255]) + (arc ** 2)[..., None] * np.array([160, 160, 150])
-    img += arc_rgb * 2.0 + blur(arc_rgb, 4.0) * 1.8
+    img += arc_rgb * 0.8 + blur(arc_rgb, 4.0) * 0.7
 
     # motes
     mo = motes_layer(t)
