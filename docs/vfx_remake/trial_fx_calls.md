@@ -23,3 +23,8 @@ Worst case quads per frame, scanned at 39 ages per effect in the preview (the ac
 labyrinth 43, gravity 31, collapse 35, shift 35 (a 48-block shift; 30 for a short one), trumpet 62, rift 27.
 Network: one small packet per use (rift: one about every second while held). Server work: none beyond building that packet. Client: no per-frame allocation beyond a few small vectors,
 no state kept between frames, `ctx.seg` thins the counts with distance and the particle setting, far decorative extras are skipped.
+
+## 3.21.0: the 3D models (nothing changes in the calls)
+The six calls above are unchanged (same shapes, same numbers, same packets). `TrialLayer` now draws real 3D models from `IsrafilModels` (see `docs/vfx_remake/israfil_models.md`) in place of the flat horn, the flat coordinate plate,
+the shard billboards of the collapse and the flat void sphere, and adds maze walls and coordinate gates, while the CLIENT setting `visual.israfilModels` is on and the effect is within 44 to 80 blocks of the camera.
+Nothing the server sends has to change. Worst case quads per frame with the models: labyrinth 74, gravity 60, collapse 50, shift 54, trumpet 98, rift 27 (the cap is 100).

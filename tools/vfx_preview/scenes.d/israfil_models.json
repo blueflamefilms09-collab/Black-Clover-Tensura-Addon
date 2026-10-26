@@ -1,0 +1,711 @@
+{
+ "_comment": "Israfil 3D models (3.21.0, IsrafilModels): close-up scenes for the Grand Trumpet, the Weight Plate, the maze walls and pillars, the collapse shards and core and the Coordinate Gates, plus normal-camera scenes of each effect. Same sky, horizon and floor as trial.json.",
+ "israfil_trumpet_close": {
+  "layer": "TrialLayer",
+  "shape": "TRIAL_TRUMPET",
+  "from": [
+   0,
+   0.9,
+   0
+  ],
+  "to": [
+   0,
+   0.9,
+   0
+  ],
+  "power": 100,
+  "duration": 50,
+  "sky": [
+   0.12,
+   0.16,
+   0.28
+  ],
+  "horizon": [
+   0.38,
+   0.44,
+   0.56
+  ],
+  "floor": [
+   0.26,
+   0.27,
+   0.3
+  ],
+  "cam": [
+   2.6,
+   5.4,
+   -5.6
+  ],
+  "target": [
+   0,
+   5.3,
+   0
+  ],
+  "ages": [
+   1.5,
+   3.5,
+   6,
+   8,
+   11,
+   13.5
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "israfil_trumpet_break": {
+  "layer": "TrialLayer",
+  "shape": "TRIAL_TRUMPET",
+  "from": [
+   0,
+   0.9,
+   0
+  ],
+  "to": [
+   0,
+   0.9,
+   0
+  ],
+  "power": 100,
+  "duration": 50,
+  "sky": [
+   0.12,
+   0.16,
+   0.28
+  ],
+  "horizon": [
+   0.38,
+   0.44,
+   0.56
+  ],
+  "floor": [
+   0.26,
+   0.27,
+   0.3
+  ],
+  "cam": [
+   2.8,
+   5.6,
+   -5.8
+  ],
+  "target": [
+   0,
+   5.6,
+   0
+  ],
+  "ages": [
+   11,
+   12,
+   13,
+   14,
+   14.8,
+   15.4
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "israfil_trumpet_view": {
+  "layer": "TrialLayer",
+  "shape": "TRIAL_TRUMPET",
+  "from": [
+   0,
+   0.9,
+   0
+  ],
+  "to": [
+   0,
+   0.9,
+   0
+  ],
+  "power": 100,
+  "duration": 50,
+  "sky": [
+   0.12,
+   0.16,
+   0.28
+  ],
+  "horizon": [
+   0.38,
+   0.44,
+   0.56
+  ],
+  "floor": [
+   0.26,
+   0.27,
+   0.3
+  ],
+  "cam": [
+   5,
+   2.8,
+   -9
+  ],
+  "target": [
+   0,
+   5,
+   0
+  ],
+  "ages": [
+   2,
+   5,
+   8,
+   11,
+   14,
+   22
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ],
+   [
+    6,
+    0,
+    5,
+    1.8
+   ],
+   [
+    -7,
+    0,
+    8,
+    1.8
+   ]
+  ]
+ },
+ "israfil_plate_close": {
+  "layer": "TrialLayer",
+  "shape": "TRIAL_GRAVITY",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   1,
+   0
+  ],
+  "power": 1.5,
+  "duration": 40,
+  "sky": [
+   0.12,
+   0.16,
+   0.28
+  ],
+  "horizon": [
+   0.38,
+   0.44,
+   0.56
+  ],
+  "floor": [
+   0.26,
+   0.27,
+   0.3
+  ],
+  "cam": [
+   4.6,
+   3.0,
+   -6.2
+  ],
+  "target": [
+   0,
+   2.1,
+   0
+  ],
+  "ages": [
+   5,
+   10,
+   15,
+   20,
+   24,
+   30
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "israfil_plate_view": {
+  "layer": "TrialLayer",
+  "shape": "TRIAL_GRAVITY",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   1,
+   0
+  ],
+  "power": 1.5,
+  "duration": 40,
+  "sky": [
+   0.12,
+   0.16,
+   0.28
+  ],
+  "horizon": [
+   0.38,
+   0.44,
+   0.56
+  ],
+  "floor": [
+   0.26,
+   0.27,
+   0.3
+  ],
+  "cam": [
+   6,
+   3.8,
+   -8.5
+  ],
+  "target": [
+   0,
+   2.3,
+   0
+  ],
+  "ages": [
+   8,
+   16,
+   22,
+   27,
+   32,
+   38
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "israfil_maze_close": {
+  "layer": "TrialLayer",
+  "shape": "TRIAL_LABYRINTH",
+  "from": [
+   0,
+   0.9,
+   0
+  ],
+  "to": [
+   0,
+   0.9,
+   0
+  ],
+  "power": 4.5,
+  "duration": 160,
+  "sky": [
+   0.12,
+   0.16,
+   0.28
+  ],
+  "horizon": [
+   0.38,
+   0.44,
+   0.56
+  ],
+  "floor": [
+   0.26,
+   0.27,
+   0.3
+  ],
+  "cam": [
+   2.5,
+   3.6,
+   -7.0
+  ],
+  "target": [
+   0,
+   1.9,
+   0
+  ],
+  "ages": [
+   12,
+   24,
+   60,
+   101,
+   122,
+   142
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "israfil_maze_view": {
+  "layer": "TrialLayer",
+  "shape": "TRIAL_LABYRINTH",
+  "from": [
+   0,
+   0.9,
+   0
+  ],
+  "to": [
+   0,
+   0.9,
+   0
+  ],
+  "power": 4.5,
+  "duration": 160,
+  "sky": [
+   0.12,
+   0.16,
+   0.28
+  ],
+  "horizon": [
+   0.38,
+   0.44,
+   0.56
+  ],
+  "floor": [
+   0.26,
+   0.27,
+   0.3
+  ],
+  "cam": [
+   3.6,
+   3.0,
+   -8.4
+  ],
+  "target": [
+   0,
+   1.8,
+   0
+  ],
+  "ages": [
+   8,
+   21,
+   40,
+   81,
+   102,
+   150
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "israfil_shards_close": {
+  "layer": "TrialLayer",
+  "shape": "TRIAL_COLLAPSE",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   1,
+   0
+  ],
+  "power": 6.5,
+  "duration": 120,
+  "sky": [
+   0.12,
+   0.16,
+   0.28
+  ],
+  "horizon": [
+   0.38,
+   0.44,
+   0.56
+  ],
+  "floor": [
+   0.26,
+   0.27,
+   0.3
+  ],
+  "cam": [
+   3.2,
+   2.8,
+   -5.5
+  ],
+  "target": [
+   0,
+   1.5,
+   0
+  ],
+  "ages": [
+   6,
+   10,
+   14,
+   17,
+   20,
+   24
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "israfil_core_close": {
+  "layer": "TrialLayer",
+  "shape": "TRIAL_COLLAPSE",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   1,
+   0
+  ],
+  "power": 6.5,
+  "duration": 120,
+  "sky": [
+   0.12,
+   0.16,
+   0.28
+  ],
+  "horizon": [
+   0.38,
+   0.44,
+   0.56
+  ],
+  "floor": [
+   0.26,
+   0.27,
+   0.3
+  ],
+  "cam": [
+   3.6,
+   2.6,
+   -5.8
+  ],
+  "target": [
+   0,
+   1.5,
+   0
+  ],
+  "ages": [
+   28,
+   45,
+   70,
+   95,
+   108,
+   116
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "israfil_collapse_view": {
+  "layer": "TrialLayer",
+  "shape": "TRIAL_COLLAPSE",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   1,
+   0
+  ],
+  "power": 6.5,
+  "duration": 120,
+  "sky": [
+   0.12,
+   0.16,
+   0.28
+  ],
+  "horizon": [
+   0.38,
+   0.44,
+   0.56
+  ],
+  "floor": [
+   0.26,
+   0.27,
+   0.3
+  ],
+  "cam": [
+   7.5,
+   4.6,
+   -10.5
+  ],
+  "target": [
+   0,
+   1.6,
+   0
+  ],
+  "ages": [
+   8,
+   16,
+   22,
+   40,
+   100,
+   115
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ],
+   [
+    3,
+    0,
+    2,
+    1.8
+   ]
+  ]
+ },
+ "israfil_gate_close": {
+  "layer": "TrialLayer",
+  "shape": "TRIAL_SHIFT",
+  "from": [
+   6,
+   0,
+   0
+  ],
+  "to": [
+   -6,
+   0,
+   2.5
+  ],
+  "power": 1,
+  "duration": 14,
+  "sky": [
+   0.12,
+   0.16,
+   0.28
+  ],
+  "horizon": [
+   0.38,
+   0.44,
+   0.56
+  ],
+  "floor": [
+   0.26,
+   0.27,
+   0.3
+  ],
+  "cam": [
+   4,
+   1.8,
+   -4.5
+  ],
+  "target": [
+   6,
+   1.4,
+   0
+  ],
+  "ages": [
+   0.5,
+   1.5,
+   3,
+   4.5,
+   6,
+   9
+  ],
+  "figures": [
+   [
+    6,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "israfil_gate_view": {
+  "layer": "TrialLayer",
+  "shape": "TRIAL_SHIFT",
+  "from": [
+   6,
+   0,
+   0
+  ],
+  "to": [
+   -6,
+   0,
+   2.5
+  ],
+  "power": 1,
+  "duration": 14,
+  "sky": [
+   0.12,
+   0.16,
+   0.28
+  ],
+  "horizon": [
+   0.38,
+   0.44,
+   0.56
+  ],
+  "floor": [
+   0.26,
+   0.27,
+   0.3
+  ],
+  "cam": [
+   0,
+   2.6,
+   -9
+  ],
+  "target": [
+   0,
+   1.0,
+   1.0
+  ],
+  "ages": [
+   1,
+   3,
+   5,
+   7,
+   10,
+   13
+  ],
+  "figures": [
+   [
+    6,
+    0,
+    0,
+    1.8
+   ],
+   [
+    -6,
+    0,
+    2.5,
+    1.8
+   ]
+  ]
+ }
+}

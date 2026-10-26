@@ -126,6 +126,10 @@ def build(layers):
         for fn in os.listdir(layer_dir):
             if fn.startswith(stem) and fn.endswith(".java"):
                 shutil.copy(os.path.join(layer_dir, fn), os.path.join(pkg, "client", "layer"))
+    if any(l.split(".")[-1] == "TrialLayer" for l in layers):                  # 3.21.0: the Israfil 3D models (IsrafilModels / IsrafilMeshDraw) live next to TrialLayer under another stem
+        for fn in os.listdir(layer_dir):
+            if fn.startswith("Israfil") and fn.endswith(".java"):
+                shutil.copy(os.path.join(layer_dir, fn), os.path.join(pkg, "client", "layer"))
     for layer in layers:                                                       # 1.35.0: the Devil / Stone / Tide / Order boss layers share BossFx (a helper, not a layer)
         if layer.split(".")[-1] in ("DevilBossLayer", "StoneBossLayer", "TideBossLayer", "OrderBossLayer"):
             shutil.copy(os.path.join(layer_dir, "BossFx.java"), os.path.join(pkg, "client", "layer"))

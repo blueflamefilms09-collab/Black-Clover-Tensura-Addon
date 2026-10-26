@@ -33,6 +33,11 @@ import java.util.Set;
  * setting (minimums in brackets); decorative extras (motes, floating shards) also drop out with the camera distance. Worst case quads per effect per frame (measured in the preview, see tools/vfx_preview/scenes.d/trial.json):
  * LABYRINTH 43, GRAVITY 31, COLLAPSE 35, SHIFT 35 (30 for a short shift), TRUMPET 62, RIFT 27 (39 ages per scene scanned; the cap is 100). No effect allocates more than a few small vectors and poses per frame (the same as the other layers); nothing is kept between frames, so nothing has to be cleaned
  * up on logout, death or dimension change; the server only sends one packet per effect (VfxSpawn) and nothing here runs on the server. A ring or plane of any radius is one quad.
+ * <p><b>3.21.0: 3D models</b> ({@link IsrafilModels}, drawn by {@link IsrafilMeshDraw}, switch {@code visual.israfilModels}, doc {@code docs/vfx_remake/israfil_models.md}). Near the camera (and with the setting on and the
+ * particle setting not minimal) the flat parts are replaced: the Grand Trumpet is a real horn that swings up, blares and cracks into 3D glass shards (the rays leave its bell), the Weight of Sins slams an engraved slab on
+ * three chains with a turning rune ring, the labyrinth also raises up to five 3D maze walls and pillars that slide at every re-shuffle, the collapse pulls 3D crystal shards into a faceted dark core, the coordinate shift
+ * has two 3D gates. The 3.20.0 draw calls are all still here as the fallback (setting off, far away, no room in the budget). Worst case quads per effect with the models (preview, every tick or two, big radii too):
+ * LABYRINTH 74, GRAVITY 60, COLLAPSE 50, SHIFT 54, TRUMPET 98, RIFT 27. A model asks {@code hasBudget} for all its visible faces plus the room the rest of the effect needs and is skipped whole otherwise.
  */
 public class TrialLayer extends AbstractVfxLayer {
     private static ResourceLocation t(String n) { return VfxTextures.byName(n); }
@@ -55,6 +60,8 @@ public class TrialLayer extends AbstractVfxLayer {
     public static final ResourceLocation GHOST = t("trial_ghost");
     public static final ResourceLocation RIFT = t("trial_rift");
     public static final ResourceLocation DASH = t("trial_dash");
+    /** 3.21.0: the material atlas of the Israfil 3D models (tools/gen_israfil_model_textures.py). */
+    public static final ResourceLocation MODEL_ATLAS = t("israfil_model_atlas");
 
     private static final int WHITE = 0xFFFFFFFF;
     private static final int ICE = 0xFFD8FBFF;
@@ -70,6 +77,18 @@ public class TrialLayer extends AbstractVfxLayer {
 
     /** Scratch corners of the quad being drawn (the layer draws on the render thread only, one effect at a time). */
     private final Vector3f q0 = new Vector3f(), q1 = new Vector3f(), q2 = new Vector3f(), q3 = new Vector3f();
+
+    /** 3.21.0: the models are drawn within these distances (blocks) of the camera, further out the flat sprites and planes of 3.20.0 stand in. */
+    static final float HORN_RANGE = 80f, PLATE_RANGE = 52f, MAZE_RANGE = 60f, CORE_RANGE = 64f, SHARD_RANGE = 44f, GATE_RANGE = 44f;
+    /** Quads of the 100-quad activation budget kept free after the 3D horn while the light bursts (the rays, the rings, the glass shards): the horn is only drawn when it and these fit. */
+    static final int HORN_KEEP = 44;
+    /** The poser / drawer of the 3D models (one per layer; render thread only). */
+    private final IsrafilMeshDraw mesh = new IsrafilMeshDraw();
+    /** The camera-relative mouth of the bell of the 3D horn, set by {@link #hornModel} for the rays that leave it. */
+    private float hmx, hmy, hmz;
+    /** The maze pieces of the labyrinth for the frame being drawn (position, height, angle, distance, kind); at most 5, filled and drawn in the same call. */
+    private final float[] wx = new float[8], wz = new float[8], wh = new float[8], wa = new float[8], wd = new float[8];
+    private final int[] wk = new int[8];
 
     @Override
     public Set<VfxShape> shapes() {
@@ -244,6 +263,158 @@ public class TrialLayer extends AbstractVfxLayer {
         return VfxPose.facing(new Vector3f(x, y, z), new Vector3f(-x, -y, -z));
     }
 
+    // ------------------------------------------------------------------ 3.21.0: the 3D models
+    /** True when the 3D models are drawn here: the setting is on, the particle setting is not minimal and the thing is within {@code range} blocks of the camera (else the 3.20.0 sprites stand in). */
+    private static boolean modelsOn(VfxRenderContext ctx, float x, float y, float z, float range) {
+        return IsrafilModels.enabled() && ctx.detail >= 0.5f && x * x + y * y + z * z < range * range;
+    }
+
+    /**
+     * The Grand Trumpet ({@link IsrafilModels#HORN}, at most 68 quads (about 45 from below)): it swings up from the caster's side to stand over the head (bell up, leaning a little toward the camera), blares (it shakes and glows brighter),
+     * and at tick 13 cracks and breaks into 3D glass shards. Always sets the mouth point (hmx, hmy, hmz) the rays leave from. Returns false when the model could not be drawn (the caller draws the flat horn).
+     */
+    private boolean hornModel(VfxVertexBuffer buf, VfxRenderContext ctx, float age, long seed, float gx, float gy, float gz, float rx, float rz, float tcx, float tcz) {
+        float w = VfxAnim.easeOutBack(Mth.clamp(age / 6f, 0f, 1f));
+        float phi = 1.45f * (1f - w);
+        float sp = Mth.sin(phi);
+        float dx = rx * sp + tcx * 0.2f * w, dy = Mth.cos(phi), dz = rz * sp + tcz * 0.2f * w;
+        float dl = Mth.sqrt(dx * dx + dy * dy + dz * dz);
+        dx /= dl;
+        dy /= dl;
+        dz /= dl;
+        float blare = smooth(4.5f, 7f, age) * (1f - smooth(13.4f, 14.2f, age));
+        float crack = smooth(9.5f, 13.4f, age) * (1f - smooth(13.4f, 14.2f, age));
+        float side = 1.0f * (1f - w);
+        float cx = gx + rx * side + crack * 0.09f * Mth.sin(age * 5.1f);
+        float cy = gy + 1.0f + 3.0f * w + crack * 0.07f * Mth.sin(age * 6.3f + 1f);
+        float cz = gz + rz * side + crack * 0.09f * Mth.sin(age * 4.7f + 2f);
+        float s = 1.2f * (0.35f + 0.65f * Mth.clamp(age / 4f, 0f, 1f)) * (1f + 0.03f * blare * Mth.sin(age * 2.7f));
+        hmx = cx + dx * IsrafilModels.HORN_MOUTH_Z * s;
+        hmy = cy + dy * IsrafilModels.HORN_MOUTH_Z * s;
+        hmz = cz + dz * IsrafilModels.HORN_MOUTH_Z * s;
+        float alpha = Math.min(Mth.clamp(age / 3f, 0f, 1f), 1f - smooth(13.2f, 15.4f, age));
+        int drawn = 0;
+        if (alpha > 0.02f) {
+            IsrafilModels.Posed p = mesh.posed();
+            p.clearPose();
+            p.look(dx, dy, dz, -cx, -cy, -cz, 0.05f * crack * Mth.sin(age * 3.7f), s);
+            drawn = mesh.draw(buf, MODEL_ATLAS, IsrafilModels.HORN, cx, cy, cz, a(WHITE, 0.97f * alpha), 0.08f + 0.22f * blare + 0.4f * crack, age < 13.4f ? HORN_KEEP : 30);   // the rays and rings that follow keep their room: an extreme view (from above) that would not leave it gets the flat horn
+            if (drawn > 0) glow(ctx, buf, hmx, hmy, hmz, 2.6f * smooth(4f, 8f, age), CYAN, 0.45f * alpha);
+        }
+        if (age >= 13.2f) hornShards(buf, ctx, age, seed, cx, cy, cz, dx, dy, dz, s);
+        return drawn > 0 || age > 15.4f;
+    }
+
+    /** The horn cracks: up to six 3D glass shards ({@link IsrafilModels#SHARD}, at most 3 quads each) fly out from along its length, tumbling, and fall. */
+    private void hornShards(VfxVertexBuffer buf, VfxRenderContext ctx, float age, long seed, float cx, float cy, float cz, float dx, float dy, float dz, float s) {
+        int n = ctx.seg(4, 3);
+        IsrafilModels.Posed p = mesh.posed();
+        for (int i = 0; i < n; i++) {
+            float born = 13.2f + 1.6f * h(seed, i, 61);
+            float q = (age - born) / (16f + 8f * h(seed, i, 62));
+            if (q <= 0f || q >= 1f) continue;
+            float t = (-2.0f + 4.3f * h(seed, i, 63)) * s;
+            float ph = h(seed, i, 64) * Mth.TWO_PI, el = (h(seed, i, 65) - 0.25f) * 1.1f;
+            float dd = (3.5f + 5f * h(seed, i, 66)) * (1f - (float) Math.pow(1f - q, 2.0));
+            float x = cx + dx * t + Mth.cos(ph) * Mth.cos(el) * dd, y = cy + dy * t + Mth.sin(el) * dd - 6f * q * q, z = cz + dz * t + Mth.sin(ph) * Mth.cos(el) * dd;
+            float sc = (0.7f + 0.6f * h(seed, i, 67)) * (1f - 0.3f * q);
+            p.clearPose();
+            p.tumble(h(seed, i, 68) - 0.5f, 1f, h(seed, i, 69) - 0.5f, age * (0.15f + 0.4f * h(seed, i, 70)) + i * 1.3f, sc, sc, sc);
+            mesh.draw(buf, MODEL_ATLAS, IsrafilModels.SHARD, x, y, z, a(WHITE, Math.min(q * 8f, 1f) * (1f - smooth(0.6f, 1f, q)) * 0.95f), 0.45f * (1f - q));
+        }
+    }
+
+    /**
+     * The Weight Plate ({@link IsrafilModels#PLATE}, at most 36 quads): an engraved hexagonal slab on three chains under a turning rune ring, wobbling as it falls, slamming down on the target's feet (a small rebound and
+     * a flash at the thud). Returns the quads drawn (0 = the caller draws the flat coordinate plate).
+     */
+    private int weightPlate(VfxVertexBuffer buf, VfxRenderContext ctx, float age, float press, float tt, float fade, float x, float y, float z, float S) {
+        float k = S * (1.95f - 0.2f * press) * 0.95f;
+        float lift = tt > 0f ? 0.2f * S * Mth.sin(Mth.clamp(tt * 5f, 0f, 1f) * Mth.PI) * (1f - tt) : 0f;
+        IsrafilModels.Posed p = mesh.posed();
+        p.clearPose();
+        p.spread()[IsrafilModels.P_RING] = age * 0.13f;
+        p.upright(age * 0.045f, (1f - press) * 0.16f, Mth.cos(age * 0.31f), Mth.sin(age * 0.31f), k);
+        float heat = 0.18f + 0.3f * press + (tt > 0f ? 0.7f * (1f - Mth.clamp(tt * 2.2f, 0f, 1f)) : 0f);
+        int q = mesh.draw(buf, MODEL_ATLAS, IsrafilModels.PLATE, x, y + lift, z, a(WHITE, 0.97f * fade), heat, 12);
+        if (q > 0) {
+            float ay = y + lift + IsrafilModels.PLATE_APEX * k;
+            ringAt(buf, VfxPose.ground(new Vector3f(x, ay, z)).spin(age * 0.13f), k * 0.5f, a(CYAN, 0.5f * fade));
+            glow(ctx, buf, x, ay, z, k * 0.9f, CYAN, 0.45f * fade * (0.6f + 0.4f * press));
+        }
+        return q;
+    }
+
+    /**
+     * The maze walls and pillars of the Dimensional Labyrinth: up to five {@link IsrafilModels#WALL_A} / {@link IsrafilModels#WALL_B} / {@link IsrafilModels#PILLAR} (at most 8 / 8 / 10 quads) rise round the trapped
+     * creature (their maze faces toward it) and slide to new places and heights at every re-shuffle, drawn far to near. The panes stay as the rest of the cage.
+     */
+    private void mazePieces(VfxVertexBuffer buf, VfxRenderContext ctx, Vector3f c, float fy, float R, long seed, float age, int epoch, int e0, float mix, float rise, float flash, float fade) {
+        int n = ctx.seg(5, 3);
+        float spin = age * 0.004f;
+        float dip = epoch == 0 ? 0f : 0.22f * Mth.sin(mix * Mth.PI);
+        for (int k = 0; k < n; k++) {
+            int i = Math.round(k * 10f / n) % 10;
+            float dA = Mth.lerp(mix, (h(seed, i, e0 * 8 + 5) - 0.5f) * 0.5f, (h(seed, i, epoch * 8 + 5) - 0.5f) * 0.5f);
+            float dR = Mth.lerp(mix, (h(seed, i, e0 * 8 + 6) - 0.5f) * 1.1f, (h(seed, i, epoch * 8 + 6) - 0.5f) * 1.1f);
+            float hgt = Mth.lerp(mix, 3.0f + 1.7f * h(seed, i, e0 * 8 + 3), 3.0f + 1.7f * h(seed, i, epoch * 8 + 3)) * rise * (1f - dip);
+            float an = Mth.TWO_PI * i / 10f + spin + dA + Mth.sin(age * 0.035f + i * 1.9f) * 0.05f;
+            float rr = R * 0.93f - 0.75f + dR;
+            float hv = h(seed, i, (mix > 0.4f ? epoch : e0) * 8 + 7);
+            wx[k] = c.x + Mth.cos(an) * rr;
+            wz[k] = c.z + Mth.sin(an) * rr;
+            wh[k] = hgt;
+            wa[k] = an;
+            wk[k] = hv < 0.35f ? 2 : hv < 0.68f ? 0 : 1;
+            wd[k] = wx[k] * wx[k] + wz[k] * wz[k] + c.y * c.y;
+        }
+        int done = 0;
+        IsrafilModels.Posed p = mesh.posed();
+        for (int pass = 0; pass < n; pass++) {
+            int best = -1;
+            for (int k = 0; k < n; k++) if ((done & (1 << k)) == 0 && (best < 0 || wd[k] > wd[best])) best = k;
+            done |= 1 << best;
+            if (wh[best] < 0.05f) continue;
+            p.clearPose();
+            float zx = -Mth.cos(wa[best]), zz = -Mth.sin(wa[best]);
+            IsrafilModels.Mesh m;
+            if (wk[best] == 2) {
+                p.standing(zx, zz, 0.95f, wh[best], 0.95f);
+                m = IsrafilModels.PILLAR;
+            } else {
+                p.standing(zx, zz, 1.9f, wh[best], 1.9f);
+                m = wk[best] == 0 ? IsrafilModels.WALL_A : IsrafilModels.WALL_B;
+            }
+            mesh.draw(buf, MODEL_ATLAS, m, wx[best], fy + 0.02f, wz[best], a(WHITE, 0.97f * fade), 0.08f + 0.7f * flash, 14);
+        }
+    }
+
+    /** The dark faceted core of the collapse ({@link IsrafilModels#CORE}, at most 12 quads), turning, radius {@code rc}; returns the quads drawn (0 = the caller draws the flat void sphere). */
+    private int coreModel(VfxVertexBuffer buf, float age, float x, float y, float z, float rc, float alpha, float heat) {
+        if (rc < 0.05f) return 0;
+        IsrafilModels.Posed p = mesh.posed();
+        p.clearPose();
+        p.tumble(0.3f, 1f, 0.2f, age * 0.07f, rc, rc, rc);
+        return mesh.draw(buf, MODEL_ATLAS, IsrafilModels.CORE, x, y, z, a(WHITE, 0.98f * alpha), heat, 6);
+    }
+
+    /** A reality shard ({@link IsrafilModels#SHARD}, at most 3 quads) with its tip along (dx, dy, dz), rolled about that axis; returns the quads drawn (0 = the caller draws the flat shard). */
+    private int shardModel(VfxVertexBuffer buf, float x, float y, float z, float dx, float dy, float dz, float size, float roll, float alpha, float heat) {
+        if (alpha <= 0.03f || size <= 0.02f) return 0;
+        mesh.posed().clearPose();
+        mesh.posed().look(dx, dy, dz, 0f, 1f, 0f, roll, size);
+        return mesh.draw(buf, MODEL_ATLAS, IsrafilModels.SHARD, x, y, z, a(WHITE, alpha), heat, 4);
+    }
+
+    /** A Coordinate Gate ({@link IsrafilModels#GATE}, at most 14 quads) standing at (x, y, z), its face along the horizontal direction (zx, zz) turned about the vertical by the flip angle {@code phi}; returns the quads drawn. */
+    private int gateModel(VfxVertexBuffer buf, float x, float y, float z, float zx, float zz, float phi, float scale, float alpha, float heat) {
+        if (alpha <= 0.03f) return 0;
+        float c = Mth.cos(phi), sn = Mth.sin(phi);
+        mesh.posed().clearPose();
+        mesh.posed().standing(zx * c + zz * sn, -zx * sn + zz * c, scale, scale, scale);
+        return mesh.draw(buf, MODEL_ATLAS, IsrafilModels.GATE, x, y, z, a(WHITE, alpha), heat, 6);
+    }
+
     // ================================================================== TRIAL_LABYRINTH
     private void labyrinth(VfxInstance inst, VfxRenderContext ctx, VfxVertexBuffer buf) {
         float age = inst.ageTicks(ctx.partialTick);
@@ -295,6 +466,9 @@ public class TrialLayer extends AbstractVfxLayer {
             quad(buf, PANE, VfxBlend.ADD, ax, fy, az, bx, fy, bz, bx, fy + hgt, bz, ax, fy + hgt, az, u0, v0, 1f - u0, 1f - v0, a(WHITE, al), a(WHITE, al * 0.55f));
         }
 
+        // 3.21.0: real 3D maze walls and pillars rise inside the panes and slide to new places at every shuffle (a few pieces; the panes stay as the rest of the cage)
+        if (modelsOn(ctx, c.x, c.y, c.z, MAZE_RANGE)) mazePieces(buf, ctx, c, fy, R, seed, age, epoch, e0, mix, rise, flash, fade);
+
         // floating corner shards that bob at the top of the cage, and motes rising inside it
         int ns = near > 0.01f ? ctx.seg(8, 4) : 0;
         for (int i = 0; i < ns; i++) {
@@ -338,8 +512,11 @@ public class TrialLayer extends AbstractVfxLayer {
         float plateY = g.y + 0.14f + 3.6f * S * (1f - press);
         VfxPose plate = VfxPose.ground(new Vector3f(g.x, plateY, g.z));
         float plateR = S * (1.95f - 0.2f * press);
-        buf.plane(GRID, VfxBlend.ADD, plate.spin(age * 0.045f), plateR / 0.985f, a(CYAN, 0.8f * fade));
-        ringAt(buf, plate, plateR * 0.96f, a(ICE, 0.7f * fade));
+        int plate3d = modelsOn(ctx, g.x, g.y, g.z, PLATE_RANGE) ? weightPlate(buf, ctx, age, press, tt, fade, g.x, plateY, g.z, S) : 0;      // 3.21.0: the engraved 3D slab on its chains
+        if (plate3d == 0) {
+            buf.plane(GRID, VfxBlend.ADD, plate.spin(age * 0.045f), plateR / 0.985f, a(CYAN, 0.8f * fade));
+            ringAt(buf, plate, plateR * 0.96f, a(ICE, 0.7f * fade));
+        }
         ribbon(buf, BEAM, VfxBlend.ADD, g.x, plateY, g.z, g.x, g.y + 0.1f, g.z, S * 1.1f, S * 1.3f, -age * 0.03f, -age * 0.03f + 1.2f, a(TEAL, 0.22f * fade * (1f - press * 0.5f)), a(INDIGO, 0.10f * fade));
 
         // 3-4 pillars of heavy light flowing down onto the disc (the pattern runs downwards, faster as the weight falls)
@@ -415,12 +592,15 @@ public class TrialLayer extends AbstractVfxLayer {
         float near = 1f - smooth(45f, 100f, dist);
         VfxPose floor = VfxPose.ground(new Vector3f(g.x, g.y + 0.06f, g.z));
         float cy = g.y + 0.9f + 0.18f * R;                                    // the heart of the collapse, a little above the ground
+        float Rs = Mth.clamp(R / 6.5f, 0.8f, 1.3f);                            // 3.21.0: the size of the 3D shards and the core follows the radius
         float d = age - PINCH;                                                // < 0 while the space is pulled in
 
         // ---- phase 1: shards and rings are pulled in
         if (d < 1f) {
             float u = Mth.clamp(age / PINCH, 0, 1);
             int m = ctx.seg(12, 6);
+            int nSh = modelsOn(ctx, g.x, g.y, g.z, SHARD_RANGE) ? Math.min(8, m) : 0;                  // 3.21.0: the first eight shards are 3D crystals
+            if (d < 0f && modelsOn(ctx, g.x, g.y, g.z, CORE_RANGE)) coreModel(buf, age, g.x, cy, g.z, Rs * (0.10f + 0.62f * u * u), Math.min(1f, age / 3f) * out, 0.2f + 0.5f * u);   // the dark core grows at the centre
             for (int i = 0; i < m; i++) {
                 float delay = h(seed, i, 0) * 4f;
                 float q = Mth.clamp((age - delay) / (PINCH - delay), 0, 1);
@@ -435,7 +615,8 @@ public class TrialLayer extends AbstractVfxLayer {
                 float al = Math.min(q * 6f, 1f) * (1f - smooth(0.93f, 1f, q)) * out;
                 if (al <= 0.01f) continue;
                 ribbon(buf, BEAM, VfxBlend.ADD, x2, y2, z2, x1, y1, z1, 0.05f, 0.16f, 0f, 1f, a(TEAL, 0f), a(CYAN, 0.7f * al));
-                shard(ctx, buf, x1, y1, z1, 0.95f * (1f - 0.55f * q), age * 0.3f + i * 1.3f, a(WHITE, 0.95f * al));
+                if (i >= nSh || shardModel(buf, x1, y1, z1, x1 - x2, y1 - y2, z1 - z2, 0.62f * (1f - 0.55f * q) * Rs, age * 0.3f + i * 1.3f, 0.95f * al, 0.3f + 0.4f * q) == 0)
+                    shard(ctx, buf, x1, y1, z1, 0.95f * (1f - 0.55f * q), age * 0.3f + i * 1.3f, a(WHITE, 0.95f * al));
             }
             for (int k = 0; k < 3; k++) {
                 float q = Mth.clamp(age / PINCH - 0.10f * k, 0, 1);
@@ -484,19 +665,26 @@ public class TrialLayer extends AbstractVfxLayer {
         // the void sphere: a dark core with a slow spiral, an inverted rim, a bright cyan edge, a glow
         if (rs > 0.1f) {
             q0.set(g.x, cy, g.z);
-            buf.billboard(ctx, VOID, VfxBlend.ALPHA, q0, rs * 2f / 0.97f, age * 0.05f, a(VOID_C, 0.97f * field));
-            buf.billboard(ctx, VOID, VfxBlend.ALPHA, q0, rs * 1.3f / 0.97f, -age * 0.08f, a(0xFF2A1060, 0.55f * field));
+            float rcore = d < 1.5f ? Mth.lerp(smooth(0f, 1.5f, d), Rs * 0.72f, 0.15f) : Math.min(rs * 0.97f, Mth.lerp(smooth(1.5f, 7f, d), 0.15f, rs * 0.97f));
+            int core3d = modelsOn(ctx, g.x, g.y, g.z, CORE_RANGE) ? coreModel(buf, age, g.x, cy, g.z, rcore, field, 0.1f + 0.2f * pulse) : 0;      // 3.21.0: the dark faceted core
+            if (core3d == 0) {
+                buf.billboard(ctx, VOID, VfxBlend.ALPHA, q0, rs * 2f / 0.97f, age * 0.05f, a(VOID_C, 0.97f * field));
+                buf.billboard(ctx, VOID, VfxBlend.ALPHA, q0, rs * 1.3f / 0.97f, -age * 0.08f, a(0xFF2A1060, 0.55f * field));
+            }
             buf.billboard(ctx, INVERT, VfxBlend.NEGATIVE, q0, rs * 2.1f / 0.90f, 0f, negative(0.85f * field));
             buf.billboard(ctx, RING, VfxBlend.ADD, q0, rs * 2f * 1.02f / 0.965f, 0f, a(CYAN, 0.95f * field * pulse));
             glow(ctx, buf, g.x, cy, g.z, rs * 1.7f, TEAL, 0.5f * field);
         }
         // shards orbit it, and motes fall into it
         int no = near > 0.01f ? ctx.seg(6, 3) : 0;
+        int nOr = modelsOn(ctx, g.x, g.y, g.z, SHARD_RANGE) ? Math.min(4, no) : 0;                       // 3.21.0: four of the orbiting shards are 3D crystals
         for (int i = 0; i < no; i++) {
             float an = age * (0.05f + 0.025f * h(seed, i, 31)) + Mth.TWO_PI * i / no;
             float orb = R * (0.42f + 0.32f * h(seed, i, 32));
             float tilt = (h(seed, i, 33) - 0.5f) * 1.2f;
-            shard(ctx, buf, g.x + Mth.cos(an) * orb, cy + Mth.sin(an) * orb * tilt, g.z + Mth.sin(an) * orb * Mth.cos(tilt), 0.7f + 0.4f * h(seed, i, 34), age * 0.1f * (i + 1) * 0.3f, a(WHITE, 0.85f * field * near));
+            float ox = g.x + Mth.cos(an) * orb, oy = cy + Mth.sin(an) * orb * tilt, oz = g.z + Mth.sin(an) * orb * Mth.cos(tilt);
+            if (i >= nOr || shardModel(buf, ox, oy, oz, -Mth.sin(an), Mth.cos(an) * tilt, Mth.cos(an) * Mth.cos(tilt), (0.55f + 0.3f * h(seed, i, 34)) * Rs, age * 0.1f * (i + 1) * 0.3f, 0.9f * field * near, 0.25f) == 0)
+                shard(ctx, buf, ox, oy, oz, 0.7f + 0.4f * h(seed, i, 34), age * 0.1f * (i + 1) * 0.3f, a(WHITE, 0.85f * field * near));
         }
         int nm = near > 0.01f ? ctx.seg(8, 3) : 0;
         for (int i = 0; i < nm; i++) {
@@ -525,6 +713,7 @@ public class TrialLayer extends AbstractVfxLayer {
         float near = 1f - smooth(40f, 90f, Mth.sqrt(A.x * A.x + A.z * A.z));
         float endFade = 1f - smooth(0.7f, 1f, u);
         float R = 1.45f * S;
+        boolean gatesA = modelsOn(ctx, A.x, A.y, A.z, GATE_RANGE), gatesB = modelsOn(ctx, B.x, B.y, B.z, GATE_RANGE);        // 3.21.0: two 3D gate frames, the rune ring shrinks to sit inside them
 
         // ---- where the caster was: the ring flips shut (its width goes to nothing and past it), a ghost stays behind
         float phiA = Mth.PI * Mth.clamp(age / (D * 0.6f), 0, 1);
@@ -532,7 +721,8 @@ public class TrialLayer extends AbstractVfxLayer {
         VfxPose floorA = VfxPose.ground(new Vector3f(A.x, A.y + 0.06f, A.z));
         buf.plane(GRID, VfxBlend.ADD, flipped(floorA.spin(age * 0.2f), Mth.cos(phiA)), R * 1.15f / 0.985f, a(CYAN, 0.85f * alA));
         VfxPose hoopA = VfxPose.facing(new Vector3f(A.x, A.y + 1.0f, A.z), new Vector3f(ix, 0, iz));
-        buf.plane(GRID, VfxBlend.ADD, flipped(hoopA.spin(-age * 0.25f), Mth.cos(phiA * 1.0f)), R / 0.985f, a(ICE, 0.7f * alA));
+        int gateA = gatesA ? gateModel(buf, A.x, A.y, A.z, ix, iz, phiA, S * 0.95f, 0.95f * alA, 0.25f + 0.5f * (1f - Mth.clamp(age / 4f, 0, 1))) : 0;
+        buf.plane(GRID, VfxBlend.ADD, flipped(hoopA.spin(-age * 0.25f), Mth.cos(phiA * 1.0f)), (gateA > 0 ? R * 0.62f : R) / 0.985f, a(ICE, 0.7f * alA));
         glow(ctx, buf, A.x, A.y + 1.0f, A.z, 2.4f * S, TEAL, alA * 0.7f);
 
         // ---- where they arrive: the ring unfolds, a ring runs out, flares
@@ -543,7 +733,8 @@ public class TrialLayer extends AbstractVfxLayer {
             VfxPose floorB = VfxPose.ground(new Vector3f(B.x, B.y + 0.06f, B.z));
             buf.plane(GRID, VfxBlend.ADD, flipped(floorB.spin(-age * 0.2f), Mth.cos(phiB)), R * 1.15f / 0.985f, a(CYAN, 0.85f * alB));
             VfxPose hoopB = VfxPose.facing(new Vector3f(B.x, B.y + 1.0f, B.z), new Vector3f(ix, 0, iz));
-            buf.plane(GRID, VfxBlend.ADD, flipped(hoopB.spin(age * 0.25f), Mth.cos(phiB)), R / 0.985f, a(ICE, 0.7f * alB));
+            int gateB = gatesB ? gateModel(buf, B.x, B.y, B.z, ix, iz, phiB, S * 0.95f, 0.95f * alB, 0.25f + 0.5f * (1f - Mth.clamp((age - 0.2f * D) / 4f, 0, 1))) : 0;
+            buf.plane(GRID, VfxBlend.ADD, flipped(hoopB.spin(age * 0.25f), Mth.cos(phiB)), (gateB > 0 ? R * 0.62f : R) / 0.985f, a(ICE, 0.7f * alB));
             float tr = Mth.clamp((age - 0.25f * D) / (0.7f * D), 0, 1);
             if (tr < 1f) soundAt(buf, floorB.lift(0.03f), 0.4f + 2.4f * S * VfxAnim.easeOutCubic(tr), a(CYAN, (1f - tr) * 0.9f));
             float fl = 1f - Mth.clamp((age - 0.25f * D) / (0.35f * D), 0, 1);
@@ -648,15 +839,18 @@ public class TrialLayer extends AbstractVfxLayer {
         float hornA = Math.min(Mth.clamp(age / 3f, 0, 1), 1f - smooth(14f, 24f, age));
         float hy = g.y + 3.0f;
         float hs = 2.3f * hornIn;
-        if (hornA > 0.01f) {
+        // 3.21.0: the real 3D Grand Trumpet swings up over the caster, blares and cracks into 3D glass shards; the rays leave its bell. Out of range, with the setting off or without room, the flat horn of 3.20.0.
+        boolean horn3d = modelsOn(ctx, g.x, g.y, g.z, HORN_RANGE) && hornModel(buf, ctx, age, seed, g.x, g.y, g.z, rx, rz, vl > 1e-3f ? vx / vl : 0f, vl > 1e-3f ? vz / vl : 0f);
+        if (!horn3d && hornA > 0.01f) {
             sprite(buf, HORN, VfxBlend.ADD, g.x, hy, g.z, 0, 1, 0, rx, 0, rz, hs, hs * 0.5f, a(WHITE, hornA));
             glow(ctx, buf, g.x, hy, g.z, 2.6f * hornIn, BRASS_HI, 0.5f * hornA);
         }
-        float mouthY = hy + hs * 0.6f;                                        // the rim of the bell is at 80 % of the picture
+        float mouthY = horn3d ? hmy : hy + hs * 0.6f;                         // the rim of the bell is at 80 % of the picture
+        float mx = horn3d ? hmx : g.x, mz = horn3d ? hmz : g.z;               // where the light leaves
         float burst = VfxAnim.easeOutCubic(Mth.clamp((age - 4f) / 7f, 0, 1));
         if (burst > 0f) {
             float fm = 1f - Mth.clamp((age - 5f) / 12f, 0, 1);
-            flare(ctx, buf, g.x, mouthY, g.z, 7f * (0.4f + 0.6f * fm), -age * 0.05f, a(ICE, fm));
+            flare(ctx, buf, mx, mouthY, mz, 7f * (0.4f + 0.6f * fm), -age * 0.05f, a(ICE, fm));
             // the cone of rays upwards and outwards, and the shaft in the middle
             int K = ctx.seg(12, 6);
             float rf = 1f - smooth(10f, 34f, age);
@@ -665,15 +859,15 @@ public class TrialLayer extends AbstractVfxLayer {
                 float th = (0.10f + 0.95f * (float) Math.pow(h(seed, i, 2), 0.8)) * 1.0f;
                 float len = (14f + 34f * h(seed, i, 3)) * burst;
                 float sc = -age * (0.05f + 0.04f * h(seed, i, 4));
-                float ex = g.x + Mth.sin(th) * Mth.cos(ph) * len, ey = mouthY + Mth.cos(th) * len, ez = g.z + Mth.sin(th) * Mth.sin(ph) * len;
-                ribbon(buf, BEAM, VfxBlend.ADD, g.x, mouthY, g.z, ex, ey, ez, 0.16f + 0.1f * h(seed, i, 5), 0.5f + 0.5f * h(seed, i, 6), sc, sc + len / 7f, a(ICE, 0.75f * rf * fade), a(i % 3 == 0 ? BRASS_HI : CYAN, 0f));
+                float ex = mx + Mth.sin(th) * Mth.cos(ph) * len, ey = mouthY + Mth.cos(th) * len, ez = mz + Mth.sin(th) * Mth.sin(ph) * len;
+                ribbon(buf, BEAM, VfxBlend.ADD, mx, mouthY, mz, ex, ey, ez, 0.16f + 0.1f * h(seed, i, 5), 0.5f + 0.5f * h(seed, i, 6), sc, sc + len / 7f, a(ICE, 0.75f * rf * fade), a(i % 3 == 0 ? BRASS_HI : CYAN, 0f));
             }
             // the horn of light itself: a wide soft cone that opens from the mouth
-            ribbon(buf, BEAM, VfxBlend.ADD, g.x, mouthY, g.z, g.x, mouthY + 26f * burst, g.z, 0.5f, 9f * burst + 0.5f, 0f, 1f, a(BRASS_HI, 0.42f * rf * fade), a(TEAL, 0.05f * rf * fade));
+            ribbon(buf, BEAM, VfxBlend.ADD, mx, mouthY, mz, mx, mouthY + 26f * burst, mz, 0.5f, 9f * burst + 0.5f, 0f, 1f, a(BRASS_HI, 0.42f * rf * fade), a(TEAL, 0.05f * rf * fade));
             float sh = 60f * burst;
-            ribbon(buf, BEAM, VfxBlend.ADD, g.x, mouthY, g.z, g.x, mouthY + sh, g.z, 1.3f, 0.35f, 0f, 3f, a(CYAN, 0.55f * rf * fade), a(INDIGO, 0f));
-            ribbon(buf, BEAM, VfxBlend.ADD, g.x, mouthY, g.z, g.x, mouthY + sh, g.z, 0.38f, 0.12f, -age * 0.08f, -age * 0.08f + 3f, a(ICE, 0.9f * rf * fade), a(CYAN, 0f));
-            glow(ctx, buf, g.x, mouthY, g.z, 4.4f * burst, CYAN, 0.8f * rf * fade);
+            ribbon(buf, BEAM, VfxBlend.ADD, mx, mouthY, mz, mx, mouthY + sh, mz, 1.3f, 0.35f, 0f, 3f, a(CYAN, 0.55f * rf * fade), a(INDIGO, 0f));
+            ribbon(buf, BEAM, VfxBlend.ADD, mx, mouthY, mz, mx, mouthY + sh, mz, 0.38f, 0.12f, -age * 0.08f, -age * 0.08f + 3f, a(ICE, 0.9f * rf * fade), a(CYAN, 0f));
+            glow(ctx, buf, mx, mouthY, mz, 4.4f * burst, CYAN, 0.8f * rf * fade);
         }
 
         // ---- the sound rings: on the ground and as the dome; a ring far from the camera fades (it is only a thin line there)
@@ -696,6 +890,7 @@ public class TrialLayer extends AbstractVfxLayer {
 
         // ---- glass shards of the broken barriers fly out, turning
         int ns = ctx.seg(24, 10);
+        if (horn3d && age < 26f) ns = ns / 3;                            // 3.21.0: the 3D horn and its shards take their share of the 100 quads
         for (int i = 0; i < ns; i++) {
             float born = 2f + h(seed, i, 11) * 10f;
             float q = (age - born) / (26f + 16f * h(seed, i, 12));
@@ -708,6 +903,7 @@ public class TrialLayer extends AbstractVfxLayer {
             shard(ctx, buf, sx, sy, sz, sz2, age * (h(seed, i, 18) - 0.5f) * 0.9f + h(seed, i, 19) * 6f, a(WHITE, Math.min(q * 9f, 1f) * (1f - smooth(0.65f, 1f, q)) * fade));
         }
         int nm = near > 0.01f ? ctx.seg(8, 3) : 0;
+        if (horn3d && age < 26f) nm = 0;
         for (int i = 0; i < nm; i++) {
             float u = Mth.frac(age / 40f + h(seed, i, 21));
             float an = h(seed, i, 22) * Mth.TWO_PI, rr = (0.8f + 5f * h(seed, i, 23)) * (0.5f + u);
