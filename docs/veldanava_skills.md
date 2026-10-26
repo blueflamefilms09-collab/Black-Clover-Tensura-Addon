@@ -320,7 +320,7 @@ The server decides everything; no client class is named (scanned by `JudgmentSou
 - **Events**: effect, incoming damage, pre-damage (lowest priority), projectile impact, death, logout, server stop; each returns on its first line for anyone who is not under Solomon.
 - **Memory**: the cast log holds 64 lines, each caster's list 3; both dropped at logout and server stop.
 - **Network**: one effect packet per press (Realm: one every 80 ticks while held; Pillars: one per target; Skin and Absorb one small packet each, absorb at most 10 a second per wearer).
-- **Client draw**: bounded per effect by the quad budget of `SolomonLayer` (see the VFX section).
+- **Client draw**: worst-frame quads per effect (engine cap 100): Copy 32, Convergence 71, Realm 39 (78 while two overlap for 20 ticks), Chain 37, Erasure 50, Mark 30, Pillar 34 with the usual 18 pillars and 90 with all 72 on one target (at most 6 falling and 6 landing drawn at once, every part checks the buffer budget), Skin 23, Absorb 16. The 17 textures take about 20 MB of video memory in all (largest 1024 x 1024).
 - **No** chunk loads (terrain only touches loaded chunks), no entity spawns, no food-bar writes.
 
 ## VFX (Solomon layer)
