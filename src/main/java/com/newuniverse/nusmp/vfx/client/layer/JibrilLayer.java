@@ -37,6 +37,11 @@ import java.util.Set;
  *   <li>JIBRIL_WINGS: Wings of Revelation. Sent following the player, re-sent every 80 ticks while on: from = its centre, power = span scale (1.0), 100 ticks. Two pairs of layered feather wings of light behind the body
  *       (they open with the first ticks and flap slowly) with a prismatic rim light, a backlight, nested halos with orbiting feathers, streamers drifting from the wing tips, falling feathers and petals.</li>
  * </ul>
+ * <p><b>3.21.0 3D models.</b> With the client setting {@code visual.jibrilModels} on (the default; see {@link JibrilModelsConfig}) real 3D meshes ({@link JibrilModels}, posed and drawn without allocation by {@link JibrilMeshDraw},
+ * textured from one 512 x 512 atlas) stand in for flat sprites while the thing is near (64 blocks, the halo, plates and cuffs of the Kingdom and Wings 42) and the particle setting is not minimal: the hinged holy cuffs (at most 18 quads
+ * each, two) and golden chain links (5 each, two) of the SHACKLES, the Spear of Heaven (at most 36) of the JUDGMENT, the open tome of law (at most 24) of the WORD, the command crown (at most 30) of the COMMAND, the halo (at most 22)
+ * and three law plates (3 each) of the KINGDOM, the halo of the WINGS. A model that does not fit the remaining budget is skipped whole and the old sprite is drawn; while a model is drawn some little extras (petals, motes, sparks,
+ * feathers, a rays plane) are thinned so the effect stays under its cap. Worst case quads per effect with the models on (preview, see docs/vfx_remake/jibril_models.md): COMMAND 66, JUDGMENT 76, SHACKLES 79, WORD 53, KINGDOM 44, WINGS 47.
  * <b>Budgets (rule 11).</b> The engine hard-caps every effect at 100 quads (400 vertices) per activation; this layer does not draw "5x the quads", it puts more detail into the textures (up to 1024 px) and uses the budget
  * where it earns it. Counts below are quads at full detail ({@code ctx.seg} thins them by distance and by the particle setting; minimums in the code); a glow counts as 2 quads, a ring or plane of any radius is one quad.
  * Worst case quads per effect per frame (measured in the preview, see tools/vfx_preview/scenes.d/jibril.json and docs/vfx_remake/jibril_fx_calls.md):
@@ -326,6 +331,94 @@ public class JibrilLayer extends AbstractVfxLayer {
         return VfxPose.facing(new Vector3f(x, y, z), new Vector3f(nx, 1f, nz));
     }
 
+    // ------------------------------------------------------------------ 3.21.0: the 3D models (JibrilModels, posed and drawn without allocation by JibrilMeshDraw, one atlas)
+    /** The material atlas of the 3D models (polished gold, pearl enamel, azure lacquer, feathers, script bands, tome pages; {@link JibrilModels}). */
+    public static final ResourceLocation MODEL_ATLAS = t("jibril_model_atlas");
+    /** How far (blocks) a model is drawn: further the flat sprites of 3.20.0 stand in (a small model sooner). */
+    static final float MODEL_RANGE = 64f, SMALL_RANGE = 42f;
+    private final JibrilMeshDraw mesh = new JibrilMeshDraw();
+
+    /** True when the 3D models are drawn here: the setting is on, the particle setting is not minimal and the thing is within {@code range} blocks of the camera (else the flat sprites stand in). */
+    private static boolean modelsOn(VfxRenderContext ctx, float x, float y, float z, float range) {
+        return JibrilModels.enabled() && ctx.detail >= 0.5f && x * x + y * y + z * z < range * range;
+    }
+
+    /** The unit lean (x, z) from (x, z) toward the camera at the origin (0, 0 straight above / below it). */
+    private static float leanX(float x, float z) {
+        float d = Mth.sqrt(x * x + z * z);
+        return d > 1e-3f ? -x / d : 0f;
+    }
+
+    private static float leanZ(float x, float z) {
+        float d = Mth.sqrt(x * x + z * z);
+        return d > 1e-3f ? -z / d : 0f;
+    }
+
+    /** A hinged holy cuff ({@link JibrilModels#CUFF}, at most 18 quads) round (x, y, z), radius {@code scale}; {@code lid} 0 = shut .. {@link JibrilModels#CUFF_OPEN} = wide open. Returns the quads drawn (0 = the caller draws the old ring). */
+    private int cuff(VfxVertexBuffer buf, float x, float y, float z, float scale, float yaw, float lid, float alpha, float heat) {
+        if (alpha <= 0.03f || scale <= 0.02f) return 0;
+        JibrilModels.Posed p = mesh.posed();
+        p.clearPose();
+        p.spread()[JibrilModels.C_LID] = lid;
+        p.upright(yaw, 0.55f, leanX(x, z), leanZ(x, z), scale);
+        return mesh.draw(buf, MODEL_ATLAS, JibrilModels.CUFF, x, y, z, a(WHITE, alpha), heat);
+    }
+
+    /** One flat link of the golden chain ({@link JibrilModels#LINK}, at most 5 quads) along (dx, dy, dz), turned {@code roll} about the chain. */
+    private int link(VfxVertexBuffer buf, float x, float y, float z, float dx, float dy, float dz, float roll, float scale, float alpha, float heat) {
+        if (alpha <= 0.03f) return 0;
+        JibrilModels.Posed p = mesh.posed();
+        p.clearPose();
+        p.look(dx, dy, dz, 0f, 1f, 0f, roll, scale);
+        return mesh.draw(buf, MODEL_ATLAS, JibrilModels.LINK, x, y, z, a(WHITE, alpha), heat);
+    }
+
+    /** The Spear of Heaven ({@link JibrilModels#SPEAR}, at most 36 quads): its tip at (x, y, z), pointing along (dx, dy, dz), the wings turned {@code roll} about the shaft. */
+    private int spear(VfxVertexBuffer buf, float x, float y, float z, float dx, float dy, float dz, float roll, float scale, float alpha, float heat) {
+        if (alpha <= 0.03f || scale <= 0.02f) return 0;
+        JibrilModels.Posed p = mesh.posed();
+        p.clearPose();
+        p.look(dx, dy, dz, 0f, 0f, 1f, roll, scale);
+        return mesh.draw(buf, MODEL_ATLAS, JibrilModels.SPEAR, x, y, z, a(0xFFFFEFD2, alpha), heat);          // a warm pearl tint so the head reads against the white column
+    }
+
+    /** The 3D halo ({@link JibrilModels#HALO}, at most 22 quads) of radius {@code r} over (x, y, z), turning {@code yaw} and leaning toward the camera so it reads as a ring. */
+    private int halo3d(VfxVertexBuffer buf, float x, float y, float z, float r, float yaw, float alpha, float heat) {
+        if (alpha <= 0.03f || r <= 0.02f) return 0;
+        JibrilModels.Posed p = mesh.posed();
+        p.clearPose();
+        p.upright(yaw, 0.75f, leanX(x, z), leanZ(x, z), r);
+        return mesh.draw(buf, MODEL_ATLAS, JibrilModels.HALO, x, y, z, a(WHITE, alpha), heat);
+    }
+
+    /** A law plate ({@link JibrilModels#PLATE}, at most 3 quads) at (x, y, z), its face turned outward at the angle {@code an} (in the XZ plane), nodding a little. */
+    private int plate(VfxVertexBuffer buf, float x, float y, float z, float an, float scale, float alpha, float heat) {
+        if (alpha <= 0.03f || scale <= 0.02f) return 0;
+        JibrilModels.Posed p = mesh.posed();
+        p.clearPose();
+        p.upright(Mth.HALF_PI - an, 0f, 0f, 0f, scale);
+        return mesh.draw(buf, MODEL_ATLAS, JibrilModels.PLATE, x, y, z, a(WHITE, alpha), heat);
+    }
+
+    /** The open tome of law ({@link JibrilModels#TOME}, at most 24 quads) at (x, y, z), its pages facing along (dx, dy, dz); {@code open} 0..1, {@code flip} 0..1 turns the leaves. */
+    private int tome(VfxVertexBuffer buf, float x, float y, float z, float dx, float dy, float dz, float open, float flip, float scale, float alpha, float heat) {
+        if (alpha <= 0.03f || scale <= 0.02f) return 0;
+        JibrilModels.Posed p = mesh.posed();
+        p.clearPose();
+        JibrilModels.tomePose(open, flip, p.bend(), p.spread());
+        p.look(dx, dy, dz, 0f, 1f, 0f, 0f, scale);
+        return mesh.draw(buf, MODEL_ATLAS, JibrilModels.TOME, x, y, z, a(WHITE, alpha), heat);
+    }
+
+    /** The command crown ({@link JibrilModels#CROWN}, at most 30 quads) of radius {@code r} floating over (x, y, z), turning {@code yaw}, leaning toward the camera so the band and the spikes show. */
+    private int crown(VfxVertexBuffer buf, float x, float y, float z, float r, float yaw, float alpha, float heat) {
+        if (alpha <= 0.03f || r <= 0.02f) return 0;
+        JibrilModels.Posed p = mesh.posed();
+        p.clearPose();
+        p.upright(yaw, 0.6f, leanX(x, z), leanZ(x, z), r);
+        return mesh.draw(buf, MODEL_ATLAS, JibrilModels.CROWN, x, y, z, a(WHITE, alpha), heat);
+    }
+
     // ================================================================== JIBRIL_COMMAND
     private void command(VfxInstance inst, VfxRenderContext ctx, VfxVertexBuffer buf) {
         float age = inst.ageTicks(ctx.partialTick);
@@ -345,6 +438,7 @@ public class JibrilLayer extends AbstractVfxLayer {
         float flash = locked ? 1f - Mth.clamp(since / 6f, 0, 1) : 0f;        // the flash of the lock
         float out = 1f - Mth.clamp((D - age) / 14f, 0, 1);                   // 0 -> 1 over the last 14 ticks: the banners lift away
         float hue = age * 0.012f;
+        boolean m3d = modelsOn(ctx, c.x, c.y, c.z, MODEL_RANGE);                // 3.21.0: the command crown is a 3D model (the little extras are thinned so the effect stays under its quad cap)
 
         // 1. the floor: a rose-window seal turning slowly, the law glyph snapping shut, a ribbon spiral against them, a rim, a glow, the lock's shock rings and sunburst
         VfxPose floor = VfxPose.ground(new Vector3f(c.x, fy + 0.05f, c.z));
@@ -365,19 +459,21 @@ public class JibrilLayer extends AbstractVfxLayer {
         float haloY = head + (0.35f + 1.8f * snap) * hs;
         float haloR = 0.66f * hs * (1f + 0.7f * snap);
         haloAt(buf, tilted(c.x, haloY, c.z, 0.75f).spin(-age * 0.05f), haloR, a(WHITE, 0.95f * fade));
-        haloAt(buf, tilted(c.x, haloY + 0.06f * hs, c.z, 0.75f).spin(age * 0.08f), haloR * 0.70f, a(PEACH, 0.85f * fade));
+        // 3.21.0: the inner ring is a floating crown of seal light (a script band under six crystal spikes) that turns and flares at the lock; the outer ring stays a sprite
+        boolean crowned = m3d && crown(buf, c.x, haloY + 0.05f * hs, c.z, haloR * 1.0f, age * 0.045f, 0.97f * fade, 0.18f + 0.75f * flash) > 0;
+        if (!crowned) haloAt(buf, tilted(c.x, haloY + 0.06f * hs, c.z, 0.75f).spin(age * 0.08f), haloR * 0.70f, a(PEACH, 0.85f * fade));
         glow(ctx, buf, c.x, haloY, c.z, 0.9f * hs, iris(hue), 0.5f * fade);
         float ey = haloY + 0.98f * hs;
         buf.plane(EMBLEM, VfxBlend.ADD, faceCamera(c.x, ey, c.z), 0.52f * hs, a(WHITE, 0.92f * fade * pulse));
         prism(ctx, buf, c.x, ey, c.z, 2.0f * hs, 0.5f * fade);
-        int nf = near > 0.01f ? ctx.seg(5, 3) : 0;
+        int nf = near > 0.01f ? (crowned ? ctx.seg(2, 1) : ctx.seg(5, 3)) : 0;
         for (int i = 0; i < nf; i++) {
             float an = Mth.TWO_PI * i / nf + age * 0.07f;
             feather(ctx, buf, c.x + Mth.cos(an) * haloR * 1.05f, haloY + 0.04f * hs + 0.05f * Mth.sin(age * 0.2f + i), c.z + Mth.sin(an) * haloR * 1.05f, 0.30f * hs + 0.08f, Mth.sin(age * 0.1f + i) * 0.8f, a(WHITE, 0.9f * fade * near));
         }
 
         // 3. the prison: law banners slam down from above round the target and stand (they lift away at the end), a ring at their top and foot, dawn curtains between them
-        int n = ctx.seg(8, 4);
+        int n = crowned ? ctx.seg(6, 4) : ctx.seg(8, 4);
         float rise = VfxAnim.easeOutCubic(Mth.clamp(age / 7f, 0, 1));
         float hgt = 2.5f * hs;
         float drop = (1f - rise) * 5f * hs - out * 3f * hs;
@@ -393,7 +489,7 @@ public class JibrilLayer extends AbstractVfxLayer {
             }
             ringAt(buf, VfxPose.ground(new Vector3f(c.x, fy + drop + hgt + 0.05f, c.z)), ringR, a(WHITE, 0.55f * fade));
             ringAt(buf, VfxPose.ground(new Vector3f(c.x, fy + 0.12f, c.z)), ringR, a(PEACH, 0.5f * fade));
-            int nk = ctx.seg(4, 2);
+            int nk = crowned ? 2 : ctx.seg(4, 2);
             for (int i = 0; i < nk; i++) {
                 float an = Mth.TWO_PI * (i + 0.5f) / nk + spin * 1.5f;
                 float x = c.x + Mth.cos(an) * ringR * 1.04f, z = c.z + Mth.sin(an) * ringR * 1.04f;
@@ -402,7 +498,7 @@ public class JibrilLayer extends AbstractVfxLayer {
         }
 
         // 4. braided chains pin the limbs: from the top of the banners in to the arms, legs and chest, each sagging once
-        int nc = ctx.seg(4, 2);
+        int nc = crowned ? ctx.seg(3, 2) : ctx.seg(4, 2);
         float reach = VfxAnim.easeOutCubic(Mth.clamp((age - 3f) / 8f, 0, 1));
         if (reach > 0.02f) {
             for (int k = 0; k < nc; k++) {
@@ -431,7 +527,7 @@ public class JibrilLayer extends AbstractVfxLayer {
             scrollPanel(buf, c.x + Mth.cos(an) * rr, c.y + hs * (0.15f + 0.45f * (i % 2)) + 0.06f * Mth.sin(age * 0.1f + i), c.z + Mth.sin(an) * rr,
                     -Mth.sin(an) * hw, 0f, Mth.cos(an) * hw, 0f, hh, 0f, scr, a(WHITE, 0.85f * fade));
         }
-        int nr = ctx.seg(3, 2);
+        int nr = crowned ? 2 : ctx.seg(3, 2);
         for (int k = 0; k < nr && rise > 0.5f; k++) {
             float px = 0, py = 0, pz = 0;
             for (int m = 0; m <= 3; m++) {
@@ -454,8 +550,8 @@ public class JibrilLayer extends AbstractVfxLayer {
 
         // 7. petals fall and motes rise through the prison, all the time
         if (near > 0.01f) {
-            drift(ctx, buf, PETAL, ctx.seg(8, 3), c.x, c.z, 0.3f * ringR, 1.3f * ringR, fy + 3.4f * hs, fy + 0.1f, age, 46f, seed, 81, 0.30f * hs + 0.06f, 0.05f, WHITE, WHITE, 0.9f * fade * near);
-            drift(ctx, buf, MOTE, ctx.seg(8, 3), c.x, c.z, 0.2f * ringR, 1.0f * ringR, fy + 0.1f, fy + 2.9f * hs, age, 40f, seed, 91, 0.24f * hs + 0.06f, 0f, WHITE, AMBER, 0.9f * fade * near);
+            drift(ctx, buf, PETAL, crowned ? ctx.seg(3, 2) : ctx.seg(8, 3), c.x, c.z, 0.3f * ringR, 1.3f * ringR, fy + 3.4f * hs, fy + 0.1f, age, 46f, seed, 81, 0.30f * hs + 0.06f, 0.05f, WHITE, WHITE, 0.9f * fade * near);
+            drift(ctx, buf, MOTE, crowned ? ctx.seg(3, 2) : ctx.seg(8, 3), c.x, c.z, 0.2f * ringR, 1.0f * ringR, fy + 0.1f, fy + 2.9f * hs, age, 40f, seed, 91, 0.24f * hs + 0.06f, 0f, WHITE, AMBER, 0.9f * fade * near);
         }
     }
 
@@ -474,6 +570,7 @@ public class JibrilLayer extends AbstractVfxLayer {
         float top = g.y + PILLAR_HEIGHT;
         float since = Math.max(0f, age - IMPACT);
         float hue = age * 0.015f;
+        boolean m3d = modelsOn(ctx, g.x, g.y, g.z, MODEL_RANGE);                // 3.21.0: the Spear of Heaven is a 3D model (the sparks, petals, feathers and motes are thinned so the effect stays under its quad cap)
 
         // 1. the pillar: before the impact only a thin braided spear falls, after it the whole braided column stands (wide at first, then it settles and thins at the end): a haze, a braid that scrolls up,
         //    a counter braid and a hot core, dawn-coloured (rose gold at the foot, lavender at the top)
@@ -524,6 +621,16 @@ public class JibrilLayer extends AbstractVfxLayer {
             }
         }
 
+        // 3b. 3.21.0, the Spear of Heaven ({@link JibrilModels#SPEAR}, at most 36 quads): a six-sided head of light with winged feathers falls out of the sky inside the thin braid (the wings turn about the shaft),
+        //     drives into the ground at the strike (it sinks a little, the head blazes) and stays standing in the heart of the pillar until the pillar thins, then it fades
+        if (m3d && age > 0.5f) {
+            float sp = Mth.clamp(1.5f * k, 1.0f, 2.6f);
+            float stab = VfxAnim.easeOutCubic(Mth.clamp(since / 3f, 0, 1));
+            float sa = landed ? fade * (1f - smooth(10f, 30f, since)) : fade;
+            float blaze = landed ? 0.08f + 0.5f * (1f - Mth.clamp(since / 8f, 0, 1)) : 0.1f + 0.3f * fall;
+            spear(buf, g.x, yb - 0.55f * sp * stab, g.z, 0f, -1f, 0f, age * (landed ? 0.06f : 0.3f), sp, sa * 0.97f, blaze);
+        }
+
         if (landed) {
             // 4. the strike: flash, a prismatic bloom, rings and two waves running out, wings of light that open at the foot
             float f = 1f - Mth.clamp(since / 7f, 0, 1);
@@ -556,7 +663,7 @@ public class JibrilLayer extends AbstractVfxLayer {
                 }
             }
             // sparks thrown up and out
-            int nsp = near > 0.01f ? ctx.seg(10, 4) : 0;
+            int nsp = near > 0.01f ? (m3d ? ctx.seg(5, 2) : ctx.seg(10, 4)) : 0;
             for (int i = 0; i < nsp; i++) {
                 float q = Mth.clamp((since - h(seed, i, 7) * 3f) / 12f, 0, 1);
                 if (q <= 0f || q >= 1f) continue;
@@ -567,9 +674,9 @@ public class JibrilLayer extends AbstractVfxLayer {
             }
             // 5. the resolve: a staggered rain of petals from the sky, feathers and motes rising round the base
             if (near > 0.01f) {
-                drift(ctx, buf, PETAL, ctx.seg(14, 5), g.x, g.z, R * 0.5f, R * 3.0f, g.y + 22f, g.y + 0.2f, since, 34f, seed, 11, 0.55f * Mth.sqrt(k) + 0.1f, 0.06f, WHITE, WHITE, 0.95f * fade * near);
-                drift(ctx, buf, FEATHER, ctx.seg(8, 3), g.x, g.z, R * 0.6f, R * 2.0f, g.y + 0.2f, g.y + 9f * Mth.sqrt(k), since, 26f, seed, 31, 0.8f * Mth.sqrt(k) + 0.1f, 0f, WHITE, WHITE, 0.95f * fade * near);
-                drift(ctx, buf, MOTE, ctx.seg(8, 3), g.x, g.z, R * 0.7f, R * 2.2f, g.y + 0.1f, g.y + 9f * Mth.sqrt(k), age, 20f, seed, 21, 0.34f, 0f, WHITE, AMBER, 0.9f * fade * near);
+                drift(ctx, buf, PETAL, m3d ? ctx.seg(5, 2) : ctx.seg(14, 5), g.x, g.z, R * 0.5f, R * 3.0f, g.y + 22f, g.y + 0.2f, since, 34f, seed, 11, 0.55f * Mth.sqrt(k) + 0.1f, 0.06f, WHITE, WHITE, 0.95f * fade * near);
+                drift(ctx, buf, FEATHER, m3d ? ctx.seg(2, 1) : ctx.seg(8, 3), g.x, g.z, R * 0.6f, R * 2.0f, g.y + 0.2f, g.y + 9f * Mth.sqrt(k), since, 26f, seed, 31, 0.8f * Mth.sqrt(k) + 0.1f, 0f, WHITE, WHITE, 0.95f * fade * near);
+                drift(ctx, buf, MOTE, m3d ? ctx.seg(2, 1) : ctx.seg(8, 3), g.x, g.z, R * 0.7f, R * 2.2f, g.y + 0.1f, g.y + 9f * Mth.sqrt(k), age, 20f, seed, 21, 0.34f, 0f, WHITE, AMBER, 0.9f * fade * near);
             }
         }
     }
@@ -687,6 +794,7 @@ public class JibrilLayer extends AbstractVfxLayer {
         float lock = Mth.clamp((age - 8f) / 8f, 0, 1);                        // the rings close from 8 to 16
         float flash = 1f - Mth.clamp((age - 16f) / 6f, 0, 1);
         float hue = age * 0.015f;
+        boolean m3d = modelsOn(ctx, c.x, c.y, c.z, MODEL_RANGE);                // 3.21.0: the holy cuffs and chain links are 3D models (the extras are thinned so the effect stays under its quad cap)
 
         // 1. the floor under the target: a seal, a glyph that closes in, a ribbon spiral and a rim
         VfxPose floor = VfxPose.ground(new Vector3f(c.x, fy + 0.05f, c.z));
@@ -702,7 +810,7 @@ public class JibrilLayer extends AbstractVfxLayer {
             float sx = hl > 1e-3f ? -dz / hl : 1f, sz = hl > 1e-3f ? dx / hl : 0f;
             float head = VfxAnim.easeOutCubic(Mth.clamp(age / 12f, 0, 1));
             float chainA = (1f - 0.65f * smooth(14f, 26f, age)) * fade;
-            int nc = ctx.seg(3, 2);
+            int nc = m3d ? 2 : ctx.seg(3, 2);
             float hw = 0.26f;
             for (int k = 0; k < nc; k++) {
                 float off = (k - (nc - 1) * 0.5f) * 1.2f;
@@ -721,8 +829,19 @@ public class JibrilLayer extends AbstractVfxLayer {
                     pz = qz;
                 }
             }
+            if (m3d && chainA > 0.03f) {
+                // 3.21.0: a third strand between the two ribbons is a real chain of golden links (flat frames, each turned a quarter about the chain), swinging along the same arc
+                int nl = ctx.seg(2, 2);
+                for (int i = 0; i < nl; i++) {
+                    float f = Math.min(0.28f + 0.3f * i, head);
+                    if (f < 0.12f) continue;
+                    float arc = Mth.sin(f * Mth.PI), darc = Mth.cos(f * Mth.PI) * Mth.PI * 0.3f;
+                    float lx = B.x + dx * f, ly = B.y + dy * f + 0.3f * arc + 0.06f * Mth.sin(age * 0.2f + i * 2f), lz = B.z + dz * f;
+                    link(buf, lx, ly, lz, dx, dy + darc, dz, (i & 1) * Mth.HALF_PI + age * 0.03f, 2.1f * Mth.clamp(hs, 0.8f, 1.5f), Mth.clamp(chainA * 1.4f, 0f, 1f) * 0.97f, 0.1f + 0.5f * flash);
+                }
+            }
             if (near > 0.01f) {
-                int nfe = ctx.seg(6, 2);
+                int nfe = m3d ? ctx.seg(3, 1) : ctx.seg(6, 2);
                 for (int i = 0; i < nfe; i++) {
                     float u = Mth.frac(age / 28f + h(seed, i, 13));
                     float f = Mth.clamp(0.1f + 0.8f * h(seed, i, 14), 0f, head);
@@ -741,6 +860,14 @@ public class JibrilLayer extends AbstractVfxLayer {
             for (int k = 0; k < 3; k++) {
                 float y = c.y + hs * (k - 1) * 0.7f;
                 float r = 1.0f * hs * (1f + 1.1f * (1f - close));
+                if (m3d && k != 1) {
+                    // 3.21.0: the upper and the lower ring are hinged cuffs of gold: they close in from wide open and clamp snug with a click (the lid shuts, the seal flares)
+                    float shut = Mth.clamp(close, 0f, 1f);
+                    float cs = 0.56f * hs * (1f + 1.7f * (1f - shut));
+                    float lid = JibrilModels.CUFF_OPEN * (1f - smooth(0.55f, 1f, shut));
+                    float yaw = k * 1.7f + (1f - shut) * age * 0.12f;
+                    if (cuff(buf, c.x, y, c.z, cs, yaw, lid, smooth(7.5f, 9.5f, age) * fade, 0.12f + 0.75f * flash) > 0) continue;
+                }
                 buf.plane(CHAINRING, VfxBlend.ADD, tilted(c.x, y, c.z, 0.55f).spin(age * 0.05f * (k % 2 == 0 ? 1f : -1f)), r / 0.9f, a(WHITE, ringA));
             }
             haloAt(buf, tilted(c.x, c.y + 1.0f * hs, c.z, 0.75f).spin(-age * 0.06f), 0.55f * hs * (1f + 0.8f * (1f - close)), a(WHITE, 0.85f * ringA));
@@ -757,7 +884,7 @@ public class JibrilLayer extends AbstractVfxLayer {
 
         // 4. law scrolls orbit the target and unroll as the rings close
         float scr = smooth(10f, 18f, age) * fade;
-        int nsc = ctx.seg(4, 2);
+        int nsc = m3d ? ctx.seg(2, 1) : ctx.seg(4, 2);
         for (int i = 0; i < nsc && scr > 0.03f; i++) {
             float an = Mth.TWO_PI * i / nsc + age * 0.05f;
             float rr = 1.15f * hs;
@@ -771,7 +898,7 @@ public class JibrilLayer extends AbstractVfxLayer {
         if (streamA > 0.01f && len > 0.5f) {
             ribbon(buf, RIBBON, c.x, c.y, c.z, B.x, B.y, B.z, 0.18f, 0.10f, -age * 0.07f, -age * 0.07f + len / 4f, a(WHITE, 0.55f * streamA), a(WHITE, 0.75f * streamA));
             ribbon(buf, BEAM, c.x, c.y, c.z, B.x, B.y, B.z, 0.10f, 0.05f, -age * 0.12f, -age * 0.12f + len / 6f, a(AMBER, 0.35f * streamA), a(WHITE, 0.5f * streamA));
-            int nsp = ctx.seg(10, 4);
+            int nsp = m3d ? ctx.seg(4, 2) : ctx.seg(10, 4);
             for (int i = 0; i < nsp; i++) {
                 float f = Mth.frac(age / 20f + h(seed, i, 51));
                 float arc = Mth.sin(f * Mth.PI);
@@ -786,8 +913,8 @@ public class JibrilLayer extends AbstractVfxLayer {
 
         // 6. petals fall and motes rise round the target
         if (near > 0.01f) {
-            drift(ctx, buf, PETAL, ctx.seg(8, 3), c.x, c.z, 0.3f * S, 1.2f * S, fy + 2.8f * hs, fy + 0.1f, age, 38f, seed, 61, 0.28f * hs + 0.06f, 0.05f, WHITE, WHITE, 0.9f * fade * near);
-            drift(ctx, buf, MOTE, ctx.seg(8, 3), c.x, c.z, 0.4f * S, 0.95f * S, fy + 0.1f, fy + 2.4f * hs, age, 40f, seed, 71, 0.2f * hs + 0.05f, 0f, WHITE, AMBER, 0.8f * fade * near);
+            drift(ctx, buf, PETAL, m3d ? ctx.seg(3, 2) : ctx.seg(8, 3), c.x, c.z, 0.3f * S, 1.2f * S, fy + 2.8f * hs, fy + 0.1f, age, 38f, seed, 61, 0.28f * hs + 0.06f, 0.05f, WHITE, WHITE, 0.9f * fade * near);
+            drift(ctx, buf, MOTE, m3d ? ctx.seg(3, 2) : ctx.seg(8, 3), c.x, c.z, 0.4f * S, 0.95f * S, fy + 0.1f, fy + 2.4f * hs, age, 40f, seed, 71, 0.2f * hs + 0.05f, 0f, WHITE, AMBER, 0.8f * fade * near);
         }
     }
 
@@ -818,6 +945,18 @@ public class JibrilLayer extends AbstractVfxLayer {
         float pulse = 0.85f + 0.15f * Mth.sin(age * 0.6f);
         float hue = age * 0.05f;
 
+        // 3.21.0: the scroll of the law is an open TOME of law (a 3D model, at most 24 quads): it opens with the strike, its leaves turn over the spine one after the other and its pages face the camera (swaying a little);
+        // while it is drawn the nested halos, the scroll sprite and some of the little extras are left out so the effect stays under its quad cap
+        boolean booked = false;
+        if (modelsOn(ctx, ox, oy, oz, MODEL_RANGE) && age > 0.8f) {
+            float tl = Mth.sqrt(ox * ox + oz * oz);
+            float tdx = tl > 1e-3f ? -ox / tl : 0f, tdz = tl > 1e-3f ? -oz / tl : 1f;                    // toward the camera
+            float sw = 0.45f * Mth.sin(age * 0.4f), cs = Mth.cos(sw), sn = Mth.sin(sw);
+            float f1 = 1f - Mth.clamp((age - 1.5f) / 5f, 0, 1);
+            booked = tome(buf, ox, oy + 0.04f * Mth.sin(age * 0.5f), oz, tdx * cs - tdz * sn, -0.12f, tdx * sn + tdz * cs, VfxAnim.easeOutBack(Mth.clamp((age - 0.8f) / 3f, 0, 1)), smooth(3f, 11f, age),
+                    0.85f * sc * Mth.clamp(pop, 0f, 1.12f), 0.97f * fade, 0.15f + 0.85f * f1) > 0;
+        }
+
         // 1. anticipation (0-2 ticks): a ring converges on the spot where the law is written
         float tc = Mth.clamp(age / 2.5f, 0, 1);
         if (tc < 1f) ringAt(buf, face.lift(0.02f), sc * (2.6f - 1.8f * VfxAnim.easeOutCubic(tc)), a(WHITE, (0.4f + 0.6f * tc) * 0.9f));
@@ -827,12 +966,14 @@ public class JibrilLayer extends AbstractVfxLayer {
             sealAt(buf, face.lift(-0.02f).spin(-age * 0.12f + 1f), R * 1.4f, a(WHITE, 0.6f * fade));
             glyphAt(buf, face.spin(age * 0.16f), R, a(WHITE, 0.8f * fade * pulse));
             glyphAt(buf, face.lift(0.03f).spin(-age * 0.22f), R * 0.7f, a(PEACH, 0.45f * fade));
-            haloAt(buf, face.lift(-0.04f).spin(age * 0.1f), R * 1.2f, a(PEACH, 0.7f * fade));
-            haloAt(buf, face.lift(-0.05f).spin(-age * 0.14f), R * 1.55f, a(WHITE, 0.4f * fade));
+            if (!booked) {
+                haloAt(buf, face.lift(-0.04f).spin(age * 0.1f), R * 1.2f, a(PEACH, 0.7f * fade));
+                haloAt(buf, face.lift(-0.05f).spin(-age * 0.14f), R * 1.55f, a(WHITE, 0.4f * fade));
+            }
             buf.plane(RAYS, VfxBlend.ADD, face.lift(-0.06f).spin(age * 0.2f), R * 2.4f, a(WHITE, 0.22f * fade));
         }
         float un = smooth(1f, 5f, age);
-        if (un > 0.03f) {
+        if (un > 0.03f && !booked) {
             Vector3f rr = face.right(), uu = face.up();
             scrollPanel(buf, ox - uu.x * 0.55f * sc, oy - uu.y * 0.55f * sc, oz - uu.z * 0.55f * sc, rr.x * 1.2f * sc, rr.y * 1.2f * sc, rr.z * 1.2f * sc, uu.x * 0.6f * sc, uu.y * 0.6f * sc, uu.z * 0.6f * sc, un, a(WHITE, 0.95f * fade));
         }
@@ -864,7 +1005,7 @@ public class JibrilLayer extends AbstractVfxLayer {
         }
 
         // 4. script ribbons orbit the glyph, runes (emblems and motes) ride its edge, sparks fly out in its plane
-        int nrb = ctx.seg(6, 3);
+        int nrb = booked ? ctx.seg(3, 2) : ctx.seg(6, 3);
         for (int i = 0; i < nrb; i++) {
             float an0 = Mth.TWO_PI * i / nrb + age * 0.28f, an1 = an0 + 0.7f;
             float rr0 = R * 1.12f;
@@ -874,7 +1015,7 @@ public class JibrilLayer extends AbstractVfxLayer {
                     ox + (rr.x * ca1 + uu.x * sa1) * rr0, oy + (rr.y * ca1 + uu.y * sa1) * rr0, oz + (rr.z * ca1 + uu.z * sa1) * rr0,
                     0.14f * sc, 0.14f * sc, -age * 0.1f, -age * 0.1f + 0.25f, a(WHITE, 0.0f), a(WHITE, 0.85f * fade));
         }
-        int nsp = ctx.seg(12, 5);
+        int nsp = booked ? ctx.seg(6, 3) : ctx.seg(12, 5);
         for (int i = 0; i < nsp; i++) {
             float q = Mth.clamp((age - h(seed, i, 1) * 2f) / 8f, 0, 1);
             if (q <= 0f || q >= 1f) continue;
@@ -884,7 +1025,7 @@ public class JibrilLayer extends AbstractVfxLayer {
             float r0 = R * (0.9f + 0.9f * q), r1 = R * (0.8f + 1.9f * q);
             ribbon(buf, BEAM, ox + rx * r1, oy + ry * r1, oz + rz * r1, ox + rx * r0, oy + ry * r0, oz + rz * r0, 0.03f, 0.10f * sc, 0f, 0.5f, a(WHITE, 0f), a(WHITE, (1f - q) * 0.9f * fade));
         }
-        int nm = ctx.seg(8, 3);
+        int nm = booked ? ctx.seg(4, 2) : ctx.seg(8, 3);
         for (int i = 0; i < nm; i++) {
             float an = Mth.TWO_PI * i / nm + age * 0.3f;
             float ca = Mth.cos(an), sa = Mth.sin(an);
@@ -897,8 +1038,8 @@ public class JibrilLayer extends AbstractVfxLayer {
         // 5. the afterglow: petals and feathers burst out and fall
         float burst = smooth(2f, 4f, age);
         if (burst > 0.01f) {
-            drift(ctx, buf, PETAL, ctx.seg(10, 4), ox, oz, 0.2f * sc, 1.8f * sc, oy + 1.4f * sc, oy - 1.0f * sc, age, 10f, seed, 61, 0.34f * sc, 0.1f, WHITE, WHITE, 0.95f * fade * burst);
-            drift(ctx, buf, FEATHER, ctx.seg(6, 3), ox, oz, 0.3f * sc, 1.6f * sc, oy + 1.0f * sc, oy - 0.8f * sc, age, 12f, seed, 71, 0.46f * sc, 0f, WHITE, WHITE, 0.9f * fade * burst);
+            drift(ctx, buf, PETAL, booked ? ctx.seg(4, 2) : ctx.seg(10, 4), ox, oz, 0.2f * sc, 1.8f * sc, oy + 1.4f * sc, oy - 1.0f * sc, age, 10f, seed, 61, 0.34f * sc, 0.1f, WHITE, WHITE, 0.95f * fade * burst);
+            drift(ctx, buf, FEATHER, booked ? ctx.seg(2, 1) : ctx.seg(6, 3), ox, oz, 0.3f * sc, 1.6f * sc, oy + 1.0f * sc, oy - 0.8f * sc, age, 12f, seed, 71, 0.46f * sc, 0f, WHITE, WHITE, 0.9f * fade * burst);
         }
     }
 
@@ -1031,6 +1172,7 @@ public class JibrilLayer extends AbstractVfxLayer {
         float pulse = 0.85f + 0.15f * Mth.sin(age * 0.07f);
         float nearC = 1f - smooth(40f, 90f, dist);                             // the caster and its little things are only drawn near the camera
         float hue = age * 0.006f;
+        boolean m3d = modelsOn(ctx, c.x, c.y, c.z, SMALL_RANGE);                // 3.21.0: the halo and three orbiting law plates over the caster are 3D models (the extras are thinned: this effect is capped at 50 quads)
 
         // 1. the floor: the rose-window seal turning very slowly (faint, the sanctuary), a ribbon spiral turning against it, a sunburst, the rim, and a seal and glyph under the caster
         VfxPose floor = VfxPose.ground(new Vector3f(c.x, fy + 0.04f, c.z));
@@ -1038,9 +1180,9 @@ public class JibrilLayer extends AbstractVfxLayer {
         spiralAt(buf, floor.lift(0.006f).spin(-age * 0.004f), R * 0.96f, a(WHITE, 0.14f * fade));
         ringAt(buf, floor.lift(0.01f), R, a(WHITE, 0.5f * fade * pulse));
         ringAt(buf, floor.lift(0.012f), R * 0.965f, a(PEACH, 0.26f * fade));
-        ringAt(buf, floor.lift(0.014f), R * 0.5f, a(AZURE, 0.12f * fade));
+        if (!m3d) ringAt(buf, floor.lift(0.014f), R * 0.5f, a(AZURE, 0.12f * fade));
         if (nearC > 0.01f) {
-            buf.plane(RAYS, VfxBlend.ADD, floor.lift(0.016f).spin(age * 0.01f), 6f, a(WHITE, 0.35f * fade * nearC));
+            if (!m3d) buf.plane(RAYS, VfxBlend.ADD, floor.lift(0.016f).spin(age * 0.01f), 6f, a(WHITE, 0.35f * fade * nearC));
             glyphAt(buf, floor.lift(0.02f).spin(age * 0.01f), 3.2f, a(WHITE, 0.65f * fade * nearC));
             ringAt(buf, floor.lift(0.03f), 3.1f, a(PEARL, 0.5f * fade * nearC));
         }
@@ -1071,7 +1213,7 @@ public class JibrilLayer extends AbstractVfxLayer {
             }
             float camAn = (float) Math.atan2(hitZ, hitX);
             int i0 = Math.round(camAn / step);
-            int K = ctx.seg(6, 2);
+            int K = m3d ? ctx.seg(3, 2) : ctx.seg(6, 2);
             float arcHalf = step * 0.5f * 0.92f;
             float spin = age * 0.0006f;
             for (int k = 0; k < K; k++) {
@@ -1091,24 +1233,37 @@ public class JibrilLayer extends AbstractVfxLayer {
         // 3. over the caster: nested halos, the book emblem on a prismatic bloom, small feathers orbiting, three streamers of light winding round, petals falling and motes rising
         if (nearC > 0.01f) {
             float hy = c.y + 1.2f;
-            haloAt(buf, tilted(c.x, hy, c.z, 0.75f).spin(age * 0.04f), 0.52f, a(WHITE, 0.9f * fade * nearC));
-            haloAt(buf, tilted(c.x, hy + 0.05f, c.z, 0.75f).spin(-age * 0.07f), 0.36f, a(PEACH, 0.8f * fade * nearC));
+            // 3.21.0: one golden halo of script (3D) with three law plates turning round it; the two flat rings and the orbiting feathers are the fallback
+            int halo = 0, plates = 0;
+            if (m3d && nearC > 0.3f) {
+                halo = halo3d(buf, c.x, hy, c.z, 0.6f, age * 0.04f, 0.97f * fade * nearC, 0.2f + 0.2f * pulse);
+                if (halo > 0) {
+                    for (int i = 0; i < 3; i++) {
+                        float an = Mth.TWO_PI * i / 3f - age * 0.035f;
+                        plates += plate(buf, c.x + Mth.cos(an) * 1.05f, hy + 0.12f + 0.07f * Mth.sin(age * 0.09f + i * 2.1f), c.z + Mth.sin(an) * 1.05f, an, 1.9f, 0.97f * fade * nearC, 0.25f + 0.2f * pulse);
+                    }
+                }
+            }
+            if (halo == 0) {
+                haloAt(buf, tilted(c.x, hy, c.z, 0.75f).spin(age * 0.04f), 0.52f, a(WHITE, 0.9f * fade * nearC));
+                haloAt(buf, tilted(c.x, hy + 0.05f, c.z, 0.75f).spin(-age * 0.07f), 0.36f, a(PEACH, 0.8f * fade * nearC));
+            }
             glow(ctx, buf, c.x, hy, c.z, 0.9f, iris(hue), 0.45f * fade * nearC);
             buf.plane(EMBLEM, VfxBlend.ADD, faceCamera(c.x, hy + 0.9f, c.z), 0.42f, a(WHITE, 0.85f * fade * nearC * pulse));
-            prism(ctx, buf, c.x, hy + 0.9f, c.z, 1.7f, 0.4f * fade * nearC);
-            int nf = ctx.seg(4, 2);
+            if (halo == 0) prism(ctx, buf, c.x, hy + 0.9f, c.z, 1.7f, 0.4f * fade * nearC);
+            int nf = halo > 0 ? 0 : ctx.seg(4, 2);
             for (int i = 0; i < nf; i++) {
                 float an = Mth.TWO_PI * i / nf + age * 0.05f;
                 feather(ctx, buf, c.x + Mth.cos(an) * 0.56f, hy + 0.04f, c.z + Mth.sin(an) * 0.56f, 0.28f, Mth.sin(age * 0.1f + i) * 0.7f, a(WHITE, 0.85f * fade * nearC));
             }
-            int nrb = ctx.seg(3, 2);
+            int nrb = halo > 0 ? 1 : ctx.seg(3, 2);
             for (int i = 0; i < nrb; i++) {
                 float an0 = Mth.TWO_PI * i / nrb + age * 0.02f, an1 = an0 + 1.2f;
                 float y0 = fy + 0.5f + 1.6f * i, y1 = y0 + 1.5f;
                 ribbon(buf, RIBBON, c.x + Mth.cos(an0) * 1.8f, y0, c.z + Mth.sin(an0) * 1.8f, c.x + Mth.cos(an1) * 1.8f, y1, c.z + Mth.sin(an1) * 1.8f, 0.2f, 0.2f, -age * 0.02f, -age * 0.02f + 0.5f, a(WHITE, 0.0f), a(WHITE, 0.6f * fade * nearC));
             }
-            drift(ctx, buf, PETAL, ctx.seg(8, 3), c.x, c.z, 1.0f, 5f, c.y + 4.5f, fy + 0.1f, age, 92f, seed, 21, 0.3f, 0.03f, WHITE, WHITE, 0.8f * fade * nearC);
-            drift(ctx, buf, MOTE, ctx.seg(6, 2), c.x, c.z, 0.8f, 4f, fy + 0.2f, fy + 5.5f, age, 70f, seed, 11, 0.26f, 0f, WHITE, AMBER, 0.8f * fade * nearC);
+            drift(ctx, buf, PETAL, halo > 0 ? ctx.seg(2, 1) : ctx.seg(8, 3), c.x, c.z, 1.0f, 5f, c.y + 4.5f, fy + 0.1f, age, 92f, seed, 21, 0.3f, 0.03f, WHITE, WHITE, 0.8f * fade * nearC);
+            drift(ctx, buf, MOTE, halo > 0 ? ctx.seg(2, 1) : ctx.seg(6, 2), c.x, c.z, 0.8f, 4f, fy + 0.2f, fy + 5.5f, age, 70f, seed, 11, 0.26f, 0f, WHITE, AMBER, 0.8f * fade * nearC);
         }
     }
 
@@ -1183,11 +1338,15 @@ public class JibrilLayer extends AbstractVfxLayer {
         // 3. over the head: nested halos with small feathers orbiting them, a glow
         float hy = c.y + 1.2f;
         float hr = 0.5f * Math.max(P, 0.8f);
-        haloAt(buf, tilted(c.x, hy, c.z, 0.75f).spin(age * 0.05f), hr, a(WHITE, 0.95f * fade));
-        haloAt(buf, tilted(c.x, hy + 0.05f, c.z, 0.75f).spin(-age * 0.08f), hr * 0.7f, a(PEACH, 0.8f * fade));
+        // 3.21.0: the halo is a 3D ring of golden script (at most 22 quads) that turns over the head; the two flat rings are the fallback, and the little extras are thinned while it is drawn (this effect is capped at 50 quads)
+        boolean halo = modelsOn(ctx, c.x, hy, c.z, SMALL_RANGE) && halo3d(buf, c.x, hy, c.z, hr * 1.3f, age * 0.05f, 0.97f * fade, 0.2f + 0.15f * Mth.sin(age * 0.1f)) > 0;
+        if (!halo) {
+            haloAt(buf, tilted(c.x, hy, c.z, 0.75f).spin(age * 0.05f), hr, a(WHITE, 0.95f * fade));
+            haloAt(buf, tilted(c.x, hy + 0.05f, c.z, 0.75f).spin(-age * 0.08f), hr * 0.7f, a(PEACH, 0.8f * fade));
+        }
         if (near > 0.01f) {
             glow(ctx, buf, c.x, hy, c.z, 0.8f * Math.max(P, 0.8f), iris(hue + 0.4f), 0.4f * fade * near);
-            int nof = ctx.seg(4, 2);
+            int nof = halo ? ctx.seg(2, 1) : ctx.seg(4, 2);
             for (int i = 0; i < nof; i++) {
                 float an = Mth.TWO_PI * i / nof + age * 0.06f;
                 feather(ctx, buf, c.x + Mth.cos(an) * hr * 1.08f, hy + 0.04f, c.z + Mth.sin(an) * hr * 1.08f, 0.26f * Math.max(P, 0.8f), Mth.sin(age * 0.1f + i) * 0.7f, a(WHITE, 0.85f * fade * near));
@@ -1202,7 +1361,7 @@ public class JibrilLayer extends AbstractVfxLayer {
                 ribbon(buf, RIBBON, tx, ty, tz, mx, my, mz, w, w, -age * 0.03f, -age * 0.03f + 0.4f, a(WHITE, 0.75f * fade * near), a(WHITE, 0.55f * fade * near));
                 ribbon(buf, RIBBON, mx, my, mz, ex, ey, ez, w, w * 0.6f, -age * 0.03f + 0.4f, -age * 0.03f + 0.8f, a(WHITE, 0.55f * fade * near), a(WHITE, 0.0f));
             }
-            int nf = ctx.seg(8, 3);
+            int nf = halo ? ctx.seg(3, 1) : ctx.seg(8, 3);
             for (int i = 0; i < nf; i++) {
                 float u = Mth.frac(age / 38f + h(seed, i, 31));
                 float side = (i & 1) == 0 ? 1f : -1f;
@@ -1211,8 +1370,8 @@ public class JibrilLayer extends AbstractVfxLayer {
                 float bz = c.z + sz * side * span - fz * (0.4f + 1.4f * u) + Mth.cos(u * 6f + i) * 0.25f;
                 feather(ctx, buf, bx, c.y + 1.0f - u * 2.6f, bz, 0.42f * Math.max(P, 0.8f), Mth.sin(u * 8f + i * 1.3f) * 0.9f, a(WHITE, Mth.sin(u * Mth.PI) * 0.85f * fade * near));
             }
-            drift(ctx, buf, PETAL, ctx.seg(8, 3), c.x - fx * 0.8f, c.z - fz * 0.8f, 0.8f * P, 3.2f * P, c.y + 1.9f * P, c.y - 1.4f, age, 50f, seed, 51, 0.28f * Math.max(P, 0.8f), 0.05f, WHITE, WHITE, 0.85f * fade * near);
-            int nm = ctx.seg(6, 2);
+            drift(ctx, buf, PETAL, halo ? ctx.seg(3, 1) : ctx.seg(8, 3), c.x - fx * 0.8f, c.z - fz * 0.8f, 0.8f * P, 3.2f * P, c.y + 1.9f * P, c.y - 1.4f, age, 50f, seed, 51, 0.28f * Math.max(P, 0.8f), 0.05f, WHITE, WHITE, 0.85f * fade * near);
+            int nm = halo ? ctx.seg(2, 1) : ctx.seg(6, 2);
             for (int i = 0; i < nm; i++) {
                 float u = Mth.frac(age / 30f + h(seed, i, 41));
                 float side = (i & 1) == 0 ? 1f : -1f;
