@@ -416,3 +416,10 @@ Ten shapes appended after `SOLOMON_ABSORB` (`HERCULES_LEAP`, `_TREMOR`, `_INVICT
 - World-Breaking Strike shatters the barriers this mod defines (Michael's Castle Guard, Uriel's prison, the Seraphim's guard, Israfil's pockets, the enemy's fields); another mod's barrier is not touched.
 - Adamantine Body does not stop a true hit (Sandalphon's) or a blow that bypasses invulnerability (the void, `/kill`).
 - Devastating Throw's chunk is a moving point drawn by the effect, not an entity; it is stopped by the first solid block on its path.
+
+
+## 3.20.0 - the master toggle and the Hercules upgrades
+
+- **Master toggle (all five skills).** `VeldanavaSkillBase` answers `canBeToggled` with the setting `masterToggle`; `onToggleOn/Off` set the four passive bits together (`JudgmentRules.masterBits`), mirror them into the mask and call each skill's `toggled` hook for the four passives. The wheel has `count - 4` modes (`JudgmentRules.wheelCount/slot/cooldownSlot`): wheel position `w` is table mode `w + 4`, and cooldowns are stored at the wheel position so the game's own display and the cooldown copies of other skills line up. A position saved by an older build wraps into the shorter wheel. An old save with any passive on becomes toggle ON with all four (`settleMaster`, once a second). With `masterToggle` false the ten-mode wheel of 3.19.0 is back.
+- **Hercules (setting `herculesUpgrades`).** Aftershock: 14 ticks after the landing, `AFTERSHOCK_RADIUS` 9, half a tremor falling off to the rim, at most 24 creatures, no blocks, one pending aftershock per owner (`HerculesState.tickAftershocks`, idle when empty). Titan's Grip: a crush of `GRIP_CRUSH_DAMAGE` 160. Battle Roar: thunder `ROAR_DAMAGE` 110 within 12 blocks (falling to half), at most 16 foes. Invictus: a second wind of 10% / 20% maximum health when it runs out by itself. Every blow is `HerculesDamage.blow` (Balance Law, cap of one press).
+- **Cost.** Per press nothing new beyond one blow per creature already queried; the tick hook is one `isEmpty` test. No new packets.

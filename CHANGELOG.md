@@ -1,5 +1,19 @@
 # Changelog
 
+## [3.20.0] — Master toggle for the five Ultimates, Hercules 3D models and stronger abilities
+
+### NEW
+- **One master toggle for the passives of all five Ultimates** (owner: "the passives should be under the tensura toggle button in the Base Tensura Mod"): Sandalphon, Israfil, Jibril, Solomon and Hercules now use Tensura's own ON/OFF toggle of the skill. ON turns the four passives on together, OFF turns them all off. The four passive entries leave the mode wheel (six modes are left: five actives and the mastery active); their bits stay in the skill and the player mask, so old saves keep working, and a save with any passive on comes up with the toggle ON. Setting `masterToggle` (default true) restores the old ten-mode wheel.
+- **Hercules, abilities that should hurt now do** (setting `herculesUpgrades`, default true): Earth-Shattering Tremor ends with an **aftershock** 14 ticks later (half a tremor, 9 blocks, up to 24 creatures, no blocks broken); Titan's Grip **crushes** what it pulls; Battle Roar **thunders** on the nearest sixteen foes within 12 blocks; Invictus gives a **second wind** (10% of maximum health, 20% mastered) when it runs out. All blows go through the Balance Law and the active-damage cap.
+- **Hercules 3D models in the effects** (client setting `visual.herculesModels`, default true, file `nusmp-hercules-client.toml`): a bronze Titan hand for Titan's Grip, a clenched fist for World-Breaking Strike, a spinning boulder for a hurled chunk of ground (Devastating Throw sends power 2 for a chunk), a laurel crown and ring for Invictus, rock chunks and glowing fissures for the Tremor, a lighter variant for the aftershock. See `docs/vfx_remake/hercules_models.md`.
+- Tests: `HerculesModelsTest`, extended `HerculesRulesTest`, `JudgmentRulesTest`, `JudgmentSourceScanTest`, `HerculesShapesTest`; self-test `hercules.master`; the five skills' self-tests read the wheel through the master toggle.
+
+### REPLACED
+- Nothing removed. The Hercules passives are no longer separate wheel entries when the master toggle is on (setting `masterToggle` brings them back); the skill descriptions mention the switch.
+
+### KEPT
+- Everything of 3.19.0: the 2D sprites of the Hercules effects (used when `visual.herculesModels` is off, far away, at minimum particles or out of budget), the toggle bits and old saves, the Time Magic VFX (untouched).
+
 ## [3.19.0] — Hercules, Lord of Martial Prowess (the fifth and last Veldanava Ultimate skill)
 
 ### NEW
