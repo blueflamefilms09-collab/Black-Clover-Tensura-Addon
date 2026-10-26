@@ -1,5 +1,29 @@
 # Changelog
 
+## [3.21.0] — Sandalphon: abilities that hurt and 3D models
+
+### NEW
+- **Sandalphon, abilities that should hurt now do** (setting `sandalphonUpgrades`, default true; every blow goes through the Balance Law and the active-damage cap):
+  - **Judgment Bullet** adds 12 true damage for every good effect it tears off (at most 3 count).
+  - **Edict** (the rule that strips boons) now also deals damage: 60 plus 20 per good effect stripped (at most 4), on enemies, players and mobs that target you.
+  - **Guillotine Cleave** grows with the Temporal Debt on the target (up to +30%) and **executes** a sigil-marked target below 35% health.
+  - **Verdict field** tolls when it runs out naturally: 6% of maximum health to the creatures inside (bounded to the field's target cap), with a bell.
+- **Sandalphon 3D models in the effects** (client setting `visual.judgmentModels`, default true, file `nusmp-judgment-client.toml`): an angled guillotine blade with a glowing bevel for the Cleave, scales of judgment (a feather against a burning heart, tilting and settling) for the Field, a law tablet that rises, flashes and shatters into shards for the Edict, a spinning lance head with gold barbs for the Bullet, and a sword of judgment that descends, plunges and stands in the ground for the Cross. See `docs/vfx_remake/judgment_models.md`.
+- Tests: `JudgmentModelsTest`, extended `JudgmentRulesTest` and `JudgmentSourceScanTest`; self-test `sandalphon.upgrades`.
+
+### REPLACED
+- Nothing removed. Only while the models setting is on, the particle detail is at least 0.5 and the effect is within 64 blocks, the Cleave's old four-stroke blade loop is replaced by the model. The Bullet head flare, the Edict glyph band and motes, and the Field and Cross motes are dimmed or thinned (not removed) beside the new models.
+
+### KEPT
+- Everything of 3.20.0: every old texture and draw call (the fallback when `visual.judgmentModels` is off, far away or out of budget), the toggle bits and old saves, the master toggle, the Time Magic VFX (untouched). With `sandalphonUpgrades` off the abilities behave as in 3.20.0.
+
+### Cost (CLAUDE.md rule 11)
+- Server: no new packets, entity spawns or chunk loads. The Bullet and Edict reuse the creatures they already touch; the Cleave adds one debt lookup per hit; the toll is one 1-box query when a Verdict field ends naturally, at most the field's target cap. Worst case per press unchanged except one extra blow per creature already queried.
+- Client: at most 100 quads / 400 vertices per effect (the engine cap). Measured worst cases with models on: Bullet 49 quads, Cleave 73, Field 90, Edict 71, Cross 76 (Sigil unchanged, 17). Every model asks the budget first and is skipped whole; no allocation per frame; models are drawn only within 64 blocks.
+
+### Not included
+- Not played in a real game, previews are headless only. Known weaknesses: the guillotine tang is a bit long and the blade is thin from the side; the lance body vanishes into the bright beam core (its gold barbs carry it); the scales, tablet and sword turn by a fixed yaw and can look like billboards when you walk around them; the rising tablet is not clipped by terrain; the sword looks slim and grey before the boom. The optional sigil model was not built.
+
 ## [3.20.0] — Master toggle for the five Ultimates, Hercules 3D models and stronger abilities
 
 ### NEW
