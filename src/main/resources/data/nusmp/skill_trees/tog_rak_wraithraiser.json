@@ -1,0 +1,1234 @@
+{
+  "magic": "tower_of_god",
+  "franchise": "tower_of_god",
+  "name": "Rak Wraithraiser",
+  "desc": "Rak Wraithraiser, the loud and proud Spear Bearer of the Wraithraiser giants: spears thrown like thunderbolts, the Mad Shocker from the Workshop and a Compression Licenser's trick of shrinking to a handy size and growing back in the middle of a fight.",
+  "book": "nusmp:tog_rak_wraithraiser_book",
+  "book_name": "A Giant's Guide to Throwing Spears",
+  "book_lore": "Page one, in huge letters: if you can hear him, you are already in range.",
+  "color": "#44AAFF",
+  "icon": "minecraft:trident",
+  "class_id": "tog_rak_wraithraiser",
+  "duplicate_sp": 3,
+  "loot_weight": 1,
+  "nodes": [
+    {
+      "id": "giant_s_stance",
+      "name": "Giant's Stance",
+      "desc": "Stand at your full Wraithraiser height: your blows land hard and push foes back, but you are slower on your feet.",
+      "parents": [],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "SPIRIT_AURA"
+      },
+      "values": {
+        "damage_pct": [
+          0.16,
+          0.192,
+          0.224
+        ],
+        "armor": [
+          1.0,
+          1.25,
+          1.5
+        ],
+        "speed_pct": [
+          -0.06,
+          -0.072,
+          -0.084
+        ],
+        "knockback_res": [
+          0,
+          0,
+          0
+        ],
+        "regen": [
+          0,
+          0,
+          0
+        ],
+        "crit_chance": [
+          0,
+          0,
+          0
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 0,
+      "icon": "minecraft:iron_block"
+    },
+    {
+      "id": "compressed_guard",
+      "name": "Compressed Guard",
+      "desc": "Compress yourself to a small, dense frame: nimble and hard to hit, but you give up some power.",
+      "parents": [
+        {
+          "node": "giant_s_stance",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "WIND_RING"
+      },
+      "values": {
+        "damage_pct": [
+          -0.08,
+          -0.096,
+          -0.112
+        ],
+        "armor": [
+          3.0,
+          3.75,
+          4.5
+        ],
+        "speed_pct": [
+          0.1,
+          0.12,
+          0.14
+        ],
+        "knockback_res": [
+          0.25,
+          0.3,
+          0.35
+        ],
+        "regen": [
+          0,
+          0,
+          0
+        ],
+        "crit_chance": [
+          0,
+          0,
+          0
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 2,
+      "icon": "minecraft:iron_nugget"
+    },
+    {
+      "id": "wraithraiser_frame",
+      "name": "Wraithraiser Frame",
+      "desc": "A giant's body holds a great deal of life.",
+      "parents": [
+        {
+          "node": "giant_s_stance",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "max_health",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          3.0,
+          3.75,
+          4.5,
+          5.25,
+          6.0
+        ]
+      },
+      "x": 2,
+      "y": 0,
+      "icon": "minecraft:turtle_helmet"
+    },
+    {
+      "id": "spear_thrower_s_arm",
+      "name": "Spear Thrower's Arm",
+      "desc": "Years of throwing give your blows weight.",
+      "parents": [
+        {
+          "node": "compressed_guard",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "attack_damage",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          1.0,
+          1.25,
+          1.5,
+          1.75,
+          2.0
+        ]
+      },
+      "x": 2,
+      "y": 2,
+      "icon": "minecraft:arrow"
+    },
+    {
+      "id": "long_reach",
+      "name": "Long Reach",
+      "desc": "A Spear Bearer fights from the far side of the room.",
+      "parents": [
+        {
+          "node": "giant_s_stance",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "entity_interaction_range",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          0.5,
+          0.625,
+          0.75,
+          0.875,
+          1.0
+        ]
+      },
+      "x": 2,
+      "y": 4,
+      "icon": "minecraft:stick"
+    },
+    {
+      "id": "giant_s_stomp",
+      "name": "Giant's Stomp",
+      "desc": "Heavy feet land softly.",
+      "parents": [
+        {
+          "node": "compressed_guard",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "safe_fall_distance",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          2.0,
+          2.5,
+          3.0,
+          3.5,
+          4.0
+        ]
+      },
+      "x": 2,
+      "y": 6,
+      "icon": "minecraft:turtle_scute"
+    },
+    {
+      "id": "spear_throw",
+      "name": "Spear Throw",
+      "desc": "Hurl a spear in a straight line through everything in front of you.",
+      "parents": [
+        {
+          "node": "giant_s_stance",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "ray_shot",
+      "params": {
+        "vfx": "LIGHTNING_SPEAR"
+      },
+      "values": {
+        "damage": [
+          9.0,
+          11.25,
+          13.5,
+          15.75
+        ],
+        "range": [
+          22.0,
+          24.2,
+          26.4,
+          28.6
+        ],
+        "pierce": [
+          3.0,
+          4.0,
+          5.0,
+          6.0
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          120.0,
+          110.0,
+          101.0,
+          91.0
+        ]
+      },
+      "x": 4,
+      "y": 0,
+      "icon": "minecraft:trident"
+    },
+    {
+      "id": "mad_shocker_strike",
+      "name": "Mad Shocker Strike",
+      "desc": "Throw the Mad Shocker high and let it drop on the place you look at with a crack of lightning.",
+      "parents": [
+        {
+          "node": "compressed_guard",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "meteor_drop",
+      "params": {
+        "vfx": "LIGHTNING_SPEAR"
+      },
+      "values": {
+        "delay": [
+          20.0,
+          19.0,
+          18.0,
+          17.0
+        ],
+        "damage": [
+          14.0,
+          17.5,
+          21.0,
+          24.5
+        ],
+        "radius": [
+          4.5,
+          4.95,
+          5.4,
+          5.85
+        ],
+        "range": [
+          18.0,
+          19.44,
+          20.88,
+          22.32
+        ],
+        "cost": [
+          0.03,
+          0.0324,
+          0.0348,
+          0.0372
+        ],
+        "cooldown": [
+          360.0,
+          331.0,
+          302.0,
+          274.0
+        ]
+      },
+      "x": 4,
+      "y": 2,
+      "icon": "minecraft:lightning_rod"
+    },
+    {
+      "id": "giant_form",
+      "name": "Giant Form",
+      "desc": "Grow to full size: you hit harder and shrug off blows for a while.",
+      "parents": [
+        {
+          "node": "spear_throw",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "buff_self",
+      "params": {
+        "effect": "strength",
+        "effect2": "resistance",
+        "vfx": "SPIRIT_AURA"
+      },
+      "values": {
+        "seconds": [
+          14.0,
+          16.0,
+          18.0,
+          20.0
+        ],
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "amp2": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          400.0,
+          376.0,
+          352.0,
+          328.0
+        ]
+      },
+      "x": 6,
+      "y": 0,
+      "icon": "minecraft:copper_ingot"
+    },
+    {
+      "id": "spear_bearer_s_boast",
+      "name": "Spear Bearer's Boast",
+      "desc": "Roar your name across the field: hostile creatures near you turn on you.",
+      "parents": [
+        {
+          "node": "mad_shocker_strike",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "taunt",
+      "params": {
+        "vfx": "WIND_RING"
+      },
+      "values": {
+        "radius": [
+          9.0,
+          9.9,
+          10.8,
+          11.7
+        ],
+        "targets": [
+          6.0,
+          8.0,
+          11.0,
+          13.0
+        ],
+        "resist_seconds": [
+          3.0,
+          4.0,
+          4.0,
+          5.0
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          200.0,
+          184.0,
+          168.0,
+          152.0
+        ]
+      },
+      "x": 6,
+      "y": 2,
+      "icon": "minecraft:goat_horn"
+    },
+    {
+      "id": "compression_step",
+      "name": "Compression Step",
+      "desc": "Shrink, slip forward a short way and grow back to size.",
+      "parents": [
+        {
+          "node": "giant_form",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "blink",
+      "params": {
+        "vfx": "SPATIAL_RIFT"
+      },
+      "values": {
+        "distance": [
+          10.0,
+          11.2,
+          12.4,
+          13.6
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          140.0,
+          129.0,
+          118.0,
+          106.0
+        ]
+      },
+      "x": 8,
+      "y": 0,
+      "icon": "minecraft:ender_pearl"
+    },
+    {
+      "id": "spear_throw_shift",
+      "name": "Spear Throw: Shift",
+      "desc": "Loose a volley of spears at the foe you look at.",
+      "parents": [
+        {
+          "node": "spear_bearer_s_boast",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "barrage",
+      "params": {
+        "vfx": "LIGHTNING_SPEAR"
+      },
+      "values": {
+        "damage": [
+          3.0,
+          3.75,
+          4.5,
+          5.25
+        ],
+        "shots": [
+          7.0,
+          9.0,
+          12.0,
+          14.0
+        ],
+        "range": [
+          18.0,
+          19.44,
+          20.88,
+          22.32
+        ],
+        "interval": [
+          3.0,
+          3.0,
+          3.0,
+          3.0
+        ],
+        "cost": [
+          0.025,
+          0.027,
+          0.029,
+          0.031
+        ],
+        "cooldown": [
+          240.0,
+          221.0,
+          202.0,
+          182.0
+        ]
+      },
+      "x": 8,
+      "y": 2,
+      "icon": "minecraft:arrow"
+    },
+    {
+      "id": "mad_shocker_shift",
+      "name": "Mad Shocker: Shift",
+      "desc": "Slam the Mad Shocker into the ground: a ring of shock freezes the foes around you in place.",
+      "parents": [
+        {
+          "node": "compression_step",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "stun_ring",
+      "params": {
+        "vfx": "LIGHTNING_FIEND"
+      },
+      "values": {
+        "radius": [
+          4.5,
+          4.95,
+          5.4,
+          5.85
+        ],
+        "seconds": [
+          2.0,
+          2.0,
+          3.0,
+          3.0
+        ],
+        "targets": [
+          6.0,
+          8.0,
+          11.0,
+          13.0
+        ],
+        "cost": [
+          0.025,
+          0.027,
+          0.029,
+          0.031
+        ],
+        "cooldown": [
+          300.0,
+          276.0,
+          252.0,
+          228.0
+        ]
+      },
+      "x": 10,
+      "y": 0,
+      "icon": "minecraft:copper_block"
+    },
+    {
+      "id": "compression_shift",
+      "name": "Compression: Shift",
+      "desc": "Shrink, jump, then grow back mid-fall: a Wraithraiser crashes down on the foes below.",
+      "parents": [
+        {
+          "node": "spear_throw_shift",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "leap_slam",
+      "params": {
+        "vfx": "STONE_SPIKES"
+      },
+      "values": {
+        "height": [
+          1.1,
+          1.188,
+          1.276,
+          1.364
+        ],
+        "damage": [
+          10.0,
+          12.5,
+          15.0,
+          17.5
+        ],
+        "radius": [
+          4.5,
+          4.95,
+          5.4,
+          5.85
+        ],
+        "knockback": [
+          1.2,
+          1.32,
+          1.44,
+          1.56
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          200.0,
+          184.0,
+          168.0,
+          152.0
+        ]
+      },
+      "x": 10,
+      "y": 6,
+      "icon": "minecraft:anvil"
+    },
+    {
+      "id": "shock_left_behind",
+      "name": "Shock Left Behind",
+      "desc": "Your blows leave a charge in the foe: part of the damage is stored and ticks later, and the Ultimate Skill discharges all of it at once.",
+      "parents": [
+        {
+          "node": "spear_throw",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "debt_store",
+      "params": {
+        "vfx": "LIGHTNING_SPEAR"
+      },
+      "values": {
+        "store_pct": [
+          0.3,
+          0.36,
+          0.42,
+          0.48
+        ],
+        "tick_seconds": [
+          3.0,
+          3.0,
+          3.0,
+          3.0
+        ],
+        "max_pct": [
+          0.6,
+          0.6,
+          0.6,
+          0.6
+        ],
+        "hold_seconds": [
+          14.0,
+          14.0,
+          14.0,
+          14.0
+        ]
+      },
+      "x": 10,
+      "y": 2,
+      "icon": "minecraft:lightning_rod",
+      "evolved": {
+        "store_pct": 0.5,
+        "max_pct": 0.9,
+        "hold_seconds": 22
+      }
+    },
+    {
+      "id": "giant_s_heft",
+      "name": "Giant's Heft",
+      "desc": "Your blows may shove the foe back a long way.",
+      "parents": [
+        {
+          "node": "mad_shocker_strike",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "knockback_on_hit",
+      "values": {
+        "strength": [
+          0.5,
+          0.575,
+          0.65,
+          0.725
+        ],
+        "chance": [
+          0.3,
+          0.345,
+          0.39,
+          0.435
+        ]
+      },
+      "x": 10,
+      "y": 4,
+      "icon": "minecraft:piston",
+      "evolved": {
+        "strength": 0.9,
+        "chance": 0.5
+      }
+    },
+    {
+      "id": "thrower_s_eye",
+      "name": "Thrower's Eye",
+      "desc": "Your blows may strike critically.",
+      "parents": [
+        {
+          "node": "giant_form",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "crit",
+      "values": {
+        "chance": [
+          0.1,
+          0.12,
+          0.14,
+          0.16
+        ],
+        "mult": [
+          1.5,
+          1.62,
+          1.74,
+          1.86
+        ]
+      },
+      "x": 12,
+      "y": 0,
+      "icon": "minecraft:spyglass",
+      "evolved": {
+        "chance": 0.22,
+        "mult": 1.9
+      }
+    },
+    {
+      "id": "proud_warrior_s_bravado",
+      "name": "Proud Warrior's Bravado",
+      "desc": "You take less damage while you are in a fight.",
+      "parents": [
+        {
+          "node": "spear_bearer_s_boast",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "reduce_when",
+      "params": {
+        "condition": "in_combat"
+      },
+      "values": {
+        "pct": [
+          0.08,
+          0.096,
+          0.112,
+          0.128
+        ]
+      },
+      "x": 12,
+      "y": 2,
+      "icon": "minecraft:shield"
+    },
+    {
+      "id": "bigger_than_you",
+      "name": "Bigger Than You",
+      "desc": "You deal more damage to bosses.",
+      "parents": [
+        {
+          "node": "compression_step",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "dmg_vs",
+      "params": {
+        "category": "boss"
+      },
+      "values": {
+        "bonus": [
+          0.2,
+          0.24,
+          0.28,
+          0.32
+        ]
+      },
+      "x": 14,
+      "y": 0,
+      "icon": "minecraft:netherite_sword"
+    },
+    {
+      "id": "victory_roar",
+      "name": "Victory Roar",
+      "desc": "Each kill restores some health.",
+      "parents": [
+        {
+          "node": "spear_throw_shift",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "kill_reward",
+      "params": {
+        "effect": "none"
+      },
+      "values": {
+        "heal": [
+          3.0,
+          3.75,
+          4.5,
+          5.25
+        ],
+        "seconds": [
+          4.0,
+          5.0,
+          5.0,
+          6.0
+        ],
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "x": 14,
+      "y": 2,
+      "icon": "minecraft:goat_horn"
+    },
+    {
+      "id": "ancient_endurance",
+      "name": "Ancient Endurance",
+      "desc": "Your wounds close over time, even out of combat.",
+      "parents": [
+        {
+          "node": "mad_shocker_shift",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "mending",
+      "values": {
+        "seconds": [
+          20.0,
+          18.0,
+          16.0,
+          14.0
+        ],
+        "amount": [
+          1,
+          1.25,
+          1.5,
+          1.75
+        ]
+      },
+      "x": 16,
+      "y": 0,
+      "icon": "minecraft:turtle_scute"
+    },
+    {
+      "id": "heavy_landing",
+      "name": "Heavy Landing",
+      "desc": "You take much less fall damage.",
+      "parents": [
+        {
+          "node": "compression_shift",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "fall_guard",
+      "values": {
+        "pct": [
+          0.5,
+          0.6,
+          0.7,
+          0.8
+        ]
+      },
+      "x": 16,
+      "y": 2,
+      "icon": "minecraft:anvil"
+    },
+    {
+      "id": "mad_shocker_thunderclap_throw",
+      "name": "Mad Shocker: Thunderclap Throw",
+      "desc": "Throw the Mad Shocker with the whole body: one great spear of lightning tears through every foe in line.",
+      "parents": [
+        {
+          "node": "compression_shift",
+          "level": 3
+        },
+        {
+          "node": "heavy_landing",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "ray_shot",
+      "params": {
+        "vfx": "LIGHTNING_SPEAR"
+      },
+      "values": {
+        "damage": [
+          26.0,
+          32.5,
+          39.0
+        ],
+        "range": [
+          28.0,
+          30.8,
+          33.6
+        ],
+        "pierce": [
+          6.0,
+          6.0,
+          6.0
+        ],
+        "cost": [
+          0.06,
+          0.0648,
+          0.0696
+        ],
+        "cooldown": [
+          1500.0,
+          1380.0,
+          1260.0
+        ]
+      },
+      "x": 16,
+      "y": 4,
+      "icon": "minecraft:trident"
+    },
+    {
+      "id": "mad_shocker",
+      "name": "Mad Shocker",
+      "desc": "Every charge the Mad Shocker left in every foe in range goes off at once: the stored wounds crack out together in a storm of lightning spears.",
+      "parents": [
+        {
+          "node": "mad_shocker_shift",
+          "level": 3
+        },
+        {
+          "node": "ancient_endurance",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "debt_burst",
+      "params": {
+        "vfx": "LIGHTNING_SPEAR"
+      },
+      "values": {
+        "damage": [
+          26.0,
+          32.5,
+          39.0
+        ],
+        "mult": [
+          2.8,
+          3.08,
+          3.36
+        ],
+        "radius": [
+          11.0,
+          12.1,
+          13.2
+        ],
+        "targets": [
+          20.0,
+          20.0,
+          20.0
+        ],
+        "cost": [
+          0.07,
+          0.0756,
+          0.0812
+        ],
+        "cooldown": [
+          13500.0,
+          12420.0,
+          11340.0
+        ]
+      },
+      "x": 16,
+      "y": 6,
+      "icon": "minecraft:lightning_rod",
+      "ultimate": true
+    }
+  ],
+  "evolution": {
+    "requirement": "arts_cast",
+    "count": 700,
+    "text": "Cast the arts of this skill 700 times to throw the Mad Shocker as a true Spear Bearer and awaken the Ultimate Skill.",
+    "ultimate_name": "Ultimate Skill, Mad Shocker"
+  }
+}
