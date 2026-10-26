@@ -15,6 +15,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.common.util.FakePlayer;
+import net.neoforged.neoforge.common.damagesource.DamageContainer;
 import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
 
 import java.io.InputStream;
@@ -161,12 +162,12 @@ public final class JibrilSelfTests {
             // Word of Law: the blow is negated and comes back (the handler is driven directly: a stand-in player is invulnerable to a real hit)
             float zBefore = z.getHealth();
             JudgmentState.write(p, JudgmentState.compose(3, 0, false));
-            var plain = new LivingIncomingDamageEvent(p, sl.damageSources().mobAttack(z), 6f);
+            var plain = new LivingIncomingDamageEvent(p, new DamageContainer(sl.damageSources().mobAttack(z), 6f));
             JibrilEvents.onIncoming(plain);
             if (plain.isCanceled()) return Result.fail("a blow was parried without a parry window");
             JibrilState.openParry(p, 40);
             if (!JibrilState.parrying(p)) return Result.fail("the parry window did not open");
-            var parried = new LivingIncomingDamageEvent(p, sl.damageSources().mobAttack(z), 6f);
+            var parried = new LivingIncomingDamageEvent(p, new DamageContainer(sl.damageSources().mobAttack(z), 6f));
             JibrilEvents.onIncoming(parried);
             boolean closed = !JibrilState.parrying(p);
             float zAfter = z.getHealth();
