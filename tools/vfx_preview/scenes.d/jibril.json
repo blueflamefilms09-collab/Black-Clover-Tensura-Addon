@@ -1,5 +1,5 @@
 {
- "_comment": "Jibril, Lord of Rigor (JibrilLayer): the eight JIBRIL_* shapes. A dusk sky so the white-gold light, the pale sky-blue shadow and the ivory feathers all read; a figure is the caster / target (1.8 tall).",
+ "_comment": "Jibril, Lord of Rigor (JibrilLayer, 3.16 'dawn / law of the sky' look): the eight JIBRIL_* shapes. A dusk sky so the pearl and rose-gold light, the prismatic rim and the lavender shadow all read; a figure is the caster / target (1.8 tall). Frames are chosen to show the stages: anticipation, strike / lock, resolve, afterglow.",
  "jibril_command": {
   "layer": "JibrilLayer",
   "shape": "JIBRIL_COMMAND",
@@ -842,6 +842,189 @@
     0,
     0,
     0,
+    1.8
+   ]
+  ]
+ },
+ "jibril_command_close": {
+  "layer": "JibrilLayer",
+  "shape": "JIBRIL_COMMAND",
+  "from": [
+   0,
+   0.9,
+   0
+  ],
+  "to": [
+   0,
+   0.9,
+   0
+  ],
+  "power": 1.5,
+  "duration": 100,
+  "sky": [
+   0.1,
+   0.14,
+   0.27
+  ],
+  "horizon": [
+   0.36,
+   0.42,
+   0.58
+  ],
+  "floor": [
+   0.22,
+   0.24,
+   0.3
+  ],
+  "cam": [
+   2.0,
+   1.6,
+   -3.6
+  ],
+  "target": [
+   0,
+   1.4,
+   0
+  ],
+  "ages": [
+   3,
+   7,
+   9,
+   11,
+   20,
+   50,
+   88,
+   96
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "jibril_word_close": {
+  "layer": "JibrilLayer",
+  "shape": "JIBRIL_WORD",
+  "from": [
+   0,
+   0.9,
+   0
+  ],
+  "to": [
+   0,
+   0.9,
+   0
+  ],
+  "power": 1.8,
+  "duration": 14,
+  "sky": [
+   0.1,
+   0.14,
+   0.27
+  ],
+  "horizon": [
+   0.36,
+   0.42,
+   0.58
+  ],
+  "floor": [
+   0.22,
+   0.24,
+   0.3
+  ],
+  "cam": [
+   1.0,
+   1.4,
+   -4.4
+  ],
+  "target": [
+   0,
+   1.1,
+   0.6
+  ],
+  "ages": [
+   0.5,
+   1.5,
+   2.5,
+   4,
+   6,
+   9,
+   12,
+   13.5
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ]
+ },
+ "jibril_reflect_close": {
+  "layer": "JibrilLayer",
+  "shape": "JIBRIL_REFLECT",
+  "from": [
+   0,
+   0.9,
+   0
+  ],
+  "to": [
+   14,
+   1.2,
+   3
+  ],
+  "power": 1,
+  "duration": 14,
+  "sky": [
+   0.1,
+   0.14,
+   0.27
+  ],
+  "horizon": [
+   0.36,
+   0.42,
+   0.58
+  ],
+  "floor": [
+   0.22,
+   0.24,
+   0.3
+  ],
+  "cam": [
+   1.5,
+   1.8,
+   -3.2
+  ],
+  "target": [
+   1.5,
+   1.2,
+   0.5
+  ],
+  "ages": [
+   1,
+   3,
+   5,
+   7,
+   8,
+   9,
+   11,
+   13
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ],
+   [
+    14,
+    0,
+    3,
     1.8
    ]
   ]

@@ -64,7 +64,7 @@ class JibrilShapesTest {
         Matcher m = Pattern.compile("t\\(\"(jibril_[a-z_]+)\"\\)").matcher(layer());
         TreeSet<String> names = new TreeSet<>();
         while (m.find()) names.add(m.group(1));
-        assertTrue(names.size() >= 14, "the layer names its textures: " + names);
+        assertTrue(names.size() >= 22, "the layer names its textures: " + names);
         List<String> bad = new ArrayList<>();
         for (String n : names) {
             Path p = TEX.resolve(n + ".png");
@@ -118,8 +118,8 @@ class JibrilShapesTest {
         Matcher w = Pattern.compile("case JIBRIL_WINGS -> (\\d+);").matcher(m.group(1));
         assertTrue(k.find() && w.find(), "Kingdom and Wings have a budget of their own");
         int kb = Integer.parseInt(k.group(1)), wb = Integer.parseInt(w.group(1));
-        assertTrue(kb > 0 && kb <= 160, "Kingdom is cheap: " + kb + " vertices");
-        assertTrue(wb > 0 && wb <= 160, "Wings are cheap: " + wb + " vertices");
+        assertTrue(kb > 0 && kb <= 200, "Kingdom is cheap: " + kb + " vertices");
+        assertTrue(wb > 0 && wb <= 200, "Wings are cheap: " + wb + " vertices");
         assertTrue(m.group(1).contains("default -> VfxVertexBuffer.MAX_VERTICES_PER_ACTIVATION"), "every other effect uses the usual cap");
     }
 
@@ -138,11 +138,25 @@ class JibrilShapesTest {
         int found = 0;
         while (m.find()) {
             found++;
-            assertTrue(Integer.parseInt(m.group(1)) <= 12, "a count above 12 at full detail: " + m.group());
+            assertTrue(Integer.parseInt(m.group(1)) <= 16, "a count above 16 at full detail: " + m.group());
             assertTrue(Integer.parseInt(m.group(2)) <= Integer.parseInt(m.group(1)), "min above full: " + m.group());
         }
-        assertTrue(found >= 15, "the layer thins its counts through ctx.seg (" + found + ")");
+        assertTrue(found >= 25, "the layer thins its counts through ctx.seg (" + found + ")");
         assertTrue(layer().contains("Worst case quads per effect per frame"), "the class comment states the worst case");
+    }
+
+    @Test
+    void theDawnLookHasItsOwnTexturesAndNothingOfSandalphon() throws IOException {
+        String src = layer();
+        for (String n : List.of("jibril_scroll", "jibril_emblem", "jibril_petal", "jibril_ribbon", "jibril_spiral", "jibril_prism"))
+            assertTrue(src.contains("\"" + n + "\""), "the dawn look uses " + n);
+        for (String n : List.of("jibril_glyph", "jibril_seal", "jibril_wing")) {
+            BufferedImage img = ImageIO.read(TEX.resolve(n + ".png").toFile());
+            assertTrue(Math.max(img.getWidth(), img.getHeight()) >= 1024, n + " is drawn at 1024 px");
+        }
+        String code = code();
+        assertFalse(code.contains("JudgmentLayer") || code.contains("TrialLayer"), "Jibril does not borrow Sandalphon or Trial drawing code");
+        assertFalse(Pattern.compile("t\\(\"(judgment|trial)_").matcher(code).find(), "no Sandalphon or Trial texture");
     }
 
     @Test

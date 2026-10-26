@@ -1,5 +1,32 @@
 # Changelog
 
+## [3.16.0] — Jibril's new look: the "dawn" VFX, about five times richer
+
+### NEW
+- **A new look for all eight Jibril effects** (owner request: "make Jibril VFX look slightly different than Sandalphon VFX, also upgrade the VFX by 5x"). Sandalphon is cold white-gold with black cracks, clock rings, a hexagram and a cross; Jibril is now **dawn**: a pearl-white core, rose-gold and amber warmth, azure-to-lavender shadow and an iridescent rim that cycles pink, gold, aqua and violet. Motifs: layered feather wings, nested halos with orbiting feathers, law banners, ribbons and unrolling scrolls of script, an open book under a crown of rays, a braided pillar with falling petals. Nothing of Sandalphon's cracks, clocks, hexagram, steel grey or cross, no scales-and-sword emblem, and none of Israfil's cyan maze.
+- **"5x" is meant as richness, not quads** (the engine's cap of 100 quads per effect is the shared performance budget, rule 11): every effect now plays at least five staged layers (anticipation, strike or lock, resolve, afterglow), the big textures (glyph, seal, wing) are 1024 px and the rest 2-4x larger, and the motion is richer (scrolling shimmer, staggered feather and petal fall, easing, flat and camera-facing layers mixed). Quads about doubled: worst frame Command 73, Judgment 69, Purge 60, Shackles 70, Word 59, Reflect 58, Kingdom 41 and Wings 45 (82 and 90 for the 20 ticks a re-send overlaps), all under the cap of 100.
+- Six new textures (`jibril_scroll`, `_emblem`, `_petal`, `_ribbon`, `_spiral`, `_prism`; 22 in all) and three new preview scenes (`jibril_command_close`, `_word_close`, `_reflect_close`).
+
+### REPLACED
+- The 3.15.0 white-gold look of the eight Jibril effects: the layer code `JibrilLayer` is rewritten and the 16 `jibril_*.png` textures are redrawn under the same names (owner request). Nothing else changes: the eight `JIBRIL_*` shapes, their packets and every number of the skill are the same, so the server and the network are untouched.
+
+### KEPT
+- Everything of 3.15.0 (all ten modes, the numbers, the settings, the icon), Sandalphon's and Israfil's effects, and the Time Magic VFX (untouched).
+
+### Cost
+- Client only. No new packet, no server work, nothing kept between frames, no per-frame collection allocation; repeated elements thin through `ctx.seg` and decorative extras are distance-culled. The Kingdom and the wings ask for a vertex budget of 200 (50 quads each) so two overlapping re-sends stay at 100. The texture set is about 20 MB of video memory.
+
+### Checked
+- `JibrilShapesTest` (updated to the new budgets, six new textures used, nothing borrowed from Sandalphon or the Trial layer), `TrialShapesTest`, `PerfSourceScanTest` and the particle / texture tests; the full sweep against the clean 3.15.0 tree (see the report). Previews, including a Jibril-next-to-Sandalphon sheet, were sent to the owner.
+
+### Not included
+- The skill icon (`jibril.png`) still shows scales of law; redraw it in the dawn palette? Nothing was seen in a real game: the preview has no depth against blocks, no lighting and no post-processing, and it cannot show how the wings sit behind a real player or which way the Word of Law glyph faces. Word's middle frames are the brightest moment, the Kingdom curtains read a little faint, and the Command lock flash saturates for about one tick.
+- Solomon and Hercules (3.17.0, 3.18.0).
+
+### Decisions for the owner
+- Redraw the skill icon in the dawn palette?
+- Purge, Word and Reflect use 58-60 quads of the 100 available; push them closer to 90?
+
 ## [3.15.0] — Jibril, Lord of Rigor
 
 ### NEW

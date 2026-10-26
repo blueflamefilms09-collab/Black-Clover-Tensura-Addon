@@ -799,7 +799,7 @@ def paint_feather(acc_rgb, acc_a, left, right, centre, W, H, ss, tint_base, tint
     dx, dy = cx1 - cx0, cy1 - cy0
     L2 = dx * dx + dy * dy
     s = np.clip(((xx - cx0) * dx + (yy - cy0) * dy) / L2, 0, 1)
-    body = lerp3(tint_base, tint_tip, smooth(0.0, 0.8, s))
+    body = lerp3(tint_base, tint_tip, smooth(0.0, 0.62, s))
     body = body * shade + col(SHADOW) * (1 - shade) * 0.55
     rim_c = iris(hue0 + s * 0.85, 0.12)
     rgb = body * (1 - edge[..., None] * rim_amt) + rim_c * edge[..., None] * rim_amt
@@ -812,7 +812,7 @@ def paint_feather(acc_rgb, acc_a, left, right, centre, W, H, ss, tint_base, tint
     sub_rgb = acc_rgb[y0:y1, x0:x1]
     sub_a = acc_a[y0:y1, x0:x1]
     shadow = np.clip(blur(fill, 2.4 * (W / 512.0) ** 0.5) * 0.55 - fill * 0.55, 0, 1) * np.clip(sub_a, 0, 1) * shade_strength
-    sub_rgb[:] = sub_rgb * (1 - shadow[..., None]) + (col(LAV) * 0.55 + col(SHADOW) * 0.45) * 0.6 * shadow[..., None]
+    sub_rgb[:] = sub_rgb * (1 - shadow[..., None] * 1.15) + (col(LAV) * 0.5 + col(SHADOW) * 0.5) * 0.55 * shadow[..., None] * 1.15
     sub_rgb[:] = rgb * al[..., None] + sub_rgb * (1 - al[..., None])
     sub_a[:] = al + sub_a * (1 - al)
 
@@ -852,7 +852,7 @@ def wing(w=1024, h=512, ss=2):
         tipx = 0.10 + 0.84 * f ** 0.85
         tipy = 0.97 - 0.52 * f ** 1.15
         left, right, centre = feather_mask((bx * W, by * H + 4), (tipx * W, tipy * H), 12.0 * k * 1.5, -0.12 + 0.14 * f, ss)
-        paint_feather(acc_rgb, acc_a, left, right, centre, W, H, ss, PEACH, LAV, 0.02 + 0.5 * f, 0.62, 0.9)
+        paint_feather(acc_rgb, acc_a, left, right, centre, W, H, ss, (238, 170, 170), LAV, 0.02 + 0.5 * f, 0.55, 1.0)
     # the long feathers, drawn from the inner one (hanging) to the outer one (the longest, pointing out) so the outer ones lie on top
     nl = 16
     for i in range(nl):
@@ -864,7 +864,7 @@ def wing(w=1024, h=512, ss=2):
         tip = (tipx * W, tipy * H)
         wm = (13.0 + 7.0 * math.sin(math.pi * min(1.0, f * 0.85 + 0.15))) * k * 1.5
         left, right, centre = feather_mask(base, tip, wm, -0.10 + 0.14 * f + rng.uniform(-0.02, 0.02), ss)
-        paint_feather(acc_rgb, acc_a, left, right, centre, W, H, ss, PEACH, PEARL, 0.0 + 0.9 * f, 0.90 + 0.10 * f)
+        paint_feather(acc_rgb, acc_a, left, right, centre, W, H, ss, (250, 184, 160), PEARL, 0.0 + 0.9 * f, 0.84 + 0.16 * f)
     # a second, shorter row between the long ones and the arm: they fill the gaps
     ns = 15
     for i in range(ns):
@@ -873,7 +873,7 @@ def wing(w=1024, h=512, ss=2):
         tipx = bx + 0.04 + 0.16 * f
         tipy = by + 0.50 - 0.17 * f
         left, right, centre = feather_mask((bx * W, by * H + 2), (tipx * W, tipy * H), 11.0 * k * 1.5, -0.08, ss)
-        paint_feather(acc_rgb, acc_a, left, right, centre, W, H, ss, PEARL, WHITE, 0.15 + 0.8 * f, 0.96)
+        paint_feather(acc_rgb, acc_a, left, right, centre, W, H, ss, (255, 206, 186), WHITE, 0.15 + 0.8 * f, 0.92)
     # the coverts: small round feathers over the roots of the long ones
     nc = 24
     for i in range(nc):
@@ -882,7 +882,7 @@ def wing(w=1024, h=512, ss=2):
         tipx = bx + 0.03 + 0.03 * f
         tipy = by + 0.20 - 0.06 * f
         left, right, centre = feather_mask((bx * W, by * H), (tipx * W, tipy * H), 8.0 * k * 1.5, -0.06, ss)
-        paint_feather(acc_rgb, acc_a, left, right, centre, W, H, ss, PEARL, WHITE, 0.3 + 0.7 * f, 1.0, rim_amt=0.5)
+        paint_feather(acc_rgb, acc_a, left, right, centre, W, H, ss, (255, 222, 206), WHITE, 0.3 + 0.7 * f, 0.97, rim_amt=0.55)
     # the leading edge: a thick rose-gold arm with a pearl sheen and a round joint at the wrist
     arm_im, ad = new_mask(W * ss, H * ss)
     pts = [(bez(t / 60)[0] * W * ss, bez(t / 60)[1] * H * ss) for t in range(61)]
