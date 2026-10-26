@@ -34,6 +34,7 @@ class Art:
     kind: str               # catalog.ACTIVE
     params: Dict = field(default_factory=dict)   # numbers override the catalogue base values; strings pick enums (effect, vfx, ...)
     icon: str = "minecraft:blaze_rod"
+    ultimate: bool = False  # 3.26.0: the Ultimate Evolution art (only the LAST finisher of a line that has `evolution`)
 
 
 @dataclass
@@ -43,6 +44,7 @@ class Pas:
     kind: str               # catalog.PASSIVE
     params: Dict = field(default_factory=dict)
     icon: str = "minecraft:amethyst_shard"
+    evolved: Dict = field(default_factory=dict)  # 3.26.0: params that replace the passive's numbers once the line has evolved (same names as `params`, same ranges)
 
 
 @dataclass
@@ -62,6 +64,7 @@ class Line:
     passives: List[Pas] = field(default_factory=list)        # 6 to 8
     finishers: List[Art] = field(default_factory=list)       # 2 (the ultimate techniques)
     loot_weight: int = 1
+    evolution: Optional[Dict] = None  # 3.26.0: {"requirement": kind, "count": N, "text": "...", "ultimate_name": "..."} (catalog.EVOLUTION)
 
 
 FRANCHISES = {

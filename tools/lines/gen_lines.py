@@ -178,7 +178,23 @@ def build_line(L, problems):
         i_d = nid(p.name)
         pas_ids.append(i_d)
         parent = art_ids[j] if j < len(art_ids) else art_ids[-1]
-        nodes.append(node(i_d, p.name, p.desc, [(parent, 2)], [1 + j // 3, 2 + j // 3, 2 + j // 3, 3 + j // 3], 4, "passive_toggle", p.kind, vals, strs, 10 + 2 * (j // 2), j % 2, p.icon))
+        pn = node(i_d, p.name, p.desc, [(parent, 2)], [1 + j // 3, 2 + j // 3, 2 + j // 3, 3 + j // 3], 4, "passive_toggle", p.kind, vals, strs, 10 + 2 * (j // 2), j % 2, p.icon)
+        if p.evolved:
+            ev = {}
+            spec_p = C.PASSIVE[p.kind]
+            for name, v in p.evolved.items():
+                if name in spec_p["params"]:
+                    lo, hi = spec_p["params"][name][1], spec_p["params"][name][2]
+                    if not isinstance(v, (int, float)) or v < lo - 1e-9 or v > hi + 1e-9:
+                        problems.append("%s passive %s: evolved %s=%s is outside [%s, %s]" % (w, p.name, name, v, lo, hi))
+                elif name in spec_p.get("enums", {}):
+                    if v not in spec_p["enums"][name]:
+                        problems.append("%s passive %s: evolved %s='%s' is not allowed" % (w, p.name, name, v))
+                else:
+                    problems.append("%s passive %s: evolved param '%s' is unknown for this kind" % (w, p.name, name))
+                ev[name] = v
+            pn["evolved"] = ev
+        nodes.append(pn)
     # --- column 4: finishers need three nodes of the two lanes
     for k, f in enumerate(L.finishers):
         if f.kind not in C.ACTIVE:
@@ -190,7 +206,27 @@ def build_line(L, problems):
             problems.append("%s finisher %s: cooldown %s is under 45 s at its last level" % (w, f.name, cd[-1]))
         lane_last = [x for x in art_ids if x][-1 - k] if len(art_ids) > k else art_ids[-1]
         parents = [(lane_last, 3), (pas_ids[-1 - k], 2)]
-        nodes.append(node(nid(f.name), f.name, f.desc, parents, [4, 5, 6], 3, "active_ability", f.kind, vals, strs, 16, 3 + 4 * k, f.icon))
+        fn = node(nid(f.name), f.name, f.desc, parents, [4, 5, 6], 3, "active_ability", f.kind, vals, strs, 16, 3 + 4 * k, f.icon)
+        if f.ultimate:
+            fn["ultimate"] = True
+        nodes.append(fn)
+    ults = [f for f in L.finishers if f.ultimate]
+    if L.evolution is None and ults:
+        problems.append("%s: has an ultimate finisher but no evolution block" % w)
+    if L.evolution is not None:
+        ev = L.evolution
+        if set(ev.keys()) - {"requirement", "count", "text", "ultimate_name", "params"} or not all(k in ev for k in ("requirement", "count", "text", "ultimate_name")):
+            problems.append("%s: evolution needs exactly requirement, count, text, ultimate_name (and optional params)" % w)
+        elif ev["requirement"] not in C.EVOLUTION:
+            problems.append("%s: unknown evolution requirement %s" % (w, ev["requirement"]))
+        elif not isinstance(ev["count"], int) or not 1 <= ev["count"] <= C.EVOLUTION_MAX_COUNT:
+            problems.append("%s: evolution count must be 1..%d" % (w, C.EVOLUTION_MAX_COUNT))
+        else:
+            for name, v in ev.get("params", {}).items():
+                if v not in C.EVOLUTION[ev["requirement"]].get("enums", {}).get(name, []):
+                    problems.append("%s: evolution param %s='%s' is not allowed" % (w, name, v))
+        if len(ults) != 1 or not L.finishers[-1].ultimate:
+            problems.append("%s: exactly one finisher, the LAST one, must be the ultimate" % w)
     check_icon(L.icon, w, problems)
     for n in nodes:
         check_icon(n["icon"], "%s node %s" % (w, n["id"]), problems)
@@ -211,6 +247,8 @@ def build_line(L, problems):
         "book_texture": "nusmp:item/skill_book_3d/%s" % L.franchise,
         "nodes": nodes,
     }
+    if L.evolution is not None:
+        route["evolution"] = dict(L.evolution)
     return route
 
 
@@ -236,7 +274,7 @@ def dump_catalog():
         return {k: {"params": {n: {"base": v[0], "min": v[1], "max": v[2], "grow": v[3]} for n, v in d["params"].items()},
                     "enums": {n: a for n, a in d.get("enums", {}).items()}, "desc": d["desc"]} for k, d in group.items()}
     data = {"active": spec(C.ACTIVE), "passive": spec(C.PASSIVE), "stance": spec(C.STANCE), "attr": spec(C.ATTR), "backgrounds": C.BACKGROUNDS,
-            "franchises": FRANCHISES, "vfx": C.VFX}
+            "franchises": FRANCHISES, "vfx": C.VFX, "evolution": {k: {"desc": v["desc"], "enums": v.get("enums", {})} for k, v in C.EVOLUTION.items()}}
     text = json.dumps(data, indent=1, ensure_ascii=False) + "\n"
     path = os.path.join(HERE, "catalog.json")
     if "--check" in sys.argv and os.path.exists(path) and open(path, encoding="utf-8").read() != text:

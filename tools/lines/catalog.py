@@ -83,6 +83,9 @@ ACTIVE = {
                      "enums": {"vfx": VFX}, "desc": "For a while, part of the damage you take is thrown back at the attacker."},
     "meteor_drop":  {"params": {"delay": (20, 10, 60, -.05), "damage": (12, 4, 90, .25), "radius": (4, 2, 10, .1), "range": (18, 8, 40, .08), "cost": (.03, .01, .1, .08), "cooldown": (360, 120, 1500, -.08)},
                      "enums": {"vfx": VFX}, "desc": "Call a strike down on the place you look at after a short delay."},
+    # 3.26.0 (Evolution skills): consumes the Debt that the player's own hits stored on foes (see debt_store) and turns it into a burst. docs/skills/evolution_ten.md
+    "debt_burst":   {"params": {"damage": (8, 2, 120, .25), "mult": (1.5, .5, 5.0, .1), "radius": (5, 2, 24, .1), "targets": (5, 1, 20, .4), "cost": (.03, .01, .1, .08), "cooldown": (260, 100, 900, -.08)},
+                     "enums": {"vfx": VFX}, "desc": "Detonate the Debt stored on the foes around you: a blow plus a multiple of all the Debt it consumes."},
 }
 
 PASSIVE = {
@@ -111,6 +114,9 @@ PASSIVE = {
     "knockback_on_hit":  {"params": {"strength": (.4, .1, 1.5, .15), "chance": (.3, .05, 1.0, .15)}, "enums": {}, "desc": "Your blows may shove the foe back."},
     "execute_threshold": {"params": {"threshold": (.2, .1, .4, .1), "bonus": (.5, .2, 3.0, .2)}, "enums": {}, "desc": "You deal much more damage to nearly dead foes."},
     "mending":           {"params": {"seconds": (20, 5, 60, -.1), "amount": (1, 1, 6, .25)}, "enums": {}, "desc": "Your wounds close over time, even out of combat."},
+    # 3.26.0 (Evolution skills): the shared "Debt" mechanic. Hits store a share of their damage on the foe; it ticks later and is consumed by debt_burst arts.
+    "debt_store":        {"params": {"store_pct": (.25, .1, .8, .2), "tick_seconds": (3, 0, 10, 0), "max_pct": (.5, .1, 1.0, 0), "hold_seconds": (12, 4, 30, 0)}, "enums": {"vfx": VFX},
+                          "desc": "Your blows store delayed damage on the foe (Debt). It ticks while it waits, and your Debt arts consume it for a burst."},
 }
 
 STANCE = {"stance": {"params": {"damage_pct": (0, -.5, 1.0, .2), "armor": (0, -10, 20, .25), "speed_pct": (0, -.5, .6, .2), "knockback_res": (0, 0, 1.0, .2), "regen": (0, 0, 3, .2),
@@ -126,3 +132,20 @@ for _group in (ACTIVE, STANCE):
     for _kind in _group.values():
         _b, _lo, _hi, _g = _kind["params"]["cooldown"]
         _kind["params"]["cooldown"] = (_b, _lo, 7200, _g)
+
+# 3.26.0 (Evolution skills): a line may carry {"evolution": {"requirement": <kind>, "count": N, "text": "...", "ultimate_name": "..."}} and ONE finisher flagged "ultimate".
+# The kind names what the engine counts for the player while the skill is owned and switched on; "damage_taken" may carry a damage_kind filter. Counters are capped at count.
+EVOLUTION = {
+    "kills":           {"desc": "Kills made while the skill is on."},
+    "elite_kills":     {"desc": "Kills of elite or boss creatures (a boss tag, or at least 100 maximum health)."},
+    "boss_kills":      {"desc": "Kills of boss creatures."},
+    "damage_dealt":    {"desc": "Damage dealt to hostile creatures while the skill is on."},
+    "damage_taken":    {"desc": "Damage taken (optionally only of one kind: params.damage_kind).", "enums": {"damage_kind": DAMAGE_KINDS + ["any"]}},
+    "lethal_survived": {"desc": "Blows that would have left the player at 2 health or less, survived (at most one every 5 seconds)."},
+    "arts_cast":       {"desc": "Arts of this skill cast."},
+    "ally_buffs":      {"desc": "Allies reached by a buffing or healing art of this skill."},
+}
+EVOLUTION_MAX_COUNT = 1000000
+
+# the Ultimate Evolution art has a cooldown of minutes: widen it for the one kind that carries it
+ACTIVE["debt_burst"]["params"]["cooldown"] = (260, 100, 18000, -.08)
