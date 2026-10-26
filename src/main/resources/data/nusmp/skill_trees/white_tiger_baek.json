@@ -1,0 +1,1276 @@
+{
+  "magic": "solo_leveling",
+  "franchise": "solo_leveling",
+  "name": "Tiger's Claws",
+  "desc": "Baek Yoonho's way of fighting: the White Tiger Guild master turns hands and body into those of a great white beast, reads his prey with the Eyes of the Beast and grows fiercest when the next blow could end him.",
+  "book": "nusmp:white_tiger_baek_book",
+  "book_name": "Field Notes of the White Tiger",
+  "book_lore": "The first rule of the guild: when the claws come out, the allies step back.",
+  "color": "#E8E8F0",
+  "icon": "minecraft:white_wool",
+  "class_id": "white_tiger_baek",
+  "duplicate_sp": 3,
+  "loot_weight": 1,
+  "book_texture": "nusmp:item/skill_book_3d/solo_leveling",
+  "nodes": [
+    {
+      "id": "tiger_form",
+      "name": "Tiger Form",
+      "desc": "Hands and hair turn to the white beast: faster and far harder-hitting, with thinner guard.",
+      "parents": [],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "WIND_SLASH"
+      },
+      "values": {
+        "damage_pct": [
+          0.25,
+          0.3,
+          0.35
+        ],
+        "armor": [
+          -2.0,
+          -2.5,
+          -3.0
+        ],
+        "speed_pct": [
+          0.15,
+          0.18,
+          0.21
+        ],
+        "knockback_res": [
+          0,
+          0,
+          0
+        ],
+        "regen": [
+          0,
+          0,
+          0
+        ],
+        "crit_chance": [
+          0,
+          0,
+          0
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 0,
+      "icon": "minecraft:white_wool"
+    },
+    {
+      "id": "prowl",
+      "name": "Prowl",
+      "desc": "Low and silent: very quick and hard to pin down, but you wear no armour of your own.",
+      "parents": [
+        {
+          "node": "tiger_form",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "WIND_RING"
+      },
+      "values": {
+        "damage_pct": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "armor": [
+          -4.0,
+          -5.0,
+          -6.0
+        ],
+        "speed_pct": [
+          0.22,
+          0.264,
+          0.308
+        ],
+        "knockback_res": [
+          0,
+          0,
+          0
+        ],
+        "regen": [
+          0,
+          0,
+          0
+        ],
+        "crit_chance": [
+          0.08,
+          0.096,
+          0.112
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 2,
+      "icon": "minecraft:rabbit_foot"
+    },
+    {
+      "id": "beast_s_strength",
+      "name": "Beast's Strength",
+      "desc": "The tiger's raw strength in every swing.",
+      "parents": [
+        {
+          "node": "tiger_form",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "attack_damage",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          1.5,
+          1.875,
+          2.25,
+          2.625,
+          3.0
+        ]
+      },
+      "x": 2,
+      "y": 0,
+      "icon": "minecraft:iron_axe"
+    },
+    {
+      "id": "predator_s_gait",
+      "name": "Predator's Gait",
+      "desc": "A hunter's swift stride.",
+      "parents": [
+        {
+          "node": "prowl",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "movement_speed",
+        "op": "mult"
+      },
+      "values": {
+        "amount": [
+          0.04,
+          0.05,
+          0.06,
+          0.07,
+          0.08
+        ]
+      },
+      "x": 2,
+      "y": 2,
+      "icon": "minecraft:leather_boots"
+    },
+    {
+      "id": "guild_master_s_stamina",
+      "name": "Guild Master's Stamina",
+      "desc": "He keeps fighting after a beating that would end others: more maximum health.",
+      "parents": [
+        {
+          "node": "tiger_form",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "max_health",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          3.0,
+          3.75,
+          4.5,
+          5.25,
+          6.0
+        ]
+      },
+      "x": 2,
+      "y": 4,
+      "icon": "minecraft:cooked_porkchop"
+    },
+    {
+      "id": "claw_speed",
+      "name": "Claw Speed",
+      "desc": "Claws that strike twice before you blink.",
+      "parents": [
+        {
+          "node": "prowl",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "attack_speed",
+        "op": "mult"
+      },
+      "values": {
+        "amount": [
+          0.06,
+          0.075,
+          0.09,
+          0.105,
+          0.12
+        ]
+      },
+      "x": 2,
+      "y": 6,
+      "icon": "minecraft:rabbit_foot"
+    },
+    {
+      "id": "claw_slash",
+      "name": "Claw Slash",
+      "desc": "Rake the cone in front of you with claws of white fur and bone.",
+      "parents": [
+        {
+          "node": "tiger_form",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "cone_strike",
+      "params": {
+        "vfx": "WIND_SLASH"
+      },
+      "values": {
+        "damage": [
+          8.0,
+          10.0,
+          12.0,
+          14.0
+        ],
+        "range": [
+          4.0,
+          4.32,
+          4.64,
+          4.96
+        ],
+        "half_angle": [
+          55.0,
+          60.5,
+          66.0,
+          71.5
+        ],
+        "targets": [
+          2.0,
+          3.0,
+          4.0,
+          4.0
+        ],
+        "knockback": [
+          0.4,
+          0.44,
+          0.48,
+          0.52
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          100.0,
+          92.0,
+          84.0,
+          76.0
+        ]
+      },
+      "x": 4,
+      "y": 0,
+      "icon": "minecraft:iron_sword"
+    },
+    {
+      "id": "pounce",
+      "name": "Pounce",
+      "desc": "Spring at the foe and rake everything in the path of the leap.",
+      "parents": [
+        {
+          "node": "prowl",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "dash_strike",
+      "params": {
+        "vfx": "WIND_SLASH"
+      },
+      "values": {
+        "distance": [
+          8.0,
+          8.8,
+          9.6,
+          10.4
+        ],
+        "damage": [
+          9.0,
+          11.25,
+          13.5,
+          15.75
+        ],
+        "targets": [
+          4.0,
+          5.0,
+          6.0,
+          8.0
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          120.0,
+          110.0,
+          101.0,
+          91.0
+        ]
+      },
+      "x": 4,
+      "y": 2,
+      "icon": "minecraft:feather"
+    },
+    {
+      "id": "beast_s_roar",
+      "name": "Beast's Roar",
+      "desc": "A tiger's roar that saps the nerve of all in front of you: slowed and weakened.",
+      "parents": [
+        {
+          "node": "claw_slash",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "debuff_cone",
+      "params": {
+        "effect": "slowness",
+        "effect2": "weakness",
+        "vfx": "WIND_RING"
+      },
+      "values": {
+        "range": [
+          5.0,
+          5.4,
+          5.8,
+          6.2
+        ],
+        "half_angle": [
+          40.0,
+          44.0,
+          48.0,
+          52.0
+        ],
+        "seconds": [
+          6.0,
+          7.0,
+          8.0,
+          9.0
+        ],
+        "amp": [
+          1.0,
+          2.0,
+          2.0,
+          2.0
+        ],
+        "seconds2": [
+          6.0,
+          7.0,
+          8.0,
+          9.0
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          220.0,
+          202.0,
+          185.0,
+          167.0
+        ]
+      },
+      "x": 6,
+      "y": 0,
+      "icon": "minecraft:goat_horn"
+    },
+    {
+      "id": "rending_bleed",
+      "name": "Rending Bleed",
+      "desc": "Tear open the foe in front of you: the weaker it already is, the deeper the claws go.",
+      "parents": [
+        {
+          "node": "pounce",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "execute",
+      "params": {
+        "vfx": "WIND_SLASH"
+      },
+      "values": {
+        "damage": [
+          10.0,
+          12.5,
+          15.0,
+          17.5
+        ],
+        "range": [
+          3.8,
+          4.028,
+          4.256,
+          4.484
+        ],
+        "bonus": [
+          1.0,
+          1.15,
+          1.3,
+          1.45
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          200.0,
+          184.0,
+          168.0,
+          152.0
+        ]
+      },
+      "x": 6,
+      "y": 2,
+      "icon": "minecraft:red_dye"
+    },
+    {
+      "id": "claw_combo_shift",
+      "name": "Claw Combo: Shift",
+      "desc": "Crouching, you whirl and rake everything around you again and again.",
+      "parents": [
+        {
+          "node": "beast_s_roar",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "whirlwind",
+      "params": {
+        "vfx": "WIND_SLASH"
+      },
+      "values": {
+        "damage": [
+          4.0,
+          5.0,
+          6.0,
+          7.0
+        ],
+        "radius": [
+          3.8,
+          4.104,
+          4.408,
+          4.712
+        ],
+        "hits": [
+          6.0,
+          8.0,
+          10.0,
+          11.0
+        ],
+        "interval": [
+          5.0,
+          5.0,
+          5.0,
+          5.0
+        ],
+        "cost": [
+          0.025,
+          0.027,
+          0.029,
+          0.031
+        ],
+        "cooldown": [
+          260.0,
+          239.0,
+          218.0,
+          198.0
+        ]
+      },
+      "x": 8,
+      "y": 0,
+      "icon": "minecraft:iron_axe"
+    },
+    {
+      "id": "pounce_shift",
+      "name": "Pounce: Shift",
+      "desc": "Crouching, you coil and make a huge leap, landing on the foes below with all your weight.",
+      "parents": [
+        {
+          "node": "rending_bleed",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "leap_slam",
+      "params": {
+        "vfx": "WIND_RING"
+      },
+      "values": {
+        "height": [
+          1.4,
+          1.4,
+          1.4,
+          1.4
+        ],
+        "damage": [
+          10.0,
+          12.5,
+          15.0,
+          17.5
+        ],
+        "radius": [
+          3.5,
+          3.85,
+          4.2,
+          4.55
+        ],
+        "knockback": [
+          0.9,
+          0.99,
+          1.08,
+          1.17
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          200.0,
+          184.0,
+          168.0,
+          152.0
+        ]
+      },
+      "x": 8,
+      "y": 2,
+      "icon": "minecraft:rabbit_hide"
+    },
+    {
+      "id": "eyes_of_the_beast",
+      "name": "Eyes of the Beast",
+      "desc": "Yellow slit eyes read the foe you look at: it takes more damage for a while.",
+      "parents": [
+        {
+          "node": "claw_combo_shift",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "mark",
+      "params": {
+        "vfx": "SPIRIT_AURA"
+      },
+      "values": {
+        "range": [
+          20.0,
+          22.0,
+          24.0,
+          26.0
+        ],
+        "seconds": [
+          10.0,
+          12.0,
+          13.0,
+          14.0
+        ],
+        "bonus": [
+          0.35,
+          0.42,
+          0.49,
+          0.56
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          200.0,
+          184.0,
+          168.0,
+          152.0
+        ]
+      },
+      "x": 10,
+      "y": 0,
+      "icon": "minecraft:spider_eye"
+    },
+    {
+      "id": "beast_s_roar_shift",
+      "name": "Beast's Roar: Shift",
+      "desc": "Crouching, the roar becomes a shockwave: creatures around you freeze in place.",
+      "parents": [
+        {
+          "node": "pounce_shift",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "stun_ring",
+      "params": {
+        "vfx": "WIND_RING"
+      },
+      "values": {
+        "radius": [
+          5.0,
+          5.5,
+          6.0,
+          6.5
+        ],
+        "seconds": [
+          2.0,
+          2.0,
+          3.0,
+          3.0
+        ],
+        "targets": [
+          6.0,
+          8.0,
+          11.0,
+          13.0
+        ],
+        "cost": [
+          0.025,
+          0.027,
+          0.029,
+          0.031
+        ],
+        "cooldown": [
+          300.0,
+          276.0,
+          252.0,
+          228.0
+        ]
+      },
+      "x": 10,
+      "y": 6,
+      "icon": "minecraft:white_wool"
+    },
+    {
+      "id": "rending_wounds",
+      "name": "Rending Wounds",
+      "desc": "Your claws leave wounds that bleed later: a share of your damage is stored on the foe (Debt). The Ultimate rips it all open at once.",
+      "parents": [
+        {
+          "node": "claw_slash",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "debt_store",
+      "params": {
+        "vfx": "WIND_SLASH"
+      },
+      "values": {
+        "store_pct": [
+          0.25,
+          0.3,
+          0.35,
+          0.4
+        ],
+        "tick_seconds": [
+          2.0,
+          2.0,
+          2.0,
+          2.0
+        ],
+        "max_pct": [
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ],
+        "hold_seconds": [
+          12.0,
+          12.0,
+          12.0,
+          12.0
+        ]
+      },
+      "x": 10,
+      "y": 2,
+      "icon": "minecraft:redstone",
+      "evolved": {
+        "store_pct": 0.5,
+        "max_pct": 0.8,
+        "hold_seconds": 18
+      }
+    },
+    {
+      "id": "reflexes_of_the_beast",
+      "name": "Reflexes of the Beast",
+      "desc": "Your reflexes are sharp enough to avoid a blow completely.",
+      "parents": [
+        {
+          "node": "pounce",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "dodge",
+      "values": {
+        "chance": [
+          0.1,
+          0.12,
+          0.14,
+          0.16
+        ],
+        "rest": [
+          100.0,
+          90.0,
+          80.0,
+          70.0
+        ]
+      },
+      "x": 10,
+      "y": 4,
+      "icon": "minecraft:rabbit_foot",
+      "evolved": {
+        "chance": 0.22
+      }
+    },
+    {
+      "id": "night_hunter",
+      "name": "Night Hunter",
+      "desc": "At night the beast's eyes see everything.",
+      "parents": [
+        {
+          "node": "beast_s_roar",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "self_effect_when",
+      "params": {
+        "effect": "night_vision",
+        "condition": "night"
+      },
+      "values": {
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "x": 12,
+      "y": 0,
+      "icon": "minecraft:fermented_spider_eye"
+    },
+    {
+      "id": "predator_s_charge",
+      "name": "Predator's Charge",
+      "desc": "You deal more damage while sprinting at your prey.",
+      "parents": [
+        {
+          "node": "rending_bleed",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "sprint_bonus",
+      "values": {
+        "bonus": [
+          0.25,
+          0.3,
+          0.35,
+          0.4
+        ]
+      },
+      "x": 12,
+      "y": 2,
+      "icon": "minecraft:sugar"
+    },
+    {
+      "id": "won_t_stay_down",
+      "name": "Won't Stay Down",
+      "desc": "When a blow would have ended you, the beast shields you for a while.",
+      "parents": [
+        {
+          "node": "claw_combo_shift",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "last_stand",
+      "values": {
+        "threshold": [
+          0.3,
+          0.3,
+          0.3,
+          0.3
+        ],
+        "seconds": [
+          6.0,
+          7.0,
+          8.0,
+          9.0
+        ],
+        "rest": [
+          2400.0,
+          2160.0,
+          1920.0,
+          1680.0
+        ]
+      },
+      "x": 14,
+      "y": 0,
+      "icon": "minecraft:totem_of_undying",
+      "evolved": {
+        "seconds": 11,
+        "rest": 1200
+      }
+    },
+    {
+      "id": "scent_of_blood",
+      "name": "Scent of Blood",
+      "desc": "You deal much more damage to nearly dead foes.",
+      "parents": [
+        {
+          "node": "pounce_shift",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "execute_threshold",
+      "values": {
+        "threshold": [
+          0.25,
+          0.275,
+          0.3,
+          0.325
+        ],
+        "bonus": [
+          0.6,
+          0.72,
+          0.84,
+          0.96
+        ]
+      },
+      "x": 14,
+      "y": 2,
+      "icon": "minecraft:rotten_flesh"
+    },
+    {
+      "id": "relentless_claws",
+      "name": "Relentless Claws",
+      "desc": "Every few blows in a row hit much harder.",
+      "parents": [
+        {
+          "node": "eyes_of_the_beast",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "combo",
+      "values": {
+        "hits": [
+          4.0,
+          4.0,
+          3.0,
+          3.0
+        ],
+        "bonus": [
+          0.5,
+          0.6,
+          0.7,
+          0.8
+        ]
+      },
+      "x": 16,
+      "y": 0,
+      "icon": "minecraft:iron_sword"
+    },
+    {
+      "id": "trophy_of_the_hunt",
+      "name": "Trophy of the Hunt",
+      "desc": "A kill heals you and fills you with speed.",
+      "parents": [
+        {
+          "node": "beast_s_roar_shift",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "kill_reward",
+      "params": {
+        "effect": "speed"
+      },
+      "values": {
+        "heal": [
+          3.0,
+          3.75,
+          4.5,
+          5.25
+        ],
+        "seconds": [
+          5.0,
+          6.0,
+          6.0,
+          7.0
+        ],
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "x": 16,
+      "y": 2,
+      "icon": "minecraft:bone"
+    },
+    {
+      "id": "full_beast_form",
+      "name": "Full Beast Form",
+      "desc": "The transformation completes: for a long while you are far stronger and far faster.",
+      "parents": [
+        {
+          "node": "beast_s_roar_shift",
+          "level": 3
+        },
+        {
+          "node": "trophy_of_the_hunt",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "buff_self",
+      "params": {
+        "effect": "strength",
+        "effect2": "speed",
+        "vfx": "WIND_RING"
+      },
+      "values": {
+        "seconds": [
+          25.0,
+          29.0,
+          32.0
+        ],
+        "amp": [
+          1.0,
+          2.0,
+          2.0
+        ],
+        "amp2": [
+          1.0,
+          2.0,
+          2.0
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174
+        ],
+        "cooldown": [
+          1500.0,
+          1410.0,
+          1320.0
+        ]
+      },
+      "x": 16,
+      "y": 4,
+      "icon": "minecraft:white_banner"
+    },
+    {
+      "id": "white_tiger_awakened",
+      "name": "White Tiger Awakened",
+      "desc": "The beast is fully awake: a huge pounce, then every wound you have opened bursts at once.",
+      "parents": [
+        {
+          "node": "eyes_of_the_beast",
+          "level": 3
+        },
+        {
+          "node": "relentless_claws",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "debt_burst",
+      "params": {
+        "vfx": "WIND_SLASH"
+      },
+      "values": {
+        "damage": [
+          32.0,
+          40.0,
+          48.0
+        ],
+        "mult": [
+          3.0,
+          3.3,
+          3.6
+        ],
+        "radius": [
+          9.0,
+          9.9,
+          10.8
+        ],
+        "targets": [
+          10.0,
+          14.0,
+          18.0
+        ],
+        "cost": [
+          0.07,
+          0.0756,
+          0.0812
+        ],
+        "cooldown": [
+          15000.0,
+          13800.0,
+          12600.0
+        ]
+      },
+      "x": 16,
+      "y": 6,
+      "icon": "minecraft:diamond_axe",
+      "ultimate": true
+    }
+  ],
+  "evolution": {
+    "requirement": "lethal_survived",
+    "count": 15,
+    "text": "Survive 15 blows that would have left you at 2 health or less while Tiger's Claws is switched on to awaken the White Tiger.",
+    "ultimate_name": "Ultimate Skill, White Tiger Awakened"
+  }
+}

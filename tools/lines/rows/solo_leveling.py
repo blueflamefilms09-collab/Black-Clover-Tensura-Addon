@@ -1,4 +1,4 @@
-"""Solo Leveling: 25 unique skill lines (hunter classes, the System, the Shadow Monarch's arts, Monarch powers, Ruler authorities, dagger and assassin techniques).
+"""Solo Leveling: 27 unique skill lines (hunter classes, the System, the Shadow Monarch's arts, Monarch powers, Ruler authorities, dagger and assassin techniques, and two Evolution skills: Antares and Baek Yoonho).
 
 Canon note: names follow the story's vocabulary; every numeric effect and wording is this mod's own design.
 """
@@ -1015,4 +1015,108 @@ LINES.append(Line(
         A("All-Out Assault", "The order everyone has waited for: you and your allies gain a long, strong surge of Strength.", "buff_aura", "minecraft:beacon", effect="strength", radius=14, seconds=25, amp=1, cooldown=1600, vfx="MAGIC_CIRCLE"),
         A("Combined Arms Barrage", "Call the whole party's long-range fire onto the spot you look at.", "meteor_drop", "minecraft:tnt", damage=28, radius=7, range=28, cooldown=1400, vfx="FLAME_EXPLOSION"),
     ],
+))
+
+# Evolution rows (3.26.0): like A / P but with the evolved overrides of a passive and the ultimate flag of an art
+def PE(name, desc, kind, icon, evolved, **p):
+    return Pas(name, desc, kind, p, icon, evolved=evolved)
+
+
+def AU(name, desc, kind, icon, **p):
+    return Art(name, desc, kind, p, icon, ultimate=True)
+
+
+# ---------------------------------------------------------------------------------------------------------------------------------- 26 (Evolution skill, 3.26.0: docs/skills/evolution_ten.md row 3)
+LINES.append(Line(
+    id="dragon_king_antares", name="Dragon Monarch's Breath", franchise=F,
+    desc="The power of Antares, Monarch of Destruction and King of Dragons: a roar that breaks the spirit, a breath that erases whatever it touches and a curse that stores every blow for the day the Monarch finally wakes.",
+    color="#ff4a2b", background="blood", icon="minecraft:dragon_head",
+    book_name="Chronicle of the Monarch of Destruction", book_lore="The oldest of the nine never raised his voice. He did not have to; the sky did it for him.",
+    stances=[
+        S("Dragon Monarch's Might", "The Monarch's wrath fills you: much harder blows, but you stop caring about your own guard.", "minecraft:fire_charge", damage_pct=0.35, armor=-3, vfx="FLAME_EXPLOSION"),
+        S("Dragon Hide", "Scales of the oldest dragon cover you: heavy armour you cannot be shoved out of, at the price of a little speed.", "minecraft:netherite_chestplate", armor=6, knockback_res=0.5, speed_pct=-0.08, vfx="EARTH_SPIKES"),
+    ],
+    stats=[
+        T("Monarch's Might", "The strength of the king of dragons in every blow.", "attack_damage", 1.5, "minecraft:netherite_sword"),
+        T("Dragon Heart", "A heart that has outlived empires: more maximum health.", "max_health", 3, "minecraft:enchanted_golden_apple"),
+        T("Draconic Scales", "Scales harder than any plate.", "armor", 1.5, "minecraft:netherite_chestplate"),
+        T("Unshaken Mass", "A body that no blow can shove aside.", "knockback_resistance", 0.12, "minecraft:anvil"),
+    ],
+    arts=[
+        A("Breath of Destruction", "Exhale a cone of annihilating flame that burns everything in front of you.", "cone_strike", "minecraft:dragon_breath", damage=10, range=5, half_angle=55, targets=5, vfx="FLAME_EXPLOSION"),
+        A("Dragon's Fear", "A mana-laden roar that saps the courage of everything in front of you: slowed and weakened.", "debuff_cone", "minecraft:goat_horn", effect="slowness", effect2="weakness", seconds=7, seconds2=7, amp=1, range=6, vfx="DEVIL_CIRCLE"),
+        A("Tail Sweep", "Lash out with a dragon's tail and hurl away everything around you.", "ring_burst", "minecraft:bone", damage=8, radius=4.5, knockback=1.2, targets=6, vfx="FIRE_BURST"),
+        A("Rending Claw", "Rake the foe in front of you and throw it into the air.", "uppercut", "minecraft:blaze_powder", damage=9, launch=0.9, vfx="FIRE_BURST"),
+        A("Breath of Destruction: Shift", "Crouching, the breath narrows into a beam of white-hot destruction that pierces a long line of foes.", "ray_shot", "minecraft:magma_cream", damage=12, range=26, pierce=3, vfx="FIRE_SPIRAL"),
+        A("Wing Dive", "Spread vast wings, climb and crash down in a ball of fire.", "leap_slam", "minecraft:elytra", damage=11, radius=4, height=1.2, knockback=1.2, vfx="FLAME_EXPLOSION"),
+        A("Dragon's Fear: Shift", "Crouching, the roar becomes a hammer: lesser creatures around you are frozen in terror.", "stun_ring", "minecraft:wither_skeleton_skull", radius=6, seconds=2.5, targets=8, vfx="DEVIL_CIRCLE"),
+        A("Tail Sweep: Shift", "Crouching, you spin with the whole body of the dragon and strike all around you several times.", "whirlwind", "minecraft:netherite_axe", damage=5, radius=4.5, hits=5, vfx="FIRE_SPIRAL"),
+    ],
+    passives=[
+        PE("Dragon's Curse", "Your blows store a share of their damage on the foe as a curse (Debt). It ticks while it waits, and the Monarch's Ultimate consumes it.", "debt_store", "minecraft:crying_obsidian",
+           {"store_pct": 0.6, "max_pct": 0.9, "hold_seconds": 20}, store_pct=0.3, tick_seconds=3, max_pct=0.5, hold_seconds=14, vfx="FLAME_EXPLOSION"),
+        P("Dragonhide: Flame", "You take much less fire damage.", "resist", "minecraft:lava_bucket", damage_kind="fire", pct=0.4),
+        PE("Monarch's Presence", "Enemies near you are constantly weakened by the weight of the Monarch's presence.", "aura", "minecraft:wither_rose",
+           {"radius": 9, "amp": 1}, effect="weakness", target="enemies", radius=6),
+        PE("Slayer of Sovereigns", "You deal much more damage to bosses.", "dmg_vs", "minecraft:nether_star", {"bonus": 0.6}, category="boss", bonus=0.3),
+        P("Ancient Fury", "Your blows may strike with the force of an age-old wrath.", "crit", "minecraft:ender_eye", chance=0.12, mult=1.8),
+        P("Ashes of Destruction", "Your blows may wither the foe as if burned to ash.", "on_hit_effect", "minecraft:coal", effect="wither", seconds=4, chance=0.3),
+        P("Scorching Scales", "Part of the damage you take is burned back into the attacker.", "thorns", "minecraft:magma_cream", pct=0.2),
+        P("Last Roar of the King", "When nearly dead the dragon's spirit shields you.", "last_stand", "minecraft:totem_of_undying", seconds=7),
+    ],
+    finishers=[
+        A("Spiritual Body Manifestation", "Your true form rises: for a long while you are mightier and nearly unbreakable.", "buff_self", "minecraft:dragon_egg", effect="strength", effect2="resistance", seconds=30, amp=1, amp2=1, cooldown=1700, vfx="FLAME_EXPLOSION"),
+        AU("Monarch of Destruction", "The Monarch wakes: every curse stored on the foes around you detonates at once in the largest blast of fire in the pack.", "debt_burst", "minecraft:nether_star",
+          damage=50, mult=4.0, radius=14, targets=10, cost=0.08, cooldown=18000, vfx="FLAME_EXPLOSION"),
+    ],
+    evolution={"requirement": "boss_kills", "count": 10,
+               "text": "Slay 10 bosses while Dragon Monarch's Breath is switched on to awaken the Monarch of Destruction.",
+               "ultimate_name": "Ultimate Skill, Monarch of Destruction"},
+))
+
+# ---------------------------------------------------------------------------------------------------------------------------------- 27 (Evolution skill, 3.26.0: docs/skills/evolution_ten.md row 4)
+LINES.append(Line(
+    id="white_tiger_baek", name="Tiger's Claws", franchise=F,
+    desc="Baek Yoonho's way of fighting: the White Tiger Guild master turns hands and body into those of a great white beast, reads his prey with the Eyes of the Beast and grows fiercest when the next blow could end him.",
+    color="#e8e8f0", background="frost", icon="minecraft:white_wool",
+    book_name="Field Notes of the White Tiger", book_lore="The first rule of the guild: when the claws come out, the allies step back.",
+    stances=[
+        S("Tiger Form", "Hands and hair turn to the white beast: faster and far harder-hitting, with thinner guard.", "minecraft:white_wool", damage_pct=0.25, speed_pct=0.15, armor=-2, vfx="WIND_SLASH"),
+        S("Prowl", "Low and silent: very quick and hard to pin down, but you wear no armour of your own.", "minecraft:rabbit_foot", speed_pct=0.22, crit_chance=0.08, armor=-4, vfx="WIND_RING"),
+    ],
+    stats=[
+        T("Beast's Strength", "The tiger's raw strength in every swing.", "attack_damage", 1.5, "minecraft:iron_axe"),
+        T("Predator's Gait", "A hunter's swift stride.", "movement_speed", 0.04, "minecraft:leather_boots", op="mult"),
+        T("Guild Master's Stamina", "He keeps fighting after a beating that would end others: more maximum health.", "max_health", 3, "minecraft:cooked_porkchop"),
+        T("Claw Speed", "Claws that strike twice before you blink.", "attack_speed", 0.06, "minecraft:rabbit_foot", op="mult"),
+    ],
+    arts=[
+        A("Claw Slash", "Rake the cone in front of you with claws of white fur and bone.", "cone_strike", "minecraft:iron_sword", damage=8, range=4, half_angle=55, vfx="WIND_SLASH"),
+        A("Pounce", "Spring at the foe and rake everything in the path of the leap.", "dash_strike", "minecraft:feather", damage=9, distance=8, targets=4, vfx="WIND_SLASH"),
+        A("Beast's Roar", "A tiger's roar that saps the nerve of all in front of you: slowed and weakened.", "debuff_cone", "minecraft:goat_horn", effect="slowness", effect2="weakness", seconds=6, seconds2=6, amp=1, vfx="WIND_RING"),
+        A("Rending Bleed", "Tear open the foe in front of you: the weaker it already is, the deeper the claws go.", "execute", "minecraft:red_dye", damage=10, bonus=1.0, range=3.8, vfx="WIND_SLASH"),
+        A("Claw Combo: Shift", "Crouching, you whirl and rake everything around you again and again.", "whirlwind", "minecraft:iron_axe", damage=4, radius=3.8, hits=6, vfx="WIND_SLASH"),
+        A("Pounce: Shift", "Crouching, you coil and make a huge leap, landing on the foes below with all your weight.", "leap_slam", "minecraft:rabbit_hide", damage=10, radius=3.5, height=1.4, knockback=0.9, vfx="WIND_RING"),
+        A("Eyes of the Beast", "Yellow slit eyes read the foe you look at: it takes more damage for a while.", "mark", "minecraft:spider_eye", range=20, seconds=10, bonus=0.35, vfx="SPIRIT_AURA"),
+        A("Beast's Roar: Shift", "Crouching, the roar becomes a shockwave: creatures around you freeze in place.", "stun_ring", "minecraft:white_wool", radius=5, seconds=2, targets=6, vfx="WIND_RING"),
+    ],
+    passives=[
+        PE("Rending Wounds", "Your claws leave wounds that bleed later: a share of your damage is stored on the foe (Debt). The Ultimate rips it all open at once.", "debt_store", "minecraft:redstone",
+           {"store_pct": 0.5, "max_pct": 0.8, "hold_seconds": 18}, store_pct=0.25, tick_seconds=2, max_pct=0.5, hold_seconds=12, vfx="WIND_SLASH"),
+        PE("Reflexes of the Beast", "Your reflexes are sharp enough to avoid a blow completely.", "dodge", "minecraft:rabbit_foot", {"chance": 0.22}, chance=0.1),
+        P("Night Hunter", "At night the beast's eyes see everything.", "self_effect_when", "minecraft:fermented_spider_eye", effect="night_vision", condition="night"),
+        P("Predator's Charge", "You deal more damage while sprinting at your prey.", "sprint_bonus", "minecraft:sugar", bonus=0.25),
+        PE("Won't Stay Down", "When a blow would have ended you, the beast shields you for a while.", "last_stand", "minecraft:totem_of_undying", {"seconds": 11, "rest": 1200}, seconds=6, rest=2400),
+        P("Scent of Blood", "You deal much more damage to nearly dead foes.", "execute_threshold", "minecraft:rotten_flesh", threshold=0.25, bonus=0.6),
+        P("Relentless Claws", "Every few blows in a row hit much harder.", "combo", "minecraft:iron_sword", hits=4, bonus=0.5),
+        P("Trophy of the Hunt", "A kill heals you and fills you with speed.", "kill_reward", "minecraft:bone", heal=3, effect="speed", seconds=5),
+    ],
+    finishers=[
+        A("Full Beast Form", "The transformation completes: for a long while you are far stronger and far faster.", "buff_self", "minecraft:white_banner", effect="strength", effect2="speed", seconds=25, amp=1, amp2=1, cooldown=1500, vfx="WIND_RING"),
+        AU("White Tiger Awakened", "The beast is fully awake: a huge pounce, then every wound you have opened bursts at once.", "debt_burst", "minecraft:diamond_axe",
+          damage=32, mult=3.0, radius=9, targets=10, cost=0.07, cooldown=15000, vfx="WIND_SLASH"),
+    ],
+    evolution={"requirement": "lethal_survived", "count": 15,
+               "text": "Survive 15 blows that would have left you at 2 health or less while Tiger's Claws is switched on to awaken the White Tiger.",
+               "ultimate_name": "Ultimate Skill, White Tiger Awakened"},
 ))
