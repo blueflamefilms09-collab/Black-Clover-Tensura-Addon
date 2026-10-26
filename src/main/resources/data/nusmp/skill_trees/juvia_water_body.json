@@ -1,0 +1,1166 @@
+{
+  "magic": "fairy_tail",
+  "franchise": "fairy_tail",
+  "name": "Water Body",
+  "desc": "Juvia Lockser's Water Magic: slice with water, wrap foes in bubbles, and let your own body turn to water so the blow that should have killed you passes through. Rain is on your side, and every drop leaves a pressure on the foe until the Great Flood.",
+  "book": "nusmp:juvia_water_body_book",
+  "book_name": "Rain-Woman's Water Primer",
+  "book_lore": "Wherever she went the rain followed. Then one day it stopped, and she found out it had been hers all along.",
+  "color": "#3F8FE0",
+  "icon": "minecraft:heart_of_the_sea",
+  "class_id": "juvia_water_body",
+  "duplicate_sp": 3,
+  "loot_weight": 1,
+  "nodes": [
+    {
+      "id": "water_body_stance",
+      "name": "Water Body Stance",
+      "desc": "Your body flows: you are lighter and faster and strike critically more often, but you wear your guard thin.",
+      "parents": [],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "WATER_RING"
+      },
+      "values": {
+        "damage_pct": [
+          0.06,
+          0.072,
+          0.084
+        ],
+        "armor": [
+          -1.0,
+          -1.25,
+          -1.5
+        ],
+        "speed_pct": [
+          0.08,
+          0.096,
+          0.112
+        ],
+        "knockback_res": [
+          0,
+          0,
+          0
+        ],
+        "regen": [
+          0,
+          0,
+          0
+        ],
+        "crit_chance": [
+          0.08,
+          0.096,
+          0.112
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 0,
+      "icon": "minecraft:water_bucket"
+    },
+    {
+      "id": "rain_woman_s_veil",
+      "name": "Rain-Woman's Veil",
+      "desc": "Let the rain hold you: you heal slowly and are hard to shift, but you hit more softly.",
+      "parents": [
+        {
+          "node": "water_body_stance",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "WATER_BURST"
+      },
+      "values": {
+        "damage_pct": [
+          -0.1,
+          -0.12,
+          -0.14
+        ],
+        "armor": [
+          3.0,
+          3.75,
+          4.5
+        ],
+        "speed_pct": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "knockback_res": [
+          0.3,
+          0.36,
+          0.42
+        ],
+        "regen": [
+          1.5,
+          1.8,
+          2.1
+        ],
+        "crit_chance": [
+          0,
+          0,
+          0
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 2,
+      "icon": "minecraft:kelp"
+    },
+    {
+      "id": "water_woman_s_body",
+      "name": "Water-Woman's Body",
+      "desc": "A body that can flow survives more: more maximum health.",
+      "parents": [
+        {
+          "node": "water_body_stance",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "max_health",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          3.0,
+          3.75,
+          4.5,
+          5.25,
+          6.0
+        ]
+      },
+      "x": 2,
+      "y": 0,
+      "icon": "minecraft:heart_of_the_sea"
+    },
+    {
+      "id": "slicing_currents",
+      "name": "Slicing Currents",
+      "desc": "Water sharpened to cut hits harder.",
+      "parents": [
+        {
+          "node": "rain_woman_s_veil",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "attack_damage",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          1.0,
+          1.25,
+          1.5,
+          1.75,
+          2.0
+        ]
+      },
+      "x": 2,
+      "y": 2,
+      "icon": "minecraft:prismarine_shard"
+    },
+    {
+      "id": "flowing_steps",
+      "name": "Flowing Steps",
+      "desc": "A body that moves like a stream is quick on its feet.",
+      "parents": [
+        {
+          "node": "water_body_stance",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "movement_speed",
+        "op": "mult"
+      },
+      "values": {
+        "amount": [
+          0.04,
+          0.05,
+          0.06,
+          0.07,
+          0.08
+        ]
+      },
+      "x": 2,
+      "y": 4,
+      "icon": "minecraft:leather_boots"
+    },
+    {
+      "id": "water_slice",
+      "name": "Water Slice",
+      "desc": "Whip a blade of pressurised water through the foes in front of you.",
+      "parents": [
+        {
+          "node": "water_body_stance",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "cone_strike",
+      "params": {
+        "vfx": "WATER_BURST"
+      },
+      "values": {
+        "damage": [
+          8.0,
+          10.0,
+          12.0,
+          14.0
+        ],
+        "range": [
+          4.5,
+          4.86,
+          5.22,
+          5.58
+        ],
+        "half_angle": [
+          45.0,
+          49.5,
+          54.0,
+          58.5
+        ],
+        "targets": [
+          4.0,
+          6.0,
+          7.0,
+          9.0
+        ],
+        "knockback": [
+          0.4,
+          0.44,
+          0.48,
+          0.52
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          100.0,
+          92.0,
+          84.0,
+          76.0
+        ]
+      },
+      "x": 4,
+      "y": 0,
+      "icon": "minecraft:prismarine_shard"
+    },
+    {
+      "id": "water_nebula",
+      "name": "Water Nebula",
+      "desc": "A swirling nebula of water bursts around you and hits every foe near you.",
+      "parents": [
+        {
+          "node": "rain_woman_s_veil",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "ring_burst",
+      "params": {
+        "vfx": "WATER_RING"
+      },
+      "values": {
+        "damage": [
+          6.0,
+          7.5,
+          9.0,
+          10.5
+        ],
+        "radius": [
+          4.5,
+          4.95,
+          5.4,
+          5.85
+        ],
+        "targets": [
+          6.0,
+          8.0,
+          11.0,
+          13.0
+        ],
+        "knockback": [
+          1.0,
+          1.1,
+          1.2,
+          1.3
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          140.0,
+          129.0,
+          118.0,
+          106.0
+        ]
+      },
+      "x": 4,
+      "y": 2,
+      "icon": "minecraft:nautilus_shell"
+    },
+    {
+      "id": "water_cyclone",
+      "name": "Water Cyclone",
+      "desc": "Spin in a cyclone of water that hits everything around you again and again.",
+      "parents": [
+        {
+          "node": "water_slice",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "whirlwind",
+      "params": {
+        "vfx": "WATER_RING"
+      },
+      "values": {
+        "damage": [
+          4.0,
+          5.0,
+          6.0,
+          7.0
+        ],
+        "radius": [
+          4.0,
+          4.32,
+          4.64,
+          4.96
+        ],
+        "hits": [
+          6.0,
+          8.0,
+          10.0,
+          11.0
+        ],
+        "interval": [
+          5.0,
+          5.0,
+          5.0,
+          5.0
+        ],
+        "cost": [
+          0.025,
+          0.027,
+          0.029,
+          0.031
+        ],
+        "cooldown": [
+          260.0,
+          239.0,
+          218.0,
+          198.0
+        ]
+      },
+      "x": 6,
+      "y": 0,
+      "icon": "minecraft:conduit"
+    },
+    {
+      "id": "hydro_screw",
+      "name": "Hydro Screw",
+      "desc": "A drill of water bursts up under the foe in front of you and throws it into the air.",
+      "parents": [
+        {
+          "node": "water_nebula",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "uppercut",
+      "params": {
+        "vfx": "WATER_BURST"
+      },
+      "values": {
+        "damage": [
+          8.0,
+          10.0,
+          12.0,
+          14.0
+        ],
+        "range": [
+          3.4,
+          3.604,
+          3.808,
+          4.012
+        ],
+        "launch": [
+          0.9,
+          0.99,
+          1.08,
+          1.17
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          120.0,
+          110.0,
+          101.0,
+          91.0
+        ]
+      },
+      "x": 6,
+      "y": 2,
+      "icon": "minecraft:prismarine_crystals"
+    },
+    {
+      "id": "water_jigsaw",
+      "name": "Water Jigsaw",
+      "desc": "Many thin saws of water cut at the foe you look at.",
+      "parents": [
+        {
+          "node": "water_cyclone",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "barrage",
+      "params": {
+        "vfx": "WATER_BURST"
+      },
+      "values": {
+        "damage": [
+          3.0,
+          3.75,
+          4.5,
+          5.25
+        ],
+        "shots": [
+          6.0,
+          8.0,
+          10.0,
+          12.0
+        ],
+        "range": [
+          14.0,
+          15.12,
+          16.24,
+          17.36
+        ],
+        "interval": [
+          3.0,
+          3.0,
+          3.0,
+          3.0
+        ],
+        "cost": [
+          0.025,
+          0.027,
+          0.029,
+          0.031
+        ],
+        "cooldown": [
+          240.0,
+          221.0,
+          202.0,
+          182.0
+        ]
+      },
+      "x": 8,
+      "y": 0,
+      "icon": "minecraft:cod"
+    },
+    {
+      "id": "water_body",
+      "name": "Water Body",
+      "desc": "Let your body flow: your wounds close and you regenerate for a while.",
+      "parents": [
+        {
+          "node": "hydro_screw",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "heal_self",
+      "params": {
+        "vfx": "WATER_RING"
+      },
+      "values": {
+        "amount": [
+          10.0,
+          12.5,
+          15.0,
+          17.5
+        ],
+        "regen_seconds": [
+          8.0,
+          9.0,
+          10.0,
+          12.0
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          400.0,
+          376.0,
+          352.0,
+          328.0
+        ]
+      },
+      "x": 8,
+      "y": 2,
+      "icon": "minecraft:potion"
+    },
+    {
+      "id": "water_body_shift",
+      "name": "Water Body: Shift",
+      "desc": "Crouch to turn to water and flow a long way ahead.",
+      "parents": [
+        {
+          "node": "water_jigsaw",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "blink",
+      "params": {
+        "vfx": "WATER_BURST"
+      },
+      "values": {
+        "distance": [
+          10.0,
+          11.2,
+          12.4,
+          13.6
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          140.0,
+          129.0,
+          118.0,
+          106.0
+        ]
+      },
+      "x": 10,
+      "y": 2,
+      "icon": "minecraft:pufferfish"
+    },
+    {
+      "id": "water_slice_shift",
+      "name": "Water Slice: Shift",
+      "desc": "Crouch to send the blade along the ground as a wave that cuts everything on it.",
+      "parents": [
+        {
+          "node": "water_body",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "ground_wave",
+      "params": {
+        "vfx": "WATER_BURST"
+      },
+      "values": {
+        "damage": [
+          7.0,
+          8.75,
+          10.5,
+          12.25
+        ],
+        "length": [
+          11.0,
+          12.1,
+          13.2,
+          14.3
+        ],
+        "width": [
+          3.0,
+          3.3,
+          3.6,
+          3.9
+        ],
+        "knockback": [
+          0.5,
+          0.55,
+          0.6,
+          0.65
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          180.0,
+          166.0,
+          151.0,
+          137.0
+        ]
+      },
+      "x": 10,
+      "y": 6,
+      "icon": "minecraft:sea_lantern"
+    },
+    {
+      "id": "drops_left_behind",
+      "name": "Drops Left Behind",
+      "desc": "Your blows leave a pressure of water on the foe (Debt). It builds while it waits, and your Debt arts cash it in.",
+      "parents": [
+        {
+          "node": "water_slice",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "debt_store",
+      "params": {
+        "vfx": "WATER_RING"
+      },
+      "values": {
+        "store_pct": [
+          0.3,
+          0.36,
+          0.42,
+          0.48
+        ],
+        "tick_seconds": [
+          3.0,
+          3.0,
+          3.0,
+          3.0
+        ],
+        "max_pct": [
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ],
+        "hold_seconds": [
+          12.0,
+          12.0,
+          12.0,
+          12.0
+        ]
+      },
+      "x": 10,
+      "y": 0,
+      "icon": "minecraft:lapis_lazuli",
+      "evolved": {
+        "store_pct": 0.5,
+        "max_pct": 0.8
+      }
+    },
+    {
+      "id": "body_of_water",
+      "name": "Body of Water",
+      "desc": "A blow may pass straight through you as if you were water.",
+      "parents": [
+        {
+          "node": "water_nebula",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "dodge",
+      "values": {
+        "chance": [
+          0.1,
+          0.12,
+          0.14,
+          0.16
+        ],
+        "rest": [
+          100.0,
+          90.0,
+          80.0,
+          70.0
+        ]
+      },
+      "x": 10,
+      "y": 4,
+      "icon": "minecraft:glass_bottle",
+      "evolved": {
+        "chance": 0.2
+      }
+    },
+    {
+      "id": "not_yet",
+      "name": "Not Yet",
+      "desc": "When you are close to falling, your body turns to water and briefly shields you.",
+      "parents": [
+        {
+          "node": "water_cyclone",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "last_stand",
+      "values": {
+        "threshold": [
+          0.3,
+          0.3,
+          0.3,
+          0.3
+        ],
+        "seconds": [
+          5.0,
+          6.0,
+          6.0,
+          7.0
+        ],
+        "rest": [
+          1800.0,
+          1620.0,
+          1440.0,
+          1260.0
+        ]
+      },
+      "x": 12,
+      "y": 0,
+      "icon": "minecraft:totem_of_undying"
+    },
+    {
+      "id": "reforming_body",
+      "name": "Reforming Body",
+      "desc": "Your wounds close over time, even out of combat.",
+      "parents": [
+        {
+          "node": "hydro_screw",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "mending",
+      "values": {
+        "seconds": [
+          18.0,
+          16.0,
+          14.0,
+          13.0
+        ],
+        "amount": [
+          1,
+          1.25,
+          1.5,
+          1.75
+        ]
+      },
+      "x": 12,
+      "y": 2,
+      "icon": "minecraft:honey_bottle"
+    },
+    {
+      "id": "rain_woman",
+      "name": "Rain Woman",
+      "desc": "In the rain you feel at home: you heal while it falls.",
+      "parents": [
+        {
+          "node": "water_jigsaw",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "regen_when",
+      "params": {
+        "condition": "raining"
+      },
+      "values": {
+        "per_second": [
+          0.8,
+          0.96,
+          1.12,
+          1.28
+        ]
+      },
+      "x": 14,
+      "y": 0,
+      "icon": "minecraft:kelp",
+      "evolved": {
+        "per_second": 1.6
+      }
+    },
+    {
+      "id": "water_quenches_fire",
+      "name": "Water Quenches Fire",
+      "desc": "Fire struggles to burn a body of water: you take less fire damage.",
+      "parents": [
+        {
+          "node": "water_body",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "resist",
+      "params": {
+        "damage_kind": "fire"
+      },
+      "values": {
+        "pct": [
+          0.35,
+          0.42,
+          0.49,
+          0.56
+        ]
+      },
+      "x": 14,
+      "y": 2,
+      "icon": "minecraft:water_bucket"
+    },
+    {
+      "id": "at_home_in_the_sea",
+      "name": "At Home in the Sea",
+      "desc": "While you stand in water you breathe freely.",
+      "parents": [
+        {
+          "node": "water_body_shift",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "self_effect_when",
+      "params": {
+        "effect": "water_breathing",
+        "condition": "in_water"
+      },
+      "values": {
+        "amp": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "x": 16,
+      "y": 0,
+      "icon": "minecraft:tropical_fish"
+    },
+    {
+      "id": "water_nebula_barrier",
+      "name": "Water Nebula: Barrier",
+      "desc": "Wrap you and your place in a sphere of flowing water: a thick shield of absorption that takes the next blows.",
+      "parents": [
+        {
+          "node": "water_slice_shift",
+          "level": 3
+        },
+        {
+          "node": "at_home_in_the_sea",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "shield",
+      "params": {
+        "vfx": "WATER_RING"
+      },
+      "values": {
+        "absorb_hearts": [
+          10.0,
+          12.0,
+          15.0
+        ],
+        "seconds": [
+          14.0,
+          15.0,
+          17.0
+        ],
+        "resist_amp": [
+          1.0,
+          2.0,
+          2.0
+        ],
+        "cost": [
+          0.05,
+          0.054,
+          0.058
+        ],
+        "cooldown": [
+          1500.0,
+          1410.0,
+          1320.0
+        ]
+      },
+      "x": 16,
+      "y": 2,
+      "icon": "minecraft:conduit"
+    },
+    {
+      "id": "water_body_great_flood",
+      "name": "Water Body: Great Flood",
+      "desc": "The field floods: a huge blow to every foe around you plus many times all the water pressure stored on each of them.",
+      "parents": [
+        {
+          "node": "water_body_shift",
+          "level": 3
+        },
+        {
+          "node": "water_quenches_fire",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "debt_burst",
+      "params": {
+        "vfx": "WATER_BURST"
+      },
+      "values": {
+        "damage": [
+          32.0,
+          40.0,
+          48.0
+        ],
+        "mult": [
+          3.0,
+          3.3,
+          3.6
+        ],
+        "radius": [
+          11.0,
+          12.1,
+          13.2
+        ],
+        "targets": [
+          10.0,
+          14.0,
+          18.0
+        ],
+        "cost": [
+          0.08,
+          0.0864,
+          0.0928
+        ],
+        "cooldown": [
+          18000.0,
+          16560.0,
+          15120.0
+        ]
+      },
+      "x": 16,
+      "y": 4,
+      "icon": "minecraft:nether_star",
+      "ultimate": true
+    }
+  ],
+  "evolution": {
+    "requirement": "lethal_survived",
+    "count": 12,
+    "text": "Survive 12 blows that would have left you at 2 health or less while Water Body is switched on to flood the field and unlock the Great Flood.",
+    "ultimate_name": "Ultimate Skill, Water Body: Great Flood"
+  }
+}

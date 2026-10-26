@@ -1,0 +1,1176 @@
+{
+  "magic": "fairy_tail",
+  "franchise": "fairy_tail",
+  "name": "Crash Magic",
+  "desc": "Gildarts Clive's Crash: whatever you touch comes apart, stone, steel or spell. Break the ground, shatter the magic thrown at you, walk through walls, and let every cracked foe wait for the All Crush that finishes the job.",
+  "book": "nusmp:gildarts_crash_book",
+  "book_name": "Fragments of the Crash Mage",
+  "book_lore": "The strongest mage in the guild has never said how Crash feels. He just walks, and the world gets out of his way.",
+  "color": "#B86BFF",
+  "icon": "minecraft:cracked_stone_bricks",
+  "class_id": "gildarts_crash",
+  "duplicate_sp": 3,
+  "loot_weight": 1,
+  "nodes": [
+    {
+      "id": "crash_stance",
+      "name": "Crash Stance",
+      "desc": "Everything you touch begins to crack: your blows hit very hard and may strike critically, but you give up some guard.",
+      "parents": [],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "STONE_SPIKES"
+      },
+      "values": {
+        "damage_pct": [
+          0.25,
+          0.3,
+          0.35
+        ],
+        "armor": [
+          -1.0,
+          -1.25,
+          -1.5
+        ],
+        "speed_pct": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "knockback_res": [
+          0,
+          0,
+          0
+        ],
+        "regen": [
+          0,
+          0,
+          0
+        ],
+        "crit_chance": [
+          0.1,
+          0.12,
+          0.14
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 0,
+      "icon": "minecraft:tnt"
+    },
+    {
+      "id": "ace_s_stride",
+      "name": "Ace's Stride",
+      "desc": "Walk through the fight as if it were not there: you are hard to push around and slowly heal, but you hit more softly.",
+      "parents": [
+        {
+          "node": "crash_stance",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "stance",
+      "params": {
+        "vfx": "ASH_FORMATION"
+      },
+      "values": {
+        "damage_pct": [
+          -0.1,
+          -0.12,
+          -0.14
+        ],
+        "armor": [
+          3.0,
+          3.75,
+          4.5
+        ],
+        "speed_pct": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "knockback_res": [
+          0.5,
+          0.6,
+          0.7
+        ],
+        "regen": [
+          1.0,
+          1.2,
+          1.4
+        ],
+        "crit_chance": [
+          0,
+          0,
+          0
+        ],
+        "cost": [
+          0,
+          0,
+          0
+        ],
+        "cooldown": [
+          40.0,
+          40.0,
+          40.0
+        ]
+      },
+      "x": 0,
+      "y": 2,
+      "icon": "minecraft:netherite_boots"
+    },
+    {
+      "id": "s_class_frame",
+      "name": "S-Class Frame",
+      "desc": "Decades of S-class jobs leave a body that does not break.",
+      "parents": [
+        {
+          "node": "crash_stance",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "max_health",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          3.0,
+          3.75,
+          4.5,
+          5.25,
+          6.0
+        ]
+      },
+      "x": 2,
+      "y": 0,
+      "icon": "minecraft:golden_apple"
+    },
+    {
+      "id": "crashing_hands",
+      "name": "Crashing Hands",
+      "desc": "Hands that unmake what they touch hit harder.",
+      "parents": [
+        {
+          "node": "ace_s_stride",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "attack_damage",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          1.5,
+          1.875,
+          2.25,
+          2.625,
+          3.0
+        ]
+      },
+      "x": 2,
+      "y": 2,
+      "icon": "minecraft:netherite_sword"
+    },
+    {
+      "id": "ace_s_toughness",
+      "name": "Ace's Toughness",
+      "desc": "A lifetime of near-misses stiffens your guard.",
+      "parents": [
+        {
+          "node": "crash_stance",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "armor_toughness",
+        "op": "add"
+      },
+      "values": {
+        "amount": [
+          1.0,
+          1.25,
+          1.5,
+          1.75,
+          2.0
+        ]
+      },
+      "x": 2,
+      "y": 4,
+      "icon": "minecraft:netherite_chestplate"
+    },
+    {
+      "id": "long_road_legs",
+      "name": "Long Road Legs",
+      "desc": "A hundred-year journey leaves a long stride.",
+      "parents": [
+        {
+          "node": "ace_s_stride",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 5,
+      "type": "attribute_modifier",
+      "kind": "attr",
+      "params": {
+        "attribute": "movement_speed",
+        "op": "mult"
+      },
+      "values": {
+        "amount": [
+          0.03,
+          0.0375,
+          0.045,
+          0.0525,
+          0.06
+        ]
+      },
+      "x": 2,
+      "y": 6,
+      "icon": "minecraft:leather_boots"
+    },
+    {
+      "id": "crash",
+      "name": "Crash",
+      "desc": "Touch the foe in front of you and unmake it: the weaker it is, the more of it comes apart.",
+      "parents": [
+        {
+          "node": "crash_stance",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "execute",
+      "params": {
+        "vfx": "STONE_SPIKES"
+      },
+      "values": {
+        "damage": [
+          11.0,
+          13.75,
+          16.5,
+          19.25
+        ],
+        "range": [
+          3.5,
+          3.71,
+          3.92,
+          4.13
+        ],
+        "bonus": [
+          1.0,
+          1.15,
+          1.3,
+          1.45
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          200.0,
+          184.0,
+          168.0,
+          152.0
+        ]
+      },
+      "x": 4,
+      "y": 0,
+      "icon": "minecraft:cracked_stone_bricks"
+    },
+    {
+      "id": "crash_wave",
+      "name": "Crash Wave",
+      "desc": "Thrust out your hand and send a cross of crushing force through the foes ahead.",
+      "parents": [
+        {
+          "node": "ace_s_stride",
+          "level": 1
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "ray_shot",
+      "params": {
+        "vfx": "ASH_FORMATION"
+      },
+      "values": {
+        "damage": [
+          10.0,
+          12.5,
+          15.0,
+          17.5
+        ],
+        "range": [
+          18.0,
+          19.8,
+          21.6,
+          23.4
+        ],
+        "pierce": [
+          3.0,
+          4.0,
+          5.0,
+          6.0
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          120.0,
+          110.0,
+          101.0,
+          91.0
+        ]
+      },
+      "x": 4,
+      "y": 2,
+      "icon": "minecraft:crossbow"
+    },
+    {
+      "id": "crash_cushion",
+      "name": "Crash Cushion",
+      "desc": "Crush the ground under you into a soft bed: a shield of absorption that eats the next blows.",
+      "parents": [
+        {
+          "node": "crash",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "shield",
+      "params": {
+        "vfx": "STONE_SPIKES"
+      },
+      "values": {
+        "absorb_hearts": [
+          7.0,
+          9.0,
+          10.0,
+          12.0
+        ],
+        "seconds": [
+          10.0,
+          11.0,
+          12.0,
+          13.0
+        ],
+        "resist_amp": [
+          1.0,
+          2.0,
+          2.0,
+          2.0
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          400.0,
+          376.0,
+          352.0,
+          328.0
+        ]
+      },
+      "x": 6,
+      "y": 0,
+      "icon": "minecraft:cobblestone"
+    },
+    {
+      "id": "ground_crash",
+      "name": "Ground Crash",
+      "desc": "Leap high and shatter the ground under the foes below.",
+      "parents": [
+        {
+          "node": "crash_wave",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "leap_slam",
+      "params": {
+        "vfx": "STONE_SPIKES"
+      },
+      "values": {
+        "height": [
+          1.0,
+          1.08,
+          1.16,
+          1.24
+        ],
+        "damage": [
+          12.0,
+          15.0,
+          18.0,
+          21.0
+        ],
+        "radius": [
+          4.0,
+          4.4,
+          4.8,
+          5.2
+        ],
+        "knockback": [
+          1.2,
+          1.32,
+          1.44,
+          1.56
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          200.0,
+          184.0,
+          168.0,
+          152.0
+        ]
+      },
+      "x": 6,
+      "y": 2,
+      "icon": "minecraft:anvil"
+    },
+    {
+      "id": "spell_crush",
+      "name": "Spell Crush",
+      "desc": "Crush the magic thrown at you for a moment: part of the damage you take is thrown back at the attacker.",
+      "parents": [
+        {
+          "node": "crash_cushion",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "ward_reflect",
+      "params": {
+        "vfx": "MIRROR_PANE"
+      },
+      "values": {
+        "seconds": [
+          8.0,
+          9.0,
+          10.0,
+          10.0
+        ],
+        "reflect_pct": [
+          0.5,
+          0.6,
+          0.7,
+          0.8
+        ],
+        "cost": [
+          0.02,
+          0.0216,
+          0.0232,
+          0.0248
+        ],
+        "cooldown": [
+          400.0,
+          376.0,
+          352.0,
+          328.0
+        ]
+      },
+      "x": 8,
+      "y": 0,
+      "icon": "minecraft:echo_shard"
+    },
+    {
+      "id": "wall_crash",
+      "name": "Wall Crash",
+      "desc": "Break straight through whatever is in the way: vanish ahead through the rubble.",
+      "parents": [
+        {
+          "node": "ground_crash",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "blink",
+      "params": {
+        "vfx": "ASH_FORMATION"
+      },
+      "values": {
+        "distance": [
+          11.0,
+          12.32,
+          13.64,
+          14.96
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          140.0,
+          129.0,
+          118.0,
+          106.0
+        ]
+      },
+      "x": 8,
+      "y": 2,
+      "icon": "minecraft:ender_pearl"
+    },
+    {
+      "id": "crash_shift",
+      "name": "Crash: Shift",
+      "desc": "Crouch to touch a foe and crack its guard: it takes more damage from everyone for a while.",
+      "parents": [
+        {
+          "node": "spell_crush",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "mark",
+      "params": {
+        "vfx": "SEAL_CHAINS"
+      },
+      "values": {
+        "range": [
+          16.0,
+          17.6,
+          19.2,
+          20.8
+        ],
+        "seconds": [
+          10.0,
+          12.0,
+          13.0,
+          14.0
+        ],
+        "bonus": [
+          0.4,
+          0.48,
+          0.56,
+          0.64
+        ],
+        "cost": [
+          0.015,
+          0.0162,
+          0.0174,
+          0.0186
+        ],
+        "cooldown": [
+          200.0,
+          184.0,
+          168.0,
+          152.0
+        ]
+      },
+      "x": 10,
+      "y": 2,
+      "icon": "minecraft:flint"
+    },
+    {
+      "id": "crash_wave_shift",
+      "name": "Crash Wave: Shift",
+      "desc": "Crouch to crush the sky above the place you look at: rubble falls on it after a short delay.",
+      "parents": [
+        {
+          "node": "wall_crash",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "active_ability",
+      "kind": "meteor_drop",
+      "params": {
+        "vfx": "STONE_SPIKES"
+      },
+      "values": {
+        "delay": [
+          24.0,
+          23.0,
+          22.0,
+          20.0
+        ],
+        "damage": [
+          16.0,
+          20.0,
+          24.0,
+          28.0
+        ],
+        "radius": [
+          4.5,
+          4.95,
+          5.4,
+          5.85
+        ],
+        "range": [
+          18.0,
+          19.44,
+          20.88,
+          22.32
+        ],
+        "cost": [
+          0.03,
+          0.0324,
+          0.0348,
+          0.0372
+        ],
+        "cooldown": [
+          360.0,
+          331.0,
+          302.0,
+          274.0
+        ]
+      },
+      "x": 10,
+      "y": 6,
+      "icon": "minecraft:tnt_minecart"
+    },
+    {
+      "id": "cracks_in_everything",
+      "name": "Cracks in Everything",
+      "desc": "Your blows leave cracks in the foe (Debt). They spread while they wait, and your Debt arts cash them in.",
+      "parents": [
+        {
+          "node": "crash",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "debt_store",
+      "params": {
+        "vfx": "STONE_SPIKES"
+      },
+      "values": {
+        "store_pct": [
+          0.3,
+          0.36,
+          0.42,
+          0.48
+        ],
+        "tick_seconds": [
+          3.0,
+          3.0,
+          3.0,
+          3.0
+        ],
+        "max_pct": [
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ],
+        "hold_seconds": [
+          12.0,
+          12.0,
+          12.0,
+          12.0
+        ]
+      },
+      "x": 10,
+      "y": 0,
+      "icon": "minecraft:cracked_stone_bricks",
+      "evolved": {
+        "store_pct": 0.5,
+        "max_pct": 0.8
+      }
+    },
+    {
+      "id": "nothing_stands",
+      "name": "Nothing Stands",
+      "desc": "You deal much more damage to nearly beaten foes.",
+      "parents": [
+        {
+          "node": "crash_wave",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "execute_threshold",
+      "values": {
+        "threshold": [
+          0.2,
+          0.22,
+          0.24,
+          0.26
+        ],
+        "bonus": [
+          0.6,
+          0.72,
+          0.84,
+          0.96
+        ]
+      },
+      "x": 10,
+      "y": 4,
+      "icon": "minecraft:wither_skeleton_skull",
+      "evolved": {
+        "threshold": 0.3,
+        "bonus": 1.2
+      }
+    },
+    {
+      "id": "ace_of_the_guild",
+      "name": "Ace of the Guild",
+      "desc": "Strong foes bring out your best: you deal more damage to bosses.",
+      "parents": [
+        {
+          "node": "crash_cushion",
+          "level": 2
+        }
+      ],
+      "cost": 1,
+      "costs": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "dmg_vs",
+      "params": {
+        "category": "boss"
+      },
+      "values": {
+        "bonus": [
+          0.2,
+          0.24,
+          0.28,
+          0.32
+        ]
+      },
+      "x": 12,
+      "y": 0,
+      "icon": "minecraft:netherite_ingot",
+      "evolved": {
+        "bonus": 0.4
+      }
+    },
+    {
+      "id": "used_to_falling",
+      "name": "Used to Falling",
+      "desc": "You walk away from a long drop: you take far less fall damage.",
+      "parents": [
+        {
+          "node": "ground_crash",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "fall_guard",
+      "values": {
+        "pct": [
+          0.6,
+          0.72,
+          0.84,
+          0.96
+        ]
+      },
+      "x": 12,
+      "y": 2,
+      "icon": "minecraft:feather"
+    },
+    {
+      "id": "unbothered",
+      "name": "Unbothered",
+      "desc": "Your wounds close over time, even out of combat.",
+      "parents": [
+        {
+          "node": "spell_crush",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "mending",
+      "values": {
+        "seconds": [
+          18.0,
+          16.0,
+          14.0,
+          13.0
+        ],
+        "amount": [
+          1,
+          1.25,
+          1.5,
+          1.75
+        ]
+      },
+      "x": 14,
+      "y": 0,
+      "icon": "minecraft:honey_bottle"
+    },
+    {
+      "id": "crash_against_the_blast",
+      "name": "Crash Against the Blast",
+      "desc": "Crash unmakes the blast before it reaches you: you take less explosion damage.",
+      "parents": [
+        {
+          "node": "wall_crash",
+          "level": 2
+        }
+      ],
+      "cost": 2,
+      "costs": [
+        2,
+        3,
+        3,
+        4
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "resist",
+      "params": {
+        "damage_kind": "explosion"
+      },
+      "values": {
+        "pct": [
+          0.4,
+          0.48,
+          0.56,
+          0.64
+        ]
+      },
+      "x": 14,
+      "y": 2,
+      "icon": "minecraft:tnt"
+    },
+    {
+      "id": "s_class_instinct",
+      "name": "S-Class Instinct",
+      "desc": "Your blows may strike critically.",
+      "parents": [
+        {
+          "node": "crash_shift",
+          "level": 2
+        }
+      ],
+      "cost": 3,
+      "costs": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "max_level": 4,
+      "type": "passive_toggle",
+      "kind": "crit",
+      "values": {
+        "chance": [
+          0.12,
+          0.144,
+          0.168,
+          0.192
+        ],
+        "mult": [
+          1.7,
+          1.836,
+          1.972,
+          2.108
+        ]
+      },
+      "x": 16,
+      "y": 0,
+      "icon": "minecraft:glowstone_dust"
+    },
+    {
+      "id": "crash_shatter_field",
+      "name": "Crash: Shatter Field",
+      "desc": "Crash the whole battlefield at once: a huge blow to every foe around you.",
+      "parents": [
+        {
+          "node": "crash_wave_shift",
+          "level": 3
+        },
+        {
+          "node": "s_class_instinct",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "ring_burst",
+      "params": {
+        "vfx": "STONE_SPIKES"
+      },
+      "values": {
+        "damage": [
+          26.0,
+          32.5,
+          39.0
+        ],
+        "radius": [
+          8.0,
+          8.8,
+          9.6
+        ],
+        "targets": [
+          10.0,
+          14.0,
+          16.0
+        ],
+        "knockback": [
+          1.6,
+          1.76,
+          1.92
+        ],
+        "cost": [
+          0.06,
+          0.0648,
+          0.0696
+        ],
+        "cooldown": [
+          1500.0,
+          1380.0,
+          1260.0
+        ]
+      },
+      "x": 16,
+      "y": 2,
+      "icon": "minecraft:obsidian"
+    },
+    {
+      "id": "all_crush",
+      "name": "All Crush",
+      "desc": "Everything the Crash has cracked comes apart together: a huge blow to every foe around you plus many times all the cracks stored on each of them.",
+      "parents": [
+        {
+          "node": "crash_shift",
+          "level": 3
+        },
+        {
+          "node": "crash_against_the_blast",
+          "level": 2
+        }
+      ],
+      "cost": 4,
+      "costs": [
+        4,
+        5,
+        6
+      ],
+      "max_level": 3,
+      "type": "active_ability",
+      "kind": "debt_burst",
+      "params": {
+        "vfx": "ASH_FORMATION"
+      },
+      "values": {
+        "damage": [
+          38.0,
+          47.5,
+          57.0
+        ],
+        "mult": [
+          3.0,
+          3.3,
+          3.6
+        ],
+        "radius": [
+          12.0,
+          13.2,
+          14.4
+        ],
+        "targets": [
+          10.0,
+          14.0,
+          18.0
+        ],
+        "cost": [
+          0.08,
+          0.0864,
+          0.0928
+        ],
+        "cooldown": [
+          18000.0,
+          16560.0,
+          15120.0
+        ]
+      },
+      "x": 16,
+      "y": 4,
+      "icon": "minecraft:nether_star",
+      "ultimate": true
+    }
+  ],
+  "evolution": {
+    "requirement": "damage_dealt",
+    "count": 120000,
+    "text": "Deal 120,000 damage to hostile creatures while Crash Magic is switched on to unlock the All Crush.",
+    "ultimate_name": "Ultimate Skill, All Crush"
+  }
+}
