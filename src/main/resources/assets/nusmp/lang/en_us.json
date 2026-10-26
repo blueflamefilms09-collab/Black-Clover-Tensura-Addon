@@ -11222,6 +11222,7 @@
   "dimension.nusmp.grimoire_library": "The Grimoire Library",
   "dimension.nusmp.arc_arena": "The Arc Arena",
   "dimension.nusmp.dream": "The Dream World",
+  "dimension.nusmp.trial": "The Labyrinth of Trials",
   "message.nusmp.maps.tag": "Map",
   "message.nusmp.maps.line": "%1$s at %2$s, %3$s, %4$s (%5$s)",
   "message.nusmp.maps.hover": "Click to copy the coordinates (%1$s). With Xaero's Minimap or World Map, click the grey text to add the waypoint.",
