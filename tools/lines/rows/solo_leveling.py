@@ -1253,7 +1253,7 @@ LINES.append(Line(
     finishers=[
         A("Fall of the Betrayed King", "A column of ash and dark light crashes onto the place you look at.", "meteor_drop", "minecraft:crying_obsidian", damage=34, radius=7, range=26, delay=18, cooldown=1500, vfx="ASH_FORMATION"),
         AU("Monarch of Shadows", "The king takes his throne: every grudge stored on the foes around you comes due in one blast of dark light.", "debt_burst", "minecraft:dragon_head",
-           damage=52, mult=4.0, radius=14, targets=10, cost=0.08, cooldown=18000, vfx="SPIRIT_AURA"),
+           damage=52, mult=4.0, radius=14, targets=10, cost=0.08, cooldown=18000, vfx="ULT_MONARCH_SHADOWS"),
     ],
     evolution={"requirement": "boss_kills", "count": 12,
                "text": "Slay 12 bosses while Ashborn, the Shadow Monarch is switched on to take the throne of the Monarch of Shadows.",
@@ -1300,7 +1300,7 @@ LINES.append(Line(
     finishers=[
         A("Chairman's Order: Hold the Line", "A command that carries across the whole field: you and every hunter around you gain a long surge of Resistance.", "buff_aura", "minecraft:white_banner", effect="resistance", radius=14, seconds=22, amp=1, cooldown=1500, vfx="MAGIC_CIRCLE"),
         AU("Chairman's Last Stand", "The old chairman steps onto the field one more time: a thunderous charge in brilliant light, and every weight of years stored on the foes comes due at once.", "debt_burst", "minecraft:golden_helmet",
-           damage=36, mult=3.0, radius=10, targets=10, cost=0.07, cooldown=15000, vfx="SPIRIT_AURA"),
+           damage=36, mult=3.0, radius=10, targets=10, cost=0.07, cooldown=15000, vfx="ULT_CHAIRMAN_STAND"),
     ],
     evolution={"requirement": "elite_kills", "count": 40,
                "text": "Slay 40 elite or boss creatures while Chairman Go's Fist is switched on to bring the chairman back to the front line.",

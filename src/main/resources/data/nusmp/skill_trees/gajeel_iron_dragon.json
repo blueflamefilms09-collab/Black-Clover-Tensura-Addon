@@ -1154,7 +1154,7 @@
       "type": "active_ability",
       "kind": "debt_burst",
       "params": {
-        "vfx": "SHADOW_POOL"
+        "vfx": "ULT_IRON_DRAGON"
       },
       "values": {
         "damage": [

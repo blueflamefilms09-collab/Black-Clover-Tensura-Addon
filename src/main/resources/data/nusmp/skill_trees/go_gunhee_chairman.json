@@ -1203,7 +1203,7 @@
       "type": "active_ability",
       "kind": "debt_burst",
       "params": {
-        "vfx": "SPIRIT_AURA"
+        "vfx": "ULT_CHAIRMAN_STAND"
       },
       "values": {
         "damage": [

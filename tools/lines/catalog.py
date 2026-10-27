@@ -11,7 +11,8 @@ Enum spec:   name: [allowed strings]        string; the same at every level (goe
 
 VFX = ["WIND_SLASH", "WIND_RING", "SPIRIT_AURA", "FLAME_EXPLOSION", "FIRE_BURST", "WATER_BURST", "LIGHTNING_SPEAR", "EARTH_SPIKES", "SPATIAL_RIFT", "MIRROR_PANE",
        "DEVIL_CIRCLE", "MAGIC_CIRCLE", "ELF_CIRCLE", "SHADOW_POOL", "POISON_BREATH", "SEAL_CHAINS", "THREAD_LINE", "WEAPON_CONSTRUCTS", "FIRE_SPIRAL", "LIGHTNING_FIEND",
-       "WATER_RING", "ASH_FORMATION", "FLAME_TRAIL", "STONE_SPIKES", "WIND_TORNADO"]
+       "WATER_RING", "ASH_FORMATION", "FLAME_TRAIL", "STONE_SPIKES", "WIND_TORNADO",
+       "ULT_IRON_DRAGON", "ULT_SATAN_CORE", "ULT_ALL_CRUSH", "ULT_GREAT_FLOOD", "ULT_MONARCH_SHADOWS", "ULT_CHAIRMAN_STAND", "ULT_DEVOURING_SHADOW", "ULT_FINAL_DOSE", "ULT_DISASTER_FLOODS", "ULT_THOUSAND_ELF"]
 
 EFFECTS = ["speed", "slowness", "haste", "mining_fatigue", "strength", "weakness", "resistance", "regeneration", "fire_resistance", "water_breathing", "invisibility",
            "night_vision", "jump_boost", "absorption", "luck", "poison", "wither", "blindness", "hunger", "glowing", "slow_falling", "nausea", "levitation", "darkness"]

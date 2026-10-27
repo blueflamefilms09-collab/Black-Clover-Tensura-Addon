@@ -12,6 +12,16 @@ import com.newuniverse.nusmp.vfx.client.layer.ElementShapesLayer;
 import com.newuniverse.nusmp.vfx.client.layer.AuraLayer;
 import com.newuniverse.nusmp.vfx.client.layer.ArcaneSpellLayer;
 import com.newuniverse.nusmp.vfx.client.layer.ArcaneSpellLayer2;
+import com.newuniverse.nusmp.vfx.client.layer.UltThousandElfLayer;
+import com.newuniverse.nusmp.vfx.client.layer.UltDisasterFloodsLayer;
+import com.newuniverse.nusmp.vfx.client.layer.UltFinalDoseLayer;
+import com.newuniverse.nusmp.vfx.client.layer.UltDevouringShadowLayer;
+import com.newuniverse.nusmp.vfx.client.layer.UltChairmanStandLayer;
+import com.newuniverse.nusmp.vfx.client.layer.UltMonarchShadowsLayer;
+import com.newuniverse.nusmp.vfx.client.layer.UltGreatFloodLayer;
+import com.newuniverse.nusmp.vfx.client.layer.UltAllCrushLayer;
+import com.newuniverse.nusmp.vfx.client.layer.UltSatanCoreLayer;
+import com.newuniverse.nusmp.vfx.client.layer.UltIronDragonLayer;
 import com.newuniverse.nusmp.vfx.client.layer.DreamPaintLayer;
 import com.newuniverse.nusmp.vfx.client.layer.MirrorLayer;
 import com.newuniverse.nusmp.vfx.client.layer.PaintStudioLayer;
@@ -131,6 +141,17 @@ public final class VfxManager {
         register(new EarthSpellLayer());
         register(new ArcaneSpellLayer());     // 0.34
         register(new ArcaneSpellLayer2());
+        register(new UltIronDragonLayer());          // 3.29.0
+        register(new UltSatanCoreLayer());          // 3.29.0
+        register(new UltAllCrushLayer());          // 3.29.0
+        register(new UltGreatFloodLayer());          // 3.29.0
+        register(new UltMonarchShadowsLayer());          // 3.29.0
+        register(new UltChairmanStandLayer());          // 3.29.0
+        register(new UltDevouringShadowLayer());          // 3.29.0
+        register(new UltFinalDoseLayer());          // 3.29.0
+        register(new UltDisasterFloodsLayer());          // 3.29.0
+        register(new UltThousandElfLayer());          // 3.29.0
+
         register(new DreamPaintLayer());      // 0.41
         register(new MirrorLayer());          // 0.42
         register(new PaintStudioLayer());     // 0.44

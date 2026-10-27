@@ -440,7 +440,18 @@ public enum VfxShape {
     HERCULES_STRIKE,
     HERCULES_SHOCKWAVE,
     HERCULES_BODY,
-    HERCULES_MOMENTUM;
+    HERCULES_MOMENTUM,
+    // 3.29.0 unique Ultimate effects (one per 3.28.0 skill book Ultimate), sent at the caster by the debt_burst art: from = to = the caster's feet, power = the burst radius (12-13), ~20 ticks.
+    ULT_IRON_DRAGON,
+    ULT_SATAN_CORE,
+    ULT_ALL_CRUSH,
+    ULT_GREAT_FLOOD,
+    ULT_MONARCH_SHADOWS,
+    ULT_CHAIRMAN_STAND,
+    ULT_DEVOURING_SHADOW,
+    ULT_FINAL_DOSE,
+    ULT_DISASTER_FLOODS,
+    ULT_THOUSAND_ELF;
 
     public static VfxShape byId(int id) {
         VfxShape[] v = values();

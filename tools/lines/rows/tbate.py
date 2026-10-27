@@ -1355,7 +1355,7 @@ LINES.append(Line(
     finishers=[
         A("Destruction Fusion", "Merge with Arthur into one towering form and crash down on the monsters below.", "leap_slam", "minecraft:crying_obsidian", "SHADOW_POOL",
           damage=32, radius=7, height=1.3, knockback=2, cooldown=1500, cost=.07),
-        AU("Devouring Shadow", "The shadow opens its whole mouth: every hunger your blows left on the monsters around you comes due in one bite.", "debt_burst", "minecraft:nether_star", "SHADOW_POOL",
+        AU("Devouring Shadow", "The shadow opens its whole mouth: every hunger your blows left on the monsters around you comes due in one bite.", "debt_burst", "minecraft:nether_star", "ULT_DEVOURING_SHADOW",
            damage=24, mult=2.3, radius=13, targets=12, cost=.07, cooldown=16000),
     ],
     evolution={"requirement": "kills", "count": 900,

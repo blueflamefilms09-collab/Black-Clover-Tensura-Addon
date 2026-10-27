@@ -1198,7 +1198,7 @@ LINES.append(Line(
     finishers=[
         A("Double Canon: Twin Release", "Both held circles let go at once: a huge burst of force around you.", "ring_burst", "minecraft:end_crystal", damage=28, radius=9, targets=14, knockback=2, cooldown=1500, cost=0.07, vfx="ELF_CIRCLE"),
         AU("Elf Ring: Thousand Elf", "Every verse left unfinished on the monsters around you is finished at once, in a chorus of borrowed spells.", "debt_burst", "minecraft:nether_star",
-           damage=22, mult=2.3, radius=13, targets=12, cost=0.07, cooldown=16000, vfx="ELF_CIRCLE"),
+           damage=22, mult=2.3, radius=13, targets=12, cost=0.07, cooldown=16000, vfx="ULT_THOUSAND_ELF"),
     ],
     evolution={"requirement": "arts_cast", "count": 500,
                "text": "Cast the arts of this skill 500 times.",

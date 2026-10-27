@@ -103,7 +103,7 @@ public final class Debts {
             double radius = c.num("radius");
             List<LivingEntity> sorted = LineGeo.nearest(AbilityKit.around(p, centre, radius), centre, MAX_TARGETS * 4);
             List<LivingEntity> picked = DebtLedger.prefer(sorted, e -> on && LEDGER.has(owner, e.getUUID(), now), Math.min(c.whole("targets"), MAX_TARGETS));
-            c.fx(centre.add(0, 0.2, 0), centre.add(0, 0.2, 0), 16, (float) radius);
+            c.fx(centre.add(0, 0.2, 0), centre.add(0, 0.2, 0), 20, (float) radius);   // 3.29.0: 20 ticks, the length of the unique Ultimate effects
             int fx = 3;
             for (LivingEntity t : picked) {
                 double owed = on ? LEDGER.debtOf(owner, t.getUUID(), now) : 0.0;
