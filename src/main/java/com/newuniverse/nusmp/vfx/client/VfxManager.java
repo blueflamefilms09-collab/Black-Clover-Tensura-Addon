@@ -310,7 +310,8 @@ public final class VfxManager {
     private void spawnUnguarded(VfxPayload p) {
         Minecraft mc = Minecraft.getInstance();
         if (mc.level == null) return;
-        VfxShape shape = p.shapeType();
+        VfxShape shape = com.newuniverse.nusmp.vfx.UltimateVfxFallback.resolve(p.shapeType());           // 3.29.0: visual.uniqueUltimates off = the generic shape the ten Ultimates used before
+        if (shape != p.shapeType()) p = new VfxPayload(shape.ordinal(), p.from(), p.to(), p.color(), p.duration(), p.power(), p.followEntity(), p.seed());
         if (FxRenderer.handles(shape)) {
             if (mc.options.particles().get() == ParticleStatus.MINIMAL) dustFallback(p, 0xFFFFFFFF);
             else FxRenderer.spawn(p);

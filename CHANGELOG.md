@@ -1,5 +1,24 @@
 # Changelog
 
+## [3.29.0] — A signature effect for each of the ten Evolution Ultimates (setting `visual.uniqueUltimates`)
+
+### NEW
+- **Ten unique Ultimate effects.** Iron Shadow Dragon Mode, Satan Soul: Hell's Core, All Crush, Water Body: Great Flood, Monarch of Shadows, Chairman's Last Stand, Devouring Shadow, Final Dose, Disaster of Floods and Elf Ring: Thousand Elf each play their own effect (shapes `ULT_*`, ten new layers), instead of a generic circle, pool or burst. Gajeel: iron dragon and rust. Mirajane: pentacle, bat wings and a black core. Gildarts: a cracked-glass disc that lets go. Juvia: a water wall, a water woman and a crashing wave. Ashborn: shadow soldiers, a crown and a violet pillar. Go Gun-hee: a gold guild seal, light lances and thunder. Regis: a shadow maw of fangs closing on a wolf head. Lee Seolhwa: needles that close into a venom flower. Shin Yoosung: a storm tide with monsters on the crests. Lefiya: a vast elven circle with ten small circles firing borrowed spells. Details, costs and previews: `docs/vfx_remake/unique_ultimates.md`.
+- Client setting `visual.uniqueUltimates` (config/nusmp-ultimates-client.toml, **default on**): off plays the generic effect each Ultimate used before 3.29.0.
+- Self-test `evolution.ultimatevfx` (CI server smoke test) and `UniqueUltimatesTest`: every unique shape is used by exactly one shipped Ultimate, has its layer and scene, and the switch restores the old shapes.
+
+### REPLACED
+- The effect of ten Ultimates (their `vfx` entry in the line rows and generated skill trees). The old shapes (SHADOW_POOL, DEVIL_CIRCLE, ASH_FORMATION, WATER_BURST, SPIRIT_AURA, POISON_BREATH, ELF_CIRCLE) stay in the mod and are used again when the setting is off. Older skill books are unchanged.
+
+### KEPT
+- Damage, radius, cooldown and every other number of the ten Ultimates; the dormant shapes of 3.28.1 are now filled in (same names).
+
+### Cost (CLAUDE.md rule 11)
+- Server: nothing added (same single effect packet, only the shape id differs). Client: at most 400 vertices per activation, worst measured 384, constant loops, no per-frame collections, deterministic from the seed; one activation per Ultimate cast (cooldowns 15000-18000 ticks).
+
+### Not verified / caveats
+- Seen only in the headless preview, not in a game: depth against blocks, real lighting, blending and texture filtering are unchecked. Weak spots: the Iron Shadow Dragon head is a spiky camera-facing shape, the Disaster of Floods monsters read as dark blobs, the Great Flood wave is boxy, the Devouring Shadow head reads as a shadow-cat more than a wolf, and the flashes of Chairman's Last Stand and Thousand Elf are heavy at their peak.
+
 ## [3.28.1] — Worn relics drawn the 1.41.0 way again (setting `relicfx.classicWorn`)
 
 ### FIXED

@@ -1127,7 +1127,7 @@
       "type": "active_ability",
       "kind": "debt_burst",
       "params": {
-        "vfx": "ASH_FORMATION"
+        "vfx": "ULT_ALL_CRUSH"
       },
       "values": {
         "damage": [

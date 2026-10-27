@@ -32,12 +32,13 @@ import java.util.UUID;
 public final class EvolutionSelfTests {
     private EvolutionSelfTests() {}
 
-    public static final String COUNTERS = "evolution.counters", DEBT = "evolution.debt";
+    public static final String COUNTERS = "evolution.counters", DEBT = "evolution.debt", ULT_VFX = "evolution.ultimatevfx";
     private static final String ROUTE_ID = "nusmp:evolution_selftest";
 
     public static void register() {
         SelfTests.register(COUNTERS, EvolutionSelfTests::counters);
         SelfTests.register(DEBT, EvolutionSelfTests::debt);
+        SelfTests.register(ULT_VFX, EvolutionSelfTests::ultimateVfx);          // 3.29.0
     }
 
     // ================================================================== a hand-built line
@@ -295,6 +296,32 @@ public final class EvolutionSelfTests {
             if (z != null) z.discard();
         }
         return bad.isEmpty() ? SelfTests.Result.ok(said.toString()) : fail(bad);
+    }
+
+    // ================================================================== the unique Ultimate effects (3.29.0)
+    /** Every one of the ten unique {@code ULT_*} effect shapes is named by exactly one shipped Ultimate (a debt_burst art flagged ultimate), and no Ultimate names a shape that does not exist. */
+    private static SelfTests.Result ultimateVfx(MinecraftServer server) {
+        List<String> bad = new ArrayList<>();
+        java.util.EnumMap<com.newuniverse.nusmp.vfx.VfxShape, Integer> used = new java.util.EnumMap<>(com.newuniverse.nusmp.vfx.VfxShape.class);
+        int ultimates = 0;
+        for (SkillRoute r : RouteRegistry.all()) {
+            if (!r.isLine()) continue;
+            for (SkillNode n : r.nodes()) {
+                if (!n.ultimate() || !"debt_burst".equals(n.kind())) continue;
+                ultimates++;
+                String word = n.params() == null ? null : n.params().get("vfx");
+                if (word == null || word.isEmpty()) continue;
+                com.newuniverse.nusmp.vfx.VfxShape shape = LineLookups.shape(word, null);
+                if (shape == null) bad.add(r.id() + ": the Ultimate '" + n.name() + "' names an unknown effect '" + word + "'");
+                else used.merge(shape, 1, Integer::sum);
+            }
+        }
+        for (com.newuniverse.nusmp.vfx.VfxShape s : com.newuniverse.nusmp.vfx.VfxShape.values()) {
+            if (!s.name().startsWith("ULT_")) continue;
+            int n = used.getOrDefault(s, 0);
+            if (n != 1) bad.add(s.name() + " is named by " + n + " Ultimate(s), expected exactly 1");
+        }
+        return bad.isEmpty() ? SelfTests.Result.ok(ultimates + " Ultimates checked, each unique effect used once") : fail(bad);
     }
 
     private static SelfTests.Result fail(List<String> bad) {

@@ -227,6 +227,7 @@ public class NUSMP {
             com.newuniverse.nusmp.vfx.client.IsrafilModelsConfig.init(modEventBus, modContainer);                            // 3.22.0: visual.israfilModels (CLIENT, default on): the 3D models of the Israfil ultimate; off = the flat sprites
             com.newuniverse.nusmp.vfx.client.JibrilModelsConfig.init(modEventBus, modContainer);                             // 3.23.0: visual.jibrilModels (CLIENT, default on): the 3D models of the Jibril ultimate; off = the flat sprites
             com.newuniverse.nusmp.vfx.client.SolomonModelsConfig.init(modEventBus, modContainer);                            // 3.24.0: visual.solomonModels (CLIENT, default on): the 3D models of the Solomon ultimate; off = the flat sprites
+            com.newuniverse.nusmp.vfx.client.UniqueUltimatesConfig.init(modEventBus, modContainer);                           // 3.29.0: visual.uniqueUltimates (CLIENT, default on): the ten Evolution Ultimates' own effects; off = their old generic ones
             com.newuniverse.nusmp.client.labyrinth.LabyrinthClient.init(modEventBus);                                        // 1.35.0: Labyrinth renderers, sky
             com.newuniverse.nusmp.client.loot.LootClient.init(modEventBus);                                                  // 1.99.0: the dungeon armour hides its vanilla box under the worn 3D model
             com.newuniverse.nusmp.client.mega.system.SystemClient.init(modEventBus, modContainer);                           // 1.55.0: the System overlay layer, its key and client config
