@@ -1,0 +1,7 @@
+{
+ "_comment": "Ultimate Devouring Shadow (UltDevouringShadowLayer, Regis Leywin): power 12 = the burst radius the layer sees.",
+ "ult_devouring_shadow": {"layer": "UltDevouringShadowLayer", "shape": "ULT_DEVOURING_SHADOW", "from": [0, 0.2, 0], "to": [0, 0.2, 0], "power": 12, "duration": 20,
+                          "cam": [0, 6.5, -15], "target": [0, 2.2, 1], "ages": [2, 4, 6, 8, 10, 11, 13, 16, 18, 19], "figures": [[0, 0, 0, 1.8], [5, 0, 2, 1.8], [-4, 0, 5, 1.8]]},
+ "ult_devouring_shadow_wide": {"layer": "UltDevouringShadowLayer", "shape": "ULT_DEVOURING_SHADOW", "from": [0, 0.2, 0], "to": [0, 0.2, 0], "power": 12, "duration": 20,
+                          "cam": [14, 15, -14], "target": [0, 1.5, 0], "ages": [3, 6, 9, 10, 12, 15, 17, 19], "figures": [[0, 0, 0, 1.8], [5, 0, 2, 1.8]]}
+}
