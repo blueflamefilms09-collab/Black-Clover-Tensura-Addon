@@ -13,6 +13,13 @@ import com.newuniverse.nusmp.vfx.client.layer.AuraLayer;
 import com.newuniverse.nusmp.vfx.client.layer.ArcaneSpellLayer;
 import com.newuniverse.nusmp.vfx.client.layer.ArcaneSpellLayer2;
 import com.newuniverse.nusmp.vfx.client.layer.UltThousandElfLayer;
+import com.newuniverse.nusmp.vfx.client.layer.VeldSeveranceLayer;
+import com.newuniverse.nusmp.vfx.client.layer.VeldBlackLightningLayer;
+import com.newuniverse.nusmp.vfx.client.layer.VeldBlackBlastLayer;
+import com.newuniverse.nusmp.vfx.client.layer.VeldTornadoLayer;
+import com.newuniverse.nusmp.vfx.client.layer.VeldDisintegrationLayer;
+import com.newuniverse.nusmp.vfx.client.layer.VeldHellFlareLayer;
+import com.newuniverse.nusmp.vfx.client.layer.VeldMegiddoLayer;
 import com.newuniverse.nusmp.vfx.client.layer.UltDisasterFloodsLayer;
 import com.newuniverse.nusmp.vfx.client.layer.UltFinalDoseLayer;
 import com.newuniverse.nusmp.vfx.client.layer.UltDevouringShadowLayer;
@@ -151,6 +158,13 @@ public final class VfxManager {
         register(new UltFinalDoseLayer());          // 3.29.0
         register(new UltDisasterFloodsLayer());          // 3.29.0
         register(new UltThousandElfLayer());          // 3.29.0
+        register(new VeldSeveranceLayer());          // 3.30.0
+        register(new VeldBlackLightningLayer());          // 3.30.0
+        register(new VeldBlackBlastLayer());          // 3.30.0
+        register(new VeldTornadoLayer());          // 3.30.0
+        register(new VeldDisintegrationLayer());          // 3.30.0
+        register(new VeldHellFlareLayer());          // 3.30.0
+        register(new VeldMegiddoLayer());          // 3.30.0
 
         register(new DreamPaintLayer());      // 0.41
         register(new MirrorLayer());          // 0.42

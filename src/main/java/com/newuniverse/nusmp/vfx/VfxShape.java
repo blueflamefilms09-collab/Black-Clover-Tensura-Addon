@@ -451,7 +451,22 @@ public enum VfxShape {
     ULT_DEVOURING_SHADOW,
     ULT_FINAL_DOSE,
     ULT_DISASTER_FLOODS,
-    ULT_THOUSAND_ELF;
+    ULT_THOUSAND_ELF,
+    // 3.30.0 Veldanava's Tensura-themed moves (server: entity/veldanava/VeldanavaMoves). Colours come from the sender; all are short, one-shot, drawn from a fixed budget.
+    // VELD_SEVERANCE: Absolute Severance, from = the cut's start (chest height), to = its far end (~44 blocks), power = half-width (~1.6), 16 ticks: a hair-thin cut through space, two dark lips of void opening along it, glass-like shards, a small circle at the start.
+    VELD_SEVERANCE,
+    // VELD_BLACK_LIGHTNING: one black bolt, from = a point high above, to = the ground point it strikes, power = impact radius (~3), 12 ticks: black bolt with crimson edges, branches, a ground ring on impact.
+    VELD_BLACK_LIGHTNING,
+    // VELD_BLACK_BLAST: Black Lightning Blast, from = to = the caster's feet, power = radius (~16), 26 ticks: a circle on the ground, a black orb that collapses, then arcs of black lightning and a shock ring race out to the radius.
+    VELD_BLACK_BLAST,
+    // VELD_TORNADO: Death Tornado, from = the funnel's foot, power = radius (~5.5), 14 ticks (re-sent every 10 ticks while it travels): a dark funnel with debris and red lightning in it.
+    VELD_TORNADO,
+    // VELD_DISINTEGRATION: from = the zone's centre on the ground, power = radius (~8), 30 ticks: a pulsing circle, the ground and air inside turning to drifting dust and motes, cracks, a bright rim.
+    VELD_DISINTEGRATION,
+    // VELD_HELL_FLARE: from = to = the caster's feet, power = the outer radius (~18), 30 ticks: rings of black-red hellfire expand outwards with flame tongues, over a burning circle.
+    VELD_HELL_FLARE,
+    // VELD_MEGIDDO: from = a point high above (~60 blocks), to = the ground point it strikes, power = beam radius (~3.5), 18 ticks: a beam of pale gold-white light from the sky with rings round it, a big burst ring and a scar on impact.
+    VELD_MEGIDDO;
 
     public static VfxShape byId(int id) {
         VfxShape[] v = values();
