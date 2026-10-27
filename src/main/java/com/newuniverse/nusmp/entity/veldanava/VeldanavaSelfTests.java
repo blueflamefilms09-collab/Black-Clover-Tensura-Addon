@@ -44,11 +44,10 @@ public final class VeldanavaSelfTests {
         SelfTests.register("veldanava.assets", VeldanavaSelfTests::assets);
         SelfTests.register("veldanava.boss", VeldanavaSelfTests::boss);
         SelfTests.register("veldanava.orb", VeldanavaSelfTests::orb);
-        SelfTests.register("veldanava.tensura_tornado", server -> tensuraIds(server, "tornado"));
-        SelfTests.register("veldanava.tensura_sever", server -> tensuraIds(server, "sever", "cutter"));
-        SelfTests.register("veldanava.tensura_black", server -> tensuraIds(server, "black", "blast"));
-        SelfTests.register("veldanava.tensura_flare", server -> tensuraIds(server, "flare", "hellfire"));
-        SelfTests.register("veldanava.tensura_megiddo", server -> tensuraIds(server, "megiddo", "disintegr"));
+        for (String id : VeldanavaTensura.IDS) {                                               // 3.31.0: every base Tensura entity is driven next to a victim, alone and owned by the boss
+            SelfTests.register("veldanava.tp_" + id, server -> probe(server, id, false));
+            SelfTests.register("veldanava.tpo_" + id, server -> probe(server, id, true));
+        }
     }
 
     // ---------------------------------------------------------------- rules (pure)
@@ -153,25 +152,62 @@ public final class VeldanavaSelfTests {
         }
     }
 
-    // ---------------------------------------------------------------- the base Tensura mod's versions of the six moves (3.31.0 discovery)
-    /** Every Tensura entity type and effect whose id holds one of the words, (the smoke command shows about 150 characters of a detail, so the words come in small groups and only the ids are listed). */
-    private static Result tensuraIds(MinecraftServer server, String... words) {
-        StringBuilder out = new StringBuilder();
-        for (var e : net.minecraft.core.registries.BuiltInRegistries.ENTITY_TYPE.entrySet()) {
-            net.minecraft.resources.ResourceLocation id = e.getKey().location();
-            if (!"tensura".equals(id.getNamespace()) || !hasWord(id.getPath(), words)) continue;
-            out.append(" E:").append(id.getPath());
+    // ---------------------------------------------------------------- the base Tensura mod's versions of the six moves (3.31.0)
+    /**
+     * Drives one base Tensura entity for 40 ticks next to a zombie and a stand-in player (alone, or owned by a real Veldanava): it must not throw, must not hurt either victim
+     * (its damage is turned off, the boss's own capped path does the damage) and must not change a block. The detail tells what the entity is, so the next step knows its API.
+     */
+    private static Result probe(MinecraftServer server, String path, boolean owned) {
+        ServerLevel sl = server.overworld();
+        if (VeldanavaTensura.typeOf(path) == null) return Result.ok("no tensura:" + path + " in this Tensura");
+        BlockPos at = sl.getSharedSpawnPos().above(2);
+        double x = at.getX() + 0.5, y = at.getY(), z = at.getZ() + 0.5;
+        for (VeldanavaBoss old : sl.getEntities(VeldanavaEntities.VELDANAVA.get(), e -> true)) old.discard();
+        FakePlayer p = SelfTests.standIn(sl, "veld_probe", x, y, z);
+        p.setHealth(p.getMaxHealth());
+        net.minecraft.world.entity.monster.Zombie zb = net.minecraft.world.entity.EntityType.ZOMBIE.create(sl);
+        zb.setNoAi(true);
+        zb.moveTo(x + 1.5, y, z, 0f, 0f);
+        sl.addFreshEntity(zb);
+        VeldanavaBoss boss = owned ? VeldanavaBoss.spawnAt(sl, Vec3.atBottomCenterOf(at.above(8)), 0f) : null;
+        VeldanavaTensura fx = new VeldanavaTensura();
+        net.minecraft.world.level.block.state.BlockState[] before = cube(sl, at);
+        try {
+            net.minecraft.world.entity.Entity e = fx.spawn(sl, path, new Vec3(x, y, z), 0f, 0f, 60);
+            if (e == null) return Result.fail("tensura:" + path + " could not be spawned");
+            if (owned && boss != null) {
+                if (e instanceof net.minecraft.world.entity.projectile.Projectile pr) pr.setOwner(boss);
+                else if (e instanceof io.github.manasmods.tensura.entity.magic.lightning.TensuraLightningBolt lb) lb.setOwner(boss);
+            }
+            if (e instanceof io.github.manasmods.tensura.entity.projectile.TensuraFlyingProjectile fp) fp.shoot(0, 0, 1, 1.2f, 0f);
+            String err = "none";
+            int ticks = 0;
+            for (; ticks < 40 && !e.isRemoved(); ticks++) {
+                try { e.tick(); } catch (Throwable t) { err = t.getClass().getSimpleName() + ":" + String.valueOf(t.getMessage()).replace('\n', ' '); break; }
+            }
+            int changed = 0;
+            net.minecraft.world.level.block.state.BlockState[] after = cube(sl, at);
+            for (int i = 0; i < after.length; i++) if (after[i] != before[i]) changed++;
+            String extra = "";
+            if (e instanceof io.github.manasmods.tensura.entity.magic.beam.BeamProjectile bp) extra = " end=" + (int) (bp.endPosX - x) + "," + (int) (bp.endPosY - y) + "," + (int) (bp.endPosZ - z);
+            String life = e instanceof io.github.manasmods.tensura.entity.TensuraProjectile tp ? tp.getAge() + "/" + tp.getLife() : "-";
+            String out = e.getClass().getSimpleName() + " t" + ticks + " age" + life + " err=" + err + " dz=" + (20f - zb.getHealth()) + " dp=" + (p.getMaxHealth() - p.getHealth()) + " blk=" + changed + extra;
+            if (!err.equals("none")) return Result.fail(out.substring(0, Math.min(150, out.length())));
+            if (zb.getHealth() < zb.getMaxHealth() || p.getHealth() < p.getMaxHealth()) return Result.fail("HURT " + out.substring(0, Math.min(140, out.length())));
+            return Result.ok(out.substring(0, Math.min(150, out.length())));
+        } finally {
+            fx.clear();
+            zb.discard();
+            if (boss != null) boss.discard();
+            p.setHealth(p.getMaxHealth());
         }
-        for (var e : net.minecraft.core.registries.BuiltInRegistries.MOB_EFFECT.entrySet()) {
-            net.minecraft.resources.ResourceLocation id = e.getKey().location();
-            if ("tensura".equals(id.getNamespace()) && hasWord(id.getPath(), words)) out.append(" F:").append(id.getPath());
-        }
-        return Result.ok(out.toString().trim());
     }
 
-    private static boolean hasWord(String path, String[] words) {
-        for (String w : words) if (path.contains(w)) return true;
-        return false;
+    private static net.minecraft.world.level.block.state.BlockState[] cube(ServerLevel sl, BlockPos at) {
+        net.minecraft.world.level.block.state.BlockState[] out = new net.minecraft.world.level.block.state.BlockState[13 * 13 * 7];
+        int i = 0;
+        for (int dx = -6; dx <= 6; dx++) for (int dz = -6; dz <= 6; dz++) for (int dy = -2; dy <= 4; dy++) out[i++] = sl.getBlockState(at.offset(dx, dy, dz));
+        return out;
     }
 
     // ---------------------------------------------------------------- the Will of the Creator

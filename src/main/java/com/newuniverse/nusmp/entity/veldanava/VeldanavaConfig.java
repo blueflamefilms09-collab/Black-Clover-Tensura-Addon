@@ -8,7 +8,7 @@ import net.neoforged.neoforge.common.ModConfigSpec;
  */
 public final class VeldanavaConfig {
     public static final ModConfigSpec SPEC;
-    public static final ModConfigSpec.BooleanValue ENABLED, SOUL_SEIZING, CLASSIC;
+    public static final ModConfigSpec.BooleanValue ENABLED, SOUL_SEIZING, CLASSIC, TENSURA_MOVES;
     public static final ModConfigSpec.DoubleValue BOSS_HEALTH, DAMAGE_SCALE, HEALTH_TOTAL, REGEN_PERCENT;
     public static final ModConfigSpec.IntValue ORB_SECONDS;
 
@@ -31,6 +31,8 @@ public final class VeldanavaConfig {
                 .define("soulSeizing", true);
         ORB_SECONDS = b.comment("How long the Will of the Creator waits for the fighters to choose their boon after he falls, in seconds, before it gives up its loot.")
                 .defineInRange("willOfTheCreatorSeconds", 300, 30, 1800);
+        TENSURA_MOVES = b.comment("true (default) = his Absolute Severance, Black Lightning, Black Lightning Blast, Death Tornado, Disintegration, Hell Flare and Megiddo are drawn by the base Tensura Reincarnated entities (their models, animations and sounds); the damage stays his own, capped and budgeted. false = the effects of 3.30.0, exactly.")
+                .define("tensuraMoves", true);
         b.pop();
         SPEC = b.build();
     }
@@ -38,6 +40,9 @@ public final class VeldanavaConfig {
     private VeldanavaConfig() {}
 
     public static boolean enabled() { return get(ENABLED); }
+
+    /** True = the six Tensura-themed moves are drawn by the base Tensura entities (3.31.0). */
+    public static boolean tensuraMoves() { return get(TENSURA_MOVES); }
 
     public static boolean soulSeizing() { return get(SOUL_SEIZING); }
 
