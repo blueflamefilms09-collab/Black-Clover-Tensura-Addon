@@ -1,0 +1,7 @@
+{
+ "_comment": "3.29.0 ULT_ALL_CRUSH (Gildarts Clive, All Crush): power = burst radius 12, 20 ticks.",
+ "ult_all_crush": {"layer": "UltAllCrushLayer", "shape": "ULT_ALL_CRUSH", "from": [0, 0.2, 0], "to": [0, 0.2, 0], "power": 12, "duration": 20, "cam": [15, 8.5, 15], "target": [0, 3.0, 0],
+                   "ages": [1, 3, 5, 7, 9, 10, 12, 15, 17, 19], "figures": [[0, 0, 0, 1.8], [3, 0, 2, 1.8]]},
+ "ult_all_crush_wide": {"layer": "UltAllCrushLayer", "shape": "ULT_ALL_CRUSH", "from": [0, 0.2, 0], "to": [0, 0.2, 0], "power": 12, "duration": 20, "cam": [24, 14, 24], "target": [0, 2.5, 0],
+                   "ages": [2, 6, 9, 11, 14, 18], "figures": [[0, 0, 0, 1.8]]}
+}

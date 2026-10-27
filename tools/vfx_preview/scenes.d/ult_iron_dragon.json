@@ -1,0 +1,7 @@
+{
+ "_comment": "Ultimate preview scenes for UltIronDragonLayer (Gajeel Redfox, Iron Shadow Dragon Mode). power = the burst radius the layer sees.",
+ "ult_iron_dragon": {"layer": "UltIronDragonLayer", "shape": "ULT_IRON_DRAGON", "from": [0, 0.2, 0], "to": [0, 0.2, 0], "power": 12, "duration": 20, "cam": [10, 8.5, 10], "target": [0, 2.2, 0],
+              "ages": [3, 6, 8, 10, 12, 15], "figures": [[0, 0, 0, 1.8], [4.5, 0, 1.5, 1.8]]},
+ "ult_iron_dragon_wide": {"layer": "UltIronDragonLayer", "shape": "ULT_IRON_DRAGON", "from": [0, 0.2, 0], "to": [0, 0.2, 0], "power": 12, "duration": 20, "cam": [24, 14, 6], "target": [0, 1.5, 0],
+              "ages": [3, 7, 9, 11, 14, 17], "figures": [[0, 0, 0, 1.8], [-5, 0, 3, 1.8], [6, 0, -4, 1.8]]}
+}

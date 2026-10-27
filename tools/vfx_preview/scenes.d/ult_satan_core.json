@@ -1,0 +1,9 @@
+{
+ "_comment": "Mirajane's Satan Soul: Hell's Core (UltSatanCoreLayer, ULT_SATAN_CORE). Power 12 = the burst radius. Ages: build-up 2-6, detonation 8-10, aftermath 14-18. The figure is the caster (1.8 tall).",
+ "ult_satan_core": {"layer": "UltSatanCoreLayer", "shape": "ULT_SATAN_CORE", "from": [0, 0.2, 0], "to": [0, 0.2, 0], "power": 12, "duration": 20,
+                    "sky": [0.07, 0.05, 0.10], "horizon": [0.22, 0.14, 0.16],
+                    "cam": [9, 7.5, -17], "target": [0, 3.2, 0], "ages": [2, 5, 8, 10, 14, 18], "figures": [[0, 0, 0, 1.8]]},
+ "ult_satan_core_wide": {"layer": "UltSatanCoreLayer", "shape": "ULT_SATAN_CORE", "from": [0, 0.2, 0], "to": [0, 0.2, 0], "power": 12, "duration": 20,
+                    "sky": [0.07, 0.05, 0.10], "horizon": [0.22, 0.14, 0.16],
+                    "cam": [17, 15, -23], "target": [0, 1.0, 0], "ages": [3, 6, 8, 10, 13, 17], "figures": [[0, 0, 0, 1.8], [7, 0, 4, 1.8], [-6, 0, 6, 1.8]]}
+}
