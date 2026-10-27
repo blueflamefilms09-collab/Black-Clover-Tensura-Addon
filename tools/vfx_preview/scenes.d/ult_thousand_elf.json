@@ -1,0 +1,7 @@
+{
+ "_comment": "Ultimate Elf Ring: Thousand Elf (UltThousandElfLayer). Burst radius 12-13, 20 ticks.",
+ "ult_thousand_elf": {"layer": "UltThousandElfLayer", "shape": "ULT_THOUSAND_ELF", "from": [0, 0.2, 0], "to": [0, 0.2, 0], "power": 12, "duration": 20, "cam": [12, 11, 12], "target": [0, 2.0, 0],
+                      "ages": [2, 5, 8, 10, 12, 14, 16, 19], "figures": [[0, 0, 0, 1.8], [-4, 0, 3, 1.8]]},
+ "ult_thousand_elf_wide": {"layer": "UltThousandElfLayer", "shape": "ULT_THOUSAND_ELF", "from": [0, 0.2, 0], "to": [0, 0.2, 0], "power": 12, "duration": 20, "cam": [19, 9, 0], "target": [0, 2.0, 0],
+                      "ages": [3, 7, 9, 11, 13, 15, 17, 19], "figures": [[0, 0, 0, 1.8]]}
+}
