@@ -48,6 +48,8 @@ public final class VeldanavaSelfTests {
             SelfTests.register("veldanava.tp_" + id, server -> probe(server, id, false));
             SelfTests.register("veldanava.tpo_" + id, server -> probe(server, id, true));
         }
+        SelfTests.register("veldanava.tensura_aim", VeldanavaSelfTests::beamAim);
+        SelfTests.register("veldanava.tensura_moves", VeldanavaSelfTests::tensuraMoves);
     }
 
     // ---------------------------------------------------------------- rules (pure)
@@ -173,7 +175,7 @@ public final class VeldanavaSelfTests {
         VeldanavaTensura fx = new VeldanavaTensura();
         net.minecraft.world.level.block.state.BlockState[] before = cube(sl, at);
         try {
-            net.minecraft.world.entity.Entity e = fx.spawn(sl, path, new Vec3(x, y, z), 0f, 0f, 60);
+            net.minecraft.world.entity.Entity e = fx.spawn(sl, path, new Vec3(x, y, z), 0f, 0f, 60, 0f, null);
             if (e == null) return Result.fail("tensura:" + path + " could not be spawned");
             if (owned && boss != null) {
                 if (e instanceof net.minecraft.world.entity.projectile.Projectile pr) pr.setOwner(boss);
@@ -191,8 +193,9 @@ public final class VeldanavaSelfTests {
             String extra = "";
             if (e instanceof io.github.manasmods.tensura.entity.magic.beam.BeamProjectile bp) extra = " end=" + (int) (bp.endPosX - x) + "," + (int) (bp.endPosY - y) + "," + (int) (bp.endPosZ - z);
             String life = e instanceof io.github.manasmods.tensura.entity.TensuraProjectile tp ? tp.getAge() + "/" + tp.getLife() : "-";
-            String out = e.getClass().getSimpleName() + " t" + ticks + " age" + life + " err=" + err + " dz=" + (20f - zb.getHealth()) + " dp=" + (p.getMaxHealth() - p.getHealth()) + " blk=" + changed + extra;
+            String out = e.getClass().getSimpleName() + " t" + ticks + " age" + life + " err=" + err + " dz=" + (20f - zb.getHealth()) + " dp=" + (p.getMaxHealth() - p.getHealth()) + " blk=" + changed + " fire=" + (zb.getRemainingFireTicks() + p.getRemainingFireTicks()) + " fx=" + (zb.getActiveEffects().size() + p.getActiveEffects().size()) + extra;
             if (!err.equals("none")) return Result.fail(out.substring(0, Math.min(150, out.length())));
+            if (zb.getRemainingFireTicks() > 0 || p.getRemainingFireTicks() > 0 || !zb.getActiveEffects().isEmpty() || !p.getActiveEffects().isEmpty()) return Result.fail("BURN/FX " + out.substring(0, Math.min(140, out.length())));
             if (zb.getHealth() < zb.getMaxHealth() || p.getHealth() < p.getMaxHealth()) return Result.fail("HURT " + out.substring(0, Math.min(140, out.length())));
             return Result.ok(out.substring(0, Math.min(150, out.length())));
         } finally {
@@ -208,6 +211,70 @@ public final class VeldanavaSelfTests {
         int i = 0;
         for (int dx = -6; dx <= 6; dx++) for (int dz = -6; dz <= 6; dz++) for (int dy = -2; dy <= 4; dy++) out[i++] = sl.getBlockState(at.offset(dx, dy, dz));
         return out;
+    }
+
+
+    /** The Black Lightning Blast beams point where the move says: beam i of 4 along the Minecraft yaw 90 * i (the angle shift of {@link VeldanavaTensura#beamYaw}). */
+    private static Result beamAim(MinecraftServer server) {
+        ServerLevel sl = server.overworld();
+        if (VeldanavaTensura.typeOf(VeldanavaTensura.BLAST) == null) return Result.ok("no tensura black_lightning_blast in this Tensura");
+        BlockPos at = sl.getSharedSpawnPos().above(40);                                  // in the air, so no block is in the way
+        VeldanavaTensura fx = new VeldanavaTensura();
+        java.util.List<net.minecraft.world.entity.Entity> beams = new java.util.ArrayList<>();
+        try {
+            int made = fx.blast(sl, Vec3.atBottomCenterOf(at), 4, 40, 20f, null);
+            if (made != 4) return Result.fail("only " + made + " of 4 beams were made");
+            for (net.minecraft.world.entity.Entity e : sl.getEntitiesOfClass(io.github.manasmods.tensura.entity.magic.beam.BlackLightningBlastProjectile.class, new AABB(at).inflate(3))) beams.add(e);
+            StringBuilder out = new StringBuilder();
+            for (net.minecraft.world.entity.Entity e : beams) {
+                for (int t = 0; t < 4 && !e.isRemoved(); t++) e.tick();
+                var bp = (io.github.manasmods.tensura.entity.magic.beam.BeamProjectile) e;
+                double dx = bp.endPosX - e.getX(), dz = bp.endPosZ - e.getZ();
+                double yaw = Math.toRadians(e.getYRot());
+                double want = -Math.sin(yaw) * dx + Math.cos(yaw) * dz;                      // the part of the beam along its Minecraft yaw
+                double len = Math.sqrt(dx * dx + dz * dz);
+                out.append(' ').append((int) e.getYRot()).append(':').append(len < 1.0 ? "zero" : String.valueOf((int) Math.round(100.0 * want / len)));
+                if (len < 1.0 || want / len < 0.9) return Result.fail("a beam does not point along its yaw:" + out);
+            }
+            return Result.ok("4 beams point along their yaw (cos %)" + out);
+        } finally {
+            fx.clear();
+            for (net.minecraft.world.entity.Entity e : beams) e.discard();
+        }
+    }
+
+    /** Runs each of the seven moves of the boss tick by tick on the real server with the Tensura versions on, and counts the Tensura entities each one made. */
+    private static Result tensuraMoves(MinecraftServer server) {
+        ServerLevel sl = server.overworld();
+        for (VeldanavaBoss old : sl.getEntities(VeldanavaEntities.VELDANAVA.get(), e -> true)) old.discard();
+        BlockPos at = sl.getSharedSpawnPos().above(2);
+        VeldanavaBoss b = VeldanavaBoss.spawnAt(sl, Vec3.atBottomCenterOf(at), 0f);
+        if (b == null) return Result.fail("the boss could not be spawned (config off?)");
+        if (!VeldanavaTensura.on()) { b.discard(); return Result.ok("the Tensura versions are switched off in this config"); }
+        int[] ids = {VeldanavaRules.ABSOLUTE_SEVERANCE, VeldanavaRules.BLACK_LIGHTNING, VeldanavaRules.BLACK_BLAST, VeldanavaRules.DEATH_TORNADO, VeldanavaRules.DISINTEGRATION, VeldanavaRules.HELL_FLARE, VeldanavaRules.MEGIDDO};
+        String[] names = {"sev", "bolt", "blast", "torn", "dis", "hell", "meg"};
+        StringBuilder out = new StringBuilder();
+        try {
+            for (int k = 0; k < ids.length; k++) {
+                VeldanavaRules.Spec spec = VeldanavaRules.spec(ids[k]);
+                b.tensura().clear();
+                b.marks().clear();
+                b.setCastYaw(0f);
+                VeldanavaMoves.begin(b, spec, sl);
+                if (spec.id() == VeldanavaRules.BLACK_LIGHTNING || spec.id() == VeldanavaRules.MEGIDDO) for (int i = 0; i < 3; i++) b.marks().add(Vec3.atBottomCenterOf(at.offset(4 * i - 4, 0, 6)));
+                int most = 0;
+                for (int t = 1; t <= spec.length(); t++) {
+                    VeldanavaMoves.tick(b, spec, t, sl);
+                    most = Math.max(most, b.tensura().alive());
+                }
+                out.append(names[k]).append(most).append(' ');
+                if (most == 0 && VeldanavaTensura.typeOf(k == 0 ? VeldanavaTensura.SEVERANCE : VeldanavaTensura.IDS[k]) != null) return Result.fail("the move " + spec.name() + " drew no Tensura entity: " + out);
+            }
+            return Result.ok("Tensura entities per move: " + out.toString().trim());
+        } finally {
+            b.tensura().clear();
+            b.discard();
+        }
     }
 
     // ---------------------------------------------------------------- the Will of the Creator

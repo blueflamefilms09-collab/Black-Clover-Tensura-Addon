@@ -8,6 +8,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.ArrayList;
@@ -29,9 +30,12 @@ public final class VeldanavaTensura {
             DISINTEGRATION = "disintegration", HELL_FLARE = "hell_flare", MEGIDDO = "megiddo_bubble";
     /** Every id the moves use, in the order of the moves. */
     public static final String[] IDS = {SEVERANCE, BOLT, BLAST, TORNADO, DISINTEGRATION, HELL_FLARE, MEGIDDO};
-    public static final int MAX_LIVE = 20, MAX_LIFE = 120;
+    public static final int MAX_LIVE = 20, MAX_LIFE = 120, MAX_BEAMS = 6;
+    /** How fast the Absolute Severance cutter flies, in blocks per tick. */
+    public static final float CUTTER_SPEED = 3.0f;
 
     private final List<Entity> live = new ArrayList<>();
+    private Entity mover;
 
     /** True when the server wants the Tensura versions (never in the 3.11.0 classic mode). */
     public static boolean on() { return VeldanavaConfig.tensuraMoves() && !VeldanavaConfig.classic(); }
@@ -46,9 +50,10 @@ public final class VeldanavaTensura {
 
     /**
      * Creates the entity, turns its own harm off, places it and adds it to the level. Returns it, or null when the id is missing or anything went wrong (the caller then
-     * plays the 3.30.0 effect). At most {@link #MAX_LIVE} stay alive; the oldest go first.
+     * plays the 3.30.0 effect). At most {@link #MAX_LIVE} stay alive; the oldest go first. 'size' above 0 sets the entity's size (radius of a field or a funnel); 'owner' is
+     * the boss (Tensura's own disintegration removes itself without one, and a field never hurts its owner).
      */
-    public Entity spawn(ServerLevel sl, String path, Vec3 at, float yawDeg, float pitchDeg, int life) {
+    public Entity spawn(ServerLevel sl, String path, Vec3 at, float yawDeg, float pitchDeg, int life, float size, Entity owner) {
         EntityType<?> type = typeOf(path);
         if (type == null) return null;
         prune();
@@ -59,7 +64,14 @@ public final class VeldanavaTensura {
             if (e == null) return null;
             e.moveTo(at.x, at.y, at.z, yawDeg, pitchDeg);
             quiet(e);
-            if (e instanceof TensuraProjectile tp) tp.setLife(Math.max(1, Math.min(MAX_LIFE, life)));
+            if (owner != null) {
+                if (e instanceof Projectile pr) pr.setOwner(owner);
+                else if (e instanceof TensuraLightningBolt lb) lb.setOwner(owner);
+            }
+            if (e instanceof TensuraProjectile tp) {
+                tp.setLife(clampLife(life));
+                if (size > 0f) tp.setSize(size);
+            }
             if (!sl.addFreshEntity(e)) return null;
             live.add(e);
             return e;
@@ -68,6 +80,75 @@ public final class VeldanavaTensura {
             return null;
         }
     }
+
+    // ---------------------------------------------------------------- the seven moves' entities
+    /** The cutter of Absolute Severance, flying along the aim. */
+    public Entity cutter(ServerLevel sl, Vec3 at, float mcYawDeg, Entity owner) {
+        Entity e = spawn(sl, SEVERANCE, at, mcYawDeg, 0f, 24, 0f, owner);
+        if (e instanceof Projectile pr) {
+            double r = Math.toRadians(mcYawDeg);
+            pr.shoot(-Math.sin(r), 0.0, Math.cos(r), CUTTER_SPEED, 0f);
+        }
+        return e;
+    }
+
+    /** One bolt of Black Lightning striking the point. */
+    public Entity bolt(ServerLevel sl, Vec3 at, Entity owner) { return spawn(sl, BOLT, at, 0f, 0f, 1, 0f, owner); }
+
+    /** 'beams' black lightning beams from the point, evenly round, each 'range' blocks long and alive for 'life' ticks. Returns how many were made. */
+    public int blast(ServerLevel sl, Vec3 at, int beams, int life, float range, Entity owner) {
+        int made = 0;
+        for (int i = 0; i < Math.min(beams, MAX_BEAMS); i++) {
+            float yaw = beamStep(i, beams);
+            Entity e = spawn(sl, BLAST, at, yaw, 0f, life, 0f, owner);
+            if (e == null) break;
+            if (e instanceof BeamProjectile bp) {
+                bp.setFollowingOwner(false);
+                bp.setYaw(beamYaw(yaw));
+                bp.setPitch(beamPitch(0f));
+                bp.setRange(range);
+            }
+            made++;
+        }
+        return made;
+    }
+
+    /** The bubble of Megiddo at the point. */
+    public Entity megiddo(ServerLevel sl, Vec3 at, int life, Entity owner) { return spawn(sl, MEGIDDO, at, 0f, 0f, life, 0f, owner); }
+
+    /** The Death Tornado: the one the moves move along ({@link #follow}). */
+    public Entity tornado(ServerLevel sl, Vec3 at, float size, int life, Entity owner) {
+        mover = spawn(sl, TORNADO, at, 0f, 0f, life, size, owner);
+        return mover;
+    }
+
+    /** A field: the Disintegration zone (the one the moves keep) or the Hell Flare. */
+    public Entity zone(ServerLevel sl, String path, Vec3 at, float size, int life, Entity owner) {
+        Entity e = spawn(sl, path, at, 0f, 0f, life, size, owner);
+        if (DISINTEGRATION.equals(path)) mover = e;
+        return e;
+    }
+
+    /** Moves the tornado (or the zone) to the point, if it is still there. */
+    public void follow(Vec3 p) {
+        if (mover != null && !mover.isRemoved()) mover.setPos(p.x, p.y, p.z);
+    }
+
+    /** True while the tornado or the zone of this cast is alive. */
+    public boolean hasMover() { return mover != null && !mover.isRemoved(); }
+
+    // ---------------------------------------------------------------- pure numbers
+    /** Tensura's beam angle (radians) for a Minecraft yaw in degrees: its beams point along +X at 0, Minecraft's yaw 0 looks along +Z. */
+    public static float beamYaw(float mcYawDeg) { return (float) Math.toRadians(mcYawDeg + 90.0); }
+
+    /** Tensura's beam pitch (radians) for a Minecraft pitch in degrees (down is positive in Minecraft). */
+    public static float beamPitch(float mcPitchDeg) { return (float) Math.toRadians(-mcPitchDeg); }
+
+    /** The yaw of beam 'i' of 'n' spread evenly round the circle, in degrees. */
+    public static float beamStep(int i, int n) { return n <= 0 ? 0f : 360f * i / n; }
+
+    /** A life in ticks, kept between one tick and {@link #MAX_LIFE}. */
+    public static int clampLife(int ticks) { return Math.max(1, Math.min(MAX_LIFE, ticks)); }
 
     /** Turns off everything a Tensura entity does to what it touches, so it is only a look and a sound. */
     public static void quiet(Entity e) {
@@ -99,5 +180,6 @@ public final class VeldanavaTensura {
     public void clear() {
         for (Entity e : live) if (!e.isRemoved()) e.discard();
         live.clear();
+        mover = null;
     }
 }

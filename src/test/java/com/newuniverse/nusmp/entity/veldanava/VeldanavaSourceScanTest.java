@@ -123,7 +123,7 @@ class VeldanavaSourceScanTest {
         String main = code(Files.readString(SRC.resolve("NUSMP.java"), StandardCharsets.UTF_8));
         assertTrue(main.contains("ModConfig.Type.SERVER, com.newuniverse.nusmp.entity.veldanava.VeldanavaConfig.SPEC, \"nusmp-veldanava-server.toml\""), "Veldanava's settings change gameplay, so they are a SERVER config");
         String cfg = code(server("VeldanavaConfig"));
-        for (String key : new String[]{"enabled", "bossHealth", "damageScale", "soulSeizing", "willOfTheCreatorSeconds", "classicMode", "healthTotal", "regenPercentPerSecond"}) assertTrue(cfg.contains("\"" + key + "\""), "config key missing: " + key);
+        for (String key : new String[]{"enabled", "bossHealth", "damageScale", "soulSeizing", "willOfTheCreatorSeconds", "classicMode", "healthTotal", "regenPercentPerSecond", "tensuraMoves"}) assertTrue(cfg.contains("\"" + key + "\""), "config key missing: " + key);
     }
 
     @Test

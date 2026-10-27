@@ -37,6 +37,7 @@ public final class VeldanavaMoves {
     // 3.30.0: the colours and sizes of the Tensura-themed moves; the LEAD constants say how many ticks before its hit each effect is sent so that its impact frame lands with the hit (tuned on the previews)
     private static final int CRIMSON = 0xC21E3A, HELL = 0xE0301E, ASH = 0xA9AFB8, HOLY = 0xFFF1B0;
     private static final double SEVER_LENGTH = 44.0, SEVER_HALF_WIDTH = 1.6, BOLT_RADIUS = 3.2, BLAST_RADIUS = 16.0, TORNADO_RADIUS = 5.5, DISINT_RADIUS = 8.0, HELL_OUTER = 18.0, MEGIDDO_RADIUS = 3.5;
+    private static final int BLAST_BEAMS = 6;                                   // 3.31.0: Tensura's Black Lightning Blast beams, evenly round
     private static final int SEVER_LEAD = 3, BOLT_LEAD = 3, BLAST_LEAD = 11, HELL_LEAD = 6, MEGIDDO_LEAD = 6;
 
     // ================================================================ start of a move
@@ -393,7 +394,8 @@ public final class VeldanavaMoves {
             b.turnTo(b.castYaw(), 60f);
             if (tick == spec.windup() - SEVER_LEAD) {
                 Vec3 o = b.position().add(0, 1.2, 0);
-                if (b.fxBudget()) VfxSpawn.send(sl, VfxShape.VELD_SEVERANCE, o, o.add(dirOf(b.castYaw()).scale(SEVER_LENGTH)), 0xFF000000 | WHITE, 16, (float) SEVER_HALF_WIDTH);
+                boolean drawn = VeldanavaTensura.use(VeldanavaTensura.SEVERANCE) && b.tensura().cutter(sl, o, b.castYaw(), b) != null;      // 3.31.0: Tensura's own cutter, else the 3.30.0 effect
+                if (!drawn && b.fxBudget()) VfxSpawn.send(sl, VfxShape.VELD_SEVERANCE, o, o.add(dirOf(b.castYaw()).scale(SEVER_LENGTH)), 0xFF000000 | WHITE, 16, (float) SEVER_HALF_WIDTH);
             }
             return;
         }
@@ -435,12 +437,16 @@ public final class VeldanavaMoves {
         for (int i = 0; i < n; i++) {
             int at = spec.windup() + VeldanavaRules.strikeTick(i, n, spec.active());
             Vec3 m = marks.get(i);
+            boolean tensura = VeldanavaTensura.use(bolt ? VeldanavaTensura.BOLT : VeldanavaTensura.MEGIDDO);                       // 3.31.0: Tensura's bolt and bubble, else the 3.30.0 effects
             if (tick == at - lead) {
-                if (bolt) { if (b.fxBudget()) VfxSpawn.send(sl, VfxShape.VELD_BLACK_LIGHTNING, m.add(0, 40, 0), m, 0xFF000000 | CRIMSON, 12, (float) BOLT_RADIUS); }
+                if (!bolt && tensura && b.tensura().megiddo(sl, m.add(0, 1.5, 0), lead + 14, b) != null) { }
+                else if (bolt && tensura) { }
+                else if (bolt) { if (b.fxBudget()) VfxSpawn.send(sl, VfxShape.VELD_BLACK_LIGHTNING, m.add(0, 40, 0), m, 0xFF000000 | CRIMSON, 12, (float) BOLT_RADIUS); }
                 else if (b.fxBudget()) VfxSpawn.send(sl, VfxShape.VELD_MEGIDDO, m.add(0, 60, 0), m, 0xFF000000 | HOLY, 18, (float) MEGIDDO_RADIUS);
             }
             if (tick != at) continue;
-            sl.playSound(null, BlockPos.containing(m), bolt ? SoundEvents.LIGHTNING_BOLT_THUNDER : SoundEvents.GENERIC_EXPLODE.value(), SoundSource.HOSTILE, bolt ? 3f : 4f, bolt ? 0.7f : 0.8f);
+            if (bolt && tensura && b.tensura().bolt(sl, m, b) == null && b.fxBudget()) VfxSpawn.send(sl, VfxShape.VELD_BLACK_LIGHTNING, m.add(0, 40, 0), m, 0xFF000000 | CRIMSON, 12, (float) BOLT_RADIUS);
+            if (!tensura) sl.playSound(null, BlockPos.containing(m), bolt ? SoundEvents.LIGHTNING_BOLT_THUNDER : SoundEvents.GENERIC_EXPLODE.value(), SoundSource.HOSTILE, bolt ? 3f : 4f, bolt ? 0.7f : 0.8f);
             double r = bolt ? BOLT_RADIUS : MEGIDDO_RADIUS;
             for (ServerPlayer p : b.playersNear(m, r)) {
                 if (p.getY() - m.y > 8.0) continue;
@@ -454,7 +460,9 @@ public final class VeldanavaMoves {
     private static void blackBlast(VeldanavaBoss b, VeldanavaRules.Spec spec, ServerLevel sl, int tick, int since) {
         Vec3 c = b.position();
         if (since < 0) {
-            if (tick == spec.windup() - BLAST_LEAD && b.fxBudget()) VfxSpawn.send(sl, VfxShape.VELD_BLACK_BLAST, c, c, 0xFF000000 | CRIMSON, 26, (float) BLAST_RADIUS);
+            if (tick != spec.windup() - BLAST_LEAD) return;
+            boolean drawn = VeldanavaTensura.use(VeldanavaTensura.BLAST) && b.tensura().blast(sl, c.add(0, 1.5, 0), BLAST_BEAMS, BLAST_LEAD + spec.active(), (float) BLAST_RADIUS, b) > 0;      // 3.31.0: Tensura's beams, else the 3.30.0 burst
+            if (!drawn && b.fxBudget()) VfxSpawn.send(sl, VfxShape.VELD_BLACK_BLAST, c, c, 0xFF000000 | CRIMSON, 26, (float) BLAST_RADIUS);
             return;
         }
         if (since == 0) {
@@ -492,7 +500,9 @@ public final class VeldanavaMoves {
         }
         if (since % 5 == 0) pt = VeldanavaBoss.ground(sl, pt);
         b.setCastPoint(pt);
-        if (since % 10 == 0 && b.fxBudget()) VfxSpawn.send(sl, VfxShape.VELD_TORNADO, pt, pt.add(0, 1, 0), 0xFF000000 | ASH, 14, (float) TORNADO_RADIUS);
+        if (since == 0 && VeldanavaTensura.use(VeldanavaTensura.TORNADO)) b.tensura().tornado(sl, pt, (float) TORNADO_RADIUS, spec.active(), b);        // 3.31.0: Tensura's funnel walks with the point
+        b.tensura().follow(pt);
+        if (!b.tensura().hasMover() && since % 10 == 0 && b.fxBudget()) VfxSpawn.send(sl, VfxShape.VELD_TORNADO, pt, pt.add(0, 1, 0), 0xFF000000 | ASH, 14, (float) TORNADO_RADIUS);
         if (since % 5 != 0) return;
         long now = sl.getGameTime();
         for (ServerPlayer p : b.playersNear(pt, TORNADO_RADIUS)) {
@@ -510,7 +520,8 @@ public final class VeldanavaMoves {
     private static void disintegration(VeldanavaBoss b, VeldanavaRules.Spec spec, ServerLevel sl, int since, boolean active) {
         if (!active || b.castPoint() == null) return;
         Vec3 c = b.castPoint();
-        if ((since == 0 || since == 28) && b.fxBudget()) VfxSpawn.send(sl, VfxShape.VELD_DISINTEGRATION, c, c.add(0, 1, 0), 0xFF000000 | ASH, 30, (float) DISINT_RADIUS);
+        if (since == 0 && VeldanavaTensura.use(VeldanavaTensura.DISINTEGRATION)) b.tensura().zone(sl, VeldanavaTensura.DISINTEGRATION, c, (float) DISINT_RADIUS, spec.active(), b);     // 3.31.0: Tensura's zone, else the 3.30.0 effect
+        if (!b.tensura().hasMover() && (since == 0 || since == 28) && b.fxBudget()) VfxSpawn.send(sl, VfxShape.VELD_DISINTEGRATION, c, c.add(0, 1, 0), 0xFF000000 | ASH, 30, (float) DISINT_RADIUS);
         if (since % 8 != 0) return;
         long now = sl.getGameTime();
         for (ServerPlayer p : b.playersNear(c, DISINT_RADIUS)) {
@@ -528,7 +539,9 @@ public final class VeldanavaMoves {
     private static void hellFlare(VeldanavaBoss b, VeldanavaRules.Spec spec, ServerLevel sl, int tick, int since) {
         Vec3 c = b.position();
         if (since < 0) {
-            if (tick == spec.windup() - HELL_LEAD && b.fxBudget()) VfxSpawn.send(sl, VfxShape.VELD_HELL_FLARE, c, c, 0xFF000000 | HELL, 30, (float) HELL_OUTER);
+            if (tick != spec.windup() - HELL_LEAD) return;
+            boolean drawn = VeldanavaTensura.use(VeldanavaTensura.HELL_FLARE) && b.tensura().zone(sl, VeldanavaTensura.HELL_FLARE, c, (float) HELL_OUTER, HELL_LEAD + 28, b) != null;      // 3.31.0: Tensura's Hell Flare, else the 3.30.0 rings
+            if (!drawn && b.fxBudget()) VfxSpawn.send(sl, VfxShape.VELD_HELL_FLARE, c, c, 0xFF000000 | HELL, 30, (float) HELL_OUTER);
             return;
         }
         if (since > 24) return;
