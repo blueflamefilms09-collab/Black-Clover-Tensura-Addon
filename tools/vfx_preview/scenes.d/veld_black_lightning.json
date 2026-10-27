@@ -1,0 +1,9 @@
+{
+ "_comment": "Veldanava Black Lightning previews, VeldBlackLightningLayer: bolt from 40 blocks up, impact radius 3, 12 ticks. The _bright scene checks it reads against a pale sky.",
+ "veld_black_lightning": {"layer": "VeldBlackLightningLayer", "shape": "VELD_BLACK_LIGHTNING", "color": "FFD0102E", "from": [1.5, 40.2, 0.5], "to": [0, 0.2, 0], "power": 3.0, "duration": 12,
+                          "cam": [0, 6, -16], "target": [0, 7.5, 0], "ages": [1, 2, 3, 4, 5, 6, 7, 8, 10, 11], "figures": [[0, 0, 0, 1.8], [4, 0, -2, 1.8]]},
+ "veld_black_lightning_wide": {"layer": "VeldBlackLightningLayer", "shape": "VELD_BLACK_LIGHTNING", "color": "FFD0102E", "from": [1.5, 40.2, 0.5], "to": [0, 0.2, 0], "power": 3.0, "duration": 12,
+                               "cam": [-30, 14, -34], "target": [0, 14, 0], "ages": [1, 2, 3, 4, 5, 6, 7, 8, 10, 11], "figures": [[0, 0, 0, 1.8]]},
+ "veld_black_lightning_bright": {"layer": "VeldBlackLightningLayer", "shape": "VELD_BLACK_LIGHTNING", "color": "FFD0102E", "from": [1.5, 40.2, 0.5], "to": [0, 0.2, 0], "power": 3.0, "duration": 12,
+                                 "cam": [-14, 5, -18], "target": [0, 9, 0], "sky": [0.62, 0.78, 0.97], "horizon": [0.85, 0.9, 0.95], "ages": [1, 3, 4, 5, 6, 7, 9, 11], "figures": [[0, 0, 0, 1.8]]}
+}
