@@ -44,6 +44,9 @@ public final class VeldanavaSelfTests {
         SelfTests.register("veldanava.assets", VeldanavaSelfTests::assets);
         SelfTests.register("veldanava.boss", VeldanavaSelfTests::boss);
         SelfTests.register("veldanava.orb", VeldanavaSelfTests::orb);
+        SelfTests.register("veldanava.tensura_wind", server -> tensuraIds(server, "tornado", "cutter", "sever", "space_cut"));
+        SelfTests.register("veldanava.tensura_fire", server -> tensuraIds(server, "flare", "hellfire", "megiddo"));
+        SelfTests.register("veldanava.tensura_bolt", server -> tensuraIds(server, "lightning", "blast", "disintegr"));
     }
 
     // ---------------------------------------------------------------- rules (pure)
@@ -146,6 +149,34 @@ public final class VeldanavaSelfTests {
         } finally {
             b.discard();
         }
+    }
+
+    // ---------------------------------------------------------------- the base Tensura mod's versions of the six moves (3.31.0 discovery)
+    /** Every Tensura entity type and effect whose id holds one of the words, with the class a new instance really has (the smoke log keeps 900 characters of a detail, so the words come in three groups). */
+    private static Result tensuraIds(MinecraftServer server, String... words) {
+        ServerLevel sl = server.overworld();
+        StringBuilder out = new StringBuilder();
+        for (var e : net.minecraft.core.registries.BuiltInRegistries.ENTITY_TYPE.entrySet()) {
+            net.minecraft.resources.ResourceLocation id = e.getKey().location();
+            if (!"tensura".equals(id.getNamespace()) || !hasWord(id.getPath(), words)) continue;
+            String cls;
+            try {
+                net.minecraft.world.entity.Entity made = e.getValue().create(sl);
+                cls = made == null ? "null" : made.getClass().getSimpleName();
+                if (made != null) made.discard();
+            } catch (Throwable t) { cls = "create failed " + t.getClass().getSimpleName(); }
+            out.append(" E:").append(id.getPath()).append('=').append(cls);
+        }
+        for (var e : net.minecraft.core.registries.BuiltInRegistries.MOB_EFFECT.entrySet()) {
+            net.minecraft.resources.ResourceLocation id = e.getKey().location();
+            if ("tensura".equals(id.getNamespace()) && hasWord(id.getPath(), words)) out.append(" F:").append(id.getPath());
+        }
+        return Result.ok(String.join("/", words) + ":" + out);
+    }
+
+    private static boolean hasWord(String path, String[] words) {
+        for (String w : words) if (path.contains(w)) return true;
+        return false;
     }
 
     // ---------------------------------------------------------------- the Will of the Creator
