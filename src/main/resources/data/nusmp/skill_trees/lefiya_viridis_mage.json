@@ -1205,7 +1205,7 @@
       "type": "active_ability",
       "kind": "debt_burst",
       "params": {
-        "vfx": "ULT_THOUSAND_ELF"
+        "vfx": "ELF_CIRCLE"
       },
       "values": {
         "damage": [

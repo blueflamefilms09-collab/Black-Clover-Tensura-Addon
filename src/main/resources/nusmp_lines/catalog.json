@@ -71,7 +71,17 @@
      "ASH_FORMATION",
      "FLAME_TRAIL",
      "STONE_SPIKES",
-     "WIND_TORNADO"
+     "WIND_TORNADO",
+     "ULT_IRON_DRAGON",
+     "ULT_SATAN_CORE",
+     "ULT_ALL_CRUSH",
+     "ULT_GREAT_FLOOD",
+     "ULT_MONARCH_SHADOWS",
+     "ULT_CHAIRMAN_STAND",
+     "ULT_DEVOURING_SHADOW",
+     "ULT_FINAL_DOSE",
+     "ULT_DISASTER_FLOODS",
+     "ULT_THOUSAND_ELF"
     ]
    },
    "desc": "Strike a cone in front of you."
@@ -141,7 +151,17 @@
      "ASH_FORMATION",
      "FLAME_TRAIL",
      "STONE_SPIKES",
-     "WIND_TORNADO"
+     "WIND_TORNADO",
+     "ULT_IRON_DRAGON",
+     "ULT_SATAN_CORE",
+     "ULT_ALL_CRUSH",
+     "ULT_GREAT_FLOOD",
+     "ULT_MONARCH_SHADOWS",
+     "ULT_CHAIRMAN_STAND",
+     "ULT_DEVOURING_SHADOW",
+     "ULT_FINAL_DOSE",
+     "ULT_DISASTER_FLOODS",
+     "ULT_THOUSAND_ELF"
     ]
    },
    "desc": "Burst outward around you."
@@ -205,7 +225,17 @@
      "ASH_FORMATION",
      "FLAME_TRAIL",
      "STONE_SPIKES",
-     "WIND_TORNADO"
+     "WIND_TORNADO",
+     "ULT_IRON_DRAGON",
+     "ULT_SATAN_CORE",
+     "ULT_ALL_CRUSH",
+     "ULT_GREAT_FLOOD",
+     "ULT_MONARCH_SHADOWS",
+     "ULT_CHAIRMAN_STAND",
+     "ULT_DEVOURING_SHADOW",
+     "ULT_FINAL_DOSE",
+     "ULT_DISASTER_FLOODS",
+     "ULT_THOUSAND_ELF"
     ]
    },
    "desc": "Dash forward, hitting everything in your path."
@@ -275,7 +305,17 @@
      "ASH_FORMATION",
      "FLAME_TRAIL",
      "STONE_SPIKES",
-     "WIND_TORNADO"
+     "WIND_TORNADO",
+     "ULT_IRON_DRAGON",
+     "ULT_SATAN_CORE",
+     "ULT_ALL_CRUSH",
+     "ULT_GREAT_FLOOD",
+     "ULT_MONARCH_SHADOWS",
+     "ULT_CHAIRMAN_STAND",
+     "ULT_DEVOURING_SHADOW",
+     "ULT_FINAL_DOSE",
+     "ULT_DISASTER_FLOODS",
+     "ULT_THOUSAND_ELF"
     ]
    },
    "desc": "Leap and crash down on the foes below."
@@ -339,7 +379,17 @@
      "ASH_FORMATION",
      "FLAME_TRAIL",
      "STONE_SPIKES",
-     "WIND_TORNADO"
+     "WIND_TORNADO",
+     "ULT_IRON_DRAGON",
+     "ULT_SATAN_CORE",
+     "ULT_ALL_CRUSH",
+     "ULT_GREAT_FLOOD",
+     "ULT_MONARCH_SHADOWS",
+     "ULT_CHAIRMAN_STAND",
+     "ULT_DEVOURING_SHADOW",
+     "ULT_FINAL_DOSE",
+     "ULT_DISASTER_FLOODS",
+     "ULT_THOUSAND_ELF"
     ]
    },
    "desc": "Fire a piercing beam along your line of sight."
@@ -409,7 +459,17 @@
      "ASH_FORMATION",
      "FLAME_TRAIL",
      "STONE_SPIKES",
-     "WIND_TORNADO"
+     "WIND_TORNADO",
+     "ULT_IRON_DRAGON",
+     "ULT_SATAN_CORE",
+     "ULT_ALL_CRUSH",
+     "ULT_GREAT_FLOOD",
+     "ULT_MONARCH_SHADOWS",
+     "ULT_CHAIRMAN_STAND",
+     "ULT_DEVOURING_SHADOW",
+     "ULT_FINAL_DOSE",
+     "ULT_DISASTER_FLOODS",
+     "ULT_THOUSAND_ELF"
     ]
    },
    "desc": "Strike a foe; the blow jumps from foe to foe."
@@ -526,7 +586,17 @@
      "ASH_FORMATION",
      "FLAME_TRAIL",
      "STONE_SPIKES",
-     "WIND_TORNADO"
+     "WIND_TORNADO",
+     "ULT_IRON_DRAGON",
+     "ULT_SATAN_CORE",
+     "ULT_ALL_CRUSH",
+     "ULT_GREAT_FLOOD",
+     "ULT_MONARCH_SHADOWS",
+     "ULT_CHAIRMAN_STAND",
+     "ULT_DEVOURING_SHADOW",
+     "ULT_FINAL_DOSE",
+     "ULT_DISASTER_FLOODS",
+     "ULT_THOUSAND_ELF"
     ]
    },
    "desc": "Gain an effect (or two) for a while."
@@ -616,7 +686,17 @@
      "ASH_FORMATION",
      "FLAME_TRAIL",
      "STONE_SPIKES",
-     "WIND_TORNADO"
+     "WIND_TORNADO",
+     "ULT_IRON_DRAGON",
+     "ULT_SATAN_CORE",
+     "ULT_ALL_CRUSH",
+     "ULT_GREAT_FLOOD",
+     "ULT_MONARCH_SHADOWS",
+     "ULT_CHAIRMAN_STAND",
+     "ULT_DEVOURING_SHADOW",
+     "ULT_FINAL_DOSE",
+     "ULT_DISASTER_FLOODS",
+     "ULT_THOUSAND_ELF"
     ]
    },
    "desc": "Give an effect to yourself and your allies around you."
@@ -674,7 +754,17 @@
      "ASH_FORMATION",
      "FLAME_TRAIL",
      "STONE_SPIKES",
-     "WIND_TORNADO"
+     "WIND_TORNADO",
+     "ULT_IRON_DRAGON",
+     "ULT_SATAN_CORE",
+     "ULT_ALL_CRUSH",
+     "ULT_GREAT_FLOOD",
+     "ULT_MONARCH_SHADOWS",
+     "ULT_CHAIRMAN_STAND",
+     "ULT_DEVOURING_SHADOW",
+     "ULT_FINAL_DOSE",
+     "ULT_DISASTER_FLOODS",
+     "ULT_THOUSAND_ELF"
     ]
    },
    "desc": "Heal yourself and regenerate for a while."
@@ -732,7 +822,17 @@
      "ASH_FORMATION",
      "FLAME_TRAIL",
      "STONE_SPIKES",
-     "WIND_TORNADO"
+     "WIND_TORNADO",
+     "ULT_IRON_DRAGON",
+     "ULT_SATAN_CORE",
+     "ULT_ALL_CRUSH",
+     "ULT_GREAT_FLOOD",
+     "ULT_MONARCH_SHADOWS",
+     "ULT_CHAIRMAN_STAND",
+     "ULT_DEVOURING_SHADOW",
+     "ULT_FINAL_DOSE",
+     "ULT_DISASTER_FLOODS",
+     "ULT_THOUSAND_ELF"
     ]
    },
    "desc": "Heal yourself and the allies around you."
@@ -784,7 +884,17 @@
      "ASH_FORMATION",
      "FLAME_TRAIL",
      "STONE_SPIKES",
-     "WIND_TORNADO"
+     "WIND_TORNADO",
+     "ULT_IRON_DRAGON",
+     "ULT_SATAN_CORE",
+     "ULT_ALL_CRUSH",
+     "ULT_GREAT_FLOOD",
+     "ULT_MONARCH_SHADOWS",
+     "ULT_CHAIRMAN_STAND",
+     "ULT_DEVOURING_SHADOW",
+     "ULT_FINAL_DOSE",
+     "ULT_DISASTER_FLOODS",
+     "ULT_THOUSAND_ELF"
     ]
    },
    "desc": "Teleport a short way forward."
@@ -848,7 +958,17 @@
      "ASH_FORMATION",
      "FLAME_TRAIL",
      "STONE_SPIKES",
-     "WIND_TORNADO"
+     "WIND_TORNADO",
+     "ULT_IRON_DRAGON",
+     "ULT_SATAN_CORE",
+     "ULT_ALL_CRUSH",
+     "ULT_GREAT_FLOOD",
+     "ULT_MONARCH_SHADOWS",
+     "ULT_CHAIRMAN_STAND",
+     "ULT_DEVOURING_SHADOW",
+     "ULT_FINAL_DOSE",
+     "ULT_DISASTER_FLOODS",
+     "ULT_THOUSAND_ELF"
     ]
    },
    "desc": "Raise a shield of absorption."
@@ -912,7 +1032,17 @@
      "ASH_FORMATION",
      "FLAME_TRAIL",
      "STONE_SPIKES",
-     "WIND_TORNADO"
+     "WIND_TORNADO",
+     "ULT_IRON_DRAGON",
+     "ULT_SATAN_CORE",
+     "ULT_ALL_CRUSH",
+     "ULT_GREAT_FLOOD",
+     "ULT_MONARCH_SHADOWS",
+     "ULT_CHAIRMAN_STAND",
+     "ULT_DEVOURING_SHADOW",
+     "ULT_FINAL_DOSE",
+     "ULT_DISASTER_FLOODS",
+     "ULT_THOUSAND_ELF"
     ]
    },
    "desc": "Draw the attention of hostile creatures to yourself."
@@ -1041,7 +1171,17 @@
      "ASH_FORMATION",
      "FLAME_TRAIL",
      "STONE_SPIKES",
-     "WIND_TORNADO"
+     "WIND_TORNADO",
+     "ULT_IRON_DRAGON",
+     "ULT_SATAN_CORE",
+     "ULT_ALL_CRUSH",
+     "ULT_GREAT_FLOOD",
+     "ULT_MONARCH_SHADOWS",
+     "ULT_CHAIRMAN_STAND",
+     "ULT_DEVOURING_SHADOW",
+     "ULT_FINAL_DOSE",
+     "ULT_DISASTER_FLOODS",
+     "ULT_THOUSAND_ELF"
     ]
    },
    "desc": "Afflict everyone in a cone in front of you."
@@ -1111,7 +1251,17 @@
      "ASH_FORMATION",
      "FLAME_TRAIL",
      "STONE_SPIKES",
-     "WIND_TORNADO"
+     "WIND_TORNADO",
+     "ULT_IRON_DRAGON",
+     "ULT_SATAN_CORE",
+     "ULT_ALL_CRUSH",
+     "ULT_GREAT_FLOOD",
+     "ULT_MONARCH_SHADOWS",
+     "ULT_CHAIRMAN_STAND",
+     "ULT_DEVOURING_SHADOW",
+     "ULT_FINAL_DOSE",
+     "ULT_DISASTER_FLOODS",
+     "ULT_THOUSAND_ELF"
     ]
    },
    "desc": "Drag the creatures around you toward yourself."
@@ -1175,7 +1325,17 @@
      "ASH_FORMATION",
      "FLAME_TRAIL",
      "STONE_SPIKES",
-     "WIND_TORNADO"
+     "WIND_TORNADO",
+     "ULT_IRON_DRAGON",
+     "ULT_SATAN_CORE",
+     "ULT_ALL_CRUSH",
+     "ULT_GREAT_FLOOD",
+     "ULT_MONARCH_SHADOWS",
+     "ULT_CHAIRMAN_STAND",
+     "ULT_DEVOURING_SHADOW",
+     "ULT_FINAL_DOSE",
+     "ULT_DISASTER_FLOODS",
+     "ULT_THOUSAND_ELF"
     ]
    },
    "desc": "Launch the foe in front of you into the air."
@@ -1245,7 +1405,17 @@
      "ASH_FORMATION",
      "FLAME_TRAIL",
      "STONE_SPIKES",
-     "WIND_TORNADO"
+     "WIND_TORNADO",
+     "ULT_IRON_DRAGON",
+     "ULT_SATAN_CORE",
+     "ULT_ALL_CRUSH",
+     "ULT_GREAT_FLOOD",
+     "ULT_MONARCH_SHADOWS",
+     "ULT_CHAIRMAN_STAND",
+     "ULT_DEVOURING_SHADOW",
+     "ULT_FINAL_DOSE",
+     "ULT_DISASTER_FLOODS",
+     "ULT_THOUSAND_ELF"
     ]
    },
    "desc": "Spin, hitting everything around you several times."
@@ -1315,7 +1485,17 @@
      "ASH_FORMATION",
      "FLAME_TRAIL",
      "STONE_SPIKES",
-     "WIND_TORNADO"
+     "WIND_TORNADO",
+     "ULT_IRON_DRAGON",
+     "ULT_SATAN_CORE",
+     "ULT_ALL_CRUSH",
+     "ULT_GREAT_FLOOD",
+     "ULT_MONARCH_SHADOWS",
+     "ULT_CHAIRMAN_STAND",
+     "ULT_DEVOURING_SHADOW",
+     "ULT_FINAL_DOSE",
+     "ULT_DISASTER_FLOODS",
+     "ULT_THOUSAND_ELF"
     ]
    },
    "desc": "Loose a volley at the foe you look at."
@@ -1385,7 +1565,17 @@
      "ASH_FORMATION",
      "FLAME_TRAIL",
      "STONE_SPIKES",
-     "WIND_TORNADO"
+     "WIND_TORNADO",
+     "ULT_IRON_DRAGON",
+     "ULT_SATAN_CORE",
+     "ULT_ALL_CRUSH",
+     "ULT_GREAT_FLOOD",
+     "ULT_MONARCH_SHADOWS",
+     "ULT_CHAIRMAN_STAND",
+     "ULT_DEVOURING_SHADOW",
+     "ULT_FINAL_DOSE",
+     "ULT_DISASTER_FLOODS",
+     "ULT_THOUSAND_ELF"
     ]
    },
    "desc": "Send a wave along the ground in front of you."
@@ -1449,7 +1639,17 @@
      "ASH_FORMATION",
      "FLAME_TRAIL",
      "STONE_SPIKES",
-     "WIND_TORNADO"
+     "WIND_TORNADO",
+     "ULT_IRON_DRAGON",
+     "ULT_SATAN_CORE",
+     "ULT_ALL_CRUSH",
+     "ULT_GREAT_FLOOD",
+     "ULT_MONARCH_SHADOWS",
+     "ULT_CHAIRMAN_STAND",
+     "ULT_DEVOURING_SHADOW",
+     "ULT_FINAL_DOSE",
+     "ULT_DISASTER_FLOODS",
+     "ULT_THOUSAND_ELF"
     ]
    },
    "desc": "A blow that hits much harder the weaker the foe is."
@@ -1513,7 +1713,17 @@
      "ASH_FORMATION",
      "FLAME_TRAIL",
      "STONE_SPIKES",
-     "WIND_TORNADO"
+     "WIND_TORNADO",
+     "ULT_IRON_DRAGON",
+     "ULT_SATAN_CORE",
+     "ULT_ALL_CRUSH",
+     "ULT_GREAT_FLOOD",
+     "ULT_MONARCH_SHADOWS",
+     "ULT_CHAIRMAN_STAND",
+     "ULT_DEVOURING_SHADOW",
+     "ULT_FINAL_DOSE",
+     "ULT_DISASTER_FLOODS",
+     "ULT_THOUSAND_ELF"
     ]
    },
    "desc": "Strike a foe and heal for a share of the damage."
@@ -1577,7 +1787,17 @@
      "ASH_FORMATION",
      "FLAME_TRAIL",
      "STONE_SPIKES",
-     "WIND_TORNADO"
+     "WIND_TORNADO",
+     "ULT_IRON_DRAGON",
+     "ULT_SATAN_CORE",
+     "ULT_ALL_CRUSH",
+     "ULT_GREAT_FLOOD",
+     "ULT_MONARCH_SHADOWS",
+     "ULT_CHAIRMAN_STAND",
+     "ULT_DEVOURING_SHADOW",
+     "ULT_FINAL_DOSE",
+     "ULT_DISASTER_FLOODS",
+     "ULT_THOUSAND_ELF"
     ]
    },
    "desc": "Freeze the creatures around you in place for a moment."
@@ -1635,7 +1855,17 @@
      "ASH_FORMATION",
      "FLAME_TRAIL",
      "STONE_SPIKES",
-     "WIND_TORNADO"
+     "WIND_TORNADO",
+     "ULT_IRON_DRAGON",
+     "ULT_SATAN_CORE",
+     "ULT_ALL_CRUSH",
+     "ULT_GREAT_FLOOD",
+     "ULT_MONARCH_SHADOWS",
+     "ULT_CHAIRMAN_STAND",
+     "ULT_DEVOURING_SHADOW",
+     "ULT_FINAL_DOSE",
+     "ULT_DISASTER_FLOODS",
+     "ULT_THOUSAND_ELF"
     ]
    },
    "desc": "Blind the creatures around you while you slip away."
@@ -1699,7 +1929,17 @@
      "ASH_FORMATION",
      "FLAME_TRAIL",
      "STONE_SPIKES",
-     "WIND_TORNADO"
+     "WIND_TORNADO",
+     "ULT_IRON_DRAGON",
+     "ULT_SATAN_CORE",
+     "ULT_ALL_CRUSH",
+     "ULT_GREAT_FLOOD",
+     "ULT_MONARCH_SHADOWS",
+     "ULT_CHAIRMAN_STAND",
+     "ULT_DEVOURING_SHADOW",
+     "ULT_FINAL_DOSE",
+     "ULT_DISASTER_FLOODS",
+     "ULT_THOUSAND_ELF"
     ]
    },
    "desc": "Mark a foe: it takes more damage for a while."
@@ -1757,7 +1997,17 @@
      "ASH_FORMATION",
      "FLAME_TRAIL",
      "STONE_SPIKES",
-     "WIND_TORNADO"
+     "WIND_TORNADO",
+     "ULT_IRON_DRAGON",
+     "ULT_SATAN_CORE",
+     "ULT_ALL_CRUSH",
+     "ULT_GREAT_FLOOD",
+     "ULT_MONARCH_SHADOWS",
+     "ULT_CHAIRMAN_STAND",
+     "ULT_DEVOURING_SHADOW",
+     "ULT_FINAL_DOSE",
+     "ULT_DISASTER_FLOODS",
+     "ULT_THOUSAND_ELF"
     ]
    },
    "desc": "For a while, part of the damage you take is thrown back at the attacker."
@@ -1827,7 +2077,17 @@
      "ASH_FORMATION",
      "FLAME_TRAIL",
      "STONE_SPIKES",
-     "WIND_TORNADO"
+     "WIND_TORNADO",
+     "ULT_IRON_DRAGON",
+     "ULT_SATAN_CORE",
+     "ULT_ALL_CRUSH",
+     "ULT_GREAT_FLOOD",
+     "ULT_MONARCH_SHADOWS",
+     "ULT_CHAIRMAN_STAND",
+     "ULT_DEVOURING_SHADOW",
+     "ULT_FINAL_DOSE",
+     "ULT_DISASTER_FLOODS",
+     "ULT_THOUSAND_ELF"
     ]
    },
    "desc": "Call a strike down on the place you look at after a short delay."
@@ -1897,7 +2157,17 @@
      "ASH_FORMATION",
      "FLAME_TRAIL",
      "STONE_SPIKES",
-     "WIND_TORNADO"
+     "WIND_TORNADO",
+     "ULT_IRON_DRAGON",
+     "ULT_SATAN_CORE",
+     "ULT_ALL_CRUSH",
+     "ULT_GREAT_FLOOD",
+     "ULT_MONARCH_SHADOWS",
+     "ULT_CHAIRMAN_STAND",
+     "ULT_DEVOURING_SHADOW",
+     "ULT_FINAL_DOSE",
+     "ULT_DISASTER_FLOODS",
+     "ULT_THOUSAND_ELF"
     ]
    },
    "desc": "Detonate the Debt stored on the foes around you: a blow plus a multiple of all the Debt it consumes."
@@ -2594,7 +2864,17 @@
      "ASH_FORMATION",
      "FLAME_TRAIL",
      "STONE_SPIKES",
-     "WIND_TORNADO"
+     "WIND_TORNADO",
+     "ULT_IRON_DRAGON",
+     "ULT_SATAN_CORE",
+     "ULT_ALL_CRUSH",
+     "ULT_GREAT_FLOOD",
+     "ULT_MONARCH_SHADOWS",
+     "ULT_CHAIRMAN_STAND",
+     "ULT_DEVOURING_SHADOW",
+     "ULT_FINAL_DOSE",
+     "ULT_DISASTER_FLOODS",
+     "ULT_THOUSAND_ELF"
     ]
    },
    "desc": "Your blows store delayed damage on the foe (Debt). It ticks while it waits, and your Debt arts consume it for a burst."
@@ -2678,7 +2958,17 @@
      "ASH_FORMATION",
      "FLAME_TRAIL",
      "STONE_SPIKES",
-     "WIND_TORNADO"
+     "WIND_TORNADO",
+     "ULT_IRON_DRAGON",
+     "ULT_SATAN_CORE",
+     "ULT_ALL_CRUSH",
+     "ULT_GREAT_FLOOD",
+     "ULT_MONARCH_SHADOWS",
+     "ULT_CHAIRMAN_STAND",
+     "ULT_DEVOURING_SHADOW",
+     "ULT_FINAL_DOSE",
+     "ULT_DISASTER_FLOODS",
+     "ULT_THOUSAND_ELF"
     ]
    },
    "desc": "Take a fighting stance: a set of bonuses (and sometimes a price) while it lasts. Only one stance at a time."
@@ -2773,7 +3063,17 @@
   "ASH_FORMATION",
   "FLAME_TRAIL",
   "STONE_SPIKES",
-  "WIND_TORNADO"
+  "WIND_TORNADO",
+  "ULT_IRON_DRAGON",
+  "ULT_SATAN_CORE",
+  "ULT_ALL_CRUSH",
+  "ULT_GREAT_FLOOD",
+  "ULT_MONARCH_SHADOWS",
+  "ULT_CHAIRMAN_STAND",
+  "ULT_DEVOURING_SHADOW",
+  "ULT_FINAL_DOSE",
+  "ULT_DISASTER_FLOODS",
+  "ULT_THOUSAND_ELF"
  ],
  "evolution": {
   "kills": {

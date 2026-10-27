@@ -1138,7 +1138,7 @@ LINES.append(Line(
     ],
     finishers=[
         A("Triage Sweep", "A whirl of thin cuts all around you, every one in the right place.", "whirlwind", "minecraft:shears", damage=5, hits=8, radius=4.5, interval=3, cooldown=1400, vfx="WIND_TORNADO"),
-        AU("Final Dose", "The last dose: every drop of poison your blows left on the foes around you comes due in one pale burst.", "debt_burst", "minecraft:dragon_breath", damage=20, mult=2.2, radius=12, targets=12, cost=0.07, cooldown=16000, vfx="ULT_FINAL_DOSE"),
+        AU("Final Dose", "The last dose: every drop of poison your blows left on the foes around you comes due in one pale burst.", "debt_burst", "minecraft:dragon_breath", damage=20, mult=2.2, radius=12, targets=12, cost=0.07, cooldown=16000, vfx="POISON_BREATH"),
     ],
     evolution={"requirement": "kills", "count": 700,
                "text": "Slay 700 creatures while Lee Seolhwa, Needle and Blade is switched on.",
@@ -1182,7 +1182,7 @@ LINES.append(Line(
     ],
     finishers=[
         A("Monster Gate: Wide Open", "Every gate at once: a long, strong Regeneration for you and every ally in a wide circle.", "buff_aura", "minecraft:nether_star", effect="regeneration", radius=13, seconds=25, amp=2, cooldown=1600, vfx="SPIRIT_AURA"),
-        AU("Disaster of Floods", "The flood let loose: every debt your blows left on the foes around you comes due in a single tide of monsters.", "debt_burst", "minecraft:heart_of_the_sea", damage=20, mult=2.2, radius=13, targets=12, cost=0.07, cooldown=16000, vfx="ULT_DISASTER_FLOODS"),
+        AU("Disaster of Floods", "The flood let loose: every debt your blows left on the foes around you comes due in a single tide of monsters.", "debt_burst", "minecraft:heart_of_the_sea", damage=20, mult=2.2, radius=13, targets=12, cost=0.07, cooldown=16000, vfx="WATER_BURST"),
     ],
     evolution={"requirement": "ally_buffs", "count": 350,
                "text": "Reach 350 allies with the buffing and healing arts of this skill.",

@@ -1184,7 +1184,7 @@
       "type": "active_ability",
       "kind": "debt_burst",
       "params": {
-        "vfx": "ULT_DEVOURING_SHADOW"
+        "vfx": "SHADOW_POOL"
       },
       "values": {
         "damage": [

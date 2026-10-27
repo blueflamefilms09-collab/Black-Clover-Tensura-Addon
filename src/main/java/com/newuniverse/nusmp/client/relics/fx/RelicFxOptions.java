@@ -21,6 +21,7 @@ public final class RelicFxOptions {
     public static final ModConfigSpec.BooleanValue SHOW_WORN;
     public static final ModConfigSpec.BooleanValue CONTACT_FIT;
     public static final ModConfigSpec.ConfigValue<String> MODEL_DETAIL;
+    public static final ModConfigSpec.BooleanValue CLASSIC_WORN;
 
     static {
         ModConfigSpec.Builder b = new ModConfigSpec.Builder();
@@ -53,6 +54,9 @@ public final class RelicFxOptions {
         MODEL_DETAIL = b.comment("3.9.0: 'x3' = relics that have a blocky detailed model (relic_worn_x3) wear it when you are near and one of the nearest four wearers; 'classic' = always the 3.8 models. "
                         + "Capes, cloaks and mantles are never changed.")
                 .define("modelDetail", "x3", o -> o instanceof String s && (s.equals("x3") || s.equals("classic")));
+        CLASSIC_WORN = b.comment("3.29.0: draw the worn relics the way Multiverse 1.41.0 (build 213) did, where every worn relic showed on the player: no per-relic plan, every relic in a Curios or armour slot "
+                        + "is drawn with its library model (else its plain box). The eye icon of a Curios slot, relicfx.hideArmourRelics and relicfx.showWorn still switch relics off. Off = the newer plan-driven layer.")
+                .define("classicWorn", true);
         b.pop();
         SPEC = b.build();
     }
@@ -66,6 +70,9 @@ public final class RelicFxOptions {
     public static boolean particles() { return get(PARTICLES); }
 
     public static boolean models() { return get(MODELS); }
+
+    /** True when the worn relics are drawn the 1.41.0 way ({@code relicfx.classicWorn}, default on). */
+    public static boolean classicWorn() { return get(CLASSIC_WORN); }
 
     /**
      * The one client switch {@code visual.upgrade} of the whole visual upgrade (default on; true when the config is not loaded): the God worn relics (1.102.0) and the Charms / Genesis

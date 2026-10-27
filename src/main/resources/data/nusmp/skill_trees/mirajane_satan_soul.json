@@ -1176,7 +1176,7 @@
       "type": "active_ability",
       "kind": "debt_burst",
       "params": {
-        "vfx": "ULT_SATAN_CORE"
+        "vfx": "DEVIL_CIRCLE"
       },
       "values": {
         "damage": [

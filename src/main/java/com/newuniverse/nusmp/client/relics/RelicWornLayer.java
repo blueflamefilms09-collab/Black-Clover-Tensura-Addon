@@ -98,6 +98,12 @@ public class RelicWornLayer extends RenderLayer<AbstractClientPlayer, PlayerMode
             WornTrace.reached(p.getUUID(), now, "player", slim, view, 0, null, 0);
             return;
         }
+        if (RelicFxOptions.classicWorn() && RelicFxOptions.showWorn()) {                 // 3.29.0: the 1.41.0 (build 213) way, where every worn relic showed
+            classic(pose, buffers, light, p, found, partial, age, netHeadYaw, headPitch, limbSwingAmount, distSq);
+            WornTrace.reached(p.getUUID(), now, "player", slim, view, found.size(), null, ENSEMBLES.size());
+            ENSEMBLES.clear();
+            return;
+        }
         boolean models = RelicFxOptions.models();
         boolean hideArmour = RelicFxOptions.hideArmourRelics();
         List<CuriosLink.RenderFlag> flags = WornExec.needsFlags(found) ? CuriosLink.flags(p) : null;      // the eye icons of the Curios screen, read once per wearer
@@ -139,6 +145,71 @@ public class RelicWornLayer extends RenderLayer<AbstractClientPlayer, PlayerMode
         int rescued = armourFailsafe(pose, buffers, light, model, p, now, found, plan);   // 1.111.0: an armour relic is never invisible: if nothing of it was drawn by any path, its plain painted boxes are
         WornTrace.reached(p.getUUID(), now, "player", slim, view, found.size(), plan, ENSEMBLES.size(), WornLibDraw.setsDrawn() + CUSTOM_RAN.size() + plan.plain().size() + rescued);
         ENSEMBLES.clear();
+    }
+
+
+    /**
+     * 3.29.0, the Multiverse 1.41.0 (build 213) draw: every relic the wearer has in a Curios or armour slot (and what the server said) goes the same three ways it did then, with no plan, no
+     * budget of "how many" and no failsafe: its own renderer, else the library model (best grade first), else the plain box of its slot. Only the owner's own switches hide a relic: the
+     * eye icon of its Curios slot and {@code relicfx.hideArmourRelics} (the all-relics switch is read by the caller).
+     */
+    private void classic(PoseStack pose, MultiBufferSource buffers, int light, AbstractClientPlayer p, List<Relics.Located> found, float partial, float age,
+                         float netHeadYaw, float headPitch, float limb, double distSq) {
+        boolean models = RelicFxOptions.models();
+        boolean hideArmour = RelicFxOptions.hideArmourRelics();
+        List<CuriosLink.RenderFlag> flags = WornExec.needsFlags(found) ? CuriosLink.flags(p) : null;
+        PlayerModel<AbstractClientPlayer> model = getParentModel();
+        VertexConsumer vc = null;
+        List<Relics.Located> custom = null;
+        int[] plain = new int[RelicSlot.values().length];
+        for (Relics.Located w : found) {
+            RelicDef d = w.def();
+            if (!d.slot().isHand() && WornRenderers.get(d.id()) == null && (models || d.slot().isArmor()) && WornLibrary.of(d) != null) plain[d.slot().ordinal()]++;
+        }
+        for (Relics.Located w : found) {
+            RelicDef d = w.def();
+            RelicSlot slot = d.slot();
+            if (slot.isHand() || w.where() == Relics.Where.HAND) continue;
+            if (flags != null && w.where() == Relics.Where.CURIOS) {
+                Boolean eye = WornExec.eyeOf(flags, w.stack());
+                if (eye != null && !eye) continue;                                       // the wearer switched this Curios slot's visibility off
+            } else if (slot.isArmor() && hideArmour) {
+                continue;
+            }
+            if (WornRenderers.get(d.id()) != null) {
+                if (custom == null) custom = new ArrayList<>(2);
+                custom.add(w);
+                continue;
+            }
+            if (models || slot.isArmor()) {
+                WornLibrary.Ensemble e = WornLibrary.of(d);
+                if (e != null) { WornExec.insert(ENSEMBLES, e); continue; }
+            }
+            if (!slot.isCurio()) continue;
+            if (vc == null) vc = buffers.getBuffer(RenderType.entityCutoutNoCull(RelicTextures.WHITE));
+            int main = d.paletteMain(), trim = d.paletteTrim(), glow = d.paletteGlow();
+            boolean shine = d.grade().atLeast(Grade.GOD);
+            WornPlacer.Placement pl = WornPlacer.place(slot.name(), plain[slot.ordinal()]++);
+            if (slot == RelicSlot.NECK) neck(pose, vc, light, model.body, d.look(), main, trim, glow, pl);
+            else if (slot == RelicSlot.BACK) back(pose, vc, light, model.body, d.look(), main, trim, glow, p.isCrouching(), pl);
+            else if (slot == RelicSlot.BELT) belt(pose, vc, light, model.body, main, trim, glow, pl);
+            else if (slot == RelicSlot.HANDS) { hands(pose, vc, light, model.rightArm, true, main, trim, glow, pl); hands(pose, vc, light, model.leftArm, false, main, trim, glow, pl); }
+            else if (slot == RelicSlot.CHARM) charm(pose, vc, light, model.body, main, trim, glow, shine, pl);
+            else {
+                WornLibrary.Ensemble e = WornLibrary.fallbackCharm(d);                    // a slot with no plain box (head, feet ...) and no model: the floating charm, never nothing
+                if (e != null) WornExec.insert(ENSEMBLES, e);
+            }
+        }
+        if (!ENSEMBLES.isEmpty()) drawEnsembles(pose, buffers, light, model, p.isCrouching(), distSq, age, limb, 0f);
+        for (Relics.Located w : found) {                                                 // the emissive pass of the painted armour boxes
+            RelicDef d = w.def();
+            if (w.where() == Relics.Where.ARMOUR && d.slot().isArmor() && !hideArmour && RelicTextures.hasArmorGlow(d.id()))
+                ArmorGlow.draw(pose, buffers, model, d.slot(), RelicTextures.armorGlow(d.id()), 0.75f + 0.25f * (float) Math.sin(age * 0.09f));
+        }
+        if (custom != null) {
+            boolean first = p == Minecraft.getInstance().player && Minecraft.getInstance().options.getCameraType().isFirstPerson();
+            for (Relics.Located w : custom) drawCustom(w, pose, buffers, light, model, p, partial, age, netHeadYaw, headPitch, first);
+        }
     }
 
     /**

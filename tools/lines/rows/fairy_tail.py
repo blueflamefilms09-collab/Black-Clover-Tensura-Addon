@@ -426,7 +426,7 @@ LINES.append(Line(
         A("Iron Dragon's Rampage", "Whirl in a storm of iron rods that hits everything around you again and again.", "whirlwind", "minecraft:netherite_axe",
           damage=6, radius=5, hits=7, cooldown=1400, vfx="WEAPON_CONSTRUCTS"),
         U("Iron Shadow Dragon Mode", "Iron and shadow become one: a huge blow to every foe around you plus many times all the rust stored on each of them.", "debt_burst", "minecraft:nether_star",
-          damage=34, mult=3.0, radius=11, targets=10, cost=0.08, cooldown=18000, vfx="ULT_IRON_DRAGON"),
+          damage=34, mult=3.0, radius=11, targets=10, cost=0.08, cooldown=18000, vfx="SHADOW_POOL"),
     ],
 ))
 
@@ -490,7 +490,7 @@ LINES.append(Line(
         A("Soul Extinction", "Gather the soul into one huge blast of dark magic and loose it through every foe ahead of you.", "ray_shot", "minecraft:end_crystal",
           damage=24, range=22, pierce=5, cost=0.05, cooldown=1400, vfx="SHADOW_POOL"),
         U("Satan Soul: Hell's Core", "The demon takes full control: a huge blow to every foe around you plus many times all the demon's marks stored on each of them.", "debt_burst", "minecraft:nether_star",
-          damage=36, mult=3.0, radius=11, targets=10, cost=0.08, cooldown=18000, vfx="ULT_SATAN_CORE"),
+          damage=36, mult=3.0, radius=11, targets=10, cost=0.08, cooldown=18000, vfx="DEVIL_CIRCLE"),
     ],
 ))
 
@@ -554,7 +554,7 @@ LINES.append(Line(
         A("Crash: Shatter Field", "Crash the whole battlefield at once: a huge blow to every foe around you.", "ring_burst", "minecraft:obsidian",
           damage=26, radius=8, targets=10, knockback=1.6, cost=0.06, cooldown=1500, vfx="STONE_SPIKES"),
         U("All Crush", "Everything the Crash has cracked comes apart together: a huge blow to every foe around you plus many times all the cracks stored on each of them.", "debt_burst", "minecraft:nether_star",
-          damage=38, mult=3.0, radius=12, targets=10, cost=0.08, cooldown=18000, vfx="ULT_ALL_CRUSH"),
+          damage=38, mult=3.0, radius=12, targets=10, cost=0.08, cooldown=18000, vfx="ASH_FORMATION"),
     ],
 ))
 
@@ -617,6 +617,6 @@ LINES.append(Line(
         A("Water Nebula: Barrier", "Wrap you and your place in a sphere of flowing water: a thick shield of absorption that takes the next blows.", "shield", "minecraft:conduit",
           absorb_hearts=10, seconds=14, resist_amp=1, cost=0.05, cooldown=1500, vfx="WATER_RING"),
         U("Water Body: Great Flood", "The field floods: a huge blow to every foe around you plus many times all the water pressure stored on each of them.", "debt_burst", "minecraft:nether_star",
-          damage=32, mult=3.0, radius=11, targets=10, cost=0.08, cooldown=18000, vfx="ULT_GREAT_FLOOD"),
+          damage=32, mult=3.0, radius=11, targets=10, cost=0.08, cooldown=18000, vfx="WATER_BURST"),
     ],
 ))

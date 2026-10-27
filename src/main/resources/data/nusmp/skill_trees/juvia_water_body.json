@@ -1117,7 +1117,7 @@
       "type": "active_ability",
       "kind": "debt_burst",
       "params": {
-        "vfx": "ULT_GREAT_FLOOD"
+        "vfx": "WATER_BURST"
       },
       "values": {
         "damage": [

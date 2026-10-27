@@ -1218,7 +1218,7 @@
       "type": "active_ability",
       "kind": "debt_burst",
       "params": {
-        "vfx": "ULT_FINAL_DOSE"
+        "vfx": "POISON_BREATH"
       },
       "values": {
         "damage": [

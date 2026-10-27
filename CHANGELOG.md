@@ -1,5 +1,23 @@
 # Changelog
 
+## [3.28.1] — Worn relics drawn the 1.41.0 way again (setting `relicfx.classicWorn`)
+
+### FIXED
+- **Worn relics did not all show on the player.** Multiverse 1.41.0 (build 213) drew every relic a player had in a Curios or armour slot; later releases put a per-relic plan (`WornPlan`) in front of that draw and not every relic got through it. New client setting `relicfx.classicWorn` (config/nusmp-relicfx-client.toml, **default on**) draws the worn relics exactly the way build 213 did: its own renderer, else the library model (best grade first), else the plain box of its slot (a slot with no box gets the floating charm, never nothing). The Curios eye icon, `relicfx.hideArmourRelics`, `relicfx.showWorn`, the distance cull and invisible/spectator wearers still hide relics as before. Off = the plan-driven layer of 3.28.0, unchanged.
+
+### NEW
+- Setting `relicfx.classicWorn` (client, looks only). Dormant groundwork for the unique Ultimate effects: ten new `VfxShape` names (`ULT_IRON_DRAGON` ... `ULT_THOUSAND_ELF`, appended) with empty placeholder layers and the same names in the art catalogue. No skill uses them yet (the ten Ultimates keep their old effects), so nothing changes in play. The Ultimate burst effect now lasts 20 ticks instead of 16.
+
+### REPLACED
+- Nothing. The plan-driven draw is kept behind the setting.
+
+### Cost (CLAUDE.md rule 11)
+- Client only, no server work, no packets. The classic draw reads the same cached relic list as before (`Relics.locatedList`) and draws through the same budgeted library (`relicfx.quality`: at most about 2400 / 4200 / 6000 vertices per player); wearers beyond 32 blocks are not drawn.
+
+### Not verified / caveats
+- Nothing visual could be run here (no game, no Gradle). The classic path is a port of the 1.41.0 loop onto the current relic list; whether every relic now shows needs a look in game. If one still does not, `/multiverse relic debug` says why.
+- Jar size (about 417 MB): not a fat jar (no shadow plugin, no `.git`/`run` files); the size is real content: about 300 MB of PNG, of which 14 weapon textures are 2048x2048 (5 to 9 MB each). The PNGs are already optimally compressed; shrinking them means lowering their resolution, which is the owner's decision (see the report).
+
 ## [3.28.0] — Third Evolution batch: ten more Unique skills (Fairy Tail, Solo Leveling, Omniscient Reader's Viewpoint, TBATE, DanMachi)
 
 ### NEW

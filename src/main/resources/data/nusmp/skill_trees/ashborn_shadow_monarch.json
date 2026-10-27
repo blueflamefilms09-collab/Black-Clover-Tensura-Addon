@@ -1212,7 +1212,7 @@
       "type": "active_ability",
       "kind": "debt_burst",
       "params": {
-        "vfx": "ULT_MONARCH_SHADOWS"
+        "vfx": "SPIRIT_AURA"
       },
       "values": {
         "damage": [
