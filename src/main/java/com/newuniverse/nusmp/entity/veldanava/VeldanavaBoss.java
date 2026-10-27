@@ -8,6 +8,11 @@ import com.newuniverse.nusmp.entity.zogratis.BlockLedger;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.Style;
+import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.network.chat.Component;
@@ -66,6 +71,10 @@ import java.util.UUID;
  *   <li><b>Soul Seizing</b>: in his last two bodies a blow that would kill a player takes their soul instead ({@link VeldanavaSoul}); they return when the fight ends.</li>
  *   <li><b>Death</b>: the Will of the Creator rises ({@link WillOfTheCreator}) and the fighters choose their boon; the loot comes from it.</li>
  * </ul>
+ * <p>3.30.0 (the anime Veldanava, unless {@link VeldanavaConfig#classic()}): {@link VeldanavaStats} gives him god-tier attributes (one-shot blow, flash-step speed, armour 30, no knockback) and
+ * five million health ({@link HealthCap} lifts vanilla's 1024 cap), he is immune to fall, fire, lava, the wither and every potion or status effect, he heals at ultra speed while he fights until a
+ * hit of the counter-element ({@code #nusmp:veldanava_counter}) breaks it, his boss bar changes and pulses with his body and state ({@link VeldanavaBar}), and he has the seven Tensura-themed
+ * moves of {@link VeldanavaMoves}.
  * All of it runs on the server. The damage he takes goes through the per-second boss budget, everything he changes in the world goes through a {@link BlockLedger} (only when the
  * griefBlocks rule is on, and all of it is put back), and the cost of every tick is bounded by the constants of {@link VeldanavaRules}.
  */
@@ -99,6 +108,11 @@ public final class VeldanavaBoss extends Monster implements BudgetedBoss {
     private Vec3 castPoint;
     private int castVariant;
     private final List<Vec3> marks = new ArrayList<>();
+    /** The damage types that break his regeneration (data tag, so a pack can add to it). */
+    public static final TagKey<DamageType> COUNTER = TagKey.create(Registries.DAMAGE_TYPE, ResourceLocation.fromNamespaceAndPath(NUSMP.MODID, "veldanava_counter"));
+    private long regenBrokenUntil;
+    private double wantedHealth;
+    private long lastBarTick = -1;
 
     public VeldanavaBoss(EntityType<? extends VeldanavaBoss> type, Level level) {
         super(type, level);
@@ -107,10 +121,22 @@ public final class VeldanavaBoss extends Monster implements BudgetedBoss {
     }
 
     public static AttributeSupplier.Builder createAttributes() {
-        return Monster.createMonsterAttributes().add(Attributes.MAX_HEALTH, 4000.0).add(Attributes.ATTACK_DAMAGE, 18.0).add(Attributes.ATTACK_KNOCKBACK, 1.0)
-                .add(Attributes.MOVEMENT_SPEED, 0.36).add(Attributes.FOLLOW_RANGE, 64.0).add(Attributes.ARMOR, 12.0).add(Attributes.ARMOR_TOUGHNESS, 6.0)
-                .add(Attributes.KNOCKBACK_RESISTANCE, 1.0).add(Attributes.STEP_HEIGHT, 1.0);
+        HealthCap.raise();                                                                  // 3.30.0: five million health needs vanilla's 1024 cap lifted (before any entity is made)
+        return Monster.createMonsterAttributes().add(Attributes.MAX_HEALTH, VeldanavaStats.HEALTH).add(Attributes.ATTACK_DAMAGE, VeldanavaStats.ATTACK_DAMAGE).add(Attributes.ATTACK_KNOCKBACK, 1.0)
+                .add(Attributes.MOVEMENT_SPEED, VeldanavaStats.MOVEMENT_SPEED).add(Attributes.FOLLOW_RANGE, VeldanavaStats.FOLLOW_RANGE).add(Attributes.ARMOR, VeldanavaStats.ARMOR)
+                .add(Attributes.ARMOR_TOUGHNESS, VeldanavaStats.ARMOR_TOUGHNESS).add(Attributes.KNOCKBACK_RESISTANCE, VeldanavaStats.KNOCKBACK_RESISTANCE).add(Attributes.STEP_HEIGHT, 1.0);
     }
+
+    /** True = the anime Veldanava of 3.30.0; false = the classic one of 3.11.0 - 3.29.0 (the server's classicMode setting). */
+    private static boolean anime() { return !VeldanavaConfig.classic(); }
+
+    /** The damage divisor of a pool the attribute could not hold (1 when it holds it all, which is the normal case). */
+    public double healthDivisor() { return wantedHealth > 0.0 ? VeldanavaStats.healthDivisor(wantedHealth, getMaxHealth()) : 1.0; }
+
+    /** The health the players are shown (the whole pool, even when the attribute is smaller). */
+    public long shownHealth() { return VeldanavaStats.shown(getHealth(), healthDivisor()); }
+
+    public long shownMaxHealth() { return VeldanavaStats.shown(getMaxHealth(), healthDivisor()); }
 
     // ================================================================ what the client reads
     @Override
@@ -202,8 +228,9 @@ public final class VeldanavaBoss extends Monster implements BudgetedBoss {
     @Override
     public boolean hurt(DamageSource source, float amount) {
         if (level().isClientSide) return super.hurt(source, amount);
-        if (source.is(DamageTypeTags.BYPASSES_INVULNERABILITY)) return dpsBudget.hurt(this, source, amount, x -> super.hurt(source, x));     // /kill and the void are capped too
+        if (source.is(DamageTypeTags.BYPASSES_INVULNERABILITY)) return dpsBudget.hurt(this, source, VeldanavaStats.scaledDamage(amount, healthDivisor()), x -> super.hurt(source, x));     // /kill and the void are capped too
         if (fightEnded || transformLeft > 0 || pendingDragonEnd || pendingLimiter) return false;
+        if (anime() && nullified(source)) return false;                                      // Thermal Fluctuation Resistance, Fall nullification, the wither
         Entity attacker = source.getEntity();
         if (VeldanavaEntities.isOwn(attacker)) return false;
         if (guarding()) {                                                                  // Justice King Michael: nothing gets through and projectiles go home
@@ -215,10 +242,21 @@ public final class VeldanavaBoss extends Monster implements BudgetedBoss {
             return false;
         }
         noteFighter(attacker);
+        if (anime() && source.is(COUNTER)) regenBrokenUntil = VeldanavaStats.breakRegen(level().getGameTime(), regenBrokenUntil);     // the counter-element stops Ultraspeed Regeneration
         float a = amount;
         if (exposed()) a *= EXPOSED_BONUS;
+        a = VeldanavaStats.scaledDamage(a, healthDivisor());
         return a > 0f && dpsBudget.hurt(this, source, a, x -> super.hurt(source, x));
     }
+
+    /** Fall, every kind of fire and lava, and the wither never hurt the Creator. */
+    private static boolean nullified(DamageSource source) {
+        if (source.is(DamageTypeTags.IS_FIRE) || source.is(DamageTypeTags.IS_FALL)) return true;
+        return source.typeHolder().unwrapKey().map(k -> VeldanavaStats.nullifiesDamage(k.location().getPath())).orElse(false);
+    }
+
+    /** Is his Ultraspeed Regeneration broken by a counter hit right now? */
+    public boolean regenBroken() { return level().getGameTime() < regenBrokenUntil; }
 
     private void noteFighter(Entity attacker) {
         if (fighters.size() >= MAX_FIGHTERS_TRACKED) return;
@@ -236,9 +274,16 @@ public final class VeldanavaBoss extends Monster implements BudgetedBoss {
     @Override public boolean causeFallDamage(float distance, float multiplier, DamageSource source) { return false; }
     @Override public boolean isAlliedTo(Entity other) { return VeldanavaEntities.isOwn(other) || super.isAlliedTo(other); }
 
-    /** Hard control never lands on the Creator (paralysis, stun, petrification, sleep, fear, freezing, restraint, stasis). */
+    /** Thermal Fluctuation Resistance: fire and lava cannot burn him (anime mode). */
+    @Override public boolean fireImmune() { return anime() || super.fireImmune(); }
+
+    /**
+     * Anime mode (Status Effect Nullification): no potion or status effect lands on him at all (poison, wither, slowness, ...). Classic mode: hard control never lands on the Creator
+     * (paralysis, stun, petrification, sleep, fear, freezing, restraint, stasis).
+     */
     @Override
     public boolean canBeAffected(MobEffectInstance effect) {
+        if (anime()) return false;
         if (effect.getEffect().value().getCategory() == MobEffectCategory.HARMFUL) {
             String path = effect.getEffect().unwrapKey().map(k -> k.location().getPath()).orElse("");
             for (String hard : new String[]{"paraly", "stun", "petrif", "sleep", "fear", "freez", "restrain", "stasis", "time_stop"})
@@ -269,7 +314,9 @@ public final class VeldanavaBoss extends Monster implements BudgetedBoss {
             if (ledger.size() >= before) nextRestore = t + 40;
         }
         bar.setProgress(Mth.clamp(getHealth() / getMaxHealth(), 0f, 1f));
-        if (lastBarForm != form()) { lastBarForm = form(); refreshBar(); }
+        if (anime()) {
+            if (lastBarForm != form() || t - lastBarTick >= VeldanavaBar.REFRESH) { lastBarForm = form(); lastBarTick = t; animateBar(t); }
+        } else if (lastBarForm != form()) { lastBarForm = form(); refreshBar(); }
         if (entityData.get(GUARD) != (t < guardUntil)) entityData.set(GUARD, t < guardUntil);
         boolean ex = t < exposedUntil;
         if (entityData.get(EXPOSED) != ex) entityData.set(EXPOSED, ex);
@@ -277,6 +324,10 @@ public final class VeldanavaBoss extends Monster implements BudgetedBoss {
         if (pendingDragonEnd) { pendingDragonEnd = false; beginTransform(sl, VeldanavaRules.HUMANOID); }
         else if (pendingLimiter || VeldanavaRules.limiterDue(form(), getHealth(), getMaxHealth())) { pendingLimiter = false; beginTransform(sl, VeldanavaRules.AVATAR); }
         if (transformLeft > 0) { tickTransform(sl); return; }
+        if (anime()) {
+            if (t % VeldanavaStats.REGEN_EVERY == 0) regenerate(t);
+            if (t % 20 == 0 && !getActiveEffects().isEmpty()) removeAllEffects();            // Status Effect Nullification also clears what another mod forced on him
+        }
         if (t % 20 == 0) upkeep(sl, t);
 
         LivingEntity target = getTarget();
@@ -354,6 +405,7 @@ public final class VeldanavaBoss extends Monster implements BudgetedBoss {
     private void think(ServerLevel sl, LivingEntity target, long t) {
         nextThink = t + 4;
         double dist = Math.sqrt(distanceToSqr(target)) - getBbWidth() * 0.5;
+        if (!anime()) for (int i = VeldanavaRules.CLASSIC_MOVES; i < VeldanavaRules.MOVES; i++) readyAt[i] = Long.MAX_VALUE;     // the classic Veldanava has only his eleven old moves
         int id = VeldanavaRules.choose(form(), Math.max(0.0, dist), readyAt, t, bound -> getRandom().nextInt(bound));
         if (id >= 0) { startCast(sl, VeldanavaRules.spec(id), target, t); return; }
         if (form() != VeldanavaRules.DRAGON && dist > 2.6 && t % 8 == 0) getNavigation().moveTo(target, 1.4);
@@ -404,7 +456,16 @@ public final class VeldanavaBoss extends Monster implements BudgetedBoss {
         if (distanceToSqr(target) > reach * reach) return;
         nextMelee = t + 14;
         swing(InteractionHand.MAIN_HAND, true);
-        strike(target, VeldanavaRules.damage(target.getMaxHealth(), 0.08f, 6f, 24f, damageScale()));
+        strike(target, anime() ? VeldanavaStats.meleeDamage(getAttributeValue(Attributes.ATTACK_DAMAGE), damageScale())
+                : VeldanavaRules.damage(target.getMaxHealth(), 0.08f, 6f, 24f, damageScale()));
+    }
+
+    /** Ultraspeed Regeneration: a small heal every {@link VeldanavaStats#REGEN_EVERY} ticks while he fights, unless a counter hit broke it. Goes around the boss heal guard and the damage budget (his own health). */
+    private void regenerate(long t) {
+        if (pendingDragonEnd || pendingLimiter || !VeldanavaStats.regenerating(fightActive, transformLeft > 0, t, regenBrokenUntil, getHealth(), getMaxHealth())) return;
+        float heal = VeldanavaStats.scaledDamage(VeldanavaStats.regenStep(getMaxHealth() * healthDivisor(), VeldanavaConfig.regenPercent()), healthDivisor());
+        if (heal <= 0f) return;
+        dpsBudget.bypass(() -> setHealth(Math.min(getMaxHealth(), getHealth() + heal)));
     }
 
     // ================================================================ what the moves use
@@ -604,7 +665,26 @@ public final class VeldanavaBoss extends Monster implements BudgetedBoss {
         bar.removePlayer(p);
     }
 
+    /** The animated bar of the anime Veldanava: his body's colour, overlay and title, a pulsing title, the health in numbers, and what he is doing. */
+    private void animateBar(long t) {
+        int f = form();
+        VeldanavaBar.Style style = VeldanavaBar.style(f);
+        boolean regenerating = VeldanavaStats.regenerating(fightActive, transformLeft > 0, t, regenBrokenUntil, getHealth(), getMaxHealth());
+        int st = VeldanavaBar.state(fightEnded, transformLeft > 0, casting != null, entityData.get(GUARD), entityData.get(EXPOSED), fightActive && t < regenBrokenUntil, regenerating);
+        float frac = Mth.clamp(getHealth() / Math.max(1f, getMaxHealth()), 0f, 1f);
+        int rgb = VeldanavaBar.pulseColor(f, st, t, frac);
+        String sym = VeldanavaBar.symbols(f, t);
+        String status = VeldanavaBar.status(st, casting == null ? "" : casting.label());
+        MutableComponent name = Component.literal(sym + " Veldanava - " + style.title() + " " + sym).withStyle(Style.EMPTY.withColor(rgb).withBold(true));
+        name.append(Component.literal("   " + VeldanavaBar.healthText(shownHealth(), shownMaxHealth())).withStyle(Style.EMPTY.withColor(0xFFFFFF).withBold(false)));
+        if (!status.isEmpty()) name.append(Component.literal("   " + status).withStyle(Style.EMPTY.withColor(style.accent()).withBold(false).withItalic(true)));
+        bar.setName(name);
+        bar.setColor(BossEvent.BossBarColor.valueOf(VeldanavaBar.color(f, st, t)));
+        bar.setOverlay(BossEvent.BossBarOverlay.valueOf(style.overlay()));
+    }
+
     private void refreshBar() {
+        if (anime()) { animateBar(level().getGameTime()); return; }
         int f = form();
         bar.setName(Component.literal("Veldanava - " + VeldanavaRules.formName(f)).withStyle(f == VeldanavaRules.DRAGON ? ChatFormatting.DARK_AQUA : f == VeldanavaRules.HUMANOID ? ChatFormatting.WHITE : ChatFormatting.LIGHT_PURPLE));
         bar.setColor(f == VeldanavaRules.DRAGON ? BossEvent.BossBarColor.BLUE : f == VeldanavaRules.HUMANOID ? BossEvent.BossBarColor.WHITE : BossEvent.BossBarColor.PURPLE);
@@ -645,6 +725,7 @@ public final class VeldanavaBoss extends Monster implements BudgetedBoss {
         tag.putBoolean("VFight", fightActive);
         tag.putBoolean("VPendingDragon", pendingDragonEnd);
         tag.putBoolean("VPendingLimiter", pendingLimiter);
+        if (wantedHealth > 0.0) tag.putDouble("VWant", wantedHealth);
         if (arena != null) tag.put("VArena", NbtUtils.writeBlockPos(arena));
         CompoundTag l = new CompoundTag();
         ledger.save(l);
@@ -658,6 +739,7 @@ public final class VeldanavaBoss extends Monster implements BudgetedBoss {
         fightActive = tag.getBoolean("VFight");
         pendingDragonEnd = tag.getBoolean("VPendingDragon");
         pendingLimiter = tag.getBoolean("VPendingLimiter");
+        wantedHealth = tag.contains("VWant") ? tag.getDouble("VWant") : 0.0;
         NbtUtils.readBlockPos(tag, "VArena").ifPresent(pos -> arena = pos);
         if (tag.contains("VLedger")) ledger.load(tag.getCompound("VLedger"), level().registryAccess().lookupOrThrow(Registries.BLOCK));
         refreshDimensions();
@@ -672,14 +754,31 @@ public final class VeldanavaBoss extends Monster implements BudgetedBoss {
         if (!VeldanavaConfig.enabled() || exists(sl)) return null;
         VeldanavaBoss boss = VeldanavaEntities.VELDANAVA.get().create(sl);
         if (boss == null) return null;
+        boss.applyStats(VeldanavaConfig.classic());
         var hp = boss.getAttribute(Attributes.MAX_HEALTH);
-        if (hp != null) hp.setBaseValue(VeldanavaConfig.bossHealth());
+        double wanted = VeldanavaConfig.bossHealth();
+        if (hp != null) hp.setBaseValue(wanted);
+        boss.wantedHealth = wanted;
         boss.moveTo(at.x, at.y, at.z, yaw, 0);
         boss.setArena(BlockPos.containing(at));
         boss.dpsBudget.bypass(() -> boss.setHealth(boss.getMaxHealth()));
         sl.addFreshEntity(boss);
         sl.playSound(null, boss.blockPosition(), SoundEvents.WITHER_SPAWN, SoundSource.HOSTILE, 3f, 0.5f);
         return boss;
+    }
+
+    /** Sets the attributes of the chosen mode (the classic numbers, or the anime ones the entity type already has). */
+    private void applyStats(boolean classic) {
+        setBase(Attributes.ATTACK_DAMAGE, classic ? VeldanavaStats.CLASSIC_ATTACK : VeldanavaStats.ATTACK_DAMAGE);
+        setBase(Attributes.MOVEMENT_SPEED, classic ? VeldanavaStats.CLASSIC_SPEED : VeldanavaStats.MOVEMENT_SPEED);
+        setBase(Attributes.ARMOR, classic ? VeldanavaStats.CLASSIC_ARMOR : VeldanavaStats.ARMOR);
+        setBase(Attributes.ARMOR_TOUGHNESS, classic ? VeldanavaStats.CLASSIC_TOUGHNESS : VeldanavaStats.ARMOR_TOUGHNESS);
+        setBase(Attributes.FOLLOW_RANGE, classic ? VeldanavaStats.CLASSIC_FOLLOW : VeldanavaStats.FOLLOW_RANGE);
+    }
+
+    private void setBase(net.minecraft.core.Holder<net.minecraft.world.entity.ai.attributes.Attribute> attribute, double value) {
+        var inst = getAttribute(attribute);
+        if (inst != null) inst.setBaseValue(value);
     }
 
     /** The key the unit-free self-test uses to read the move table. */

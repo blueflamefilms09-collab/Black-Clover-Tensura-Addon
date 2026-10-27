@@ -48,7 +48,7 @@ public final class VeldanavaSelfTests {
 
     // ---------------------------------------------------------------- rules (pure)
     private static Result rules(MinecraftServer server) {
-        if (VeldanavaRules.MOVES != 11) return Result.fail("expected 11 moves, found " + VeldanavaRules.MOVES);
+        if (VeldanavaRules.MOVES != 18) return Result.fail("expected 18 moves (11 classic + 7 Tensura-themed), found " + VeldanavaRules.MOVES);
         for (int f = 0; f < VeldanavaRules.FORMS; f++) {
             List<VeldanavaRules.Spec> list = VeldanavaRules.movesOf(f);
             if (list.size() < 5) return Result.fail("body " + f + " has only " + list.size() + " moves");
@@ -65,7 +65,7 @@ public final class VeldanavaSelfTests {
                 if (id >= 0 && !VeldanavaRules.spec(id).has(f)) return Result.fail("body " + f + " chose a move it does not have: " + VeldanavaRules.spec(id).name());
             }
         }
-        if (VeldanavaRules.choose(VeldanavaRules.DRAGON, 5.0, new long[]{9999, 9999, 9999, 9999, 9999, 9999, 9999, 9999, 9999, 9999, 9999}, 1000L, t -> 0) != -1) return Result.fail("a move on cooldown was chosen");
+        if (VeldanavaRules.choose(VeldanavaRules.DRAGON, 5.0, new long[]{9999, 9999, 9999, 9999, 9999, 9999, 9999, 9999, 9999, 9999, 9999, 9999, 9999, 9999, 9999, 9999, 9999, 9999}, 1000L, t -> 0) != -1) return Result.fail("a move on cooldown was chosen");
         if (VeldanavaRules.marks(0) != 0 || VeldanavaRules.marks(100) > VeldanavaRules.MAX_MARKS) return Result.fail("the Starfall marks are not capped");
         if (VeldanavaRules.fighters(100) != VeldanavaRules.MAX_FIGHTERS) return Result.fail("the fighter cap is not applied");
         if (VeldanavaRules.damage(1.0E9, 0.6f, 5f, 100f, 1f) > 100.0001f) return Result.fail("the damage cap is not applied");
@@ -78,7 +78,10 @@ public final class VeldanavaSelfTests {
         if (g[0] != 1 || g[1] != 3 || g[2] != 1) return Result.fail("the guaranteed loot is not 1 core, 3 fragments, 1 essence");
         if (VeldanavaRules.orbTicks(300) != 6000) return Result.fail("the orb does not wait 5 minutes by default");
         for (int c = 1; c <= VeldanavaBoons.COUNT; c++) if (VeldanavaBoons.boon(c).changes().isEmpty()) return Result.fail("boon " + c + " changes nothing");
-        return Result.ok("11 moves, 3 bodies, caps and numbers hold");
+        if (VeldanavaStats.HEALTH != 5_000_000.0 || VeldanavaStats.regenStep(5_000_000.0, VeldanavaStats.REGEN_PERCENT_PER_SECOND) <= 0f) return Result.fail("the anime health or regeneration numbers are wrong");
+        if (!VeldanavaStats.nullifiesDamage("fall") || !VeldanavaStats.nullifiesDamage("lava") || VeldanavaStats.nullifiesDamage("magic")) return Result.fail("the nullified damage types are wrong");
+        for (int f = 0; f < VeldanavaRules.FORMS; f++) if (VeldanavaBar.style(f).color().isEmpty()) return Result.fail("body " + f + " has no bar look");
+        return Result.ok("18 moves, 3 bodies, caps, stats and bar numbers hold");
     }
 
     // ---------------------------------------------------------------- assets
@@ -115,7 +118,19 @@ public final class VeldanavaSelfTests {
                 return Result.fail("the dragon's hitbox is " + b.getBbWidth() + "x" + b.getBbHeight());
             if (VeldanavaBoss.spawnAt(sl, Vec3.atBottomCenterOf(at.above(2)), 0f) != null) return Result.fail("a second Veldanava was allowed in the same world");
             double hp = b.getAttributeValue(Attributes.MAX_HEALTH);
-            if (Math.abs(hp - VeldanavaConfig.bossHealth()) > 0.5) return Result.fail("max health " + hp + " is not the configured " + VeldanavaConfig.bossHealth());
+            double want = VeldanavaConfig.bossHealth();
+            if (HealthCap.raised() && Math.abs(hp - want) > 0.5) return Result.fail("max health " + hp + " is not the configured " + want);
+            if (!HealthCap.raised() && Math.abs(hp - Math.min(want, VeldanavaStats.VANILLA_HEALTH_CAP)) > 0.5) return Result.fail("max health " + hp + " is not the vanilla cap");
+            if (Math.abs(b.shownMaxHealth() - want) > 1.0) return Result.fail("the players would be shown " + b.shownMaxHealth() + " health, not " + want);
+            if (!VeldanavaConfig.classic()) {
+                if (Math.abs(b.getAttributeValue(Attributes.ATTACK_DAMAGE) - VeldanavaStats.ATTACK_DAMAGE) > 0.01 || Math.abs(b.getAttributeValue(Attributes.MOVEMENT_SPEED) - VeldanavaStats.MOVEMENT_SPEED) > 0.001
+                        || b.getAttributeValue(Attributes.KNOCKBACK_RESISTANCE) < 1.0) return Result.fail("the anime attributes are not on him");
+                if (!b.fireImmune()) return Result.fail("fire and lava can burn him");
+                if (b.canBeAffected(new net.minecraft.world.effect.MobEffectInstance(net.minecraft.world.effect.MobEffects.POISON, 20, 1))
+                        || b.canBeAffected(new net.minecraft.world.effect.MobEffectInstance(net.minecraft.world.effect.MobEffects.WITHER, 20, 1))) return Result.fail("poison or wither can land on him");
+                if (b.hurt(sl.damageSources().fall(), 50f) || b.hurt(sl.damageSources().lava(), 50f) || b.hurt(sl.damageSources().wither(), 50f)) return Result.fail("fall, lava or the wither hurt him");
+                if (b.causeFallDamage(30f, 1f, sl.damageSources().fall())) return Result.fail("a fall hurt him");
+            }
             for (int form = VeldanavaRules.HUMANOID; form <= VeldanavaRules.AVATAR; form++) {                 // the saved body brings back its hitbox
                 CompoundTag t = new CompoundTag();
                 b.saveWithoutId(t);
@@ -125,7 +140,8 @@ public final class VeldanavaSelfTests {
                 if (Math.abs(b.getBbHeight() - VeldanavaRules.height(form)) > 0.01f) return Result.fail("body " + form + " has a hitbox of height " + b.getBbHeight());
             }
             var slow = new net.minecraft.world.effect.MobEffectInstance(net.minecraft.world.effect.MobEffects.MOVEMENT_SLOWDOWN, 20, 1);
-            if (!b.canBeAffected(slow)) return Result.fail("an ordinary slowness should still land on him");
+            if (VeldanavaConfig.classic() && !b.canBeAffected(slow)) return Result.fail("an ordinary slowness should still land on him in classic mode");
+            if (!VeldanavaConfig.classic() && b.canBeAffected(slow)) return Result.fail("no effect may land on him in the anime mode");
             return Result.ok("spawned, one per world, hitbox and saved bodies hold, max health " + (int) hp);
         } finally {
             b.discard();

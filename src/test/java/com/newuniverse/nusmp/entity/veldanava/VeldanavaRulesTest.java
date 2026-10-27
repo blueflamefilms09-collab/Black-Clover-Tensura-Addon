@@ -62,15 +62,16 @@ class VeldanavaRulesTest {
             assertTrue(s.forms() != 0, s.name() + " belongs to no body");
             assertTrue(s.length() < 400, s.name() + " is too long a move");
         }
-        assertEquals(5, VeldanavaRules.movesOf(VeldanavaRules.DRAGON).size());
-        assertEquals(5, VeldanavaRules.movesOf(VeldanavaRules.HUMANOID).size());
-        assertEquals(6, VeldanavaRules.movesOf(VeldanavaRules.AVATAR).size());
+        assertEquals(9, VeldanavaRules.movesOf(VeldanavaRules.DRAGON).size(), "5 classic + Black Lightning, Death Tornado, Hell Flare, Megiddo");
+        assertEquals(10, VeldanavaRules.movesOf(VeldanavaRules.HUMANOID).size(), "5 classic + Absolute Severance, Black Lightning, Black Lightning Blast, Disintegration, Hell Flare");
+        assertEquals(13, VeldanavaRules.movesOf(VeldanavaRules.AVATAR).size());
         List<VeldanavaRules.Spec> ultimates = VeldanavaRules.movesOf(VeldanavaRules.AVATAR).stream().filter(VeldanavaRules.Spec::ultimate).toList();
-        assertEquals(1, ultimates.size(), "one ultimate");
+        assertEquals(2, ultimates.size(), "Genesis and Megiddo");
         assertEquals(VeldanavaRules.GENESIS, ultimates.get(0).id());
+        assertEquals(VeldanavaRules.MEGIDDO, ultimates.get(1).id());
         assertTrue(VeldanavaRules.spec(VeldanavaRules.GENESIS).has(VeldanavaRules.AVATAR) && !VeldanavaRules.spec(VeldanavaRules.GENESIS).has(VeldanavaRules.HUMANOID));
         assertEquals(VeldanavaRules.SWEEP, VeldanavaRules.spec(-5).id());
-        assertEquals(VeldanavaRules.GENESIS, VeldanavaRules.spec(99).id());
+        assertEquals(VeldanavaRules.MEGIDDO, VeldanavaRules.spec(99).id(), "an out-of-range id is the last move");
     }
 
     @Test
@@ -80,7 +81,7 @@ class VeldanavaRulesTest {
         assertEquals(VeldanavaRules.STARFALL, VeldanavaRules.choose(VeldanavaRules.DRAGON, 5, ready, 0, t -> 5), "Gravity Pull needs 6+ blocks");
         assertEquals(VeldanavaRules.ROAR, VeldanavaRules.choose(VeldanavaRules.DRAGON, 5, ready, 0, t -> 10));
         assertEquals(VeldanavaRules.BITE, VeldanavaRules.choose(VeldanavaRules.DRAGON, 5, ready, 0, t -> 12));
-        assertEquals(VeldanavaRules.BITE, VeldanavaRules.choose(VeldanavaRules.DRAGON, 5, ready, 0, t -> t - 1), "the last point of the roll is still a move");
+        assertEquals(VeldanavaRules.MEGIDDO, VeldanavaRules.choose(VeldanavaRules.DRAGON, 5, ready, 0, t -> t - 1), "the last point of the roll is still a move (the last of the table is Megiddo)");
         assertEquals(-1, VeldanavaRules.choose(VeldanavaRules.DRAGON, 500, ready, 0, t -> 0), "nothing reaches that far");
         ready[VeldanavaRules.SWEEP] = 100;
         assertNotEquals(VeldanavaRules.SWEEP, VeldanavaRules.choose(VeldanavaRules.DRAGON, 5, ready, 99, t -> 0), "a move on cooldown is never chosen");

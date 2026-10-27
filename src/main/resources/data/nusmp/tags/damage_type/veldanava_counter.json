@@ -1,0 +1,7 @@
+{
+  "replace": false,
+  "values": [
+    "nusmp:conceptual_severance",
+    {"id": "minecraft:out_of_world", "required": false}
+  ]
+}

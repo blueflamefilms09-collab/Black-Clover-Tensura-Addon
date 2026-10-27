@@ -23,12 +23,21 @@ import java.util.List;
  *
  * <p>Worst case, per tick: Stardust Sweep 24 targets + 6 blocks + 1 packet; Gravity Pull 24 targets + 1 packet; Starfall 1 star (12 per cast) = 1 block + 24 targets + 3 packets;
  * Genesis 24 targets + 24 blocks + 3 packets once.
+ *
+ * <p>3.30.0, the seven Tensura-themed moves (anime mode only; costs per tick): Absolute Severance 24 targets + 5 blocks + 1 packet once; Black Lightning at most 3 bolts (3 packets, 24 targets once each);
+ * Black Lightning Blast 24 targets once + 4 blocks per tick + 1 packet; Death Tornado 24 targets every 5 ticks + 1 packet every 10 ticks; Disintegration 24 targets + 2 blocks every 8 ticks + 2 packets;
+ * Hell Flare 24 targets per tick for 24 ticks (the three rings share one list) + 1 packet; Megiddo at most 8 beams (8 sigils, 8 packets over 14 ticks, 24 targets and 1 block per beam).
  */
 public final class VeldanavaMoves {
     private VeldanavaMoves() {}
 
     private static final int TEAL = 0x3EE0D0, GOLD = 0xF2D27A, WHITE = 0xFFFFFF, VIOLET = 0xB58CFF;
     private static final double SWEEP_LENGTH = 56.0, SWEEP_HALF_WIDTH = 3.5, PULL_RADIUS = 38.0;
+
+    // 3.30.0: the colours and sizes of the Tensura-themed moves; the LEAD constants say how many ticks before its hit each effect is sent so that its impact frame lands with the hit (tuned on the previews)
+    private static final int CRIMSON = 0xC21E3A, HELL = 0xE0301E, ASH = 0xA9AFB8, HOLY = 0xFFF1B0;
+    private static final double SEVER_LENGTH = 44.0, SEVER_HALF_WIDTH = 1.6, BOLT_RADIUS = 3.2, BLAST_RADIUS = 16.0, TORNADO_RADIUS = 5.5, DISINT_RADIUS = 8.0, HELL_OUTER = 18.0, MEGIDDO_RADIUS = 3.5;
+    private static final int SEVER_LEAD = 3, BOLT_LEAD = 3, BLAST_LEAD = 11, HELL_LEAD = 6, MEGIDDO_LEAD = 6;
 
     // ================================================================ start of a move
     public static void begin(VeldanavaBoss b, VeldanavaRules.Spec spec, ServerLevel sl) {
@@ -74,6 +83,39 @@ public final class VeldanavaMoves {
                 if (b.fxBudget()) ZogratisVfx.divineSigil(sl, b.position(), 26.0, spec.windup(), WHITE, true);
                 sl.playSound(null, b.blockPosition(), SoundEvents.BEACON_ACTIVATE, SoundSource.HOSTILE, 6f, 0.5f);
             }
+            case VeldanavaRules.ABSOLUTE_SEVERANCE -> {
+                b.say("Absolute Severance.");
+                tellRay(b, sl, b.castYaw(), SEVER_LENGTH, 0.8, WHITE);
+            }
+            case VeldanavaRules.BLACK_LIGHTNING -> {
+                b.say("Black Lightning.");
+                pickPoints(b, sl, VeldanavaRules.bolts(b.playersNear(b.arenaCenter(), VeldanavaRules.ARENA_RADIUS).size()), 1.5, spec, BOLT_RADIUS + 0.6, CRIMSON);
+            }
+            case VeldanavaRules.BLACK_BLAST -> {
+                b.say("Black Lightning Blast.");
+                if (b.fxBudget()) ZogratisVfx.divineSigil(sl, b.position(), BLAST_RADIUS, spec.windup() - BLAST_LEAD, CRIMSON, true);
+            }
+            case VeldanavaRules.DEATH_TORNADO -> {
+                b.say("Death Tornado.");
+                Vec3 at = VeldanavaBoss.ground(sl, b.position().add(dirOf(b.yawTo(target == null ? b.position().add(0, 0, 1) : target.position())).scale(9.0)));
+                b.setCastPoint(at);
+                if (b.fxBudget()) ZogratisVfx.well(sl, at, 7.0, spec.windup(), ASH, true);
+            }
+            case VeldanavaRules.DISINTEGRATION -> {
+                b.say("Disintegration.");
+                Vec3 at = VeldanavaBoss.ground(sl, target == null ? b.position() : target.position());
+                b.setCastPoint(at);
+                if (b.fxBudget()) ZogratisVfx.divineSigil(sl, at, DISINT_RADIUS, spec.windup(), ASH, true);
+            }
+            case VeldanavaRules.HELL_FLARE -> {
+                b.say("Hell Flare.");
+                if (b.fxBudget()) ZogratisVfx.divineSigil(sl, b.position(), 7.0, spec.windup() - HELL_LEAD, HELL, true);
+            }
+            case VeldanavaRules.MEGIDDO -> {
+                b.say("Megiddo.");
+                pickPoints(b, sl, VeldanavaRules.beams(b.playersNear(b.arenaCenter(), VeldanavaRules.ARENA_RADIUS).size()), 4.0, spec, MEGIDDO_RADIUS + 0.8, HOLY);
+                sl.playSound(null, b.blockPosition(), SoundEvents.BEACON_POWER_SELECT, SoundSource.HOSTILE, 6f, 0.5f);
+            }
             default -> { }
         }
     }
@@ -96,6 +138,13 @@ public final class VeldanavaMoves {
             case VeldanavaRules.URIEL -> uriel(b, spec, sl, sinceActive, active);
             case VeldanavaRules.LAW -> law(b, spec, sl, sinceActive);
             case VeldanavaRules.GENESIS -> genesis(b, spec, sl, tick, sinceActive);
+            case VeldanavaRules.ABSOLUTE_SEVERANCE -> severance(b, spec, sl, target, tick, sinceActive);
+            case VeldanavaRules.BLACK_LIGHTNING -> strikePoints(b, spec, sl, tick, BOLT_LEAD, true);
+            case VeldanavaRules.BLACK_BLAST -> blackBlast(b, spec, sl, tick, sinceActive);
+            case VeldanavaRules.DEATH_TORNADO -> tornado(b, spec, sl, target, sinceActive, active);
+            case VeldanavaRules.DISINTEGRATION -> disintegration(b, spec, sl, sinceActive, active);
+            case VeldanavaRules.HELL_FLARE -> hellFlare(b, spec, sl, tick, sinceActive);
+            case VeldanavaRules.MEGIDDO -> strikePoints(b, spec, sl, tick, MEGIDDO_LEAD, false);
             default -> { }
         }
     }
@@ -336,6 +385,168 @@ public final class VeldanavaMoves {
         }
     }
 
+    // ================================================================ 3.30.0: the Tensura-themed moves
+    // ---------------------------------------------------------------- Absolute Severance: a cut through space that nothing blocks
+    private static void severance(VeldanavaBoss b, VeldanavaRules.Spec spec, ServerLevel sl, LivingEntity target, int tick, int since) {
+        if (since < 0) {
+            if (target != null && tick < spec.windup() - 8) b.setCastYaw(b.yawTo(target.position()));            // aims until the last 8 ticks, then locks
+            b.turnTo(b.castYaw(), 60f);
+            if (tick == spec.windup() - SEVER_LEAD) {
+                Vec3 o = b.position().add(0, 1.2, 0);
+                if (b.fxBudget()) VfxSpawn.send(sl, VfxShape.VELD_SEVERANCE, o, o.add(dirOf(b.castYaw()).scale(SEVER_LENGTH)), 0xFF000000 | WHITE, 16, (float) SEVER_HALF_WIDTH);
+            }
+            return;
+        }
+        if (since != 0) return;
+        double yaw = b.castYaw();
+        Vec3 dir = dirOf(yaw);
+        Vec3 o = b.position().add(0, 1.2, 0);
+        sl.playSound(null, b.blockPosition(), SoundEvents.GLASS_BREAK, SoundSource.HOSTILE, 4f, 0.5f);
+        for (ServerPlayer p : b.playersNear(b.position(), SEVER_LENGTH + 2.0)) {
+            if (!VeldanavaRules.inBeam(p.getX() - b.getX(), p.getZ() - b.getZ(), yaw, SEVER_LENGTH, SEVER_HALF_WIDTH) || !VeldanavaRules.withinHeight(p.getY() + 0.9 - o.y, 5.0)) continue;
+            b.strike(p, VeldanavaRules.damage(p.getMaxHealth(), spec.share(), 8f, 80f, b.damageScale()));        // "severance": nothing blocks it, it is true damage
+            p.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 40, 1));
+        }
+        destroyAlong(b, o, dir, 2, 40, 3);
+    }
+
+    // ---------------------------------------------------------------- shared by Black Lightning and Megiddo: points picked at the start, struck one after another
+    /** Picks up to 'count' ground points round the players (the target first), marks each with a sigil that lasts until its strike. At most MAX_MARKS points. */
+    private static void pickPoints(VeldanavaBoss b, ServerLevel sl, int count, double spread, VeldanavaRules.Spec spec, double sigilRadius, int color) {
+        List<ServerPlayer> ps = b.playersNear(b.arenaCenter(), VeldanavaRules.ARENA_RADIUS);
+        b.marks().clear();
+        if (ps.isEmpty()) return;
+        LivingEntity first = b.castTargetEntity();
+        int n = Math.min(count, VeldanavaRules.MAX_MARKS);
+        for (int i = 0; i < n; i++) {
+            LivingEntity who = i == 0 && first != null ? first : ps.get(i % ps.size());
+            double ox = i == 0 ? 0.0 : (b.getRandom().nextDouble() - 0.5) * 2.0 * spread, oz = i == 0 ? 0.0 : (b.getRandom().nextDouble() - 0.5) * 2.0 * spread;
+            Vec3 m = VeldanavaBoss.ground(sl, who.position().add(ox, 0, oz));
+            b.marks().add(m);
+            int until = spec.windup() + VeldanavaRules.strikeTick(i, n, spec.active());
+            if (b.fxBudget()) ZogratisVfx.divineSigil(sl, m, sigilRadius, until, color, true);
+        }
+    }
+
+    /** Sends each point's effect 'lead' ticks before its strike and lands the strike: bolts (Black Lightning) or beams (Megiddo). */
+    private static void strikePoints(VeldanavaBoss b, VeldanavaRules.Spec spec, ServerLevel sl, int tick, int lead, boolean bolt) {
+        List<Vec3> marks = b.marks();
+        int n = marks.size();
+        for (int i = 0; i < n; i++) {
+            int at = spec.windup() + VeldanavaRules.strikeTick(i, n, spec.active());
+            Vec3 m = marks.get(i);
+            if (tick == at - lead) {
+                if (bolt) { if (b.fxBudget()) VfxSpawn.send(sl, VfxShape.VELD_BLACK_LIGHTNING, m.add(0, 40, 0), m, 0xFF000000 | CRIMSON, 12, (float) BOLT_RADIUS); }
+                else if (b.fxBudget()) VfxSpawn.send(sl, VfxShape.VELD_MEGIDDO, m.add(0, 60, 0), m, 0xFF000000 | HOLY, 18, (float) MEGIDDO_RADIUS);
+            }
+            if (tick != at) continue;
+            sl.playSound(null, BlockPos.containing(m), bolt ? SoundEvents.LIGHTNING_BOLT_THUNDER : SoundEvents.GENERIC_EXPLODE.value(), SoundSource.HOSTILE, bolt ? 3f : 4f, bolt ? 0.7f : 0.8f);
+            double r = bolt ? BOLT_RADIUS : MEGIDDO_RADIUS;
+            for (ServerPlayer p : b.playersNear(m, r)) {
+                if (p.getY() - m.y > 8.0) continue;
+                b.strike(p, bolt ? VeldanavaRules.damage(p.getMaxHealth(), spec.share(), 6f, 45f, b.damageScale()) : VeldanavaRules.damage(p.getMaxHealth(), spec.share(), 12f, 110f, b.damageScale()));
+            }
+            b.tryDestroy(BlockPos.containing(m).below());
+        }
+    }
+
+    // ---------------------------------------------------------------- Black Lightning Blast: a dark orb collapses and bursts into black lightning all round
+    private static void blackBlast(VeldanavaBoss b, VeldanavaRules.Spec spec, ServerLevel sl, int tick, int since) {
+        Vec3 c = b.position();
+        if (since < 0) {
+            if (tick == spec.windup() - BLAST_LEAD && b.fxBudget()) VfxSpawn.send(sl, VfxShape.VELD_BLACK_BLAST, c, c, 0xFF000000 | CRIMSON, 26, (float) BLAST_RADIUS);
+            return;
+        }
+        if (since == 0) {
+            sl.playSound(null, b.blockPosition(), SoundEvents.LIGHTNING_BOLT_THUNDER, SoundSource.HOSTILE, 6f, 0.5f);
+            for (ServerPlayer p : b.playersNear(c, BLAST_RADIUS + 2.0)) {
+                double d = Math.sqrt(p.distanceToSqr(c));
+                float fall = VeldanavaRules.falloff(d, 4.0, BLAST_RADIUS, 0.4f);
+                b.strike(p, VeldanavaRules.damage(p.getMaxHealth(), spec.share(), 8f, 60f, b.damageScale()) * fall);
+                Vec3 away = p.position().subtract(c).multiply(1, 0, 1);
+                if (away.lengthSqr() < 1.0E-4) away = new Vec3(0, 0, 1);
+                p.setDeltaMovement(p.getDeltaMovement().add(away.normalize().scale(0.9 * fall)).add(0, 0.35, 0));
+                p.hurtMarked = true;
+            }
+        }
+        if (since < spec.active()) {                                                        // the ring of the blast eats a few blocks while it passes (griefBlocks only)
+            double r = 3.0 + 2.0 * since;
+            for (int k = 0; k < 4; k++) {
+                double a = (Math.PI * 2.0) * (k + since * 0.31) / 4.0;
+                b.tryDestroy(BlockPos.containing(c.x + Math.cos(a) * r, c.y, c.z + Math.sin(a) * r));
+            }
+        }
+    }
+
+    // ---------------------------------------------------------------- Death Tornado: a funnel that walks toward the target, lifting and spinning everything it catches (slower than a runner)
+    private static void tornado(VeldanavaBoss b, VeldanavaRules.Spec spec, ServerLevel sl, LivingEntity target, int since, boolean active) {
+        if (!active || b.castPoint() == null) return;
+        Vec3 pt = b.castPoint();
+        Vec3 goal = target == null ? pt : target.position();
+        Vec3 to = goal.subtract(pt).multiply(1, 0, 1);
+        double d = to.length();
+        if (d > 0.5) {
+            double step = Math.min(VeldanavaRules.TORNADO_SPEED, d);
+            Vec3 next = pt.add(to.scale(step / d));
+            if (next.distanceToSqr(b.arenaCenter()) < (double) (VeldanavaRules.ARENA_RADIUS - 2) * (VeldanavaRules.ARENA_RADIUS - 2)) pt = next;
+        }
+        if (since % 5 == 0) pt = VeldanavaBoss.ground(sl, pt);
+        b.setCastPoint(pt);
+        if (since % 10 == 0 && b.fxBudget()) VfxSpawn.send(sl, VfxShape.VELD_TORNADO, pt, pt.add(0, 1, 0), 0xFF000000 | ASH, 14, (float) TORNADO_RADIUS);
+        if (since % 5 != 0) return;
+        long now = sl.getGameTime();
+        for (ServerPlayer p : b.playersNear(pt, TORNADO_RADIUS)) {
+            if (!b.canHit(p.getUUID(), now, 8)) continue;
+            b.strike(p, VeldanavaRules.damage(p.getMaxHealth(), spec.share(), 3f, 14f, b.damageScale()));
+            Vec3 rel = p.position().subtract(pt).multiply(1, 0, 1);
+            Vec3 spin = rel.lengthSqr() < 1.0E-4 ? Vec3.ZERO : new Vec3(-rel.z, 0, rel.x).normalize().scale(0.35).subtract(rel.normalize().scale(0.15));
+            Vec3 v = p.getDeltaMovement();
+            p.setDeltaMovement(v.x * 0.5 + spin.x, Math.min(0.9, v.y + 0.5), v.z * 0.5 + spin.z);
+            p.hurtMarked = true;
+        }
+    }
+
+    // ---------------------------------------------------------------- Disintegration: a zone where everything turns to dust, pulse after pulse
+    private static void disintegration(VeldanavaBoss b, VeldanavaRules.Spec spec, ServerLevel sl, int since, boolean active) {
+        if (!active || b.castPoint() == null) return;
+        Vec3 c = b.castPoint();
+        if ((since == 0 || since == 28) && b.fxBudget()) VfxSpawn.send(sl, VfxShape.VELD_DISINTEGRATION, c, c.add(0, 1, 0), 0xFF000000 | ASH, 30, (float) DISINT_RADIUS);
+        if (since % 8 != 0) return;
+        long now = sl.getGameTime();
+        for (ServerPlayer p : b.playersNear(c, DISINT_RADIUS)) {
+            if (!b.canHit(p.getUUID(), now, 6)) continue;
+            b.strike(p, VeldanavaRules.damage(p.getMaxHealth(), spec.share(), 3f, 12f, b.damageScale()));
+            p.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 40, 1));
+        }
+        for (int k = 0; k < 2; k++) {
+            double a = b.getRandom().nextDouble() * Math.PI * 2.0, r = b.getRandom().nextDouble() * (DISINT_RADIUS - 1.0);
+            b.tryDestroy(BlockPos.containing(c.x + Math.cos(a) * r, c.y - 1.0, c.z + Math.sin(a) * r));
+        }
+    }
+
+    // ---------------------------------------------------------------- Hell Flare: three rings of hellfire race out from him one after another
+    private static void hellFlare(VeldanavaBoss b, VeldanavaRules.Spec spec, ServerLevel sl, int tick, int since) {
+        Vec3 c = b.position();
+        if (since < 0) {
+            if (tick == spec.windup() - HELL_LEAD && b.fxBudget()) VfxSpawn.send(sl, VfxShape.VELD_HELL_FLARE, c, c, 0xFF000000 | HELL, 30, (float) HELL_OUTER);
+            return;
+        }
+        if (since > 24) return;
+        if (since == 0) sl.playSound(null, b.blockPosition(), SoundEvents.BLAZE_SHOOT, SoundSource.HOSTILE, 5f, 0.4f);
+        long now = sl.getGameTime();
+        List<ServerPlayer> near = b.playersNear(c, HELL_OUTER + 3.0);
+        for (int ring = 0; ring < 3; ring++) {
+            double radius = VeldanavaRules.hellRingRadius(ring, since, HELL_OUTER);
+            if (radius <= 0.0) continue;
+            for (ServerPlayer p : near) {
+                double d = Math.sqrt((p.getX() - c.x) * (p.getX() - c.x) + (p.getZ() - c.z) * (p.getZ() - c.z));
+                if (!VeldanavaRules.inRingBand(d, radius, 2.2) || !VeldanavaRules.withinHeight(p.getY() - c.y, 6.0) || !b.canHit(p.getUUID(), now, 3)) continue;
+                b.strike(p, VeldanavaRules.damage(p.getMaxHealth(), spec.share(), 6f, 40f, b.damageScale()));
+                p.igniteForSeconds(4f);
+            }
+        }
+    }
+
     // ================================================================ small helpers
     /** The unit vector a Minecraft yaw (degrees) looks along. */
     static Vec3 dirOf(double yawDeg) {
@@ -358,9 +569,11 @@ public final class VeldanavaMoves {
     }
 
     /** A thin line toward the aim: the warning before a beam or a slash. */
-    private static void tellRay(VeldanavaBoss b, ServerLevel sl, double yaw, double length, double width) {
+    private static void tellRay(VeldanavaBoss b, ServerLevel sl, double yaw, double length, double width) { tellRay(b, sl, yaw, length, width, TEAL); }
+
+    private static void tellRay(VeldanavaBoss b, ServerLevel sl, double yaw, double length, double width, int color) {
         if (!b.fxBudget()) return;
         Vec3 o = b.position().add(0, 1.5, 0);
-        ZogratisVfx.ray(sl, o, o.add(dirOf(yaw).scale(length)), width, 30, TEAL, true);
+        ZogratisVfx.ray(sl, o, o.add(dirOf(yaw).scale(length)), width, 30, color, true);
     }
 }

@@ -1,5 +1,25 @@
 # Changelog
 
+## [3.30.0] — Veldanava, the anime Creator God (setting `classicMode`)
+
+### NEW
+- **God-tier Veldanava** (`VeldanavaStats`): exactly 5,000,000 health, attack 80 (one-shots an unarmoured player), speed 0.55, armor 30 / toughness 20, knockback resistance 1.0, follow range 96. Vanilla's 1024 health cap is lifted for that one attribute (`HealthCap`); if a runtime refuses, a damage divisor keeps the fight the same size.
+- **Nullifications:** fall, fire, lava and wither damage are refused; poison, wither, slowness and every other potion or status effect cannot be applied.
+- **Ultraspeed Regeneration:** heals 0.1% of his maximum per second while fighting (setting `regenPercentPerSecond`), unless he is hit by the counter-element (damage type tag `nusmp:veldanava_counter`: `conceptual_severance`, `out_of_world`), which breaks it for 6 seconds.
+- **Boss bar per form** (`VeldanavaBar`): teal dragon, white-gold Creator God, violet-crimson Dark Avatar; pulsing title and symbols, flash while changing body, yellow while exposed or guarding, red while regeneration is broken, a status line, and "4,999,200 / 5,000,000".
+- **Six new moves** with their own effects: Absolute Severance, Black Lightning, Black Lightning Blast, Death Tornado, Disintegration, Hell Flare, and a second ultimate, Megiddo. Seven new `VELD_*` visual shapes with layers and preview scenes.
+- Server settings `classicMode` (false), `healthTotal` (5,000,000) and `regenPercentPerSecond` (0.1) in `nusmp-veldanava-server.toml`.
+- Tests: `VeldanavaAnimeTest`; the rules, source-scan tests and the `veldanava.*` self-tests cover the new numbers.
+
+### REPLACED
+- Outside `classicMode`: the 3.11.0 stats (4000 health, attack 18, speed 0.36, armor 12 / toughness 6, follow 64) and the old resistance list.
+
+### KEPT
+- All older moves, forms, models, loot and boons; `bossHealth` and the 3.11.0 behaviour come back with `classicMode = true`.
+
+### Caveats
+- Not seen in a running game. 5,000,000 health is practically unkillable at ordinary damage (lower `healthTotal` if needed). The health cap is lifted by reflection.
+
 ## [3.29.0] — A signature effect for each of the ten Evolution Ultimates (setting `visual.uniqueUltimates`)
 
 ### NEW

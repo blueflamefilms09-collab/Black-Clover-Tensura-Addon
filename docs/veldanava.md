@@ -44,6 +44,26 @@ The flag is the player's own NBT key `hasReceivedVeldanavaBoon` (the guide's nam
 
 Loot per fighter: 1 **Star King Dragon Core**, 3 **Genesis Fragment**, 1 **Creator's Essence** (guaranteed); 15% one of **Justice King Michael / Covenant King Uriel / Nihility Fragment**; 1% **Veldanava's Divine Core**.
 
+## The anime Veldanava (3.30.0, replaces the 3.11.0 numbers; `classicMode = true` brings them back)
+
+Rebuilt from the "Boss Entity Implementation Guidelines" the owner uploaded. Source of each entry: the guide itself (owner's file); the names of the six moves are Tensura names (Absolute Severance, Black Lightning, Death Tornado, Disintegration, Hell Flare, Megiddo). No wiki page was fetched for this change; the move behaviour is mod-owned and themed on those names, not copied from a Tensura asset.
+
+**NEW**
+* **Stats** (`VeldanavaStats`): 5,000,000 health, attack 80 (one blow kills an unarmoured player, hurts a fully armoured one badly), speed 0.55 (a flash step), armor 30, toughness 20, knockback resistance 1.0, follow range 96.
+* **Health above 1024** (`HealthCap`): vanilla clamps MAX_HEALTH to 1024; the cap of that one attribute is lifted once by reflection (both sides). If a runtime refuses, the boss falls back to a damage divisor (`VeldanavaStats.healthDivisor`) so the fight is the same size, and the bar still shows the whole pool. Percent-of-max-health skills of players hit the real maximum when the cap is lifted; in the fallback they are weaker.
+* **Nullifications** (anime mode): fall, every kind of fire and lava, and wither damage are refused; poison, wither, slowness and every other potion/status effect cannot be applied, and he is fire-immune.
+* **Ultraspeed Regeneration** (`VeldanavaStats.regenStep`): while he fights he heals 0.1% of his maximum per second (server setting `regenPercentPerSecond`, 0 = off), in one small step every 10 ticks, through the DPS budget bypass. A hit of the counter-element (damage type tag `nusmp:veldanava_counter`: `conceptual_severance` and, when present, `minecraft:out_of_world`) stops it for 6 seconds. Add damage types to the tag with a data pack to widen the counter.
+* **Boss bar per form** (`VeldanavaBar`): dragon = teal (blue, 10 notches), Creator God = white and gold (12 notches), Dark Avatar = violet and crimson (20 notches); the title pulses between two colours, flashes white while he changes body, turns yellow while exposed or guarding and red while the regeneration is broken; the line under it names the state or the running move; the health is shown as "4,999,200 / 5,000,000". Refreshed every 5 ticks, a player only gets a packet when something shown changed.
+* **Six moves** (appended to the table, ids 11..17, each used only by the bodies named in its table row): **Absolute Severance** (long thin lines of severing light; hits only along the lines), **Black Lightning** (up to 3 bolts at players), **Black Lightning Blast** (a big black-lightning burst with a wide ring), **Death Tornado** (a tornado that drifts toward the target), **Disintegration** (a ground circle whose ripples erode everything standing on it), **Hell Flare** (expanding rings of hell fire, a safe gap between the rings), **Megiddo** (second ultimate: a pillar of light on a marked spot, leaves him exposed). Each has a windup telegraph, a damage share like the older moves (`VeldanavaRules.damage`, the same caps), and its own visual effect (`VELD_*` shapes, `vfx/client/layer/Veld*Layer.java`, previews `tools/vfx_preview/scenes.d/veld_*.json`).
+
+**REPLACED** (only outside `classicMode`): the 4000 health, attack 18, speed 0.36, armor 12 / toughness 6 and follow 64 of 3.11.0; the old hard-control resistance list (now every effect is refused).
+
+**KEPT**: every old move, form, model, loot item and boon; `bossHealth` is still read in classic mode. Config additions: `classicMode` (false), `healthTotal` (5,000,000, 100..1e9) and `regenPercentPerSecond` (0.1, 0..5). Old servers with `bossHealth = 4000` get the new health from `healthTotal` without touching the file.
+
+**Worst-case cost of the change.** Entities: still 1 boss per world, no entities added by any new move (the effects are packets). Server work per tick: bolts <= 3, beams <= 8 per cast, still walking only the player list, `MAX_TARGETS` 24; regeneration one `heal` every 10 ticks; effects cleared once a second; the bar looked at every 5 ticks. Packets: all new effect packets go through `fxBudget()` (<= 12 per tick for the boss and the global budget), nearby players only; the bar sends at most 4 small packets a second per viewer. Client: each new layer <= 400 vertices per activation (peaks: severance 336, lightning 312, blast 392, hell flare 364, disintegration 300, megiddo 252, tornado 324), thinned by distance. `HealthCap` is a one-time reflection.
+
+**Caveats.** Not seen in a running game (previews and the CI smoke test only). 5,000,000 health is practically unkillable at ordinary damage (the DPS budget lets 300,000 a second through at most); lower `healthTotal` if that is too hard. The move effects use existing textures; no Tensura model or animation asset was added.
+
 ## Worst-case cost (CLAUDE.md rule 11)
 
 | What | Bound |

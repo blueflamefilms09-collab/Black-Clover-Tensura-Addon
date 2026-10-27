@@ -71,7 +71,7 @@ public class VeldanavaRenderer extends ZogratisRenderer<VeldanavaBoss> {
         float phase = e.phaseProgress();
         boolean newBody = change && phase >= 0.5f;                       // the entity swapped the body at the middle of the change
         boolean oldBody = change && !newBody;
-        boolean big = casting && (e.castingMove() == VeldanavaRules.GENESIS || e.castingMove() == VeldanavaRules.GRAVITY || e.castingMove() == VeldanavaRules.GENESIS_SLASH);
+        boolean big = casting && VeldanavaRules.bigCast(e.castingMove());                       // the wide or heavy moves play the big cast clip (3.30.0: the new ones too)
 
         fr.transforming = newBody;
         fr.transformProgress = (phase - 0.5f) * 2f;
@@ -82,7 +82,7 @@ public class VeldanavaRenderer extends ZogratisRenderer<VeldanavaBoss> {
         fr.runCycle = (form == VeldanavaRules.DRAGON ? 8.0f : 2.4f) * scale;
         clock.update(fr, CLIPS[form]);
 
-        int mode = fr.dead ? ZogratisGlow.NORMAL : change ? ZogratisGlow.TRANSFORMING : casting ? (e.castingMove() == VeldanavaRules.GENESIS ? ZogratisGlow.ULTIMATE : ZogratisGlow.CASTING)
+        int mode = fr.dead ? ZogratisGlow.NORMAL : change ? ZogratisGlow.TRANSFORMING : casting ? ((e.castingMove() == VeldanavaRules.GENESIS || e.castingMove() == VeldanavaRules.MEGIDDO) ? ZogratisGlow.ULTIMATE : ZogratisGlow.CASTING)
                 : e.exposed() ? ZogratisGlow.EXPOSED : ZogratisGlow.NORMAL;
         float fade = fr.dead ? ZogratisGlow.deathFade(fr.deathTicks, DEATH_TICKS) : 1f;
         float level = ZogratisGlow.level(form == VeldanavaRules.AVATAR ? 100 : form == VeldanavaRules.HUMANOID ? 70 : 55, fr.age, mode, phase) * fade;

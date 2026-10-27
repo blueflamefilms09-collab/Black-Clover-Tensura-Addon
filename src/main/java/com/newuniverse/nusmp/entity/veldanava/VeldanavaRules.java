@@ -89,8 +89,12 @@ public final class VeldanavaRules {
 
     // ---------------------------------------------------------------- the moves
     public static final int SWEEP = 0, GRAVITY = 1, STARFALL = 2, ROAR = 3, BITE = 4,
-            GOD_SPEED = 5, GENESIS_SLASH = 6, SERAPH_GUARD = 7, URIEL = 8, LAW = 9, GENESIS = 10;
-    public static final int MOVES = 11;
+            GOD_SPEED = 5, GENESIS_SLASH = 6, SERAPH_GUARD = 7, URIEL = 8, LAW = 9, GENESIS = 10,
+            // 3.30.0: the Tensura-themed moves of the anime Veldanava (appended; the classic mode does not use them)
+            ABSOLUTE_SEVERANCE = 11, BLACK_LIGHTNING = 12, BLACK_BLAST = 13, DEATH_TORNADO = 14, DISINTEGRATION = 15, HELL_FLARE = 16, MEGIDDO = 17;
+    public static final int MOVES = 18;
+    /** The moves of 3.11.0 - 3.29.0: ids under this are the classic table. */
+    public static final int CLASSIC_MOVES = 11;
 
     /**
      * One move: the bodies that have it (bit mask of 1 &lt;&lt; form), the ticks of its telegraph (windup), of its effect (active) and of the rest after it
@@ -118,6 +122,13 @@ public final class VeldanavaRules {
             new Spec(URIEL, "uriel_prison", "Covenant King Uriel", H | A, 20, 50, 10, 420, 0, 30, 3, false, 0.10f),
             new Spec(LAW, "law_manipulation", "Law Manipulation", H | A, 20, 6, 14, 500, 0, 30, 3, false, 0f),
             new Spec(GENESIS, "genesis", "Genesis: Creation of the World", A, 100, 8, 60, 1200, 0, 64, 4, true, 0.60f),
+            new Spec(ABSOLUTE_SEVERANCE, "absolute_severance", "Absolute Severance", H | A, 22, 6, 16, 260, 0, 48, 6, false, 0.38f),
+            new Spec(BLACK_LIGHTNING, "black_lightning", "Black Lightning", D | H | A, 16, 24, 12, 220, 0, 56, 6, false, 0.20f),
+            new Spec(BLACK_BLAST, "black_lightning_blast", "Black Lightning Blast", H | A, 26, 8, 18, 360, 0, 22, 4, false, 0.30f),
+            new Spec(DEATH_TORNADO, "death_tornado", "Death Tornado", D | A, 20, 70, 20, 420, 4, 48, 4, false, 0.12f),
+            new Spec(DISINTEGRATION, "disintegration", "Disintegration", H | A, 30, 40, 20, 480, 0, 40, 3, false, 0.06f),
+            new Spec(HELL_FLARE, "hell_flare", "Hell Flare", D | H | A, 24, 30, 16, 320, 0, 40, 5, false, 0.18f),
+            new Spec(MEGIDDO, "megiddo", "Megiddo", D | A, 90, 14, 50, 1500, 0, 64, 2, true, 0.50f),
     };
 
     public static Spec spec(int id) { return TABLE[id < 0 ? 0 : Math.min(MOVES - 1, id)]; }
@@ -145,6 +156,11 @@ public final class VeldanavaRules {
 
     private static boolean usable(Spec s, int form, double distance, long[] readyAt, long now) {
         return s.has(form) && distance >= s.minRange() && distance <= s.maxRange() && (readyAt == null || s.id() >= readyAt.length || now >= readyAt[s.id()]);
+    }
+
+    /** Does the renderer play the big cast animation for this move? (The classic three, and the wide or heavy new ones.) */
+    public static boolean bigCast(int id) {
+        return id == GENESIS || id == GRAVITY || id == GENESIS_SLASH || id == ABSOLUTE_SEVERANCE || id == BLACK_BLAST || id == DEATH_TORNADO || id == HELL_FLARE || id == MEGIDDO;
     }
 
     /** The cooldown of a move in the given body, in ticks (never under a second). */
@@ -194,6 +210,37 @@ public final class VeldanavaRules {
 
     /** How many falling stars for 'players' players near the boss: three, plus two each, at most {@link #MAX_MARKS}. */
     public static int marks(int players) { return Math.max(0, Math.min(MAX_MARKS, players <= 0 ? 0 : 3 + 2 * players)); }
+
+    // ---------------------------------------------------------------- the 3.30.0 moves (pure geometry)
+    /** The most black bolts of one Black Lightning, and the most beams of one Megiddo. */
+    public static final int MAX_BOLTS = 3, MAX_BEAMS = 8;
+
+    /** One bolt for each of up to {@link #MAX_BOLTS} players, at least one when anyone is there. */
+    public static int bolts(int players) { return players <= 0 ? 0 : Math.min(MAX_BOLTS, players); }
+
+    /** Two beams, plus one for each player, at most {@link #MAX_BEAMS}. */
+    public static int beams(int players) { return players <= 0 ? 0 : Math.min(MAX_BEAMS, 2 + players); }
+
+    /** The tick of the move's active part at which bolt/beam number 'i' of 'n' falls: evenly spread over 'active' ticks. */
+    public static int strikeTick(int i, int n, int active) { return n <= 0 ? 0 : (int) ((long) i * Math.max(1, active) / n); }
+
+    /** How far (blocks) the Death Tornado moves in a tick toward its target: it never overshoots and never moves under 'step'. Returns the new distance still to go. */
+    public static double tornadoRemaining(double distance, double step) { return Math.max(0.0, distance - step); }
+
+    /** The Death Tornado's speed in blocks per tick (slower than a sprinting player: it can be outrun). */
+    public static final double TORNADO_SPEED = 0.22;
+
+    /** Hell Flare: the radius of ring 'ring' (0..2) 'since' ticks into the move; each ring starts 4 ticks after the last and takes 12 ticks to reach 'outer'. */
+    public static double hellRingRadius(int ring, int since, double outer) {
+        double t = (since - 4.0 * ring) / 12.0;
+        return outer * Math.max(0.0, Math.min(1.0, t));
+    }
+
+    /** Is a creature at 'distance' from the middle inside the band of a ring of radius 'radius'? */
+    public static boolean inRingBand(double distance, double radius, double halfBand) { return radius > 0.0 && Math.abs(distance - radius) <= halfBand; }
+
+    /** Is the vertical gap between a creature and a flat beam small enough for the beam to cut it? */
+    public static boolean withinHeight(double dy, double reach) { return Math.abs(dy) <= reach; }
 
     // ---------------------------------------------------------------- the will of the creator and the loot
     /** How long the Will of the Creator waits for the fighters to take their boon: five minutes, or what the server set (30 s .. 30 min). */
