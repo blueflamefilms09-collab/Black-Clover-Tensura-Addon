@@ -2,6 +2,7 @@ package com.newuniverse.nusmp.entity.veldanava;
 
 import io.github.manasmods.tensura.entity.TensuraProjectile;
 import io.github.manasmods.tensura.entity.magic.beam.BeamProjectile;
+import io.github.manasmods.tensura.entity.magic.field.AreaField;
 import io.github.manasmods.tensura.entity.magic.lightning.TensuraLightningBolt;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
@@ -33,6 +34,8 @@ public final class VeldanavaTensura {
     public static final int MAX_LIVE = 20, MAX_LIFE = 120, MAX_BEAMS = 6;
     /** How fast the Absolute Severance cutter flies, in blocks per tick. */
     public static final float CUTTER_SPEED = 3.0f;
+    /** A field hits once per this many ticks; far above any life, so a field (the Hell Flare sets fire and an effect of its own) never hits. */
+    public static final int NEVER_HIT = 1_000_000;
 
     private final List<Entity> live = new ArrayList<>();
     private Entity mover;
@@ -160,12 +163,15 @@ public final class VeldanavaTensura {
             tp.setBurnTicks(0);
             tp.setElementalAttack(false);
             try { tp.setMobEffect(null); } catch (Throwable ignored) { }
+            if (e instanceof AreaField af) af.setTickEachHit(NEVER_HIT);
         }
         if (e instanceof TensuraLightningBolt lb) {
             lb.setTensuraDamage(0f);
             lb.setSecondaryDamage(0f);
             lb.setShouldPlaceFire(false);
             lb.setElementalAttack(false);
+            lb.setRadius(0f);
+            lb.setVisualOnly(true);
         }
         if (e instanceof BeamProjectile bp) bp.setExplosionRadius(0f);
     }

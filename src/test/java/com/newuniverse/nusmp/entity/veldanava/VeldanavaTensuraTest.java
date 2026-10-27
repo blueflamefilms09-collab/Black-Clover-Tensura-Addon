@@ -56,7 +56,7 @@ class VeldanavaTensuraTest {
     @Test
     void theTensuraEntitiesAreOnlyALookAndAreSwitchableAndCleanedUp() throws IOException {
         String t = code("VeldanavaTensura");
-        for (String off : new String[]{"setDamage(0f)", "setSecondaryDamage(0f)", "setKnockForce(0f)", "setBurnTicks(0)", "setMobEffect(null)", "setTensuraDamage(0f)", "setShouldPlaceFire(false)", "setExplosionRadius(0f)"})
+        for (String off : new String[]{"setDamage(0f)", "setSecondaryDamage(0f)", "setKnockForce(0f)", "setBurnTicks(0)", "setMobEffect(null)", "setTensuraDamage(0f)", "setShouldPlaceFire(false)", "setExplosionRadius(0f)", "setVisualOnly(true)", "setRadius(0f)", "setTickEachHit(NEVER_HIT)"})
             assertTrue(t.contains(off), "a Tensura entity keeps its own harm: " + off);
         assertTrue(t.contains("MAX_LIVE") && t.contains("live.remove(0).discard()") && t.contains("clampLife(life)"), "the live count or the life is not capped");
         assertFalse(t.contains("getEntities") || t.contains("getChunk(") || t.contains("setBlock(") || t.contains("Minecraft"), "the helper scans, loads or changes the world on its own");
