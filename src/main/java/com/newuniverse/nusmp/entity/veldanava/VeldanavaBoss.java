@@ -95,6 +95,7 @@ public final class VeldanavaBoss extends Monster implements BudgetedBoss {
     private final ServerBossEvent bar = new ServerBossEvent(Component.empty(), BossEvent.BossBarColor.BLUE, BossEvent.BossBarOverlay.PROGRESS);
     private final Set<UUID> fighters = new LinkedHashSet<>();
     private final BlockLedger ledger = new BlockLedger(this::serverLevel);
+    private final VeldanavaTensura tensura = new VeldanavaTensura();                 // 3.31.0: the base Tensura entities that draw his moves (all discarded with him)
     private final long[] readyAt = new long[VeldanavaRules.MOVES];
     private final Map<UUID, Long> lastHit = new HashMap<>();
     private BlockPos arena;
@@ -392,6 +393,7 @@ public final class VeldanavaBoss extends Monster implements BudgetedBoss {
         emptySeconds = 0;
         if (casting != null) endCast(sl.getGameTime(), true);
         ledger.restoreAll(sl);
+        tensura.clear();
         VeldanavaSoul.release(sl.getServer(), getUUID());
         dpsBudget.bypass(() -> setHealth(getMaxHealth()));
         setTarget(null);
@@ -552,6 +554,9 @@ public final class VeldanavaBoss extends Monster implements BudgetedBoss {
         return target.hurt(sl.damageSources().indirectMagic(this, this), amount);
     }
 
+    /** The base Tensura entities that draw his moves (3.31.0). */
+    public VeldanavaTensura tensura() { return tensura; }
+
     /** Sends one effect packet if this tick's budget has room. */
     public boolean fxBudget() {
         if (fxBudget <= 0) return false;
@@ -702,6 +707,7 @@ public final class VeldanavaBoss extends Monster implements BudgetedBoss {
         bar.setProgress(0f);
         say("The world... goes on without me.");
         ledger.restoreAll(sl);
+        tensura.clear();
         VeldanavaSoul.release(sl.getServer(), getUUID());
         WillOfTheCreator.spawn(sl, position(), fighters);
     }
@@ -710,6 +716,7 @@ public final class VeldanavaBoss extends Monster implements BudgetedBoss {
     public void remove(RemovalReason reason) {
         if (!level().isClientSide) {
             bar.removeAllPlayers();
+            tensura.clear();
             if (level() instanceof ServerLevel sl) {
                 VeldanavaSoul.release(sl.getServer(), getUUID());
                 if (reason.shouldDestroy()) ledger.restoreAll(sl);
