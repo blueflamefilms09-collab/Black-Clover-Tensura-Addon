@@ -1,0 +1,7 @@
+{
+ "_comment": "Ultimate Chairman's Last Stand (UltChairmanStandLayer): power = burst radius in blocks, 20 ticks.",
+ "ult_chairman_stand": {"layer": "UltChairmanStandLayer", "shape": "ULT_CHAIRMAN_STAND", "from": [0, 0.2, 0], "to": [0, 0.2, 0], "power": 12, "duration": 20, "cam": [13, 8.5, 13], "target": [0, 1.2, 0],
+              "ages": [2, 5, 7, 9, 12, 15, 18, 19], "figures": [[0, 0, 0, 1.8], [4, 0, 3, 1.8]]},
+ "ult_chairman_stand_wide": {"layer": "UltChairmanStandLayer", "shape": "ULT_CHAIRMAN_STAND", "from": [0, 0.2, 0], "to": [0, 0.2, 0], "power": 12, "duration": 20, "cam": [20, 14, 20], "target": [0, 1.5, 0],
+              "ages": [3, 6, 8, 10, 13, 17], "figures": [[0, 0, 0, 1.8], [-5, 0, 4, 1.8], [6, 0, -3, 1.8]]}
+}
