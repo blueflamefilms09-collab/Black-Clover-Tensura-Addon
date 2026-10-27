@@ -1,0 +1,9 @@
+{
+ "_comment": "Veldanava Absolute Severance previews, VeldSeveranceLayer: a 44 block cut along +z at chest height, half-width 1.6, 16 ticks.",
+ "veld_severance": {"layer": "VeldSeveranceLayer", "shape": "VELD_SEVERANCE", "color": "FF5EEAD8", "from": [0, 1.4, 0], "to": [0, 1.4, 44], "power": 1.6, "duration": 16,
+                    "cam": [-9, 2.6, -5], "target": [0, 1.4, 14], "ages": [0.5, 1.5, 2.4, 3.5, 4.5, 6, 8, 11, 13, 15],
+                    "figures": [[1.5, 0, 0.5, 1.8], [-1.5, 0, 6, 1.8]]},
+ "veld_severance_wide": {"layer": "VeldSeveranceLayer", "shape": "VELD_SEVERANCE", "color": "FF5EEAD8", "from": [0, 1.4, 0], "to": [0, 1.4, 44], "power": 1.6, "duration": 16,
+                         "cam": [-30, 9, 18], "target": [0, 1.4, 22], "ages": [1, 2.2, 3.5, 4.5, 6, 9, 12, 14, 15.5],
+                         "figures": [[1.5, 0, 0.5, 1.8], [0, 0, 44, 1.8]]}
+}
