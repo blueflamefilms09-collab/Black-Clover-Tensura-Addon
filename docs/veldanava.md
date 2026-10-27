@@ -64,6 +64,20 @@ Rebuilt from the "Boss Entity Implementation Guidelines" the owner uploaded. Sou
 
 **Caveats.** Not seen in a running game (previews and the CI smoke test only). 5,000,000 health is practically unkillable at ordinary damage (the DPS budget lets 300,000 a second through at most); lower `healthTotal` if that is too hard. The move effects use existing textures; no Tensura model or animation asset was added.
 
+## His Tensura moves are Tensura's own (3.31.0, setting `tensuraMoves`)
+
+The seven moves that exist in the base Tensura Reincarnated mod (Absolute Severance, Black Lightning, Black Lightning Blast, Death Tornado, Disintegration, Hell Flare, Megiddo) are drawn by Tensura's own entities, with Tensura's models, animations and sounds: `tensura:severance_cutter`, `black_lightning_bolt`, `black_lightning_blast`, `death_tornado`, `disintegration`, `hell_flare`, `megiddo_bubble` (ids found in the real mod by the CI server, 2026-10-27). They are looked up by registry id at run time (`VeldanavaTensura.typeOf`), so a missing id keeps the 3.30.0 effect for that move.
+
+**How each move uses them.** Absolute Severance: one cutter flies along the aim at the end of the wind-up. Black Lightning: one bolt per marked point at the strike tick. Black Lightning Blast: six beams, evenly round him, for the length of the blast (Tensura's blast is a beam, so this is its read of the 3.30.0 burst; the damage stays the disc). Death Tornado: one funnel that walks with the cast point (moved every tick). Disintegration: one zone, owned by the boss (Tensura's removes itself without an owner). Hell Flare: one field at his feet. Megiddo: one bubble per marked point, before its strike.
+
+**Only a look and a sound.** `VeldanavaTensura.quiet` turns off every entity's own damage, secondary damage, knockback, burn, mob effect, element, fire and explosion before it is added; the damage is still `VeldanavaRules.damage` through `VeldanavaBoss.strike` (DPS budget, damage cap, Anti-Totem, `damageScale`). The CI self-tests prove, on the real server with the real mod: no entity throws while ticking 40 ticks (alone and owned by a real Veldanava), a zombie and a stand-in player next to each lose no health, catch no fire and get no effect, no block in a 13x13x7 cube changes, the beams point along their yaw, and the seven moves played tick by tick each make at least one Tensura entity.
+
+**NEW**: `VeldanavaTensura`, the server setting `tensuraMoves` (default true), `VeldanavaTensuraTest`, self-tests `veldanava.tp_*`, `veldanava.tpo_*`, `veldanava.tensura_aim`, `veldanava.tensura_moves`. **REPLACED**: nothing is removed; with the setting on, the seven `VELD_*` effects are only the fallback. **KEPT**: all 3.30.0 layers, shapes and scenes; `tensuraMoves = false` restores 3.30.0 exactly.
+
+**Worst-case cost of the change.** Entities: at most `MAX_LIVE` = 20 Tensura entities per boss (the oldest are discarded first), each with a life of at most `MAX_LIFE` = 120 ticks (6 s), all discarded when he falls, is removed or the fight resets; one cast makes at most 1 (severance, tornado, disintegration, hell flare), `MAX_MARKS` = 12 (bolts, megiddo) or `MAX_BEAMS` = 6 (blast) of them. No entity scan: the boss keeps its own list. No block changes of its own (fire and explosions are off on every entity that has a switch). Packets: Tensura's entities send their own spawn/data packets to nearby players, at most 12 per cast; the 3.30.0 effect packets are not sent while they are used. Client: Tensura's renderers, bounded by the entity cap above; far entities are culled by vanilla's entity distance.
+
+**Caveats.** Not seen in a running game. The entities' own sounds and particles are Tensura's and are not budgeted by this mod; the cap above bounds how many exist at once. Block-launching and ground effects of the funnel and the Hell Flare are turned off only where Tensura offers a switch; the smoke test saw no block change near the spawn, but a long fight in a built-up area is the real test.
+
 ## Worst-case cost (CLAUDE.md rule 11)
 
 | What | Bound |
@@ -75,13 +89,13 @@ Rebuilt from the "Boss Entity Implementation Guidelines" the owner uploaded. Sou
 | Client | 3 GeoLite models drawn in one pass plus one glow pass; dragon <= 1784 quads per pass; culled beyond 220 blocks and by a grown frustum box; no per-frame allocation, textures resolved once |
 | Config | server config only; the visual effects reuse existing client settings |
 
-Pinned by `VeldanavaRulesTest`, `VeldanavaBoonsTest`, `VeldanavaSourceScanTest` and the smoke self-tests `veldanava.rules`, `veldanava.assets`, `veldanava.boss`, `veldanava.orb`.
+Pinned by `VeldanavaRulesTest`, `VeldanavaBoonsTest`, `VeldanavaTensuraTest`, `VeldanavaSourceScanTest` and the smoke self-tests `veldanava.rules`, `veldanava.assets`, `veldanava.boss`, `veldanava.orb`.
 
 ## Files
 
 * Models and animation: `tools/gen_veldanava.py` -> `assets/nusmp/{geo,animations,textures}/entity/veldanava_<humanoid|dark_avatar|true_dragon>.*` (+ `_glow`), preview `python3 tools/gen_veldanava.py --preview <scene>`.
 * Items and lang: `tools/gen_veldanava_items.py` (icons, item models, `tools/lang/veldanava.json` merged into `en_us.json`; `--sheet` writes a preview).
-* Server: `entity/veldanava/` (`VeldanavaBoss`, `VeldanavaMoves`, `VeldanavaRules`, `VeldanavaSoul`, `VeldanavaBoons`, `WillOfTheCreator`, `VeldanavaCommand`, `VeldanavaEntities`, `VeldanavaConfig`, `VeldanavaEvents`, `VeldanavaSelfTests`).
+* Server: `entity/veldanava/` (`VeldanavaBoss`, `VeldanavaMoves`, `VeldanavaRules`, `VeldanavaSoul`, `VeldanavaBoons`, `WillOfTheCreator`, `VeldanavaCommand`, `VeldanavaEntities`, `VeldanavaConfig`, `VeldanavaEvents`, `VeldanavaSelfTests`, `VeldanavaTensura`).
 * Client: `client/veldanava/` (`VeldanavaClient`, `VeldanavaRenderer`, `VeldanavaOrbRenderer`).
 
 ## What the guide asks for that is not built

@@ -1,5 +1,22 @@
 # Changelog
 
+## [3.31.0] — Veldanava casts the base Tensura moves (setting `tensuraMoves`)
+
+### NEW
+- **Tensura's own versions of his Tensura moves.** Absolute Severance, Black Lightning, Black Lightning Blast, Death Tornado, Disintegration, Hell Flare and Megiddo are now drawn by the base Tensura Reincarnated entities (`severance_cutter`, `black_lightning_bolt`, `black_lightning_blast`, `death_tornado`, `disintegration`, `hell_flare`, `megiddo_bubble`), with Tensura's own models, animations and sounds. They are found by registry id at run time (`VeldanavaTensura`), so a Tensura version without one of them simply keeps the 3.30.0 effect for that move.
+- **The Tensura entities are only the look and the sound.** Each is spawned with its own damage, secondary damage, knockback, burn, mob effect, fire and explosion turned off; the damage stays in the boss's capped, budgeted path (DPS budget, damage cap, Anti-Totem), so the fight is exactly as hard as in 3.30.0.
+- Server setting `tensuraMoves` (default **true**) in `nusmp-veldanava-server.toml`. `false` brings back the 3.30.0 effects exactly (and `classicMode = true` still brings back the 3.11.0 boss).
+- Tests: `VeldanavaTensuraTest`; CI self-tests `veldanava.tp_*` / `veldanava.tpo_*` (every Tensura entity driven next to a zombie and a stand-in player, alone and owned by the boss), `veldanava.tensura_aim` (beam directions) and `veldanava.tensura_moves` (the seven moves played tick by tick).
+
+### REPLACED
+- Nothing is removed. With `tensuraMoves = true` the seven `VELD_*` effects of 3.30.0 are no longer played, except as the fallback when a Tensura entity cannot be made.
+
+### KEPT
+- All 3.30.0 effect layers, shapes and preview scenes (the fallback and the `tensuraMoves = false` look), all damage numbers, the telegraph sigils, every older move.
+
+### Caveats
+- Not seen in a running game: the CI server only proves the entities spawn, tick, hurt nobody, burn nobody and change no block; how they look in motion and from which angle is for a player to judge. The Black Lightning Blast is six beams round him (Tensura's blast is a beam), while its damage is still the disc of 3.30.0.
+
 ## [3.30.0] — Veldanava, the anime Creator God (setting `classicMode`)
 
 ### NEW
