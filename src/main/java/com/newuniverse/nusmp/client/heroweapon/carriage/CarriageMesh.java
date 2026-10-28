@@ -1,5 +1,6 @@
 package com.newuniverse.nusmp.client.heroweapon.carriage;
 
+import com.newuniverse.nusmp.mesh.MeshText;
 import com.mojang.logging.LogUtils;
 import com.newuniverse.nusmp.heroweapon.weapon.carriage.CarriageNumbers;
 import net.minecraft.client.Minecraft;
@@ -49,7 +50,7 @@ final class CarriageMesh {
             Optional<Resource> res = Minecraft.getInstance().getResourceManager().getResource(rl("weapon_meshes/vassal_carriage.txt"));
             if (res.isPresent()) {
                 List<String> lines = new ArrayList<>();
-                try (BufferedReader in = res.get().openAsReader()) {
+                try (BufferedReader in = MeshText.reader(res.get())) {
                     String line;
                     while ((line = in.readLine()) != null) lines.add(line);
                 }

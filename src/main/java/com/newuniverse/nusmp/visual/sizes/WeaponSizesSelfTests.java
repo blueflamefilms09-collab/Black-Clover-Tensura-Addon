@@ -1,5 +1,6 @@
 package com.newuniverse.nusmp.visual.sizes;
 
+import com.newuniverse.nusmp.mesh.MeshPack;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -31,7 +32,7 @@ public final class WeaponSizesSelfTests {
 
     private static String text(String path) throws Exception {
         try (InputStream in = WeaponSizesSelfTests.class.getResourceAsStream("/assets/nusmp/" + path)) {
-            return in == null ? null : new String(in.readAllBytes(), StandardCharsets.UTF_8);
+            return in == null ? null : MeshPack.text(in.readAllBytes());
         }
     }
 

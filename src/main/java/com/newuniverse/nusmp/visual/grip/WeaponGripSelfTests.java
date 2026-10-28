@@ -1,5 +1,6 @@
 package com.newuniverse.nusmp.visual.grip;
 
+import com.newuniverse.nusmp.mesh.MeshPack;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -35,7 +36,7 @@ public final class WeaponGripSelfTests {
 
     private static String text(String path) throws Exception {
         try (InputStream in = WeaponGripSelfTests.class.getResourceAsStream("/assets/nusmp/" + path)) {
-            return in == null ? null : new String(in.readAllBytes(), StandardCharsets.UTF_8);
+            return in == null ? null : MeshPack.text(in.readAllBytes());
         }
     }
 

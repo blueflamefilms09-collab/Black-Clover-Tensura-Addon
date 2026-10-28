@@ -1,5 +1,6 @@
 package com.newuniverse.nusmp.visual.genesis;
 
+import com.newuniverse.nusmp.mesh.MeshText;
 import com.newuniverse.nusmp.labyrinth.mega.SelfTests;
 import com.newuniverse.nusmp.perf.VfxQuality;
 import net.minecraft.server.MinecraftServer;
@@ -62,7 +63,7 @@ public final class VuSelfTests {
     private static VuMesh read(String path) throws Exception {
         try (InputStream in = open(path)) {
             if (in == null) return null;
-            return VuMesh.parse(new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8)));
+            return VuMesh.parse(MeshText.reader(in));
         }
     }
 }

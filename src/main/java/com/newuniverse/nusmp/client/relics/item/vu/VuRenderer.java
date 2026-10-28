@@ -1,5 +1,6 @@
 package com.newuniverse.nusmp.client.relics.item.vu;
 
+import com.newuniverse.nusmp.mesh.MeshText;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.logging.LogUtils;
@@ -102,7 +103,7 @@ public final class VuRenderer {
             Optional<Resource> res = sized(mc, "weapon_meshes_vu/" + meshId + ".txt");             // 1.110.0: the thickened copy of a dagger / katana mesh when there is one
             if (res.isEmpty()) return null;
             Entry e = new Entry();
-            try (BufferedReader in = res.get().openAsReader()) { e.mesh = VuMesh.parse(in); }
+            try (BufferedReader in = MeshText.reader(res.get())) { e.mesh = VuMesh.parse(in); }
             String base = WeaponClasses.baseId(meshId);
             Optional<Resource> sp = mc.getResourceManager().getResource(rl("visual_upgrade/" + base + ".json"));
             if (sp.isPresent()) {
@@ -123,7 +124,7 @@ public final class VuRenderer {
             if (!e.mesh.lod.isEmpty()) {
                 Optional<Resource> lr = sized(mc, "weapon_meshes_vu/" + e.mesh.lod + ".txt");
                 if (lr.isPresent()) {
-                    try (BufferedReader in = lr.get().openAsReader()) { e.lod = VuMesh.parse(in); }
+                    try (BufferedReader in = MeshText.reader(lr.get())) { e.lod = VuMesh.parse(in); }
                     e.lodSkin = rl("textures/entity/weapon_vu/" + e.lod.skin + ".png");
                     e.lodGlow = exists(mc, "textures/entity/weapon_vu/" + e.lod.skin + "_glow.png") ? rl("textures/entity/weapon_vu/" + e.lod.skin + "_glow.png") : null;
                     e.lodSpecOf = specs(e.lod, e.spec);

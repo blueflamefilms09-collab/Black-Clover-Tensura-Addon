@@ -1,5 +1,31 @@
 # Changelog
 
+## [3.32.0] — Smaller jar: models packed in a compact binary form + a fixed detail limit (setting-free, build switches)
+
+### SMALLER (owner decision)
+- **The big text models are packed into a compact binary form inside the jar.** 3,198 mesh files (`weapon_meshes`, `weapon_meshes_vu`, `weapon_meshes_sz`, `weapon_meshes_vu_sz`, `djinn`: 294 MB of text in the source tree) become 15.3 MB of packed files with the same names (`NMSH` header + deflate; corners shared by neighbouring quads are stored once, numbers as varints). **Same look: the packing is lossless**, every file is unpacked again at build time and compared with its text, and a difference fails the build. In the jar this is about 18 MB less (the text was already deflated to about 33 MB there).
+- **A fixed detail limit on the heaviest models**: a mesh with more than 3000 quads (6000 triangles) loses its smallest quads (by surface area) until it fits. 52 meshes are over the limit (103,449 small quads left out; the worst is the Cardinal Halo Chakram, 7566 -> 3000 quads, 27% of its surface). What is never cut: the quads that give each layer its length, grip and scale (extremes of x, y, z), every void and halo-card quad, and the orbit groups. The cut only touches the copy inside the jar; the source files keep every quad.
+- The big win of the jar is elsewhere (about 241 MB of PNG textures); this release only does what was asked for the models. See `docs/mesh_packing.md`.
+
+### NEW
+- `mesh/MeshPack` (the codec), `MeshText` (the loader shim), `MeshCap` (the detail limit), `MeshPackMain` + Gradle task `packMeshes` (build step), `tools/mesh_cap/preview_cap.py` (old-vs-new pictures).
+- Loaders (`WeaponRenderer`, `VuRenderer`, `CarriageMesh`, `DjinnMeshes`) read both forms: they look at the first four bytes and fall back to plain text.
+- Build switches: `-PpackMeshes=false` (jar with plain text, as before), `-PmeshQuadCap=<n>` (default 3000, `0` = keep every quad), `-PmeshCapDump=<dir>` (write the cut meshes as text to look at them).
+- Tests: `MeshPackTest` (round trip of every shipped mesh, odd lines, damaged files), `MeshCapTest` (extents, protected layers, determinism); CI self-test `mesh.pack`; the build workflow checks that the jar holds `NMSH` files.
+
+### REPLACED
+- The plain text copies of the 3,198 meshes inside the jar are replaced by the packed (and, for 52, cut) copies, as the owner asked.
+
+### KEPT
+- All plain text meshes in the source tree and in git, plain-text loading (resource packs and older jars still work), every quad of every mesh when built with `-PmeshQuadCap=0`.
+
+### Cost (worst case)
+- Build time only, plus one decode of one mesh when the weapon first draws (a few ms, off the render path as before). No new runtime packets, entities, or per-tick work. Cut meshes draw fewer quads, so client draw cost goes down.
+
+### Caveats
+- Not seen in a running game: the pictures in `tools/mesh_cap/preview_cap.py` are flat-shaded drawings of the mesh files, not the in-game render. Small pieces of fine detail disappear from the heaviest models (e.g. the ring under the Demon-Slayer Sword's pommel is much thinner); `-PmeshQuadCap=0` brings every quad back.
+- The dev server and the CI smoke test read plain text from the classes folder, so the packed form is proven by the `mesh.pack` self-test, the per-file check in the build and the new jar check, not by the booted game.
+
 ## [3.31.0] — Veldanava casts the base Tensura moves (setting `tensuraMoves`) + the world-join fix
 
 ### FIXED (world could not be joined with Ako's Evil Skill Tree)

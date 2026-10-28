@@ -1,5 +1,6 @@
 package com.newuniverse.nusmp.client;
 
+import com.newuniverse.nusmp.mesh.MeshText;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -369,7 +370,7 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
             if (res.isPresent()) {
                 mesh = new Mesh();
                 mesh.tex = tex != null ? tex : skin(id, "");
-                try (BufferedReader in = res.get().openAsReader()) {
+                try (BufferedReader in = MeshText.reader(res.get())) {
                     String line;
                     while ((line = in.readLine()) != null) parse(mesh, id, line.trim().split("\\s+"));
                 }

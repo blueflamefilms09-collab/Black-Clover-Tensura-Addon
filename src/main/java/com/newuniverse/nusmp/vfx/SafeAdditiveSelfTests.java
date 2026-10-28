@@ -1,5 +1,6 @@
 package com.newuniverse.nusmp.vfx;
 
+import com.newuniverse.nusmp.mesh.MeshText;
 import com.newuniverse.nusmp.labyrinth.mega.SelfTests;
 import com.newuniverse.nusmp.visual.genesis.VuCardLimits;
 import com.newuniverse.nusmp.visual.genesis.VuMesh;
@@ -56,7 +57,7 @@ public final class SafeAdditiveSelfTests {
         VuMesh m;
         try (InputStream in = SafeAdditiveSelfTests.class.getResourceAsStream("/assets/nusmp/weapon_meshes_vu/elsdocia.txt")) {
             if (in == null) return SelfTests.Result.fail("the Elsdocia mesh is missing");
-            m = VuMesh.parse(new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8)));
+            m = VuMesh.parse(MeshText.reader(in));
         }
         float h = VuCardLimits.bodyHeight(m);
         if (!SafeAdditiveMath.cardEdgeOk(VuCardLimits.longestCard(m), h)) return SelfTests.Result.fail("an Elsdocia card is taller than the cap");

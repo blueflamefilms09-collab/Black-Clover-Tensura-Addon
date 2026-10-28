@@ -1,5 +1,6 @@
 package com.newuniverse.nusmp.vupgrade;
 
+import com.newuniverse.nusmp.mesh.MeshText;
 import com.google.gson.JsonParser;
 import com.newuniverse.nusmp.client.vupgrade.godb.UpgradeMath;
 import com.newuniverse.nusmp.client.vupgrade.godb.UpgradeSpec;
@@ -83,7 +84,7 @@ public final class DjinnDarkSelfTests {
     private static String text(String path) throws IOException {
         try (InputStream in = DjinnDarkSelfTests.class.getResourceAsStream(path)) {
             if (in == null) return null;
-            try (BufferedReader r = new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8))) {
+            try (BufferedReader r = MeshText.reader(in)) {
                 StringBuilder sb = new StringBuilder();
                 String line;
                 while ((line = r.readLine()) != null) sb.append(line).append('\n');

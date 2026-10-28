@@ -1,5 +1,6 @@
 package com.newuniverse.nusmp.client.relics.djinn;
 
+import com.newuniverse.nusmp.mesh.MeshText;
 import com.mojang.logging.LogUtils;
 import com.newuniverse.nusmp.relics.djinn.Djinn;
 import net.minecraft.client.Minecraft;
@@ -158,7 +159,7 @@ public final class DjinnMeshes {
             Optional<Resource> res = Minecraft.getInstance().getResourceManager().getResource(rl("djinn/" + key + ".txt"));
             if (res.isEmpty()) return Data.EMPTY;
             List<float[]> body = new ArrayList<>(), glow = new ArrayList<>();
-            try (BufferedReader in = res.get().openAsReader()) {
+            try (BufferedReader in = MeshText.reader(res.get())) {
                 String line;
                 while ((line = in.readLine()) != null) {
                     if (!line.startsWith("qn ")) continue;

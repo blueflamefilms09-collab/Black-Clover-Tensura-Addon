@@ -78,6 +78,47 @@ tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8'
 }
 
+// 3.32.0: the big text meshes go into the jar in the compact packed form (mesh/MeshPack.java, same file names; the loaders read both forms).
+// The source tree and build/resources keep the plain text, so the tests and the dev runs read text; only the jar gets the packed copies.
+// Setting -PpackMeshes=false builds a jar with the plain text.
+def meshFolders = ["weapon_meshes", "weapon_meshes_vu", "weapon_meshes_sz", "weapon_meshes_vu_sz", "djinn"]
+def packedMeshDir = layout.buildDirectory.dir("packed-meshes")
+def meshRoot = layout.projectDirectory.dir("src/main/resources/assets/nusmp")
+def packMeshesOn = !(project.findProperty("packMeshes") in ["false", false])
+// the fixed detail limit of the big meshes in the jar, in quads (mesh/MeshCap.java); -PmeshQuadCap=0 keeps every quad
+def meshCap = (project.findProperty("meshQuadCap") ?: "3000").toString().toInteger()
+def meshCapDump = project.findProperty("meshCapDump")
+tasks.register("packMeshes", JavaExec) {
+    group = "build"
+    description = "Packs the big text meshes into build/packed-meshes (they replace the text copies in the jar)"
+    classpath = sourceSets.main.output.classesDirs
+    mainClass = "com.newuniverse.nusmp.mesh.MeshPackMain"
+    maxHeapSize = "2g"
+    systemProperty "nusmp.meshQuadCap", meshCap
+    if (meshCapDump) systemProperty "nusmp.meshCapDump", meshCapDump.toString()
+    inputs.property("meshQuadCap", meshCap)
+    args(meshRoot.asFile.absolutePath, packedMeshDir.get().asFile.absolutePath, *meshFolders)
+    inputs.files(meshFolders.collect { meshRoot.dir(it) }).withPropertyName("meshFolders")
+    inputs.files(sourceSets.main.output.classesDirs)
+    outputs.dir(packedMeshDir)
+    doFirst { packedMeshDir.get().asFile.deleteDir() }
+}
+tasks.named("jar") {
+    if (packMeshesOn) {
+        dependsOn tasks.named("packMeshes")
+        from(packedMeshDir) { into "assets/nusmp" }
+        duplicatesStrategy = DuplicatesStrategy.INCLUDE
+        // the plain text twin of a packed mesh stays out of the jar
+        eachFile { FileCopyDetails d ->
+            File packed = packedMeshDir.get().asFile
+            if (!d.file.toPath().startsWith(packed.toPath()) && d.relativePath.pathString.startsWith("assets/nusmp/")) {
+                String rel = d.relativePath.pathString.substring("assets/nusmp/".length())
+                if (new File(packed, rel).isFile()) d.exclude()
+            }
+        }
+    }
+}
+
 test {
     useJUnitPlatform()
     testLogging { events "failed"; exceptionFormat "full" }

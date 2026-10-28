@@ -1,5 +1,6 @@
 package com.newuniverse.nusmp.visual.demonslayer;
 
+import com.newuniverse.nusmp.mesh.MeshText;
 import com.newuniverse.nusmp.client.DemonSlayerMesh;
 import com.newuniverse.nusmp.labyrinth.mega.SelfTests;
 import com.newuniverse.nusmp.perf.VfxQuality;
@@ -99,7 +100,7 @@ public final class DsSelfTests {
     private static VuMesh read(String path) throws Exception {
         try (InputStream in = open(path)) {
             if (in == null) return null;
-            return VuMesh.parse(new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8)));
+            return VuMesh.parse(MeshText.reader(in));
         }
     }
 }
