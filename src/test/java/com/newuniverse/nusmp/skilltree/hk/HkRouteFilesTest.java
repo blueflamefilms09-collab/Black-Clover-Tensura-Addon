@@ -22,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * and checks them against the constants: the franchise tag, the distinct class and book ids, the skill ids of the register, the passive ids, and that every fallback equals the file's level-1 value.
  */
 class HkRouteFilesTest {
-    private static final Path DIR = Path.of("src/main/resources/data/nusmp/skill_trees");
+    private static final Path DIR = Path.of("src/main/resources/data/nusmp/unique_skills");
     private static final String[][] ROUTES = {{"oath_of_the_heavy_armor", HkRoute.OATH}, {"basic_swordsmanship", HkRoute.SWORD}, {"lady_luck", HkRoute.LUCK}, {"smoldering_fang_of_insanity", HkRoute.FANG}};
     private static final Set<String> SKILLS = Set.of(HkRoute.SKILL_PROVOKE, HkRoute.SKILL_SHIELD_WALL, HkRoute.SKILL_SHIELD_BASH, HkRoute.SKILL_POWER_STRIKE, HkRoute.SKILL_SWIFT_STEP,
             HkRoute.SKILL_CRESCENT_CUT, HkRoute.SKILL_GAMBLERS_COIN, HkRoute.SKILL_JACKPOT, HkRoute.SKILL_EMBER_BITE, HkRoute.SKILL_INSANITY, HkRoute.SKILL_HOWL_OF_RUIN, HkRoute.SKILL_FANG_OF_INSANITY);

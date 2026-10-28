@@ -1,7 +1,7 @@
 """Where the list of lines comes from, for the asset generators (gen_book_index.py).
 
 Two sources, merged by line id:
-  1. the route files the game loads: src/main/resources/data/nusmp/skill_trees/*.json (the 8 hand-built routes, and every generated line once gen_lines.py has written it);
+  1. the route files the game loads: src/main/resources/data/nusmp/unique_skills/*.json (the 8 hand-built routes, and every generated line once gen_lines.py has written it);
   2. the rows the content authors write: tools/lines/rows/<franchise>.py through gen_lines.load_rows() (so the assets can be made BEFORE gen_lines.py has written the json,
      and while rows/ is still empty or half filled: whatever exists is used, nothing is required).
 The file wins over the row when both exist (the file is what the game reads). Order: by id, so the output is deterministic.
@@ -14,7 +14,7 @@ import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.abspath(os.path.join(HERE, "..", ".."))
-ROUTES = os.path.join(ROOT, "src", "main", "resources", "data", "nusmp", "skill_trees")
+ROUTES = os.path.join(ROOT, "src", "main", "resources", "data", "nusmp", "unique_skills")
 sys.path.insert(0, HERE)
 
 # the hand-built routes have no background theme in their json: this table gives them one (franchise / element of the route)

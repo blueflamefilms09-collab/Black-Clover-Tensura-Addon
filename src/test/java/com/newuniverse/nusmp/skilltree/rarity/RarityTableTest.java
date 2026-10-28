@@ -29,7 +29,7 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 class RarityTableTest {
     private static final Path BOOKS = Path.of("src/main/resources/assets/nusmp/skill_books.json");
-    private static final Path ROUTES = Path.of("src/main/resources/data/nusmp/skill_trees");
+    private static final Path ROUTES = Path.of("src/main/resources/data/nusmp/unique_skills");
     private static final Path PY = Path.of("tools/lines/rarity_table.py");
 
     private static Map<String, JsonObject> lines() throws IOException {

@@ -27,7 +27,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  */
 class UniqueBooksFilesTest {
     private static final Path DATA = Path.of("src/main/resources/data");
-    private static final Path TREES = DATA.resolve("nusmp/skill_trees");
+    private static final Path TREES = DATA.resolve("nusmp/unique_skills");
     private static final Path TABLE = Path.of("src/main/resources/assets/nusmp/skill_books.json");
     private static final Path FRAGMENT = Path.of("tools/lang/skillbooks_unique.json");
     private static final Path ICONS = Path.of("src/main/resources/assets/nusmp/textures/skill/line");
@@ -83,7 +83,7 @@ class UniqueBooksFilesTest {
     @Test
     void noFairyTailWordIsLeftInTheSkillBookDataTheShopOrTheLoot() throws IOException {
         List<String> bad = new ArrayList<>();
-        for (String dir : new String[] {"nusmp/skill_trees", "nusmp/black_market", "nusmp/loot_modifiers", "neoforge/loot_modifiers", "nusmp/loot_table"}) {
+        for (String dir : new String[] {"nusmp/unique_skills", "nusmp/black_market", "nusmp/loot_modifiers", "neoforge/loot_modifiers", "nusmp/loot_table"}) {
             Path root = DATA.resolve(dir);
             if (!Files.exists(root)) continue;
             for (Path p : jsonUnder(root)) {

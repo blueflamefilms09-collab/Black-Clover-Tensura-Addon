@@ -1,6 +1,6 @@
 """Row builders for the Unique Skill Lines (see docs/skillbooks_unique.md and catalog.py).
 
-A franchise file in rows/ defines LINES = [Line(...), ...]; gen_lines.py turns every Line into data/nusmp/skill_trees/<id>.json.
+A franchise file in rows/ defines LINES = [Line(...), ...]; gen_lines.py turns every Line into data/nusmp/unique_skills/<id>.json.
 WHY a builder and not raw JSON: the layout (stance -> stats and arts -> passive synergy -> finishers), the costs, the level tables and the prerequisite wiring are the same
 for all 275 lines, so a content author writes only what is THEIRS (names, flavour, which kind with which numbers) and the generator makes the tree.
 """

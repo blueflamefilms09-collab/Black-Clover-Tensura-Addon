@@ -26,7 +26,7 @@ import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.abspath(os.path.join(HERE, "..", ".."))
-ROUTES = os.path.join(ROOT, "src", "main", "resources", "data", "nusmp", "skill_trees")
+ROUTES = os.path.join(ROOT, "src", "main", "resources", "data", "nusmp", "unique_skills")
 
 RARITIES = ["common", "uncommon", "rare", "epic", "mythic"]
 

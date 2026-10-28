@@ -1,6 +1,10 @@
 # Changelog
 
-## [3.31.0] — Veldanava casts the base Tensura moves (setting `tensuraMoves`)
+## [3.31.0] — Veldanava casts the base Tensura moves (setting `tensuraMoves`) + the world-join fix
+
+### FIXED (world could not be joined with Ako's Evil Skill Tree)
+- **All 284 skill-tree files moved from `data/nusmp/skill_trees/` to `data/nusmp/unique_skills/`** (the alias folder `RouteLoader` already reads, same route ids, same schema, no change in the game). Ako's Evil Skill Tree syncs every mod's `data/*/skill_trees` folder to the client as one string; ours made it 2.9 million characters against a limit of 1,048,576, so the client was disconnected when the world loaded (and the next load then threw the `jei-server.toml` config error). `skill_trees` is now empty on purpose; `ShippedFolderTest` keeps it that way. A datapack may still add files to either folder.
+- The `veldanava.boss` self-test no longer fails when another mod clamps his health attribute below 5,000,000 (CI showed 10,000); the damage divisor already makes up the difference and the test checks the shown health.
 
 ### NEW
 - **Tensura's own versions of his Tensura moves.** Absolute Severance, Black Lightning, Black Lightning Blast, Death Tornado, Disintegration, Hell Flare and Megiddo are now drawn by the base Tensura Reincarnated entities (`severance_cutter`, `black_lightning_bolt`, `black_lightning_blast`, `death_tornado`, `disintegration`, `hell_flare`, `megiddo_bubble`), with Tensura's own models, animations and sounds. They are found by registry id at run time (`VeldanavaTensura`), so a Tensura version without one of them simply keeps the 3.30.0 effect for that move.
@@ -15,7 +19,8 @@
 - All 3.30.0 effect layers, shapes and preview scenes (the fallback and the `tensuraMoves = false` look), all damage numbers, the telegraph sigils, every older move.
 
 ### Caveats
-- Not seen in a running game: the CI server only proves the entities spawn, tick, hurt nobody, burn nobody and change no block; how they look in motion and from which angle is for a player to judge. The Black Lightning Blast is six beams round him (Tensura's blast is a beam), while its damage is still the disc of 3.30.0.
+- `veldanava.orb` (grant the skill to a stand-in player) fails in CI since before 3.30.0 ("The skill could not be given"); not changed here, it needs a look with a real player.
+- Not seen in a running game: the CI server only proves the entities spawn, tick, hurt nobody, burn nobody (the bolt is visual-only and the Hell Flare field never hits) and change no block; how they look in motion and from which angle is for a player to judge. The Black Lightning Blast is six beams round him (Tensura's blast is a beam), while its damage is still the disc of 3.30.0.
 
 ## [3.30.0] — Veldanava, the anime Creator God (setting `classicMode`)
 

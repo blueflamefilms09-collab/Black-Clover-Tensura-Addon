@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate data/nusmp/skill_trees/<line>.json for every Line in tools/lines/rows/*.py.
+"""Generate data/nusmp/unique_skills/<line>.json for every Line in tools/lines/rows/*.py.
 
 usage: python3 tools/lines/gen_lines.py [--only <franchise>] [--check] [--list]
  --check  fail (exit 1) when a generated file differs from the one on disk, or when a rule is broken (CI guard)
@@ -16,7 +16,7 @@ import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.abspath(os.path.join(HERE, "..", ".."))
-OUT = os.path.join(ROOT, "src/main/resources/data/nusmp/skill_trees")
+OUT = os.path.join(ROOT, "src/main/resources/data/nusmp/unique_skills")
 sys.path.insert(0, HERE)
 import catalog as C  # noqa: E402
 from lines_lib import FRANCHISES  # noqa: E402

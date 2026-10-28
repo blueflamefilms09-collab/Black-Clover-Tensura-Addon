@@ -29,7 +29,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * with the system properties {@code nusmp.test.skilltrees} and {@code nusmp.test.assets}. 1.96.0: the background pictures of the removed tree screen were deleted with it, so their checks are gone.
  */
 class LineAssetsTest {
-    private static final String TREES = System.getProperty("nusmp.test.skilltrees", "src/main/resources/data/nusmp/skill_trees");
+    private static final String TREES = System.getProperty("nusmp.test.skilltrees", "src/main/resources/data/nusmp/unique_skills");
     private static final String ASSETS = System.getProperty("nusmp.test.assets", "src/main/resources/assets/nusmp") + "/";
 
     private static JsonObject json(File f) throws Exception {

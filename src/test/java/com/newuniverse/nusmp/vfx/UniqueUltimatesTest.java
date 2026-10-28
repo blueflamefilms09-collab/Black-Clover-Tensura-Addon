@@ -21,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class UniqueUltimatesTest {
     private static final Path ROOT = Path.of("").toAbsolutePath();
     private static final Path LAYERS = ROOT.resolve("src/main/java/com/newuniverse/nusmp/vfx/client/layer");
-    private static final Path TREES = ROOT.resolve("src/main/resources/data/nusmp/skill_trees");
+    private static final Path TREES = ROOT.resolve("src/main/resources/data/nusmp/unique_skills");
 
     private static final Set<VfxShape> UNIQUE = EnumSet.of(VfxShape.ULT_IRON_DRAGON, VfxShape.ULT_SATAN_CORE, VfxShape.ULT_ALL_CRUSH, VfxShape.ULT_GREAT_FLOOD, VfxShape.ULT_MONARCH_SHADOWS,
             VfxShape.ULT_CHAIRMAN_STAND, VfxShape.ULT_DEVOURING_SHADOW, VfxShape.ULT_FINAL_DOSE, VfxShape.ULT_DISASTER_FLOODS, VfxShape.ULT_THOUSAND_ELF);

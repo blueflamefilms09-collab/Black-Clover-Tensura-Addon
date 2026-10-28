@@ -37,6 +37,11 @@ public final class RouteLoader extends SimpleJsonResourceReloadListener {
      * Skill Lines are authored under that name (the owner's word for them) and a pack author may use either folder. If a route id exists in both, the {@code skill_trees} file wins and the clash is logged.
      */
     public static final String ALIAS_DIRECTORY = "unique_skills";
+    /**
+     * 3.31.0: every file this mod ships is in {@link #ALIAS_DIRECTORY}, NOT in {@link #DIRECTORY}. {@code data/<namespace>/skill_trees} is also the folder the Ako's Evil Skill Tree mod syncs to the client as ONE string
+     * (limit 1,048,576 characters); our 284 files made it 2.9 million and a world could not be joined. A pack author may still use {@code skill_trees} here; it is read as before.
+     */
+    public static final String SHIPPED_DIRECTORY = ALIAS_DIRECTORY;
 
     private static final Logger LOG = LogUtils.getLogger();
     private static final Gson GSON = new GsonBuilder().create();
