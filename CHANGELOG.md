@@ -6,6 +6,9 @@
 - **All 284 skill-tree files moved from `data/nusmp/skill_trees/` to `data/nusmp/unique_skills/`** (the alias folder `RouteLoader` already reads, same route ids, same schema, no change in the game). Ako's Evil Skill Tree syncs every mod's `data/*/skill_trees` folder to the client as one string; ours made it 2.9 million characters against a limit of 1,048,576, so the client was disconnected when the world loaded (and the next load then threw the `jei-server.toml` config error). `skill_trees` is now empty on purpose; `ShippedFolderTest` keeps it that way. A datapack may still add files to either folder.
 - The `veldanava.boss` self-test no longer fails when another mod clamps his health attribute below 5,000,000 (CI showed 10,000); the damage divisor already makes up the difference and the test checks the shown health.
 
+### SMALLER (owner decision)
+- **The 14 weapon skins of `entity/weapon_vu` that were 2048 px are now 1024 px** (alpha-aware Lanczos, `tools/downscale_weapon_skins.py`; the models use normalised UVs and the glow/veins maps were already 1024 px, so nothing else changes): about 71 MB of skins became 23 MB, and the folder as a whole went from ~99 MB to 30 MB uncompressed. The 2048 px originals are in git history (3.30.0). Detail on the blade is a little softer when held very close.
+
 ### NEW
 - **Tensura's own versions of his Tensura moves.** Absolute Severance, Black Lightning, Black Lightning Blast, Death Tornado, Disintegration, Hell Flare and Megiddo are now drawn by the base Tensura Reincarnated entities (`severance_cutter`, `black_lightning_bolt`, `black_lightning_blast`, `death_tornado`, `disintegration`, `hell_flare`, `megiddo_bubble`), with Tensura's own models, animations and sounds. They are found by registry id at run time (`VeldanavaTensura`), so a Tensura version without one of them simply keeps the 3.30.0 effect for that move.
 - **The Tensura entities are only the look and the sound.** Each is spawned with its own damage, secondary damage, knockback, burn, mob effect, fire and explosion turned off; the damage stays in the boss's capped, budgeted path (DPS budget, damage cap, Anti-Totem), so the fight is exactly as hard as in 3.30.0.
@@ -13,7 +16,8 @@
 - Tests: `VeldanavaTensuraTest`; CI self-tests `veldanava.tp_*` / `veldanava.tpo_*` (every Tensura entity driven next to a zombie and a stand-in player, alone and owned by the boss), `veldanava.tensura_aim` (beam directions) and `veldanava.tensura_moves` (the seven moves played tick by tick).
 
 ### REPLACED
-- Nothing is removed. With `tensuraMoves = true` the seven `VELD_*` effects of 3.30.0 are no longer played, except as the fallback when a Tensura entity cannot be made.
+- The 14 weapon skins (2048 px -> 1024 px, see SMALLER above).
+- Nothing else is removed. With `tensuraMoves = true` the seven `VELD_*` effects of 3.30.0 are no longer played, except as the fallback when a Tensura entity cannot be made.
 
 ### KEPT
 - All 3.30.0 effect layers, shapes and preview scenes (the fallback and the `tensuraMoves = false` look), all damage numbers, the telegraph sigils, every older move.
