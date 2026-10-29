@@ -6,7 +6,11 @@ Status: DRAFT, rules only. No boss code is built from this yet. Items marked OPE
 1. **One custom Unique/Ultimate skill per boss.** Built by us (not a base Tensura skill); it may pull status effects and abilities from Tensura.
    - A real registered skill (own name, icon, tooltip). The tooltip does NOT have to disclose the borrowed Tensura effects.
    - Exactly one skill per boss, one-of-one (no two bosses share a skill).
-   - Players can get it: it gives a **10% gain**; it can be taken or sealed by any of the existing means (OPEN: what the 10% applies to, and whether "1 of 1" means one copy per server or one skill per boss).
+   - Players can get it: it gives a **10% gain**; it can be taken or sealed by any of the existing means (OPEN: what the 10% applies to).
+   - **1 of 1 (decided):** once ONE player gets the skill, it is no longer available to anyone else on the server. The boss still dies and still drops its other loot, but the skill is gone from the pool.
+     - A server-wide claim registry (saved world data) maps skill id -> holder UUID. The claim is taken in one atomic server-side step at the moment the skill is awarded, so two players killing the boss at the same time can never both get it.
+     - The skill is awarded to ONE player per kill, not to everyone who contributed (this overrides "per-player loot" for this one item only). OPEN: who gets it (proposal: a roll among the players who dealt damage, weighted by damage share).
+     - The claim follows the skill: if it is taken from the holder in any way (stolen, absorbed, traded) the claim moves to the new holder; if it is sealed it stays claimed. OPEN: when does a claimed skill become available again (proposal: only by an admin command, or if the holder's skill is destroyed/reset).
 2. **One signature mechanic, separate from the skill.** An arena or phase rule the player must understand and counter (e.g. Madara's Six Paths). Telegraphed, with an intended answer.
 3. **Strength starts slightly above base Tensura and keeps rising.** Scaled by dungeon rank, F-Rank up to SSS-Rank, from one scaling table that every boss reads (HP, damage, armor, speed per step). See "Rank ladder" below. Also scaled by nearby player count. Not scaled to player power.
 
@@ -81,7 +85,8 @@ Every boss has a Feel Sheet (silhouette/model, colour + VFX palette, movement + 
 (Placeholder design; final bosses and mechanics are the owner's call.)
 
 ## Open questions
-- What exactly is the "10% gain", and what does "1 of 1" mean (one skill per boss, or one copy in the world)?
+- What exactly is the "10% gain"?
+- Who gets the skill when several players beat the boss (proposal: damage-weighted roll), and when does a claimed skill return to the pool (proposal: admin only)?
 - Which two bosses are the ice pair, and in the same dungeon or different ones?
 - How many bosses per rank (F, E, D, C, B, A, S, SS, SSS)?
 - Rank ladder: is my reading right (see below)?
