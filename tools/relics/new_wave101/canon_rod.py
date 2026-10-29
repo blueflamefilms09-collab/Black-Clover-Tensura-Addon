@@ -28,22 +28,22 @@ def build_millennium_rod_canon():
     CY = Y1 + 19.0                               # centre of the round setting
     R = 10.5                                     # its radius
     # the shaft, a touch slimmer at the foot, and the spike
-    rod(m, "shaft", "gold", 0.0, Y1, 1.45, 1.8, sides=12, base=GOLD, smooth=55)
+    rod(m, "shaft", "gold", 0.0, Y1, 1.45, 1.8, sides=10, base=GOLD, smooth=55)
     lathe_y(m, "spike", "gold", -17.0, [(0.0, 0.0), (1.2, 0.55), (6.0, 1.15), (17.0, 1.45)], sides=10, base=GOLD_HI, caps=(False, False))
     for y, r, h in ((7.0, 2.1, 1.6), (12.0, 1.9, 1.2), (Y1 - 40.0, 2.2, 1.6)):
-        collar_ring(m, y, r, h, "gold", GOLD_HI, name="ring_%d" % int(y), sides=12)
+        collar_ring(m, y, r, h, "gold", GOLD_HI, name="ring_%d" % int(y), sides=10)
     # the collar under the head: a bead, a short flared cone that grows into the setting
     lathe_y(m, "collar", "gold", Y1 - 5.0, [(0.0, 1.9), (1.0, 2.8), (2.5, 3.0), (3.5, 2.2), (4.5, 2.2), (6.0, 3.4), (12.0, 5.4), (16.5, 8.2)], sides=12, base=GOLD_HI, caps=(False, False))
     # the round setting: a domed gold disc with a raised rim, seen face on
     disc = P(m, "setting", "gold", base=GOLD, smooth=45, uv_mode="loft")
-    ml.lathe(disc, "z", (0.0, CY, 0.0), [(-2.4, R - 2.6), (-1.5, R - 0.4), (-0.6, R), (0.6, R), (1.5, R - 0.4), (2.4, R - 2.6)], sides=24, caps=(True, True))
+    ml.lathe(disc, "z", (0.0, CY, 0.0), [(-2.4, R - 2.6), (-1.5, R - 0.4), (-0.6, R), (0.6, R), (1.5, R - 0.4), (2.4, R - 2.6)], sides=20, caps=(True, True))
     for sg, tag in ((1, "f"), (-1, "b")):
         z = sg * 3.0
         face = P(m, "face_" + tag, "gold", base=GOLD_HI, smooth=45, uv_mode="loft")
-        ml.lathe(face, "z", (0.0, CY, sg * 1.9), [(0.0, R - 2.4), (sg * 0.5, R - 2.9)], sides=24, caps=(False, True))
-        ring_blade(m, "rim_" + tag, "gold", 0.0, CY, R - 1.0, 0.9, 1.2, n=24, base=GOLD_HI)
+        ml.lathe(face, "z", (0.0, CY, sg * 1.9), [(0.0, R - 2.4), (sg * 0.5, R - 2.9)], sides=20, caps=(False, True))
+        ring_blade(m, "rim_" + tag, "gold", 0.0, CY, R - 1.0, 0.9, 1.2, n=20, base=GOLD_HI)
         # the Eye of Wdjat in relief: almond lids, a dark iris, a lit pupil, the brow and the falcon's tear with its curl
-        rim = lid(0.0, CY + 0.6, 6.4, 3.0, z, 1.0, n=10) + lid(0.0, CY + 0.6, 6.4, 2.4, z, -1.0, n=10)[::-1]
+        rim = lid(0.0, CY + 0.6, 6.4, 3.0, z, 1.0, n=8) + lid(0.0, CY + 0.6, 6.4, 2.4, z, -1.0, n=8)[::-1]
         tube(m, "eye_rim_" + tag, "gold", rim, 0.55, 0.55, sides=4, base=GOLD_HI, glow=True)
         orb(m, "iris_" + tag, "obsidian", (0.0, CY + 0.6, z), 2.5, base=EYE_DK, glow=False, rz=0.5, sides=10, stacks=6)
         orb(m, "pupil_" + tag, "crystal", (0.0, CY + 0.6, z + sg * 0.3), 1.2, base=(255, 232, 150), glow=True, rz=0.5, sides=8, stacks=5)
@@ -59,7 +59,7 @@ def build_millennium_rod_canon():
         neck = P(m, "neck_" + s, "gold", base=GOLD, smooth=45, uv_mode="loft")
         ml.lathe(neck, "x", (sx * (R - 2.0), CY, 0.0), [(0.0, 3.6), (sx * 2.0, 2.4), (sx * 5.5, 2.5), (sx * 9.0, 3.4)], sides=10, caps=(False, False))
         sweep_blade(m, "crescent_" + s, "gold", arc, lambda t: 5.0 * math.sin(math.pi * min(max(t, 0.0), 1.0)) ** 0.75 + 0.15, lambda t: 1.6 * math.sin(math.pi * min(max(t, 0.0), 1.0)) ** 0.5 + 0.2,
-                    n=6, bevel=0.5, base=GOLD_HI, smooth=40)
+                    n=5, bevel=0.5, base=GOLD_HI, smooth=40)
     atlas = new_atlas(512)
     lay_and_paint(m, atlas)
     glow_parts(atlas, m, ["pupil_f", "pupil_b"], (255, 236, 160), 1.0, 0.6)

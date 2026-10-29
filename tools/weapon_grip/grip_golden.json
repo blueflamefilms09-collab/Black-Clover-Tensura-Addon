@@ -2161,11 +2161,11 @@
  },
  "millennium_rod": {
   "class": "staff",
-  "fraction": 0.4,
-  "source": "class",
-  "x": -0.026,
-  "y": 88.28,
-  "z": 0.026
+  "fraction": 0.456,
+  "source": "directive",
+  "x": 0.0,
+  "y": 101.56,
+  "z": 0.0
  },
  "minotaur_kings_labrys": {
   "class": "battleaxe",
