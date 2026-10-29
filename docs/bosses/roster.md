@@ -37,7 +37,7 @@ How the gag will use it (design, not built):
   - The death goes through the normal death flow (the damage source is a custom `death_note` source with a death message like "<player> died of a heart attack"), so keepInventory, respawn and the Totem of Undying behave as everywhere else. It does not touch creative or spectator players.
   - Counterplay (boss rule 9): the writing takes a few seconds; killing Light (F-rank, low HP) or knocking him away before the pen touches the page cancels the scene, and a Totem of Undying saves the player once. If Light dies first, he gives his funny reward instead.
   - Server-side only: the server decides the death and the cancel; the client draws the scene and plays the voice. A server setting `lightDeathNoteLethal` (default on, per the owner) switches the final blow to a harmless joke instead, so a server owner can turn the real death off.
-  - Voice quote: a short line in an anime-style Light voice made with the existing ElevenLabs voice-line tooling (a designed voice, not the original actor), played to the dying player and players nearby. Proposed lines (picked at random): "Just as planned.", "I am justice!", "I'll take a potato chip... and eat it!". OPEN: which lines the owner wants.
+  - Voice quote: a short line in an anime-style Light voice made with the existing ElevenLabs voice-line tooling (a designed voice, not the original actor), played to the dying player and players nearby. DECIDED (owner): two lines, picked at random: "Just as planned." and "I am justice!". (The potato-chip line stays only in the chip beat's monologue, not as a death quote.)
   - Cost: one scripted scene of a few seconds, one death, one sound; skipped for players far from Light.
 
 ## Compared with what the mod already has (rule 5)
