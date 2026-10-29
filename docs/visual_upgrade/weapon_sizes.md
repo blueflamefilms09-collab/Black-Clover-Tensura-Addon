@@ -25,7 +25,6 @@ Owner report: the dagger is tiny in first and third person, and the katanas look
 ## Measured before and after (blocks; L3/L1 length third/first person, w blade width, d thickness; b before, a after)
 ```
 id                             class      var |   L3b   L3a |   L1b   L1a |    w1b    w1a |    w3b    w3a |   d3b   d3a
-black_wing_blade               longsword  old |  1.20  1.20 |  0.76  0.76 |  0.049  0.049 |  0.077  0.077 | 0.043 0.043  (unchanged)
 blackrazor                     greatsword old |  2.65  2.65 |  0.98  0.98 |  0.061  0.061 |  0.166  0.166 | 0.035 0.035  (unchanged)
 blackrazor                     greatsword vu  |  2.65  2.65 |  0.98  0.98 |  0.103  0.103 |  0.279  0.279 | 0.026 0.026  (unchanged)
 bloodbound_katana              katana     old |  1.56  1.56 |  0.98  0.98 |  0.054  0.125 |  0.086  0.199 | 0.045 0.060
@@ -63,7 +62,6 @@ eschaton                       rapier     old |  1.15  1.15 |  0.92  0.92 |  0.0
 fairy_glitter_gauntlets        dagger     old |  0.60  0.60 |  0.27  0.27 |  0.238  0.238 |  0.527  0.527 | 0.153 0.153  (unchanged)
 fairy_glitter_gauntlets        dagger     vu  |  0.55  0.55 |  0.25  0.25 |  0.203  0.203 |  0.450  0.450 | 0.164 0.164  (unchanged)
 fairy_heart_gauntlets          dagger     old |  0.60  0.60 |  0.27  0.27 |  0.266  0.266 |  0.590  0.590 | 0.163 0.163  (unchanged)
-flame_empress_blade            longsword  old |  1.25  1.25 |  0.79  0.79 |  0.102  0.102 |  0.161  0.161 | 0.048 0.048  (unchanged)
 flamecutter                    longsword  old |  1.56  1.56 |  1.03  1.03 |  0.071  0.071 |  0.108  0.108 | 0.017 0.017  (unchanged)
 frostbrand                     sabre      old |  1.22  1.22 |  0.93  0.93 |  0.055  0.055 |  0.073  0.073 | 0.009 0.009  (unchanged)
 giant_jawblade                 greatsword old |  2.52  2.52 |  0.92  0.92 |  0.152  0.152 |  0.415  0.415 | 0.075 0.075  (unchanged)
@@ -92,7 +90,6 @@ magic_tool_sword               longsword  old |  1.56  1.56 |  0.95  0.95 |  0.1
 marids_valor                   sabre      old |  1.12  1.12 |  0.90  0.90 |  0.072  0.072 |  0.090  0.090 | 0.022 0.022  (unchanged)
 marids_valor                   sabre      old |  1.12  1.12 |  0.90  0.90 |  0.068  0.068 |  0.085  0.085 | 0.020 0.020  (unchanged)
 miasma_infused_katana          katana     old |  1.58  1.58 |  0.88  0.88 |  0.068  0.125 |  0.121  0.224 | 0.036 0.060
-nakagami_edge                  longsword  old |  1.30  1.30 |  0.82  0.82 |  0.068  0.068 |  0.107  0.107 | 0.040 0.040  (unchanged)
 null_blade                     greatsword old |  2.52  2.52 |  1.03  1.03 |  0.074  0.074 |  0.180  0.180 | 0.042 0.042  (unchanged)
 palladion                      longsword  old |  1.56  1.56 |  1.20  1.20 |  0.058  0.058 |  0.075  0.075 | 0.014 0.014  (unchanged)
 permafrost_sabre               sabre      old |  1.12  1.12 |  0.90  0.90 |  0.049  0.049 |  0.061  0.061 | 0.033 0.033  (unchanged)

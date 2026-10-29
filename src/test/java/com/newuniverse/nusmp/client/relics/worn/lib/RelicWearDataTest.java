@@ -21,8 +21,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * The Curios data of the mod, read from the resources folder: every slot type the relics use is DEFINED by the mod (not left to Curios), has a size, is given to the player and has a tag file,
- * and every relic of every wave (0 to 105 and the pairs, the Djinn and the forge items, which are defined in the same wave sources) is listed in the tag of its slot. The dungeon relic and
- * celestial key slots keep working. Same checks as the self-test {@code relic.wear}, which runs them on the registered relics.
+ * and every relic of every wave (0 to 105 and the pairs, the Djinn and the forge items, which are defined in the same wave sources) is listed in the tag of its slot. The dungeon relic
+ * slot keeps working. Same checks as the self-test {@code relic.wear}, which runs them on the registered relics.
  */
 class RelicWearDataTest {
     static final Path RES = Path.of("src/main/resources");
@@ -81,13 +81,11 @@ class RelicWearDataTest {
     }
 
     @Test
-    void theDungeonRelicAndCelestialKeySlotsKeepWorking() throws IOException {
+    void theDungeonRelicSlotKeepsWorking() throws IOException {
         RelicWear.Data d = data();
         assertEquals(2, (int) d.slotSizes().get("dungeon_relic"));
-        assertEquals(12, (int) d.slotSizes().get("celestial_key"));
-        assertTrue(d.assigned().contains("dungeon_relic") && d.assigned().contains("celestial_key"));
+        assertTrue(d.assigned().contains("dungeon_relic"));
         assertTrue(d.tags().get("dungeon_relic").contains("nusmp:glutton_chalice"));
-        assertTrue(d.tags().get("celestial_key").contains("nusmp:leo_key"));
     }
 
     @Test

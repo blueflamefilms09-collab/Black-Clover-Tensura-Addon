@@ -164,7 +164,7 @@ class FranchiseDataTest {
         assertEquals("black_clover", m.franchiseOf("charter_grimoire_ban"), "by prefix");
         assertEquals("magi", m.franchiseOf("djinn_weapon_bael_dark"), "by prefix");
         assertEquals("shield_hero", m.franchiseOf("legendary_shield"));
-        assertEquals("fairy_tail", m.franchiseOf("aquarius_key"));
+        assertEquals("fairy_tail", m.franchiseOf("stormcaller_staff"));
         assertNull(m.franchiseOf("stone"), "an item without a franchise has none");
         assertNull(m.franchiseOf(""));
         assertNull(m.franchiseOf(null));

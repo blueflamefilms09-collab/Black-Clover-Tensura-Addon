@@ -41,11 +41,6 @@
       "profile": "handaxe",
       "source": "relic"
     },
-    "black_wing_blade": {
-      "class": "longsword",
-      "profile": "longsword",
-      "source": "table"
-    },
     "blackrazor": {
       "class": "greatsword",
       "profile": "greatsword",
@@ -636,11 +631,6 @@
       "profile": "hammer",
       "source": "relic"
     },
-    "flame_empress_blade": {
-      "class": "longsword",
-      "profile": "longsword",
-      "source": "table"
-    },
     "flamecutter": {
       "class": "longsword",
       "profile": "longsword",
@@ -806,11 +796,6 @@
       "profile": "greatsword",
       "source": "item"
     },
-    "lightning_empress_halberd": {
-      "class": "glaive",
-      "profile": "glaive",
-      "source": "table"
-    },
     "lightworkers_scepter": {
       "class": "club",
       "profile": "club",
@@ -880,11 +865,6 @@
       "class": "greataxe",
       "profile": "greataxe",
       "source": "relic"
-    },
-    "nakagami_edge": {
-      "class": "longsword",
-      "profile": "longsword",
-      "source": "table"
     },
     "nekrathuls_pact_scythe": {
       "class": "scythe",
@@ -961,11 +941,6 @@
       "profile": "longsword",
       "source": "item"
     },
-    "purgatory_mace": {
-      "class": "club",
-      "profile": "club",
-      "source": "table"
-    },
     "quicklings_ivy": {
       "class": "rapier",
       "profile": "rapier",
@@ -1030,11 +1005,6 @@
       "class": "sabre",
       "profile": "sabre",
       "source": "relic"
-    },
-    "sea_empress_trident": {
-      "class": "trident",
-      "profile": "trident",
-      "source": "table"
     },
     "serpant_head_staff": {
       "class": "staff",
@@ -1521,21 +1491,16 @@
     "aegis_of_the_abyss": "shield: no swing",
     "amulet_of_the_juggernauts_blindness": "hand item / charm / book / key: not a weapon",
     "anti_bird_charm": "hand item / charm / book / key: not a weapon",
-    "aquarius_key": "hand item / charm / book / key: not a weapon",
-    "aries_key": "hand item / charm / book / key: not a weapon",
     "bianca": "ranged (crossbow): Better Combat only handles melee",
     "bolt_thrower": "ranged (crossbow): Better Combat only handles melee",
     "bond_thread": "hand item / charm / book / key: not a weapon",
     "book_of_mispells": "hand item / charm / book / key: not a weapon",
     "calamity_wave_aegis": "shield: no swing",
-    "cancer_key": "hand item / charm / book / key: not a weapon",
-    "capricorn_key": "hand item / charm / book / key: not a weapon",
     "celestial_support": "shield: no swing",
     "chronicle_sigil": "hand item / charm / book / key: not a weapon",
     "circlet_of_quickened_thought": "hand item / charm / book / key: not a weapon",
     "communication_magic_device": "hand item / charm / book / key: not a weapon",
     "crossbow_of_swift_death": "ranged (crossbow): Better Combat only handles melee",
-    "crux_key": "hand item / charm / book / key: not a weapon",
     "cultist_sigil_ring": "hand item / charm / book / key: not a weapon",
     "dawnpiercer_crossbow": "ranged (crossbow): Better Combat only handles melee",
     "devil_bound_sheath": "hand item / charm / book / key: not a weapon",
@@ -1550,40 +1515,28 @@
     "fortune_die": "hand item / charm / book / key: not a weapon",
     "gamblers_grimoire_page": "hand item / charm / book / key: not a weapon",
     "gauches_hand_mirror": "hand item / charm / book / key: not a weapon",
-    "gemini_key": "hand item / charm / book / key: not a weapon",
     "glutton_chalice": "hand item / charm / book / key: not a weapon",
     "goblin_ear_ward": "hand item / charm / book / key: not a weapon",
     "golem_core_belt": "hand item / charm / book / key: not a weapon",
     "grimoire_chain": "hand item / charm / book / key: not a weapon",
     "hand_of_providence": "hand item / charm / book / key: not a weapon",
     "heros_shield": "shield: no swing",
-    "horologium_key": "hand item / charm / book / key: not a weapon",
     "hyperborean_crossbow": "ranged (crossbow): Better Combat only handles melee",
     "legendary_bow": "ranged (bow): Better Combat only handles melee",
     "legendary_bow_curse": "ranged (bow): Better Combat only handles melee",
     "legendary_shield": "shield: no swing",
-    "leo_key": "hand item / charm / book / key: not a weapon",
-    "libra_key": "hand item / charm / book / key: not a weapon",
     "lich_dust_pendant": "hand item / charm / book / key: not a weapon",
-    "lyra_key": "hand item / charm / book / key: not a weapon",
     "magebane_shield": "shield: no swing",
     "magic_tool_bow": "ranged (crossbow): Better Combat only handles melee",
     "mana_core": "hand item / charm / book / key: not a weapon",
     "mana_method_rune_stone": "hand item / charm / book / key: not a weapon",
     "needler": "ranged (crossbow): Better Combat only handles melee",
-    "nikora_key": "hand item / charm / book / key: not a weapon",
     "orc_tusk_ring": "hand item / charm / book / key: not a weapon",
-    "pisces_key": "hand item / charm / book / key: not a weapon",
     "recovery_salve": "hand item / charm / book / key: not a weapon",
-    "sagittarius_key": "hand item / charm / book / key: not a weapon",
-    "scorpio_key": "hand item / charm / book / key: not a weapon",
     "shroud_of_margins": "hand item / charm / book / key: not a weapon",
     "silver_eagles_galewing_bow": "ranged (bow): Better Combat only handles melee",
     "spirit_charm": "hand item / charm / book / key: not a weapon",
-    "spirit_king_gate_key": "hand item / charm / book / key: not a weapon",
-    "spirit_king_sceptre": "hand item / charm / book / key: not a weapon",
     "starforged_aeon_bow": "ranged (bow): Better Combat only handles melee",
-    "taurus_key": "hand item / charm / book / key: not a weapon",
     "the_dragons_spirit": "ranged (bow): Better Combat only handles melee",
     "the_dragons_truth": "hand item / charm / book / key: not a weapon",
     "the_reaver": "ranged (bow): Better Combat only handles melee",
@@ -1596,7 +1549,6 @@
     "vassal_gauntlet": "hand item / charm / book / key: not a weapon",
     "vassal_mirror": "shield: no swing",
     "viola_of_moonlit_spirits": "hand item / charm / book / key: not a weapon",
-    "virgo_key": "hand item / charm / book / key: not a weapon",
     "warlute": "ranged (crossbow): Better Combat only handles melee",
     "wisp_lantern": "hand item / charm / book / key: not a weapon",
     "wraith_cloak": "hand item / charm / book / key: not a weapon",

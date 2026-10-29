@@ -114,7 +114,7 @@ class CodexEntriesTest {
     void foundOnListsComeFromTheItemTablesAndAreSorted() throws Exception {
         CodexEntries.Book book = CodexTestData.book(CodexTestData.english());
         CodexEntries.Entry anti = book.entries().stream().filter(e -> e.key().equals("nusmp:anti_magic")).findFirst().orElseThrow();
-        assertTrue(anti.foundOn().contains("Item demon_slayer_sword") && anti.foundOn().contains("Item nakagami_edge"), "the anti-magic mark is on the Demon-Slayer and the Nakagami: " + anti.foundOn());
+        assertTrue(anti.foundOn().contains("Item demon_slayer_sword") && anti.foundOn().contains("Item demon_slasher_katana"), "the anti-magic mark is on the Demon-Slayer and the Demon-Slasher: " + anti.foundOn());
         CodexEntries.Entry legacy = book.entries().stream().filter(e -> e.key().equals("nusmp:legacy_of_the_wizard_kings")).findFirst().orElseThrow();
         assertEquals(List.of("Item elsdocia"), legacy.foundOn());
         CodexEntries.Entry swift = book.entries().stream().filter(e -> e.key().equals("tensura:swift")).findFirst().orElseThrow();

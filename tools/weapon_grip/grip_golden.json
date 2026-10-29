@@ -71,14 +71,6 @@
   "y": 12.666,
   "z": 0.0
  },
- "aquarius_key": {
-  "class": "handitem",
-  "fraction": 0.5,
-  "source": "class",
-  "x": -0.001,
-  "y": 7.581,
-  "z": 0.0
- },
  "arashs_stella_bow": {
   "class": "bow",
   "fraction": 0.5,
@@ -110,14 +102,6 @@
   "x": -0.75,
   "y": 0.0,
   "z": 1.122
- },
- "aries_key": {
-  "class": "handitem",
-  "fraction": 0.5,
-  "source": "class",
-  "x": 0.0,
-  "y": 7.09,
-  "z": 0.0
  },
  "astralaria": {
   "class": "battleaxe",
@@ -206,14 +190,6 @@
   "x": 0.0,
   "y": 53.0,
   "z": -4.723
- },
- "black_wing_blade": {
-  "class": "longsword",
-  "fraction": 0.133,
-  "source": "handle",
-  "x": 0.0,
-  "y": -10.438,
-  "z": 0.0
  },
  "blackrazor": {
   "class": "greatsword",
@@ -343,22 +319,6 @@
   "y": -1.605,
   "z": 2.8
  },
- "cancer_key": {
-  "class": "handitem",
-  "fraction": 0.5,
-  "source": "class",
-  "x": 0.0,
-  "y": 7.09,
-  "z": 0.0
- },
- "capricorn_key": {
-  "class": "handitem",
-  "fraction": 0.5,
-  "source": "class",
-  "x": 0.0,
-  "y": 7.581,
-  "z": 0.0
- },
  "cardinal_halo_chakram": {
   "class": "handaxe",
   "fraction": 0.25,
@@ -470,14 +430,6 @@
   "x": 0.0,
   "y": 4.0,
   "z": -0.9
- },
- "crux_key": {
-  "class": "handitem",
-  "fraction": 0.5,
-  "source": "class",
-  "x": 0.0,
-  "y": 7.581,
-  "z": 0.0
  },
  "cultist_sigil_ring": {
   "class": "handitem",
@@ -1471,14 +1423,6 @@
   "y": 18.258,
   "z": 0.0
  },
- "flame_empress_blade": {
-  "class": "longsword",
-  "fraction": 0.141,
-  "source": "handle",
-  "x": 0.0,
-  "y": -8.734,
-  "z": 0.0
- },
  "flamecutter": {
   "class": "longsword",
   "fraction": 0.12,
@@ -1541,14 +1485,6 @@
   "source": "override",
   "x": 0.0,
   "y": -13.11,
-  "z": 0.0
- },
- "gemini_key": {
-  "class": "handitem",
-  "fraction": 0.5,
-  "source": "class",
-  "x": -0.001,
-  "y": 7.581,
   "z": 0.0
  },
  "genin_academy_kunai": {
@@ -1685,14 +1621,6 @@
   "source": "directive",
   "x": 0.0,
   "y": 16.933,
-  "z": 0.0
- },
- "horologium_key": {
-  "class": "handitem",
-  "fraction": 0.5,
-  "source": "class",
-  "x": -0.001,
-  "y": 7.581,
   "z": 0.0
  },
  "humbling_longsword": {
@@ -1951,14 +1879,6 @@
   "y": 11.4,
   "z": 0.0
  },
- "leo_key": {
-  "class": "handitem",
-  "fraction": 0.5,
-  "source": "class",
-  "x": 0.0,
-  "y": 7.581,
-  "z": 0.0
- },
  "leviathan_axe": {
   "class": "handaxe",
   "fraction": 0.25,
@@ -1973,14 +1893,6 @@
   "source": "class",
   "x": 0.0,
   "y": 71.88,
-  "z": 0.0
- },
- "libra_key": {
-  "class": "handitem",
-  "fraction": 0.5,
-  "source": "class",
-  "x": 0.0,
-  "y": 7.581,
   "z": 0.0
  },
  "lich_dust_pendant": {
@@ -2015,14 +1927,6 @@
   "y": -9.297,
   "z": 0.0
  },
- "lightning_empress_halberd": {
-  "class": "glaive",
-  "fraction": 0.33,
-  "source": "class",
-  "x": 0.0,
-  "y": -34.96,
-  "z": 0.0
- },
  "lightworkers_scepter": {
   "class": "club",
   "fraction": 0.287,
@@ -2053,14 +1957,6 @@
   "source": "directive",
   "x": 0.0,
   "y": 9.227,
-  "z": 0.0
- },
- "lyra_key": {
-  "class": "handitem",
-  "fraction": 0.5,
-  "source": "class",
-  "x": -0.492,
-  "y": 7.09,
   "z": 0.0
  },
  "magebane_longsword": {
@@ -2191,14 +2087,6 @@
   "y": 42.754,
   "z": 0.0
  },
- "nakagami_edge": {
-  "class": "longsword",
-  "fraction": 0.117,
-  "source": "handle",
-  "x": 0.0,
-  "y": -10.859,
-  "z": 0.0
- },
  "needler": {
   "class": "crossbow",
   "fraction": 0.5,
@@ -2246,14 +2134,6 @@
   "x": -2.758,
   "y": 92.564,
   "z": -1.553
- },
- "nikora_key": {
-  "class": "handitem",
-  "fraction": 0.5,
-  "source": "class",
-  "x": -0.001,
-  "y": 7.581,
-  "z": 0.0
  },
  "noon_cleaver": {
   "class": "greataxe",
@@ -2351,14 +2231,6 @@
   "y": 46.595,
   "z": 0.0
  },
- "pisces_key": {
-  "class": "handitem",
-  "fraction": 0.5,
-  "source": "class",
-  "x": 0.0,
-  "y": 7.09,
-  "z": 0.0
- },
  "primal_chaos": {
   "class": "rapier",
   "fraction": 0.139,
@@ -2381,14 +2253,6 @@
   "source": "handle",
   "x": 0.0,
   "y": -8.622,
-  "z": 0.0
- },
- "purgatory_mace": {
-  "class": "club",
-  "fraction": 0.25,
-  "source": "class",
-  "x": 0.0,
-  "y": -36.75,
   "z": 0.0
  },
  "quicklings_ivy": {
@@ -2503,14 +2367,6 @@
   "y": 85.12,
   "z": -0.6
  },
- "sagittarius_key": {
-  "class": "handitem",
-  "fraction": 0.5,
-  "source": "class",
-  "x": 0.491,
-  "y": 7.581,
-  "z": 0.0
- },
  "sanguine_wardens_cleaver": {
   "class": "cleaver",
   "fraction": 0.125,
@@ -2533,22 +2389,6 @@
   "source": "directive",
   "x": -1.526,
   "y": 5.017,
-  "z": 0.0
- },
- "scorpio_key": {
-  "class": "handitem",
-  "fraction": 0.5,
-  "source": "class",
-  "x": 0.491,
-  "y": 7.581,
-  "z": 0.0
- },
- "sea_empress_trident": {
-  "class": "trident",
-  "fraction": 0.33,
-  "source": "class",
-  "x": 0.0,
-  "y": -34.28,
   "z": 0.0
  },
  "selection_hopefuls_bokken": {
@@ -2701,22 +2541,6 @@
   "source": "class",
   "x": 0.0,
   "y": 1.25,
-  "z": 0.0
- },
- "spirit_king_gate_key": {
-  "class": "handitem",
-  "fraction": 0.5,
-  "source": "class",
-  "x": -0.001,
-  "y": 7.581,
-  "z": 0.0
- },
- "spirit_king_sceptre": {
-  "class": "handitem",
-  "fraction": 0.3,
-  "source": "override",
-  "x": 0.0,
-  "y": 12.734,
   "z": 0.0
  },
  "spirit_of_boreas": {
@@ -3198,14 +3022,6 @@
   "x": 0.01,
   "y": 18.065,
   "z": 0.057
- },
- "taurus_key": {
-  "class": "handitem",
-  "fraction": 0.5,
-  "source": "class",
-  "x": 0.0,
-  "y": 7.581,
-  "z": 0.0
  },
  "the_bifrost": {
   "class": "staff",
@@ -4957,14 +4773,6 @@
   "source": "class",
   "x": 0.0,
   "y": 6.238,
-  "z": 0.0
- },
- "virgo_key": {
-  "class": "handitem",
-  "fraction": 0.5,
-  "source": "class",
-  "x": -0.001,
-  "y": 7.581,
   "z": 0.0
  },
  "void_origin_katana": {

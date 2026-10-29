@@ -76,7 +76,7 @@ offset": this is the anchor-relative form of it; a fraction of the screen would 
 | Scale weights readout (`scale_readout`) | HUD | **movable** | `apply/end` |
 | Page unlocked toast (`page_toast`) | HUD | **movable** | layer hook + `report` (the slide-in is part of the drawing) |
 | Four Kingdoms menu, Codex, Compat codex, Engravement codex, Avatar actions, Tower Wizard questions | screen panel | **movable** | screen hooks of `GuiScale` |
-| Avatar creator, Soul forge, Avatar inventory, Hub quests, Hub shop, Relic forge, Grimoire slot, Requip Armoury | container panel | **movable** | the same; the panel is the container's own image rectangle |
+| Avatar creator, Soul forge, Avatar inventory, Hub quests, Hub shop, Relic forge, Grimoire slot | container panel | **movable** | the same; the panel is the container's own image rectangle |
 | Multiverse status book, Skill shop, Weapon forms book, Dungeon map, System stat screen | full-window screens | fixed: nothing to move | listed in `GuiMoveRegistry.fixed()` |
 | Multiverse status compact panel, Four Kingdoms slot button | parts of another screen | fixed: they follow that screen | |
 | Unique skill acquired banner, mana-zone camera tint, Djinn vignette and flash, curse vignette and offer prompt | full-screen effects and announcements | fixed | |

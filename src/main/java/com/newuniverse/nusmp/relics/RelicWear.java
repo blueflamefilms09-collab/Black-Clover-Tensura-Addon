@@ -33,8 +33,8 @@ public final class RelicWear {
     /** The slot ids Curios itself is known to ship. A slot outside this list that the mod does not define either is a hole. */
     public static final Set<String> CURIOS_SHIPPED = Set.of("necklace", "back", "belt", "hands", "charm", "ring", "head", "body", "bracelet", "curio");
 
-    /** The slot ids the relics of the mod use besides the five of the {@link RelicSlot} enum (the dungeon relics and the celestial keys have slots of their own). */
-    public static final List<String> OTHER_SLOTS = List.of("dungeon_relic", "celestial_key", "relic_head", "relic_feet");      // 3.10.0: relic_head / relic_feet hold the head and feet relics besides the armour slots
+    /** The slot ids the relics of the mod use besides the five of the {@link RelicSlot} enum (the dungeon relics have a slot of their own; the Celestial Key slot was removed with the keys). */
+    public static final List<String> OTHER_SLOTS = List.of("dungeon_relic", "relic_head", "relic_feet");      // 3.10.0: relic_head / relic_feet hold the head and feet relics besides the armour slots
 
     /** The mod's slot files that must exist (the relic slots, in the order of {@link RelicSlot}). */
     public static final List<String> RELIC_SLOTS = List.of("necklace", "back", "belt", "hands", "charm");
@@ -115,7 +115,7 @@ public final class RelicWear {
     private static final String SLOTS = "data/nusmp/curios/slots/", ENTITIES = "data/nusmp/curios/entities/", TAGS = "data/curios/tags/item/";
 
     /** The entity files the mod ships. A new one is added here and nowhere else. */
-    public static final List<String> ENTITY_FILES = List.of("relics", "dungeon_relic", "celestial_key");
+    public static final List<String> ENTITY_FILES = List.of("relics", "dungeon_relic");
 
     /** Reads the slot, entity and tag files of the mod through {@code src}; a file that is missing is simply not in the result (the checks name it). */
     public static Data read(Source src) throws IOException {

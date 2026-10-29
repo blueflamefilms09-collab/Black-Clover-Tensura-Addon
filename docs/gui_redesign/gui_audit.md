@@ -43,7 +43,6 @@ BEFORE sheet: `docs/previews/gui_redesign/gui_before.png` (software mock-ups mad
 | Black Market | `skilltree/shop/ShopScreen`, `ShopPainter`, `ShopLayout` | plum glass, witch portrait, rows, scroll | portrait art | own |
 | Hub Quest / Hub Shop / Dungeon Map | `elite/hub/QuestScreen`, `ShopScreen`, `DungeonMapScreen` | vanilla-style lists, room rectangles | none | plain |
 | Relic Forge | `relics/forge/ForgeScreen` | forge view, buttons | none | anime-ish |
-| Requip Armoury | `requip/RequipArmouryScreen` | 54-cell grid, 3 tabs | none | anime + classic |
 | Weapon Book (hero weapons) | `heroweapon/forms/WeaponBookScreen` | forms, absorb list | none | own |
 | Shishou Stomach | `shishou/ShishouStomachScreen` | chest menu with star-field panel, level/mana gauges in title row | `AkashicTheme` fills | own |
 | System Stats / System Edit | `mega/system/SystemStatsScreen`, `SystemEditScreen` | stat allocation, window placement | none | System style (`OverlayStyle`) |

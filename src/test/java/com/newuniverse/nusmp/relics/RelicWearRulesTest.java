@@ -15,10 +15,10 @@ import static org.junit.jupiter.api.Assertions.*;
 class RelicWearRulesTest {
     private static RelicWear.Data complete() {
         return new RelicWear.Data(
-                Map.of("necklace", 1, "back", 1, "belt", 1, "hands", 2, "charm", 1, "dungeon_relic", 2, "celestial_key", 12, "relic_head", 1, "relic_feet", 1),
+                Map.of("necklace", 1, "back", 1, "belt", 1, "hands", 2, "charm", 1, "dungeon_relic", 2, "relic_head", 1, "relic_feet", 1),
                 Map.of("necklace", Set.of("nusmp:a"), "back", Set.of("nusmp:b"), "belt", Set.of("nusmp:c"), "hands", Set.of("nusmp:d"), "charm", Set.of("nusmp:e"),
-                        "dungeon_relic", Set.of(), "celestial_key", Set.of(), "relic_head", Set.of("nusmp:h"), "relic_feet", Set.of("nusmp:f")),
-                Set.of("necklace", "back", "belt", "hands", "charm", "dungeon_relic", "celestial_key", "relic_head", "relic_feet"));
+                        "dungeon_relic", Set.of(), "relic_head", Set.of("nusmp:h"), "relic_feet", Set.of("nusmp:f")),
+                Set.of("necklace", "back", "belt", "hands", "charm", "dungeon_relic", "relic_head", "relic_feet"));
     }
 
     @Test
