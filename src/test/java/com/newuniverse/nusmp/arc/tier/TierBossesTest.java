@@ -79,6 +79,16 @@ class TierBossesTest {
         assertTrue(com.newuniverse.nusmp.client.playermodel.PlayerLookTables.FILES.contains("playermodel/looks_tier.json"));
     }
 
+    /** 3.33.1: every tier boss, now and in every later tier, is in the anime skin style: the hair is painted on the skin, so a look never names a kit haircut. */
+    @Test
+    void everyTierLookIsInTheAnimeStyleWithPaintedHair() throws Exception {
+        com.google.gson.JsonObject looks = com.google.gson.JsonParser.parseString(Files.readString(RES.resolve("playermodel/looks_tier.json"))).getAsJsonObject().getAsJsonObject("looks");
+        for (TierRow row : all()) {
+            assertTrue(looks.has(row.id()), "no look for " + row.id());
+            assertFalse(looks.getAsJsonObject(row.id()).has("hair"), row.id() + " names a kit haircut; the hair is painted on the skin");
+        }
+    }
+
     /** The old shared-body recolours stay in the jar as the fallback if the kit is switched off. */
     @Test
     void theLegacySharedBodySkinsAreKept() {

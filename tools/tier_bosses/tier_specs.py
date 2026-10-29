@@ -1,6 +1,6 @@
 """3.33.0: the sheets of the Tier List bosses, in the vocabulary of the arcs' art kit (tools/arc_kit/spec.py), so the player-model kit paints them exactly like every other character
 (skin tone, face, hair, outfit, accessories, glow). Looks are written from memory of each character (the wikis could not be reached): colours and cuts, not copies. A tier only needs new
-entries here; `gen_tier_looks.py` paints them. Heights are the boss's own (they match the row in TierRoster*.java).
+entries here (every tier is painted in the anime skin style of `anime_skin.py`, the owner's rule since 3.33.1: shaded eyes, hair painted on the skin, outfit details); `gen_tier_looks.py` paints them. Heights are the boss's own (they match the row in TierRoster*.java).
 """
 
 

@@ -214,3 +214,5 @@ The English and Japanese wikis (fandom, wikipedia) were **not reachable** from t
 - Worst-case cost: one boss decides once a second and runs one move at a time; a move touches at most 24 foes (`EarlyMoves.MAX_FOES`), 5 bolts/volley shots (staggered), 4 wisps, 5 swarm bursts; no per-tick world scans, no chunk loads; a live cap of `tierBossMax` bosses; effects are sent to nearby players only through the existing perf budgets; the boss removes itself from the live set when it leaves the world.
 - Saga: `ArcSaga.TIER_LIST` ("The Tier List", appended last); its reward is 24 magic stones, 32 experience bottles and 4 golden apples; its arena shape is the stone ring.
 - Loot: `nusmp:magic_stone` (max/2 .. max by tier) and the saga reward; Charter grimoires are not given (these are light bosses).
+
+**Style rule (owner, 3.33.1): every tier boss, now and in every later tier, is painted in the anime skin style (`tools/tier_bosses/anime_skin.py`): hair painted on the skin (no kit haircut in the look), shaded eyes, outfit details. `TierBossesTest` guards it.**
