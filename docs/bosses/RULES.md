@@ -28,9 +28,9 @@ A floor is a place in the Mega-Dungeon, a rank is how strong a boss is. The dung
 | 121-140 | S |
 | 141-160 | SS |
 | 161-180 | SSS |
-Inside a rank the sub-steps (minus, plain, plus) follow the floor: about the first 7 floors are minus, the middle 6-7 plain, the last 6-7 plus. Floors past 180 stay at SSS+ (OPEN: or keep climbing with a flat bonus per floor).
+Inside a rank the sub-steps (minus, plain, plus) follow the floor: about the first 7 floors are minus, the middle 6-7 plain, the last 6-7 plus. Floors past 100 do not exist; A to SSS are reached through rifts and secret floors (see below).
 A boss uses the step of the floor it stands on. A boss from a tier list keeps its own named rank and appears on floors of that rank.
-(OPEN: nine ranks at 20 floors each need 180 floors. If the dungeon only goes to 100, five ranks would be reached, F to B. Decide whether to stretch the dungeon, or to use a different span per rank.)
+DECIDED: the dungeon keeps 100 floors, so floors only reach B-Rank (F 1-20, E 21-40, D 41-60, C 61-80, B 81-100). The A, S, SS and SSS bosses live somewhere else: special rifts or secret floors (OPEN: how they are entered, e.g. a key from a B-rank boss, a hidden stairway, a rift event). A boss in a rift or secret floor uses the step of its own rank, not the floor number.
 
 ## Source material
 Bosses from other series follow their source material (skills, look, behaviour).
@@ -85,5 +85,6 @@ Every boss has a Feel Sheet (silhouette/model, colour + VFX palette, movement + 
 - Which two bosses are the ice pair, and in the same dungeon or different ones?
 - How many bosses per rank (F, E, D, C, B, A, S, SS, SSS)?
 - Rank ladder: is my reading right (see below)?
+- How are the rifts / secret floors for A, S, SS, SSS entered?
 - Exact banned-skill list inside boss arenas.
 - Per-rank multipliers for the scaling table (proposal: F- at about 1.1x the base Tensura equivalent, rising about 1.1x per sub-step, so one full rank is about 1.33x).
