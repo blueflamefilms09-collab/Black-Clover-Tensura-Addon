@@ -1,254 +1,295 @@
 {
- "voice": null,
- "voice_name": null,
+ "voice": "rm143ZlE6RfHtN634wZ8",
+ "voice_name": "Jay - British, well-spoken, calm, husky.",
  "model": "eleven_v4",
- "note": "No audio is generated yet: voice is null until the owner and the assistant have designed or chosen it. tools/audio/shishou_voice_generate.py refuses to run while it is null.",
+ "note": "Voice chosen by the owner in 3.34.0 (Jay: British, well-spoken, calm, husky). An earlier set was made with \"Blue - Commander with Grit\" (YGWwh1G8pUwWmJyCCpma) and replaced by this set before release. Takes generated with ElevenLabs eleven_v4, one take per line, not yet heard in a game.",
  "lines": [
   {
    "id": "shishou_claim_1",
    "group": "claim",
    "prompt": "[calm, dry, amused] So you are my wielder. Try not to bore me.",
-   "text": "So you are my wielder. Try not to bore me."
+   "text": "So you are my wielder. Try not to bore me.",
+   "voice": "rm143ZlE6RfHtN634wZ8"
   },
   {
    "id": "shishou_claim_2",
    "group": "claim",
    "prompt": "[warm, measured] I will teach you what a sword can be.",
-   "text": "I will teach you what a sword can be."
+   "text": "I will teach you what a sword can be.",
+   "voice": "rm143ZlE6RfHtN634wZ8"
   },
   {
    "id": "shishou_claim_3",
    "group": "claim",
    "prompt": "[quiet, wise] Hold me properly. We have a great deal to learn.",
-   "text": "Hold me properly. We have a great deal to learn."
+   "text": "Hold me properly. We have a great deal to learn.",
+   "voice": "rm143ZlE6RfHtN634wZ8"
   },
   {
    "id": "shishou_recall_1",
    "group": "recall",
    "prompt": "[calm] Back in your hand. Good.",
-   "text": "Back in your hand. Good."
+   "text": "Back in your hand. Good.",
+   "voice": "rm143ZlE6RfHtN634wZ8"
   },
   {
    "id": "shishou_recall_2",
    "group": "recall",
    "prompt": "[dry] You called, wielder. I came.",
-   "text": "You called, wielder. I came."
+   "text": "You called, wielder. I came.",
+   "voice": "rm143ZlE6RfHtN634wZ8"
   },
   {
    "id": "shishou_throw_1",
    "group": "throw",
    "prompt": "[calm, focused] Leave the fighting to me for a moment.",
-   "text": "Leave the fighting to me for a moment."
+   "text": "Leave the fighting to me for a moment.",
+   "voice": "rm143ZlE6RfHtN634wZ8"
   },
   {
    "id": "shishou_throw_2",
    "group": "throw",
    "prompt": "[dry] Fly, then. I will hold the line.",
-   "text": "Fly, then. I will hold the line."
+   "text": "Fly, then. I will hold the line.",
+   "voice": "rm143ZlE6RfHtN634wZ8"
   },
   {
    "id": "shishou_levelup_1",
    "group": "levelup",
    "prompt": "[pleased, measured] I have grown. Another step, wielder.",
-   "text": "I have grown. Another step, wielder."
+   "text": "I have grown. Another step, wielder.",
+   "voice": "rm143ZlE6RfHtN634wZ8"
   },
   {
    "id": "shishou_levelup_2",
    "group": "levelup",
    "prompt": "[dry, proud] I grow stronger, as I intended.",
-   "text": "I grow stronger, as I intended."
+   "text": "I grow stronger, as I intended.",
+   "voice": "rm143ZlE6RfHtN634wZ8"
   },
   {
    "id": "shishou_levelup_3",
    "group": "levelup",
    "prompt": "[calm] Power gathers in me. Use it well.",
-   "text": "Power gathers in me. Use it well."
+   "text": "Power gathers in me. Use it well.",
+   "voice": "rm143ZlE6RfHtN634wZ8"
   },
   {
    "id": "shishou_skill_utility_1",
    "group": "skill_utility",
    "prompt": "[curious, calm] A new skill. How useful.",
-   "text": "A new skill. How useful."
+   "text": "A new skill. How useful.",
+   "voice": "rm143ZlE6RfHtN634wZ8"
   },
   {
    "id": "shishou_skill_utility_2",
    "group": "skill_utility",
    "prompt": "[matter-of-fact] This will make your life easier, wielder.",
-   "text": "This will make your life easier, wielder."
+   "text": "This will make your life easier, wielder.",
+   "voice": "rm143ZlE6RfHtN634wZ8"
   },
   {
    "id": "shishou_skill_magic_1",
    "group": "skill_magic",
    "prompt": "[intrigued] I have eaten a new spell. Delicious.",
-   "text": "I have eaten a new spell. Delicious."
+   "text": "I have eaten a new spell. Delicious.",
+   "voice": "rm143ZlE6RfHtN634wZ8"
   },
   {
    "id": "shishou_skill_magic_2",
    "group": "skill_magic",
    "prompt": "[wise, calm] Magic, absorbed. Let us put it to use.",
-   "text": "Magic, absorbed. Let us put it to use."
+   "text": "Magic, absorbed. Let us put it to use.",
+   "voice": "rm143ZlE6RfHtN634wZ8"
   },
   {
    "id": "shishou_skill_combat_1",
    "group": "skill_combat",
    "prompt": "[sharp, pleased] A new edge for the blade.",
-   "text": "A new edge for the blade."
+   "text": "A new edge for the blade.",
+   "voice": "rm143ZlE6RfHtN634wZ8"
   },
   {
    "id": "shishou_skill_combat_2",
    "group": "skill_combat",
    "prompt": "[calm, confident] Now we can cut deeper.",
-   "text": "Now we can cut deeper."
+   "text": "Now we can cut deeper.",
+   "voice": "rm143ZlE6RfHtN634wZ8"
   },
   {
    "id": "shishou_skill_space_1",
    "group": "skill_space",
    "prompt": "[quiet, amused] Space bends a little easier now.",
-   "text": "Space bends a little easier now."
+   "text": "Space bends a little easier now.",
+   "voice": "rm143ZlE6RfHtN634wZ8"
   },
   {
    "id": "shishou_skill_space_2",
    "group": "skill_space",
    "prompt": "[calm] A new way to move. Do not waste it.",
-   "text": "A new way to move. Do not waste it."
+   "text": "A new way to move. Do not waste it.",
+   "voice": "rm143ZlE6RfHtN634wZ8"
   },
   {
    "id": "shishou_eat_1",
    "group": "eat",
    "prompt": "[satisfied, dry] Delicious.",
-   "text": "Delicious."
+   "text": "Delicious.",
+   "voice": "rm143ZlE6RfHtN634wZ8"
   },
   {
    "id": "shishou_eat_2",
    "group": "eat",
    "prompt": "[calm] Eaten. Its power is mine.",
-   "text": "Eaten. Its power is mine."
+   "text": "Eaten. Its power is mine.",
+   "voice": "rm143ZlE6RfHtN634wZ8"
   },
   {
    "id": "shishou_eat_3",
    "group": "eat",
    "prompt": "[amused] Do not look away. This is how a sword grows.",
-   "text": "Do not look away. This is how a sword grows."
+   "text": "Do not look away. This is how a sword grows.",
+   "voice": "rm143ZlE6RfHtN634wZ8"
   },
   {
    "id": "shishou_lowmana_1",
    "group": "lowmana",
    "prompt": "[calm, concerned] My mana is running low, wielder.",
-   "text": "My mana is running low, wielder."
+   "text": "My mana is running low, wielder.",
+   "voice": "rm143ZlE6RfHtN634wZ8"
   },
   {
    "id": "shishou_lowmana_2",
    "group": "lowmana",
    "prompt": "[dry, serious] I need rest. Do not draw on me now.",
-   "text": "I need rest. Do not draw on me now."
+   "text": "I need rest. Do not draw on me now.",
+   "voice": "rm143ZlE6RfHtN634wZ8"
   },
   {
    "id": "shishou_dormant_1",
    "group": "dormant",
    "prompt": "[quiet, weary] I must sleep for a while. Find me again.",
-   "text": "I must sleep for a while. Find me again."
+   "text": "I must sleep for a while. Find me again.",
+   "voice": "rm143ZlE6RfHtN634wZ8"
   },
   {
    "id": "shishou_dormant_2",
    "group": "dormant",
    "prompt": "[calm] My strength is spent. I will wait.",
-   "text": "My strength is spent. I will wait."
+   "text": "My strength is spent. I will wait.",
+   "voice": "rm143ZlE6RfHtN634wZ8"
   },
   {
    "id": "shishou_danger_1",
    "group": "danger",
    "prompt": "[urgent, calm] Wielder, hostiles approach from behind.",
-   "text": "Wielder, hostiles approach from behind."
+   "text": "Wielder, hostiles approach from behind.",
+   "voice": "rm143ZlE6RfHtN634wZ8"
   },
   {
    "id": "shishou_danger_2",
    "group": "danger",
    "prompt": "[sharp] Danger behind you. Turn.",
-   "text": "Danger behind you. Turn."
+   "text": "Danger behind you. Turn.",
+   "voice": "rm143ZlE6RfHtN634wZ8"
   },
   {
    "id": "shishou_danger_3",
    "group": "danger",
    "prompt": "[firm] Your health is failing. Retreat, or let me fight.",
-   "text": "Your health is failing. Retreat, or let me fight."
+   "text": "Your health is failing. Retreat, or let me fight.",
+   "voice": "rm143ZlE6RfHtN634wZ8"
   },
   {
    "id": "shishou_thief_1",
    "group": "thief",
    "prompt": "[cold, firm] Let go of me, you aren't my wielder.",
-   "text": "Let go of me, you aren't my wielder."
+   "text": "Let go of me, you aren't my wielder.",
+   "voice": "rm143ZlE6RfHtN634wZ8"
   },
   {
    "id": "shishou_thief_2",
    "group": "thief",
    "prompt": "[sharp] Hands off. I do not serve you.",
-   "text": "Hands off. I do not serve you."
+   "text": "Hands off. I do not serve you.",
+   "voice": "rm143ZlE6RfHtN634wZ8"
   },
   {
    "id": "shishou_appraise_1",
    "group": "appraise",
    "prompt": "[calm, analytical] I have looked at it. Listen carefully.",
-   "text": "I have looked at it. Listen carefully."
+   "text": "I have looked at it. Listen carefully.",
+   "voice": "rm143ZlE6RfHtN634wZ8"
   },
   {
    "id": "shishou_appraise_2",
    "group": "appraise",
    "prompt": "[dry] It is weak to something. Find out what.",
-   "text": "It is weak to something. Find out what."
+   "text": "It is weak to something. Find out what.",
+   "voice": "rm143ZlE6RfHtN634wZ8"
   },
   {
    "id": "shishou_appraise_3",
    "group": "appraise",
    "prompt": "[matter-of-fact] An ordinary thing, but it may be eaten.",
-   "text": "An ordinary thing, but it may be eaten."
+   "text": "An ordinary thing, but it may be eaten.",
+   "voice": "rm143ZlE6RfHtN634wZ8"
   },
   {
    "id": "shishou_barrier_on_1",
    "group": "barrier_on",
    "prompt": "[calm, firm] Barrier raised. Nothing gets through.",
-   "text": "Barrier raised. Nothing gets through."
+   "text": "Barrier raised. Nothing gets through.",
+   "voice": "rm143ZlE6RfHtN634wZ8"
   },
   {
    "id": "shishou_barrier_off_1",
    "group": "barrier_off",
    "prompt": "[tense] The barrier is broken. Be careful.",
-   "text": "The barrier is broken. Be careful."
+   "text": "The barrier is broken. Be careful.",
+   "voice": "rm143ZlE6RfHtN634wZ8"
   },
   {
    "id": "shishou_victory_1",
    "group": "victory",
    "prompt": "[satisfied] Well fought.",
-   "text": "Well fought."
+   "text": "Well fought.",
+   "voice": "rm143ZlE6RfHtN634wZ8"
   },
   {
    "id": "shishou_victory_2",
    "group": "victory",
    "prompt": "[dry, pleased] As expected. Nothing could stand against us.",
-   "text": "As expected. Nothing could stand against us."
+   "text": "As expected. Nothing could stand against us.",
+   "voice": "rm143ZlE6RfHtN634wZ8"
   },
   {
    "id": "shishou_idle_1",
    "group": "idle",
    "prompt": "[calm, wise] A sword should never stop learning.",
-   "text": "A sword should never stop learning."
+   "text": "A sword should never stop learning.",
+   "voice": "rm143ZlE6RfHtN634wZ8"
   },
   {
    "id": "shishou_idle_2",
    "group": "idle",
    "prompt": "[dry, amused] You swing me well enough, for a beginner.",
-   "text": "You swing me well enough, for a beginner."
+   "text": "You swing me well enough, for a beginner.",
+   "voice": "rm143ZlE6RfHtN634wZ8"
   },
   {
    "id": "shishou_idle_3",
    "group": "idle",
    "prompt": "[thoughtful] Every battle is a lesson, wielder.",
-   "text": "Every battle is a lesson, wielder."
+   "text": "Every battle is a lesson, wielder.",
+   "voice": "rm143ZlE6RfHtN634wZ8"
   },
   {
    "id": "shishou_idle_4",
    "group": "idle",
    "prompt": "[quiet] Quiet today. I do not trust quiet.",
-   "text": "Quiet today. I do not trust quiet."
+   "text": "Quiet today. I do not trust quiet.",
+   "voice": "rm143ZlE6RfHtN634wZ8"
   }
  ]
 }

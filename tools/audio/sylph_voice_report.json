@@ -1,4 +1,124 @@
 {
+ "sylph_big_1": {
+  "bytes": 25627,
+  "seconds": 2.64
+ },
+ "sylph_big_2": {
+  "bytes": 31506,
+  "seconds": 3.39
+ },
+ "sylph_big_3": {
+  "bytes": 22456,
+  "seconds": 2.26
+ },
+ "sylph_cast_1": {
+  "bytes": 15625,
+  "seconds": 1.45
+ },
+ "sylph_cast_2": {
+  "bytes": 19991,
+  "seconds": 2.01
+ },
+ "sylph_cast_3": {
+  "bytes": 19284,
+  "seconds": 1.91
+ },
+ "sylph_cast_4": {
+  "bytes": 18636,
+  "seconds": 1.85
+ },
+ "sylph_cast_5": {
+  "bytes": 32481,
+  "seconds": 3.32
+ },
+ "sylph_cast_6": {
+  "bytes": 16824,
+  "seconds": 1.61
+ },
+ "sylph_cast_7": {
+  "bytes": 14328,
+  "seconds": 1.22
+ },
+ "sylph_cheer_1": {
+  "bytes": 19452,
+  "seconds": 1.97
+ },
+ "sylph_cheer_2": {
+  "bytes": 27500,
+  "seconds": 2.9
+ },
+ "sylph_cheer_3": {
+  "bytes": 21167,
+  "seconds": 2.16
+ },
+ "sylph_cheer_4": {
+  "bytes": 17189,
+  "seconds": 1.69
+ },
+ "sylph_cheer_5": {
+  "bytes": 24585,
+  "seconds": 2.57
+ },
+ "sylph_giggle_1": {
+  "bytes": 19279,
+  "seconds": 1.89
+ },
+ "sylph_giggle_2": {
+  "bytes": 24746,
+  "seconds": 2.55
+ },
+ "sylph_giggle_3": {
+  "bytes": 28637,
+  "seconds": 2.99
+ },
+ "sylph_giggle_4": {
+  "bytes": 16126,
+  "seconds": 1.48
+ },
+ "sylph_hurt_1": {
+  "bytes": 23414,
+  "seconds": 2.46
+ },
+ "sylph_hurt_2": {
+  "bytes": 29434,
+  "seconds": 3.21
+ },
+ "sylph_hurt_3": {
+  "bytes": 16128,
+  "seconds": 1.52
+ },
+ "sylph_hurt_4": {
+  "bytes": 16408,
+  "seconds": 1.53
+ },
+ "sylph_idle_1": {
+  "bytes": 46636,
+  "seconds": 5.4
+ },
+ "sylph_idle_2": {
+  "bytes": 21853,
+  "seconds": 2.22
+ },
+ "sylph_idle_3": {
+  "bytes": 35844,
+  "seconds": 3.84
+ },
+ "sylph_idle_4": {
+  "bytes": 27646,
+  "seconds": 2.83
+ },
+ "sylph_idle_5": {
+  "bytes": 28804,
+  "seconds": 3.1
+ },
+ "sylph_idle_6": {
+  "bytes": 40687,
+  "seconds": 4.7
+ },
+ "sylph_idle_7": {
+  "bytes": 26878,
+  "seconds": 2.74
+ },
  "sylph_link_1": {
   "bytes": 33377,
   "seconds": 3.54
@@ -6,5 +126,101 @@
  "sylph_link_2": {
   "bytes": 30506,
   "seconds": 3.32
+ },
+ "sylph_link_3": {
+  "bytes": 34012,
+  "seconds": 3.74
+ },
+ "sylph_pout_1": {
+  "bytes": 23454,
+  "seconds": 2.48
+ },
+ "sylph_pout_2": {
+  "bytes": 24783,
+  "seconds": 2.49
+ },
+ "sylph_sad_1": {
+  "bytes": 25359,
+  "seconds": 2.73
+ },
+ "sylph_sad_2": {
+  "bytes": 22093,
+  "seconds": 2.23
+ },
+ "sylph_sad_3": {
+  "bytes": 25917,
+  "seconds": 2.73
+ },
+ "sylph_shout_1": {
+  "bytes": 21108,
+  "seconds": 2.15
+ },
+ "sylph_shout_2": {
+  "bytes": 22842,
+  "seconds": 2.35
+ },
+ "sylph_shout_3": {
+  "bytes": 22964,
+  "seconds": 2.43
+ },
+ "sylph_sleepy_1": {
+  "bytes": 32606,
+  "seconds": 3.46
+ },
+ "sylph_sleepy_2": {
+  "bytes": 22754,
+  "seconds": 2.38
+ },
+ "sylph_smug_1": {
+  "bytes": 24376,
+  "seconds": 2.53
+ },
+ "sylph_smug_2": {
+  "bytes": 18777,
+  "seconds": 1.79
+ },
+ "sylph_startle_1": {
+  "bytes": 19965,
+  "seconds": 2.06
+ },
+ "sylph_startle_2": {
+  "bytes": 30419,
+  "seconds": 3.27
+ },
+ "sylph_unlink_1": {
+  "bytes": 28945,
+  "seconds": 3.06
+ },
+ "sylph_unlink_2": {
+  "bytes": 30438,
+  "seconds": 3.18
+ },
+ "sylph_unlink_3": {
+  "bytes": 34294,
+  "seconds": 3.83
+ },
+ "sylph_victory_1": {
+  "bytes": 22411,
+  "seconds": 2.34
+ },
+ "sylph_victory_2": {
+  "bytes": 26661,
+  "seconds": 2.77
+ },
+ "sylph_worry_1": {
+  "bytes": 24963,
+  "seconds": 2.67
+ },
+ "sylph_worry_2": {
+  "bytes": 26630,
+  "seconds": 2.89
+ },
+ "sylph_worry_3": {
+  "bytes": 21508,
+  "seconds": 2.16
+ },
+ "sylph_worry_4": {
+  "bytes": 25518,
+  "seconds": 2.72
  }
 }

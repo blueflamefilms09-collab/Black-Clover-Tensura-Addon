@@ -207,15 +207,15 @@ The script plans **21 lines in 12 groups** (the situation's group is picked, nev
 | `gnome_hurt_3` | Hm. A scratch. | hurt | yes |
 | `gnome_surprised_1` | You are hurt! Careful. | surprised | yes |
 | `gnome_lowhp_1` | Gnome stands firm. Behind me. | lowhp | yes |
-| `gnome_lowhp_2` | You will not fall. Not while I stand. | lowhp | **no** (no credits left) |
-| `gnome_victory_1` | The earth is pleased. | victory | **no** (no credits left) |
-| `gnome_victory_2` | Another one crumbles. | victory | **no** (no credits left) |
-| `gnome_death_1` | Rest now. The earth will hold you. | death | **no** (no credits left) |
-| `gnome_doze_1` | Gnome... waits... in the stone. | doze | **no** (no credits left) |
+| `gnome_lowhp_2` | You will not fall. Not while I stand. | lowhp | yes (3.34.0) |
+| `gnome_victory_1` | The earth is pleased. | victory | yes (3.34.0) |
+| `gnome_victory_2` | Another one crumbles. | victory | yes (3.34.0) |
+| `gnome_death_1` | Rest now. The earth will hold you. | death | yes (3.34.0) |
+| `gnome_doze_1` | Gnome... waits... in the stone. | doze | yes (3.34.0) |
 | `gnome_wake_1` | Hm? We move. | wake | yes |
-| `gnome_idle_1` | Still. As the mountain is still. | idle | **no** (no credits left) |
+| `gnome_idle_1` | Still. As the mountain is still. | idle | yes (3.34.0) |
 
-**Six lines are not recorded**, because the ElevenLabs account ran out of credits during the run (it had 10000 in all and 33 left; the credits are shared with other work, one credit per character of the prompt, tags included: the 15 recorded lines cost about 680). Until they exist, the situations SLEEP, IDLE, KILL and OWNER_DEATH make their grunts, chuckles and snores but say nothing, and the second line of the low-health group is absent. **To finish: top up the credits, generate each missing line (the text of each is in `tools/audio/gnome_voice.py`, `python3 tools/audio/gnome_voice.py --missing` prints id and prompt, model `eleven_v4`, voice `xHxp1c5pQOzhWjBqV78M`), save the take as `<raw_dir>/gnome_<line>.mp3`, then run the one command `python3 tools/audio/gnome_voice.py <raw_dir>`**: it converts the takes, registers them in `voice_lines.json`, `voice_report.json`, `sounds.json` and `VoiceCatalog.GNOME_LINES`, and the game uses them (the pools in `GnomeMoodRules` already name all 21 lines; a line without a recording is simply not in the pool). Sizes: the 15 files are 328 KB; with the six missing about 450 KB.
+**All 21 lines are recorded (3.34.0).** The first run recorded 15 and ran out of credits; the six missing ones (`lowhp_2`, `victory_1`, `victory_2`, `death_1`, `doze_1`, `idle_1`) were generated in 3.34.0 with the same model (`eleven_v4`) and voice (`xHxp1c5pQOzhWjBqV78M`), converted by `python3 tools/audio/gnome_voice.py <raw_dir>` and registered in `voice_lines.json`, `voice_report.json`, `sounds.json` and `VoiceCatalog.GNOME_LINES`. The situations SLEEP, IDLE, KILL and OWNER_DEATH now speak as well as grunt, chuckle and snore. To redo a line: `python3 tools/audio/gnome_voice.py --missing` prints id and prompt of lines without a file; save the take as `<raw_dir>/gnome_<line>.mp3` and run the converter again. Size: the 21 files are 518 KB.
 
 **Non-verbal voice.** `gnome.grunt` (4), `gnome.chuckle` (2), `gnome.snore` (2), `gnome.huff` (2): synthesised (section 6), played by the sound gate like the other cues, with their own subtitles ("The Gnome grunts", ...). They are the Gnome's sounds when it has no line.
 
@@ -267,7 +267,7 @@ Edited (additions, append-only one-liners): `prop/PropKind` (+`GNOME_1` at the e
 * **The lore** (section 1): no wiki page was fetched; the name "Gnome" and the "massive earth golem" look are the owner's, not confirmed by anything reachable.
 * **The look against the series:** there is no picture, so "looks like Black Clover" is a judgement from the repo's other Black Clover renders and the series' art language (cel flat tones, ink lines, hatching, glow, magic circle). The silhouette is still blockier than a drawn golem (the models are cubes; plates are rotated to break the box, but it is a box-built giant). The crystals read as capped pillars more than gems.
 * **The spoken lines were never heard**, and neither were the synthesised grunts, chuckle, snore and huff: the lines are an ElevenLabs library voice I could not play, checked only by duration, size and level; whether the voice sounds like a stone golem, and whether the licence of the voice allows it in a released mod, is the owner's call (section 7.4).
-* **Six of the 21 planned lines have no recording** (the account ran out of credits): `lowhp_2`, `victory_1`, `victory_2`, `death_1`, `doze_1`, `idle_1`. The situations still react with pose, face and cue; they just do not speak. One command finishes it (section 7.4).
+* **All 21 lines are recorded** (3.34.0), one take each, picked without listening.
 * **The spoken lines are not positional**: the voice system plays a line to the listener, so inside the 32 blocks there is no fading with distance and no direction.
 * **The poses**: `shrug` and `doze` are small movements and read weakly in a still picture (the shoulders heave, the head sinks); `kneel` was judged from stills only. The face plate sits a hair in front of the head: it was not checked for flicker against the head's own face in a real depth buffer.
 * **The sounds were never listened to.** They were checked by numbers (duration, peak, level) and spectrograms (a low band, an irregular pulse train for the grinding, a decaying burst for the crash), not by ear; every recipe is a few lines of parameters in the generator and can be retuned.

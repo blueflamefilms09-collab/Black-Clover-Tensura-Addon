@@ -27,6 +27,28 @@
   "spirit_light.voice.spiritlight_settle_1": { "sounds": [ { "name": "nusmp:spirit_light/voice/spiritlight_settle_1", "stream": false, "attenuation_distance": 32} ]},
   "spirit_light.voice.spiritlight_settle_2": { "sounds": [ { "name": "nusmp:spirit_light/voice/spiritlight_settle_2", "stream": false, "attenuation_distance": 32} ]},
   "spirit_light.voice.spiritlight_beam_1": { "sounds": [ { "name": "nusmp:spirit_light/voice/spiritlight_beam_1", "stream": false, "attenuation_distance": 32} ]},
+  "spirit_light.voice.spiritlight_beam_2": { "sounds": [ { "name": "nusmp:spirit_light/voice/spiritlight_beam_2", "stream": false, "attenuation_distance": 32} ]},
+  "spirit_light.voice.spiritlight_beam_3": { "sounds": [ { "name": "nusmp:spirit_light/voice/spiritlight_beam_3", "stream": false, "attenuation_distance": 32} ]},
+  "spirit_light.voice.spiritlight_beam_4": { "sounds": [ { "name": "nusmp:spirit_light/voice/spiritlight_beam_4", "stream": false, "attenuation_distance": 32} ]},
+  "spirit_light.voice.spiritlight_beam_5": { "sounds": [ { "name": "nusmp:spirit_light/voice/spiritlight_beam_5", "stream": false, "attenuation_distance": 32} ]},
+  "spirit_light.voice.spiritlight_pulse_1": { "sounds": [ { "name": "nusmp:spirit_light/voice/spiritlight_pulse_1", "stream": false, "attenuation_distance": 32} ]},
+  "spirit_light.voice.spiritlight_pulse_2": { "sounds": [ { "name": "nusmp:spirit_light/voice/spiritlight_pulse_2", "stream": false, "attenuation_distance": 32} ]},
+  "spirit_light.voice.spiritlight_pulse_3": { "sounds": [ { "name": "nusmp:spirit_light/voice/spiritlight_pulse_3", "stream": false, "attenuation_distance": 32} ]},
+  "spirit_light.voice.spiritlight_pulse_4": { "sounds": [ { "name": "nusmp:spirit_light/voice/spiritlight_pulse_4", "stream": false, "attenuation_distance": 32} ]},
+  "spirit_light.voice.spiritlight_damage_1": { "sounds": [ { "name": "nusmp:spirit_light/voice/spiritlight_damage_1", "stream": false, "attenuation_distance": 32} ]},
+  "spirit_light.voice.spiritlight_damage_2": { "sounds": [ { "name": "nusmp:spirit_light/voice/spiritlight_damage_2", "stream": false, "attenuation_distance": 32} ]},
+  "spirit_light.voice.spiritlight_damage_3": { "sounds": [ { "name": "nusmp:spirit_light/voice/spiritlight_damage_3", "stream": false, "attenuation_distance": 32} ]},
+  "spirit_light.voice.spiritlight_damage_4": { "sounds": [ { "name": "nusmp:spirit_light/voice/spiritlight_damage_4", "stream": false, "attenuation_distance": 32} ]},
+  "spirit_light.voice.spiritlight_low_1": { "sounds": [ { "name": "nusmp:spirit_light/voice/spiritlight_low_1", "stream": false, "attenuation_distance": 32} ]},
+  "spirit_light.voice.spiritlight_low_2": { "sounds": [ { "name": "nusmp:spirit_light/voice/spiritlight_low_2", "stream": false, "attenuation_distance": 32} ]},
+  "spirit_light.voice.spiritlight_low_3": { "sounds": [ { "name": "nusmp:spirit_light/voice/spiritlight_low_3", "stream": false, "attenuation_distance": 32} ]},
+  "spirit_light.voice.spiritlight_win_1": { "sounds": [ { "name": "nusmp:spirit_light/voice/spiritlight_win_1", "stream": false, "attenuation_distance": 32} ]},
+  "spirit_light.voice.spiritlight_win_2": { "sounds": [ { "name": "nusmp:spirit_light/voice/spiritlight_win_2", "stream": false, "attenuation_distance": 32} ]},
+  "spirit_light.voice.spiritlight_win_3": { "sounds": [ { "name": "nusmp:spirit_light/voice/spiritlight_win_3", "stream": false, "attenuation_distance": 32} ]},
+  "spirit_light.voice.spiritlight_death_1": { "sounds": [ { "name": "nusmp:spirit_light/voice/spiritlight_death_1", "stream": false, "attenuation_distance": 32} ]},
+  "spirit_light.voice.spiritlight_death_2": { "sounds": [ { "name": "nusmp:spirit_light/voice/spiritlight_death_2", "stream": false, "attenuation_distance": 32} ]},
+  "spirit_light.voice.spiritlight_idle_1": { "sounds": [ { "name": "nusmp:spirit_light/voice/spiritlight_idle_1", "stream": false, "attenuation_distance": 32} ]},
+  "spirit_light.voice.spiritlight_idle_2": { "sounds": [ { "name": "nusmp:spirit_light/voice/spiritlight_idle_2", "stream": false, "attenuation_distance": 32} ]},
   "zagred_seal": {
     "subtitle": "subtitles.entity.nusmp.zagred_seal",
     "sounds": [{ "name": "nusmp:entity/zagred/seal", "stream": true }]
@@ -191,6 +213,29 @@
   "spirit.dark.voice.feast_2": { "sounds": [ { "name": "nusmp:spirit/dark/voice/feast_2", "stream": false, "attenuation_distance": 32 } ] },
   "spirit.dark.voice.feast_3": { "sounds": [ { "name": "nusmp:spirit/dark/voice/feast_3", "stream": false, "attenuation_distance": 32 } ] },
   "spirit.dark.voice.feast_4": { "sounds": [ { "name": "nusmp:spirit/dark/voice/feast_4", "stream": false, "attenuation_distance": 32 } ] },
+  "spirit.dark.voice.idle_1": { "sounds": [ { "name": "nusmp:spirit/dark/voice/idle_1", "stream": false, "attenuation_distance": 32 } ] },
+  "spirit.dark.voice.idle_2": { "sounds": [ { "name": "nusmp:spirit/dark/voice/idle_2", "stream": false, "attenuation_distance": 32 } ] },
+  "spirit.dark.voice.idle_3": { "sounds": [ { "name": "nusmp:spirit/dark/voice/idle_3", "stream": false, "attenuation_distance": 32 } ] },
+  "spirit.dark.voice.idle_4": { "sounds": [ { "name": "nusmp:spirit/dark/voice/idle_4", "stream": false, "attenuation_distance": 32 } ] },
+  "spirit.dark.voice.idle_5": { "sounds": [ { "name": "nusmp:spirit/dark/voice/idle_5", "stream": false, "attenuation_distance": 32 } ] },
+  "spirit.dark.voice.idle_6": { "sounds": [ { "name": "nusmp:spirit/dark/voice/idle_6", "stream": false, "attenuation_distance": 32 } ] },
+  "spirit.dark.voice.low_1": { "sounds": [ { "name": "nusmp:spirit/dark/voice/low_1", "stream": false, "attenuation_distance": 32 } ] },
+  "spirit.dark.voice.low_2": { "sounds": [ { "name": "nusmp:spirit/dark/voice/low_2", "stream": false, "attenuation_distance": 32 } ] },
+  "spirit.dark.voice.low_3": { "sounds": [ { "name": "nusmp:spirit/dark/voice/low_3", "stream": false, "attenuation_distance": 32 } ] },
+  "spirit.dark.voice.low_4": { "sounds": [ { "name": "nusmp:spirit/dark/voice/low_4", "stream": false, "attenuation_distance": 32 } ] },
+  "spirit.dark.voice.kill_1": { "sounds": [ { "name": "nusmp:spirit/dark/voice/kill_1", "stream": false, "attenuation_distance": 32 } ] },
+  "spirit.dark.voice.kill_2": { "sounds": [ { "name": "nusmp:spirit/dark/voice/kill_2", "stream": false, "attenuation_distance": 32 } ] },
+  "spirit.dark.voice.kill_3": { "sounds": [ { "name": "nusmp:spirit/dark/voice/kill_3", "stream": false, "attenuation_distance": 32 } ] },
+  "spirit.dark.voice.kill_4": { "sounds": [ { "name": "nusmp:spirit/dark/voice/kill_4", "stream": false, "attenuation_distance": 32 } ] },
+  "spirit.dark.voice.kill_5": { "sounds": [ { "name": "nusmp:spirit/dark/voice/kill_5", "stream": false, "attenuation_distance": 32 } ] },
+  "spirit.dark.voice.died_1": { "sounds": [ { "name": "nusmp:spirit/dark/voice/died_1", "stream": false, "attenuation_distance": 32 } ] },
+  "spirit.dark.voice.died_2": { "sounds": [ { "name": "nusmp:spirit/dark/voice/died_2", "stream": false, "attenuation_distance": 32 } ] },
+  "spirit.dark.voice.died_3": { "sounds": [ { "name": "nusmp:spirit/dark/voice/died_3", "stream": false, "attenuation_distance": 32 } ] },
+  "spirit.dark.voice.power_1": { "sounds": [ { "name": "nusmp:spirit/dark/voice/power_1", "stream": false, "attenuation_distance": 32 } ] },
+  "spirit.dark.voice.power_2": { "sounds": [ { "name": "nusmp:spirit/dark/voice/power_2", "stream": false, "attenuation_distance": 32 } ] },
+  "spirit.dark.voice.power_3": { "sounds": [ { "name": "nusmp:spirit/dark/voice/power_3", "stream": false, "attenuation_distance": 32 } ] },
+  "spirit.dark.voice.power_end_1": { "sounds": [ { "name": "nusmp:spirit/dark/voice/power_end_1", "stream": false, "attenuation_distance": 32 } ] },
+  "spirit.dark.voice.power_end_2": { "sounds": [ { "name": "nusmp:spirit/dark/voice/power_end_2", "stream": false, "attenuation_distance": 32 } ] },
   "mob.goblin.ambient": {
     "subtitle": "subtitles.nusmp.mob.goblin.ambient",
     "sounds": [
@@ -2244,6 +2289,414 @@
       { "name": "nusmp:voice/undine/undine_died_1", "stream": false }
     ]
   },
+  "voice.undine_cast_6": {
+    "subtitle": "subtitles.nusmp.voice.undine_cast_6",
+    "sounds": [
+      { "name": "nusmp:voice/undine/undine_cast_6", "stream": false }
+    ]
+  },
+  "voice.undine_cast_7": {
+    "subtitle": "subtitles.nusmp.voice.undine_cast_7",
+    "sounds": [
+      { "name": "nusmp:voice/undine/undine_cast_7", "stream": false }
+    ]
+  },
+  "voice.undine_cast_8": {
+    "subtitle": "subtitles.nusmp.voice.undine_cast_8",
+    "sounds": [
+      { "name": "nusmp:voice/undine/undine_cast_8", "stream": false }
+    ]
+  },
+  "voice.undine_wave_1": {
+    "subtitle": "subtitles.nusmp.voice.undine_wave_1",
+    "sounds": [
+      { "name": "nusmp:voice/undine/undine_wave_1", "stream": false }
+    ]
+  },
+  "voice.undine_wave_2": {
+    "subtitle": "subtitles.nusmp.voice.undine_wave_2",
+    "sounds": [
+      { "name": "nusmp:voice/undine/undine_wave_2", "stream": false }
+    ]
+  },
+  "voice.undine_wave_3": {
+    "subtitle": "subtitles.nusmp.voice.undine_wave_3",
+    "sounds": [
+      { "name": "nusmp:voice/undine/undine_wave_3", "stream": false }
+    ]
+  },
+  "voice.undine_wave_4": {
+    "subtitle": "subtitles.nusmp.voice.undine_wave_4",
+    "sounds": [
+      { "name": "nusmp:voice/undine/undine_wave_4", "stream": false }
+    ]
+  },
+  "voice.undine_hurt_1": {
+    "subtitle": "subtitles.nusmp.voice.undine_hurt_1",
+    "sounds": [
+      { "name": "nusmp:voice/undine/undine_hurt_1", "stream": false }
+    ]
+  },
+  "voice.undine_hurt_2": {
+    "subtitle": "subtitles.nusmp.voice.undine_hurt_2",
+    "sounds": [
+      { "name": "nusmp:voice/undine/undine_hurt_2", "stream": false }
+    ]
+  },
+  "voice.undine_hurt_3": {
+    "subtitle": "subtitles.nusmp.voice.undine_hurt_3",
+    "sounds": [
+      { "name": "nusmp:voice/undine/undine_hurt_3", "stream": false }
+    ]
+  },
+  "voice.undine_hurt_4": {
+    "subtitle": "subtitles.nusmp.voice.undine_hurt_4",
+    "sounds": [
+      { "name": "nusmp:voice/undine/undine_hurt_4", "stream": false }
+    ]
+  },
+  "voice.undine_hurt_5": {
+    "subtitle": "subtitles.nusmp.voice.undine_hurt_5",
+    "sounds": [
+      { "name": "nusmp:voice/undine/undine_hurt_5", "stream": false }
+    ]
+  },
+  "voice.undine_idle_1": {
+    "subtitle": "subtitles.nusmp.voice.undine_idle_1",
+    "sounds": [
+      { "name": "nusmp:voice/undine/undine_idle_1", "stream": false }
+    ]
+  },
+  "voice.undine_idle_2": {
+    "subtitle": "subtitles.nusmp.voice.undine_idle_2",
+    "sounds": [
+      { "name": "nusmp:voice/undine/undine_idle_2", "stream": false }
+    ]
+  },
+  "voice.undine_idle_3": {
+    "subtitle": "subtitles.nusmp.voice.undine_idle_3",
+    "sounds": [
+      { "name": "nusmp:voice/undine/undine_idle_3", "stream": false }
+    ]
+  },
+  "voice.undine_idle_4": {
+    "subtitle": "subtitles.nusmp.voice.undine_idle_4",
+    "sounds": [
+      { "name": "nusmp:voice/undine/undine_idle_4", "stream": false }
+    ]
+  },
+  "voice.undine_idle_5": {
+    "subtitle": "subtitles.nusmp.voice.undine_idle_5",
+    "sounds": [
+      { "name": "nusmp:voice/undine/undine_idle_5", "stream": false }
+    ]
+  },
+  "voice.undine_idle_6": {
+    "subtitle": "subtitles.nusmp.voice.undine_idle_6",
+    "sounds": [
+      { "name": "nusmp:voice/undine/undine_idle_6", "stream": false }
+    ]
+  },
+  "voice.undine_lowhp_1": {
+    "subtitle": "subtitles.nusmp.voice.undine_lowhp_1",
+    "sounds": [
+      { "name": "nusmp:voice/undine/undine_lowhp_1", "stream": false }
+    ]
+  },
+  "voice.undine_lowhp_2": {
+    "subtitle": "subtitles.nusmp.voice.undine_lowhp_2",
+    "sounds": [
+      { "name": "nusmp:voice/undine/undine_lowhp_2", "stream": false }
+    ]
+  },
+  "voice.undine_lowhp_3": {
+    "subtitle": "subtitles.nusmp.voice.undine_lowhp_3",
+    "sounds": [
+      { "name": "nusmp:voice/undine/undine_lowhp_3", "stream": false }
+    ]
+  },
+  "voice.undine_lowhp_4": {
+    "subtitle": "subtitles.nusmp.voice.undine_lowhp_4",
+    "sounds": [
+      { "name": "nusmp:voice/undine/undine_lowhp_4", "stream": false }
+    ]
+  },
+  "voice.undine_win_1": {
+    "subtitle": "subtitles.nusmp.voice.undine_win_1",
+    "sounds": [
+      { "name": "nusmp:voice/undine/undine_win_1", "stream": false }
+    ]
+  },
+  "voice.undine_win_2": {
+    "subtitle": "subtitles.nusmp.voice.undine_win_2",
+    "sounds": [
+      { "name": "nusmp:voice/undine/undine_win_2", "stream": false }
+    ]
+  },
+  "voice.undine_win_3": {
+    "subtitle": "subtitles.nusmp.voice.undine_win_3",
+    "sounds": [
+      { "name": "nusmp:voice/undine/undine_win_3", "stream": false }
+    ]
+  },
+  "voice.undine_win_4": {
+    "subtitle": "subtitles.nusmp.voice.undine_win_4",
+    "sounds": [
+      { "name": "nusmp:voice/undine/undine_win_4", "stream": false }
+    ]
+  },
+  "voice.undine_died_2": {
+    "subtitle": "subtitles.nusmp.voice.undine_died_2",
+    "sounds": [
+      { "name": "nusmp:voice/undine/undine_died_2", "stream": false }
+    ]
+  },
+  "voice.shishou_claim_1": {
+    "subtitle": "subtitles.nusmp.voice.shishou_claim_1",
+    "sounds": [
+      { "name": "nusmp:voice/shishou/shishou_claim_1", "stream": false }
+    ]
+  },
+  "voice.shishou_claim_2": {
+    "subtitle": "subtitles.nusmp.voice.shishou_claim_2",
+    "sounds": [
+      { "name": "nusmp:voice/shishou/shishou_claim_2", "stream": false }
+    ]
+  },
+  "voice.shishou_claim_3": {
+    "subtitle": "subtitles.nusmp.voice.shishou_claim_3",
+    "sounds": [
+      { "name": "nusmp:voice/shishou/shishou_claim_3", "stream": false }
+    ]
+  },
+  "voice.shishou_recall_1": {
+    "subtitle": "subtitles.nusmp.voice.shishou_recall_1",
+    "sounds": [
+      { "name": "nusmp:voice/shishou/shishou_recall_1", "stream": false }
+    ]
+  },
+  "voice.shishou_recall_2": {
+    "subtitle": "subtitles.nusmp.voice.shishou_recall_2",
+    "sounds": [
+      { "name": "nusmp:voice/shishou/shishou_recall_2", "stream": false }
+    ]
+  },
+  "voice.shishou_throw_1": {
+    "subtitle": "subtitles.nusmp.voice.shishou_throw_1",
+    "sounds": [
+      { "name": "nusmp:voice/shishou/shishou_throw_1", "stream": false }
+    ]
+  },
+  "voice.shishou_throw_2": {
+    "subtitle": "subtitles.nusmp.voice.shishou_throw_2",
+    "sounds": [
+      { "name": "nusmp:voice/shishou/shishou_throw_2", "stream": false }
+    ]
+  },
+  "voice.shishou_levelup_1": {
+    "subtitle": "subtitles.nusmp.voice.shishou_levelup_1",
+    "sounds": [
+      { "name": "nusmp:voice/shishou/shishou_levelup_1", "stream": false }
+    ]
+  },
+  "voice.shishou_levelup_2": {
+    "subtitle": "subtitles.nusmp.voice.shishou_levelup_2",
+    "sounds": [
+      { "name": "nusmp:voice/shishou/shishou_levelup_2", "stream": false }
+    ]
+  },
+  "voice.shishou_levelup_3": {
+    "subtitle": "subtitles.nusmp.voice.shishou_levelup_3",
+    "sounds": [
+      { "name": "nusmp:voice/shishou/shishou_levelup_3", "stream": false }
+    ]
+  },
+  "voice.shishou_skill_utility_1": {
+    "subtitle": "subtitles.nusmp.voice.shishou_skill_utility_1",
+    "sounds": [
+      { "name": "nusmp:voice/shishou/shishou_skill_utility_1", "stream": false }
+    ]
+  },
+  "voice.shishou_skill_utility_2": {
+    "subtitle": "subtitles.nusmp.voice.shishou_skill_utility_2",
+    "sounds": [
+      { "name": "nusmp:voice/shishou/shishou_skill_utility_2", "stream": false }
+    ]
+  },
+  "voice.shishou_skill_magic_1": {
+    "subtitle": "subtitles.nusmp.voice.shishou_skill_magic_1",
+    "sounds": [
+      { "name": "nusmp:voice/shishou/shishou_skill_magic_1", "stream": false }
+    ]
+  },
+  "voice.shishou_skill_magic_2": {
+    "subtitle": "subtitles.nusmp.voice.shishou_skill_magic_2",
+    "sounds": [
+      { "name": "nusmp:voice/shishou/shishou_skill_magic_2", "stream": false }
+    ]
+  },
+  "voice.shishou_skill_combat_1": {
+    "subtitle": "subtitles.nusmp.voice.shishou_skill_combat_1",
+    "sounds": [
+      { "name": "nusmp:voice/shishou/shishou_skill_combat_1", "stream": false }
+    ]
+  },
+  "voice.shishou_skill_combat_2": {
+    "subtitle": "subtitles.nusmp.voice.shishou_skill_combat_2",
+    "sounds": [
+      { "name": "nusmp:voice/shishou/shishou_skill_combat_2", "stream": false }
+    ]
+  },
+  "voice.shishou_skill_space_1": {
+    "subtitle": "subtitles.nusmp.voice.shishou_skill_space_1",
+    "sounds": [
+      { "name": "nusmp:voice/shishou/shishou_skill_space_1", "stream": false }
+    ]
+  },
+  "voice.shishou_skill_space_2": {
+    "subtitle": "subtitles.nusmp.voice.shishou_skill_space_2",
+    "sounds": [
+      { "name": "nusmp:voice/shishou/shishou_skill_space_2", "stream": false }
+    ]
+  },
+  "voice.shishou_eat_1": {
+    "subtitle": "subtitles.nusmp.voice.shishou_eat_1",
+    "sounds": [
+      { "name": "nusmp:voice/shishou/shishou_eat_1", "stream": false }
+    ]
+  },
+  "voice.shishou_eat_2": {
+    "subtitle": "subtitles.nusmp.voice.shishou_eat_2",
+    "sounds": [
+      { "name": "nusmp:voice/shishou/shishou_eat_2", "stream": false }
+    ]
+  },
+  "voice.shishou_eat_3": {
+    "subtitle": "subtitles.nusmp.voice.shishou_eat_3",
+    "sounds": [
+      { "name": "nusmp:voice/shishou/shishou_eat_3", "stream": false }
+    ]
+  },
+  "voice.shishou_lowmana_1": {
+    "subtitle": "subtitles.nusmp.voice.shishou_lowmana_1",
+    "sounds": [
+      { "name": "nusmp:voice/shishou/shishou_lowmana_1", "stream": false }
+    ]
+  },
+  "voice.shishou_lowmana_2": {
+    "subtitle": "subtitles.nusmp.voice.shishou_lowmana_2",
+    "sounds": [
+      { "name": "nusmp:voice/shishou/shishou_lowmana_2", "stream": false }
+    ]
+  },
+  "voice.shishou_dormant_1": {
+    "subtitle": "subtitles.nusmp.voice.shishou_dormant_1",
+    "sounds": [
+      { "name": "nusmp:voice/shishou/shishou_dormant_1", "stream": false }
+    ]
+  },
+  "voice.shishou_dormant_2": {
+    "subtitle": "subtitles.nusmp.voice.shishou_dormant_2",
+    "sounds": [
+      { "name": "nusmp:voice/shishou/shishou_dormant_2", "stream": false }
+    ]
+  },
+  "voice.shishou_danger_1": {
+    "subtitle": "subtitles.nusmp.voice.shishou_danger_1",
+    "sounds": [
+      { "name": "nusmp:voice/shishou/shishou_danger_1", "stream": false }
+    ]
+  },
+  "voice.shishou_danger_2": {
+    "subtitle": "subtitles.nusmp.voice.shishou_danger_2",
+    "sounds": [
+      { "name": "nusmp:voice/shishou/shishou_danger_2", "stream": false }
+    ]
+  },
+  "voice.shishou_danger_3": {
+    "subtitle": "subtitles.nusmp.voice.shishou_danger_3",
+    "sounds": [
+      { "name": "nusmp:voice/shishou/shishou_danger_3", "stream": false }
+    ]
+  },
+  "voice.shishou_thief_1": {
+    "subtitle": "subtitles.nusmp.voice.shishou_thief_1",
+    "sounds": [
+      { "name": "nusmp:voice/shishou/shishou_thief_1", "stream": false }
+    ]
+  },
+  "voice.shishou_thief_2": {
+    "subtitle": "subtitles.nusmp.voice.shishou_thief_2",
+    "sounds": [
+      { "name": "nusmp:voice/shishou/shishou_thief_2", "stream": false }
+    ]
+  },
+  "voice.shishou_appraise_1": {
+    "subtitle": "subtitles.nusmp.voice.shishou_appraise_1",
+    "sounds": [
+      { "name": "nusmp:voice/shishou/shishou_appraise_1", "stream": false }
+    ]
+  },
+  "voice.shishou_appraise_2": {
+    "subtitle": "subtitles.nusmp.voice.shishou_appraise_2",
+    "sounds": [
+      { "name": "nusmp:voice/shishou/shishou_appraise_2", "stream": false }
+    ]
+  },
+  "voice.shishou_appraise_3": {
+    "subtitle": "subtitles.nusmp.voice.shishou_appraise_3",
+    "sounds": [
+      { "name": "nusmp:voice/shishou/shishou_appraise_3", "stream": false }
+    ]
+  },
+  "voice.shishou_barrier_on_1": {
+    "subtitle": "subtitles.nusmp.voice.shishou_barrier_on_1",
+    "sounds": [
+      { "name": "nusmp:voice/shishou/shishou_barrier_on_1", "stream": false }
+    ]
+  },
+  "voice.shishou_barrier_off_1": {
+    "subtitle": "subtitles.nusmp.voice.shishou_barrier_off_1",
+    "sounds": [
+      { "name": "nusmp:voice/shishou/shishou_barrier_off_1", "stream": false }
+    ]
+  },
+  "voice.shishou_victory_1": {
+    "subtitle": "subtitles.nusmp.voice.shishou_victory_1",
+    "sounds": [
+      { "name": "nusmp:voice/shishou/shishou_victory_1", "stream": false }
+    ]
+  },
+  "voice.shishou_victory_2": {
+    "subtitle": "subtitles.nusmp.voice.shishou_victory_2",
+    "sounds": [
+      { "name": "nusmp:voice/shishou/shishou_victory_2", "stream": false }
+    ]
+  },
+  "voice.shishou_idle_1": {
+    "subtitle": "subtitles.nusmp.voice.shishou_idle_1",
+    "sounds": [
+      { "name": "nusmp:voice/shishou/shishou_idle_1", "stream": false }
+    ]
+  },
+  "voice.shishou_idle_2": {
+    "subtitle": "subtitles.nusmp.voice.shishou_idle_2",
+    "sounds": [
+      { "name": "nusmp:voice/shishou/shishou_idle_2", "stream": false }
+    ]
+  },
+  "voice.shishou_idle_3": {
+    "subtitle": "subtitles.nusmp.voice.shishou_idle_3",
+    "sounds": [
+      { "name": "nusmp:voice/shishou/shishou_idle_3", "stream": false }
+    ]
+  },
+  "voice.shishou_idle_4": {
+    "subtitle": "subtitles.nusmp.voice.shishou_idle_4",
+    "sounds": [
+      { "name": "nusmp:voice/shishou/shishou_idle_4", "stream": false }
+    ]
+  },
   "undine.ambient": {
     "subtitle": "subtitles.nusmp.undine.ambient",
     "sounds": [
@@ -2410,5 +2863,227 @@
       { "name": "nusmp:sylph/pout_1" },
       { "name": "nusmp:sylph/pout_2" }
     ]
+  },
+  "voice.gnome_lowhp_2": { "sounds": [ { "name": "nusmp:voice/gnome/gnome_lowhp_2", "stream": false } ] },
+  "voice.gnome_victory_1": { "sounds": [ { "name": "nusmp:voice/gnome/gnome_victory_1", "stream": false } ] },
+  "voice.gnome_victory_2": { "sounds": [ { "name": "nusmp:voice/gnome/gnome_victory_2", "stream": false } ] },
+  "voice.gnome_death_1": { "sounds": [ { "name": "nusmp:voice/gnome/gnome_death_1", "stream": false } ] },
+  "voice.gnome_doze_1": { "sounds": [ { "name": "nusmp:voice/gnome/gnome_doze_1", "stream": false } ] },
+  "voice.gnome_idle_1": { "sounds": [ { "name": "nusmp:voice/gnome/gnome_idle_1", "stream": false } ] },
+  "voice.sylph_link_3": {
+    "sounds": [{ "name": "nusmp:voice/sylph/sylph_link_3", "stream": false }],
+    "subtitle": "subtitles.nusmp.voice.sylph_link_3"
+  },
+  "voice.sylph_unlink_1": {
+    "sounds": [{ "name": "nusmp:voice/sylph/sylph_unlink_1", "stream": false }],
+    "subtitle": "subtitles.nusmp.voice.sylph_unlink_1"
+  },
+  "voice.sylph_unlink_2": {
+    "sounds": [{ "name": "nusmp:voice/sylph/sylph_unlink_2", "stream": false }],
+    "subtitle": "subtitles.nusmp.voice.sylph_unlink_2"
+  },
+  "voice.sylph_unlink_3": {
+    "sounds": [{ "name": "nusmp:voice/sylph/sylph_unlink_3", "stream": false }],
+    "subtitle": "subtitles.nusmp.voice.sylph_unlink_3"
+  },
+  "voice.sylph_cast_1": {
+    "sounds": [{ "name": "nusmp:voice/sylph/sylph_cast_1", "stream": false }],
+    "subtitle": "subtitles.nusmp.voice.sylph_cast_1"
+  },
+  "voice.sylph_cast_2": {
+    "sounds": [{ "name": "nusmp:voice/sylph/sylph_cast_2", "stream": false }],
+    "subtitle": "subtitles.nusmp.voice.sylph_cast_2"
+  },
+  "voice.sylph_cast_3": {
+    "sounds": [{ "name": "nusmp:voice/sylph/sylph_cast_3", "stream": false }],
+    "subtitle": "subtitles.nusmp.voice.sylph_cast_3"
+  },
+  "voice.sylph_cast_4": {
+    "sounds": [{ "name": "nusmp:voice/sylph/sylph_cast_4", "stream": false }],
+    "subtitle": "subtitles.nusmp.voice.sylph_cast_4"
+  },
+  "voice.sylph_cast_5": {
+    "sounds": [{ "name": "nusmp:voice/sylph/sylph_cast_5", "stream": false }],
+    "subtitle": "subtitles.nusmp.voice.sylph_cast_5"
+  },
+  "voice.sylph_cast_6": {
+    "sounds": [{ "name": "nusmp:voice/sylph/sylph_cast_6", "stream": false }],
+    "subtitle": "subtitles.nusmp.voice.sylph_cast_6"
+  },
+  "voice.sylph_cast_7": {
+    "sounds": [{ "name": "nusmp:voice/sylph/sylph_cast_7", "stream": false }],
+    "subtitle": "subtitles.nusmp.voice.sylph_cast_7"
+  },
+  "voice.sylph_big_1": {
+    "sounds": [{ "name": "nusmp:voice/sylph/sylph_big_1", "stream": false }],
+    "subtitle": "subtitles.nusmp.voice.sylph_big_1"
+  },
+  "voice.sylph_big_2": {
+    "sounds": [{ "name": "nusmp:voice/sylph/sylph_big_2", "stream": false }],
+    "subtitle": "subtitles.nusmp.voice.sylph_big_2"
+  },
+  "voice.sylph_big_3": {
+    "sounds": [{ "name": "nusmp:voice/sylph/sylph_big_3", "stream": false }],
+    "subtitle": "subtitles.nusmp.voice.sylph_big_3"
+  },
+  "voice.sylph_shout_1": {
+    "sounds": [{ "name": "nusmp:voice/sylph/sylph_shout_1", "stream": false }],
+    "subtitle": "subtitles.nusmp.voice.sylph_shout_1"
+  },
+  "voice.sylph_shout_2": {
+    "sounds": [{ "name": "nusmp:voice/sylph/sylph_shout_2", "stream": false }],
+    "subtitle": "subtitles.nusmp.voice.sylph_shout_2"
+  },
+  "voice.sylph_shout_3": {
+    "sounds": [{ "name": "nusmp:voice/sylph/sylph_shout_3", "stream": false }],
+    "subtitle": "subtitles.nusmp.voice.sylph_shout_3"
+  },
+  "voice.sylph_hurt_1": {
+    "sounds": [{ "name": "nusmp:voice/sylph/sylph_hurt_1", "stream": false }],
+    "subtitle": "subtitles.nusmp.voice.sylph_hurt_1"
+  },
+  "voice.sylph_hurt_2": {
+    "sounds": [{ "name": "nusmp:voice/sylph/sylph_hurt_2", "stream": false }],
+    "subtitle": "subtitles.nusmp.voice.sylph_hurt_2"
+  },
+  "voice.sylph_hurt_3": {
+    "sounds": [{ "name": "nusmp:voice/sylph/sylph_hurt_3", "stream": false }],
+    "subtitle": "subtitles.nusmp.voice.sylph_hurt_3"
+  },
+  "voice.sylph_hurt_4": {
+    "sounds": [{ "name": "nusmp:voice/sylph/sylph_hurt_4", "stream": false }],
+    "subtitle": "subtitles.nusmp.voice.sylph_hurt_4"
+  },
+  "voice.sylph_startle_1": {
+    "sounds": [{ "name": "nusmp:voice/sylph/sylph_startle_1", "stream": false }],
+    "subtitle": "subtitles.nusmp.voice.sylph_startle_1"
+  },
+  "voice.sylph_startle_2": {
+    "sounds": [{ "name": "nusmp:voice/sylph/sylph_startle_2", "stream": false }],
+    "subtitle": "subtitles.nusmp.voice.sylph_startle_2"
+  },
+  "voice.sylph_idle_1": {
+    "sounds": [{ "name": "nusmp:voice/sylph/sylph_idle_1", "stream": false }],
+    "subtitle": "subtitles.nusmp.voice.sylph_idle_1"
+  },
+  "voice.sylph_idle_2": {
+    "sounds": [{ "name": "nusmp:voice/sylph/sylph_idle_2", "stream": false }],
+    "subtitle": "subtitles.nusmp.voice.sylph_idle_2"
+  },
+  "voice.sylph_idle_3": {
+    "sounds": [{ "name": "nusmp:voice/sylph/sylph_idle_3", "stream": false }],
+    "subtitle": "subtitles.nusmp.voice.sylph_idle_3"
+  },
+  "voice.sylph_idle_4": {
+    "sounds": [{ "name": "nusmp:voice/sylph/sylph_idle_4", "stream": false }],
+    "subtitle": "subtitles.nusmp.voice.sylph_idle_4"
+  },
+  "voice.sylph_idle_5": {
+    "sounds": [{ "name": "nusmp:voice/sylph/sylph_idle_5", "stream": false }],
+    "subtitle": "subtitles.nusmp.voice.sylph_idle_5"
+  },
+  "voice.sylph_idle_6": {
+    "sounds": [{ "name": "nusmp:voice/sylph/sylph_idle_6", "stream": false }],
+    "subtitle": "subtitles.nusmp.voice.sylph_idle_6"
+  },
+  "voice.sylph_idle_7": {
+    "sounds": [{ "name": "nusmp:voice/sylph/sylph_idle_7", "stream": false }],
+    "subtitle": "subtitles.nusmp.voice.sylph_idle_7"
+  },
+  "voice.sylph_worry_1": {
+    "sounds": [{ "name": "nusmp:voice/sylph/sylph_worry_1", "stream": false }],
+    "subtitle": "subtitles.nusmp.voice.sylph_worry_1"
+  },
+  "voice.sylph_worry_2": {
+    "sounds": [{ "name": "nusmp:voice/sylph/sylph_worry_2", "stream": false }],
+    "subtitle": "subtitles.nusmp.voice.sylph_worry_2"
+  },
+  "voice.sylph_worry_3": {
+    "sounds": [{ "name": "nusmp:voice/sylph/sylph_worry_3", "stream": false }],
+    "subtitle": "subtitles.nusmp.voice.sylph_worry_3"
+  },
+  "voice.sylph_worry_4": {
+    "sounds": [{ "name": "nusmp:voice/sylph/sylph_worry_4", "stream": false }],
+    "subtitle": "subtitles.nusmp.voice.sylph_worry_4"
+  },
+  "voice.sylph_cheer_1": {
+    "sounds": [{ "name": "nusmp:voice/sylph/sylph_cheer_1", "stream": false }],
+    "subtitle": "subtitles.nusmp.voice.sylph_cheer_1"
+  },
+  "voice.sylph_cheer_2": {
+    "sounds": [{ "name": "nusmp:voice/sylph/sylph_cheer_2", "stream": false }],
+    "subtitle": "subtitles.nusmp.voice.sylph_cheer_2"
+  },
+  "voice.sylph_cheer_3": {
+    "sounds": [{ "name": "nusmp:voice/sylph/sylph_cheer_3", "stream": false }],
+    "subtitle": "subtitles.nusmp.voice.sylph_cheer_3"
+  },
+  "voice.sylph_cheer_4": {
+    "sounds": [{ "name": "nusmp:voice/sylph/sylph_cheer_4", "stream": false }],
+    "subtitle": "subtitles.nusmp.voice.sylph_cheer_4"
+  },
+  "voice.sylph_cheer_5": {
+    "sounds": [{ "name": "nusmp:voice/sylph/sylph_cheer_5", "stream": false }],
+    "subtitle": "subtitles.nusmp.voice.sylph_cheer_5"
+  },
+  "voice.sylph_sad_1": {
+    "sounds": [{ "name": "nusmp:voice/sylph/sylph_sad_1", "stream": false }],
+    "subtitle": "subtitles.nusmp.voice.sylph_sad_1"
+  },
+  "voice.sylph_sad_2": {
+    "sounds": [{ "name": "nusmp:voice/sylph/sylph_sad_2", "stream": false }],
+    "subtitle": "subtitles.nusmp.voice.sylph_sad_2"
+  },
+  "voice.sylph_sad_3": {
+    "sounds": [{ "name": "nusmp:voice/sylph/sylph_sad_3", "stream": false }],
+    "subtitle": "subtitles.nusmp.voice.sylph_sad_3"
+  },
+  "voice.sylph_giggle_1": {
+    "sounds": [{ "name": "nusmp:voice/sylph/sylph_giggle_1", "stream": false }],
+    "subtitle": "subtitles.nusmp.voice.sylph_giggle_1"
+  },
+  "voice.sylph_giggle_2": {
+    "sounds": [{ "name": "nusmp:voice/sylph/sylph_giggle_2", "stream": false }],
+    "subtitle": "subtitles.nusmp.voice.sylph_giggle_2"
+  },
+  "voice.sylph_giggle_3": {
+    "sounds": [{ "name": "nusmp:voice/sylph/sylph_giggle_3", "stream": false }],
+    "subtitle": "subtitles.nusmp.voice.sylph_giggle_3"
+  },
+  "voice.sylph_giggle_4": {
+    "sounds": [{ "name": "nusmp:voice/sylph/sylph_giggle_4", "stream": false }],
+    "subtitle": "subtitles.nusmp.voice.sylph_giggle_4"
+  },
+  "voice.sylph_pout_1": {
+    "sounds": [{ "name": "nusmp:voice/sylph/sylph_pout_1", "stream": false }],
+    "subtitle": "subtitles.nusmp.voice.sylph_pout_1"
+  },
+  "voice.sylph_pout_2": {
+    "sounds": [{ "name": "nusmp:voice/sylph/sylph_pout_2", "stream": false }],
+    "subtitle": "subtitles.nusmp.voice.sylph_pout_2"
+  },
+  "voice.sylph_smug_1": {
+    "sounds": [{ "name": "nusmp:voice/sylph/sylph_smug_1", "stream": false }],
+    "subtitle": "subtitles.nusmp.voice.sylph_smug_1"
+  },
+  "voice.sylph_smug_2": {
+    "sounds": [{ "name": "nusmp:voice/sylph/sylph_smug_2", "stream": false }],
+    "subtitle": "subtitles.nusmp.voice.sylph_smug_2"
+  },
+  "voice.sylph_sleepy_1": {
+    "sounds": [{ "name": "nusmp:voice/sylph/sylph_sleepy_1", "stream": false }],
+    "subtitle": "subtitles.nusmp.voice.sylph_sleepy_1"
+  },
+  "voice.sylph_sleepy_2": {
+    "sounds": [{ "name": "nusmp:voice/sylph/sylph_sleepy_2", "stream": false }],
+    "subtitle": "subtitles.nusmp.voice.sylph_sleepy_2"
+  },
+  "voice.sylph_victory_1": {
+    "sounds": [{ "name": "nusmp:voice/sylph/sylph_victory_1", "stream": false }],
+    "subtitle": "subtitles.nusmp.voice.sylph_victory_1"
+  },
+  "voice.sylph_victory_2": {
+    "sounds": [{ "name": "nusmp:voice/sylph/sylph_victory_2", "stream": false }],
+    "subtitle": "subtitles.nusmp.voice.sylph_victory_2"
   }
 }

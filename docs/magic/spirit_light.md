@@ -81,7 +81,7 @@ A **new** synthesised set (`tools/gen_spirit_light_sounds.py`, numpy plus ffmpeg
 
 The seraph (and only the seraph) speaks, in a clear, resonant, gentle voice: **35 short lines** are written (`tools/audio/spirit_light_lines.json`, text also in `tools/lang/spirit_light_voice.json`), cues greeting, farewell, rise, settle, beam, pulse, damage, owner low health, owner wins, owner dies and idle. The cub never speaks (creature sounds only).
 
-**State of the audio: 13 of 35 lines have a real recording; 22 have none yet.** The voice account ran out of credits (the service answered "quota of 10000, 4 credits remaining") after 13 lines, and it also rate-limited earlier in the session. Nothing was faked: a line without an ogg file is **not registered as a sound event and is never spoken**; for a cue that has no recorded line the server plays the synthesised cue sound instead (`LightMoodRules.fallbackSound`, covered by `LightMoodRulesTest`).
+**State of the audio: all 35 lines have a real recording (3.34.0).** 13 were recorded in the first run, which then ran out of credits; the other 22 (beam 2-5, pulse, damage, low, win, death, idle) were recorded in 3.34.0 with the same voice (`eiNgkRczHJmif3gxSoyz`) and model (`eleven_v4`), one take each. A line without an ogg file is still **not registered as a sound event and is never spoken**, and a cue with no recorded line still plays the synthesised cue sound (`LightMoodRules.fallbackSound`, covered by `LightMoodRulesTest`).
 
 | Cue | Lines written | Lines recorded |
 |---|---|---|
@@ -89,21 +89,19 @@ The seraph (and only the seraph) speaks, in a clear, resonant, gentle voice: **3
 | farewell | 3 | 3 |
 | rise | 3 | 3 |
 | settle | 2 | 2 |
-| beam | 5 | 1 |
-| pulse | 4 | 0 |
-| damage | 4 | 0 |
-| low | 3 | 0 |
-| win | 3 | 0 |
-| death | 2 | 0 |
-| idle | 2 | 0 |
+| beam | 5 | 5 |
+| pulse | 4 | 4 |
+| damage | 4 | 4 |
+| low | 3 | 3 |
+| win | 3 | 3 |
+| death | 2 | 2 |
+| idle | 2 | 2 |
 
-Missing lines (ids, text in the manifest): `spiritlight_beam_2`, `spiritlight_beam_3`, `spiritlight_beam_4`, `spiritlight_beam_5`, `spiritlight_pulse_1`, `spiritlight_pulse_2`, `spiritlight_pulse_3`, `spiritlight_pulse_4`, `spiritlight_damage_1`, `spiritlight_damage_2`, `spiritlight_damage_3`, `spiritlight_damage_4`, `spiritlight_low_1`, `spiritlight_low_2`, `spiritlight_low_3`, `spiritlight_win_1`, `spiritlight_win_2`, `spiritlight_win_3`, `spiritlight_death_1`, `spiritlight_death_2`, `spiritlight_idle_1`, `spiritlight_idle_2`.
-
-**One command to finish it** once credits are back: generate every missing line (the `prompt` field of the manifest, voice `eiNgkRczHJmif3gxSoyz`, model `eleven_v4`, one take each), save each as `<id>.mp3` in one folder, then run
+To redo a line: generate it (the `prompt` field of the manifest, voice and model above), save it as `<id>.mp3` in one folder, then run
 
     python3 -B tools/audio/spirit_light_voice.py <that folder>
 
-It converts each take (mono, 32 kHz, silence trimmed, about -16 LUFS, Ogg Vorbis q3), writes `sounds/spirit_light/voice/<id>.ogg`, registers exactly the lines that now have a file in `sounds.json` and in the generated `SpiritLightVoiceLines.java`, and updates the report. `--refresh` only re-registers. Total size of the 13 recorded files: about 362 KB (limit about 3 MB for all 35).
+It converts each take (mono, 32 kHz, silence trimmed, about -16 LUFS, Ogg Vorbis q3), writes `sounds/spirit_light/voice/<id>.ogg`, registers exactly the lines that have a file in `sounds.json` and in the generated `SpiritLightVoiceLines.java`, and updates the report. `--refresh` only re-registers. Total size of the 35 files: about 942 KB (limit about 3 MB).
 
 How the voice is played: the server picks a line with `LightMoodRules.line` (never the same one twice in a row, per-cue cooldown), and sends a `Say` packet only to players within **32 blocks**, **at most one line per 4 seconds per listener**, through the existing `VoiceLimiter`; the client plays it positionally from the seraph in the voice category and honours the voice on/off and volume settings.
 

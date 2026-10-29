@@ -19,6 +19,18 @@
   "bytes": 34678,
   "seconds": 4.2
  },
+ "died_1": {
+  "bytes": 23868,
+  "seconds": 2.7
+ },
+ "died_2": {
+  "bytes": 32185,
+  "seconds": 4.0
+ },
+ "died_3": {
+  "bytes": 25682,
+  "seconds": 2.93
+ },
  "feast_1": {
   "bytes": 21404,
   "seconds": 2.83
@@ -51,6 +63,50 @@
   "bytes": 18581,
   "seconds": 2.47
  },
+ "idle_1": {
+  "bytes": 34328,
+  "seconds": 4.2
+ },
+ "idle_2": {
+  "bytes": 39756,
+  "seconds": 4.8
+ },
+ "idle_3": {
+  "bytes": 21958,
+  "seconds": 2.51
+ },
+ "idle_4": {
+  "bytes": 30101,
+  "seconds": 3.32
+ },
+ "idle_5": {
+  "bytes": 33676,
+  "seconds": 4.4
+ },
+ "idle_6": {
+  "bytes": 37410,
+  "seconds": 4.6
+ },
+ "kill_1": {
+  "bytes": 28379,
+  "seconds": 3.35
+ },
+ "kill_2": {
+  "bytes": 25568,
+  "seconds": 2.94
+ },
+ "kill_3": {
+  "bytes": 28849,
+  "seconds": 3.46
+ },
+ "kill_4": {
+  "bytes": 32885,
+  "seconds": 4.0
+ },
+ "kill_5": {
+  "bytes": 32772,
+  "seconds": 3.81
+ },
  "link_1": {
   "bytes": 48041,
   "seconds": 6.1
@@ -66,6 +122,42 @@
  "link_4": {
   "bytes": 45467,
   "seconds": 5.5
+ },
+ "low_1": {
+  "bytes": 34670,
+  "seconds": 4.3
+ },
+ "low_2": {
+  "bytes": 29640,
+  "seconds": 3.47
+ },
+ "low_3": {
+  "bytes": 26303,
+  "seconds": 3.07
+ },
+ "low_4": {
+  "bytes": 37175,
+  "seconds": 4.6
+ },
+ "power_1": {
+  "bytes": 32752,
+  "seconds": 4.1
+ },
+ "power_2": {
+  "bytes": 31296,
+  "seconds": 3.74
+ },
+ "power_3": {
+  "bytes": 31835,
+  "seconds": 3.82
+ },
+ "power_end_1": {
+  "bytes": 29946,
+  "seconds": 3.59
+ },
+ "power_end_2": {
+  "bytes": 31889,
+  "seconds": 3.77
  },
  "step_1": {
   "bytes": 13455,

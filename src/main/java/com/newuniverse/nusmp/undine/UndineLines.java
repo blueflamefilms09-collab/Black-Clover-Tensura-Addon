@@ -37,7 +37,7 @@ public final class UndineLines {
     }
 
     // BEGIN REGISTERED (rewritten by tools/audio/undine_voice_convert.py)
-    private static final String[] REGISTERED = {"undine_link_1", "undine_link_2", "undine_link_3", "undine_link_4", "undine_farewell_1", "undine_farewell_2", "undine_farewell_3", "undine_cast_1", "undine_cast_2", "undine_cast_3", "undine_cast_4", "undine_cast_5", "undine_died_1"};
+    private static final String[] REGISTERED = {"undine_link_1", "undine_link_2", "undine_link_3", "undine_link_4", "undine_farewell_1", "undine_farewell_2", "undine_farewell_3", "undine_cast_1", "undine_cast_2", "undine_cast_3", "undine_cast_4", "undine_cast_5", "undine_cast_6", "undine_cast_7", "undine_cast_8", "undine_wave_1", "undine_wave_2", "undine_wave_3", "undine_wave_4", "undine_hurt_1", "undine_hurt_2", "undine_hurt_3", "undine_hurt_4", "undine_hurt_5", "undine_idle_1", "undine_idle_2", "undine_idle_3", "undine_idle_4", "undine_idle_5", "undine_idle_6", "undine_lowhp_1", "undine_lowhp_2", "undine_lowhp_3", "undine_lowhp_4", "undine_win_1", "undine_win_2", "undine_win_3", "undine_win_4", "undine_died_1", "undine_died_2"};
     // END REGISTERED
 
     private static final List<String> IDS = Collections.unmodifiableList(java.util.Arrays.asList(REGISTERED));

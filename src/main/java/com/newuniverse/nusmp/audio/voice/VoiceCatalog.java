@@ -45,7 +45,7 @@ public final class VoiceCatalog {
      * The Gnome's lines (suffix after {@code gnome_}; docs/magic/gnome.md section 7): deep, slow, gravelly words of the Earth Spirit, said by the server through {@code gnome.Gnome} to the players within 32
      * blocks of it. A line is listed here only when its recording exists (tools/audio/gnome_voice.py).
      */
-    public static final List<String> GNOME_LINES = List.of("greet_1", "greet_2", "farewell_1", "farewell_2", "cast_1", "cast_2", "cast_3", "cast_big_1", "cast_big_2", "hurt_1", "hurt_2", "hurt_3", "surprised_1", "lowhp_1", "wake_1");
+    public static final List<String> GNOME_LINES = List.of("greet_1", "greet_2", "farewell_1", "farewell_2", "cast_1", "cast_2", "cast_3", "cast_big_1", "cast_big_2", "hurt_1", "hurt_2", "hurt_3", "surprised_1", "lowhp_1", "lowhp_2", "victory_1", "victory_2", "death_1", "doze_1", "wake_1", "idle_1");
 
     /** The 120 lines and the Gnome's: exactly the ids of tools/audio/voice_lines.json. */
     private static final List<String> BASE_IDS;

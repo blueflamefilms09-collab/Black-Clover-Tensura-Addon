@@ -1,7 +1,7 @@
 # Shishou, the Akashic Relic (Grade: EX-Singularity)
 
 The talking sword of "Reincarnated as a Sword", built from the owner's design document (`shishou_design.md`) and the reference image (`tools/shishou/shishou_reference.webp`).
-One sword per world. He starts as a wild flying sword that hunts and eats monsters, settles into the ground when he is spent, is claimed by one player, levels up, learns skills and talks (as action-bar text; the voice pipeline is built but no audio exists yet).
+One sword per world. He starts as a wild flying sword that hunts and eats monsters, settles into the ground when he is spent, is claimed by one player, levels up, learns skills and talks (Thought Communication text and, since 3.34.0, a spoken voice).
 
 **Nothing here has been seen in a running game.** The pure rules, the assets and the source rules are unit-tested; the Minecraft glue is type-checked against the real jars and covered by CI self-tests (`relic.shishou`, `relic.shishou_claim`, `relic.shishou_skills`), which have not run yet. See "What is not verified".
 
@@ -42,7 +42,7 @@ One sword per world. He starts as a wild flying sword that hunts and eats monste
 8. **Real Tensura API calls.** None in 2.0.0. Names were carried as names (see "Canon"). Since 2.1.0 the skill `nusmp:shishou` is a real skill of the Tensura skill system (ManasCore's skill API, mirrored from the Requip skill).
 9. **Appraisal reading Tensura's own appraisal data, trap detection.** Not built. Appraisal reads vanilla health and the sword's own estimates (levelish / manaish / a weakness mask).
 10. **Walls of flame or earth as placed blocks.** No skill places or breaks a block (rule 11: no unbounded world edits). Skills are hit-scan or area effects with particles only.
-11. **Audio.** No voice was generated: the lines, the pipeline and the tests exist; the finish is one command (below).
+11. **Audio.** Recorded in 3.34.0 (section "Voice" below).
 12. **Custom 3D prop VFX for the skills.** Skill effects are particles through the perf budget; there are no new models for pillars or bolts.
 13. **Dormant pedestal as a built structure.** He embeds himself in the ground block; no pedestal blocks are placed.
 
@@ -214,11 +214,11 @@ Changed existing tests: `ShishouProgressionTest` (the curve numbers 31 and 285 a
 - **Particles:** every call goes through the custom particle facade (`Fx.options(FxThemes.SKILL_SHISHOU, ...)`), rewritten by `tools/particles/codemod.py`; the theme `skill.shishou` was appended to `tools/particles/gen_themes.py` and `map.json` (so `particle_themes.json`, `FxThemes.java` and `docs/custom_particles.md` were regenerated; the regeneration also added the already-existing relic wave themes 101 to 105 that the generated files had not listed yet).
 - **Engravings** (rule 6): severance 2, barrier piercing 2, magicule absorption 2, energy steal 1, magic interference 1 (`item/WeaponEngravings.java`), and the franchise engravings `Teacher's Insight` and `Devoured Power`.
 
-## Voice (no audio exists yet)
+## Voice (3.34.0)
 
-`tools/audio/shishou_lines.json` lists 41 lines in 18 groups with the voice id `null` in its header. `ShishouVoiceLines` carries the same words as text; every moment is Thought Communication text until audio is registered. Speech rules (`ShishouSpeechGate`): a per-wielder cooldown per group, an 80-tick gap between lines, only the wielder (and listeners within 32 blocks when broadcast is on). Config `relic.shishouVoice` switches the speech.
+`tools/audio/shishou_lines.json` lists 41 lines in 18 groups. **All 41 are recorded** with the ElevenLabs voice "Jay - British, well-spoken, calm, husky." (`rm143ZlE6RfHtN634wZ8`, chosen by the owner), model `eleven_v4`, one take per line with a short delivery tag (`[calm, dry, amused]`, ...), converted to mono 32 kHz Ogg Vorbis (about 1.05 MB in all) by `tools/audio/shishou_voice_convert.py`. A first set made with a voice I had picked myself ("Blue - Commander with Grit") was replaced by the owner's choice before any release; none of it is in the jar. `ShishouVoiceLines` carries the same words as text (the subtitles are "Shishou: ..." in `tools/lang/shishou_voice.json`); a moment whose line has no file stays Thought Communication text only. Speech rules (`ShishouSpeechGate`): a per-wielder cooldown per group, an 80-tick gap between lines, only the wielder (and listeners within 32 blocks when broadcast is on). Config `relic.shishouVoice` switches the speech.
 
-**One command to finish once a voice is chosen:** put the voice id into the header of `tools/audio/shishou_lines.json`, then run `python3 tools/audio/shishou_voice_generate.py` (it refuses to run while the voice is null) followed by `python3 tools/audio/shishou_voice_convert.py` (converts to ogg, writes `sounds.json` entries, updates the `REGISTERED` block). `ShishouVoiceAssetsTest` keeps the manifest, catalogue, sounds.json, files and lang text in step.
+**To redo a line or change the voice:** put the new voice id into the header and the lines of `tools/audio/shishou_lines.json`, generate the takes (the `prompt` field is the exact text with its tag), save them as `<id>.mp3` in one folder and run `python3 -B tools/audio/shishou_voice_convert.py <folder>` (converts to ogg, writes `sounds.json` entries, updates the `REGISTERED` block). `ShishouVoiceAssetsTest` keeps the manifest, catalogue, sounds.json, files and lang text in step.
 
 ## Server and multiplayer (rule 9)
 

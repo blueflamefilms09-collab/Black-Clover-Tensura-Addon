@@ -62,7 +62,29 @@ public final class SpiritLightVoiceLines {
             "spiritlight_rise_3",
             "spiritlight_settle_1",
             "spiritlight_settle_2",
-            "spiritlight_beam_1");
+            "spiritlight_beam_1",
+            "spiritlight_beam_2",
+            "spiritlight_beam_3",
+            "spiritlight_beam_4",
+            "spiritlight_beam_5",
+            "spiritlight_pulse_1",
+            "spiritlight_pulse_2",
+            "spiritlight_pulse_3",
+            "spiritlight_pulse_4",
+            "spiritlight_damage_1",
+            "spiritlight_damage_2",
+            "spiritlight_damage_3",
+            "spiritlight_damage_4",
+            "spiritlight_low_1",
+            "spiritlight_low_2",
+            "spiritlight_low_3",
+            "spiritlight_win_1",
+            "spiritlight_win_2",
+            "spiritlight_win_3",
+            "spiritlight_death_1",
+            "spiritlight_death_2",
+            "spiritlight_idle_1",
+            "spiritlight_idle_2");
 
     /** The text of a line (shown on the owner's action bar), or "" for an unknown id. */
     public static String text(String id) {

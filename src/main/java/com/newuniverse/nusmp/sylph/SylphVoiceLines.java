@@ -24,7 +24,22 @@ public final class SylphVoiceLines {
 
     static {
         // BEGIN GENERATED (tools/audio/sylph_voice_convert.py): group -> number of lines that have a file; do not edit by hand
-        COUNTS.put("link", 2);
+        COUNTS.put("link", 3);
+        COUNTS.put("unlink", 3);
+        COUNTS.put("cast", 7);
+        COUNTS.put("big", 3);
+        COUNTS.put("shout", 3);
+        COUNTS.put("hurt", 4);
+        COUNTS.put("startle", 2);
+        COUNTS.put("idle", 7);
+        COUNTS.put("worry", 4);
+        COUNTS.put("cheer", 5);
+        COUNTS.put("sad", 3);
+        COUNTS.put("giggle", 4);
+        COUNTS.put("pout", 2);
+        COUNTS.put("smug", 2);
+        COUNTS.put("sleepy", 2);
+        COUNTS.put("victory", 2);
         // END GENERATED
     }
 

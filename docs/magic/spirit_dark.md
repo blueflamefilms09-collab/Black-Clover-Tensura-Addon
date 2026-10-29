@@ -149,30 +149,30 @@ New: `src/main/java/com/newuniverse/nusmp/spiritdark/*` (SpiritDark, SpiritDarkR
 
 ## 11. Voice recording status
 
-**24 of the 47 planned spoken lines exist; 23 are missing.** They were generated with ElevenLabs (model `eleven_v4`, voice "Oliver - Warm British Narrator", library voice id `lo1O1Dz1Tu4FWVEPaxuT`, one flow `phzC5eCWea8kdTLFgBqB`). The workspace ran out of credits during the run (the last request failed with "exceeds your quota of 10000, 4 credits remaining"), so the rest could not be recorded. Nothing was faked: only lines whose `.ogg` exists are listed in `assets/nusmp/spirit_dark_voice.json` and in `sounds.json`, and a situation with no recorded line falls back to the synthesised cue (`SpiritDarkVoiceCatalog.fallback`).
+**All 47 planned spoken lines exist (3.34.0).** They were generated with ElevenLabs (model `eleven_v4`, voice "Oliver - Warm British Narrator", library voice id `lo1O1Dz1Tu4FWVEPaxuT`). 24 were recorded earlier; the other 23 (idle, low, kill, died, power, power_end) were recorded in 3.34.0 after the first run had run out of credits. Only lines whose `.ogg` exists are listed in `assets/nusmp/spirit_dark_voice.json` and in `sounds.json`; a situation whose line is absent still falls back to the synthesised cue (`SpiritDarkVoiceCatalog.fallback`), which now only happens when the line pool is switched off.
 
-| Group | Recorded | Missing |
-|---|---|---|
-| link | link_1..4 | none |
-| unlink | unlink_1..3 | none |
-| cast | cast_1..5 | none |
-| step (shadow step) | step_1..4 | none |
-| hurt | hurt_1..4 | none |
-| feast (life steal) | feast_1..4 | none |
-| idle | none | idle_1..6 |
-| low (owner low health) | none | low_1..4 |
-| kill (owner killed something) | none | kill_1..5 |
-| died (owner died) | none | died_1..3 |
-| power (powered form arrives) | none | power_1..3 |
-| power_end | none | power_end_1..2 |
+| Group | Recorded |
+|---|---|
+| link | link_1..4 |
+| unlink | unlink_1..3 |
+| cast | cast_1..5 |
+| step (shadow step) | step_1..4 |
+| hurt | hurt_1..4 |
+| feast (life steal) | feast_1..4 |
+| idle | idle_1..6 |
+| low (owner low health) | low_1..4 |
+| kill (owner killed something) | kill_1..5 |
+| died (owner died) | died_1..3 |
+| power (powered form arrives) | power_1..3 |
+| power_end | power_end_1..2 |
 
-Two takes are not single-line recordings. `hurt_3`, `hurt_4` and `feast_1..4` were generated as ONE six-line take and cut apart at the pauses between lines (ffmpeg silence detection, cuts at the middle of the five longest-fitting gaps; checked only by the number of inner pauses per line and by the length each line should have). The cut points were NOT confirmed by listening or by a transcription (the transcription request failed on the same quota), so one of those six may start or end a hair early or late. To redo them as single takes, record `hurt_3`, `hurt_4`, `feast_1..4` again and run `convert`.
+Two takes are not single-line recordings. `hurt_3`, `hurt_4` and `feast_1..4` were generated as ONE six-line take and cut apart at the pauses between lines (ffmpeg silence detection; checked only by the number of inner pauses per line and by the length each line should have). The cut points were NOT confirmed by listening, so one of those six may start or end a hair early or late. To redo them as single takes, record `hurt_3`, `hurt_4`, `feast_1..4` again and run `convert`.
 
-**One command to finish the rest** once credits are available: generate each missing line from `tools/audio/spirit_dark_lines.json` (the `prompt` field is the exact text with its delivery tags, same model and voice as above), save the mp3s as `<line id>.mp3` in one folder and run
+**To redo any line:** generate it from `tools/audio/spirit_dark_lines.json` (the `prompt` field is the exact text with its delivery tags, same model and voice as above), save the mp3 as `<line id>.mp3` in one folder and run
 
     python3 -B tools/audio/spirit_dark_voice.py convert <that folder>
 
-(`missing` lists what is still missing, `sync` rewrites the voice json and the `sounds.json` entries, `check` verifies; the total stays far below 3 MB, now 0.69 MB for 24 lines, so about 1.4 MB when all 47 exist).
+(`missing` lists what is still missing, `sync` rewrites the voice json and the `sounds.json` entries, `check` verifies; the total stays far below 3 MB: 1.4 MB for all 47 lines).
 
 **Licence caveat.** The voice is a ready-made library voice of the ElevenLabs account, not a clone of a real person. Whether its terms allow shipping the generated audio inside a commercial mod was not cleared (it depends on the account's plan and on the voice's own licence in the voice library); the owner must check this before a release. All audio is in `assets/nusmp/sounds/spirit/dark/voice/`; deleting that folder, the json and the `spirit.dark.voice.*` block of `sounds.json` (or running `sync` after removing the oggs) turns the voice off without touching anything else.
 

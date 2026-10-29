@@ -1,5 +1,19 @@
 # Changelog
 
+## [3.34.0] — The unfinished voice lines are recorded (Spirit of Darkness, Spirit of Light, Gnome, Undine, Sylph, Shishou)
+
+### NEW
+- **173 spoken lines**, the ones that earlier runs could not record because the voice account ran out of credits: Spirit of Darkness 23 (idle, low, kill, died, power, power_end; now 47 of 47), Spirit of Light 22 (beam 2-5, pulse, damage, low, win, death, idle; now 35 of 35), Gnome 6 (lowhp_2, victory_1-2, death_1, doze_1, idle_1; now 21 of 21), Undine 27 (cast 6-8, wave, hurt, idle, low health, win, died_2; now 40 of 40), Sylph 54 (every group but link_1-2; now 56 of 56) and **Shishou 41 (all of them; now 41 of 41)**. Each character keeps the voice its earlier lines used (Oliver, the Spirit of Light voice, the Gnome voice, Julie I, Candy); Shishou speaks with the owner-chosen **Jay - British, well-spoken, calm, husky.** Model `eleven_v4`, one take per line, delivery tags from the manifests.
+- Each line is converted by its character's existing converter (`tools/audio/*_voice*.py`: mono 32 kHz, silence trimmed, about -16 LUFS, Ogg Vorbis q3) and registered by those tools in `sounds.json`, the subtitle fragments in `tools/lang`, the Java line lists (`SpiritLightVoiceLines`, `UndineLines`, `SylphVoiceLines`, `ShishouVoiceLines`, `VoiceCatalog`) and `spirit_dark_voice.json`; the reports in `tools/audio/*_report.json` are refreshed. Docs updated: `docs/magic/{spirit_dark,spirit_light,gnome,undine,sylph}.md`, `docs/items/shishou.md`.
+- Cost: no new code and no new settings. About 6.2 MB of Ogg in the jar (Darkness 1.4 MB, Sylph 1.4 MB, Shishou 1.0 MB, Light 0.9 MB, Undine 0.9 MB, Gnome 0.5 MB). The speech gates and caps are unchanged: one line per listener per few seconds, listeners within 32 blocks only, per-group cooldowns, packets of one id.
+
+### REPLACED
+- Nothing. (A first set of Shishou lines made with a voice I had picked, "Blue - Commander with Grit", was replaced by Jay before any release; it was never in a jar.)
+
+### KEPT
+- Every older line, the 120 older voice lines, the synthesised cues and the fallback to them when a line has no file.
+- Honest: no take was heard in a game, and each was picked as the single take generated, without listening. `hurt_3`, `hurt_4` and `feast_1-4` of the Spirit of Darkness were cut from one six-line take at the pauses (not confirmed by ear). Whether the ElevenLabs voices may be shipped in a public mod is not cleared (library voices carry their own conditions; a paid plan is needed for commercial use): the owner must check it.
+
 ## [3.33.1] — The Tier List bosses wear the anime skin style of the owner's reference sheet
 
 ### REPLACED

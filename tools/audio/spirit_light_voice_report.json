@@ -3,6 +3,46 @@
   "bytes": 21006,
   "seconds": 2.16
  },
+ "spiritlight_beam_2": {
+  "bytes": 19244,
+  "seconds": 1.91
+ },
+ "spiritlight_beam_3": {
+  "bytes": 26159,
+  "seconds": 2.78
+ },
+ "spiritlight_beam_4": {
+  "bytes": 26350,
+  "seconds": 2.9
+ },
+ "spiritlight_beam_5": {
+  "bytes": 28076,
+  "seconds": 3.04
+ },
+ "spiritlight_damage_1": {
+  "bytes": 24799,
+  "seconds": 2.64
+ },
+ "spiritlight_damage_2": {
+  "bytes": 33871,
+  "seconds": 3.64
+ },
+ "spiritlight_damage_3": {
+  "bytes": 23798,
+  "seconds": 2.61
+ },
+ "spiritlight_damage_4": {
+  "bytes": 31137,
+  "seconds": 3.48
+ },
+ "spiritlight_death_1": {
+  "bytes": 36371,
+  "seconds": 4.2
+ },
+ "spiritlight_death_2": {
+  "bytes": 31590,
+  "seconds": 3.51
+ },
  "spiritlight_farewell_1": {
   "bytes": 27495,
   "seconds": 2.98
@@ -31,6 +71,42 @@
   "bytes": 34440,
   "seconds": 4.0
  },
+ "spiritlight_idle_1": {
+  "bytes": 29807,
+  "seconds": 3.24
+ },
+ "spiritlight_idle_2": {
+  "bytes": 22779,
+  "seconds": 2.46
+ },
+ "spiritlight_low_1": {
+  "bytes": 29712,
+  "seconds": 3.34
+ },
+ "spiritlight_low_2": {
+  "bytes": 31678,
+  "seconds": 3.48
+ },
+ "spiritlight_low_3": {
+  "bytes": 30320,
+  "seconds": 3.34
+ },
+ "spiritlight_pulse_1": {
+  "bytes": 21587,
+  "seconds": 2.26
+ },
+ "spiritlight_pulse_2": {
+  "bytes": 21037,
+  "seconds": 2.16
+ },
+ "spiritlight_pulse_3": {
+  "bytes": 25696,
+  "seconds": 2.85
+ },
+ "spiritlight_pulse_4": {
+  "bytes": 19040,
+  "seconds": 1.97
+ },
  "spiritlight_rise_1": {
   "bytes": 33885,
   "seconds": 3.83
@@ -50,5 +126,17 @@
  "spiritlight_settle_2": {
   "bytes": 27688,
   "seconds": 2.99
+ },
+ "spiritlight_win_1": {
+  "bytes": 27710,
+  "seconds": 3.06
+ },
+ "spiritlight_win_2": {
+  "bytes": 34666,
+  "seconds": 3.9
+ },
+ "spiritlight_win_3": {
+  "bytes": 18801,
+  "seconds": 1.9
  }
 }

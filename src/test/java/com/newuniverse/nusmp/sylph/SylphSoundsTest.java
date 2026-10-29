@@ -121,7 +121,7 @@ class SylphSoundsTest {
     void theOlderEntriesOfSoundsJsonAreStillThere() throws IOException {
         JsonObject doc = soundsJson();
         assertEquals(200, doc.keySet().stream().filter(k -> k.startsWith("mob.")).count(), "the 200 mob voices are untouched");
-        assertEquals(120, doc.keySet().stream().filter(k -> k.startsWith("voice.") && !k.startsWith("voice.sylph_") && !k.startsWith("voice.undine_") && !k.startsWith("voice.gnome_")).count(), "the 120 spoken lines are untouched (the own lines of Sylph, the Undine and the Gnome are voice.sylph_*, voice.undine_*, voice.gnome_*)");
+        assertEquals(120, doc.keySet().stream().filter(k -> k.startsWith("voice.") && !k.startsWith("voice.sylph_") && !k.startsWith("voice.undine_") && !k.startsWith("voice.gnome_") && !k.startsWith("voice.shishou_")).count(), "the 120 spoken lines are untouched (the own lines of Sylph, the Undine, the Gnome and Shishou are voice.sylph_*, voice.undine_*, voice.gnome_*, voice.shishou_*)");
         assertTrue(doc.size() >= 352 + SylphSoundSet.cues().size(), "nothing was removed");
     }
 }

@@ -427,6 +427,14 @@
   "bytes": 19907,
   "seconds": 2.16
  },
+ "gnome_death_1": {
+  "bytes": 36100,
+  "seconds": 4.3
+ },
+ "gnome_doze_1": {
+  "bytes": 29373,
+  "seconds": 3.44
+ },
  "gnome_farewell_1": {
   "bytes": 32671,
   "seconds": 3.84
@@ -455,13 +463,29 @@
   "bytes": 26563,
   "seconds": 3.07
  },
+ "gnome_idle_1": {
+  "bytes": 38721,
+  "seconds": 4.7
+ },
  "gnome_lowhp_1": {
   "bytes": 28275,
   "seconds": 3.16
  },
+ "gnome_lowhp_2": {
+  "bytes": 30532,
+  "seconds": 3.68
+ },
  "gnome_surprised_1": {
   "bytes": 18925,
   "seconds": 2.14
+ },
+ "gnome_victory_1": {
+  "bytes": 19817,
+  "seconds": 2.28
+ },
+ "gnome_victory_2": {
+  "bytes": 40119,
+  "seconds": 5.1
  },
  "gnome_wake_1": {
   "bytes": 16780,

@@ -1,48 +1,212 @@
 {
- "converted": {},
- "missing": [
-  "shishou_claim_1",
-  "shishou_claim_2",
-  "shishou_claim_3",
-  "shishou_recall_1",
-  "shishou_recall_2",
-  "shishou_throw_1",
-  "shishou_throw_2",
-  "shishou_levelup_1",
-  "shishou_levelup_2",
-  "shishou_levelup_3",
-  "shishou_skill_utility_1",
-  "shishou_skill_utility_2",
-  "shishou_skill_magic_1",
-  "shishou_skill_magic_2",
-  "shishou_skill_combat_1",
-  "shishou_skill_combat_2",
-  "shishou_skill_space_1",
-  "shishou_skill_space_2",
-  "shishou_eat_1",
-  "shishou_eat_2",
-  "shishou_eat_3",
-  "shishou_lowmana_1",
-  "shishou_lowmana_2",
-  "shishou_dormant_1",
-  "shishou_dormant_2",
-  "shishou_danger_1",
-  "shishou_danger_2",
-  "shishou_danger_3",
-  "shishou_thief_1",
-  "shishou_thief_2",
-  "shishou_appraise_1",
-  "shishou_appraise_2",
-  "shishou_appraise_3",
-  "shishou_barrier_on_1",
-  "shishou_barrier_off_1",
-  "shishou_victory_1",
-  "shishou_victory_2",
-  "shishou_idle_1",
-  "shishou_idle_2",
-  "shishou_idle_3",
-  "shishou_idle_4"
- ],
+ "converted": {
+  "shishou_claim_1": {
+   "seconds": 3.73,
+   "bytes": 33475,
+   "text": "So you are my wielder. Try not to bore me."
+  },
+  "shishou_claim_2": {
+   "seconds": 2.4,
+   "bytes": 23614,
+   "text": "I will teach you what a sword can be."
+  },
+  "shishou_claim_3": {
+   "seconds": 3.35,
+   "bytes": 32229,
+   "text": "Hold me properly. We have a great deal to learn."
+  },
+  "shishou_recall_1": {
+   "seconds": 2.03,
+   "bytes": 19824,
+   "text": "Back in your hand. Good."
+  },
+  "shishou_recall_2": {
+   "seconds": 2.66,
+   "bytes": 26687,
+   "text": "You called, wielder. I came."
+  },
+  "shishou_throw_1": {
+   "seconds": 2.15,
+   "bytes": 22117,
+   "text": "Leave the fighting to me for a moment."
+  },
+  "shishou_throw_2": {
+   "seconds": 2.66,
+   "bytes": 25714,
+   "text": "Fly, then. I will hold the line."
+  },
+  "shishou_levelup_1": {
+   "seconds": 3.21,
+   "bytes": 30203,
+   "text": "I have grown. Another step, wielder."
+  },
+  "shishou_levelup_2": {
+   "seconds": 2.75,
+   "bytes": 26822,
+   "text": "I grow stronger, as I intended."
+  },
+  "shishou_levelup_3": {
+   "seconds": 2.87,
+   "bytes": 25912,
+   "text": "Power gathers in me. Use it well."
+  },
+  "shishou_skill_utility_1": {
+   "seconds": 2.52,
+   "bytes": 23457,
+   "text": "A new skill. How useful."
+  },
+  "shishou_skill_utility_2": {
+   "seconds": 2.23,
+   "bytes": 23408,
+   "text": "This will make your life easier, wielder."
+  },
+  "shishou_skill_magic_1": {
+   "seconds": 3.48,
+   "bytes": 31570,
+   "text": "I have eaten a new spell. Delicious."
+  },
+  "shishou_skill_magic_2": {
+   "seconds": 4.0,
+   "bytes": 36196,
+   "text": "Magic, absorbed. Let us put it to use."
+  },
+  "shishou_skill_combat_1": {
+   "seconds": 1.89,
+   "bytes": 19414,
+   "text": "A new edge for the blade."
+  },
+  "shishou_skill_combat_2": {
+   "seconds": 1.95,
+   "bytes": 19686,
+   "text": "Now we can cut deeper."
+  },
+  "shishou_skill_space_1": {
+   "seconds": 2.38,
+   "bytes": 23811,
+   "text": "Space bends a little easier now."
+  },
+  "shishou_skill_space_2": {
+   "seconds": 3.21,
+   "bytes": 29232,
+   "text": "A new way to move. Do not waste it."
+  },
+  "shishou_eat_1": {
+   "seconds": 1.32,
+   "bytes": 14237,
+   "text": "Delicious."
+  },
+  "shishou_eat_2": {
+   "seconds": 2.84,
+   "bytes": 25886,
+   "text": "Eaten. Its power is mine."
+  },
+  "shishou_eat_3": {
+   "seconds": 4.1,
+   "bytes": 36638,
+   "text": "Do not look away. This is how a sword grows."
+  },
+  "shishou_lowmana_1": {
+   "seconds": 2.37,
+   "bytes": 22913,
+   "text": "My mana is running low, wielder."
+  },
+  "shishou_lowmana_2": {
+   "seconds": 3.04,
+   "bytes": 28379,
+   "text": "I need rest. Do not draw on me now."
+  },
+  "shishou_dormant_1": {
+   "seconds": 3.31,
+   "bytes": 29506,
+   "text": "I must sleep for a while. Find me again."
+  },
+  "shishou_dormant_2": {
+   "seconds": 3.04,
+   "bytes": 29051,
+   "text": "My strength is spent. I will wait."
+  },
+  "shishou_danger_1": {
+   "seconds": 2.42,
+   "bytes": 23145,
+   "text": "Wielder, hostiles approach from behind."
+  },
+  "shishou_danger_2": {
+   "seconds": 2.18,
+   "bytes": 20955,
+   "text": "Danger behind you. Turn."
+  },
+  "shishou_danger_3": {
+   "seconds": 3.67,
+   "bytes": 33759,
+   "text": "Your health is failing. Retreat, or let me fight."
+  },
+  "shishou_thief_1": {
+   "seconds": 2.88,
+   "bytes": 27437,
+   "text": "Let go of me, you aren't my wielder."
+  },
+  "shishou_thief_2": {
+   "seconds": 2.47,
+   "bytes": 23442,
+   "text": "Hands off. I do not serve you."
+  },
+  "shishou_appraise_1": {
+   "seconds": 2.59,
+   "bytes": 25593,
+   "text": "I have looked at it. Listen carefully."
+  },
+  "shishou_appraise_2": {
+   "seconds": 2.99,
+   "bytes": 28510,
+   "text": "It is weak to something. Find out what."
+  },
+  "shishou_appraise_3": {
+   "seconds": 2.72,
+   "bytes": 27854,
+   "text": "An ordinary thing, but it may be eaten."
+  },
+  "shishou_barrier_on_1": {
+   "seconds": 2.82,
+   "bytes": 26345,
+   "text": "Barrier raised. Nothing gets through."
+  },
+  "shishou_barrier_off_1": {
+   "seconds": 2.72,
+   "bytes": 25624,
+   "text": "The barrier is broken. Be careful."
+  },
+  "shishou_victory_1": {
+   "seconds": 1.32,
+   "bytes": 14148,
+   "text": "Well fought."
+  },
+  "shishou_victory_2": {
+   "seconds": 3.38,
+   "bytes": 33370,
+   "text": "As expected. Nothing could stand against us."
+  },
+  "shishou_idle_1": {
+   "seconds": 2.4,
+   "bytes": 23867,
+   "text": "A sword should never stop learning."
+  },
+  "shishou_idle_2": {
+   "seconds": 2.6,
+   "bytes": 25011,
+   "text": "You swing me well enough, for a beginner."
+  },
+  "shishou_idle_3": {
+   "seconds": 2.59,
+   "bytes": 24472,
+   "text": "Every battle is a lesson, wielder."
+  },
+  "shishou_idle_4": {
+   "seconds": 3.37,
+   "bytes": 30810,
+   "text": "Quiet today. I do not trust quiet."
+  }
+ },
+ "missing": [],
  "rejected": [],
- "bytes": 0
+ "bytes": 1074323
 }

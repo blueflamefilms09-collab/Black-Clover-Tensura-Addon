@@ -60,41 +60,148 @@
    "bytes": 15728,
    "text": "Go, little wave."
   },
+  "undine_cast_6": {
+   "seconds": 1.75,
+   "bytes": 17966,
+   "text": "As the river wills."
+  },
+  "undine_cast_7": {
+   "seconds": 2.36,
+   "bytes": 23602,
+   "text": "Sea, lend me your strength."
+  },
+  "undine_cast_8": {
+   "seconds": 1.48,
+   "bytes": 15845,
+   "text": "Be washed away."
+  },
+  "undine_wave_1": {
+   "seconds": 3.45,
+   "bytes": 31826,
+   "text": "Rise, great sea! Crash upon them!"
+  },
+  "undine_wave_2": {
+   "seconds": 2.22,
+   "bytes": 21714,
+   "text": "Hear the roar of the deep!"
+  },
+  "undine_wave_3": {
+   "seconds": 2.74,
+   "bytes": 25956,
+   "text": "Drown their fury beneath the waves!"
+  },
+  "undine_wave_4": {
+   "seconds": 4.0,
+   "bytes": 36189,
+   "text": "Let the ocean remember its name!"
+  },
+  "undine_hurt_1": {
+   "seconds": 1.26,
+   "bytes": 13849,
+   "text": "Be careful."
+  },
+  "undine_hurt_2": {
+   "seconds": 1.63,
+   "bytes": 16619,
+   "text": "You are bleeding."
+  },
+  "undine_hurt_3": {
+   "seconds": 1.91,
+   "bytes": 19563,
+   "text": "Do not let them touch you."
+  },
+  "undine_hurt_4": {
+   "seconds": 1.31,
+   "bytes": 14106,
+   "text": "Oh!"
+  },
+  "undine_hurt_5": {
+   "seconds": 1.36,
+   "bytes": 14695,
+   "text": "Stay with me."
+  },
+  "undine_idle_1": {
+   "seconds": 2.28,
+   "bytes": 22473,
+   "text": "The water is calm tonight."
+  },
+  "undine_idle_2": {
+   "seconds": 4.4,
+   "bytes": 38336,
+   "text": "Hm... listen to the stream."
+  },
+  "undine_idle_3": {
+   "seconds": 3.08,
+   "bytes": 28828,
+   "text": "Every river finds the sea in the end."
+  },
+  "undine_idle_4": {
+   "seconds": 2.87,
+   "bytes": 26773,
+   "text": "I can hear the rain, far away."
+  },
+  "undine_idle_5": {
+   "seconds": 2.34,
+   "bytes": 23348,
+   "text": "The tide remembers everyone."
+  },
+  "undine_idle_6": {
+   "seconds": 3.23,
+   "bytes": 31481,
+   "text": "Take your time. I am not going anywhere."
+  },
+  "undine_lowhp_1": {
+   "seconds": 3.07,
+   "bytes": 29336,
+   "text": "Your strength is fading. Let me help you."
+  },
+  "undine_lowhp_2": {
+   "seconds": 2.96,
+   "bytes": 27693,
+   "text": "Please, be careful. You are hurt."
+  },
+  "undine_lowhp_3": {
+   "seconds": 2.95,
+   "bytes": 27504,
+   "text": "Do not give up. I am with you."
+  },
+  "undine_lowhp_4": {
+   "seconds": 2.78,
+   "bytes": 25673,
+   "text": "Breathe. The water will mend you."
+  },
+  "undine_win_1": {
+   "seconds": 1.48,
+   "bytes": 15674,
+   "text": "Well done."
+  },
+  "undine_win_2": {
+   "seconds": 2.14,
+   "bytes": 21032,
+   "text": "The tide is yours."
+  },
+  "undine_win_3": {
+   "seconds": 1.82,
+   "bytes": 18611,
+   "text": "As I knew you would."
+  },
+  "undine_win_4": {
+   "seconds": 2.63,
+   "bytes": 24829,
+   "text": "Beautifully done."
+  },
   "undine_died_1": {
    "seconds": 2.61,
    "bytes": 24990,
    "text": "No... come back to the water..."
+  },
+  "undine_died_2": {
+   "seconds": 3.06,
+   "bytes": 28324,
+   "text": "Sleep now. I will carry you home."
   }
  },
- "missing": [
-  "undine_cast_6",
-  "undine_cast_7",
-  "undine_cast_8",
-  "undine_wave_1",
-  "undine_wave_2",
-  "undine_wave_3",
-  "undine_wave_4",
-  "undine_hurt_1",
-  "undine_hurt_2",
-  "undine_hurt_3",
-  "undine_hurt_4",
-  "undine_hurt_5",
-  "undine_idle_1",
-  "undine_idle_2",
-  "undine_idle_3",
-  "undine_idle_4",
-  "undine_idle_5",
-  "undine_idle_6",
-  "undine_lowhp_1",
-  "undine_lowhp_2",
-  "undine_lowhp_3",
-  "undine_lowhp_4",
-  "undine_win_1",
-  "undine_win_2",
-  "undine_win_3",
-  "undine_win_4",
-  "undine_died_2"
- ],
+ "missing": [],
  "rejected": [],
- "bytes": 292025
+ "bytes": 933870
 }

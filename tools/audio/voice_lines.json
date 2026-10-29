@@ -804,9 +804,45 @@
   "prompt": "[deep, slow, gravelly, firm] Gnome stands firm. Behind me."
  },
  {
+  "id": "gnome_lowhp_2",
+  "role": "gnome",
+  "voice": "xHxp1c5pQOzhWjBqV78M",
+  "prompt": "[deep, slow, gravelly, firm] You will not fall. Not while I stand."
+ },
+ {
+  "id": "gnome_victory_1",
+  "role": "gnome",
+  "voice": "xHxp1c5pQOzhWjBqV78M",
+  "prompt": "[deep, slow, gravelly, pleased] The earth is pleased."
+ },
+ {
+  "id": "gnome_victory_2",
+  "role": "gnome",
+  "voice": "xHxp1c5pQOzhWjBqV78M",
+  "prompt": "[deep, slow, gravelly, amused] Another one crumbles."
+ },
+ {
+  "id": "gnome_death_1",
+  "role": "gnome",
+  "voice": "xHxp1c5pQOzhWjBqV78M",
+  "prompt": "[deep, very slow, gravelly, soft] Rest now. The earth will hold you."
+ },
+ {
+  "id": "gnome_doze_1",
+  "role": "gnome",
+  "voice": "xHxp1c5pQOzhWjBqV78M",
+  "prompt": "[deep, very slow, gravelly, drowsy] Gnome... waits... in the stone."
+ },
+ {
   "id": "gnome_wake_1",
   "role": "gnome",
   "voice": "xHxp1c5pQOzhWjBqV78M",
   "prompt": "[deep, gravelly] Hm? We move."
+ },
+ {
+  "id": "gnome_idle_1",
+  "role": "gnome",
+  "voice": "xHxp1c5pQOzhWjBqV78M",
+  "prompt": "[deep, very slow, gravelly] Still. As the mountain is still."
  }
 ]
