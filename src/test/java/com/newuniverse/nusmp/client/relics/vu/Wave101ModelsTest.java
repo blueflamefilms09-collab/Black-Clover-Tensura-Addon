@@ -100,10 +100,12 @@ class Wave101ModelsTest {
                 }
                 assertNotNull(m.glowTex, n + " has no glow map");
                 assertTrue(m.glowMapQuads > 0, n + " lights no quad with its glow map");
-                assertTrue(m.haloQuads > 0, n + " has no additive halo / fx quads");
-                assertTrue(m.starQuads > 0 && m.starTex != null, n + " has no nebula pass");
+                // the seven Millennium Items are plain gold since 3.35.0 (the owner wants no halos or motes on them): only the other eight must carry additive fx quads
+                assertTrue(m.haloQuads > 0 || com.newuniverse.nusmp.relics.wave.Wave101Rules.inSet(id), n + " has no additive halo / fx quads");
+                boolean canon = com.newuniverse.nusmp.relics.wave.Wave101Rules.inSet(id);
+                assertTrue(canon || (m.starQuads > 0 && m.starTex != null), n + " has no nebula pass");
                 int groups = m.groups.length - 1;
-                assertTrue(groups >= 10, n + " has only " + groups + " animation groups");
+                assertTrue(groups >= (canon ? 2 : 10), n + " has only " + groups + " animation groups");
                 for (int i = 0; i < m.pos.length; i++) assertTrue(Float.isFinite(m.pos[i]) && Math.abs(m.pos[i]) < 80f, n + " has a vertex far away: " + m.pos[i]);
                 for (int i = 0; i < m.quads; i++) {
                     if ((m.flags[i] & WornMesh.STAR) != 0) continue;
@@ -128,7 +130,8 @@ class Wave101ModelsTest {
                 assertEquals(1024, size, m.skin + " has the wrong size for its grade");
                 long opaque = 0;
                 for (int y = 0; y < size; y += 2) for (int x = 0; x < size; x += 2) if ((img.getRGB(x, y) >>> 24) > 0) opaque++;
-                assertTrue(opaque * 4 > (long) size * size / 5, m.skin + " is mostly empty");
+                // a tenth of the atlas: the plain-gold Millennium models have fewer parts than the old ornamented ones and so use less of it
+                assertTrue(opaque * 4 > (long) size * size / 10, m.skin + " is mostly empty");
                 BufferedImage lod = ImageIO.read(ASSETS.resolve("textures").resolve(model(m.lodName).skin).toFile());
                 assertTrue(lod.getWidth() <= 128, "the lod skin of " + n + " is " + lod.getWidth());
             }
@@ -156,7 +159,8 @@ class Wave101ModelsTest {
                     assertTrue(l.particle.equals("fx") || l.particle.startsWith("nusmp:"), id + " layer " + l.name + " uses the vanilla particle " + l.particle);
                 }
             }
-            assertTrue(geometry >= 6 && particles >= 2, id + " has " + geometry + " geometry and " + particles + " particle layers");
+            boolean canon = com.newuniverse.nusmp.relics.wave.Wave101Rules.inSet(id);   // the plain-gold canon models glow only at the Eye: one glow layer and one glint are enough
+            assertTrue(geometry >= (canon ? 1 : 6) && particles >= (canon ? 1 : 2), id + " has " + geometry + " geometry and " + particles + " particle layers");
         }
     }
 

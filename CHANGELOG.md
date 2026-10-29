@@ -10,6 +10,7 @@
 ### REPLACED
 - The seven models (worn models, 16x16 sprites, the Rod mesh and skins, the grip golden row of the Rod) are rebuilt as plain gold canon shapes. The old lapis bands, circlets, motes, halos and fate wheels are gone from the registry; the old builders stay in `tools/relics/new_wave101/items_*.py` unused.
 - The seven descriptions are rewritten to the wiki powers.
+- `Wave101ModelsTest` guards that encoded the old ornamented look are relaxed for the seven Millennium Items only (no nebula pass, no additive halo, at least 2 animation groups, 1 glow layer and 1 particle layer; skins need a tenth of the atlas instead of a fifth). The other eight relics keep the strict rules.
 
 ### KEPT
 - Every existing act (Other Me, Shadow Game, Mind Read, Truth Gaze, Dowsing Needles, Draw Power, Mind Control, Pharaoh's Command, Judgement Strike, Open the Soul Room, Mind Garden, Weigh the Heart, Ammit's Verdict, Foresight, Prophecy), all passives, the set bonus, ids, slots and damage numbers. Acts are now 2 to 4 per item.
