@@ -74,7 +74,7 @@ class TierBossesTest {
 
     @Test
     void thePlayerModelKitDrawsExactlyTheseBosses() {
-        assertEquals(TierRoster.ids().size(), all().size());
+        assertEquals(TierRoster.ids().size(), all().size() + TierRosterGag.rows().size());          // 3.36.0: the gag boss is appended after the sixteen
         for (String id : TierRoster.ids()) assertTrue(com.newuniverse.nusmp.client.playermodel.PlayerModelTable.ARC_BOSSES.contains(id), id);
         assertTrue(com.newuniverse.nusmp.client.playermodel.PlayerLookTables.FILES.contains("playermodel/looks_tier.json"));
     }

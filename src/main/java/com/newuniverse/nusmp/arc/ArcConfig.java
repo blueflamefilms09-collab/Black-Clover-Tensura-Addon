@@ -11,7 +11,7 @@ import net.neoforged.neoforge.common.ModConfigSpec;
  */
 public final class ArcConfig {
     public static final ModConfigSpec SPEC;
-    public static final ModConfigSpec.BooleanValue ENABLED, STORY_GATE, NPCS_MORTAL, FLOOR_BOSSES, SHARE_CREDIT, TIER_BOSSES;
+    public static final ModConfigSpec.BooleanValue ENABLED, STORY_GATE, NPCS_MORTAL, FLOOR_BOSSES, SHARE_CREDIT, TIER_BOSSES, LIGHT_DEATH_NOTE_LETHAL;
     public static final ModConfigSpec.DoubleValue FLOOR_BOSS_CHANCE;
     public static final ModConfigSpec.IntValue NPC_WANDER, TALK_COOLDOWN, TIER_BOSS_MAX;
 
@@ -38,6 +38,8 @@ public final class ArcConfig {
                 .define("tierBosses", true);
         TIER_BOSS_MAX = b.comment("3.33.0: how many Tier List bosses may be alive in the whole server at once (a hard cap on top of the floors' own limits).")
                 .defineInRange("tierBossMax", 6, 1, 24);
+        LIGHT_DEATH_NOTE_LETHAL = b.comment("3.36.0: Light Yagami's Death Note scene ends in a REAL death of the player it writes (a normal death: keepInventory, respawn and the Totem of Undying work as usual; creative and spectator players are skipped). False = the scene plays the same but ends in a harmless joke and nobody dies. A SERVER setting because it changes gameplay.")
+                .define("lightDeathNoteLethal", true);
         b.pop();
         SPEC = b.build();
     }
@@ -68,4 +70,7 @@ public final class ArcConfig {
     public static boolean tierBosses() { return enabled() && get(TIER_BOSSES); }
 
     public static int tierBossMax() { return get(TIER_BOSS_MAX); }
+
+    /** 3.36.0: does Light's Death Note really kill (true, the default) or end in a harmless joke? */
+    public static boolean lightDeathNoteLethal() { return get(LIGHT_DEATH_NOTE_LETHAL); }
 }

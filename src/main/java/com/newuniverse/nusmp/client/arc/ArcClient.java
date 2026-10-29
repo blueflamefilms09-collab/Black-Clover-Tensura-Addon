@@ -28,6 +28,7 @@ public final class ArcClient {
     public static void init(IEventBus modBus) {
         modBus.addListener(ArcClient::registerRenderers);
         modBus.addListener(ArcClient::registerColors);
+        LightSceneClient.init(modBus);                      // 3.36.0: Light Yagami's Death Note cinematic (client drawing only, started by the server's packet)
     }
 
     private static void registerRenderers(EntityRenderersEvent.RegisterRenderers e) {

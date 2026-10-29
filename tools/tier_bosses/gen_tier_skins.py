@@ -38,6 +38,8 @@ PALETTES = {
     "foxy":            dict(hair=0x9E9E9E, skin=0xE0B890, outfit=0xB0BEC5, pants=0x455A64, accent=0xFF8A65),
     "shou_tucker":     dict(hair=0x5D4037, skin=0xF2C9A4, outfit=0x8D6E63, pants=0x4E342E, accent=0xC5E1A5),
     "ao":              dict(hair=0x1A1A2E, skin=0xE8C8A8, outfit=0x4FC3F7, pants=0x0D47A1, accent=0xFFFFFF),
+    # 3.36.0: the gag boss (tier F of the new ladder); the kit skin is painted by gen_tier_looks.py, this is only the fallback when the kit is off
+    "light_yagami":    dict(hair=0x6B4426, skin=0xF2DCD0, outfit=0xB79C73, pants=0x45463F, accent=0xC41E24),
 }
 
 HEAD_HAIR_ROWS = 10          # of 32: the fringe of the face texture
@@ -117,7 +119,10 @@ def main(argv):
             cnt[c] = cnt.get(c, 0) + 1
     mean = {c: sums[c] / cnt[c] for c in sums}
     sheet = []
+    only = argv[argv.index("--only") + 1:] if "--only" in argv else []        # 3.36.0: --only id ... repaints just those (every file is otherwise rewritten)
     for cid, pal in PALETTES.items():
+        if only and cid not in only:
+            continue
         out = base.copy()
         glow = Image.new("RGBA", base.size, (0, 0, 0, 0))
         op, gp = out.load(), glow.load()

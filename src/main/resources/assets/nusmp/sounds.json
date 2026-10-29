@@ -3085,5 +3085,17 @@
   "voice.sylph_victory_2": {
     "sounds": [{ "name": "nusmp:voice/sylph/sylph_victory_2", "stream": false }],
     "subtitle": "subtitles.nusmp.voice.sylph_victory_2"
+  },
+  "light_yagami.chip_line": {
+    "sounds": [{ "name": "nusmp:light_chip_line", "stream": false }],
+    "subtitle": "subtitles.nusmp.light_yagami.chip_line"
+  },
+  "light_yagami.death_just_as_planned": {
+    "sounds": [{ "name": "nusmp:light_death_just_as_planned", "stream": false }],
+    "subtitle": "subtitles.nusmp.light_yagami.death_just_as_planned"
+  },
+  "light_yagami.death_i_am_justice": {
+    "sounds": [{ "name": "nusmp:light_death_i_am_justice", "stream": false }],
+    "subtitle": "subtitles.nusmp.light_yagami.death_i_am_justice"
   }
 }

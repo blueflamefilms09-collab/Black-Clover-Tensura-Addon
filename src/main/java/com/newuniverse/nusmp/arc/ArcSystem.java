@@ -34,6 +34,9 @@ public final class ArcSystem {
         NeoForge.EVENT_BUS.addListener((AddReloadListenerEvent e) -> e.addListener(new DialogueLoader()));
         NeoForge.EVENT_BUS.addListener((ServerStoppedEvent e) -> DialogueLoader.clear());
         com.newuniverse.nusmp.arc.tier.TierSelfTests.register();   // 3.33.0: keys tier.*
+        com.newuniverse.nusmp.arc.tier.LightSounds.register(modBus);                                             // 3.36.0: Light Yagami (gag boss): his three spoken lines (sound events)
+        modBus.addListener(com.newuniverse.nusmp.arc.tier.LightNet::registerPayloads);                          // the one small scene packet (server to the players near him)
+        com.newuniverse.nusmp.arc.tier.LightEvents.register(NeoForge.EVENT_BUS);                                // his scenes end on logout, death, dimension change, server stop
         ArcSelfTests.register();                         // keys arc.*, expected by the server smoke test (SMOKE_EXPECT prefix "arc")
     }
 }

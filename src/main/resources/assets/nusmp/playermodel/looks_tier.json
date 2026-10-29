@@ -49,6 +49,12 @@
    "slim": false,
    "scale": 1.0667
   },
+  "light_yagami": {
+   "skin": "light_yagami",
+   "slim": true,
+   "scale": 0.9867,
+   "glow": true
+  },
   "malty_melromarc": {
    "skin": "malty_melromarc",
    "slim": true,

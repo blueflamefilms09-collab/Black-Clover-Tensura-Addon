@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "nusmp:conceptual_severance"
+    "nusmp:conceptual_severance",
+    "nusmp:death_note"
   ]
 }

@@ -179,6 +179,9 @@ public abstract class ZogratisBoss extends Monster implements com.newuniverse.nu
     protected void onFightEnd(boolean won) {}
     /** The form the Gates open into (the Triad become hybrids; Lucius overrides this with {@link #FORM_DIVINE}). */
     protected int gatesForm() { return FORM_HYBRID; }
+
+    /** 3.36.0: the power a boss starts a fight at, and returns to when an abandoned fight resets. The default is the framework's 20%; a gag boss with nothing to unlock (Light Yagami) starts at 100% so no Gates ever open. */
+    protected int openingPower() { return PowerCurve.OPENING; }
     /** The model scale of a form (a pure function of the form: it is called while the entity is still being built). */
     protected float formScale(int form) { return form == FORM_HYBRID ? 1.12f : 1.0f; }
     /** Per-boss damage factor on top of the power tuning. */
@@ -571,6 +574,7 @@ public abstract class ZogratisBoss extends Monster implements com.newuniverse.nu
         TriadBond.register(this);
         if (arena == null) arena = blockPosition();
         scheduler.reset(t);
+        if (power() < openingPower()) entityData.set(POWER, openingPower());          // 3.36.0: a boss that opens above 20% (default: no change)
         if (tuning.power() != power()) {                                  // a power set from outside (a command, a subclass): the pool follows it
             tuning = PowerCurve.tuning(power());
             mana.retune(tuning);
@@ -649,9 +653,9 @@ public abstract class ZogratisBoss extends Monster implements com.newuniverse.nu
         refill.reset();
         lastGlowStep = 0f;
         setTarget(null);
-        entityData.set(POWER, PowerCurve.OPENING);
+        entityData.set(POWER, openingPower());
         entityData.set(FORM, FORM_BASE);
-        tuning = PowerCurve.tuning(PowerCurve.OPENING);
+        tuning = PowerCurve.tuning(openingPower());
         mana.retune(tuning);
         applyTuning();
         refreshBar();

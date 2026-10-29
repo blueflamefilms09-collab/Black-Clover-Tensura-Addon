@@ -15,6 +15,7 @@ public final class TierRoster {
         List<TierRow> out = new ArrayList<>();
         out.addAll(TierRosterF.rows());
         out.addAll(TierRosterD.rows());
+        out.addAll(TierRosterGag.rows());          // 3.36.0: Light Yagami (the gag boss of rank F of the new ladder), appended last
         return out;
     }
 

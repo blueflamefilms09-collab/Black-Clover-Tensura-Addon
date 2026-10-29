@@ -53,7 +53,9 @@ public final class TierBosses {
         done = true;
         for (TierRow row : all()) {
             ArcRoster.register(row.character());
-            ArcEntities.<TierBoss>boss(row.id(), (type, level) -> new TierBoss(type, level, row), row.width(), row.height(), look(row), () -> attributes(row.character()));
+            boolean light = TierRosterGag.LIGHT.equals(row.id());          // 3.36.0: the gag boss is its own entity class (Death Note scene, no knockback resistance)
+            ArcEntities.<TierBoss>boss(row.id(), light ? (type, level) -> new LightYagamiBoss(type, level, row) : (type, level) -> new TierBoss(type, level, row),
+                    row.width(), row.height(), look(row), () -> light ? LightYagamiBoss.attributes(row.character()) : attributes(row.character()));
         }
     }
 }

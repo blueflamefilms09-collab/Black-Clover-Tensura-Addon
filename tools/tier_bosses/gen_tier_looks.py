@@ -25,6 +25,29 @@ from arc_kit import spec as S  # noqa: E402
 from tier_specs import SHEETS  # noqa: E402
 import anime_skin  # noqa: E402
 
+def light_post(cv, spec, seed, glow):
+    """3.36.0: Light Yagami's red tie down the chest (knot under the collar, a blade of two columns to the belt) and the thin black pen on the left sleeve (a dark line with a silver clip)."""
+    def tie(face, lx, ly, lz, w, h, d):
+        if face != "front" or lx not in (3, 4) or ly < 1 or ly > 8:
+            return None
+        if ly == 1:
+            return (122, 14, 22, 255)                            # the knot
+        shade = (196, 28, 36, 255) if (lx == 3) else (166, 20, 30, 255)
+        return (140, 16, 26, 255) if ly == 8 else shade           # the blade, darker at the tip
+    cv.paint("body", tie, overlay=True, faces=("front",))
+    cv.paint("body", tie, overlay=False, faces=("front",))
+
+    def pen(face, lx, ly, lz, w, h, d):
+        if face not in ("front", "west", "east") or ly < 3 or ly > 9:
+            return None
+        if face == "front" and lx == 1:
+            return (154, 154, 162, 255) if ly == 3 else (14, 14, 18, 255)   # the pen (silver clip at the top)
+        return None
+    cv.paint("arm_l", pen, overlay=True, faces=("front",))
+    return False
+
+
+POSTS = {"light_yagami": light_post}
 OUT_LOOKS = os.path.join(GS.ASSETS, "playermodel", "looks_tier.json")
 
 
@@ -41,7 +64,7 @@ def main(argv):
     for cid in ids or list(SHEETS):
         spec = S.normalize(SHEETS[cid], cid)
         painter = GS.paint_character if "--plain" in argv else anime_skin.paint_character          # 3.33.1: the anime style (--plain = the first kit painter)
-        img, glow, hs, hrgb, slim = painter(spec, cid, masks)
+        img, glow, hs, hrgb, slim = painter(spec, cid, masks, POSTS.get(cid))
         img.save(os.path.join(GS.SKINS, cid + ".png"))
         if glow is not None:
             glow.save(os.path.join(GS.SKINS, cid + "_glow.png"))

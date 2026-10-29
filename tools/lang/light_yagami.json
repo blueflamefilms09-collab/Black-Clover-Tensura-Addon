@@ -1,0 +1,16 @@
+{
+  "entity.nusmp.light_yagami": "Light Yagami",
+  "death.attack.nusmp.death_note": "%1$s died of a heart attack",
+  "death.attack.nusmp.death_note.player": "%1$s died of a heart attack",
+  "nusmp.light_yagami.caption.chip": "I'll take a potato chip... and eat it!",
+  "nusmp.light_yagami.caption.writing": "A name is being written...",
+  "nusmp.light_yagami.card.chip": "A POTATO CHIP",
+  "nusmp.light_yagami.card.pen": "THE PEN",
+  "nusmp.light_yagami.card.note": "DEATH NOTE",
+  "nusmp.light_yagami.joke": "Light misspelled your name. Nobody died.",
+  "item.nusmp.light_potato_chip": "Light's Potato Chip",
+  "item.nusmp.light_ryuk_apple": "Ryuk's Apple",
+  "subtitles.nusmp.light_yagami.chip_line": "Light Yagami: “I'll take a potato chip... and eat it!”",
+  "subtitles.nusmp.light_yagami.death_just_as_planned": "Light Yagami: “Just as planned.”",
+  "subtitles.nusmp.light_yagami.death_i_am_justice": "Light Yagami: “I am justice!”"
+}
