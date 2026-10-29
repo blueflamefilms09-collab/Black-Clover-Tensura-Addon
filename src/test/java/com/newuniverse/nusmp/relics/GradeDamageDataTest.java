@@ -60,12 +60,10 @@ class GradeDamageDataTest {
         assertTrue(n >= 28, "kinds found: " + n);
     }
 
+    // the six Requip weapons left the mod in 3.36.0 (owner request); only the hero weapons are checked now
     @Test void requipAndHeroWeaponsAreAllGraded() throws IOException {
-        Matcher m = Pattern.compile("WEAPON_STATS.put\\(\"([a-z_]+)\"").matcher(read("requip/RequipItems.java"));
-        int n = 0;
-        while (m.find()) { n++; assertNotNull(WeaponGrades.of(m.group(1)), m.group(1)); }
-        assertEquals(6, n);
-        m = Pattern.compile("[A-Z_]+\\(\"([a-z_]+)\", \"[^\"]+\", HeroClass\\.").matcher(read("heroweapon/HeroKind.java"));
+        int n;
+        Matcher m = Pattern.compile("[A-Z_]+\\(\"([a-z_]+)\", \"[^\"]+\", HeroClass\\.").matcher(read("heroweapon/HeroKind.java"));
         n = 0;
         while (m.find()) { n++; assertNotNull(WeaponGrades.of(m.group(1)), m.group(1)); }
         assertEquals(21, n);
