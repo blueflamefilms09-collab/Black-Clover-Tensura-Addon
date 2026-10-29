@@ -8,7 +8,12 @@ Status: DRAFT, rules only. No boss code is built from this yet. Items marked OPE
    - Exactly one skill per boss, one-of-one (no two bosses share a skill).
    - Players can get it: it gives a **10% gain**; it can be taken or sealed by any of the existing means (OPEN: what the 10% applies to, and whether "1 of 1" means one copy per server or one skill per boss).
 2. **One signature mechanic, separate from the skill.** An arena or phase rule the player must understand and counter (e.g. Madara's Six Paths). Telegraphed, with an intended answer.
-3. **Strength starts slightly above base Tensura and keeps rising.** Scaled by dungeon rank, E-Rank up to SSS-Rank, from one scaling table that every boss reads (HP, damage, armor, speed per rank). Also scaled by nearby player count. Not scaled to player power.
+3. **Strength starts slightly above base Tensura and keeps rising.** Scaled by dungeon rank, F-Rank up to SSS-Rank, from one scaling table that every boss reads (HP, damage, armor, speed per step). See "Rank ladder" below. Also scaled by nearby player count. Not scaled to player power.
+
+## Rank ladder
+Ranks: F, E, D, C, B, A, S, SS, SSS (9 ranks). Inside each rank a boss sits on a sub-step, from negative up to positive, and then ranks up:
+`F-` -> `F` -> `F+` -> `E-` -> `E` -> `E+` -> ... -> `SS+` -> `SSS-` -> `SSS` -> `SSS+` (27 steps).
+The scaling table has one row per step, so the strength curve is smooth and every boss names its step (e.g. "C-Rank, plus"). (OPEN: confirm this reading; the alternative is that "negative to positive" means weak to strong inside a rank with no named sub-steps.)
 
 ## Source material
 Bosses from other series follow their source material (skills, look, behaviour).
@@ -33,7 +38,7 @@ Every boss has a Feel Sheet (silhouette/model, colour + VFX palette, movement + 
 - HP/damage scale with players nearby; per-player damage tracking decides loot.
 - Per-player loot and credit, no kill-stealing.
 - Hard caps on minions, particles and projectiles per boss; effects sent to nearby players only; worst case stated in each boss doc.
-- Solo/group: E-B solo-able, A group-recommended, S-SSS group-required.
+- Solo/group: F-B solo-able, A group-recommended, S-SSS group-required.
 
 ## Rewards
 - Guaranteed signature drop (unique item or relic) plus a rare engraved weapon (CLAUDE.md rule 6).
@@ -61,6 +66,7 @@ Every boss has a Feel Sheet (silhouette/model, colour + VFX palette, movement + 
 ## Open questions
 - What exactly is the "10% gain", and what does "1 of 1" mean (one skill per boss, or one copy in the world)?
 - Which two bosses are the ice pair, and in the same dungeon or different ones?
-- How many bosses per rank (E, D, C, B, A, S, SS, SSS)?
+- How many bosses per rank (F, E, D, C, B, A, S, SS, SSS)?
+- Rank ladder: is my reading right (see below)?
 - Exact banned-skill list inside boss arenas.
-- Per-rank multipliers for the scaling table (proposal: rank E at about 1.1x the base Tensura equivalent, rising about 1.3x per rank step).
+- Per-rank multipliers for the scaling table (proposal: F- at about 1.1x the base Tensura equivalent, rising about 1.1x per sub-step, so one full rank is about 1.33x).
