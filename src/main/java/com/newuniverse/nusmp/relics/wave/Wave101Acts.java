@@ -342,6 +342,222 @@ final class Wave101Acts {
         });
     }
 
+    // ================================================================ 3.35.0: the powers the wiki lists and the first version of the items did not have
+    /** Longest a sealed or controlled mob stays so, whatever the caller asks for: five minutes at most. */
+    static final int MAX_SEAL_TICKS = Wave101Rules.MAX_SEAL_TICKS;
+
+    /** Holds a creature still: a sealed soul does not move, strike or cast (the effects of the mod, then the vanilla ones; an unknown id is skipped). */
+    private static void hold(LivingEntity t, int ticks) {
+        int ticks2 = Wave101Rules.holdTicks(ticks);
+        Fx.addEffect(t, "tensura:paralysis", ticks2, 0);
+        Fx.addEffect(t, "minecraft:slowness", ticks2, 6);
+        Fx.addEffect(t, "minecraft:weakness", ticks2, 3);
+        Fx.addEffect(t, "minecraft:mining_fatigue", ticks2, 3);
+        if (t instanceof Mob m) m.setTarget(null);
+    }
+
+    /** Duel Monster (Puzzle: it summons and controls Duel Monsters): one spectral monster fights for the wielder for a while (the summon helper keeps at most six allies per player). */
+    static ActBody duelMonster(int ticks) {
+        return guard("duel_monster", c -> {
+            ServerPlayer p = c.player();
+            ServerLevel l = p.serverLevel();
+            fx(l, VfxShape.MAGIC_CIRCLE_EXPLOSION, p.position(), p.position().add(p.getLookAngle().scale(2.0)).add(0, 0.2, 0), glow(c), 40, 3.0f);
+            LivingEntity m = Fx.summon(p, "minecraft:iron_golem", Mth.clamp(ticks, 100, 1200));
+            if (m == null) m = Fx.summon(p, "minecraft:skeleton", Mth.clamp(ticks, 100, 1200));
+            if (m == null) {
+                Fx.say(p, "No Duel Monster answers the summons.");
+                return;
+            }
+            m.setCustomName(net.minecraft.network.chat.Component.literal("Duel Monster"));
+            Fx.addEffect(m, "minecraft:strength", Mth.clamp(ticks, 100, 1200), 1);
+            Fx.say(p, "A Duel Monster takes the field.");
+        });
+    }
+
+    // ---------------------------------------------------------------- the Eye
+    /** Seal in a Card (Eye: it seals souls inside cards): the mob in sight is held in a soul card for a few seconds (a boss only falters), and the wielder deals more to it while it lasts. */
+    static ActBody sealInCard(double reach, int secs) {
+        return guard("seal_in_card", c -> {
+            ServerPlayer p = c.player();
+            LivingEntity t = Wave20Util.lookTarget(p, Mth.clamp(reach, 4, 32));
+            if (t == null) {
+                Fx.say(p, "No soul in sight to seal.");
+                return;
+            }
+            ServerLevel l = p.serverLevel();
+            fx(l, VfxShape.SEAL_CHAINS, chest(p), body(t), glow(c), 24, 1.2f);
+            if (Wave30Kit.isBoss(t) || t instanceof Player) {
+                Fx.addEffect(t, "minecraft:slowness", 60, 2);
+                Fx.say(p, "Its soul is too great for a card: it only falters.");
+                return;
+            }
+            hold(t, secs * 20);
+            Fx.addEffect(t, "minecraft:glowing", secs * 20, 0);
+            Wave101Marks.put(t, p.getUUID(), Wave101Rules.Mark.READ, now(p) + secs * 20L);
+            FxRelic.burst(l, body(t), glow(c));
+            Fx.say(p, t.getName().getString() + " is sealed in a card for " + secs + " seconds.");
+        });
+    }
+
+    /** Sight of the Dead (Eye: visions of the dead): the undead and the dying near the wielder are shown through the walls and marked, and the wielder sees in the dark. */
+    static ActBody sightOfTheDead(double radius, int secs) {
+        return guard("sight_of_the_dead", c -> {
+            ServerPlayer p = c.player();
+            ServerLevel l = p.serverLevel();
+            FxRelic.ring(l, p.position(), Math.min(radius, 12.0), glow(c));
+            long until = now(p) + secs * 20L;
+            int n = 0;
+            for (LivingEntity t : Fx.foesAround(p, radius)) {
+                boolean dead = t.getType().is(EntityTypeTags.UNDEAD), dying = t.getHealth() < t.getMaxHealth() * 0.25f;
+                if (!dead && !dying) continue;
+                if (n++ >= 24) break;
+                Fx.addEffect(t, "minecraft:glowing", secs * 20, 0);
+                Wave101Marks.put(t, p.getUUID(), Wave101Rules.Mark.READ, until);
+                fx(l, VfxShape.MIRROR_PANE, body(t), p.getEyePosition(), glow(c), 12, 0.8f);
+            }
+            Fx.addEffect(p, "minecraft:night_vision", secs * 20, 0);
+            Fx.lendSkill(p, "tensura:magic_sense", secs * 20);
+            Fx.say(p, n == 0 ? "The dead are quiet here." : n + (n == 1 ? " soul" : " souls") + " of the dead and the dying are shown to you.");
+        });
+    }
+
+    // ---------------------------------------------------------------- the Ring
+    /** Seal a Soul (Ring: it seals souls into objects): the soul of a small mob in sight is sealed in the Ring (it dies) and its power feeds the wielder; a great soul is only hurt. */
+    static ActBody sealSoul(double reach, float dmg, float maxSealable) {
+        return guard("seal_soul", c -> {
+            ServerPlayer p = c.player();
+            LivingEntity t = Wave20Util.lookTarget(p, Mth.clamp(reach, 4, 24));
+            if (t == null) {
+                Fx.say(p, "No soul in sight to seal.");
+                return;
+            }
+            ServerLevel l = p.serverLevel();
+            fx(l, VfxShape.ASH_FORMATION, body(t), chest(p), glow(c), 20, 1.0f);
+            boolean small = Wave101Rules.sealable(Wave30Kit.isBoss(t), t instanceof Player, t.getMaxHealth(), maxSealable);
+            if (!small) {
+                Fx.damage(p, t, scaled(c, dmg), "minecraft:magic");
+                Fx.say(p, "Its soul is too great to seal: the Ring only draws at it.");
+                return;
+            }
+            Fx.damage(p, t, 400f, "minecraft:magic");
+            if (t.isAlive()) return;
+            Wave2Mana.give(p, 0.08 * Wave101Set.power(p));
+            Fx.heal(p, Math.min(40f, scaled(c, 10f)));
+            FxRelic.burst(l, body(t), glow(c));
+            Fx.say(p, "A soul is sealed in the Ring.");
+        });
+    }
+
+    // ---------------------------------------------------------------- the Rod
+    /** Seal in a Tablet (Rod: it seals spirit monsters in stone tablets): up to three mobs in a line are turned to stone tablets for a while (a boss only falters). */
+    static ActBody sealInTablet(double range, int secs) {
+        return guard("seal_in_tablet", c -> {
+            ServerPlayer p = c.player();
+            ServerLevel l = p.serverLevel();
+            double len = Wave20Util.lineLength(p, Mth.clamp(range, 4, 32));
+            Vec3 from = chest(p), to = from.add(p.getLookAngle().scale(len));
+            fx(l, VfxShape.SEAL_CHAINS, from, to, glow(c), 24, 1.4f);
+            int n = 0;
+            for (LivingEntity t : Wave20Util.foesOnLine(p, range, 1.6, 3)) {
+                if (Wave30Kit.isBoss(t) || t instanceof Player) {
+                    Fx.addEffect(t, "minecraft:slowness", 60, 2);
+                    continue;
+                }
+                hold(t, secs * 20);
+                Fx.addEffect(t, "minecraft:resistance", secs * 20, 4);                  // stone does not break (and does not heal either)
+                FxRelic.burst(l, body(t), glow(c));
+                n++;
+            }
+            Fx.say(p, n == 0 ? "No spirit monster on the line to seal." : n + (n == 1 ? " spirit is" : " spirits are") + " sealed in stone for " + secs + " seconds.");
+        });
+    }
+
+    // ---------------------------------------------------------------- the Key
+    /** Redecorate the Soul (Key: it redecorates a soul to make anyone a puppet): the mob in sight (no boss, no player) becomes the wielder's puppet for a long while. */
+    static ActBody redecorateSoul(double reach, int ticks) {
+        return guard("redecorate_soul", c -> {
+            ServerPlayer p = c.player();
+            LivingEntity t = Wave30Kit.target(p, Mth.clamp(reach, 4, 24));
+            if (t == null || t == p) {
+                Fx.say(p, "No soul in sight to redecorate.");
+                return;
+            }
+            ServerLevel l = p.serverLevel();
+            fx(l, VfxShape.SPACE_PORTAL, chest(p), body(t), glow(c), 30, 1.2f);
+            if (t instanceof Mob m && Wave30Kit.controllable(p, t)) {
+                int ticks2 = Mth.clamp(ticks, 100, MAX_SEAL_TICKS);
+                Wave30Events.dominate(m, p, now(p) + ticks2);
+                fx(l, VfxShape.THREAD_STRINGS, chest(p), body(t), glow(c), 20, 1.0f);
+                Fx.say(p, t.getName().getString() + " is your puppet for " + ticks2 / 20 + " seconds.");
+            } else {
+                Fx.say(p, "That soul cannot be redecorated.");
+            }
+        });
+    }
+
+    // ---------------------------------------------------------------- the Scale
+    /** Fuse Monsters (Scale: it fuses monsters): up to five foes are pulled together into one place and fused in a single blow, harder for every foe in the knot; each is marked as weighed. */
+    static ActBody fuseMonsters(double radius, float dmg) {
+        return guard("fuse_monsters", c -> {
+            ServerPlayer p = c.player();
+            ServerLevel l = p.serverLevel();
+            fx(l, VfxShape.SEAL_CHAINS, p.position(), p.position().add(0, 1, 0), glow(c), 24, (float) radius * 0.3f);
+            List<LivingEntity> knot = new ArrayList<>();
+            for (LivingEntity t : Fx.foesAround(p, radius)) {
+                if (knot.size() >= Wave101Rules.FUSE_MAX) break;
+                knot.add(t);
+            }
+            if (knot.size() < Wave101Rules.FUSE_MIN) {
+                Fx.say(p, "There are not two monsters to fuse.");
+                return;
+            }
+            Vec3 centre = Vec3.ZERO;
+            for (LivingEntity t : knot) centre = centre.add(t.position());
+            centre = centre.scale(1.0 / knot.size());
+            float each = scaled(c, dmg) * Wave101Rules.fuseFactor(knot.size());
+            long until = now(p) + 240L;
+            for (LivingEntity t : knot) {
+                Vec3 pull = centre.subtract(t.position());
+                t.setDeltaMovement(pull.scale(0.35).add(0, 0.2, 0));
+                t.hurtMarked = true;
+                Fx.damage(p, t, each, "minecraft:magic");
+                Fx.addEffect(t, "minecraft:slowness", 100, 3);
+                Wave101Marks.put(t, p.getUUID(), Wave101Rules.Mark.WEIGHED, until);
+            }
+            FxRelic.burst(l, centre.add(0, 1, 0), glow(c));
+            Fx.say(p, knot.size() + " monsters are fused.");
+        });
+    }
+
+    // ---------------------------------------------------------------- the Necklace
+    /** Sight of the Past (Necklace: it sees into the past): whoever hurt the wielder (the last attacker, and every foe round that has them in its sights) is shown through the walls and marked. */
+    static ActBody sightOfThePast(double radius, int secs) {
+        return guard("sight_of_the_past", c -> {
+            ServerPlayer p = c.player();
+            ServerLevel l = p.serverLevel();
+            FxRelic.ring(l, p.position(), Math.min(radius, 12.0), glow(c));
+            fx(l, VfxShape.TIME_REWIND, p.position(), p.position().add(0, 1, 0), glow(c), 30, 2.0f);
+            long until = now(p) + secs * 20L;
+            int n = 0;
+            LivingEntity last = p.getLastHurtByMob();
+            if (last != null && last.isAlive() && last != p && !last.isAlliedTo(p) && p.tickCount - p.getLastHurtByMobTimestamp() < 1200 && last.distanceToSqr(p) < 64.0 * 64.0) {
+                Fx.addEffect(last, "minecraft:glowing", secs * 20, 0);
+                Wave101Marks.put(last, p.getUUID(), Wave101Rules.Mark.READ, until);
+                fx(l, VfxShape.MIRROR_PANE, body(last), p.getEyePosition(), glow(c), 12, 0.8f);
+                n++;
+            }
+            for (LivingEntity t : Fx.foesAround(p, radius)) {
+                if (n >= 12) break;
+                if (t == last || !(t instanceof Mob m) || m.getTarget() != p) continue;
+                Fx.addEffect(t, "minecraft:glowing", secs * 20, 0);
+                Wave101Marks.put(t, p.getUUID(), Wave101Rules.Mark.READ, until);
+                n++;
+            }
+            Fx.lendSkill(p, "tensura:future_vision", secs * 20);
+            Fx.say(p, n == 0 ? "The past shows nothing that wishes you harm." : "The past shows who means you harm.");
+        });
+    }
+
     // ================================================================ the Dragon Balls
     /** Shenron's Wish: the wielder is made whole (all the missing health, ailments cleansed, a great shield, regeneration and strength) and the friends round are mended too. */
     static ActBody wish() {

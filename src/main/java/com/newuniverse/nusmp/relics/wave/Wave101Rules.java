@@ -96,4 +96,26 @@ public final class Wave101Rules {
     public static final double DRAW_PER_FOE = 0.04, DRAW_MAX = 0.24;
 
     public static double draw(int foes) { return Math.min(DRAW_MAX, DRAW_PER_FOE * Math.max(0, foes)); }
+
+    // ---------------------------------------------------------------- 3.35.0: the wiki powers (seal, fuse, puppet)
+    /** Longest a sealed or controlled mob stays so (five minutes), and the shortest any hold lasts (one second). */
+    public static final int MAX_SEAL_TICKS = 6000, MIN_HOLD_TICKS = 20;
+
+    public static int holdTicks(int asked) { return Math.max(MIN_HOLD_TICKS, Math.min(MAX_SEAL_TICKS, asked)); }
+
+    /** Most foes the Scale fuses in one blow, and the extra share of damage each foe in the knot adds for every other. */
+    public static final int FUSE_MAX = 5, FUSE_MIN = 2;
+    public static final float FUSE_STEP = 0.2f;
+
+    public static int fuseCount(int foes) { return Math.max(0, Math.min(FUSE_MAX, foes)); }
+
+    /** The factor a fusion of {@code foes} monsters hits each of them with: 1.0 for one, 1.8 for the full five (never more). */
+    public static float fuseFactor(int foes) { return 1.0f + FUSE_STEP * Math.max(0, fuseCount(foes) - 1); }
+
+    /** Heaviest soul the Ring can seal (it is capped at 200 health whatever the caller asks); a boss or a player is never sealed. */
+    public static final float SEAL_SOUL_CAP = 200f;
+
+    public static boolean sealable(boolean boss, boolean player, float maxHealth, float limit) {
+        return !boss && !player && maxHealth <= Math.min(limit, SEAL_SOUL_CAP);
+    }
 }

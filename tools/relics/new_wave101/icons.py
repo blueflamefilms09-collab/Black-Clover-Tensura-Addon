@@ -25,11 +25,12 @@ SOLID = ~(VP.STAR | VP.HALO)
 
 # the view of each sprite and, where the whole model is not the iconic part, the window on it (model pixels, authoring frame: x right, y up)
 VIEWS = {
-    "millennium_puzzle": ((0, 0), (-5.0, 5.0, -9.6, -0.6)),
-    "millennium_eye": ((0, 0), (-6.8, 6.8, 4.2, 13.6)),
-    "millennium_ring": ((12, 0), (-6.5, 4.5, -12.0, -1.8)),
-    "millennium_key": ((0, 0), (-7.0, 7.0, -19.0, -8.6)),
-    "millennium_necklace": ((0, 0), (-8.0, 8.0, -9.6, 1.6)),
+    "millennium_puzzle": ((0, 0), (-4.7, 4.7, -9.4, -0.2)),
+    "millennium_eye": ((0, 0), (-3.2, 3.2, 3.5, 9.9)),
+    "millennium_ring": ((12, 0), (-5.6, 3.6, -12.4, -3.0)),
+    "millennium_key": ((0, 0), (-4.2, 4.2, -24.2, -11.0)),
+    "millennium_necklace": ((0, 12), (-5.8, 5.8, -6.0, 0.8)),
+    "millennium_scale": ((0, 16), (-11.5, 11.5, -9.0, 17.0)),
     "straw_hat_of_joy_boy": ((0, 12), (-11.0, 11.0, 5.5, 14.5)),
     "law_of_cycles_gown": ((0, 0), (-9.0, 9.0, -19.0, 1.6)),
     "seven_dragon_balls_of_shenron": ((20, 52), None),

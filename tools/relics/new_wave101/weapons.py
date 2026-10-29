@@ -2,7 +2,7 @@
 and gold, class longsword) and the Requiem Stand Arrow (a golden arrow with a beetle's head, class dagger). Built with the kit of the 35 weapons of 1.97.0 (tools/relics/new197_*.py): real
 cross-sections, a painted skin, a second additive glow skin, the dimensional void of the Genesis Demon-Slayer where it fits, the 16 x 16 sprite rendered from the mesh, both item models.
 
-    python3 -B tools/relics/new_wave101/weapons.py [id ...]
+    python3 -B tools/relics/new_wave101/weapons.py [--old-rod] [id ...]     (millennium_rod is the canon build of canon_rod.py; --old-rod rebuilds the first one)
 """
 import math
 import os
@@ -149,9 +149,12 @@ def write_classes():
     pt = os.path.join(ROOT, "tools", "relics", "weapon_classes.json")
     a = json.load(open(pa))
     t = json.load(open(pt))
+    before = json.dumps([a, t], sort_keys=True)
     for rid, cls in CLASSES.items():
         a["weapons"].setdefault(rid, cls)
         t["weapons"].setdefault(rid, {"class": cls})
+    if json.dumps([a, t], sort_keys=True) == before:       # nothing new: leave the files (and their formatting) alone
+        return
     with open(pa, "w", newline="\n") as f:
         f.write(json.dumps(a, indent=1, ensure_ascii=True) + "\n")
     with open(pt, "w", newline="\n") as f:
@@ -182,8 +185,11 @@ def presets():
         print("  display %-26s %s L=%.2f" % (item_id, plan["action"], mesh.length))
     man = json.load(open(dp.MANIFEST, encoding="utf-8"))
     mine = set(ids)
+    old_man = json.dumps(man, sort_keys=True)
     rows = [r for r in man["weapons"] if r["id"] not in mine] + entries
     man["weapons"] = sorted(rows, key=lambda r: r["id"])
+    if json.dumps(man, sort_keys=True) == old_man:          # unchanged: no rewrite
+        return
     open(dp.MANIFEST, "w", encoding="utf-8", newline="\n").write(json.dumps(man, indent=2) + "\n")
 
 
@@ -192,6 +198,10 @@ def main(argv):
     for rid, fn in BUILDERS.items():
         if only and rid not in only:
             continue
+        if rid == "millennium_rod" and "--old-rod" not in argv:        # the canon Rod (canon_rod.py); `--old-rod` runs the first build above again
+            sys.path.insert(0, HERE)
+            from canon_rod import build_millennium_rod_canon
+            fn = build_millennium_rod_canon
         fn()
     write_classes()
     presets()

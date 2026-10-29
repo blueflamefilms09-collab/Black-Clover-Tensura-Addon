@@ -4,6 +4,7 @@ import math
 import numpy as np
 
 from common import *  # noqa: F401,F403
+from canon_a import build_puzzle_canon
 from common import (geo, K, PT, V, Item, GL, PL, ST, MAIN, TRIM, GLOW, DARK, ACCENT, GOLD, GOLD_HI, GOLD_DK, LAPIS, LAPIS_DK, LAPIS_HI, TURQ, deco_lapis, deco_hiero, deco_wdjat, wdjat,
                     paint_wdjat, ankh, orbit_motes)
 
@@ -93,13 +94,10 @@ def build_puzzle(vm, info):
     vm.deco(PT.deco_glyphs, wheel, glow, rows=1, glow=True, strength=0.7, seed=8)
 
 
-add(Item("millennium_puzzle", build_puzzle, dict(style="void", dark=(2, 4, 24), mid=(40, 70, 170), hot=(255, 232, 150)), hand_size=0.95, hand_style="hang", seed=101, worn="pieces",
+add(Item("millennium_puzzle", build_puzzle_canon, dict(style="void", dark=(2, 4, 24), mid=(40, 70, 170), hot=(255, 232, 150)), hand_size=0.95, hand_style="hang", seed=101, worn="pieces",
          pieces=[("", "body", False)], anchor="body",
-         layers=[GL("second soul", "nebula_core", "second_soul"), GL("wdjat glow", "aura_shell", "wdjat_glow"), GL("seven items", "orbit_shards", "seven_motes"), GL("fate wheel", "halo_ring", "fate_wheel"),
-                 GL("fate wheel b", "halo_ring", "fate_wheel_b"), GL("shadow ripple", "portal_ripples", "shadow_ripple"), GL("falling sand", "orbit_shards", "falling_sand"),
-                 GL("tear glints", "lens_flare", "tear_glints"), GL("halo ring", "rune_ring", "halo_ring"), GL("lens flare", "lens_flare", "lens_flare"), GL("light shafts", "light_shafts", "light_shafts"),
-                 PL("rune eyes", "motes", "nusmp:rune_eye", None, count=1, every=10, radius=0.5, rise=0.012),
-                 PL("golden sand", "glints", "nusmp:sand_grain", 0xFFE890, count=1, every=5, radius=0.5, rise=-0.01),
-                 PL("soul glints", "glints", "nusmp:gem_sparkle", 0x6A8CFF, count=1, every=8, radius=0.45, rise=0.01)],
+         layers=[GL("wdjat glow", "aura_shell", "wdjat_glow"),
+                 PL("eye glint", "glints", "nusmp:gem_sparkle", 0xFFE890, count=1, every=12, radius=0.4, rise=0.01)],
          acts={"other_me": [ST("SHADOW_UNITE", 0x2A4FC0, 3.2, 70, "self"), ST("DIVINE_HALO", 0xFFE890, 3.0, 60, "sky"), ST("LIGHT_FLARE", 0xFFFFFF, 1.8, 16, "self")],
-               "shadow_game": [ST("SHADOW_POOL", 0x2A4FC0, 5.0, 90, "ground"), ST("MAGIC_CIRCLE_EXPLOSION", 0xF0C050, 4.6, 60, "ground"), ST("DIVINE_SIGIL", 0xFFE890, 3.0, 50, "sky")]}))
+               "shadow_game": [ST("SHADOW_POOL", 0x2A4FC0, 5.0, 90, "ground"), ST("MAGIC_CIRCLE_EXPLOSION", 0xF0C050, 4.6, 60, "ground"), ST("DIVINE_SIGIL", 0xFFE890, 3.0, 50, "sky")],
+               "summon_duel_monster": [ST("MAGIC_CIRCLE", 0xF0C050, 4.4, 60, "front"), ST("SHADOW_UNITE", 0x2A4FC0, 3.0, 50, "front"), ST("LIGHT_FLARE", 0xFFFFFF, 1.8, 14, "front")]}))

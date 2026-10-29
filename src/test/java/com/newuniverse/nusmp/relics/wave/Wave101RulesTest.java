@@ -97,4 +97,32 @@ class Wave101RulesTest {
         assertEquals(0.24, Wave101Rules.draw(6), 1e-9);
         assertEquals(0.24, Wave101Rules.draw(12), 1e-9);
     }
+
+    @Test
+    void sealsAreBoundedAndNeverHoldForever() {
+        assertEquals(20, Wave101Rules.holdTicks(0), "at least a second");
+        assertEquals(200, Wave101Rules.holdTicks(200));
+        assertEquals(6000, Wave101Rules.holdTicks(Integer.MAX_VALUE), "five minutes at most");
+    }
+
+    @Test
+    void theScaleFusesAtMostFiveAndHarderForEachFoe() {
+        assertEquals(5, Wave101Rules.fuseCount(40));
+        assertEquals(0, Wave101Rules.fuseCount(-3));
+        assertEquals(1.0f, Wave101Rules.fuseFactor(0), 1e-6);
+        assertEquals(1.0f, Wave101Rules.fuseFactor(1), 1e-6);
+        assertEquals(1.2f, Wave101Rules.fuseFactor(2), 1e-6);
+        assertEquals(1.8f, Wave101Rules.fuseFactor(5), 1e-6);
+        assertEquals(1.8f, Wave101Rules.fuseFactor(99), 1e-6, "the knot never grows past five");
+    }
+
+    @Test
+    void theRingSealsSmallSoulsOnlyAndNeverBossesOrPlayers() {
+        assertTrue(Wave101Rules.sealable(false, false, 20f, 120f));
+        assertTrue(Wave101Rules.sealable(false, false, 120f, 120f));
+        assertFalse(Wave101Rules.sealable(false, false, 121f, 120f), "a greater soul is only hurt");
+        assertFalse(Wave101Rules.sealable(true, false, 10f, 120f), "never a boss");
+        assertFalse(Wave101Rules.sealable(false, true, 10f, 120f), "never a player");
+        assertFalse(Wave101Rules.sealable(false, false, 300f, 9999f), "the 200 health cap holds whatever is asked");
+    }
 }

@@ -40,7 +40,7 @@ public final class Wave101 {
         // ---------------------------------------------------------------- Millennium Puzzle (Genesis, neck pendant)
         out.accept(RelicDef.of("millennium_puzzle", "Millennium Puzzle", Grade.GENESIS, RelicSlot.NECK)
                 .palette(0x2A4FC0, 0xF0C050, 0xFFE890).look(Look.PENDANT)
-                .desc("A golden pyramid on a cord, with the Eye of Wdjat on its face, in which a second soul sleeps. When a blow would kill you, the other soul takes it and you wake at 40% health (once in five minutes). Use: Other Me and Shadow Game. Worn with the other Millennium Items it grows stronger.")
+                .desc("The Sennen Puzzle: an inverted golden pyramid with the Eye of Wdjat on its face, holding the soul of Pharaoh Atem. When a blow would kill you, the other soul takes it and you wake at 40% health (once in five minutes). It summons and commands Duel Monsters and gives its solver the power of darkness. Carried by Aknamkanon, Atem and Priest Seto, then Solomon Muto and Yugi Muto. Use: Other Me, Shadow Game and Duel Monster. Worn with the other Millennium Items it grows stronger.")
                 .passive(Passive.flag("w101_puzzle"))
                 .passive(Passive.attr("minecraft:generic.max_health", 12.0, Operation.ADD_VALUE))
                 .passive(Passive.attr("tensura:max_magicule", 0.25, Operation.ADD_MULTIPLIED_TOTAL))
@@ -49,12 +49,13 @@ public final class Wave101 {
                 .passive(Passive.resist("tensura:curse", 0.5))
                 .passive(Passive.skill("tensura:thought_acceleration"))
                 .act(Act.of("other_me", "Other Me", Wave71Acts.bolster("minecraft:strength", 2, "minecraft:resistance", 1, 20, 80f, 0f)).cooldown(1800).mana(10))
-                .act(Act.of("shadow_game", "Shadow Game", Wave101Acts.shadowGame(14.0, 110f, 8)).cooldown(4800).mana(14).needsSneak().usesPerDay(3)));
+                .act(Act.of("shadow_game", "Shadow Game", Wave101Acts.shadowGame(14.0, 110f, 8)).cooldown(4800).mana(14).needsSneak().usesPerDay(3))
+                .act(Act.of("summon_duel_monster", "Duel Monster", Wave101Acts.duelMonster(900)).cooldown(6000).mana(16).usesPerDay(3)));
 
         // ---------------------------------------------------------------- Millennium Eye (Genesis, head: the brow piece)
         out.accept(RelicDef.of("millennium_eye", "Millennium Eye", Grade.GENESIS, RelicSlot.HEAD)
                 .palette(0x1A3A9A, 0xE8B040, 0x58F0E8).look(Look.CIRCLET)
-                .desc("A golden eye set in the brow of a lapis circlet. It sees what is true and what is meant, and nothing near can hide its thoughts. Use: Mind Read and Truth Gaze. Worn with the other Millennium Items it grows stronger.")
+                .desc("The Sennen Eye: a round golden disc with an eye, worn on the brow. It reads minds, looks into a soul, seals souls inside cards and shows the dead. Carried by Aknadin, then Pegasus, Bakura and Yugi. Use: Mind Read, Truth Gaze, Seal in a Card and Sight of the Dead. Worn with the other Millennium Items it grows stronger.")
                 .passive(Passive.attr("minecraft:generic.luck", 4.0, Operation.ADD_VALUE))
                 .passive(Passive.attr("tensura:max_magicule", 0.2, Operation.ADD_MULTIPLIED_TOTAL))
                 .passive(Passive.resist("minecraft:magic", 0.3))
@@ -62,24 +63,27 @@ public final class Wave101 {
                 .passive(Passive.skill("tensura:magic_sense"))
                 .passive(Passive.skill("tensura:farsight"))
                 .act(Act.of("mind_read", "Mind Read", Wave101Acts.readMinds(24.0, 12)).cooldown(900).mana(8))
-                .act(Act.of("truth_gaze", "Truth Gaze", Wave101Acts.eyeBeam(32.0, 1.6, 130f, 8)).cooldown(3000).mana(12).needsSneak()));
+                .act(Act.of("truth_gaze", "Truth Gaze", Wave101Acts.eyeBeam(32.0, 1.6, 130f, 8)).cooldown(3000).mana(12).needsSneak())
+                .act(Act.of("seal_in_card", "Seal in a Card", Wave101Acts.sealInCard(24.0, 8)).cooldown(2400).mana(12).usesPerDay(6))
+                .act(Act.of("sight_of_the_dead", "Sight of the Dead", Wave101Acts.sightOfTheDead(32.0, 12)).cooldown(1800).mana(8)));
 
         // ---------------------------------------------------------------- Millennium Ring (Genesis, hands: a ring on the finger)
         out.accept(RelicDef.of("millennium_ring", "Millennium Ring", Grade.GENESIS, RelicSlot.HANDS)
                 .palette(0x233E8C, 0xF2C860, 0xFFD870).look(Look.CHARM)
-                .desc("A golden ring hung with five needles that swing to whatever means you harm and to whatever holds power. Monsters that hunt you glow through the walls. Use: Dowsing Needles and Draw Power. Worn with the other Millennium Items it grows stronger.")
+                .desc("The Sennen Ring: a golden hoop round a pyramid, hung with five needles that swing to whatever its owner seeks, like a compass. It seals souls, or pieces of souls, into objects and holds the souls of Zorc and Thief Bakura. Monsters that hunt you glow through the walls. Carried by Mahad, Thief King Bakura and Zorc, then Marik, Bakura and Yugi. Use: Dowsing Needles, Draw Power and Seal a Soul. Worn with the other Millennium Items it grows stronger.")
                 .passive(Passive.flag("w101_ring"))
                 .passive(Passive.attr("tensura:max_magicule", 0.3, Operation.ADD_MULTIPLIED_TOTAL))
                 .passive(Passive.attr("minecraft:player.entity_interaction_range", 1.0, Operation.ADD_VALUE))
                 .passive(Passive.resist("minecraft:magic", 0.3))
                 .passive(Passive.skill("tensura:magic_sense"))
                 .act(Act.of("dowsing_needles", "Dowsing Needles", Wave101Acts.dowse(48.0, 10)).cooldown(600).mana(6))
-                .act(Act.of("draw_power", "Draw Power", Wave101Acts.drawPower(12.0, 80f)).cooldown(2400).mana(6)));
+                .act(Act.of("draw_power", "Draw Power", Wave101Acts.drawPower(12.0, 80f)).cooldown(2400).mana(6))
+                .act(Act.of("seal_a_soul", "Seal a Soul", Wave101Acts.sealSoul(16.0, 150f, 120f)).cooldown(1200).mana(10).usesPerDay(8)));
 
         // ---------------------------------------------------------------- Millennium Rod (Genesis, a held rod: weapon)
         out.accept(RelicDef.of("millennium_rod", "Millennium Rod", Grade.GENESIS, RelicSlot.MAIN_HAND).vessel().model3d()
                 .look(Look.STAFF).palette(0x30389C, 0xEEB844, 0x9AE8FF)
-                .desc("A golden rod with a winged eye on its head, that bends the mind of whoever it is pointed at. 70% more damage against a foe under 30% of its health, which it also weakens. Use: Mind Control, Pharaoh's Command and Judgement Strike. Worn with the other Millennium Items it grows stronger.")
+                .desc("The Sennen Rod: a golden rod with a crescent head and an eye, that bends the mind of whoever it is pointed at and seals spirit monsters in stone tablets. 70% more damage against a foe under 30% of its health, which it also weakens. Carried by Priest Seto, then Mr. Ishtar, Marik and Yugi. Use: Mind Control, Pharaoh's Command, Judgement Strike and Seal in a Tablet. Worn with the other Millennium Items it grows stronger.")
                 .passive(Passive.flag("w101_millennium_rod"))
                 .passive(Passive.attr("minecraft:player.entity_interaction_range", 1.0, Operation.ADD_VALUE))
                 .passive(Passive.attr("tensura:max_magicule", 0.25, Operation.ADD_MULTIPLIED_TOTAL))
@@ -88,37 +92,40 @@ public final class Wave101 {
                 .act(Act.of("mind_control", "Mind Control", Wave101Acts.mindControl(24.0, 240)).cooldown(1200).mana(10))
                 .act(Act.of("pharaohs_command", "Pharaoh's Command", Wave101Acts.command(16.0, 3, 160)).cooldown(2400).mana(12).needsSneak())
                 .act(Act.of("judgement_strike", "Judgement Strike", Wave71Acts.line(28.0, 1.8, (float) (DMG_MILLENNIUM_ROD * 1.2), "minecraft:magic", "minecraft:slowness", 6, 3, VfxShape.MIRROR_RAY)).cooldown(6000).mana(14).usesPerDay(2))
+                .act(Act.of("seal_in_tablet", "Seal in a Tablet", Wave101Acts.sealInTablet(24.0, 12)).cooldown(3000).mana(14).usesPerDay(4))
                 .melee(DMG_MILLENNIUM_ROD, 1.3)
                 .engrave("magic_weapon@4", "magic_interference", "barrier_piercing", "enervation", "soul_eater"));
 
         // ---------------------------------------------------------------- Millennium Key (Genesis, belt: the ankh key)
         out.accept(RelicDef.of("millennium_key", "Millennium Key", Grade.GENESIS, RelicSlot.BELT)
                 .palette(0x2C46A8, 0xE4AE3C, 0xFFD060).look(Look.BELT)
-                .desc("A golden ankh on a lapis belt: the key to the room of the soul. No fear, confusion or sleep can reach the one who carries it. Use: Open the Soul Room and Mind Garden. Worn with the other Millennium Items it grows stronger.")
+                .desc("The Sennen Key: a golden ankh that lets its holder walk into another person's mind and redecorate the soul until anyone is a puppet. No fear, confusion or sleep can reach the one who carries it. Carried by Shimon Muran and Shada, then Shadi and Yugi. Use: Open the Soul Room, Mind Garden and Redecorate the Soul. Worn with the other Millennium Items it grows stronger.")
                 .passive(Passive.flag("w101_key"))
                 .passive(Passive.attr("minecraft:generic.max_health", 10.0, Operation.ADD_VALUE))
                 .passive(Passive.attr("minecraft:generic.luck", 2.0, Operation.ADD_VALUE))
                 .passive(Passive.resist("tensura:curse", 0.5))
                 .passive(Passive.skill("tensura:abnormal_condition_resistance"))
                 .act(Act.of("open_the_soul_room", "Open the Soul Room", Wave101Acts.soulRoom(12.0, 95f)).cooldown(1800).mana(8))
-                .act(Act.of("mind_garden", "Mind Garden", Wave101Acts.mindGarden(14.0, 12, 60f)).cooldown(6000).mana(12).usesPerDay(2)));
+                .act(Act.of("mind_garden", "Mind Garden", Wave101Acts.mindGarden(14.0, 12, 60f)).cooldown(6000).mana(12).usesPerDay(2))
+                .act(Act.of("redecorate_the_soul", "Redecorate the Soul", Wave101Acts.redecorateSoul(20.0, 1200)).cooldown(6000).mana(16).needsSneak().usesPerDay(2)));
 
         // ---------------------------------------------------------------- Millennium Scale (Genesis, a charm held in the hand)
         out.accept(RelicDef.of("millennium_scale", "Millennium Scale", Grade.GENESIS, RelicSlot.CHARM)
                 .palette(0x1F4AB4, 0xF4C85A, 0x78F0D8).look(Look.CHARM)
-                .desc("A small golden balance with a feather on one pan. It weighs the heart of a monster and judges it: a heavy heart is struck down, a light one is spared. Use: Weigh the Heart and Ammit's Verdict. Worn with the other Millennium Items it grows stronger.")
+                .desc("The Sennen Scale: a golden balance that weighs the darkness in a person's heart, and fuses monsters. A heavy heart is struck down, a light one is spared. Carried by Karim, Thief King Bakura and Atem, then Shadi and Yugi. Use: Weigh the Heart, Ammit's Verdict and Fuse Monsters. Worn with the other Millennium Items it grows stronger.")
                 .passive(Passive.attr("minecraft:generic.luck", 4.0, Operation.ADD_VALUE))
                 .passive(Passive.attr("minecraft:generic.max_health", 10.0, Operation.ADD_VALUE))
                 .passive(Passive.resist("minecraft:magic", 0.4))
                 .passive(Passive.resist("tensura:curse", 0.4))
                 .passive(Passive.skill("tensura:analytical_appraisal"))
                 .act(Act.of("weigh_the_heart", "Weigh the Heart", Wave101Acts.weighHeart(24.0, 150f)).cooldown(1500).mana(10))
-                .act(Act.of("ammits_verdict", "Ammit's Verdict", Wave101Acts.verdict(14.0, 120f)).cooldown(6000).mana(14).needsSneak().usesPerDay(2)));
+                .act(Act.of("ammits_verdict", "Ammit's Verdict", Wave101Acts.verdict(14.0, 120f)).cooldown(6000).mana(14).needsSneak().usesPerDay(2))
+                .act(Act.of("fuse_monsters", "Fuse Monsters", Wave101Acts.fuseMonsters(16.0, 110f)).cooldown(3600).mana(14).usesPerDay(4)));
 
         // ---------------------------------------------------------------- Millennium Necklace (Genesis, the broad collar over the chest)
         out.accept(RelicDef.of("millennium_necklace", "Millennium Necklace", Grade.GENESIS, RelicSlot.CHEST)
                 .palette(0x1C3C90, 0xEBBB52, 0x62E6F0).look(Look.PLATE)
-                .desc("A broad collar of gold and lapis that shows what is to come. Once every eight seconds the first heavy blow is seen coming and halved. Use: Foresight and Prophecy. Worn with the other Millennium Items it grows stronger.")
+                .desc("The Sennen Necklace: a golden collar with an eye plate that sees into the past and the future. Once every eight seconds the first heavy blow is seen coming and halved. Carried by Isis, then Mr. Ishtar, Ishizu and Yugi. Use: Foresight, Prophecy and Sight of the Past. Worn with the other Millennium Items it grows stronger.")
                 .passive(Passive.flag("w101_necklace"))
                 .passive(Passive.attr("minecraft:generic.max_health", 14.0, Operation.ADD_VALUE))
                 .passive(Passive.attr("minecraft:generic.movement_speed", 0.05, Operation.ADD_MULTIPLIED_BASE))
@@ -126,7 +133,8 @@ public final class Wave101 {
                 .passive(Passive.resist("minecraft:is_projectile", 0.3))
                 .passive(Passive.skill("tensura:danger_sense"))
                 .act(Act.of("foresight", "Foresight", Wave101Acts.foresee(24.0, 12)).cooldown(1500).mana(8))
-                .act(Act.of("prophecy", "Prophecy", Wave101Acts.prophecy()).cooldown(6000).mana(14).needsSneak().usesPerDay(2)));
+                .act(Act.of("prophecy", "Prophecy", Wave101Acts.prophecy()).cooldown(6000).mana(14).needsSneak().usesPerDay(2))
+                .act(Act.of("sight_of_the_past", "Sight of the Past", Wave101Acts.sightOfThePast(32.0, 12)).cooldown(1500).mana(8)));
 
         // ================================================================ eight world-level artifacts of other worlds
         // ---------------------------------------------------------------- Ea, Sword of Rupture (Genesis, Fate)

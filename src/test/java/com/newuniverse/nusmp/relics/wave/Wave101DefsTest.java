@@ -146,7 +146,7 @@ class Wave101DefsTest {
         String events = Files.readString(WAVES.resolve("Wave101Events.java")) + Files.readString(WAVES.resolve("Wave101Passives.java"));
         for (Def d : defs()) {
             int acts = d.block().split("\\.act\\(Act\\.of\\(", -1).length - 1;
-            if (acts < 2 || acts > 3) bad.add(d.id() + " has " + acts + " acts");
+            if (acts < 2 || acts > 4) bad.add(d.id() + " has " + acts + " acts");
             if (!d.block().contains("Passive.attr(") && !d.block().contains("Passive.resist(")) bad.add(d.id() + " has no passives");
             Matcher f = Pattern.compile("Passive\\.flag\\(\"(w101_[a-z_]+)\"\\)").matcher(d.block());
             while (f.find()) {

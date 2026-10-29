@@ -39,7 +39,7 @@ final class Wave101SelfTest {
             else bad.add(id + " has the grade " + d.grade());
             if (d.slot() != SLOTS[i]) bad.add(id + " is in the slot " + d.slot() + ", wanted " + SLOTS[i]);
             if (d.passives().isEmpty()) bad.add(id + " has no passives");
-            if (d.acts().size() < 2 || d.acts().size() > 3) bad.add(id + " has " + d.acts().size() + " acts");
+            if (d.acts().size() < 2 || d.acts().size() > 4) bad.add(id + " has " + d.acts().size() + " acts");
             if (Wave101Rules.inSet(id)) {
                 millenniumSlots.add(d.slot());
                 if (d.needsAttunement()) bad.add(id + " needs attunement, so the whole set could not be worn together");
@@ -59,6 +59,15 @@ final class Wave101SelfTest {
             }
         }
         if (millenniumSlots.size() != 7) bad.add("the seven Millennium Items sit in " + millenniumSlots.size() + " different slots, wanted seven");
+        for (String act : new String[]{"summon_duel_monster", "seal_in_card", "sight_of_the_dead", "seal_a_soul", "seal_in_tablet", "redecorate_the_soul", "fuse_monsters", "sight_of_the_past"}) {
+            boolean found = false;
+            for (String id : Wave101Rules.SET) {
+                RelicDef d = Relics.byId(id);
+                if (d != null && d.acts().stream().anyMatch(a -> a.key().equals(act))) found = true;
+            }
+            if (!found) bad.add("the Millennium act " + act + " is not registered on any of the seven");
+        }
+        if (Wave101Rules.fuseFactor(99) > 1.81f || Wave101Rules.holdTicks(Integer.MAX_VALUE) > 6000) bad.add("the seal and fuse bounds are not what the doc says");
         if (Wave101Rules.SET.length != 7 || Wave101Rules.power(7) <= Wave101Rules.power(1)) bad.add("the set bonus rules are not what the doc says");
         if (!bad.isEmpty()) return SelfTests.Result.fail(bad.size() + " problems, first: " + bad.get(0));
         if (genesis != 15 || weapons != 3) return SelfTests.Result.fail("counts " + genesis + " Genesis, " + weapons + " weapons (wanted 15 and 3)");
