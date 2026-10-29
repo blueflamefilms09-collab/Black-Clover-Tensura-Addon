@@ -56,7 +56,6 @@ public final class GuiScaleRegistry {
         screen("relic_forge", "client.relics.forge.ForgeScreen", -1, -1, "Relic forge");
         screen("grimoire_slot", "client.grimoire.GrimoireSlotScreen", -1, -1, "Grimoire slot");
         screen("system_stats", "client.mega.system.SystemStatsScreen", 0, 0, "System stat points");
-        screen("requip_armoury", "client.requip.RequipArmouryScreen", -1, -1, "Requip Armoury");
         screen("engraving_codex", "client.engraving.EngravingCodexScreen", 540, 300, "Engravement codex");
         screen("shishou_stomach", "client.shishou.ShishouStomachScreen", -1, -1, "Shishou Stomach");
         // HUD overlays scaled by a render-layer hook

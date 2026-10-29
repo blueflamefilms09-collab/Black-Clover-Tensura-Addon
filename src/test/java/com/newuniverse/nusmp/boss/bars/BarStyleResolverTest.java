@@ -87,7 +87,7 @@ class BarStyleResolverTest {
         assertEquals(BarStyleIds.DANMACHI, BarStyleResolver.forArc("danmachi", "minotaur"));
         assertEquals(BarStyleIds.ZAGRED, BarStyleResolver.forArc("elf_reincarnation", "zagred"));
         assertEquals(BarStyleIds.MAGIC_KNIGHTS, BarStyleResolver.forArc(null, null), "an unknown saga falls to the Magic Knights");
-        for (String path : List.of("dante_zogratis", "vanica_zogratis", "zenon_zogratis", "devil_avatar", "lucius_zogratis", "goliath", "charybdis_spawn", "god_of_order", "zagred", "spirit_king",
+        for (String path : List.of("dante_zogratis", "vanica_zogratis", "zenon_zogratis", "devil_avatar", "lucius_zogratis", "goliath", "charybdis_spawn", "god_of_order", "zagred",
                 "floor_warden", "labyrinth_guardian")) {
             assertTrue(BarStyleIds.known(BarStyleResolver.forEntityPath(path)), path);
         }
@@ -104,7 +104,7 @@ class BarStyleResolverTest {
         Set<String> used = new HashSet<>();
         for (DecennialProfile p : roster()) used.add(styleOf(p));
         for (ArcSaga s : ArcSaga.values()) used.add(BarStyleResolver.forArc(s.id(), ""));
-        for (String path : List.of("dante_zogratis", "lucius_zogratis", "goliath", "charybdis_spawn", "god_of_order", "zagred", "spirit_king", "floor_warden")) used.add(BarStyleResolver.forEntityPath(path));
+        for (String path : List.of("dante_zogratis", "lucius_zogratis", "goliath", "charybdis_spawn", "god_of_order", "zagred", "floor_warden")) used.add(BarStyleResolver.forEntityPath(path));
         used.add(BarStyleResolver.forGuardian(true));
         used.add(BarStyleResolver.forArc("elf_reincarnation", "fana"));
         used.add(BarStyleResolver.forArc("x", "morris"));

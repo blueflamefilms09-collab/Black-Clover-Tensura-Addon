@@ -52,7 +52,6 @@ relics/upgrade/UpgradeSelfTests.java
 relics/vu/DuelDiskSelfTests.java
 relics/vu/VuSelfTests.java
 relics/wave/WaveBossNet.java
-requip/RequipMagic.java
 skilltree/shop/ShopNet.java
 song/SongNet.java
 visual/demonslayer/DsSelfTests.java

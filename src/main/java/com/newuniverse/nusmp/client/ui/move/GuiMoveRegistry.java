@@ -145,7 +145,6 @@ public final class GuiMoveRegistry {
         panel("hub_shop", "Hub shop", 176, 166, "client/elite/hub/ShopScreen.java");
         panel("relic_forge", "Relic forge", 176, 166, "client/relics/forge/ForgeScreen.java");
         panel("grimoire_slot", "Grimoire slot", 176, 166, "client/grimoire/GrimoireSlotScreen.java");
-        panel("requip_armoury", "Requip Armoury", 176, 166, "client/requip/RequipArmouryScreen.java");
         panel("shishou_stomach", "Shishou Stomach", 176, 168, "client/shishou/ShishouStomachScreen.java");
 
         // ---------------- custom GUI classes that stay where they are, with the reason

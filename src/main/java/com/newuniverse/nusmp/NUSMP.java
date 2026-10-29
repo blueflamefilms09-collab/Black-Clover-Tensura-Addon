@@ -123,7 +123,6 @@ public class NUSMP {
         com.newuniverse.nusmp.heroweapon.HeroWeaponSystem.init(modEventBus, modContainer);                                  // 1.62.0: the weapons of The Rising of the Shield Hero: Holy, Seven Star and Vassal Weapons (registers its own items, components, attachment and configs)
         com.newuniverse.nusmp.arc.world.ArcWorldSystem.init(modEventBus, modContainer);                                    // 1.61.0: where the characters appear: floor bosses, story arenas, the Hub (registers its own config nusmp-arc-world-server.toml; before NUItems.ITEMS.register)
         com.newuniverse.nusmp.elite.EliteSystem.init(modEventBus, modContainer);                                           // 1.83.0: the EliteTensuraAddon systems and the Hub economy (docs/elite/plan.md)
-        com.newuniverse.nusmp.requip.RequipSystem.init(modEventBus);                                                       // Requip: The Knight (Erza Scarlet's Ultimate skill, the book Titania's Requip, six weapons, the self-test skill.erza_requip)
         com.newuniverse.nusmp.item.ShieldBoot.init();                                                                      // 1.110.0: shields are used like vanilla's: axes disable any shield, visual.shields self-tests
         modEventBus.addListener(com.newuniverse.nusmp.charter.CharterNet::registerPayloads);
         modEventBus.addListener(com.newuniverse.nusmp.entity.veldanava.skills.VeldanavaSkillNet::registerPayloads);          // 3.13.0: the skill card screen of the Will of the Creator
@@ -152,7 +151,6 @@ public class NUSMP {
         com.newuniverse.nusmp.particle.fx.FxBoot.init(modEventBus, modContainer);                                         // 1.103.0: the custom particle library (70 types), nusmp-particles-server.toml, /multiverse particles, self-test particles.custom
         com.newuniverse.nusmp.relics.forge.ForgeRegistry.init(modEventBus);                                                // 1.40.0: the Relic Forge (block item on NUItems.ITEMS: before its register)
         com.newuniverse.nusmp.labyrinth.LabyrinthSystem.init(modEventBus);                                                  // 1.35.0: the Labyrinth (blocks, gate, trials, seals, vault, processors; block items go on NUItems.ITEMS so this runs before its register)
-        com.newuniverse.nusmp.celestial.CelestialSystem.init(modEventBus);                                                 // Celestial Spirit Magic: keys, the Spirit King, the Gate (before NUItems.ITEMS.register)
         com.newuniverse.nusmp.item.NUItems.ITEMS.register(modEventBus);
         com.newuniverse.nusmp.item.NUItems.MATERIALS.register(modEventBus);
         com.newuniverse.nusmp.entity.NUEntities.ENTITIES.register(modEventBus);
@@ -283,7 +281,6 @@ public class NUSMP {
             com.newuniverse.nusmp.client.DemonSlayerRenderer.init(modEventBus);
             com.newuniverse.nusmp.client.aura.PlayerAuraClient.init(modEventBus);                             // 0.53: player render layers
             modEventBus.addListener(com.newuniverse.nusmp.client.prop.MagicPropRenderer::register);           // 0.53: props
-            modEventBus.addListener(com.newuniverse.nusmp.client.celestial.CelestialClient::register);          // the Spirit King's renderer
             com.newuniverse.nusmp.client.geo.GeoModels.init(modEventBus);                                      // 0.53: geo.json models re-read on a resource reload
             com.newuniverse.nusmp.client.SwordDrawClient.init();                                              // 0.52: the draw animation
             com.newuniverse.nusmp.client.WeaponRenderer.init(modEventBus);                                  // 0.50: every weapon in 3D

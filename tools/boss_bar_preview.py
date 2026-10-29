@@ -52,7 +52,7 @@ SAMPLES = {
     "danmachi": ("Minotaur", "Orario Labyrinth"), "lucius": ("Lucius Zogratis", "Ultimate Wizard King"),
     "god_of_order": ("God of Order", "The World's Judge"), "goliath": ("Goliath", "Floor Warden of Steel"),
     "charybdis": ("Charybdis Spawn", "Floor Warden of the Deep"), "warden": ("Labyrinth Guardian (Frost)", "Floor +10 Warden"),
-    "spirit_king": ("The Celestial Spirit King", "Third Form"), "zagred": ("Zagred", "The Word Soul"),
+    "zagred": ("Zagred", "The Word Soul"),
 }
 
 

@@ -88,7 +88,6 @@ public final class BarStyleResolver {
         put(ENTITY, BarStyleIds.CHARYBDIS, "charybdis_spawn");
         put(ENTITY, BarStyleIds.GOD_OF_ORDER, "god_of_order");
         put(ENTITY, BarStyleIds.ZAGRED, "zagred");
-        put(ENTITY, BarStyleIds.SPIRIT_KING, "spirit_king");
         put(ENTITY, BarStyleIds.WARDEN, "floor_warden", "labyrinth_guardian");
 
         put(CHARACTER, BarStyleIds.MIDNIGHT_SUN, "fana", "patolli", "rades", "rhya");

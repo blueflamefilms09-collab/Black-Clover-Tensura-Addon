@@ -50,7 +50,6 @@ S("god_of_order", "boss", "scales", ["laurel", "halo_small", "scales_motif"], "#
 S("goliath", "boss", "anvil", ["rivets", "embers_top"], "#14161a", "#5a626e", "#9aa4b2", "#dde4ee", "#ff8a3a", "#ffb060", "#c8d0dc", "#5a6270", "embers", "slide", name="#F0F4FA", title="#9AA4B2")
 S("charybdis", "boss", "whirlpool", ["waves", "whirl"], "#031428", "#0d4f8f", "#1e7fc0", "#c8ffff", "#7ff0ff", "#c8ffff", "#6ae0ff", "#0a3f8f", "wave", "rise", name="#E8FFFF", title="#5AB8E0")
 S("warden", "boss", "key", ["rivets", "runes_motif"], "#100c18", "#483a58", "#8a78a0", "#d0c0e8", "#a070ff", "#c8a8ff", "#b898f0", "#3a2a60", "runes", "slide", name="#F4ECFF", title="#A898C8")
-S("spirit_king", "boss", "spirit", ["orbs", "wings"], "#10182a", "#6a82b8", "#d8e6ff", "#ffffff", "#a0d0ff", "#ffffff", "#e8f4ff", "#7a9ae0", "souls", "fade", "dissolve", name="#FFFFFF", title="#C8DCFF", seed=9)
 S("zagred", "boss", "rune", ["runes_motif", "quills"], "#0a0414", "#3a1a6a", "#8a5ad0", "#e0c8ff", "#b070ff", "#d8b0ff", "#c898ff", "#2a0e5a", "runes", "flash", name="#F4E8FF", title="#A880E0")
 
 IDS = [s["id"] for s in STYLES]

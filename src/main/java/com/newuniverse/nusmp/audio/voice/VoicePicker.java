@@ -22,7 +22,7 @@ public final class VoicePicker {
     }
 
     static {
-        put("holy", "holy", "archon", "magic_knights", "spirit_king");
+        put("holy", "holy", "archon", "magic_knights");
         put("evil", "evil", "midnight_sun", "god_of_order", "lucius", "warden", "spade_kingdom", "seven_sins");
         put("undead", "undead", "lich", "fallen_king", "pocket_tomb", "plague", "blood");
         put("fire", "fire");

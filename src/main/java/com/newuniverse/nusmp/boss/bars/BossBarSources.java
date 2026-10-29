@@ -3,7 +3,6 @@ package com.newuniverse.nusmp.boss.bars;
 import com.newuniverse.nusmp.arc.ArcBoss;
 import com.newuniverse.nusmp.arc.ArcCharacter;
 import com.newuniverse.nusmp.boss.bar.BossBarThemes;
-import com.newuniverse.nusmp.celestial.SpiritKingEntity;
 import com.newuniverse.nusmp.entity.ZagredBossEntity;
 import com.newuniverse.nusmp.entity.zogratis.PowerCurve;
 import com.newuniverse.nusmp.entity.zogratis.ZogratisBoss;
@@ -36,7 +35,6 @@ public final class BossBarSources {
         if (e instanceof BossBarSource s) return s;
         if (e instanceof ZogratisBoss z) return new Zogratis(z);
         if (e instanceof LabyrinthGuardianEntity g) return new Guardian(g);
-        if (e instanceof SpiritKingEntity k) return new SpiritKing(k);
         if (e instanceof ZagredBossEntity z) return new OldZagred(z);
         return new Generic(e);
     }
@@ -205,24 +203,7 @@ public final class BossBarSources {
         @Override public int fighters() { return decennial() && !layer().controller().fighting() ? 0 : playersNear(g, 48.0); }
     }
 
-    // ================================================================ the Celestial Spirit King and the old Zagred
-    public static final class SpiritKing extends Generic {
-        private final SpiritKingEntity k;
-
-        public SpiritKing(SpiritKingEntity k) {
-            super(k);
-            this.k = k;
-        }
-
-        @Override public String styleId() { return BarStyleIds.SPIRIT_KING; }
-
-        @Override public int phase() { return k.phase(); }
-
-        @Override public int phaseCount() { return 3; }
-
-        @Override public List<Integer> phaseThresholds() { return List.of(67, 33); }
-    }
-
+    // ================================================================ the old Zagred
     public static final class OldZagred extends Generic {
         private final ZagredBossEntity z;
 

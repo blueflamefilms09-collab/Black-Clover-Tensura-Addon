@@ -26,7 +26,6 @@ public final class NUCreativeTab {
                 output.accept(GrimoireItem.createUnbound(GrimoireCover.FIVE_LEAF, MagicType.ANTI_MAGIC, Devil.LIEBE));
                 output.accept(GrimoireItem.createUnbound(GrimoireCover.FIVE_LEAF, MagicType.KOTODAMA, Devil.ZAGRED));   // 0.47: creative only
                 for (var it : com.newuniverse.nusmp.item.NUItems.all()) output.accept(it.get());
-                for (net.minecraft.world.item.Item ri : com.newuniverse.nusmp.requip.RequipItems.creative()) output.accept(ri);                                   // Requip: The Knight: Titania's Requip and the six armour weapons
                 for (var egg : com.newuniverse.nusmp.dungeon.floor.goliath.GoliathEntities.spawnEggs()) output.accept(egg.get());                                 // 1.23.0
                 for (var egg : com.newuniverse.nusmp.dungeon.floor.charybdis.CharybdisEntities.spawnEggs()) output.accept(egg.get());
                 for (net.minecraft.world.item.Item ci : com.newuniverse.nusmp.charter.CharterItems.all()) output.accept(ci);                   // 1.25.0: Charter Grimoires
@@ -55,7 +54,6 @@ public final class NUCreativeTab {
                 for (var egg : com.newuniverse.nusmp.companion.sample.CompanionEntities.spawnEggs()) output.accept(egg.get());                       // companions: the sample companion's spawn egg (Charmy)
                 for (var sb : com.newuniverse.nusmp.spiritblades.SpiritBladesBoot.creativeItems()) output.accept(sb.get());                  // the Wind Spirit blades: Spirit of Zephyr and Spirit of Boreas (creative only)
                 for (var vl : com.newuniverse.nusmp.valkyrielance.ValkyrieLanceBoot.creativeItems()) output.accept(vl.get());                // the Valkyrie Drill Lance (creative only)
-                for (var ci : com.newuniverse.nusmp.celestial.CelestialItems.creativeItems()) output.accept(ci.get());               // Celestial Gate: the keys and the sceptre
                 output.accept(com.newuniverse.nusmp.block.NUBlocks.GRIMOIRE_ALTAR_ITEM.get());
                 com.newuniverse.nusmp.labyrinth.LabyrinthCreative.addTo(output);                                       // 1.35.0: the Labyrinth's blocks and items
 
