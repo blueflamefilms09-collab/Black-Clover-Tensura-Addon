@@ -15,9 +15,8 @@ Status: DRAFT, rules only. No boss code is built from this yet. Items marked OPE
 3. **Strength starts slightly above base Tensura and keeps rising.** Scaled by dungeon rank, F-Rank up to SSS-Rank, from one scaling table that every boss reads (HP, damage, armor, speed per step). See "Rank ladder" below. Also scaled by nearby player count. Not scaled to player power.
 
 ## Rank ladder
-Ranks: F, E, D, C, B, A, S, SS, SSS (9 ranks). Inside each rank a boss sits on a sub-step, from negative up to positive, and then ranks up:
-`F-` -> `F` -> `F+` -> `E-` -> `E` -> `E+` -> ... -> `SS+` -> `SSS-` -> `SSS` -> `SSS+` (27 steps).
-The scaling table has one row per step, so the strength curve is smooth and every boss names its step (e.g. "C-Rank, plus"). (OPEN: confirm this reading; the alternative is that "negative to positive" means weak to strong inside a rank with no named sub-steps.)
+Ranks: F, E, D, C, B, A, S, SS, SSS. Flat, 9 ranks, no minus/plus sub-steps (decided by the owner; this replaces the earlier F-/F/F+ idea).
+The scaling table has one row per rank (9 rows) and every boss names its rank.
 
 ## Floors to ranks (rank up every 20 floors)
 A floor is a place in the Mega-Dungeon, a rank is how strong a boss is. The dungeon ranks up every 20 floors, counted by distance from Floor 0 (the same distance `FloorMap.threat(floor)` uses, so the negative side mirrors the positive side):
@@ -32,9 +31,9 @@ A floor is a place in the Mega-Dungeon, a rank is how strong a boss is. The dung
 | 121-140 | S |
 | 141-160 | SS |
 | 161-180 | SSS |
-Inside a rank the sub-steps (minus, plain, plus) follow the floor: about the first 7 floors are minus, the middle 6-7 plain, the last 6-7 plus. Floors 181-200 stay at SSS+. While the dungeon is still shallower, A to SSS can live in rifts and secret floors.
-A boss uses the step of the floor it stands on. A boss from a tier list keeps its own named rank and appears on floors of that rank.
-DECIDED (update): the dungeon will grow in the future, to about floor 200 (confirmed by the owner: 200). With rank up every 20 floors, floors 1-180 cover F to SSS exactly as in the table above, and floors 181-200 stay at SSS+ (the final stretch). Until the dungeon is that deep, the floors that exist today only reach their current rank, and the higher-rank bosses (A, S, SS, SSS) can live in special rifts or secret floors in the meantime. A boss in a rift or secret floor uses the step of its own rank, not the floor number.
+Ranks are flat inside their 20 floors. Floors 181-200 stay at SSS. While the dungeon is still shallower, A to SSS can live in rifts and secret floors.
+A boss uses the rank of the floor it stands on. A boss from a tier list keeps its own named rank and appears on floors of that rank.
+DECIDED (update): the dungeon will grow in the future, to about floor 200 (confirmed by the owner: 200). With rank up every 20 floors, floors 1-180 cover F to SSS exactly as in the table above, and floors 181-200 stay at SSS (the final stretch). Until the dungeon is that deep, the floors that exist today only reach their current rank, and the higher-rank bosses (A, S, SS, SSS) can live in special rifts or secret floors in the meantime. A boss in a rift or secret floor uses the step of its own rank, not the floor number.
 
 ## Source material
 Bosses from other series follow their source material (skills, look, behaviour).
@@ -89,7 +88,6 @@ Every boss has a Feel Sheet (silhouette/model, colour + VFX palette, movement + 
 - Who gets the skill when several players beat the boss (proposal: damage-weighted roll), and when does a claimed skill return to the pool (proposal: admin only)?
 - Which two bosses are the ice pair, and in the same dungeon or different ones?
 - How many bosses per rank (F, E, D, C, B, A, S, SS, SSS)?
-- Rank ladder: is my reading right (see below)?
 - How are the rifts / secret floors for A, S, SS, SSS entered?
 - Exact banned-skill list inside boss arenas.
-- Per-rank multipliers for the scaling table (proposal: F- at about 1.1x the base Tensura equivalent, rising about 1.1x per sub-step, so one full rank is about 1.33x).
+- Per-rank multipliers for the scaling table (proposal: rank F at about 1.1x the base Tensura equivalent, rising about 1.33x per rank).
