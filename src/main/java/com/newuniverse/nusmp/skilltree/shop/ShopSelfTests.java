@@ -4,6 +4,8 @@ import com.newuniverse.nusmp.arc.ArcEntities;
 import com.newuniverse.nusmp.arc.ArcNpcEntity;
 import com.newuniverse.nusmp.dungeon.DungeonFood;
 import com.newuniverse.nusmp.labyrinth.mega.SelfTests;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.item.ItemStack;
@@ -11,12 +13,14 @@ import net.minecraft.world.item.Items;
 import net.neoforged.neoforge.common.util.FakePlayer;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
- * Why: nothing of the shop can be played by its author, so the CI server smoke test runs two checks in the real game ({@code /multiverse mega selftest}, keys
- * {@code skillbook.shop.*}). {@code skillbook.shop.stock} proves the DATA is right where only the real game can tell: both files loaded through the real reload listener with no problem,
+ * Why: nothing of the shop can be played by its author, so the CI server smoke test runs checks in the real game ({@code /multiverse mega selftest}, keys
+ * {@code skillbook.shop.*}; {@code items} and {@code buy_item} cover the item goods and the shop types, see {@code docs/black_market_goods.md}). {@code skillbook.shop.stock} proves the DATA is right where only the real game can tell: both files loaded through the real reload listener with no problem,
  * every {@code minecraft:} and {@code nusmp:} item the witch buys exists, and the shelf is deterministic and changes with the restock period (the Skill Books were removed, so the shelf is empty and
  * {@code stock.json} lists no line; any line a datapack adds must still make a real item). {@code skillbook.shop.buy} proves the DEAL with a stand-in player and a real witch entity: a sale refused when far,
  * a purchase of an unknown offer refused, a sale, a bulk sale and the refusal of a bulk sale of a valuable. It passes with a message when the shop is switched off in the config (a closed shop would refuse every
@@ -30,6 +34,8 @@ public final class ShopSelfTests {
     public static void register() {
         SelfTests.register("skillbook.shop.stock", ShopSelfTests::stock);
         SelfTests.register("skillbook.shop.buy", ShopSelfTests::buy);
+        SelfTests.register("skillbook.shop.items", ShopSelfTests::items);
+        SelfTests.register("skillbook.shop.buy_item", ShopSelfTests::buyItem);
     }
 
     private static SelfTests.Result ok(String detail) { return SelfTests.Result.ok(detail); }
@@ -63,6 +69,152 @@ public final class ShopSelfTests {
         if (!bad.isEmpty()) return fail(String.join(" | ", bad));
         return ok(MarketData.stock().size() + " shelf lines and " + MarketData.prices().size() + " prices load clean (" + foreign + " foreign item(s)), "
                 + shelf.size() + " offers now, every one can be made");
+    }
+
+    // ================================================================ the item pools of the witch's shelf
+    /**
+     * {@code skillbook.shop.items}: the witch's ITEM lines in the real game. Every line that names a {@code minecraft:}, {@code c:} or {@code nusmp:} tag or item must resolve to a non-empty pool (a typo
+     * there is a bug; a line that names another mod's item may be empty when that mod is absent); every pool item exists, is allowed by the shop's type, is not banned or excluded and is sold for
+     * more than the witch pays for it; the shelf is deterministic, changes with the restock period, never lists an item twice, and every offer can be made into a real stack within the item's stack size.
+     */
+    private static SelfTests.Result items(MinecraftServer server) {
+        MarketData.Shop shop = MarketData.shop(MarketData.WITCH_SHOP);
+        if (shop == null) return fail("no shop 'witch' loaded (data/nusmp/black_market/stock.json)");
+        ShopType type = MarketData.types().get(shop.type());
+        if (type == null) return fail("the witch's shop type '" + shop.type() + "' is not in types.json");
+        if (!"general".equals(type.id())) return fail("the witch is the general store but her file says type '" + type.id() + "'");
+        List<String> bad = new ArrayList<>();
+        int lines = 0;
+        int pooled = 0;
+        int foreignEmpty = 0;
+        int items = 0;
+        for (StockEntry e : shop.entries()) {
+            if (e.kind() != StockEntry.Kind.ITEM) continue;
+            lines++;
+            List<StockBoard.PoolItem> pool = ShopPools.pool(shop.id(), e);
+            String id = e.itemOrTagId();
+            String ns = id.substring(0, Math.max(0, id.indexOf(':')));
+            if (pool.isEmpty()) {
+                if (ns.equals("minecraft") || ns.equals("c") || ns.equals("nusmp")) bad.add(e.id() + ": " + e.item() + " gave an empty pool in this game");
+                else foreignEmpty++;
+                continue;
+            }
+            pooled++;
+            if (pool.size() > ShopPools.MAX_POOL) bad.add(e.id() + ": the pool holds " + pool.size() + " items, above the cap");
+            for (StockBoard.PoolItem p : pool) {
+                items++;
+                ResourceLocation rl = ResourceLocation.tryParse(p.id());
+                if (rl == null || !BuiltInRegistries.ITEM.containsKey(rl)) bad.add(e.id() + ": pool item " + p.id() + " is not an item");
+                if (type.isBanned(p.id()) || e.exclude().contains(p.id())) bad.add(e.id() + ": pool item " + p.id() + " is banned or excluded");
+                if (p.maxStack() < 1) bad.add(e.id() + ": " + p.id() + " has no stack size");
+                PriceTable.Price buy = MarketData.prices().get(p.id());
+                if (buy != null && e.priceMin() <= buy.gold()) bad.add(e.id() + ": " + p.id() + " would be sold at " + e.priceMin() + " but the witch pays " + buy.gold());
+            }
+        }
+        if (lines == 0) bad.add("the witch's file has no item line");
+        if (!bad.isEmpty()) return fail(String.join(" | ", bad.subList(0, Math.min(5, bad.size()))));
+
+        long seed = server.overworld().getSeed();
+        List<StockBoard.Slot> slots = ShopPools.slots(shop.id());
+        if (slots.size() < 8) return fail("only " + slots.size() + " of " + lines + " lines made a slot");
+        if (slots.size() > StockBoard.MAX_SLOTS) return fail("the shelf has " + slots.size() + " slots, above the cap");
+        List<StockBoard.Offer> a = StockBoard.build(seed, 7, 0, slots, id -> 0);
+        if (!a.equals(StockBoard.build(seed, 7, 0, slots, id -> 0))) return fail("the same inputs gave two different shelves");
+        boolean moves = false;
+        for (int period = 8; period < 40 && !moves; period++) moves = !a.equals(StockBoard.build(seed, period, 0, slots, id -> 0));
+        if (!moves) return fail("40 restock periods never changed the shelf");
+        Set<String> refs = new HashSet<>();
+        List<StockBoard.Offer> shelf = ShopService.shelf(server);
+        for (StockBoard.Offer o : shelf) {
+            ItemStack st = ShopGoods.stack(o);
+            if (st.isEmpty()) bad.add("offer " + o.id() + " (" + o.ref() + ") cannot be made into an item");
+            else if (st.getCount() != o.amount() || st.getCount() > st.getMaxStackSize()) bad.add("offer " + o.id() + ": " + st.getCount() + " of " + o.ref() + " is not a legal stack");
+            if (!refs.add(o.ref())) bad.add("the item " + o.ref() + " is on the shelf twice");
+            if (o.kind() != StockEntry.Kind.ITEM) bad.add("offer " + o.id() + " is not an item offer");
+            PriceTable.Price back = MarketData.prices().get(o.ref());
+            if (back != null && ShopLoopGuard.loops(ShopRules.buyPrice(o.price(), ShopConfig.priceScale()), o.amount(), ShopRules.sellUnit(back.gold(), ShopConfig.sellScale()))) {
+                bad.add("offer " + o.id() + ": " + o.ref() + " could be sold back for a profit");
+            }
+        }
+        if (!bad.isEmpty()) return fail(String.join(" | ", bad.subList(0, Math.min(5, bad.size()))));
+        return ok(lines + " item lines, " + pooled + " pools (" + items + " items, " + foreignEmpty + " foreign line(s) empty), " + slots.size() + " slots, " + shelf.size() + " offers now, no loop, shelf deterministic and moving");
+    }
+
+    /**
+     * {@code skillbook.shop.buy_item}: a purchase of an ITEM offer end to end with a stand-in player and a real witch: a price that moved is refused and changes nothing, a poor player is refused, then the
+     * purchase hands over exactly the offer's stack, takes exactly its price, and counts one copy as bought; the same offer cannot be bought past its stock. Puts the world back as it found it.
+     */
+    private static SelfTests.Result buyItem(MinecraftServer server) {
+        if (!ShopConfig.enabled()) return ok("skipped: the Black Market is switched off in the config (nusmp-skilltree-shop-server.toml, enabled)");
+        ServerLevel level = server.overworld();
+        FakePlayer fp = SelfTests.standIn(level, PLAYER, 0.5, 100, 0.5);
+        ArcNpcEntity witch = ArcEntities.NPC.get().create(level);
+        if (witch == null) return fail("the NPC entity could not be created");
+        MarketState state = MarketState.get(server);
+        Map<String, Integer> keptBought = state.boughtView();
+        long keptGold = MarketGold.get(fp);
+        try {
+            witch.moveTo(2.5, 100, 0.5, 0f, 0f);
+            witch.setCharacter(BlackMarketWitch.ID);
+            if (!level.addFreshEntity(witch)) return fail("the witch could not be placed in the world");
+            fp.getInventory().clearContent();
+            MarketGold.clearCounter(fp);
+            state.replaceBought(Map.of());
+            StockBoard.Offer offer = null;
+            for (StockBoard.Offer o : ShopService.shelf(server)) {
+                if (o.kind() == StockEntry.Kind.ITEM && o.left() > 0 && !ShopGoods.stack(o).isEmpty()) {
+                    offer = o;
+                    break;
+                }
+            }
+            if (offer == null) return fail("the shelf has no item offer to buy");
+            long price = ShopRules.buyPrice(offer.price(), ShopConfig.priceScale());
+            ItemStack want = ShopGoods.stack(offer);
+
+            MarketGold.set(fp, price + 7);
+            ShopService.Result r = ShopService.buy(fp, offer.id(), price + 1);                   // the price on the player's screen is not the price now
+            if (r.reply() != ShopRules.Reply.PRICE_MOVED || MarketGold.get(fp) != price + 7 || carried(fp) != 0) return fail("a purchase at a moved price answered " + r.reply() + " and changed something");
+            MarketGold.set(fp, price - 1);
+            r = ShopService.buy(fp, offer.id(), price);
+            if (r.reply() != ShopRules.Reply.POOR || MarketGold.get(fp) != price - 1 || carried(fp) != 0) return fail("a purchase with too little gold answered " + r.reply() + " and changed something");
+
+            MarketGold.set(fp, price + 7);
+            r = ShopService.buy(fp, offer.id(), price);
+            if (r.reply() != ShopRules.Reply.BOUGHT) return fail("the purchase answered " + r.reply());
+            if (MarketGold.get(fp) != 7) return fail("the purchase left " + MarketGold.get(fp) + " gold, expected 7");
+            int got = 0;
+            for (int i = 0; i < fp.getInventory().getContainerSize(); i++) {
+                ItemStack st = fp.getInventory().getItem(i);
+                if (st.isEmpty()) continue;
+                if (!ItemStack.isSameItem(st, want)) return fail("the purchase put " + st + " in the inventory instead of " + want.getItem());
+                got += st.getCount();
+            }
+            if (got != want.getCount()) return fail("the purchase handed over " + got + " items instead of " + want.getCount());
+            if (state.bought(offer.id()) != 1) return fail("the purchase was counted " + state.bought(offer.id()) + " times");
+
+            // buy the rest of the stock, then one more: sold out, and nothing is charged
+            for (int i = 1; i < offer.total(); i++) {
+                MarketGold.set(fp, price);
+                if (ShopService.buy(fp, offer.id(), price).reply() != ShopRules.Reply.BOUGHT) return fail("copy " + (i + 1) + " of " + offer.total() + " was refused");
+            }
+            MarketGold.set(fp, price * 2);
+            r = ShopService.buy(fp, offer.id(), price);
+            if (r.reply() != ShopRules.Reply.SOLD_OUT || MarketGold.get(fp) != price * 2) return fail("a purchase past the stock answered " + r.reply() + " and left " + MarketGold.get(fp) + " gold");
+            return ok("bought " + want.getCount() + " x " + offer.ref() + " for " + price + " gold; a moved price, a poor purse and a sold-out shelf changed nothing");
+        } finally {
+            witch.discard();
+            fp.setPos(0.5, 100, 0.5);
+            fp.getInventory().clearContent();
+            MarketGold.set(fp, keptGold);
+            MarketGold.clearCounter(fp);
+            state.replaceBought(keptBought);
+        }
+    }
+
+    private static int carried(FakePlayer fp) {
+        int items = 0;
+        for (int i = 0; i < fp.getInventory().getContainerSize(); i++) items += fp.getInventory().getItem(i).getCount();
+        return items;
     }
 
     // ================================================================ the deal

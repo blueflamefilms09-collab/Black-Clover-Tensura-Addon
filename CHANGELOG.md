@@ -1,5 +1,24 @@
 # Changelog
 
+## [3.36.0] — Skill books, the Celestial Gate and Requip are removed; the witch sells new goods; Light Yagami, the first gag boss
+
+### NEW
+- **Black Market witch: new goods (data only).** A new stock kind `item` rolls items from tag pools or single ids (`#c:ingots`, `#c:gems`, `#c:foods`, `#minecraft:logs`, ender pearl, Tensura crystals, ...) with a price range and a stack size. All players see the same shelf; it changes at every restock (world seed + restock period). Her `stock.json` now has 20 lines. A buy-low-sell-high guard (`ShopLoopGuard`) drops any offer that could be sold back for a profit. Prices are one number each in `stock.json` and can be retuned with `/reload`. See `docs/black_market_goods.md`.
+- **Typed shops for future NPCs.** Per-shop files `data/nusmp/black_market/shops/<id>.json` and `types.json` (`general`, `food`, `ores`, `potions`, `tools`, `armor`, `magic`, `building`, `materials`): a shop only accepts goods of its own type. No second shop ships yet; a future NPC calls `ShopService.shelf(server, "<id>")`.
+- **Light Yagami, rank F gag boss** (`docs/bosses/light_yagami.md`). Not a fight: a scripted scene (chip beat, raised pen, writing, 9.5 s) that ends in a real death with one of two spoken quotes, unless the player kills or knocks Light away first. Setting `lightDeathNoteLethal` (server config, default true; false = harmless joke). Original look (dark suit, teal notebook); drop your own skin PNG over the same file names to change it. Three new voice lines (`light_chip_line`, `light_death_just_as_planned`, `light_death_i_am_justice`).
+- Boss, roster and teacher-system design documents (`docs/bosses/RULES.md`, `docs/bosses/roster.md`, `docs/dungeon/teacher_system.md`): documents only, nothing built from them yet.
+- Cost: no per-tick work for the shop (a shelf build is at most 32 slot rolls, once per shop action, one 2 to 3 KB snapshot to the acting player). Light: one comparison per tick while idle, at most 4 scenes on the server, at most 2 tiny packets per viewer per scene, at most 24 rectangles per frame.
+
+### REPLACED
+- The witch's empty shelf is replaced by the 20 item lines. (The test that asserted an empty shelf now asserts that the shelf holds no book.)
+
+### REMOVED (owner request)
+- **All skill books** (`skill_book`, `sp_book`, Fairy Tail, Celestial and Requip books), **the unique skills that existed only through them**, the Fairy Tail skills, Celestial Spirit Magic, **the Celestial Gate, keys, Spirit World and King, and the Erza Requip skill** with its armoury, weapons and armour sets. About 2,500 files, mostly textures, geo files and animations. See `docs/skill_books_removed.md`, `docs/fairy_tail_celestial_books_removed.md`, `docs/celestial_requip_removed.md`, `docs/skilltree/REMOVED.md`.
+
+### KEPT
+- Save compatibility: the data component ids `skill_book_id`, `sp_amount`, `sp_kind`, `skill_book_rarity` and the attachment ids `nusmp:celestial` and `nusmp:requip_armoury` stay registered as inert holders; retired skill ids stay in `LegacyIds` and `LegacyMigration` clears them from players at login and respawn. Enum entries (auras, stock kinds `route_book` and `sp_book`) stay. The witch still buys goods. Storm Magic, the 16 F/D tier bosses and the Time Magic VFX are untouched.
+- Honest: nothing was seen in a game. Old book stacks in chests and the removed skills vanish on load; Celestial blocks and entities from old worlds load as unknown and are dropped. The Gradle build, the full test sweep and the server smoke test (including the new `tier.light.*` and `skillbook.shop.*` self-tests) run only in CI. The `c:` tag names in the witch's file are written from memory of NeoForge 1.21.1: a wrong tag shows up as a failing smoke check or a missing line, not a crash.
+
 ## [3.35.0] — The Millennium Items are remade to match the wiki and the anime
 
 ### NEW

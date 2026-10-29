@@ -1,0 +1,81 @@
+{
+  "_why": "The SHOP TYPES: what each kind of NPC shop is allowed to sell. A shop file (stock.json for the Black Market witch, or shops/<shop_id>.json for a future NPC) names its type with \"type\": \"food\" and the validator (ShopType.java, StockSchema.java) rejects every item line whose item or tag is not of that type, so the baker never gets a netherite block on his shelf. A type allows an item when the item is not in banned_ids AND one of these holds: \"all\" is true (the general store), the item id is in \"ids\", the item's namespace is in \"namespaces\", or the item carries one of the \"tags\" (a tag also allows its children: c:ores allows c:ores/iron). A TAG line of a shop file is allowed when the tag itself is allowed. To make a new type just add an entry here (a datapack can replace the file and /reload); a type needs at least one of all, tags, namespaces or ids. Tags that no mod provides are harmless: a line that names an empty tag simply makes no slot. Keys that start with an underscore are comments.",
+  "types": {
+    "_general": "The Black Market witch: she sells a bit of everything the world and the modpack have, minus the items that must never be bought for gold (creative-only blocks, and the catalysts of the relic upgrade ritual, which the dungeon is meant to give out).",
+    "general": {
+      "all": true,
+      "banned_ids": [
+        "minecraft:air", "minecraft:barrier", "minecraft:light", "minecraft:structure_void", "minecraft:structure_block", "minecraft:jigsaw",
+        "minecraft:command_block", "minecraft:chain_command_block", "minecraft:repeating_command_block", "minecraft:command_block_minecart",
+        "minecraft:debug_stick", "minecraft:knowledge_book", "minecraft:bedrock", "minecraft:spawner", "minecraft:trial_spawner", "minecraft:vault",
+        "minecraft:reinforced_deepslate", "minecraft:end_portal_frame", "minecraft:dragon_egg", "minecraft:petrified_oak_slab",
+        "tensura:low_magisteel_ingot", "tensura:high_magisteel_ingot", "tensura:mithril_ingot", "tensura:adamantite_ingot", "tensura:hihiirokane_ingot",
+        "nusmp:devils_core", "nusmp:genesis_seed"
+      ]
+    },
+
+    "_food": "A cook or a baker: crops and everything edible, plus the dungeon's raw meats.",
+    "food": {
+      "tags": ["c:foods", "c:crops", "c:raw_meats", "c:eggs", "c:seeds", "c:mushrooms"],
+      "ids": ["minecraft:sugar", "minecraft:wheat", "minecraft:cocoa_beans", "minecraft:honey_bottle", "minecraft:milk_bucket", "minecraft:sweet_berries", "minecraft:glow_berries"],
+      "banned_ids": ["minecraft:enchanted_golden_apple"]
+    },
+
+    "_ores": "A miner or a smelter: ores, raw ore, ingots, nuggets, gems and dusts, never the finished goods made of them.",
+    "ores": {
+      "tags": ["c:ores", "c:raw_materials", "c:ingots", "c:nuggets", "c:gems", "c:dusts"],
+      "ids": ["minecraft:coal", "minecraft:charcoal", "minecraft:netherite_scrap"],
+      "banned_ids": ["minecraft:netherite_ingot", "tensura:low_magisteel_ingot", "tensura:high_magisteel_ingot", "tensura:mithril_ingot", "tensura:adamantite_ingot", "tensura:hihiirokane_ingot"]
+    },
+
+    "_potions": "An alchemist: potion bottles and the brewing reagents. Note: a purchase hands over the item's DEFAULT stack, so a potion line gives the plain bottle; brewed potions are not a shop good yet.",
+    "potions": {
+      "ids": [
+        "minecraft:potion", "minecraft:splash_potion", "minecraft:lingering_potion", "minecraft:glass_bottle", "minecraft:brewing_stand", "minecraft:cauldron",
+        "minecraft:nether_wart", "minecraft:blaze_powder", "minecraft:fermented_spider_eye", "minecraft:spider_eye", "minecraft:ghast_tear", "minecraft:magma_cream",
+        "minecraft:phantom_membrane", "minecraft:rabbit_foot", "minecraft:glistering_melon_slice", "minecraft:dragon_breath", "minecraft:redstone", "minecraft:glowstone_dust",
+        "minecraft:gunpowder", "minecraft:sugar", "minecraft:pufferfish", "minecraft:turtle_scute"
+      ]
+    },
+
+    "_tools": "A smith of tools: pickaxes, axes, shovels, hoes, swords and the small tools.",
+    "tools": {
+      "tags": ["minecraft:pickaxes", "minecraft:axes", "minecraft:shovels", "minecraft:hoes", "minecraft:swords", "c:tools"],
+      "ids": ["minecraft:shears", "minecraft:flint_and_steel", "minecraft:fishing_rod", "minecraft:bow", "minecraft:crossbow", "minecraft:arrow", "minecraft:spyglass", "minecraft:compass", "minecraft:clock"]
+    },
+
+    "_armor": "An armourer: helmets, chestplates, leggings and boots, and shields.",
+    "armor": {
+      "tags": ["minecraft:head_armor", "minecraft:chest_armor", "minecraft:leg_armor", "minecraft:foot_armor", "c:armors"],
+      "ids": ["minecraft:shield"]
+    },
+
+    "_magic": "A magic dealer: everything of Tensura, plus the vanilla goods of enchanting and the end.",
+    "magic": {
+      "namespaces": ["tensura"],
+      "ids": [
+        "minecraft:enchanted_book", "minecraft:experience_bottle", "minecraft:book", "minecraft:ender_pearl", "minecraft:ender_eye", "minecraft:amethyst_shard", "minecraft:lapis_lazuli",
+        "minecraft:echo_shard", "minecraft:totem_of_undying", "minecraft:nether_star", "minecraft:blaze_rod", "minecraft:end_crystal", "minecraft:heart_of_the_sea"
+      ],
+      "banned_ids": ["tensura:low_magisteel_ingot", "tensura:high_magisteel_ingot", "tensura:mithril_ingot", "tensura:adamantite_ingot", "tensura:hihiirokane_ingot"]
+    },
+
+    "_building": "A mason or a carpenter: logs, planks, stone, bricks, wool, glass and the blocks cut from them.",
+    "building": {
+      "tags": [
+        "minecraft:logs", "minecraft:planks", "minecraft:stone_bricks", "minecraft:wool", "minecraft:terracotta", "minecraft:slabs", "minecraft:stairs", "minecraft:walls",
+        "minecraft:fences", "minecraft:doors", "minecraft:sand", "minecraft:stone_crafting_materials", "c:glass_blocks", "c:stones", "c:cobblestones", "c:sandstone_blocks"
+      ]
+    },
+
+    "_materials": "A hunter's broker: what monsters drop (hides, bones, string, feathers, slime), the Tensura monster parts and the magic stones and crystals.",
+    "materials": {
+      "tags": ["c:leathers", "c:bones", "c:strings", "c:feathers", "c:slime_balls", "c:gunpowders"],
+      "ids": [
+        "nusmp:magic_stone", "tensura:giant_bat_wing", "tensura:spider_fang", "tensura:monster_leather_d", "tensura:monster_leather_c", "tensura:monster_leather_b", "tensura:beast_horn", "tensura:unicorn_horn",
+        "tensura:magic_stone", "tensura:low_quality_magic_crystal", "tensura:medium_quality_magic_crystal", "tensura:high_quality_magic_crystal"
+      ],
+      "banned_ids": ["nusmp:devils_core", "nusmp:genesis_seed"]
+    }
+  }
+}

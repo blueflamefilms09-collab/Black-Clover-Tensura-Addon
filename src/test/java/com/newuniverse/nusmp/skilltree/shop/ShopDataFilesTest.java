@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Why: the two files the game ships ({@code stock.json}, {@code prices.json}) ARE the owner's economy, so they are tested as the specification they implement: they load with
- * no problem at all, the shelf is empty (the books it sold were removed), the price
+ * no problem at all, the shelf holds item lines only (the books it sold were removed), the price
  * table has the owner's defaults, bulk selling never reaches a valuable, and every {@code nusmp:} item the witch buys really is registered by the mod (read from the source,
  * because the item classes import the game and cannot be loaded here).
  */
@@ -45,8 +45,10 @@ class ShopDataFilesTest {
     }
 
     @Test
-    void theShelfIsEmptyBecauseTheSkillBooksWereRemoved() throws IOException {
-        assertEquals(0, stock().size(), "the only goods the witch sold were Skill Books and SP Books; both items were removed (docs/skill_books_removed.md)");
+    void theShelfHoldsNoBookBecauseTheSkillBooksWereRemoved() throws IOException {
+        // was "the shelf is empty" until the Black Market got new goods (docs/black_market_goods.md): the books are still gone, the shelf is item lines only
+        assertTrue(stock().size() > 0, "the witch has goods again");
+        for (StockEntry e : stock().values()) assertEquals(StockEntry.Kind.ITEM, e.kind(), e.id() + ": the Skill Book and SP Book items were removed (docs/skill_books_removed.md)");
     }
 
     @Test

@@ -78,13 +78,31 @@ public final class ShopService {
     }
 
     // ================================================================ the shelf
-    /** The shelf right now: the data file's lines against the routes that exist, rolled for the current restock, minus what has been bought. Brings the world's market up to date first. */
+    /** The shelf of the witch right now: the data file's lines against the routes and items that exist, rolled for the current restock, minus what has been bought. Brings the world's market up to date first. */
     public static List<StockBoard.Offer> shelf(MinecraftServer server) {
+        return shelf(server, MarketData.WITCH_SHOP);
+    }
+
+    /**
+     * The shelf of the shop {@code shopId} right now (the slots come from {@link ShopPools}, built once per data reload; the roll is O(slots)). An ITEM offer the witch would buy back for as much
+     * as it costs, at the prices really in force after the server's scales, is left off: no buy-and-sell-back loop can exist whatever the files and the config say.
+     */
+    public static List<StockBoard.Offer> shelf(MinecraftServer server, String shopId) {
         MarketState state = MarketState.get(server);
         long now = server.overworld().getGameTime();
         state.syncPeriod(StockBoard.period(now, ShopConfig.restockDays()));
-        List<StockBoard.Slot> slots = StockBoard.slots(MarketData.stock(), ShopGoods.routeIds());
-        return StockBoard.build(server.overworld().getSeed(), state.period(), state.epoch(), slots, state::bought);
+        List<StockBoard.Slot> slots = ShopPools.slots(shopId);
+        List<StockBoard.Offer> rolled = StockBoard.build(server.overworld().getSeed(), state.period(), state.epoch(), slots, state::bought);
+        List<StockBoard.Offer> out = new ArrayList<>(rolled.size());
+        PriceTable table = MarketData.prices();
+        for (StockBoard.Offer o : rolled) {
+            if (o.kind() == StockEntry.Kind.ITEM) {
+                PriceTable.Price back = table.get(o.ref());
+                if (back != null && ShopLoopGuard.loops(ShopRules.buyPrice(o.price(), ShopConfig.priceScale()), o.amount(), ShopRules.sellUnit(back.gold(), ShopConfig.sellScale()))) continue;
+            }
+            out.add(o);
+        }
+        return out;
     }
 
     /** The operator's restock: a new shelf at once. */

@@ -5,6 +5,7 @@ import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.config.ModConfig;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.AddReloadListenerEvent;
+import net.neoforged.neoforge.event.TagsUpdatedEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.server.ServerStoppedEvent;
 
@@ -29,8 +30,10 @@ public final class ShopSystem {
         NeoForge.EVENT_BUS.addListener((AddReloadListenerEvent e) -> e.addListener(new MarketData()));
         NeoForge.EVENT_BUS.addListener((ServerStoppedEvent e) -> {
             MarketData.clear();
+            ShopPools.clear();
             ShopGate.clear();
         });
+        NeoForge.EVENT_BUS.addListener((TagsUpdatedEvent e) -> MarketData.invalidatePools());      // the world's item tags were (re)bound: the pools of the ITEM lines are resolved again on next use
         NeoForge.EVENT_BUS.addListener((PlayerEvent.PlayerLoggedOutEvent e) -> ShopGate.forget(e.getEntity().getUUID()));
         ShopSelfTests.register();
     }

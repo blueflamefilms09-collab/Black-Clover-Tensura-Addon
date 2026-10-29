@@ -18,6 +18,9 @@ public final class BlackMarketWitch {
     /** The character id: the roster key, the dialogue file name, the model name ({@code arc_black_market_witch}) and the id {@link ShopHook} looks for. */
     public static final String ID = "black_market_witch";
 
+    /** The shop she keeps: the file {@code data/nusmp/black_market/shops/witch.json}, or the older {@code stock.json}; its type is {@code general}. */
+    public static final String SHOP = "witch";
+
     /** The boss whose defeat brings her to the Hub: the first of the roster, so that the shop is found only once the dungeon has been survived by somebody. */
     public static final String GATE = "revchi_salik";
 

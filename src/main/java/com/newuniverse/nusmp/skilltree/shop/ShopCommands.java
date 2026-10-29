@@ -76,8 +76,11 @@ public final class ShopCommands {
                 + GoldFormat.clock(StockBoard.ticksUntilRestock(now, ShopConfig.restockDays())) + ", period " + StockBoard.period(now, ShopConfig.restockDays()) + ", restocks forced " + state.epoch() + ".");
         say(ctx, "Data: " + MarketData.stock().size() + " shelf line(s), the witch buys " + MarketData.prices().size() + " item(s) in " + MarketData.prices().categories().size()
                 + " categories (bulk: " + String.join(", ", MarketData.prices().bulkCategories()) + ").");
+        for (MarketData.Shop shop : MarketData.shops().values()) {
+            say(ctx, "Shop '" + shop.id() + "': type " + shop.type() + ", " + shop.entries().size() + " line(s), " + ShopPools.slots(shop.id()).size() + " slot(s) that can be stocked here.");
+        }
         List<String> problems = MarketData.problems();
-        if (problems.isEmpty()) say(ctx, "No problems in stock.json or prices.json.");
+        if (problems.isEmpty()) say(ctx, "No problems in the shop files, types.json or prices.json.");
         else for (String p : problems) say(ctx, "  problem: " + p);
         if (!MarketData.unknownItems().isEmpty()) say(ctx, "Priced items this game does not have (dropped): " + String.join(", ", MarketData.unknownItems()));
         return 1;
@@ -86,12 +89,12 @@ public final class ShopCommands {
     private static int stock(CommandContext<CommandSourceStack> ctx) {
         List<StockBoard.Offer> shelf = ShopService.shelf(ctx.getSource().getServer());
         if (shelf.isEmpty()) {
-            say(ctx, "The shelf is empty (the Skill Books were removed, so the witch has nothing to sell; she still buys goods).");
+            say(ctx, "The shelf is empty (no line of the shop file made a slot, or none rolled onto this restock; /multiverse skillbook shop status says why; she still buys goods).");
             return 0;
         }
         double scale = ShopConfig.priceScale();
         for (StockBoard.Offer o : shelf) {
-            say(ctx, o.id() + "  " + o.kind().id() + " " + o.ref() + "  " + GoldFormat.full(ShopRules.buyPrice(o.price(), scale)) + " gold  " + o.left() + "/" + o.total() + " left"
+            say(ctx, o.id() + "  " + o.kind().id() + " " + o.ref() + (o.amount() > 1 ? " x" + o.amount() : "") + "  " + GoldFormat.full(ShopRules.buyPrice(o.price(), scale)) + " gold  " + o.left() + "/" + o.total() + " left"
                     + (o.flagship() ? "  (flagship)" : ""));
         }
         return shelf.size();

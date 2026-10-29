@@ -33,8 +33,8 @@ public record ShopSnapshot(int witch, long gold, long ticksToRestock, int dailyL
      * One offer on the shelf.
      *
      * @param id       the slot id (the key of a purchase)
-     * @param kind     0 for a route book, 1 for an SP book (the ordinal of {@link StockEntry.Kind})
-     * @param ref      the route id or the SP kind
+     * @param kind     0 for a route book, 1 for an SP book, 2 for an item (the ordinal of {@link StockEntry.Kind})
+     * @param ref      the route id, the SP kind or the item id
      * @param stack    the item as the player would receive it
      * @param price    gold, after the server's price scale
      * @param left     copies left

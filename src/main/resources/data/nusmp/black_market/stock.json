@@ -1,4 +1,327 @@
 {
-  "_why": "What the old witch SELLS, as data so a server owner can put a shelf together with a datapack and /reload (the pure validator is StockSchema.java). The shelf is EMPTY on purpose: the witch only ever sold Skill Books (route books at 2,000,000 to 3,000,000 gold) and SP Books, and both items, together with the unique skills they taught, were removed at the owner's request (docs/skill_books_removed.md). The witch still BUYS goods for gold (prices.json). A line is a SLOT on the shelf: at every restock its price is rolled inside [price_min, price_max] from the world seed and the restock period, 'stock' copies are put out, and 'weight' is the percent chance the slot is on the shelf; the only kinds the code knows are the two removed book kinds, which sell nothing (the shop makes no item for them), so a line is of no use until a new kind of good is added. Keys that start with an underscore are comments.",
-  "entries": []
+  "_why": "The Black Market witch's SHELF, as data so a server owner can change it with a datapack and /reload (the pure validator is StockSchema.java; the file formats are in docs/black_market_goods.md). This file is the shelf of the shop 'witch' (a file shops/witch.json, if a datapack adds one, takes its place). She is a GENERAL store: \"type\": \"general\" (types.json) lets her sell anything that exists. Her Skill Books were removed (docs/skill_books_removed.md), so every line is now an ITEM line: \"item\" is one item id or an item TAG (#namespace:tag), and at every restock the line rolls ONE item out of it from the world seed and the restock period, so every player sees the same shelf and a restock changes it. \"count\" is how many items one purchase hands over (a number or [min, max]); price_min/price_max are the gold PER ITEM (a stack costs count times the rolled price); \"stock\" is how many purchases are on the shelf; \"weight\" is the percent chance the line is on the shelf at all; \"exclude\" lists ids that never come out of the pool. An item this game does not have (a mod that is not installed) or a tag that is empty simply makes no slot. THE RULE THAT KEEPS THE ECONOMY SAFE: she must never sell an item for less than she pays for it (prices.json), or a player could buy and sell it back for gold forever. The pool drops every item whose buy price is not BELOW the line's price_min, and the shelf drops an offer that would loop under the server's price and sell scales; so a broad tag like #c:ingots can never hand out gold ingots at a loss. Prices are in the witch's gold: the dearest goods sit well above what she pays (diamond: she pays 200,000, she sells for 260,000 to 330,000). Keys that start with an underscore are comments.",
+  "type": "general",
+  "entries": [
+    {
+      "_why": "Any ingot of any mod. Gold (she pays 25,000) and every ingot she buys fall out of the pool by themselves; netherite is left out by hand because she does not buy it.",
+      "id": "ingots",
+      "kind": "item",
+      "item": "#c:ingots",
+      "exclude": [
+        "minecraft:netherite_ingot"
+      ],
+      "count": [
+        8,
+        32
+      ],
+      "price_min": 3000,
+      "price_max": 5000,
+      "stock": [
+        2,
+        4
+      ],
+      "weight": 100
+    },
+    {
+      "id": "raw_ores",
+      "kind": "item",
+      "item": "#c:raw_materials",
+      "count": [
+        8,
+        32
+      ],
+      "price_min": 2200,
+      "price_max": 3800,
+      "stock": [
+        2,
+        4
+      ],
+      "weight": 90
+    },
+    {
+      "_why": "Lapis, amethyst, quartz and the like. Diamond and emerald are not in this pool (she pays more than 9,000 for them); they have their own lines below.",
+      "id": "minor_gems",
+      "kind": "item",
+      "item": "#c:gems",
+      "count": [
+        4,
+        16
+      ],
+      "price_min": 4500,
+      "price_max": 9000,
+      "stock": [
+        2,
+        3
+      ],
+      "weight": 90
+    },
+    {
+      "id": "dusts",
+      "kind": "item",
+      "item": "#c:dusts",
+      "count": [
+        16,
+        48
+      ],
+      "price_min": 1200,
+      "price_max": 2400,
+      "stock": [
+        2,
+        4
+      ],
+      "weight": 80
+    },
+    {
+      "_why": "Bread, stew, fruit, the dungeon's meals. The meats she buys (4,000 and up) are not in this pool.",
+      "id": "foods",
+      "kind": "item",
+      "item": "#c:foods",
+      "count": [
+        8,
+        24
+      ],
+      "price_min": 900,
+      "price_max": 2000,
+      "stock": [
+        3,
+        6
+      ],
+      "weight": 100
+    },
+    {
+      "id": "cooked_meat",
+      "kind": "item",
+      "item": "#c:foods/cooked_meat",
+      "count": [
+        6,
+        16
+      ],
+      "price_min": 1500,
+      "price_max": 2800,
+      "stock": [
+        2,
+        4
+      ],
+      "weight": 70
+    },
+    {
+      "id": "crops",
+      "kind": "item",
+      "item": "#c:crops",
+      "count": [
+        16,
+        48
+      ],
+      "price_min": 700,
+      "price_max": 1500,
+      "stock": [
+        2,
+        4
+      ],
+      "weight": 70
+    },
+    {
+      "id": "logs",
+      "kind": "item",
+      "item": "#minecraft:logs",
+      "count": [
+        32,
+        64
+      ],
+      "price_min": 500,
+      "price_max": 1100,
+      "stock": [
+        3,
+        6
+      ],
+      "weight": 80
+    },
+    {
+      "id": "ender_pearls",
+      "kind": "item",
+      "item": "minecraft:ender_pearl",
+      "count": [
+        2,
+        8
+      ],
+      "price_min": 6000,
+      "price_max": 9000,
+      "stock": [
+        2,
+        3
+      ],
+      "weight": 60
+    },
+    {
+      "id": "experience_bottles",
+      "kind": "item",
+      "item": "minecraft:experience_bottle",
+      "count": [
+        1,
+        4
+      ],
+      "price_min": 12000,
+      "price_max": 20000,
+      "stock": [
+        2,
+        3
+      ],
+      "weight": 50
+    },
+    {
+      "_why": "Tensura's plain magic stone: she buys it at 6,000 and sells it at 8,500 to 11,000.",
+      "id": "tensura_stone",
+      "kind": "item",
+      "item": "tensura:magic_stone",
+      "count": [
+        4,
+        16
+      ],
+      "price_min": 8500,
+      "price_max": 11000,
+      "stock": [
+        2,
+        4
+      ],
+      "weight": 80
+    },
+    {
+      "_why": "The three Tensura crystals: she buys them at 30,000 / 100,000 / 350,000 and sells them at about a third more.",
+      "id": "low_crystal",
+      "kind": "item",
+      "item": "tensura:low_quality_magic_crystal",
+      "count": [
+        1,
+        3
+      ],
+      "price_min": 42000,
+      "price_max": 55000,
+      "stock": [
+        1,
+        3
+      ],
+      "weight": 70
+    },
+    {
+      "id": "medium_crystal",
+      "kind": "item",
+      "item": "tensura:medium_quality_magic_crystal",
+      "count": [
+        1,
+        2
+      ],
+      "price_min": 135000,
+      "price_max": 170000,
+      "stock": [
+        1,
+        2
+      ],
+      "weight": 45
+    },
+    {
+      "id": "high_crystal",
+      "kind": "item",
+      "item": "tensura:high_quality_magic_crystal",
+      "count": 1,
+      "price_min": 460000,
+      "price_max": 560000,
+      "stock": [
+        1,
+        2
+      ],
+      "weight": 25,
+      "flagship": true
+    },
+    {
+      "_why": "She pays 60,000 for an emerald.",
+      "id": "emeralds",
+      "kind": "item",
+      "item": "minecraft:emerald",
+      "count": [
+        2,
+        6
+      ],
+      "price_min": 80000,
+      "price_max": 100000,
+      "stock": [
+        2,
+        3
+      ],
+      "weight": 70
+    },
+    {
+      "_why": "She pays 25,000 for a gold ingot.",
+      "id": "gold_ingots",
+      "kind": "item",
+      "item": "minecraft:gold_ingot",
+      "count": [
+        2,
+        8
+      ],
+      "price_min": 33000,
+      "price_max": 42000,
+      "stock": [
+        2,
+        3
+      ],
+      "weight": 70
+    },
+    {
+      "_why": "She pays 200,000 for a diamond.",
+      "id": "diamonds",
+      "kind": "item",
+      "item": "minecraft:diamond",
+      "count": [
+        1,
+        3
+      ],
+      "price_min": 260000,
+      "price_max": 330000,
+      "stock": [
+        1,
+        2
+      ],
+      "weight": 55
+    },
+    {
+      "_why": "She pays 400,000 for a scrap.",
+      "id": "netherite_scrap",
+      "kind": "item",
+      "item": "minecraft:netherite_scrap",
+      "count": [
+        1,
+        2
+      ],
+      "price_min": 520000,
+      "price_max": 640000,
+      "stock": [
+        1,
+        2
+      ],
+      "weight": 15
+    },
+    {
+      "_why": "She pays 600,000 for one.",
+      "id": "golden_apples",
+      "kind": "item",
+      "item": "minecraft:enchanted_golden_apple",
+      "count": 1,
+      "price_min": 780000,
+      "price_max": 900000,
+      "stock": 1,
+      "weight": 12
+    },
+    {
+      "_why": "She pays 1,500,000 for a nether star. The rarest thing on her shelf.",
+      "id": "nether_star",
+      "kind": "item",
+      "item": "minecraft:nether_star",
+      "count": 1,
+      "price_min": 1950000,
+      "price_max": 2300000,
+      "stock": 1,
+      "weight": 6,
+      "flagship": true
+    }
+  ]
 }

@@ -38,6 +38,30 @@ public final class StockRoll {
         return new Roll(present, price, count);
     }
 
+    /** Which pool member an ITEM slot rolled to and how many items one purchase hands over. */
+    public record ItemRoll(int index, int amount) {}
+
+    /**
+     * Rolls WHICH item of an ITEM slot's pool is on the shelf this restock, and the size of the stack. A pure function of the same four inputs as {@link #roll} (world seed, restock period,
+     * restock counter, slot id) on its own mixer stream, so the world sees one shelf, a restock changes it, a restart rebuilds it, and the item is independent of the price roll.
+     *
+     * @param poolSize the number of items in the slot's resolved pool (at least 1, else index 0 and amount 0)
+     * @param maxStack the stack size of the rolled item is not known here; the caller caps the amount, this only rolls inside {@code [countMin, countMax]}
+     */
+    public static ItemRoll rollItem(long seed, long period, int epoch, String slotId, int poolSize, int countMin, int countMax) {
+        if (poolSize <= 0) return new ItemRoll(0, 0);
+        long h = mix(seed ^ mix(period * GOLDEN + epoch + 0x1F83D9ABL) ^ fnv(slotId + "#item"));
+        h = next(h);
+        double uPick = unit(h);
+        h = next(h);
+        double uAmount = unit(h);
+        int index = Math.min(poolSize - 1, (int) Math.floor(uPick * poolSize));
+        int lo = Math.max(1, countMin);
+        int hi = Math.max(lo, countMax);
+        int amount = Math.min(hi, lo + (int) Math.floor(uAmount * (hi - lo + 1)));
+        return new ItemRoll(index, amount);
+    }
+
     /** The step prices are rounded to at this size: 1 under 1,000, 10 under 10,000, 100 under 100,000, 1,000 from there (three or four significant digits). */
     public static long step(long v) {
         return v >= 100_000 ? 1_000 : v >= 10_000 ? 100 : v >= 1_000 ? 10 : 1;

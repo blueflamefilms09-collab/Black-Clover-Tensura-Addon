@@ -348,7 +348,8 @@ public final class ShopScreen extends Screen {
 
     // ================================================================ text
     private String nameOf(ShopSnapshot.Offer o) {
-        return o.stack().isEmpty() ? o.ref() : o.stack().getHoverName().getString();
+        if (o.stack().isEmpty()) return o.ref();
+        return o.stack().getCount() > 1 ? o.stack().getHoverName().getString() + " x" + o.stack().getCount() : o.stack().getHoverName().getString();
     }
 
     private int nameColor(ShopSnapshot.Offer o) {
@@ -357,6 +358,7 @@ public final class ShopScreen extends Screen {
 
     /** What the witch murmurs about the offer the mouse is over (the shelf holds no book any more, so every offer is "price each"). */
     private String blurb(ShopSnapshot.Offer o) {
+        if (o.stack().getCount() > 1) return Component.translatable("gui.nusmp.shop.blurb.stack", GoldFormat.full(o.price()), o.stack().getCount()).getString();
         return Component.translatable("gui.nusmp.shop.blurb.goods", GoldFormat.full(o.price())).getString();
     }
 
