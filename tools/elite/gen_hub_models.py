@@ -3,7 +3,7 @@
 
     python tools/elite/gen_hub_models.py
 
-The Dungeon Map follows the Skill Book's pattern (assets/nusmp/models/item/skill_book*.json): the model file uses the `neoforge:separate_transforms` loader, so the item is a real 3D model in
+The Dungeon Map follows the pattern of the (removed) Skill Book model: the model file uses the `neoforge:separate_transforms` loader, so the item is a real 3D model in
 the hand (a rolled map on two wooden rollers with four knobs, built from a few cuboids) and keeps its flat sprite as the inventory, ground and item-frame icon. The hand transforms are the Skill
 Book's (a flat sheet held face-on reads the same way).
 """
@@ -51,7 +51,7 @@ def write(name, obj):
 
 
 def main():
-    with open(os.path.join(OUT, "skill_book_3d.json")) as f:
+    with open(os.path.join(OUT, "dungeon_map_3d.json")) as f:   # the display block was copied from the (removed) Skill Book model; it now lives in this file
         display = json.load(f)["display"]
     write("dungeon_map_3d.json", build_3d(display))
     write("dungeon_map_2d.json", {"parent": "minecraft:item/generated", "textures": {"layer0": "nusmp:item/dungeon_map"}})

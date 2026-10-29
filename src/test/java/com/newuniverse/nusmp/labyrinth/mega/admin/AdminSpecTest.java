@@ -46,7 +46,7 @@ public class AdminSpecTest {
             assertTrue(seen.add(lit), "listed twice: " + lit);
             assertFalse(AdminSpec.PLAYER_LITERALS.contains(lit), "the admin literal '" + lit + "' has the name of a player subcommand and would be merged into it");
         }
-        assertEquals(8, AdminSpec.ADMIN_LITERALS.size());
+        assertEquals(7, AdminSpec.ADMIN_LITERALS.size());
         assertEquals(5, AdminSpec.PLAYER_LITERALS.size());
     }
 

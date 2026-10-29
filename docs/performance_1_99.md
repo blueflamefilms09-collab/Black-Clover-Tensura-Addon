@@ -226,8 +226,6 @@ Regenerate with `python3 tools/perf/inventory.py --write`.
 | `relics/wave/Wave9Events.java#onPlayerTick` | PlayerTickEvent.Post | every 4 ticks | trivial | per player | OK: throttled |
 | `skill/SkillEvents.java#onPlayerTick` | PlayerTickEvent.Post | every 20 ticks | trivial | per player | OK: throttled |
 | `skill/SkillEvolution.java#onPlayerTick` | PlayerTickEvent.Post | every 100 ticks | skills, loop | per player | OK: throttled |
-| `skilltree/hk/HkPassives.java#onPlayerTick` | PlayerTickEvent.Post | every BEAT ticks | trivial | per player | OK: throttled |
-| `skilltree/line/LineEvents.java#onPlayerTick` | PlayerTickEvent.Post | every tick | trivial | per player | OK: cheap gate, delegates |
 | `song/SongTicker.java#onPlayerTick` | PlayerTickEvent.Post | every 20 ticks | trivial | per player | OK: reads one int when no song mode is on [probe s.song.ticker] |
 | `wizard/WizardSystem.java#onPlayerTick` | PlayerTickEvent.Post | every 2400 ticks | trivial | per player | OK: throttled |
 | `antimagic/NihilityZone.java#onServerTick` | ServerTickEvent.Post | every tick | entity scan, effects, loop | global (loops players of its dimension) | OK: iterates live zones only (none almost always); one entity scan per zone per pass [probe s.antimagic.nihility] |
@@ -303,8 +301,6 @@ Regenerate with `python3 tools/perf/inventory.py --write`.
 | `relics/wave/Wave6Events.java#onServerTick` | ServerTickEvent.Post | every tick | trivial | global (loops players of its dimension) | OK: cheap gate, delegates |
 | `relics/wave/Wave9Events.java#onServerTick` | ServerTickEvent.Post | every 10 ticks | trivial | global (loops players of its dimension) | OK: throttled |
 | `shadow/UniteWatcher.java#onServerTick` | ServerTickEvent.Post | every tick | player list, loop | global (loops players of its dimension) | OK: loops online players, a few field reads each |
-| `skilltree/item/UnlockFx.java#onServerTick` | ServerTickEvent.Post | every tick | loop | global (loops players of its dimension) | OK: light |
-| `skilltree/kit/KitClock.java#onServerTick` | ServerTickEvent.Post | every tick | trivial | global (loops players of its dimension) | OK: cheap gate, delegates |
 | `soul/PaladinEvents.java#onTick` | ServerTickEvent.Post | every DRIVE_EVERY ticks | loop | global (loops players of its dimension) | OK: throttled |
 | `wizard/WizardLibrary.java#onServerTick` | ServerTickEvent.Post | every 2 ticks | entity scan, player list, loop | global (loops players of its dimension) | OK: throttled [probe s.wizard.library] |
 | `elite/hub/HubNpcSpawner.java#onLevelTick` | LevelTickEvent.Post | every 100 ticks | trivial | per level | OK: throttled |
@@ -479,8 +475,6 @@ Regenerate with `python3 tools/perf/inventory.py --write`.
 | `relics/wave/Wave8Events.java#onIncoming` | LivingIncomingDamageEvent | on a hit | effects | per hit | OK: event driven |
 | `relics/wave/Wave9Events.java#onIncoming` | LivingIncomingDamageEvent | on a hit | effects | per hit | OK: event driven |
 | `shadow/UniteEvents.java#onIncomingDamage` | LivingIncomingDamageEvent | on a hit | packets | per hit | OK: event driven |
-| `skilltree/hk/HkPassives.java#onIncomingDamage` | LivingIncomingDamageEvent | on a hit | trivial | per hit | OK: event driven |
-| `skilltree/line/LineEvents.java#onIncomingDamage` | LivingIncomingDamageEvent | on a hit | trivial | per hit | OK: event driven |
 | `soul/PaladinEvents.java#onIncoming` | LivingIncomingDamageEvent | on a hit | trivial | per hit | OK: event driven |
 | `thread/RougeFateEvents.java#onIncoming` | LivingIncomingDamageEvent | on a hit | trivial | per hit | OK: event driven |
 | `thread/ThreadSpells.java#onIncomingDamage` | LivingIncomingDamageEvent | on a hit | trivial | per hit | OK: event driven |
@@ -518,7 +512,6 @@ Regenerate with `python3 tools/perf/inventory.py --write`.
 | `relics/wave/Wave5Hooks.java#onDamagePre` | LivingDamageEvent.Pre | on a hit | trivial | per hit | OK: event driven |
 | `relics/wave/Wave6Events.java#onDamaged` | LivingDamageEvent.Post | on a hit | trivial | per hit | OK: event driven |
 | `relics/wave/Wave8Events.java#onDamagePost` | LivingDamageEvent.Post | on a hit | trivial | per hit | OK: event driven |
-| `skilltree/line/LineEvents.java#onDamaged` | LivingDamageEvent.Post | on a hit | trivial | per hit | OK: event driven |
 | `song/SongTicker.java#onDamaged` | LivingDamageEvent.Post | on a hit | effects | per hit | OK: event driven |
 | `client/SwordDrawClient.java#onRenderHand` | RenderHandEvent | every frame | trivial | per frame | OK: light |
 | `client/relics/djinn/DjinnFirstPerson.java#onRenderHand` | RenderHandEvent | every frame | trivial | per frame | OK: light |

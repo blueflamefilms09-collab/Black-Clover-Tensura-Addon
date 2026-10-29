@@ -62,7 +62,7 @@ Owner brief: "also make the dungeon mob drops better the deeper/higher you go." 
 | luck added to the extra rolls | +3 | 300 | 0.09 | 0.74 | 1.2 | 2.3 |
 | experience of the kill | x4 | 300 | x1.09 | x1.74 | x2.2 | x3.3 |
 
-- The extra rolls are the mob's own loot table (`EntityType.getDefaultLootTable()`) rolled again, RAW (the global loot modifiers do not fire again, so a coin or a skill book is never paid twice), with the killer's Luck plus the depth luck. At most 24 extra stacks per death.
+- The extra rolls are the mob's own loot table (`EntityType.getDefaultLootTable()`) rolled again, RAW (the global loot modifiers do not fire again, so a coin is never paid twice), with the killer's Luck plus the depth luck. At most 24 extra stacks per death.
 - Coin stacks (Tensura's and this mod's) are not boosted: the coin rules already scale them.
 - Applies on the same terms as the gear: the Mega-Dungeon, a dungeon monster that is no boss and no servant, killed by a player. The floor is the one the mob was born on (`nusmp_depth_floor`) when it has it, else where it died.
 - Config (`nusmp-labyrinth-mega-depth-server.toml`, `[depth]`): `drops` (true), `dropRollsMax` (3), `dropCountMax` (1), `dropLuckMax` (3), `xpMax` (3), `dropScale` (1; 0 = the deep floors drop what the shallow ones do). Self-test `enc.depth_drops`.

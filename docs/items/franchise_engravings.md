@@ -331,7 +331,6 @@ The run prints how many items each rule decided (`--report --why` lists every it
 | grimoires, magic books, staves, keys, Charter grimoires (mapped) | the engravings as a display tag | the `held` spell kinds (`spell_refund`, `spell_power`) for a spell cast from a grimoire (see the limit below) |
 | armour, robes, mantles, Curios relics (mapped) | its franchise's engravings | the `any` kinds: wards, shield guard, dodge, second wind, mana trickle, ally regeneration |
 | shields | `shield_guard` / `ward` engravings | the reduction while blocking or holding a shield |
-| skill books | none: skill books have no franchise | display only |
 
 **Limit, honestly:** the spell hook is one line in `book/GrimoireBook` after a finished cast, so `spell_refund` and `spell_power` work for grimoire casts only; the Fairy Tail, Celestial, Djinn and hero-weapon casters use their own cast paths and do not call it (their engravings still act through the melee, guard and aura kinds). Spell damage is recognised as a non-melee hit whose attacker is the caster within the engraving's window (3 seconds) of a cast; a spell that damages without naming its caster (vanilla `magic` damage with no entity) cannot be told from the caster and gets no bonus.
 

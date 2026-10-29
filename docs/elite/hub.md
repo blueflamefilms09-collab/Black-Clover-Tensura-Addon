@@ -49,7 +49,7 @@ master switch at every call (0 / false when the economy is off). Coins inside Te
   level); chests and bosses always pay. Floor 0 (the Hub) pays nothing: the modifier and the listeners only run in the Mega-Dungeon dimension and the roll itself returns 0 for floor 0. Defaults: mob 6 bronze, chest 80, boss 1500,
   x3 per tier, up to +50 percent over a tier (always below the step to the next tier), a rift-pocket chest x3.
 * `CoinLootModifier` (global loot modifier `nusmp:hub_coins`, `data/nusmp/loot_modifiers/hub_coins.json`, listed in `data/neoforge/loot_modifiers/global_loot_modifiers.json`): pays an ordinary hostile monster killed by a
-  player (via `LootVictims.kindOf`, the same test the skill books use: no pet, shadow, summon or boss) and every `chests/...` table rolled in the Mega-Dungeon (in a Secret Rift pocket the rift multiplier and the pocket's own floor).
+  player (via `LootVictims.kindOf`: no pet, shadow, summon or boss) and every `chests/...` table rolled in the Mega-Dungeon (in a Secret Rift pocket the rift multiplier and the pocket's own floor).
   In coin mode the chest roll loses its Magic Stones and crystals (the economy is replaced) unless `keepStoneDrops`.
 * `CoinMobDrops` (`LivingDropsEvent`, LOW): the same payout for creatures that roll no loot table at all. The 400 `nusmp:foundry_mob` are exactly that (`FoundryMobEntity.dropFromLootTable` does nothing; their loot comes from
   the economy listeners), so a modifier alone would never pay them. The modifier stamps a creature it has decided for with `nusmp_hub_coin_decided`, so the two never pay twice.
@@ -90,7 +90,7 @@ The stock is PER PLAYER and PER WORLD DAY (`dailyLimit` stacks): the Hub is shar
 the same day clock as the dailies, and is the rule a player can predict.
 
 ## Dungeon Map (`nusmp:dungeon_map`)
-A real item (stacks to 16; 3D rolled map in the hand through `neoforge:separate_transforms`, the flat sprite as the icon, the Skill Book's pattern; `tools/elite/gen_hub_models.py`). Using it inside the Mega-Dungeon asks `HubMap` to flatten
+A real item (stacks to 16; 3D rolled map in the hand through `neoforge:separate_transforms`, the flat sprite as the icon, the pattern of the removed Skill Book; `tools/elite/gen_hub_models.py`). Using it inside the Mega-Dungeon asks `HubMap` to flatten
 the player's sector into a `MapView` (pure): only the rooms of the CURRENT floor, only the doors (the generator's `Sector.edges`) between kept rooms, the first rooms by id up to `map.maxRooms`, a visited flag per room from the
 player's `MapMemory` (the room they stand in is recorded every half second). `DungeonMapScreen` draws every room at true size, coloured by its `RoomKind`, doors as lines, unexplored rooms dim, S for the arrival stair, E for the
 stair that leads on, and the player live with the way they face; drag to move, wheel to zoom. It shows the layout, not what is in the rooms.
@@ -104,5 +104,5 @@ stair that leads on, and the player live with the way they face; drag to move, w
 JUnit (pure): `CoinMathTest`, `CoinLootTest`, `QuestsTest`, `ShopTableTest`, `MapViewTest`, `HubDataFilesTest` under `src/test/java/com/newuniverse/nusmp/elite/hub`. In-game: `elite.hub.wallet`, `stones`, `loot`, `shop`, `quests`, `npcs`, `map`.
 
 ## Unverified (written against stubs and existing idioms, never run in a game)
-The coin ratios of bronze and stellar gold; that the real Tensura loot pipeline calls the modifier for entities with a table (it does for the skill books, the same way); the Villager model/texture registration; the menu and screen
+The coin ratios of bronze and stellar gold; that the real Tensura loot pipeline calls the modifier for entities with a table (it did for the removed skill books, the same way); the Villager model/texture registration; the menu and screen
 open flow; the `separate_transforms` item model transforms; the plaza spots against the stamped template; pouches. CI compiles the real thing.

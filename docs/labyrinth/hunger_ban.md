@@ -56,7 +56,7 @@ and in the sources that generate them (`tools/lang/food.json`, `food.pages.json`
 ## 2. What feeds or restores: kept
 
 `FoodArts.feed` and the full-stomach pages, `WikiSpells` and `DreamWorld` meals, `InstrumentSkills` (Glutton), Gluttony's kill feed, the Chalice's stew, the
-hunger-saver passive (`PassiveExecutors` lowers the exhaustion), the cupcake, the Sentinel's half hunger, the Belt, the Locket, the Safeguard record, the Ring of Rock Eating,
+hunger-saver passive (removed with the Skill Books), the cupcake, the Sentinel's half hunger, the Belt, the Locket, the Safeguard record, the Ring of Rock Eating,
 Fey Honey, Wave 16 chalk and saturation, Wave 17 meals, Wave 18 top-up, Wave 22 lich floor, Wave 30 wishes, the monster meals of `DungeonFood`, `MealBuffs`.
 
 ## 3. Cleanses and mentions only: kept

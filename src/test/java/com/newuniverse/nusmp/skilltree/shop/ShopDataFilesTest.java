@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Why: the two files the game ships ({@code stock.json}, {@code prices.json}) ARE the owner's economy, so they are tested as the specification they implement: they load with
- * no problem at all, the flagship sits where the owner put it (the Ember Knight book in the top third of 2 to 3 million), the primers carry the owner's bands, the price
+ * no problem at all, the shelf is empty (the books it sold were removed), the price
  * table has the owner's defaults, bulk selling never reaches a valuable, and every {@code nusmp:} item the witch buys really is registered by the mod (read from the source,
  * because the item classes import the game and cannot be loaded here).
  */
@@ -45,34 +45,8 @@ class ShopDataFilesTest {
     }
 
     @Test
-    void theFlagshipIsTheFangInTheTopThirdOfTwoToThreeMillion() throws IOException {
-        StockEntry fang = stock().get("fang_of_smoldering_insanity");
-        assertNotNull(fang);
-        assertEquals("nusmp:smoldering_fang_of_insanity", fang.route());      // 1.81.0: the Fang is its own route, not the Ember Knight
-        assertEquals(StockEntry.Kind.ROUTE_BOOK, fang.kind());
-        assertEquals(2_000_000L, fang.priceMin());
-        assertEquals(3_000_000L, fang.priceMax());
-        assertTrue(fang.bandStart() >= 2_000_000 + 1_000_000 * (2.0 / 3.0), "the owner asked for the top third of the band");
-        assertTrue(fang.flagship());
-        assertEquals(1, fang.stockMin());
-        assertEquals(1, fang.stockMax());
-        assertEquals(100, fang.weight(), "the owner's named target is always on the shelf");
-    }
-
-    @Test
-    void everyOtherRouteIsOnSaleAtTheSameBandThroughTheAllRoutesLine() throws IOException {
-        StockEntry all = stock().get("route_books");
-        assertNotNull(all);
-        assertTrue(all.allRoutes());
-        assertEquals(2_000_000L, all.priceMin());
-        assertEquals(3_000_000L, all.priceMax());
-        assertEquals(1, all.stockMax(), "one copy of each route book per restock");
-    }
-
-    @Test
-    void theSkillPointPrimersAreGoneFromTheShelf() throws IOException {
-        for (StockEntry e : stock().values()) assertTrue(e.kind() != StockEntry.Kind.SP_BOOK, e.id() + ": the SP Books were removed with the Skill Points");
-        assertEquals(2, stock().size(), "the flagship and the all-books line");
+    void theShelfIsEmptyBecauseTheSkillBooksWereRemoved() throws IOException {
+        assertEquals(0, stock().size(), "the only goods the witch sold were Skill Books and SP Books; both items were removed (docs/skill_books_removed.md)");
     }
 
     @Test

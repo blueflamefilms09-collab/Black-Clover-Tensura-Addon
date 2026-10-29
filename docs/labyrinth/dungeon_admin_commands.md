@@ -1,7 +1,7 @@
 # The `/dungeon` admin tree (round 1.99.0, builder DUNGEON-ADMIN)
 
 The owner's request: "to test a 2,000-floor world, 275+ Unique skills, multi-phase bosses and rifts there must be a permission-gated administrative command tree under
-`/dungeon`": teleport to any floor, skip floors, spawn and slay Decennial bosses, open rifts, hand out and take back Unique skills, reset a player to a fresh entry, and a
+`/dungeon`": teleport to any floor, skip floors, spawn and slay Decennial bosses, open rifts, reset a player to a fresh entry, and a
 particle view of the floor's room graph. This file is the account of what was built, WHY each part has the shape it has (the command-tree hierarchy, the permission gating, the
 data it reaches, the chunk and generation safety), the numbers, and, honestly, what has not been seen running.
 
@@ -12,12 +12,10 @@ needs the game is type-checked against the API stubs and covered by the in-game 
 
 | Part | Status |
 |---|---|
-| The admin subtree `tp`, `skip`, `boss spawn / kill`, `rift spawn pocket / shortcut`, `skill unlock / give_sp`, `reset alignment / skills / waypoint / all`, `debug wfc / info`, `admin help` under the literal `dungeon` | NEW (package `labyrinth.mega.admin`) |
+| The admin subtree `tp`, `skip`, `boss spawn / kill`, `rift spawn pocket / shortcut`, `reset alignment / waypoint / all` (`skill unlock / give_sp` and `reset skills` were removed with the Skill Books), `debug wfc / info`, `admin help` under the literal `dungeon` | NEW (package `labyrinth.mega.admin`) |
 | `/dungeon floor`, `status`, `release`, `unstuck [party]`, `help` (player subcommands of `lock.DungeonCommand`) | KEPT, untouched, still open to every player (the admin tree is MERGED into the same literal) |
 | `/multiverse mega ...` admin trees (`floors`, `lock`, `core`, `rift`, `party`, `hub`, `skillbook` ...) | KEPT, untouched (the repair tools; the `/dungeon` tree is the quick tester's handle on the same systems) |
 | `DungeonAdminHooks` with the interfaces `BossHook` and `RiftHook` and their DEFAULTS (the Labyrinth Guardian and the rift block the dungeon has today) | NEW; the Decennial boss facade and the rift facade of the parallel builders replace the defaults with one line each (section 6) |
-| Skill points: `/dungeon skill give_sp <amount>` | NEW command that does NOT bring the Skill Tree back: it adds MASTERY (section 4) |
-| Unique skills: `UniqueBooks.grant / forget`, the `UniqueSkills` registry | REUSED as they are (no skill code changed) |
 | `PlayerDungeonAlignment` attachment, `Waypoint` record in the player's persistent data, `MegaTravel` landing memory, `ExpansionQueue`, `HubTravel`, `LockPolicy`, `RoomGraph` | REUSED as they are |
 | Lang keys `message.nusmp.dungeon.admin.*` in `tools/lang/dungeon_admin.json` | NEW (flat fragment; `en_us.json` not edited) |
 | Self-test `dungeon.admin` | NEW |
@@ -33,8 +31,7 @@ needs the game is type-checked against the API stubs and covered by the in-game 
   skip [<floors -1000..1000>]              [op 2]
   boss  spawn <level -100..100> | kill     [op 2]
   rift  spawn pocket | shortcut            [op 2]
-  skill unlock <skill|all> | give_sp <amount 1..100000>              [op 2]
-  reset alignment | skills | waypoint | all                          [op 2]
+  reset alignment | waypoint | all                                  [op 2]
   debug wfc | info                         [op 2]
   admin help                               [op 2]
 ```
@@ -44,7 +41,7 @@ needs the game is type-checked against the API stubs and covered by the in-game 
   root and nothing was renamed, moved or removed. The alternative (a different root such as `/dng`) would have left two commands for one idea, and the player's tab completion
   would not show the admin ones to an operator at the right place.
 * **The gate is on the children, not on the root.** A `requires(hasPermission(2))` on the root would hide `/dungeon floor` and `/dungeon unstuck` from every player below level 2,
-  and `unstuck` is the way out of a sealed room. So the root has no requirement and each ADMIN child (`tp`, `skip`, `boss`, `rift`, `skill`, `reset`, `debug`, `admin`) carries
+  and `unstuck` is the way out of a sealed room. So the root has no requirement and each ADMIN child (`tp`, `skip`, `boss`, `rift`, `reset`, `debug`, `admin`) carries
   it (`AdminTree.gated`). Everything below a gated child is reached only through it, so no deeper node needs its own gate. A gated node is also left out of tab completion and out of
   the command tree the server sends to a client below level 2, so a player never even sees the admin words.
 * **Ranges in the tree, rules in the executor.** `IntegerArgumentType.integer(-1000, 1000)` makes Brigadier refuse floor 1001 with its own red message and caret, before any code of
@@ -105,30 +102,17 @@ The crosshair is followed 32 blocks (`Entity.pick`); the rift opens in the air c
 free the second is tried. Default hook: the three calls `/multiverse mega rift open` makes (`RiftService.open`, `aimShortcut` from the floor under it, `announce`); a shortcut needs a
 floor of the Mega-Dungeon under it and is closed again, with a red line, anywhere else.
 
-### `skill unlock <skill|all>`
+### `skill unlock` and `skill give_sp` (removed)
 
-The ids are the bare ids of the Unique skill lines (`UniqueSkills.bares()`: 254 today), tab-completed from the registry plus `all`. One skill is one call of `UniqueBooks.grant`, the call a
-Skill Book makes, so a book and the command can never disagree; the player then picks and slots the skill in Tensura's own Ability Selection screen. `all` is that call for every
-line, handed out as a JOB of 12 per tick (254 skill-list updates in one tick would be 254 packets in one tick), with a summary at the end ("N learned, M already known, K failed,
-of T"). The Unique skills that are not Skill Book lines (Requip, the celestial keys, the Fairy Tail skills) have their own books and give commands (`/requip teach`,
-`/multiverse celestial give`, `/multiverse fairytail give`) and are not part of `all`.
+Both commands were removed together with the Skill Books and the unique skills they taught (see `docs/skill_books_removed.md`): there is no line skill left to unlock and no mastery of one to add to.
 
-### `skill give_sp <amount>` (decided from the code)
-
-Skill Points were REMOVED in 1.96.0 at the owner's request and nothing here brings them back. What replaced them is MASTERY: a line skill's mastery decides which of its arts have
-awakened and the level of its passives (`MasteryLevels`: "with the Skill Tree gone there are no Skill Points to buy node levels with ... the skill's MASTERY sets the level every node
-counts at"). So the closest living thing to "free Skill Points to test node purchasing" is mastery points, and the command adds `amount` (1 to 100000) mastery points to every Unique
-skill line the player owns, and says: "Skill Points were removed in 1.96.0 (skill books teach Unique skills directly); mastery now opens the later arts of a skill." When the player owns
-no line skill it grants nothing and says so in red. The other candidate, Black Market gold, buys books at the witch; it is not what Skill Points were for, so it is not used.
-
-### `reset alignment|skills|waypoint|all`
+### `reset alignment|waypoint|all`
 
 | Kind | What is cleared | What is kept on purpose |
 |---|---|---|
 | `alignment` | the `PlayerDungeonAlignment` attachment (road, lock, deepest floor of each road) through `AlignmentRules.reset`, the floor tracker's memory of the floor, and the client copy is re-sent | the Hub origin (the way the home gate leads back to) and the gate cool-down stamps: clearing them would strand a player in the Sanctuary |
 | `waypoint` | the `Waypoint` record, the deepest-Landing memory of both roads (`nusmp_mega_landing*`, which decides where the next entry puts the player), the Return Crystal and Gate Key cool-downs | the party record |
-| `skills` | the Unique skills the skill books taught (`UniqueBooks.forget`, as a job) | Tensura's own skills and every vanilla datum |
-| `all` | the three above | |
+| `all` | the two above | |
 
 ### `debug wfc`, `debug info`, `admin help`
 
@@ -157,7 +141,6 @@ them as they are:
 |---|---|---|
 | `PlayerDungeonAlignment` | data attachment `nusmp:dungeon_alignment` (`labyrinth.mega.floors.AlignmentAttachments`, value `PlayerDungeonAlignment`) | `reset alignment` -> `AlignmentRules.reset`, `AlignmentNet.send`; `skip` reads `chosen()` |
 | `PlayerDungeonWaypoint` | record `Waypoint` in the player's persistent data, key `nusmp_mega_waypoint` (`labyrinth.mega.rift`) | `tp` writes it, `reset waypoint` and `WaypointService.clear` remove it |
-| Unique Skill Line | ManasCore skill list, one `LineUniqueSkill` per book | `UniqueBooks.grant / forget / ownedLines`, mastery through the skill instance |
 | Floor / dimension / chunk loading | `MegaTravel`, `ExpansionQueue`, portal ticket | section 3 `tp` |
 
 ## 5. Numbers
@@ -168,8 +151,6 @@ them as they are:
 | Level range | -100 to -1 and 1 to 100, ten floors each, boss on the last floor |
 | Permission | level 2 on every admin child, none on the root |
 | Teleport clock | every 5 ticks; arrival waits at most 12 looks for the landing chunk; gives up after 3 minutes without progress |
-| Skill jobs | 12 skills per tick |
-| `give_sp` | 1 to 100000 mastery points per skill |
 | Debug view | burst every 10 ticks, 160 points per burst, 200 per tick in all, range 72, 5 minutes |
 | Estimate shown for a queued teleport | 2 seconds per floor (a guess for the countdown only) |
 
@@ -201,7 +182,7 @@ For a facade method of another return type use a lambda, for example `(l, lv, p)
 * Self-test **`dungeon.admin`** (registered in `AdminRegistry`; CI should expect the prefix `dungeon.admin`): on the server's own dispatcher it checks that the player subcommands survived the
   merge and are open to a level-1 source, that every admin literal exists, is hidden from level 1 and usable at level 2, that the usages Brigadier prints at both levels equal `AdminSpec`
   exactly (extra, missing or ungated nodes fail), the argument edges (1000 / 1001, level 100 / 101, amount 0), that every command from a console returns 0 and throws nothing, that the
-  commands that need a dungeon refuse cleanly for a stand-in in the Overworld, `reset`, teaching / mastering / forgetting a skill by command, the teleport planner on a built floor
+  commands that need a dungeon refuse cleanly for a stand-in in the Overworld, `reset`, the teleport planner on a built floor
   (ARRIVE) and on floor +-1000 (not ARRIVE, nothing grown), the debug model of a saved sector and `debug wfc` on and off on a built floor.
 
 ## 8. What could NOT be verified (honest list)
@@ -212,8 +193,6 @@ For a facade method of another return type use a lambda, for example `(l, lv, p)
   self-test pins the result but has not run.
 * `tp` to a far floor takes as long as the generator needs (about one floor per 1-3 seconds on a normal server, one floor at a time for the whole server). The "2 seconds per floor"
   estimate is a guess. A far teleport (hundreds of floors) also fills the world with the sectors in between; that is the nature of the request.
-* `skill give_sp` uses ManasCore's `addMasteryPoint(entity, double)`; its exact scaling and its effect on a stand-in are not known, so the self-test reports the result instead of
-  requiring it. `unlock all` hands 12 skills per tick; the effect on a client with a long skill list was not measured.
 * The default `boss kill` relies on `die(genericKill)` after zeroing health inside the budget bypass, the sequence the guard self-test uses; the Mythic Trait and legendary
   resistances were reasoned about, not seen. A boss from a facade that is not a `LabyrinthGuardianEntity` is only slain by the facade's own hook.
 * The particle view: colours, sizes and the 72-block reach are reasoned about, not seen; whether 160 dust particles per burst read well is a matter of taste to tune (all constants are in

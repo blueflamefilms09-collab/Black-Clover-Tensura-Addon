@@ -1,6 +1,6 @@
 # 3.29.0 — a signature effect for each Evolution Ultimate
 
-Ten shapes (`VfxShape.ULT_*`, appended at the end of the enum), one layer each (`vfx/client/layer/Ult*Layer.java`, registered in `VfxManager`), one preview scene each (`tools/vfx_preview/scenes.d/ult_*.json`, run `python3 tools/vfx_preview/preview.py ult_<name>`). The Ultimate art (`debt_burst`) sends the shape once, at the caster's feet, `power` = the burst radius, 20 ticks. Each Ultimate's `vfx` in `tools/lines/rows/*.py` (and the generated `skill_trees/*.json`) now names its own shape.
+Ten shapes (`VfxShape.ULT_*`, appended at the end of the enum), one layer each (`vfx/client/layer/Ult*Layer.java`, registered in `VfxManager`), one preview scene each (`tools/vfx_preview/scenes.d/ult_*.json`, run `python3 tools/vfx_preview/preview.py ult_<name>`). The Ultimate art (`debt_burst`) sends the shape once, at the caster's feet, `power` = the burst radius, 20 ticks. The Evolution Ultimate skills that named these shapes were removed with the Skill Books (see `docs/skill_books_removed.md`); the shapes, layers and scenes stay and can still be sent with the `/vfx` command.
 
 Setting: CLIENT `visual.uniqueUltimates` in `config/nusmp-ultimates-client.toml` (default true). Off = the generic shape each Ultimate played before 3.29.0 (table in `vfx/UltimateVfxFallback.java`). Server data and damage are not touched.
 

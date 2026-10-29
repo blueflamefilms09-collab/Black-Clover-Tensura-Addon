@@ -70,7 +70,6 @@ Common machinery: `ui/GuiScale` + `ui/scale/*` (per-screen and per-HUD size, "fi
 | `nusmp:song_meter` | `song/SongClient` | voice level meter near the hotbar | local mic level |
 | `nusmp:scale_weights` | `scalecast/ScaleHud` | plate over the hotbar (scale casting weights) | prop word |
 | `nusmp:hub_quest_tracker` | `elite/hub/HubClient`, `QuestOverlay` | quest progress, top right | hub sync |
-| `nusmp:route_unlocked` | `skilltree/ItemsClient` (`BannerTimeline`) | banner when a skill-book route opens | sync |
 | (hook) boss bars | `gui/bossbar/ModBossBarOverlay`, `CustomBarOverlay`, `BossBarPainter`, textures `gui/bossbar/*.png` (bg, edge, fill, flame, frame, glow, pips, shine) | replaces vanilla boss layer on `RenderGuiLayerEvent.Pre`, vanilla layout, mod bosses get styled bars | boss events |
 | (hook) Grand Magic Zone tint | `manazone/ManaZoneClient.onGuiLayer` | one translucent fill on `CAMERA_OVERLAYS` | region sync |
 | (hook) Tensura menus | `FourKingdomsSlot`, `MultiverseStatusClient.onScreenRender`, `TensuraScreenTheme` | slot, compact panel, optional overlay on `ScreenEvent.Render.Post` | - |
