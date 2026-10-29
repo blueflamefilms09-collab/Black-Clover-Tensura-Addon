@@ -48,3 +48,13 @@ Counted from the worn loadout (`Wave101Set`). From 3 to 7 items: resistance, reg
 - `GradeTest`, `RelicDefTest`, `RelicPowerCoverageTest`, `RelicChecksTest`, `AttuneGradeRuleTest`, `UnifiedTooltipRulesTest` need Minecraft classes and could not run offline; the full Gradle build and the `relic.genesis_new` self-test were not run.
 - Rod, Ea and Arrow have no upgrade twin (Ea has no void parts); hand sprites are auto-rendered and rough.
 - `relic_themes.json` was not touched.
+
+## 3.35.0: the Millennium Items remade to canon
+
+Source for powers and carriers: the owner's Yu-Gi-Oh! wiki tables (English fandom wiki, Millennium Items; nothing needed the Japanese wiki) and the anime for the look. Full tables: `docs/relics/millennium_canon.md`.
+
+- Models (REPLACED, old builders kept in `tools/relics/new_wave101/items_*.py` unused): plain gold, the Eye of Wdjat as the only motif, no lapis, motes, halos or fate wheels. Puzzle = inverted pyramid with loop, chain and Eye; Eye = round disc on a head band; Ring = hoop with a pyramid and five needles; Key = ankh; Scale = beam, post, two dishes, no feather; Necklace = gold torc with the Eye plate and a chain; Rod = spiked shaft, round Eye setting, crescent blades, finial.
+- Powers (NEW acts, all old acts kept): Puzzle Duel Monster; Eye Seal in a Card, Sight of the Dead; Ring Seal a Soul; Rod Seal in a Tablet; Key Redecorate the Soul; Scale Fuse Monsters; Necklace Sight of the Past. Carriers are in each tooltip.
+- Bounds (`Wave101Rules`, tested): holds last 1 s to 5 min; a fusion takes at most 5 foes (x1.8 at five); the Ring seals only non-boss, non-player souls up to 200 health; bosses and players only falter. No per-tick code: every act runs once per use inside `SafeCast` with its cooldown and daily limit.
+- Rod mesh 1902 quads (limit 3000); the six worn models are 630 to 1282 quads, under the Genesis caps, smaller than the old ones.
+

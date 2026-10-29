@@ -1,5 +1,20 @@
 # Changelog
 
+## [3.35.0] — The Millennium Items are remade to match the wiki and the anime
+
+### NEW
+- **Eight wiki powers**, one act each: Puzzle *Duel Monster* (one spectral ally for 45 s), Eye *Seal in a Card* (a mob is held and marked; a boss or player only falters) and *Sight of the Dead* (undead and dying foes shown, night vision), Ring *Seal a Soul* (a small mob is sealed, feeds mana and health; a great soul is only hurt), Rod *Seal in a Tablet* (up to 3 mobs on a line held in stone), Key *Redecorate the Soul* (one mob becomes a puppet, sneak, 2 a day), Scale *Fuse Monsters* (up to 5 foes pulled together, harder per foe), Necklace *Sight of the Past* (whoever hurt you is shown and marked). Each has its own VFX and a cooldown and daily limit.
+- Carriers (old and recent) and wiki powers in every tooltip; the pure rules (`holdTicks`, `fuseFactor`, `sealable`) in `Wave101Rules` with unit tests; a self-test check that the eight acts are registered.
+- Cost: no per-tick work; each act runs once per use under `SafeCast`; holds are capped at 5 minutes, fusions at 5 foes, puppets one per wearer. The models are smaller than the old ones (Rod 1902 quads, worn models 630 to 1282 quads).
+
+### REPLACED
+- The seven models (worn models, 16x16 sprites, the Rod mesh and skins, the grip golden row of the Rod) are rebuilt as plain gold canon shapes. The old lapis bands, circlets, motes, halos and fate wheels are gone from the registry; the old builders stay in `tools/relics/new_wave101/items_*.py` unused.
+- The seven descriptions are rewritten to the wiki powers.
+
+### KEPT
+- Every existing act (Other Me, Shadow Game, Mind Read, Truth Gaze, Dowsing Needles, Draw Power, Mind Control, Pharaoh's Command, Judgement Strike, Open the Soul Room, Mind Garden, Weigh the Heart, Ammit's Verdict, Foresight, Prophecy), all passives, the set bonus, ids, slots and damage numbers. Acts are now 2 to 4 per item.
+- Honest: nothing was seen in a game. The previews show each model alone, not on a player body, so where the Ring hangs, the Key sits at the belt and the Necklace lies on the chest are not confirmed. The Eye's, Scale's and Necklace's glow colours are still teal or cyan from the old palette; gold would be a one-line change. The sentient skill-sword file needed nothing new: it is the existing Shishou.
+
 ## [3.34.0] — The unfinished voice lines are recorded (Spirit of Darkness, Spirit of Light, Gnome, Undine, Sylph, Shishou)
 
 ### NEW

@@ -5,16 +5,6 @@
  "draw_ticks": 12,
  "layers": [
   {
-   "name": "ring core",
-   "kind": "geometry",
-   "type": "nebula_core",
-   "group": "ring_glow",
-   "views": [
-    "hand",
-    "worn"
-   ]
-  },
-  {
    "name": "ring glow",
    "kind": "geometry",
    "type": "aura_shell",
@@ -25,127 +15,12 @@
    ]
   },
   {
-   "name": "needles",
-   "kind": "geometry",
-   "type": "aura_shell",
-   "group": "needles",
-   "views": [
-    "hand",
-    "worn"
-   ]
-  },
-  {
-   "name": "dowsing needle",
-   "kind": "geometry",
-   "type": "aura_shell",
-   "group": "dowsing_needle",
-   "views": [
-    "hand",
-    "worn"
-   ]
-  },
-  {
-   "name": "wrist halo",
-   "kind": "geometry",
-   "type": "halo_ring",
-   "group": "wrist_halo",
-   "views": [
-    "hand",
-    "worn"
-   ]
-  },
-  {
-   "name": "wrist halo b",
-   "kind": "geometry",
-   "type": "halo_ring",
-   "group": "wrist_halo_b",
-   "views": [
-    "hand",
-    "worn"
-   ]
-  },
-  {
-   "name": "seeking needles",
-   "kind": "geometry",
-   "type": "orbit_shards",
-   "group": "seeking_needles",
-   "views": [
-    "hand",
-    "worn"
-   ]
-  },
-  {
-   "name": "power motes",
-   "kind": "geometry",
-   "type": "orbit_shards",
-   "group": "power_motes",
-   "views": [
-    "hand",
-    "worn"
-   ]
-  },
-  {
-   "name": "dowsing ripple",
-   "kind": "geometry",
-   "type": "portal_ripples",
-   "group": "dowsing_ripple",
-   "views": [
-    "hand",
-    "worn"
-   ]
-  },
-  {
-   "name": "cuff glints",
-   "kind": "geometry",
-   "type": "lens_flare",
-   "group": "cuff_glints",
-   "views": [
-    "hand",
-    "worn"
-   ]
-  },
-  {
-   "name": "lens flare",
-   "kind": "geometry",
-   "type": "lens_flare",
-   "group": "lens_flare",
-   "views": [
-    "hand",
-    "worn"
-   ]
-  },
-  {
-   "name": "light shafts",
-   "kind": "geometry",
-   "type": "light_shafts",
-   "group": "light_shafts",
-   "views": [
-    "hand",
-    "worn"
-   ]
-  },
-  {
-   "name": "drawn power",
-   "kind": "particle",
-   "type": "motes",
-   "particle": "nusmp:mana_mote",
-   "count": 1,
-   "every": 5,
-   "radius": 0.5,
-   "rise": 0.014,
-   "views": [
-    "hand",
-    "worn"
-   ],
-   "color": "FFD870"
-  },
-  {
    "name": "needle glints",
    "kind": "particle",
    "type": "glints",
    "particle": "nusmp:gem_sparkle",
    "count": 1,
-   "every": 7,
+   "every": 10,
    "radius": 0.4,
    "rise": 0.01,
    "views": [

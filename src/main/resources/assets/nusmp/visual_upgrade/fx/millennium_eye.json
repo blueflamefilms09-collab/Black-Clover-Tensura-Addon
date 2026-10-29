@@ -5,16 +5,6 @@
  "draw_ticks": 12,
  "layers": [
   {
-   "name": "mind void",
-   "kind": "geometry",
-   "type": "nebula_core",
-   "group": "mind_void",
-   "views": [
-    "hand",
-    "worn"
-   ]
-  },
-  {
    "name": "wdjat glow",
    "kind": "geometry",
    "type": "aura_shell",
@@ -25,148 +15,19 @@
    ]
   },
   {
-   "name": "uraeus",
-   "kind": "geometry",
-   "type": "aura_shell",
-   "group": "uraeus",
-   "views": [
-    "hand",
-    "worn"
-   ]
-  },
-  {
-   "name": "falcon wings",
-   "kind": "geometry",
-   "type": "petals",
-   "group": "falcon_wings",
-   "views": [
-    "hand",
-    "worn"
-   ]
-  },
-  {
-   "name": "lappets",
-   "kind": "geometry",
-   "type": "ribbons",
-   "group": "lappets",
-   "views": [
-    "hand",
-    "worn"
-   ]
-  },
-  {
-   "name": "thought tablets",
-   "kind": "geometry",
-   "type": "orbit_shards",
-   "group": "thought_tablets",
-   "views": [
-    "hand",
-    "worn"
-   ]
-  },
-  {
-   "name": "read sigils",
-   "kind": "geometry",
-   "type": "orbit_shards",
-   "group": "read_sigils",
-   "views": [
-    "hand",
-    "worn"
-   ]
-  },
-  {
-   "name": "truth halo",
-   "kind": "geometry",
-   "type": "halo_ring",
-   "group": "truth_halo",
-   "views": [
-    "hand",
-    "worn"
-   ]
-  },
-  {
-   "name": "truth halo b",
-   "kind": "geometry",
-   "type": "halo_ring",
-   "group": "truth_halo_b",
-   "views": [
-    "hand",
-    "worn"
-   ]
-  },
-  {
-   "name": "mind seal",
-   "kind": "geometry",
-   "type": "rune_ring",
-   "group": "mind_seal",
-   "views": [
-    "hand",
-    "worn"
-   ]
-  },
-  {
-   "name": "sight ray",
-   "kind": "geometry",
-   "type": "light_shafts",
-   "group": "sight_ray",
-   "views": [
-    "hand",
-    "worn"
-   ]
-  },
-  {
-   "name": "lens flare",
-   "kind": "geometry",
-   "type": "lens_flare",
-   "group": "lens_flare",
-   "views": [
-    "hand",
-    "worn"
-   ]
-  },
-  {
-   "name": "watching eyes",
-   "kind": "particle",
-   "type": "motes",
-   "particle": "nusmp:rune_eye",
-   "count": 1,
-   "every": 9,
-   "radius": 0.6,
-   "rise": 0.012,
-   "views": [
-    "hand",
-    "worn"
-   ]
-  },
-  {
-   "name": "truth glints",
+   "name": "eye glint",
    "kind": "particle",
    "type": "glints",
-   "particle": "nusmp:holy_ray",
+   "particle": "nusmp:gem_sparkle",
    "count": 1,
-   "every": 5,
-   "radius": 0.5,
-   "rise": 0.012,
-   "views": [
-    "hand",
-    "worn"
-   ],
-   "color": "58F0E8"
-  },
-  {
-   "name": "brow sparks",
-   "kind": "particle",
-   "type": "sparks",
-   "particle": "nusmp:star4",
-   "count": 1,
-   "every": 7,
+   "every": 12,
    "radius": 0.4,
    "rise": 0.01,
    "views": [
     "hand",
     "worn"
    ],
-   "color": "E8B040"
+   "color": "58F0E8"
   }
  ]
 }

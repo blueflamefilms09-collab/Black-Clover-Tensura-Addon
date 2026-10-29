@@ -68,16 +68,23 @@ act gate_of_babylon_crest gate_fully_open SPACE_PORTAL:E8C850:4.6:90:front WEAPO
 # ---- wave 101 (genesis_new) begin ----
 act millennium_puzzle other_me SHADOW_UNITE:2A4FC0:3.2:70:self DIVINE_HALO:FFE890:3:60:sky LIGHT_FLARE:FFFFFF:1.8:16:self
 act millennium_puzzle shadow_game SHADOW_POOL:2A4FC0:5:90:ground MAGIC_CIRCLE_EXPLOSION:F0C050:4.6:60:ground DIVINE_SIGIL:FFE890:3:50:sky
+act millennium_puzzle summon_duel_monster MAGIC_CIRCLE:F0C050:4.4:60:front SHADOW_UNITE:2A4FC0:3:50:front LIGHT_FLARE:FFFFFF:1.8:14:front
 act millennium_eye mind_read MIRROR_ARRAY:58F0E8:3.6:70:self DIVINE_SIGIL:E8B040:3:60:ground LIGHT_FLARE:FFFFFF:1.8:16:self
 act millennium_eye truth_gaze LIGHT_BLADE:58F0E8:3.4:40:front DIVINE_RAY:E8B040:3:50:front
+act millennium_eye seal_in_card SEAL_TRINITY:58F0E8:3.4:60:front MIRROR_FRAME:E8B040:3:50:front
+act millennium_eye sight_of_the_dead SOUL_VORTEX:9AE8F0:3.4:70:self SPIRIT_AURA:58F0E8:3:60:ground
 act millennium_ring dowsing_needles COMPASS_ARRAY:FFD870:3.4:70:ground SPIRIT_AURA:F2C860:2.4:40:self
 act millennium_ring draw_power MANA_CHARGE:FFD870:3.4:60:self GRAVITY_WELL:F2C860:3.2:70:ground
+act millennium_ring seal_a_soul SOUL_VORTEX:FFD870:3.2:60:front SEAL_CHAINS:F2C860:3:60:front
 act millennium_key open_the_soul_room SPACE_PORTAL:FFD060:3:70:front DIVINE_SIGIL:E4AE3C:3.2:60:ground SPIRIT_AURA:2C46A8:2.6:50:self
 act millennium_key mind_garden DIVINE_HALO:FFD060:3.4:80:sky MAGIC_CIRCLE:2C46A8:3.4:60:ground LIGHT_FLARE:FFFFFF:1.8:16:self
+act millennium_key redecorate_the_soul SOUL_VORTEX:FFD060:3:70:front DIVINE_SIGIL:E4AE3C:3:60:ground SPIRIT_AURA:FFE890:2.4:50:self
 act millennium_scale weigh_the_heart MIRROR_FRAME:78F0D8:3:40:front DIVINE_SIGIL:F4C85A:3:60:ground
 act millennium_scale ammits_verdict SEAL_CHAINS:F4C85A:4:80:ground DIVINE_PILLAR:78F0D8:3.6:80:ground SOUL_VORTEX:F4C85A:3:60:self
+act millennium_scale fuse_monsters GRAVITY_WELL:F4C85A:3.4:60:front ALCHEMY_CIRCLE:78F0D8:3.2:60:ground LIGHT_FLARE:FFFFFF:2:16:front
 act millennium_necklace foresight MAGIC_CIRCLE:62E6F0:3:70:ground SPIRIT_AURA:EBBB52:2.8:50:self LIGHT_FLARE:FFFFFF:1.8:16:self
 act millennium_necklace prophecy DIVINE_SIGIL:62E6F0:3:90:ground DIVINE_HALO:EBBB52:3.4:80:sky SPACE_RINGGATE:62E6F0:3:60:ground
+act millennium_necklace sight_of_the_past MIRROR_FRAME:62E6F0:3:60:front MAGIC_CIRCLE:EBBB52:3:60:ground LIGHT_FLARE:FFFFFF:1.6:16:self
 act truth_seeking_orbs_of_the_sage truth_seeking_barrage LIGHT_BLADE:E0E0FF:2.6:30:front SPACE_CRACK:8A8AA8:3:36:front
 act truth_seeking_orbs_of_the_sage shinra_tensei GRAVITY_WELL:E0E0FF:4.4:50:ground WIND_RING:FFFFFF:4:40:ground
 act truth_seeking_orbs_of_the_sage chibaku_tensei GRAVITY_WELL:E0E0FF:4.6:90:ground SPACE_TEAR:8A8AA8:3.8:80:sky SHADOW_POOL:14141C:3.6:80:ground

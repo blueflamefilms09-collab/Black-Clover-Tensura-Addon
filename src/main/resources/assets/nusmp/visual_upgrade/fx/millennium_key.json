@@ -5,124 +5,10 @@
  "draw_ticks": 12,
  "layers": [
   {
-   "name": "soul room",
-   "kind": "geometry",
-   "type": "nebula_core",
-   "group": "soul_room",
-   "views": [
-    "hand",
-    "worn"
-   ]
-  },
-  {
    "name": "wdjat glow",
    "kind": "geometry",
    "type": "aura_shell",
    "group": "wdjat_glow",
-   "views": [
-    "hand",
-    "worn"
-   ]
-  },
-  {
-   "name": "ankh key",
-   "kind": "geometry",
-   "type": "aura_shell",
-   "group": "ankh_key",
-   "views": [
-    "hand",
-    "worn"
-   ]
-  },
-  {
-   "name": "belt tails",
-   "kind": "geometry",
-   "type": "ribbons",
-   "group": "belt_tails",
-   "views": [
-    "hand",
-    "worn"
-   ]
-  },
-  {
-   "name": "soul motes",
-   "kind": "geometry",
-   "type": "orbit_shards",
-   "group": "soul_motes",
-   "views": [
-    "hand",
-    "worn"
-   ]
-  },
-  {
-   "name": "lock ring",
-   "kind": "geometry",
-   "type": "halo_ring",
-   "group": "lock_ring",
-   "views": [
-    "hand",
-    "worn"
-   ]
-  },
-  {
-   "name": "door ripple",
-   "kind": "geometry",
-   "type": "portal_ripples",
-   "group": "door_ripple",
-   "views": [
-    "hand",
-    "worn"
-   ]
-  },
-  {
-   "name": "key glints",
-   "kind": "geometry",
-   "type": "lens_flare",
-   "group": "key_glints",
-   "views": [
-    "hand",
-    "worn"
-   ]
-  },
-  {
-   "name": "halo ring",
-   "kind": "geometry",
-   "type": "rune_ring",
-   "group": "halo_ring",
-   "views": [
-    "hand",
-    "worn"
-   ]
-  },
-  {
-   "name": "lens flare",
-   "kind": "geometry",
-   "type": "lens_flare",
-   "group": "lens_flare",
-   "views": [
-    "hand",
-    "worn"
-   ]
-  },
-  {
-   "name": "light shafts",
-   "kind": "geometry",
-   "type": "light_shafts",
-   "group": "light_shafts",
-   "views": [
-    "hand",
-    "worn"
-   ]
-  },
-  {
-   "name": "unlocked minds",
-   "kind": "particle",
-   "type": "motes",
-   "particle": "nusmp:rune_key",
-   "count": 1,
-   "every": 8,
-   "radius": 0.5,
-   "rise": 0.012,
    "views": [
     "hand",
     "worn"
@@ -134,8 +20,8 @@
    "type": "glints",
    "particle": "nusmp:gem_sparkle",
    "count": 1,
-   "every": 5,
-   "radius": 0.45,
+   "every": 7,
+   "radius": 0.4,
    "rise": 0.012,
    "views": [
     "hand",
