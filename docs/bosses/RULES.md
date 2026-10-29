@@ -30,7 +30,7 @@ A floor is a place in the Mega-Dungeon, a rank is how strong a boss is. The dung
 | 161-180 | SSS |
 Inside a rank the sub-steps (minus, plain, plus) follow the floor: about the first 7 floors are minus, the middle 6-7 plain, the last 6-7 plus. Floors 181-200 stay at SSS+. While the dungeon is still shallower, A to SSS can live in rifts and secret floors.
 A boss uses the step of the floor it stands on. A boss from a tier list keeps its own named rank and appears on floors of that rank.
-DECIDED (update): the dungeon will grow in the future, to about floor 200 (the owner wrote "floor numbers 20", read as 200; OPEN: confirm). With rank up every 20 floors, floors 1-180 cover F to SSS exactly as in the table above, and floors 181-200 stay at SSS+ (the final stretch). Until the dungeon is that deep, the floors that exist today only reach their current rank, and the higher-rank bosses (A, S, SS, SSS) can live in special rifts or secret floors in the meantime. A boss in a rift or secret floor uses the step of its own rank, not the floor number.
+DECIDED (update): the dungeon will grow in the future, to about floor 200 (confirmed by the owner: 200). With rank up every 20 floors, floors 1-180 cover F to SSS exactly as in the table above, and floors 181-200 stay at SSS+ (the final stretch). Until the dungeon is that deep, the floors that exist today only reach their current rank, and the higher-rank bosses (A, S, SS, SSS) can live in special rifts or secret floors in the meantime. A boss in a rift or secret floor uses the step of its own rank, not the floor number.
 
 ## Source material
 Bosses from other series follow their source material (skills, look, behaviour).
