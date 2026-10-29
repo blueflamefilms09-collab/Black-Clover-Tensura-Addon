@@ -17,7 +17,22 @@ Source: the owner's message, spelling as typed. Nothing here is built yet. Ranks
 23 bosses. This answers "how many bosses per rank": F 3, E 3, D 3, C 4, B 3, A 3, S 4, SS 0, SSS 0.
 
 ## Light Yagami (F, gag boss)
-Not a real fight. An over-animated, anime-style cutscene: Light raises his hand with the pen and writes the player's name in the Death Note. Anime staging (camera push-in, speed lines, dramatic lighting, the pen stroke). Server-side the cutscene is a bounded, short scripted event shown to the nearby party only; the client only draws it. OPEN: what happens at the end of the gag (proposal: harmless, a joke defeat for Light and a funny reward, never real player death).
+Not a real fight. An over-animated, anime-style cutscene: Light raises his hand with the pen and writes the player's name in the Death Note.
+
+Reference clip from the owner: `Full-Death-Note` (108 s, 480x360, the potato-chip scene), watched as frames only (3 contact sheets, one frame per 3 s); its audio and Japanese text were not transcribed. What the frames show, in order, which is the style the gag copies:
+1. Extreme close-ups of Light's eyes and face, hard black shadow cut across the face, hair falling over one eye.
+2. Dramatic insert shots of the object (the chip bag, labelled in katakana) as if it were a weapon; Ryuk upside-down on the bed in the dark background.
+3. A close-up of the pen gripped in the hand, then the pen tip raised; a very serious tone for a silly act.
+4. Quick cuts between tight shots (eye, hand, pen, bag, mug), then a wide shot of the room (desk, monitor, shelves).
+5. A split-screen / panel burst (four boxes at once) at the peak of the monologue.
+6. A hidden TV under the bag, and Light writing from a high overhead angle in a green-lit pool of light.
+7. A cut to L and the investigators in a dark room, then back to Light at the desk in a wide silhouette shot.
+
+How the gag will use it (design, not built):
+- Beats: eyes close-up -> dark shadow slash -> the hand rising with the pen (slow, held) -> an insert on the pen tip -> panel burst -> the name appears on the page -> a quick over-dramatic reaction -> punchline.
+- Mod tools: the existing boss intro / title-card path and the Time Magic style of short scripted VFX (do not touch the Time Magic VFX files), black bars, speed lines, screen shake, a few client-only overlay quads. All of it is client drawing; the server only starts and ends the scene for the nearby party.
+- Bounds (rule 11): one scene of a few seconds, at most a couple of overlay quads per frame, shown only to players near Light, skipped for far players.
+- OPEN: what happens at the end of the gag (proposal: harmless, a joke defeat for Light and a funny reward, never real player death), and whether the gag copies the chip scene itself (Light eating a chip with a dramatic monologue) or only the pen-writing beat.
 
 ## Compared with what the mod already has (rule 5)
 - The released 3.33.0 tier-list batch already holds 16 bosses on floors 1-20: Kurozumi Orochi, Mr. 2 Bon Clay, Sogou Nobuyuki, Charlos, Yammy Llargo, Zetsu (F) and Malty S. Melromarc, Rachel, Jugram Haschwalth, "Big Mom" Charlotte Linlin, Code, Bertholdt Hoover, Morgan, Foxy, Shou Tucker, Ao (D). Those were placed by the old owner tier list (docs/bosses/tierlist.md), which used different tiers.
