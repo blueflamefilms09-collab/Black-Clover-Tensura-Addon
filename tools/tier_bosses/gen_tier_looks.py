@@ -26,24 +26,24 @@ from tier_specs import SHEETS  # noqa: E402
 import anime_skin  # noqa: E402
 
 def light_post(cv, spec, seed, glow):
-    """3.36.0: Light Yagami's red tie down the chest (knot under the collar, a blade of two columns to the belt) and the thin black pen on the left sleeve (a dark line with a silver clip)."""
-    def tie(face, lx, ly, lz, w, h, d):
-        if face != "front" or lx not in (3, 4) or ly < 1 or ly > 8:
+    """3.36.0: Light Yagami's own notebook motif: a small teal notebook in the breast pocket (white page edge on top, a gold bookmark ribbon) and a thin teal page-edge line on the left cuff.
+    An original design (no copied prop); the owner may replace the whole skin PNG."""
+    def book(face, lx, ly, lz, w, h, d):
+        if face != "front" or lx not in (5, 6) or ly < 2 or ly > 5:
             return None
-        if ly == 1:
-            return (122, 14, 22, 255)                            # the knot
-        shade = (196, 28, 36, 255) if (lx == 3) else (166, 20, 30, 255)
-        return (140, 16, 26, 255) if ly == 8 else shade           # the blade, darker at the tip
-    cv.paint("body", tie, overlay=True, faces=("front",))
-    cv.paint("body", tie, overlay=False, faces=("front",))
+        if ly == 2:
+            return (236, 234, 224, 255)                          # the pages
+        if lx == 6 and ly >= 3:
+            return (214, 176, 64, 255) if ly == 5 else (22, 92, 88, 255)   # the ribbon hangs from the spine edge
+        return (31, 122, 116, 255) if ly < 5 else (22, 92, 88, 255)
+    cv.paint("body", book, overlay=True, faces=("front",))
+    cv.paint("body", book, overlay=False, faces=("front",))
 
-    def pen(face, lx, ly, lz, w, h, d):
-        if face not in ("front", "west", "east") or ly < 3 or ly > 9:
+    def cuff(face, lx, ly, lz, w, h, d):
+        if face != "front" or ly != 9:
             return None
-        if face == "front" and lx == 1:
-            return (154, 154, 162, 255) if ly == 3 else (14, 14, 18, 255)   # the pen (silver clip at the top)
-        return None
-    cv.paint("arm_l", pen, overlay=True, faces=("front",))
+        return (53, 208, 181, 255)
+    cv.paint("arm_l", cuff, overlay=True, faces=("front",))
     return False
 
 

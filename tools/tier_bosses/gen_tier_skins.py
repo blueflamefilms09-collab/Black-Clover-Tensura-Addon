@@ -39,7 +39,7 @@ PALETTES = {
     "shou_tucker":     dict(hair=0x5D4037, skin=0xF2C9A4, outfit=0x8D6E63, pants=0x4E342E, accent=0xC5E1A5),
     "ao":              dict(hair=0x1A1A2E, skin=0xE8C8A8, outfit=0x4FC3F7, pants=0x0D47A1, accent=0xFFFFFF),
     # 3.36.0: the gag boss (tier F of the new ladder); the kit skin is painted by gen_tier_looks.py, this is only the fallback when the kit is off
-    "light_yagami":    dict(hair=0x6B4426, skin=0xF2DCD0, outfit=0xB79C73, pants=0x45463F, accent=0xC41E24),
+    "light_yagami":    dict(hair=0x262C44, skin=0xF2DCD0, outfit=0x1F2A44, pants=0x181F33, accent=0x2FA39A),
 }
 
 HEAD_HAIR_ROWS = 10          # of 32: the fringe of the face texture

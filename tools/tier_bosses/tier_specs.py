@@ -143,13 +143,14 @@ SHEETS = {
                 glow={"color": "#e0f7ff", "eyes": True, "props": False, "trim": False}),
 }
 
-# 3.36.0: Light Yagami (the gag boss, tier F of the new ladder; the owner's skin reference): messy side-swept brown hair, red Kira eyes, pale skin, a khaki blazer over a white shirt,
-# a red tie (painted by POSTS below), dark belt, charcoal trousers, dark shoes, a thin black pen on the left sleeve. Appended only.
+# 3.36.0: Light Yagami (the gag boss, tier F of the new ladder). An ORIGINAL look, not a likeness of any existing character: a neat young man in a plain dark navy suit, a pale shirt,
+# tidy ink-blue hair with a side part, teal eyes, and a small teal notebook in the breast pocket (painted by POSTS in gen_tier_looks.py). The owner can drop their own skin PNG over
+# textures/entity/playermodel/light_yagami.png (+ _glow.png) and textures/entity/arc_light_yagami.png; the ids stay. Appended only.
 SHEETS["light_yagami"] = sheet("light_yagami", "Light Yagami", "slim", 1.85, "pale",
-                               {"expression": "smirk", "eyes": "sharp", "eye_color": "#d02020", "sclera": "#f4f0ee", "brows": "thin", "mouth": "smirk"},
-                               {"style": "messy", "color": "#6b4426"},
-                               {"kind": "uniform", "color": "#b79c73", "trim": "#8e7650", "length": "hip", "open": True, "collar": "wide", "buttons": True},
-                               {"kind": "trousers", "color": "#45463f"}, boots="shoes", boots_color="#18181a",
-                               inner={"kind": "shirt", "color": "#f4f4f2"},
-                               belt={"kind": "plain", "color": "#1e1b19", "buckle": "#8a8a90"},
-                               glow={"color": "#ff3030", "eyes": True, "props": False, "trim": False})
+                               {"expression": "calm", "eyes": "sharp", "eye_color": "#2fa39a", "brows": "thin", "mouth": "line"},
+                               {"style": "side_part", "color": "#262c44"},
+                               {"kind": "coat", "color": "#1f2a44", "trim": "#2c3a5e", "length": "hip", "open": False, "collar": "stand", "buttons": True},
+                               {"kind": "trousers", "color": "#181f33"}, boots="shoes", boots_color="#101018",
+                               inner={"kind": "shirt", "color": "#e9e7e0"},
+                               belt={"kind": "plain", "color": "#14141c", "buckle": "#8a8a90"},
+                               glow={"color": "#35d0b5", "eyes": True, "props": False, "trim": False})

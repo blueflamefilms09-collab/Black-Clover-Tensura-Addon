@@ -202,7 +202,8 @@ class FranchiseDataTest {
             assertEquals(line.substring(eq + 1), now.get(id), "the engravings of " + id + " changed");
             checked++;
         }
-        assertTrue(checked >= 80, "baseline entries: " + checked);
+        // 24 baseline rows left with the Requip weapons and the skill-book items the owner asked to remove (3.36.0); the other rows must stay
+        assertTrue(checked >= 55, "baseline entries: " + checked);
         assertTrue(read("src/main/java/com/newuniverse/nusmp/item/WeaponEngravings.java").contains("static final String FLAG = \"NUEngraved\""), "the NUEngraved marker rule stays");
         assertTrue(read("src/main/java/com/newuniverse/nusmp/franchise/FranchiseEngravings.java").contains("FLAG = \"NUFranchise\""), "the franchise engravings have their own marker");
     }
