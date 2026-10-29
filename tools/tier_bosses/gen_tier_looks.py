@@ -2,7 +2,7 @@
 """3.33.0: paints the Tier List bosses on the player-model kit (docs/playermodel.md), the way every other humanoid of the mod is drawn: the vanilla player model with a 64x64 skin
 of its own (+ a glow map), the hair layer, wide or slim arms, scaled to the boss's height.
 
-    python3 -B tools/tier_bosses/gen_tier_looks.py [--sheet out.png] [id ...]
+    python3 -B tools/tier_bosses/gen_tier_looks.py [--plain] [--sheet out.png] [id ...]
 
 Reads the sheets of tier_specs.py (the art kit's vocabulary), paints each with tools/playermodel/gen_skins.paint_character, writes
 assets/nusmp/textures/entity/playermodel/<id>.png (+ _glow.png) and assets/nusmp/playermodel/looks_tier.json (same format as looks.json; merged add-only by PlayerLookTables).
@@ -23,6 +23,7 @@ import gen_hair  # noqa: E402
 import gen_skins as GS  # noqa: E402
 from arc_kit import spec as S  # noqa: E402
 from tier_specs import SHEETS  # noqa: E402
+import anime_skin  # noqa: E402
 
 OUT_LOOKS = os.path.join(GS.ASSETS, "playermodel", "looks_tier.json")
 
@@ -39,7 +40,8 @@ def main(argv):
     painted = []
     for cid in ids or list(SHEETS):
         spec = S.normalize(SHEETS[cid], cid)
-        img, glow, hs, hrgb, slim = GS.paint_character(spec, cid, masks)
+        painter = GS.paint_character if "--plain" in argv else anime_skin.paint_character          # 3.33.1: the anime style (--plain = the first kit painter)
+        img, glow, hs, hrgb, slim = painter(spec, cid, masks)
         img.save(os.path.join(GS.SKINS, cid + ".png"))
         if glow is not None:
             glow.save(os.path.join(GS.SKINS, cid + "_glow.png"))

@@ -1,5 +1,16 @@
 # Changelog
 
+## [3.33.1] — The Tier List bosses wear the anime skin style of the owner's reference sheet
+
+### REPLACED
+- The skins of the 16 tier F and D bosses (`textures/entity/playermodel/<id>.png`, `_glow.png`) are repainted in the style of the owner's reference sheet of anime skins: larger shaded eyes with a lash line, a vivid iris and a highlight, thin brows, a tiny mouth, blush, soft light-to-shade gradients on every garment with cool shadows and warm lights, clean fabric (no noise), cuff bands, trouser stripes, ruffled hems, knee socks under skirts, bright collar edges, and the hair painted on the skin's hat layer (fringe, side locks, lit crown band, long hair down the back for long styles).
+- Their look entries no longer name a kit haircut (the hair is on the skin), so the chunky cap box of the kit's hair no longer covers the painted hair. KEPT: every kit hairstyle and every other character's look; `gen_tier_looks.py --plain` paints the first kit style again.
+
+### NEW
+- `tools/tier_bosses/anime_skin.py` (the painter), `preview_tier.py` (renders the 16 as characters, front and back) and `preview_heads.py` (face close-ups).
+- Cost: none at run time (same 64x64 skins, same bodies; only pixels changed).
+- Honest: the painter is a first pass at the reference's look; seen only in the software preview, not in a game.
+
 ## [3.33.0] — The Tier List, first batch: 16 light bosses (tiers F and D) on floors 1-20 of the Mega-Dungeon
 
 ### NEW
