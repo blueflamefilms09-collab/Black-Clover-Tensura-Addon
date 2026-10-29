@@ -3,19 +3,19 @@
 ## [3.33.0] — The Tier List, first batch: 16 light bosses (tiers F and D) on floors 1-20 of the Mega-Dungeon
 
 ### NEW
-- **Sixteen bosses from the owner's tier list**, as floor bosses of the early floors (1-20): tier F: Kurozumi Orochi, Mr. 2 Bon Clay, Sogou Nobuyuki, Charlos, Yammy Llargo, Zetsu; tier D: Malty S. Melromarc, Rachel, Jugram Haschwalth, "Big Mom" Charlotte Linlin, Code, Bertholdt Hoover, Morgan, Foxy, Shou Tucker, Ao. Each has five moves (four plus an ultimate), its own name, boss bar, colours, three lines, floors, magic stone loot and a skin of its own on the shared humanoid body (`arc_<id>.png` and `_glow.png`).
+- **Sixteen bosses from the owner's tier list**, as floor bosses of the early floors (1-20): tier F: Kurozumi Orochi, Mr. 2 Bon Clay, Sogou Nobuyuki, Charlos, Yammy Llargo, Zetsu; tier D: Malty S. Melromarc, Rachel, Jugram Haschwalth, "Big Mom" Charlotte Linlin, Code, Bertholdt Hoover, Morgan, Foxy, Shou Tucker, Ao. Each has five moves (four plus an ultimate), its own name, boss bar, colours, three lines, floors, magic stone loot and a painted skin on **the mod's player-model kit** (the same vanilla-player body, skin and hair layer the other humanoid bosses use: `textures/entity/playermodel/<id>.png`, glow maps where a character has glowing parts, and a look in `playermodel/looks_tier.json`).
 - **Light-boss framework** `arc/tier/`: `TierLetter` (the ladder F ... SSS+++ with stats and floor bands), `TierMove` (nine bounded move kinds as data), `TierRow` (a character as a data row), `TierRules` (the house rules, checked by a test and a self-test), `TierMoves` (rows to framework moves), `TierBoss` (one class for all), `TierBosses` (registration), `TierRosterF` / `TierRosterD` (the rows), `TierSelfTests`.
 - New saga **The Tier List** (`ArcSaga.TIER_LIST`, appended last) with its reward and arena shape.
 - Settings (server, `nusmp-arc-server.toml`): `tierBosses` (default on; off restores the dungeon without them) and `tierBossMax` (default 6: how many may be alive at once).
 - `ArcLook` gets a `skin` component (default empty, so every existing look is unchanged) and `ArcBossRenderer` applies it: a character can wear its own texture on a shared model.
-- Skin tool `tools/tier_bosses/gen_tier_skins.py` (recolours the shared body per region, keeps the shading, writes the glow of the accent). Docs: `docs/bosses/tier_f_d.md`.
+- Skin and look tools `tools/tier_bosses/tier_specs.py` + `gen_tier_looks.py` (paint the 64x64 player skins with the art-kit painter and write `looks_tier.json`; `PlayerLookTables.FILES` gets the table appended, `PlayerModelTable.ARC_BOSSES` gets the tier ids through the pure list `arc/tier/TierRoster`). Docs: `docs/bosses/tier_f_d.md`.
 - Tests: `TierBossesTest` (rules for all rows, unique ids and names, floors, ladder, skins, language names); CI self-tests `tier.roster`, `tier.moves`, `tier.spawn` (the smoke list now expects the prefix `tier`).
 
 ### REPLACED
 - Nothing. Everything here is new.
 
 ### KEPT
-- Every existing boss, saga, floor boss, model and setting. The only shared code that changed is appended: one registration line, one saga value, two switch cases, one config pair, a skin component with a defaulted constructor.
+- Every existing boss, saga, floor boss, model and setting. The only shared code that changed is appended: one registration line, one saga value, two switch cases, one config pair, a skin component with a defaulted constructor, one file in the player-look table list and the tier ids in the player-model boss set. REPLACED: nothing from before; the first recolours of the shared body (`arc_<id>.png`, `tools/tier_bosses/gen_tier_skins.py`) stay in the jar as the fallback the renderer uses if the kit is off.
 
 ### Cost (worst case)
 - One light boss decides once a second and runs one move at a time. A move touches at most 24 foes, 5 bolts or volley shots (staggered), 4 wisps or swarm bursts; no per-tick world scans, no chunk loads; at most `tierBossMax` (default 6, hard limit 24) light bosses are alive at once; effects go to nearby players only through the existing perf budgets; the boss leaves the live set when it leaves the world. One extra texture pair per character (small 512x64 PNGs).
@@ -23,7 +23,7 @@
 ### Caveats
 - Not seen in a running game: the moves, the numbers and the skins are checked by tests, the rules and the CI server smoke test, not played.
 - The English and Japanese wikis could not be reached from the build environment, so **no move was checked against a wiki**. All were written from memory and tagged named / theme / filler in `docs/bosses/tier_f_d.md`; Rachel, Code and Ao are mostly filler.
-- The skins are recolours of one shared body, not models of their own (the full-boss tiers S and up will get their own models later).
+- The sixteen are player-model characters (skin + hair, no extras models or props yet); the full-boss tiers S and up will get their own models later.
 
 ## [3.32.0] — Smaller jar: models packed in a compact binary form + a fixed detail limit (setting-free, build switches)
 

@@ -9,7 +9,6 @@ import com.newuniverse.nusmp.arc.ArcSaga;
 import com.newuniverse.nusmp.entity.zogratis.ZogratisBoss;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -27,13 +26,11 @@ public final class TierBosses {
 
     private static boolean done;
 
-    /** Every light boss of the list that is built, tier F first (the order is the roster order and never changes; later tiers are appended). */
-    public static List<TierRow> all() {
-        List<TierRow> out = new ArrayList<>();
-        out.addAll(TierRosterF.rows());
-        out.addAll(TierRosterD.rows());
-        return out;
-    }
+    /** Every light boss of the list that is built (see {@link TierRoster}). */
+    public static List<TierRow> all() { return TierRoster.all(); }
+
+    /** The ids of every light boss that is built (the player-model kit draws exactly these). */
+    public static List<String> ids() { return TierRoster.ids(); }
 
     /** The skin texture name of a character ({@code textures/entity/arc_<id>.png}, written by tools/tier_bosses/gen_tier_skins.py). */
     public static String skin(String id) { return "arc_" + id; }

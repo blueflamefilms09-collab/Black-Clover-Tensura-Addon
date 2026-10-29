@@ -11,8 +11,12 @@ public final class PlayerModelTable {
     private PlayerModelTable() {}
 
     /** The arcs' bosses that are people (the others, the DanMachi monsters, keep their own models). Each id must have a look in looks.json. */
-    public static final Set<String> ARC_BOSSES = Set.of("heath_grice", "vetto", "lotus_whomalt", "mars", "revchi_salik", "meliodas", "merlin", "king", "escanor", "ban", "diane", "gowther",
+    private static final Set<String> ARC_BOSSES_BASE = Set.of("heath_grice", "vetto", "lotus_whomalt", "mars", "revchi_salik", "meliodas", "merlin", "king", "escanor", "ban", "diane", "gowther",
             "fana", "rhya", "rades_spirito", "patolli", "lucifero", "morris_libardirt", "zagred", "udaeus");
+
+    /** 3.33.0: the Tier List bosses are people too; their looks are in looks_tier.json. Appended, never replacing the ids above. */
+    public static final Set<String> ARC_BOSSES = java.util.stream.Stream.concat(ARC_BOSSES_BASE.stream(),
+            com.newuniverse.nusmp.arc.tier.TierRoster.ids().stream()).collect(java.util.stream.Collectors.toUnmodifiableSet());
 
     /** The entity ids (the path of the registry name) the kit draws besides the arcs' bosses. */
     public static final List<String> CONVERTED_ENTITIES = List.of("arc_npc", "dante_zogratis", "vanica_zogratis", "zenon_zogratis", "lucius_zogratis", "dark_disciple", "zogratis_clone",

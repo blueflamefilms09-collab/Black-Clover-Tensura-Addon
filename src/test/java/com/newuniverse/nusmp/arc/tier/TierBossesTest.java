@@ -62,13 +62,27 @@ class TierBossesTest {
         assertTrue(TierLetter.A.light() && !TierLetter.S.light());
     }
 
+    /** 3.33.0: the tier bosses wear the mod's player-model kit like the other humanoids: a painted skin and a look in looks_tier.json. */
     @Test
-    void everyCharacterHasItsSkinAndGlow() {
+    void everyCharacterHasItsPlayerModelSkinAndLook() throws Exception {
+        String looks = Files.readString(RES.resolve("playermodel/looks_tier.json"));
         for (TierRow row : all()) {
-            String skin = "arc_" + row.id();
-            assertTrue(Files.isRegularFile(RES.resolve("textures/entity/" + skin + ".png")), "missing " + skin + ".png");
-            assertTrue(Files.isRegularFile(RES.resolve("textures/entity/" + skin + "_glow.png")), "missing " + skin + "_glow.png");
+            assertTrue(Files.isRegularFile(RES.resolve("textures/entity/playermodel/" + row.id() + ".png")), "missing player-model skin " + row.id() + ".png");
+            assertTrue(looks.contains("\"" + row.id() + "\""), "no look for " + row.id());
         }
+    }
+
+    @Test
+    void thePlayerModelKitDrawsExactlyTheseBosses() {
+        assertEquals(TierRoster.ids().size(), all().size());
+        for (String id : TierRoster.ids()) assertTrue(com.newuniverse.nusmp.client.playermodel.PlayerModelTable.ARC_BOSSES.contains(id), id);
+        assertTrue(com.newuniverse.nusmp.client.playermodel.PlayerLookTables.FILES.contains("playermodel/looks_tier.json"));
+    }
+
+    /** The old shared-body recolours stay in the jar as the fallback if the kit is switched off. */
+    @Test
+    void theLegacySharedBodySkinsAreKept() {
+        for (TierRow row : all()) assertTrue(Files.isRegularFile(RES.resolve("textures/entity/arc_" + row.id() + ".png")), "kept skin missing " + row.id());
     }
 
     @Test
