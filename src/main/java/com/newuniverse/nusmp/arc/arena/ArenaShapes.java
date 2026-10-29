@@ -46,7 +46,7 @@ public final class ArenaShapes {
             case WIZARD_KING -> WIZARD_COURT;
             case SEVEN_DEADLY_SINS -> SUNLIT_PLAIN;
             case DANMACHI -> ORARIO_PIT;
-            case ALLIES -> STONE_RING;
+            case ALLIES, TIER_LIST -> STONE_RING;
         };
     }
 

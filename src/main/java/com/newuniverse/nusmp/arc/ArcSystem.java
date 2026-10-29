@@ -33,6 +33,7 @@ public final class ArcSystem {
         modContainer.registerConfig(ModConfig.Type.SERVER, ArcConfig.SPEC, "nusmp-arc-server.toml");
         NeoForge.EVENT_BUS.addListener((AddReloadListenerEvent e) -> e.addListener(new DialogueLoader()));
         NeoForge.EVENT_BUS.addListener((ServerStoppedEvent e) -> DialogueLoader.clear());
+        com.newuniverse.nusmp.arc.tier.TierSelfTests.register();   // 3.33.0: keys tier.*
         ArcSelfTests.register();                         // keys arc.*, expected by the server smoke test (SMOKE_EXPECT prefix "arc")
     }
 }

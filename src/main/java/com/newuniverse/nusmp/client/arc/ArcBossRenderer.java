@@ -38,6 +38,8 @@ public class ArcBossRenderer extends ZogratisRenderer<ArcBoss> {
         String name = ArcModelKey.clean(look.model());
         GeoSpec a = GeoSpec.of(ArcModelKey.KEY, name.isEmpty() ? ArcModelKey.FALLBACK : name);
         GeoSpec b = GeoSpec.of(ArcModelKey.KEY, name.isEmpty() ? ArcModelKey.FALLBACK : ArcModelKey.form2(name));
+        if (!look.skin().isEmpty()) a = a.skin(look.skin());          // 3.33.0: a character on a shared body wears their own texture and glow
+        if (!look.skin().isEmpty()) b = b.skin(look.skin());
         this.first = look.glow() ? a : a.noGlow();
         this.second = look.glow() ? b : b.noGlow();
         this.firstClips = new ArcClips(first);

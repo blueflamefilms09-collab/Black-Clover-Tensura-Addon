@@ -11,9 +11,9 @@ import net.neoforged.neoforge.common.ModConfigSpec;
  */
 public final class ArcConfig {
     public static final ModConfigSpec SPEC;
-    public static final ModConfigSpec.BooleanValue ENABLED, STORY_GATE, NPCS_MORTAL, FLOOR_BOSSES, SHARE_CREDIT;
+    public static final ModConfigSpec.BooleanValue ENABLED, STORY_GATE, NPCS_MORTAL, FLOOR_BOSSES, SHARE_CREDIT, TIER_BOSSES;
     public static final ModConfigSpec.DoubleValue FLOOR_BOSS_CHANCE;
-    public static final ModConfigSpec.IntValue NPC_WANDER, TALK_COOLDOWN;
+    public static final ModConfigSpec.IntValue NPC_WANDER, TALK_COOLDOWN, TIER_BOSS_MAX;
 
     static {
         ModConfigSpec.Builder b = new ModConfigSpec.Builder();
@@ -34,6 +34,10 @@ public final class ArcConfig {
                 .defineInRange("npcWanderRadius", 6, 0, 32);
         TALK_COOLDOWN = b.comment("Ticks between two conversations with the same character (stops a held right-click from flooding the chat).")
                 .defineInRange("talkCooldownTicks", 20, 0, 600);
+        TIER_BOSSES = b.comment("3.33.0: the Tier List characters (tiers F, D, ...) may stand as bosses of the Mega-Dungeon and be summoned. False restores the dungeon without them.")
+                .define("tierBosses", true);
+        TIER_BOSS_MAX = b.comment("3.33.0: how many Tier List bosses may be alive in the whole server at once (a hard cap on top of the floors' own limits).")
+                .defineInRange("tierBossMax", 6, 1, 24);
         b.pop();
         SPEC = b.build();
     }
@@ -60,4 +64,8 @@ public final class ArcConfig {
     public static int npcWander() { return get(NPC_WANDER); }
 
     public static int talkCooldown() { return get(TALK_COOLDOWN); }
+
+    public static boolean tierBosses() { return enabled() && get(TIER_BOSSES); }
+
+    public static int tierBossMax() { return get(TIER_BOSS_MAX); }
 }

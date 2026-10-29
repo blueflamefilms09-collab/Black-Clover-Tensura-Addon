@@ -46,5 +46,6 @@ public final class ArcCharacters {
         com.newuniverse.nusmp.arc.npc.BlackBullsNpcs.registerAll();   // 1.61.0: fourteen Black Bulls and friends of the saga Allies (NPC-A); the NPC lines stay together because the roster order decides the Hub posts
         com.newuniverse.nusmp.arc.knights.KnightsCast.registerAll();   // 1.61.0: sixteen friendly Magic Knights, captains and court members of the Hub (NPC-B)
         com.newuniverse.nusmp.skilltree.shop.BlackMarketWitch.registerAll();   // 1.62.0: the Old Witch of the Black Market (the Skill Book shop); an NPC of the saga Allies who appears after Revchi Salik
+        com.newuniverse.nusmp.arc.tier.TierBosses.registerAll();   // 3.33.0: the Tier List bosses of tiers F and D (light bosses of floors 1-20); appended last so the roster order of everything before stays
     }
 }

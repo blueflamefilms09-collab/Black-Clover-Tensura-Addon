@@ -18379,5 +18379,21 @@
   "nusmp.skill.line_regis_leywin_devour": "Regis Leywin, the Devouring Shadow",
   "nusmp.skill.line_regis_leywin_devour.description": "The beast born of an Acclorite: a horned wolf that slips through shadow, eats the magic thrown at it, fits into Arthur's fist and howls fear into everything near. Every bite leaves a hunger that the Devouring Shadow collects later. Evolves after nine hundred kills.\nArts (press the skill key, scroll to change): Wolf Form, Gauntlet Form, Shadow Step, Shadow Step: Shift, Devour, Devour: Shift, Destruction Breath, Dread Howl, Gauntlet Strike: Shift, Wisp Veil, Destruction Fusion, Devouring Shadow.\nWhile switched on: Acclorite Heart, Beast's Fangs, Shadow Stride, Aether-Dense Hide, Hunger Owed, Mana Devourer, Mind-Link Warning, Vivum Mending, Aether Absorption, Shadow Hunter, Fed, Dread Presence.",
   "nusmp.skill.line_shin_yoosung_child": "Shin Yoosung, Monster Gate",
-  "nusmp.skill.line_shin_yoosung_child.description": "The youngest of the Company and the strongest bond-keeper: tamed beasts answered through a gate, a shield that nothing gets through, a breath for those who threaten the party and, far down the road, a flood. Evolves once you have reached three hundred and fifty allies with your buffs and healing.\nArts (press the skill key, scroll to change): Little Commander, Beast King's Sensitivity, Monster Gate, Monster Gate: Shift, Tamed Pack's Mending, Shield of the Pack, Beast King's Breath, Beast King's Breath: Shift, Calm the Wild, Rush of the Gate, Monster Gate: Wide Open, Disaster of Floods.\nWhile switched on: Child's Quick Feet, Hearty Appetite, Beast Whisperer's Luck, Brave Little Heart, Flood's Toll, Companions Close By, Small and Quick, Stay Close to the Party, Lively in the Fray, Beast Lord's Hide, Eager Student, Gentle Mending."
+  "nusmp.skill.line_shin_yoosung_child.description": "The youngest of the Company and the strongest bond-keeper: tamed beasts answered through a gate, a shield that nothing gets through, a breath for those who threaten the party and, far down the road, a flood. Evolves once you have reached three hundred and fifty allies with your buffs and healing.\nArts (press the skill key, scroll to change): Little Commander, Beast King's Sensitivity, Monster Gate, Monster Gate: Shift, Tamed Pack's Mending, Shield of the Pack, Beast King's Breath, Beast King's Breath: Shift, Calm the Wild, Rush of the Gate, Monster Gate: Wide Open, Disaster of Floods.\nWhile switched on: Child's Quick Feet, Hearty Appetite, Beast Whisperer's Luck, Brave Little Heart, Flood's Toll, Companions Close By, Small and Quick, Stay Close to the Party, Lively in the Fray, Beast Lord's Hide, Eager Student, Gentle Mending.",
+  "entity.nusmp.charlos": "Charlos",
+  "entity.nusmp.zetsu": "Zetsu",
+  "entity.nusmp.yammy_llargo": "Yammy Llargo",
+  "entity.nusmp.sogou_nobuyuki": "Sogou Nobuyuki",
+  "entity.nusmp.mr_2_bon_clay": "Mr. 2 Bon Clay",
+  "entity.nusmp.kurozumi_orochi": "Kurozumi Orochi",
+  "entity.nusmp.malty_melromarc": "Malty S. Melromarc",
+  "entity.nusmp.rachel": "Rachel",
+  "entity.nusmp.jugram_haschwalth": "Jugram Haschwalth",
+  "entity.nusmp.big_mom": "\"Big Mom\" Charlotte Linlin",
+  "entity.nusmp.code": "Code",
+  "entity.nusmp.bertholdt_hoover": "Bertholdt Hoover",
+  "entity.nusmp.axe_hand_morgan": "Morgan",
+  "entity.nusmp.foxy": "Foxy",
+  "entity.nusmp.shou_tucker": "Shou Tucker",
+  "entity.nusmp.ao": "Ao"
 }

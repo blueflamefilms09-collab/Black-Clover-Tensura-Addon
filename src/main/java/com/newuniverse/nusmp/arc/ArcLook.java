@@ -13,14 +13,21 @@ package com.newuniverse.nusmp.arc;
  * @param growXz    extra horizontal culling box (wings, capes, weapons reaching past the hitbox)
  * @param growUp    extra vertical culling box
  * @param glow      whether the model has a glow texture layer ({@code arc_<model>_glow.png})
+ * @param skin      3.33.0: the texture name (without .png, e.g. "arc_kurozumi_orochi") a character wears on a SHARED model, or "" for the model's own texture
  */
-public record ArcLook(String model, float height, float walkCycle, float runCycle, float shadow, float growXz, float growUp, boolean glow) {
+public record ArcLook(String model, float height, float walkCycle, float runCycle, float shadow, float growXz, float growUp, boolean glow, String skin) {
+    /** The look of a character with a model of their own (the texture is the model's). */
+    public ArcLook(String model, float height, float walkCycle, float runCycle, float shadow, float growXz, float growUp, boolean glow) {
+        this(model, height, walkCycle, runCycle, shadow, growXz, growUp, glow, "");
+    }
+
+
     /** A human-sized character: 1.9 blocks tall, normal stride. */
     public static ArcLook humanoid(String model) { return new ArcLook(model, 1.9f, 1.6f, 2.6f, 0.5f, 1.2f, 0.6f, true); }
 
     /** The same look at another height (the stride grows with it). */
     public ArcLook sized(float blocks) {
         float k = blocks / height;
-        return new ArcLook(model, blocks, walkCycle * k, runCycle * k, shadow * k, growXz * k, growUp * k, glow);
+        return new ArcLook(model, blocks, walkCycle * k, runCycle * k, shadow * k, growXz * k, growUp * k, glow, skin);
     }
 }

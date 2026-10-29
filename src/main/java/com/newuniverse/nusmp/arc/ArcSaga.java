@@ -17,7 +17,9 @@ public enum ArcSaga {
     /** DanMachi: the dungeon of Orario and what lives in it. */
     DANMACHI("DanMachi", 5),
     /** Allies and townsfolk (Magic Knights and others) that are not tied to one arc's boss list. */
-    ALLIES("Allies", 6);
+    ALLIES("Allies", 6),
+    /** 3.33.0: the owner's boss tier list (docs/bosses/tierlist.md): characters of many series who stand as floor bosses of the Mega-Dungeon, weak ones first. */
+    TIER_LIST("The Tier List", 7);
 
     private final String title;
     private final int order;

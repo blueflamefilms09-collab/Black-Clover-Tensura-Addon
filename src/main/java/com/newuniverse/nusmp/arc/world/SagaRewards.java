@@ -65,6 +65,7 @@ public final class SagaRewards {
             case SEVEN_DEADLY_SINS -> List.of(new Stack("nusmp:magic_stone", 24), new Stack("minecraft:experience_bottle", 32), new Stack("minecraft:golden_apple", 4), new Stack("minecraft:diamond", 6));
             case DANMACHI -> List.of(new Stack("nusmp:magic_stone", 16), new Stack("minecraft:experience_bottle", 24), new Stack("minecraft:golden_apple", 3), new Stack("minecraft:emerald", 12));
             case ALLIES -> List.of();
+            case TIER_LIST -> List.of(new Stack("nusmp:magic_stone", 24), new Stack("minecraft:experience_bottle", 32), new Stack("minecraft:golden_apple", 4));
         };
     }
 

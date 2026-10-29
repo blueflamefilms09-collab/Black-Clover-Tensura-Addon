@@ -100,6 +100,9 @@ public final class ArcFloorBosses {
             if (server == null || sector == null || !ArcConfig.floorBosses()) return null;
             int floor = sector.lastFloor();
             List<ArcCharacter> standing = ArcRoster.floorBosses(floor, sector.polarity);
+            if (!ArcConfig.tierBosses() || com.newuniverse.nusmp.arc.tier.TierBoss.liveCount() >= ArcConfig.tierBossMax()) {   // 3.33.0: the Tier List switch and cap
+                standing = standing.stream().filter(x -> x.saga() != com.newuniverse.nusmp.arc.ArcSaga.TIER_LIST).toList();
+            }
             if (standing.isEmpty()) return null;
             List<ServerPlayer> party = partyNear(sl, altar);
             FloorBossChoice.Request req = new FloorBossChoice.Request(MegaData.get(server).seed, sector.id, floor, sector.polarity,
