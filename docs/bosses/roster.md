@@ -32,7 +32,8 @@ How the gag will use it (design, not built):
 - Beats: eyes close-up -> dark shadow slash -> the hand rising with the pen (slow, held) -> an insert on the pen tip -> panel burst -> the name appears on the page -> a quick over-dramatic reaction -> punchline.
 - Mod tools: the existing boss intro / title-card path and the Time Magic style of short scripted VFX (do not touch the Time Magic VFX files), black bars, speed lines, screen shake, a few client-only overlay quads. All of it is client drawing; the server only starts and ends the scene for the nearby party.
 - Bounds (rule 11): one scene of a few seconds, at most a couple of overlay quads per frame, shown only to players near Light, skipped for far players.
-- OPEN: what happens at the end of the gag (proposal: harmless, a joke defeat for Light and a funny reward, never real player death), and whether the gag copies the chip scene itself (Light eating a chip with a dramatic monologue) or only the pen-writing beat.
+- DECIDED (owner: both): the gag has TWO parts in one scene. Part 1, the chip beat: Light's over-serious inner monologue while he takes and eats a potato chip (close-ups of the bag, the dramatic chip, Ryuk behind him). Part 2, the pen beat: he raises his hand and pen and writes the player's name in the Death Note. The chip beat is the joke setup, the pen beat is the punchline.
+- OPEN: what happens at the end of the gag (proposal: harmless, a joke defeat for Light and a funny reward, never real player death).
 
 ## Compared with what the mod already has (rule 5)
 - The released 3.33.0 tier-list batch already holds 16 bosses on floors 1-20: Kurozumi Orochi, Mr. 2 Bon Clay, Sogou Nobuyuki, Charlos, Yammy Llargo, Zetsu (F) and Malty S. Melromarc, Rachel, Jugram Haschwalth, "Big Mom" Charlotte Linlin, Code, Bertholdt Hoover, Morgan, Foxy, Shou Tucker, Ao (D). Those were placed by the old owner tier list (docs/bosses/tierlist.md), which used different tiers.
