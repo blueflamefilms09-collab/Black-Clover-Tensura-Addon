@@ -15,6 +15,23 @@ Ranks: F, E, D, C, B, A, S, SS, SSS (9 ranks). Inside each rank a boss sits on a
 `F-` -> `F` -> `F+` -> `E-` -> `E` -> `E+` -> ... -> `SS+` -> `SSS-` -> `SSS` -> `SSS+` (27 steps).
 The scaling table has one row per step, so the strength curve is smooth and every boss names its step (e.g. "C-Rank, plus"). (OPEN: confirm this reading; the alternative is that "negative to positive" means weak to strong inside a rank with no named sub-steps.)
 
+## Floors to ranks (rank up every 20 floors)
+A floor is a place in the Mega-Dungeon, a rank is how strong a boss is. The dungeon ranks up every 20 floors, counted by distance from Floor 0 (the same distance `FloorMap.threat(floor)` uses, so the negative side mirrors the positive side):
+| Floors (distance from Floor 0) | Rank |
+|---|---|
+| 1-20 | F |
+| 21-40 | E |
+| 41-60 | D |
+| 61-80 | C |
+| 81-100 | B |
+| 101-120 | A |
+| 121-140 | S |
+| 141-160 | SS |
+| 161-180 | SSS |
+Inside a rank the sub-steps (minus, plain, plus) follow the floor: about the first 7 floors are minus, the middle 6-7 plain, the last 6-7 plus. Floors past 180 stay at SSS+ (OPEN: or keep climbing with a flat bonus per floor).
+A boss uses the step of the floor it stands on. A boss from a tier list keeps its own named rank and appears on floors of that rank.
+(OPEN: nine ranks at 20 floors each need 180 floors. If the dungeon only goes to 100, five ranks would be reached, F to B. Decide whether to stretch the dungeon, or to use a different span per rank.)
+
 ## Source material
 Bosses from other series follow their source material (skills, look, behaviour).
 
