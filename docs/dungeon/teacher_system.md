@@ -30,8 +30,11 @@ The offer fires when two party members' power scores differ by at least a ratio 
 - Worst case: 1 attribute-modifier set per mentor (4 modifiers) and one stored link per player.
 - Needs a self-test: link, scale, clear on logout/dimension change, and "no modifier survives".
 
-## Open questions
-- The power-score formula (which stats and weights).
-- The mentor's floor (50% proposed) and the strength gap ratio (2x proposed).
-- Whether boss skills with the 1-of-1 rule (docs/bosses/RULES.md) can be won while mentoring (proposal: yes; the apprentice-weighted damage roll still applies).
-- Whether the bonus numbers (+25%) suit the mod's economy.
+## Decisions (owner: "do what you think is best")
+- Power score = 0.4 x normalised Tensura EP + 0.2 x max health + 0.2 x attack damage + 0.2 x armour (each against a fixed reference table, server config). One pure function, unit tested.
+- Mentor floor: never below 50% of own values.
+- Offer fires at a power gap of 2x or more (server config); up to 3 apprentices per mentor, the weakest sets the scale.
+- Switched off for the mentor while mentoring: the same arena ban list as the boss rules (teleport-out, instant-kill, time-stop) plus ultimate-class skills.
+- Bonus numbers: +25% skill progress and +25% dungeon experience for the apprentice; mentor reward 1 Mentor Mark per apprentice floor cleared, a title at 100 marks. Both are server configs.
+- Mentoring never changes the boss 1-of-1 skill roll: it stays damage-weighted among the players who dealt damage.
+- Still unknown until built and tried in a game: whether Tensura's own stats can be capped directly (if yes, use that instead of attribute modifiers).

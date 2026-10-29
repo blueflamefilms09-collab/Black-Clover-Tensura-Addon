@@ -9,8 +9,8 @@ Status: DRAFT, rules only. No boss code is built from this yet. Items marked OPE
    - Players can get it: it gives a **+10% gain to the skill's own power** (decided); it can be taken or sealed by any of the existing means.
    - **1 of 1 (decided):** once ONE player gets the skill, it is no longer available to anyone else on the server. The boss still dies and still drops its other loot, but the skill is gone from the pool.
      - A server-wide claim registry (saved world data) maps skill id -> holder UUID. The claim is taken in one atomic server-side step at the moment the skill is awarded, so two players killing the boss at the same time can never both get it.
-     - The skill is awarded to ONE player per kill, not to everyone who contributed (this overrides "per-player loot" for this one item only). OPEN: who gets it (proposal: a roll among the players who dealt damage, weighted by damage share).
-     - The claim follows the skill: if it is taken from the holder in any way (stolen, absorbed, traded) the claim moves to the new holder; if it is sealed it stays claimed. OPEN: when does a claimed skill become available again (proposal: only by an admin command, or if the holder's skill is destroyed/reset).
+     - The skill is awarded to ONE player per kill, not to everyone who contributed (this overrides "per-player loot" for this one item only). DECIDED (owner: do what you think is best): a roll among the players who dealt damage, weighted by damage share.
+     - The claim follows the skill: if it is taken from the holder in any way (stolen, absorbed, traded) the claim moves to the new holder; if it is sealed it stays claimed. DECIDED: a claimed skill returns to the pool only by an admin command, or if the skill itself is destroyed/reset (a holder who just quits keeps the claim).
 2. **One signature mechanic, separate from the skill.** An arena or phase rule the player must understand and counter (e.g. Madara's Six Paths). Telegraphed, with an intended answer.
 3. **Strength starts slightly above base Tensura and keeps rising.** Scaled by dungeon rank, F-Rank up to SSS-Rank, from one scaling table that every boss reads (HP, damage, armor, speed per step). See "Rank ladder" below. Also scaled by nearby player count. Not scaled to player power.
 
@@ -51,7 +51,7 @@ Every boss has a Feel Sheet (silhouette/model, colour + VFX palette, movement + 
 - A visible telegraph before every big hit.
 - At least one counter to the signature skill and one to the mechanic.
 - Anti-cheese: resistance or immunity to pearl-skipping, pillar-stacking, suffocation, void-pushing.
-- Full kit allowed for players, except a short banned list inside boss arenas (OPEN: exact list; proposal: teleport-out, instant-kill on the boss, time-stop on the boss).
+- Full kit allowed for players, except a short banned list inside boss arenas (DECIDED: teleport-out, instant-kill on the boss, time-stop on the boss).
 
 ## Multiplayer and server (CLAUDE.md rules 9 and 11)
 - All state server-side, keyed by player UUID.
