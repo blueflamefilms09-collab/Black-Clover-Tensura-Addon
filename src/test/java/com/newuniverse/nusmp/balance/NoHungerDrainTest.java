@@ -40,7 +40,6 @@ class NoHungerDrainTest {
     private static final Map<String, int[]> WRITERS = Map.ofEntries(
             Map.entry("balance/HungerBan.java", new int[]{1, 1, 1}),                       // the guard's repair: writes back values never worse than the armed reading
             Map.entry("dungeon/nexus/relic/ChaliceHandler.java", new int[]{1, 1, 0}),     // the Chalice's stew: raises the food level after a meal of raw meat
-            Map.entry("skilltree/line/PassiveExecutors.java", new int[]{0, 0, 1}),        // the hunger-saver passive: LOWERS the exhaustion
             Map.entry("relics/wave/Wave7Events.java", new int[]{0, 0, 1}),                // the Sentinel's armour: keeps only half of the exhaustion gained (lowers it)
             Map.entry("relics/wave/Wave16Events.java", new int[]{0, 1, 0}),               // a relic that raises saturation
             Map.entry("relics/wave/Wave25Acts.java", new int[]{1, 1, 0}),                 // the Ring of Rock Eating: eats rocks to FILL the bar

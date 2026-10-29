@@ -1,6 +1,0 @@
-{
-  "parent": "nusmp:item/skill_book_3d",
-  "textures": {
-    "cover": "nusmp:item/skill_book_3d/solo_leveling"
-  }
-}

@@ -1,1 +1,0 @@
-{"loader":"neoforge:separate_transforms","gui_light":"front","textures":{"particle":"nusmp:item/skill_book_v2/trim_common"},"base":{"parent":"nusmp:item/skill_book_v2_exiled_heavy_knight_common"},"perspectives":{"gui":{"parent":"nusmp:item/skill_book_icon_exiled_heavy_knight_common"}}}

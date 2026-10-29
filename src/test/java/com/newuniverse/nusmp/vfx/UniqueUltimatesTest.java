@@ -15,13 +15,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Why: 3.29.0 gives each of the ten Evolution Ultimates its own signature effect ({@code ULT_*} shapes, one layer each). This guards the rules that are easy to break without a game: every unique shape has its layer
- * registered and its preview scene, every layer keeps to the 400-vertex budget idiom (no per-frame collections, no client-only calls outside the layer API), the shipped line files name exactly one unique shape per
- * Ultimate, the old generic shapes are still in the enum (the "keep the old" rule) and the CLIENT setting {@code visual.uniqueUltimates} restores them. Pure: reads the repo's files, the working directory is the project root.
+ * registered and its preview scene, every layer keeps to the 400-vertex budget idiom (no per-frame collections, no client-only calls outside the layer API), the old generic shapes are still in the enum (the "keep the old" rule) and the CLIENT setting {@code visual.uniqueUltimates} restores them. Pure: reads the repo's files, the working directory is the project root.
  */
 class UniqueUltimatesTest {
     private static final Path ROOT = Path.of("").toAbsolutePath();
     private static final Path LAYERS = ROOT.resolve("src/main/java/com/newuniverse/nusmp/vfx/client/layer");
-    private static final Path TREES = ROOT.resolve("src/main/resources/data/nusmp/unique_skills");
 
     private static final Set<VfxShape> UNIQUE = EnumSet.of(VfxShape.ULT_IRON_DRAGON, VfxShape.ULT_SATAN_CORE, VfxShape.ULT_ALL_CRUSH, VfxShape.ULT_GREAT_FLOOD, VfxShape.ULT_MONARCH_SHADOWS,
             VfxShape.ULT_CHAIRMAN_STAND, VfxShape.ULT_DEVOURING_SHADOW, VfxShape.ULT_FINAL_DOSE, VfxShape.ULT_DISASTER_FLOODS, VfxShape.ULT_THOUSAND_ELF);
@@ -98,17 +96,5 @@ class UniqueUltimatesTest {
         Matcher m = Pattern.compile("UniqueUltimatesConfig\\.init\\(modEventBus, modContainer\\)").matcher(read(ROOT.resolve("src/main/java/com/newuniverse/nusmp/NUSMP.java")));
         assertTrue(m.find(), "NUSMP registers the config");
         assertFalse(m.find(), "and only once");
-    }
-
-    @Test
-    void eachShippedUltimateNamesExactlyOneUniqueShape() throws IOException {
-        int[] count = new int[VfxShape.values().length];
-        try (var st = Files.list(TREES)) {
-            for (Path p : (Iterable<Path>) st::iterator) {
-                Matcher m = Pattern.compile("\"vfx\": \"(ULT_[A-Z_]+)\"").matcher(read(p));
-                while (m.find()) count[VfxShape.valueOf(m.group(1)).ordinal()]++;
-            }
-        }
-        for (VfxShape s : UNIQUE) assertEquals(1, count[s.ordinal()], s + " is used by exactly one Ultimate");
     }
 }

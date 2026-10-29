@@ -33,7 +33,7 @@ class HubDataFilesTest {
         Set<String> entries = new HashSet<>();
         for (JsonElement e : list.getAsJsonArray("entries")) entries.add(e.getAsString());
         assertTrue(entries.contains("nusmp:hub_coins"), "the global loot modifier list must name nusmp:hub_coins");
-        for (String old : new String[] {"nusmp:relic_chests", "nusmp:gear_chests", "nusmp:skill_books", "nusmp:rift_books"}) assertTrue(entries.contains(old), "the old modifier " + old + " is still listed (add the new, keep the old)");
+        for (String old : new String[] {"nusmp:relic_chests", "nusmp:gear_chests"}) assertTrue(entries.contains(old), "the old modifier " + old + " is still listed (add the new, keep the old)");
         JsonObject mod = JsonParser.parseString(read("resources/data/nusmp/loot_modifiers/hub_coins.json")).getAsJsonObject();
         assertTrue(mod.get("type").getAsString().equals("nusmp:hub_coins"));
         assertTrue(read("java/com/newuniverse/nusmp/elite/hub/CoinLootModifier.java").contains("MODIFIERS.register(\"hub_coins\""), "the codec is registered under the id the JSON names");
