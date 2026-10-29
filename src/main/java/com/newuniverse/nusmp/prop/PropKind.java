@@ -158,7 +158,7 @@ public enum PropKind {
     POISON_PLANT_1,
     MUD_1,
     MUCUS_1,
-    /** Celestial Spirit Magic (celestial.CelestialProps): a zodiac or silver spirit stepping out of its circle (param: key ordinal | phase << 8 | ticks since the cast << 16); and the Gate / the Spirit King's summon (param 0 gate, 1 king) */
+    /** Celestial Spirit Magic (UNUSED since the Celestial Gate, the keys and the Spirit King were removed; kept so the ordinals of the kinds after them do not shift): CELESTIAL_1 = a spirit stepping out of its circle, CELESTIAL_2 = the Gate / the Spirit King summon */
     CELESTIAL_1,
     CELESTIAL_2,
     /** 1.99.0 Light and Bone Magic after the Black Clover wiki: one kind each, the variant is the low byte of the param (prop.LightJaProps / BoneJaProps, painters client.prop.LightJaPropPainter / BoneJaPropPainter) */

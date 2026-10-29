@@ -45,7 +45,7 @@ import java.util.concurrent.ConcurrentHashMap;
  *       ({@code ActPower}) by {@link #actFactor}, which is 1.0 whenever the gate let the act through.</li>
  *   <li><b>Feedback</b>: a tooltip line on the weapon, and the first nerfed hit of a session shows an action-bar line.</li>
  * </ul>
- * Only {@code Relics.defOf(stack) != null && def.needsAttunement()} is ever affected: Djinn weapons, Requip, hero weapons, loot gear, Elsdocia and every
+ * Only {@code Relics.defOf(stack) != null && def.needsAttunement()} is ever affected: Djinn weapons, hero weapons, loot gear, Elsdocia and every
  * non-relic item are outside the rule.
  */
 public final class RelicPowerEvents {

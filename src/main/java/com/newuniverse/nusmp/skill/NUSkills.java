@@ -239,9 +239,6 @@ public final class NUSkills {
         return ids;
     }
 
-    // ---- Fairy Tail: Requip: The Knight (Erza Scarlet), a standalone Ultimate (its book Titania's Requip was removed; the admin command /requip teach teaches it); one mode per armour (requip.Armour) + Dismiss ----
-    public static final DeferredHolder<ManasSkill, ErzaRequipSkill> ERZA_REQUIP = SKILLS.register("erza_requip", ErzaRequipSkill::new);
-
     /** The 64 retired merged-magic skill ids (nusmp:merged_00..63), kept registered as inert placeholders so old saves load (core.magic.profile.RetiredMagic); forgotten at login. Registered LAST so the registry order of everything else is unchanged. */
     public static final java.util.List<DeferredHolder<ManasSkill, com.newuniverse.nusmp.core.magic.profile.RetiredMagic.RetiredBook>> MERGED_BOOKS =
             com.newuniverse.nusmp.core.magic.profile.RetiredMagic.registerAll(SKILLS);

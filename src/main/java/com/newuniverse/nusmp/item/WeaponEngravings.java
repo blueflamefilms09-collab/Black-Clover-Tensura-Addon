@@ -98,32 +98,6 @@ public final class WeaponEngravings {
             Map.entry("vassal_gauntlet", List.of(e("crushing", 2), e("barrier_piercing", 1), e("sturdy", 1))),   // fists that break defences (Turtle Crush, Conflagration Fist); the quaking shock and palm go through guards; the gauntlet is armour too (Iron Guard)
             Map.entry("vassal_projectile", List.of(e("swift", 2), e("severance", 1), e("magic_weapon", 1))),   // speed of throw; knives, kunai and chakrams cut clean; the base form is a blade conjured through the gem
             Map.entry("vassal_carriage", List.of(e("sturdy", 2), e("crushing", 1), e("swift", 1), e("vitality", 1))),   // built to protect those aboard; rams and runs foes down; Haikuikku and the Queen's pull; the Soothing Ride tends the riders
-            // Requip: The Knight (requip.RequipItems): the weapons the armours put in the hand
-            Map.entry("flame_empress_blade", List.of(e("elemental_boost", 2), e("severance", 1), e("barrier_piercing", 1))),   // Flame Empress: a blade of living flame that cuts clean and burns through wards
-            Map.entry("lightning_empress_halberd", List.of(e("elemental_boost", 2), e("swift", 2), e("crushing", 1))),   // Lightning Empress: thunder in the head, a quick long weapon that hits hard
-            Map.entry("sea_empress_trident", List.of(e("elemental_boost", 2), e("barrier_piercing", 1), e("magic_weapon", 1))),   // Sea Empress: the deep's trident, a magic weapon that goes through wards
-            Map.entry("black_wing_blade", List.of(e("swift", 2), e("severance", 2), e("enervation", 1))),   // Black Wing: a fast shadow-edged blade that cuts clean and saps
-            Map.entry("nakagami_edge", List.of(e("nusmp:anti_magic", 1), e("barrier_piercing", 3), e("magic_interference", 2), e("magicule_absorption", 1))),   // Nakagami: parts spells and wards, jams casting, drinks the magic it cuts
-            Map.entry("purgatory_mace", List.of(e("crushing", 3), e("sturdy", 2), e("elemental_boost", 1), e("severance", 1))),   // Purgatory: a hell-forged mace that breaks what it strikes
-            // Celestial Spirit Magic: the twelve Gold Zodiac keys, the silver keys, the gate key and the sceptre of the Spirit King (each engraving follows the spirit it calls)
-            Map.entry("aquarius_key", List.of(e("elemental_boost", 1), e("magic_weapon", 1))),                       // a torrent: boosts elements
-            Map.entry("taurus_key", List.of(e("crushing", 1), e("sturdy", 1))),                                      // the golden bull's axe
-            Map.entry("leo_key", List.of(e("holy_weapon", 1), e("elemental_boost", 1))),                             // Regulus: holy light
-            Map.entry("virgo_key", List.of(e("enervation", 1), e("sturdy", 1))),                                     // chains that tire what they bind
-            Map.entry("sagittarius_key", List.of(e("swift", 1), e("barrier_piercing", 1))),                          // arrows through wards
-            Map.entry("gemini_key", List.of(e("magic_interference", 1), e("swift", 1))),                             // the copy that confuses magic
-            Map.entry("cancer_key", List.of(e("severance", 1), e("enervation", 1))),                                 // scissors: clean cut, sapping wound
-            Map.entry("scorpio_key", List.of(e("enervation", 1), e("elemental_boost", 1))),                          // sand and sting
-            Map.entry("capricorn_key", List.of(e("crushing", 1), e("sturdy", 1))),                                   // the goat's charge
-            Map.entry("pisces_key", List.of(e("restoration", 1), e("elemental_boost", 1))),                          // tide that heals
-            Map.entry("aries_key", List.of(e("magic_protection", 1), e("restoration", 1))),                          // wool that wards and mends
-            Map.entry("libra_key", List.of(e("magic_interference", 1), e("magic_protection", 1))),                  // the scales weigh magic
-            Map.entry("horologium_key", List.of(e("magic_protection", 1), e("sturdy", 1))),                          // the shelter
-            Map.entry("crux_key", List.of(e("holy_weapon", 1))),                                                     // a guiding star
-            Map.entry("lyra_key", List.of(e("restoration", 1))),                                                     // a soothing song
-            Map.entry("nikora_key", List.of(e("swift", 1))),                                                         // the little dog is quick
-            Map.entry("spirit_king_gate_key", List.of(e("holy_weapon", 2), e("barrier_piercing", 1), e("magic_interference", 1), e("magic_weapon", 1))),   // the key of the Celestial Gate
-            Map.entry("spirit_king_sceptre", List.of(e("holy_weapon", 2), e("restoration", 2), e("magic_protection", 1), e("elemental_boost", 1), e("magic_weapon", 1))),   // the sceptre of the Celestial Spirit King: holy, mending, warding
             // 1.99.0: the monster-drop weapons of the dungeon loot (labyrinth/loot/roster.json lists the same engravings)
             Map.entry("goblin_fang_dagger", List.of(e("swift", 1), e("severance", 1))),                                  // a quick stab that cuts clean
             Map.entry("delvers_longsword", List.of(e("sturdy", 1), e("severance", 1))),                                  // the plain sword a delver trusts: hard to break, cuts clean

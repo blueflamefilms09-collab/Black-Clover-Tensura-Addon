@@ -93,7 +93,7 @@ public enum Aura {
     MUCUS,
     /** Fairy Tail skills' timed-form armour. UNUSED since the Fairy Tail skills were removed; kept so the enum ordinals (sent over the network) of the entries after it do not shift. */
     FAIRY_TAIL,
-    /** Requip: The Knight (Erza Scarlet): the armour render layer; the style is the worn armour's ordinal in requip.Armour (client.aura.ErzaAura, pieces forged in by EquipAnimation) */
+    /** Requip: The Knight (Erza Scarlet). UNUSED since the Requip skill was removed; kept so the enum ordinals (sent over the network) of the entries after it do not shift. */
     ERZA,
     /** 1.99.0 Great Spirits: the Spirit Dive of Wind, Water, Fire and Earth; the style is book.SpiritDivePieces.style(element, stage) (client.aura.SpiritDiveAura, pieces forged in by EquipAnimation) */
     SPIRIT_DIVE,

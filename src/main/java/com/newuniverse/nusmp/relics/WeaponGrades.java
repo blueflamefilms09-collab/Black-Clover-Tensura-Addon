@@ -4,7 +4,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
- * Pure table: the grade and the weapon type of the fixed weapons that are not Relic defs (the Black Clover weapons, the Requip weapons, the hero
+ * Pure table: the grade and the weapon type of the fixed weapons that are not Relic defs (the Black Clover weapons, the hero
  * weapons, the Otherworld Trident, the Magic Tool Sword and Spear). A relic def has its own grade; a Djinn weapon takes {@link #djinn}.
  * The damage of each is {@link GradeDamage#damage(int, String)} of its entry (docs/grade_damage.md has the before and after).
  * Keys are the lower-case enum or registry names. Elsdocia is not listed: it keeps its own 400.
@@ -53,13 +53,6 @@ public final class WeaponGrades {
         e("otherworld_trident", 3, "trident");
         e("magic_tool_sword", 0, "longsword");
         e("magic_tool_spear", 0, "spear");
-        // Requip weapons (the Armour#weapon() ids)
-        e("flame_empress_blade", 3, "longsword");
-        e("lightning_empress_halberd", 3, "glaive");
-        e("sea_empress_trident", 3, "trident");
-        e("black_wing_blade", 3, "longsword");
-        e("nakagami_edge", 4, "longsword");
-        e("purgatory_mace", 3, "mace");
         // hero weapons (HeroKind.id()): the four Holy Weapons are Legend, the Seven Star Weapons Unique, the Vassal Weapons Rare
         e("legendary_shield", 4, "shield");
         e("legendary_sword", 4, "longsword");
