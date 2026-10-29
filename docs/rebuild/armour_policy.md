@@ -236,7 +236,7 @@ a recollection it stays general rather than naming a character.
 | `NUConfig`, `NUSMP` | EDITED, append only | the five config values, two registration lines |
 | Spirit Dive duration and spirit lock | REPLACED (see section 4) | |
 | Lang texts of the 11 armour pages | REPLACED in `tools/lang/armour_policy.json` | the keys `nusmp.page.book_<book>.<page>` of those pages now describe the toggle; the old texts said "for 30 seconds" |
-| Fairy Tail forms (`fairytail.FtCast`, `Aura.FAIRY_TAIL`), Erza Requip (`Aura.ERZA`) | KEPT, untouched | not Black Clover magics: separate skills with their own explicit forms (Erza Requip is another builder's lane) |
+| Fairy Tail forms (removed with the Fairy Tail skills; `Aura.FAIRY_TAIL` kept unused), Erza Requip (`Aura.ERZA`) | KEPT, untouched | not Black Clover magics: separate skills with their own explicit forms (Erza Requip is another builder's lane) |
 | `blackclover.ModeArmor` overlays | KEPT | the FORM look of Fire, Wind, Water (new), Anti-Magic and Shadow |
 
 ## 8. What could not be verified

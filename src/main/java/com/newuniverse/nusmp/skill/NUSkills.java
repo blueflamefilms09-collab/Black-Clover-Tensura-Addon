@@ -239,15 +239,12 @@ public final class NUSkills {
         return ids;
     }
 
-    // ---- Fairy Tail: Requip: The Knight (Erza Scarlet), a standalone Ultimate taught by the book Titania's Requip; one mode per armour (requip.Armour) + Dismiss ----
+    // ---- Fairy Tail: Requip: The Knight (Erza Scarlet), a standalone Ultimate (its book Titania's Requip was removed; the admin command /requip teach teaches it); one mode per armour (requip.Armour) + Dismiss ----
     public static final DeferredHolder<ManasSkill, ErzaRequipSkill> ERZA_REQUIP = SKILLS.register("erza_requip", ErzaRequipSkill::new);
 
     /** The 64 retired merged-magic skill ids (nusmp:merged_00..63), kept registered as inert placeholders so old saves load (core.magic.profile.RetiredMagic); forgotten at login. Registered LAST so the registry order of everything else is unchanged. */
     public static final java.util.List<DeferredHolder<ManasSkill, com.newuniverse.nusmp.core.magic.profile.RetiredMagic.RetiredBook>> MERGED_BOOKS =
             com.newuniverse.nusmp.core.magic.profile.RetiredMagic.registerAll(SKILLS);
-
-    /** Celestial Spirit Magic (Lucy Heartfilia): a Unique skill learned from its own book (celestial.CelestialSkillBookItem). Registered after the retired books so the order of the older entries is unchanged. */
-    public static final DeferredHolder<ManasSkill, CelestialSpiritMagicSkill> CELESTIAL_SPIRIT_MAGIC = SKILLS.register("celestial_spirit_magic", CelestialSpiritMagicSkill::new);
 
     /** Shishou, the Teacher (2.1.0): the talking sword's abilities as an Ultimate skill with modes, given to his wielder (shishou.ShishouGrantService). Registered last so the order of the older entries is unchanged. */
     public static final DeferredHolder<ManasSkill, ShishouUltimateSkill> SHISHOU = SKILLS.register("shishou", ShishouUltimateSkill::new);

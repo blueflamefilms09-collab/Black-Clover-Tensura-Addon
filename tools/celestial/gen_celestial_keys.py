@@ -68,38 +68,6 @@ def build_key(kid, rank, colour):
     return w.finish(item_id, m, atlas, real_m=0.30, glow=("FFFFFF", 0.10, 0.5, 1.0))
 
 
-def build_book():
-    item_id = "celestial_spirit_magic_book"
-    m = ml.Mesh(item_id)
-    W, H, T = 9.0, 13.0, 3.0
-    cover = (88, 62, 172)
-    cb = w.add(m, "cover_back", "leather", base=cover, smooth=0)
-    ml.box(cb, (-W / 2, 0, T / 2 - 0.45), (W / 2, H, T / 2), chamfer=0.1)
-    cf = w.add(m, "cover_front", "leather", base=cover, smooth=0)
-    ml.box(cf, (-W / 2, 0, -T / 2), (W / 2, H, -T / 2 + 0.45), chamfer=0.1)
-    sp = w.add(m, "spine", "leather", base=tuple(int(c * 0.8) for c in cover), smooth=30)
-    ml.box(sp, (-W / 2 - 0.35, 0, -T / 2), (-W / 2 + 0.25, H, T / 2), chamfer=0.1)
-    pg = w.add(m, "pages", "bone", base=(236, 230, 210), smooth=0)
-    ml.box(pg, (-W / 2 + 0.4, 0.35, -T / 2 + 0.5), (W / 2 - 0.35, H - 0.35, T / 2 - 0.5))
-    corners = w.add(m, "corner_caps", "gold", base=(212, 168, 66), smooth=0)
-    for x in (-W / 2 + 0.2, W / 2 - 1.3):
-        for y in (0.0, H - 1.3):
-            ml.box(corners, (x, y, -T / 2 - 0.15), (x + 1.1, y + 1.3, -T / 2 + 0.55), chamfer=0.1)
-    star = w.add(m, "clasp_star", "gold", base=(246, 208, 96), smooth=0)
-    ml.gem(star, (0.0, H * 0.55, -T / 2 - 0.1), 1.8, long=0.35, sides=5, axis="z")
-    core = w.add(m, "clasp_core", "crystal", base=(255, 244, 200), smooth=0)
-    ml.gem(core, (0.0, H * 0.55, -T / 2 - 0.45), 0.7, long=0.4, sides=6, axis="z")
-    rb = w.add(m, "ribbon", "cloth", base=(214, 70, 90), smooth=30)
-    ml.box(rb, (1.4, -2.2, -0.5), (2.2, H * 0.4, 0.5), chamfer=0.05)
-    atlas = ml.Atlas(512)
-    atlas.layout(m)
-    atlas.paint(m)
-    w.paint_part(atlas, m.part("clasp_core"), lambda c: w.set_glow(c, (255, 236, 160), 1.0, core=0.6))
-    w.paint_part(atlas, m.part("clasp_star"), lambda c: w.set_glow(c, (255, 214, 110), 0.55, core=0.3))
-    m.orient_cfg = "manual"
-    return w.finish(item_id, m, atlas, real_m=0.3, fit=True, glow=("FFFFFF", 0.10, 0.5, 1.0))
-
-
 def build_sceptre():
     item_id = "spirit_king_sceptre"
     m = ml.Mesh(item_id)
@@ -142,8 +110,6 @@ def main(only=None):
         if only and kid + "_key" not in only:
             continue
         build_key(kid, rank, colour)
-    if not only or "celestial_spirit_magic_book" in only:
-        build_book()
     if not only or "spirit_king_sceptre" in only:
         build_sceptre()
 

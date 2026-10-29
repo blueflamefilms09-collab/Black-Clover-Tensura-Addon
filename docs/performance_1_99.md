@@ -162,7 +162,6 @@ Regenerate with `python3 tools/perf/inventory.py --write`.
 | `dungeon/nexus/relic/RelicEvents.java#onPlayerTick` | PlayerTickEvent.Post | every 5 ticks | trivial | per player | OK: throttled |
 | `elite/hub/QuestEvents.java#onPlayerTick` | PlayerTickEvent.Post | every 200 ticks | trivial | per player | OK: throttled |
 | `entity/zogratis/LuciusBossEventHandler.java#onPlayerTick` | PlayerTickEvent.Post | every tick | trivial | per player | OK: light |
-| `fairytail/FairyTailSystem.java#onPlayerTick` | PlayerTickEvent.Post | every 100 ticks | skills, loop | per player | OK: throttled |
 | `heroweapon/bond/HeroBondEvents.java#onPlayerTick` | PlayerTickEvent.Post | every 4 ticks | trivial | per player | OK: throttled |
 | `heroweapon/gem/GemEvents.java#onPlayerTick` | PlayerTickEvent.Post | every tick | trivial | per player | OK: cheap gate, delegates |
 | `item/ArmorEngravings.java#onPlayerTick` | PlayerTickEvent.Post | every 20 ticks | inventory, registry, loop | per player | OK: throttled [probe s.engravings.armor] |

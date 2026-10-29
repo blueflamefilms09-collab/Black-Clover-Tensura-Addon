@@ -27,10 +27,9 @@ import java.util.function.IntSupplier;
 /**
  * Why: the executors of the {@code /dungeon} admin tree, one static method per command, all server side. Every one of them starts the same way: find the PLAYER the command acts on
  * ({@link #player}); a console, a command block or a function has none, and then the answer is a red line that says how to run the command (as a player, or {@code /execute as
- * <player> run dungeon ...}), never an exception. Every one of them is also wrapped by {@link #guarded}, so a bug or a missing system below (a hook that throws, a skill list that
- * is not ready) ends as a red line and a log entry and never as an exception out of the command, which the game would print as an opaque error and which could leave half a job
- * behind. They do not do the heavy work themselves: a teleport to a floor that does not exist becomes a ticket on a clock ({@link FloorTeleport}), granting 250 skills becomes a job on
- * a clock ({@link SkillAdmin}), and the bosses and rifts go through the two small hooks ({@link DungeonAdminHooks}). The arithmetic is {@link DungeonAdminMath}.
+ * <player> run dungeon ...}), never an exception. Every one of them is also wrapped by {@link #guarded}, so a bug or a missing system below (a hook that throws, a hook that is
+ * not ready) ends as a red line and a log entry and never as an exception out of the command, which the game would print as an opaque error and which could leave half a job
+ * behind. They do not do the heavy work themselves: a teleport to a floor that does not exist becomes a ticket on a clock ({@link FloorTeleport}), and the bosses and rifts go through the two small hooks ({@link DungeonAdminHooks}). The arithmetic is {@link DungeonAdminMath}.
  */
 final class AdminCommands {
     private AdminCommands() {}
@@ -163,22 +162,8 @@ final class AdminCommands {
 
     static BlockPos front(ServerPlayer p) { return p.blockPosition().relative(p.getDirection(), RIFT_FALLBACK); }
 
-    // ================================================================ skills and resets
-    static int skillUnlock(CommandContext<CommandSourceStack> ctx, String id) {
-        CommandSourceStack src = ctx.getSource();
-        ServerPlayer p = player(src);
-        if (p == null) return 0;
-        return guarded(src, "skill unlock", () -> SkillAdmin.unlock(p, id));
-    }
-
-    static int skillGiveSp(CommandContext<CommandSourceStack> ctx, int amount) {
-        CommandSourceStack src = ctx.getSource();
-        ServerPlayer p = player(src);
-        if (p == null) return 0;
-        return guarded(src, "skill give_sp", () -> SkillAdmin.giveMastery(p, amount));
-    }
-
-    enum Reset { ALIGNMENT, SKILLS, WAYPOINT, ALL }
+    // ================================================================ resets
+    enum Reset { ALIGNMENT, WAYPOINT, ALL }
 
     static int reset(CommandContext<CommandSourceStack> ctx, Reset what) {
         CommandSourceStack src = ctx.getSource();
@@ -187,7 +172,6 @@ final class AdminCommands {
         return guarded(src, "reset " + what.name().toLowerCase(Locale.ROOT), () -> switch (what) {
             case ALIGNMENT -> ResetAdmin.doAlignment(p);
             case WAYPOINT -> ResetAdmin.doWaypoint(p);
-            case SKILLS -> SkillAdmin.forgetAll(p, false);
             case ALL -> ResetAdmin.doAll(p);
         });
     }

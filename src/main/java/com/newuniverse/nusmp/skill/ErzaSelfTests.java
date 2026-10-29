@@ -155,8 +155,6 @@ public final class ErzaSelfTests {
             res("assets/nusmp/models/item/" + w + "_icon.json", missing);
             res("assets/nusmp/textures/item/" + w + ".png", missing);
         }
-        res("assets/nusmp/models/item/titanias_requip.json", missing);
-        res("assets/nusmp/textures/item/titanias_requip.png", missing);
         res("assets/nusmp/textures/skill/erza_requip.png", missing);
         if (missing.isEmpty()) return null;
         return "missing " + String.join(", ", missing.subList(0, Math.min(6, missing.size()))) + (missing.size() > 6 ? " (+" + (missing.size() - 6) + ")" : "");

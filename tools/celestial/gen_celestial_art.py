@@ -207,33 +207,8 @@ def sign(name):
     return finish(im, w, h, bloom=1.0)
 
 
-def skill_icon(wheel_img):
-    """The 32 x 32 icon of the skill: a gold frame (a Unique skill), night blue inside, the zodiac wheel in gold and a gold key across it."""
-    from gen_celestial_icons import key_icon
-    n = 32
-    bg = Image.new("RGBA", (n, n), (14, 16, 46, 255))
-    px = bg.load()
-    for y in range(n):
-        for x in range(n):
-            d = min(x, y, n - 1 - x, n - 1 - y)
-            if d == 0:
-                px[x, y] = (255, 214, 110, 255)
-            elif d == 1:
-                px[x, y] = (150, 104, 24, 255)
-            elif d == 2:
-                px[x, y] = (30, 34, 84, 255)
-    ring = wheel_img.resize((26, 26), Image.LANCZOS)
-    tint = Image.new("RGBA", ring.size, (255, 214, 110, 255))
-    ring = Image.composite(tint, Image.new("RGBA", ring.size, (0, 0, 0, 0)), ring.split()[3].point(lambda v: int(v * 0.85)))
-    bg.alpha_composite(ring, (3, 3))
-    key = key_icon("leo", "gold", 0x3FA9FF)
-    bg.alpha_composite(key, (8, 8))
-    return bg
-
-
 def main():
     w = wheel()
-    skill_icon(w).save(out_path("textures", "skill", "celestial_spirit_magic.png"))
     wheel().save(out_path("textures", "particle", "celestial_circle.png"))
     runering().save(out_path("textures", "particle", "celestial_ring.png"))
     glint().save(out_path("textures", "particle", "celestial_glint.png"))

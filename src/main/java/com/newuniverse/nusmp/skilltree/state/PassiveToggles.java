@@ -1,4 +1,4 @@
-package com.newuniverse.nusmp.skilltree.line;
+package com.newuniverse.nusmp.skilltree.state;
 
 import java.util.Collections;
 import java.util.LinkedHashMap;

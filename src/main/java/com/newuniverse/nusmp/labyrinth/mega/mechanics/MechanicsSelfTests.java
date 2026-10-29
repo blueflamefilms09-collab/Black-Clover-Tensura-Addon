@@ -517,8 +517,7 @@ public final class MechanicsSelfTests {
 
             boolean puzzle = PuzzleBridge.effect(p, "minecraft:hunger", 200, 1);
             com.newuniverse.nusmp.relics.Fx.addEffect(p, "minecraft:hunger", 200, 1);
-            boolean line = com.newuniverse.nusmp.skilltree.line.LineLookups.give(p, "hunger", 200, 1, false);
-            if (puzzle || line || p.hasEffect(net.minecraft.world.effect.MobEffects.HUNGER)) return SelfTests.Result.fail("an effect-by-id path put the Hunger effect on a player (puzzle=" + puzzle + ", line=" + line + ")");
+            if (puzzle || p.hasEffect(net.minecraft.world.effect.MobEffects.HUNGER)) return SelfTests.Result.fail("an effect-by-id path put the Hunger effect on a player (puzzle=" + puzzle + ")");
             done.add("effect-by-id choke points refuse Hunger");
 
             net.minecraft.world.effect.MobEffect sickness = com.newuniverse.nusmp.dungeon.DungeonEffects.MAGICULE_SICKNESS.get();

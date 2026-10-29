@@ -14,39 +14,22 @@ import net.minecraft.commands.arguments.EntityArgument;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.storage.loot.LootPool;
-import net.minecraft.world.level.storage.loot.entries.LootItem;
-import net.minecraft.world.level.storage.loot.predicates.LootItemRandomChanceCondition;
-import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.common.NeoForge;
-import net.neoforged.neoforge.event.LootTableLoadEvent;
 import net.neoforged.neoforge.event.RegisterCommandsEvent;
 
 import java.util.ArrayList;
 import java.util.Locale;
-import java.util.Map;
 
 /**
- * Why: the one entry point of Requip: The Knight that the mod's constructor calls ({@code NUSMP}): it attaches the item register, the admin command, the dungeon loot and the in-game self-test. The
- * skill itself is {@code skill.ErzaRequipSkill} (registered in {@code NUSkills}); the armour table is {@link Armour}, the rules {@link RequipRules}. This class also holds the two ways of learning
- * the skill: the book ({@link TitaniasRequipItem}, gated) and the admin command (not gated).
+ * Why: the one entry point of Requip: The Knight that the mod's constructor calls ({@code NUSMP}): it attaches the item register, the admin command and the in-game self-test. The
+ * skill itself is {@code skill.ErzaRequipSkill} (registered in {@code NUSkills}); the armour table is {@link Armour}, the rules {@link RequipRules}. This class also holds the way of learning
+ * the skill: the admin command (not gated). The book "Titania's Requip" and its dungeon loot were removed.
  */
 public final class RequipSystem {
     private RequipSystem() {}
 
     private static boolean started;
-
-    /** Loot tables that may hold a Titania's Requip, with the chance (0..1) each opening has of adding one. Vanilla vaults of old magic plus this mod's own dungeon vaults. */
-    static final Map<String, Float> LOOT = Map.ofEntries(
-            Map.entry("minecraft:chests/ancient_city", 0.06f), Map.entry("minecraft:chests/end_city_treasure", 0.05f),
-            Map.entry("minecraft:chests/stronghold_library", 0.05f), Map.entry("minecraft:chests/bastion_treasure", 0.05f),
-            Map.entry("minecraft:chests/woodland_mansion", 0.04f), Map.entry("minecraft:chests/simple_dungeon", 0.03f),
-            Map.entry("minecraft:chests/trial_chambers/reward_unique", 0.08f),
-            Map.entry("nusmp:chests/dungeon_relic_vault", 0.10f), Map.entry("nusmp:chests/library_ruins", 0.06f),
-            Map.entry("nusmp:chests/grimoire_tower", 0.08f), Map.entry("nusmp:chests/hidden_cache", 0.04f),
-            Map.entry("nusmp:chests/labyrinth_pedestal", 0.06f));
 
     /** Called once from the mod constructor, before the item register is frozen. */
     public static void init(IEventBus modBus) {
@@ -54,7 +37,6 @@ public final class RequipSystem {
         started = true;
         RequipItems.REGISTER.register(modBus);
         NeoForge.EVENT_BUS.addListener(RequipSystem::onCommands);
-        NeoForge.EVENT_BUS.addListener(RequipSystem::onLoot);
         ErzaSelfTests.register();                                          // the CI server smoke test runs skill.erza_requip
         RequipMagic.init(modBus);                                          // the Equip Magic: the pocket Armoury, Loadouts, Blade / Barrage / Strike, Partial Armour, the finishers (self-test skill.requip_magic)
     }
@@ -86,23 +68,9 @@ public final class RequipSystem {
         return null;
     }
 
-    // ---------------------------------------------------------------- loot
-    private static void onLoot(LootTableLoadEvent e) {
-        Float chance = LOOT.get(e.getName().toString());
-        if (chance == null) return;
-        e.getTable().addPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1f)).when(LootItemRandomChanceCondition.randomChance(chance))
-                .add(LootItem.lootTableItem(RequipItems.TITANIAS_REQUIP.get())).build());
-    }
-
     // ---------------------------------------------------------------- admin command
     private static void onCommands(RegisterCommandsEvent e) {
         e.getDispatcher().register(Commands.literal("requip").requires(s -> s.hasPermission(2))
-                .then(Commands.literal("book").then(Commands.argument("player", EntityArgument.player()).executes(ctx -> {
-                    ServerPlayer p = EntityArgument.getPlayer(ctx, "player");
-                    p.getInventory().placeItemBackInInventory(new ItemStack(RequipItems.TITANIAS_REQUIP.get()));
-                    ctx.getSource().sendSuccess(() -> Component.literal("Gave Titania's Requip to " + p.getName().getString()), true);
-                    return 1;
-                })))
                 .then(Commands.literal("teach").then(Commands.argument("player", EntityArgument.player()).executes(ctx -> {
                     ServerPlayer p = EntityArgument.getPlayer(ctx, "player");
                     String why = teach(p, true);

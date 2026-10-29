@@ -21,7 +21,7 @@ import java.util.List;
  * Why: {@code /multiverse celestial ...}: the admin side of the keys (give, bind, reset, a test king) and the two lines a player needs (the choice after the Gate opens, the way
  * back out of the Spirit World, a look at their own collection).
  * <pre>
- *   celestial give  &lt;player&gt; &lt;key|all|gold|silver|book|sceptre&gt;      give the item(s)
+ *   celestial give  &lt;player&gt; &lt;key|all|gold|silver|sceptre&gt;      give the item(s)
  *   celestial bind  &lt;player&gt; &lt;key|all&gt;                          seal the contract in the player's record (and in their keys' items)
  *   celestial reset &lt;player&gt;                                    forget everything (collection, contracts, bonds, the King's record)
  *   celestial king  [player]                                    summon a test king beside you / the player (admin)
@@ -38,7 +38,7 @@ public final class CelestialCommand {
     private static final SuggestionProvider<CommandSourceStack> KEYS = (ctx, b) -> {
         List<String> ids = new ArrayList<>();
         for (CelestialKey k : CelestialKey.values()) ids.add(k.id);
-        ids.addAll(List.of("all", "gold", "silver", "book", "sceptre"));
+        ids.addAll(List.of("all", "gold", "silver", "sceptre"));
         return SharedSuggestionProvider.suggest(ids, b);
     };
 
@@ -86,8 +86,7 @@ public final class CelestialCommand {
     private static int give(CommandContext<CommandSourceStack> ctx, String what) throws CommandSyntaxException {
         ServerPlayer p = EntityArgument.getPlayer(ctx, "player");
         List<ItemStack> stacks = new ArrayList<>();
-        if (what.equals("book")) stacks.add(new ItemStack(CelestialItems.SKILL_BOOK.get()));
-        else if (what.equals("sceptre")) stacks.add(new ItemStack(CelestialItems.SCEPTRE.get()));
+        if (what.equals("sceptre")) stacks.add(new ItemStack(CelestialItems.SCEPTRE.get()));
         else for (CelestialKey k : pick(what)) stacks.add(CelestialItems.stack(k));
         if (stacks.isEmpty()) { ctx.getSource().sendFailure(Component.literal("No such key: " + what)); return 0; }
         for (ItemStack s : stacks) if (!p.getInventory().add(s)) p.drop(s, false);

@@ -78,25 +78,12 @@ public final class AdminText {
     public static final String RIFT_KIND_SHORTCUT = put("rift.kind.shortcut", "shortcut");
 
     // ---- skill
-    public static final String SKILL_UNKNOWN = put("skill.unknown", "There is no Unique skill '%1$s'. Tab-complete the id, or use 'all'.");
-    public static final String SKILL_LEARNED = put("skill.learned", "You learned %1$s.");
-    public static final String SKILL_ALREADY = put("skill.already", "You already know %1$s.");
-    public static final String SKILL_FAIL = put("skill.fail", "Could not teach %1$s (%2$s).");
-    public static final String SKILL_BUSY = put("skill.busy", "A skill grant or reset is still running for you. Wait for its summary.");
-    public static final String SKILL_ALL_START = put("skill.all_start", "Teaching %1$s Unique skills over the next few ticks...");
-    public static final String SKILL_ALL_DONE = put("skill.all_done", "Done: %1$s Unique skill(s) learned, %2$s already known, %3$s failed, of %4$s.");
-    public static final String SP_REMOVED = put("sp.removed", "Skill Points were removed in 1.96.0 (skill books teach Unique skills directly); mastery now opens the later arts of a skill.");
-    public static final String SP_OK = put("sp.ok", "Added %1$s mastery point(s) to each of your %2$s Unique skill(s) instead.");
-    public static final String SP_NONE = put("sp.none", "Skill Points were removed in 1.96.0 (skill books teach Unique skills directly); nothing granted, because you know no Unique skill yet. Use /dungeon skill unlock first.");
 
     // ---- reset
     public static final String RESET_ALIGNMENT = put("reset.alignment", "Alignment cleared: no road, no lock, no record of the deepest floors, and the tracker forgot your floor.");
     public static final String RESET_WAYPOINT = put("reset.waypoint", "Waypoint cleared, with the memory of the deepest Landing: the next entry starts at the first floor.");
     public static final String RESET_WAYPOINT_NONE = put("reset.waypoint_none", "You had no waypoint and no deepest-Landing memory; nothing to clear.");
-    public static final String RESET_SKILLS_START = put("reset.skills_start", "Forgetting your %1$s Unique skill(s) over the next few ticks...");
-    public static final String RESET_SKILLS_NONE = put("reset.skills_none", "You know no Unique skill from the skill books; nothing to forget.");
-    public static final String RESET_SKILLS_DONE = put("reset.skills_done", "Done: %1$s Unique skill(s) forgotten, %2$s could not be taken away.");
-    public static final String RESET_ALL = put("reset.all", "Everything of the dungeon is cleared for you: alignment, waypoint and Unique skills.");
+    public static final String RESET_ALL = put("reset.all", "Everything of the dungeon is cleared for you: alignment and waypoint.");
 
     // ---- debug
     public static final String DEBUG_ON = put("debug.on", "WFC debug ON for %1$s minutes (or until you leave the dimension). Green = on a loop, yellow = single link, red = dead end. Run it again to stop.");
@@ -124,12 +111,9 @@ public final class AdminText {
     public static final String HELP_BOSS_KILL = put("help.boss_kill", "Slay the boss near you; its Mana Core drops to test the Gatekeeper.");
     public static final String HELP_RIFT_POCKET = put("help.rift_pocket", "Open a pocket-dungeon rift at your crosshair.");
     public static final String HELP_RIFT_SHORTCUT = put("help.rift_shortcut", "Open a floor-shortcut rift at your crosshair.");
-    public static final String HELP_SKILL_UNLOCK = put("help.skill_unlock", "Learn a Unique skill (tab-complete the id) or 'all' of them.");
-    public static final String HELP_SKILL_SP = put("help.skill_sp", "Skill Points no longer exist: adds mastery points to your Unique skills instead.");
     public static final String HELP_RESET_ALIGNMENT = put("help.reset_alignment", "Forget your road, the lock and the deepest floors.");
-    public static final String HELP_RESET_SKILLS = put("help.reset_skills", "Forget the Unique skills the skill books taught.");
     public static final String HELP_RESET_WAYPOINT = put("help.reset_waypoint", "Forget your waypoint and the deepest Landing.");
-    public static final String HELP_RESET_ALL = put("help.reset_all", "All three of the above.");
+    public static final String HELP_RESET_ALL = put("help.reset_all", "Both of the above.");
     public static final String HELP_DEBUG_WFC = put("help.debug_wfc", "Toggle the particle view of this floor's room graph (green loop, yellow single link, red dead end).");
     public static final String HELP_DEBUG_INFO = put("help.debug_info", "Say the floor, level, theme and seed you are standing in.");
     public static final String HELP_ADMIN_HELP = put("help.admin_help", "This list.");

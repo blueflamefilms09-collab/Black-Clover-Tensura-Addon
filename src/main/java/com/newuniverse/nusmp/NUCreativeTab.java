@@ -50,13 +50,12 @@ public final class NUCreativeTab {
                 for (net.minecraft.world.item.ItemStack st : com.newuniverse.nusmp.skilltree.SkillBookSystem.creativeItems()) output.accept(st);     // 1.96.0: one Skill Book per unique skill
                 output.accept(com.newuniverse.nusmp.shishou.ShishouItems.creativeStack());                                      // Shishou: a bare stack; it becomes the sword only when no Shishou exists, else it dissolves (the one-per-world cap)
                 for (net.minecraft.world.item.Item hw : com.newuniverse.nusmp.heroweapon.HeroWeaponSystem.creativeItems()) output.accept(hw);   // 1.62.0: the 21 hero weapons and the Calling Gems
-                for (net.minecraft.world.item.ItemStack ft : com.newuniverse.nusmp.fairytail.FairyTailSystem.creativeItems()) output.accept(ft);   // Fairy Tail skill books
                 output.accept(com.newuniverse.nusmp.fairytail.storm.StormBoot.STAFF.get());                                          // Storm Magic (Fairy Tail): the Stormcaller Staff
                 output.accept(com.newuniverse.nusmp.firecast.FireCastBoot.BAT.get());                                                // fire casting: Magna's Soul Bat
                 for (var egg : com.newuniverse.nusmp.companion.sample.CompanionEntities.spawnEggs()) output.accept(egg.get());                       // companions: the sample companion's spawn egg (Charmy)
                 for (var sb : com.newuniverse.nusmp.spiritblades.SpiritBladesBoot.creativeItems()) output.accept(sb.get());                  // the Wind Spirit blades: Spirit of Zephyr and Spirit of Boreas (creative only)
                 for (var vl : com.newuniverse.nusmp.valkyrielance.ValkyrieLanceBoot.creativeItems()) output.accept(vl.get());                // the Valkyrie Drill Lance (creative only)
-                for (var ci : com.newuniverse.nusmp.celestial.CelestialItems.creativeItems()) output.accept(ci.get());               // Celestial Spirit Magic: the keys, the book, the sceptre
+                for (var ci : com.newuniverse.nusmp.celestial.CelestialItems.creativeItems()) output.accept(ci.get());               // Celestial Gate: the keys and the sceptre
                 output.accept(com.newuniverse.nusmp.block.NUBlocks.GRIMOIRE_ALTAR_ITEM.get());
                 com.newuniverse.nusmp.labyrinth.LabyrinthCreative.addTo(output);                                       // 1.35.0: the Labyrinth's blocks and items
 

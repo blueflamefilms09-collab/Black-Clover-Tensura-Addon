@@ -64,15 +64,15 @@ public class AdminSpecTest {
             assertNotNull(AdminText.englishOrNull(e.helpKey()), "no help text for " + e.usage());
             assertFalse(e.usage().startsWith("/") || e.usage().startsWith(AdminSpec.ROOT + " "), "a usage is written without the root: " + e.usage());
         }
-        assertEquals(16, AdminSpec.ENTRIES.size());
+        assertEquals(13, AdminSpec.ENTRIES.size());
         assertEquals(AdminSpec.ENTRIES.size(), AdminSpec.usages().size());
     }
 
     @Test
     public void theUsagesCoverEveryCommandOfTheOwnersSpec() {
         List<String> usages = AdminSpec.usages();
-        for (String must : new String[] {"tp <floor>", "skip", "skip <floors>", "boss spawn <level>", "boss kill", "rift spawn pocket", "rift spawn shortcut", "skill unlock <skill>",
-                "skill give_sp <amount>", "reset alignment", "reset skills", "reset waypoint", "reset all", "debug wfc", "debug info", "admin help"}) {
+        for (String must : new String[] {"tp <floor>", "skip", "skip <floors>", "boss spawn <level>", "boss kill", "rift spawn pocket", "rift spawn shortcut",
+                "reset alignment", "reset waypoint", "reset all", "debug wfc", "debug info", "admin help"}) {
             assertTrue(usages.contains(must), "missing: " + must);
         }
     }
@@ -85,8 +85,6 @@ public class AdminSpecTest {
         assertEquals(1000, AdminSpec.range("floors").max());
         assertEquals(-100, AdminSpec.range("level").min());
         assertEquals(100, AdminSpec.range("level").max());
-        assertEquals(1, AdminSpec.range("amount").min());
-        assertEquals(AdminSpec.SP_MAX, AdminSpec.range("amount").max());
         assertEquals(DungeonAdminMath.MAX_FLOOR, AdminSpec.range("floor").max());
         assertEquals(DungeonAdminMath.MAX_LEVEL, AdminSpec.range("level").max());
     }
@@ -107,15 +105,13 @@ public class AdminSpecTest {
     }
 
     @Test
-    public void theTreeUsesTheOwnersRangesAndTheSkillSuggestions() throws IOException {
+    public void theTreeUsesTheOwnersRanges() throws IOException {
         String src = read(TREE);
         assertTrue(src.contains("argument(\"floor\", IntegerArgumentType.integer(-maxFloor, maxFloor))"));
         assertTrue(src.contains("argument(\"floors\", IntegerArgumentType.integer(-maxFloor, maxFloor))"));
         assertTrue(src.contains("argument(\"level\", IntegerArgumentType.integer(-maxLevel, maxLevel))"));
-        assertTrue(src.contains("argument(\"amount\", IntegerArgumentType.integer(1, AdminSpec.SP_MAX))"));
         assertTrue(src.contains("int maxFloor = DungeonAdminMath.MAX_FLOOR, maxLevel = DungeonAdminMath.MAX_LEVEL;"));
-        assertTrue(src.contains("SharedSuggestionProvider.suggest(SkillAdmin.suggestions(), b)"), "tab completion comes from the skill registry");
-        for (String arg : new String[] {"floor", "floors", "level", "skill", "amount"}) assertTrue(src.contains("argument(\"" + arg + "\""), arg);
+        for (String arg : new String[] {"floor", "floors", "level"}) assertTrue(src.contains("argument(\"" + arg + "\""), arg);
     }
 
     @Test

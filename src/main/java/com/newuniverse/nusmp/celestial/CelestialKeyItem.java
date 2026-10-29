@@ -23,10 +23,9 @@ import com.newuniverse.nusmp.particle.fx.FxOld;
 import com.newuniverse.nusmp.particle.fx.FxThemes;
 
 /**
- * Why: a Celestial Key is a physical item (a Gold Zodiac key or a silver key), the only thing that lets Celestial Spirit Magic call its spirit. Holding the key and
+ * Why: a Celestial Key is a physical item (a Gold Zodiac key or a silver key), a collectible of the Celestial Gate (the Celestial Spirit Magic skill that once called the spirits was removed). Holding the key and
  * keeping the use button down performs the contract ritual (three seconds, a ring of stars, a share of the magicules): the key then carries the player's name and the
- * spirit answers only that player. Using the key while sneaking breaks the contract so the key can be given away. The summon itself is a mode of the skill
- * ({@code skill.CelestialSpiritMagicSkill}); this item does not summon.
+ * spirit answers only that player. Using the key while sneaking breaks the contract so the key can be given away. This item does not summon.
  */
 public final class CelestialKeyItem extends Item {
     private final CelestialKey key;

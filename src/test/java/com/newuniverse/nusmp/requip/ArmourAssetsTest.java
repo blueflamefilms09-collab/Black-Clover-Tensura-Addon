@@ -63,7 +63,7 @@ class ArmourAssetsTest {
                     "textures/item/" + w + ".png", "models/item/" + w + ".json", "models/item/" + w + "_icon.json"))
                 if (!has(rel)) missing.add(rel);
         }
-        for (String rel : List.of("textures/item/titanias_requip.png", "models/item/titanias_requip.json", "textures/skill/erza_requip.png"))
+        for (String rel : List.of("textures/skill/erza_requip.png"))
             if (!has(rel)) missing.add(rel);
         assertTrue(missing.isEmpty(), "missing: " + missing);
     }

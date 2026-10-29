@@ -1,4 +1,4 @@
-"""Requip: The Knight (Erza Scarlet): the six weapons the armours put in the hand, the book "Titania's Requip" and the skill icon. Deterministic.
+"""Requip: The Knight (Erza Scarlet): the six weapons the armours put in the hand and the skill icon. Deterministic.
 
     python3 -B tools/gen_erza_weapons.py                  (then: python3 -B tools/item_preview/preview_weapons.py flame_empress_blade ...)
 
@@ -7,7 +7,7 @@ It builds on tools/gen_weapon_models.py (the Genesis Demon-Slayer's standard): f
   assets/nusmp/textures/entity/weapon/<id>.png        its skin (+ _glow.png, drawn additive and full bright)
   assets/nusmp/textures/item/<id>.png                 the 16x16 inventory icon (the mesh is placed on its diagonal)
   assets/nusmp/models/item/<id>.json, <id>_icon.json  the 3D in-hand model and the flat icon model
-and for the book assets/nusmp/textures/item/titanias_requip.png + models/item/titanias_requip.json, and assets/nusmp/textures/skill/erza_requip.png (32x32).
+and assets/nusmp/textures/skill/erza_requip.png (32x32).
 The weapons: flame_empress_blade, lightning_empress_halberd, sea_empress_trident, black_wing_blade, nakagami_edge, purgatory_mace (engravings: item/WeaponEngravings.java).
 Model units are pixels: y along the weapon (0 = where the head meets the guard, the grip below 0), x across it, z through it.
 """
@@ -337,32 +337,7 @@ def write_models(item_id):
     dump(item_id, src)
 
 
-# ====================================================================================================================== the book and the skill icon
-def write_book():
-    im = Image.new("RGBA", (16, 16), (0, 0, 0, 0))
-    cover, dark, gold, ember = (150, 24, 36), (86, 12, 24), (232, 186, 70), (255, 150, 60)
-    for y in range(2, 14):
-        for x in range(3, 13):
-            c = cover if x > 3 else dark
-            if y in (2, 13) or x in (3, 12):
-                c = dark
-            im.putpixel((x, y), c + (255,))
-    for y in range(4, 12):                                              # a gold sword on the cover
-        im.putpixel((8, y), gold + (255,))
-    for x in range(6, 11):
-        im.putpixel((x, 9), gold + (255,))
-    im.putpixel((8, 3), ember + (255,))
-    im.putpixel((8, 12), ember + (255,))
-    for y in range(3, 13):
-        im.putpixel((4, y), gold + (255,)) if y % 3 == 0 else None
-    d = os.path.join(ASSETS, "textures", "item")
-    os.makedirs(d, exist_ok=True)
-    im.save(os.path.join(d, "titanias_requip.png"))
-    models = os.path.join(ASSETS, "models", "item")
-    with open(os.path.join(models, "titanias_requip.json"), "w", newline="\n") as f:
-        f.write(json.dumps({"parent": "minecraft:item/generated", "textures": {"layer0": "nusmp:item/titanias_requip"}}) + "\n")
-
-
+# ====================================================================================================================== the skill icon
 def write_skill_icon():
     S = 32
     im = Image.new("RGBA", (S, S), (0, 0, 0, 0))
@@ -392,7 +367,6 @@ def write_skill_icon():
 
 
 def main(only=None):
-    write_book()
     write_skill_icon()
     for item_id, fn, real, grip in WEAPONS:
         if only and item_id not in only:

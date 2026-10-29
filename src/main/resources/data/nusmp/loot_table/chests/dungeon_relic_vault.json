@@ -41,13 +41,6 @@
           "functions": [ { "function": "minecraft:set_count", "count": { "type": "minecraft:uniform", "min": 1, "max": 2 } } ] },
         { "type": "minecraft:item", "name": "tensura:high_quality_magic_crystal", "weight": 1 }
       ]
-    },
-    {
-      "rolls": 1,
-      "conditions": [ { "condition": "minecraft:random_chance", "chance": 0.12 } ],
-      "entries": [
-        { "type": "minecraft:loot_table", "value": "nusmp:chests/fairy_tail_skill_book" }
-      ]
     }
   ]
 }

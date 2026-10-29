@@ -40,7 +40,6 @@ public final class AdminRegistry {
         gameBus.addListener((PlayerEvent.PlayerLoggedOutEvent e) -> forget(e.getEntity().getUUID()));
         gameBus.addListener((ServerStoppedEvent e) -> {
             FloorTeleport.clear();
-            SkillAdmin.clear();
             WfcDebugService.clear();
             warned = false;
         });
@@ -56,7 +55,6 @@ public final class AdminRegistry {
     private static void tick(MinecraftServer server) {
         try {
             FloorTeleport.tick(server);
-            SkillAdmin.tick(server);
             WfcDebugService.tick(server);
         } catch (RuntimeException e) {
             if (!warned) {
@@ -68,7 +66,6 @@ public final class AdminRegistry {
 
     private static void forget(UUID id) {
         FloorTeleport.forget(id);
-        SkillAdmin.forget(id);
         WfcDebugService.forget(id);
     }
 }

@@ -1,5 +1,4 @@
 {
- "item.nusmp.titanias_requip": "Titania's Requip",
  "item.nusmp.flame_empress_blade": "Flame Empress Blade",
  "item.nusmp.lightning_empress_halberd": "Lightning Empress Halberd",
  "item.nusmp.sea_empress_trident": "Sea Empress Trident",
@@ -32,7 +31,5 @@
  "nusmp.skill.msg.erza.locked": "%s is not yet yours: master Requip to %s percent.",
  "nusmp.skill.msg.erza.equipped": "%s",
  "nusmp.skill.msg.erza.dry": "Your magic power runs dry: the armor fades.",
- "nusmp.requip.weapon.lore": "Requipped with its armour; it vanishes when the armour is dismissed.",
- "nusmp.requip.book.lore": "Teaches Requip: The Knight (Ultimate skill): fourteen armours, one per mode.",
- "nusmp.requip.book.need": "Needs %s max EP, or %s with a mastered Unique skill."
+ "nusmp.requip.weapon.lore": "Requipped with its armour; it vanishes when the armour is dismissed."
 }

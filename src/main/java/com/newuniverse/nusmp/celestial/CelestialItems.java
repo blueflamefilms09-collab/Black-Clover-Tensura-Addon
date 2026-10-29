@@ -12,7 +12,7 @@ import java.util.Map;
 
 /**
  * Why: the items of Celestial Spirit Magic in one registry: the twelve Gold Zodiac keys, the four silver keys, the Spirit King's gate key (all from {@link CelestialKey},
- * so a key added to the table is registered without another line), the skill book that teaches the skill, and the sceptre the king leaves to the one who beats him.
+ * so a key added to the table is registered without another line) and the sceptre the king leaves to the one who beats him. The Celestial Spirit Magic skill book was removed.
  * They are registered through {@link NUItems#ITEMS}; call {@link #init()} from the mod constructor before that register is added to the bus.
  */
 public final class CelestialItems {
@@ -20,7 +20,6 @@ public final class CelestialItems {
 
     private static final Map<CelestialKey, DeferredItem<? extends Item>> KEYS = new EnumMap<>(CelestialKey.class);
 
-    public static final DeferredItem<CelestialSkillBookItem> SKILL_BOOK;
     public static final DeferredItem<SpiritKingSceptreItem> SCEPTRE;
 
     static {
@@ -28,7 +27,6 @@ public final class CelestialItems {
             if (k.summons()) KEYS.put(k, NUItems.ITEMS.register(k.itemId(), () -> new CelestialKeyItem(k)));
             else KEYS.put(k, NUItems.ITEMS.register(k.itemId(), () -> new GateKeyItem(k)));
         }
-        SKILL_BOOK = NUItems.ITEMS.register("celestial_spirit_magic_book", CelestialSkillBookItem::new);
         SCEPTRE = NUItems.ITEMS.register("spirit_king_sceptre", SpiritKingSceptreItem::new);
     }
 
@@ -47,18 +45,17 @@ public final class CelestialItems {
         return null;
     }
 
-    /** The items the model and the tab need: every key, the book and the sceptre. */
+    /** The items the model and the tab need: every key and the sceptre. */
     public static List<DeferredItem<? extends Item>> all() {
         List<DeferredItem<? extends Item>> out = new ArrayList<>();
         for (CelestialKey k : CelestialKey.values()) out.add(KEYS.get(k));
-        out.add(SKILL_BOOK);
         out.add(SCEPTRE);
         return List.copyOf(out);
     }
 
     public static List<DeferredItem<? extends Item>> creativeItems() { return all(); }
 
-    /** The items drawn as 3D models in hand (client.WeaponRenderer): every key, the book and the sceptre. */
+    /** The items drawn as 3D models in hand (client.WeaponRenderer): every key and the sceptre. */
     public static List<java.util.function.Supplier<? extends Item>> renderables() {
         List<java.util.function.Supplier<? extends Item>> out = new ArrayList<>();
         out.addAll(all());

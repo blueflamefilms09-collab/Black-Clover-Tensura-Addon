@@ -13,15 +13,13 @@ import java.util.Map;
 import java.util.function.Supplier;
 
 /**
- * Why: the items of Requip: The Knight in one register: the skill book "Titania's Requip" (using it teaches the skill) and the six weapons the armours put in the hand. The register is the mod's
+ * Why: the items of Requip: The Knight in one register: the six weapons the armours put in the hand (the skill book "Titania's Requip" was removed). The register is the mod's
  * own and is attached to the mod bus by {@link RequipSystem#init}.
  */
 public final class RequipItems {
     private RequipItems() {}
 
     public static final DeferredRegister.Items REGISTER = DeferredRegister.createItems(NUSMP.MODID);
-
-    public static final DeferredItem<TitaniasRequipItem> TITANIAS_REQUIP = REGISTER.register("titanias_requip", TitaniasRequipItem::new);
 
     /** weapon id -> {damage bonus, attack speed modifier, lore line}. The ids are the {@link Armour#weapon()} values. */
     private static final Map<String, Object[]> WEAPON_STATS = new LinkedHashMap<>();
@@ -52,10 +50,9 @@ public final class RequipItems {
     /** The weapons as suppliers, for {@code client.WeaponRenderer}'s list of 3D weapons. */
     public static List<Supplier<? extends Item>> weapons() { return new ArrayList<>(WEAPONS.values()); }
 
-    /** Everything that belongs in the creative tab: the book first, then the weapons. */
+    /** Everything that belongs in the creative tab: the weapons. */
     public static List<Item> creative() {
         List<Item> l = new ArrayList<>();
-        l.add(TITANIAS_REQUIP.get());
         for (DeferredItem<RequipWeaponItem> d : WEAPONS.values()) l.add(d.get());
         return l;
     }

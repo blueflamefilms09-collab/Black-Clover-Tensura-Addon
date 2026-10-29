@@ -98,7 +98,7 @@ public final class UnifiedTooltipRules {
         if (names.contains("djinn") && (names.contains("weapon") || h.weapon())) return Category.WEAPON;
         if (names.contains("djinn")) return Category.DJINN;
         if (names.contains("grimoire")) return Category.GRIMOIRE;
-        if (names.contains("skillbook") || names.contains("spbook") || names.contains("ftbook") || names.contains("codex")) return Category.BOOK;
+        if (names.contains("skillbook") || names.contains("spbook") || names.contains("codex")) return Category.BOOK;
         if (names.contains("key")) return Category.KEY;
         if (names.contains("core")) return Category.CORE;
         if (h.armour() || names.contains("armor") || names.contains("armour") || names.contains("robe")) return Category.ARMOUR;

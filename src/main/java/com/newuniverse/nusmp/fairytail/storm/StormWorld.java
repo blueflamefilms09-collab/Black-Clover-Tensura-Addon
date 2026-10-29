@@ -28,7 +28,7 @@ import java.util.List;
  * Why: a storm hurts, moves and looks after creatures, and every one of those questions has the same few answers: who may be hurt (never the caster, an ally, a pet, a summon, a
  * creative or spectating player, an armour stand), who is a friend, where the ground is, and how a hit goes through the balance law. This is that and nothing else; the manager decides
  * WHEN, this decides WHO and HOW MUCH. Every area query is a cylinder and is capped at {@link StormMath#MAX_FOES} creatures, so one storm can never scan or hurt an unbounded
- * crowd. Server side only. The rules mirror the Fairy Tail skills ({@code fairytail/FtWorld}, which keeps its own helpers package-private).
+ * crowd. Server side only. The rules mirror the (removed) Fairy Tail skills' target rules.
  */
 final class StormWorld {
     private StormWorld() {}

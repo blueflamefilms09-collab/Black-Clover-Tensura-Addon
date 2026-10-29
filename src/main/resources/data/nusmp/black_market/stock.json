@@ -1,27 +1,4 @@
 {
-  "_why": "What the old witch SELLS, as data so the owner can retune the shelf with no rebuild and a server owner can replace it with a datapack and /reload (the pure validator is StockSchema.java; see docs/skillbooks_unique.md). A line is a SLOT on the shelf: at every restock its price is rolled inside [price_min, price_max] from the world seed, the restock period and the slot id (so it is the same for every player and the same after a restart: 'market risk' without anyone being cheated), 'stock' copies are put out (a number, or [min, max]), and 'weight' is the percent chance the slot is on the shelf at all. A bad line is skipped with a sentence shown by /multiverse tree shop status; it never breaks the others. The numbers are the owner's: route books 2,000,000 to 3,000,000 gold, one copy each; SP primers 3 to 5 copies. Keys that start with an underscore are comments. 1.96.0: the SP Book lines are gone with the Skill Points; every book teaches a unique skill.",
-  "entries": [
-    {
-      "_why": "The target of the whole shop (the owner's text: 'The target: the Fang of Smoldering Insanity'; it is the book of its own Exiled Heavy Knight skill). A line of its own so that it can be the flagship: band_low 0.6667 puts its roll in the top third of the band (2,666,700 to 3,000,000 gold), so the book everybody wants is also the dearest, and the all-routes line below skips this route, so it is never on the shelf twice.",
-      "id": "fang_of_smoldering_insanity",
-      "kind": "route_book",
-      "route": "nusmp:smoldering_fang_of_insanity",
-      "price_min": 2000000,
-      "price_max": 3000000,
-      "band_low": 0.6667,
-      "stock": 1,
-      "weight": 100,
-      "flagship": true
-    },
-    {
-      "_why": "Every OTHER Skill Book: one slot per book in the registry, at the owner's band of 2,000,000 to 3,000,000 gold, one copy each. 'routes: all' is read when the shelf is rolled, so a book added later by a datapack appears on the shelf with no edit here.",
-      "id": "route_books",
-      "kind": "route_book",
-      "routes": "all",
-      "price_min": 2000000,
-      "price_max": 3000000,
-      "stock": 1,
-      "weight": 100
-    }
-  ]
+  "_why": "What the old witch SELLS, as data so a server owner can put a shelf together with a datapack and /reload (the pure validator is StockSchema.java). The shelf is EMPTY on purpose: the witch only ever sold Skill Books (route books at 2,000,000 to 3,000,000 gold) and SP Books, and both items, together with the unique skills they taught, were removed at the owner's request (docs/skill_books_removed.md). The witch still BUYS goods for gold (prices.json). A line is a SLOT on the shelf: at every restock its price is rolled inside [price_min, price_max] from the world seed and the restock period, 'stock' copies are put out, and 'weight' is the percent chance the slot is on the shelf; the only kinds the code knows are the two removed book kinds, which sell nothing (the shop makes no item for them), so a line is of no use until a new kind of good is added. Keys that start with an underscore are comments.",
+  "entries": []
 }

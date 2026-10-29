@@ -27,7 +27,6 @@ class CelestialAssetsTest {
     private static List<String> itemIds() {
         List<String> ids = new ArrayList<>();
         for (CelestialKey k : CelestialKey.values()) ids.add(k.itemId());
-        ids.add("celestial_spirit_magic_book");
         ids.add("spirit_king_sceptre");
         return ids;
     }
@@ -166,19 +165,12 @@ class CelestialAssetsTest {
     }
 
     @Test
-    void theLangFragmentNamesEveryItemAndMode() throws IOException {
+    void theLangFragmentNamesEveryItem() throws IOException {
         JsonObject lang = json(Path.of("tools", "lang", "celestial_keys.json"));
         List<String> bad = new ArrayList<>();
         for (String id : itemIds()) if (!lang.has("item.nusmp." + id)) bad.add("item." + id);
-        for (CelestialKey k : CelestialKey.values()) {
-            if (!k.summons()) continue;
-            if (!lang.has("nusmp.skill.mode.celestial." + k.id)) bad.add("mode " + k.id);
-            if (k.hasStarDress() && !lang.has("nusmp.skill.mode.celestial.dress_" + k.id)) bad.add("dress " + k.id);
-        }
-        for (String k : new String[]{"nusmp.skill.celestial_spirit_magic", "nusmp.skill.celestial_spirit_magic.description", "entity.nusmp.spirit_king", "curios.identifier.celestial_key",
-                "nusmp.skill.mode.celestial.dismiss", "nusmp.skill.mode.celestial.blessing", "nusmp.skill.mode.celestial.king"})
+        for (String k : new String[]{"entity.nusmp.spirit_king", "curios.identifier.celestial_key"})
             if (!lang.has(k)) bad.add(k);
         assertEquals(List.of(), bad);
-        assertTrue(Files.exists(ASSETS.resolve("textures/skill/celestial_spirit_magic.png")), "the skill icon");
     }
 }

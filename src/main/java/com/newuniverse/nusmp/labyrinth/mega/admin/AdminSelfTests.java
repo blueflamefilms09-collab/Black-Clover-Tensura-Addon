@@ -8,8 +8,6 @@ import com.newuniverse.nusmp.labyrinth.mega.SelfTests;
 import com.newuniverse.nusmp.labyrinth.mega.Sector;
 import com.newuniverse.nusmp.labyrinth.mega.gen.SectorGenerator;
 import com.newuniverse.nusmp.labyrinth.mega.rift.Waypoint;
-import com.newuniverse.nusmp.skilltree.unique.UniqueBooks;
-import io.github.manasmods.manascore.skill.api.SkillAPI;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.MinecraftServer;
@@ -25,9 +23,9 @@ import java.util.Set;
  * server's own command dispatcher after every mod has registered: the player's {@code /dungeon} subcommands are all still there and still open to a level-0 source; every admin
  * literal exists and is hidden from a level-1 source and usable by a level-2 source; the usage strings Brigadier prints for each level are EXACTLY {@link AdminSpec}'s (so a node
  * added without its spec line, a spec line without its node, or a node that lost its gate fails the run); the integer ranges hold at their edges (1000 parses, 1001 does not;
- * level 100 and 101; an amount of 0); every command run from a source with no player (the console) returns 0 and throws nothing; every command that needs a player returns a clean
- * refusal for a stand-in standing in the Overworld; the teleport planner says ARRIVE for a floor that stands and does not for one far beyond (without growing anything); the
- * Unique skill list is not empty and teaching, mastering and forgetting one by command works on a stand-in; and the particle view toggles on a built floor and off again. A stand-in
+ * level 100 and 101); every command run from a source with no player (the console) returns 0 and throws nothing; every command that needs a player returns a clean
+ * refusal for a stand-in standing in the Overworld; the teleport planner says ARRIVE for a floor that stands and does not for one far beyond (without growing anything); and
+ * the particle view toggles on a built floor and off again. A stand-in
  * has no connection, so the teleport itself is covered by the planner and the pure rules, as in the other self-tests.
  */
 public final class AdminSelfTests {
@@ -88,8 +86,8 @@ public final class AdminSelfTests {
 
         // ---- the ranges hold at their edges
         String[][] edges = {{"tp 1000", "y"}, {"tp -1000", "y"}, {"tp 1001", "n"}, {"tp -1001", "n"}, {"tp 0", "y"}, {"skip 1000", "y"}, {"skip 1001", "n"},
-                {"boss spawn 100", "y"}, {"boss spawn -100", "y"}, {"boss spawn 101", "n"}, {"boss spawn -101", "n"}, {"skill give_sp 1", "y"}, {"skill give_sp 0", "n"},
-                {"skill give_sp " + (AdminSpec.SP_MAX + 1), "n"}, {"rift spawn pocket", "y"}, {"rift spawn shortcut", "y"}, {"rift spawn banana", "n"}, {"reset everything", "n"}};
+                {"boss spawn 100", "y"}, {"boss spawn -100", "y"}, {"boss spawn 101", "n"}, {"boss spawn -101", "n"},
+                {"rift spawn pocket", "y"}, {"rift spawn shortcut", "y"}, {"rift spawn banana", "n"}, {"reset everything", "n"}};
         for (String[] e : edges) {
             boolean full = parsesFully(d, AdminSpec.ROOT + " " + e[0], op);
             if (full != e[1].equals("y")) return fail("'/" + AdminSpec.ROOT + " " + e[0] + "' " + (full ? "was accepted" : "was refused") + " at permission level " + AdminSpec.PERMISSION);
@@ -117,7 +115,7 @@ public final class AdminSelfTests {
         ServerLevel over = server.overworld();
         FakePlayer fp = SelfTests.standIn(over, "dungeon_admin", 0.5, 100, 0.5);
         CommandSourceStack asFp = fp.createCommandSourceStack().withPermission(AdminSpec.PERMISSION);
-        String[] refusals = {"debug wfc", "debug info", "boss kill", "boss spawn 0", "skip 0", "skip -3", "skill unlock no_such_skill_here", "skill give_sp 5"};
+        String[] refusals = {"debug wfc", "debug info", "boss kill", "boss spawn 0", "skip 0", "skip -3"};
         for (String c : refusals) {
             int r;
             try {
@@ -137,32 +135,6 @@ public final class AdminSelfTests {
         }
         if (!fp.getPersistentData().getCompound(Waypoint.KEY).isEmpty()) return fail("reset waypoint left a waypoint behind");
         done.append("resets; ");
-
-        // ---- the Unique skills: the list is the registry's, and one can be taught, mastered and forgotten by command
-        List<String> ids = SkillAdmin.ids();
-        if (ids.isEmpty()) return fail("the Unique skill list is empty");
-        String first = ids.get(0);
-        if (!SkillAdmin.suggestions().get(0).equals("all") || SkillAdmin.suggestions().size() != ids.size() + 1) return fail("the suggestions are not 'all' plus the registry's lines");
-        if (SkillAPI.getSkillsFrom(fp) == null) {
-            done.append(ids.size()).append(" unique skills listed (the stand-in has no skill list, so teaching was not driven); ");
-        } else {
-            if (UniqueBooks.owns(fp, first)) UniqueBooks.forget(fp, first);
-            try {
-                if (d.execute(AdminSpec.ROOT + " skill unlock " + first, asFp) != 1 || !UniqueBooks.owns(fp, first)) return fail("skill unlock " + first + " did not teach the skill");
-                if (d.execute(AdminSpec.ROOT + " skill unlock " + first, asFp) != 0) return fail("teaching a skill that is already known should report 0");
-                int mastered = d.execute(AdminSpec.ROOT + " skill give_sp 3", asFp);                      // Tensura's mastery on a stand-in is not guaranteed to take: reported, not failed
-                if (d.execute(AdminSpec.ROOT + " reset skills", asFp) != 1) return fail("reset skills did not start a job");
-                if (!SkillAdmin.busy(fp.getUUID())) return fail("reset skills started no job");
-                SkillAdmin.drain(fp);                                                                      // a stand-in is not in the player list, so the clock would not reach it
-                if (UniqueBooks.owns(fp, first)) return fail("reset skills left " + first + " behind");
-                done.append(ids.size()).append(" unique skills, unlock/reset ok, mastery on ").append(mastered).append(" skill(s); ");
-            } catch (Throwable t) {
-                return fail("the skill commands threw " + t.getClass().getSimpleName() + ": " + t.getMessage());
-            } finally {
-                UniqueBooks.forget(fp, first);
-                SkillAdmin.forget(fp.getUUID());
-            }
-        }
 
         // ---- the teleport planner, the debug model and the particle view on a built floor
         ServerLevel mega = SelfTests.mega(server);

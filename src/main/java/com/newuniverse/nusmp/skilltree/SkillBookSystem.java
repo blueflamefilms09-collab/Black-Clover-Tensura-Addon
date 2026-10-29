@@ -1,28 +1,21 @@
 package com.newuniverse.nusmp.skilltree;
 
-import com.newuniverse.nusmp.skilltree.hk.HeavyKnightSkills;
-import com.newuniverse.nusmp.skilltree.item.ItemsSystem;
-import com.newuniverse.nusmp.skilltree.line.EvolutionConfig;
-import com.newuniverse.nusmp.skilltree.line.LineSystem;
+import com.newuniverse.nusmp.skilltree.item.SkillItems;
 import com.newuniverse.nusmp.skilltree.shop.ShopSystem;
 import com.newuniverse.nusmp.skilltree.state.SkillTreeAttachments;
-import com.newuniverse.nusmp.skilltree.unique.SkillBookSelfTests;
-import com.newuniverse.nusmp.skilltree.unique.UniqueEvents;
-import com.newuniverse.nusmp.skilltree.unique.UniqueSkills;
+import com.newuniverse.nusmp.skilltree.unique.LegacyMigration;
+import com.newuniverse.nusmp.skilltree.unique.LegacySkills;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
-import net.neoforged.fml.config.ModConfig;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Why: the skill book system is a few small systems (the unique skills one per book and the line engine that runs their arts and passives; the items and the loot; the Black Market shop) that must start in one
- * fixed order, and the mod constructor should have exactly ONE line for all of it. The order: the legacy record's attachment and the skill registers on the mod bus (the ManasCore skill registry must hear
- * about the unique skills before it freezes); then the line engine, the game-bus events, {@link ItemsSystem#init} (the Skill Book, the loot modifier types) and {@link ShopSystem#init}; the in-game self-tests
- * last. Each system registers its OWN config file, so no separate {@code registerConfig} line exists. 1.96.0: this replaced the Skill Tree engine (routes, SP, the tree screen), which was removed; the
- * attachment {@code nusmp:skill_tree} stays registered because old worlds hold it and the Black Market keeps its gold in it. Safe to call twice.
+ * Why: the Skill Books (the Skill Book and the SP Book items), the 284 unique skills they taught, the line engine that ran those skills and the book loot were removed at the owner's request (see
+ * {@code docs/skill_books_removed.md}); the mod constructor still has exactly ONE line for what is left of this package, and this is it. What stays, in this order: the attachment {@code nusmp:skill_tree} (old worlds
+ * hold it and the Black Market keeps its gold in it); the four data component ids the books carried ({@link SkillItems}); the inert stubs of the retired skill ids ({@link LegacySkills}) and the login hook that
+ * forgets them from a player ({@link LegacyMigration}); and the Black Market ({@link ShopSystem}), whose witch buys goods for gold. Safe to call twice.
  */
 public final class SkillBookSystem {
     private SkillBookSystem() {}
@@ -34,19 +27,14 @@ public final class SkillBookSystem {
         if (done) return;
         done = true;
         SkillTreeAttachments.ATTACHMENTS.register(modBus);
-        UniqueSkills.init(modBus);                                  // one Unique skill per book, in Tensura's Ability Selection screen (docs/skillbooks_unique.md)
-        HeavyKnightSkills.SKILLS.register(modBus);                  // the technique classes of the four Heavy Knight books (run as modes of their unique skills)
-        LineSystem.init();                                          // the arts and passives engine
-        modContainer.registerConfig(ModConfig.Type.SERVER, EvolutionConfig.SPEC, "nusmp-evolution-server.toml");   // 3.26.0: evolutionSkills (counters, Ultimate gate, evolved passives, Debt)
-        UniqueEvents.register();                                    // the data reload, the login migration
-        ItemsSystem.init(modBus, modContainer);
+        SkillItems.init(modBus);                                    // the four legacy data components (old stacks and worlds still load)
+        LegacySkills.init(modBus);                                  // the retired skill ids, as inert stubs (the ManasCore skill registry must hear about them before it freezes)
+        LegacyMigration.register();                                 // login: forget the stubs, clear the old Skill Tree record
         ShopSystem.init(modBus, modContainer);
-        SkillBookSelfTests.register();
-        com.newuniverse.nusmp.skilltree.item.BookLookSelfTests.register();      // 3.26.0: skillbook.look.files (the packed look files, the rarity values, the shimmer cap)
     }
 
-    /** What the creative tab offers: one Skill Book per unique skill. */
+    /** What the creative tab offers from this package: nothing any more (there are no Skill Books). Kept so the creative tab's call site still compiles; the call site can be removed. */
     public static List<ItemStack> creativeItems() {
-        return new ArrayList<>(ItemsSystem.creativeItems());
+        return List.of();
     }
 }

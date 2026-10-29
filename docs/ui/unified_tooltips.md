@@ -42,7 +42,7 @@ Rare; Tool Special; Grimoire, Core Unique; Hero Weapon, Djinn Legend; Food, Mate
 ### The category of an item
 
 `UnifiedTooltipRules.classify`, first match wins: flags the game knows for sure (armour, sword/bow/trident, digger, block item, food component), then the simple class names of the
-item's class chain (HeroWeapon, Djinn, Grimoire, SkillBook/SPBook/FtBook, Key, Core, Armor/Robe, Weapon/Sword/Bow/Trident/Spear/Staff/Blade, Tool, Food/Meal,
+item's class chain (HeroWeapon, Djinn, Grimoire, SkillBook/SPBook, Key, Core, Armor/Robe, Weapon/Sword/Bow/Trident/Spear/Staff/Blade, Tool, Food/Meal,
 Trinket/Charm/Seal/Relic, Material/Gem/Fragment/Shard), then the registry path as whole words between underscores for a plain `Item` (`_key`, `_core`, `_book`, `coin`, `ring`,
 `ingot`, `stew` ...). Nothing matches: "Item", Normal.
 

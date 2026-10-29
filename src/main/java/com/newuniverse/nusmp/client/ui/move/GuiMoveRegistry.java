@@ -165,7 +165,6 @@ public final class GuiMoveRegistry {
         fixed("client/multiverse/MultiverseStatusClient.java", "the compact status panel takes the spot of another mod's placeholder text on its screen: it follows that text");
         fixed("client/multiverse/FourKingdomsSlot.java", "a button fixed to a slot of the inventory screen: it follows the inventory");
         fixed("client/manazone/ManaZoneClient.java", "a full-screen tint of the camera: nothing to move");
-        fixed("client/skilltree/ItemsClient.java", "the full-width 'skill acquired' banner and flash: an announcement across the whole screen");
         fixed("client/ui/gs/GsNotices.java", "the alert crest of the great_spirit look is placed by its own client setting ui.greatSpirit.noticePos (corner + offset), moved on its own screen (/nusmp_gui_crest)");
         fixed("client/ui/gs/GsCrestScreen.java", "the crest's own move screen (drag, Save, Reset); client only");
         // GUI Size entries that GUI Move leaves alone (by id)

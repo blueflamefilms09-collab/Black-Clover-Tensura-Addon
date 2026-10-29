@@ -375,14 +375,6 @@
   "y": 69.047,
   "z": -0.494
  },
- "celestial_spirit_magic_book": {
-  "class": "handitem",
-  "fraction": 0.5,
-  "source": "class",
-  "x": -0.175,
-  "y": 5.4,
-  "z": -0.365
- },
  "celestial_support": {
   "class": "shield",
   "fraction": 0.5,

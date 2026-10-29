@@ -6,8 +6,6 @@ import com.newuniverse.nusmp.client.ui.theme.MagicCircle;
 import com.newuniverse.nusmp.client.ui.theme.UiMath;
 import com.newuniverse.nusmp.client.ui.theme.UiPanel;
 import com.newuniverse.nusmp.client.ui.theme.UiTheme;
-import com.newuniverse.nusmp.skilltree.unique.LineIndex;
-import com.newuniverse.nusmp.skilltree.unique.UniqueSkills;
 import com.newuniverse.nusmp.skilltree.shop.BuyPayload;
 import com.newuniverse.nusmp.skilltree.shop.GoldFormat;
 import com.newuniverse.nusmp.skilltree.shop.SellAllPayload;
@@ -15,7 +13,6 @@ import com.newuniverse.nusmp.skilltree.shop.SellPayload;
 import com.newuniverse.nusmp.skilltree.shop.ShopRules;
 import com.newuniverse.nusmp.skilltree.shop.ShopSnapshot;
 import com.newuniverse.nusmp.skilltree.shop.ShopSyncPayload;
-import com.newuniverse.nusmp.skilltree.shop.StockEntry;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
@@ -355,19 +352,12 @@ public final class ShopScreen extends Screen {
     }
 
     private int nameColor(ShopSnapshot.Offer o) {
-        if (o.kind() == StockEntry.Kind.ROUTE_BOOK.ordinal()) {
-            LineIndex.Line l = UniqueSkills.line(o.ref());
-            if (l != null) return 0xFF000000 | ShopColors.lift(l.color());                    // the book's own colour, lifted so it reads on the dark glass
-        }
         return o.flagship() ? ShopPainter.AMBER : ShopPainter.PAPER;
     }
 
-    /** What the witch murmurs about the offer the mouse is over. */
+    /** What the witch murmurs about the offer the mouse is over (the shelf holds no book any more, so every offer is "price each"). */
     private String blurb(ShopSnapshot.Offer o) {
-        String key;
-        if (o.kind() == StockEntry.Kind.ROUTE_BOOK.ordinal()) key = o.flagship() ? "gui.nusmp.shop.blurb.flagship" : "gui.nusmp.shop.blurb.route";
-        else key = I18n.exists("gui.nusmp.shop.blurb.sp." + o.ref()) ? "gui.nusmp.shop.blurb.sp." + o.ref() : "gui.nusmp.shop.blurb.sp";
-        return I18n.get(key);
+        return Component.translatable("gui.nusmp.shop.blurb.goods", GoldFormat.full(o.price())).getString();
     }
 
     /**

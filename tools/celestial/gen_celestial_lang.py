@@ -15,7 +15,7 @@ from celestial_data import ROOT  # noqa: E402
 
 J = os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "nusmp")
 FILES = [os.path.join(J, "celestial", f) for f in sorted(os.listdir(os.path.join(J, "celestial"))) if f.endswith(".java")] + [
-    os.path.join(J, "skill", "CelestialSpiritMagicSkill.java"), os.path.join(J, "skill", "CelestialArts.java")]
+    os.path.join(J, "skill", "CelestialArts.java")]
 LIT = r'"((?:[^"\\]|\\.)*)"'
 
 
@@ -36,22 +36,16 @@ def main():
             out["item.nusmp." + item] = "Silver Key of " + display
         else:
             out["item.nusmp." + item] = "Key of the Celestial Gate"
-        if rank != "GATE":
-            out["nusmp.skill.mode.celestial." + kid] = display + ": " + ability
     for m in re.finditer(r'"Star Dress",|^\s+"([A-Za-z ]+ Form)",', src, re.M):
         pass
     for m in re.finditer(r'^\s+[A-Z_]+\(' + LIT + r'.*?\n\s+' + LIT + r',', src, re.M | re.S):
         pass
     # the dresses: the "<Sign> Form" string is the first literal on the last line of each gold entry
     for m in re.finditer(r'^\s+([A-Z_]+)\(' + LIT + r'.*?"([A-Za-z]+ Form)"', src, re.M | re.S):
-        out["nusmp.skill.mode.celestial.dress_" + unescape(m.group(2))] = "Star Dress: " + m.group(3)
-    out["item.nusmp.celestial_spirit_magic_book"] = "Book of Celestial Spirit Magic"
+        pass   # the Star Dress mode names went with the skill that used them
     out["item.nusmp.spirit_king_sceptre"] = "Sceptre of the Celestial Spirit King"
     out["entity.nusmp.spirit_king"] = "The Celestial Spirit King"
     out["curios.identifier.celestial_key"] = "Celestial Key"
-    out["nusmp.skill.celestial_spirit_magic"] = "Celestial Spirit Magic"
-    out["nusmp.skill.celestial_spirit_magic.description"] = ("Unique. Call the spirits of the stars with their golden and silver keys, wear their power as Star Dress forms, "
-                                                              "and open the Celestial Gate when all twelve Gold Zodiac keys are yours.")
     for f in FILES:
         text = open(f, encoding="utf-8").read()
         for m in re.finditer(r'translatableWithFallback\(\s*' + LIT + r',\s*' + LIT, text):

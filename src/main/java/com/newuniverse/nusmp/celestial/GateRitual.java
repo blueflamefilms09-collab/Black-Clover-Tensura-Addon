@@ -1,8 +1,5 @@
 package com.newuniverse.nusmp.celestial;
 
-import com.newuniverse.nusmp.skill.NUSkills;
-import io.github.manasmods.manascore.skill.api.ManasSkillInstance;
-import io.github.manasmods.manascore.skill.api.SkillAPI;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.ClickEvent;
 import net.minecraft.network.chat.Component;
@@ -16,7 +13,6 @@ import net.minecraft.world.phys.Vec3;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * Why: the Celestial Gate is the moment the collection pays off. Using the gate key with all twelve Gold Zodiac keys carried and bound opens the Gate (a pillar of light, the
@@ -27,13 +23,8 @@ import java.util.Optional;
 public final class GateRitual {
     private GateRitual() {}
 
-    /** The skill's mastery as 0..1 (0 when the player does not know it). */
-    public static double mastery(ServerPlayer p) {
-        Optional<ManasSkillInstance> inst = SkillAPI.getSkillsFrom(p).getSkill(NUSkills.CELESTIAL_SPIRIT_MAGIC.get().getRegistryName());
-        if (inst.isEmpty()) return 0.0;
-        int max = inst.get().getMaxMastery();
-        return max <= 0 ? 0.0 : Math.max(0.0, Math.min(1.0, inst.get().getMastery() / (double) max));
-    }
+    /** The skill mastery as 0..1. The Celestial Spirit Magic skill was removed (the book that taught it is gone), so nobody has any: always 0. */
+    public static double mastery(ServerPlayer p) { return 0.0; }
 
     /** The gate key was used: opens the Gate if the rules allow, else says what is missing. */
     public static boolean open(ServerPlayer p) {

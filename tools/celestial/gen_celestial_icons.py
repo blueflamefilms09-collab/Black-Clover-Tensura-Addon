@@ -1,4 +1,4 @@
-"""Celestial Spirit Magic: the 16 x 16 inventory icons and the item model json of the keys, the book and the sceptre.
+"""Celestial Spirit Magic: the 16 x 16 inventory icons and the item model json of the keys and the sceptre.
 
     python3 -B tools/celestial/gen_celestial_icons.py
 
@@ -87,29 +87,6 @@ def key_icon(kid, rank, colour):
     return c.image()
 
 
-def book_icon():
-    c = Canvas()
-    cover = [(62, 40, 130), (86, 60, 170), (118, 90, 210), (160, 130, 240)]
-    gold = RAMPS["gold"]
-    for y in range(3, 14):
-        for x in range(3, 13):
-            sh = cover[0] if x >= 11 else cover[1] if x >= 8 else cover[2] if x >= 5 else cover[3] if y <= 5 else cover[2]
-            c.put(x, y, sh)
-    for y in range(3, 14):                                                     # the spine and the page edge
-        c.put(3, y, cover[0]); c.put(12, y, (240, 236, 220))
-    for x in range(3, 13):
-        c.put(x, 13, (222, 216, 196))
-    for (x, y) in ((4, 4), (11, 4), (4, 12), (11, 12)):                         # the gold corners
-        c.put(x, y, gold[1])
-    for (x, y) in ((7, 5), (8, 5), (6, 6), (7, 6), (8, 6), (9, 6), (7, 7), (8, 7), (7, 8), (8, 8), (6, 9), (9, 9)):   # the star of the cover
-        c.put(x, y, gold[0] if y <= 7 else gold[1])
-    c.put(8, 7, (255, 255, 255))
-    for y in range(9, 15):                                                     # the ribbon
-        c.put(10, y, (214, 70, 90))
-    c.outline()
-    return c.image()
-
-
 def sceptre_icon():
     c = Canvas()
     gold = RAMPS["gold"]
@@ -138,14 +115,6 @@ DISPLAY_DIAGONAL = {
     "fixed": {"rotation": [0, 180, 0], "translation": [0, 0, 0], "scale": [1, 1, 1]},
     "gui": {"rotation": [0, 0, 0], "translation": [0, 0, 0], "scale": [1, 1, 1]},
 }
-DISPLAY_BOOK = {
-    "thirdperson_righthand": {"rotation": [0, 0, 0], "translation": [0, 3, 1], "scale": [0.55, 0.55, 0.55]},
-    "firstperson_righthand": {"rotation": [0, -90, 25], "translation": [1.13, 3.2, 1.13], "scale": [0.68, 0.68, 0.68]},
-    "ground": {"rotation": [0, 0, 0], "translation": [0, 2, 0], "scale": [0.5, 0.5, 0.5]},
-    "head": {"rotation": [0, 180, 0], "translation": [0, 13, 7], "scale": [1, 1, 1]},
-    "fixed": {"rotation": [0, 180, 0], "translation": [0, 0, 0], "scale": [1, 1, 1]},
-    "gui": {"rotation": [0, 0, 0], "translation": [0, 0, 0], "scale": [1, 1, 1]},
-}
 
 
 def write_models(item_id, display):
@@ -165,11 +134,9 @@ def main():
         key_icon(kid, rank, colour).save(out_path("textures", "item", item_id + ".png"))
         write_models(item_id, DISPLAY_DIAGONAL)
         ids.append(item_id)
-    book_icon().save(out_path("textures", "item", "celestial_spirit_magic_book.png"))
-    write_models("celestial_spirit_magic_book", DISPLAY_BOOK)
     sceptre_icon().save(out_path("textures", "item", "spirit_king_sceptre.png"))
     write_models("spirit_king_sceptre", DISPLAY_DIAGONAL)
-    ids += ["celestial_spirit_magic_book", "spirit_king_sceptre"]
+    ids += ["spirit_king_sceptre"]
     print("icons and item models written for", len(ids), "items")
     return ids
 

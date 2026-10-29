@@ -20,7 +20,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 
 /**
- * Requip: The Knight (Erza Scarlet), a standalone Ultimate skill taught by the book Titania's Requip. One MODE per armour (the order of {@link Armour}, switched with the mode key like every other
+ * Requip: The Knight (Erza Scarlet), a standalone Ultimate skill (the book Titania's Requip that taught it was removed; /requip teach is the way in). One MODE per armour (the order of {@link Armour}, switched with the mode key like every other
  * multi-mode skill) and a last mode, Dismiss.
  * <ul>
  *   <li>Press the skill key in an armour's mode while another armour (or none) is worn: the armour is put on. Pieces of the old armour shatter out, the new armour's pieces forge in, one by one, with a

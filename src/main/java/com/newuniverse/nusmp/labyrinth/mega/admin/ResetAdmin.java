@@ -10,14 +10,13 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
 
 /**
- * Why: {@code /dungeon reset <alignment|skills|waypoint|all>} puts a tester back to a "fresh player" so the entry workflows (the Hub's gates, the Directional Lock, the first
+ * Why: {@code /dungeon reset <alignment|waypoint|all>} puts a tester back to a "fresh player" so the entry workflows (the Hub's gates, the Directional Lock, the first
  * landing, the Return Crystal) can be run again without a new account. Each kind clears exactly the records the dungeon keeps for the player and nothing else. ALIGNMENT is the
  * {@code PlayerDungeonAlignment} data attachment (the road, the lock, the deepest floor of each road, through the same {@link AlignmentRules#reset} the {@code /multiverse mega floors
  * reset} repair tool uses) plus the floor tracker's memory of the floor they stood on, and it re-sends the cleared state to the client so the Hub's gate hints update. The Hub's
  * way home (the origin the home gate leads back to) and the gate cool-down stamps are left alone on purpose: clearing them would strand a player in the Sanctuary with no gate
  * that leads out. WAYPOINT is the {@code Waypoint} record the Return Crystal and the Gate Key read, plus the remembered deepest Landing of each road (which decides where the next
- * entry through a gate puts the player) and the two item cool-downs, so the next entry starts at the first floor. SKILLS is {@link SkillAdmin#forgetAll}: only the Unique skills the
- * skill books taught, never Tensura's own skills or any vanilla data. All three act on the player who ran the command (a tester resets themselves; for someone else use
+ * entry through a gate puts the player) and the two item cool-downs, so the next entry starts at the first floor. (The Unique skills the removed Skill Books taught no longer exist, so there is nothing to reset for them.) Both act on the player who ran the command (a tester resets themselves; for someone else use
  * {@code /execute as <player> run ...}).
  */
 public final class ResetAdmin {
@@ -62,13 +61,13 @@ public final class ResetAdmin {
         return 1;
     }
 
-    /** {@code reset all}: alignment and waypoint now, the skills over the next ticks (its job ends with the "everything cleared" line). */
+    /** {@code reset all}: alignment and waypoint, then the "everything cleared" line. */
     public static int doAll(ServerPlayer p) {
         alignment(p);
         waypoint(p);
         AdminMsg.tell(p, AdminMsg.green(AdminText.RESET_ALIGNMENT));
         AdminMsg.tell(p, AdminMsg.green(AdminText.RESET_WAYPOINT));
-        SkillAdmin.forgetAll(p, true);
+        AdminMsg.tell(p, AdminMsg.green(AdminText.RESET_ALL));
         return 1;
     }
 }

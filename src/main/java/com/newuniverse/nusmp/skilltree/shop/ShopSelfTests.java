@@ -4,8 +4,6 @@ import com.newuniverse.nusmp.arc.ArcEntities;
 import com.newuniverse.nusmp.arc.ArcNpcEntity;
 import com.newuniverse.nusmp.dungeon.DungeonFood;
 import com.newuniverse.nusmp.labyrinth.mega.SelfTests;
-import com.newuniverse.nusmp.skilltree.data.RouteRegistry;
-import com.newuniverse.nusmp.skilltree.data.SkillRoute;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.item.ItemStack;
@@ -19,12 +17,10 @@ import java.util.Map;
 /**
  * Why: nothing of the shop can be played by its author, so the CI server smoke test runs two checks in the real game ({@code /multiverse mega selftest}, keys
  * {@code skillbook.shop.*}). {@code skillbook.shop.stock} proves the DATA is right where only the real game can tell: both files loaded through the real reload listener with no problem,
- * every {@code minecraft:} and {@code nusmp:} item the witch buys exists, the shelf built from the REAL route registry is deterministic, changes with the restock period, offers
- * every route its line promises, and every offer can be turned into a real item stack (a wrong factory name or an unknown SP kind shows here), and the flagship sits in the top
- * third of its band. {@code skillbook.shop.buy} proves the DEAL: a stand-in player and a real witch entity, a purchase refused when poor, when far, when the price moved and when the
- * offer is unknown (each leaving gold, stock and inventory untouched), a real purchase that moves exactly the right gold, stock and item, a sold-out refusal, and a sale, a bulk
- * sale and the refusal of a bulk sale of a valuable. Both pass with an empty route registry (and say so); the deal test passes with a message when the shop or the Skill Tree is switched off
- * in the config (a closed shop would refuse every step, which proves nothing), and ignores a daily purchase limit; both put the world back as they found it.
+ * every {@code minecraft:} and {@code nusmp:} item the witch buys exists, and the shelf is deterministic and changes with the restock period (the Skill Books were removed, so the shelf is empty and
+ * {@code stock.json} lists no line; any line a datapack adds must still make a real item). {@code skillbook.shop.buy} proves the DEAL with a stand-in player and a real witch entity: a sale refused when far,
+ * a purchase of an unknown offer refused, a sale, a bulk sale and the refusal of a bulk sale of a valuable. It passes with a message when the shop is switched off in the config (a closed shop would refuse every
+ * step, which proves nothing), and puts the world back as it found it.
  */
 public final class ShopSelfTests {
     private ShopSelfTests() {}
@@ -43,7 +39,6 @@ public final class ShopSelfTests {
     // ================================================================ the data and the shelf
     private static SelfTests.Result stock(MinecraftServer server) {
         List<String> bad = new ArrayList<>();
-        if (MarketData.stock().isEmpty()) bad.add("no shelf line loaded (data/nusmp/black_market/stock.json)");
         if (MarketData.prices().isEmpty()) bad.add("no price loaded (data/nusmp/black_market/prices.json)");
         if (!MarketData.problems().isEmpty()) bad.add("data problems: " + String.join("; ", MarketData.problems().subList(0, Math.min(4, MarketData.problems().size()))));
         int foreign = 0;
@@ -65,37 +60,9 @@ public final class ShopSelfTests {
             if (o.price() < 1 || o.left() > o.total()) bad.add("the offer " + o.id() + " has price " + o.price() + " and " + o.left() + "/" + o.total() + " left");
         }
         List<StockBoard.Offer> shelf = ShopService.shelf(server);
-        for (SkillRoute r : RouteRegistry.all()) {
-            if (com.newuniverse.nusmp.skilltree.rarity.BookFacts.isBlocked(r.id())) continue;       // 3.26.0: a blocked franchise's book is deliberately not on the shelf
-            StockEntry line = lineFor(r.id());
-            boolean always = line != null && line.weight() >= 100;
-            boolean listed = false;
-            for (StockBoard.Offer o : shelf) if (o.kind() == StockEntry.Kind.ROUTE_BOOK && o.ref().equals(r.id())) listed = true;
-            if (always && !listed && MarketState.get(server).boughtView().isEmpty()) bad.add("the route " + r.id() + " has an always-stocked line but no offer");
-        }
-        StockBoard.Offer fang = StockBoard.find(StockBoard.build(seed, 11, 0, slots, id -> 0), "fang_of_smoldering_insanity");
-        String flagship = "no Smoldering Fang of Insanity route in the registry yet";
-        StockEntry fangLine = null;
-        for (StockEntry e : MarketData.stock()) if (e.id().equals("fang_of_smoldering_insanity")) fangLine = e;
-        if (fang != null && fangLine != null) {
-            if (fang.price() < fangLine.bandStart()) bad.add("the flagship rolled " + fang.price() + ", below the top third of its band (" + (long) fangLine.bandStart() + ")");
-            flagship = "the flagship rolls " + GoldFormat.full(fang.price()) + " at period 11";
-        }
         if (!bad.isEmpty()) return fail(String.join(" | ", bad));
         return ok(MarketData.stock().size() + " shelf lines and " + MarketData.prices().size() + " prices load clean (" + foreign + " foreign item(s)), "
-                + (RouteRegistry.all().isEmpty() ? "the route registry is empty (nothing can be on the shelf), " : RouteRegistry.all().size() + " routes on the shelf, ")
-                + shelf.size() + " offers now, every one can be made; " + flagship);
-    }
-
-    /** The data line that stocks a route: its own line, else the all-routes line. */
-    private static StockEntry lineFor(String routeId) {
-        StockEntry all = null;
-        for (StockEntry e : MarketData.stock()) {
-            if (e.kind() != StockEntry.Kind.ROUTE_BOOK) continue;
-            if (!e.allRoutes() && e.route().equals(routeId)) return e;
-            if (e.allRoutes()) all = e;
-        }
-        return all;
+                + shelf.size() + " offers now, every one can be made");
     }
 
     // ================================================================ the deal
@@ -115,62 +82,22 @@ public final class ShopSelfTests {
             fp.getInventory().clearContent();
             MarketGold.clearCounter(fp);
 
-            StockBoard.Offer offer = null;
-            for (StockBoard.Offer o : ShopService.shelf(server)) if (o.kind() == StockEntry.Kind.SP_BOOK && o.left() > 0) { offer = o; break; }
-            if (offer == null) return fail("no SP book is on the shelf (stock.json has none, or all are sold)");
-            long price = ShopRules.buyPrice(offer.price(), ShopConfig.priceScale());
-            int left = offer.left();
-            ItemStack expected = ShopGoods.stack(offer);
-            if (expected.isEmpty()) return fail("the SP book " + offer.ref() + " cannot be made (the items factory refused it)");
-            String id = offer.id();
-
-            // 1. poor: one gold short
-            MarketGold.set(fp, price - 1);
-            ShopService.Result r = ShopService.buy(fp, id, price);
-            String why = untouched("poor", r, ShopRules.Reply.POOR, fp, price - 1, server, id, left, 0);
+            // 1. no such offer (the shelf holds no book any more, so nothing is for sale): refused, nothing moves
+            MarketGold.set(fp, 5_000_000);
+            ShopService.Result r = ShopService.buy(fp, "no_such_offer", 1);
+            String why = untouched("unknown offer", r, ShopRules.Reply.UNKNOWN, fp, 5_000_000, server, "no_such_offer", -1, 0);
             if (why != null) return fail(why);
 
-            // 2. the price moved: the player saw another price
-            MarketGold.set(fp, price + 5_000_000);
-            r = ShopService.buy(fp, id, price + 1);
-            why = untouched("price moved", r, ShopRules.Reply.PRICE_MOVED, fp, price + 5_000_000, server, id, left, 0);
-            if (why != null) return fail(why);
-
-            // 3. no such offer
-            r = ShopService.buy(fp, "no_such_offer", 1);
-            why = untouched("unknown offer", r, ShopRules.Reply.UNKNOWN, fp, price + 5_000_000, server, id, left, 0);
-            if (why != null) return fail(why);
-
-            // 4. far from the witch: a purchase and a sale are both refused, and nothing moves
+            // 2. far from the witch: a sale is refused, and nothing moves
             fp.getInventory().setItem(0, new ItemStack(Items.DIAMOND, 2));
             fp.setPos(60.5, 100, 0.5);
-            r = ShopService.buy(fp, id, price);
-            why = untouched("far", r, ShopRules.Reply.FAR, fp, price + 5_000_000, server, id, left, 2);
-            if (why != null) return fail(why);
             r = ShopService.sell(fp, 0, "minecraft:diamond", 1);
-            why = untouched("far sale", r, ShopRules.Reply.FAR, fp, price + 5_000_000, server, id, left, 2);
+            why = untouched("far sale", r, ShopRules.Reply.FAR, fp, 5_000_000, server, "no_such_offer", -1, 2);
             if (why != null) return fail(why);
             fp.setPos(0.5, 100, 0.5);
             fp.getInventory().clearContent();
 
-            // 5. a real purchase moves exactly the gold, the stock and the item
-            r = ShopService.buy(fp, id, price);
-            if (r.reply() != ShopRules.Reply.BOUGHT) return fail("a purchase with enough gold, in reach, answered " + r.reply());
-            if (MarketGold.get(fp) != 5_000_000) return fail("the purchase should leave 5,000,000 gold but left " + MarketGold.get(fp));
-            if (stockLeft(server, id) != left - 1) return fail("the stock should drop from " + left + " to " + (left - 1) + " but is " + stockLeft(server, id));
-            if (!carries(fp, expected)) return fail("the bought book is not in the inventory");
-
-            // 6. sold out
-            int guard = 0;
-            MarketGold.set(fp, GoldLedger.mul(price, 100));
-            while (stockLeft(server, id) > 0 && guard++ < 12) {
-                MarketGold.clearCounter(fp);                                          // a daily limit in the config must not stop the test from emptying the shelf
-                if (ShopService.buy(fp, id, price).reply() != ShopRules.Reply.BOUGHT) return fail("a purchase of a book still in stock was refused");
-            }
-            r = ShopService.buy(fp, id, price);
-            if (r.reply() != ShopRules.Reply.SOLD_OUT) return fail("buying a sold-out book answered " + r.reply());
-
-            // 7. selling: a diamond stack, then a bulk sale of meat, then the refusal of a bulk sale of a valuable
+            // 3. selling: a diamond stack, then a bulk sale of meat, then the refusal of a bulk sale of a valuable
             fp.getInventory().clearContent();
             MarketGold.set(fp, 0);
             PriceTable table = MarketData.prices();
@@ -201,8 +128,7 @@ public final class ShopSelfTests {
             if (r.reply() != ShopRules.Reply.SOLD || r.count() != 7 || MarketGold.get(fp) != before + 7 * meatUnit) return fail("selling all meat gave " + r + " and left " + MarketGold.get(fp) + " gold");
             r = ShopService.sellAll(fp, table.get("minecraft:nether_star").category());
             if (r.reply() != ShopRules.Reply.NOTHING || fp.getInventory().getItem(7).isEmpty()) return fail("a bulk sale of treasure must be refused and the nether star kept, got " + r);
-            return ok("poor, price-moved, unknown and far purchases changed nothing; a real purchase of " + offer.ref() + " for " + GoldFormat.full(price) + " moved the gold, the stock ("
-                    + left + " to " + (left - 1) + ") and the item; sold out refused; 2 diamonds and 7 meat sold, the nether star kept");
+            return ok("an unknown purchase and a far sale changed nothing; 2 diamonds and 7 meat sold, the nether star kept");
         } finally {
             witch.discard();
             fp.setPos(0.5, 100, 0.5);
@@ -227,12 +153,5 @@ public final class ShopSelfTests {
     private static int stockLeft(MinecraftServer server, String id) {
         StockBoard.Offer o = StockBoard.find(ShopService.shelf(server), id);
         return o == null ? -1 : o.left();
-    }
-
-    private static boolean carries(FakePlayer fp, ItemStack expected) {
-        for (int i = 0; i < fp.getInventory().getContainerSize(); i++) {
-            if (ItemStack.isSameItemSameComponents(fp.getInventory().getItem(i), expected)) return true;
-        }
-        return false;
     }
 }

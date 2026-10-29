@@ -1,6 +1,5 @@
 package com.newuniverse.nusmp.skilltree.state;
 
-import com.newuniverse.nusmp.skilltree.line.PassiveToggles;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.StringTag;

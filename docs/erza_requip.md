@@ -1,16 +1,14 @@
 # Requip: The Knight (Erza Scarlet)
 
 A standalone Tensura **Ultimate** skill (`nusmp:erza_requip`, registered in `skill/NUSkills`, class `skill/ErzaRequipSkill`) with one mode per armour and a last mode, Dismiss. It does not depend on the skill
-tree or on any grimoire: it is taught by its own book, **Titania's Requip** (`nusmp:titanias_requip`).
+tree or on any grimoire: the book that taught it, **Titania's Requip** (`nusmp:titanias_requip`), was removed (owner request, `docs/fairy_tail_celestial_books_removed.md`); only the admin command teaches it now.
 
 ## Getting it
 
 | Way | How |
 |---|---|
-| The book | Use Titania's Requip. It teaches the skill if the reader has **100,000 max EP**, or **25,000 max EP and one mastered Unique skill** (`RequipRules.eligible`). The book is used up only after the skill was learned. |
-| Loot | A pool is added to the vanilla ancient city, end city, stronghold library, bastion, mansion, dungeon and trial vault chests and to this mod's own dungeon vault, library ruins, grimoire tower, hidden cache and labyrinth pedestal chests (`RequipSystem.LOOT`, 3 to 10 percent per opening). |
-| Admin | `/requip book <player>` gives the book, `/requip teach <player>` teaches the skill without the EP gate, `/requip set <player> <armour>` puts an armour on without cost, `/requip dismiss <player>` takes it off (permission level 2). |
-| Creative tab | The book and the six weapons are in the mod's creative tab. |
+| Admin | `/requip teach <player>` teaches the skill without the EP gate, `/requip set <player> <armour>` puts an armour on without cost, `/requip dismiss <player>` takes it off (permission level 2). |
+| Creative tab | The six weapons are in the mod's creative tab. |
 
 ## Using it
 
@@ -471,7 +469,7 @@ Six armours put a weapon in the hand (a real item flagged `ErzaRequip`, unbreaka
 | Area | Files |
 |---|---|
 | Table and rules (no Minecraft classes) | `requip/Armour.java`, `requip/ArmourSets.java`, `requip/RequipRules.java` |
-| Items, loot, command | `requip/RequipItems.java`, `requip/TitaniasRequipItem.java`, `requip/RequipWeaponItem.java`, `requip/RequipSystem.java` |
+| Items, loot, command | `requip/RequipItems.java`, `requip/RequipWeaponItem.java`, `requip/RequipSystem.java` |
 | Skill, effects, attacks, self-test | `skill/ErzaRequipSkill.java`, `skill/ErzaRequipFx.java`, `skill/ErzaRequipAttacks.java`, `skill/ErzaSelfTests.java` |
 | Client | `client/aura/ErzaAura.java` |
 | Assets | `tools/gen_erza_armour.py` (the 1.99.0 Djinn-quality remake: 288 piece models, see `docs/erza_armour_remake.md`; the 1.96.0 `tools/gen_erza_requip_geo.py` is kept behind `--legacy`), `tools/gen_erza_weapons.py` (six weapons, the book, the skill icon), the preview scenes `tools/render_preview/scenes.d/erza_requip.json` and `erza_armour.json` |

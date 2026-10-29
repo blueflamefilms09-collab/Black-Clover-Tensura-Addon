@@ -215,7 +215,6 @@ public final class MultiverseCommands {
         root.then(com.newuniverse.nusmp.engraving.codex.EngravingCodexCommand.node());                   // 1.99.0: engravings (gives the Engravement Codex)
         root.then(com.newuniverse.nusmp.compat.maps.MapsCommand.waypointNode());                       // compat-maps: waypoint share on|off|here|gate|return
         com.newuniverse.nusmp.charter.CharterCommand.addTo(root);                                              // 1.25.0: charter status|give|reset
-        root.then(com.newuniverse.nusmp.fairytail.FairyTailCommand.node());                                    // Fairy Tail skills: fairytail give|learn|list
         root.then(com.newuniverse.nusmp.skilltree.unique.SkillBookCommand.node());                                    // 1.96.0: skillbook list|learn|forget|give|gold|shop (replaces the removed /multiverse tree)
         root.then(com.newuniverse.nusmp.heroweapon.HeroCommand.node());                                         // 1.62.0: hero status|summon|dismiss|bind|release|form|curse|gem
         root.then(com.newuniverse.nusmp.shishou.ShishouCommand.node());                                       // shishou spawn|status|reset|recover|level|skills|broadcast|stomach (op for the admin ones)

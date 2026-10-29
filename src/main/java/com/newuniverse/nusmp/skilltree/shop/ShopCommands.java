@@ -86,7 +86,7 @@ public final class ShopCommands {
     private static int stock(CommandContext<CommandSourceStack> ctx) {
         List<StockBoard.Offer> shelf = ShopService.shelf(ctx.getSource().getServer());
         if (shelf.isEmpty()) {
-            say(ctx, "The shelf is empty (no stock lines loaded, or no route books while the route registry is empty).");
+            say(ctx, "The shelf is empty (the Skill Books were removed, so the witch has nothing to sell; she still buys goods).");
             return 0;
         }
         double scale = ShopConfig.priceScale();

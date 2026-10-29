@@ -26,10 +26,7 @@ public final class AdminSpec {
     public static final List<String> PLAYER_LITERALS = List.of("floor", "status", "release", "unstuck", "help");
 
     /** The top-level admin literals: each one carries the permission gate itself, so the player's subcommands beside them stay usable by everyone. */
-    public static final List<String> ADMIN_LITERALS = List.of("tp", "skip", "boss", "rift", "skill", "reset", "debug", "admin");
-
-    /** The most mastery points one {@code give_sp} adds. */
-    public static final int SP_MAX = 100_000;
+    public static final List<String> ADMIN_LITERALS = List.of("tp", "skip", "boss", "rift", "reset", "debug", "admin");
 
     /** The range of an integer argument, as the tree states it to Brigadier. */
     public record Range(String argument, int min, int max) {}
@@ -38,8 +35,7 @@ public final class AdminSpec {
     public static final List<Range> RANGES = List.of(
             new Range("floor", -DungeonAdminMath.MAX_FLOOR, DungeonAdminMath.MAX_FLOOR),
             new Range("floors", -DungeonAdminMath.MAX_FLOOR, DungeonAdminMath.MAX_FLOOR),
-            new Range("level", -DungeonAdminMath.MAX_LEVEL, DungeonAdminMath.MAX_LEVEL),
-            new Range("amount", 1, SP_MAX));
+            new Range("level", -DungeonAdminMath.MAX_LEVEL, DungeonAdminMath.MAX_LEVEL));
 
     /** One runnable path of the tree with the key of its one-line help text. */
     public record Entry(String usage, String helpKey) {
@@ -59,10 +55,7 @@ public final class AdminSpec {
             new Entry("boss kill", AdminText.HELP_BOSS_KILL),
             new Entry("rift spawn pocket", AdminText.HELP_RIFT_POCKET),
             new Entry("rift spawn shortcut", AdminText.HELP_RIFT_SHORTCUT),
-            new Entry("skill unlock <skill>", AdminText.HELP_SKILL_UNLOCK),
-            new Entry("skill give_sp <amount>", AdminText.HELP_SKILL_SP),
             new Entry("reset alignment", AdminText.HELP_RESET_ALIGNMENT),
-            new Entry("reset skills", AdminText.HELP_RESET_SKILLS),
             new Entry("reset waypoint", AdminText.HELP_RESET_WAYPOINT),
             new Entry("reset all", AdminText.HELP_RESET_ALL),
             new Entry("debug wfc", AdminText.HELP_DEBUG_WFC),
