@@ -1,15 +1,15 @@
 {
  "id": "meliodas",
- "source": "baseline",
+ "source": "hand",
  "size": 256,
- "hair_reason": "a wild blond crest swept up and back: the big layered spike mass of the owner's reference 154",
+ "hair_reason": "painted by hand: tools/arc_hd/chars/meliodas.py",
  "look": {
   "skin": "meliodas",
   "slim": false,
   "scale": 0.9813,
   "hold_r": -0.42,
   "hair": "anime_spike_swept",
-  "hair_color": "#e8c860",
+  "hair_color": "#f6d044",
   "extras": [
    {
     "model": "pmx_meliodas",
