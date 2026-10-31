@@ -8,35 +8,37 @@
    "scale": 0.9867,
    "glow": true,
    "hair": "anime_short_open",
-   "hair_color": "#1a1a2e"
+   "hair_color": "#2a2f58"
   },
   "axe_hand_morgan": {
    "skin": "axe_hand_morgan",
    "slim": false,
    "scale": 1.3867,
    "hair": "anime_short",
-   "hair_color": "#4e342e"
+   "hair_color": "#4a3a2c"
   },
   "bertholdt_hoover": {
    "skin": "bertholdt_hoover",
    "slim": false,
    "scale": 1.8133,
-   "hair": "anime_short",
-   "hair_color": "#2c1b10"
+   "hair": "anime_short_open",
+   "hair_color": "#35231a"
   },
   "big_mom": {
    "skin": "big_mom",
-   "slim": true,
+   "slim": false,
    "scale": 1.92,
+   "glow": true,
    "hair": "anime_mane",
-   "hair_color": "#f06292"
+   "hair_color": "#e8458c"
   },
   "charlos": {
    "skin": "charlos",
    "slim": false,
    "scale": 0.96,
+   "glow": true,
    "hair": "anime_short_open",
-   "hair_color": "#d8c060"
+   "hair_color": "#ffe040"
   },
   "code": {
    "skin": "code",
@@ -44,28 +46,29 @@
    "scale": 1.0133,
    "glow": true,
    "hair": "anime_spiky",
-   "hair_color": "#dddddd"
+   "hair_color": "#f2f5ff"
   },
   "foxy": {
    "skin": "foxy",
    "slim": false,
    "scale": 1.0133,
    "hair": "anime_afro",
-   "hair_color": "#9e9e9e"
+   "hair_color": "#d4d8e2"
   },
   "jugram_haschwalth": {
    "skin": "jugram_haschwalth",
    "slim": false,
    "scale": 1.0133,
-   "hair": "anime_long",
-   "hair_color": "#e8e0c8"
+   "hair": "anime_long_open",
+   "hair_color": "#fff8e0"
   },
   "kurozumi_orochi": {
    "skin": "kurozumi_orochi",
    "slim": false,
    "scale": 1.0667,
+   "glow": true,
    "hair": "anime_topknot",
-   "hair_color": "#2a2a3a"
+   "hair_color": "#30304a"
   },
   "light_yagami": {
    "skin": "light_yagami",
@@ -73,51 +76,51 @@
    "scale": 0.9867,
    "glow": true,
    "hair": "anime_swept",
-   "hair_color": "#262c44"
+   "hair_color": "#7e4c2e"
   },
   "malty_melromarc": {
    "skin": "malty_melromarc",
    "slim": true,
    "scale": 0.9067,
    "hair": "anime_long_open",
-   "hair_color": "#b71c1c"
+   "hair_color": "#c8141f"
   },
   "mr_2_bon_clay": {
    "skin": "mr_2_bon_clay",
-   "slim": true,
+   "slim": false,
    "scale": 1.0667,
    "hair": "anime_afro",
-   "hair_color": "#262634"
+   "hair_color": "#2a2a3e"
   },
   "rachel": {
    "skin": "rachel",
    "slim": true,
    "scale": 0.9067,
    "hair": "anime_long_open",
-   "hair_color": "#6b3e26"
+   "hair_color": "#7a4528"
   },
   "shou_tucker": {
    "skin": "shou_tucker",
    "slim": true,
    "scale": 0.9867,
-   "hair": "anime_swept",
-   "hair_color": "#5d4037"
+   "hair": "anime_short",
+   "hair_color": "#6a4a34"
   },
   "sogou_nobuyuki": {
    "skin": "sogou_nobuyuki",
    "slim": false,
    "scale": 0.9867,
    "glow": true,
-   "hair": "anime_long_open",
-   "hair_color": "#e8c860"
+   "hair": "anime_swept",
+   "hair_color": "#ffd650"
   },
   "yammy_llargo": {
    "skin": "yammy_llargo",
    "slim": false,
    "scale": 1.7067,
    "glow": true,
-   "hair": "anime_short",
-   "hair_color": "#2a2a38"
+   "hair": "anime_spiky",
+   "hair_color": "#22222e"
   },
   "zetsu": {
    "skin": "zetsu",
@@ -125,7 +128,7 @@
    "scale": 1.0133,
    "glow": true,
    "hair": "anime_hood",
-   "hair_color": "#2e7d32"
+   "hair_color": "#6ed03a"
   }
  }
 }
