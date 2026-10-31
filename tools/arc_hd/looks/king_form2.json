@@ -1,8 +1,8 @@
 {
  "id": "king_form2",
- "source": "baseline",
+ "source": "hand",
  "size": 256,
- "hair_reason": "a layered brown mop with a fringe over the brow: reference 156",
+ "hair_reason": "painted by hand: tools/arc_hd/chars/king_form2.py",
  "look": {
   "skin": "king_form2",
   "slim": true,

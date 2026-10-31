@@ -28,7 +28,7 @@ BASE = dict(
 )
 FORM2 = dict(
     hair="#c47a3a", hair_rgb=(196, 122, 58), suit="#f09a3a", trim="#ffe0a0", belt="#6b4526", boot="#6b4526", gold="#ffd070", metal="#e8a850",
-    iris=("#a8700a", "#ffd070", "#fff4c0"), eye_glow="#fff0b0", brow="#8a521c", form2=True, glow="#ffd070",
+    iris=("#a8700a", "#ffd070", "#fff4c0"), eye_glow="#ffc040", brow="#8a521c", form2=True, glow="#ffd070",
 )
 
 
@@ -68,7 +68,7 @@ def head_front(cv, P):
 # ================================================================================================ the suit
 def suit_panel(f, P, name):
     s, t = P["suit"], P["trim"]
-    H.cloth(f, f.m_all(), s, top=1.12, bottom=0.84, round_=0.1, fold_xs=[1.3, 6.7] if name in ("front", "back") else [1.2, 2.8], fold_depth=0.08, fold_y0=2.0, fold_y1=9.0, weave_k=0.0)
+    K.cloth(f, f.m_all(), s, top=1.12, bottom=0.84, round_=0.1, fold_xs=[1.3, 6.7] if name in ("front", "back") else [1.2, 2.8], fold_depth=0.08, fold_y0=2.0, fold_y1=9.0, weave_k=0.0)
     if name in ("front", "back"):
         H.sheen(f, f.m_rect(0, 1.5, 8, 9), [1.1, 6.9], width=0.22, strength=0.2, tilt=0.04, y0=2.0, y1=8.6, color="#ffe8c0")
     f.fill(f.m_rect(0.0, 11.0, f.w, 12.0), H.tone(s, 0.9), 0.6)
@@ -177,7 +177,7 @@ def gauntlet(f, P, ov):
     if P["form2"]:
         plate = f.m_band(6.0, 12.0)
         f.fill(plate, H.lin((0, 6.0), (0, 12.0), [(0, H.tone(m, 1.35)), (0.35, m), (1, H.tone(m, 0.68))]))
-        H.scallops(f, plate, 6.4, rows=4, cell=1.5, depth=1.9, base=None, tip=None, edge=H.tone(m, 0.4), edge_a=0.6, shadow=0.2)
+        H.scallops(f, plate, 6.4, rows=4, cell=1.5, depth=1.9, base=None, tip=None, edge=H.tone(m, 0.5), edge_a=0.4, shadow=0.12)
         H.bevel(f, plate, depth=0.3, gain=0.8, spec=0.35)
     else:
         plate = f.m_band(6.0, 12.0)
@@ -201,7 +201,7 @@ def pauldron(f, P, ov):
     m, g = P["metal"], P["gold"]
     plate = f.m_band(0.0, 3.7)
     f.fill(plate, H.lin((0, 0), (0, 3.7), [(0, H.tone(m, 1.3)), (0.5, m), (1, H.tone(m, 0.7))]))
-    H.scallops(f, plate, 0.4, rows=3, cell=1.5, depth=1.7, base=None, tip=None, edge=H.tone(m, 0.4), edge_a=0.65, shadow=0.24)
+    H.scallops(f, plate, 0.4, rows=3, cell=1.5, depth=1.7, base=None, tip=None, edge=H.tone(m, 0.5), edge_a=0.45, shadow=0.14)
     H.bevel(f, plate, depth=0.28, gain=0.9, spec=0.4)
     H.trim_band(f, 0.0, 0.55, g, spec=0.5, outline=0.5)
     H.trim_band(f, 3.15, 3.75, g, spec=0.5, outline=0.55, glow=("#ffd070" if ov else None))
@@ -231,7 +231,7 @@ def legs(cv, P):
     for part in ("leg_r", "leg_l"):
         for nm in SIDES:
             for f, ov in zip(A.lay(cv, part, nm), (False, True)):
-                H.cloth(f, f.m_band(0.0, 4.2), s, top=1.1, bottom=0.86, round_=0.12, fold_xs=[1.2, 2.8], fold_depth=0.08, fold_y0=0.3, fold_y1=3.9, weave_k=0.0)
+                K.cloth(f, f.m_band(0.0, 4.2), s, top=1.1, bottom=0.86, round_=0.12, fold_xs=[1.2, 2.8], fold_depth=0.08, fold_y0=0.3, fold_y1=3.9, weave_k=0.0)
                 H.shadow_under(f, 0.0, 0.5, 0.0)
                 H.trim_band(f, 4.0, 5.0, t if not P["form2"] else g, spec=0.4, outline=0.55)                  # the hem of the shorts, gold-peach
                 K.seam(f, [(0.12, 4.5), (f.w - 0.12, 4.5)], H.tone(t, 0.6), 0.055, 0.7, (0.28, 0.18), 0.2)
@@ -244,18 +244,18 @@ def legs(cv, P):
 
 def brown_boot(f, P, name):
     b, g = P["boot"], P["gold"]
-    f.fill(f.m_band(5.0, 11.25), H.lin((0, 5.0), (0, 11.25), [(0, H.tone(b, 1.28)), (0.4, b), (1, H.tone(b, 0.66))]))
-    f.fill(f.m_band(5.0, 5.5), H.tone(b, 1.45), 0.5)
+    f.fill(f.m_band(5.0, 11.25), H.lin((0, 5.0), (0, 11.25), [(0, K.lit(b, 1.4)), (0.4, b), (1, H.tone(b, 0.66))]))
+    f.fill(f.m_band(5.0, 5.5), K.lit(b, 1.7), 0.5)
     H.sheen(f, f.m_band(5.3, 11.0), [f.w * 0.28], width=0.2, strength=0.28, tilt=0.03, y0=5.6, y1=10.6, color="#d8b090")
     for y in (6.9, 8.7):                                                                 # two buckled straps
-        f.rect(0.0, y, f.w, y + 0.7, H.tone(b, 0.8))
-        f.fill(f.m_rect(0.0, y, f.w, y + 0.16), H.tone(b, 1.6), 0.8)
+        f.rect(0.0, y, f.w, y + 0.7, H.tone(b, 0.78))
+        f.fill(f.m_rect(0.0, y, f.w, y + 0.16), K.lit(b, 1.9), 0.8)
         f.fill(f.m_rect(0.0, y + 0.62, f.w, y + 0.72), "#0e0a08", 0.6)
         if name == "front":
             H.stud(f, f.w * 0.5, y + 0.35, 0.3, g)
     f.fill(f.m_polyline([(0.0, 10.0), (f.w * 0.5, 10.25), (f.w, 10.05)], 0.1), H.tone(b, 0.45), 0.7)
     if name == "front":
-        f.ellipse(f.w * 0.5, 10.5, 1.1, 0.55, H.tone(b, 1.6), a=0.38, soft=2.0)
+        f.ellipse(f.w * 0.5, 10.5, 1.1, 0.55, K.lit(b, 1.9), a=0.38, soft=2.0)
         f.fill(f.m_line((f.w * 0.5, 5.6), (f.w * 0.5, 6.8), 0.1, 0.1), H.tone(b, 0.55), 0.6)
     f.fill(f.m_band(11.0, 11.35), "#8a5e3c", 0.95)
     f.fill(f.m_band(11.3, 12.0), H.lin((0, 11.3), (0, 12.0), [(0, "#1c1512"), (1, "#0d0b0a")]))
@@ -267,7 +267,7 @@ def greave(f, P, name, ov):
     f.fill(f.m_band(5.0, 6.0), H.lin((0, 5.0), (0, 6.0), [(0, H.tone(b, 1.1)), (1, H.tone(b, 0.7))]))
     plate = f.m_band(6.0, 11.25)
     f.fill(plate, H.lin((0, 6.0), (0, 11.25), [(0, H.tone(m, 1.35)), (0.4, m), (1, H.tone(m, 0.65))]))
-    H.scallops(f, plate, 6.4, rows=3, cell=1.35, depth=2.0, base=None, tip=None, edge=H.tone(m, 0.4), edge_a=0.6, shadow=0.2)
+    H.scallops(f, plate, 6.4, rows=3, cell=1.35, depth=2.0, base=None, tip=None, edge=H.tone(m, 0.5), edge_a=0.4, shadow=0.12)
     H.bevel(f, plate, depth=0.3, gain=0.8, spec=0.4)
     H.trim_band(f, 5.8, 6.5, g, spec=0.5, outline=0.55, glow=("#ffd070" if ov else None))
     if name == "front":

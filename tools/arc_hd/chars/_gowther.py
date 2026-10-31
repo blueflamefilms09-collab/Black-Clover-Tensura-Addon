@@ -26,17 +26,17 @@ F1 = {
     "hair": "#b4457f", "hair_rgb": (180, 69, 127), "hair_pal": S.hair_pal("#b4457f", dark="#6a2250", light="#d5679f", high="#f7b6d9"),
     "style": "anime_short",
     "coat": "#2f2a66", "coat_l": "#4b4597", "coat_d": "#1e1b44", "belt": "#1e1b44", "belt_b": "#13112e",
-    "trim": "#e68ac0", "trim_l": "#ffc6e8", "shirt": "#f4eef8", "boot": "#15122a", "glove": "#f4eef8",
+    "trim": "#e68ac0", "trim_l": "#ffc6e8", "shirt": "#f4eef8", "boot": "#262050", "strap": "#4a3a80", "glove": "#f4eef8",
     "iris": ("#6e4310", "#e0a030", "#ffeaa8"), "eye_glow": "#ffcf70", "lash": "#3a1633", "brow": "#6a2650",
     "glow": "#ff8ad0", "form2": False,
 }
 F2 = dict(F1)
 F2.update({
-    "hair": "#f0b8d8", "hair_rgb": (240, 184, 216), "hair_pal": S.hair_pal("#f0b8d8", dark="#b8689a", light="#fcd6ec", high="#ffffff"),
+    "hair": "#ffacd8", "hair_rgb": (255, 172, 216), "hair_pal": S.hair_pal("#ffacd8", dark="#c0608f", light="#ffd0ea", high="#ffffff"),
     "style": "anime_long",
     "coat": "#4a448c", "coat_l": "#6a62b4", "coat_d": "#2c2864", "belt": "#2c2864", "belt_b": "#1c1944",
     "trim": "#ffd0ec", "trim_l": "#ffffff", "shirt": "#fbf6ff",
-    "iris": ("#8a5a14", "#ffd070", "#fff6d0"), "eye_glow": "#ffffff", "lash": "#5a2a52", "brow": "#a85a8a",
+    "iris": ("#8a5a14", "#ffd070", "#fff6d0"), "eye_glow": "#ffd890", "lash": "#5a2a52", "brow": "#a85a8a",
     "glow": "#ffb0e4", "form2": True,
 })
 
@@ -59,18 +59,25 @@ def head_front(cv, P):
     H.brow(f, (3.45, 3.95), (1.2, 3.7), P["brow"], 0.24, 0.10, arch=0.05)
     H.brow(f, (4.55, 3.95), (6.8, 3.7), P["brow"], 0.24, 0.10, arch=0.05)
     # the eyes: round doll eyes, amber, long lashes; the iris glows
-    H.eye(f, 2.4, 5.1, 2.7, 2.5, P["iris"], lash=P["lash"], tilt=0.04, lash_w=0.36, flick=0.3, iris_r=1.06, glow=P["eye_glow"], lid_shadow=0.22)
-    H.eye(f, 5.6, 5.1, 2.7, 2.5, P["iris"], lash=P["lash"], tilt=0.04, lash_w=0.36, flick=0.3, iris_r=1.06, glow=P["eye_glow"], lid_shadow=0.22)
+    for ex in (2.3, 5.7):
+        H.eye(f, ex, 5.1, 2.5, 2.5, P["iris"], lash=P["lash"], tilt=0.04, lash_w=0.36, flick=0.3, iris_r=1.06, glow=None, lid_shadow=0.22)
+        f.glow_fill(f.m_ellipse(ex, 5.3, 0.62, 0.72), P["eye_glow"], 0.55)                          # a small light in the iris, the rest of the eye stays dark
     H.blush(f, 1.2, 6.35, 0.95, 0.5, "#f08ab0", 0.55)                                      # the doll's blush
     H.blush(f, 6.8, 6.35, 0.95, 0.5, "#f08ab0", 0.55)
     H.nose(f, 4.0, 6.15, "#d9a4a0", 0.22)
-    H.mouth_smile(f, 4.0, 7.0, 1.6, color="#a8506a", lip="#e89aa8", depth=0.07, thick=0.2)
+    H.mouth_smile(f, 4.0, 7.0, 1.6, color="#7a2a48", lip="#e07a98", depth=0.07, thick=0.22)
     if P["form2"]:
         crack(f, [(1.0, 2.4), (1.5, 3.1), (1.2, 3.9), (1.9, 4.5)], P)
         crack(f, [(0.5, 5.9), (1.2, 6.4), (1.1, 7.2), (1.8, 7.8)], P)
         crack(f, [(7.5, 2.8), (6.9, 3.6), (7.3, 4.3), (6.8, 5.0)], P)
         light_line(f, [(2.4, 6.55), (1.6, 6.85), (0.7, 6.8)], P)
         light_line(f, [(5.6, 6.55), (6.4, 6.85), (7.3, 6.8)], P)
+
+
+def head_sides(cv, P):
+    for nm in ("west", "east"):
+        for ov in (False, True):
+            S.ear(cv.face("head", nm, ov), nm, SKIN, 4.7)
 
 
 def crack(f, pts, P):
@@ -152,8 +159,6 @@ def body_front(f, P, ov):
         H.sheen(f, pm, [x0 + 0.6 if x0 < 4 else x0 + 0.55], width=0.2, strength=0.2, tilt=0.05, y0=2.0, y1=8.6, color="#b8aee0")
         S.edge_light(f, pm, x0, x0 + 0.2, cl, 1.6, 0.35)
     # the shirt in the opening of the coat
-    xl = lambda y: 2.55 - (y / 9.1) * 0.4
-    xr = lambda y: 5.45 + (y / 9.1) * 0.4
     pl = f.m_poly([(2.55, 0.0), (5.45, 0.0), (5.85, 9.1), (2.15, 9.1)])
     H.cloth(f, pl, P["shirt"], top=1.08, bottom=0.88, round_=0.04, fold_xs=[3.3, 4.8], fold_depth=0.07, fold_y0=3.0, fold_y1=9.0, weave_k=0.0)
     f.shade(pl * np.clip(1.0 - np.minimum(f.X - (2.55 - (f.Y / 9.1) * 0.4), (5.45 + (f.Y / 9.1) * 0.4) - f.X) / 0.55, 0, 1), 0.74, 0.9)
@@ -209,7 +214,7 @@ def body_back(f, P, ov):
 
 
 def body_side(f, P, name):
-    coat, cl, cd, trim = P["coat"], P["coat_l"], P["coat_d"], P["trim"]
+    coat, cl, trim = P["coat"], P["coat_l"], P["trim"]
     S.panel(f, f.m_all(), coat, 1.26, 0.78, 0.08, folds=[1.3, 2.7], fold_depth=0.08, y0=1.8, y1=9.0)
     band = f.m_rect(0, 0, f.w, 1.7)
     f.fill(band, H.lin((0, 0), (0, 1.7), [(0, H.tone(cl, 1.1)), (1, H.tone(coat, 0.82))]))
@@ -282,7 +287,7 @@ def arms(cv, P):
 
 # ================================================================================================ the legs
 def leg(f, P, name):
-    coat, cd, trim = P["coat"], P["coat_d"], P["trim"]
+    coat, trim = P["coat"], P["trim"]
     tail = f.m_band(0.0, 6.0)
     S.panel(f, tail, coat, 1.2, 0.8, 0.12, folds=[1.1, 2.9], fold_depth=0.10, y0=0.4, y1=5.8)
     H.sheen(f, tail, [f.w * 0.3], width=0.2, strength=0.15, tilt=0.03, y0=0.5, y1=5.4, color="#b8aee0")
@@ -300,16 +305,13 @@ def leg(f, P, name):
     H.sheen(f, f.m_band(7.7, 11.0), [f.w * 0.3], width=0.2, strength=0.3, tilt=0.04, y0=7.8, y1=10.6, color="#a79ad0")
     f.fill(f.m_polyline([(0.0, 9.6), (f.w * 0.5, 9.85), (f.w, 9.65)], 0.11), H.tone(P["boot"], 0.5), 0.7)    # ankle wrinkles
     if name == "front":                                                                                  # the strap with its buckle, and the toe cap
-        f.rect(0.0, 8.5, f.w, 9.2, H.tone(P["belt"], 1.3), r=0.0)
+        f.rect(0.0, 8.5, f.w, 9.2, P["strap"], r=0.0)
         f.fill(f.m_rect(0.0, 8.5, f.w, 8.64), H.tone(trim, 1.0), 0.45)
         H.stud(f, f.w * 0.5, 8.85, 0.3, trim)
         f.ellipse(f.w * 0.5, 10.35, 1.2, 0.65, H.tone(P["boot"], 1.9), a=0.35, soft=2.0)
     S.sole(f, 11.0, 12.0, welt="#6a5a8a")
     if name in ("west", "east"):
         S.seam(f, [(f.w * 0.5, 0.3), (f.w * 0.5, 5.4)], P["trim_l"], 0.055, 0.3)
-    # the slit of the coat between the legs: a dark line at the inner edge of the tails
-    inner = 0.0 if (name == "front") else None
-    del inner
 
 
 def legs(cv, P):
@@ -327,6 +329,7 @@ def paint_form(spec, cid, masks, P):
     A.bridge(cv, img64, glow64, spec, P["hair_rgb"], skip=lambda part, face, ov: part == "head" and face == "front" and not ov)
     cov = S.covers(cv)
     head_front(cv, P)
+    head_sides(cv, P)
     body(cv, P)
     arms(cv, P)
     legs(cv, P)

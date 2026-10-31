@@ -1,8 +1,8 @@
 {
  "id": "escanor",
- "source": "baseline",
+ "source": "hand",
  "size": 256,
- "hair_reason": "the short brown cut of Lowly Escanor",
+ "hair_reason": "painted by hand: tools/arc_hd/chars/escanor.py",
  "look": {
   "skin": "escanor",
   "slim": false,

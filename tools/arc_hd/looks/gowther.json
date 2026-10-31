@@ -1,14 +1,14 @@
 {
  "id": "gowther",
- "source": "baseline",
+ "source": "hand",
  "size": 256,
- "hair_reason": "KEPT classic: the centre-parted pink bob",
+ "hair_reason": "painted by hand: tools/arc_hd/chars/gowther.py",
  "look": {
   "skin": "gowther",
   "slim": true,
   "scale": 0.9867,
   "glow": true,
-  "hair": "curtains",
+  "hair": "anime_short",
   "hair_color": "#b4457f",
   "extras": [
    {

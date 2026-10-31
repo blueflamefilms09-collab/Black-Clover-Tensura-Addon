@@ -1,8 +1,8 @@
 {
  "id": "diane_form2",
- "source": "baseline",
+ "source": "hand",
  "size": 256,
- "hair_reason": "KEPT classic: the long twin tails of the Serpent's Sin (no anime twin-tail cut exists)",
+ "hair_reason": "painted by hand: tools/arc_hd/chars/diane_form2.py",
  "look": {
   "skin": "diane_form2",
   "slim": true,

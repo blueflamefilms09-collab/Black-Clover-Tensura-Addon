@@ -27,7 +27,7 @@ BASE = dict(
 )
 FORM2 = dict(
     hair="#f0a040", hair_rgb=(240, 160, 64), tunic="#fff4c0", trim="#e8d070", trim_d="#a8842a", gold="#f6dc7c", sash="#4fa04a", glow="#d8ffa0",
-    mantle="#d8f4a8", lining="#ffffff", iris=("#a86a08", "#ffcf5a", "#fff4b0"), eye_glow="#fff0a0", brow="#a8601a", form2=True,
+    mantle="#d8f4a8", lining="#ffffff", iris=("#a86a08", "#ffcf5a", "#fff4b0"), eye_glow="#ffd040", brow="#a8601a", form2=True,
 )
 
 
@@ -113,7 +113,7 @@ def tree(f, cx, cy, s, P, glow=True):
 
 def tunic_front(f, ov, P):
     t, g = P["tunic"], P["gold"]
-    H.cloth(f, f.m_all(), t, top=1.12, bottom=0.88, round_=0.08, fold_xs=[1.2, 6.8], fold_depth=0.08, fold_y0=2.0, fold_y1=10.0, weave_k=0.0)
+    K.cloth(f, f.m_all(), t, top=1.12, bottom=0.88, round_=0.08, fold_xs=[1.2, 6.8], fold_depth=0.08, fold_y0=2.0, fold_y1=10.0, weave_k=0.0)
     H.sheen(f, f.m_rect(0, 1.5, 8, 9), [1.0, 7.0], width=0.2, strength=0.22, tilt=0.04, y0=2.0, y1=8.8, color="#ffffff")
     f.fill(f.m_line((4.0, 6.7), (4.0, 9.0), 0.17, 0.17), H.tone(t, 0.62), 0.55)       # the placket under the emblem
     f.fill(f.m_line((4.17, 6.7), (4.17, 9.0), 0.12, 0.12), H.tone(t, 1.25), 0.5)
@@ -149,7 +149,7 @@ def tunic_front(f, ov, P):
 
 def tunic_back(f, ov, P):
     t, g = P["tunic"], P["gold"]
-    H.cloth(f, f.m_all(), t, top=1.1, bottom=0.86, round_=0.08, fold_xs=[1.6, 3.0, 5.0, 6.4], fold_depth=0.07, fold_y0=4.0, fold_y1=10.0, weave_k=0.0)
+    K.cloth(f, f.m_all(), t, top=1.1, bottom=0.86, round_=0.08, fold_xs=[1.6, 3.0, 5.0, 6.4], fold_depth=0.07, fold_y0=4.0, fold_y1=10.0, weave_k=0.0)
     f.fill(f.m_line((4.0, 4.8), (4.0, 9.0), 0.16, 0.16), H.tone(t, 0.6), 0.5)
     # the mantle's yoke over the shoulders: pale green, gold edge, the lining peeking at the lower edge, the tree on it
     yoke = f.m_poly([(0, 0), (8, 0), (8, 3.2), (6.0, 4.5), (4.0, 4.9), (2.0, 4.5), (0, 3.2)])
@@ -171,7 +171,7 @@ def tunic_back(f, ov, P):
 
 def tunic_side(f, ov, P, name):
     t, g = P["tunic"], P["gold"]
-    H.cloth(f, f.m_all(), H.tone(t, 0.94), top=1.1, bottom=0.86, round_=0.1, fold_xs=[1.2, 2.6], fold_depth=0.07, fold_y0=3.0, fold_y1=10.0, weave_k=0.0)
+    K.cloth(f, f.m_all(), H.tone(t, 0.94), top=1.1, bottom=0.86, round_=0.1, fold_xs=[1.2, 2.6], fold_depth=0.07, fold_y0=3.0, fold_y1=10.0, weave_k=0.0)
     yoke = f.m_poly([(0, 0), (f.w, 0), (f.w, 3.4), (0, 3.4)])
     f.fill(f.m_rect(0, 0, f.w, 3.3), H.lin((0, 0), (0, 3.3), [(0, H.tone(P["mantle"], 1.1)), (1, H.tone(P["mantle"], 0.78))]), 0.0)
     H.trim_band(f, 9.0, 10.55, P["sash"], spec=0.4, outline=0.55)
@@ -202,7 +202,7 @@ def arm(cv, part, P):
             K.limb_skin(f, SKIN, 3.6, 12.0, tendon=nm in ("front", "east", "west"))
             K.fingers(f, SKIN, n=2)
             t, g = P["tunic"], P["gold"]
-            H.cloth(f, f.m_band(0.0, 3.2), t, top=1.12, bottom=0.88, round_=0.12, fold_xs=[1.0, 2.2], fold_depth=0.07, fold_y0=0.9, fold_y1=2.9, weave_k=0.0)
+            K.cloth(f, f.m_band(0.0, 3.2), t, top=1.12, bottom=0.88, round_=0.12, fold_xs=[1.0, 2.2], fold_depth=0.07, fold_y0=0.9, fold_y1=2.9, weave_k=0.0)
             f.fill(f.m_rect(0.0, 0.0, f.w, 0.3), H.tone(t, 0.76), 0.7)                   # the shoulder seam
             K.seam(f, [(0.0, 0.7), (f.w, 0.7)], "#a8a070", 0.055, 0.6, (0.3, 0.2), 0.15)
             H.shadow_under(f, 3.0, 0.5, 0.3)
@@ -220,7 +220,7 @@ def legs(cv, P):
                 for y, k in ((7.0, 0.5),):                                               # the knee
                     f.fill(f.m_polyline([(0.3, y), (f.w * 0.5, y + 0.25), (f.w - 0.3, y)], 0.12) * f.m_band(5.0, 10.0), H.tone(SKIN[0], 0.78), k)
                 # the tunic skirt over the thigh: cream, a gold hem and a dark green pinstripe
-                H.cloth(f, f.m_band(0.0, 3.1), t, top=1.12, bottom=0.88, round_=0.1, fold_xs=[1.3, 2.7], fold_depth=0.07, fold_y0=0.2, fold_y1=2.9, weave_k=0.0)
+                K.cloth(f, f.m_band(0.0, 3.1), t, top=1.12, bottom=0.88, round_=0.1, fold_xs=[1.3, 2.7], fold_depth=0.07, fold_y0=0.2, fold_y1=2.9, weave_k=0.0)
                 H.trim_band(f, 3.0, 4.0, g, spec=0.35, outline=0.55)
                 f.fill(f.m_band(4.0, 5.0), H.lin((0, 4.0), (0, 5.0), [(0, P["trim_d"]), (1, H.tone(P["trim_d"], 0.8))]))
                 H.shadow_under(f, 5.0, 0.7, 0.3)

@@ -1,8 +1,8 @@
 {
  "id": "ban_form2",
- "source": "baseline",
+ "source": "hand",
  "size": 256,
- "hair_reason": "swept-up silver spikes with long side locks: thick vertical clumps",
+ "hair_reason": "painted by hand: tools/arc_hd/chars/ban_form2.py",
  "look": {
   "skin": "ban_form2",
   "slim": false,

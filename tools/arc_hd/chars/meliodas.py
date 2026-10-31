@@ -1,4 +1,5 @@
-"""Meliodas, the Dragon's Sin of Wrath, HD 256x256: the hand-painted pilot of the HD arc pass (docs/arc/hd_arc.md).
+"""Meliodas, the Dragon's Sin of Wrath, HD 256x256: the hand-painted pilot of the HD arc pass (docs/arc/hd_arc.md), reworked by group sds1 (docs/arc/hd_arc_sds1.md).
+`meliodas_form2.py` (the Demon King) loads this module and swaps its palette and its face (FORM2 = True); all the drawing code below is shared.
 
 The outfit is the one of the 64x64 sheet (tools/arc/char_meliodas.py: a dark vest with a brown yoke and a stand collar over a cream shirt, short cream sleeves with brown cuffs, a wrapped right hand,
 a double belt with a gold buckle, dark trousers tucked into calf boots); nothing is changed in WHAT he wears, only how finely it is drawn. The colour blocking and the layout come from the 64x64
@@ -7,8 +8,8 @@ the anime face with the emerald eyes, the thick blond brows, the fringe, the wid
 double belt with the gold buckle; the sleeves with their stitched cuffs; the wrapped right hand; the Dragon's Sin mark on the left forearm (the sources disagree on the exact place: here the forearm below
 the sleeve, so it is seen); the trousers with their creases, the boots with their straps, welt and polished toe.
 
-Original art from memory of the character's look (docs/arc/meliodas.md lists the sources), nothing traced. Glow: none in this form (the glow of the sword lives on the weapon model); `meliodas_form2` stays on
-the baseline until it gets its own module.
+Original art from memory of the character's look (docs/arc/meliodas.md lists the sources), nothing traced. Glow: none in this form (the glow of the sword lives on the weapon model). The Demon King form
+(`meliodas_form2.py`) runs this same code with FORM2 = True: dark palette, slit red glowing eyes, the black lock, the sigil, fangs, and glowing cracks and veins on the left arm (the glow map exists only there).
 """
 import os
 import sys
@@ -17,9 +18,13 @@ import numpy as np
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import arc_hdlib as A  # noqa: E402
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import _sds1_kit as K  # noqa: E402
 
 H = A.H
 
+FORM2 = False                                                                       # meliodas_form2.py sets this and the palette below before it calls paint()
+HAIR_STYLE = "anime_spike_tall"                                                     # thick layered clumps (reference 154); the pilot's anime_spike_swept read as thin fingers
 HAIR = "#f6d044"                                                                    # a golden blond: the sheet's #e8c860 reads khaki once the hair tint pipeline is applied
 HAIR_RGB = (246, 208, 68)
 SKIN = ("#e5b393", "#f4cfb6", "#fee6d3")
@@ -79,7 +84,7 @@ def lock(f, cx, w, top, length, lean, shade=1.0):
     return m
 
 
-def head_front(cv):
+def head_front_human(cv):
     f = cv.face("head", "front")
     H.skin_face(f, SKIN, hair=None, side=0.09, chin=0.07, shadow=0.0)
     # the hair of the fringe: a messy blond mass; locks hang over the brow, a sideburn each side
@@ -109,6 +114,79 @@ def head_front(cv):
     f.poly([(5.15, 6.92), (5.6, 6.92), (5.38, 7.5)], "#ffffff", 0.95)
 
 
+# ================================================================================================ form 2: the Demon King (assault mode): slit red eyes, angry brows, the sigil, cracks and veins that glow
+DEMON, DEMON_L, CRIMSON = "#1a0a14", "#4a1030", "#ff3a5a"
+BLACK_LOCK = {"d": "#07050a", "m": "#15121a", "l": "#2c2434", "h": "#54486a"}
+
+
+def crack(f, pts, width=0.17, a=0.95):
+    """A jagged crack of light: a dark crimson edge, a bright core, a glow-map twin."""
+    m = f.m_polyline(pts, width + 0.12)
+    f.fill(m, DEMON, 0.85)
+    K.glow_line(f, pts, CRIMSON, width, a, core="#ffd0d8", core_a=0.6)
+
+
+def sigil(f, cx, cy, s=1.0, glow=True):
+    """The Demon mark on the forehead (drawn from memory, stylised): a pointed diamond with a hooked cross-line and a short tail, dark with a crimson edge that glows."""
+    d = [(cx, cy - 1.0 * s), (cx + 0.55 * s, cy - 0.1 * s), (cx, cy + 1.05 * s), (cx - 0.55 * s, cy - 0.1 * s)]
+    f.poly(d, DEMON, 0.95)
+    f.fill(f.m_polyline(d + [d[0]], 0.1 * s), CRIMSON, 0.9, glow=glow)
+    f.fill(f.m_line((cx - 1.0 * s, cy + 0.15 * s), (cx + 1.0 * s, cy + 0.15 * s), 0.12 * s, 0.12 * s), DEMON, 0.95)
+    f.fill(f.m_line((cx - 1.0 * s, cy + 0.15 * s), (cx + 1.0 * s, cy + 0.15 * s), 0.07 * s, 0.07 * s), CRIMSON, 0.85, glow=glow)
+    f.poly([(cx - 0.12 * s, cy + 0.15 * s), (cx + 0.12 * s, cy + 0.15 * s), (cx, cy + 1.0 * s)], CRIMSON, 0.85, glow=glow)
+
+
+def head_front_demon(cv):
+    f = cv.face("head", "front")
+    K.clear_glow(f)
+    skin = ("#dcae92", "#efc8b0", "#fbe0cc")
+    H.skin_face(f, skin, hair=None, side=0.1, chin=0.09, shadow=0.0)
+    mass = f.m_poly([(-0.3, -0.3), (8.3, -0.3), (8.3, 1.9), (7.2, 1.6), (6.0, 2.0), (4.9, 1.5), (3.8, 1.9), (2.6, 1.5), (1.4, 1.9), (-0.3, 1.7)])
+    f.shade((1.0 - mass) * np.clip(1.0 - (f.Y - 1.6) / 2.0, 0, 1) * (f.Y > 1.3), 0.84)
+    f.fill(mass, H.lin((0, 0), (0, 2.0), [(0, H.mix(HAIR_D, HAIR_M, 0.45)), (0.5, HAIR_M), (1, H.tone(HAIR_M, 0.9))]))
+    for x in (0.9, 2.1, 3.3, 4.5, 5.7, 6.9):
+        f.fill(f.m_line((x, 0.0), (x + 0.12, 1.7), 0.10, 0.05) * mass, HAIR_H, 0.35)
+    # the fringe is swept up and apart to show the sigil; one black lock hangs on the left of the picture
+    for sh, (cx, w, ln, ln_, lean) in ((0.8, (7.0, 1.5, 0.9, 2.6, -0.4)), (0.8, (1.0, 1.5, 0.9, 2.6, 0.4)), (0.9, (5.7, 1.3, 1.0, 1.1, -0.3)), (0.9, (2.4, 1.3, 1.0, 1.2, 0.3))):
+        lock(f, cx, w, ln, ln_, lean, sh)
+    lock_pal = BLACK_LOCK
+    K.lock(f, lock_pal, 2.9, 1.2, 0.5, 2.1, -0.2, 1.0)
+    lock(f, 0.42, 1.0, 0.8, 4.0, 0.15, 1.0)
+    lock(f, 7.58, 1.0, 0.8, 4.0, -0.15, 1.0)
+    sigil(f, 4.7, 2.75, 0.85)
+    # angry brows (inner ends low), slit crimson eyes, black rims, a hard open grin with two fangs
+    brow = "#8a5a10"
+    H.brow(f, (3.3, 4.2), (0.95, 3.15), brow, 0.42, 0.14, arch=0.0)
+    H.brow(f, (4.7, 4.2), (7.05, 3.15), brow, 0.42, 0.14, arch=0.0)
+    iris = ("#5a0614", "#ff3a5a", "#ffb4be")
+    for cx in (2.4, 5.6):
+        H.eye(f, cx, 5.1, 2.5, 1.9, iris, lash="#10060c", tilt=0.35, lash_w=0.5, flick=0.45, lid_shadow=0.35, glow="#ff3a5a", hi=0.7, pupil="#ff3a5a")
+        f.fill(f.m_ellipse(cx, 5.15, 0.11, 0.78), "#1a0408", 0.95)                                     # the slit pupil
+        f.fill(f.m_polyline([(cx - 1.35, 5.95 + (0.0 if cx < 4 else 0.0)), (cx, 6.35), (cx + 1.35, 5.95)], 0.12), DEMON, 0.6)   # the dark rim under the eye
+    H.nose(f, 4.0, 6.1, "#c08a76", 0.24)
+    H.mouth_smile(f, 4.0, 6.55, 4.0, color="#5a1018", lip="#c8706c", depth=0.3, thick=0.2, teeth="#fffdf6", open_h=0.8)
+    for x in (2.9, 5.1):
+        f.poly([(x - 0.22, 6.82), (x + 0.22, 6.82), (x, 7.55)], "#ffffff", 0.95)
+    # cracks from the outer eye corners down the cheeks and the veins of the temples
+    for sgn in (1.0, -1.0):
+        x0 = 4.0 + sgn * 3.3
+        crack(f, [(x0, 5.0), (x0 - sgn * 0.4, 5.6), (x0 - sgn * 0.15, 6.2), (x0 - sgn * 0.7, 6.9), (x0 - sgn * 0.55, 7.7)])
+        crack(f, [(x0 - sgn * 0.3, 5.5), (x0 - sgn * 0.95, 5.85)], 0.12, 0.8)
+        crack(f, [(4.0 + sgn * 1.6, 2.7), (4.0 + sgn * 2.2, 3.05), (4.0 + sgn * 2.7, 2.85)], 0.11, 0.7)
+
+
+def head_front(cv):
+    (head_front_demon if FORM2 else head_front_human)(cv)
+
+
+def demon_marks(cv):
+    """Form 2: the Demon mark has spread over the arms: crimson veins under the wrap and cracks along the left forearm, glowing."""
+    for nm in SIDES:
+        for f in A.lay(cv, "arm_l", nm):
+            crack(f, [(f.w * 0.3, 8.9), (f.w * 0.55, 9.6), (f.w * 0.4, 10.4), (f.w * 0.65, 11.2)], 0.14, 0.85)
+            crack(f, [(f.w * 0.7, 4.6), (f.w * 0.5, 5.2), (f.w * 0.62, 6.0)], 0.12, 0.75)
+
+
 # ================================================================================================ the body
 def rim_light(f, mask, x0, x1, k=1.55, a=0.22):
     """A thin lit edge on the light side of a panel (the vest is a smooth dark cloth: without it the panels read as flat black)."""
@@ -116,7 +194,7 @@ def rim_light(f, mask, x0, x1, k=1.55, a=0.22):
 
 
 def vest_front(f):
-    H.cloth(f, f.m_all(), VEST, top=1.28, bottom=0.80, round_=0.08, fold_xs=[0.8, 7.2], fold_depth=0.10, fold_y0=1.8, fold_y1=9.0, weave_k=0.0)
+    K.cloth(f, f.m_all(), VEST, top=1.5, bottom=0.80, round_=0.08, fold_xs=[0.8, 7.2], fold_depth=0.10, fold_y0=1.8, fold_y1=9.0, weave_k=0.0)
     for x0, x1 in ((0.0, 2.3), (5.7, 8.0)):                                              # the two vest panels: a sheen of the cloth, a lit edge, a princess seam
         pm = f.m_rect(x0, 1.5, x1, 9.0)
         H.sheen(f, pm, [x0 + 0.55 if x0 < 4 else x0 + 0.5], width=0.2, strength=0.22, tilt=0.05, y0=2.0, y1=8.6, color="#a99ea0")
@@ -137,7 +215,7 @@ def vest_front(f):
     H.shadow_under(f, 1.6, 0.45, 0.26, x0=5.6, x1=8.0)
     # the cream shirt in the opening of the vest
     placket = f.m_poly([(2.55, 0.0), (5.45, 0.0), (6.05, 9.05), (1.95, 9.05)])
-    H.cloth(f, placket, SHIRT, top=1.1, bottom=0.9, round_=0.05, fold_xs=[3.05, 5.0], fold_depth=0.08, fold_y0=2.2, fold_y1=8.8, weave_k=0.0)
+    K.cloth(f, placket, SHIRT, top=1.1, bottom=0.9, round_=0.05, fold_xs=[3.05, 5.0], fold_depth=0.08, fold_y0=2.2, fold_y1=8.8, weave_k=0.0)
     f.shade(placket * np.clip(1.0 - np.minimum(f.X - (2.55 - (f.Y / 9.05) * 0.6), (5.45 + (f.Y / 9.05) * 0.6) - f.X) / 0.6, 0, 1), 0.78, 0.9)   # the vest shades the shirt at its edge
     f.fill(f.m_line((4.0, 1.7), (4.0, 9.0), 0.17, 0.17) * placket, H.tone(SHIRT, 0.55), 0.6)
     f.fill(f.m_line((4.17, 1.7), (4.17, 9.0), 0.12, 0.12) * placket, H.tone(SHIRT, 1.25), 0.55)
@@ -189,7 +267,7 @@ def body_front(f, ov):
 
 def body_back(f, ov):
     if not ov:
-        H.cloth(f, f.m_all(), VEST, top=1.25, bottom=0.8, round_=0.08, fold_xs=[1.6, 3.0, 5.0, 6.4], fold_depth=0.09, fold_y0=1.8, fold_y1=9.0, weave_k=0.0)
+        K.cloth(f, f.m_all(), VEST, top=1.25, bottom=0.8, round_=0.08, fold_xs=[1.6, 3.0, 5.0, 6.4], fold_depth=0.09, fold_y0=1.8, fold_y1=9.0, weave_k=0.0)
         H.sheen(f, f.m_rect(0, 1.5, 8, 9.0), [1.6, 6.3], width=0.22, strength=0.18, tilt=0.04, y0=2.0, y1=8.6, color="#a99ea0")
         yoke = f.m_rect(0, 0, 8, 1.55)
         f.fill(yoke, H.lin((0, 0), (0, 1.55), [(0, H.tone(YOKE, 1.12)), (0.6, YOKE), (1, H.tone(YOKE, 0.68))]))
@@ -207,7 +285,7 @@ def body_back(f, ov):
 
 def body_side(f, ov, name):
     if not ov:
-        H.cloth(f, f.m_all(), VEST, top=1.25, bottom=0.8, round_=0.08, fold_xs=[1.4, 2.6], fold_depth=0.08, fold_y0=1.8, fold_y1=9.0, weave_k=0.0)
+        K.cloth(f, f.m_all(), VEST, top=1.25, bottom=0.8, round_=0.08, fold_xs=[1.4, 2.6], fold_depth=0.08, fold_y0=1.8, fold_y1=9.0, weave_k=0.0)
         yoke = f.m_rect(0, 0, f.w, 1.55)
         f.fill(yoke, H.lin((0, 0), (0, 1.55), [(0, H.tone(YOKE, 1.12)), (0.6, YOKE), (1, H.tone(YOKE, 0.68))]))
         H.bevel(f, yoke, depth=0.24, gain=1.0, spec=0.25)
@@ -254,7 +332,7 @@ def dragon(f, x0, y0, w, h, flip=False, a=0.92):
 
 
 def sleeve(f, ov, part):
-    H.cloth(f, f.m_band(0.0, 3.0), SHIRT, top=1.1, bottom=0.88, round_=0.12, fold_xs=[1.3, 2.7], fold_depth=0.07, fold_y0=0.9, fold_y1=2.8, weave_k=0.0)
+    K.cloth(f, f.m_band(0.0, 3.0), SHIRT, top=1.1, bottom=0.88, round_=0.12, fold_xs=[1.3, 2.7], fold_depth=0.07, fold_y0=0.9, fold_y1=2.8, weave_k=0.0)
     f.fill(f.m_rect(0.0, 0.0, f.w, 0.3), H.tone(SHIRT, 0.76), 0.7)                          # the shoulder seam
     seam(f, [(0.0, 0.62), (f.w, 0.62)], "#a39574", 0.055, 0.7, (0.3, 0.2), 0.15)
     seam(f, [(0.0, 2.55), (f.w, 2.55)], "#a39574", 0.055, 0.7, (0.3, 0.2), 0.15)           # the hem stitch
@@ -328,7 +406,7 @@ def arms(cv):
 
 # ================================================================================================ the legs
 def leg(f, ov, part, name):
-    H.cloth(f, f.m_band(0.0, 6.4), TROUS, top=1.3, bottom=0.8, round_=0.12, fold_xs=[1.2, 2.8], fold_depth=0.10, fold_y0=0.4, fold_y1=6.0, weave_k=0.0)
+    K.cloth(f, f.m_band(0.0, 6.4), TROUS, top=1.5, bottom=0.8, round_=0.12, fold_xs=[1.2, 2.8], fold_depth=0.10, fold_y0=0.4, fold_y1=6.0, weave_k=0.0)
     for y, k in ((2.6, 0.6), (3.7, 0.45)):                                                # knee creases
         f.fill(f.m_polyline([(0.2, y), (f.w * 0.5, y + 0.28), (f.w - 0.2, y + 0.05)], 0.1) * f.m_band(0, 6.4), H.tone(TROUS, 0.5), k)
         f.fill(f.m_polyline([(0.2, y - 0.15), (f.w * 0.5, y + 0.13), (f.w - 0.2, y - 0.10)], 0.06) * f.m_band(0, 6.4), H.tone(TROUS, 1.8), k * 0.5)
@@ -338,7 +416,7 @@ def leg(f, ov, part, name):
     H.trim_band(f, 6.3, 7.35, "#7a6252", spec=0.25, outline=0.6)
     seam(f, [(0.12, 6.85), (f.w - 0.12, 6.85)], "#d0b48a", 0.06, 0.75, (0.28, 0.18), 0.2)
     boot = f.m_band(7.35, 11.25)
-    f.fill(boot, H.lin((0, 7.35), (0, 11.25), [(0, H.tone(BOOT, 1.25)), (0.5, BOOT), (1, H.tone(BOOT, 0.72))]))
+    f.fill(boot, H.lin((0, 7.35), (0, 11.25), [(0, K.lit(BOOT, 1.4)), (0.5, BOOT), (1, H.tone(BOOT, 0.72))]))
     H.shadow_under(f, 7.4, 0.7, 0.34)
     H.sheen(f, boot, [f.w * 0.3], width=0.2, strength=0.26, tilt=0.04, y0=7.7, y1=10.6, color="#c8a898")
     f.fill(f.m_polyline([(0.0, 9.45), (f.w * 0.5, 9.7), (f.w, 9.5)], 0.11), H.tone(BOOT, 0.45), 0.7)       # ankle wrinkles
@@ -365,7 +443,7 @@ def legs(cv):
 # ================================================================================================ paint
 def paint(spec, cid, masks):
     spec["hair"]["color"] = HAIR                                                          # the scalp and the 3D hair share one golden blond
-    img64, glow64, hair, hrgb, slim = A.blueprint(cid, spec, masks, hair="anime_spike_swept")
+    img64, glow64, hair, hrgb, slim = A.blueprint(cid, spec, masks, hair=HAIR_STYLE)
     cv = H.Canvas(256, slim)
     A.bridge(cv, img64, glow64, spec, HAIR_RGB, skip=lambda part, face, ov: part == "head" and face == "front" and not ov)
     covers = {(p, n): cover_of(cv, p, n) for p in ("body", "arm_r", "arm_l", "leg_r", "leg_l") for n in SIDES}
@@ -373,6 +451,8 @@ def paint(spec, cid, masks):
     body(cv)
     arms(cv)
     legs(cv)
+    if FORM2:
+        demon_marks(cv)
     hold_cover(cv, covers)
     skin, glow = cv.finish()
     return skin, glow, hair, HAIR_RGB, slim

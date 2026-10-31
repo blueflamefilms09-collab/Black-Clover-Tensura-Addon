@@ -1,8 +1,8 @@
 {
  "id": "merlin",
- "source": "baseline",
+ "source": "hand",
  "size": 256,
- "hair_reason": "KEPT classic: the black bob with the long fringe",
+ "hair_reason": "painted by hand: tools/arc_hd/chars/merlin.py",
  "look": {
   "skin": "merlin",
   "slim": true,

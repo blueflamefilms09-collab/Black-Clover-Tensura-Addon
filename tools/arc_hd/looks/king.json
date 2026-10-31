@@ -1,8 +1,8 @@
 {
  "id": "king",
- "source": "baseline",
+ "source": "hand",
  "size": 256,
- "hair_reason": "a layered brown mop with a fringe over the brow: reference 156",
+ "hair_reason": "painted by hand: tools/arc_hd/chars/king.py",
  "look": {
   "skin": "king",
   "slim": true,
@@ -10,7 +10,7 @@
   "hold_r": -0.42,
   "glow": true,
   "hair": "anime_short",
-  "hair_color": "#c9742c",
+  "hair_color": "#c4702e",
   "extras": [
    {
     "model": "pmx_king",

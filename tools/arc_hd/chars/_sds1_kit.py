@@ -49,6 +49,29 @@ def clear_glow(f):
     f.glow[...] = 0.0
 
 
+def lit(c, k):
+    """The colour c lit by k > 1 without washing out toward white (H.tone mixes 45 % toward a warm white at k = 1.3, which turns dark leather grey): a plain scale with a touch of warmth."""
+    a = H.col(c)
+    return np.clip(a * k + (k - 1.0) * np.array([0.03, 0.02, 0.0], np.float32), 0, 1).astype(np.float32)
+
+
+def cloth(face, mask, color, top=1.1, bottom=0.84, round_=0.10, fold_xs=None, fold_depth=0.07, fold_y0=0.0, fold_y1=None, weave_k=0.0, a=1.0):
+    """H.cloth with a lit top that keeps the hue (H.tone whitens: a dark red jacket turned pink and black trousers turned grey at top = 1.25)."""
+    mask = np.asarray(mask, np.float32)
+    ys = np.where(mask > 0.5)[0]
+    y0 = face.Y[ys.min(), 0] - 0.5 / face.f if len(ys) else 0.0
+    y1 = face.Y[ys.max(), 0] + 0.5 / face.f if len(ys) else face.h
+    t = lit(color, top) if top > 1.0 else H.tone(color, top)
+    face.fill(mask, H.lin((0, y0), (0, y1), [(0, t), (0.55, color), (1, H.tone(color, bottom))]), a)
+    away = face.X if face.light[0] > 0 else face.w - face.X
+    face.shade(mask, 1.0 - round_ * H.smoothstep(0.45 * face.w, face.w, away), a)
+    if fold_xs:
+        H.folds(face, mask, fold_xs, depth=fold_depth, width=0.25, y0=fold_y0 if fold_y0 else y0, y1=fold_y1 if fold_y1 else y1)
+    if weave_k:
+        H.weave(face, mask, strength=weave_k)
+    return face
+
+
 def seam(f, pts, color="#c9a867", width=0.07, a=0.8, dash=(0.34, 0.2), shadow=0.28):
     """A stitched line; at 256 texels a line thinner than one texel (0.25 px) breaks into dots, so width and dashes are kept at texel scale."""
     d = None if dash is None else (max(dash[0], 0.5), max(dash[1], 0.36))
@@ -116,8 +139,10 @@ def spike(f, pal, cx, w, top, length, lean, shade=1.0, edge=0.07):
 
 
 def hair_palette(base):
-    """dict(d, m, l, h) for a hair colour: shadow, mid, light, highlight."""
-    return {"d": H.tone(base, 0.62), "m": H.col(base), "l": H.tone(base, 1.22), "h": H.tone(base, 1.6)}
+    """dict(d, m, l, h) for a hair colour: shadow, mid, light, highlight (the light and the highlight keep the hue: no washing out towards white)."""
+    b = H.col(base)
+    light = np.clip(b * 1.16 + 0.035, 0, 1).astype(np.float32)
+    return {"d": H.tone(base, 0.6), "m": b, "l": light, "h": np.clip(light + (1.0 - light) * 0.32, 0, 1).astype(np.float32)}
 
 
 def fringe_mass(f, pal, poly, y0=0.0, y1=2.2):
@@ -152,8 +177,8 @@ def fingers(f, skin, y0=10.9, y1=11.9, n=3):
 
 
 # ================================================================================================ boots and trousers
-def trousers(f, color, y0, y1, name, knee=True, fold_xs=(1.2, 2.8), seam_color="#8a7e9a"):
-    H.cloth(f, f.m_band(y0, y1), color, top=1.3, bottom=0.8, round_=0.12, fold_xs=list(fold_xs), fold_depth=0.10, fold_y0=y0 + 0.4, fold_y1=y1 - 0.4, weave_k=0.0)
+def trousers(f, color, y0, y1, name, knee=True, fold_xs=(1.2, 2.8), seam_color="#8a7e9a", top=1.3, bottom=0.8):
+    cloth(f, f.m_band(y0, y1), color, top=top, bottom=bottom, round_=0.12, fold_xs=list(fold_xs), fold_depth=0.10, fold_y0=y0 + 0.4, fold_y1=y1 - 0.4, weave_k=0.0)
     if knee:
         for y, k in ((2.6, 0.6), (3.7, 0.45)):
             f.fill(f.m_polyline([(0.2, y), (f.w * 0.5, y + 0.28), (f.w - 0.2, y + 0.05)], 0.1) * f.m_band(y0, y1), H.tone(color, 0.5), k)
@@ -165,7 +190,7 @@ def trousers(f, color, y0, y1, name, knee=True, fold_xs=(1.2, 2.8), seam_color="
 def boot(f, color, y0, y1, name, strap=None, gold="#e0b43e", cuff=None, toe=True, sole="#0d0b0a"):
     """A boot from y0 to the foot line at 11.25 with welt and sole to 12: a gradient, a sheen, ankle wrinkles, an optional strap with a buckle across the shin and a polished toe cap."""
     boot_m = f.m_band(y0, 11.25)
-    f.fill(boot_m, H.lin((0, y0), (0, 11.25), [(0, H.tone(color, 1.25)), (0.5, color), (1, H.tone(color, 0.72))]))
+    f.fill(boot_m, H.lin((0, y0), (0, 11.25), [(0, lit(color, 1.35)), (0.5, color), (1, H.tone(color, 0.72))]))
     H.shadow_under(f, y0 + 0.05, 0.7, 0.34)
     H.sheen(f, boot_m, [f.w * 0.3], width=0.2, strength=0.26, tilt=0.04, y0=y0 + 0.35, y1=10.6, color="#c8a898")
     f.fill(f.m_polyline([(0.0, 9.45), (f.w * 0.5, 9.7), (f.w, 9.5)], 0.11), H.tone(color, 0.45), 0.7)
@@ -176,10 +201,10 @@ def boot(f, color, y0, y1, name, strap=None, gold="#e0b43e", cuff=None, toe=True
         f.fill(f.m_rect(0.0, 8.82, f.w, 8.92), "#0e0a08", 0.7)
         H.stud(f, f.w * 0.5, 8.5, 0.34, gold)
     if toe and name == "front":
-        f.ellipse(f.w * 0.5, 10.25, 1.2, 0.65, H.tone(color, 1.6), a=0.38, soft=2.0)
-    f.fill(f.m_band(11.0, 11.35), H.tone(color, 1.5), 0.9)
+        f.ellipse(f.w * 0.5, 10.25, 1.2, 0.65, lit(color, 1.9), a=0.38, soft=2.0)
+    f.fill(f.m_band(11.0, 11.35), lit(color, 1.7), 0.9)
     f.fill(f.m_band(11.3, 12.0), H.lin((0, 11.3), (0, 12.0), [(0, "#1c1512"), (1, sole)]))
-    f.fill(f.m_band(11.0, 11.12), H.tone(color, 2.0), 0.6)
+    f.fill(f.m_band(11.0, 11.12), lit(color, 2.2), 0.6)
 
 
 # ================================================================================================ marks and light

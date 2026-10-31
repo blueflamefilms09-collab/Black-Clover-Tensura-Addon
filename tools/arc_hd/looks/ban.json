@@ -1,8 +1,8 @@
 {
  "id": "ban",
- "source": "baseline",
+ "source": "hand",
  "size": 256,
- "hair_reason": "swept-up silver spikes with long side locks: thick vertical clumps",
+ "hair_reason": "painted by hand: tools/arc_hd/chars/ban.py",
  "look": {
   "skin": "ban",
   "slim": false,

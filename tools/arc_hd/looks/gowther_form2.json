@@ -1,15 +1,15 @@
 {
  "id": "gowther_form2",
- "source": "baseline",
+ "source": "hand",
  "size": 256,
- "hair_reason": "the long pink hair of his true form, full back and cheek locks",
+ "hair_reason": "painted by hand: tools/arc_hd/chars/gowther_form2.py",
  "look": {
   "skin": "gowther_form2",
   "slim": true,
   "scale": 0.9867,
   "glow": true,
   "hair": "anime_long",
-  "hair_color": "#f0b8d8",
+  "hair_color": "#ffacd8",
   "extras": [
    {
     "model": "pmx_gowther_form2",

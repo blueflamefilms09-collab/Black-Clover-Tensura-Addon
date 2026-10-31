@@ -122,3 +122,19 @@ def sole(f, y0, y1=12.0, welt="#5a4a5a", sole_dark="#0d0b10", sole_light="#1c162
     f.fill(f.m_band(y0, y0 + 0.35), welt, 0.95)
     f.fill(f.m_band(y0 + 0.3, y1), H.lin((0, y0 + 0.3), (0, y1), [(0, sole_light), (1, sole_dark)]))
     f.fill(f.m_band(y0, y0 + 0.12), H.tone(welt, 1.5), 0.6)
+
+
+# ================================================================================================ the sides of the head
+def ear(f, name, skin, y=4.7, earring=None, jewel=None):
+    """An ear on a side face of the head (west = the entity's right, its front at the right end): a skin ellipse with an inner shadow and a rim; optionally a stud and a drop earring (colour, glow)."""
+    cx = 3.85 if name == "west" else 4.15
+    s0, s1, s2 = skin
+    f.fill(f.m_ellipse(cx, y, 0.95, 1.3), H.lin((0, y - 1.3), (0, y + 1.3), [(0, s2), (0.5, s1), (1, s0)]))
+    f.fill(f.m_ellipse(cx + (0.1 if name == "west" else -0.1), y + 0.05, 0.45, 0.85), H.tone(s0, 0.84), 0.75)
+    f.fill(f.m_ring(cx, y, 1.02, 0.15) * f.m_rect(0, y - 1.6, 8, y + 1.6), H.tone(s0, 0.7), 0.55)
+    f.fill(f.m_ellipse(cx - 0.25, y - 0.7, 0.3, 0.2), H.tone(s2, 1.05), 0.6)
+    if earring:
+        H.stud(f, cx, y + 1.35, 0.3, earring, spec=0.9)
+        f.fill(f.m_line((cx, y + 1.5), (cx, y + 2.3), 0.18, 0.12), earring, 0.95)
+        if jewel:
+            H.gem(f, cx, y + 2.45, 0.26, jewel[0], setting=earring, facets=4, spec=0.8, glow=jewel[1])

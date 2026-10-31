@@ -43,35 +43,38 @@ def head_front(cv, P):
     pal = P["hair_pal"]
     streak = S.hair_pal("#4a38b0", dark="#2a1e78", light="#7a66e0", high=P["violet"])
     H.skin_face(f, SKIN, hair=None, side=0.08, chin=0.06, shadow=0.0)
-    # eyeshadow first (the eye is drawn over it): a violet wash above the lid that sweeps out to the temple
-    for cx, sgn in ((2.4, -1.0), (5.6, 1.0)):
-        sh = f.m_ellipse(cx + sgn * 0.15, 4.45, 1.65, 0.62, rot=sgn * -14)
-        f.fill(sh, P["shadow"], 0.55)
-        f.fill(sh * np.clip((f.Y - 3.9) / 0.5, 0, 1), H.tone(P["shadow"], 1.25), 0.25)
-    # the fringe: long, straight, swept from a part right of the middle down over the left brow
-    mass = S.hair_mass(f, pal, [(-0.3, -0.3), (8.3, -0.3), (8.3, 2.3), (6.9, 2.35), (5.3, 2.6), (3.6, 3.0), (2.0, 3.35), (0.8, 3.5), (-0.3, 3.7)])
+    # eyeshadow first (the eye is drawn over it): a thin violet crescent above the lid that sweeps out to the temple
+    for cx, sgn in ((2.45, -1.0), (5.55, 1.0)):
+        sh = f.m_ellipse(cx + sgn * 0.2, 4.5, 1.55, 0.5, rot=sgn * -16)
+        f.fill(sh, P["shadow"], 0.4)
+        f.fill(sh * np.clip((f.Y - 4.0) / 0.45, 0, 1), H.tone(P["shadow"], 1.3), 0.2)
+    # the fringe: a long straight cut parted right of the middle, a little lower on the left
+    mass = S.hair_mass(f, pal, [(-0.3, -0.3), (8.3, -0.3), (8.3, 2.3), (6.2, 2.5), (4.0, 2.75), (1.8, 3.0), (-0.3, 3.2)])
     S.strands(f, pal, (0.8, 1.9, 3.1, 4.3, 5.6, 6.9), 0.0, 2.8, mass, 0.3)
-    S.lock(f, 1.6, 2.0, 1.4, 2.35, 0.5, pal, 0.9)
-    S.lock(f, 3.3, 1.6, 1.8, 1.6, 0.3, pal, 1.0)
-    S.lock(f, 5.2, 1.5, 1.7, 1.2, 0.0, pal, 0.95)
-    S.lock(f, 6.9, 1.4, 1.2, 1.4, -0.2, pal, 1.0)
-    S.lock(f, 0.55, 1.15, 1.0, 5.9, 0.1, pal, 1.0)                                         # the long locks that frame the face
-    S.lock(f, 7.45, 1.15, 1.0, 5.9, -0.1, pal, 1.0)
-    S.lock(f, 1.15, 0.55, 2.8, 4.4, 0.0, streak, 1.0)                                      # the violet streak
+    S.lock(f, 1.7, 1.9, 0.1, 3.0, 0.4, pal, 0.9)
+    S.lock(f, 3.6, 1.8, 0.2, 2.7, 0.3, pal, 1.0)
+    S.lock(f, 5.4, 1.7, 0.2, 2.5, 0.1, pal, 0.95)
+    S.lock(f, 7.0, 1.4, 0.2, 2.3, -0.2, pal, 1.0)
+    S.lock(f, 2.55, 0.55, 0.0, 2.9, 0.15, streak, 1.0)                                     # the violet streak inside the fringe
+    S.lock(f, 0.5, 1.1, 1.0, 5.6, 0.1, pal, 1.0)                                           # the long locks that frame the face
+    S.lock(f, 7.5, 1.1, 1.0, 5.6, -0.1, pal, 1.0)
+    S.lock(f, 0.62, 0.45, 1.6, 4.4, 0.05, streak, 1.0)
     # the brows: thin, arched and sharp
-    H.brow(f, (3.5, 3.75), (1.0, 3.2), "#241a30", 0.26, 0.10, arch=0.14)
-    H.brow(f, (4.5, 3.75), (7.0, 3.2), "#241a30", 0.26, 0.10, arch=0.14)
+    H.brow(f, (3.5, 3.8), (1.0, 3.3), "#241a30", 0.26, 0.10, arch=0.14)
+    H.brow(f, (4.5, 3.8), (7.0, 3.3), "#241a30", 0.26, 0.10, arch=0.14)
     # the eyes: golden, half lidded, the outer corner raised with a liner wing
-    for cx, outer in ((2.45, -1.0), (5.55, 1.0)):
-        H.eye(f, cx, 5.2, 2.7, 1.75, P["iris"], lash="#120c1a", tilt=0.32, lash_w=0.52, flick=0.6, iris_r=0.98, lid_shadow=0.34)
-        f.glow_fill(f.m_ellipse(cx, 5.3, 0.46, 0.55, soft=2.0), P["eye_glow"], 0.55)
-    H.blush(f, 1.35, 6.4, 0.9, 0.42, "#f08a9a", 0.22)
-    H.blush(f, 6.65, 6.4, 0.9, 0.42, "#f08a9a", 0.22)
+    for cx in (2.3, 5.7):
+        H.eye(f, cx, 5.2, 2.5, 1.75, P["iris"], lash="#120c1a", tilt=0.32, lash_w=0.5, flick=0.58, iris_r=0.98, lid_shadow=0.34)
+        f.glow_fill(f.m_ellipse(cx, 5.3, 0.4, 0.5, soft=2.0), P["eye_glow"], 0.5)
+    H.blush(f, 1.35, 6.4, 0.9, 0.42, "#f08a9a", 0.2)
+    H.blush(f, 6.65, 6.4, 0.9, 0.42, "#f08a9a", 0.2)
     H.nose(f, 4.0, 6.15, "#cf9a96", 0.22)
-    # red lips: a faint smile
-    H.mouth_smile(f, 4.0, 6.95, 2.2, color="#6e1228", lip="#d8445e", depth=0.14, thick=0.3)
-    f.fill(f.m_ellipse(4.0, 7.2, 0.95, 0.3), "#b8284a", 0.9)
-    f.fill(f.m_ellipse(3.75, 7.1, 0.4, 0.1), "#ff9aa8", 0.7)
+    # red lips: small, a faint smile, a lit lower lip
+    pts = [(4.0 + u * 0.85, 6.95 + 0.1 * (1.0 - u * u)) for u in (-1.0, -0.8, -0.6, -0.4, -0.2, 0.0, 0.2, 0.4, 0.6, 0.8, 1.0)]
+    f.fill(f.m_poly(pts + [(4.0 + u * 0.8, 7.12 + 0.34 * (1.0 - u * u)) for u in (1.0, 0.6, 0.2, -0.2, -0.6, -1.0)]), "#c63c58")
+    f.fill(f.m_poly(pts + [(4.0 + u * 0.85, 7.05) for u in (1.0, 0.0, -1.0)]), "#98223e", 0.95)
+    f.fill(f.m_polyline(pts, 0.14), "#5a0e22", 0.95)
+    f.fill(f.m_ellipse(3.8, 7.22, 0.38, 0.09), "#ffb0bc", 0.75)
     if P["form2"]:
         light_line(f, [(2.4, 6.55), (1.5, 6.9), (0.7, 6.85)], P)
         light_line(f, [(5.6, 6.55), (6.5, 6.9), (7.3, 6.85)], P)
@@ -81,21 +84,10 @@ def light_line(f, pts, P, a=0.6):
     f.fill(f.m_polyline(pts, 0.12), "#fffbe8", a, glow=P["glow"])
 
 
-def ear_side(f, P, name):
-    """An ear and a gold earring on the side of the head (the 3D hair stops above the cheek)."""
-    cx = 3.9 if name == "west" else 4.1
-    f.fill(f.m_ellipse(cx, 4.6, 0.95, 1.25), H.lin((0, 3.4), (0, 5.9), [(0, SKIN[1]), (1, SKIN[0])]))
-    f.fill(f.m_ellipse(cx + (0.12 if name == "west" else -0.12), 4.6, 0.45, 0.8), H.tone(SKIN[0], 0.82), 0.8)
-    f.fill(f.m_ring(cx, 4.6, 1.05, 0.14) * f.m_rect(0, 3.0, 8, 6.2), H.tone(SKIN[0], 0.75), 0.5)
-    H.stud(f, cx, 5.95, 0.34, P["gold"], spec=0.9)
-    f.fill(f.m_line((cx, 6.1), (cx, 7.0), 0.18, 0.12), P["gold"], 0.95)
-    H.gem(f, cx, 7.15, 0.26, P["violet"], setting=P["gold"], facets=4, spec=0.8, glow=P["glow"])
-
-
 def head_sides(cv, P):
     for nm in ("west", "east"):
-        ear_side(cv.face("head", nm, False), P, nm)
-        ear_side(cv.face("head", nm, True), P, nm)
+        for ov in (False, True):
+            S.ear(cv.face("head", nm, ov), nm, SKIN, 4.7, earring=P["gold"], jewel=(P["violet"], P["glow"]))
 
 
 # ================================================================================================ the body
@@ -197,7 +189,7 @@ def belts(f, P, front=False):
 
 
 def body_back(f, P):
-    d, dd, g = P["dress"], P["dress_d"], P["gold"]
+    d, g = P["dress"], P["gold"]
     S.panel(f, f.m_all(), d, 1.2, 0.78, 0.08, folds=[1.5, 3.0, 5.0, 6.5], fold_depth=0.09, y0=2.0, y1=9.0)
     S.seam(f, [(4.0, 2.4), (4.0, 8.9)], P["gold_l"], 0.07, 0.5)                                    # the lacing of the back (the cloak hides it)
     for y in (3.0, 4.4, 5.8, 7.2):
@@ -210,7 +202,7 @@ def body_back(f, P):
 
 
 def body_side(f, P, name):
-    d, dd, g = P["dress"], P["dress_d"], P["gold"]
+    d, g = P["dress"], P["gold"]
     S.panel(f, f.m_all(), d, 1.2, 0.8, 0.08, folds=[1.3, 2.7], fold_depth=0.08, y0=2.0, y1=9.0)
     edge = f.w - 0.7 if name == "west" else 0.7
     H.trim_line(f, [(edge, 2.2), (edge, 9.0)], g, width=0.26, spec=0.4, outline=0.55)
@@ -244,10 +236,10 @@ def arm(cv, part, P):
             S.seam(f, [(0.0, 0.95), (f.w, 0.95)], gl, 0.055, 0.45, (0.3, 0.2), 0.15)
             # the glove: long and black, from the wrist down
             gv = f.m_band(7.9, 12.0)
-            f.fill(gv, H.lin((0, 7.9), (0, 12.0), [(0, H.tone(P["glove"], 1.9)), (0.4, H.tone(P["glove"], 1.4)), (1, H.tone(P["glove"], 0.8))]))
+            f.fill(gv, H.lin((0, 7.9), (0, 12.0), [(0, H.tone(P["glove"], 1.35)), (0.4, H.tone(P["glove"], 1.15)), (1, H.tone(P["glove"], 0.7))]))
             side = np.minimum(f.X, f.w - f.X)
             f.shade(gv, 1.0 - 0.18 * (1.0 - H.smoothstep(0.0, 0.8, side)), 0.9)
-            H.sheen(f, gv, [f.w * 0.35], width=0.28, strength=0.45, tilt=0.0, y0=8.4, y1=11.4, color="#b0a4e0")
+            H.sheen(f, gv, [f.w * 0.35], width=0.26, strength=0.17, tilt=0.0, y0=8.6, y1=11.3, color="#8a7cc8")
             if nm in ("front", "back"):
                 for x in (f.w * 0.3, f.w * 0.5, f.w * 0.7):
                     f.fill(f.m_line((x, 10.9), (x, 11.9), 0.18, 0.12) * gv, "#000000", 0.7)
