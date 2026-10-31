@@ -181,9 +181,11 @@ public class ShishouEntity extends PathfinderMob {
     }
 
     // ---------------------------------------------------------------- the hunt (2.1.0)
-    private long huntNextScan, ignoreUntil;
-    private int ignoredId = -1, chargeTicks, stuckTicks;
+    private long huntNextScan;
+    private int chargeTicks, stuckTicks;
     private Vec3 lastPos = Vec3.ZERO;
+    /** 3.42.0: up to four creatures given up on at once (it was one, so two unreachable creatures made him ping-pong between them). */
+    private final ShishouIgnore ignored = new ShishouIgnore();
 
     public long huntNextScan() { return huntNextScan; }
 
@@ -193,11 +195,12 @@ public class ShishouEntity extends PathfinderMob {
     public void scanNow() { huntNextScan = 0L; }
 
     /** Has this creature been given up on (a charge that could not reach it) and is the pause not over yet? */
-    public boolean isIgnored(LivingEntity t) { return t != null && t.getId() == ignoredId && level().getGameTime() < ignoreUntil; }
+    public boolean isIgnored(LivingEntity t) { return t != null && ignored.ignored(t.getId(), level().getGameTime()); }
 
-    private void ignore(LivingEntity t) {
-        ignoredId = t.getId();
-        ignoreUntil = level().getGameTime() + ShishouHunt.IGNORE_TICKS;
+    /** The charge cannot reach this creature: it is passed over for {@link ShishouHunt#IGNORE_TICKS} ticks (the last {@link ShishouIgnore#SLOTS} such creatures are remembered). */
+    public void giveUp(LivingEntity t) {
+        long now = level().getGameTime();
+        ignored.add(t.getId(), now + ShishouHunt.IGNORE_TICKS, now);
     }
 
     /** A new charge begins: the speed curve starts over. */
@@ -211,11 +214,14 @@ public class ShishouEntity extends PathfinderMob {
     public void charge(Vec3 aim) {
         chargeTicks++;
         double top = ShishouHunt.topSpeed(swordLevel(), ShishouConfig.chargePercent());
-        steer(aim, ShishouHunt.chargeSpeed(chargeTicks, top), true);
+        steer(aim, ShishouHunt.chargeSpeed(chargeTicks, top), true, true);
     }
 
-    /** One tick of an ordinary flight toward {@code aim} at {@code blocksPerTick} (the patrol). */
-    public void fly(Vec3 aim, double blocksPerTick) { steer(aim, blocksPerTick, false); }
+    /** One tick of an ordinary flight toward {@code aim} at {@code blocksPerTick} (the patrol, the follow, the way down to the pedestal): the same steering as the charge, with the unstick rule. */
+    public void fly(Vec3 aim, double blocksPerTick) { steer(aim, blocksPerTick, false, true); }
+
+    /** A gentle approach (a thrown sword settling at its wielder's shoulder): the same steering without the unstick rule, so a sword that has arrived does not jitter. */
+    public void glide(Vec3 aim, double blocksPerTick) { steer(aim, blocksPerTick, false, false); }
 
     /** In reach of the target: the velocity dies down so he rides along with it instead of shooting past. */
     public void hoverOn(Vec3 aim) {
@@ -239,7 +245,7 @@ public class ShishouEntity extends PathfinderMob {
         beginCharge();
     }
 
-    private void steer(Vec3 aim, double speed, boolean charging) {
+    private void steer(Vec3 aim, double speed, boolean charging, boolean unstick) {
         Vec3 to = aim.subtract(position());
         double dist = to.length();
         if (dist < 1.0e-4) return;
@@ -248,18 +254,20 @@ public class ShishouEntity extends PathfinderMob {
         Vec3 nv = new Vec3(ShishouHunt.blend(v.x, want.x), ShishouHunt.blend(v.y, want.y), ShishouHunt.blend(v.z, want.z));
         double movedSqr = position().distanceToSqr(lastPos);
         lastPos = position();
-        stuckTicks = ShishouHunt.progressed(movedSqr) ? 0 : stuckTicks + 1;
-        int u = ShishouHunt.unstick(stuckTicks);
-        if (u == 1) {                                                                         // blocked: slide up and to the side of the way in
-            Vec3 side = new Vec3(-to.z, 0.0, to.x).normalize().scale(((tickCount / 10) & 1) == 0 ? 0.25 : -0.25);
-            nv = nv.add(0.0, 0.3, 0.0).add(side);
-        } else if (u == 2 && charging && getTarget() != null) {                               // cannot get there: another creature first
-            ignore(getTarget());
-            setTarget(null);
-            scanNow();
-            stuckTicks = 0;
-            return;
-        }
+        if (unstick) {
+            stuckTicks = ShishouHunt.progressed(movedSqr) ? 0 : stuckTicks + 1;
+            int u = ShishouHunt.unstick(stuckTicks);
+            if (u == 1) {                                                                     // blocked: slide up and to the side of the way in
+                Vec3 side = new Vec3(-to.z, 0.0, to.x).normalize().scale(((tickCount / 10) & 1) == 0 ? 0.25 : -0.25);
+                nv = nv.add(0.0, 0.3, 0.0).add(side);
+            } else if (u == 2 && charging && getTarget() != null) {                           // cannot get there: another creature first
+                giveUp(getTarget());
+                setTarget(null);
+                scanNow();
+                stuckTicks = 0;
+                return;
+            }
+        } else stuckTicks = 0;
         setDeltaMovement(nv);
         hasImpulse = true;
     }

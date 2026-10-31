@@ -267,13 +267,34 @@ public final class ShishouSelfTests {
             near.moveTo(at.x + r * 0.6, at.y + 10, at.z, 0, 0);                                  // up in the air within the cube: the 2.0.0 scan (4 blocks up and down) missed this
             far.moveTo(at.x + r * 1.5, at.y, at.z, 0, 0);
             villager.moveTo(at.x + 2, at.y, at.z, 0, 0);
-            for (var e : new net.minecraft.world.entity.Mob[]{near, far, villager}) {
+            List<net.minecraft.world.entity.Mob> crowd = new ArrayList<>(List.of(near, far, villager));
+            for (int i = 0, n = Math.min(ShishouConfig.huntExamined() + 2, 80); i < n; i++) {        // 3.42.0: more cows than the examined cap must not hide the zombie
+                net.minecraft.world.entity.animal.Cow cow = EntityType.COW.create(level);
+                if (cow == null) break;
+                cow.moveTo(at.x - 3 - (i % 8), at.y, at.z + 3 + (i / 8), 0, 0);
+                crowd.add(cow);
+            }
+            for (var e : crowd) {
                 e.setPersistenceRequired();
                 e.setNoAi(true);
                 if (level.addFreshEntity(e)) made.add(e);
             }
             net.minecraft.world.entity.LivingEntity found = ShishouGoals.scan(sword, level, level.getGameTime());
-            if (found != near) return Result.fail("the scan picked " + found + " instead of the monster within the radius (never the villager, never one beyond " + r + " blocks)");
+            if (found != near) return Result.fail("the scan picked " + found + " instead of the monster within the radius (never the villager, never one beyond " + r + " blocks, and not hidden by " + (crowd.size() - 3) + " cows)");
+            // 3.42.0: the sword remembers several creatures it gave up on, not one
+            Zombie b = EntityType.ZOMBIE.create(level), c = EntityType.ZOMBIE.create(level);
+            if (b == null || c == null) return Result.fail("could not make the second and third zombie");
+            b.moveTo(at.x - r * 0.4, at.y + 4, at.z - 6, 0, 0);
+            c.moveTo(at.x, at.y + 4, at.z + r * 0.5, 0, 0);
+            for (var e : new net.minecraft.world.entity.Mob[]{b, c}) {
+                e.setPersistenceRequired();
+                e.setNoAi(true);
+                if (level.addFreshEntity(e)) made.add(e);
+            }
+            sword.giveUp(near);
+            sword.giveUp(b);
+            if (!sword.isIgnored(near) || !sword.isIgnored(b)) return Result.fail("the sword forgot a creature it had given up on (the memory must hold several)");
+            if (ShishouGoals.scan(sword, level, level.getGameTime()) != c) return Result.fail("the scan did not skip the two creatures given up on");
             // the charge accelerates and never exceeds the top speed
             sword.beginCharge();
             double top = ShishouHunt.topSpeed(sword.swordLevel(), ShishouConfig.chargePercent());
@@ -286,7 +307,7 @@ public final class ShishouSelfTests {
                 if (i == 0) v0 = v;
             }
             if (!(v > v0) || v > top + 1e-6) return Result.fail("the charge did not accelerate within the cap: " + v0 + " -> " + v + " (top " + top + ")");
-            return Result.ok("the scan finds the monster in the cube, skips the villager and the far one; the charge accelerates to " + String.format("%.2f", v) + " blocks a tick (top " + String.format("%.2f", top) + ")");
+            return Result.ok("the scan finds the monster in the cube, skips the villager, the far one, a crowd of cows and two creatures given up on; the charge accelerates to " + String.format("%.2f", v) + " blocks a tick (top " + String.format("%.2f", top) + ")");
         } finally {
             for (var e : made) if (!e.isRemoved()) {
                 if (e instanceof ShishouEntity se) se.expectRemoval();

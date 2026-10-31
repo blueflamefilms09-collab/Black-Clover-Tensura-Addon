@@ -47,6 +47,14 @@ public final class ShishouSpells {
 
     /** The one casting: the level, who casts (a wielder and/or the body), where from and which way, the sword's level and record. */
     public record Caster(ServerLevel level, ServerPlayer wielder, ShishouEntity body, Vec3 origin, Vec3 look, int swordLevel, ShishouRecord record, long now, UUID key) {
+        /**
+         * 3.42.0 audit: {@code look} is always a unit vector now. A thrown sword passed the vector to its target as its look, so every ray of its spells ({@code origin + look * range}) was as many times longer as the
+         * target was far (a 24 block spell became hundreds of blocks: a huge entity box, and a block ray that could walk into unloaded chunks).
+         */
+        public Caster {
+            look = look == null ? Vec3.ZERO : look.normalize();
+        }
+
         public LivingEntity attacker() { return wielder != null && body == null ? wielder : body != null ? body : wielder; }
     }
 
@@ -305,7 +313,7 @@ public final class ShishouSpells {
             ServerLevel sl = w.serverLevel();
             double ang = now * 0.3 + k.slot * Math.PI / 2.0;
             Vec3 pos = center(victim).add(Math.cos(ang) * 1.3, 0.3 + k.slot * 0.15, Math.sin(ang) * 1.3);
-            double dmg = ShishouRules.strikeDamage(ShishouData.get().record().level(), ShishouData.get().record().attackSteps(), 0.0, ShishouConfig.strikeCap()) * ShishouRules.CLONE_SHARE;
+            double dmg = ShishouRules.strikeDamage(ShishouData.get().record().level(), ShishouData.get().record().attackSteps(), 0.0, ShishouConfig.strikeCap(), ShishouConfig.damagePercent()) * ShishouRules.CLONE_SHARE;   // 3.42.0: the server's damage scale applies to the clones too
             Caster c = new Caster(sl, w, null, pos, center(victim).subtract(pos), ShishouData.get().record().level(), ShishouData.get().record(), now, k.wielder);
             hit(c, victim, dmg);
             fx(sl, Fx.options(FxThemes.SKILL_SHISHOU, FxTone.LIGHT), pos, 2, 0.1);

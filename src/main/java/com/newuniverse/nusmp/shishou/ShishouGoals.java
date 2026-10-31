@@ -83,7 +83,11 @@ public final class ShishouGoals {
         }
     }
 
-    /** One look for prey: a single box query, at most the configured number of creatures examined, the best by score; null when there is none. */
+    /**
+     * One look for prey: a single box query that already keeps only the creatures he may hunt (3.42.0: the examined cap used to be spent on every mob in the cube, so sixty-four cows on a farm hid the zombie),
+     * at most the configured number of those examined, the three best by score are tried for a clear line in that order (a charge cannot pass a wall, so one he can see beats a nearer one he cannot), and when
+     * none of the three is in the open the best by score is taken anyway (the unstick rule gives it up if it really cannot be reached). Null when there is nothing to hunt.
+     */
     static LivingEntity scan(ShishouEntity s, ServerLevel sl, long now) {
         boolean minion = s.isMinion();
         ServerPlayer o = minion ? s.owner() : null;
@@ -91,20 +95,19 @@ public final class ShishouGoals {
         double r = ShishouHunt.scanRadius(minion, ShishouConfig.huntRadius(), ShishouConfig.minionLeash()), h = ShishouHunt.scanHeight(r);
         Vec3 c = minion ? o.position() : s.position();
         AABB box = new AABB(c.x - r, c.y - h, c.z - r, c.x + r, c.y + h, c.z + r);
-        List<Mob> list = sl.getEntitiesOfClass(Mob.class, box, Mob::isAlive);
-        int cap = ShishouConfig.huntExamined(), n = 0;
-        Mob best = null;
-        double bestScore = Double.MAX_VALUE;
-        for (Mob m : list) {
-            if (++n > cap) break;
-            if (s.isIgnored(m) || !s.isValidTarget(m)) continue;
-            double sc = ShishouHunt.score(Math.sqrt(m.distanceToSqr(s)), m.getMaxHealth(), m.getTarget() instanceof Player);
-            if (sc < bestScore) {
-                bestScore = sc;
-                best = m;
-            }
+        List<Mob> list = sl.getEntitiesOfClass(Mob.class, box, m -> m.isAlive() && !s.isIgnored(m) && s.isValidTarget(m));
+        if (list.isEmpty()) return null;
+        int n = Math.min(list.size(), ShishouConfig.huntExamined());
+        ShishouHunt.Top top = new ShishouHunt.Top(ShishouHunt.LOS_CHECKS);
+        for (int i = 0; i < n; i++) {
+            Mob m = list.get(i);
+            top.offer(i, ShishouHunt.score(Math.sqrt(m.distanceToSqr(s)), m.getMaxHealth(), m.getTarget() instanceof Player));
         }
-        return best;
+        for (int k = 0; k < top.size(); k++) {
+            Mob m = list.get(top.index(k));
+            if (s.hasLineOfSight(m)) return m;
+        }
+        return list.get(top.index(0));
     }
 
     /**
@@ -189,6 +192,9 @@ public final class ShishouGoals {
         public boolean canContinueToUse() { return dest != null && sword.getTarget() == null && !sword.isDormant() && sword.distanceToSqr(dest) > 9.0 && sword.level().getGameTime() < nextLook + 3L * ShishouHunt.PATROL_PERIOD; }
 
         @Override
+        public boolean requiresUpdateEveryTick() { return true; }                                 // vanilla ticks a running goal every other tick otherwise, which halved the speed
+
+        @Override
         public void tick() { if (dest != null) sword.fly(dest, 0.9); }
 
         @Override
@@ -215,11 +221,17 @@ public final class ShishouGoals {
         public boolean canContinueToUse() { return canUse(); }
 
         @Override
+        public boolean requiresUpdateEveryTick() { return true; }
+
+        /** 3.42.0: steers like the charge does (it asked the move control, whose air speed is a vanilla default, so a sprinting wielder outran his own sword). */
+        @Override
         public void tick() {
             ServerPlayer o = sword.owner();
             if (o == null) return;
-            double speed = sword.distanceToSqr(o) > (double) ShishouRules.MINION_RETURN * ShishouRules.MINION_RETURN ? ShishouRules.CHARGE_SPEED : 1.2;
-            sword.getMoveControl().setWantedPosition(o.getX() + 0.8, o.getY() + 1.9, o.getZ() - 0.8, speed);
+            Vec3 spot = new Vec3(o.getX() + 0.8, o.getY() + 1.9, o.getZ() - 0.8);
+            double d = Math.sqrt(sword.distanceToSqr(spot)), speed = ShishouHunt.followSpeed(d);
+            if (d > ShishouHunt.FOLLOW_EASE) sword.fly(spot, speed);
+            else sword.glide(spot, speed);
         }
     }
 
@@ -251,6 +263,9 @@ public final class ShishouGoals {
         public void stop() { if (!sword.isDormant() && sword.groundSpot() == null) sword.setDormantPending(false); }
 
         @Override
+        public boolean requiresUpdateEveryTick() { return true; }
+
+        @Override
         public void tick() {
             giveUp--;
             BlockPos g = sword.groundSpot();
@@ -260,7 +275,7 @@ public final class ShishouGoals {
                 ShishouService.embed(sword, g);
                 return;
             }
-            sword.getMoveControl().setWantedPosition(tx, ty + 0.5, tz, 1.1);
+            sword.fly(new Vec3(tx, ty + 0.5, tz), ShishouHunt.DORMANT_SPEED);
         }
     }
 

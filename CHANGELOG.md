@@ -1,5 +1,32 @@
 # Changelog
 
+## [3.42.0] — Shishou audit (flying, hunting, combat) and the Reset Scroll guard
+
+Owner requests: "fix/rework Shishou weapon, Ai, and combat" (answered "audit everything"), and "make it so none of my skill can't be reroll with the basic tensura skill and full reset". Docs: `docs/items/shishou.md` (section "3.42.0: the audit"), `docs/skill/reset_guard.md`.
+
+### NEW
+- **Reset Scroll guard** (`skill/ResetGuard`, pure rules in `skill/ResetRules`): Tensura's skill-reset and full-reset scrolls can no longer remove any skill of this mod (namespace `nusmp`: grimoires and pages, Shishou, the five Ultimate skills, Evolution and Unique skills). Two layers: ManasCore's cancellable remove-skill event is refused when the call stack comes out of `ResetScrollItem`, and our ids are added to Tensura's `NO_RESET` list when that list can be changed. This mod's own removals and the admin command `/tensura reset` are not blocked. Server setting `guard.resetScrollGuard` (default on; `false` restores the old behaviour) in `nusmp-multiverse-server.toml`. The double negative in the request is read as "none of my skills can be reset by those scrolls".
+- **Shishou:** `ShishouIgnore` (a 4-slot give-up memory), `ShishouHunt.Top` (best-three selection), `ShishouHunt.followSpeed` (eased follow speed), `ShishouEntity.giveUp` and `glide`.
+- Tests: `ResetRulesTest` (7), `ShishouAudit342Test` (11); CI self-test `skill.reset_guard` (new smoke prefix); the hunt self-test `relic.shishou_hunt` covers the starved scan and the two-creature give-up.
+
+### REPLACED (inside code that stays registered)
+- Shishou's single-slot "ignore" (a second unreachable creature wiped the first) by the 4-slot memory.
+- The scan cap applied before the "is it huntable" filter (64 cows could hide the zombie) by a filter inside the one box query, so the cap counts only huntable creatures.
+- A line-of-sight ray per candidate by at most 3 rays per scan, on the best three.
+- The fixed follow speed by an eased one (0.12 to 1.6); the unstick jitter while hovering beside the wielder by a `glide` with no unstick rule.
+- Patrol, stay-by-wielder and dormant goals ticked every other tick by every-tick goals; dormant flight now uses the same `fly` as everything else.
+- A minion cast with an un-normalised (or null) look vector by a normalised one; clone strikes with fixed damage by damage scaled with the server's `damagePercent`.
+
+### KEPT (unchanged on purpose)
+- The flurry cadence and bounce, the 31 skills, the strike formula, every Shishou config key and number, the dormant pedestal, and everything not listed. The balance of the combo is an open decision (see the Shishou doc).
+
+### Cost (rule 11)
+- Shishou: still one box query per scan gap (6 to 8 ticks) per sword; line of sight is now at most 3 rays per scan (was one per candidate); the give-up memory is 4 ints and 4 longs; flights are O(1) per tick; no packet added.
+- Reset guard: runs only when a skill of this mod is removed (rare): one stack walk, one action-bar line at most every 40 ticks per player, a 64-entry throttle map, no per-tick work, no world scan, server side only.
+
+### Not seen in a game
+- Nothing here was run in a game by me. The Shishou fixes rest on reading the code and the pure tests; the reset guard rests on the assumption that the scrolls remove skills through ManasCore's `forgetSkill` (the CI self-test is meant to show it, and says so if the Tensura calls cannot run on a stand-in).
+
 ## [3.41.0] — Veldanava, the Creator God, is removed (the five ultimate skills stay)
 
 Owner request: "also remove veldanava". Scope chosen by the owner: the boss only, the five ultimate skills stay. The removed doc `docs/veldanava.md` is in git history (tag `v3.40.0-b509`).

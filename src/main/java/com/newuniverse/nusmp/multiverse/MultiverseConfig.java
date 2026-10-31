@@ -31,7 +31,7 @@ public final class MultiverseConfig {
     public static final ModConfigSpec.IntValue SQUAD_MAX_SIZE;
     public static final ModConfigSpec.BooleanValue SQUAD_CAPTAIN_PROMOTES_VICE, SQUAD_GOLD_FEEDS_SCORE, SQUAD_BLACK_REDUCES_SCORE, SQUAD_OFFLINE_COUNT;
     // spirit lord
-    public static final ModConfigSpec.BooleanValue GRIMOIRE_GUARD;
+    public static final ModConfigSpec.BooleanValue GRIMOIRE_GUARD, RESET_SCROLL_GUARD;
     public static final ModConfigSpec.DoubleValue SPIRIT_PHYSICAL_REDUCTION;
     public static final ModConfigSpec.BooleanValue SPIRIT_FALL_IMMUNE;
     public static final ModConfigSpec.BooleanValue LETHAL_EXHAUSTION, CHOOSE_MAGIC, WIZARD_MODE, SUMMONS_NEED_BOTH, ALL_MAGICS;
@@ -91,6 +91,8 @@ public final class MultiverseConfig {
         b.push("guard");
         GRIMOIRE_GUARD = b.comment("Grimoire skills cannot be copied, plundered, stolen or learned any other way than from the world or an admin",
                 "(/multiverse grimoire give | canon, the ceremony, the Tower Wizard, an awakening). Anything else is cancelled or taken back.").define("grimoireGuard", true);
+        RESET_SCROLL_GUARD = b.comment("3.42.0: Tensura's Reset Scrolls (skill reset, full reset) cannot remove any skill of this mod (namespace nusmp).",
+                "false = the scrolls reset them like any other skill. The admin command /tensura reset is never blocked.").define("resetScrollGuard", true);
         b.pop();
 
         b.push("spirit_lord");

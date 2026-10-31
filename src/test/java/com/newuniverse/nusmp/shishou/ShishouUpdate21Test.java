@@ -397,7 +397,7 @@ class ShishouUpdate21Test {
         assertEquals(1, count(goals, "getEntitiesOfClass\\("), "exactly one box query in the goals");
         String scan = goals.substring(goals.indexOf("static LivingEntity scan("));
         scan = scan.substring(0, scan.indexOf("\n    }\n"));
-        assertTrue(scan.contains("huntExamined()") && scan.contains("break"), "the number of creatures examined is capped");
+        assertTrue(scan.contains("huntExamined()") && scan.contains("i < n"), "the number of creatures examined is capped (3.42.0: counted over the huntable ones, not over every mob)");
         assertTrue(scan.contains("isValidTarget") && !scan.contains("getChunk") && !scan.contains("sort"), "valid targets only, no chunk load, no sort");
         assertTrue(goals.contains("huntNextScan") && goals.contains("scanGap("), "a scan is gated by a timestamp (not by every tick)");
         assertTrue(goals.contains("getNearestPlayer") && count(goals, "getNearestPlayer\\(") == 1, "the patrol is one nearest-player lookup a second");

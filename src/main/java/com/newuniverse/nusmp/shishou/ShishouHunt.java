@@ -100,4 +100,51 @@ public final class ShishouHunt {
     public static double scansPerSecond(int scanGap) { return 20.0 / Math.max(1, scanGap); }
 
     public static int examinedPerSecond(int scanGap, int maxExamined) { return (int) Math.ceil(scansPerSecond(scanGap) * maxExamined); }
+
+    // ---------------------------------------------------------------- 3.42.0 audit
+    /** The best candidates of a scan whose line of sight is checked, best first: at most this many clip rays per scan (a charge cannot pass a wall, so a creature he can see beats a nearer one he cannot). */
+    public static final int LOS_CHECKS = 3;
+
+    /** Worst case of the line-of-sight rays a second while he hunts: one scan every {@code scanGap} ticks, {@link #LOS_CHECKS} rays each. */
+    public static double raysPerSecond(int scanGap) { return scansPerSecond(scanGap) * LOS_CHECKS; }
+
+    /** A fixed-size list of the {@code k} lowest scores seen (lower is better), best first; offering is O(k) and nothing grows. */
+    public static final class Top {
+        private final int[] index;
+        private final double[] score;
+        private int n;
+
+        public Top(int k) {
+            index = new int[Math.max(1, k)];
+            score = new double[index.length];
+        }
+
+        public void offer(int i, double s) {
+            if (n == index.length && s >= score[n - 1]) return;
+            int at = Math.min(n, index.length - 1);
+            while (at > 0 && score[at - 1] > s) {
+                index[at] = index[at - 1];
+                score[at] = score[at - 1];
+                at--;
+            }
+            index[at] = i;
+            score[at] = s;
+            if (n < index.length) n++;
+        }
+
+        public int size() { return n; }
+
+        /** The candidate index at rank {@code r} (0 = best). */
+        public int index(int r) { return index[r]; }
+    }
+
+    // The follow flight of a thrown sword (it used to ask the move control, whose air speed is a vanilla default; now it steers like the charge and the patrol do).
+    public static final double FOLLOW_MIN = 0.12, FOLLOW_EASE = 6.0, FOLLOW_EASE_TOP = 0.6, FOLLOW_STEP = 0.05, FOLLOW_MAX = 1.6, DORMANT_SPEED = 0.55;
+
+    /** Blocks per tick a thrown sword flies to its wielder's shoulder at {@code distance} blocks: it eases in over the last {@link #FOLLOW_EASE} blocks, and beyond that speeds up to {@link #FOLLOW_MAX}. */
+    public static double followSpeed(double distance) {
+        double d = Math.max(0.0, distance);
+        if (d <= FOLLOW_EASE) return FOLLOW_MIN + (FOLLOW_EASE_TOP - FOLLOW_MIN) * d / FOLLOW_EASE;
+        return Math.min(FOLLOW_MAX, FOLLOW_EASE_TOP + FOLLOW_STEP * (d - FOLLOW_EASE));
+    }
 }

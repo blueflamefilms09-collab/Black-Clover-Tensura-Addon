@@ -282,3 +282,48 @@ Measured by `PerfProbe` sections `s.shishou.hold`, `s.shishou.cast`, `s.shishou.
 
 ## 3.2.0: the flurry bounce
 After a landed strike Shishou bounces off the target (0.55 blocks a tick away from it, a little up, for 3 ticks, `ShishouHunt.bounce`) and then the charge starts again, like an anime sword flurry. Server setting `flurryBounce` (default true; false = the 3.1 behaviour of hovering on the target). Entity attributes: flying speed 1.5, movement speed 0.8, follow range 64, attack damage 14 (the strike damage itself still comes from the sword level, `ShishouRules.strikeDamage`). The 3.0 hunter (flying move control, flying navigation, direct 3D charge, one bounded box query per scan, no melee goal) is kept: a 2-tick scan over 64 blocks would break the no-lag rule, so the scan gap stays the configured `huntScanTicks`. Worst case cost of the bounce: one velocity set per strike, nothing per tick but a counter.
+
+## 3.42.0: the audit (AI, flying, hunting, combat)
+
+Owner request: "fix/rework Shishou weapon, Ai, and combat", answered "audit everything". Nothing was removed (rule 2); every fix is a replacement of a weaker rule inside code that stays registered, and the flurry cadence, the 31 skills, the strike formula and the balance numbers are **unchanged** (kept on purpose, see the decision at the end).
+
+### What was found and what changed
+
+| # | Finding | Fix (3.42.0) |
+|---|---|---|
+| 1 | **The give-up memory held one creature.** After a failed charge Shishou "ignored" the creature for a while, but a second one overwrote the first, so two unreachable mobs made him bounce between them forever. | New pure `ShishouIgnore`: 4 slots (a creature id plus the tick it ends); the same id extends, else a free or expired slot, else the soonest-ending one is replaced. `ShishouEntity.giveUp(target)` is the one way in. |
+| 2 | **The scan could be starved by cheap creatures.** The candidate list was cut at `huntExamined` *before* the "is it huntable" filter, so 64 cows next to the zombie hid the zombie. | The filter (alive, not ignored, valid target) is in the box query's predicate, so the cap counts only huntable creatures (`ShishouGoals.scan`). Same one box query per scan gap. |
+| 3 | **Line of sight was tested for every candidate.** The ray test is the expensive step. | At most `ShishouHunt.LOS_CHECKS` (3) rays per scan, on the three best-scoring candidates (`ShishouHunt.Top`, a fixed-size best-first selection); the best one that is visible wins, else the best score. |
+| 4 | **The unstick rule fired while following the wielder**, so a sword hovering still beside a standing player gave up its "target" that did not exist and jittered. | `steer` has an `unstick` switch: charging and `fly` keep it, the new `glide` (used when the sword is close to its spot) has none. |
+| 5 | **Following was a fixed speed**, a snap-and-overshoot at short range and slow at long range. | `ShishouHunt.followSpeed(distance)`: eases from 0.12 up to 0.6 over 6 blocks, then +0.05 per block up to 1.6; continuous and monotonic (tested). |
+| 6 | **Patrol, stay-by-wielder and dormant goals were only ticked every other tick** by the vanilla goal selector, which made the flight stutter. | The three goals declare `requiresUpdateEveryTick()`. Dormant flight now goes through the same `fly` call as everything else (no `setWantedPosition`). |
+| 7 | **The minion cast could get a zero look vector** (`Caster.look` null or not unit length), which sent bolts nowhere. | `Caster` normalises `look` in its constructor (zero vector when null). |
+| 8 | **Clone strikes ignored the damage setting.** Clones used a fixed damage, so the server's `damagePercent` did not scale them. | `tickClones` uses `ShishouRules.strikeDamage(..., strikeCap(), damagePercent()) * CLONE_SHARE`. |
+
+### Worst-case cost (rule 11)
+
+| Part | Cost |
+|---|---|
+| Hunt scan | still **one box query per scan gap** (6 to 8 ticks, config `huntScanTicks`) per sword, at most `huntExamined` candidates examined; the predicate runs once per creature in the box, as before |
+| Line of sight | **at most 3 rays per scan** (about 10 rays a second at the default gap, 30 at the fastest allowed setting; was one ray per candidate) |
+| Give-up memory | 4 ints and 4 longs per sword, O(4) per lookup, no allocation |
+| Follow, patrol, dormant flights | O(1) per tick (one velocity step), no query |
+| Packets | none added |
+
+### Tests
+
+- `ShishouAudit342Test` (11): the ignore ring (several at once, expiry and slot reuse, extension and full-table eviction, -1 never ignored), `Top` ordering and ties, the bounded line-of-sight cost, `followSpeed` continuity / monotonic / bounded, and source scans (the scan filters in its query predicate and has one `hasLineOfSight` call site; no `setWantedPosition` in the goals; `requiresUpdateEveryTick` in patrol, stay and dormant; `ShishouEntity` has the ring and not the old single slot; `Caster` normalises; clones use `damagePercent`).
+- `ShishouUpdate21Test` (one assertion updated for the new scan loop shape), `ShishouSourceScanTest` (still at most 3 `getEntitiesOfClass` calls in the package).
+- CI self-test `relic.shishou_hunt` (covered by the `relic.shishou` prefix) now also spawns more cows than the examine cap beside a zombie (the zombie must still be found) and gives up two creatures at once (both must be ignored, the third found).
+
+### What is not verified (3.42.0)
+
+- **Nothing was seen in a game.** The fixes rest on reading the code and the pure tests; the CI self-test is the only run.
+- The vanilla behaviour assumed for fix 6 (the goal selector fully ticks a goal every other tick unless `requiresUpdateEveryTick`) and for the air acceleration of flying mobs comes from memory of the 1.21 source, not from the jar in this session.
+- The feel of the flight (the follow ease, the glide) is tuned by arithmetic, not by eye.
+
+### Open decision
+
+The sword's flurry is still one strike every 15 to 6 ticks (faster as he levels). Making the combo faster, or adding a second target mid-flurry, is a balance change: say so and it ships as its own release behind a setting.
+
+**NEW:** `ShishouIgnore`, `ShishouHunt.Top` / `followSpeed` / `LOS_CHECKS` / `raysPerSecond`, `ShishouEntity.giveUp` / `glide`, `ShishouAudit342Test`. **REPLACED:** the single-slot give-up memory, the pre-filter candidate cap, the per-candidate line-of-sight loop, the fixed follow speed, the every-other-tick goals, the un-normalised minion look, the fixed clone damage. **KEPT:** the flurry cadence and bounce, the 31 skills, the strike formula, every config key, the dormant pedestal, everything not listed.

@@ -427,6 +427,9 @@ public class NUSMP {
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.multiverse.WorldSites::onServerTick);
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.blackclover.GrimoireGuard::onPlayerTick);
         com.newuniverse.nusmp.blackclover.GrimoireGuard.registerTensuraHooks();
+        com.newuniverse.nusmp.skill.ResetGuard.register();                                                                                  // 3.42.0: Tensura's Reset Scrolls cannot remove a skill of this mod
+        com.newuniverse.nusmp.skill.ResetGuardSelfTests.register();
+        NeoForge.EVENT_BUS.addListener((net.neoforged.neoforge.event.server.ServerStartingEvent e) -> { if (com.newuniverse.nusmp.skill.ResetGuard.enabled()) com.newuniverse.nusmp.skill.ResetGuard.protectScrollLists(); });
         // 0.41: Dream Magic's pocket dimension, Painting Magic's camouflage
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.book.DreamWorld::onServerTick);
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.book.DreamWorld::onDamage);
