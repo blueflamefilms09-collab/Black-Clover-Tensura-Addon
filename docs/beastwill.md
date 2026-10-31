@@ -24,7 +24,7 @@ It reuses what the mod already has instead of adding a parallel system:
 - **Foes / teams / protection**: `SongTargets.isFoe`, `FtbTeamHelper.sameTeam`, the server's PvP and protection checks, `BossIdentity` for bosses.
 - **Hard control**: `BalanceLaw.beginControl/controlTicks` (the shared 12 s hard-control cooldown and the caps every other hard control obeys).
 - **Transformations**: `ModeArmor.active(p)` (the mod's mode armours) for the conflict rule.
-- **Visuals**: `Aura.BEAST_WILL` through the existing player-aura pipeline, the perf budgets (`PerfBudgets.particles`) and `PerfProbe`.
+- **Visuals**: `Aura.BEAST_WILL` through the existing player-aura pipeline, the perf budgets (the aura's own caps, `PerfProbe`) and, for the ability effects, the mod's particle facade `Fx` (theme `skill`, light/dark flavour; per-tick budgets and quality levels built in).
 - **Controls**: five rebindable keys in the mod's key category; no new input system.
 
 ## 2. How to get a will
@@ -278,12 +278,12 @@ Worst case, with many players:
 
 - **Server work**: a player with no will costs one attachment lookup per tick and nothing else. A player with a will: one upkeep a second (staggered across ticks). An ability touches at most **10** creatures (default 4-8, hard cap 10); each use does one bounded area query, no chunk loads, no block change, no entity spawn, no per-tick scan.
 - **Packets**: at most **4 Sync packets per second per player** (and only when something changed: a hash check), `Info` only on will change or reload, `Preview` only on an ask, `Action` rate-limited by the client (3 ticks) and the server (4 ticks). Every `Action` is range-checked and the sender must be a real server player. No packet is broadcast; the aura is sent through the existing aura lease to nearby players.
-- **Particles**: through `PerfBudgets.particles`; at most a few dozen per ability; Time Exclusion draws one ring.
+- **Particles**: only through the `Fx` facade (it holds `PerfBudgets.particles` and the quality levels; no vanilla `ParticleTypes` in the package, pinned by `FxSourceScanTest` and `BeastWillSourceScanTest`); at most 24 per call and a few dozen per ability; Time Exclusion draws one ring.
 - **Client draw**: the aura draws at most 19 quads per player per frame within 24 blocks (2 eyes, 10 motes, 1 haze, 4 for two rings), 6 between 24 and 48 blocks, nothing beyond 48 blocks, and not at all for invisible players. Timed with `PerfProbe` section `c.beastwill.aura`. The HUD builds its text every 10 ticks, not per frame.
 - **Memory**: one small `Run` per player with a will; removed at logout, death and dimension change. The ledger grows by one short string per used offer.
 - **No lag**: nothing here runs per tick for players without a will; nothing allocates in the render loop.
 
-CI: self-tests `beastwill.catalog.load` (data files load and validate), `beastwill.rules.bounds` (arithmetic and bounds), `beastwill.player.roundtrip` (a player-level round trip); the smoke list holds the prefixes `beastwill.catalog`, `beastwill.rules`, `beastwill.player` are on the smoke list. `ServerSafetyTest` is untouched (no client class in common code); `BeastWillSourceScanTest` pins: no client class, no static player, UUID-keyed maps, no block/entity/chunk ops in abilities, hard control through the balance law, targets through the foe rule, particles through the budget, validated packets, SERVER config only.
+CI: self-tests `beastwill.catalog.load` (data files load and validate), `beastwill.rules.bounds` (arithmetic and bounds), `beastwill.player.roundtrip` (a player-level round trip); the smoke list holds the prefixes `beastwill.catalog`, `beastwill.rules`, `beastwill.player` are on the smoke list. `ServerSafetyTest` is untouched (no client class in common code); `BeastWillSourceScanTest` pins: no client class, no static player, UUID-keyed maps, no block/entity/chunk ops in abilities, hard control through the balance law, targets through the foe rule, particles only through the `Fx` facade, validated packets, SERVER config only.
 
 ## 13. Assumptions
 

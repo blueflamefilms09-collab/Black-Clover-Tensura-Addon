@@ -3,11 +3,11 @@ package com.newuniverse.nusmp.beastwill;
 import com.newuniverse.nusmp.avatar.FtbTeamHelper;
 import com.newuniverse.nusmp.balance.BalanceLaw;
 import com.newuniverse.nusmp.boss.rules.BossIdentity;
-import com.newuniverse.nusmp.perf.PerfBudgets;
+import com.newuniverse.nusmp.particle.fx.Fx;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
+import com.newuniverse.nusmp.particle.fx.FxTone;
 import com.newuniverse.nusmp.song.SongTargets;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.particles.ParticleOptions;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
@@ -128,14 +128,14 @@ public final class BeastWillAbilities {
         return ticks < 5 ? 0 : ticks;
     }
 
-    private static void fx(ServerLevel level, ParticleOptions type, Vec3 at, int want, double spread) {
-        int n = PerfBudgets.particles(level.getGameTime(), Math.min(want, 24));
-        if (n > 0) level.sendParticles(type, at.x, at.y, at.z, n, spread, spread, spread, 0.02);
+    /** Particles go through the mod's {@link Fx} facade (theme "skill", light or dark flavour): it applies the per-tick budgets, the quality level and the custom-particle switch, and never throws. At most 24 per call. */
+    private static void fx(ServerLevel level, boolean dark, Vec3 at, int want, double spread) {
+        Fx.spray(level, FxThemes.SKILL, FxTone.of(dark), at.x, at.y, at.z, Math.min(want, 24), spread, spread, spread, 0.02);
     }
 
-    private static void line(ServerLevel level, ParticleOptions type, Vec3 from, Vec3 to, int steps) {
+    private static void line(ServerLevel level, boolean dark, Vec3 from, Vec3 to, int steps) {
         Vec3 d = to.subtract(from);
-        for (int i = 0; i <= steps; i++) fx(level, type, from.add(d.scale(i / (double) Math.max(1, steps))), 1, 0.05);
+        for (int i = 0; i <= steps; i++) fx(level, dark, from.add(d.scale(i / (double) Math.max(1, steps))), 1, 0.05);
     }
 
     // ------------------------------------------------------------------ dragon
@@ -147,7 +147,7 @@ public final class BeastWillAbilities {
         }
         for (LivingEntity t : seen) t.addEffect(new MobEffectInstance(MobEffects.GLOWING, Math.max(20, a.durationTicks()), 0, false, false));
         p.serverLevel().playSound(null, p.blockPosition(), SoundEvents.ENDER_DRAGON_GROWL, SoundSource.PLAYERS, 0.35f, 1.6f);
-        fx(p.serverLevel(), ParticleTypes.DRAGON_BREATH, p.getEyePosition(), 12, 0.4);
+        fx(p.serverLevel(), true, p.getEyePosition(), 12, 0.4);
         return true;
     }
 
@@ -160,7 +160,7 @@ public final class BeastWillAbilities {
             t.push(look.x * 0.35, 0.08, look.z * 0.35);
             t.hurtMarked = true;
         }
-        line(level, ParticleTypes.DRAGON_BREATH, eye.add(look.scale(0.8)), eye.add(look.scale(Math.min(range, 10))), 8);
+        line(level, true, eye.add(look.scale(0.8)), eye.add(look.scale(Math.min(range, 10))), 8);
         level.playSound(null, p.blockPosition(), SoundEvents.ENDER_DRAGON_SHOOT, SoundSource.PLAYERS, 0.5f, 1.2f);
         return true;
     }
@@ -208,7 +208,7 @@ public final class BeastWillAbilities {
             if (t instanceof Mob m) m.getNavigation().stop();
             t.setDeltaMovement(Vec3.ZERO);
             t.hurtMarked = true;
-            fx(p.serverLevel(), ParticleTypes.REVERSE_PORTAL, t.getBoundingBox().getCenter(), 8, 0.3);
+            fx(p.serverLevel(), true, t.getBoundingBox().getCenter(), 8, 0.3);
             held++;
         }
         p.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, Math.max(20, a.durationTicks()), 0, false, false));
@@ -218,7 +218,7 @@ public final class BeastWillAbilities {
     private static void ring(ServerLevel level, Vec3 c, double r) {
         for (int i = 0; i < 12; i++) {
             double t = i * Math.PI * 2 / 12;
-            fx(level, ParticleTypes.END_ROD, new Vec3(c.x + Math.cos(t) * r, c.y + 0.1, c.z + Math.sin(t) * r), 1, 0.0);
+            fx(level, false, new Vec3(c.x + Math.cos(t) * r, c.y + 0.1, c.z + Math.sin(t) * r), 1, 0.0);
         }
     }
 
@@ -226,7 +226,7 @@ public final class BeastWillAbilities {
     private static boolean veil(ServerPlayer p, BeastWillDef.Ability a) {
         BeastWillStealth.veil(p, Math.max(20, a.durationTicks()));
         p.serverLevel().playSound(null, p.blockPosition(), SoundEvents.SCULK_SHRIEKER_SHRIEK, SoundSource.PLAYERS, 0.15f, 1.8f);
-        fx(p.serverLevel(), ParticleTypes.SMOKE, p.position().add(0, 0.9, 0), 14, 0.3);
+        fx(p.serverLevel(), true, p.position().add(0, 0.9, 0), 14, 0.3);
         return true;
     }
 
@@ -252,10 +252,10 @@ public final class BeastWillAbilities {
             BeastWillFeedback.say(p, "dash_blocked", false);
             return false;
         }
-        fx(level, ParticleTypes.SMOKE, from.add(0, 0.9, 0), 10, 0.3);
+        fx(level, true, from.add(0, 0.9, 0), 10, 0.3);
         p.teleportTo(best.x, best.y, best.z);
         p.fallDistance = 0;
-        fx(level, ParticleTypes.SMOKE, best.add(0, 0.9, 0), 10, 0.3);
+        fx(level, true, best.add(0, 0.9, 0), 10, 0.3);
         level.playSound(null, p.blockPosition(), SoundEvents.ENDERMAN_TELEPORT, SoundSource.PLAYERS, 0.3f, 1.7f);
         return true;
     }
@@ -280,9 +280,9 @@ public final class BeastWillAbilities {
         }
         boolean unseen = BeastWillStealth.veiled(p);
         if (placed) {
-            fx(level, ParticleTypes.SMOKE, p.position().add(0, 0.9, 0), 8, 0.3);
+            fx(level, true, p.position().add(0, 0.9, 0), 8, 0.3);
             p.teleportTo(behind.x, behind.y, behind.z);
-            fx(level, ParticleTypes.SMOKE, behind.add(0, 0.9, 0), 8, 0.3);
+            fx(level, true, behind.add(0, 0.9, 0), 8, 0.3);
         }
         hit(p, t, a.power() * scale * (unseen ? 1.5 : 1.0), mastery, a.bossFactor());
         BeastWillStealth.reveal(p);
@@ -303,7 +303,7 @@ public final class BeastWillAbilities {
             hit(p, t, a.power() * scale, mastery, a.bossFactor());
             int ticks = ticksFor(t, a, 20, false);
             if (ticks > 0) t.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, ticks, 1, false, true));
-            line(level, ParticleTypes.COMPOSTER, from, t.getBoundingBox().getCenter(), 6);
+            line(level, false, from, t.getBoundingBox().getCenter(), 6);
         }
         level.playSound(null, p.blockPosition(), SoundEvents.GRASS_BREAK, SoundSource.PLAYERS, 0.8f, 0.7f);
         return true;
@@ -317,7 +317,7 @@ public final class BeastWillAbilities {
         }
         BalanceLaw.heal(p, (float) Math.max(0.5, a.power() * 2.0 * scale));
         p.removeEffect(MobEffects.POISON);
-        fx(p.serverLevel(), ParticleTypes.HAPPY_VILLAGER, p.position().add(0, 1.0, 0), 14, 0.4);
+        fx(p.serverLevel(), false, p.position().add(0, 1.0, 0), 14, 0.4);
         return true;
     }
 
@@ -338,7 +338,7 @@ public final class BeastWillAbilities {
             if (ticks <= 0) continue;
             t.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, ticks, 6, false, true));
             if (t instanceof Mob m) m.getNavigation().stop();
-            fx(p.serverLevel(), ParticleTypes.COMPOSTER, t.position().add(0, 0.4, 0), 10, 0.35);
+            fx(p.serverLevel(), false, t.position().add(0, 0.4, 0), 10, 0.35);
             rooted++;
         }
         p.serverLevel().playSound(null, p.blockPosition(), SoundEvents.ROOTED_DIRT_BREAK, SoundSource.PLAYERS, 1.0f, 0.6f);
@@ -351,7 +351,7 @@ public final class BeastWillAbilities {
         int amp = (int) Math.min(2, Math.floor(a.power() * scale * 1.2));
         p.addEffect(new MobEffectInstance(MobEffects.ABSORPTION, ticks, amp, false, true));
         p.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, ticks, 0, false, false));
-        fx(p.serverLevel(), ParticleTypes.COMPOSTER, p.position().add(0, 1.0, 0), 16, 0.5);
+        fx(p.serverLevel(), false, p.position().add(0, 1.0, 0), 16, 0.5);
         p.serverLevel().playSound(null, p.blockPosition(), SoundEvents.WOOD_PLACE, SoundSource.PLAYERS, 1.0f, 0.5f);
         return true;
     }
@@ -362,7 +362,7 @@ public final class BeastWillAbilities {
         p.addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, ticks, a.power() * scale >= 1.5 ? 1 : 0, false, true));
         p.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, ticks, 0, false, false));
         p.removeEffect(MobEffects.MOVEMENT_SLOWDOWN);
-        fx(p.serverLevel(), ParticleTypes.FLAME, p.position().add(0, 1.0, 0), 14, 0.4);
+        fx(p.serverLevel(), false, p.position().add(0, 1.0, 0), 14, 0.4);
         p.serverLevel().playSound(null, p.blockPosition(), SoundEvents.RAVAGER_ROAR, SoundSource.PLAYERS, 0.4f, 1.3f);
         return true;
     }
@@ -391,7 +391,7 @@ public final class BeastWillAbilities {
         }
         level.playSound(null, p.blockPosition(), SoundEvents.RAVAGER_ROAR, SoundSource.PLAYERS, 1.4f, 0.55f);
         ring(level, p.position(), Math.min(a.radius(), 12));
-        fx(level, ParticleTypes.SONIC_BOOM, p.position().add(0, 1.2, 0), 1, 0.0);
+        fx(level, false, p.position().add(0, 1.2, 0), 1, 0.0);
         return true;
     }
 }

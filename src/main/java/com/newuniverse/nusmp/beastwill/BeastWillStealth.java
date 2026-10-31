@@ -1,8 +1,9 @@
 package com.newuniverse.nusmp.beastwill;
 
 import com.newuniverse.nusmp.boss.rules.BossIdentity;
-import com.newuniverse.nusmp.perf.PerfBudgets;
-import net.minecraft.core.particles.ParticleTypes;
+import com.newuniverse.nusmp.particle.fx.Fx;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
+import com.newuniverse.nusmp.particle.fx.FxTone;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -62,8 +63,7 @@ public final class BeastWillStealth {
             return;
         }
         if (now % 10 == 0) {
-            int n = PerfBudgets.particles(now, 2);
-            if (n > 0) p.serverLevel().sendParticles(ParticleTypes.SMOKE, p.getX(), p.getY() + 0.2, p.getZ(), n, 0.15, 0.05, 0.15, 0.0);
+            Fx.spray(p.serverLevel(), FxThemes.SKILL, FxTone.DARK, p.getX(), p.getY() + 0.2, p.getZ(), 2, 0.15, 0.05, 0.15, 0.0);
         }
     }
 

@@ -69,7 +69,8 @@ class BeastWillSourceScanTest {
         assertTrue(a.contains("BalanceLaw.beginControl") && a.contains("BalanceLaw.controlTicks"), "hard control through the shared cooldown and the caps");
         assertTrue(a.contains("SongTargets.isFoe"), "targets through the foe rule");
         assertTrue(a.contains("FtbTeamHelper.sameTeam") && a.contains("mayInteract"), "teams and protections are respected");
-        assertTrue(a.contains("PerfBudgets.particles"), "particles through the budget");
+        assertTrue(a.contains("Fx.spray(") && !a.contains("ParticleTypes.") && !a.contains("sendParticles("), "particles only through the Fx facade (it holds the budgets and the quality levels)");
+        assertFalse(code("BeastWillStealth.java").contains("ParticleTypes."), "the stealth trail goes through the Fx facade too");
         assertEquals(0, count(a, "Math.random"), "no unseeded randomness");
     }
 
