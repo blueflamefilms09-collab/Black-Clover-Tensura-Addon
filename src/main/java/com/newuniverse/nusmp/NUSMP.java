@@ -432,6 +432,7 @@ public class NUSMP {
         com.newuniverse.nusmp.skill.ResetGuard.register();                                                                                  // 3.42.0: Tensura's Reset Scrolls cannot remove a skill of this mod
         com.newuniverse.nusmp.skill.ResetGuardSelfTests.register();
         com.newuniverse.nusmp.skill.RemovedSkillsSelfTests.register();
+        com.newuniverse.nusmp.skill.UltimatePairSelfTests.register();                                                                      // 3.46.0: Nen and the All Fiction rebuild
         NeoForge.EVENT_BUS.addListener((net.neoforged.neoforge.event.server.ServerStartingEvent e) -> { if (com.newuniverse.nusmp.skill.ResetGuard.enabled()) com.newuniverse.nusmp.skill.ResetGuard.protectScrollLists(); });
         // 0.41: Dream Magic's pocket dimension, Painting Magic's camouflage
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.book.DreamWorld::onServerTick);

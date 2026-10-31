@@ -1,5 +1,22 @@
 # Changelog
 
+## [3.46.0] — Ultimate pair 1: Nen (Hunter x Hunter, new) and All Fiction (rebuilt from two modes to ten)
+
+Owner: "Nen (Hunter x Hunter) as a new Ultimate", "All Fiction is a yes but we are fully rebuilding it", "i want custom skill based animes", Ultimates "2 at a time". Docs: `docs/skills/nen_allfiction.md`, `docs/releases/3.46.0.md`.
+
+### NEW
+- **Nen** (`nusmp:nen`, Ultimate, grant with `/tensura edit <player> ability grant nusmp:nen`): ten modes, Ten, Zetsu, Ren, Gyo, En, Ken, Ko, Hatsu: Enhancement, Hatsu: Emission, Vow and Limitation. Windows are game times in the skill tag (no tick, no cleanup); damage goes through the balance law; a press looks at no more than 24 creatures and hits at most 3. Server setting `ultimates_3_46.nenEnabled`.
+- **All Fiction modes 2-9**: Annul Damage (a pool of half your max health), Rewind Step (where you stood up to 5 s ago, checked for world, loaded chunk, free space and distance), Erase Effects, Nullify Strike (the next hit never happens), Unmake (hostile projectiles only, at most 32), Share the Fiction (at most 8 allies, healed through the balance law), Stand Up (tells you when the refused death is ready), World Fiction (a 6 s zone pulsing once a second, at most 8 allies and 16 projectiles). A five-second position memory (once a second, reset on a dimension change). Server setting `ultimates_3_46.allFictionRebuilt`.
+- Nen icon (`textures/skill/nen.png`, painter `S_nen` in `tools/skills/gen_skill_icons.py`), 47 lang keys, tests `NenRulesTest`, `FictionRebuildRulesTest`, `UltimatePairSourceScanTest` (and `nen` in `SkillAssetsTest`), CI self-tests `skill.nen.registry` and `skill.fiction.rebuild` (added to the smoke list).
+
+### REPLACED
+- The All Fiction skill class: two modes -> ten, on the owner's word ("fully rebuilding it").
+
+### KEPT
+- The id `nusmp:all_fiction`, its icon, Undo and Fiction (ids, numbers, lang keys), the health memory `H0..H4`, the death passive and `DeathReadyAt`, the Book Maker -> All Fiction evolution, `FictionRules.modes() = 2` for Book Maker, every other skill. Shared files were only appended to.
+
+Not seen in a game: any of it (feel and balance of the numbers, the Rewind collision check on slopes, the zone ring look). The English and Japanese wiki pages could not be fetched in this build (hosts not allowed), so the modes follow the author's knowledge of the series, not a checked page. Not included: the four other Nen types' signature abilities, Shu/In/Ryu as separate modes, block restoration for All Fiction. Worst-case cost: no Nen tick; All Fiction's tick stays once a second per owner (+15 numbers in the tag), the zone adds one ally query and one projectile query a second for 6 s; no new packet type.
+
 ## [3.45.0] — Beast Will (The Beginning After the End inspired): four wills, two forms, assimilation and strain
 
 Owner: "Recreate the Beast Will system inspired by The Beginning After the End (TBATE) ... a complete gameplay system that fits my existing mod's combat, progression, abilities, and energy systems." Docs: `docs/beastwill.md`, `docs/releases/3.45.0.md`.

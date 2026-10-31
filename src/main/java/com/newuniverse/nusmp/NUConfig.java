@@ -73,6 +73,7 @@ public final class NUConfig {
     public static final ModConfigSpec.IntValue DEVIL_FORM_LIMIT_SECONDS, DEVIL_FORM_AFTERMATH_SECONDS;
     public static final ModConfigSpec.BooleanValue ZAGRED_BOSS_ENABLED, KOTODAMA_BOSS_REWARD;   // 0.47
     public static final ModConfigSpec.BooleanValue ANTI_MAGIC_EVENT_ONLY;                       // 0.48
+    public static final ModConfigSpec.BooleanValue NEN_ENABLED, ALL_FICTION_REBUILT;          // 3.46.0
     public static final ModConfigSpec.IntValue PVP_HIT_CAP_PERCENT, SPELL_DAMAGE_PERCENT, SPELL_COOLDOWN_PERCENT;   // 0.48
     // Magic gear
     public static final ModConfigSpec.DoubleValue GEAR_REGEN_JUNIOR, GEAR_REGEN_SENIOR, GEAR_SPADE_REGEN_PENALTY, GEAR_CONDUCTION_DAMAGE;
@@ -205,6 +206,11 @@ public final class NUConfig {
         DEVIL_FORM_LIMIT_SECONDS = b.comment("Devil Union (the Anti-Magic Black Form): the strict time limit in seconds, then the form shatters (default 5 minutes).").defineInRange("devilFormLimitSeconds", 300, 20, 36000);
         DEVIL_FORM_AFTERMATH_SECONDS = b.comment("How long the user is incapacitated by muscle pain after the limit broke the union (slowness, weakness, mining fatigue; never hunger). 0 = none.")
                 .defineInRange("devilFormAftermathSeconds", 1800, 0, 86400);
+        b.pop();
+
+        b.push("ultimates_3_46");
+        NEN_ENABLED = b.comment("Nen (Hunter x Hunter Ultimate, 3.46.0). false = the skill stays registered but every mode refuses and its damage hooks do nothing.").define("nenEnabled", true);
+        ALL_FICTION_REBUILT = b.comment("All Fiction rebuild (3.46.0, ten modes). false = the old two modes only (Undo and Fiction) and the old death-refusal; the new modes refuse.").define("allFictionRebuilt", true);
         b.pop();
 
         SPEC = b.build();

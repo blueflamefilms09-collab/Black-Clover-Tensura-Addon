@@ -66,6 +66,9 @@ public final class NUSkills {
     public static final DeferredHolder<ManasSkill, TheAlmightySkill> THE_ALMIGHTY = SKILLS.register("the_almighty", TheAlmightySkill::new);
     public static final DeferredHolder<ManasSkill, TheVisionarySkill> THE_VISIONARY = SKILLS.register("the_visionary", TheVisionarySkill::new);
 
+    // ---- 3.46.0: Hunter x Hunter (Ultimate; grant with /tensura edit <player> ability grant nusmp:nen) ----
+    public static final DeferredHolder<ManasSkill, NenSkill> NEN = SKILLS.register("nen", NenSkill::new);
+
     // ---- Black Clover ----
     /** Granted automatically with a grimoire. Magic, leaves and devil are stored on the skill. */
     public static final DeferredHolder<ManasSkill, GrimoireMagicSkill> GRIMOIRE_MAGIC = SKILLS.register("grimoire_magic", () -> new GrimoireMagicSkill()); // legacy

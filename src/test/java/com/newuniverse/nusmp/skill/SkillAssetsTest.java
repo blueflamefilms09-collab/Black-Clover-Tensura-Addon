@@ -31,7 +31,7 @@ class SkillAssetsTest {
             "spirit_card", "unbreakable_will", "hati", "devils_footprints", "book_maker",
             "lord_of_summons", "goddess_of_faith", "heros_argonaut", "hell_conqueror", "immortal_will", "adolla_burst",
             "all_fiction", "black_wings",
-            "the_almighty", "the_visionary");
+            "the_almighty", "the_visionary", "nen");
 
     /** 3.44.0: removed on the owner's word. Their ids must no longer be registered by NUSkills (LegacySkills keeps them as inert stubs) and their icons stay in the jar. */
     private static final List<String> REMOVED = Arrays.asList("six_eyes", "limitless", "gold_experience", "gold_experience_requiem", "vector_manipulation", "instant_death");

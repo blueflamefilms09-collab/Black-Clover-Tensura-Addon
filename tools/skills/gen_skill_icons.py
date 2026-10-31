@@ -264,6 +264,7 @@ PAL = {
     "instant_death": ("ultimate", 0x8A0A1E, 0x080204, 0xE8E0D8, 0xFF2A3A),
     "the_almighty": ("ultimate", 0xB81E2A, 0x0A0204, 0xFFD0D0, 0xFF3A3A),
     "the_visionary": ("ultimate", 0xFF7AE0, 0x1A0830, 0xFFE0FA, 0x7AD8FF),
+    "nen": ("ultimate", 0x2AC8A0, 0x04141A, 0xDFFBF4, 0xFFE070),   # 3.46.0
 }
 
 
@@ -606,6 +607,22 @@ def S_visionary(d, p):
         sparkle(d, C + math.cos(a) * r, C + math.sin(a) * r, s, (255, 255, 255))
 
 
+def S_nen(d, p):
+    # Nen: the water-divination glass with a leaf on it, the aura rising round it like a flame (Ten) and a ring of Ren behind
+    rays(d, C, C + 4, 76, 118, 14, p[4], 6, rot=8)
+    for dx, h, w in ((-62, 104, 46), (62, 104, 46), (-26, 128, 54), (26, 128, 54), (0, 150, 62)):
+        flame(d, C + dx, C + 58, h, w, p[3] if abs(dx) > 30 else p[4], (255, 255, 255))
+    poly(d, [(C - 56, C - 22), (C + 56, C - 22), (C + 42, C + 88), (C - 42, C + 88)], (214, 246, 252), (255, 255, 255), 5)   # the glass
+    poly(d, [(C - 51, C + 2), (C + 51, C + 2), (C + 41, C + 82), (C - 41, C + 82)], (64, 170, 220))                                # the water
+    ell(d, C, C - 22, 56, 12, (236, 252, 255), (255, 255, 255), 4)                                                                   # the rim
+    ell(d, C, C + 2, 51, 10, (140, 214, 244))                                                                                         # the surface
+    poly(d, [(C - 22, C + 2), (C, C - 16), (C + 26, C + 2), (C + 4, C + 12)], (90, 220, 90), (20, 90, 30), 4)                      # the leaf
+    ln(d, [(C - 22, C + 2), (C + 26, C + 2)], (20, 90, 30), 4)
+    for ang, r, s in ((30, 104, 16), (150, 108, 14), (270, 100, 18)):
+        a = math.radians(ang)
+        sparkle(d, C + math.cos(a) * r, C + math.sin(a) * r, s, (255, 255, 255))
+
+
 SYMBOLS = {
     "summoner": S_summoner, "faith": S_faith, "firebolt": S_firebolt, "argonaut": S_argonaut, "liaris_freese": S_liaris,
     "airiel": S_airiel, "hestia": S_hestia, "freya": S_freya, "hephaestus": S_hephaestus, "loki": S_loki,
@@ -615,7 +632,7 @@ SYMBOLS = {
     "six_eyes": S_sixeyes, "gold_experience": S_goldexp, "vector_manipulation": S_vector, "lord_of_summons": S_lord,
     "goddess_of_faith": S_goddess, "heros_argonaut": S_heros, "hell_conqueror": S_hellconq, "immortal_will": S_immortal,
     "adolla_burst": S_adolla, "all_fiction": S_allfiction, "limitless": S_limitless, "gold_experience_requiem": S_requiem,
-    "black_wings": S_blackwings, "instant_death": S_instdeath, "the_almighty": S_almighty, "the_visionary": S_visionary,
+    "black_wings": S_blackwings, "instant_death": S_instdeath, "the_almighty": S_almighty, "the_visionary": S_visionary, "nen": S_nen,
 }
 
 
