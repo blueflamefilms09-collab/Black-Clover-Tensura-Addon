@@ -81,32 +81,6 @@ class UltimateRulesTest {
     }
 
     @Test
-    void limitlessHasFourModesAndPurpleIsTheMostExpensive() {
-        assertEquals(4, GojoRules.MODES);
-        assertEquals("Infinity", GojoRules.INFINITY_KEY);
-        double purple = GojoRules.cost(GojoRules.PURPLE, false);
-        assertTrue(purple > GojoRules.cost(GojoRules.RED, false));
-        assertTrue(purple > GojoRules.cost(GojoRules.BLUE, false));
-        assertTrue(GojoRules.cost(GojoRules.INFINITY, true) < GojoRules.cost(GojoRules.INFINITY, false), "mastered Infinity is cheaper to hold");
-        assertTrue(GojoRules.purpleDamage(true) > GojoRules.purpleDamage(false));
-        assertTrue(GojoRules.cooldown(GojoRules.PURPLE) > GojoRules.cooldown(GojoRules.RED));
-        assertEquals(0, GojoRules.cooldown(GojoRules.INFINITY));
-        assertEquals(1.0, GojoRules.infinityBlock());
-    }
-
-    @Test
-    void requiemReturnsHarmMoreThanGoldExperienceEverHeals() {
-        assertTrue(JoJoRules.returns(true, 0.99, false), "an open window returns everything");
-        assertTrue(JoJoRules.returns(false, 0.1, false));
-        assertFalse(JoJoRules.returns(false, 0.5, false));
-        assertTrue(JoJoRules.returns(false, 0.3, true));
-        assertTrue(JoJoRules.zeroTicks(true) > JoJoRules.zeroTicks(false));
-        assertTrue(JoJoRules.lifeHeal(Tier.MASTERED) > JoJoRules.lifeHeal(Tier.BASE));
-        assertEquals(2, JoJoRules.requiemModes());
-        assertTrue(JoJoRules.burstRadius(true) > JoJoRules.burstRadius(false));
-    }
-
-    @Test
     void blackWingsReflectEverythingAndGlideOnlyInTheAir() {
         assertEquals(0.5, VectorRules.reflectShare(Tier.BASE), 1e-9);
         assertEquals(0.75, VectorRules.reflectShare(Tier.MASTERED), 1e-9);

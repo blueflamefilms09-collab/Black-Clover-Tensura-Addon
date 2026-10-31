@@ -1,5 +1,25 @@
 # Changelog
 
+## [3.44.0] — Six skills removed, a new background for the advancement tab
+
+Owner: "Six Eyes/Limitless (remove this), Gold Experience (remove this skill), Vector Manipulation (remove this skill), Instant Death (remove this Skill)" and "also rework the Background for My Advancement's menu". Docs: `docs/skills/rebuild.md`, `docs/advancements.md`, `docs/releases/3.44.0.md`.
+
+### REMOVED (on the owner's word)
+- **Six Eyes** and its Ultimate **Limitless**, **Gold Experience** and its Ultimate **Gold Experience Requiem**, **Vector Manipulation**, **Instant Death**: the six skills, their rules classes (`GojoRules`, `JoJoRules`), the three evolution paths (Six Eyes -> Limitless, Gold Experience -> Requiem, Vector Manipulation -> Black Wings), the Soul Forge row of Gold Experience Requiem, the `instantDeathBossShare` setting, their lang keys and their test cases.
+- The six ids stay registered as inert stubs (`LegacyIds.REMOVED_SKILLS`, registered by `LegacySkills`) and are forgotten at the next login or respawn (`LegacyMigration`), so an old world loads.
+
+### NEW
+- **Advancement tab background**: `textures/gui/advancements/multiverse_weave.png`, a seamless dark 32x32 starfield with a woven lattice, made by `tools/quests/gen_tab_background.py` (`--check` to verify). Two other candidates ship next to it (`sigil_tiles.png`, `grimoire_pages.png`); switch by changing the `background` string in `data/nusmp/advancement/root.json` and `ROOT_BG` in `tools/quests/spec_adv.py`.
+- CI self-test `skill.removed_ultimates` (the six ids are inert stubs, Black Wings is live).
+- Tests: `AdvancementBackgroundTest` (square, a multiple of 16, opaque, dark; root uses it; old tile kept), `SkillAssetsTest` and `LegacyIdsTest` cases for the removals.
+
+### REPLACED
+- The tab background: the green altar tile `textures/block/grimoire_altar_top.png` (still used by the altar block, kept) is no longer the advancement background.
+
+### KEPT
+- **Black Wings** (now grant only, since its Unique is gone), Book Maker, All Fiction, The Almighty, The Visionary, the Limitless Blindfold relic, the 32x32 icons of the six removed skills, every other skill and every older config key.
+- Pure rule numbers shared with kept skills (`AuraRules`, `GodTierRules`, `VectorRules`) are left in place.
+
 ## [3.43.0] — Shishou's fast flurry (server setting `flurryFast`)
 
 Owner: "Should Shishou's flurry be faster? ... sure". Doc: `docs/items/shishou.md` (section "3.43.0: the fast flurry"), `docs/skill/reset_guard.md`.

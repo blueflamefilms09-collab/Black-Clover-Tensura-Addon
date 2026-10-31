@@ -13,7 +13,8 @@ from spec_magic import MAGICS, RESTRICTED, BRANCHES
 S = Spec()
 add = S.add
 
-ROOT_BG = "nusmp:textures/block/grimoire_altar_top.png"
+# 3.44.0: the tab has its own seamless background (tools/quests/gen_tab_background.py); the old altar tile was "nusmp:textures/block/grimoire_altar_top.png"
+ROOT_BG = "nusmp:textures/gui/advancements/multiverse_weave.png"
 
 
 def AND(*crits):

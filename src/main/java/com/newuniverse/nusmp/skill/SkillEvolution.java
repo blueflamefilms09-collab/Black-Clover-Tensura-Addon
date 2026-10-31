@@ -36,9 +36,7 @@ public final class SkillEvolution {
         m.put(NUSkills.UNBREAKABLE_WILL, NUSkills.IMMORTAL_WILL);
         m.put(NUSkills.DEVILS_FOOTPRINTS, NUSkills.ADOLLA_BURST);
         m.put(NUSkills.BOOK_MAKER, NUSkills.ALL_FICTION);
-        m.put(NUSkills.SIX_EYES, NUSkills.LIMITLESS);
-        m.put(NUSkills.GOLD_EXPERIENCE, NUSkills.GOLD_EXPERIENCE_REQUIEM);
-        m.put(NUSkills.VECTOR_MANIPULATION, NUSkills.BLACK_WINGS);
+        // 3.44.0: Six Eyes -> Limitless, Gold Experience -> Requiem and Vector Manipulation -> Black Wings were removed (Black Wings stays, grant only)
         return m;
     }
 

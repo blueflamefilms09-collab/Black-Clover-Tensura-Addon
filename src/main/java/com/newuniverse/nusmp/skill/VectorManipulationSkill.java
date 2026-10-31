@@ -16,16 +16,12 @@ import net.minecraft.world.entity.projectile.ProjectileDeflection;
 import net.minecraft.world.phys.EntityHitResult;
 
 /**
- * Vector Manipulation (Accelerator): TOGGLE reflection. While on, projectiles that would hit you are sent back, and half of every melee
- * hit (three quarters when mastered) is turned back on the attacker (through the balance law's PvP cap, never as a chain: a reflected hit
- * cannot be reflected again). Costs 50 magicules a second. Black Wings (the Ultimate) extends this class. Numbers: {@link VectorRules}.
+ * The vector-reflection engine of Black Wings. Until 3.43.0 this class was also the registered Unique skill Vector Manipulation (Accelerator); the owner removed that skill in 3.44.0
+ * (its id {@code nusmp:vector_manipulation} lives on as an inert stub, see {@code LegacySkills}), and what is left is the shared base: TOGGLE reflection. While on, projectiles that
+ * would hit you are sent back, and a share of every melee hit is turned back on the attacker (through the balance law's PvP cap, never as a chain: a reflected hit cannot be reflected
+ * again). Black Wings (the Ultimate) extends this class. Numbers: {@link VectorRules}.
  */
-public class VectorManipulationSkill extends ToggleAuraSkill {
-    static final SkillText TEXT = SkillText.of("vector_manipulation", "Vector Manipulation",
-            "Unique. Toggle. Reflect projectiles and turn part of every melee hit back on the attacker.");
-
-    public VectorManipulationSkill() { this(SkillType.UNIQUE, TEXT, false); }
-
+public abstract class VectorManipulationSkill extends ToggleAuraSkill {
     protected VectorManipulationSkill(SkillType type, SkillText text, boolean ultimate) { super(type, text, ultimate); }
 
     @Override protected int interval() { return VectorRules.interval(); }

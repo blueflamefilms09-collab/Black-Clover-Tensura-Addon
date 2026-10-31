@@ -55,20 +55,14 @@ public final class NUSkills {
     public static final DeferredHolder<ManasSkill, HellConquerorSkill> HELL_CONQUEROR = SKILLS.register("hell_conqueror", HellConquerorSkill::new);
     public static final DeferredHolder<ManasSkill, ImmortalWillSkill> IMMORTAL_WILL = SKILLS.register("immortal_will", ImmortalWillSkill::new);
 
-    // ---- Fire Force / Medaka Box / JJK / JoJo / Railgun (Unique -> Ultimate) ----
+    // ---- Fire Force / Medaka Box / Railgun (Unique -> Ultimate); 3.44.0: Six Eyes, Limitless, Gold Experience (+Requiem) and Vector Manipulation were removed (their ids live on as inert stubs, LegacySkills) ----
     public static final DeferredHolder<ManasSkill, DevilsFootprintsSkill> DEVILS_FOOTPRINTS = SKILLS.register("devils_footprints", DevilsFootprintsSkill::new);
     public static final DeferredHolder<ManasSkill, AdollaBurstSkill> ADOLLA_BURST = SKILLS.register("adolla_burst", AdollaBurstSkill::new);
     public static final DeferredHolder<ManasSkill, BookMakerSkill> BOOK_MAKER = SKILLS.register("book_maker", BookMakerSkill::new);
     public static final DeferredHolder<ManasSkill, AllFictionSkill> ALL_FICTION = SKILLS.register("all_fiction", AllFictionSkill::new);
-    public static final DeferredHolder<ManasSkill, SixEyesSkill> SIX_EYES = SKILLS.register("six_eyes", SixEyesSkill::new);
-    public static final DeferredHolder<ManasSkill, LimitlessSkill> LIMITLESS = SKILLS.register("limitless", LimitlessSkill::new);
-    public static final DeferredHolder<ManasSkill, GoldExperienceSkill> GOLD_EXPERIENCE = SKILLS.register("gold_experience", GoldExperienceSkill::new);
-    public static final DeferredHolder<ManasSkill, GoldExperienceRequiemSkill> GOLD_EXPERIENCE_REQUIEM = SKILLS.register("gold_experience_requiem", GoldExperienceRequiemSkill::new);
-    public static final DeferredHolder<ManasSkill, VectorManipulationSkill> VECTOR_MANIPULATION = SKILLS.register("vector_manipulation", VectorManipulationSkill::new);
     public static final DeferredHolder<ManasSkill, BlackWingsSkill> BLACK_WINGS = SKILLS.register("black_wings", BlackWingsSkill::new);
 
-    // ---- Standalone god-tier Ultimates (admin/event rewards) ----
-    public static final DeferredHolder<ManasSkill, InstantDeathSkill> INSTANT_DEATH = SKILLS.register("instant_death", InstantDeathSkill::new);
+    // ---- Standalone god-tier Ultimates (admin/event rewards); 3.44.0: Instant Death was removed ----
     public static final DeferredHolder<ManasSkill, TheAlmightySkill> THE_ALMIGHTY = SKILLS.register("the_almighty", TheAlmightySkill::new);
     public static final DeferredHolder<ManasSkill, TheVisionarySkill> THE_VISIONARY = SKILLS.register("the_visionary", TheVisionarySkill::new);
 

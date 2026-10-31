@@ -32,6 +32,12 @@ class LegacyIdsTest {
         for (String r : LegacyIds.REMOVED_LINES) { assertTrue(r.matches("[a-z0-9_]+"), r); assertTrue(paths.add("line_" + r), r + " is in two lists"); }
         for (String t : LegacyIds.RETIRED_TECHNIQUES) { assertTrue(t.matches("[a-z0-9_]+"), t); assertTrue(paths.add(t), t); }
         for (String t : LegacyIds.REMOVED_TECHNIQUES) { assertTrue(t.matches("[a-z0-9_]+"), t); assertTrue(paths.add(t), t + " is in two lists"); }
+        for (String t : LegacyIds.REMOVED_SKILLS) { assertTrue(t.matches("[a-z0-9_]+"), t); assertTrue(paths.add(t), t + " is in two lists"); }
+    }
+
+    @Test
+    void the344RemovalsAreSixKnownIds() {
+        assertEquals(List.of("six_eyes", "limitless", "gold_experience", "gold_experience_requiem", "vector_manipulation", "instant_death"), LegacyIds.REMOVED_SKILLS);
     }
 
     @Test

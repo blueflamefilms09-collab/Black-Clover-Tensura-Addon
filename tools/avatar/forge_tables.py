@@ -129,5 +129,5 @@ SKILLS = [
     ("immortal_will", "nusmp:immortal_will", "ultimate", "Immortal Will", 15, 3500, 0xB8C2CC, "Refuses the end."),
     ("adolla_burst", "nusmp:adolla_burst", "ultimate", "Adolla Burst", 16, 4000, 0xFF8A4A, "The flame of the other world."),
     ("black_wings", "nusmp:black_wings", "ultimate", "Black Wings", 14, 3000, 0x4A3A6A, "Direction, bent to your will."),
-    ("gold_experience_requiem", "nusmp:gold_experience_requiem", "ultimate", "Gold Experience Requiem", 18, 5000, 0xFFD060, "Life, and the return to zero."),
+    # 3.44.0: gold_experience_requiem was removed on the owner's word (its Soul Forge row is gone)
 ]

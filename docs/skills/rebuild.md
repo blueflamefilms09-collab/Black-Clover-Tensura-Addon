@@ -115,21 +115,19 @@ Adolla Burst: dash becomes **Light Speed** (a blink up to 32 blocks, 22 damage a
 the pin on every foe in a 10-block cone at 60% damage. All Fiction (a different skill): **Undo** (1500, 400: health from 5 s ago, harmful effects cleansed), **Fiction** (4000, 1200, 24 blocks: erase a mob; a boss or protected player loses effects and 25% health;
 a player is killed, never silently removed), passive **death becomes fiction** once per 15 min (never against the void or /kill).
 
-### Six Eyes (`six_eyes`) -> Limitless (`limitless`)
-*Rules: `AuraRules`, `GojoRules`.* Six Eyes (toggle, 40/s, 20 mastered): night vision, living things within 40 (64) blocks glow (nearest 64), the creature you look at is read out (health).
-Limitless: **Infinity** (120/s, 60 mastered; stops every attack and turns projectiles back), **Blue** (1500: pull + 10 / 16 damage), **Red** (1800: push + 16 / 24), **Hollow Purple** (6000, 64 blocks: kills what it may, 50 / 80 damage to bosses and protected players). Foes only.
+### REMOVED in 3.44.0: Six Eyes, Limitless, Gold Experience, Gold Experience Requiem, Vector Manipulation
+The owner removed Six Eyes (and its Ultimate Limitless), Gold Experience (and Gold Experience Requiem) and Vector Manipulation. Their ids stay registered as inert stubs (`LegacyIds.REMOVED_SKILLS`, `LegacySkills`),
+and `LegacyMigration` forgets a stub a player still holds at the next login or respawn, so an old world loads. The evolution paths Six Eyes -> Limitless, Gold Experience -> Requiem and Vector Manipulation -> Black Wings are gone from `SkillEvolution`.
+Their 32x32 icons stay in the jar. `GojoRules` and `JoJoRules` are deleted; `AuraRules`' Six Eyes numbers and `VectorRules` stay as pure rules. **Black Wings stays** (grant only now, through `/tensura edit <player> ability grant nusmp:black_wings`); it keeps
+the shared reflection engine, which lives on as the abstract `VectorManipulationSkill` base class:
 
-### Gold Experience (`gold_experience`) -> Gold Experience Requiem (`gold_experience_requiem`)
-*Rules: `JoJoRules`.* GE: **Give Life** (800, 300: heal 10 / 16 through the healing cap + Regeneration, mastered cleanses), **Sensory Overload** (600, 160: 6 / 10 damage, nausea, blindness, slowness), melee hits slow.
-Requiem: **Return to Zero** (5000, 2400: 6 s / 10 s in which every attack returns to zero; outside it 20% / 35% of attacks do, the attacker is left powerless), **Life Burst** (3000, 900: allies within 14 / 20 healed 50% through the cap, cleansed, Regeneration, Absorption IV).
-
-### Vector Manipulation (`vector_manipulation`) -> Black Wings (`black_wings`)
-*Rules: `VectorRules`.* Toggle 50/s (Black Wings 80/s): projectiles are reversed, 50% / 75% (mastered) / **100%** of a melee hit goes back (through the PvP cap; never reflected twice).
+### Black Wings (`black_wings`, grant only since 3.44.0)
+*Rules: `VectorRules`.* Toggle 80/s: projectiles are reversed, **100%** of a melee hit goes back (through the PvP cap; never reflected twice).
 Black Wings adds no fall damage at all, projectiles return 1.6x faster **as your own**, and a **glide** (sneak in mid-air: slow sink, drift forward, dark Rukh wings).
 
 ## Standalone god-tier Ultimates (admin / event rewards)
-*Rules: `GodTierRules`. Config `[god_tier]`: `affectsPlayers`, `bossHealthThreshold`, `instantDeathBossShare`, `almightyDodgeChance`.*
-- **Instant Death**: Die (3000, 400 / 200: what you look at dies, boss / protected player loses the configured share) and Mass Death (8000, 3600: hostile creatures within 16 / 24 blocks). Only things you may hurt.
+*Rules: `GodTierRules`. Config `[god_tier]`: `affectsPlayers`, `bossHealthThreshold`, `almightyDodgeChance`. (3.44.0 removed Instant Death and its `instantDeathBossShare` setting; an old key in a config file is ignored.)*
+- **Instant Death**: REMOVED in 3.44.0 (id kept as an inert stub).
 - **The Almighty**: dodge chance (config 0.2, x1.5 mastered, never above 95%); Rewrite the Future (5000, 3000): nothing reaches you for 5 s / 8 s and your harmful effects vanish.
 - **The Visionary**: Meteor (4000, 600: 35 / 50 damage within 6 / 8 blocks, **no explosion**, no block or fire damage), Void (3500, 700: foes lifted, withered, darkened, blinded), Perfect Body (3000, 3600: Strength/Resistance/Speed III, Regeneration II, 60 s / 120 s).
 

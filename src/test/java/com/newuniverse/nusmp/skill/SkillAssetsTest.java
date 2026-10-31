@@ -24,15 +24,17 @@ import static org.junit.jupiter.api.Assertions.*;
  * it needs no Minecraft classes.
  */
 class SkillAssetsTest {
-    /** The ids the owner listed: 25 Uniques / Extras, 10 Ultimate evolutions, 3 standalone Ultimates. */
+    /** The ids that are still registered by NUSkills (3.44.0 took six of the owner's original 38 out, see REMOVED). */
     private static final List<String> IDS = Arrays.asList(
             "summoner", "faith", "firebolt", "argonaut", "liaris_freese", "airiel", "hestia", "freya", "hephaestus", "loki",
             "wynn_fimbulvetr", "rea_laevateinn", "arcs_ray", "futsunomitama", "uchide_no_kozuchi", "hell_walker", "hawk_eye",
-            "spirit_card", "unbreakable_will", "hati", "devils_footprints", "book_maker", "six_eyes", "gold_experience",
-            "vector_manipulation",
+            "spirit_card", "unbreakable_will", "hati", "devils_footprints", "book_maker",
             "lord_of_summons", "goddess_of_faith", "heros_argonaut", "hell_conqueror", "immortal_will", "adolla_burst",
-            "all_fiction", "limitless", "gold_experience_requiem", "black_wings",
-            "instant_death", "the_almighty", "the_visionary");
+            "all_fiction", "black_wings",
+            "the_almighty", "the_visionary");
+
+    /** 3.44.0: removed on the owner's word. Their ids must no longer be registered by NUSkills (LegacySkills keeps them as inert stubs) and their icons stay in the jar. */
+    private static final List<String> REMOVED = Arrays.asList("six_eyes", "limitless", "gold_experience", "gold_experience_requiem", "vector_manipulation", "instant_death");
 
     private static String read(String path) throws Exception {
         return Files.readString(Path.of(path), StandardCharsets.UTF_8);
@@ -45,13 +47,32 @@ class SkillAssetsTest {
     }
 
     @Test
+    void theRemovedSkillsAreStubsNowAndTheirIconsStay() throws Exception {
+        String registry = read("src/main/java/com/newuniverse/nusmp/skill/NUSkills.java");
+        String legacy = read("src/main/java/com/newuniverse/nusmp/skilltree/unique/LegacyIds.java");
+        for (String id : REMOVED) {
+            assertFalse(registry.contains("register(\"" + id + "\""), id + " must not be a live skill any more");
+            assertTrue(legacy.contains("\"" + id + "\""), id + " must stay registered as an inert stub (LegacyIds.REMOVED_SKILLS) so old worlds load");
+            assertTrue(new File("src/main/resources/assets/nusmp/textures/skill/" + id + ".png").isFile(), id + ": the icon stays (rule 2)");
+        }
+        for (String gone : new String[] {"SixEyesSkill", "LimitlessSkill", "GoldExperienceSkill", "GoldExperienceRequiemSkill", "InstantDeathSkill", "GojoRules", "JoJoRules"})
+            assertFalse(new File("src/main/java/com/newuniverse/nusmp/skill/" + gone + ".java").exists() || new File("src/main/java/com/newuniverse/nusmp/skill/rules/" + gone + ".java").exists(), gone + " is deleted");
+    }
+
+    @Test
+    void theRemovalSelfTestIsRegisteredAndInTheSmokeList() throws Exception {
+        assertTrue(read("src/main/java/com/newuniverse/nusmp/NUSMP.java").contains("RemovedSkillsSelfTests.register()"), "registered");
+        assertTrue(read("src/main/java/com/newuniverse/nusmp/skill/RemovedSkillsSelfTests.java").contains("\"skill.removed_ultimates\""), "id");
+        assertTrue(read(".github/workflows/smoke.yml").contains("skill.removed_ultimates,tier"), "the smoke list expects it, with tier last");
+    }
+
+    @Test
     void theEvolutionTableIsUnchanged() throws Exception {
         String src = read("src/main/java/com/newuniverse/nusmp/skill/SkillEvolution.java");
         String[][] pairs = {
                 {"SUMMONER", "LORD_OF_SUMMONS"}, {"FAITH", "GODDESS_OF_FAITH"}, {"ARGONAUT", "HEROS_ARGONAUT"},
                 {"HELL_WALKER", "HELL_CONQUEROR"}, {"UNBREAKABLE_WILL", "IMMORTAL_WILL"}, {"DEVILS_FOOTPRINTS", "ADOLLA_BURST"},
-                {"BOOK_MAKER", "ALL_FICTION"}, {"SIX_EYES", "LIMITLESS"}, {"GOLD_EXPERIENCE", "GOLD_EXPERIENCE_REQUIEM"},
-                {"VECTOR_MANIPULATION", "BLACK_WINGS"}};
+                {"BOOK_MAKER", "ALL_FICTION"}};
         for (String[] p : pairs) assertTrue(src.contains("m.put(NUSkills." + p[0] + ", NUSkills." + p[1] + ");"), "evolution missing: " + p[0]);
         int puts = src.split("m\\.put\\(NUSkills\\.", -1).length - 1;
         assertEquals(pairs.length, puts, "no evolution path was added or dropped");

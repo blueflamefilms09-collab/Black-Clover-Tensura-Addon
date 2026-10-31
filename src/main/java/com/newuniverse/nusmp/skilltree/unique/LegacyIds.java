@@ -86,6 +86,13 @@ public final class LegacyIds {
             "ft_sky_dragons_roar", "ft_sky_dragons_wing_attack", "ft_sky_dragons_wave_wind", "ft_sky_dragons_breath", "ft_sky_troia", "ft_sky_arms_vernier", "ft_sky_drill",
             "ft_ice_make_lance", "ft_ice_make_floor", "ft_ice_make_shield", "ft_ice_make_cannon", "ft_ice_make_saucer", "ft_ice_make_eagle", "ft_ice_make_hammer", "ft_ice_make_excalibur");
 
+    /**
+     * 3.44.0: the paths of the six skills the owner removed (Six Eyes and its Ultimate Limitless, Gold Experience and its Ultimate Gold Experience Requiem, Vector Manipulation, Instant Death). The ids {@code nusmp:<path>}
+     * stay registered as inert stubs so a world that saved one of them still loads; the stub is forgotten at the next login or respawn ({@link LegacyMigration}). Their 32x32 icons stay in the jar.
+     */
+    public static final List<String> REMOVED_SKILLS = List.of(
+            "six_eyes", "limitless", "gold_experience", "gold_experience_requiem", "vector_manipulation", "instant_death");
+
     private static final Set<String> LINE_SET = Set.copyOf(REMOVED_LINES);
 
     /** The book id a removed line's Skill Book carries ({@code nusmp:<line>_book}). */

@@ -143,7 +143,7 @@ def adv_doc():
     frames = collections.Counter(a.frame for a in S.advs)
     lines += ["", "Frames: %d task, %d goal, %d challenge. Goals and challenges announce in chat, tasks do not. Every advancement grants experience "
               "(5 to 2000 points, more for challenges)." % (frames["task"], frames["goal"], frames["challenge"]), "",
-              "The tab background is `textures/block/grimoire_altar_top.png` (an existing 16x16 texture of the mod; the advancement screen tiles it).", "",
+              "The tab background is `textures/gui/advancements/multiverse_weave.png` (3.44.0, a seamless 32x32 tile made by `tools/quests/gen_tab_background.py`; the advancement screen tiles it in 16x16 cells). Two other candidates, `sigil_tiles.png` and `grimoire_pages.png`, are in the same folder; the old altar tile (`textures/block/grimoire_altar_top.png`) is kept for the altar block.", "",
               "## Triggers", "",
               "Vanilla triggers are used wherever the game can see the thing itself: `minecraft:tick` (the root), `inventory_changed` (carry a mod item), "
               "`changed_dimension` (the five mod dimensions), `player_killed_entity` (bosses, together with the event), `player_interacted_with_entity` "

@@ -49,7 +49,6 @@ public final class NUConfig {
     // God-tier
     public static final ModConfigSpec.BooleanValue GOD_TIER_AFFECTS_PLAYERS;
     public static final ModConfigSpec.DoubleValue BOSS_HEALTH_THRESHOLD;
-    public static final ModConfigSpec.DoubleValue INSTANT_DEATH_BOSS_SHARE;
     public static final ModConfigSpec.DoubleValue ALMIGHTY_DODGE_CHANCE;
 
     // Black Clover grimoires
@@ -128,9 +127,8 @@ public final class NUConfig {
         b.pop();
 
         b.push("god_tier");
-        GOD_TIER_AFFECTS_PLAYERS = b.comment("Can Instant Death / All Fiction / Hollow Purple instantly kill or erase PLAYERS? If false, players take a share of max health instead.").define("affectsPlayers", false);
+        GOD_TIER_AFFECTS_PLAYERS = b.comment("Can All Fiction instantly kill or erase PLAYERS? If false, players take a share of max health instead.").define("affectsPlayers", false);
         BOSS_HEALTH_THRESHOLD = b.comment("Anything with at least this much max health (or tagged c:bosses) counts as a boss and can't be instantly killed.").defineInRange("bossHealthThreshold", 300.0, 1.0, 1.0E9);
-        INSTANT_DEATH_BOSS_SHARE = b.comment("Share of max health Instant Death removes from bosses (0.3 = 30%).").defineInRange("instantDeathBossShare", 0.3, 0.0, 1.0);
         ALMIGHTY_DODGE_CHANCE = b.comment("Chance The Almighty makes an attack never happen (x1.5 when mastered).").defineInRange("almightyDodgeChance", 0.2, 0.0, 1.0);
         b.pop();
 

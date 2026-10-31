@@ -13,7 +13,7 @@
     "show_toast": false,
     "announce_to_chat": false,
     "hidden": false,
-    "background": "nusmp:textures/block/grimoire_altar_top.png"
+    "background": "nusmp:textures/gui/advancements/multiverse_weave.png"
   },
   "criteria": {
     "tick": {

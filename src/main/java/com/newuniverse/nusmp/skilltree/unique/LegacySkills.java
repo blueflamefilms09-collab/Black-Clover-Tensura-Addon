@@ -23,6 +23,7 @@ public final class LegacySkills {
         for (String path : LegacyIds.REMOVED_TECHNIQUES) SKILLS.register(path, LegacySkill::new);
         for (String bare : LegacyIds.REMOVED_LINES) SKILLS.register("line_" + bare, LegacySkill::new);
         for (String path : LegacyIds.RETIRED_TECHNIQUES) SKILLS.register(path, LegacySkill::new);
+        for (String path : LegacyIds.REMOVED_SKILLS) SKILLS.register(path, LegacySkill::new);   // 3.44.0, appended last
     }
 
     /** Registers the stubs on the mod bus. Called once from {@code SkillBookSystem.init}. */

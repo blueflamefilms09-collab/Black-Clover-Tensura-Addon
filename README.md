@@ -40,12 +40,9 @@ Master the Unique skill and it evolves automatically (checked every 5 seconds). 
 | Unbreakable Will | Immortal Will | `nusmp:immortal_will` |
 | Devil's Footprints (Fire Force) | Adolla Burst | `nusmp:adolla_burst` |
 | Book Maker (Medaka Box) | All Fiction | `nusmp:all_fiction` |
-| Six Eyes (JJK) | Limitless | `nusmp:limitless` |
-| Gold Experience (JoJo) | Gold Experience Requiem | `nusmp:gold_experience_requiem` |
-| Vector Manipulation (Railgun) | Black Wings | `nusmp:black_wings` |
 
-Standalone Ultimates (grant only): `nusmp:instant_death`, `nusmp:the_almighty`, `nusmp:the_visionary`.
-God-tier balance: config `[god_tier]` (affectsPlayers, bossHealthThreshold, instantDeathBossShare, almightyDodgeChance).
+Standalone Ultimates (grant only): `nusmp:black_wings`, `nusmp:the_almighty`, `nusmp:the_visionary`. (3.44.0 removed Six Eyes / Limitless, Gold Experience / Requiem, Vector Manipulation and Instant Death; Black Wings stays as a grant-only skill.)
+God-tier balance: config `[god_tier]` (affectsPlayers, bossHealthThreshold, almightyDodgeChance).
 
 Config `[ultimate_evolution]`: enabled, minimumEP, replacesBase.
 
@@ -60,7 +57,7 @@ The DanMachi spells are chanted: hold the skill key, a line finishes every 14 ti
    - Windows: `gradlew.bat build`
    - Mac/Linux: `./gradlew build`
    The first build downloads Minecraft, NeoForge and Tensura, so it takes a while.
-3. The mod jar is in `build/libs/multiverse-of-anime-3.43.0.jar`.
+3. The mod jar is in `build/libs/multiverse-of-anime-3.44.0.jar`.
 
 ## Install
 Put the jar in the `mods` folder of the **server and every player's client**.
