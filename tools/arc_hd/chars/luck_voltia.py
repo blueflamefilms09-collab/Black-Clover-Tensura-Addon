@@ -21,8 +21,8 @@ A, H = K.A, K.H
 SIDES = K.SIDES
 
 HAIR_STYLE = "anime_short"
-HAIR = "#f1cd3a"                                              # a saturated golden blond: pale yellows read khaki after the hair tint
-HAIR_RGB = (241, 205, 58)
+HAIR = "#f8d63c"                                              # a saturated golden blond: pale yellows read khaki after the hair tint
+HAIR_RGB = (248, 214, 60)
 SKIN = ("#ecbc9c", "#f8d7bc", "#ffeadc")
 TUNIC = "#4ab8c8"
 TRIM = "#2a8a96"

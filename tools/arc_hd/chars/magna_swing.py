@@ -63,6 +63,8 @@ def head_front(cv):
     # a few lighter stubbly roots of the shaved sides show at the temples
     for x0 in (0.0, 6.6):
         f.fill(f.m_rect(x0, 0.0, x0 + 1.4, 1.0, soft=2.0), pal["m"], 0.55)
+    # the shaved scalp above the strap: a dark stubble, not bare skin
+    f.fill(f.m_rect(0.0, 0.0, 8.0, 1.15, soft=1.4), H.lin((0, 0), (0, 1.15), [(0, pal["d"]), (1, pal["m"])]), 0.92)
     goggles(f)
     # angry thick black brows, low and slanted, above the frame
     H.brow(f, (3.35, 3.5), (0.9, 2.7), "#14141a", 0.5, 0.2, arch=0.0)
@@ -86,6 +88,18 @@ def band(f, y0, y1):
     if f.name == "front":
         f.rect(3.4, y0 - 0.12, 4.6, y1 + 0.12, H.metal_paint(y0, y1, "#9aa0ae", 1.1), r=0.1)
         f.rect(3.7, y0 + 0.2, 4.3, y1 - 0.2, "#14141c", r=0.05)
+
+
+def stubble(cv):
+    """The shaved sides and back of the head: a dark stubble over the skin above the ears and the nape, not bare skin (the mohawk strip itself is the 3D hair)."""
+    pal = K.hair_pal("#2a2a34", light_k=1.3)
+    for nm in ("west", "east", "back"):
+        f = cv.face("head", nm, False)
+        m = f.m_rect(0.0, 0.0, f.w, 5.0, soft=1.8)
+        if nm != "back":
+            m = m * (1.0 - f.m_ellipse(3.85 if nm == "west" else 4.15, 4.7, 1.25, 1.6, soft=1.6))
+        f.fill(m, pal["d"], 0.6)
+        f.fill(m * f.m_rect(0.0, 0.0, f.w, 2.2), pal["d"], 0.25)
 
 
 def head_overlay(cv):
@@ -217,6 +231,7 @@ def legs(cv):
 def paint(spec, cid, masks):
     cv, covers, hair, slim, img64 = K.start(cid, spec, masks, HAIR_STYLE, HAIR, HAIR_RGB)
     K.tidy_head(cv, img64, spec, HAIR, HAIR_RGB, SKIN, ears=True)
+    stubble(cv)
     head_front(cv)
     hc = head_overlay(cv)
     body(cv)

@@ -1,8 +1,8 @@
 {
  "id": "mimosa_vermillion",
- "source": "baseline",
+ "source": "hand",
  "size": 256,
- "hair_reason": "long wavy blond hair, a full back and cheek locks",
+ "hair_reason": "painted by hand: tools/arc_hd/chars/mimosa_vermillion.py",
  "look": {
   "skin": "mimosa_vermillion",
   "slim": true,

@@ -89,16 +89,16 @@ def body_front(f, ov):
         K.seam(f, [(x1 + s * 0.4, 1.4), (x1 + s * 0.4, 8.4)], "#f6e6b8", 0.055, 0.55)
     # the satchel: a strap from the right shoulder (left of the picture) across the chest to the left hip, and the flap of the bag at the hip
     satchel_strap(f, 0.5, 1.2, 7.2, 9.8)
+    # the belt and its gold buckle (under the bag at the hip)
+    K.belt_band(f, 8.9, 10.1, BELT, stitch="#a07a5a")
+    K.buckle(f, 3.6, 9.5, 1.9, 1.3, GOLD, hole="#2a1c0c")
+    # the flap of the bag hangs over the belt at the left hip
     f.rect(5.6, 8.5, 7.9, 11.2, H.lin((0, 8.5), (0, 11.2), [(0, K.lit(STRAP, 1.1)), (1, H.tone(STRAP, 0.78))]), r=0.2)
     f.rect(5.6, 8.5, 7.9, 9.7, H.lin((0, 8.5), (0, 9.7), [(0, K.lit(STRAP, 1.3)), (1, STRAP)]), r=0.2)
     f.fill(f.m_rect(5.6, 9.62, 7.9, 9.78), "#1e120a", 0.7)
     K.seam(f, [(5.8, 10.9), (7.7, 10.9)], "#e0b878", 0.055, 0.6)
     H.stud(f, 6.75, 9.7, 0.3, GOLD, spec=0.9)
     H.shadow_under(f, 11.2, 0.4, 0.25, x0=5.6, x1=7.9)
-    # the belt and its gold buckle (under the bag at the hip)
-    K.belt_band(f, 8.9, 10.1, BELT, stitch="#a07a5a")
-    K.buckle(f, 3.6, 9.5, 1.9, 1.3, GOLD, hole="#2a1c0c")
-    f.rect(5.6, 8.5, 7.9, 11.2, H.lin((0, 8.5), (0, 11.2), [(0, K.lit(STRAP, 1.1)), (1, H.tone(STRAP, 0.78))]), r=0.2, a=0.0)
     f.fill(f.m_band(11.3, 12.0), TRIM, 0.9)
     f.fill(f.m_rect(0.0, 11.3, f.w, 11.45), K.lit(TRIM, 1.6), 0.6)
 

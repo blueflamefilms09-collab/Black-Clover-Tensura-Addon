@@ -1,14 +1,14 @@
 {
  "id": "yami_sukehiro",
- "source": "baseline",
+ "source": "hand",
  "size": 256,
- "hair_reason": "short black spikes swept up",
+ "hair_reason": "painted by hand: tools/arc_hd/chars/yami_sukehiro.py",
  "look": {
   "skin": "yami_sukehiro",
   "slim": false,
   "scale": 1.0933,
   "hold_r": -0.42,
-  "hair": "anime_spiky",
+  "hair": "anime_spike_tall",
   "hair_color": "#15151b",
   "extras": [
    {

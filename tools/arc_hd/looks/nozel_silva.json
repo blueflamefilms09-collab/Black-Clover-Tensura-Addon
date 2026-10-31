@@ -1,14 +1,14 @@
 {
  "id": "nozel_silva",
- "source": "baseline",
+ "source": "hand",
  "size": 256,
- "hair_reason": "silver hair swept over the brow in a long fringe: the silver reference 155",
+ "hair_reason": "painted by hand: tools/arc_hd/chars/nozel_silva.py",
  "look": {
   "skin": "nozel_silva",
   "slim": true,
   "scale": 1.0667,
   "hair": "anime_swept",
-  "hair_color": "#e0e4ee",
+  "hair_color": "#f2f4ff",
   "extras": [
    {
     "model": "pmx_nozel_silva",

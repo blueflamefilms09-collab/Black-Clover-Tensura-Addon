@@ -1,14 +1,14 @@
 {
  "id": "noelle_silva",
- "source": "baseline",
+ "source": "hand",
  "size": 256,
- "hair_reason": "KEPT classic: two low twin tails",
+ "hair_reason": "painted by hand: tools/arc_hd/chars/noelle_silva.py",
  "look": {
   "skin": "noelle_silva",
   "slim": true,
   "scale": 0.96,
   "hair": "twin_tails",
-  "hair_color": "#dfe4ef",
+  "hair_color": "#e2e7f2",
   "extras": [
    {
     "model": "pmx_noelle_silva",

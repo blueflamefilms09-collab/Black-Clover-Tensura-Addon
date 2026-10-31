@@ -1,14 +1,15 @@
 {
  "id": "finral_roulacase",
- "source": "baseline",
+ "source": "hand",
  "size": 256,
- "hair_reason": "short neat hair with a side fringe",
+ "hair_reason": "painted by hand: tools/arc_hd/chars/finral_roulacase.py",
  "look": {
   "skin": "finral_roulacase",
   "slim": true,
   "scale": 1.0133,
+  "glow": true,
   "hair": "anime_short",
-  "hair_color": "#9a7650",
+  "hair_color": "#b98c52",
   "extras": [
    {
     "model": "pmx_finral_roulacase",

@@ -1,14 +1,14 @@
 {
  "id": "luck_voltia",
- "source": "baseline",
+ "source": "hand",
  "size": 256,
- "hair_reason": "short messy blond",
+ "hair_reason": "painted by hand: tools/arc_hd/chars/luck_voltia.py",
  "look": {
   "skin": "luck_voltia",
   "slim": true,
   "scale": 0.928,
   "hair": "anime_short",
-  "hair_color": "#e8c84a",
+  "hair_color": "#f8d63c",
   "extras": [
    {
     "model": "pmx_luck_voltia",

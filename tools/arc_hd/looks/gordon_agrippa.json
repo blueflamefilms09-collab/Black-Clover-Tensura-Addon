@@ -1,14 +1,14 @@
 {
  "id": "gordon_agrippa",
- "source": "baseline",
+ "source": "hand",
  "size": 256,
- "hair_reason": "long black hair falling over one eye (a side-swept fringe)",
+ "hair_reason": "painted by hand: tools/arc_hd/chars/gordon_agrippa.py",
  "look": {
   "skin": "gordon_agrippa",
   "slim": false,
   "scale": 1.1093,
   "hair": "anime_swept",
-  "hair_color": "#0f0f14",
+  "hair_color": "#1b1b26",
   "extras": [
    {
     "model": "pmx_gordon_agrippa",

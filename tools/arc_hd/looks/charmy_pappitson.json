@@ -1,14 +1,14 @@
 {
  "id": "charmy_pappitson",
- "source": "baseline",
+ "source": "hand",
  "size": 256,
- "hair_reason": "short bob-like hair",
+ "hair_reason": "painted by hand: tools/arc_hd/chars/charmy_pappitson.py",
  "look": {
   "skin": "charmy_pappitson",
   "slim": true,
   "scale": 0.8107,
   "hair": "anime_short",
-  "hair_color": "#201e26",
+  "hair_color": "#2a2634",
   "extras": [
    {
     "model": "pmx_charmy_pappitson",

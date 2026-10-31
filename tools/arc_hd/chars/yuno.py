@@ -27,7 +27,7 @@ HAIR_STYLE = "anime_bangs_long"
 HAIR = "#1a1a24"                                                                    # black with a blue cast (the sheet's #16161c turns to a flat black after the tint pass)
 HAIR_RGB = (26, 26, 36)
 SKIN = ("#e9b898", "#f8d4ba", "#ffeadb")
-SHIRT, SHIRT_L = "#1d1d28", "#34344a"
+SHIRT, SHIRT_L = "#202034", "#3c3c5c"
 GOLD, GOLD_D = "#d4aa54", "#8c6a24"
 TROUS = "#272733"
 BOOT = "#43322a"
@@ -91,7 +91,7 @@ def collar(f, front, back=False):
 def shirt_front(f):
     m = f.m_all()
     K.cloth(f, m, SHIRT, top=1.4, bottom=0.8, round_=0.08, fold_xs=[1.3, 6.7], fold_depth=0.07, fold_y0=2.0, fold_y1=8.8)
-    H.sheen(f, m, [1.5, 6.4], width=0.22, strength=0.16, tilt=0.03, y0=2.0, y1=8.6, color="#8a8aa8")
+    H.sheen(f, m, [1.5, 6.4], width=0.26, strength=0.26, tilt=0.03, y0=2.0, y1=8.6, color="#9a9ac0")
     # the placket down the middle: a lit fold, a gold piping on each side and three small gold buttons
     f.fill(f.m_rect(3.7, 1.5, 4.3, 9.0), H.tone(SHIRT, 0.62), 0.6)
     for x in (3.62, 4.38):
@@ -169,7 +169,7 @@ def arm(cv, part):
             sleeve = f.m_band(0.0, 10.2)
             K.cloth(f, sleeve, SHIRT, top=1.35, bottom=0.82, round_=0.14, fold_xs=[f.w * 0.5], fold_depth=0.07, fold_y0=1.5, fold_y1=9.5)
             f.shade(sleeve, 1.0 + 0.12 * K.blob(f, f.w * 0.4, 1.2, f.w * 0.7, 1.5), 0.9)           # the shoulder catches the light
-            H.sheen(f, sleeve, [f.w * 0.3], width=0.2, strength=0.14, tilt=0.0, y0=1.5, y1=9.6, color="#8a8aa8")
+            H.sheen(f, sleeve, [f.w * 0.3], width=0.24, strength=0.24, tilt=0.0, y0=1.5, y1=9.6, color="#9a9ac0")
             K.feather_pad(f, -0.1, f.w + 0.1, 0.0, 2.3, FUR, FUR_L, FUR_D, seed=11 + len(nm))        # the feathered collar of the mantle rests on the shoulder
             for y, k in ((4.8, 0.5), (5.4, 0.35)):                                                   # the creases at the elbow
                 K.crease(f, [(0.0, y), (f.w * 0.4, y + 0.3), (f.w, y + 0.05)], SHIRT, 0.1, k, mask=sleeve)

@@ -1,14 +1,14 @@
 {
  "id": "yuno",
- "source": "baseline",
+ "source": "hand",
  "size": 256,
- "hair_reason": "the parted fringe that sweeps to the temples and leaves the eyes free",
+ "hair_reason": "painted by hand: tools/arc_hd/chars/yuno.py",
  "look": {
   "skin": "yuno",
   "slim": true,
   "scale": 1.0667,
   "hair": "anime_bangs_long",
-  "hair_color": "#16161c",
+  "hair_color": "#1a1a24",
   "extras": [
    {
     "model": "pmx_yuno",

@@ -22,8 +22,8 @@ A, H = K.A, K.H
 SIDES = K.SIDES
 
 HAIR_STYLE = "anime_swept"                                    # the owner's silver reference 155: a big swept silver mass with a long fringe over one eye
-HAIR = "#e6eaf8"                                              # a cool silver; the hair sheet is grey and the tint multiplies, so it must start very light
-HAIR_RGB = (230, 234, 248)
+HAIR = "#f2f4ff"                                              # a cool silver; the hair sheet is grey and the tint multiplies, so it must start very light
+HAIR_RGB = (242, 244, 255)
 SKIN = ("#e8c3b3", "#f6dccf", "#fdeee4")
 SKIN_D = "#c49a8c"
 COAT = "#d7dbe9"                                              # silver-white coat (the sheet's #d4d8e4)
@@ -90,7 +90,7 @@ def body_front(f, ov):
         H.stud(f, 4.0, y, 0.24, SILVER, spec=0.9)
     # the piped edge of the coat along the opening: steel blue, a light stitch next to it
     for xe, s in ((3.1, -1.0), (4.9, 1.0)):
-        H.trim_line(f, [(xe - s * 0.05, 1.3), (xe - s * 0.05, 12.0)], TRIM, width=0.34, spec=0.35, outline=0.6)
+        H.trim_line(f, [(xe - s * 0.05, 1.3), (xe - s * 0.05, 12.0)], TRIM, width=0.5, spec=0.35, outline=0.6)
         K.seam(f, [(xe + s * -0.42, 1.8), (xe + s * -0.42, 8.4)], PIPE, 0.06, 0.65)
     # the shoulders: the coat yoke is a little darker and a seam runs from the collar to the arm
     for x0, x1 in ((0.0, 1.3), (6.7, 8.0)):
@@ -159,7 +159,7 @@ def body(cv):
 def arm(cv, part):
     for nm in SIDES:
         for f in K.pair(cv, part, nm):
-            sleeve = f.m_band(0.0, 8.4)
+            sleeve = f.m_band(0.0, 8.0)
             K.cloth(f, sleeve, COAT, top=1.12, bottom=0.85, round_=0.14, fold_xs=[0.9, 2.1], fold_depth=0.09, fold_y0=1.0, fold_y1=8.0)
             K.sheen(f, sleeve, [f.w * 0.35], 1.8, 7.6, 0.18)
             f.fill(f.m_rect(0.0, 0.0, f.w, 0.35), K.lit(COAT, 1.2), 0.55)                                   # the shoulder cap catches the light
@@ -167,8 +167,8 @@ def arm(cv, part):
             for y, k in ((5.2, 0.55), (5.75, 0.38)):                                                          # the elbow creases
                 f.fill(f.m_polyline([(0.0, y), (f.w * 0.5, y + 0.3), (f.w, y + 0.05)], 0.16) * sleeve, K.deep(COAT, 0.6), k)
             f.fill(f.m_polyline([(0.0, 4.95), (f.w * 0.5, 5.2), (f.w, 5.0)], 0.2) * sleeve, K.lit(COAT, 1.3), 0.35)
-            H.shadow_under(f, 8.4, 0.55, 0.3)
-            K.cuff(f, 8.4, 9.7, TRIM, pipe=PIPE, stud_color=SILVER)
+            H.shadow_under(f, 8.0, 0.55, 0.3)
+            K.cuff(f, 8.0, 9.7, TRIM, pipe=PIPE, stud_color=SILVER)
             K.glove(f, GLOVE, 9.7, 12.0, nm, finger_n=2)
             H.shadow_under(f, 9.7, 0.5, 0.2)
 
