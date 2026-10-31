@@ -1,14 +1,14 @@
 {
  "id": "julius_novachrono",
- "source": "baseline",
+ "source": "hand",
  "size": 256,
- "hair_reason": "medium-long pale hair framing the face, no centre fringe",
+ "hair_reason": "painted by hand: tools/arc_hd/chars/julius_novachrono.py",
  "look": {
   "skin": "julius_novachrono",
   "slim": false,
   "scale": 1.0773,
   "hair": "anime_long_open",
-  "hair_color": "#e0cf9a",
+  "hair_color": "#fff6d2",
   "extras": [
    {
     "model": "pmx_julius_novachrono",

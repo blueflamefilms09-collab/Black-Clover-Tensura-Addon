@@ -1,14 +1,14 @@
 {
  "id": "vetto",
- "source": "baseline",
+ "source": "hand",
  "size": 256,
- "hair_reason": "the wild golden mane",
+ "hair_reason": "painted by hand: tools/arc_hd/chars/vetto.py",
  "look": {
   "skin": "vetto",
   "slim": false,
   "scale": 1.3067,
   "glow": true,
   "hair": "anime_mane",
-  "hair_color": "#d8b868"
+  "hair_color": "#dcb44c"
  }
 }

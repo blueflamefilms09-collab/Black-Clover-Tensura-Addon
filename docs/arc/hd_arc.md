@@ -1,4 +1,15 @@
-# HD arc characters: the Seven Deadly Sins and Black Clover kit skins at 256x256 (3.38)
+# HD arc characters: the Seven Deadly Sins and Black Clover kit skins at 256x256 (3.40.0)
+
+**Status at the 3.40.0 release: all 81 look names are hand-painted** (`source: "hand"` in every fragment of `tools/arc_hd/looks/`); none is on the generic baseline any more. Where this file says "the other 80 names are the baseline"
+(section 1) or "`meliodas_form2` stays on the baseline" (section 5), that was the state of the pilot and is kept as history. The group notes, one per batch of characters, with what each painter found weaker than the
+owner's references and the hair problems that belong to the hair engine: `hd_arc_sds1.md` (Meliodas, King, Diane, Ban + second forms), `hd_arc_sds2.md` (Gowther, Merlin, Escanor), `hd_arc_bc1.md` .. `hd_arc_bc7.md`
+(the Black Clover characters, the Zogratis four, Fana, Lucifero, Zagred, the Dark Disciple). Their previews are `docs/previews/arc_hd/<group>_front_back.png` and `<group>_close.png`. Section 6 below shows the hair table of
+the baseline pass; **23 looks changed hair style when they were painted** (the final values are in `src/main/resources/assets/nusmp/playermodel/looks.json`):
+`asta`, `yami_sukehiro`, `leopold_vermillion` -> `anime_spike_tall`; `meliodas`, `meliodas_form2` -> `anime_spike_tall`; `escanor_form2` -> `anime_spike_tall`; `fana_form2` -> `anime_spike_swept`;
+`gowther` -> `anime_short`; `dante_zogratis`, `dante_zogratis_form2` -> `pompadour`; `fana`, `lucifero`, `lucifero_form2`, `vanessa_enoteca` -> `anime_long_open`; `rades_spirito` -> `anime_long_open`;
+`gauche_adlai`, `heath_grice`, `heath_grice_form2`, `morris_libardirt`, `morris_libardirt_form2` -> `anime_short_open`; `klaus_lunettes` -> `anime_bangs_long`; `revchi_salik` -> `anime_swept`; `zora_ideale` -> `anime_spiky`.
+Nine looks gained a glow map (`"glow": true`): `finral_roulacase`, `gauche_adlai`, `lotus_whomalt`, `morris_libardirt`, `nacht_faust`, `rades_spirito`, `revchi_salik`, `secre_swallowtail`, `vanessa_enoteca`.
+
 
 Owner's three answers this builds on: hair sheets go HD too: **NO** (they stay 64x64); the Seven Deadly Sins and Black Clover arc NPCs get the same treatment as the Tier List bosses: **YES (this
 change)**; the new bosses follow after that: **YES (next, not part of this change)**.

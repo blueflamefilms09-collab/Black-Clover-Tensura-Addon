@@ -1,15 +1,15 @@
 {
  "id": "vanica_zogratis_form2",
- "source": "baseline",
+ "source": "hand",
  "size": 256,
- "hair_reason": "KEPT classic: the black bob",
+ "hair_reason": "painted by hand: tools/arc_hd/chars/vanica_zogratis_form2.py",
  "look": {
   "skin": "vanica_zogratis_form2",
   "slim": true,
   "scale": 1.0133,
   "glow": true,
   "hair": "bob",
-  "hair_color": "#1a1418",
+  "hair_color": "#221a20",
   "extras": [
    {
     "model": "pmx_vanica_zogratis_form2",

@@ -1,15 +1,15 @@
 {
  "id": "lucifero_form2",
- "source": "baseline",
+ "source": "hand",
  "size": 256,
- "hair_reason": "long pale hair",
+ "hair_reason": "painted by hand: tools/arc_hd/chars/lucifero_form2.py",
  "look": {
   "skin": "lucifero_form2",
   "slim": false,
   "scale": 1.44,
   "glow": true,
-  "hair": "anime_long",
-  "hair_color": "#ece8f4",
+  "hair": "anime_long_open",
+  "hair_color": "#f2eefa",
   "extras": [
    {
     "model": "pmx_lucifero_form2",

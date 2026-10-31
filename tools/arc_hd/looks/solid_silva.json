@@ -1,14 +1,14 @@
 {
  "id": "solid_silva",
- "source": "baseline",
+ "source": "hand",
  "size": 256,
- "hair_reason": "pale hair with a side parting and a long fringe",
+ "hair_reason": "painted by hand: tools/arc_hd/chars/solid_silva.py",
  "look": {
   "skin": "solid_silva",
   "slim": true,
   "scale": 1.0133,
   "hair": "anime_swept",
-  "hair_color": "#c8d4ec",
+  "hair_color": "#8fb4f4",
   "extras": [
    {
     "model": "pmx_solid_silva",

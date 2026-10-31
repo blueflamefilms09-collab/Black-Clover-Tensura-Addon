@@ -97,7 +97,7 @@ class GsTalkScreenPureTest {
         assertFalse(FaceInfo.NONE.has());
     }
 
-    /** 3.38 (HD arc characters): a 128 or 256 skin of the same layout is read at the centre of the block of each model pixel; the portrait's UV grid (texH) stays the 64 grid. */
+    /** 3.40.0 (HD arc characters): a 128 or 256 skin of the same layout is read at the centre of the block of each model pixel; the portrait's UV grid (texH) stays the 64 grid. */
     @Test
     void anHdSkinIsReadAtTheCentreOfEachModelPixelBlock() {
         for (int w : new int[]{128, 256}) {

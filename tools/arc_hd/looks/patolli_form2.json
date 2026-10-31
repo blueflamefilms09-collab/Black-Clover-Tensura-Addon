@@ -1,15 +1,15 @@
 {
  "id": "patolli_form2",
- "source": "baseline",
+ "source": "hand",
  "size": 256,
- "hair_reason": "KEPT classic: the long braid",
+ "hair_reason": "painted by hand: tools/arc_hd/chars/patolli_form2.py",
  "look": {
   "skin": "patolli_form2",
   "slim": true,
   "scale": 1.0773,
   "glow": true,
   "hair": "braid",
-  "hair_color": "#f4f0ff",
+  "hair_color": "#f6f2ff",
   "extras": [
    {
     "model": "pmx_patolli_form2",

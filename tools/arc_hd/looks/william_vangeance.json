@@ -1,15 +1,15 @@
 {
  "id": "william_vangeance",
- "source": "baseline",
+ "source": "hand",
  "size": 256,
- "hair_reason": "long white hair swept over one eye",
+ "hair_reason": "painted by hand: tools/arc_hd/chars/william_vangeance.py",
  "look": {
   "skin": "william_vangeance",
   "slim": true,
   "scale": 1.088,
   "glow": true,
   "hair": "anime_swept",
-  "hair_color": "#eceef6",
+  "hair_color": "#f4f5fb",
   "extras": [
    {
     "model": "pmx_william_vangeance",

@@ -1,14 +1,14 @@
 {
  "id": "dante_zogratis",
- "source": "baseline",
+ "source": "hand",
  "size": 256,
- "hair_reason": "KEPT classic: dark swept-back hair",
+ "hair_reason": "painted by hand: tools/arc_hd/chars/dante_zogratis.py",
  "look": {
   "skin": "dante_zogratis",
   "slim": false,
   "scale": 1.0667,
-  "hair": "slick",
-  "hair_color": "#241812",
+  "hair": "pompadour",
+  "hair_color": "#181010",
   "extras": [
    {
     "model": "pmx_dante_zogratis",

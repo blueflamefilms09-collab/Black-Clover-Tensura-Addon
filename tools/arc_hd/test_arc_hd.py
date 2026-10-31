@@ -1,4 +1,4 @@
-"""Tests of the HD arc tooling (python3 -B tools/arc_hd/test_arc_hd.py), 3.38. See docs/arc/hd_arc.md.
+"""Tests of the HD arc tooling (python3 -B tools/arc_hd/test_arc_hd.py), 3.40.0. See docs/arc/hd_arc.md.
 
 Pure checks, no game: the hair table (every id has a style or a reason, every style exists), the roster, the fragments against looks.json (what merge_looks.py --check says), the size rule of every shipped
 HD skin and its glow map (the Java twin is ArcHdSkinsTest), the guard of gen_skins.py (an HD id is not regenerated at 64x64), the contract of every hand-painted module in tools/arc_hd/chars (the tuple, the

@@ -1,15 +1,16 @@
 {
  "id": "revchi_salik",
- "source": "baseline",
+ "source": "hand",
  "size": 256,
- "hair_reason": "short unkempt dark hair",
+ "hair_reason": "painted by hand: tools/arc_hd/chars/revchi_salik.py",
  "look": {
   "skin": "revchi_salik",
   "slim": true,
   "scale": 1.04,
   "hold_r": -0.42,
-  "hair": "anime_short",
-  "hair_color": "#2a2622",
+  "glow": true,
+  "hair": "anime_swept",
+  "hair_color": "#322a2a",
   "extras": [
    {
     "model": "pmx_revchi_salik",

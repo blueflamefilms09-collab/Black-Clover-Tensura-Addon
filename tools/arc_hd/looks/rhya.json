@@ -1,14 +1,14 @@
 {
  "id": "rhya",
- "source": "baseline",
+ "source": "hand",
  "size": 256,
- "hair_reason": "short messy dark hair",
+ "hair_reason": "painted by hand: tools/arc_hd/chars/rhya.py",
  "look": {
   "skin": "rhya",
   "slim": true,
   "scale": 1.0667,
   "hair": "anime_short",
-  "hair_color": "#14141c",
+  "hair_color": "#1c1c28",
   "extras": [
    {
     "model": "pmx_rhya",

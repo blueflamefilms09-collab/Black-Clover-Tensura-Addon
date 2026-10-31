@@ -1,14 +1,14 @@
 {
  "id": "klaus_lunettes",
- "source": "baseline",
+ "source": "hand",
  "size": 256,
- "hair_reason": "a neat side parting with the fringe over the glasses",
+ "hair_reason": "painted by hand: tools/arc_hd/chars/klaus_lunettes.py",
  "look": {
   "skin": "klaus_lunettes",
   "slim": true,
   "scale": 1.0613,
-  "hair": "anime_swept",
-  "hair_color": "#8fb8e0",
+  "hair": "anime_bangs_long",
+  "hair_color": "#6fa4ee",
   "extras": [
    {
     "model": "pmx_klaus_lunettes",

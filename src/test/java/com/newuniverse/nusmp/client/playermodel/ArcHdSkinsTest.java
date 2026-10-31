@@ -17,7 +17,7 @@ import java.util.TreeMap;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * 3.38 (HD arc characters, docs/arc/hd_arc.md): the Seven Deadly Sins and Black Clover characters of the kit are drawn with 256x256 skins (the same UV layout as the 64x64 ones). Reads the real files, no game:
+ * 3.40.0 (HD arc characters, docs/arc/hd_arc.md): the Seven Deadly Sins and Black Clover characters of the kit are drawn with 256x256 skins (the same UV layout as the 64x64 ones). Reads the real files, no game:
  * every skin of the look table {@code looks.json} is square, a power-of-two multiple of 64 and has a glow map of the SAME size exactly when the look glows; the HD roster is HD, painted on every base
  * rectangle, its second layer is a clean cutout, its hair is a kit style; and {@code looks.json} equals the merge of the fragments of {@code tools/arc_hd/looks} (so the two generators never disagree).
  */

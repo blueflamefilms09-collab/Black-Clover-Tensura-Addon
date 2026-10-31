@@ -1,14 +1,14 @@
 {
  "id": "zora_ideale",
- "source": "baseline",
+ "source": "hand",
  "size": 256,
- "hair_reason": "red hair pushed back into a ragged crest",
+ "hair_reason": "painted by hand: tools/arc_hd/chars/zora_ideale.py",
  "look": {
   "skin": "zora_ideale",
   "slim": true,
   "scale": 1.0347,
-  "hair": "anime_spike_swept",
-  "hair_color": "#c8402e",
+  "hair": "anime_spiky",
+  "hair_color": "#d02e1a",
   "extras": [
    {
     "model": "pmx_zora_ideale",

@@ -1,8 +1,8 @@
 {
  "id": "lucius_zogratis_form2",
- "source": "baseline",
+ "source": "hand",
  "size": 256,
- "hair_reason": "tall black spikes, a crown of clumps; the true form is the same cut in white",
+ "hair_reason": "painted by hand: tools/arc_hd/chars/lucius_zogratis_form2.py",
  "look": {
   "skin": "lucius_zogratis_form2",
   "slim": false,

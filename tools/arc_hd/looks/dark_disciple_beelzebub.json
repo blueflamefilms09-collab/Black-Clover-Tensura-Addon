@@ -1,8 +1,8 @@
 {
  "id": "dark_disciple_beelzebub",
- "source": "baseline",
+ "source": "hand",
  "size": 256,
- "hair_reason": "the cultist's hood",
+ "hair_reason": "painted by hand: tools/arc_hd/chars/dark_disciple_beelzebub.py",
  "look": {
   "skin": "dark_disciple_beelzebub",
   "slim": false,

@@ -1,14 +1,14 @@
 {
  "id": "marx_francois",
- "source": "baseline",
+ "source": "hand",
  "size": 256,
- "hair_reason": "KEPT classic: the short dark bob",
+ "hair_reason": "painted by hand: tools/arc_hd/chars/marx_francois.py",
  "look": {
   "skin": "marx_francois",
   "slim": false,
   "scale": 0.992,
   "hair": "bob",
-  "hair_color": "#3a2a22",
+  "hair_color": "#5a4232",
   "extras": [
    {
     "model": "pmx_marx_francois",

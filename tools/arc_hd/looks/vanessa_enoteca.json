@@ -1,14 +1,15 @@
 {
  "id": "vanessa_enoteca",
- "source": "baseline",
+ "source": "hand",
  "size": 256,
- "hair_reason": "long wavy pink hair",
+ "hair_reason": "painted by hand: tools/arc_hd/chars/vanessa_enoteca.py",
  "look": {
   "skin": "vanessa_enoteca",
   "slim": true,
   "scale": 1.0507,
-  "hair": "anime_long",
-  "hair_color": "#e87aae",
+  "glow": true,
+  "hair": "anime_long_open",
+  "hair_color": "#f5559f",
   "extras": [
    {
     "model": "pmx_vanessa_enoteca",

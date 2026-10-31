@@ -1,14 +1,15 @@
 {
  "id": "rades_spirito",
- "source": "baseline",
+ "source": "hand",
  "size": 256,
- "hair_reason": "short messy hair",
+ "hair_reason": "painted by hand: tools/arc_hd/chars/rades_spirito.py",
  "look": {
   "skin": "rades_spirito",
   "slim": false,
   "scale": 1.024,
-  "hair": "anime_short",
-  "hair_color": "#b9a2e0",
+  "glow": true,
+  "hair": "anime_long_open",
+  "hair_color": "#ac70ff",
   "extras": [
    {
     "model": "pmx_rades_spirito",

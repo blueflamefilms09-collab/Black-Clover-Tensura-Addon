@@ -1,14 +1,14 @@
 {
  "id": "mereoleona_vermillion",
- "source": "baseline",
+ "source": "hand",
  "size": 256,
- "hair_reason": "the wild red lion's mane",
+ "hair_reason": "painted by hand: tools/arc_hd/chars/mereoleona_vermillion.py",
  "look": {
   "skin": "mereoleona_vermillion",
   "slim": false,
   "scale": 1.0667,
   "hair": "anime_mane",
-  "hair_color": "#d0421e",
+  "hair_color": "#d4421c",
   "extras": [
    {
     "model": "pmx_mereoleona_vermillion",

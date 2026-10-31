@@ -1,15 +1,15 @@
 {
  "id": "fana_form2",
- "source": "baseline",
+ "source": "hand",
  "size": 256,
- "hair_reason": "her hair lifts into a wild mane in her second form",
+ "hair_reason": "painted by hand: tools/arc_hd/chars/fana_form2.py",
  "look": {
   "skin": "fana_form2",
   "slim": true,
   "scale": 0.928,
   "glow": true,
-  "hair": "anime_mane",
-  "hair_color": "#ff9ab0",
+  "hair": "anime_spike_swept",
+  "hair_color": "#ff7a9e",
   "extras": [
    {
     "model": "pmx_fana_form2",

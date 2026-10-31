@@ -1,15 +1,15 @@
 {
  "id": "vetto_form2",
- "source": "baseline",
+ "source": "hand",
  "size": 256,
- "hair_reason": "the wild golden mane",
+ "hair_reason": "painted by hand: tools/arc_hd/chars/vetto_form2.py",
  "look": {
   "skin": "vetto_form2",
   "slim": false,
   "scale": 1.3067,
   "glow": true,
   "hair": "anime_mane",
-  "hair_color": "#f0eee8",
+  "hair_color": "#f2f0ea",
   "extras": [
    {
     "model": "pmx_vetto_form2",

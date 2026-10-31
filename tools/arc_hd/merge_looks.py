@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Applies the look fragments of tools/arc_hd/looks/<name>.json to assets/nusmp/playermodel/looks.json (3.38, docs/arc/hd_arc.md).
+"""Applies the look fragments of tools/arc_hd/looks/<name>.json to assets/nusmp/playermodel/looks.json (3.40.0, docs/arc/hd_arc.md).
 
     python3 -B tools/arc_hd/merge_looks.py            # replace the entries of the names that have a fragment; every other entry stays byte for byte as it is
     python3 -B tools/arc_hd/merge_looks.py --check    # change nothing; exit 1 when looks.json does not equal the merge of the fragments, or a fragment's skin breaks the kit's rules

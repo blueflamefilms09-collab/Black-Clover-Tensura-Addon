@@ -226,7 +226,10 @@ def boot(f, color, y0, y1, name, strap=None, gold="#e0b43e", toe=True, sole="#0d
     boot_m = f.m_band(y0, 11.25)
     f.fill(boot_m, H.lin((0, y0), (0, 11.25), [(0, lit(color, 1.35)), (0.5, color), (1, H.tone(color, 0.72))]))
     H.shadow_under(f, y0 + 0.05, 0.7, 0.34)
-    H.sheen(f, boot_m, [f.w * 0.3], width=0.2, strength=0.26, tilt=0.04, y0=y0 + 0.35, y1=10.6, color="#c8a898")
+    H.sheen(f, boot_m, [f.w * 0.3], width=0.22, strength=0.42, tilt=0.04, y0=y0 + 0.35, y1=10.6, color="#c8b0b0")
+    H.sheen(f, boot_m, [f.w * 0.72], width=0.14, strength=0.2, tilt=0.04, y0=y0 + 0.6, y1=10.4, color="#a8a8c0")
+    if name in ("west", "east"):                                                                 # the stitched side seam of the boot, a texel wide
+        seam(f, [(f.w * 0.5, y0 + 0.5), (f.w * 0.5, 10.8)], lit(color, 2.2), 0.05, 0.5, (0.3, 0.2), 0.2)
     f.fill(f.m_polyline([(0.0, 9.45), (f.w * 0.5, 9.7), (f.w, 9.5)], 0.11), H.tone(color, 0.45), 0.7)
     f.fill(f.m_polyline([(0.0, 9.78), (f.w * 0.5, 10.0), (f.w, 9.8)], 0.07), lit(color, 1.8), 0.32)
     if strap and name == "front":
@@ -371,3 +374,179 @@ def head_rear(cv, pal, back_y=6.0, nape_y=7.2, side_top=3.0, ear_x=4.1, side_low
         outline = [(px(-0.3), -0.3), (px(8.3), -0.3), (px(8.3), side_top - 0.1), (px(ear_x + 1.5), side_top + 0.1), (px(ear_x + 0.3), side_top + 0.5), (px(ear_x), side_top + 2.0),
                    (px(ear_x + 0.3), side_low - 0.4), (px(ear_x - 0.9), side_low), (px(ear_x - 2.5), side_low + 0.5), (px(-0.3), side_low + 0.2)]
         hair_mass(f, pal, outline, 0.0, side_low + 0.2, shadow_k=0.88, shadow_depth=1.0, streaks=tuple(px(x) for x in (0.7, 1.8, 2.9, 4.1, 5.2, 6.4, 7.5)), streak_len=2.6)
+
+
+# ================================================================================================ bc3 additions: the face, glasses, trims, plates, gloves, ruffles
+def grow_cover(cv, covers, part, y0, y1, names=SIDES):
+    """Lets the second layer of `part` cover the rows y0..y1 too, where the 64x64 sheet has none (a deliberate exception for a bulky piece such as a boot cuff; documented per character)."""
+    for n in names:
+        covers[(part, n)] = np.maximum(covers[(part, n)], cv.face(part, n, True).m_band(y0, y1))
+
+
+def clear_head_overlay(cv):
+    """Empties every second-layer island of the head (the accessories of the sheet: glasses, monocle, ear studs are redrawn by hand, both layers)."""
+    for n in ("front", "back", "west", "east", "top", "bottom"):
+        cv.face("head", n, True).clear()
+
+
+def eyeshadow(f, cx, cy, w, color, a=0.5, h=0.62, lift=0.55):
+    """A soft band of eyeshadow over the upper lid of an eye at (cx, cy) of width w (draw it before the eye)."""
+    m = f.m_ellipse(cx, cy - lift, w * 0.62, h, soft=3.0)
+    f.fill(m, color, a)
+
+
+def eye_pair(f, iris, cx=(2.4, 5.6), cy=5.0, w=2.5, h=1.8, **kw):
+    """Both anime eyes of the front of the head with the shared keywords of H.eye (tilt, lash, lash_w, flick, lid_shadow, iris_r, hi, pupil, glow)."""
+    out = []
+    for x in cx:
+        out.append(H.eye(f, x, cy, w, h, iris, **kw))
+    return out
+
+
+def eye_bags(f, cx, cy, w, color="#9a7a90", a=0.5, depth=0.5):
+    """The dark crescent under an eye (tired characters)."""
+    m = f.m_polyline([(cx - w * 0.5, cy + 0.15), (cx, cy + depth), (cx + w * 0.5, cy + 0.15)], 0.22, soft=2.0)
+    f.fill(m, color, a)
+
+
+def ring_mask(f, x0, y0, x1, y1, th, r=0.3):
+    """(ring, inside) masks of a rounded rectangle frame of thickness th (a lens frame, a plate rim)."""
+    outer = f.m_rect(x0, y0, x1, y1, r)
+    inner = f.m_rect(x0 + th, y0 + th, x1 - th, y1 - th, max(0.05, r - th * 0.6))
+    return H.minus(outer, inner), inner
+
+
+def vband(f, x0, x1, y0, y1, color, bevel=0.2, spec=0.4, outline=0.55):
+    """A vertical bevelled metal or piping band (a placket, a lapel trim): dark outline, a gradient across (light on the left), a bevel, a specular streak."""
+    m = f.m_rect(x0, y0, x1, y1)
+    if outline > 0:
+        f.fill(f.m_rect(x0 - 0.1, y0 - 0.02, x1 + 0.1, y1 + 0.02), H.tone(color, 0.38), outline)
+    f.fill(m, H.lin((x0, 0), (x1, 0), [(0, H.tone(color, 1.35)), (0.45, color), (1, H.tone(color, 0.66))]))
+    H.bevel(f, m, depth=bevel, gain=1.1, spec=spec, spec_pow=12)
+    return m
+
+
+def button_column(f, x, ys, color, r=0.26, thread=None):
+    for y in ys:
+        H.stud(f, x, y, r, color, spec=0.85)
+        if thread:
+            f.fill(f.m_ring(x, y, r * 1.55, 0.1), thread, 0.55)
+
+
+def plate(f, mask, color, light=1.1, spec=0.55, bevel=0.3, y0=None, y1=None):
+    """A steel or gold plate over a mask: the vertical metal gradient, a bevel with a specular streak. Returns the mask."""
+    ys = np.where(np.asarray(mask) > 0.5)[0]
+    if len(ys) and y0 is None:
+        y0 = float(f.Y[ys.min(), 0])
+        y1 = float(f.Y[ys.max(), 0]) + 0.25
+    f.fill(mask, H.metal_paint(y0, y1, color, light))
+    H.bevel(f, mask, depth=bevel, gain=1.15, spec=spec, spec_pow=14)
+    return mask
+
+
+def edge_line(f, mask, color, a=0.8, grow=1.0):
+    """A dark line round a mask (its border, `grow` texels wide): the dilated mask minus the mask."""
+    m = np.asarray(mask, np.float32)
+    k = max(1, int(round(grow)))
+    d = m.copy()
+    for _ in range(k):
+        e = d.copy()
+        e[1:] = np.maximum(e[1:], d[:-1])
+        e[:-1] = np.maximum(e[:-1], d[1:])
+        e[:, 1:] = np.maximum(e[:, 1:], d[:, :-1])
+        e[:, :-1] = np.maximum(e[:, :-1], d[:, 1:])
+        d = e
+    f.fill(np.clip(d - m, 0, 1), color, a)
+
+
+def glove(f, color, y0=10.4, y1=12.0, name="front", shade=0.7, cuff=None):
+    """A glove from y0 to the end of the hand: a gradient, a sheen, finger gaps on the front and the back and a knuckle line."""
+    m = f.m_band(y0, y1)
+    f.fill(m, H.lin((0, y0), (0, y1), [(0, lit(color, 1.12)), (0.6, color), (1, H.tone(color, 0.82))]))
+    H.sheen(f, m, [f.w * 0.35], width=0.35, strength=0.18, tilt=0.0, y0=y0 + 0.2, y1=y1 - 0.2, color="#ffffff")
+    if name in ("front", "back"):
+        for i in range(1, 4 if f.w > 3.5 else 3):
+            x = f.w * i / (4.0 if f.w > 3.5 else 3.0)
+            f.fill(f.m_line((x, y0 + 0.9), (x, y1 - 0.05), 0.17, 0.12) * m, H.tone(color, shade), 0.7)
+        f.fill(f.m_line((0.15, y0 + 0.85), (f.w - 0.15, y0 + 0.85), 0.14, 0.14) * m, H.tone(color, shade), 0.55)
+    return m
+
+
+def ruffle(f, y0, y1, base, light, dark, cell=1.3, rows=2, mask=None, a=1.0, seed=2):
+    """A frilled hem or collar from y0 to y1: scallops (1.3 px cells, never a 1 px lattice), a light lip, a dark gap under each tab and a soft shadow."""
+    m = f.m_rect(-0.1, y0, f.w + 0.1, y1)
+    if mask is not None:
+        m = m * mask
+    f.fill(m, H.lin((0, y0), (0, y1), [(0, lit(base, 1.25)), (0.5, base), (1, H.tone(base, 0.62))]), a)
+    H.scallops(f, m, y0 + 0.1, rows=rows, cell=cell, depth=max(0.7, (y1 - y0) * 0.8), base=None, tip=None, edge=dark, edge_a=0.45, shadow=0.22)
+    n = max(2, int(f.w / cell))
+    for i in range(n * 2):
+        x = f.w * H.hsh(i, seed, 8)
+        y = y0 + (y1 - y0) * (0.2 + 0.6 * H.hsh(i, seed, 9))
+        f.fill(f.m_line((x, y), (x + 0.1, y + 0.45), 0.12, 0.05) * m, light, 0.6 * a)
+    return m
+
+
+def sleeve(f, color, y0=0.0, y1=10.4, sheen="#9aa6d0", elbow=4.2):
+    """A long cloth sleeve from y0 to y1: gradient, the lit shoulder, a sheen, creases at the elbow. Returns its mask."""
+    sl = f.m_band(y0, y1)
+    cloth(f, sl, color, top=1.4, bottom=0.8, round_=0.14, fold_xs=[f.w * 0.5], fold_depth=0.08, fold_y0=y0 + 1.5, fold_y1=y1 - 0.4)
+    f.shade(sl, 1.0 + 0.12 * blob(f, f.w * 0.4, y0 + 1.2, f.w * 0.7, 1.4), 0.9)
+    H.sheen(f, sl, [f.w * 0.3], width=0.26, strength=0.2, tilt=0.0, y0=y0 + 1.5, y1=y1 - 0.4, color=sheen)
+    for dy, k in ((0.0, 0.5), (0.6, 0.35)):
+        crease(f, [(0.0, elbow + dy), (f.w * 0.4, elbow + dy + 0.3), (f.w, elbow + dy + 0.05)], color, 0.1, k, mask=sl)
+    return sl
+
+
+def cuff(f, y0, y1, color, trim=None, stitch=None):
+    """A cuff band (y0..y1): a lit gradient, a bevel, an optional bright trim line at the top and bottom and a stitch between."""
+    band = f.m_rect(0.0, y0, f.w, y1)
+    f.fill(band, H.lin((0, y0), (0, y1), [(0, lit(color, 1.35)), (0.5, color), (1, H.tone(color, 0.7))]))
+    H.bevel(f, band, depth=0.18, gain=1.0, spec=0.3)
+    f.fill(f.m_rect(0.0, y0, f.w, y0 + 0.12), "#06060a", 0.55)
+    if trim:
+        f.fill(f.m_rect(0.0, y0 + 0.12, f.w, y0 + 0.3), trim, 0.95)
+        f.fill(f.m_rect(0.0, y1 - 0.3, f.w, y1 - 0.12), trim, 0.95)
+    if stitch:
+        seam(f, [(0.12, (y0 + y1) / 2.0), (f.w - 0.12, (y0 + y1) / 2.0)], stitch, 0.055, 0.7, (0.3, 0.18), 0.2)
+    return band
+
+
+def leather_band(f, mask, color="#1e1b1f", light=1.9, a=1.0):
+    """A strap of dark leather over a mask: a gradient, a lit upper edge, a darker lower edge."""
+    ys = np.where(np.asarray(mask) > 0.5)[0]
+    y0 = float(f.Y[ys.min(), 0]) if len(ys) else 0.0
+    y1 = float(f.Y[ys.max(), 0]) + 0.25 if len(ys) else 1.0
+    f.fill(mask, H.lin((0, y0), (0, y1), [(0, lit(color, light)), (0.4, color), (1, H.tone(color, 0.55))]), a)
+    return mask
+
+
+def epaulette(f, x0, x1, y0, y1, base, light, trim):
+    """A shoulder board: a rounded plate with a lit top, a trim line round it and two studs."""
+    m = f.m_rect(x0, y0, x1, y1, 0.2)
+    f.fill(f.m_rect(x0 - 0.08, y0 - 0.08, x1 + 0.08, y1 + 0.1, 0.24), H.tone(base, 0.3), 0.85)
+    f.fill(m, H.lin((0, y0), (0, y1), [(0, light), (0.5, base), (1, H.tone(base, 0.65))]))
+    H.bevel(f, m, depth=0.22, gain=1.1, spec=0.5)
+    f.fill(f.m_rect(x0 + 0.12, y0 + 0.12, x1 - 0.12, y0 + 0.28, 0.1), trim, 0.9)
+    f.fill(f.m_rect(x0 + 0.12, y1 - 0.28, x1 - 0.12, y1 - 0.12, 0.1), trim, 0.9)
+    return m
+
+
+def bare_leg(f, skin, name, y0=0.0, y1=10.4, knee_y=6.4):
+    """A bare leg from y0 to y1 (a slim thigh and calf): a skin gradient, both edges falling into shadow (the roundness), a soft kneecap on the front or the crease behind the knee on the back, the
+    swell of the calf and a lit shin line. Everything is soft; the few lines are a texel wide."""
+    s0, s1, s2 = skin
+    m = f.m_band(y0, y1)
+    f.fill(m, H.lin((0, y0), (0, y1), [(0, H.tone(s1, 0.94)), (0.3, s1), (0.7, H.tone(s1, 0.97)), (1, H.tone(s0, 0.9))]))
+    side = np.minimum(f.X, f.w - f.X)
+    f.shade(m, 1.0 - 0.14 * (1.0 - H.smoothstep(0.0, 1.0, side)), 0.9)
+    f.shade(m, 1.0 + 0.10 * blob(f, f.w * 0.45, (y0 + knee_y) / 2.0 - 0.5, f.w * 0.55, 2.2), 0.9)          # the thigh catches the light
+    f.shade(m, 1.0 + 0.12 * blob(f, f.w * 0.42, knee_y + 2.0, f.w * 0.42, 1.6), 0.9)                     # the calf swells
+    if name == "front":
+        f.ellipse(f.w * 0.5, knee_y, f.w * 0.3, 0.55, H.tone(s2, 1.0), a=0.30, soft=2.0)                 # the kneecap
+        f.fill(f.m_polyline([(f.w * 0.22, knee_y + 0.62), (f.w * 0.5, knee_y + 0.78), (f.w * 0.78, knee_y + 0.62)], 0.09) * m, H.tone(s0, 0.72), 0.4)
+        f.fill(f.m_line((f.w * 0.46, knee_y + 1.2), (f.w * 0.46, y1 - 0.8), 0.1, 0.07) * m, H.tone(s2, 1.0), 0.28)   # the shin
+    elif name == "back":
+        f.fill(f.m_polyline([(f.w * 0.15, knee_y + 0.1), (f.w * 0.5, knee_y + 0.3), (f.w * 0.85, knee_y + 0.1)], 0.12) * m, H.tone(s0, 0.7), 0.45)
+    H.shadow_under(f, y0 + 0.05, 0.7, 0.2, mask=m)
+    return m

@@ -1,15 +1,15 @@
 {
  "id": "lucius_zogratis",
- "source": "baseline",
+ "source": "hand",
  "size": 256,
- "hair_reason": "tall black spikes, a crown of clumps; the true form is the same cut in white",
+ "hair_reason": "painted by hand: tools/arc_hd/chars/lucius_zogratis.py",
  "look": {
   "skin": "lucius_zogratis",
   "slim": false,
   "scale": 1.12,
   "glow": true,
   "hair": "anime_spike_tall",
-  "hair_color": "#12101a",
+  "hair_color": "#1a1618",
   "extras": [
    {
     "model": "pmx_lucius_zogratis",

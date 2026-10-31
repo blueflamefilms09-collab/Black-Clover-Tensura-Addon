@@ -1,14 +1,14 @@
 {
  "id": "fuegoleon_vermillion",
- "source": "baseline",
+ "source": "hand",
  "size": 256,
- "hair_reason": "red hair swept back with a fringe: a neat captain",
+ "hair_reason": "painted by hand: tools/arc_hd/chars/fuegoleon_vermillion.py",
  "look": {
   "skin": "fuegoleon_vermillion",
   "slim": false,
   "scale": 1.1093,
   "hair": "anime_swept",
-  "hair_color": "#b8301c",
+  "hair_color": "#c2321c",
   "extras": [
    {
     "model": "pmx_fuegoleon_vermillion",

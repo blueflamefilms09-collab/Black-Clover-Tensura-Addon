@@ -1,15 +1,15 @@
 {
  "id": "heath_grice_form2",
- "source": "baseline",
+ "source": "hand",
  "size": 256,
- "hair_reason": "KEPT classic: silver hair slicked back",
+ "hair_reason": "painted by hand: tools/arc_hd/chars/heath_grice_form2.py",
  "look": {
   "skin": "heath_grice_form2",
   "slim": true,
   "scale": 1.1093,
   "glow": true,
-  "hair": "slick",
-  "hair_color": "#f4f4fa",
+  "hair": "anime_short_open",
+  "hair_color": "#f6f6fc",
   "extras": [
    {
     "model": "pmx_heath_grice_form2",

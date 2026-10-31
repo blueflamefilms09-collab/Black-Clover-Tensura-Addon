@@ -1,8 +1,8 @@
 {
  "id": "mars",
- "source": "baseline",
+ "source": "hand",
  "size": 256,
- "hair_reason": "pale spiky hair",
+ "hair_reason": "painted by hand: tools/arc_hd/chars/mars.py",
  "look": {
   "skin": "mars",
   "slim": false,
@@ -10,7 +10,7 @@
   "hold_r": -0.42,
   "glow": true,
   "hair": "anime_spiky",
-  "hair_color": "#d8d4ea",
+  "hair_color": "#dcd8ee",
   "extras": [
    {
     "model": "pmx_mars",

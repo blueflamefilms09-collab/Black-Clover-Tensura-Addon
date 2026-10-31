@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""HD skins for the Seven Deadly Sins and Black Clover characters of the player-model kit (3.38, docs/arc/hd_arc.md).
+"""HD skins for the Seven Deadly Sins and Black Clover characters of the player-model kit (3.40.0, docs/arc/hd_arc.md).
 
     python3 -B tools/arc_hd/gen_arc_hd.py <look name or base id ...> [--size 64|128|256] [--baseline] [--exact] [--all]
                                            [--out-dir DIR] [--frag-dir DIR] [--list]

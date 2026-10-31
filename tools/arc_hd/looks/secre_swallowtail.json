@@ -1,14 +1,15 @@
 {
  "id": "secre_swallowtail",
- "source": "baseline",
+ "source": "hand",
  "size": 256,
- "hair_reason": "KEPT classic: the black bob",
+ "hair_reason": "painted by hand: tools/arc_hd/chars/secre_swallowtail.py",
  "look": {
   "skin": "secre_swallowtail",
   "slim": true,
   "scale": 0.9173,
+  "glow": true,
   "hair": "bob",
-  "hair_color": "#14141a",
+  "hair_color": "#26263a",
   "extras": [
    {
     "model": "pmx_secre_swallowtail",

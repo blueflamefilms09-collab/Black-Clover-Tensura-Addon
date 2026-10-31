@@ -389,3 +389,59 @@ def glow_line(f, pts, color, width=0.22, a=0.95, glow=True, core="#ffffff", core
 def pair(cv, part, name):
     """(base island, second-layer island) of a face: draw the crisp things on BOTH (the game drops the second layer and the hair beyond 24 blocks, PlayerLod)."""
     return A.lay(cv, part, name)
+
+
+# ================================================================================================ added for group bc4
+def each(cv, part, fn, names=SIDES):
+    """Calls fn(face, name, is_overlay) for every side of a part, base layer then second layer: the crisp things are drawn on both (the second layer and the hair are dropped beyond 24 blocks)."""
+    for nm in names:
+        for f, isov in zip(A.lay(cv, part, nm), (False, True)):
+            fn(f, nm, isov)
+
+
+def cap(cv, part, name, color, edge=None, k_top=1.2, overlay=False):
+    """The top or bottom face of a part (shoulder board, collar top, sole): a plain gradient of `color`, optionally a darker rim."""
+    f = cv.face(part, name, overlay)
+    f.fill(f.m_all(), H.lin((0, 0), (0, f.h), [(0, lit(color, k_top)), (1, H.tone(color, 0.8))]))
+    if edge is not None:
+        inner = f.m_rect(0.28, 0.28, f.w - 0.28, f.h - 0.28)
+        f.fill(1.0 - inner, edge, 0.85)
+    return f
+
+
+def fur_band(f, y0, y1, base, light, dark, tuft=0.55, seed=0, mask=None):
+    """A band of fluffy fur from y0 to y1 across the whole width of a face: a mottled body with short curved strokes in three tones and a tufted lower edge that hangs `tuft` model pixels
+    below y1 (keep y1 + tuft inside the face). Deterministic. Returns its mask."""
+    n = max(4, int(round(f.w / 0.5)))
+    pts = [(-0.3, y0 - 0.3), (f.w + 0.3, y0 - 0.3), (f.w + 0.3, y1 - 0.1)]
+    for i in range(n, -1, -1):
+        x = f.w * i / n
+        ln = tuft * (0.45 + 0.55 * H.hsh(seed, i, 1))
+        pts.append((x + 0.12 * (H.hsh(seed, i, 2) - 0.5), y1 + (ln if i % 2 == 0 else ln * 0.45)))
+    pts.append((-0.3, y1 - 0.1))
+    m = f.m_poly(pts)
+    if mask is not None:
+        m = m * np.asarray(mask, np.float32)
+    f.fill(m, H.lin((0, y0), (0, y1 + tuft), [(0, light), (0.5, base), (1, dark)]))
+    for i in range(int(f.w / 0.34) + 1):
+        x = 0.17 + 0.34 * i
+        for j in range(int((y1 - y0 + tuft) / 0.5) + 1):
+            y = y0 + 0.5 * j + 0.2 * H.hsh(seed, i, j, 3)
+            r = H.hsh(seed, i, j)
+            col = light if r > 0.6 else (dark if r < 0.25 else base)
+            lean = (H.hsh(seed, i, j, 4) - 0.5) * 0.3
+            f.fill(f.m_line((x, y), (x + lean, y + 0.42), 0.22, 0.1) * m, col, 0.7)
+    f.fill(f.m_polyline(pts[3:-1], 0.12) * m, dark, 0.55)
+    return m
+
+
+def scar(f, pts, color="#c98a7a", dark="#8a5448", width=0.22):
+    f.fill(f.m_polyline(pts, width + 0.12), dark, 0.5)
+    f.fill(f.m_polyline(pts, width), color, 0.9)
+
+
+def muscle(f, mask, skin, line_pts, light_pts=None, k=0.7, a=0.5):
+    """A shaded muscle edge: a dark curved line along a separation (`line_pts`), a lit line next to it (`light_pts`)."""
+    f.fill(f.m_polyline(line_pts, 0.26) * mask, H.tone(skin[0], k), a)
+    if light_pts:
+        f.fill(f.m_polyline(light_pts, 0.3) * mask, H.tone(skin[2], 1.04), a * 0.7)

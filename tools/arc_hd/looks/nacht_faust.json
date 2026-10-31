@@ -1,14 +1,15 @@
 {
  "id": "nacht_faust",
- "source": "baseline",
+ "source": "hand",
  "size": 256,
- "hair_reason": "KEPT classic: the high ponytail",
+ "hair_reason": "painted by hand: tools/arc_hd/chars/nacht_faust.py",
  "look": {
   "skin": "nacht_faust",
   "slim": true,
   "scale": 1.088,
+  "glow": true,
   "hair": "high_ponytail",
-  "hair_color": "#12121a",
+  "hair_color": "#1c1c28",
   "extras": [
    {
     "model": "pmx_nacht_faust",

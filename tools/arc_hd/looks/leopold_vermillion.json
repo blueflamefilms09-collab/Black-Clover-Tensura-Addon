@@ -1,14 +1,14 @@
 {
  "id": "leopold_vermillion",
- "source": "baseline",
+ "source": "hand",
  "size": 256,
- "hair_reason": "wild red spikes",
+ "hair_reason": "painted by hand: tools/arc_hd/chars/leopold_vermillion.py",
  "look": {
   "skin": "leopold_vermillion",
   "slim": false,
   "scale": 1.0027,
-  "hair": "anime_spiky",
-  "hair_color": "#d8431d",
+  "hair": "anime_spike_tall",
+  "hair_color": "#de4a1e",
   "extras": [
    {
     "model": "pmx_leopold_vermillion",

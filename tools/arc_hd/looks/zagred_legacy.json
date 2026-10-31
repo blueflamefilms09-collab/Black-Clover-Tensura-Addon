@@ -1,8 +1,8 @@
 {
  "id": "zagred_legacy",
- "source": "baseline",
+ "source": "hand",
  "size": 256,
- "hair_reason": "KEPT classic: the long spiky hair",
+ "hair_reason": "painted by hand: tools/arc_hd/chars/zagred_legacy.py",
  "look": {
   "skin": "zagred_legacy",
   "slim": false,

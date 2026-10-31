@@ -1,8 +1,8 @@
 {
  "id": "dark_disciple",
- "source": "baseline",
+ "source": "hand",
  "size": 256,
- "hair_reason": "the cultist's hood (the 3.37 hood sheet)",
+ "hair_reason": "painted by hand: tools/arc_hd/chars/dark_disciple.py",
  "look": {
   "skin": "dark_disciple",
   "slim": false,

@@ -1,13 +1,13 @@
 {
  "id": "vanica_zogratis",
- "source": "baseline",
+ "source": "hand",
  "size": 256,
- "hair_reason": "KEPT classic: the black bob",
+ "hair_reason": "painted by hand: tools/arc_hd/chars/vanica_zogratis.py",
  "look": {
   "skin": "vanica_zogratis",
   "slim": true,
   "scale": 1.0133,
   "hair": "bob",
-  "hair_color": "#1a1418"
+  "hair_color": "#221a20"
  }
 }

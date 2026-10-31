@@ -1,5 +1,26 @@
 # Changelog
 
+## [3.40.0] — The Seven Deadly Sins and Black Clover arc characters are repainted by hand in HD (256x256)
+
+Doc and commands: `docs/arc/hd_arc.md` (status, hair table, how to paint one), one note per batch `docs/arc/hd_arc_sds1.md`, `hd_arc_sds2.md`, `hd_arc_bc1.md` to `hd_arc_bc7.md`; previews `docs/previews/arc_hd/` (front and back, close-ups, contact sheets of all 81 looks).
+
+### NEW
+- **81 hand-painted HD looks (56 characters with their second forms).** Seven Deadly Sins: Meliodas, King, Diane, Ban, Gowther, Merlin, Escanor. Black Clover: Asta, Yuno, Noelle, Yami, Mimosa, Nozel, Luck, Magna, Finral, Charmy, Gordon, Vanessa, Klaus, Secre, Solid, Zora, Marx, Gauche, Fuegoleon, Leopold, William, Julius, Nacht, the four Zogratis (Dante, Vanica, Zenon, Lucius), Fana, Heath, Morris, Lotus, Rades, Revchi, Patolli, Lucifero, both Zagreds and the Dark Disciple (the full list is the 81 fragments in `tools/arc_hd/looks/`). Every skin is 256x256 (4x the detail, the same UV layout as before) with eyes, brows and teeth, cloth with seams, stitching and trim, metal, boots and belts drawn at texel scale on both layers; 55 of them have a 256x256 glow map.
+- **Hair chosen per character from the 3D hair kit (reason for each in `tools/arc_hd/hair_map.py`).** 23 looks moved to a different kit style as they were painted (spike-tall for Meliodas, Asta, Yami, Leopold and Escanor's noon form; open-fringe long and short cuts so a face, a third eye or a forehead stone is not hidden; and so on). The hair styles themselves are unchanged.
+- **9 looks gained a glow map** (Finral, Gauche, Lotus, Morris, Nacht (his four relic gems), Rades, Revchi, Secre, Vanessa).
+- **HD pipeline** `tools/arc_hd/` (roster, hair map, bridge to the tier-boss HD kit, painter modules, `merge_looks.py` with a `--check`, software-renderer preview, 8 Python tests). `FaceInfo` now reads the face of an HD skin at the centre of each model pixel, so the Gs talk portrait gives the same skin tone and slimness as before. `ArcHdSkinsTest` (square, multiple of 64, glow as big as its skin, fragments equal `looks.json`) and `GsTalkScreenPureTest` guard it.
+- Cost: textures only. A 256x256 texture is about 340 KiB of GPU memory with mipmaps and is loaded the first time a character is drawn, so only the looks near the player are resident (all 136 PNGs at once would be about 46 MB, which never happens in play); no tick work, no packets, no new draw calls, no change on the server.
+
+### REPLACED
+- The 81 skin PNGs and 55 glow maps of these characters (same file names, repainted at 256x256), their entries in `playermodel/looks.json` (hair style and colour, glow flag) and the portrait reader `FaceInfo`.
+- Meliodas's pilot paint (already in the 3.39.0 jar as work in progress) is repainted in the final style, with the kit hair changed to `anime_spike_tall`; `meliodas_form2` is now hand-painted too. Every other look had a smooth-upscaled baseline of the 64x64 sheet before; those are now painted by hand.
+
+### KEPT
+- The hair sheets (still 64x64; the owner answered NO to HD hair), every hair style (the 23 `anime_*` styles and the classic ones, nothing removed), the 64x64 painters (`gen_arc_hd.py --size 64` still writes the old skins byte for byte, checked on all 81 names), the UV layout, models, animations, packets and look keys, DanMachi, the generic and hub NPCs, the merchants, the other franchises and the 17 tier boss skins of 3.37.0.
+
+### Not seen in a game
+Everything was checked in the software preview renderer (flat light, no 3D hair motion) and by the pure tests only; how the HD detail, the glow and the hair read in the game at distance was not seen. The wikis could not be fetched (English and Japanese both blocked), so every look is from memory plus the repo docs; the painters flag what they could not match. Known weaker spots: the overlay is one pixel thick, so there are no truly bulky pauldrons or collars and the colour blocking is softer than the references; several hair cuts read flat from behind (Meliodas, Asta and Yami's spike-tall crown, Noelle's twin-tail cap, Magna's mohawk, Secre's and Marx's bob, Merlin's bob); Mimosa's hair bow cannot be drawn under the hair cap; very pale hair shows grey in the preview (the colours are tuned for the in-game tint). Decisions for you: King's colours follow the 64x64 sheet (cream, green, gold) while your reference 156 shows navy, teal and gold; Nacht's four chest gems are painted on the coat because his model has none (`GEMS_ON_SKIN = False` in `tools/arc_hd/chars/nacht_faust.py` undoes it).
+
 ## [3.39.0] — The 16 light Tier List bosses get their anime powers, balanced by a measured band
 
 Design, constants and tables: `docs/bosses/tier_powers.md` (a test keeps it in step with the code). Light Yagami (his own scene), the Zogratis bosses and the arcs' characters are not touched.

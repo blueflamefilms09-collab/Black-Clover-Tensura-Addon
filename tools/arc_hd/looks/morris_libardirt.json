@@ -1,14 +1,15 @@
 {
  "id": "morris_libardirt",
- "source": "baseline",
+ "source": "hand",
  "size": 256,
- "hair_reason": "short blond spikes",
+ "hair_reason": "painted by hand: tools/arc_hd/chars/morris_libardirt.py",
  "look": {
   "skin": "morris_libardirt",
   "slim": true,
   "scale": 1.0667,
-  "hair": "anime_spiky",
-  "hair_color": "#d9c27a",
+  "glow": true,
+  "hair": "anime_short_open",
+  "hair_color": "#ffce1e",
   "extras": [
    {
     "model": "pmx_morris_libardirt",

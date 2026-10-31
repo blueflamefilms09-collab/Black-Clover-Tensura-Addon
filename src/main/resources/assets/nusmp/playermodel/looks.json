@@ -22,8 +22,8 @@
    "skin": "asta",
    "slim": false,
    "scale": 1.0027,
-   "hair": "anime_spiky",
-   "hair_color": "#cfd2d8",
+   "hair": "anime_spike_tall",
+   "hair_color": "#d6dae4",
    "extras": [
     {
      "model": "pmx_asta",
@@ -113,7 +113,7 @@
    "slim": true,
    "scale": 0.8107,
    "hair": "anime_short",
-   "hair_color": "#201e26",
+   "hair_color": "#2a2634",
    "extras": [
     {
      "model": "pmx_charmy_pappitson",
@@ -126,8 +126,8 @@
    "skin": "dante_zogratis",
    "slim": false,
    "scale": 1.0667,
-   "hair": "slick",
-   "hair_color": "#241812",
+   "hair": "pompadour",
+   "hair_color": "#181010",
    "extras": [
     {
      "model": "pmx_dante_zogratis",
@@ -141,8 +141,8 @@
    "slim": false,
    "scale": 1.0667,
    "glow": true,
-   "hair": "slick",
-   "hair_color": "#161020",
+   "hair": "pompadour",
+   "hair_color": "#241a34",
    "extras": [
     {
      "model": "pmx_dante_zogratis_form2",
@@ -363,8 +363,8 @@
    "scale": 1.0667,
    "hold_r": -0.42,
    "glow": true,
-   "hair": "anime_mane",
-   "hair_color": "#e0902a",
+   "hair": "anime_spike_tall",
+   "hair_color": "#ff8c14",
    "extras": [
     {
      "model": "pmx_escanor_form2",
@@ -378,8 +378,8 @@
    "slim": true,
    "scale": 0.928,
    "glow": true,
-   "hair": "anime_long",
-   "hair_color": "#e88fb4",
+   "hair": "anime_long_open",
+   "hair_color": "#e0709c",
    "extras": [
     {
      "model": "pmx_fana",
@@ -393,8 +393,8 @@
    "slim": true,
    "scale": 0.928,
    "glow": true,
-   "hair": "anime_mane",
-   "hair_color": "#ff9ab0",
+   "hair": "anime_spike_swept",
+   "hair_color": "#ff7a9e",
    "extras": [
     {
      "model": "pmx_fana_form2",
@@ -407,8 +407,9 @@
    "skin": "finral_roulacase",
    "slim": true,
    "scale": 1.0133,
+   "glow": true,
    "hair": "anime_short",
-   "hair_color": "#9a7650",
+   "hair_color": "#b98c52",
    "extras": [
     {
      "model": "pmx_finral_roulacase",
@@ -422,7 +423,7 @@
    "slim": false,
    "scale": 1.1093,
    "hair": "anime_swept",
-   "hair_color": "#b8301c",
+   "hair_color": "#c2321c",
    "extras": [
     {
      "model": "pmx_fuegoleon_vermillion",
@@ -435,8 +436,9 @@
    "skin": "gauche_adlai",
    "slim": true,
    "scale": 1.0453,
-   "hair": "anime_short",
-   "hair_color": "#17161d",
+   "glow": true,
+   "hair": "anime_short_open",
+   "hair_color": "#2a2a40",
    "extras": [
     {
      "model": "pmx_gauche_adlai",
@@ -482,7 +484,7 @@
    "slim": false,
    "scale": 1.1093,
    "hair": "anime_swept",
-   "hair_color": "#0f0f14",
+   "hair_color": "#1b1b26",
    "extras": [
     {
      "model": "pmx_gordon_agrippa",
@@ -496,7 +498,7 @@
    "slim": true,
    "scale": 0.9867,
    "glow": true,
-   "hair": "curtains",
+   "hair": "anime_short",
    "hair_color": "#b4457f",
    "extras": [
     {
@@ -512,7 +514,7 @@
    "scale": 0.9867,
    "glow": true,
    "hair": "anime_long",
-   "hair_color": "#f0b8d8",
+   "hair_color": "#ffacd8",
    "extras": [
     {
      "model": "pmx_gowther_form2",
@@ -540,8 +542,8 @@
    "slim": true,
    "scale": 1.1093,
    "glow": true,
-   "hair": "slick",
-   "hair_color": "#c4c8d8",
+   "hair": "anime_short_open",
+   "hair_color": "#cdd2e6",
    "extras": [
     {
      "model": "pmx_heath_grice",
@@ -555,8 +557,8 @@
    "slim": true,
    "scale": 1.1093,
    "glow": true,
-   "hair": "slick",
-   "hair_color": "#f4f4fa",
+   "hair": "anime_short_open",
+   "hair_color": "#f6f6fc",
    "extras": [
     {
      "model": "pmx_heath_grice_form2",
@@ -591,7 +593,7 @@
    "slim": false,
    "scale": 1.0773,
    "hair": "anime_long_open",
-   "hair_color": "#e0cf9a",
+   "hair_color": "#fff6d2",
    "extras": [
     {
      "model": "pmx_julius_novachrono",
@@ -635,7 +637,7 @@
    "hold_r": -0.42,
    "glow": true,
    "hair": "anime_short",
-   "hair_color": "#c9742c",
+   "hair_color": "#c4702e",
    "extras": [
     {
      "model": "pmx_king",
@@ -664,8 +666,8 @@
    "skin": "klaus_lunettes",
    "slim": true,
    "scale": 1.0613,
-   "hair": "anime_swept",
-   "hair_color": "#8fb8e0",
+   "hair": "anime_bangs_long",
+   "hair_color": "#6fa4ee",
    "extras": [
     {
      "model": "pmx_klaus_lunettes",
@@ -678,8 +680,8 @@
    "skin": "leopold_vermillion",
    "slim": false,
    "scale": 1.0027,
-   "hair": "anime_spiky",
-   "hair_color": "#d8431d",
+   "hair": "anime_spike_tall",
+   "hair_color": "#de4a1e",
    "extras": [
     {
      "model": "pmx_leopold_vermillion",
@@ -707,8 +709,9 @@
    "skin": "lotus_whomalt",
    "slim": true,
    "scale": 1.0933,
+   "glow": true,
    "hair": "anime_short",
-   "hair_color": "#4a443f",
+   "hair_color": "#4c4540",
    "extras": [
     {
      "model": "pmx_lotus_whomalt",
@@ -722,8 +725,8 @@
    "slim": false,
    "scale": 1.44,
    "glow": true,
-   "hair": "anime_long",
-   "hair_color": "#ece8f4",
+   "hair": "anime_long_open",
+   "hair_color": "#ece8f6",
    "extras": [
     {
      "model": "pmx_lucifero",
@@ -737,8 +740,8 @@
    "slim": false,
    "scale": 1.44,
    "glow": true,
-   "hair": "anime_long",
-   "hair_color": "#ece8f4",
+   "hair": "anime_long_open",
+   "hair_color": "#f2eefa",
    "extras": [
     {
      "model": "pmx_lucifero_form2",
@@ -753,7 +756,7 @@
    "scale": 1.12,
    "glow": true,
    "hair": "anime_spike_tall",
-   "hair_color": "#12101a",
+   "hair_color": "#1a1618",
    "extras": [
     {
      "model": "pmx_lucius_zogratis",
@@ -782,7 +785,7 @@
    "slim": true,
    "scale": 0.928,
    "hair": "anime_short",
-   "hair_color": "#e8c84a",
+   "hair_color": "#f8d63c",
    "extras": [
     {
      "model": "pmx_luck_voltia",
@@ -796,7 +799,7 @@
    "slim": false,
    "scale": 1.0453,
    "hair": "mohawk",
-   "hair_color": "#17171b",
+   "hair_color": "#1a1a22",
    "extras": [
     {
      "model": "pmx_magna_swing",
@@ -812,7 +815,7 @@
    "hold_r": -0.42,
    "glow": true,
    "hair": "anime_spiky",
-   "hair_color": "#d8d4ea",
+   "hair_color": "#dcd8ee",
    "extras": [
     {
      "model": "pmx_mars",
@@ -842,7 +845,7 @@
    "slim": false,
    "scale": 0.992,
    "hair": "bob",
-   "hair_color": "#3a2a22",
+   "hair_color": "#5a4232",
    "extras": [
     {
      "model": "pmx_marx_francois",
@@ -856,7 +859,7 @@
    "slim": false,
    "scale": 0.9813,
    "hold_r": -0.42,
-   "hair": "anime_spike_swept",
+   "hair": "anime_spike_tall",
    "hair_color": "#f6d044",
    "extras": [
     {
@@ -872,8 +875,8 @@
    "scale": 0.9813,
    "hold_r": -0.42,
    "glow": true,
-   "hair": "anime_spike_swept",
-   "hair_color": "#e8c860",
+   "hair": "anime_spike_tall",
+   "hair_color": "#f6d044",
    "extras": [
     {
      "model": "pmx_meliodas_form2",
@@ -887,7 +890,7 @@
    "slim": false,
    "scale": 1.0667,
    "hair": "anime_mane",
-   "hair_color": "#d0421e",
+   "hair_color": "#d4421c",
    "extras": [
     {
      "model": "pmx_mereoleona_vermillion",
@@ -944,8 +947,9 @@
    "skin": "morris_libardirt",
    "slim": true,
    "scale": 1.0667,
-   "hair": "anime_spiky",
-   "hair_color": "#d9c27a",
+   "glow": true,
+   "hair": "anime_short_open",
+   "hair_color": "#ffce1e",
    "extras": [
     {
      "model": "pmx_morris_libardirt",
@@ -959,8 +963,8 @@
    "slim": true,
    "scale": 1.0667,
    "glow": true,
-   "hair": "anime_spiky",
-   "hair_color": "#d9c27a",
+   "hair": "anime_short_open",
+   "hair_color": "#ffce1e",
    "extras": [
     {
      "model": "pmx_morris_libardirt_form2",
@@ -973,8 +977,9 @@
    "skin": "nacht_faust",
    "slim": true,
    "scale": 1.088,
+   "glow": true,
    "hair": "high_ponytail",
-   "hair_color": "#12121a",
+   "hair_color": "#1c1c28",
    "extras": [
     {
      "model": "pmx_nacht_faust",
@@ -988,7 +993,7 @@
    "slim": true,
    "scale": 0.96,
    "hair": "twin_tails",
-   "hair_color": "#dfe4ef",
+   "hair_color": "#e2e7f2",
    "extras": [
     {
      "model": "pmx_noelle_silva",
@@ -1002,7 +1007,7 @@
    "slim": true,
    "scale": 1.0667,
    "hair": "anime_swept",
-   "hair_color": "#e0e4ee",
+   "hair_color": "#f2f4ff",
    "extras": [
     {
      "model": "pmx_nozel_silva",
@@ -1038,7 +1043,7 @@
    "scale": 1.0773,
    "glow": true,
    "hair": "braid",
-   "hair_color": "#f2f0ea",
+   "hair_color": "#f6f3ec",
    "extras": [
     {
      "model": "pmx_patolli",
@@ -1053,7 +1058,7 @@
    "scale": 1.0773,
    "glow": true,
    "hair": "braid",
-   "hair_color": "#f4f0ff",
+   "hair_color": "#f6f2ff",
    "extras": [
     {
      "model": "pmx_patolli_form2",
@@ -1066,8 +1071,9 @@
    "skin": "rades_spirito",
    "slim": false,
    "scale": 1.024,
-   "hair": "anime_short",
-   "hair_color": "#b9a2e0",
+   "glow": true,
+   "hair": "anime_long_open",
+   "hair_color": "#ac70ff",
    "extras": [
     {
      "model": "pmx_rades_spirito",
@@ -1082,7 +1088,7 @@
    "scale": 1.024,
    "glow": true,
    "hair": "anime_mane",
-   "hair_color": "#d8c4ff",
+   "hair_color": "#cda0ff",
    "extras": [
     {
      "model": "pmx_rades_spirito_form2",
@@ -1096,8 +1102,9 @@
    "slim": true,
    "scale": 1.04,
    "hold_r": -0.42,
-   "hair": "anime_short",
-   "hair_color": "#2a2622",
+   "glow": true,
+   "hair": "anime_swept",
+   "hair_color": "#322a2a",
    "extras": [
     {
      "model": "pmx_revchi_salik",
@@ -1111,7 +1118,7 @@
    "slim": true,
    "scale": 1.0667,
    "hair": "anime_short",
-   "hair_color": "#14141c",
+   "hair_color": "#1c1c28",
    "extras": [
     {
      "model": "pmx_rhya",
@@ -1126,7 +1133,7 @@
    "scale": 1.0667,
    "glow": true,
    "hair": "anime_spiky",
-   "hair_color": "#f0f0f8",
+   "hair_color": "#eceef8",
    "extras": [
     {
      "model": "pmx_rhya_form2",
@@ -1139,8 +1146,9 @@
    "skin": "secre_swallowtail",
    "slim": true,
    "scale": 0.9173,
+   "glow": true,
    "hair": "bob",
-   "hair_color": "#14141a",
+   "hair_color": "#26263a",
    "extras": [
     {
      "model": "pmx_secre_swallowtail",
@@ -1154,7 +1162,7 @@
    "slim": true,
    "scale": 1.0133,
    "hair": "anime_swept",
-   "hair_color": "#c8d4ec",
+   "hair_color": "#8fb4f4",
    "extras": [
     {
      "model": "pmx_solid_silva",
@@ -1209,8 +1217,9 @@
    "skin": "vanessa_enoteca",
    "slim": true,
    "scale": 1.0507,
-   "hair": "anime_long",
-   "hair_color": "#e87aae",
+   "glow": true,
+   "hair": "anime_long_open",
+   "hair_color": "#f5559f",
    "extras": [
     {
      "model": "pmx_vanessa_enoteca",
@@ -1224,7 +1233,7 @@
    "slim": true,
    "scale": 1.0133,
    "hair": "bob",
-   "hair_color": "#1a1418"
+   "hair_color": "#221a20"
   },
   "vanica_zogratis_form2": {
    "skin": "vanica_zogratis_form2",
@@ -1232,7 +1241,7 @@
    "scale": 1.0133,
    "glow": true,
    "hair": "bob",
-   "hair_color": "#1a1418",
+   "hair_color": "#221a20",
    "extras": [
     {
      "model": "pmx_vanica_zogratis_form2",
@@ -1247,7 +1256,7 @@
    "scale": 1.3067,
    "glow": true,
    "hair": "anime_mane",
-   "hair_color": "#d8b868"
+   "hair_color": "#dcb44c"
   },
   "vetto_form2": {
    "skin": "vetto_form2",
@@ -1255,7 +1264,7 @@
    "scale": 1.3067,
    "glow": true,
    "hair": "anime_mane",
-   "hair_color": "#f0eee8",
+   "hair_color": "#f2f0ea",
    "extras": [
     {
      "model": "pmx_vetto_form2",
@@ -1285,7 +1294,7 @@
    "scale": 1.088,
    "glow": true,
    "hair": "anime_swept",
-   "hair_color": "#eceef6",
+   "hair_color": "#f4f5fb",
    "extras": [
     {
      "model": "pmx_william_vangeance",
@@ -1299,7 +1308,7 @@
    "slim": false,
    "scale": 1.0933,
    "hold_r": -0.42,
-   "hair": "anime_spiky",
+   "hair": "anime_spike_tall",
    "hair_color": "#15151b",
    "extras": [
     {
@@ -1314,7 +1323,7 @@
    "slim": true,
    "scale": 1.0667,
    "hair": "anime_bangs_long",
-   "hair_color": "#16161c",
+   "hair_color": "#1a1a24",
    "extras": [
     {
      "model": "pmx_yuno",
@@ -1329,7 +1338,7 @@
    "scale": 1.2267,
    "glow": true,
    "hair": "anime_spike_tall",
-   "hair_color": "#0c0a12",
+   "hair_color": "#16121e",
    "extras": [
     {
      "model": "pmx_zagred",
@@ -1344,7 +1353,7 @@
    "scale": 1.2267,
    "glow": true,
    "hair": "anime_spike_tall",
-   "hair_color": "#08060c",
+   "hair_color": "#0e0a14",
    "extras": [
     {
      "model": "pmx_zagred_form2",
@@ -1374,7 +1383,7 @@
    "scale": 1.1733,
    "glow": true,
    "hair": "spiky_long",
-   "hair_color": "#14101c",
+   "hair_color": "#100c18",
    "extras": [
     {
      "model": "pmx_zagred_legacy_form2",
@@ -1388,7 +1397,7 @@
    "slim": false,
    "scale": 1.0667,
    "hair": "anime_short",
-   "hair_color": "#14101a"
+   "hair_color": "#1a1618"
   },
   "zenon_zogratis_form2": {
    "skin": "zenon_zogratis_form2",
@@ -1409,8 +1418,8 @@
    "skin": "zora_ideale",
    "slim": true,
    "scale": 1.0347,
-   "hair": "anime_spike_swept",
-   "hair_color": "#c8402e",
+   "hair": "anime_spiky",
+   "hair_color": "#d02e1a",
    "extras": [
     {
      "model": "pmx_zora_ideale",

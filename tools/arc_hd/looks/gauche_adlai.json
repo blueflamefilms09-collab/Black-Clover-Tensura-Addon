@@ -1,14 +1,15 @@
 {
  "id": "gauche_adlai",
- "source": "baseline",
+ "source": "hand",
  "size": 256,
- "hair_reason": "short unkempt black hair",
+ "hair_reason": "painted by hand: tools/arc_hd/chars/gauche_adlai.py",
  "look": {
   "skin": "gauche_adlai",
   "slim": true,
   "scale": 1.0453,
-  "hair": "anime_short",
-  "hair_color": "#17161d",
+  "glow": true,
+  "hair": "anime_short_open",
+  "hair_color": "#2a2a40",
   "extras": [
    {
     "model": "pmx_gauche_adlai",

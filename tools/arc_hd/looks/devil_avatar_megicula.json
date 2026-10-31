@@ -1,8 +1,8 @@
 {
  "id": "devil_avatar_megicula",
- "source": "baseline",
+ "source": "hand",
  "size": 256,
- "hair_reason": "bald",
+ "hair_reason": "painted by hand: tools/arc_hd/chars/devil_avatar_megicula.py",
  "look": {
   "skin": "devil_avatar_megicula",
   "slim": false,

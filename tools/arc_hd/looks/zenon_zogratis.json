@@ -1,13 +1,13 @@
 {
  "id": "zenon_zogratis",
- "source": "baseline",
+ "source": "hand",
  "size": 256,
- "hair_reason": "short dark hair",
+ "hair_reason": "painted by hand: tools/arc_hd/chars/zenon_zogratis.py",
  "look": {
   "skin": "zenon_zogratis",
   "slim": false,
   "scale": 1.0667,
   "hair": "anime_short",
-  "hair_color": "#14101a"
+  "hair_color": "#1a1618"
  }
 }
