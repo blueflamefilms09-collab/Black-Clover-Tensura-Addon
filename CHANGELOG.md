@@ -1,5 +1,24 @@
 # Changelog
 
+## [3.37.0] — The 17 tier bosses are remade by hand in HD (256x256) with new, attached 3D hair
+
+### NEW
+- **HD boss skins.** All 17 Tier List bosses (Ao, Axe-Hand Morgan, Bertholdt Hoover, Big Mom, Charlos, Code, Foxy, Jugram Haschwalth, Kurozumi Orochi, Light Yagami, Malty Melromarc, Mr. 2 Bon Clay, Rachel, Shou Tucker, Sogou Nobuyuki, Yammy Llargo, Zetsu) have a hand-painted 256x256 skin (4x the detail, same UV layout) with cloth folds, stitching, metal trim, outlines and proper anime eyes, plus 256x256 glow maps where they glow. The HD tools are in `tools/tier_bosses/hd/` (`hdlib.py`, one module per boss); how to add a character: `docs/bosses/hd_outfits.md`.
+- **16 reworked anime hair styles, nothing floats.** Every piece of every `anime_*` style is attached to the head or to another piece (new Python and JUnit check `HairAttachedTest`). New styles: `anime_spike_tall`, `anime_spike_swept`, `anime_curls`, `anime_afro_wide`, `anime_flattop`, `anime_bangs_long`; the earlier `anime_*` styles (spiky, afro, mane, short, swept, long, topknot, hood) are rebuilt with thick, overlapping spikes and attached puffs. At most 180 quads per style.
+- **Hand-painted character modules** (`tools/tier_bosses/remake/<id>.py` 64x64 and `tools/tier_bosses/hd/<id>.py` 256x256) and a loader in `gen_tier_looks.py` (`--size 64|128|256`, `--flat`, `--generic`).
+- Docs: `docs/bosses/anime_style_v2.md`, `hd_outfits.md`, `hd_outfits_a..d.md`, `remake_a..d.md`; previews in `docs/previews/tier_style_v2..v4/` and `hair_v2/`.
+- Cost: textures only, about 0.5 MB of GPU memory per HD boss (about 9 MB for all 17 with glow maps); no tick work, no packets, no new draw calls. Hair is the existing kit hair, at most 180 quads per style.
+
+### REPLACED
+- The 17 boss skin PNGs and glow maps (same file names, repainted, now 256x256) and their hair entries in `looks_tier.json`; the `anime_*` hair styles (unreleased since 3.37 work started, rebuilt in place).
+- The engine's size rule: a skin or glow map may be 64, 128 or 256 square (`SkinPath.validSkinSize`, `PlayerModelAudit`); a glow map must match its skin.
+
+### KEPT
+- The 64x64 hand-painted modules (`remake/`) and the generic painter (`anime_skin.py`, `--flat`), the 23 classic hair styles (pixel-identical), every other character and skin.
+
+### Not seen in a game
+Everything was checked with the software preview renderer and the pure tests only; hair motion, in-game light and glow, and HD detail at distance were not seen in a game. The wikis could not be fetched, so every look is from memory. Known weaker spots: Code's spikes read like a crown from behind, Zetsu's hood is a plain mass, Jugram's and Rachel's back hair is flat, Morgan's flat-top looks like a hat block, the hair sheets are still 64x64.
+
 ## [3.36.0] — Skill books, the Celestial Gate and Requip are removed; the witch sells new goods; Light Yagami, the first gag boss
 
 ### NEW
