@@ -63,7 +63,8 @@ class SkillAssetsTest {
     void theRemovalSelfTestIsRegisteredAndInTheSmokeList() throws Exception {
         assertTrue(read("src/main/java/com/newuniverse/nusmp/NUSMP.java").contains("RemovedSkillsSelfTests.register()"), "registered");
         assertTrue(read("src/main/java/com/newuniverse/nusmp/skill/RemovedSkillsSelfTests.java").contains("\"skill.removed_ultimates\""), "id");
-        assertTrue(read(".github/workflows/smoke.yml").contains("skill.removed_ultimates,tier"), "the smoke list expects it, with tier last");
+        String smoke = read(".github/workflows/smoke.yml");
+        assertTrue(smoke.contains("skill.removed_ultimates,") && smoke.contains(",tier\""), "the smoke list expects it, with tier last (later self-tests go between them)");
     }
 
     @Test

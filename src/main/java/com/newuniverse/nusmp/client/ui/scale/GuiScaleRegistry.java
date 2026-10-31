@@ -65,6 +65,7 @@ public final class GuiScaleRegistry {
         layer("song_meter", "song_meter", GuiScaleMath.Anchor.BOTTOM_CENTER, "Song meter");
         layer("floor_card", "system_floor_card", GuiScaleMath.Anchor.TOP_CENTER, "System floor card");
         layer("page_toast", "page_unlock", GuiScaleMath.Anchor.TOP_CENTER, "Page unlocked toast");
+        layer("beastwill_hud", "beastwill_hud", GuiScaleMath.Anchor.CENTER_LEFT, "Beast Will HUD");
         // HUD overlays that apply the scale themselves (they already have their own position, anchor or size)
         site("system_hud", GuiScaleMath.Anchor.TOP_LEFT, "System window");
         site("hero_hud", GuiScaleMath.Anchor.BOTTOM_LEFT, "Hero weapon HUD");

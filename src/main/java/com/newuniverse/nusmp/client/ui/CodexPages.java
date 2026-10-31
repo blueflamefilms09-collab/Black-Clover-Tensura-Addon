@@ -96,6 +96,7 @@ public final class CodexPages {
         register(new EntryListPage("Entities", "En", 40, CodexSources::entities));
         register(new EntryListPage("Magic", "Mg", 40, CodexSources::magic));
         register(new EntryListPage("Effects", "Ef", 0, CodexSources::effects));
+        register(new com.newuniverse.nusmp.client.beastwill.BeastWillCodexPage());                         // 3.45.0: Beast Will (how to get one, the forms, strain, keys, your wills)
     }
 
     // ---------------------------------------------------------------- overview

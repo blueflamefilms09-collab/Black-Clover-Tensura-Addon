@@ -42,5 +42,6 @@
   "nusmp.gui_scale.gui.system_hud": "System window",
   "nusmp.gui_scale.gui.hero_hud": "Hero weapon HUD",
   "nusmp.gui_scale.gui.djinn_panel": "Djinn panel",
-  "nusmp.gui_scale.gui.boss_bar": "Boss bar"
+  "nusmp.gui_scale.gui.boss_bar": "Boss bar",
+  "nusmp.gui_scale.gui.beastwill_hud": "Beast Will HUD"
 }

@@ -54,6 +54,7 @@ public final class NUCreativeTab {
                 for (var sb : com.newuniverse.nusmp.spiritblades.SpiritBladesBoot.creativeItems()) output.accept(sb.get());                  // the Wind Spirit blades: Spirit of Zephyr and Spirit of Boreas (creative only)
                 for (var vl : com.newuniverse.nusmp.valkyrielance.ValkyrieLanceBoot.creativeItems()) output.accept(vl.get());                // the Valkyrie Drill Lance (creative only)
                 output.accept(com.newuniverse.nusmp.block.NUBlocks.GRIMOIRE_ALTAR_ITEM.get());
+                for (net.minecraft.world.item.ItemStack bw : com.newuniverse.nusmp.beastwill.BeastWillItems.creativeStacks()) output.accept(bw);             // 3.45.0: one Beast Will core per shipped will
                 com.newuniverse.nusmp.labyrinth.LabyrinthCreative.addTo(output);                                       // 1.35.0: the Labyrinth's blocks and items
 
                 for (var relic : new net.neoforged.neoforge.registries.DeferredItem[]{com.newuniverse.nusmp.dungeon.nexus.relic.RelicItems.GLUTTON_CHALICE, com.newuniverse.nusmp.dungeon.nexus.relic.RelicItems.MANTLE_OF_THE_SCAVENGER,

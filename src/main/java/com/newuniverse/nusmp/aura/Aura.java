@@ -98,5 +98,7 @@ public enum Aura {
     /** 1.99.0 Great Spirits: the Spirit Dive of Wind, Water, Fire and Earth; the style is book.SpiritDivePieces.style(element, stage) (client.aura.SpiritDiveAura, pieces forged in by EquipAnimation) */
     SPIRIT_DIVE,
     /** Spirit Dive remake: Fuegoleon's flaming right arm while the Salamander is his; the style is book.FuegoleonArmRules.STYLE (client.aura.FuegoleonArmAura; also drawn in first person by client.aura.FireArmFirstPerson) */
-    FUEGOLEON_ARM
+    FUEGOLEON_ARM,
+    /** 3.45.0 Beast Will: the subtle (Acquire) or full (Integrate) manifestation of a bound will; the style packs the phase and the will's tint (beastwill.BeastWillManager.style; client.aura.BeastWillAura) */
+    BEAST_WILL
 }

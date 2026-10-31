@@ -85,5 +85,6 @@ final class AuraRegistry {
         MucusAura.register();
         SpiritDiveAura.register();           // 1.99.0 Great Spirits: the Spirit Dive of Wind, Water, Fire and Earth (half and full stages, the Saint Valkyrie Dress)
         FuegoleonArmAura.register();         // Spirit Dive remake: Fuegoleon's flaming right arm (Aura.FUEGOLEON_ARM)
+        BeastWillAura.register();            // 3.45.0 Beast Will: the eyes, motes, haze and rings of an Acquire / Integrate form (Aura.BEAST_WILL)
     }
 }

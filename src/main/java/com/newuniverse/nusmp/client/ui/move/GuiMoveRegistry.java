@@ -131,6 +131,7 @@ public final class GuiMoveRegistry {
         hud("floor_card", "System floor report", How.LAYER, new Place(0, true, false, 0, 6), 6, 276, 120, "client/mega/system/FloorCardClient.java");
         hud("page_toast", "Page unlocked toast", How.LAYER, TC, 8, 300, 62, "client/ui/theme/PageUnlockOverlay.java");
         hud("shishou_hud", "Shishou HUD", How.BEGIN, new Place(3, false, false, 6, 40), 6, 156, 80, "client/shishou/ShishouClient.java", "client/shishou/ShishouHud.java");
+        hud("beastwill_hud", "Beast Will HUD", How.LAYER, new Place(0, false, true, 0, 0), 6, 176, 150, "client/beastwill/BeastWillClient.java");
         // ---------------- panels of screens (centred by default)
         panel("four_kingdoms", "Four Kingdoms menu", 340, 236, "client/multiverse/FourKingdomsScreen.java");
         panel("codex", "Codex", 480, 300, "client/ui/CodexScreen.java");
@@ -165,6 +166,7 @@ public final class GuiMoveRegistry {
         fixed("client/manazone/ManaZoneClient.java", "a full-screen tint of the camera: nothing to move");
         fixed("client/ui/gs/GsNotices.java", "the alert crest of the great_spirit look is placed by its own client setting ui.greatSpirit.noticePos (corner + offset), moved on its own screen (/nusmp_gui_crest)");
         fixed("client/ui/gs/GsCrestScreen.java", "the crest's own move screen (drag, Save, Reset); client only");
+        fixed("client/beastwill/BeastWillConfirmScreen.java", "the absorption window of a Beast Will: a modal ask with two buttons that opens centred and is scaled by the GUI Size framework; it is closed in seconds, so there is nothing to move");
         // GUI Size entries that GUI Move leaves alone (by id)
         fixed("gui_scale:multiverse_status", "a full-window status book: nothing to move");
         fixed("gui_scale:skill_shop", "a full-window shop: nothing to move");

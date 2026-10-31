@@ -1,5 +1,29 @@
 # Changelog
 
+## [3.45.0] — Beast Will (The Beginning After the End inspired): four wills, two forms, assimilation and strain
+
+Owner: "Recreate the Beast Will system inspired by The Beginning After the End (TBATE) ... a complete gameplay system that fits my existing mod's combat, progression, abilities, and energy systems." Docs: `docs/beastwill.md`, `docs/releases/3.45.0.md`.
+
+### NEW
+- **Beast Will system** (`com.newuniverse.nusmp.beastwill`): the essence of a powerful mana beast. One active will per player (progress of up to 8 kept), distinct from summoning, taming and ordinary transformations.
+- **Acquisition**: a rare **Beast Will Core** drops from wild beasts of rank **A or higher** (rank from Existence Points, thresholds configurable), and **direct inheritance** for a beast that wants to hand its will over (`BeastWillApi.offer/grant`, or tag a creature `nusmp_will_offer:<will>`; sneak + empty-hand right-click). Both open a **confirm screen** (will, beast, rank, affinity, fit, EP needed vs held, or the refusal reason) and are **checked before anything is consumed**; the ledger makes a beast give one will to one player once.
+- **Progression**: assimilation, mastery and body strain per player, daily gain caps (anti-farming), meditation (sneak still with the will off), compatibility by race (humans, elves, dwarves full hosts; others slower and more strained, never impossible).
+- **Two forms**: **Acquire** (10 % assimilation; modest stats, basic abilities, subtle look) and **Integrate** (95 % assimilation + 50 % mastery; stronger stats, advanced abilities, higher drain and strain, stronger look). Integrate cannot be held with a mode armour (`exclusiveIntegrate`).
+- **Strain tiers** (Calm / Strained 30 / Exhausted 60 / Overload 85 / Rejection 100): reduced effectiveness, Weakness, the form ends with a small non-lethal hit, a rejection lockout only after a deliberate second press and a tenth of the assimilation lost. Never death, never a lost skill or level. Death caps strain at 59.
+- **Four wills** (data: `data/nusmp/beast_will/*.json`): **Dragon Will** (Sylvia-inspired; legendary, rank S, 0.4 %; Dragon Sight, Draconic Pulse, Draconic Breath, bounded **Time Exclusion** that never pauses the game and cannot hold bosses), **Shadow Panther Will** (Shadow Veil with stated reveal rules, a validated Shadow Dash, Ambush), **Elderwood Guardian Will** (Vine Lash, Verdant Mend, Restraining Vines capped at 3 s on players, Bark Ward; effects only, no blocks or entities to clean up), **Lion Will** (Mane Surge, World Howl: push and slow, 25 % on bosses, never a lock-down).
+- **UI**: a movable HUD panel (GUI Move / GUI Scale "Beast Will HUD"), the confirm screen, a Codex page "Beast Will" (appended last), five rebindable keys (`[` Acquire, `]` Integrate, `;` and `\` abilities, `=` swap), throttled messages, a temporary aura (`Aura.BEAST_WILL`).
+- **Server config** `nusmp-beastwill-server.toml` (drops, ranks, hosts, rates, swap lock, strain, penalties, rejection, stat/drain/cooldown scales, target cap, Integrate exclusivity, PvP, stealth) and `/beastwill status|list|give|core|offer|set|strain|clear`.
+- Tests: `BeastWillRulesTest`, `BeastWillSchemaTest`, `BeastWillStateTest`, `BeastWillSourceScanTest`; CI self-tests `beastwill.catalog.load`, `beastwill.rules.bounds`, `beastwill.player.roundtrip` (added to the smoke list).
+- **TEMPORARY art**: the core icon (`tools/beastwill/gen_core_icon.py`, a flat 16x16 orb) and the form look (existing glow sprites, no per-creature model).
+
+### REPLACED
+- Nothing.
+
+### KEPT
+- Everything. Shared files were only appended to (`Aura.BEAST_WILL`, `AuraRegistry`, `CodexPages`, `GuiMoveRegistry`, `GuiScaleRegistry`, `NUCreativeTab`, `NUSMP`, the lang file, the smoke list).
+
+Not seen in a game: any of it (HUD layout, aura, ability feel and balance, the Tensura beast ids behind the drop keywords, the head-yaw eye placement). Worst-case cost: at most 10 creatures per ability, 4 sync packets per second per player, aura 19 quads per player within 24 blocks.
+
 ## [3.44.0] — Six skills removed, a new background for the advancement tab
 
 Owner: "Six Eyes/Limitless (remove this), Gold Experience (remove this skill), Vector Manipulation (remove this skill), Instant Death (remove this Skill)" and "also rework the Background for My Advancement's menu". Docs: `docs/skills/rebuild.md`, `docs/advancements.md`, `docs/releases/3.44.0.md`.
