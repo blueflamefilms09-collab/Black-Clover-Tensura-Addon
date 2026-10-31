@@ -51,6 +51,19 @@ def light_post(cv, spec, seed, glow):
 
 
 POSTS = {"light_yagami": light_post}
+
+
+def load_remake(cid):
+    """3.37.0: tools/tier_bosses/remake/<id>.py may define paint(spec, cid, masks) -> (skin image, glow image or None, hair style id, hair rgb, slim): a character drawn by hand, pixel by pixel,
+    in the style of the owner's references. No file = the generic anime painter. `--generic` ignores them."""
+    path = os.path.join(HERE, "remake", cid + ".py")
+    if not os.path.isfile(path):
+        return None
+    import importlib.util
+    spec_ = importlib.util.spec_from_file_location("remake_" + cid, path)
+    mod = importlib.util.module_from_spec(spec_)
+    spec_.loader.exec_module(mod)
+    return getattr(mod, "paint", None)
 OUT_LOOKS = os.path.join(GS.ASSETS, "playermodel", "looks_tier.json")
 
 
@@ -70,7 +83,10 @@ def main(argv):
         spec = S.normalize(raw, cid)
         if v2:
             spec["_v2"] = v2
-        if "--plain" in argv:
+        hand = None if ("--flat" in argv or "--plain" in argv or "--generic" in argv) else load_remake(cid)
+        if hand is not None:
+            img, glow, hs, hrgb, slim = hand(spec, cid, masks)                       # 3.37.0: a character painted by hand (tools/tier_bosses/remake/<id>.py)
+        elif "--plain" in argv:
             img, glow, hs, hrgb, slim = GS.paint_character(spec, cid, masks, POSTS.get(cid))          # the first kit painter
         else:
             img, glow, hs, hrgb, slim = anime_skin.paint_character(spec, cid, masks, POSTS.get(cid), volume="--flat" not in argv)
