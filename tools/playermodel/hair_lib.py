@@ -99,6 +99,48 @@ def strand_grey(seed, col, row, rows, flow="down", tip=0.0):
     return float(min(1.0, max(0.25, base + sheen + root + ends + streak)))
 
 
+# ---------------------------------------------------------------- anime strands (3.37, "anime skin style v2"): clumps with cel-shaded light-to-shade steps
+ANIME_LEVELS = (0.58, 0.76, 0.91, 1.0)           # the grey steps of an anime sheet: deep shade, shade, base, highlight (the game's tint multiplies them)
+
+
+def _q(g):
+    """Snaps a grey to the nearest anime step (cel shading: clusters, not a smooth gradient)."""
+    return min(ANIME_LEVELS, key=lambda lv: abs(lv - g))
+
+
+def clump_of(seed, col):
+    """The clump a strand column belongs to and the column's place in it: clumps are 2 to 4 strands wide, mostly 3, the boundaries are hashed (so two sheets never repeat each other)."""
+    start = 0
+    c = 0
+    for i in range(1, int(col) + 1):
+        if i - start >= 4 or (i - start >= 3 and hash01(seed, i, 11) > 0.35) or (i - start == 2 and hash01(seed, i, 11) > 0.8):
+            start = i
+            c += 1
+    return c, int(col) - start
+
+
+def clump_grey(seed, col, row, rows, tip=0.0):
+    """The grey of one texel of an anime strand sheet: strands run down in clumps; every clump has its own base step, a bright root band, a shaded lower half, a darker left edge (the gap to the
+    next clump) and a lit right edge, a few bright highlight pixels and a few shade pixels; the tips darken. Four steps only."""
+    c, pos = clump_of(seed, col)
+    t = row / max(1.0, rows - 1.0)
+    base = 0.86 + 0.20 * (hash01(seed, c, 5) - 0.5)
+    g = base
+    g += 0.16 * math.exp(-((t - 0.16) ** 2) / 0.012)             # the lit band near the root
+    g -= 0.26 * max(0.0, t - 0.55) / 0.45                           # the shaded lower half
+    g -= 0.10 * max(0.0, t - 0.82) * (1.0 + tip) / 0.18             # the tips
+    if pos == 0:
+        g -= 0.17                                                   # the gap between two clumps
+    elif pos >= 1 and hash01(seed, c, 9) > 0.5:
+        g += 0.05
+    h = hash01(seed, col, row + 31)
+    if h > 0.965 and t < 0.65:
+        g = 1.04                                                    # a bright highlight pixel
+    elif h < 0.025 and t > 0.25:
+        g -= 0.2                                                    # a shade pixel
+    return float(_q(min(1.04, max(0.35, g))))
+
+
 def fill_face(sheet, rect, grey_fn, alpha_fn=None):
     x0, y0, w, h = rect
     for y in range(h):
@@ -110,7 +152,7 @@ def fill_face(sheet, rect, grey_fn, alpha_fn=None):
             sheet.px[y0 + y, x0 + x] = (g, g, g, a)
 
 
-def paint_block(sheet, u, v, w, h, d, seed, taper="none", pattern="strand", rows=None, tip=0.0):
+def paint_block(sheet, u, v, w, h, d, seed, taper="none", pattern="strand", rows=None, tip=0.0, anime=False):
     """Paints a plain block of hair: every face a strand sheet; `taper` carves the alpha ('point_down': the lower rows narrow to a point; 'point_up'; 'round' for curls; 'ends': the bottom
     corners are cut), `pattern` 'strand' (vertical strands), 'plait' (diagonal braid pattern), 'curl' (rings), 'solid' (a tie / band)."""
     rg = regions(u, v, w, h, d)
@@ -126,11 +168,17 @@ def paint_block(sheet, u, v, w, h, d, seed, taper="none", pattern="strand", rows
                 return (0.92, 0.72, 0.84)[k] * (0.9 + 0.1 * hash01(seed, x, y))
             if pattern == "solid":
                 return 0.82 + 0.1 * hash01(seed, x, y)
+            if anime:
+                if face in ("top", "bottom"):
+                    return clump_grey(seed, x, y, hh, tip=tip) * 0.96
+                return clump_grey(seed, x + (0 if face != "back" else 3), y, hh, tip=tip)
             if face in ("top", "bottom"):
                 return strand_grey(seed, x, y, hh, tip=tip)
             return strand_grey(seed, x + (0 if face != "back" else 3), y, hh, tip=tip)
 
         def alpha(x, y, ww, hh, face=face):
+            if taper == "zigzag" and face == "bottom":
+                return 0.0                              # (anime) the underside of a jagged slab is never drawn
             if face in ("top", "bottom"):
                 return 1.0
             if taper == "point_down":
@@ -143,6 +191,12 @@ def paint_block(sheet, u, v, w, h, d, seed, taper="none", pattern="strand", rows
                 return 1.0 if abs(x - half) <= lim + 0.5 else 0.0
             if taper == "ends":
                 if y >= hh - 1 and (x == 0 or x == ww - 1) and ww > 2:
+                    return 0.0
+                return 1.0
+            if taper == "zigzag":                       # (anime) a jagged lower edge: every other bottom texel is cut, the next to last one every third
+                if y == hh - 1 and ww > 1 and x % 2 == 1:
+                    return 0.0
+                if y == hh - 2 and hh > 3 and x % 3 == 1:
                     return 0.0
                 return 1.0
             if taper == "round":
@@ -169,7 +223,26 @@ def cell_of(face, x, y):
     return x, 7, y                      # bottom
 
 
-def paint_cap(sheet, mask, seed, u=32, v=0):
+def anime_cap_grey(seed, face, lx, ly, lz):
+    """(anime) the grey of one scalp texel: the top is wedges of clumps round the crown with a bright arc across the front (the halo of an anime head), the fringe row is lit and the rows
+    below it shaded, the sides and the back are clumps running down with the lit band at the top."""
+    if face == "top":
+        ang = math.atan2(lx - 3.5, lz - 3.5)
+        wedge = int((ang + math.pi) / (2 * math.pi) * 14)
+        dist = math.hypot(lx - 3.5, lz - 3.5)
+        g = 0.78 + 0.2 * (hash01(seed, wedge, 3) - 0.5)
+        if lz <= 3 and 1.6 <= dist <= 3.4:
+            g += 0.2                                       # the lit arc over the forehead
+        if wedge % 3 == 0:
+            g -= 0.14                                      # a gap between two wedges
+        if hash01(seed, lx, lz + 40) > 0.94:
+            g = 1.04
+        return float(_q(min(1.04, max(0.4, g))))
+    col = lx + lz * 2 if face in ("west", "east") else lx + 3 * (face == "back")
+    return clump_grey(seed, col, ly, 8, tip=0.3)
+
+
+def paint_cap(sheet, mask, seed, u=32, v=0, anime=False):
     """Paints the 8x8x8 scalp cap at the hat layer's place. `mask(face, lx, ly, lz)` says whether the hair covers that cell of the head's surface (the bottom is never covered)."""
     rg = regions(u, v, 8, 8, 8)
     for face, rect in rg.items():
@@ -182,6 +255,8 @@ def paint_cap(sheet, mask, seed, u=32, v=0):
 
         def grey(x, y, w, h, face=face):
             lx, ly, lz = cell_of(face, x, y)
+            if anime:
+                return anime_cap_grey(seed, face, lx, ly, lz)
             if face == "top":                    # radial strands from the crown
                 ang = math.atan2(lx - 3.5, lz - 3.5)
                 col = int((ang + math.pi) / (2 * math.pi) * 22)
@@ -196,8 +271,9 @@ def paint_cap(sheet, mask, seed, u=32, v=0):
 
 # ---------------------------------------------------------------- the style being built
 class Style:
-    def __init__(self, sid):
+    def __init__(self, sid, anime=False):
         self.id = sid
+        self.anime = anime                       # 3.37: an anime-style sheet (clumps, four grey steps); the geometry JSON is the same format
         self.sheet = Sheet(sid)
         self.boxes = []
         self.chains = []
@@ -208,7 +284,7 @@ class Style:
         """The scalp cap: an 8x8x8 box at the hat layer's UV with the haircut's alpha mask."""
         (u, v), fresh = self.sheet.alloc(8, 8, 8, key="cap", at=(32, 0))
         self.mask = mask
-        paint_cap(self.sheet, mask, self.seed + 1)
+        paint_cap(self.sheet, mask, self.seed + 1, anime=self.anime)
         self.boxes.append({"name": name, "part": "head", "from": [-4, -8, -4], "size": [8, 8, 8], "inflate": inflate, "uv": [u, v], "tone": tone, "helm": helm})
 
     def box(self, name, frm, size, inflate=0.2, tone=0, part="head", rot=None, pivot=None, helm="hide", taper="none", pattern="strand", key=None, tip=0.0, uvsize=None):
@@ -217,7 +293,7 @@ class Style:
         k = key if key is not None else "%s:%s:%s:%s:%s" % (uw, uh, ud, taper, pattern)
         (u, v), fresh = self.sheet.alloc(uw, uh, ud, key=k)
         if fresh:
-            paint_block(self.sheet, u, v, uw, uh, ud, self.seed + len(self.boxes) * 7, taper=taper, pattern=pattern, tip=tip)
+            paint_block(self.sheet, u, v, uw, uh, ud, self.seed + len(self.boxes) * 7, taper=taper, pattern=pattern, tip=tip, anime=self.anime)
         b = {"name": name, "part": part, "from": [round(c, 3) for c in frm], "size": [round(c, 3) for c in size], "inflate": inflate, "uv": [u, v], "tone": tone, "helm": helm}
         if (uw, uh, ud) != (w, h, d):
             b["uvsize"] = [uw, uh, ud]
@@ -237,7 +313,7 @@ class Style:
             key = "%s:%s:%s:%s:%s:%d" % (shared_key if shared_key else name, uw, uh, ud, taper, i) if not mirror_of else "%s:%s:%s:%s:%s:%d" % (mirror_of, uw, uh, ud, taper, i)
             (u, v), fresh = self.sheet.alloc(uw, uh, ud, key=key)
             if fresh:
-                paint_block(self.sheet, u, v, uw, uh, ud, self.seed + 31 * (i + 1) + len(self.chains) * 13, taper=taper, pattern=pattern, tip=0.6 if last else 0.0)
+                paint_block(self.sheet, u, v, uw, uh, ud, self.seed + 31 * (i + 1) + len(self.chains) * 13, taper=taper, pattern=pattern, tip=0.6 if last else 0.0, anime=self.anime)
             tone = (tones[i] if tones else (0 if i % 2 == 0 else 1)) if pattern == "plait" else (tones[i] if tones else 0)
             seg = {"part": part, "size": [round(w, 3), round(ln, 3), round(d, 3)], "inflate": infl, "uv": [u, v], "tone": tone}
             if (uw, uh, ud) != (round(w), round(ln), round(d)):
@@ -250,7 +326,15 @@ class Style:
 
     def save_sheet(self, folder):
         os.makedirs(folder, exist_ok=True)
-        self.sheet.image().save(os.path.join(folder, self.id + ".png"))
+        path = os.path.join(folder, self.id + ".png")
+        img = self.sheet.image()
+        if os.path.isfile(path):                 # 3.37: an unchanged sheet is left alone (the committed PNGs are optimised; rewriting them would only change their bytes)
+            try:
+                if np.array_equal(np.array(Image.open(path).convert("RGBA")), np.array(img)):
+                    return
+            except OSError:
+                pass
+        img.save(path)
 
 
 def write_styles(styles, order, out_json, meta=None):

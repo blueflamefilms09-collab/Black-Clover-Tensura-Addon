@@ -54,7 +54,7 @@ class LightYagamiDataTest {
             assertTrue(Files.isRegularFile(RES.resolve(f)), f);
         JsonObject look = json(RES.resolve("playermodel/looks_tier.json")).getAsJsonObject("looks").getAsJsonObject("light_yagami");
         assertNotNull(look);
-        assertFalse(look.has("hair"), "the hair is painted on the skin");
+        assertTrue(look.has("hair") && look.get("hair").getAsString().startsWith("anime_"), "3.37: anime skin style v2, his hair is the kit's volumetric anime hair");
         assertTrue(look.get("slim").getAsBoolean());
         assertTrue(look.get("glow").getAsBoolean(), "the eyes glow");
     }

@@ -77,6 +77,10 @@ Public API (small and stable; everything else is internal):
 
 * 23 styles in `assets/nusmp/playermodel/hair_styles.json`, painted sheets `textures/entity/playermodel/hair/<style>.png` (both written by `tools/playermodel/gen_hair.py`): `bald`, `short`, `slick`,
   `curtains`, `swept`, `messy`, `spiky`, `spiky_long`, `mohawk`, `bob`, `long`, `layered`, `hime`, `ponytail`, `high_ponytail`, `twin_tails`, `drills`, `braid`, `bun`, `pompadour`, `ahoge`, `mane`, `hood`.
+* 3.37 (appended, nothing above changed): the `anime_*` styles for the Tier List bosses (`anime_short`, `anime_short_open`, `anime_spiky`, `anime_swept`, `anime_long`, `anime_long_open`, `anime_afro`,
+  `anime_topknot` with more volume: a jagged crown slab over the cap, a fringe of single-segment locks, side locks, a nape, leaning tufts; `anime_mane`, `anime_hood` are the classic cuts with the new sheet).
+  Their sheets are painted in clumps with four grey steps and a few bright highlight pixels (`hair_lib.clump_grey`), still grey, so the tint pipeline (`HairPalette` base / highlight / shade) is unchanged.
+  Worst case per style 23 boxes + 14 chain segments = 180 quads. See `docs/bosses/anime_style_v2.md`.
 * Geometry: layered boxes with the vanilla box UV on a 64x64 sheet. The scalp cap is the 8x8x8 box at the hat layer's UV (u 32, v 0) inflated 0.7 (the hat layer is 0.5), and every layer on top
   of it has its own inflate (0.85 and up), so no two surfaces share a plane (a test checks the cap and equal boxes). The haircut is carved by the sheet's alpha mask; the sheets are grey strands,
   tinted at draw time. A fringe is a second layer in front of the cap (single-segment chains). `HairPalette.of(rgb)` gives base, highlight and shade (black hair still shines); boxes pick a tone.

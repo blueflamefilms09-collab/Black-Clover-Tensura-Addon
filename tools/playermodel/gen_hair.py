@@ -79,16 +79,24 @@ def bangs(s, kind, tone=0):
 # ---------------------------------------------------------------------------------------------- the styles
 STYLES = {}
 ORDER = []
+_CTX = {"prefix": "", "anime": False, "only": None}          # 3.37: the second pass over the classic styles paints anime sheets under another id (see build_anime)
 
 
-def style(sid):
-    s = Style(sid)
-    STYLES[sid] = s
-    ORDER.append(sid)
+def style(sid, anime=None):
+    s = Style(_CTX["prefix"] + sid, anime=_CTX["anime"] if anime is None else anime)
+    if _CTX["only"] is None or sid in _CTX["only"]:         # a style outside `only` is built (the code is shared) but not kept
+        STYLES[s.id] = s
+        ORDER.append(s.id)
     return s
 
 
 def build():
+    _build_classic()
+    build_anime()
+    return STYLES
+
+
+def _build_classic():
     # bald: nothing but the sheet (the loader needs the style to exist)
     style("bald")
 
@@ -288,7 +296,138 @@ def build():
 
     s.cap(hood_mask, inflate=1.15, helm="hide")
     s.chain("drape", (0.0, -1.0, 3.9), [(9.6, 5.0, 3.0, "head", 0.5), (10.4, 5.0, 3.2, "body", 0.5)], tuning="stiff", params="default", phase=0.2, taper_last="ends")
-    return STYLES
+
+
+# ---------------------------------------------------------------------------------------------- anime styles (3.37, "anime skin style v2")
+# The Tier List bosses are drawn like the anime Minecraft skins of the owner's reference sheet: a chunky hair mass with a fringe, not a flat painted scalp. These are ADDITIONS: new ids
+# (anime_*), appended after the classic 23, with new sheets (clumps, four grey steps, bright highlight pixels; the tint pipeline is unchanged: grey x HairPalette base/highlight/shade).
+# Worst case per style: 23 boxes + 14 chain segments = 180 quads (the biggest classic ones: mane 21 + 7 = 168, layered 1 + 13), so the draw cost is the same order as the existing hair.
+ANIME_CLASSIC_COPIES = ("mane", "hood")             # the classic cuts that only get an anime sheet (same boxes and chains under the id anime_<id>)
+
+
+def a_cap(s, front=2, side_hi=3, side_lo=5, back=6, notch=(3, 4), inflate=0.8):
+    s.cap(cap_mask(front=front, side_hi=side_hi, side_lo=side_lo, back=back, notch=notch), inflate=inflate)
+
+
+def a_crown(s, h=2.2, infl=1.25, tone=1):
+    """The volume of the head of hair: a slab over the top rows of the head with a jagged lower edge, standing off the cap (inflate 1.25 against the cap's 0.8)."""
+    s.box("crown", (-4.0, -8.0, -4.0), (8.0, h, 8.0), inflate=infl, tone=tone, taper="zigzag")
+
+
+def a_fringe(s, locks, open_brow=False):
+    """The fringe: single-segment locks over the front of the head (x, width, length, tone-ish phase); in front of both the cap and the crown. `open_brow` keeps only the two outer locks, so a
+    circlet, crown or headband painted on row 2 of the hat layer stays visible under the hair."""
+    z = -5.35
+    if open_brow:
+        locks = [lk for lk in locks if abs(lk[0]) > 3.0]
+    for i, (x, w, ln) in enumerate(locks):
+        s.chain("fringe%d" % i, (x, -8.2, z - 0.03 * (i % 2)), [(w, ln, 0.9, "head", 0.2 + 0.03 * (i % 2))], tuning="stiff", params="stiff", phase=0.6 * i, helm="hide",
+                taper_last="point_down", shared_key="afr%d_%d" % (int(w * 10), int(ln * 10)), tones=[1 if i % 2 else 0])
+
+
+def a_side_locks(s, length=4.6, w=1.8, depth=3.4, y=-6.2, z=-1.0, taper="point_down"):
+    for sign, nm in ((1, "L"), (-1, "R")):
+        s.chain("side" + nm, (sign * 4.7, y, z), [(w, length, depth, "head", 0.16)], tuning="head", params="default", phase=0.9 if sign > 0 else 2.1, helm="hide", taper_last=taper,
+                shared_key="aside", tones=[1])
+
+
+def a_nape(s, y=-3.2, w=8.0, ln=3.6, taper="ends", tail=None):
+    segs = [(w, ln, 1.6, "head", 0.34)]
+    if tail:
+        segs.append((w - 1.0, tail, 1.5, "body", 0.34))
+    s.chain("nape", (0.0, y, 4.2), segs, tuning="head", params="default", phase=0.4, taper_last=taper)
+
+
+def a_tufts(s, spec, size=(2.4, 3.2, 2.4), prefix="tuft"):
+    """Leaning locks on the crown: (x, z, dx, dz, degrees, tone): boxes standing on the head, tilted outward, pointed."""
+    for i, (x, z, dx, dz, a, tone) in enumerate(spec):
+        rx, ry, rz = tilt(dx, dz, a)
+        w, h, d = size
+        s.box("%s%d" % (prefix, i), (x - w / 2, -8.0 - h * 0.78, z - d / 2), (w, h, d), inflate=0.1 + 0.02 * (i % 2), tone=tone, rot=(rx, 0, rz), pivot=(x, -7.8, z), taper="point_up")
+
+
+def build_anime():
+    """Appends the anime styles: sheet-only copies of mane and hood, then the new chunky cuts."""
+    saved = dict(_CTX)
+    _CTX.update(prefix="anime_", anime=True, only=ANIME_CLASSIC_COPIES)
+    try:
+        _build_classic()
+    finally:
+        _CTX.clear()
+        _CTX.update(saved)
+    _CTX.update(prefix="", anime=False, only=None)
+
+    # anime_short: a thick short cut, side locks over the temples, a jagged back, leaning tufts (Charlos, Ao, Bertholdt, Yammy, Morgan); _open: no centre fringe (a circlet shows)
+    for sid, open_brow in (("anime_short", False), ("anime_short_open", True)):
+        s = style(sid, anime=True)
+        a_cap(s, front=2, side_hi=3, side_lo=5, back=6, notch=(3, 4))
+        a_crown(s, 2.4)
+        a_fringe(s, ((-3.2, 2.4, 3.0), (-1.0, 2.2, 3.8), (1.2, 2.2, 2.8), (3.3, 2.4, 3.6)), open_brow)
+        a_side_locks(s, 4.4, 1.8)
+        a_nape(s, -3.4, 8.0, 3.6)
+        a_tufts(s, [(-2.6, -2.4, -1, -1, 24, 2), (0.4, -3.0, 0, -1, 28, 1), (2.8, -2.2, 1, -1, 24, 2), (-3.0, 1.4, -1, 0, 26, 1), (3.0, 1.4, 1, 0, 26, 2), (0.0, 2.8, 0, 1, 24, 1)])
+
+    # anime_spiky: big layered spikes, a ragged fringe, long side locks and spikes down the nape (Code; the Meliodas family)
+    s = style("anime_spiky", anime=True)
+    a_cap(s, front=1, side_hi=3, side_lo=5, back=6, notch=())
+    a_crown(s, 2.0, 1.3)
+    ring = [(-2.8, -2.8, -1, -1), (0.0, -3.3, 0, -1), (2.8, -2.8, 1, -1), (-3.3, 0.2, -1, 0), (3.3, 0.2, 1, 0), (-2.6, 3.0, -1, 1), (0.0, 3.4, 0, 1), (2.6, 3.0, 1, 1), (0.0, 0.0, 0, 0)]
+    for i, (x, z, dx, dz) in enumerate(ring):
+        lean = 8 if (dx == 0 and dz == 0) else 27 + 5 * (i % 3)
+        rx, ry, rz = tilt(dx, dz, lean)
+        h2 = 2.8 + 0.8 * (i % 3)
+        s.box("spike%da" % i, (x - 1.7, -10.6, z - 1.7), (3.4, 2.6, 3.4), inflate=0.12, tone=1 if i % 2 else 0, rot=(rx, 0, rz), pivot=(x, -8.0, z), taper="point_up")
+        s.box("spike%db" % i, (x - 1.0, -10.6 - h2, z - 1.0), (2.0, h2, 2.0), inflate=0.06, tone=2 if i % 2 else 1, rot=(rx, 0, rz), pivot=(x, -8.0, z), taper="point_up", tip=0.5)
+    a_fringe(s, ((-3.4, 2.2, 3.4), (-1.5, 2.0, 4.2), (0.5, 2.0, 3.0), (2.3, 2.2, 4.4), (3.9, 1.8, 3.2)))
+    a_side_locks(s, 5.0, 1.9)
+    for i, x in enumerate((-2.4, 0.0, 2.4)):
+        s.box("nape%d" % i, (x - 1.2, -4.6, 3.6), (2.4, 4.2, 1.6), inflate=0.2, tone=1 if i == 1 else 0, rot=(-22, 0, 0), pivot=(x, -4.6, 4.4), taper="point_down")
+
+    # anime_swept: a voluminous side-swept cut with a long fringe over the eyes, locks at the cheeks and a full back (Light, Tucker; the silver-haired reference)
+    s = style("anime_swept", anime=True)
+    a_cap(s, front=2, side_hi=3, side_lo=5, back=6, notch=())
+    a_crown(s, 2.6, 1.3)
+    s.chain("fringeA", (-1.6, -8.2, -5.35), [(5.0, 4.8, 0.9, "head", 0.2)], tuning="stiff", params="stiff", phase=0.2, helm="hide", taper_last="point_down", tones=[0])
+    s.chain("fringeB", (2.6, -8.2, -5.38), [(2.6, 4.0, 0.9, "head", 0.23)], tuning="stiff", params="stiff", phase=1.1, helm="hide", taper_last="point_down", tones=[1])
+    s.chain("fringeC", (-4.1, -8.2, -5.3), [(1.8, 5.6, 0.9, "head", 0.19)], tuning="stiff", params="stiff", phase=1.8, helm="hide", taper_last="point_down", tones=[1])
+    s.chain("fringeD", (4.1, -8.2, -5.3), [(1.8, 4.8, 0.9, "head", 0.19)], tuning="stiff", params="stiff", phase=2.4, helm="hide", taper_last="point_down", tones=[0])
+    a_side_locks(s, 5.4, 2.0, y=-6.4)
+    a_nape(s, -3.6, 8.2, 3.8, tail=3.0)
+    a_tufts(s, [(-1.6, -2.4, -1, -1, 22, 2), (1.8, -2.6, 1, -1, 20, 1), (-3.0, 0.6, -1, 0, 24, 1), (3.0, 0.8, 1, 0, 24, 2), (0.2, 2.8, 0, 1, 22, 2)], size=(2.8, 2.8, 2.8))
+
+    # anime_long: a long full cut: thick crown, a centre fringe, cheek locks to the chest, a heavy back with a second layer (Sogou, Malty, Rachel, Jugram); _open: no centre fringe
+    for sid, open_brow in (("anime_long", False), ("anime_long_open", True)):
+        s = style(sid, anime=True)
+        a_cap(s, front=2, side_hi=3, side_lo=5, back=8, notch=(3, 4))
+        a_crown(s, 2.4, 1.25)
+        a_fringe(s, ((-3.4, 2.2, 3.6), (-1.3, 2.2, 3.0), (1.3, 2.2, 3.0), (3.5, 2.2, 3.8)), open_brow)
+        s.chain("back", (0.0, -2.0, 4.1), [(8.4, 4.5, 1.8, "head", 0.3), (8.8, 4.5, 1.8, "body", 0.32), (8.6, 4.5, 1.8, "body", 0.3), (7.8, 4.0, 1.6, "body", 0.28)], tuning="head",
+                params="heavy", phase=0.0, taper_last="ends", tones=[0, 1, 0, 1])
+        s.chain("back2", (0.0, -3.0, 4.9), [(6.4, 4.0, 1.3, "head", 0.4), (6.4, 4.0, 1.3, "body", 0.42)], tuning="head", params="default", phase=1.1, taper_last="ends", shared_key="ab2", tones=[1, 0])
+        for sign, nm in ((1, "L"), (-1, "R")):
+            s.chain("cheek" + nm, (sign * 4.85, -6.2, -2.5), [(1.9, 5.4, 2.0, "head", 0.14), (1.9, 4.6, 1.8, "body", 0.14)], tuning="head", params="default", phase=0.8 if sign > 0 else 2.2,
+                    shared_key="acheek", tones=[1, 0])
+
+    # anime_afro: a big round puff (Mr. 2 Bon Clay, Foxy)
+    s = style("anime_afro", anime=True)
+    a_cap(s, front=2, side_hi=4, side_lo=5, back=7, notch=(3, 4))
+    s.box("puff", (-5.4, -12.8, -5.4), (10.8, 7.4, 10.8), inflate=0.3, tone=0, taper="zigzag")
+    s.box("puffTop", (-4.4, -14.6, -4.4), (8.8, 2.4, 8.8), inflate=0.25, tone=1, taper="zigzag")
+    s.box("puffL", (5.2, -11.0, -3.4), (2.2, 5.4, 6.8), inflate=0.2, tone=1, taper="zigzag", key="apuffside")
+    s.box("puffR", (-7.4, -11.0, -3.4), (2.2, 5.4, 6.8), inflate=0.2, tone=1, taper="zigzag", key="apuffside")
+    a_fringe(s, ((-2.6, 2.4, 2.4), (0.0, 2.4, 2.8), (2.6, 2.4, 2.4)))
+
+    # anime_topknot: the thick short cut with a tied topknot (Kurozumi Orochi)
+    s = style("anime_topknot", anime=True)
+    a_cap(s, front=2, side_hi=3, side_lo=5, back=6, notch=(3, 4))
+    a_crown(s, 2.4)
+    a_fringe(s, ((-3.3, 2.4, 3.0), (-1.1, 2.2, 3.6), (1.2, 2.2, 3.0), (3.4, 2.4, 3.4)))
+    a_side_locks(s, 4.2, 1.7)
+    a_nape(s, -3.4, 8.0, 3.4)
+    s.box("knotTie", (-2.6, -10.2, -0.6), (5.2, 1.0, 5.2), inflate=0.15, tone=-1, pattern="solid", helm="hide")
+    s.box("knot", (-2.2, -13.4, 0.0), (4.4, 3.4, 4.0), inflate=0.3, tone=1, taper="round", helm="hide")
+    s.box("knotTop", (-1.6, -14.8, 0.4), (3.2, 1.6, 3.2), inflate=0.2, tone=2, taper="round", helm="hide")
+
 
 
 def main():

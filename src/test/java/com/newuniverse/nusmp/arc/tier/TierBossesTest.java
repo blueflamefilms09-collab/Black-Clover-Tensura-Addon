@@ -79,13 +79,30 @@ class TierBossesTest {
         assertTrue(com.newuniverse.nusmp.client.playermodel.PlayerLookTables.FILES.contains("playermodel/looks_tier.json"));
     }
 
-    /** 3.33.1: every tier boss, now and in every later tier, is in the anime skin style: the hair is painted on the skin, so a look never names a kit haircut. */
+    /**
+     * 3.37: anime skin style v2 (replaces the 3.33.1 rule "the hair is painted flat on the skin"): every tier boss, now and in every later tier, wears the kit's volumetric hair (an anime_* cut of
+     * hair_styles.json, with a hair colour), the scalp is painted on the base head only (the hat layer's top face stays free, so no flat hair under the 3D hair), and the sleeves, jacket and
+     * legs carry overlay-layer details (the overlay layers are not empty). The old flat mode stays reachable with gen_tier_looks.py --flat.
+     */
     @Test
-    void everyTierLookIsInTheAnimeStyleWithPaintedHair() throws Exception {
+    void everyTierLookIsInTheAnimeStyleV2WithVolumetricHairAndOverlayDetails() throws Exception {
         com.google.gson.JsonObject looks = com.google.gson.JsonParser.parseString(Files.readString(RES.resolve("playermodel/looks_tier.json"))).getAsJsonObject().getAsJsonObject("looks");
+        com.google.gson.JsonObject styles = com.google.gson.JsonParser.parseString(Files.readString(RES.resolve("playermodel/hair_styles.json"))).getAsJsonObject().getAsJsonObject("styles");
         for (TierRow row : all()) {
             assertTrue(looks.has(row.id()), "no look for " + row.id());
-            assertFalse(looks.getAsJsonObject(row.id()).has("hair"), row.id() + " names a kit haircut; the hair is painted on the skin");
+            com.google.gson.JsonObject look = looks.getAsJsonObject(row.id());
+            assertTrue(look.has("hair"), row.id() + " has no kit haircut: anime skin style v2 uses the volumetric hair");
+            String hair = look.get("hair").getAsString();
+            assertTrue(hair.startsWith("anime_") && styles.has(hair), row.id() + ": " + hair + " is not an anime_* cut of hair_styles.json");
+            assertTrue(look.has("hair_color") && look.get("hair_color").getAsString().matches("#[0-9a-fA-F]{6}"), row.id() + " needs a hair colour");
+            java.awt.image.BufferedImage img = javax.imageio.ImageIO.read(RES.resolve("textures/entity/playermodel/" + row.id() + ".png").toFile());
+            int hatTop = 0;
+            for (int y = 0; y < 8; y++) for (int x = 40; x < 48; x++) if ((img.getRGB(x, y) >>> 24) != 0) hatTop++;
+            assertEquals(0, hatTop, row.id() + ": hair painted flat on the hat layer's top (the volumetric hair covers it)");
+            int overlay = 0;
+            for (int y = 32; y < 48; y++) for (int x = 16; x < 40; x++) if ((img.getRGB(x, y) >>> 24) != 0) overlay++;          // the jacket layer of the body
+            for (int y = 32; y < 48; y++) for (int x = 40; x < 56; x++) if ((img.getRGB(x, y) >>> 24) != 0) overlay++;          // the sleeve layer of the right arm
+            assertTrue(overlay > 120, row.id() + ": the overlay layers carry no outfit details (" + overlay + " texels)");
         }
     }
 
