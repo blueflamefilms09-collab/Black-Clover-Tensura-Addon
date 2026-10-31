@@ -11,8 +11,8 @@ import net.neoforged.neoforge.common.ModConfigSpec;
  */
 public final class ArcConfig {
     public static final ModConfigSpec SPEC;
-    public static final ModConfigSpec.BooleanValue ENABLED, STORY_GATE, NPCS_MORTAL, FLOOR_BOSSES, SHARE_CREDIT, TIER_BOSSES, LIGHT_DEATH_NOTE_LETHAL;
-    public static final ModConfigSpec.DoubleValue FLOOR_BOSS_CHANCE;
+    public static final ModConfigSpec.BooleanValue ENABLED, STORY_GATE, NPCS_MORTAL, FLOOR_BOSSES, SHARE_CREDIT, TIER_BOSSES, LIGHT_DEATH_NOTE_LETHAL, TIER_POWERS;
+    public static final ModConfigSpec.DoubleValue FLOOR_BOSS_CHANCE, TIER_POWER_SCALE;
     public static final ModConfigSpec.IntValue NPC_WANDER, TALK_COOLDOWN, TIER_BOSS_MAX;
 
     static {
@@ -40,6 +40,10 @@ public final class ArcConfig {
                 .defineInRange("tierBossMax", 6, 1, 24);
         LIGHT_DEATH_NOTE_LETHAL = b.comment("3.36.0: Light Yagami's Death Note scene ends in a REAL death of the player it writes (a normal death: keepInventory, respawn and the Totem of Undying work as usual; creative and spectator players are skipped). False = the scene plays the same but ends in a harmless joke and nobody dies. A SERVER setting because it changes gameplay.")
                 .define("lightDeathNoteLethal", true);
+        TIER_POWERS = b.comment("3.39.0: the anime powers of the Tier List bosses (their trait: slow field, Hierro armour, the Balance, Karma marks ... and the new statuses poison, shield break, strip). False = the bosses fight with their plain moves only (a few move cooldowns were retuned and stay).")
+                .define("tierPowers", true);
+        TIER_POWER_SCALE = b.comment("3.39.0: multiplies the STRENGTH of every boss trait (radius, damage cut, percentages; never a duration). 1.0 = as designed (docs/bosses/tier_powers.md), 0.5 = half as strong, 2.0 = twice as strong.")
+                .defineInRange("tierPowerScale", 1.0, 0.5, 2.0);
         b.pop();
         SPEC = b.build();
     }
@@ -70,6 +74,18 @@ public final class ArcConfig {
     public static boolean tierBosses() { return enabled() && get(TIER_BOSSES); }
 
     public static int tierBossMax() { return get(TIER_BOSS_MAX); }
+
+    /** Test hook only (the server self-test forces the powers off to prove the old behaviour comes back); null in the real game. */
+    public static volatile Boolean tierPowersOverride;
+
+    /** 3.39.0: do the Tier List bosses use their anime powers (traits and the new statuses)? */
+    public static boolean tierPowers() {
+        Boolean o = tierPowersOverride;
+        return o != null ? o && enabled() : enabled() && get(TIER_POWERS);
+    }
+
+    /** 3.39.0: the strength multiplier of every boss trait, 0.5 to 2.0 (1.0 while the config is not loaded). */
+    public static double tierPowerScale() { return Math.max(0.5, Math.min(2.0, get(TIER_POWER_SCALE))); }
 
     /** 3.36.0: does Light's Death Note really kill (true, the default) or end in a harmless joke? */
     public static boolean lightDeathNoteLethal() { return get(LIGHT_DEATH_NOTE_LETHAL); }

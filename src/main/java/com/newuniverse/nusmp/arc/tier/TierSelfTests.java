@@ -33,6 +33,9 @@ public final class TierSelfTests {
         SelfTests.register("tier.light.data", TierSelfTests::lightData);          // 3.36.0: Light Yagami (gag boss): row, data pack, sounds, setting
         SelfTests.register("tier.light.scene", TierSelfTests::lightScene);        // the scene with the setting off: no kill, cleanup, caps
         SelfTests.register("tier.light.cleanup", TierSelfTests::lightCleanup);    // logout / death / dimension change / the boss leaving the world
+        SelfTests.register("tier.power.data", TierSelfTests::powerData);          // 3.39.0: the traits of every row: price list, binding, budget, balance bands, settings
+        SelfTests.register("tier.power.live", TierSelfTests::powerLive);          // the hooks on a real boss: armour, guard, karma, strip, and the setting off
+        SelfTests.register("tier.power.state", TierSelfTests::powerState);        // marks / karma / window are capped and expire on their own
     }
 
     private static SelfTests.Result roster(MinecraftServer server) {
@@ -174,5 +177,120 @@ public final class TierSelfTests {
         } finally {
             LightScenes.reset();
         }
+    }
+
+    // ================================================================ 3.39.0: the anime powers
+
+    private static SelfTests.Result powerData(MinecraftServer server) {
+        List<String> bad = new ArrayList<>();
+        List<TierRow> rows = TierBosses.all();
+        int withTraits = 0;
+        for (TierRow row : rows) {
+            bad.addAll(TierBalance.problems(row));
+            if (!row.traits().isEmpty()) withTraits++;
+        }
+        List<TierRow> banded = new ArrayList<>();
+        for (TierRow row : rows) if (!row.id().equals(TierRosterGag.LIGHT)) banded.add(row);       // the gag boss (28 health) is outside every band on purpose
+        bad.addAll(TierBalance.bandProblems(banded));
+        for (TierTrait t : TierTrait.values()) {
+            if (t.what().isBlank() || t.counter().isBlank() || t.window().isBlank() || t.label().isBlank()) bad.add(t + " has no description, counter or window");
+            if (t.price() < 1) bad.add(t + " is free");
+        }
+        if (!ArcConfig.tierPowers()) bad.add("tierPowers is not on by default");
+        if (Math.abs(ArcConfig.tierPowerScale() - 1.0) > 1e-9) bad.add("tierPowerScale is not 1.0 by default");
+        return bad.isEmpty() ? SelfTests.Result.ok(rows.size() + " bosses, " + withTraits + " with traits: budgets, bindings, hit caps and tier bands hold")
+                : SelfTests.Result.fail(bad.size() + " problem(s): " + String.join(" | ", bad.subList(0, Math.min(5, bad.size()))));
+    }
+
+    /** The hooks on a real summoned boss, with a stand-in player: Hierro cuts melee, the guard cuts everything, Karma marks and hits harder, strip takes one effect, the setting off restores the plain fight. */
+    private static SelfTests.Result powerLive(MinecraftServer server) {
+        ServerLevel level = server.overworld();
+        BlockPos at = level.getSharedSpawnPos();
+        if (!level.hasChunkAt(at)) return SelfTests.Result.ok("skipped: the spawn chunk is not loaded");
+        var fake = net.neoforged.neoforge.common.util.FakePlayerFactory.get(level, new com.mojang.authlib.GameProfile(java.util.UUID.nameUUIDFromBytes("tier-power-test".getBytes()), "TierPowerTest"));
+        fake.moveTo(Vec3.atBottomCenterOf(at.above(2)));
+        fake.setGameMode(net.minecraft.world.level.GameType.SURVIVAL);
+        List<String> done = new ArrayList<>();
+        ArcConfig.tierPowersOverride = Boolean.TRUE;
+        try {
+            for (TierTrait probe : new TierTrait[]{TierTrait.ARMOUR, TierTrait.UNTOUCHABLE, TierTrait.KARMA}) {
+                TierRow row = TierBosses.all().stream().filter(r -> r.has(probe)).findFirst().orElse(null);
+                if (row == null) continue;
+                ArcBoss boss = null;
+                try {
+                    ArcSpawner.Result r = ArcSpawner.summon(level, row.character(), Vec3.atBottomCenterOf(at.above(2)).add(6, 0, 0), 0f, List.of(), true);
+                    if (r.outcome() != ArcSpawner.Outcome.SPAWNED || !(r.boss() instanceof TierBoss tb)) return SelfTests.Result.fail("summoning " + row.id() + " gave " + r.outcome());
+                    boss = tb;
+                    net.minecraft.world.damagesource.DamageSource melee = level.damageSources().playerAttack(fake);
+                    net.minecraft.world.damagesource.DamageSource magic = level.damageSources().indirectMagic(fake, fake);
+                    long now = level.getGameTime();
+                    switch (probe) {
+                        case ARMOUR -> {
+                            float cut = TierTraits.mitigate(tb, melee, 10f);
+                            if (cut >= 9.9f || cut < 10f * (1f - (float) TierTrait.MAX_CUT) - 0.01f) return SelfTests.Result.fail(row.id() + ": Hierro armour gave " + cut + " of 10 on a melee blow");
+                            if (TierTraits.mitigate(tb, magic, 10f) < cut) return SelfTests.Result.fail(row.id() + ": magic is cut harder than melee");
+                            ArcConfig.tierPowersOverride = Boolean.FALSE;
+                            float plain = TierTraits.mitigate(tb, melee, 10f);
+                            ArcConfig.tierPowersOverride = Boolean.TRUE;
+                            if (plain != 10f) return SelfTests.Result.fail(row.id() + ": the armour still cuts with the powers off (" + plain + ")");
+                            done.add("armour " + cut);
+                        }
+                        case UNTOUCHABLE -> {
+                            if (TierTraits.mitigate(tb, magic, 10f) < 9.99f) return SelfTests.Result.fail(row.id() + ": the guard is up before its move");
+                            TierTraits.afterMove(tb, row.moves().stream().filter(m -> m.id().equals(row.moveOf(TierTrait.UNTOUCHABLE))).findFirst().orElseThrow(), fake);
+                            float cut = TierTraits.mitigate(tb, magic, 10f);
+                            if (!tb.traitState().guard(now) || cut >= 9.9f) return SelfTests.Result.fail(row.id() + ": the guard did not start (" + cut + ")");
+                            done.add("guard " + cut);
+                        }
+                        case KARMA -> {
+                            if (TierTraits.strikeBase(tb, fake, 10f) != 10f) return SelfTests.Result.fail(row.id() + ": a Karma mark exists before its move");
+                            TierTraits.afterMove(tb, row.moves().stream().filter(m -> m.id().equals(row.moveOf(TierTrait.KARMA))).findFirst().orElseThrow(), fake);
+                            float harder = TierTraits.strikeBase(tb, fake, 10f);
+                            if (!tb.traitState().karma(fake.getUUID(), now) || harder < 11.9f) return SelfTests.Result.fail(row.id() + ": the Karma mark did not land (" + harder + ")");
+                            done.add("karma " + harder);
+                        }
+                        default -> { }
+                    }
+                } finally {
+                    if (boss != null) boss.discard();
+                }
+            }
+            fake.addEffect(new net.minecraft.world.effect.MobEffectInstance(net.minecraft.world.effect.MobEffects.MOVEMENT_SPEED, 600, 0));
+            fake.addEffect(new net.minecraft.world.effect.MobEffectInstance(net.minecraft.world.effect.MobEffects.POISON, 600, 0));
+            ArcConfig.tierPowersOverride = Boolean.FALSE;
+            int offStrip = TierTraits.strip(fake, true);
+            ArcConfig.tierPowersOverride = Boolean.TRUE;
+            if (offStrip != 0) return SelfTests.Result.fail("strip works with the powers off");
+            int stripped = TierTraits.strip(fake, false);
+            if (stripped != 1 || fake.hasEffect(net.minecraft.world.effect.MobEffects.MOVEMENT_SPEED) || !fake.hasEffect(net.minecraft.world.effect.MobEffects.POISON))
+                return SelfTests.Result.fail("strip removed " + stripped + " effect(s); it must take exactly one beneficial effect and leave the poison");
+            done.add("strip 1");
+            TierTraits.breakShield(fake, 100);                                                                                        // not blocking: nothing happens, nothing throws
+            return SelfTests.Result.ok("hooks on real bosses: " + String.join(", ", done) + "; powers off restores the plain fight");
+        } finally {
+            ArcConfig.tierPowersOverride = null;
+            fake.removeAllEffects();
+        }
+    }
+
+    /** The memory of the traits is capped and expires on its own (pure state, driven by hand). */
+    private static SelfTests.Result powerState(MinecraftServer server) {
+        TierState st = new TierState();
+        long now = 1000;
+        for (int i = 0; i < TierTrait.MAX_TRACKED * 3; i++) {
+            java.util.UUID u = java.util.UUID.nameUUIDFromBytes(("p" + i).getBytes());
+            st.addMark(u, now);
+            st.markKarma(u, now);
+            st.steamReady(u, now);
+            st.lockReady(u, now);
+        }
+        if (st.size() > 4 * TierTrait.MAX_TRACKED) return SelfTests.Result.fail(st.size() + " entries are held, the cap is " + 4 * TierTrait.MAX_TRACKED + " for four maps");
+        st.prune(now + TierTrait.KARMA_TICKS + TierTrait.MARK_TICKS);
+        if (st.size() != 0) return SelfTests.Result.fail(st.size() + " entries survived their expiry");
+        java.util.UUID a = java.util.UUID.randomUUID();
+        for (int i = 1; i <= TierTrait.MARK_MAX + 2; i++) st.addMark(a, now);
+        if (st.marks(a, now) != TierTrait.MARK_MAX) return SelfTests.Result.fail("marks are not capped at " + TierTrait.MARK_MAX);
+        st.clear();
+        return SelfTests.Result.ok("marks, karma, steam and lock gaps are capped at " + TierTrait.MAX_TRACKED + " each and expire by themselves");
     }
 }

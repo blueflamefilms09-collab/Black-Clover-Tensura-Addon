@@ -1,5 +1,28 @@
 # Changelog
 
+## [3.39.0] — The 16 light Tier List bosses get their anime powers, balanced by a measured band
+
+Design, constants and tables: `docs/bosses/tier_powers.md` (a test keeps it in step with the code). Light Yagami (his own scene), the Zogratis bosses and the arcs' characters are not touched.
+
+### NEW
+- **16 boss traits** (`TierTrait`, run by `TierTraits`, all server side): slow field, steam, Hierro armour, the Balance, soul marks, mirror stance, system lock, pull, spore poison, fusion, sight, Karma mark, echo, untouchable guards, climb, shield break. Each has a price, a counter and a window in which it is off or weak. Six of them hang on one named move of the boss (Balance, Mirror, Pull, Karma, Echo, Untouchable). Every one of the 16 bosses carries one or two (budget F 5 points, D 7, C 9, B 11, A 13; the next letters are already priced).
+- **Three new move statuses** (appended to `TierMove.Effect`): POISON (never lethal), SHIELD_BREAK (a raised shield is disabled 5 s) and STRIP (beneficial effects removed: one per hit, all of them from an ultimate or a crowd move).
+- **Re-cut moves for all 16** (numbers, statuses and a few shapes) so Foxy, Ao and Code no longer play alike; Zetsu and Orochi poison, Sogou strips, Morgan breaks shields, Bertholdt's steam ignites, Big Mom's Soul Pocus marks every bolt it lands.
+- **Balance rules as code and tests.** `TierBalance` (pure) simulates a boss for 180 s and prints its pressure (damage per second); inside a tier every boss must lie within ±25% of the tier mean at 60% power, an ordinary hit is at most 1.6x the boss's attack and an ultimate at most 2.0x, and a row may not spend more than its budget. `tools/tier_bosses/tier_pressure.py` is the deterministic Python twin (retune a row without compiling). Tests: `TierBalanceTest`, `TierStateTest`, `TierPowersDocTest`; server self-tests `tier.power.data`, `tier.power.live` (real bosses, FakePlayers), `tier.power.state`.
+- **Two server settings** (`nusmp-arc-server.toml`, section `[arc]`): `tierPowers` (default true; false = the plain moves only: no traits, no new statuses) and `tierPowerScale` (0.5 to 2.0, default 1.0, scales every trait's strength: radius, reduction, percentages; never a duration).
+- Cost (worst case): once a second per boss one foe query of at most 24 foes (so at most 144 foe checks a second with the default 6 bosses), one 16-point particle ring while a field or stance is up; at most 4 pull impulses and 2 echo tasks per use of the bound move; five small maps per boss held to 24 players each and pruned every second; no entity, block or chunk work; no packets of its own; a hook that throws is caught and logged once.
+
+### REPLACED
+- The moves of the 16 bosses were retuned in place (same ids and names): hits and cooldowns of the high bosses came down (Big Mom 5.41 to 4.29, Jugram 4.58 to 3.86, Rachel 4.34 to 3.80, Yammy 3.42 to 3.00, Orochi 3.35 to 3.09), the low ones went up (Sogou 1.96 to 2.40, Bon Clay 2.05 to 2.37, Code 2.87 to 3.40, Ao 2.89 to 3.24, Foxy 3.20 to 3.71, Morgan 3.06 to 3.55). All sixteen now lie inside their band (F 2.03 to 3.38, D 2.83 to 4.71).
+- **Charlos and Malty:** their guard call is now an ordinary move (three guards, 4 s of 35% less damage) and the ultimate is a new circle-slow move (Slave Collar Detonation, Slave Crest Curse), because Untouchable may not sit on an ultimate. Spore Cloud (Zetsu), Venom Mist (Orochi) now poison instead of slowing; System Lock (Sogou) now strips instead of slowing.
+
+### KEPT
+- Every boss's stats, floors, look, loot and voice; the tier stat table; Light Yagami; the 6% per second damage budget, the power curve, the Gates and the telegraph rules. With `tierPowers` false the bosses fight with their plain moves (the retuned cooldowns and damages stay).
+- The arcs' HD work in progress that is already in the tree (SDS and Black Clover NPC skins, `tools/arc_hd`) rides along unchanged; its own release is next.
+
+### Not seen in a game
+Nothing was played. The pressure numbers come from the simulator and the tests, the live traits are covered by the server self-test only; whether armour/untouchable at 35% feels fair, and whether a late fight (climb and fusion steps push Big Mom to 4.93 at 100% power) is too hard, needs a real fight. The pressure number does not see the defensive and control traits, so Yammy, Charlos and Malty were deliberately kept in the middle or low half of their band. The wikis could not be fetched: every anime power is from memory (named / theme / filler tags in the roster rows). The 1-of-1 player skill each boss should drop is a separate later release.
+
 ## [3.37.0] — The 17 tier bosses are remade by hand in HD (256x256) with new, attached 3D hair
 
 ### NEW

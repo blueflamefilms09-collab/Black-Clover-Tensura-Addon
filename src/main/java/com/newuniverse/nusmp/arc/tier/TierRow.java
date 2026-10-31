@@ -16,9 +16,34 @@ import java.util.List;
  * @param moves     its moves, in the order the scheduler considers them
  * @param height    its height in blocks (the one body model is scaled to it; the hitbox follows)
  */
-public record TierRow(ArcCharacter character, TierLetter letter, List<TierMove> moves, float height) {
+public record TierRow(ArcCharacter character, TierLetter letter, List<TierMove> moves, float height, List<TierTraitSpec> traits) {
     public TierRow {
         moves = List.copyOf(moves);
+        traits = traits == null ? List.of() : List.copyOf(traits);
+    }
+
+    /** The row without traits (3.33.0 shape, kept for old callers and tests). */
+    public TierRow(ArcCharacter character, TierLetter letter, List<TierMove> moves, float height) {
+        this(character, letter, moves, height, List.of());
+    }
+
+    /** 3.39.0: does the row carry this trait? */
+    public boolean has(TierTrait t) {
+        for (TierTraitSpec s : traits) if (s.trait() == t) return true;
+        return false;
+    }
+
+    /** 3.39.0: the move id a trait hangs on (null if the row has no such trait or it stands alone). */
+    public String moveOf(TierTrait t) {
+        for (TierTraitSpec s : traits) if (s.trait() == t) return s.moveId();
+        return null;
+    }
+
+    /** 3.39.0: points of the trait budget spent. */
+    public int traitPoints() {
+        int n = 0;
+        for (TierTraitSpec s : traits) n += s.trait().price();
+        return n;
     }
 
     public String id() { return character.id(); }
@@ -35,6 +60,7 @@ public record TierRow(ArcCharacter character, TierLetter letter, List<TierMove> 
         private float height = 1.9f;
         private double hp = 1.0, atk = 1.0;
         private final List<TierMove> moves = new ArrayList<>();
+        private final List<TierTraitSpec> traits = new ArrayList<>();
 
         private Builder(TierLetter letter, String id, String name, String source) {
             this.letter = letter;
@@ -52,10 +78,14 @@ public record TierRow(ArcCharacter character, TierLetter letter, List<TierMove> 
         public Builder lines(String opening, String gates, String death) { c.lines(opening, gates, death); return this; }
         public Builder move(TierMove m) { moves.add(m); return this; }
         public Builder move(TierMove.Builder m) { moves.add(m.build()); return this; }
+        /** 3.39.0: a standalone trait (slow field, armour, soul marks, fusion, sight, climb, poison, steam, system lock, shield break). */
+        public Builder trait(TierTrait t) { traits.add(TierTraitSpec.of(t)); return this; }
+        /** 3.39.0: a trait that hangs on one move of this row (balance, mirror, pull, karma, echo, untouchable). */
+        public Builder trait(TierTrait t, String moveId) { traits.add(TierTraitSpec.on(t, moveId)); return this; }
 
         public TierRow build() {
             c.stats(Math.round(letter.health() * hp), Math.round(letter.attack() * atk * 10) / 10.0, letter.speed(), letter.armor()).floors(null, floorMin, floorMax);
-            return new TierRow(c.build(), letter, moves, height);
+            return new TierRow(c.build(), letter, moves, height, traits);
         }
     }
 }

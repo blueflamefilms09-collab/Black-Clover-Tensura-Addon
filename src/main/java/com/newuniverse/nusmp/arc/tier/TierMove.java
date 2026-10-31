@@ -23,7 +23,13 @@ public record TierMove(String id, String label, Kind kind, int minPower, int win
     public enum Kind { CLEAVE, SLAM, WAVE, BOLT, VOLLEY, MARKED, RUSH, BEAM, SWARM }
 
     /** What a hit leaves on the foe. */
-    public enum Effect { NONE, SLOW, WEAKEN, BLIND, FROST, BURN }
+    public enum Effect { NONE, SLOW, WEAKEN, BLIND, FROST, BURN,
+        /** 3.39.0 (appended): poison for the given ticks (vanilla poison stops at 1 health, so it never kills). */
+        POISON,
+        /** 3.39.0: disables a raised shield for the given ticks (the shield item's cooldown). */
+        SHIELD_BREAK,
+        /** 3.39.0: strips beneficial effects: 1 for an ordinary hit, every one in reach for a crowd (ultimate) move. The tick count is only a marker (it must be above 0). */
+        STRIP }
 
     /** Where the move's name comes from (see the class comment). */
     public enum Basis { NAMED, THEME, FILLER }

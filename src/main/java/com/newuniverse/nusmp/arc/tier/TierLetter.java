@@ -62,6 +62,9 @@ public enum TierLetter {
     /** Magic Stones dropped on each kill (the boss adds a little random on top, never more than this again). */
     public int stones() { return stones; }
 
+    /** 3.39.0: the points of {@link TierTrait} prices a boss of this tier may spend (F 5, D 7, then two more per letter). */
+    public int traitBudget() { return 5 + 2 * ordinal(); }
+
     /** Is this a light boss (the shared-body level of the owner's two levels), as opposed to a full boss with its own model? A..F are light. */
     public boolean light() { return ordinal() <= A.ordinal(); }
 
