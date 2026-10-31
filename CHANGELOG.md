@@ -1,5 +1,31 @@
 # Changelog
 
+## [3.41.0] — Veldanava, the Creator God, is removed (the five ultimate skills stay)
+
+Owner request: "also remove veldanava". Scope chosen by the owner: the boss only, the five ultimate skills stay. The removed doc `docs/veldanava.md` is in git history (tag `v3.40.0-b509`).
+
+### REMOVED (on the owner's word)
+- **The boss:** Veldanava with his three bodies (Star King Dragon, Creator God, Dark Avatar of God), his moves, boss bar, Tensura bridge, health cap, soul/boon housekeeping, `/multiverse boss veldanava`, and the server config `nusmp-veldanava-server.toml`.
+- **The Will of the Creator** orb, its card screen and its two packets (`veldanava_skills_open`, `veldanava_skills_claim`), the three attribute boons, and `/multiverse veldanava boon|skill`.
+- **The spawn egg and the seven relics:** Star King Dragon Core, Genesis Fragment, Creator's Essence, Justice King Michael Fragment, Covenant King Uriel Fragment, Nihility Fragment, Veldanava's Divine Core (items, models, icons, lang). Items of these kinds still in an old world's chests or inventories are dropped by the game on load, like any removed mod item; so is a Veldanava entity still standing in a loaded chunk.
+- **The seven boss VFX layers and shapes** (Absolute Severance, Black Lightning, Black Lightning Blast, Death Tornado, Disintegration, Hell Flare, Megiddo; `VfxShape` loses its last seven entries, nothing else shifts), the 3 geo models, 3 animation files, 6 entity textures, the `veldanava_counter` damage-type tag, the generators `tools/gen_veldanava*.py`, the 8 boss preview scenes, the 36 boss lang keys, and the boss tests (`VeldanavaAnimeTest`, `VeldanavaBoonsTest`, `VeldanavaRulesTest`, `VeldanavaSourceScanTest`, `VeldanavaTensuraTest`) and self-tests (`veldanava.rules / assets / boss / orb`, which also leave the CI smoke list).
+
+### NEW
+- **`/multiverse ultimate give <player> <id>` and `/multiverse ultimate take <player>`** (permission 2). With the boss gone this is how the five ultimate skills (sandalphon, israfil, jibril, solomon, hercules) are given: one command class (`UltimateCommand`) that ends in the existing `VeldanavaSkills.grant / revoke`, so nothing about the rules changes (one of the five per player, the id is checked against the card table, nothing else can be named). No ticking, no packet, no state of its own.
+
+### REPLACED
+- Nothing replaced.
+
+### KEPT (unchanged)
+- **Sandalphon, Israfil, Jibril, Solomon, Hercules:** the skills, their ten modes, effects, fields, the Israfil pocket labyrinth, the VFX layers and shapes, the animated icons, models, lang, config (`nusmp-veldanava-skills-server.toml`, including the now-unused `rewardScreen` key), tests and self-tests. The player flag `nusmp_veldanava_skill` keeps its name, so a world where a player already holds a skill reads it as before.
+- In **Hercules' World-Breaking Strike** the two lines that shattered Michael's Castle Guard and the boss's spatial shield are gone with the things they broke; it still ends pockets and fields, breaks armour and lays Temporal Debt. Its self-test lost the Castle Guard case.
+
+### Cost
+- Removal only. Server: no boss, no orb, no event handlers left behind (less per tick, not more); the new command is a one-shot. Network: two packets fewer, none added. Client: seven VFX layers and three renderers fewer, nothing added.
+
+### Not seen in a game
+- Built and tested by the pure tests, the compile check and the CI smoke test; not loaded in a game by me.
+
 ## [3.40.0] — The Seven Deadly Sins and Black Clover arc characters are repainted by hand in HD (256x256)
 
 Doc and commands: `docs/arc/hd_arc.md` (status, hair table, how to paint one), one note per batch `docs/arc/hd_arc_sds1.md`, `hd_arc_sds2.md`, `hd_arc_bc1.md` to `hd_arc_bc7.md`; previews `docs/previews/arc_hd/` (front and back, close-ups, contact sheets of all 81 looks).

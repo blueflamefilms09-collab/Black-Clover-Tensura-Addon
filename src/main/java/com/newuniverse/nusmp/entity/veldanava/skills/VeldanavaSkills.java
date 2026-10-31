@@ -10,14 +10,14 @@ import net.minecraft.world.entity.player.Player;
 import net.neoforged.neoforge.registries.DeferredHolder;
 
 /**
- * Why: the Will of the Creator now gives one ultimate skill of five (instead of one of three attribute boons), once in a player's life. This is the one place that says which skill an
+ * Why: a player holds one ultimate skill of five, once in a life (an admin gives it with {@link UltimateCommand}; the Veldanava boss that used to is gone). This is the one place that says which skill an
  * id means, whether the player already took theirs, and that gives it. The "already received" flag is the player's own key {@link #TAG_CHOICE} (kept through death and relogging, copied
  * with the player), and the claim is validated by id against {@link JudgmentRules#claimable}, so a packet or command can never name anything else. Server side.
  */
 public final class VeldanavaSkills {
     private VeldanavaSkills() {}
 
-    /** The player's key: the id of the skill the Creator gave them (empty or missing = none yet). */
+    /** The player's key: the id of the skill they were given (empty or missing = none yet). Kept under its old name so worlds that have it still read it. */
     public static final String TAG_CHOICE = "nusmp_veldanava_skill";
 
     /** The skill for a card id, or null when this build has none (a sealed card). Releases add one line per skill. */
@@ -42,7 +42,7 @@ public final class VeldanavaSkills {
         if (h == null) return false;
         var skills = SkillAPI.getSkillsFrom(p);
         if (skills.getSkill(h.getId()).isEmpty()) {
-            boolean ok = skills.learnSkill(h.get().createDefaultInstance(), Component.literal("The Will of the Creator grants you " + JudgmentRules.card(id).title() + ".").withStyle(ChatFormatting.GOLD, ChatFormatting.BOLD));
+            boolean ok = skills.learnSkill(h.get().createDefaultInstance(), Component.literal("You are granted " + JudgmentRules.card(id).title() + ".").withStyle(ChatFormatting.GOLD, ChatFormatting.BOLD));
             if (!ok) return false;
         }
         p.getPersistentData().putString(TAG_CHOICE, id);

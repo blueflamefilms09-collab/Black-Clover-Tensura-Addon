@@ -2,7 +2,6 @@ package com.newuniverse.nusmp.entity.veldanava.skills;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.newuniverse.nusmp.entity.veldanava.VeldanavaItem;
 import com.newuniverse.nusmp.labyrinth.mega.SelfTests;
 import com.newuniverse.nusmp.labyrinth.mega.SelfTests.Result;
 import io.github.manasmods.manascore.skill.api.ManasSkillInstance;
@@ -279,12 +278,7 @@ public final class HerculesSelfTests {
             if (tf.endsAt != 0L) return Result.fail("a throw did not land within its bound");
             JudgmentFields.clearAll();
 
-            // the Strike: Michael's Castle Guard of a player is spent once, and the armour of a creature breaks
-            p.getPersistentData().putBoolean(VeldanavaItem.TAG_MICHAEL, true);
-            p.getPersistentData().remove(VeldanavaItem.TAG_MICHAEL_DAY);
-            if (!HerculesSkill.spendCastleGuard(p) || HerculesSkill.spendCastleGuard(p)) return Result.fail("the Castle Guard was not spent exactly once");
-            p.getPersistentData().remove(VeldanavaItem.TAG_MICHAEL);
-            if (HerculesSkill.spendCastleGuard(p)) return Result.fail("a Castle Guard that was never raised was spent");
+            // the Strike: the armour of a creature breaks
             far.addEffect(new MobEffectInstance(JudgmentEffects.ARMOR_BREAK, 40, 0));
             if (!far.hasEffect(JudgmentEffects.ARMOR_BREAK)) return Result.fail("the armour break did not take");
 
@@ -293,14 +287,12 @@ public final class HerculesSelfTests {
             HerculesState.startInvictus(p);
             HerculesState.clear(p);
             if (HerculesState.kept() != 0 || HerculesState.invictus(p) || HerculesState.hasSpeedModifier(p)) return Result.fail("clearing the skill left something behind");
-            return Result.ok("body, fire, stutter, fall, strength, Invictus, leap and landing, terrain, throw, Castle Guard, armour break and clean-up hold");
+            return Result.ok("body, fire, stutter, fall, strength, Invictus, leap and landing, terrain, throw, armour break and clean-up hold");
         } finally {
             JudgmentFields.clearAll();
             HerculesState.clear(p);
             p.removeAllEffects();
             JudgmentState.write(p, 0);
-            p.getPersistentData().remove(VeldanavaItem.TAG_MICHAEL);
-            p.getPersistentData().remove(VeldanavaItem.TAG_MICHAEL_DAY);
             sl.getGameRules().getRule(GameRules.RULE_MOBGRIEFING).set(griefing, server);
             for (int dx = -7; dx <= 7; dx++) for (int dz = -7; dz <= 7; dz++) for (int dy = 0; dy >= -3; dy--) sl.setBlock(platform.offset(dx, dy, dz), Blocks.AIR.defaultBlockState(), 2);
             z.discard();

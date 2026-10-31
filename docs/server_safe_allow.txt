@@ -60,4 +60,3 @@ vupgrade/GodBSelfTests.java
 wizard/WizardNet.java
 mana/method/ManaMethodBoot.java
 mana/method/RuneNet.java
-entity/veldanava/skills/VeldanavaSkillNet.java

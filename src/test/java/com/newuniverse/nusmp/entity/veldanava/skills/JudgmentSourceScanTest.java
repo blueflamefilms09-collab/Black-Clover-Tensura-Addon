@@ -43,10 +43,9 @@ class JudgmentSourceScanTest {
         for (Path p : files()) {
             String c = code(read(p));
             if (client.matcher(c).find()) bad.add(p.getFileName().toString());
-            if (ours.matcher(c).find() && !p.getFileName().toString().equals("VeldanavaSkillNet.java")) bad.add(p.getFileName() + " (our client package)");
+            if (ours.matcher(c).find()) bad.add(p.getFileName() + " (our client package)");
         }
         assertTrue(bad.isEmpty(), "the skill's server code names a client class: " + bad);
-        assertTrue(file("VeldanavaSkillNet").contains("client.veldanava.VeldanavaSkillClient.onOpen"), "the one hand-off to the client is the card screen");
     }
 
     @Test
@@ -127,15 +126,11 @@ class JudgmentSourceScanTest {
     }
 
     @Test
-    void theClaimPacketIsValidatedOnTheServer() throws IOException {
-        String net = file("VeldanavaSkillNet");
-        assertTrue(net.contains("readUtf(ID_MAX)") && net.contains("writeUtf(p.id(), ID_MAX)"), "the id is read with a length limit");
-        assertTrue(net.contains("ctx.player() instanceof ServerPlayer"), "the sender must be a server player");
-        assertTrue(net.contains("WillOfTheCreator.waitingFor(p)"), "the player must have an orb waiting");
-        assertTrue(net.contains("registrar(\"1\").optional()"), "a client without the mod can still join");
-        String orb = code(read(SRC.resolve("entity/veldanava/WillOfTheCreator.java")));
-        assertTrue(orb.contains("JudgmentRules.claimable("), "the orb judges the card by the rules table");
-        assertTrue(orb.contains("VeldanavaSkills.grant("), "the skill is given through the one grant");
+    void theGrantIsValidatedOnTheServer() throws IOException {
+        String cmd = file("UltimateCommand");
+        assertTrue(cmd.contains("hasPermission(2)"), "only an admin gives or takes an ultimate skill");
+        assertTrue(cmd.contains("JudgmentRules.claimable(id)") && cmd.contains("VeldanavaSkills.grant("), "the command names only a real card and gives it through the one grant");
+        assertFalse(cmd.contains("Payload") || cmd.contains("PacketDistributor"), "the command sends no packet");
         String sk = file("VeldanavaSkills");
         assertTrue(sk.contains("!JudgmentRules.claimable(id) || received(p)"), "a skill is granted once");
     }
@@ -187,7 +182,7 @@ class JudgmentSourceScanTest {
         assertTrue(Files.exists(RES.resolve("assets/nusmp/textures/skill/veldanava/sandalphon.png")), "missing skill icon");
         JsonObject lang = JsonParser.parseString(read(RES.resolve("assets/nusmp/lang/en_us.json"))).getAsJsonObject();
         for (String k : new String[]{"nusmp.skill.sandalphon", "nusmp.skill.sandalphon.description", "nusmp.skill.sandalphon.mastered", "effect.nusmp.temporal_stutter", "effect.nusmp.temporal_debt", "effect.nusmp.event_silence",
-                "effect.nusmp.future_rejection", "effect.nusmp.movement_interference", "effect.nusmp.action_lock", "nusmp.veldanava.skills.title", "nusmp.veldanava.skills.hint", "nusmp.veldanava.skills.take"})
+                "effect.nusmp.future_rejection", "effect.nusmp.movement_interference", "effect.nusmp.action_lock"})
             assertTrue(lang.has(k), "missing lang key " + k);
         for (JudgmentRules.Mode m : JudgmentRules.SANDALPHON.modes()) assertTrue(lang.has("nusmp.skill.mode.sandalphon." + m.id()), "missing lang key for mode " + m.id());
         String smoke = read(Path.of(".github/workflows/smoke.yml"));
@@ -295,13 +290,5 @@ class JudgmentSourceScanTest {
         String tick = state.substring(state.indexOf("static void tickHotbar"));
         assertTrue(tick.substring(0, tick.indexOf('\n', tick.indexOf('\n') + 1)).contains("isEmpty()") || tick.contains("if (HOTBAR.isEmpty()) return;"), "an idle hotbar hold does nothing");
         assertTrue(skill.contains("JudgmentConfig.strictGovernance()") && skill.contains("JudgmentConfig.wingsFlight()"), "the two new toggles sit behind their settings");
-    }
-
-    @Test
-    void theOldBoonsStayInTheCode() throws IOException {
-        String boons = code(read(SRC.resolve("entity/veldanava/VeldanavaBoons.java")));
-        assertTrue(boons.contains("TAG_RECEIVED") && boons.contains("TAG_CHOICE") && boons.contains("COUNT"), "the three attribute boons are kept (owner rule 2)");
-        String orb = code(read(SRC.resolve("entity/veldanava/WillOfTheCreator.java")));
-        assertTrue(orb.contains("VeldanavaBoons.grant("), "the boon grant is still wired for the rewardScreen=false setting");
     }
 }

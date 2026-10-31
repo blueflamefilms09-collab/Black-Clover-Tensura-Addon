@@ -2,8 +2,6 @@ package com.newuniverse.nusmp.entity.veldanava.skills;
 
 import com.newuniverse.nusmp.balance.BalanceLaw;
 import com.newuniverse.nusmp.book.EnergyBridge;
-import com.newuniverse.nusmp.entity.veldanava.VeldanavaBoss;
-import com.newuniverse.nusmp.entity.veldanava.VeldanavaItem;
 import com.newuniverse.nusmp.entity.veldanava.pocket.PocketLabyrinth;
 import com.newuniverse.nusmp.heroweapon.weapon.kit.Foes;
 import io.github.manasmods.manascore.skill.api.ManasSkillInstance;
@@ -265,7 +263,7 @@ public class HerculesSkill extends VeldanavaSkillBase {
     // ---------------------------------------------------------------- World-Breaking Strike
     /**
      * World-Breaking Strike: one punch. The spatial barriers within {@link HerculesRules#STRIKE_SHATTER_RADIUS} blocks of the fist (the pockets of other players' labyrinths, the enemy's fields) end; of the (at most
-     * eight) foes within {@link HerculesRules#STRIKE_RADIUS} blocks of it, each has Michael's Castle Guard, Uriel's prison and the guard of the Seraphim shattered, its armour broken for
+     * eight) foes within {@link HerculesRules#STRIKE_RADIUS} blocks of it, each has its armour broken for
      * {@link HerculesRules#ARMOR_BREAK_TICKS} ticks, {@link HerculesRules#STRIKE_DEBT} stacks of Temporal Debt laid on it, and takes the blow (the nearest one in full, the others half).
      */
     private static boolean strike(ServerPlayer p) {
@@ -282,23 +280,12 @@ public class HerculesSkill extends VeldanavaSkillBase {
         double mastery = HerculesDamage.mastery(p);
         int rank = 0;
         for (LivingEntity t : foes) {
-            if (t instanceof VeldanavaBoss b && b.shatterSpatial()) broken++;
-            if (t instanceof ServerPlayer sp && spendCastleGuard(sp)) broken++;
             t.addEffect(new MobEffectInstance(JudgmentEffects.ARMOR_BREAK, HerculesRules.armorBreakTicks(t instanceof net.minecraft.world.entity.player.Player, BalanceLaw.isBoss(t)), 0, false, true, true));
             TemporalDebt.add(t, HerculesRules.STRIKE_DEBT);
             HerculesDamage.blow(p, t, HerculesRules.strikeDamage(rank++), mastery);
         }
         HerculesFx.strike(l, p, point);
         p.displayClientMessage(Component.literal("World-Breaking Strike: " + foes.size() + (foes.size() == 1 ? " enemy" : " enemies") + ", " + broken + " barrier" + (broken == 1 ? "" : "s") + " shattered.").withStyle(ChatFormatting.GOLD), true);
-        return true;
-    }
-
-    /** Michael's Castle Guard of a player (one fatal blow a day, {@link VeldanavaItem#TAG_MICHAEL}): spent for today, so the blow that follows is not turned away. True when there was one to spend. */
-    static boolean spendCastleGuard(ServerPlayer t) {
-        if (!t.getPersistentData().getBoolean(VeldanavaItem.TAG_MICHAEL)) return false;
-        long day = t.level().getDayTime() / 24000L;
-        if (t.getPersistentData().getLong(VeldanavaItem.TAG_MICHAEL_DAY) == day + 1) return false;
-        t.getPersistentData().putLong(VeldanavaItem.TAG_MICHAEL_DAY, day + 1);
         return true;
     }
 }

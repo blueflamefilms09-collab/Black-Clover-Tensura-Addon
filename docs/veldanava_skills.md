@@ -1,5 +1,7 @@
 # Veldanava's ultimate skills (3.13.0 onward): Sandalphon, Lord of Judgment, Israfil, Lord of Trials (3.14.0) and Jibril, Lord of Rigor (3.15.0)
 
+> **3.41.0 note.** The Veldanava boss and the Will of the Creator card screen described below were removed at the owner's request (`docs/veldanava.md` is in git history, tag `v3.40.0-b509`). The five skills are unchanged. They are now given by an admin: `/multiverse ultimate give <player> <id>` (sandalphon, israfil, jibril, solomon, hercules) and `/multiverse ultimate take <player>`. Everything below about the orb, the card screen and the chat offer is history.
+
 Source of the design: the owner's `veldanava_skill_drops.txt` (five skills, ten modes each). The reference jar `tensuramoreskills-0.0.4.9.3.jar` (All Rights Reserved) was read for ideas only; no code and no asset of it is used.
 Wiki sources: none needed (the numbers come from the owner's file); nothing was fetched.
 
