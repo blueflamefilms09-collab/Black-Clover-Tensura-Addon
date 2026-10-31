@@ -1,0 +1,20 @@
+{
+ "id": "marx_francois",
+ "source": "baseline",
+ "size": 256,
+ "hair_reason": "KEPT classic: the short dark bob",
+ "look": {
+  "skin": "marx_francois",
+  "slim": false,
+  "scale": 0.992,
+  "hair": "bob",
+  "hair_color": "#3a2a22",
+  "extras": [
+   {
+    "model": "pmx_marx_francois",
+    "texture": "pmx_marx_francois",
+    "glow": true
+   }
+  ]
+ }
+}

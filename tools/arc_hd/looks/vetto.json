@@ -1,0 +1,14 @@
+{
+ "id": "vetto",
+ "source": "baseline",
+ "size": 256,
+ "hair_reason": "the wild golden mane",
+ "look": {
+  "skin": "vetto",
+  "slim": false,
+  "scale": 1.3067,
+  "glow": true,
+  "hair": "anime_mane",
+  "hair_color": "#d8b868"
+ }
+}

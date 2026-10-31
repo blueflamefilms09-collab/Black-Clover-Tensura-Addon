@@ -1,0 +1,21 @@
+{
+ "id": "diane",
+ "source": "baseline",
+ "size": 256,
+ "hair_reason": "KEPT classic: the long twin tails of the Serpent's Sin (no anime twin-tail cut exists)",
+ "look": {
+  "skin": "diane",
+  "slim": true,
+  "scale": 1.0667,
+  "hold_r": -0.42,
+  "hair": "twin_tails",
+  "hair_color": "#8a5434",
+  "extras": [
+   {
+    "model": "pmx_diane",
+    "texture": "pmx_diane",
+    "glow": true
+   }
+  ]
+ }
+}

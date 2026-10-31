@@ -1,0 +1,22 @@
+{
+ "id": "dark_disciple_lucifero",
+ "source": "baseline",
+ "size": 256,
+ "hair_reason": "the cultist's hood",
+ "look": {
+  "skin": "dark_disciple_lucifero",
+  "slim": false,
+  "scale": 1.0133,
+  "hold_r": -0.42,
+  "glow": true,
+  "hair": "anime_hood",
+  "hair_color": "#4a3a80",
+  "extras": [
+   {
+    "model": "pmx_dark_disciple",
+    "texture": "pmx_dark_disciple_lucifero",
+    "glow": true
+   }
+  ]
+ }
+}

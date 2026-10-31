@@ -1,0 +1,20 @@
+{
+ "id": "noelle_silva",
+ "source": "baseline",
+ "size": 256,
+ "hair_reason": "KEPT classic: two low twin tails",
+ "look": {
+  "skin": "noelle_silva",
+  "slim": true,
+  "scale": 0.96,
+  "hair": "twin_tails",
+  "hair_color": "#dfe4ef",
+  "extras": [
+   {
+    "model": "pmx_noelle_silva",
+    "texture": "pmx_noelle_silva",
+    "glow": true
+   }
+  ]
+ }
+}

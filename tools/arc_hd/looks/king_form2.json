@@ -1,0 +1,22 @@
+{
+ "id": "king_form2",
+ "source": "baseline",
+ "size": 256,
+ "hair_reason": "a layered brown mop with a fringe over the brow: reference 156",
+ "look": {
+  "skin": "king_form2",
+  "slim": true,
+  "scale": 0.8533,
+  "hold_r": -0.42,
+  "glow": true,
+  "hair": "anime_short",
+  "hair_color": "#f0a040",
+  "extras": [
+   {
+    "model": "pmx_king_form2",
+    "texture": "pmx_king_form2",
+    "glow": true
+   }
+  ]
+ }
+}

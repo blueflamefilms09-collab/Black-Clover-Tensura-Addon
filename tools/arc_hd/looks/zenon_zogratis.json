@@ -1,0 +1,13 @@
+{
+ "id": "zenon_zogratis",
+ "source": "baseline",
+ "size": 256,
+ "hair_reason": "short dark hair",
+ "look": {
+  "skin": "zenon_zogratis",
+  "slim": false,
+  "scale": 1.0667,
+  "hair": "anime_short",
+  "hair_color": "#14101a"
+ }
+}

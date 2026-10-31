@@ -1,0 +1,20 @@
+{
+ "id": "dante_zogratis",
+ "source": "baseline",
+ "size": 256,
+ "hair_reason": "KEPT classic: dark swept-back hair",
+ "look": {
+  "skin": "dante_zogratis",
+  "slim": false,
+  "scale": 1.0667,
+  "hair": "slick",
+  "hair_color": "#241812",
+  "extras": [
+   {
+    "model": "pmx_dante_zogratis",
+    "texture": "pmx_dante_zogratis",
+    "glow": true
+   }
+  ]
+ }
+}

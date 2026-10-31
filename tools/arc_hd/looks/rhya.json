@@ -1,0 +1,20 @@
+{
+ "id": "rhya",
+ "source": "baseline",
+ "size": 256,
+ "hair_reason": "short messy dark hair",
+ "look": {
+  "skin": "rhya",
+  "slim": true,
+  "scale": 1.0667,
+  "hair": "anime_short",
+  "hair_color": "#14141c",
+  "extras": [
+   {
+    "model": "pmx_rhya",
+    "texture": "pmx_rhya",
+    "glow": true
+   }
+  ]
+ }
+}

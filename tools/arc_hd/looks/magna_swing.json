@@ -1,0 +1,20 @@
+{
+ "id": "magna_swing",
+ "source": "baseline",
+ "size": 256,
+ "hair_reason": "KEPT classic: the sheet's mohawk",
+ "look": {
+  "skin": "magna_swing",
+  "slim": false,
+  "scale": 1.0453,
+  "hair": "mohawk",
+  "hair_color": "#17171b",
+  "extras": [
+   {
+    "model": "pmx_magna_swing",
+    "texture": "pmx_magna_swing",
+    "glow": true
+   }
+  ]
+ }
+}

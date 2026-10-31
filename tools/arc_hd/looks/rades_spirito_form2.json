@@ -1,0 +1,21 @@
+{
+ "id": "rades_spirito_form2",
+ "source": "baseline",
+ "size": 256,
+ "hair_reason": "his hair flares into a mane in the second form",
+ "look": {
+  "skin": "rades_spirito_form2",
+  "slim": false,
+  "scale": 1.024,
+  "glow": true,
+  "hair": "anime_mane",
+  "hair_color": "#d8c4ff",
+  "extras": [
+   {
+    "model": "pmx_rades_spirito_form2",
+    "texture": "pmx_rades_spirito_form2",
+    "glow": true
+   }
+  ]
+ }
+}

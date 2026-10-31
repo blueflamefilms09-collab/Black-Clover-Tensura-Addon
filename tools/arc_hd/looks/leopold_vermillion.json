@@ -1,0 +1,20 @@
+{
+ "id": "leopold_vermillion",
+ "source": "baseline",
+ "size": 256,
+ "hair_reason": "wild red spikes",
+ "look": {
+  "skin": "leopold_vermillion",
+  "slim": false,
+  "scale": 1.0027,
+  "hair": "anime_spiky",
+  "hair_color": "#d8431d",
+  "extras": [
+   {
+    "model": "pmx_leopold_vermillion",
+    "texture": "pmx_leopold_vermillion",
+    "glow": true
+   }
+  ]
+ }
+}

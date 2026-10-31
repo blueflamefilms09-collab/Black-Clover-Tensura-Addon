@@ -1,0 +1,20 @@
+{
+ "id": "mereoleona_vermillion",
+ "source": "baseline",
+ "size": 256,
+ "hair_reason": "the wild red lion's mane",
+ "look": {
+  "skin": "mereoleona_vermillion",
+  "slim": false,
+  "scale": 1.0667,
+  "hair": "anime_mane",
+  "hair_color": "#d0421e",
+  "extras": [
+   {
+    "model": "pmx_mereoleona_vermillion",
+    "texture": "pmx_mereoleona_vermillion",
+    "glow": true
+   }
+  ]
+ }
+}

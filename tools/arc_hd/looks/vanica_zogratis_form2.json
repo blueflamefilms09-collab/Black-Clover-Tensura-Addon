@@ -1,0 +1,21 @@
+{
+ "id": "vanica_zogratis_form2",
+ "source": "baseline",
+ "size": 256,
+ "hair_reason": "KEPT classic: the black bob",
+ "look": {
+  "skin": "vanica_zogratis_form2",
+  "slim": true,
+  "scale": 1.0133,
+  "glow": true,
+  "hair": "bob",
+  "hair_color": "#1a1418",
+  "extras": [
+   {
+    "model": "pmx_vanica_zogratis_form2",
+    "texture": "pmx_vanica_zogratis_form2",
+    "glow": true
+   }
+  ]
+ }
+}

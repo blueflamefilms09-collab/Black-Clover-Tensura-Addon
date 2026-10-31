@@ -1,0 +1,21 @@
+{
+ "id": "zagred_legacy",
+ "source": "baseline",
+ "size": 256,
+ "hair_reason": "KEPT classic: the long spiky hair",
+ "look": {
+  "skin": "zagred_legacy",
+  "slim": false,
+  "scale": 1.1733,
+  "glow": true,
+  "hair": "spiky_long",
+  "hair_color": "#14101c",
+  "extras": [
+   {
+    "model": "pmx_zagred_legacy",
+    "texture": "pmx_zagred_legacy",
+    "glow": true
+   }
+  ]
+ }
+}

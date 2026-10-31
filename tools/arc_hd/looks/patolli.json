@@ -1,0 +1,21 @@
+{
+ "id": "patolli",
+ "source": "baseline",
+ "size": 256,
+ "hair_reason": "KEPT classic: the long braid",
+ "look": {
+  "skin": "patolli",
+  "slim": true,
+  "scale": 1.0773,
+  "glow": true,
+  "hair": "braid",
+  "hair_color": "#f2f0ea",
+  "extras": [
+   {
+    "model": "pmx_patolli",
+    "texture": "pmx_patolli",
+    "glow": true
+   }
+  ]
+ }
+}

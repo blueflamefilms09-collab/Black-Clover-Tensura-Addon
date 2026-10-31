@@ -1,0 +1,20 @@
+{
+ "id": "fuegoleon_vermillion",
+ "source": "baseline",
+ "size": 256,
+ "hair_reason": "red hair swept back with a fringe: a neat captain",
+ "look": {
+  "skin": "fuegoleon_vermillion",
+  "slim": false,
+  "scale": 1.1093,
+  "hair": "anime_swept",
+  "hair_color": "#b8301c",
+  "extras": [
+   {
+    "model": "pmx_fuegoleon_vermillion",
+    "texture": "pmx_fuegoleon_vermillion",
+    "glow": true
+   }
+  ]
+ }
+}

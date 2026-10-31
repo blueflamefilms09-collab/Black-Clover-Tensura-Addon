@@ -1,0 +1,20 @@
+{
+ "id": "nozel_silva",
+ "source": "baseline",
+ "size": 256,
+ "hair_reason": "silver hair swept over the brow in a long fringe: the silver reference 155",
+ "look": {
+  "skin": "nozel_silva",
+  "slim": true,
+  "scale": 1.0667,
+  "hair": "anime_swept",
+  "hair_color": "#e0e4ee",
+  "extras": [
+   {
+    "model": "pmx_nozel_silva",
+    "texture": "pmx_nozel_silva",
+    "glow": true
+   }
+  ]
+ }
+}

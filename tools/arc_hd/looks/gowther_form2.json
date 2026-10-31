@@ -1,0 +1,21 @@
+{
+ "id": "gowther_form2",
+ "source": "baseline",
+ "size": 256,
+ "hair_reason": "the long pink hair of his true form, full back and cheek locks",
+ "look": {
+  "skin": "gowther_form2",
+  "slim": true,
+  "scale": 0.9867,
+  "glow": true,
+  "hair": "anime_long",
+  "hair_color": "#f0b8d8",
+  "extras": [
+   {
+    "model": "pmx_gowther_form2",
+    "texture": "pmx_gowther_form2",
+    "glow": true
+   }
+  ]
+ }
+}

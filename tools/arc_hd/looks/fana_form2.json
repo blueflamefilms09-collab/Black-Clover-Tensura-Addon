@@ -1,0 +1,21 @@
+{
+ "id": "fana_form2",
+ "source": "baseline",
+ "size": 256,
+ "hair_reason": "her hair lifts into a wild mane in her second form",
+ "look": {
+  "skin": "fana_form2",
+  "slim": true,
+  "scale": 0.928,
+  "glow": true,
+  "hair": "anime_mane",
+  "hair_color": "#ff9ab0",
+  "extras": [
+   {
+    "model": "pmx_fana_form2",
+    "texture": "pmx_fana_form2",
+    "glow": true
+   }
+  ]
+ }
+}

@@ -1,0 +1,21 @@
+{
+ "id": "lucifero",
+ "source": "baseline",
+ "size": 256,
+ "hair_reason": "long pale hair",
+ "look": {
+  "skin": "lucifero",
+  "slim": false,
+  "scale": 1.44,
+  "glow": true,
+  "hair": "anime_long",
+  "hair_color": "#ece8f4",
+  "extras": [
+   {
+    "model": "pmx_lucifero",
+    "texture": "pmx_lucifero",
+    "glow": true
+   }
+  ]
+ }
+}

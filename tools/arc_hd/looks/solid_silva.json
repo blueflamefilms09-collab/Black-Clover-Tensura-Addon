@@ -1,0 +1,20 @@
+{
+ "id": "solid_silva",
+ "source": "baseline",
+ "size": 256,
+ "hair_reason": "pale hair with a side parting and a long fringe",
+ "look": {
+  "skin": "solid_silva",
+  "slim": true,
+  "scale": 1.0133,
+  "hair": "anime_swept",
+  "hair_color": "#c8d4ec",
+  "extras": [
+   {
+    "model": "pmx_solid_silva",
+    "texture": "pmx_solid_silva",
+    "glow": true
+   }
+  ]
+ }
+}

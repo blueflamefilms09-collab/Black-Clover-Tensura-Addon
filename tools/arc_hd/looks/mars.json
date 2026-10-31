@@ -1,0 +1,22 @@
+{
+ "id": "mars",
+ "source": "baseline",
+ "size": 256,
+ "hair_reason": "pale spiky hair",
+ "look": {
+  "skin": "mars",
+  "slim": false,
+  "scale": 1.04,
+  "hold_r": -0.42,
+  "glow": true,
+  "hair": "anime_spiky",
+  "hair_color": "#d8d4ea",
+  "extras": [
+   {
+    "model": "pmx_mars",
+    "texture": "pmx_mars",
+    "glow": true
+   }
+  ]
+ }
+}

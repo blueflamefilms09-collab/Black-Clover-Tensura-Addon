@@ -1,0 +1,21 @@
+{
+ "id": "gowther",
+ "source": "baseline",
+ "size": 256,
+ "hair_reason": "KEPT classic: the centre-parted pink bob",
+ "look": {
+  "skin": "gowther",
+  "slim": true,
+  "scale": 0.9867,
+  "glow": true,
+  "hair": "curtains",
+  "hair_color": "#b4457f",
+  "extras": [
+   {
+    "model": "pmx_gowther",
+    "texture": "pmx_gowther",
+    "glow": true
+   }
+  ]
+ }
+}

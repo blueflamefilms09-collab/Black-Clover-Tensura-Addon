@@ -1,0 +1,20 @@
+{
+ "id": "zora_ideale",
+ "source": "baseline",
+ "size": 256,
+ "hair_reason": "red hair pushed back into a ragged crest",
+ "look": {
+  "skin": "zora_ideale",
+  "slim": true,
+  "scale": 1.0347,
+  "hair": "anime_spike_swept",
+  "hair_color": "#c8402e",
+  "extras": [
+   {
+    "model": "pmx_zora_ideale",
+    "texture": "pmx_zora_ideale",
+    "glow": true
+   }
+  ]
+ }
+}

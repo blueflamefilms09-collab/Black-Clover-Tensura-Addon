@@ -1,0 +1,19 @@
+{
+ "id": "devil_avatar_megicula",
+ "source": "baseline",
+ "size": 256,
+ "hair_reason": "bald",
+ "look": {
+  "skin": "devil_avatar_megicula",
+  "slim": false,
+  "scale": 1.52,
+  "glow": true,
+  "extras": [
+   {
+    "model": "pmx_devil_avatar",
+    "texture": "pmx_devil_avatar_megicula",
+    "glow": true
+   }
+  ]
+ }
+}

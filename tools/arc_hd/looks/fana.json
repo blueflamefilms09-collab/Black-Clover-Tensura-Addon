@@ -1,0 +1,21 @@
+{
+ "id": "fana",
+ "source": "baseline",
+ "size": 256,
+ "hair_reason": "long pink hair",
+ "look": {
+  "skin": "fana",
+  "slim": true,
+  "scale": 0.928,
+  "glow": true,
+  "hair": "anime_long",
+  "hair_color": "#e88fb4",
+  "extras": [
+   {
+    "model": "pmx_fana",
+    "texture": "pmx_fana",
+    "glow": true
+   }
+  ]
+ }
+}

@@ -1,0 +1,21 @@
+{
+ "id": "heath_grice_form2",
+ "source": "baseline",
+ "size": 256,
+ "hair_reason": "KEPT classic: silver hair slicked back",
+ "look": {
+  "skin": "heath_grice_form2",
+  "slim": true,
+  "scale": 1.1093,
+  "glow": true,
+  "hair": "slick",
+  "hair_color": "#f4f4fa",
+  "extras": [
+   {
+    "model": "pmx_heath_grice_form2",
+    "texture": "pmx_heath_grice_form2",
+    "glow": true
+   }
+  ]
+ }
+}

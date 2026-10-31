@@ -1,0 +1,20 @@
+{
+ "id": "klaus_lunettes",
+ "source": "baseline",
+ "size": 256,
+ "hair_reason": "a neat side parting with the fringe over the glasses",
+ "look": {
+  "skin": "klaus_lunettes",
+  "slim": true,
+  "scale": 1.0613,
+  "hair": "anime_swept",
+  "hair_color": "#8fb8e0",
+  "extras": [
+   {
+    "model": "pmx_klaus_lunettes",
+    "texture": "pmx_klaus_lunettes",
+    "glow": true
+   }
+  ]
+ }
+}

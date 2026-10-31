@@ -91,10 +91,36 @@ class GsTalkScreenPureTest {
         FaceInfo old = FaceInfo.from(new int[64 * 32], 64, 32);
         assertTrue(old.has() && old.legacy());
         assertEquals(FaceInfo.DEFAULT_TONE, old.tone(), "a transparent face keeps the default tone");
-        for (int[] bad : new int[][]{{64, 48}, {32, 32}, {128, 128}, {64, 16}}) assertSame(FaceInfo.NONE, FaceInfo.from(new int[bad[0] * bad[1]], bad[0], bad[1]));
+        for (int[] bad : new int[][]{{64, 48}, {32, 32}, {64, 16}, {192, 192}, {100, 100}, {128, 96}, {2048, 2048}}) assertSame(FaceInfo.NONE, FaceInfo.from(new int[bad[0] * bad[1]], bad[0], bad[1]));
         assertSame(FaceInfo.NONE, FaceInfo.from(null, 64, 64));
         assertSame(FaceInfo.NONE, FaceInfo.from(new int[10], 64, 64));
         assertFalse(FaceInfo.NONE.has());
+    }
+
+    /** 3.38 (HD arc characters): a 128 or 256 skin of the same layout is read at the centre of the block of each model pixel; the portrait's UV grid (texH) stays the 64 grid. */
+    @Test
+    void anHdSkinIsReadAtTheCentreOfEachModelPixelBlock() {
+        for (int w : new int[]{128, 256}) {
+            int k = w / 64;
+            int[] skin = new int[w * w];
+            java.util.Arrays.fill(skin, 0xFFC8A078);
+            // a texel that is NOT at the centre of the block must not be read: poison the corners of the two cheek blocks and of the slim-arm block
+            for (int[] p : new int[][]{{11, 14}, {12, 14}, {47, 24}}) skin[p[1] * k * w + p[0] * k] = 0;
+            FaceInfo wide = FaceInfo.from(skin, w, w);
+            assertTrue(wide.has(), w + " wide");
+            assertFalse(wide.slim());
+            assertFalse(wide.legacy());
+            assertEquals(0xFFC8A078, wide.tone());
+            assertEquals(64, wide.texH(), "the portrait's grid is the 64 grid");
+            int cx = 47 * k + k / 2, cy = 24 * k + k / 2;
+            skin[cy * w + cx] = 0;                                                                  // the transparent column at the 4th texel of the arm (centre of its block): slim
+            FaceInfo slim = FaceInfo.from(skin, w, w);
+            assertTrue(slim.slim() && slim.armW() == 3, w + " slim");
+            FaceInfo old = FaceInfo.from(new int[w * (w / 2)], w, w / 2);
+            assertTrue(old.has() && old.legacy());
+            assertEquals(32, old.texH());
+            assertSame(FaceInfo.NONE, FaceInfo.from(new int[w * w], w, w / 2 + 1));
+        }
     }
 
     // ---------------------------------------------------------------- the icons and the palette

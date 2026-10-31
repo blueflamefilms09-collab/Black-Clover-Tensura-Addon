@@ -1,0 +1,21 @@
+{
+ "id": "zagred_form2",
+ "source": "baseline",
+ "size": 256,
+ "hair_reason": "tall dark spikes, the devil's crown of clumps",
+ "look": {
+  "skin": "zagred_form2",
+  "slim": false,
+  "scale": 1.2267,
+  "glow": true,
+  "hair": "anime_spike_tall",
+  "hair_color": "#08060c",
+  "extras": [
+   {
+    "model": "pmx_zagred_form2",
+    "texture": "pmx_zagred_form2",
+    "glow": true
+   }
+  ]
+ }
+}

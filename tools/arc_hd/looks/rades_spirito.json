@@ -1,0 +1,20 @@
+{
+ "id": "rades_spirito",
+ "source": "baseline",
+ "size": 256,
+ "hair_reason": "short messy hair",
+ "look": {
+  "skin": "rades_spirito",
+  "slim": false,
+  "scale": 1.024,
+  "hair": "anime_short",
+  "hair_color": "#b9a2e0",
+  "extras": [
+   {
+    "model": "pmx_rades_spirito",
+    "texture": "pmx_rades_spirito",
+    "glow": true
+   }
+  ]
+ }
+}

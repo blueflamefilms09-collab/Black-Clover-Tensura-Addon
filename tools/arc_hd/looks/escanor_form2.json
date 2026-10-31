@@ -1,0 +1,22 @@
+{
+ "id": "escanor_form2",
+ "source": "baseline",
+ "size": 256,
+ "hair_reason": "the blazing mane of the Sun's noon: a full chunky mane",
+ "look": {
+  "skin": "escanor_form2",
+  "slim": false,
+  "scale": 1.0667,
+  "hold_r": -0.42,
+  "glow": true,
+  "hair": "anime_mane",
+  "hair_color": "#e0902a",
+  "extras": [
+   {
+    "model": "pmx_escanor_form2",
+    "texture": "pmx_escanor_form2",
+    "glow": true
+   }
+  ]
+ }
+}

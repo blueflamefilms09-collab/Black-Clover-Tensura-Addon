@@ -1,0 +1,21 @@
+{
+ "id": "escanor",
+ "source": "baseline",
+ "size": 256,
+ "hair_reason": "the short brown cut of Lowly Escanor",
+ "look": {
+  "skin": "escanor",
+  "slim": false,
+  "scale": 1.0667,
+  "hold_r": -0.42,
+  "hair": "anime_short",
+  "hair_color": "#6a4a30",
+  "extras": [
+   {
+    "model": "pmx_escanor",
+    "texture": "pmx_escanor",
+    "glow": true
+   }
+  ]
+ }
+}

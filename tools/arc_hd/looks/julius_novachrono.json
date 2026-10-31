@@ -1,0 +1,20 @@
+{
+ "id": "julius_novachrono",
+ "source": "baseline",
+ "size": 256,
+ "hair_reason": "medium-long pale hair framing the face, no centre fringe",
+ "look": {
+  "skin": "julius_novachrono",
+  "slim": false,
+  "scale": 1.0773,
+  "hair": "anime_long_open",
+  "hair_color": "#e0cf9a",
+  "extras": [
+   {
+    "model": "pmx_julius_novachrono",
+    "texture": "pmx_julius_novachrono",
+    "glow": true
+   }
+  ]
+ }
+}

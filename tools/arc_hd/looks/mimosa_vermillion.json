@@ -1,0 +1,20 @@
+{
+ "id": "mimosa_vermillion",
+ "source": "baseline",
+ "size": 256,
+ "hair_reason": "long wavy blond hair, a full back and cheek locks",
+ "look": {
+  "skin": "mimosa_vermillion",
+  "slim": true,
+  "scale": 0.9813,
+  "hair": "anime_long",
+  "hair_color": "#f2d878",
+  "extras": [
+   {
+    "model": "pmx_mimosa_vermillion",
+    "texture": "pmx_mimosa_vermillion",
+    "glow": true
+   }
+  ]
+ }
+}

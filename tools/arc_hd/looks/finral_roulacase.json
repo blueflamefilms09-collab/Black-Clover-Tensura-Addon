@@ -1,0 +1,20 @@
+{
+ "id": "finral_roulacase",
+ "source": "baseline",
+ "size": 256,
+ "hair_reason": "short neat hair with a side fringe",
+ "look": {
+  "skin": "finral_roulacase",
+  "slim": true,
+  "scale": 1.0133,
+  "hair": "anime_short",
+  "hair_color": "#9a7650",
+  "extras": [
+   {
+    "model": "pmx_finral_roulacase",
+    "texture": "pmx_finral_roulacase",
+    "glow": true
+   }
+  ]
+ }
+}

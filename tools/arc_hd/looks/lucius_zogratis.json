@@ -1,0 +1,21 @@
+{
+ "id": "lucius_zogratis",
+ "source": "baseline",
+ "size": 256,
+ "hair_reason": "tall black spikes, a crown of clumps; the true form is the same cut in white",
+ "look": {
+  "skin": "lucius_zogratis",
+  "slim": false,
+  "scale": 1.12,
+  "glow": true,
+  "hair": "anime_spike_tall",
+  "hair_color": "#12101a",
+  "extras": [
+   {
+    "model": "pmx_lucius_zogratis",
+    "texture": "pmx_lucius_zogratis",
+    "glow": true
+   }
+  ]
+ }
+}

@@ -1,0 +1,21 @@
+{
+ "id": "merlin_form2",
+ "source": "baseline",
+ "size": 256,
+ "hair_reason": "KEPT classic: the black bob with the long fringe",
+ "look": {
+  "skin": "merlin_form2",
+  "slim": true,
+  "scale": 1.0133,
+  "glow": true,
+  "hair": "bob",
+  "hair_color": "#17131f",
+  "extras": [
+   {
+    "model": "pmx_merlin_form2",
+    "texture": "pmx_merlin_form2",
+    "glow": true
+   }
+  ]
+ }
+}

@@ -1,0 +1,22 @@
+{
+ "id": "mars_form2",
+ "source": "baseline",
+ "size": 256,
+ "hair_reason": "taller pale spikes in the second form",
+ "look": {
+  "skin": "mars_form2",
+  "slim": false,
+  "scale": 1.04,
+  "hold_r": -0.42,
+  "glow": true,
+  "hair": "anime_spike_tall",
+  "hair_color": "#fff0d8",
+  "extras": [
+   {
+    "model": "pmx_mars_form2",
+    "texture": "pmx_mars_form2",
+    "glow": true
+   }
+  ]
+ }
+}

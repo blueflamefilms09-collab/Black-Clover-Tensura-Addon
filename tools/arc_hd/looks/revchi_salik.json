@@ -1,0 +1,21 @@
+{
+ "id": "revchi_salik",
+ "source": "baseline",
+ "size": 256,
+ "hair_reason": "short unkempt dark hair",
+ "look": {
+  "skin": "revchi_salik",
+  "slim": true,
+  "scale": 1.04,
+  "hold_r": -0.42,
+  "hair": "anime_short",
+  "hair_color": "#2a2622",
+  "extras": [
+   {
+    "model": "pmx_revchi_salik",
+    "texture": "pmx_revchi_salik",
+    "glow": true
+   }
+  ]
+ }
+}

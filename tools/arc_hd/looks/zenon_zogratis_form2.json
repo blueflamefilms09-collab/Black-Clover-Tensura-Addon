@@ -1,0 +1,21 @@
+{
+ "id": "zenon_zogratis_form2",
+ "source": "baseline",
+ "size": 256,
+ "hair_reason": "KEPT classic: the pale mohawk of his true form",
+ "look": {
+  "skin": "zenon_zogratis_form2",
+  "slim": false,
+  "scale": 1.0667,
+  "glow": true,
+  "hair": "mohawk",
+  "hair_color": "#d8d0b4",
+  "extras": [
+   {
+    "model": "pmx_zenon_zogratis_form2",
+    "texture": "pmx_zenon_zogratis_form2",
+    "glow": true
+   }
+  ]
+ }
+}

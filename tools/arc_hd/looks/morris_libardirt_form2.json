@@ -1,0 +1,21 @@
+{
+ "id": "morris_libardirt_form2",
+ "source": "baseline",
+ "size": 256,
+ "hair_reason": "short blond spikes",
+ "look": {
+  "skin": "morris_libardirt_form2",
+  "slim": true,
+  "scale": 1.0667,
+  "glow": true,
+  "hair": "anime_spiky",
+  "hair_color": "#d9c27a",
+  "extras": [
+   {
+    "model": "pmx_morris_libardirt_form2",
+    "texture": "pmx_morris_libardirt_form2",
+    "glow": true
+   }
+  ]
+ }
+}

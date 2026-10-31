@@ -1,0 +1,20 @@
+{
+ "id": "asta",
+ "source": "baseline",
+ "size": 256,
+ "hair_reason": "short upright spikes: thick clumps standing up, the hair of the main hero",
+ "look": {
+  "skin": "asta",
+  "slim": false,
+  "scale": 1.0027,
+  "hair": "anime_spiky",
+  "hair_color": "#cfd2d8",
+  "extras": [
+   {
+    "model": "pmx_asta",
+    "texture": "pmx_asta",
+    "glow": true
+   }
+  ]
+ }
+}

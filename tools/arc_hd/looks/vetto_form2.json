@@ -1,0 +1,21 @@
+{
+ "id": "vetto_form2",
+ "source": "baseline",
+ "size": 256,
+ "hair_reason": "the wild golden mane",
+ "look": {
+  "skin": "vetto_form2",
+  "slim": false,
+  "scale": 1.3067,
+  "glow": true,
+  "hair": "anime_mane",
+  "hair_color": "#f0eee8",
+  "extras": [
+   {
+    "model": "pmx_vetto_form2",
+    "texture": "pmx_vetto_form2",
+    "glow": true
+   }
+  ]
+ }
+}

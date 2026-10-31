@@ -1,0 +1,20 @@
+{
+ "id": "nacht_faust",
+ "source": "baseline",
+ "size": 256,
+ "hair_reason": "KEPT classic: the high ponytail",
+ "look": {
+  "skin": "nacht_faust",
+  "slim": true,
+  "scale": 1.088,
+  "hair": "high_ponytail",
+  "hair_color": "#12121a",
+  "extras": [
+   {
+    "model": "pmx_nacht_faust",
+    "texture": "pmx_nacht_faust",
+    "glow": true
+   }
+  ]
+ }
+}

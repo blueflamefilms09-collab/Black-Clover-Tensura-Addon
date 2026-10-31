@@ -1,0 +1,20 @@
+{
+ "id": "gordon_agrippa",
+ "source": "baseline",
+ "size": 256,
+ "hair_reason": "long black hair falling over one eye (a side-swept fringe)",
+ "look": {
+  "skin": "gordon_agrippa",
+  "slim": false,
+  "scale": 1.1093,
+  "hair": "anime_swept",
+  "hair_color": "#0f0f14",
+  "extras": [
+   {
+    "model": "pmx_gordon_agrippa",
+    "texture": "pmx_gordon_agrippa",
+    "glow": true
+   }
+  ]
+ }
+}

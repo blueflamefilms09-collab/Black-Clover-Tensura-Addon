@@ -1,0 +1,20 @@
+{
+ "id": "luck_voltia",
+ "source": "baseline",
+ "size": 256,
+ "hair_reason": "short messy blond",
+ "look": {
+  "skin": "luck_voltia",
+  "slim": true,
+  "scale": 0.928,
+  "hair": "anime_short",
+  "hair_color": "#e8c84a",
+  "extras": [
+   {
+    "model": "pmx_luck_voltia",
+    "texture": "pmx_luck_voltia",
+    "glow": true
+   }
+  ]
+ }
+}

@@ -1,0 +1,20 @@
+{
+ "id": "gauche_adlai",
+ "source": "baseline",
+ "size": 256,
+ "hair_reason": "short unkempt black hair",
+ "look": {
+  "skin": "gauche_adlai",
+  "slim": true,
+  "scale": 1.0453,
+  "hair": "anime_short",
+  "hair_color": "#17161d",
+  "extras": [
+   {
+    "model": "pmx_gauche_adlai",
+    "texture": "pmx_gauche_adlai",
+    "glow": true
+   }
+  ]
+ }
+}

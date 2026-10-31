@@ -1,0 +1,21 @@
+{
+ "id": "rhya_form2",
+ "source": "baseline",
+ "size": 256,
+ "hair_reason": "white spikes in the second form",
+ "look": {
+  "skin": "rhya_form2",
+  "slim": true,
+  "scale": 1.0667,
+  "glow": true,
+  "hair": "anime_spiky",
+  "hair_color": "#f0f0f8",
+  "extras": [
+   {
+    "model": "pmx_rhya_form2",
+    "texture": "pmx_rhya_form2",
+    "glow": true
+   }
+  ]
+ }
+}

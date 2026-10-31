@@ -1,0 +1,22 @@
+{
+ "id": "meliodas_form2",
+ "source": "baseline",
+ "size": 256,
+ "hair_reason": "a wild blond crest swept up and back: the big layered spike mass of the owner's reference 154",
+ "look": {
+  "skin": "meliodas_form2",
+  "slim": false,
+  "scale": 0.9813,
+  "hold_r": -0.42,
+  "glow": true,
+  "hair": "anime_spike_swept",
+  "hair_color": "#e8c860",
+  "extras": [
+   {
+    "model": "pmx_meliodas_form2",
+    "texture": "pmx_meliodas_form2",
+    "glow": true
+   }
+  ]
+ }
+}

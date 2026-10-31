@@ -1,0 +1,20 @@
+{
+ "id": "lotus_whomalt",
+ "source": "baseline",
+ "size": 256,
+ "hair_reason": "short unkempt hair",
+ "look": {
+  "skin": "lotus_whomalt",
+  "slim": true,
+  "scale": 1.0933,
+  "hair": "anime_short",
+  "hair_color": "#4a443f",
+  "extras": [
+   {
+    "model": "pmx_lotus_whomalt",
+    "texture": "pmx_lotus_whomalt",
+    "glow": true
+   }
+  ]
+ }
+}

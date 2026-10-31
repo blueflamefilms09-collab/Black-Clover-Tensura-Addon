@@ -1,0 +1,20 @@
+{
+ "id": "secre_swallowtail",
+ "source": "baseline",
+ "size": 256,
+ "hair_reason": "KEPT classic: the black bob",
+ "look": {
+  "skin": "secre_swallowtail",
+  "slim": true,
+  "scale": 0.9173,
+  "hair": "bob",
+  "hair_color": "#14141a",
+  "extras": [
+   {
+    "model": "pmx_secre_swallowtail",
+    "texture": "pmx_secre_swallowtail",
+    "glow": true
+   }
+  ]
+ }
+}

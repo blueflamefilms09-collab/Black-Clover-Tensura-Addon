@@ -1,0 +1,19 @@
+{
+ "id": "devil_avatar_form2",
+ "source": "baseline",
+ "size": 256,
+ "hair_reason": "bald: the devil's body has no hair (horns are extras)",
+ "look": {
+  "skin": "devil_avatar_form2",
+  "slim": false,
+  "scale": 1.52,
+  "glow": true,
+  "extras": [
+   {
+    "model": "pmx_devil_avatar_form2",
+    "texture": "pmx_devil_avatar_form2",
+    "glow": true
+   }
+  ]
+ }
+}

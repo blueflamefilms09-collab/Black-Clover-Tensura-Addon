@@ -1,0 +1,22 @@
+{
+ "id": "ban_form2",
+ "source": "baseline",
+ "size": 256,
+ "hair_reason": "swept-up silver spikes with long side locks: thick vertical clumps",
+ "look": {
+  "skin": "ban_form2",
+  "slim": false,
+  "scale": 1.1307,
+  "hold_r": -0.42,
+  "glow": true,
+  "hair": "anime_spiky",
+  "hair_color": "#eef2f8",
+  "extras": [
+   {
+    "model": "pmx_ban_form2",
+    "texture": "pmx_ban_form2",
+    "glow": true
+   }
+  ]
+ }
+}

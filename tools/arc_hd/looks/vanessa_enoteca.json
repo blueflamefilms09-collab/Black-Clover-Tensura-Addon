@@ -1,0 +1,20 @@
+{
+ "id": "vanessa_enoteca",
+ "source": "baseline",
+ "size": 256,
+ "hair_reason": "long wavy pink hair",
+ "look": {
+  "skin": "vanessa_enoteca",
+  "slim": true,
+  "scale": 1.0507,
+  "hair": "anime_long",
+  "hair_color": "#e87aae",
+  "extras": [
+   {
+    "model": "pmx_vanessa_enoteca",
+    "texture": "pmx_vanessa_enoteca",
+    "glow": true
+   }
+  ]
+ }
+}
