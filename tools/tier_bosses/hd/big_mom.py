@@ -48,7 +48,7 @@ def hearts(f, mask, y0, y1, color=GOLD, a=0.55, dx=2.0, size=0.62):
         x = (dx * 0.5) if n % 2 == 0 else dx
         while x < f.w + dx * 0.5:
             hp = f.m_poly(H.heart_pts(x, y, size)) * mask
-            f.fill(hp, H.lin((0, y - size * 0.5), (0, y + size * 0.5), [(0, GOLD_L), (1, GOLD_D)]), a)
+            f.fill(hp, H.lin((0, y - size * 0.5), (0, y + size * 0.5), [(0, GOLD_L), (1, GOLD)]), a)
             x += dx
         y += 1.15
         n += 1
@@ -290,34 +290,36 @@ def leg(cv, part):
                 f.clear()
         w = base.w
         # base: the skirt down to the knee, striped stockings, wine boots
-        base.fill(base.m_band(0.0, 7.2), H.lin((0, 0), (0, 7.2), [(0, H.tone(PLUM, 0.85)), (1, PLUM)]))
-        gores(base, base.m_band(0.0, 7.2), [2.0], k=0.2, y0=0.0, y1=7.2)
-        hearts(base, base.m_band(0.2, 6.9), 1.2, 5.0, dx=2.0, size=1.15, a=0.75)
+        base.fill(base.m_band(0.0, 6.8), H.lin((0, 0), (0, 6.8), [(0, H.tone(PLUM, 0.85)), (1, PLUM)]))
+        gores(base, base.m_band(0.0, 6.8), [2.0], k=0.2, y0=0.0, y1=6.8)
+        hearts(base, base.m_band(0.2, 6.4), 1.2, 5.0, dx=2.0, size=1.15, a=0.75)
         # stockings: pink and white stripes
-        st = base.m_band(7.0, 9.3)
-        yy = base.Y
-        stripe = ((yy - 7.0) // 0.6).astype(int) % 2 == 0
+        st = base.m_band(6.6, 8.8)
+        stripe = ((base.Y - 6.6) // 0.6).astype(int) % 2 == 0
         base.fill(st, np.where(stripe[..., None], H.col("#fff2f6"), H.col("#f0608f")).astype(np.float32))
-        H.sheen(base, st, [1.1], width=0.2, strength=0.25, y0=7.2, y1=9.2)
-        H.shadow_under(base, 7.0, 0.5, 0.24)
-        # wine boot
-        boot = base.m_band(9.0, 12.0)
-        base.fill(boot, H.lin((0, 9.0), (0, 12.0), [(0, H.tone(WINE, 1.15)), (0.55, WINE), (1, WINE_D)]))
-        H.sheen(base, boot, [1.0], width=0.2, strength=0.25, tilt=0.05, y0=9.8, y1=11.5, color="#ff9ac0")
-        H.trim_band(base, 9.0, 9.7, GOLD, outline=0.5)
+        H.sheen(base, st, [1.1], width=0.2, strength=0.25, y0=6.8, y1=8.6)
+        H.shadow_under(base, 6.6, 0.5, 0.24)
+        # wine boot: gold cuff, lace ruffle, lacing, dark sole
+        boot = base.m_band(8.6, 12.0)
+        base.fill(boot, H.lin((0, 8.6), (0, 12.0), [(0, H.tone(WINE, 1.25)), (0.5, WINE), (1, WINE_D)]))
+        H.sheen(base, boot, [1.0], width=0.2, strength=0.28, tilt=0.05, y0=9.6, y1=11.5, color="#ff9ac0")
+        H.trim_band(base, 8.6, 9.2, GOLD, outline=0.5)
         if nm == "front":
-            for y in (10.5, 11.1):
-                H.stud(base, 1.1, y, 0.12, GOLD_L)
-                H.stud(base, 2.9, y, 0.12, GOLD_L)
-        base.fill(base.m_band(11.65, 12.0), H.tone(WINE_D, 0.6), 0.9)
-        # overlay: the skirt flare (plum, gold scalloped hem, lace petticoat) and the lace boot ruffle
-        ov.fill(ov.m_band(0.0, 5.6), H.lin((0, 0), (0, 5.6), [(0, H.tone(PLUM, 0.9)), (1, PLUM)]))
-        gores(ov, ov.m_band(0.0, 5.6), [2.0], k=0.2, y0=0.0, y1=5.6)
-        hearts(ov, ov.m_band(0.2, 4.9), 1.2, 4.4, dx=2.0, size=1.15, a=0.75)
-        H.trim_band(ov, 5.0, 5.7, GOLD, outline=0.5)
-        H.scallops(ov, ov.m_band(5.6, 7.9), 5.6, rows=2, cell=1.0, depth=1.5, base=LACE, tip="#ffffff", edge=LACE_D, edge_a=0.45, shadow=0.24)
-        H.trim_band(ov, 9.0, 9.7, GOLD, outline=0.5)
-        H.scallops(ov, ov.m_band(9.5, 10.6), 9.6, rows=1, cell=1.0, depth=0.9, base=LACE, tip="#ffffff", edge=LACE_D, edge_a=0.45, shadow=0.2)
+            lacing(base, 1.0, 3.0, 9.8, 11.2, 4, width=0.13)
+            for y in (9.8, 10.55, 11.3):
+                H.stud(base, 1.0, y, 0.11, GOLD_L)
+                H.stud(base, 3.0, y, 0.11, GOLD_L)
+        elif nm in ("west", "east"):
+            H.trim_line(base, [(0.0, 11.0), (w, 11.0)], GOLD, width=0.16, outline=0.3)
+        base.fill(base.m_band(11.62, 12.0), H.tone(WINE_D, 0.6), 0.9)
+        # overlay: the skirt flare (plum, gold hem, lace petticoat) and the lace boot ruffle
+        ov.fill(ov.m_band(0.0, 5.2), H.lin((0, 0), (0, 5.2), [(0, H.tone(PLUM, 0.9)), (1, PLUM)]))
+        gores(ov, ov.m_band(0.0, 5.2), [2.0], k=0.2, y0=0.0, y1=5.2)
+        hearts(ov, ov.m_band(0.2, 4.6), 1.2, 4.0, dx=2.0, size=1.15, a=0.8)
+        H.trim_band(ov, 4.7, 5.35, GOLD, outline=0.5)
+        H.scallops(ov, ov.m_band(5.3, 7.0), 5.3, rows=2, cell=1.0, depth=1.2, base=LACE, tip="#ffffff", edge=LACE_D, edge_a=0.45, shadow=0.24)
+        H.trim_band(ov, 8.6, 9.2, GOLD, outline=0.5)
+        H.scallops(ov, ov.m_band(8.9, 9.9), 8.95, rows=1, cell=1.0, depth=0.85, base=LACE, tip="#ffffff", edge=LACE_D, edge_a=0.45, shadow=0.2)
     for f in lay(cv, part, "bottom"):
         f.fill(f.m_all(), WINE_D)
     for f in lay(cv, part, "top"):
