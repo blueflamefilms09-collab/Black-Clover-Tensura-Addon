@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * The kit's data, with no game: the hair table (every style resolves, its boxes lie in the 64x64 sheet, the cap is on the hat layer's UV and larger than it), the table of looks (every look
- * resolves to a skin that exists at 64x64, a glow map where it says so, a haircut that exists, extras with their roots and textures), skin path resolution, the old avatar hair ids, the helmet
+ * resolves to a skin that exists (square, 64, 128 or 256: 3.38.0 HD outfits), a glow map of the same size where it says so, a haircut that exists, extras with their roots and textures), skin path resolution, the old avatar hair ids, the helmet
  * rule and the arcs' bosses. The same audit runs in the CI server's self-test {@code render.playermodel}.
  */
 class PlayerModelDataTest {
@@ -123,6 +123,43 @@ class PlayerModelDataTest {
         assertEquals("", SkinPath.hairSheet("../x"));
         assertEquals("textures/entity/pmx_asta.png", SkinPath.extraTexture("pmx_asta"));
         assertEquals("", SkinPath.extraTexture("a/b"));
+    }
+
+    /** 3.38.0 (HD outfits): the model's UVs are fractions of the 64x64 layout, so a skin may be a power-of-two multiple of 64 with the same layout; it must be square. */
+    @Test
+    void aSkinMayBe64Or128Or256ButSquareAndAPowerOfTwoMultipleOf64() {
+        for (int ok : new int[]{64, 128, 256, 512, 1024}) assertTrue(SkinPath.validSkinSize(ok, ok), String.valueOf(ok));
+        for (int[] bad : new int[][]{{64, 32}, {32, 32}, {0, 0}, {192, 192}, {320, 320}, {100, 100}, {256, 128}, {128, 256}, {2048, 2048}, {-64, -64}, {64, 65}})
+            assertFalse(SkinPath.validSkinSize(bad[0], bad[1]), bad[0] + "x" + bad[1]);
+        assertEquals(1, SkinPath.texelsPerPixel(64));
+        assertEquals(2, SkinPath.texelsPerPixel(128));
+        assertEquals(4, SkinPath.texelsPerPixel(256));
+        assertEquals(1, SkinPath.texelsPerPixel(100), "an invalid size counts as the base size");
+    }
+
+    /** Every skin the tables name is valid under that rule, and its glow map (when the look says it glows) has the size of the skin: the audit says so for the whole data set, 64 or HD. */
+    @Test
+    void everyLookSkinAndItsGlowMapFollowTheSizeRule() throws Exception {
+        int hd = 0, base = 0;
+        for (String table : PlayerLookTables.FILES) {
+            File f = new File(ASSETS + table);
+            if (!f.isFile()) continue;
+            for (PlayerLook l : PlayerLook.parseTable(json(table)).values()) {
+                String path = SkinPath.resolve(l.skin());
+                if (path.isEmpty() || !new File(ASSETS + path).isFile()) continue;
+                java.awt.image.BufferedImage img = javax.imageio.ImageIO.read(new File(ASSETS + path));
+                assertTrue(SkinPath.validSkinSize(img.getWidth(), img.getHeight()), l.id() + ": " + img.getWidth() + "x" + img.getHeight());
+                if (img.getWidth() > 64) hd++; else base++;
+                File g = new File(ASSETS + SkinPath.glowOf(path));
+                if (l.glow() && g.isFile()) {
+                    java.awt.image.BufferedImage gi = javax.imageio.ImageIO.read(g);
+                    assertEquals(img.getWidth(), gi.getWidth(), l.id() + " glow width");
+                    assertEquals(img.getHeight(), gi.getHeight(), l.id() + " glow height");
+                }
+            }
+        }
+        assertTrue(base > 300, "the 64x64 skins stay valid: " + base);
+        assertTrue(hd >= 0);
     }
 
     @Test

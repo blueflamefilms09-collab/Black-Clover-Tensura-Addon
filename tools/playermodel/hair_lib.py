@@ -207,6 +207,111 @@ def paint_block(sheet, u, v, w, h, d, seed, taper="none", pattern="strand", rows
         fill_face(sheet, rect, grey, alpha)
 
 
+# ---------------------------------------------------------------- spikes and rolls (3.37 hair rework)
+def spike_grey(seed, face, x, y, fw, fh):
+    """The grey of one texel of a spike section's side face (y = 0 is the tip end): strands run along the spike, in clumps; the left of a face is lit, the right shaded (a rounded clump),
+    the tip end is lit and the root end dark, so the stacked sections read as layered clumps with a dark gap between them. Four grey steps (ANIME_LEVELS)."""
+    xn = (x + 0.5) / max(1.0, fw)
+    t = y / max(1.0, fh - 1.0)
+    c, pos = clump_of(seed, x)
+    g = 0.90 + 0.12 * (hash01(seed, c, 5) - 0.5)
+    g += 0.20 * (0.5 - xn)                                          # the clump's rounding: lit left, shaded right
+    g += 0.07 * (1.0 - t) ** 2                                      # the lit tip end
+    g -= 0.30 * max(0.0, t - 0.5) / 0.5                             # the shaded root end
+    if pos == 0 and c > 0:
+        g -= 0.13                                                   # the gap between two strands clumps
+    if pos == 1 and hash01(seed, c, 3) > 0.5 and 0.08 < t < 0.7:
+        g += 0.09                                                   # a lit strand
+    if y == fh - 1:
+        g -= 0.2                                                    # the dark line where the section meets the one below
+    h = hash01(seed, x * 7 + len(face), y + 5)
+    if h > 0.95 and t < 0.6:
+        g = 1.04
+    return float(_q(min(1.04, max(0.35, g))))
+
+
+def paint_spike(sheet, u, v, w, h, d, seed, ratio):
+    """A section of a spike: its sides are trapezoids that narrow from the full width at the root (the bottom row) to `ratio` of it at the tip end (the top row; 0 is a point), the top face
+    keeps only the middle `ratio` of its footprint (a point's top is one texel), the bottom is never drawn (it is inside the hair below)."""
+    rg = regions(u, v, w, h, d)
+    for face, rect in rg.items():
+        x0, y0, fw, fh = rect
+        if face == "bottom":
+            continue
+        for yy in range(fh):
+            for xx in range(fw):
+                if face == "top":
+                    lim_x = max(0.5, ratio * (fw - 1) / 2.0 + 0.5)
+                    lim_y = max(0.5, ratio * (fh - 1) / 2.0 + 0.5)
+                    if abs(xx - (fw - 1) / 2.0) > lim_x or abs(yy - (fh - 1) / 2.0) > lim_y:
+                        continue
+                    g = min(1.0, 0.95 + 0.08 * hash01(seed, xx, yy))
+                    g = _q(g)
+                else:
+                    half = (fw - 1) / 2.0
+                    t = yy / max(1.0, fh - 1.0)
+                    lim = half * (ratio + (1.0 - ratio) * t)
+                    if abs(xx - half) > lim + 0.5:
+                        continue
+                    g = spike_grey(seed, face, xx, yy, fw, fh)
+                sheet.px[y0 + yy, x0 + xx] = (g, g, g, 1.0)
+
+
+def ring_grey(seed, x, y, fw, fh, light=1.0):
+    """The grey of one texel of a rolled curl's face: concentric bands round the face's centre (the spiral of a curl, four steps), lit towards the top left, a bright highlight pixel."""
+    cx, cy = (fw - 1) / 2.0, (fh - 1) / 2.0
+    r = math.hypot((x - cx) / max(0.5, fw / 2.0), (y - cy) / max(0.5, fh / 2.0))
+    band = int(r * 3.2 + 0.35 * math.sin(math.atan2(y - cy, x - cx) * 1.0 + hash01(seed, 1, 1) * 6.0)) % 3
+    g = (0.78, 0.97, 0.66)[band]
+    g += 0.08 * (-(x - cx) / max(1.0, fw) - (y - cy) / max(1.0, fh))
+    g *= light
+    if hash01(seed, x, y + 9) > 0.96 and r < 0.85:
+        g = 1.04
+    return float(_q(min(1.04, max(0.35, g))))
+
+
+def paint_curl(sheet, u, v, w, h, d, seed, round_cut=True):
+    """A rolled curl: every face is a disc of concentric bands (a cube with six round faces reads as a ball), the bottom face a little darker."""
+    rg = regions(u, v, w, h, d)
+    for face, rect in rg.items():
+        x0, y0, fw, fh = rect
+        for yy in range(fh):
+            for xx in range(fw):
+                cx, cy = (fw - 1) / 2.0, (fh - 1) / 2.0
+                if round_cut and ((xx - cx) / max(0.5, fw / 2.0)) ** 2 + ((yy - cy) / max(0.5, fh / 2.0)) ** 2 > 1.22:
+                    continue
+                g = ring_grey(seed + len(face), xx, yy, fw, fh, 0.9 if face == "bottom" else 1.0)
+                sheet.px[y0 + yy, x0 + xx] = (g, g, g, 1.0)
+
+
+def paint_mass(sheet, u, v, w, h, d, seed, round_cut=0.0, flat_top=False):
+    """A chunk of a head of hair (an afro tier, a flat top): clump strands on the sides, a lit top with wedge clumps; `round_cut` > 0 cuts the corners of the side faces (an ellipse), so a
+    stack of tiers reads as a dome. The bottom is never drawn."""
+    rg = regions(u, v, w, h, d)
+    for face, rect in rg.items():
+        x0, y0, fw, fh = rect
+        if face == "bottom":
+            continue
+        for yy in range(fh):
+            for xx in range(fw):
+                if round_cut > 0.0 and face != "top":
+                    cx, cy = (fw - 1) / 2.0, (fh - 1) / 2.0
+                    ex = abs(xx - cx) / max(0.5, fw / 2.0)
+                    ey = abs(yy - cy) / max(0.5, fh / 2.0)
+                    if ex ** round_cut + ey ** round_cut > 1.0 + 0.5 / max(1.0, min(fw, fh)):
+                        continue
+                if face == "top":
+                    ang = math.atan2(xx - (fw - 1) / 2.0, yy - (fh - 1) / 2.0)
+                    wedge = int((ang + math.pi) / (2 * math.pi) * 12)
+                    g = 0.92 + 0.14 * (hash01(seed, wedge, 3) - 0.5) - (0.12 if wedge % 3 == 0 else 0.0)
+                    if hash01(seed, xx, yy + 40) > 0.93:
+                        g = 1.04
+                    g = _q(min(1.04, max(0.4, g)))
+                else:
+                    g = clump_grey(seed, xx + (3 if face == "back" else 0), yy, fh, tip=0.0)
+                sheet.px[y0 + yy, x0 + xx] = (g, g, g, 1.0)
+
+
 # ---------------------------------------------------------------- the scalp cap (hat-layer UV)
 def cell_of(face, x, y):
     """The scalp cell (lx, ly, lz) a texel of the 8 x 8 x 8 cap's face covers."""
@@ -287,13 +392,23 @@ class Style:
         paint_cap(self.sheet, mask, self.seed + 1, anime=self.anime)
         self.boxes.append({"name": name, "part": "head", "from": [-4, -8, -4], "size": [8, 8, 8], "inflate": inflate, "uv": [u, v], "tone": tone, "helm": helm})
 
+    def _paint(self, u, v, uw, uh, ud, sd, taper, pattern, tip):
+        if pattern == "spike":                              # 3.37 hair rework: a spike section; `taper` is "pt<ratio>" (the tip end's share of the root's width)
+            paint_spike(self.sheet, u, v, uw, uh, ud, sd, float(taper[2:]))
+        elif pattern == "curl3d":                           # a rolled curl: round discs of concentric bands on all six faces
+            paint_curl(self.sheet, u, v, uw, uh, ud, sd)
+        elif pattern == "mass":                             # a tier of an afro / a flat top: `taper` is "m<round exponent>" ("m0" no cut, "m2.4" a rounded dome)
+            paint_mass(self.sheet, u, v, uw, uh, ud, sd, round_cut=float(taper[1:]) if taper[:1] == "m" else 0.0)
+        else:
+            paint_block(self.sheet, u, v, uw, uh, ud, sd, taper=taper, pattern=pattern, tip=tip, anime=self.anime)
+
     def box(self, name, frm, size, inflate=0.2, tone=0, part="head", rot=None, pivot=None, helm="hide", taper="none", pattern="strand", key=None, tip=0.0, uvsize=None):
         w, h, d = size
         uw, uh, ud = uvsize or (max(1, int(round(w))), max(1, int(round(h))), max(1, int(round(d))))
         k = key if key is not None else "%s:%s:%s:%s:%s" % (uw, uh, ud, taper, pattern)
         (u, v), fresh = self.sheet.alloc(uw, uh, ud, key=k)
         if fresh:
-            paint_block(self.sheet, u, v, uw, uh, ud, self.seed + len(self.boxes) * 7, taper=taper, pattern=pattern, tip=tip, anime=self.anime)
+            self._paint(u, v, uw, uh, ud, self.seed + len(self.boxes) * 7, taper, pattern, tip)
         b = {"name": name, "part": part, "from": [round(c, 3) for c in frm], "size": [round(c, 3) for c in size], "inflate": inflate, "uv": [u, v], "tone": tone, "helm": helm}
         if (uw, uh, ud) != (w, h, d):
             b["uvsize"] = [uw, uh, ud]
@@ -313,7 +428,7 @@ class Style:
             key = "%s:%s:%s:%s:%s:%d" % (shared_key if shared_key else name, uw, uh, ud, taper, i) if not mirror_of else "%s:%s:%s:%s:%s:%d" % (mirror_of, uw, uh, ud, taper, i)
             (u, v), fresh = self.sheet.alloc(uw, uh, ud, key=key)
             if fresh:
-                paint_block(self.sheet, u, v, uw, uh, ud, self.seed + 31 * (i + 1) + len(self.chains) * 13, taper=taper, pattern=pattern, tip=0.6 if last else 0.0, anime=self.anime)
+                self._paint(u, v, uw, uh, ud, self.seed + 31 * (i + 1) + len(self.chains) * 13, taper, pattern, 0.6 if last else 0.0)
             tone = (tones[i] if tones else (0 if i % 2 == 0 else 1)) if pattern == "plait" else (tones[i] if tones else 0)
             seg = {"part": part, "size": [round(w, 3), round(ln, 3), round(d, 3)], "inflate": infl, "uv": [u, v], "tone": tone}
             if (uw, uh, ud) != (round(w), round(ln), round(d)):
@@ -347,3 +462,194 @@ def write_styles(styles, order, out_json, meta=None):
     with open(out_json, "w") as f:
         json.dump(doc, f, indent=1)
         f.write("\n")
+
+
+# ---------------------------------------------------------------- the attachment check (3.37 hair rework: nothing floats)
+# Every box and every chain segment of a style is an oriented box in the head's frame (a rotated box turns about its pivot, vanilla order Rz Ry Rx; a chain segment hangs from its pivot at
+# rest). A piece is ATTACHED when the exact distance between it and the scalp cap, or a piece that is already attached, is at most ATTACH_GAP model pixels (0 when they overlap). A static box
+# must also be EMBEDDED: it overlaps its parent by at least EMBED_DEPTH pixels (the smallest overlap over the 15 separating axes of two boxes), so a spike stands IN the hair, not on one
+# corner of it. The same maths is in the JUnit test client/playermodel/HairAttachedTest.java (read it together with this).
+ATTACH_GAP = 0.1
+EMBED_DEPTH = 0.4
+SIDE_Y = -8.0           # a static box with any part lower than this (beside the head, not above it) must touch the scalp cap itself: a piece that hangs off another piece beside the head floats
+
+
+def rot_zyx(rx, ry, rz):
+    """The 3x3 rotation of a vanilla model part: Rz * Ry * Rx, angles in degrees."""
+    rx, ry, rz = math.radians(rx), math.radians(ry), math.radians(rz)
+    cx, sx, cy, sy, cz, sz = math.cos(rx), math.sin(rx), math.cos(ry), math.sin(ry), math.cos(rz), math.sin(rz)
+    Rx = np.array([[1, 0, 0], [0, cx, -sx], [0, sx, cx]], float)
+    Ry = np.array([[cy, 0, sy], [0, 1, 0], [-sy, 0, cy]], float)
+    Rz = np.array([[cz, -sz, 0], [sz, cz, 0], [0, 0, 1]], float)
+    return Rz @ Ry @ Rx
+
+
+class Obb:
+    """An oriented box: centre c, half extents h, axes = the columns of R."""
+    __slots__ = ("name", "c", "h", "R", "rotated", "chain", "index", "verts")
+
+    def __init__(self, name, c, h, R, rotated=False, chain=None, index=0):
+        self.name, self.c, self.h, self.R, self.rotated, self.chain, self.index = name, np.array(c, float), np.array(h, float), np.array(R, float), rotated, chain, index
+        self.verts = np.array([self.c + self.R @ (self.h * np.array([sx, sy, sz])) for sx in (-1, 1) for sy in (-1, 1) for sz in (-1, 1)])
+
+    def aabb(self):
+        return self.verts.min(axis=0), self.verts.max(axis=0)
+
+
+def pieces_of(spec):
+    """The oriented boxes of a style spec (the dict a Style.spec() / hair_styles.json entry holds), boxes first, then every chain segment at rest."""
+    out = []
+    for b in spec["boxes"]:
+        f, s, infl = np.array(b["from"], float), np.array(b["size"], float), float(b.get("inflate", 0.0))
+        c, R, rotated = f + s / 2.0, np.eye(3), False
+        if b.get("rot"):
+            pv = np.array(b.get("pivot") or (f[0] + s[0] / 2, f[1] + s[1], f[2] + s[2] / 2), float)
+            R = rot_zyx(*b["rot"])
+            c = pv + R @ (c - pv)
+            rotated = True
+        out.append(Obb(b["name"], c, s / 2.0 + infl, R, rotated))
+    for ch in spec["chains"]:
+        y = float(ch["root"][1])
+        for i, sg in enumerate(ch["segments"]):
+            w, ln, d = sg["size"]
+            infl = float(sg.get("inflate", 0.0))
+            out.append(Obb("%s#%d" % (ch["name"], i), (ch["root"][0], y + ln / 2.0, ch["root"][2]), (w / 2.0 + infl, ln / 2.0 + infl, d / 2.0 + infl), np.eye(3), False, ch["name"], i))
+            y += ln
+    return out
+
+
+def _aabb_gap(a, b):
+    lo_a, hi_a = a.aabb()
+    lo_b, hi_b = b.aabb()
+    g = np.maximum(0.0, np.maximum(lo_b - hi_a, lo_a - hi_b))
+    return float(np.linalg.norm(g))
+
+
+def _point_obb(p, o):
+    q = o.R.T @ (np.asarray(p, float) - o.c)
+    return float(np.linalg.norm(q - np.clip(q, -o.h, o.h)))
+
+
+def _seg_seg(p1, q1, p2, q2):
+    d1, d2, r = q1 - p1, q2 - p2, p1 - p2
+    a, e, f = float(d1 @ d1), float(d2 @ d2), float(d2 @ r)
+    s = t = 0.0
+    if a <= 1e-12 and e <= 1e-12:
+        return float(np.linalg.norm(r))
+    if a <= 1e-12:
+        t = min(1.0, max(0.0, f / e))
+    else:
+        c = float(d1 @ r)
+        if e <= 1e-12:
+            s = min(1.0, max(0.0, -c / a))
+        else:
+            b = float(d1 @ d2)
+            den = a * e - b * b
+            s = min(1.0, max(0.0, (b * f - c * e) / den)) if den > 1e-12 else 0.0
+            t = (b * s + f) / e
+            if t < 0.0:
+                t, s = 0.0, min(1.0, max(0.0, -c / a))
+            elif t > 1.0:
+                t, s = 1.0, min(1.0, max(0.0, (b - c) / a))
+    return float(np.linalg.norm((p1 + d1 * s) - (p2 + d2 * t)))
+
+
+_EDGES = [(i, i ^ m) for i in range(8) for m in (1, 2, 4) if i < (i ^ m)]
+
+
+def obb_overlap(a, b):
+    """The penetration depth of two oriented boxes: the smallest overlap over their 15 separating axes, or None when some axis separates them."""
+    axes = [a.R[:, i] for i in range(3)] + [b.R[:, i] for i in range(3)]
+    for i in range(3):
+        for j in range(3):
+            x = np.cross(a.R[:, i], b.R[:, j])
+            n = np.linalg.norm(x)
+            if n > 1e-6:
+                axes.append(x / n)
+    dc = b.c - a.c
+    depth = 1e9
+    for ax in axes:
+        ra = float(np.sum(a.h * np.abs(a.R.T @ ax)))
+        rb = float(np.sum(b.h * np.abs(b.R.T @ ax)))
+        ov = ra + rb - abs(float(dc @ ax))
+        if ov < 0.0:
+            return None
+        depth = min(depth, ov)
+    return depth
+
+
+def obb_distance(a, b, limit=None):
+    """The exact distance between two oriented boxes (0 when they overlap). `limit`: gives up (returns a value above it) when the boxes' bounds are farther apart than that."""
+    if limit is not None and _aabb_gap(a, b) > limit:
+        return limit + 1.0
+    if obb_overlap(a, b) is not None:
+        return 0.0
+    best = 1e9
+    for v in a.verts:
+        best = min(best, _point_obb(v, b))
+    for v in b.verts:
+        best = min(best, _point_obb(v, a))
+    for (i, j) in _EDGES:
+        for (k, l) in _EDGES:
+            best = min(best, _seg_seg(a.verts[i], a.verts[j], b.verts[k], b.verts[l]))
+    return best
+
+
+def attach_report(spec, gap=ATTACH_GAP, embed=EMBED_DEPTH):
+    """{'floating': [names not within `gap` of the cap or an attached piece], 'shallow': [static boxes attached but overlapping their parent by less than `embed`], 'pieces': n}.
+    Chain segments are checked at rest; a segment hangs from the end of the one above, so only the first one has to find the hair."""
+    ps = pieces_of(spec)
+    root = [p for p in ps if p.name == "cap"]
+    if not root:
+        return {"floating": [], "shallow": [], "pieces": len(ps), "note": "no cap"}
+    attached = list(root)
+    todo = [p for p in ps if p.name != "cap"]
+    depth_of = {}
+    progress = True
+    while todo and progress:
+        progress = False
+        for p in list(todo):
+            best = None
+            for q in attached:
+                if p.chain is not None and p.index > 0 and not (q.chain == p.chain and q.index == p.index - 1):
+                    continue                            # a chain segment hangs from the segment above it
+                d = obb_distance(p, q, gap)
+                if d <= gap:
+                    ov = obb_overlap(p, q)
+                    best = max(best or 0.0, ov if ov is not None else 0.0)
+            if best is not None:
+                attached.append(p)
+                todo.remove(p)
+                depth_of[p.name] = best
+                progress = True
+    shallow = [p.name for p in attached if p.chain is None and p.name != "cap" and depth_of.get(p.name, 0.0) < embed]
+    cap = root[0]
+    beside = [p.name for p in ps if p.chain is None and p.name != "cap" and p.aabb()[1][1] > SIDE_Y and obb_distance(p, cap, gap) > gap]
+    return {"floating": [p.name for p in todo], "shallow": shallow, "beside": beside, "coplanar": coplanar_pairs(ps), "pieces": len(ps)}
+
+
+COPLANAR = 0.02
+
+
+def coplanar_pairs(ps, tol=COPLANAR, min_area=0.5):
+    """Pairs of pieces with the same orientation that have a face on one plane (within `tol`), both facing the same way, and overlap there by at least `min_area` square pixels: two such faces
+    z-fight. Back-to-back faces (one piece's high face on the other's low face) are inside the hair, slivers are not seen, pieces of different orientation cannot share a plane except by
+    accident, and two segments of one chain move against each other, so none of those are reported."""
+    out = []
+    for i in range(len(ps)):
+        for j in range(i + 1, len(ps)):
+            a, b = ps[i], ps[j]
+            if not np.allclose(a.R, b.R, atol=1e-6) or (a.chain is not None and a.chain == b.chain):
+                continue
+            ca, cb = a.R.T @ a.c, b.R.T @ b.c
+            lo_a, hi_a, lo_b, hi_b = ca - a.h, ca + a.h, cb - b.h, cb + b.h
+            for ax in range(3):
+                others = [k for k in range(3) if k != ax]
+                ov = 1.0
+                for k in others:
+                    ov *= max(0.0, min(hi_a[k], hi_b[k]) - max(lo_a[k], lo_b[k]))
+                if ov < min_area:
+                    continue
+                if abs(lo_a[ax] - lo_b[ax]) < tol or abs(hi_a[ax] - hi_b[ax]) < tol:
+                    out.append("%s|%s" % (a.name, b.name))
+    return sorted(set(out))

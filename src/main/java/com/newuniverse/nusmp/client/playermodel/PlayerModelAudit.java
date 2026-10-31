@@ -84,10 +84,11 @@ public final class PlayerModelAudit {
                 String path = SkinPath.resolve(l.skin());
                 if (path.isEmpty()) bad.add("look " + l.id() + ": the skin name '" + l.skin() + "' is not valid");
                 else {
-                    String why = png(open, path, 64, 64);
+                    int[] size = {SkinPath.BASE_SIZE};
+                    String why = skinPng(open, path, size);
                     if (why != null) bad.add("look " + l.id() + ": " + why);
                     if (l.glow()) {
-                        String g = png(open, SkinPath.glowOf(path), 64, 64);
+                        String g = png(open, SkinPath.glowOf(path), size[0], size[0]);              // the glow map has the size of its skin
                         if (g != null) bad.add("look " + l.id() + ": glow map: " + g);
                     }
                 }
@@ -117,6 +118,23 @@ public final class PlayerModelAudit {
         }
         for (String id : PlayerModelTable.FIXED_LOOKS) if (!looks.containsKey(id)) bad.add("the look '" + id + "' that a body asks for by name is not in looks.json");
         for (String id : PlayerModelTable.ARC_BOSSES) if (!looks.containsKey(id)) bad.add("the arc boss " + id + " has no look");
+    }
+
+    /**
+     * 3.38.0 (HD outfits): null when the skin exists and is square with a side that is a power-of-two multiple of 64 ({@link SkinPath#validSkinSize}: 64, 128, 256 ...), else why not.
+     * {@code size[0]} receives the width when the file could be read (so the glow map can be checked against it), otherwise it keeps 64.
+     */
+    private static String skinPng(Function<String, InputStream> open, String path, int[] size) {
+        try (InputStream in = open.apply(path)) {
+            if (in == null) return path + " is missing";
+            java.awt.image.BufferedImage img = ImageIO.read(in);
+            if (img == null) return path + " is not a png";
+            if (!SkinPath.validSkinSize(img.getWidth(), img.getHeight())) return path + " is " + img.getWidth() + "x" + img.getHeight() + ", not a square power-of-two multiple of 64 (64, 128, 256 ...)";
+            size[0] = img.getWidth();
+            return null;
+        } catch (Exception e) {
+            return path + ": " + e;
+        }
     }
 
     /** null when the png exists and has this size, else why not. */

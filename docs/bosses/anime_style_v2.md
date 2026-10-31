@@ -39,6 +39,23 @@ Light Yagami keeps his own post (the notebook and the teal cuff line, `POSTS` in
 2. `python3 -B tools/tier_bosses/gen_tier_looks.py [id]`, then `python3 -B tools/tier_bosses/preview_tier.py out.png --back --cols 3 [ids]` (or `--close` for the three-quarter bust).
 3. Run `TierBossesTest`; it checks the look has an `anime_*` hair and a colour, that the hat layer's top is empty (no flat hair) and that the overlay layers carry details.
 
+## Hair rework (owner: "the spiky hair sucks, the hair is floating")
+
+Details and the check rules: `docs/playermodel.md` (Hair). Preview: `docs/previews/hair_v2/anime_hair_styles.png` (plain head) and `anime_hair_styles_on_bosses.png`, front / three-quarter / back.
+
+| | Kind | What |
+|---|---|---|
+| `anime_short`, `anime_short_open`, `anime_swept`, `anime_afro`, `anime_topknot`, `anime_spiky` (geometry and sheet) | REPLACED (same ids, so every look keeps working) | spikes are overlapping stepped boxes with a wide base rooted in the crown, nothing floats; the afro is one connected rounded mass; the top knot sits on the head; locks and tufts are attached |
+| `anime_mane` | REPLACED (it was the classic mane copy; the other 22 classic styles stay untouched) | ring of 8 stacked spikes, a mantle and cheek locks |
+| `anime_long`, `anime_long_open` | KEPT (same cut and same sheet pixels); only the fringe locks are nudged by 0.03 to 0.04 px so no two of them share a face plane | |
+| `anime_spike_tall`, `anime_spike_swept`, `anime_curls`, `anime_afro_wide`, `anime_flattop`, `anime_bangs_long` | NEW (appended to `hair_styles.json`, new sheets `hair/anime_*.png`) | tall front-and-back spikes, a swept back spike mane, rolled curls, a wide afro, a flat top, long parted bangs |
+| `anime_hood`, the 22 other classic styles and sheets, the tint pipeline, hair springs | KEPT (pixel-identical) | |
+| `HairAttachedTest`, `hair_lib.attach_report`, `hair_preview.py` | NEW | proves every box and chain segment of every `anime_*` style is attached (see playermodel.md) |
+
+Suggested looks for the repaint step (not changed here, `looks_tier.json` belongs to the skin builders): big_mom `anime_curls`, mr_2_bon_clay `anime_afro_wide`, code / yammy_llargo / zetsu `anime_spike_tall`
+or `anime_spike_swept`, ao / bertholdt_hoover `anime_bangs_long`, axe_hand_morgan `anime_flattop`.
+Worst case per style 180 quads (`anime_spike_tall`: 25 boxes + 5 chain segments), none above 200; no new packets, no per-tick work, no new runtime code. The sheets stay 64x64 (the audit requires it).
+
 ## Cost (rule 11)
 
 Zero runtime change in code: textures, the `hair` field in `looks_tier.json`, ten appended styles in `hair_styles.json`. The hair is the existing kit hair (bounded boxes and spring chains,

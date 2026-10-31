@@ -72,9 +72,10 @@ class Face:
         self.pts, self.uv, self.normal, self.tex, self.tint, self.emissive, self.mode = pts, uv, normal, tex, tint, emissive, mode
 
 
-def cube_faces(m, frm, size, inflate, uv_origin, uv_size, tex, tint=(1, 1, 1), mirror=False, emissive=False, mode="cutout", face_uv=None):
+def cube_faces(m, frm, size, inflate, uv_origin, uv_size, tex, tint=(1, 1, 1), mirror=False, emissive=False, mode="cutout", face_uv=None, uv_ref=None):
     """Faces of a box under the 4x4 matrix `m`. `frm` is the min corner, `size` the extent, y down. uv_origin / uv_size give the vanilla box-UV layout, or `face_uv` per face
-    {name: (u1, v1, u2, v2)} in texels (the geo.json per-face form)."""
+    {name: (u1, v1, u2, v2)} in texels (the geo.json per-face form). `uv_ref` = (w, h) of the layout the UVs are written in when the texture is a finer version of it (3.38: an HD skin of
+    128 or 256 px has the 64x64 layout, so the model's UVs are fractions of 64, exactly like the game's baked model); None = the texture's own size (every older caller)."""
     x0, y0, z0 = frm[0] - inflate, frm[1] - inflate, frm[2] - inflate
     x1, y1, z1 = frm[0] + size[0] + inflate, frm[1] + size[1] + inflate, frm[2] + size[2] + inflate
     if mirror:
@@ -83,6 +84,8 @@ def cube_faces(m, frm, size, inflate, uv_origin, uv_size, tex, tint=(1, 1, 1), m
     for i in range(8):
         corners.append((x1 if i & 1 else x0, y1 if i & 2 else y0, z1 if i & 4 else z0))
     th, tw = tex.shape[0], tex.shape[1]
+    if uv_ref:
+        tw, th = uv_ref
     out = []
     regs = None if face_uv else box_regions(uv_origin[0], uv_origin[1], uv_size[0], uv_size[1], uv_size[2])
     for name, idx in FACE_CORNERS.items():
@@ -235,9 +238,9 @@ def player_faces(skin_tex, slim=False, pose=None, tint=(1, 1, 1), overlays=True,
     ]
     for name, px, py, pz, frm, size, uv, infl, ouv, oinfl in parts:
         m = pm(name, px, py, pz)
-        faces += cube_faces(m, frm, size, infl, uv, size, skin_tex, tint, mode=alpha_mode)
+        faces += cube_faces(m, frm, size, infl, uv, size, skin_tex, tint, mode=alpha_mode, uv_ref=(64, 64))      # 3.38: the skin may be 64, 128 or 256 square (same layout)
         if overlays:
-            faces += cube_faces(m, frm, size, oinfl, ouv, size, skin_tex, tint, mode="cutout")
+            faces += cube_faces(m, frm, size, oinfl, ouv, size, skin_tex, tint, mode="cutout", uv_ref=(64, 64))
     return faces
 
 

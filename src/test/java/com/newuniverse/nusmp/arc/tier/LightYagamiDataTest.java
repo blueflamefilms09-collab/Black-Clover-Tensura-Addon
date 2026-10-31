@@ -62,12 +62,13 @@ class LightYagamiDataTest {
     @Test
     void theSkinIsTheOriginalDarkSuitWithTheNotebookMotif() throws Exception {
         java.awt.image.BufferedImage img = javax.imageio.ImageIO.read(RES.resolve("textures/entity/playermodel/light_yagami.png").toFile());
-        assertEquals(64, img.getWidth());
-        assertEquals(64, img.getHeight());
+        int k = img.getWidth() / 64;                                    // 3.38.0 HD outfits: 64, 128 or 256 square, the same layout
+        assertEquals(img.getWidth(), img.getHeight());
+        assertTrue(k >= 1 && img.getWidth() == 64 * k && (k & (k - 1)) == 0, "a power-of-two multiple of 64: " + img.getWidth());
         // body front (u=20,v=20, 8x12): mostly a dark suit (every channel low), with no red tie
         int dark = 0, total = 0, red = 0;
-        for (int y = 0; y < 12; y++) for (int x = 0; x < 8; x++) {
-            int c = img.getRGB(20 + x, 20 + y);
+        for (int y = 0; y < 12 * k; y++) for (int x = 0; x < 8 * k; x++) {
+            int c = img.getRGB(20 * k + x, 20 * k + y);
             if ((c >>> 24) == 0) continue;
             int r = c >> 16 & 255, g = c >> 8 & 255, b = c & 255;
             total++;
@@ -78,12 +79,12 @@ class LightYagamiDataTest {
         assertEquals(0, red, "no red tie: the look is original");
         // the notebook motif: teal pixels in the pocket area (columns 5..6, rows 2..5)
         int teal = 0;
-        for (int y = 2; y <= 5; y++) for (int x = 5; x <= 6; x++) {
-            int c = img.getRGB(20 + x, 20 + y);
+        for (int y = 2 * k; y <= 5 * k + k - 1; y++) for (int x = 5 * k; x <= 6 * k + k - 1; x++) {
+            int c = img.getRGB(20 * k + x, 20 * k + y);
             int r = c >> 16 & 255, g = c >> 8 & 255, b = c & 255;
             if (g > r + 40 && b > r + 40) teal++;
         }
-        assertTrue(teal >= 3, "the notebook motif is missing (" + teal + " teal pixels)");
+        assertTrue(teal >= 3 * k * k, "the notebook motif is missing (" + teal + " teal texels)");
         // the fallback skin (the arc kit's own size) is a readable image too
         java.awt.image.BufferedImage fb = javax.imageio.ImageIO.read(RES.resolve("textures/entity/arc_light_yagami.png").toFile());
         assertTrue(fb.getWidth() >= 64 && fb.getHeight() >= 64);

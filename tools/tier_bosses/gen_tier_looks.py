@@ -2,10 +2,15 @@
 """3.33.0: paints the Tier List bosses on the player-model kit (docs/playermodel.md), the way every other humanoid of the mod is drawn: the vanilla player model with a 64x64 skin
 of its own (+ a glow map), the hair layer, wide or slim arms, scaled to the boss's height.
 
-    python3 -B tools/tier_bosses/gen_tier_looks.py [--flat] [--plain] [--sheet out.png] [id ...]
+    python3 -B tools/tier_bosses/gen_tier_looks.py [--flat] [--plain] [--generic] [--size 64|128|256] [--auto-hd] [--sheet out.png] [id ...]
 
 3.37: the default is the anime skin style v2 (volume mode: the kit's volumetric anime_* hair + armour and costume pieces on the overlay layers, see docs/bosses/anime_style_v2.md);
 `--flat` repaints the 3.33.1 look (hair painted flat on the skin, hair style "bald"); `--plain` is the first kit painter.
+
+3.38.0 (HD outfits, docs/bosses/hd_outfits.md): each id is painted by the first of these that exists: tools/tier_bosses/hd/<id>.py (256x256 skin + glow map, every model pixel a 4x4 block),
+tools/tier_bosses/remake/<id>.py (64x64 by hand), the generic anime painter (64x64). `--size 64` skips the HD modules so the 64x64 version stays reachable (the remake modules are never removed),
+`--size 128` writes the HD modules downsampled by 2 (an exact area average), `--size 256` (the default) writes them as drawn. `--auto-hd` also runs the generic HD bridge over every id that has no
+HD module (a smooth 256 upscale with outlines and material detail, no character art); without it those ids stay 64x64, which the kit accepts (a skin and its glow map may be 64, 128 or 256 square).
 
 Reads the sheets of tier_specs.py (the art kit's vocabulary), paints each with tools/playermodel/gen_skins.paint_character, writes
 assets/nusmp/textures/entity/playermodel/<id>.png (+ _glow.png) and assets/nusmp/playermodel/looks_tier.json (same format as looks.json; merged add-only by PlayerLookTables).
@@ -64,12 +69,50 @@ def load_remake(cid):
     mod = importlib.util.module_from_spec(spec_)
     spec_.loader.exec_module(mod)
     return getattr(mod, "paint", None)
+
+
+SIZES = (64, 128, 256)
+
+
+def load_hd(cid):
+    """3.38.0: tools/tier_bosses/hd/<id>.py may define paint(spec, cid, masks) -> (skin at 256x256, glow at 256x256 or None, hair style id, hair rgb, slim), the same tuple contract as the
+    remake modules: a character drawn at 4x detail (see tools/tier_bosses/hd/hdlib.py). No file = no HD module (the 64x64 remake or the generic painter is used)."""
+    path = os.path.join(HERE, "hd", cid + ".py")
+    if not os.path.isfile(path):
+        return None
+    import importlib.util
+    spec_ = importlib.util.spec_from_file_location("hd_" + cid, path)
+    mod = importlib.util.module_from_spec(spec_)
+    spec_.loader.exec_module(mod)
+    return getattr(mod, "paint", None)
+
+
+def to_size(img, glow, size):
+    """Skin and glow map brought to `size` (an HD module draws at 256; 128 and 64 are exact area averages, see hd_core.downsample); a size that is already right is kept."""
+    if img.width == size:
+        return img, glow
+    sys.path.insert(0, os.path.join(HERE, "hd"))
+    import hd_core
+    return hd_core.downsample(img, size), (hd_core.downsample_glow(glow, size) if glow is not None else None)
+
+
+def auto_hd(cid, img, glow, slim, size):
+    """`--auto-hd`: the generic HD bridge over a 64x64 skin (no character art): smooth upscale, outlines, material detail."""
+    sys.path.insert(0, os.path.join(HERE, "hd"))
+    import hdlib
+    return hdlib.hd_paint(cid, img, glow, size=size, slim=slim)
+
+
 OUT_LOOKS = os.path.join(GS.ASSETS, "playermodel", "looks_tier.json")
 
 
 def main(argv):
     ids = [a for a in argv if not a.startswith("--") and a in SHEETS]
     sheet_out = argv[argv.index("--sheet") + 1] if "--sheet" in argv else None
+    size = int(argv[argv.index("--size") + 1]) if "--size" in argv and argv.index("--size") + 1 < len(argv) else 256
+    if size not in SIZES:
+        raise SystemExit("--size must be one of %s, not %s" % (SIZES, size))
+    old_style = "--flat" in argv or "--plain" in argv or "--generic" in argv              # the older painters stay 64x64 and never use the HD modules
     gen_hair.build()
     masks = {sid: getattr(st, "mask", None) for sid, st in gen_hair.STYLES.items()}
     os.makedirs(GS.SKINS, exist_ok=True)
@@ -83,13 +126,19 @@ def main(argv):
         spec = S.normalize(raw, cid)
         if v2:
             spec["_v2"] = v2
-        hand = None if ("--flat" in argv or "--plain" in argv or "--generic" in argv) else load_remake(cid)
-        if hand is not None:
+        hand = None if old_style else load_remake(cid)
+        hd = None if (old_style or size == 64) else load_hd(cid)
+        if hd is not None:
+            img, glow, hs, hrgb, slim = hd(spec, cid, masks)                         # 3.38.0: an HD character (tools/tier_bosses/hd/<id>.py), 256x256
+            img, glow = to_size(img, glow, size)
+        elif hand is not None:
             img, glow, hs, hrgb, slim = hand(spec, cid, masks)                       # 3.37.0: a character painted by hand (tools/tier_bosses/remake/<id>.py)
         elif "--plain" in argv:
             img, glow, hs, hrgb, slim = GS.paint_character(spec, cid, masks, POSTS.get(cid))          # the first kit painter
         else:
             img, glow, hs, hrgb, slim = anime_skin.paint_character(spec, cid, masks, POSTS.get(cid), volume="--flat" not in argv)
+        if "--auto-hd" in argv and size > 64 and hd is None and not old_style and img.width == 64:
+            img, glow = auto_hd(cid, img, glow, slim, size)
         img.save(os.path.join(GS.SKINS, cid + ".png"))
         if glow is not None:
             glow.save(os.path.join(GS.SKINS, cid + "_glow.png"))
@@ -110,7 +159,7 @@ def main(argv):
         rows = (len(painted) + cols - 1) // cols
         sheet = Image.new("RGBA", (cell * cols, cell * rows), (40, 42, 48, 255))
         for i, (cid, img) in enumerate(painted):
-            sheet.alpha_composite(img.resize((cell, cell), Image.NEAREST), ((i % cols) * cell, (i // cols) * cell))
+            sheet.alpha_composite(img.resize((cell, cell), Image.NEAREST if img.width == 64 else Image.BOX), ((i % cols) * cell, (i // cols) * cell))
         sheet.save(sheet_out)
         print("sheet", sheet_out)
 

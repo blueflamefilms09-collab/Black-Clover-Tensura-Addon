@@ -63,6 +63,22 @@ public final class SkinPath {
 
     public static String defaultPath() { return DIR + DEFAULT_ID + ".png"; }
 
+    /** The size of the vanilla player skin layout, and the largest square the kit accepts for a skin or glow map (sanity cap: 1024 is 4 MB of texture). */
+    public static final int BASE_SIZE = 64, MAX_SIZE = 1024;
+
+    /**
+     * 3.38.0 (HD outfits): may a skin, or a glow map, have this size? The model's UVs are fractions of the 64x64 layout (the layer definition bakes u/64), so a skin may be any power-of-two
+     * multiple of 64 with the SAME layout: 64 (every older character), 128 or 256 (every model pixel is then a 2x2 or 4x4 block of texels). It must be square.
+     */
+    public static boolean validSkinSize(int w, int h) {
+        if (w != h || w < BASE_SIZE || w > MAX_SIZE || w % BASE_SIZE != 0) return false;
+        int k = w / BASE_SIZE;
+        return (k & (k - 1)) == 0;
+    }
+
+    /** How many texels one model pixel is wide for a skin of this width (1 for 64, 4 for 256); 1 for a size that is not valid. */
+    public static int texelsPerPixel(int w) { return validSkinSize(w, w) ? w / BASE_SIZE : 1; }
+
     /** The path of a hair sheet: {@code textures/entity/playermodel/<texture>.png} (a style's {@code texture} field is {@code hair/<style>}). */
     public static String hairSheet(String texture) {
         return texture != null && texture.matches("[a-z0-9_/-]+") && !texture.contains("..") ? DIR + texture + ".png" : "";

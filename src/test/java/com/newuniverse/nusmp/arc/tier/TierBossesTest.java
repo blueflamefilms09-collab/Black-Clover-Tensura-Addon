@@ -96,13 +96,45 @@ class TierBossesTest {
             assertTrue(hair.startsWith("anime_") && styles.has(hair), row.id() + ": " + hair + " is not an anime_* cut of hair_styles.json");
             assertTrue(look.has("hair_color") && look.get("hair_color").getAsString().matches("#[0-9a-fA-F]{6}"), row.id() + " needs a hair colour");
             java.awt.image.BufferedImage img = javax.imageio.ImageIO.read(RES.resolve("textures/entity/playermodel/" + row.id() + ".png").toFile());
+            int k = img.getWidth() / 64;                                                       // 3.38.0 HD outfits: a skin may be 64, 128 or 256 square; every model pixel is a k x k block of texels
+            assertTrue(k >= 1, row.id());
             int hatTop = 0;
-            for (int y = 0; y < 8; y++) for (int x = 40; x < 48; x++) if ((img.getRGB(x, y) >>> 24) != 0) hatTop++;
+            for (int y = 0; y < 8 * k; y++) for (int x = 40 * k; x < 48 * k; x++) if ((img.getRGB(x, y) >>> 24) != 0) hatTop++;
             assertEquals(0, hatTop, row.id() + ": hair painted flat on the hat layer's top (the volumetric hair covers it)");
             int overlay = 0;
-            for (int y = 32; y < 48; y++) for (int x = 16; x < 40; x++) if ((img.getRGB(x, y) >>> 24) != 0) overlay++;          // the jacket layer of the body
-            for (int y = 32; y < 48; y++) for (int x = 40; x < 56; x++) if ((img.getRGB(x, y) >>> 24) != 0) overlay++;          // the sleeve layer of the right arm
-            assertTrue(overlay > 120, row.id() + ": the overlay layers carry no outfit details (" + overlay + " texels)");
+            for (int y = 32 * k; y < 48 * k; y++) for (int x = 16 * k; x < 40 * k; x++) if ((img.getRGB(x, y) >>> 24) != 0) overlay++;          // the jacket layer of the body
+            for (int y = 32 * k; y < 48 * k; y++) for (int x = 40 * k; x < 56 * k; x++) if ((img.getRGB(x, y) >>> 24) != 0) overlay++;          // the sleeve layer of the right arm
+            assertTrue(overlay > 120 * k * k, row.id() + ": the overlay layers carry no outfit details (" + overlay + " texels)");
+        }
+    }
+
+    /**
+     * 3.38.0 (HD outfits): a tier boss skin may be 64, 128 or 256 square (the UVs are fractions of the 64x64 layout, so the same layout simply gets sampled finer): equal width and height, a
+     * power-of-two multiple of 64, a glow map of the same size when the look glows, and the face rectangles of the base layer (head, body, arms, legs: front and back) have no hole.
+     */
+    @Test
+    void everyTierSkinAndGlowMapIsSquareAMultipleOf64AndTheGlowMatchesItsSkin() throws Exception {
+        com.google.gson.JsonObject looks = com.google.gson.JsonParser.parseString(Files.readString(RES.resolve("playermodel/looks_tier.json"))).getAsJsonObject().getAsJsonObject("looks");
+        for (TierRow row : all()) {
+            java.awt.image.BufferedImage img = javax.imageio.ImageIO.read(RES.resolve("textures/entity/playermodel/" + row.id() + ".png").toFile());
+            assertEquals(img.getWidth(), img.getHeight(), row.id() + ": a skin is square");
+            assertEquals(0, img.getWidth() % 64, row.id() + ": a multiple of 64");
+            int k = img.getWidth() / 64;
+            assertTrue(k >= 1 && (k & (k - 1)) == 0 && img.getWidth() <= 1024, row.id() + ": a power-of-two multiple of 64 up to 1024, got " + img.getWidth());
+            assertTrue(com.newuniverse.nusmp.client.playermodel.SkinPath.validSkinSize(img.getWidth(), img.getHeight()), row.id());
+            boolean glows = looks.getAsJsonObject(row.id()).has("glow") && looks.getAsJsonObject(row.id()).get("glow").getAsBoolean();
+            java.nio.file.Path gp = RES.resolve("textures/entity/playermodel/" + row.id() + "_glow.png");
+            if (glows) assertTrue(Files.isRegularFile(gp), row.id() + " says it glows but has no glow map");
+            if (Files.isRegularFile(gp)) {
+                java.awt.image.BufferedImage g = javax.imageio.ImageIO.read(gp.toFile());
+                assertEquals(img.getWidth(), g.getWidth(), row.id() + ": the glow map has the size of its skin");
+                assertEquals(img.getHeight(), g.getHeight(), row.id() + ": the glow map has the size of its skin");
+            }
+            int[][] fronts = {{8, 8, 8, 8}, {20, 20, 8, 12}, {32, 20, 8, 12}, {4, 20, 4, 12}, {12, 20, 4, 12}};   // head front, body front and back, right leg front and back (arms: wide or slim, left to the arm tests of the kit)
+            for (int[] r : fronts)
+                for (int y = r[1] * k; y < (r[1] + r[3]) * k; y++)
+                    for (int x = r[0] * k; x < (r[0] + r[2]) * k; x++)
+                        assertTrue((img.getRGB(x, y) >>> 24) != 0, row.id() + ": a hole in the base layer at " + x + "," + y);
         }
     }
 

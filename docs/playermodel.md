@@ -81,6 +81,27 @@ Public API (small and stable; everything else is internal):
   `anime_topknot` with more volume: a jagged crown slab over the cap, a fringe of single-segment locks, side locks, a nape, leaning tufts; `anime_mane`, `anime_hood` are the classic cuts with the new sheet).
   Their sheets are painted in clumps with four grey steps and a few bright highlight pixels (`hair_lib.clump_grey`), still grey, so the tint pipeline (`HairPalette` base / highlight / shade) is unchanged.
   Worst case per style 23 boxes + 14 chain segments = 180 quads. See `docs/bosses/anime_style_v2.md`.
+* 3.37 hair rework (owner: "the spiky hair sucks, the hair is floating"): every `anime_*` cut is rebuilt so that nothing floats, and six cuts are appended (`anime_spike_tall`, `anime_spike_swept`,
+  `anime_curls`, `anime_afro_wide`, `anime_flattop`, `anime_bangs_long`). Same data format, same sheet size (64x64), same renderer: no runtime code changed. Quads per style (pieces x 6, all <= 200):
+  hood 18, short 126, short_open 114, swept 120, long 96, long_open 84, afro 60, topknot 72, mane 150, spiky 168, spike_tall 180, spike_swept 144, curls 144, afro_wide 60, flattop 36, bangs_long 138.
+  * Attachment check (`hair_lib.attach_report`, mirrored by `HairAttachedTest`; `gen_hair.py` runs it before it writes anything and stops on a failure). A piece is an oriented box (rotations in vanilla's
+    Rz Ry Rx order about the pivot; a chain segment at rest, hanging from the one above). R1 ATTACHED: the exact distance to the scalp cap or to a piece that is already attached is at most 0.1 px.
+    R2 EMBEDDED: a static box overlaps the piece it stands on by at least 0.4 px (smallest overlap over the 15 separating axes), so a spike stands in the hair and not on a corner of it. R3 BESIDE THE HEAD:
+    a static box that reaches below the top of the head (y > -8) touches the cap itself, so a puff cannot hang off a piece that floats above. R4 NO Z-FIGHT: two pieces of one orientation never have a
+    face on one plane facing the same way over 0.5 square px (same-chain pairs, back-to-back faces and slivers are ignored). Run on the styles as committed before the rework it flags the old `anime_afro` side puffs
+    (`puffL`, `puffR`: beside the head, off the cap), the nine `anime_spiky` upper spikes (`spike0b` ... `spike8b`: only a corner in the section below) and the `anime_topknot` tie (`knotTie`), so it does catch
+    the floating hair of the owner's images; the rebuilt styles pass all four rules.
+  * Spikes (`gen_hair.spike`): a stack of 2 to 3 overlapping boxes (joint to joint, 1 px overlap) that leans with `lean_rot` (pitch back, then yaw about the vertical, so the faces stay square to the
+    spike and no twisted plates appear), widest and thickest at the base (the base is rooted deep in the crown at y about -7.8), stepping down in width to a blunt carved tip. The UV is 1.6 times finer
+    than the geometry (`uvsize`), so a spike face of 3 px has 5 texels and the carved point, the lit tip, the dark root and the four grey steps read from every side (`hair_lib.paint_spike`).
+    Spikes of one rank share a sheet region (`key`, `uv_length`), which is how 20 to 25 boxes fit on 64x64.
+  * Curls (`anime_curls`): cubes and a 3-segment hanging chain painted as concentric rolled rings on every face (`paint_curl`), a front roll box over the forehead, 6 curls on the crown, 4 at the sides.
+    Afro (`anime_afro`, `anime_afro_wide`): one connected rounded mass of five tiers (band, two side blocks, back block, two top tiers) that all overlap the cap and each other (`paint_mass`: clump sides, rounded
+    corners), so the head sits in the mass with no gap at the temples. Bangs (`anime_bangs_long`): two blades per side start at the part on the hairline and sweep to the temple, the eyes stay free.
+  * 128x128 hair sheets were considered and NOT shipped: `PlayerModelAudit.hairProblems` requires 64x64 hair sheets (and `pmrender.hair_faces` would need a 64 `uv_ref`), so the finer UV above is the substitute.
+  * Preview: `python3 -B tools/playermodel/hair_preview.py out.png [--boss] [--views 0,35,180] [style ...]` (software renderer, springs at rest). Contact sheets: `docs/previews/hair_v2/anime_hair_styles.png`
+    (plain head) and `docs/previews/hair_v2/anime_hair_styles_on_bosses.png` (on a boss); front, three-quarter and back.
+  * Cost: no new code, no new packets, no per-tick work; at most 180 quads per style (rule 11), drawn by the existing hair layer for nearby entities only, through the existing perf budgets.
 * Geometry: layered boxes with the vanilla box UV on a 64x64 sheet. The scalp cap is the 8x8x8 box at the hat layer's UV (u 32, v 0) inflated 0.7 (the hat layer is 0.5), and every layer on top
   of it has its own inflate (0.85 and up), so no two surfaces share a plane (a test checks the cap and equal boxes). The haircut is carved by the sheet's alpha mask; the sheets are grey strands,
   tinted at draw time. A fringe is a second layer in front of the cap (single-segment chains). `HairPalette.of(rgb)` gives base, highlight and shade (black hair still shines); boxes pick a tone.
