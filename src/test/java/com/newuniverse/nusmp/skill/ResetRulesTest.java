@@ -85,6 +85,8 @@ class ResetRulesTest {
     void theSelfTestIsRegisteredAndInTheSmokeList() throws IOException {
         String t = code("src/main/java/com/newuniverse/nusmp/skill/ResetGuardSelfTests.java");
         assertTrue(t.contains("\"skill.reset_guard\""), "self-test id");
+        assertTrue(t.contains("ResetGuard.hooked()") && code("src/main/java/com/newuniverse/nusmp/skill/ResetGuard.java").contains("hooked = true"), "the self-test checks that the hook was taken");
+        assertTrue(t.contains("NOT EXERCISED"), "a stand-in that cannot hold skills is told, not failed");
         String smoke = Files.readString(Path.of(".github/workflows/smoke.yml"));
         assertTrue(smoke.contains("skill.reset_guard"), "the smoke list expects the self-test");
         assertTrue(code("src/main/java/com/newuniverse/nusmp/NUSMP.java").contains("ResetGuardSelfTests.register()"), "registered");

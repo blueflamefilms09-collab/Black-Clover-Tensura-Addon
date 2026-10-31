@@ -147,4 +147,34 @@ public final class ShishouHunt {
         if (d <= FOLLOW_EASE) return FOLLOW_MIN + (FOLLOW_EASE_TOP - FOLLOW_MIN) * d / FOLLOW_EASE;
         return Math.min(FOLLOW_MAX, FOLLOW_EASE_TOP + FOLLOW_STEP * (d - FOLLOW_EASE));
     }
+
+    // ---------------------------------------------------------------- 3.43.0 the fast flurry
+    /** The fast flurry (server setting {@code flurryFast}): the strike cooldown runs from {@link #FAST_COOLDOWN_MAX} ticks (low level) down to {@link #FAST_COOLDOWN_MIN} (level 100), the bounce is {@link #FAST_BOUNCE_TICKS} ticks at {@link #FAST_BOUNCE_SPEED}, and each strike hits for {@link #FLURRY_DAMAGE_SHARE} of the old damage. */
+    public static final int FAST_COOLDOWN_MAX = 8, FAST_COOLDOWN_MIN = 3, FAST_BOUNCE_TICKS = 2;
+    public static final double FAST_BOUNCE_SPEED = 0.8, FLURRY_DAMAGE_SHARE = 0.7;
+
+    /** The fast strike cooldown in ticks: the 3.42.0 cooldown ({@link #strikeCooldown(int)}, 15 down to 6) times 8/15 rounded, never below {@link #FAST_COOLDOWN_MIN}: 8 at low level, 3 at level 100, so it follows the old curve and the damage rise stays between 1.2 and 1.4. */
+    public static int strikeCooldownFast(int level) { return Math.max(FAST_COOLDOWN_MIN, Math.round(strikeCooldown(level) * (float) FAST_COOLDOWN_MAX / 15.0f)); }
+
+    /** The strike cooldown for the server's setting: the fast flurry or the 3.42.0 one. */
+    public static int strikeCooldown(int level, boolean fast) { return fast ? strikeCooldownFast(level) : strikeCooldown(level); }
+
+    /** The share of the strike damage one strike deals: {@link #FLURRY_DAMAGE_SHARE} in the fast flurry (more strikes, each a little lighter), 1 otherwise. */
+    public static double strikeShare(boolean fast) { return fast ? FLURRY_DAMAGE_SHARE : 1.0; }
+
+    public static int bounceTicks(boolean fast) { return fast ? FAST_BOUNCE_TICKS : BOUNCE_TICKS; }
+
+    /** The bounce velocity for the setting (the same direction and lift, the speed of the fast or the old bounce). */
+    public static double[] bounce(double dx, double dy, double dz, boolean fast) {
+        double[] v = bounce(dx, dy, dz);
+        if (!fast) return v;
+        double k = FAST_BOUNCE_SPEED / BOUNCE_SPEED, lift = BOUNCE_LIFT;
+        return new double[]{v[0] * k, (v[1] - lift) * k + lift, v[2] * k};
+    }
+
+    /** Strikes a second at most for this cooldown (the cap on the damage calls, particle bursts and mana payments one sword makes). */
+    public static double strikesPerSecond(int cooldownTicks) { return 20.0 / Math.max(1, cooldownTicks); }
+
+    /** The damage a second the strikes reach at full rate relative to the old flurry at the same level: (old cooldown / new cooldown) times the share. */
+    public static double dpsFactor(int level) { return (double) strikeCooldown(level) / strikeCooldownFast(level) * FLURRY_DAMAGE_SHARE; }
 }

@@ -12,7 +12,7 @@ import java.util.Map;
  */
 public final class ShishouConfig {
     public static final ModConfigSpec SPEC;
-    public static final ModConfigSpec.BooleanValue ENABLED, VOICE, NATURAL, MINION_EATS_LOOT, MINION_AUTOCAST, HELD_AUTOCAST, ALLOW_BROADCAST, SENSE_NEUTRALS, PATROL, FEED, GRANT_SKILL, BOUNCE;
+    public static final ModConfigSpec.BooleanValue ENABLED, VOICE, NATURAL, MINION_EATS_LOOT, MINION_AUTOCAST, HELD_AUTOCAST, ALLOW_BROADCAST, SENSE_NEUTRALS, PATROL, FEED, GRANT_SKILL, BOUNCE, FLURRY_FAST;
     public static final ModConfigSpec.DoubleValue NATURAL_CHANCE, STRIKE_CAP, VIBRATION_PCT, FLAME_CAP, LIGHTNING_CAP, DIVINE_CAP;
     public static final ModConfigSpec.IntValue DORMANT_KILLS, DORMANT_DAYS, RESERVE_DAYS, STEAL_SCALE, STORAGE_ROWS, MINION_LEASH,
             HUNT_RADIUS, HUNT_SCAN_TICKS, HUNT_EXAMINED, CHARGE_PERCENT, START_LEVEL, EXP_PERCENT, DAMAGE_PERCENT, FEED_PER_CLICK, FEED_GAP;
@@ -36,6 +36,7 @@ public final class ShishouConfig {
         HUNT_EXAMINED = b.comment("The most creatures one look examines (a hard cap on the work of a scan).").defineInRange("huntMaxExamined", ShishouHunt.MAX_EXAMINED, ShishouHunt.EXAMINED_MIN, ShishouHunt.EXAMINED_MAX);
         CHARGE_PERCENT = b.comment("Speed of the telekinetic charge in percent (100 = about 23 blocks a second at level 10 and up to 38 at the top).").defineInRange("chargeSpeedPercent", 100, 10, 300);
         BOUNCE = b.comment("The flurry: after a strike he bounces off the target a little and dashes in again (like an anime sword flurry) instead of hovering on it. false = the 3.1 behaviour.").define("flurryBounce", true);
+        FLURRY_FAST = b.comment("3.43.0 the fast flurry: strikes come about twice as often (8 ticks apart at low level down to 3 at level 100, was 15 down to 6) and the bounce is snappier, each strike hits for 70% of the old damage, so the damage a second rises by about 1.2 to 1.4 times. The wild sword's mana still pays for the same number of strikes.", "false = the exact 3.42.0 cadence and damage.").define("flurryFast", true);
         PATROL = b.comment("A wild sword with no prey in range flies toward the nearest player (that is where monsters spawn) instead of wandering at random. It never targets a player.").define("patrolToPlayers", true);
         DORMANT_DAYS = b.comment("Days of wandering after which the wild sword settles into its pedestal.").defineInRange("dormantAfterDays", ShishouRules.DORMANT_DAYS, 1, 1000);
         RESERVE_DAYS = b.comment("Days a recovered, dormant sword is kept for its old wielder before anyone may claim it.").defineInRange("reserveDays", ShishouRules.RESERVE_DAYS, 0, 1000);
@@ -112,6 +113,7 @@ public final class ShishouConfig {
     public static boolean senseNeutrals() { return get(SENSE_NEUTRALS); }
     public static boolean patrol() { return get(PATROL); }
     public static boolean flurryBounce() { return get(BOUNCE); }
+    public static boolean flurryFast() { return get(FLURRY_FAST); }
     public static boolean feed() { return enabled() && get(FEED); }
     public static boolean grantSkill() { return enabled() && get(GRANT_SKILL); }
     public static int huntRadius() { return get(HUNT_RADIUS); }

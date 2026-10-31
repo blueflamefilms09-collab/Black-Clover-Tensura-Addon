@@ -1,5 +1,26 @@
 # Changelog
 
+## [3.43.0] — Shishou's fast flurry (server setting `flurryFast`)
+
+Owner: "Should Shishou's flurry be faster? ... sure". Doc: `docs/items/shishou.md` (section "3.43.0: the fast flurry"), `docs/skill/reset_guard.md`.
+
+### NEW
+- **Fast flurry**, server setting `flurryFast` in `nusmp-shishou-server.toml` (default on; `false` = the exact 3.42.0 cadence and damage): strike cooldown 8 ticks at low level down to 3 at level 100 (was 15 down to 6), the bounce after a strike 2 ticks at 0.8 blocks a tick (was 3 at 0.55), each strike for 70% of the old damage, so damage a second rises about 1.2 to 1.4 times. Pure rules in `ShishouHunt` (`strikeCooldownFast`, `strikeShare`, `bounceTicks`, `bounce(..., fast)`, `dpsFactor`, `strikesPerSecond`). Test `ShishouFastFlurry343Test` (7).
+- `ResetGuard.hooked()`.
+
+### REPLACED
+- Nothing replaced: with `flurryFast = false` every number is the 3.42.0 one.
+- The CI self-test `skill.reset_guard` (3.42.0 reported FAIL because the smoke stand-in cannot hold a skill of this mod) now fails only if the remove-skill hook was not taken, and says `NOT EXERCISED` when no scroll reset could run.
+
+### KEPT
+- The charge, the hunt, the 31 skills, the strike formula, the clones, the wild mana (still 200 strikes), every other config key.
+
+### Cost (rule 11)
+- One sword strikes at most 6.7 times a second (was 3.3): one damage call, one budgeted particle burst, one mana payment and one velocity set per strike. No new query, packet, entity or per-tick scan.
+
+### Not seen in a game
+- The look of the faster flurry and its balance against bosses were not seen by me. The Reset Scroll guard is still unproven end to end (the CI stand-in cannot hold our skills).
+
 ## [3.42.0] — Shishou audit (flying, hunting, combat) and the Reset Scroll guard
 
 Owner requests: "fix/rework Shishou weapon, Ai, and combat" (answered "audit everything"), and "make it so none of my skill can't be reroll with the basic tensura skill and full reset". Docs: `docs/items/shishou.md` (section "3.42.0: the audit"), `docs/skill/reset_guard.md`.

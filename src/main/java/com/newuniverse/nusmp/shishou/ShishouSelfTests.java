@@ -307,7 +307,11 @@ public final class ShishouSelfTests {
                 if (i == 0) v0 = v;
             }
             if (!(v > v0) || v > top + 1e-6) return Result.fail("the charge did not accelerate within the cap: " + v0 + " -> " + v + " (top " + top + ")");
-            return Result.ok("the scan finds the monster in the cube, skips the villager, the far one, a crowd of cows and two creatures given up on; the charge accelerates to " + String.format("%.2f", v) + " blocks a tick (top " + String.format("%.2f", top) + ")");
+            boolean fast = ShishouConfig.flurryFast();
+            int cd = ShishouHunt.strikeCooldown(sword.swordLevel(), fast), cdOld = ShishouHunt.strikeCooldown(sword.swordLevel(), false);
+            if (fast && (cd >= cdOld || cd < ShishouHunt.FAST_COOLDOWN_MIN)) return Result.fail("the fast flurry cooldown " + cd + " is not between " + ShishouHunt.FAST_COOLDOWN_MIN + " and the old " + cdOld);
+            if (!fast && cd != cdOld) return Result.fail("flurryFast is off but the cooldown " + cd + " is not the 3.42.0 one " + cdOld);
+            return Result.ok("the scan finds the monster in the cube, skips the villager, the far one, a crowd of cows and two creatures given up on; the charge accelerates to " + String.format("%.2f", v) + " blocks a tick (top " + String.format("%.2f", top) + "); flurry " + (fast ? "fast" : "3.42.0") + ", strike cooldown " + cd + " ticks (3.42.0: " + cdOld + ")");
         } finally {
             for (var e : made) if (!e.isRemoved()) {
                 if (e instanceof ShishouEntity se) se.expectRemoval();

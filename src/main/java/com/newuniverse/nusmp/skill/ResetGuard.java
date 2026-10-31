@@ -39,11 +39,17 @@ public final class ResetGuard {
 
     public static boolean enabled() { return MultiverseConfig.get(MultiverseConfig.RESET_SCROLL_GUARD); }
 
+    /** Set once the remove-skill event took the hook (the self-test reads it). */
+    private static volatile boolean hooked;
+
+    public static boolean hooked() { return hooked; }
+
     // ---------------------------------------------------------------- the event
     /** Hooks ManasCore's remove-skill event. A missing or changed event cannot break loading. */
     public static void register() {
         try {
             SkillEvents.REMOVE_SKILL.register(ResetGuard::onRemove);
+            hooked = true;
             LOGGER.info("Reset guard: the skills of {} are hooked against Tensura's Reset Scrolls.", NAMESPACE);
         } catch (Throwable t) {
             LOGGER.warn("Reset guard: the remove-skill event is not hooked ({}).", t.toString());

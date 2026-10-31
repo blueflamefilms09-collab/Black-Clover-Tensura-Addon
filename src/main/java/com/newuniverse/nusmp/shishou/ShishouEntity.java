@@ -238,10 +238,11 @@ public class ShishouEntity extends PathfinderMob {
     public void bounceOff(Vec3 from) {
         if (!ShishouConfig.flurryBounce()) return;
         Vec3 d = position().subtract(from);
-        double[] v = ShishouHunt.bounce(d.x, d.y, d.z);
+        boolean fast = ShishouConfig.flurryFast();
+        double[] v = ShishouHunt.bounce(d.x, d.y, d.z, fast);
         setDeltaMovement(v[0], v[1], v[2]);
         hasImpulse = true;
-        bounceTicks = ShishouHunt.BOUNCE_TICKS;
+        bounceTicks = ShishouHunt.bounceTicks(fast);
         beginCharge();
     }
 
@@ -301,7 +302,7 @@ public class ShishouEntity extends PathfinderMob {
     public boolean strike(LivingEntity target) {
         if (!(level() instanceof ServerLevel sl) || !strikeReady() || target == null || !target.isAlive()) return false;
         if (!ShishouService.payStrike(this, sl)) return false;
-        strikeCooldown = ShishouHunt.strikeCooldown(swordLevel());
+        strikeCooldown = ShishouHunt.strikeCooldown(swordLevel(), ShishouConfig.flurryFast());
         attackTicks = ShishouRules.ATTACK_ANIM_TICKS;
         setState(ShishouRules.STATE_ATTACK);
         boolean landed = ShishouService.strike(this, sl, target);

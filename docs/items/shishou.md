@@ -327,3 +327,21 @@ Owner request: "fix/rework Shishou weapon, Ai, and combat", answered "audit ever
 The sword's flurry is still one strike every 15 to 6 ticks (faster as he levels). Making the combo faster, or adding a second target mid-flurry, is a balance change: say so and it ships as its own release behind a setting.
 
 **NEW:** `ShishouIgnore`, `ShishouHunt.Top` / `followSpeed` / `LOS_CHECKS` / `raysPerSecond`, `ShishouEntity.giveUp` / `glide`, `ShishouAudit342Test`. **REPLACED:** the single-slot give-up memory, the pre-filter candidate cap, the per-candidate line-of-sight loop, the fixed follow speed, the every-other-tick goals, the un-normalised minion look, the fixed clone damage. **KEPT:** the flurry cadence and bounce, the 31 skills, the strike formula, every config key, the dormant pedestal, everything not listed.
+
+## 3.43.0: the fast flurry
+
+Owner: "Should Shishou's flurry be faster? ... sure". A balance change behind a server setting.
+
+| | 3.42.0 (`flurryFast = false`) | 3.43.0 (`flurryFast = true`, default) |
+|---|---|---|
+| strike cooldown | 15 ticks at low level down to 6 at level 100 | the old curve times 8/15, rounded: 8 down to 3 (`ShishouHunt.strikeCooldownFast`) |
+| strikes a second at most | 1.3 to 3.3 | 2.5 to 6.7 |
+| damage of one strike | 100% | 70% (`FLURRY_DAMAGE_SHARE`) |
+| damage a second | 1 | 1.2 to 1.4 times (`ShishouHunt.dpsFactor`, tested for every level) |
+| bounce after a strike | 3 ticks at 0.55 blocks a tick | 2 ticks at 0.8 (same direction, same lift) |
+
+- **Mana:** the wild sword still has 400 mana at 2 per strike, so the same 200 strikes (the wild phase is shorter in time, not in kills). A minion pays 1 sword mana per strike, so its pool drains about twice as fast: that is the natural brake.
+- **Worst case (rule 11):** one sword strikes at most 6.7 times a second (was 3.3): one `hurt` call, one `PerfParticles` burst (already budgeted), one mana payment and one bounce velocity set per strike. No new query, packet, entity or per-tick scan.
+- **Not changed:** the charge, the hunt, the 31 skills, the strike formula, the clones, every other config key.
+- **Not verified:** nothing seen in a game. The look of a 3-tick flurry (does it read as stabs or as a blur?) and the balance against the bosses are untested; `flurryFast = false` restores 3.42.0 exactly.
+- Tests: `ShishouFastFlurry343Test` (cooldown range and monotonic for all levels, always faster but bounded, damage rise 1.2 to 1.4 at every level, the setting off equals 3.42.0, bounce direction and lift, wiring, 200 wild strikes); the self-test `relic.shishou_hunt` also checks the cooldown for the active setting.

@@ -593,7 +593,7 @@ public final class ShishouService {
         ShishouRecord rec = d.record();
         long now = sl.getGameTime();
         int el = usable(rec, ShishouSkill.ELEMENTAL_SYNTHESIS) ? Integer.bitCount(ShishouStealTable.elements(rec.learned())) : 0;
-        double dmg = ShishouRules.strikeDamage(rec.level(), rec.attackSteps(), ShishouRules.elementBonus(el), ShishouConfig.strikeCap(), ShishouConfig.damagePercent());
+        double dmg = ShishouRules.strikeDamage(rec.level(), rec.attackSteps(), ShishouRules.elementBonus(el), ShishouConfig.strikeCap(), ShishouConfig.damagePercent()) * ShishouHunt.strikeShare(ShishouConfig.flurryFast());
         ServerPlayer owner = e.isMinion() ? e.owner() : null;
         if (owner != null) t.setLastHurtByPlayer(owner);
         t.invulnerableTime = 0;
