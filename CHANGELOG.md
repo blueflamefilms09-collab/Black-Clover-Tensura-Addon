@@ -1,5 +1,25 @@
 # Changelog
 
+## [3.48.0] — Devil Contract system: tiers, assimilation key, strict Devil Union with a 24 hour cooldown, Weg markings / horns / wings, lasting sacrifices
+
+Owner: the file `claude_prompt_devil_system.md`, then "go" on the guide. Docs: `docs/devil_contract.md`, `docs/devil_contract_guide.md`, `docs/releases/3.48.0.md`.
+
+### NEW
+- **The `devil` package**: `DevilTier` (None, Low, Mid, High, Supreme), `DevilAttribute`, `Sacrifice`, the pure `DevilRules`, the contract as a copy-on-death data attachment (`DevilContract`, `DevilStore`), `DevilContracts` (once-a-second server step, union and cooldown, stat and flight modifiers, login / respawn / death / logout handling), three optional packets (`DevilNet`: `Toggle`, `Sync`, `Visual`), `/devil` (status, grant, level, sacrifice, cooldown, clear), `DevilBoot`, self-tests `devil.contract.registry`, `devil.rules.bounds`, `devil.store.roundtrip`.
+- **The key** `N` (`key.nusmp.devil_assimilate`): lets the devil in or pushes it back; the level climbs 1 to 2.5 percent a second by tier, the cost per second is the tier's base times `1 + 9 x^2`, the stat bonuses follow a smooth curve, wings give flight from 50 %.
+- **The Devil Union** at 100 %: exactly five minutes, then the level drops to 0 and the union is locked for 24 in-game hours (24 000 ticks); the level stops at 99 % while the lock runs. It excludes the old Anti-Magic union (one devil at a time).
+- **The look** (`client/devil`): Weg markings of four tiers (wide and slim skins, 16 generated textures), horns and bat wings (`DevilModels`), a glow pass in the union, the HUD panel (`devil_hud`, movable), a darkened screen edge and a narrower field of view for a lost eye. Textures from `tools/gen_devil_textures.py`, previews in `docs/previews/devil/`.
+- **New prices** for `/devilpact accept`: `half` (half the maximum health for good, Supreme), `eye_left`, `eye_right` (a lost eye, High). The price also picks the tier of the contract (`tax` Low, `seal` and `maxhp` Mid); the devil's magic picks the attribute.
+- Settings `nusmp-devil-server.toml` (enabled, unionSeconds, cooldownHours, deathStartsCooldown, drainScale, statScale, allowFlight, halfHealth, eyeReachPenalty) and `nusmp-devil-client.toml` (wegLayer, hud, eyeOverlayStrength); 40 lang keys; tests `DevilRulesTest`, `DevilStoreTagTest`, `DevilSourceScanTest`; `devil` added to the CI smoke list.
+
+### REPLACED
+- Nothing.
+
+### KEPT
+- The three old prices (`tax`, `seal`, `maxhp`) and their effects, the four original devils and their pages, the Anti-Magic Black Form with its 5 minute / 30 minute rule, the Beast Will assimilation, and every other file; shared files (`NUSMP`, `ForbiddenMagic`, `GrimoireCommand`, `AntiMagicBook`, `smoke.yml`, `en_us.json`) were only appended to (one hook line each).
+
+Not seen in a game: any of it (the wing and horn shapes, how the markings sit on a real skin, the balance of the numbers). The English and Japanese wiki pages could not be fetched in this environment, so no canon text is claimed. The attribute has no combat effect yet, the first-person arm is not marked, a dimension change does not end the union, and `N` shares its default key with the Hero weapon cycle key (rebindable).
+
 ## [3.47.0] — Ultimate pair 2: Gate of Babylon (Fate, new) and Ki (Dragon Ball, new)
 
 Owner: "i want custom skill based animes", Ultimates "2 at a time", "let me know as you make them", then "go" for pair 2. Docs: `docs/skills/gate_ki.md`, `docs/releases/3.47.0.md`.

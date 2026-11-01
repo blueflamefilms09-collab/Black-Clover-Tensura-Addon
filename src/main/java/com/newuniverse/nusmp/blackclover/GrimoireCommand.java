@@ -24,7 +24,7 @@ public final class GrimoireCommand {
         // Players: accept a devil contract (only while holding a Devil Contract).
         event.getDispatcher().register(Commands.literal("devilpact").then(Commands.literal("accept")
                 .then(Commands.argument("price", com.mojang.brigadier.arguments.StringArgumentType.word())
-                        .suggests((c, b) -> { b.suggest("maxhp"); b.suggest("seal"); b.suggest("tax"); return b.buildFuture(); })
+                        .suggests((c, b) -> { b.suggest("maxhp"); b.suggest("seal"); b.suggest("tax"); b.suggest("half"); b.suggest("eye_left"); b.suggest("eye_right"); return b.buildFuture(); })
                         .executes(ctx -> {
                             ServerPlayer p = ctx.getSource().getPlayerOrException();
                             var contract = com.newuniverse.nusmp.item.NUItems.DEVIL_CONTRACT.get();

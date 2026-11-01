@@ -82,7 +82,7 @@ public final class ForbiddenMagic {
     public static double manaTax(Player p) { return data(p).getDouble("nusmp_mana_tax"); }
 
     // ---------------------------------------------------------------- contract
-    /** Price: "maxhp" (-2 hearts permanently), "seal" (a random page sealed for good), or "tax" (+15% cost on all grimoire magic). */
+    /** Price: "maxhp" (-2 hearts permanently), "seal" (a random page sealed for good), or "tax" (+15% cost on all grimoire magic). 3.48.0 adds "half" (half the maximum health for good), "eye_left" and "eye_right" (a lost eye). */
     public static boolean bind(ServerPlayer p, String price) {
         if (com.newuniverse.nusmp.relics.djinn.Bonds.refuse(p, com.newuniverse.nusmp.relics.djinn.Bonds.Kind.DEVIL, "a devil contract")) return false;   // 1.24.0: one bond, a Spirit, a Devil or a Djinn
         var g = GrimoirePages.grimoireOf(p);
@@ -107,6 +107,7 @@ public final class ForbiddenMagic {
                     }
                 }
             }
+            case "half", "eye_left", "eye_right" -> { /* 3.48.0: the new prices add no old price; com.newuniverse.nusmp.devil.DevilContracts.grant records them below */ }
             default -> d.putDouble("nusmp_mana_tax", d.getDouble("nusmp_mana_tax") + NUConfig.FORBIDDEN_MANA_TAX.get());
         }
         save(p, d);
@@ -131,6 +132,7 @@ public final class ForbiddenMagic {
         SkillAPI.getSkillsFrom(p).learnSkill(fb, Component.literal("Forbidden pages bleed into your grimoire.").withStyle(ChatFormatting.DARK_RED));
         subtitle(p, Component.literal(p.getName().getString() + " has bound " + devil.displayName + ", " + devil.title + "."));
         com.newuniverse.nusmp.quests.NusmpEvents.fire(p, "spirit.contract", "devil");
+        com.newuniverse.nusmp.devil.DevilContracts.grant(p, price, magic.name());                                       // 3.48.0: the Devil Contract system: tier from the price, attribute from the magic
         return true;
     }
 

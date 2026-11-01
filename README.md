@@ -47,6 +47,8 @@ Beast Will (3.45.0): `nusmp:beast_will_core` (rare drop of rank A+ beasts, or a 
 Nen (3.46.0): Hunter x Hunter Ultimate with ten modes (Ten, Zetsu, Ren, Gyo, En, Ken, Ko, Hatsu Enhancement, Hatsu Emission, Vow and Limitation); grant with `/tensura edit <player> ability grant nusmp:nen`; server setting `ultimates_3_46.nenEnabled`. All Fiction was rebuilt to ten modes (Undo, Fiction, Annul Damage, Rewind Step, Erase Effects, Nullify Strike, Unmake, Share the Fiction, Stand Up, World Fiction); `ultimates_3_46.allFictionRebuilt = false` brings back the old two. Docs: `docs/skills/nen_allfiction.md`.
 Gate of Babylon (3.47.0): Fate Ultimate with ten modes (Gate, Volley, Rain, Chains of Heaven, Golden Armour, Vimana, King's Aura, Gae Bolg, Ea, Elixir); grant with `/tensura edit <player> ability grant nusmp:gate_of_babylon`; server setting `ultimates_3_47.gateEnabled`. Ki (3.47.0): Dragon Ball Ultimate with ten modes (Ki Blast, Kamehameha, Instant Transmission, Solar Flare, Afterimage, Super Saiyan, Spirit Bomb, Kaioken, Ultra Instinct, Ki Sense); grant with `/tensura edit <player> ability grant nusmp:ki`; server setting `ultimates_3_47.kiEnabled`. Docs: `docs/skills/gate_ki.md`.
 
+Devil Contract (3.48.0): tiers from the contract price (`/devilpact accept tax|seal|maxhp|eye_left|eye_right|half`), the key `N` lets the devil in or pushes it back (assimilation 0 to 100 %, scaling magicule drain, horns from 20 %, wings and flight from 50 %), a strict five minute Devil Union at 100 % with a 24 in-game hour lock, lasting sacrifices (half the maximum health, a lost eye); `/devil status`, server setting file `nusmp-devil-server.toml`. Docs: `docs/devil_contract.md`.
+
 Config `[ultimate_evolution]`: enabled, minimumEP, replacesBase.
 
 The DanMachi spells are chanted: hold the skill key, a line finishes every 14 ticks (6 when mastered), release after the last line to cast; releasing early breaks the chant at no cost. Every skill, mode and number is in `docs/skills/rebuild.md`.
@@ -60,7 +62,7 @@ The DanMachi spells are chanted: hold the skill key, a line finishes every 14 ti
    - Windows: `gradlew.bat build`
    - Mac/Linux: `./gradlew build`
    The first build downloads Minecraft, NeoForge and Tensura, so it takes a while.
-3. The mod jar is in `build/libs/multiverse-of-anime-3.47.0.jar`.
+3. The mod jar is in `build/libs/multiverse-of-anime-3.48.0.jar`.
 
 ## Install
 Put the jar in the `mods` folder of the **server and every player's client**.

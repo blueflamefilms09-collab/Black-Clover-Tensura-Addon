@@ -113,6 +113,7 @@ public class NUSMP {
         com.newuniverse.nusmp.charset.CharacterSetBoot.init(modContainer);      // character spell sets: nusmp-character-spells-server.toml (magic.characterSpellSets), self-test magic.character_spells (docs/magic/character_spells.md)
         com.newuniverse.nusmp.spiritdark.SpiritDarkBoot.init(modEventBus, modContainer);                                  // Spirit of Darkness: nusmp-spiritdark-server.toml (magic.spiritDark), the sounds, the key packet, the events, self-test magic.spirit_dark
         com.newuniverse.nusmp.spiritcontrol.SpiritControlBoot.init(modEventBus, modContainer);                           // 3.0.0: the spirit control plane (grimoire spirit pages, /multiverse spirit, combat mode), nusmp-spirit-control-server.toml (magic.spiritControl), self-tests magic.spirit_control and magic.spirit_combat
+        com.newuniverse.nusmp.devil.DevilBoot.init(modEventBus, modContainer);                                          // 3.48.0: Devil Contract system: tiers, assimilation key, Devil Union + 24 h cooldown, sacrifices, nusmp-devil-server.toml, the packets, /devil, self-tests devil.*
         com.newuniverse.nusmp.beastwill.BeastWillBoot.init(modEventBus, modContainer);                                  // 3.45.0: Beast Will (TBATE-inspired): data-driven wills, cores, assimilation, Acquire / Integrate forms, nusmp-beastwill-server.toml, the packets, the events, /beastwill, self-tests beastwill.*
 
         com.newuniverse.nusmp.core.magic.profile.RetiredAttachments.ATTACHMENTS.register(modEventBus);                      // the saved attachments of the removed Celestial Spirit Magic and Requip stay registered (save compatibility)
@@ -203,6 +204,7 @@ public class NUSMP {
             com.newuniverse.nusmp.client.song.SongClient.init(modEventBus);
             com.newuniverse.nusmp.client.shishou.ShishouClient.init(modEventBus);      // Shishou: the throw / cast / next-skill keys, the movable HUD, the body renderer, the concealed tooltip
             com.newuniverse.nusmp.client.companion.CompanionClient.init(modEventBus, modContainer);                           // companions: the talk screen, the speech bubbles, the sample companion's renderer, nusmp-companions-client.toml
+            com.newuniverse.nusmp.client.devil.DevilClient.init(modEventBus, modContainer);                                  // 3.48.0 Devil Contract: the key, the HUD, the Weg layer (markings, horns, wings), the eye shade, nusmp-devil-client.toml
             com.newuniverse.nusmp.client.beastwill.BeastWillClient.init(modEventBus);                                       // 3.45.0 Beast Will: the keys, the HUD panel, the absorption screen
 
             com.newuniverse.nusmp.client.spiritlight.SpiritLightClient.init(modEventBus);        // Spirit of Light: the seraph's spoken-line player (no keys since 3.0.0)

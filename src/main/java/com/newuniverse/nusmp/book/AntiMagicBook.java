@@ -154,6 +154,7 @@ public class AntiMagicBook extends ElementBook {
         }
         if (inBlackForm(i)) { setForm(p, i, false); return true; }
         if (DevilFormLimit.refuse(p)) return false;                                     // 1.99.0: the aftermath of a union that broke at the time limit
+        if (com.newuniverse.nusmp.devil.DevilContracts.refuseOldUnion(p)) return false;   // 3.48.0: not inside the Devil Union of the Devil Contract system
         if (!AntiMagicAura.pay(p, AntiMagicCosts.FORM_START, "hold Black Form")) return false;
         setForm(p, i, true);
         return true;
