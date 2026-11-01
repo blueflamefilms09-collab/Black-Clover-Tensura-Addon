@@ -17756,5 +17756,7 @@
   "nusmp.devil.hud.sac_half": "half health",
   "nusmp.devil.hud.sac_eye_left": "left eye",
   "nusmp.devil.hud.sac_eye_right": "right eye",
-  "nusmp.devil.hud.sacrifices": "Paid: %s"
+  "nusmp.devil.hud.sacrifices": "Paid: %s",
+  "gui_move.element.devil_hud": "Devil Contract HUD",
+  "nusmp.gui_scale.gui.devil_hud": "Devil Contract HUD"
 }

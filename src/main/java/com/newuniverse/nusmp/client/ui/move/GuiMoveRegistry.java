@@ -132,6 +132,7 @@ public final class GuiMoveRegistry {
         hud("page_toast", "Page unlocked toast", How.LAYER, TC, 8, 300, 62, "client/ui/theme/PageUnlockOverlay.java");
         hud("shishou_hud", "Shishou HUD", How.BEGIN, new Place(3, false, false, 6, 40), 6, 156, 80, "client/shishou/ShishouClient.java", "client/shishou/ShishouHud.java");
         hud("beastwill_hud", "Beast Will HUD", How.LAYER, new Place(0, false, true, 0, 0), 6, 176, 150, "client/beastwill/BeastWillClient.java");
+        hud("devil_hud", "Devil Contract HUD", How.LAYER, new Place(1, false, true, 0, 0), 6, 164, 92, "client/devil/DevilClient.java");
         // ---------------- panels of screens (centred by default)
         panel("four_kingdoms", "Four Kingdoms menu", 340, 236, "client/multiverse/FourKingdomsScreen.java");
         panel("codex", "Codex", 480, 300, "client/ui/CodexScreen.java");
