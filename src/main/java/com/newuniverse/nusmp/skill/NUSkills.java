@@ -68,6 +68,8 @@ public final class NUSkills {
 
     // ---- 3.46.0: Hunter x Hunter (Ultimate; grant with /tensura edit <player> ability grant nusmp:nen) ----
     public static final DeferredHolder<ManasSkill, NenSkill> NEN = SKILLS.register("nen", NenSkill::new);
+    public static final DeferredHolder<ManasSkill, GateOfBabylonSkill> GATE_OF_BABYLON = SKILLS.register("gate_of_babylon", GateOfBabylonSkill::new);
+    public static final DeferredHolder<ManasSkill, KiSkill> KI = SKILLS.register("ki", KiSkill::new);
 
     // ---- Black Clover ----
     /** Granted automatically with a grimoire. Magic, leaves and devil are stored on the skill. */

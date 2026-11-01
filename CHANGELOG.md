@@ -1,5 +1,23 @@
 # Changelog
 
+## [3.47.0] — Ultimate pair 2: Gate of Babylon (Fate, new) and Ki (Dragon Ball, new)
+
+Owner: "i want custom skill based animes", Ultimates "2 at a time", "let me know as you make them", then "go" for pair 2. Docs: `docs/skills/gate_ki.md`, `docs/releases/3.47.0.md`.
+
+### NEW
+- **Gate of Babylon** (`nusmp:gate_of_babylon`, Ultimate, grant with `/tensura edit <player> ability grant nusmp:gate_of_babylon`): ten modes, Gate (one weapon on what you look at), Volley (six creatures in a cone), Rain (a place you look at, radius 6, twelve creatures), Chains of Heaven (holds a creature; a boss two fifths as long, a player half as long), Golden Armour (0.7x damage and Absorption II for 20 s), Vimana (a leap and Slow Falling for 15 s), King's Aura (allies Strength I and Resistance I, foes Weakness I), Gae Bolg (a spear through three), Ea (one 40-block line through everything in it, 120 s cooldown), Elixir (30 % heal, cleanse, Regeneration). Windows are game times in the skill tag (no tick, no cleanup)
+- **Ki** (`nusmp:ki`, Ultimate, grant with `/tensura edit <player> ability grant nusmp:ki`): ten modes, Ki Blast, Kamehameha (28 blocks, pierces six), Instant Transmission (a safe blink of up to 32 blocks, refunded if there is no room), Solar Flare (a cone of foes blinded and slowed, shorter on bosses and players), Afterimage (the next blow does a fifth), Super Saiyan (Strength II, Speed I, 0.85x damage taken), Spirit Bomb (24 + 4 per living ally lending energy, at most eight), Kaioken (Strength III, Speed II for 15 % of your maximum health, 1.25x damage taken, never to the last heart), Ultra Instinct (one blow a second dodged, the rest 0.5x), Ki Sense (hostile presences within 32 blocks glow)
+- **`ControlRules.controlTicks`**: one shared rule for every hold of these skills, a boss held 0.4x as long, a player 0.5x, never past 15 seconds
+- Gate of Babylon and Ki icons (`textures/skill/gate_of_babylon.png`, `ki.png`; painters `S_gate`, `S_ki` in `tools/skills/gen_skill_icons.py`), 45 lang keys, tests `GateRulesTest`, `KiRulesTest`, `ControlRulesTest`, `UltimatePair2SourceScanTest` (and both ids in `SkillAssetsTest`), CI self-tests `skill.gate.registry` and `skill.ki.registry` (added to the smoke list), server settings `ultimates_3_47.gateEnabled` and `ultimates_3_47.kiEnabled`
+
+### REPLACED
+- Nothing. Neither skill existed before (the repo's "Gate of Babylon Crest" is a relic item and stays as it is).
+
+### KEPT
+- Every other skill, icon, setting and test; Nen and All Fiction (3.46.0) are untouched. Shared files (`NUSkills`, `NUConfig`, `UltimatePairSelfTests`, `smoke.yml`, `SkillAssetsTest`, `en_us.json`) were only appended to.
+
+Not seen in a game: any of it (feel and balance of the numbers, the Vimana leap, the blink on slopes, how the gate and beam effects look). The English and Japanese wiki pages could not be fetched in this build (hosts not allowed), so the modes follow the series as the author knows it, unchecked against a page. Not included: Gilgamesh's other Noble Phantasms as items, Dragon Ball fusion and the other transformations, per-mode animated icons.
+
 ## [3.46.0] — Ultimate pair 1: Nen (Hunter x Hunter, new) and All Fiction (rebuilt from two modes to ten)
 
 Owner: "Nen (Hunter x Hunter) as a new Ultimate", "All Fiction is a yes but we are fully rebuilding it", "i want custom skill based animes", Ultimates "2 at a time". Docs: `docs/skills/nen_allfiction.md`, `docs/releases/3.46.0.md`.

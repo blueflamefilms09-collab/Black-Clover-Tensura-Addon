@@ -45,6 +45,7 @@ Standalone Ultimates (grant only): `nusmp:black_wings`, `nusmp:the_almighty`, `n
 God-tier balance: config `[god_tier]` (affectsPlayers, bossHealthThreshold, almightyDodgeChance).
 Beast Will (3.45.0): `nusmp:beast_will_core` (rare drop of rank A+ beasts, or a beast's own offer) binds a Dragon, Shadow Panther, Elderwood Guardian or Lion Will; keys `[` `]` `;` `\` `=`; commands `/beastwill ...`; server config `nusmp-beastwill-server.toml`; see `docs/beastwill.md`.
 Nen (3.46.0): Hunter x Hunter Ultimate with ten modes (Ten, Zetsu, Ren, Gyo, En, Ken, Ko, Hatsu Enhancement, Hatsu Emission, Vow and Limitation); grant with `/tensura edit <player> ability grant nusmp:nen`; server setting `ultimates_3_46.nenEnabled`. All Fiction was rebuilt to ten modes (Undo, Fiction, Annul Damage, Rewind Step, Erase Effects, Nullify Strike, Unmake, Share the Fiction, Stand Up, World Fiction); `ultimates_3_46.allFictionRebuilt = false` brings back the old two. Docs: `docs/skills/nen_allfiction.md`.
+Gate of Babylon (3.47.0): Fate Ultimate with ten modes (Gate, Volley, Rain, Chains of Heaven, Golden Armour, Vimana, King's Aura, Gae Bolg, Ea, Elixir); grant with `/tensura edit <player> ability grant nusmp:gate_of_babylon`; server setting `ultimates_3_47.gateEnabled`. Ki (3.47.0): Dragon Ball Ultimate with ten modes (Ki Blast, Kamehameha, Instant Transmission, Solar Flare, Afterimage, Super Saiyan, Spirit Bomb, Kaioken, Ultra Instinct, Ki Sense); grant with `/tensura edit <player> ability grant nusmp:ki`; server setting `ultimates_3_47.kiEnabled`. Docs: `docs/skills/gate_ki.md`.
 
 Config `[ultimate_evolution]`: enabled, minimumEP, replacesBase.
 
@@ -59,7 +60,7 @@ The DanMachi spells are chanted: hold the skill key, a line finishes every 14 ti
    - Windows: `gradlew.bat build`
    - Mac/Linux: `./gradlew build`
    The first build downloads Minecraft, NeoForge and Tensura, so it takes a while.
-3. The mod jar is in `build/libs/multiverse-of-anime-3.46.0.jar`.
+3. The mod jar is in `build/libs/multiverse-of-anime-3.47.0.jar`.
 
 ## Install
 Put the jar in the `mods` folder of the **server and every player's client**.

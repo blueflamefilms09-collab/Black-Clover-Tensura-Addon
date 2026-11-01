@@ -265,6 +265,8 @@ PAL = {
     "the_almighty": ("ultimate", 0xB81E2A, 0x0A0204, 0xFFD0D0, 0xFF3A3A),
     "the_visionary": ("ultimate", 0xFF7AE0, 0x1A0830, 0xFFE0FA, 0x7AD8FF),
     "nen": ("ultimate", 0x2AC8A0, 0x04141A, 0xDFFBF4, 0xFFE070),   # 3.46.0
+    "gate_of_babylon": ("ultimate", 0xE8A020, 0x160E02, 0xFFF0B0, 0xFFD060),   # 3.47.0
+    "ki": ("ultimate", 0x2A78E8, 0x040A1C, 0xDFF2FF, 0xFFD020),   # 3.47.0
 }
 
 
@@ -623,6 +625,40 @@ def S_nen(d, p):
         sparkle(d, C + math.cos(a) * r, C + math.sin(a) * r, s, (255, 255, 255))
 
 
+def S_gate(d, p):
+    # Gate of Babylon: a golden ring (the gate) opening above, five weapons of gold falling out of it, a golden shimmer behind
+    rays(d, C, C - 40, 74, 120, 16, p[4], 5, rot=4)
+    ell(d, C, C - 44, 66, 66, (40, 22, 4))                                                                    # the dark inside of the gate
+    for x, ln_, w in ((-70, 96, 11), (-35, 120, 12), (0, 146, 14), (35, 120, 12), (70, 96, 11)):
+        y0 = C - 8
+        poly(d, [(C + x - w, y0), (C + x + w, y0), (C + x + w * 0.9, y0 + ln_ * 0.8), (C + x, y0 + ln_), (C + x - w * 0.9, y0 + ln_ * 0.8)],
+             (255, 244, 200), (150, 100, 20), 4)                                                                # the blade, point down
+        poly(d, [(C + x - w * 2.0, y0 - 8), (C + x + w * 2.0, y0 - 8), (C + x + w * 2.0, y0 + 2), (C + x - w * 2.0, y0 + 2)], (255, 208, 60), (150, 100, 20), 3)   # the guard
+        ln(d, [(C + x, y0 - 8), (C + x, y0 - 34)], (255, 208, 60), 7)                                          # the grip
+    ell(d, C, C - 44, 66, 66, None, (255, 214, 70), 10)                                                       # the gate's ring
+    ell(d, C, C - 44, 50, 50, None, (255, 240, 170), 3)
+    for ang in range(0, 360, 45):
+        a = math.radians(ang)
+        sparkle(d, C + math.cos(a) * 66, C - 44 + math.sin(a) * 66, 9, (255, 255, 255))
+    sparkle(d, C - 92, C + 70, 16, (255, 255, 255))
+    sparkle(d, C + 94, C + 56, 14, (255, 255, 255))
+
+
+def S_ki(d, p):
+    # Ki: golden spiked aura, the blue ki sphere in the hands, and the beam of a Kamehameha running to the right edge
+    for dx, h, w in ((-78, 110, 50), (-40, 150, 54), (0, 176, 60), (40, 150, 54), (78, 110, 50)):
+        flame(d, C + dx, C + 58, h, w, p[4], (255, 250, 200))
+    poly(d, [(C - 24, C - 14), (C + 122, C - 40), (C + 122, C + 58), (C - 24, C + 38)], (70, 160, 255), (230, 245, 255), 4)      # the beam
+    poly(d, [(C - 24, C - 2), (C + 122, C - 22), (C + 122, C + 40), (C - 24, C + 26)], (170, 220, 255))
+    poly(d, [(C - 24, C + 6), (C + 122, C - 8), (C + 122, C + 24), (C - 24, C + 18)], (255, 255, 255))
+    ell(d, C - 30, C + 12, 58, 58, (60, 140, 255), (225, 245, 255), 6)                                                          # the sphere
+    ell(d, C - 30, C + 12, 40, 40, (150, 210, 255))
+    ell(d, C - 30, C + 12, 22, 22, (255, 255, 255))
+    rays(d, C - 30, C + 12, 66, 92, 12, (225, 245, 255), 5, rot=10)
+    sparkle(d, C + 76, C - 84, 18, (255, 255, 255))
+    sparkle(d, C - 92, C - 70, 14, (255, 255, 255))
+
+
 SYMBOLS = {
     "summoner": S_summoner, "faith": S_faith, "firebolt": S_firebolt, "argonaut": S_argonaut, "liaris_freese": S_liaris,
     "airiel": S_airiel, "hestia": S_hestia, "freya": S_freya, "hephaestus": S_hephaestus, "loki": S_loki,
@@ -633,6 +669,7 @@ SYMBOLS = {
     "goddess_of_faith": S_goddess, "heros_argonaut": S_heros, "hell_conqueror": S_hellconq, "immortal_will": S_immortal,
     "adolla_burst": S_adolla, "all_fiction": S_allfiction, "limitless": S_limitless, "gold_experience_requiem": S_requiem,
     "black_wings": S_blackwings, "instant_death": S_instdeath, "the_almighty": S_almighty, "the_visionary": S_visionary, "nen": S_nen,
+    "gate_of_babylon": S_gate, "ki": S_ki,
 }
 
 
