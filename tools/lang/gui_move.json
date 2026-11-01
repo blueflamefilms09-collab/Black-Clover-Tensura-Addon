@@ -42,5 +42,6 @@
   "gui_move.element.grimoire_slot": "Grimoire slot",
   "gui_move.element.shishou_stomach": "Shishou Stomach",
   "gui_move.panels": "Panels: %s",
-  "gui_move.element.beastwill_hud": "Beast Will HUD"
+  "gui_move.element.beastwill_hud": "Beast Will HUD",
+  "gui_move.element.devil_hud": "Devil Contract HUD"
 }
