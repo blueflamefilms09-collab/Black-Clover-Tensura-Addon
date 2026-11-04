@@ -16,7 +16,7 @@ public final class MegaConfig {
     public static final ModConfigSpec.IntValue FLOOR_ROOMS;
     public static final ModConfigSpec SPEC;
     public static final ModConfigSpec.BooleanValue EXPANSION, LAST_LANDING, EXPAND_AFTER_VAULT, KEEP_DIGGERS_OUT;
-    public static final ModConfigSpec.IntValue PIECES_PER_TICK, MAX_PIECES, MAX_SECTORS, ASSEMBLE_TRIES, MAX_LINK_MODULES, GEN_BUDGET_MS;
+    public static final ModConfigSpec.IntValue PIECES_PER_TICK, MAX_PIECES, MAX_SECTORS, ASSEMBLE_TRIES, MAX_LINK_MODULES, GEN_BUDGET_MS, AUTO_RETRIES;
 
     static {
         ModConfigSpec.Builder b = new ModConfigSpec.Builder();
@@ -35,6 +35,8 @@ public final class MegaConfig {
                 .defineInRange("maxSectors", 1000, 1, 10000);
         ASSEMBLE_TRIES = b.comment("How many seeds the generator tries before it gives up on a sector layout that passes the audit and uses the fallback.")
                 .defineInRange("assembleTries", 24, 1, 64);
+        AUTO_RETRIES = b.comment("3.48.4: how many times a floor that cannot be planned, or that would only get the minimal fallback layout, is planned again with a new seed by itself (before it is placed). 0 = the old behaviour: FAILED until an admin runs regen, fallback layouts are kept.")
+                .defineInRange("autoRetries", 3, 0, 10);
         MAX_LINK_MODULES = b.comment("Longest straight tunnel (in 9-block modules) between two sectors when the next region would collide with an old one. 0 = never build links.")
                 .defineInRange("maxLinkModules", 40, 0, 60);
         GEN_BUDGET_MS = b.comment("Milliseconds of server time one tick may spend placing the pieces of a sector (at least one piece is always placed, and never more than piecesPerTick). Lower = smoother, but the sector takes longer to appear.")

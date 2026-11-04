@@ -340,6 +340,7 @@ public final class ExpansionQueue implements Expander {
     }
 
     public void onServerStopped() {
+        replans.clear();
         queue.clear();
         current = null;
         ticks = 0;
@@ -393,14 +394,33 @@ public final class ExpansionQueue implements Expander {
 
     // ================================================================================================================ the job
 
+    /** 3.48.4: pure rule, may a floor that failed or got only the fallback be planned again? First-time jobs only (restore == null), and at most {@code max} times. */
+    static boolean mayReplan(int done, int max, boolean firstTime) { return firstTime && done < max; }
+
+    /** Times each sector was re-planned with a new seed this run (in memory; a restart starts again from the saved seed, which is the last one tried). */
+    private final java.util.Map<Integer, Integer> replans = new java.util.HashMap<>();
+
+    /** Gives the sector a new seed (saved, so a restart repeats the new plan) and reports whether another plan was started. */
+    private boolean replan(MegaData data, Sector s, String why) {
+        int done = replans.getOrDefault(s.id, 0);
+        if (!mayReplan(done, MegaConfig.get(MegaConfig.AUTO_RETRIES), current != null && current.restore == null)) return false;
+        replans.put(s.id, done + 1);
+        s.seed = Rng.mix(s.seed, 0xA17E0000L + done + 1);
+        data.setDirty();
+        LOG.warn("[nusmp] Mega sector {} is planned again with a new seed (try {}): {}", s.id, done + 1, why);
+        return true;
+    }
+
     private void plan(ServerLevel level, MegaData data, Sector s) {
         Job j = current;
         j.startNanos = System.nanoTime();
         SectorGenerator.Planned planned = SectorGenerator.plan(level, data, s);
         if (!planned.ok()) {
+            if (replan(data, s, planned.failure())) return;
             fail(data, s, planned.failure());
             return;
         }
+        if (planned.solved().fallback() && replan(data, s, "only the fallback layout was possible")) return;
         j.planned = planned;
         j.built = SectorGenerator.build(level, planned);
         j.placer = new SectorPlacer(level, s, j.built, j.repair);
@@ -417,6 +437,7 @@ public final class ExpansionQueue implements Expander {
     private void finish(MinecraftServer server, ServerLevel level, MegaData data, Sector s) {
         Job j = current;
         SectorGenerator.fill(s, j.built);
+        replans.remove(s.id);
         s.state = j.restore != null ? j.restore : Sector.State.ACTIVE;
         Sector prev = SectorGenerator.prevOf(data, s);
         int opened = 0;

@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.48.4] — Floors plan themselves again when they fail
+
+### ADDED
+- A floor that cannot be planned, or that would only get the minimal fallback layout (Landing and boss chain only), is planned again with a new saved seed, up to `mega.autoRetries` times (default 3), before anything is placed. Only first-time generation; an admin `regen` of a built floor is unchanged. After the last try the old behaviour applies (FAILED, or the fallback layout is kept). 0 turns it off.
+- Test `FloorReplanTest`. Cost: at most 3 extra plans per bad floor, one at a time on the existing queue, nothing per tick, no packets.
+- Caveat: I could not find a depth-specific cause for the broken Abyssal floors 15+, so this is a safety net, not a root-cause fix. Not run in a game. Floors that are already FAILED or already built with the fallback layout are not touched; use `/multiverse mega regen <id>` for those.
+
 ## [3.48.3] — Fix: a rift's chests can no longer be farmed by re-entering the same rift
 
 Report: players re-entered one pocket rift again and again; each time the realm collapsed a brand-new realm with fresh chests was built for the same rift.
