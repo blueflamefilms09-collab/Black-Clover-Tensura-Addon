@@ -93,4 +93,31 @@ class NenRulesTest {
         assertTrue(NenRules.enGlowTicks() <= 400 && NenRules.gyoRevealTicks() <= 400 && NenRules.gyoNightTicks() <= 2400);
         assertTrue(NenRules.renStrengthAmp() <= 2 && NenRules.renSpeedAmp() <= 1 && NenRules.kenSlowAmp() <= 2);
     }
+
+    @Test
+    void seventeenModesAndTheWheel() {
+        assertEquals(17, NenRules.MODES);
+        assertEquals(NenRules.MODES, NenRules.IDS.length);
+        assertEquals(1.0, NenRules.efficiency(NenRules.T_ENHANCE, NenRules.T_ENHANCE));
+        assertEquals(0.8, NenRules.efficiency(NenRules.T_ENHANCE, NenRules.T_TRANS));
+        assertEquals(0.8, NenRules.efficiency(NenRules.T_ENHANCE, NenRules.T_EMIT));
+        assertEquals(0.4, NenRules.efficiency(NenRules.T_ENHANCE, NenRules.T_SPEC));
+        for (int m = 0; m < NenRules.MODES; m++) assertTrue(NenRules.hatsu(m) == (NenRules.typeOfMode(m) >= 0));
+        for (long a = 0; a < 50; a++) { int t = NenRules.divine(a * 7919L, a * 104729L); assertTrue(t >= 0 && t < 6); }
+        assertEquals(NenRules.divine(5L, 9L), NenRules.divine(5L, 9L));
+    }
+
+    @Test
+    void zetsuIsDefencelessAndRyuGuards() {
+        assertTrue(NenRules.takenMultiplier(false, false, false, false, true, false) > 1.0);
+        assertTrue(NenRules.takenMultiplier(false, false, false, false, false, true) < 1.0);
+        double hi = NenRules.takenMultiplier(true, true, true, true, true, true), lo = NenRules.takenMultiplier(true, true, false, false, false, true);
+        assertTrue(hi <= 1.5 && lo >= 0.25);
+    }
+
+    @Test
+    void newHatsuAreBounded() {
+        assertTrue(NenRules.transMax() <= 6 && NenRules.conjDamage() > 0 && NenRules.specRadius() <= 16 && NenRules.manipRange() <= 24);
+        assertTrue(NenRules.duration(NenRules.SHU) > 0 && NenRules.duration(NenRules.IN) > 0 && NenRules.duration(NenRules.RYU) > 0);
+    }
 }

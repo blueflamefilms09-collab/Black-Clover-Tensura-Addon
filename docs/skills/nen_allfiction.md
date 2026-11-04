@@ -55,3 +55,6 @@ Not fetched: the English wiki (`hunterxhunter.fandom.com`, `medaka-box.fandom.co
 
 ## Not included
 The four other Nen types' signature abilities (Transmutation, Conjuration, Manipulation, Specialization) and Shu/In/Ryu as separate modes; restoring blocks or broken terrain with All Fiction; per-mode animated icons; a model. Nothing here was seen in a game.
+
+## 3.49.0 additions (Nen)
+Seventeen modes now (the first ten unchanged): Shu, In, Ryu, Hatsu Transmutation, Conjuration, Manipulation, Specialization. Water Divination type affinity uses the wheel: 100 / 80 / 60 / 40 %. Zetsu leaves you defenceless (+30 % damage taken); Ryu cuts damage taken by 15 % and raises damage dealt by 20 %. Source: the author's knowledge of the series (wikis not fetched in this session, rule 10). Worst case: up to 24 creatures looked at and 8 hit per press, no new tick or packet.

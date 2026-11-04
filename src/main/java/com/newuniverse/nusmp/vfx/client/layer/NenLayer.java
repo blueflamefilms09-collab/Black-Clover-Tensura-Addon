@@ -29,7 +29,7 @@ public class NenLayer extends AbstractVfxLayer {
     private static final ResourceLocation GLOW = t("glow"), SPARK = t("spark"), HALO = t("bfx_halo"), RING = t("shock_ring_0"), STREAK = t("spike_streak"), FLARE = t("spike_flare"),
             EYE = t("eye_flare"), SMOKE = t("smoke_wisp_0");
 
-    private static final int[] KIND_COLOR = {0xFFDCEEFF, 0xFF8C93A8, 0xFFFFE08A, 0xFF9CC4FF, 0xFFFF9A5A, 0xFFB070FF};
+    private static final int[] KIND_COLOR = {0xFFDCEEFF, 0xFF8C93A8, 0xFFFFE08A, 0xFF9CC4FF, 0xFFFF9A5A, 0xFFB070FF, 0xFF7CFFD8, 0xFFFF7ADA};
     private static final int WHITE = 0xFFFFFFFF;
 
     @Override public Set<VfxShape> shapes() { return EnumSet.of(VfxShape.NEN_AURA, VfxShape.NEN_EN, VfxShape.NEN_GYO, VfxShape.NEN_IMPACT, VfxShape.NEN_BEAM); }
@@ -75,17 +75,17 @@ public class NenLayer extends AbstractVfxLayer {
 
     // ---------------------------------------------------------------- the aura of a window
     private void aura(VfxInstance inst, VfxRenderContext ctx, VfxVertexBuffer buf, float age, float fade) {
-        int kind = Mth.clamp(Math.round(inst.power), 0, 5);
+        int kind = Mth.clamp(Math.round(inst.power), 0, 7);
         long seed = inst.seed;
         Vector3f c = ctx.rel(inst.from(ctx));
         int col = inst.color != 0 ? inst.color : KIND_COLOR[kind];
         // wisps: [count, radius, height, speed, size, alpha] per kind
-        int n = switch (kind) { case 0 -> 10; case 1 -> 4; case 2 -> 20; case 3 -> 14; case 4 -> 8; default -> 12; };
-        float rad = switch (kind) { case 0 -> 0.5f; case 1 -> 0.35f; case 2 -> 0.75f; case 3 -> 0.6f; case 4 -> 0.45f; default -> 0.65f; };
-        float hgt = switch (kind) { case 0 -> 2.1f; case 1 -> 1.2f; case 2 -> 3.2f; case 3 -> 2.0f; case 4 -> 2.2f; default -> 2.6f; };
-        float spd = switch (kind) { case 0 -> 0.022f; case 1 -> -0.014f; case 2 -> 0.05f; case 3 -> 0.015f; case 4 -> 0.035f; default -> 0.03f; };
-        float size = switch (kind) { case 0 -> 1.1f; case 1 -> 0.7f; case 2 -> 1.7f; case 3 -> 1.5f; case 4 -> 1.0f; default -> 1.4f; };
-        float al = switch (kind) { case 0 -> 0.7f; case 1 -> 0.3f; case 2 -> 0.85f; case 3 -> 0.8f; case 4 -> 0.8f; default -> 0.75f; };
+        int n = switch (kind) { case 0 -> 10; case 1 -> 4; case 2 -> 20; case 3 -> 14; case 4 -> 8; case 6 -> 6; case 7 -> 10; default -> 12; };
+        float rad = switch (kind) { case 0 -> 0.5f; case 1 -> 0.35f; case 2 -> 0.75f; case 3 -> 0.6f; case 4 -> 0.45f; case 6 -> 0.4f; case 7 -> 0.7f; default -> 0.65f; };
+        float hgt = switch (kind) { case 0 -> 2.1f; case 1 -> 1.2f; case 2 -> 3.2f; case 3 -> 2.0f; case 4 -> 2.2f; case 6 -> 1.9f; case 7 -> 2.3f; default -> 2.6f; };
+        float spd = switch (kind) { case 0 -> 0.022f; case 1 -> -0.014f; case 2 -> 0.05f; case 3 -> 0.015f; case 4 -> 0.035f; case 6 -> 0.02f; case 7 -> 0.04f; default -> 0.03f; };
+        float size = switch (kind) { case 0 -> 1.1f; case 1 -> 0.7f; case 2 -> 1.7f; case 3 -> 1.5f; case 4 -> 1.0f; case 6 -> 0.8f; case 7 -> 1.2f; default -> 1.4f; };
+        float al = switch (kind) { case 0 -> 0.7f; case 1 -> 0.3f; case 2 -> 0.85f; case 3 -> 0.8f; case 4 -> 0.8f; case 6 -> 0.55f; case 7 -> 0.85f; default -> 0.75f; };
         float flare = kind == 2 ? 0.5f + 0.5f * Mth.sin(age * 0.5f) : 1f;               // Ren breathes
         int count = ctx.seg(n, Math.max(3, n / 2));
         for (int k = 0; k < count; k++) {
@@ -118,6 +118,16 @@ public class NenLayer extends AbstractVfxLayer {
             for (int k = 0; k < links; k++) {
                 float ang = Mth.TWO_PI * k / links + age * 0.08f, y = c.y + 0.3f + (k * 0.27f);
                 sprite(ctx, buf, SPARK, VfxBlend.ADD, c.x + Mth.cos(ang) * 0.75f, y, c.z + Mth.sin(ang) * 0.75f, 0.35f, ang, a(KIND_COLOR[5], 0.8f * fade));
+            }
+        }
+        if (kind == 6) {                                                                // Shu: a thin veil and a bright glow in front of the hands
+            sprite(ctx, buf, GLOW, VfxBlend.ADD, c.x, c.y + 1.3f, c.z, 1.2f, 0f, a(col, 0.35f * fade));
+        }
+        if (kind == 7) {                                                                // Ryu: glows orbiting the body
+            int orbs = ctx.seg(4, 2);
+            for (int k = 0; k < orbs; k++) {
+                float ang = Mth.TWO_PI * k / orbs + age * 0.12f, y = c.y + 0.4f + 0.45f * k;
+                sprite(ctx, buf, GLOW, VfxBlend.ADD, c.x + Mth.cos(ang) * 0.7f, y, c.z + Mth.sin(ang) * 0.7f, 0.7f, 0f, a(col, 0.7f * fade));
             }
         }
         if (kind == 1) sprite(ctx, buf, SMOKE, VfxBlend.ALPHA, c.x, c.y + 0.9f, c.z, 1.6f, age * 0.01f, a(col, 0.12f * fade));

@@ -35,7 +35,8 @@ public class NenSkill extends NUSkill {
             "Ultimate. Hunter x Hunter's life energy in ten modes: Ten, Zetsu, Ren, Gyo, En, Ken, Ko, Hatsu Enhancement, Hatsu Emission and Vow and Limitation.");
 
     /** The cast colour of each mode (ARGB). */
-    private static final int[] COLORS = {0xFFE8F4FF, 0xFF4A4A5C, 0xFFFFD060, 0xFF7AE0FF, 0xFF6AFFC0, 0xFF8AB8FF, 0xFFFF6A3A, 0xFFFF9A3A, 0xFF6AD8FF, 0xFFB060FF};
+    private static final int[] COLORS = {0xFFE8F4FF, 0xFF4A4A5C, 0xFFFFD060, 0xFF7AE0FF, 0xFF6AFFC0, 0xFF8AB8FF, 0xFFFF6A3A, 0xFFFF9A3A, 0xFF6AD8FF, 0xFFB060FF,
+            0xFF7AFFD8, 0xFF303040, 0xFFFFFFFF, 0xFFFFE04A, 0xFFD8C890, 0xFFE060FF, 0xFFFF6AA0};
 
     public NenSkill() { super(SkillType.ULTIMATE, TEXT, true); }
 
@@ -55,26 +56,37 @@ public class NenSkill extends NUSkill {
             case NenRules.KO -> SkillMsg.mode("nen.ko", "Ko");
             case NenRules.ENHANCE -> SkillMsg.mode("nen.enhance", "Hatsu: Enhancement");
             case NenRules.EMIT -> SkillMsg.mode("nen.emit", "Hatsu: Emission");
-            default -> SkillMsg.mode("nen.vow", "Vow and Limitation");
+            case NenRules.VOW -> SkillMsg.mode("nen.vow", "Vow and Limitation");
+            case NenRules.SHU -> SkillMsg.mode("nen.shu", "Shu");
+            case NenRules.IN -> SkillMsg.mode("nen.in", "In");
+            case NenRules.RYU -> SkillMsg.mode("nen.ryu", "Ryu");
+            case NenRules.TRANS -> SkillMsg.mode("nen.trans", "Hatsu: Transmutation");
+            case NenRules.CONJ -> SkillMsg.mode("nen.conj", "Hatsu: Conjuration");
+            case NenRules.MANIP -> SkillMsg.mode("nen.manip", "Hatsu: Manipulation");
+            default -> SkillMsg.mode("nen.spec", "Hatsu: Specialization");
         };
     }
 
     private static boolean open(CompoundTag tag, int mode, long now) { return NenRules.active(tag.getLong(NenRules.untilKey(mode)), now); }
 
     // ---------------------------------------------------------------- the effects (3.48.5)
-    private static final int[] AURA_KINDS = {NenRules.TEN, NenRules.ZETSU, NenRules.REN, NenRules.KEN, NenRules.KO, NenRules.VOW};
+    private static final int[] AURA_KINDS = {NenRules.TEN, NenRules.ZETSU, NenRules.REN, NenRules.KEN, NenRules.KO, NenRules.VOW, NenRules.SHU, NenRules.RYU};
     /** Ticks an aura instance lives: resent every {@link #AURA_EVERY} ticks while its window is open, so a window ended early fades within about two and a half seconds. */
     private static final int AURA_LIFE = 50, AURA_EVERY = 40;
 
+    private static final String IN_KEY = "nusmp_nen_in";
     private static boolean newFx() { return NUConfig.NEN_VFX.get(); }
+
+    /** In hides the aura: while it is open none of this player's Nen effects are sent (the hatsu is still there, you just cannot see it). */
+    private static boolean hidden(ServerPlayer p) { return p.getPersistentData().getLong(IN_KEY) > p.level().getGameTime(); }
 
     /** Sends the aura of one window kind (index in {@link #AURA_KINDS}) following the player. Cosmetic: nearby players only (VfxSpawn), never throws. */
     private static void auraFx(ServerPlayer p, int kind) {
-        SkillFx.follow(p.serverLevel(), VfxShape.NEN_AURA, p, p.position(), 0, AURA_LIFE, kind);
+        if (!hidden(p)) SkillFx.follow(p.serverLevel(), VfxShape.NEN_AURA, p, p.position(), 0, AURA_LIFE, kind);
     }
 
     private static void shapeFx(ServerPlayer p, VfxShape shape, Vec3 at, Vec3 to, int argb, int life, float power) {
-        SkillFx.shape(p.serverLevel(), shape, at, to, argb, life, power);
+        if (!hidden(p)) SkillFx.shape(p.serverLevel(), shape, at, to, argb, life, power);
     }
 
     /** Once every two seconds, for each window that is open: the aura (at most the six windows, in practice two or three). */
@@ -109,7 +121,12 @@ public class NenSkill extends NUSkill {
             case NenRules.KO -> window(instance, p, tag, now, mode, SkillMsg.t("nen.ko", "Ko: all your aura gathers in one strike."));
             case NenRules.ENHANCE -> enhance(instance, p, vow);
             case NenRules.EMIT -> emit(instance, p, vow);
-            default -> vow(instance, p, tag, now);
+            case NenRules.VOW -> vow(instance, p, tag, now);
+            case NenRules.SHU, NenRules.IN, NenRules.RYU -> advanced(instance, p, tag, now, mode);
+            case NenRules.TRANS -> trans(instance, p, tag, now, vow);
+            case NenRules.CONJ -> conj(instance, p, tag, now, vow);
+            case NenRules.MANIP -> manip(instance, p, tag, now, vow);
+            default -> spec(instance, p, tag, now, vow);
         };
         if (!done) return;
         cooldown(instance, mode, DMUtil.cooldown(NenRules.cooldown(mode)));
@@ -173,7 +190,7 @@ public class NenSkill extends NUSkill {
             e.addEffect(new MobEffectInstance(MobEffects.GLOWING, NenRules.gyoRevealTicks(), 0, false, false, false));
             shown++;
         }
-        if (newFx()) SkillFx.follow(p.serverLevel(), VfxShape.NEN_GYO, p, p.position(), 0xFF7AE0FF, 20, 1f);
+        if (newFx() && !hidden(p)) SkillFx.follow(p.serverLevel(), VfxShape.NEN_GYO, p, p.position(), 0xFF7AE0FF, 20, 1f);
         SkillUtil.actionbar(p, SkillMsg.t("nen.gyo", "Gyo: the aura gathers in your eyes.").withStyle(ChatFormatting.AQUA));
         return true;
     }
@@ -193,7 +210,7 @@ public class NenSkill extends NUSkill {
         LivingEntity t = SkillTargets.lookFoe(p, NenRules.enhanceReach());
         if (t == null) { SkillUtil.fail(p, SkillMsg.t("nen.no_target", "Nothing in reach.")); return false; }
         if (!SkillUtil.spendMagicules(p, DMUtil.cost(NenRules.cost(NenRules.ENHANCE)))) return false;
-        SkillDamage.hit(p, t, NenRules.enhanceDamage() * NenRules.hatsuMultiplier(vow), masteryFrac(instance));
+        SkillDamage.hit(p, t, NenRules.enhanceDamage() * hatsuMul(instance, p, NenRules.ENHANCE, vow), masteryFrac(instance));
         knock(p, t, NenRules.enhanceKnockback());
         Vec3 hit = t.position().add(0, t.getBbHeight() * 0.5, 0);
         if (newFx()) shapeFx(p, VfxShape.NEN_IMPACT, hit, hit, 0xFFFF9A3A, 14, 1f); else SkillFx.burst(p.serverLevel(), hit, false, 14, 0.4);
@@ -207,7 +224,7 @@ public class NenSkill extends NUSkill {
         int hits = 0;
         for (LivingEntity t : SkillTargets.foesAlong(p, from, to, NenRules.emitWidth())) {
             if (hits >= NenRules.emitPierce()) break;
-            if (SkillDamage.hit(p, t, NenRules.emitDamage() * NenRules.hatsuMultiplier(vow), masteryFrac(instance), SkillDamage.Kind.MAGIC) > 0f) hits++;
+            if (SkillDamage.hit(p, t, NenRules.emitDamage() * hatsuMul(instance, p, NenRules.EMIT, vow), masteryFrac(instance), SkillDamage.Kind.MAGIC) > 0f) hits++;
         }
         return true;
     }
@@ -219,10 +236,107 @@ public class NenSkill extends NUSkill {
         return true;
     }
 
+    // ---------------------------------------------------------------- 3.49.0: Shu, In, Ryu and the other four hatsu types
+    /** The type this player was given by the Water Divination (assigned from their UUID the first time it is asked, then kept in the skill tag). */
+    private static int typeOf(ManasSkillInstance instance, ServerPlayer p) {
+        CompoundTag tag = instance.getOrCreateTag();
+        if (!tag.contains("NenType")) {
+            tag.putInt("NenType", NenRules.divine(p.getUUID().getMostSignificantBits(), p.getUUID().getLeastSignificantBits()));
+            instance.markDirty();
+        }
+        return Math.floorMod(tag.getInt("NenType"), 6);
+    }
+
+    /** The multiplier of a hatsu: the vow, In, and how well the player's type suits it. */
+    private static double hatsuMul(ManasSkillInstance instance, ServerPlayer p, int mode, boolean vow) {
+        double m = NenRules.hatsuMultiplier(vow) * NenRules.efficiency(typeOf(instance, p), NenRules.typeOfMode(mode));
+        if (open(instance.getOrCreateTag(), NenRules.IN, p.level().getGameTime())) m *= NenRules.inMultiplier();
+        return m;
+    }
+
+    /** Shu (the held item is wrapped in aura), In (the aura is hidden) and Ryu (the aura flows to where the blow lands): a window each. */
+    private boolean advanced(ManasSkillInstance instance, ServerPlayer p, CompoundTag tag, long now, int mode) {
+        if (!SkillUtil.spendMagicules(p, DMUtil.cost(NenRules.cost(mode)))) return false;
+        tag.putLong(NenRules.untilKey(mode), NenRules.endsAt(now, mode));
+        switch (mode) {
+            case NenRules.SHU -> { if (newFx()) auraFx(p, 6); SkillUtil.actionbar(p, SkillMsg.t("nen.shu", "Shu: your aura wraps what you hold.").withStyle(ChatFormatting.AQUA)); }
+            case NenRules.IN -> { p.getPersistentData().putLong(IN_KEY, NenRules.endsAt(now, mode)); SkillUtil.actionbar(p, SkillMsg.t("nen.in", "In: your aura cannot be seen.").withStyle(ChatFormatting.DARK_GRAY)); }
+            default -> { if (newFx()) auraFx(p, 7); SkillUtil.actionbar(p, SkillMsg.t("nen.ryu", "Ryu: your aura flows to where it is needed.").withStyle(ChatFormatting.LIGHT_PURPLE)); }
+        }
+        return true;
+    }
+
+    /** Transmutation: the aura takes the nature of lightning and runs along a line, hitting up to four and slowing them. */
+    private boolean trans(ManasSkillInstance instance, ServerPlayer p, CompoundTag tag, long now, boolean vow) {
+        if (!SkillUtil.spendMagicules(p, DMUtil.cost(NenRules.cost(NenRules.TRANS)))) return false;
+        Vec3 from = p.getEyePosition(), to = DMUtil.lookPoint(p, NenRules.transRange());
+        shapeFx(p, VfxShape.NEN_BEAM, from, to, 0xFFFFE04A, 14, 1f);
+        int hits = 0;
+        for (LivingEntity t : SkillTargets.foesAlong(p, from, to, 1.5)) {
+            if (hits >= NenRules.transMax()) break;
+            if (SkillDamage.hit(p, t, NenRules.transDamage() * hatsuMul(instance, p, NenRules.TRANS, vow), masteryFrac(instance), SkillDamage.Kind.MAGIC) > 0f) {
+                t.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, NenRules.transSlowTicks(), 0));
+                hits++;
+            }
+        }
+        return true;
+    }
+
+    /** Conjuration: chains of aura bind the creature you look at and hold it nearly still. */
+    private boolean conj(ManasSkillInstance instance, ServerPlayer p, CompoundTag tag, long now, boolean vow) {
+        LivingEntity t = SkillTargets.lookFoe(p, NenRules.conjRange());
+        if (t == null) { SkillUtil.fail(p, SkillMsg.t("nen.no_target", "Nothing in reach.")); return false; }
+        if (!SkillUtil.spendMagicules(p, DMUtil.cost(NenRules.cost(NenRules.CONJ)))) return false;
+        SkillDamage.hit(p, t, NenRules.conjDamage() * hatsuMul(instance, p, NenRules.CONJ, vow), masteryFrac(instance), SkillDamage.Kind.MAGIC);
+        t.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, NenRules.conjRootTicks(), 4));
+        Vec3 at = t.position().add(0, t.getBbHeight() * 0.5, 0);
+        shapeFx(p, VfxShape.NEN_IMPACT, at, at, 0xFFD8C890, 14, 1.3f);
+        return true;
+    }
+
+    /** Manipulation: the creature you look at turns on the nearest other creature (a player is only weakened and slowed). */
+    private boolean manip(ManasSkillInstance instance, ServerPlayer p, CompoundTag tag, long now, boolean vow) {
+        LivingEntity t = SkillTargets.lookFoe(p, NenRules.manipRange());
+        if (t == null) { SkillUtil.fail(p, SkillMsg.t("nen.no_target", "Nothing in reach.")); return false; }
+        if (!SkillUtil.spendMagicules(p, DMUtil.cost(NenRules.cost(NenRules.MANIP)))) return false;
+        t.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, NenRules.manipTicks(), 1));
+        if (t instanceof Mob m) {
+            for (LivingEntity other : SkillTargets.foes(p, t.position(), NenRules.manipSearch())) {
+                if (other != t) { m.setTarget(other); break; }
+            }
+        } else {
+            t.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, NenRules.manipTicks(), 1));
+        }
+        Vec3 at = t.position().add(0, t.getBbHeight() * 0.5, 0);
+        shapeFx(p, VfxShape.NEN_IMPACT, at, at, 0xFFE060FF, 14, 1.1f);
+        return true;
+    }
+
+    /** Specialization: a pull of aura draws the foes around you in and weakens them (at most eight). */
+    private boolean spec(ManasSkillInstance instance, ServerPlayer p, CompoundTag tag, long now, boolean vow) {
+        if (!SkillUtil.spendMagicules(p, DMUtil.cost(NenRules.cost(NenRules.SPEC)))) return false;
+        int pulled = 0;
+        for (LivingEntity t : SkillTargets.foes(p, p.position(), NenRules.specRadius())) {
+            if (pulled >= NenRules.specMax()) break;
+            Vec3 d = p.position().subtract(t.position());
+            if (d.lengthSqr() < 1.0e-4) continue;
+            Vec3 dir = d.normalize();
+            t.setDeltaMovement(dir.x * 1.1, 0.3, dir.z * 1.1);
+            t.hurtMarked = true;
+            t.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 80, 0));
+            SkillDamage.hit(p, t, NenRules.specDamage() * hatsuMul(instance, p, NenRules.SPEC, vow), masteryFrac(instance), SkillDamage.Kind.MAGIC);
+            pulled++;
+        }
+        Vec3 c = p.position().add(0, 1, 0);
+        shapeFx(p, VfxShape.NEN_IMPACT, c, c, 0xFFFF6AA0, 14, 2.4f);
+        return true;
+    }
+
     /** A second press (or the owner's choice): the window closes, with what it gave. */
     private void end(ManasSkillInstance instance, ServerPlayer p, CompoundTag tag, int mode) {
         tag.putLong(NenRules.untilKey(mode), 0L);
         if (mode == NenRules.ZETSU) p.removeEffect(MobEffects.INVISIBILITY);
+        if (mode == NenRules.IN) p.getPersistentData().putLong(IN_KEY, 0L);
         if (mode == NenRules.REN) { dropOwn(p, MobEffects.DAMAGE_BOOST, NenRules.renStrengthAmp()); dropOwn(p, MobEffects.MOVEMENT_SPEED, NenRules.renSpeedAmp()); }
         if (mode == NenRules.KEN) dropOwn(p, MobEffects.MOVEMENT_SLOWDOWN, NenRules.kenSlowAmp());
         instance.markDirty();
@@ -249,7 +363,8 @@ public class NenSkill extends NUSkill {
         if (amount.get() <= 0 || !NUConfig.NEN_ENABLED.get() || source.is(DamageTypeTags.BYPASSES_INVULNERABILITY)) return true;
         CompoundTag tag = instance.getOrCreateTag();
         long now = owner.level().getGameTime();
-        double m = NenRules.takenMultiplier(open(tag, NenRules.TEN, now), open(tag, NenRules.KEN, now), open(tag, NenRules.KO, now), open(tag, NenRules.VOW, now));
+        double m = NenRules.takenMultiplier(open(tag, NenRules.TEN, now), open(tag, NenRules.KEN, now), open(tag, NenRules.KO, now), open(tag, NenRules.VOW, now),
+                open(tag, NenRules.ZETSU, now), open(tag, NenRules.RYU, now));
         if (m != 1.0) amount.set((float) (amount.get() * m));
         return true;
     }
@@ -260,6 +375,8 @@ public class NenSkill extends NUSkill {
         if (!(owner instanceof ServerPlayer p) || target == owner || amount.get() <= 0 || !NUConfig.NEN_ENABLED.get()) return true;
         CompoundTag tag = instance.getOrCreateTag();
         long now = p.level().getGameTime();
+        if (open(tag, NenRules.SHU, now) && !p.getMainHandItem().isEmpty()) amount.set((float) (amount.get() + NenRules.shuBonus()));      // the aura on the weapon
+        if (open(tag, NenRules.RYU, now)) amount.set((float) (amount.get() * NenRules.ryuDealtMultiplier()));
         if (open(tag, NenRules.ZETSU, now)) {
             tag.putLong(NenRules.untilKey(NenRules.ZETSU), 0L);
             p.removeEffect(MobEffects.INVISIBILITY);

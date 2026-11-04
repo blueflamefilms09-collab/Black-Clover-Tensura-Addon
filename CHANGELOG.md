@@ -1,5 +1,13 @@
 # Changelog
 
+## [3.49.0] — Nen ability rework (seven modes added, Water Divination types)
+- NEW (appended after the 10 old modes, which are KEPT unchanged in id, cost and lang): Shu (aura on the held item, +damage), In (hidden aura: no aura VFX, hatsu hit a little harder), Ryu (aura flows to where a blow lands: takes less, deals more), and Hatsu Transmutation (chain of bolts, slows), Conjuration (a conjured strike on the foe you look at that roots it), Manipulation (the foe you look at is weakened and a mob turns on the nearest other creature), Specialization (pulls up to 8 foes in and hits them).
+- NEW: Water Divination type per player (stable from the UUID, kept in the skill tag). Each hatsu works at 100 % on your own type, 80 % next to it on the wheel, 60 % and 40 % opposite (Enhancement, Transmutation, Conjuration, Specialization, Manipulation, Emission).
+- CHANGED: Zetsu is now defenceless (you take 30 % more while it holds). Ryu cuts hits by 15 %. Clamp of damage taken stays 0.25..1.5.
+- NEW VFX: aura kinds 6 (Shu, thin cyan veil with a glow at the hands) and 7 (Ryu, orbiting glows) in `NenLayer`; In hides the aura/Gyo effects.
+- Cost (rule 11): each press looks at up to 24 creatures (`SkillTargets`), hits at most 4 (Transmutation), 8 (Specialization) or 1 (Conjuration, Manipulation); no new tick, no new packet type; windows are game-time stamps in the player's skill tag.
+- Not included: custom hatsu creation, memory rules, Nen items. Not seen in a game.
+
 ## [3.48.6] — Fix: 3.48.5 build (source-scan test)
 - The source-scan test that said "Nen has no tick" now allows the one gated tick of the aura refresh (every 40 ticks, only with `nenVfx` on). 3.48.5 contains the Nen VFX rework; this release is the same content with the test corrected.
 
