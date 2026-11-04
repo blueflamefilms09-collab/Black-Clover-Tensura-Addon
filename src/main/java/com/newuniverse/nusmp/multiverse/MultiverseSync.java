@@ -140,6 +140,21 @@ public final class MultiverseSync {
         c.putBoolean("Active", Ceremony.isActive(p.getServer()));
         c.putString("Where", MultiverseProfile.acceptedAt(p));
         t.put("Ceremony", c);
+        // 3.50.0: the menu shows the soul (EP against the grimoire gate) and the Djinn bond
+        CompoundTag soul = new CompoundTag();
+        soul.putLong("Ep", (long) com.newuniverse.nusmp.avatar.TensuraBridge.ep(p));
+        soul.putInt("Need", MultiverseConfig.get(MultiverseConfig.GRIMOIRE_MIN_EP));
+        t.put("Soul", soul);
+        try {
+            var dj = com.newuniverse.nusmp.relics.djinn.DjinnState.of(p).active();
+            if (dj != null) {
+                CompoundTag dt = new CompoundTag();
+                dt.putString("Name", dj.fullName());
+                dt.putInt("Phase", com.newuniverse.nusmp.relics.djinn.DjinnState.of(p).phase());
+                dt.putInt("Trust", com.newuniverse.nusmp.relics.djinn.DjinnState.of(p).trust());
+                t.put("Djinn", dt);
+            }
+        } catch (RuntimeException ignored) { /* the Djinn state is optional: the menu simply has no block */ }
         return t;
     }
 

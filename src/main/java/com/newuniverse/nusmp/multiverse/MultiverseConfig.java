@@ -35,7 +35,7 @@ public final class MultiverseConfig {
     public static final ModConfigSpec.DoubleValue SPIRIT_PHYSICAL_REDUCTION;
     public static final ModConfigSpec.BooleanValue SPIRIT_FALL_IMMUNE;
     public static final ModConfigSpec.BooleanValue LETHAL_EXHAUSTION, CHOOSE_MAGIC, WIZARD_MODE, SUMMONS_NEED_BOTH, ALL_MAGICS;
-    public static final ModConfigSpec.IntValue SUMMONS_MIN_LEVEL, SUMMONS_MIN_MINUTES, WK_MIN_STARS;
+    public static final ModConfigSpec.IntValue SUMMONS_MIN_LEVEL, SUMMONS_MIN_MINUTES, WK_MIN_STARS, GRIMOIRE_MIN_EP;
     public static final ModConfigSpec.DoubleValue DUAL_ATTRIBUTE_CHANCE;
 
     static {
@@ -106,6 +106,7 @@ public final class MultiverseConfig {
         b.push("wizard");
         WIZARD_MODE = b.comment("Grimoires are claimed from the Tower Wizard: a summons arrives when you are old and grown enough, the wizard sets a questionnaire, and your grimoire floats to you. false = the older ceremony.").define("enabled", true);
         ALL_MAGICS = b.comment("The questionnaire can give any magic attribute (Anti-Magic, Kotodama, Curse and the devil-only Demon magics aside). false = only the starterMagics of the ceremony (Fire, Water, Wind, Earth by default).").define("allMagics", true);
+        GRIMOIRE_MIN_EP = b.comment("Existence Points (Tensura EP) a player needs before a grimoire calls them: the summons, the altar and the tower all wait for it. 0 = no EP gate (the level / age rules below decide).").defineInRange("minEp", 20000, 0, 100000000);
         SUMMONS_MIN_LEVEL = b.comment("Experience levels that earn the summons (0 = ignore levels).").defineInRange("minLevel", 5, 0, 1000);
         SUMMONS_MIN_MINUTES = b.comment("Minutes of play time (the mage's age) that earn the summons (0 = ignore age).").defineInRange("minMinutes", 30, 0, 100000);
         SUMMONS_NEED_BOTH = b.comment("true = both the level and the age are needed; false = either one is enough. With both set to 0 the summons comes at once.").define("needBoth", false);

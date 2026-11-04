@@ -68,6 +68,26 @@ public final class DjinnSources {
                 .withStyle(ChatFormatting.LIGHT_PURPLE), false);
     }
 
+    // ---------------------------------------------------------------- 3.50.0: cleared pocket rifts
+    /**
+     * A pocket rift was cleared with these players inside: one roll of {@code chance}; a win hands a Seal of a sleeping Djinn to one of them at random
+     * (the ledger records it like every other Seal). One roll per cleared rift, and a rift clears once, so the cost is a single random draw.
+     */
+    public static void riftCleared(ServerLevel level, List<ServerPlayer> inside, double chance) {
+        if (level == null || inside == null || inside.isEmpty() || chance <= 0.0 || level.getRandom().nextDouble() >= chance) return;
+        MinecraftServer server = level.getServer();
+        if (server == null) return;
+        DjinnLedger ledger = DjinnLedger.get(server);
+        Djinn d = HouseholdRules.pickSleeping(ledger.sleeping(), level.getRandom().nextDouble());
+        if (d == null) return;
+        ServerPlayer who = inside.get(level.getRandom().nextInt(inside.size()));
+        ledger.sealIssued(d, level.dimension().location().toString(), who.blockPosition(), server.overworld().getGameTime());
+        who.getInventory().placeItemBackInInventory(DjinnItems.sealStack(d));
+        who.sendSystemMessage(Component.literal("The rift gives up a Djinn Seal: " + d.fullName() + ".").withColor(d.color()));
+        server.getPlayerList().broadcastSystemMessage(Component.literal("A Djinn stirs: the Seal of " + d.displayName() + " came out of a rift.")
+                .withStyle(ChatFormatting.LIGHT_PURPLE), false);
+    }
+
     // ---------------------------------------------------------------- vaults
     /**
      * A Seal for a vault or Treasury chest, or EMPTY: a 3% chance, and only if some Djinn still sleeps. Marks the Djinn as having a Seal in the

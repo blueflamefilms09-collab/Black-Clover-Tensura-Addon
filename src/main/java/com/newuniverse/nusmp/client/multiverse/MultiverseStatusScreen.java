@@ -110,6 +110,16 @@ public class MultiverseStatusScreen extends Screen {
         if (!c.getBoolean("Accepted")) cl.add(c.getBoolean("Eligible") ? "Eligible: go to a Grimoire Tower" : "Not eligible");
         cl.add(c.getBoolean("Active") ? "Ceremony in progress" : "Ceremony closed");
         out.add(new Block("Ceremony", cl, false));
+        CompoundTag soul = s.getCompound("Soul");                                                // 3.50.0
+        if (soul.contains("Ep")) {
+            long need = soul.getInt("Need");
+            List<String> sl = new ArrayList<>();
+            sl.add("EP " + soul.getLong("Ep") + (need > 0 ? " / " + need + " for a grimoire" : ""));
+            if (need > 0 && soul.getLong("Ep") < need) sl.add("A grimoire calls a stronger soul");
+            out.add(new Block("Soul", sl, false));
+        }
+        CompoundTag dj = s.getCompound("Djinn");
+        if (dj.contains("Name")) out.add(new Block("Djinn", List.of(dj.getString("Name"), "Phase " + dj.getInt("Phase") + "  trust " + dj.getInt("Trust")), false));
         return out;
     }
 

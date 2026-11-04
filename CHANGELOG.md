@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.50.0] — Grimoires need 20,000 EP, a new way to find Djinn Seals, a fuller status menu
+- NEW: grimoires only call a soul of at least 20,000 EP (server setting `multiverse.minEp`, 0 = off). The Grimoire Summons, the Tower Wizard, the Altar and the ceremony all wait for it, and each says what is missing (EP shown against the need). REPLACES the level / play-time rule of the summons while `minEp` > 0 (the old settings are kept and used again at 0).
+- NEW: clearing a pocket rift (secret boss or puzzle) has a 6 % chance (`rift.djinnSealChance`, 0 = off) to give one Djinn Seal of a sleeping Djinn to a random player inside. One roll per cleared rift, and a rift clears once (one random draw; no tick, no packet). KEPT: floor bosses, vault chests, trading, admin grant, Dark Rukh Shards.
+- NEW: the Multiverse status menu has a Soul block (EP against the grimoire need) and a Djinn block (name, phase, trust). KEPT: every other block.
+- Abyssal floors 15 and deeper: the planner was run over floors 1 to 30 of both roads on the real room catalog (6 seeds each) and built every one without the fallback layout, so the fault is not in the layout planner. Not fixed: needs `latest.log` lines with "MEGA sector" from a broken floor.
+- Not seen in a game.
+
 ## [3.49.0] — Nen ability rework (seven modes added, Water Divination types)
 - NEW (appended after the 10 old modes, which are KEPT unchanged in id, cost and lang): Shu (aura on the held item, +damage), In (hidden aura: no aura VFX, hatsu hit a little harder), Ryu (aura flows to where a blow lands: takes less, deals more), and Hatsu Transmutation (chain of bolts, slows), Conjuration (a conjured strike on the foe you look at that roots it), Manipulation (the foe you look at is weakened and a mob turns on the nearest other creature), Specialization (pulls up to 8 foes in and hits them).
 - NEW: Water Divination type per player (stable from the UUID, kept in the skill tag). Each hatsu works at 100 % on your own type, 80 % next to it on the wheel, 60 % and 40 % opposite (Enhancement, Transmutation, Conjuration, Specialization, Manipulation, Emission).

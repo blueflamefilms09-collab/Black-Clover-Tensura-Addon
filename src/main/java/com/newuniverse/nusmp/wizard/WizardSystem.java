@@ -66,6 +66,7 @@ public final class WizardSystem {
     public static boolean summoned(Player p) { return data(p).getBoolean("Summoned"); }
 
     private static boolean grownEnough(ServerPlayer p) {
+        if (MultiverseConfig.get(MultiverseConfig.GRIMOIRE_MIN_EP) > 0) return true;                        // 3.50.0: EP decides (Ceremony.isEligible checks it), not level or age
         int minLevel = MultiverseConfig.get(MultiverseConfig.SUMMONS_MIN_LEVEL), minMinutes = MultiverseConfig.get(MultiverseConfig.SUMMONS_MIN_MINUTES);
         boolean levelOk = minLevel <= 0 || p.experienceLevel >= minLevel;
         long ticks = p.getStats().getValue(Stats.CUSTOM.get(Stats.PLAY_TIME));
@@ -90,6 +91,8 @@ public final class WizardSystem {
         if (!(event.getEntity() instanceof ServerPlayer p) || !MultiverseConfig.get(MultiverseConfig.WIZARD_MODE)) return;
         if (p.tickCount % 2400 == 41 && summoned(p) && !WizardLibrary.inLibrary(p) && GrimoirePages.grimoireOf(p).isEmpty())                  // a reminder of the next step
             p.displayClientMessage(Component.literal("Your Grimoire Summons is waiting: right-click it to visit the Tower Wizard.").withStyle(ChatFormatting.YELLOW), true);
+        if (p.tickCount % 12000 == 41 && !summoned(p) && GrimoirePages.grimoireOf(p).isEmpty() && !Ceremony.hasEnoughEp(p))
+            p.displayClientMessage(Component.literal("A grimoire calls a soul of " + MultiverseConfig.get(MultiverseConfig.GRIMOIRE_MIN_EP) + " EP. Grow stronger.").withStyle(ChatFormatting.GRAY), true);
         if (p.tickCount % 100 != 41) return;
         if (summoned(p) || !Ceremony.isEligible(p) || !grownEnough(p)) return;
         summon(p);
@@ -118,6 +121,7 @@ public final class WizardSystem {
             return;
         }
         if (!MultiverseConfig.get(MultiverseConfig.WIZARD_MODE)) { say(p, "The tower chooses its mages in the old way now: pray at the altar."); return; }
+        if (!Ceremony.hasEnoughEp(p)) { say(p, "Your soul is still too small for a grimoire. Come back with " + MultiverseConfig.get(MultiverseConfig.GRIMOIRE_MIN_EP) + " EP."); return; }
         if (!Ceremony.isEligible(p)) { say(p, "The grimoires have not called you."); return; }
         if (!summoned(p) && !p.hasPermissions(2)) { say(p, "You come without a summons. Grow a little more, and one will find you."); return; }
         var sheet = Questionnaire.draw(p.getRandom());

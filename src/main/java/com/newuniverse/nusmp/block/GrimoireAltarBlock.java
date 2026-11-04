@@ -62,6 +62,10 @@ public class GrimoireAltarBlock extends Block {
         // a bound mage prays with the grimoire in their Grimoire Slot (sneak: training)
         ItemStack slotted = com.newuniverse.nusmp.blackclover.GrimoireSlot.get(p);
         if (GrimoireItem.isOwnedBy(slotted, p.getUUID())) { pray(p, level, pos); return InteractionResult.CONSUME; }
+        if (!com.newuniverse.nusmp.multiverse.Ceremony.hasEnoughEp(p) && GrimoirePages.grimoireOf(p).isEmpty()) {
+            p.displayClientMessage(Component.literal("Your soul is still too small for a grimoire (" + com.newuniverse.nusmp.multiverse.MultiverseConfig.get(com.newuniverse.nusmp.multiverse.MultiverseConfig.GRIMOIRE_MIN_EP) + " EP).").withStyle(ChatFormatting.GRAY), true);
+            return InteractionResult.CONSUME;
+        }
         p.displayClientMessage(Component.literal(GrimoireAcceptance.hasRolled(p) ? "Your fate is already written."
                 : "No grimoire answers you yet. Ask about the next Grimoire Acceptance Ceremony.").withStyle(ChatFormatting.GRAY), true);
         glow(p, pos, 0xFF8CFFC2, 0.8f);

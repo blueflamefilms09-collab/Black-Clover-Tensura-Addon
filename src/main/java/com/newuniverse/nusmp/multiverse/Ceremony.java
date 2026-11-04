@@ -90,8 +90,15 @@ public final class Ceremony {
                 .withStyle(ChatFormatting.GRAY), false);
     }
 
+    /** 3.50.0: a grimoire only calls a soul of at least {@code minEp} EP (0 = no gate). */
+    public static boolean hasEnoughEp(ServerPlayer p) {
+        int need = MultiverseConfig.get(MultiverseConfig.GRIMOIRE_MIN_EP);
+        return need <= 0 || com.newuniverse.nusmp.avatar.TensuraBridge.ep(p) >= need;
+    }
+
     public static boolean isEligible(ServerPlayer p) {
         if (GrimoirePages.grimoireOf(p).isPresent()) return false;
+        if (!hasEnoughEp(p)) return false;
         if (MultiverseConfig.get(MultiverseConfig.WIZARD_MODE))                // 1.13.0: the Tower Wizard calls every mage, the Convergence does not gate him
             return MultiverseConfig.get(MultiverseConfig.EVERYONE_ELIGIBLE) || MultiverseProfile.eligibleFlag(p);
         return MultiverseConfig.get(MultiverseConfig.EVERYONE_ELIGIBLE) || MultiverseProfile.eligibleFlag(p);
