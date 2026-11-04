@@ -451,7 +451,13 @@ public enum VfxShape {
     ULT_DEVOURING_SHADOW,
     ULT_FINAL_DOSE,
     ULT_DISASTER_FLOODS,
-    ULT_THOUSAND_ELF;
+    ULT_THOUSAND_ELF,
+    // 3.48.5 Nen (Hunter x Hunter): the aura of Ten/Zetsu/Ren/Ken/Ko/Vow (power = kind), the En sphere, Gyo, the hatsu impact and the emission bolt.
+    NEN_AURA,
+    NEN_EN,
+    NEN_GYO,
+    NEN_IMPACT,
+    NEN_BEAM;
 
     public static VfxShape byId(int id) {
         VfxShape[] v = values();

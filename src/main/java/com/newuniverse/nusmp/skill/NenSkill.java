@@ -18,6 +18,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import com.newuniverse.nusmp.vfx.VfxShape;
 
 import java.util.List;
 
@@ -60,6 +61,33 @@ public class NenSkill extends NUSkill {
 
     private static boolean open(CompoundTag tag, int mode, long now) { return NenRules.active(tag.getLong(NenRules.untilKey(mode)), now); }
 
+    // ---------------------------------------------------------------- the effects (3.48.5)
+    private static final int[] AURA_KINDS = {NenRules.TEN, NenRules.ZETSU, NenRules.REN, NenRules.KEN, NenRules.KO, NenRules.VOW};
+    /** Ticks an aura instance lives: resent every {@link #AURA_EVERY} ticks while its window is open, so a window ended early fades within about two and a half seconds. */
+    private static final int AURA_LIFE = 50, AURA_EVERY = 40;
+
+    private static boolean newFx() { return NUConfig.NEN_VFX.get(); }
+
+    /** Sends the aura of one window kind (index in {@link #AURA_KINDS}) following the player. Cosmetic: nearby players only (VfxSpawn), never throws. */
+    private static void auraFx(ServerPlayer p, int kind) {
+        SkillFx.follow(p.serverLevel(), VfxShape.NEN_AURA, p, p.position(), 0, AURA_LIFE, kind);
+    }
+
+    private static void shapeFx(ServerPlayer p, VfxShape shape, Vec3 at, Vec3 to, int argb, int life, float power) {
+        SkillFx.shape(p.serverLevel(), shape, at, to, argb, life, power);
+    }
+
+    /** Once every two seconds, for each window that is open: the aura (at most the six windows, in practice two or three). */
+    @Override public boolean canTick(ManasSkillInstance instance, LivingEntity entity) { return true; }
+
+    @Override
+    public void onTick(ManasSkillInstance instance, LivingEntity living) {
+        if (!(living instanceof ServerPlayer p) || p.level().isClientSide || p.tickCount % AURA_EVERY != 0 || !newFx() || !NUConfig.NEN_ENABLED.get()) return;
+        CompoundTag tag = instance.getOrCreateTag();
+        long now = p.level().getGameTime();
+        for (int k = 0; k < AURA_KINDS.length; k++) if (open(tag, AURA_KINDS[k], now)) auraFx(p, k);
+    }
+
     // ---------------------------------------------------------------- the press
     @Override
     public void onPressed(ManasSkillInstance instance, LivingEntity entity, int key, int mode) {
@@ -94,7 +122,7 @@ public class NenSkill extends NUSkill {
     private boolean window(ManasSkillInstance instance, ServerPlayer p, CompoundTag tag, long now, int mode, Component message) {
         if (!SkillUtil.spendMagicules(p, DMUtil.cost(NenRules.cost(mode)))) return false;
         tag.putLong(NenRules.untilKey(mode), NenRules.endsAt(now, mode));
-        SkillFx.aura(p.serverLevel(), p, false);
+        if (newFx()) auraFx(p, mode == NenRules.KO ? 4 : 0); else SkillFx.aura(p.serverLevel(), p, false);
         SkillUtil.actionbar(p, message.copy().withStyle(ChatFormatting.AQUA));
         return true;
     }
@@ -106,6 +134,7 @@ public class NenSkill extends NUSkill {
         for (LivingEntity e : SkillTargets.foes(p, p.position(), NenRules.zetsuRadius())) {
             if (e instanceof Mob m && m.getTarget() == p) m.setTarget(null);   // what was hunting you forgets you
         }
+        if (newFx()) auraFx(p, 1);
         SkillUtil.actionbar(p, SkillMsg.t("nen.zetsu", "Zetsu: your presence is gone. Striking breaks it.").withStyle(ChatFormatting.GRAY));
         return true;
     }
@@ -116,7 +145,7 @@ public class NenSkill extends NUSkill {
         tag.putLong(NenRules.untilKey(NenRules.REN), NenRules.endsAt(now, NenRules.REN));
         p.addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, ticks, NenRules.renStrengthAmp()));
         p.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, ticks, NenRules.renSpeedAmp()));
-        SkillFx.burst(p.serverLevel(), p.position().add(0, 1, 0), false, 18, 0.7);
+        if (newFx()) { auraFx(p, 2); shapeFx(p, VfxShape.NEN_IMPACT, p.position().add(0, 1, 0), p.position().add(0, 1, 0), 0xFFFFE08A, 14, 1.4f); } else SkillFx.burst(p.serverLevel(), p.position().add(0, 1, 0), false, 18, 0.7);
         SkillUtil.actionbar(p, SkillMsg.t("nen.ren", "Ren: your aura pours out.").withStyle(ChatFormatting.GOLD));
         return true;
     }
@@ -126,7 +155,7 @@ public class NenSkill extends NUSkill {
         int ticks = NenRules.duration(NenRules.KEN);
         tag.putLong(NenRules.untilKey(NenRules.KEN), NenRules.endsAt(now, NenRules.KEN));
         p.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, ticks, NenRules.kenSlowAmp()));
-        SkillFx.aura(p.serverLevel(), p, false);
+        if (newFx()) auraFx(p, 3); else SkillFx.aura(p.serverLevel(), p, false);
         SkillUtil.actionbar(p, SkillMsg.t("nen.ken", "Ken: you hold your ground.").withStyle(ChatFormatting.BLUE));
         return true;
     }
@@ -144,6 +173,7 @@ public class NenSkill extends NUSkill {
             e.addEffect(new MobEffectInstance(MobEffects.GLOWING, NenRules.gyoRevealTicks(), 0, false, false, false));
             shown++;
         }
+        if (newFx()) SkillFx.follow(p.serverLevel(), VfxShape.NEN_GYO, p, p.position(), 0xFF7AE0FF, 20, 1f);
         SkillUtil.actionbar(p, SkillMsg.t("nen.gyo", "Gyo: the aura gathers in your eyes.").withStyle(ChatFormatting.AQUA));
         return true;
     }
@@ -153,7 +183,8 @@ public class NenSkill extends NUSkill {
         if (!SkillUtil.spendMagicules(p, DMUtil.cost(NenRules.cost(NenRules.EN)))) return false;
         List<LivingEntity> foes = SkillTargets.foes(p, p.position(), NenRules.enRadius());
         for (LivingEntity e : foes) e.addEffect(new MobEffectInstance(MobEffects.GLOWING, NenRules.enGlowTicks(), 0, false, false, false));
-        SkillFx.ring(p.serverLevel(), p.position().add(0, 0.2, 0), 12.0, 0x6AFFC0);
+        if (newFx()) shapeFx(p, VfxShape.NEN_EN, p.position(), p.position(), 0xFF6AFFC0, 40, (float) NenRules.enRadius());
+        else SkillFx.ring(p.serverLevel(), p.position().add(0, 0.2, 0), 12.0, 0x6AFFC0);
         SkillUtil.actionbar(p, SkillMsg.t("nen.en", "En: %s presences within your aura.", foes.size()).withStyle(ChatFormatting.GREEN));
         return true;
     }
@@ -164,14 +195,15 @@ public class NenSkill extends NUSkill {
         if (!SkillUtil.spendMagicules(p, DMUtil.cost(NenRules.cost(NenRules.ENHANCE)))) return false;
         SkillDamage.hit(p, t, NenRules.enhanceDamage() * NenRules.hatsuMultiplier(vow), masteryFrac(instance));
         knock(p, t, NenRules.enhanceKnockback());
-        SkillFx.burst(p.serverLevel(), t.position().add(0, t.getBbHeight() * 0.5, 0), false, 14, 0.4);
+        Vec3 hit = t.position().add(0, t.getBbHeight() * 0.5, 0);
+        if (newFx()) shapeFx(p, VfxShape.NEN_IMPACT, hit, hit, 0xFFFF9A3A, 14, 1f); else SkillFx.burst(p.serverLevel(), hit, false, 14, 0.4);
         return true;
     }
 
     private boolean emit(ManasSkillInstance instance, ServerPlayer p, boolean vow) {
         if (!SkillUtil.spendMagicules(p, DMUtil.cost(NenRules.cost(NenRules.EMIT)))) return false;
         Vec3 from = p.getEyePosition(), to = DMUtil.lookPoint(p, NenRules.emitRange());
-        SkillFx.beam(p.serverLevel(), from, to, false);
+        if (newFx()) shapeFx(p, VfxShape.NEN_BEAM, from, to, 0xFF6AD8FF, 14, 1f); else SkillFx.beam(p.serverLevel(), from, to, false);
         int hits = 0;
         for (LivingEntity t : SkillTargets.foesAlong(p, from, to, NenRules.emitWidth())) {
             if (hits >= NenRules.emitPierce()) break;
@@ -182,7 +214,7 @@ public class NenSkill extends NUSkill {
 
     private boolean vow(ManasSkillInstance instance, ServerPlayer p, CompoundTag tag, long now) {
         tag.putLong(NenRules.untilKey(NenRules.VOW), NenRules.endsAt(now, NenRules.VOW));
-        SkillFx.aura(p.serverLevel(), p, true);
+        if (newFx()) auraFx(p, 5); else SkillFx.aura(p.serverLevel(), p, true);
         SkillUtil.actionbar(p, SkillMsg.t("nen.vow", "You swear the vow: no Ten, Zetsu or Ken, and your hatsu hit harder.").withStyle(ChatFormatting.LIGHT_PURPLE));
         return true;
     }
@@ -240,7 +272,8 @@ public class NenSkill extends NUSkill {
             SkillDamage.hit(p, target, NenRules.koDamage() * mul, masteryFrac(instance));
             knock(p, target, NenRules.enhanceKnockback() * 1.5);
             if (p.level() instanceof ServerLevel level) {
-                SkillFx.burst(level, target.position().add(0, target.getBbHeight() * 0.5, 0), false, 20, 0.5);
+                Vec3 koAt = target.position().add(0, target.getBbHeight() * 0.5, 0);
+                if (newFx()) shapeFx(p, VfxShape.NEN_IMPACT, koAt, koAt, 0xFFFF6A3A, 14, 1.6f); else SkillFx.burst(level, koAt, false, 20, 0.5);
                 SkillFx.sound(level, target.position(), SoundEvents.ANVIL_LAND, 0.5F, 1.6F);
             }
         }

@@ -1,5 +1,17 @@
 # Changelog
 
+## [3.48.5] — Nen VFX rework (REPLACED: the particle puffs)
+
+### REPLACED / NEW
+- New layer `NenLayer` and shapes `NEN_AURA`, `NEN_EN`, `NEN_GYO`, `NEN_IMPACT`, `NEN_BEAM` (appended to the end of `VfxShape`). Aura is drawn as flowing, rising streams of light, as in the anime:
+  Ten a calm white-blue veil hugging the body; Zetsu almost nothing (grey motes sinking inwards, a closing ring); Ren a wide, tall gold-white blaze with a pulsing halo; Ken dense and heavy with two slow rings;
+  Ko the aura drawn into one bright core; Vow violet chain links spiralling; En a sphere of twinkling motes with rising rings; Gyo a ring closing on the face and two eye flares; Hatsu Enhancement / Ko a flash, shock ring and radial streaks; Hatsu Emission a bright bolt racing out with a layered beam behind it.
+- Window auras follow the player and are resent every 2 s while the window is open (`NenSkill.onTick`); a window ended early fades within about 2.5 s.
+- Server setting `nenVfx` (default true); false brings back the old particle puffs. Powers, numbers and costs are untouched. KEPT: every old `SkillFx` call (used when the setting is off).
+- Cost: at most one aura packet per open window per 2 s per Nen user (2-3 in practice), sent to nearby players only; each shape is under 120 vertices on the client, all in the existing 400-vertex activation cap; nothing per frame is allocated. Test `NenShapesTest`.
+- Textures: existing particle textures only (aura_wisp_*, glow, spark, shock_ring_0, bfx_halo, eye_flare, ...); no new image files.
+- Caveat: not previewed and not seen in a game, so colours and sizes are untuned. The other Nen types (Transmutation, Conjuration, Manipulation, Specialization) are still not modes, so they have no effects either.
+
 ## [3.48.4] — Floors plan themselves again when they fail
 
 ### ADDED
