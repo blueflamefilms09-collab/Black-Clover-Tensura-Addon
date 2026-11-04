@@ -143,6 +143,18 @@ public final class PocketRealm extends SavedData {
     }
 
     private final Map<Integer, Pocket> pockets = new LinkedHashMap<>();
+    /** 3.48.3: seeds of rifts whose realm was cleared and has collapsed; such a rift cannot be entered again (no re-farming the chests). Capped, the oldest is forgotten first. */
+    private final java.util.LinkedHashSet<Long> spent = new java.util.LinkedHashSet<>();
+    static final int SPENT_CAP = 4096;
+
+    /** Pure rule: may a rift with this seed open a NEW realm? */
+    static boolean mayOpenNew(boolean switchOn, java.util.Set<Long> spentSeeds, long seed) { return !switchOn || !spentSeeds.contains(seed); }
+
+    void markSpent(long seed) {
+        spent.remove(seed);
+        spent.add(seed);
+        while (spent.size() > SPENT_CAP) { var it = spent.iterator(); it.next(); it.remove(); }
+    }
 
     public static PocketRealm get(MinecraftServer server) {
         return server.overworld().getDataStorage().computeIfAbsent(new SavedData.Factory<>(PocketRealm::new, PocketRealm::load, null), NAME);
@@ -155,6 +167,7 @@ public final class PocketRealm extends SavedData {
             Pocket p = Pocket.load(list.getCompound(i));
             r.pockets.put(p.slot, p);
         }
+        for (long v : t.getLongArray("Spent")) r.spent.add(v);
         return r;
     }
 
@@ -163,6 +176,7 @@ public final class PocketRealm extends SavedData {
         ListTag list = new ListTag();
         for (Pocket p : pockets.values()) list.add(p.save());
         t.put("Pockets", list);
+        t.putLongArray("Spent", spent.stream().mapToLong(Long::longValue).toArray());
         return t;
     }
 
@@ -192,6 +206,10 @@ public final class PocketRealm extends SavedData {
         PocketRealm realm = get(server);
         Pocket pocket = rift.slot() >= 0 ? realm.pockets.get(rift.slot()) : null;
         if (pocket != null && pocket.seed != rift.seed()) pocket = null;                         // the slot was freed and given to another rift: this rift's realm is gone
+        if (pocket == null && !mayOpenNew(RiftConfig.get(RiftConfig.ONE_VISIT), realm.spent, rift.seed())) {
+            WaypointService.say(p, "pocket.spent", "The tear is spent: the realm behind it has already been emptied.", ChatFormatting.GRAY);
+            return;
+        }
         if (pocket == null) pocket = realm.create(mega, from, rift, here);
         else realm.keepWhole(mega, pocket, here == null ? com.newuniverse.nusmp.labyrinth.mega.RegionTheme.GRAVITY : here.theme);        // 1.101.0: a realm that stands is read back before anybody walks into it
         if (pocket == null) {
@@ -424,6 +442,7 @@ public final class PocketRealm extends SavedData {
         for (Entity e : mega.getEntitiesOfClass(Entity.class, box, en -> !(en instanceof ServerPlayer))) e.discard();
         PocketBuilder.clear(mega, p.slot);
         pockets.remove(p.slot);
+        if (p.bossDead || p.solved) markSpent(p.seed);
         setDirty();
     }
 

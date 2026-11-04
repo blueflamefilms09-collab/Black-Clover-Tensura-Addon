@@ -9,7 +9,7 @@ import net.neoforged.neoforge.common.ModConfigSpec;
  */
 public final class RiftConfig {
     public static final ModConfigSpec SPEC;
-    public static final ModConfigSpec.BooleanValue ENABLED, POCKETS, WAYPOINT;
+    public static final ModConfigSpec.BooleanValue ENABLED, POCKETS, WAYPOINT, ONE_VISIT;
     public static final ModConfigSpec.DoubleValue SHORTCUT_CHANCE, POCKET_CHANCE, BOSS_SHARE;
     /** 1.99.0 (the exclusive tombs): the mega-rare switches, the one-in-N, the pity, the depth and luck weights, the lifetimes, the cap, the build speed. */
     public static final ModConfigSpec.BooleanValue MEGA_ENABLED, MEGA_BROADCAST, KEEP_ITEMS, TRAPS_ON, GRAVITY_ON;
@@ -26,6 +26,7 @@ public final class RiftConfig {
                 .define("enabled", true);
         POCKETS = b.comment("Pocket rifts (an instanced hidden realm with a secret boss or a puzzle vault) may open. false = only shortcut rifts do.").define("pockets", true);
         WAYPOINT = b.comment("The last place a player stood in the dungeon is remembered, and the Return Crystal / Gate Key / Return Portal lead back to it.").define("waypoint", true);
+        ONE_VISIT = b.comment("A pocket rift whose realm was cleared cannot be entered again once it collapsed (stops re-entering the same rift to refill its chests). false = the old behaviour.").define("oneVisit", true);
         CHECK_SECONDS = b.comment("Seconds between two rolls for a new rift near a player on a floor.").defineInRange("checkSeconds", 90, 10, 3600);
         SHORTCUT_CHANCE = b.comment("Chance per roll that a shortcut rift opens near the player.").defineInRange("shortcutChance", 0.18, 0.0, 1.0);
         POCKET_CHANCE = b.comment("Chance per roll that a pocket rift opens near the player (rare).").defineInRange("pocketChance", 0.06, 0.0, 1.0);

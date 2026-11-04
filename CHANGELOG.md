@@ -1,5 +1,14 @@
 # Changelog
 
+## [3.48.3] — Fix: a rift's chests can no longer be farmed by re-entering the same rift
+
+Report: players re-entered one pocket rift again and again; each time the realm collapsed a brand-new realm with fresh chests was built for the same rift.
+
+### FIXED
+- A pocket rift whose realm was cleared (boss dead / puzzle solved) is marked spent when the realm collapses; stepping into it again says "The tear is spent" and builds nothing. Spent seeds are saved (`Spent` long array, capped at 4096, oldest forgotten first). An uncleared realm that collapses still lets the rift be tried again. Tombs already had this rule.
+- Server setting `rift.oneVisit` (default true); false restores the old behaviour. Test `SpentRiftTest`.
+- Cost: one set lookup on rift entry, at most 32 KB saved data, no per-tick work. Caveat: not run in a game; I did not confirm that "looter" meant this exact route (other chest sources, such as a dropped vault loot table, are unchanged).
+
 ## [3.48.2] — Fix: no Armorsaurus in the Mega-Dungeon (a 60 second server hang in Tensura's dig AI)
 
 Report: the server thread was stuck for 60 s in Tensura 2.0.1.4 `SetRandomDigTarget.getTargetPosition` (the Armorsaurus's "pick a random place to dig" search) in the `nusmp:mega_dungeon` dimension, whose unbreakable floors leave that search no dig spot. The AI is Tensura's, so it is not patched.
