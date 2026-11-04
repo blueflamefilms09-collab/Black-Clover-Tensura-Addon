@@ -14,6 +14,7 @@ public final class HeroConfig {
     public static final ModConfigSpec SPEC;
 
     public static final ModConfigSpec.BooleanValue ENABLED, HOLY_UNIQUE, VASSAL_UNIQUE, HOLY_REJECTS_OTHERS, REPEL_XP, ADOPT_STACKS, SHOW_MESSAGES;
+    public static final ModConfigSpec.BooleanValue CASTING_RELICS_ALLOWED;
     public static final ModConfigSpec.IntValue MAX_BONDS, REPEL_RADIUS, MAX_LEVEL, SHOCK_SLOW_TICKS, SKILL_GLOBAL_LOCK_TICKS, MIN_COOLDOWN_TICKS, KEY_SPACING_TICKS,
             MAX_KILL_EXP, REPEL_NOTICE_SECONDS;
     public static final ModConfigSpec.DoubleValue WEAPON_EXP_MULTIPLIER, SHOCK_DAMAGE, KILL_EXP_SHARE, BOSS_KILL_EXP_FACTOR;
@@ -31,6 +32,8 @@ public final class HeroConfig {
                 .define("vassalUnique", false);
         HOLY_REJECTS_OTHERS = b.comment("Restriction one: a Holy Weapon's wielder who fights with (or fires) a weapon of another class is shocked instead.")
                 .define("holyRejectsOthers", true);
+        CASTING_RELICS_ALLOWED = b.comment("3.48.1: relics that are not fought with (tomes, wands, staffs, orbs) are never rejected by restriction one, so a Holy Weapon's wielder can still use and learn from them. Off: they count as weapons again (the old behaviour).")
+                .define("castingRelicsAllowed", true);
         REPEL_XP = b.comment("Restriction three: two Holy wielders within repelRadius of each other gain no experience (orbs, kill experience, the weapon's own experience).")
                 .define("repelXp", true);
         REPEL_RADIUS = b.comment("Blocks within which two Holy wielders of the same dimension repel each other's experience.")
@@ -85,6 +88,7 @@ public final class HeroConfig {
     public static boolean vassalUnique() { return get(VASSAL_UNIQUE); }
 
     public static boolean holyRejectsOthers() { return get(HOLY_REJECTS_OTHERS); }
+    public static boolean castingRelicsAllowed() { return get(CASTING_RELICS_ALLOWED); }
 
     public static boolean repelXp() { return get(REPEL_XP); }
 

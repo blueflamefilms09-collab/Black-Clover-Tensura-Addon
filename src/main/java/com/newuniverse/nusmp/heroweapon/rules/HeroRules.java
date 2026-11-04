@@ -117,6 +117,13 @@ public final class HeroRules {
         if (item instanceof SimpleSpearItem || item instanceof VortexSpearItem) return WeaponClass.SPEAR;
         if (item instanceof SimpleScytheItem) return WeaponClass.OTHER_WEAPON;
         if (item instanceof DjinnWeaponItem dj) return djinnClass(DjinnWeaponRules.spec(dj.djinn()).kind());
+        // 3.48.1: a tome, wand, staff or orb relic is read or cast, not fought with: it is not a weapon of any class (it extends SwordItem, which made a Shield wielder's tome count as a sword)
+        if (item instanceof RelicBearer cr && HeroConfig.castingRelicsAllowed() && !cr.relic().isRanged()) {
+            switch (cr.relic().look()) {
+                case TOME, WAND, STAFF, ORB -> { return WeaponClass.NONE; }
+                default -> { }
+            }
+        }
         if (item instanceof RelicBearer rb && rb.relic().isRanged()) return WeaponClass.BOW;
         return null;
     }

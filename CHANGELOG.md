@@ -1,5 +1,13 @@
 # Changelog
 
+## [3.48.1] — Fix: a Holy Weapon no longer stops its wielder from using tomes, wands, staffs and orbs
+
+Owner report: "Is the Shield Hero shield meant to stop me from using primordial relics and Magic tomes?" (these are not weapons, so holding a hero weapon should not stop you using or learning them).
+
+### FIXED
+- Cause: hand-held relics are all `RelicWeaponItem`, which extends `SwordItem`, so `HeroRules` classed a tome, wand, staff or orb as a sword and the Holy-Weapon restriction (`holyRejectsOthers`) shocked a Shield wielder for holding it. Now a relic whose look is TOME, WAND, STAFF or ORB (and is not a bow or crossbow) declares no weapon class and is never rejected.
+- New server setting `heroweapon.castingRelicsAllowed` (default true); false restores the old behaviour. Nothing else changed: swords, axes, bows, spears and every other relic weapon are rejected as before.
+
 ## [3.48.0] — Devil Contract system: tiers, assimilation key, strict Devil Union with a 24 hour cooldown, Weg markings / horns / wings, lasting sacrifices
 
 Owner: the file `claude_prompt_devil_system.md`, then "go" on the guide. Docs: `docs/devil_contract.md`, `docs/devil_contract_guide.md`, `docs/releases/3.48.0.md`.
