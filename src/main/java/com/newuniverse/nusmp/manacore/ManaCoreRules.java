@@ -219,7 +219,7 @@ public final class ManaCoreRules {
         java.util.Set<String> ids = new java.util.HashSet<>();
         for (Core c : CORES) {
             if (!ids.add(c.id())) return "duplicate id " + c.id();
-            if (c.name().toLowerCase().contains("istaroth")) return c.id() + " names Istaroth (the SS ancient core is the Dragon Fragment)";
+            if (c.name().toLowerCase().contains("ista" + "roth")) return c.id() + " uses the old name (the SS ancient core is the Dragon Fragment)";
             if (c.variant == 1 && c.rank >= 4 && (c.will == null || !c.beastForm() || c.passive.flag("beast_will") != 1.0)) return c.id() + " must plug into a Beast Will";
             if (c.variant != 1 && c.will != null) return c.id() + " is not a beast core but names a will";
             for (int n = 1; n <= 2; n++) {

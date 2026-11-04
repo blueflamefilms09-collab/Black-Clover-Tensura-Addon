@@ -391,6 +391,198 @@
   "y": 6.897,
   "z": 0.0
  },
+ "core_a_ancient": {
+  "class": "handitem",
+  "fraction": 0.5,
+  "source": "class",
+  "x": -0.0,
+  "y": 0.008,
+  "z": 0.002
+ },
+ "core_a_beast": {
+  "class": "handitem",
+  "fraction": 0.5,
+  "source": "class",
+  "x": -0.0,
+  "y": 0.008,
+  "z": 0.002
+ },
+ "core_a_standard": {
+  "class": "handitem",
+  "fraction": 0.5,
+  "source": "class",
+  "x": -0.0,
+  "y": 0.008,
+  "z": 0.002
+ },
+ "core_aa_ancient": {
+  "class": "handitem",
+  "fraction": 0.5,
+  "source": "class",
+  "x": -0.045,
+  "y": 0.0,
+  "z": 0.143
+ },
+ "core_aa_beast": {
+  "class": "handitem",
+  "fraction": 0.5,
+  "source": "class",
+  "x": -0.045,
+  "y": 0.0,
+  "z": 0.143
+ },
+ "core_aa_standard": {
+  "class": "handitem",
+  "fraction": 0.5,
+  "source": "class",
+  "x": -0.045,
+  "y": 0.0,
+  "z": 0.143
+ },
+ "core_b_ancient": {
+  "class": "handitem",
+  "fraction": 0.5,
+  "source": "class",
+  "x": -0.004,
+  "y": 0.009,
+  "z": -0.005
+ },
+ "core_b_beast": {
+  "class": "handitem",
+  "fraction": 0.5,
+  "source": "class",
+  "x": -0.004,
+  "y": 0.009,
+  "z": -0.005
+ },
+ "core_b_standard": {
+  "class": "handitem",
+  "fraction": 0.5,
+  "source": "class",
+  "x": -0.004,
+  "y": 0.009,
+  "z": -0.005
+ },
+ "core_c_ancient": {
+  "class": "handitem",
+  "fraction": 0.5,
+  "source": "class",
+  "x": -0.0,
+  "y": 0.002,
+  "z": -0.007
+ },
+ "core_c_beast": {
+  "class": "handitem",
+  "fraction": 0.5,
+  "source": "class",
+  "x": -0.0,
+  "y": 0.002,
+  "z": -0.007
+ },
+ "core_c_standard": {
+  "class": "handitem",
+  "fraction": 0.5,
+  "source": "class",
+  "x": -0.0,
+  "y": 0.002,
+  "z": -0.007
+ },
+ "core_d_ancient": {
+  "class": "handitem",
+  "fraction": 0.5,
+  "source": "class",
+  "x": -0.003,
+  "y": 0.0,
+  "z": -0.003
+ },
+ "core_d_beast": {
+  "class": "handitem",
+  "fraction": 0.5,
+  "source": "class",
+  "x": -0.003,
+  "y": 0.0,
+  "z": -0.003
+ },
+ "core_d_standard": {
+  "class": "handitem",
+  "fraction": 0.5,
+  "source": "class",
+  "x": -0.003,
+  "y": 0.0,
+  "z": -0.003
+ },
+ "core_e_ancient": {
+  "class": "handitem",
+  "fraction": 0.5,
+  "source": "class",
+  "x": -0.064,
+  "y": -0.069,
+  "z": -0.167
+ },
+ "core_e_beast": {
+  "class": "handitem",
+  "fraction": 0.5,
+  "source": "class",
+  "x": -0.064,
+  "y": -0.069,
+  "z": -0.167
+ },
+ "core_e_standard": {
+  "class": "handitem",
+  "fraction": 0.5,
+  "source": "class",
+  "x": -0.064,
+  "y": -0.069,
+  "z": -0.167
+ },
+ "core_s_ancient": {
+  "class": "handitem",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 0.0,
+  "y": -0.101,
+  "z": -0.253
+ },
+ "core_s_beast": {
+  "class": "handitem",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 0.0,
+  "y": -0.101,
+  "z": -0.253
+ },
+ "core_s_standard": {
+  "class": "handitem",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 0.0,
+  "y": -0.101,
+  "z": -0.253
+ },
+ "core_ss_ancient": {
+  "class": "handitem",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 0.0,
+  "y": -0.101,
+  "z": -0.253
+ },
+ "core_ss_beast": {
+  "class": "handitem",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 0.0,
+  "y": -0.101,
+  "z": -0.253
+ },
+ "core_ss_standard": {
+  "class": "handitem",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 0.0,
+  "y": -0.101,
+  "z": -0.253
+ },
  "corpse_eater": {
   "class": "katana",
   "fraction": 0.188,
