@@ -10,8 +10,8 @@ import static org.junit.jupiter.api.Assertions.*;
 /** Why: Nen (3.46.0) is an Ultimate with ten modes; every number and decision of it is pure, so the bounds and the trade-offs are pinned without a world. */
 class NenRulesTest {
     @Test
-    void tenModesWithUniqueIdsAndKeys() {
-        assertEquals(10, NenRules.MODES);
+    void modesWithUniqueIdsAndKeys() {
+        assertEquals(17, NenRules.MODES);
         assertEquals(NenRules.MODES, NenRules.IDS.length);
         Set<String> ids = new HashSet<>(), keys = new HashSet<>();
         for (int m = 0; m < NenRules.MODES; m++) {
