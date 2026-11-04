@@ -15,7 +15,7 @@ public final class MegaConfig {
     /** 1.58.0, the floor model: how many rooms one floor has ({@code mega.floorRooms}). */
     public static final ModConfigSpec.IntValue FLOOR_ROOMS;
     public static final ModConfigSpec SPEC;
-    public static final ModConfigSpec.BooleanValue EXPANSION, LAST_LANDING, EXPAND_AFTER_VAULT;
+    public static final ModConfigSpec.BooleanValue EXPANSION, LAST_LANDING, EXPAND_AFTER_VAULT, KEEP_DIGGERS_OUT;
     public static final ModConfigSpec.IntValue PIECES_PER_TICK, MAX_PIECES, MAX_SECTORS, ASSEMBLE_TRIES, MAX_LINK_MODULES, GEN_BUDGET_MS;
 
     static {
@@ -41,6 +41,8 @@ public final class MegaConfig {
                 .defineInRange("genBudgetMs", 30, 5, 200);
         FLOOR_ROOMS = b.comment("1.58.0, the floor model: how many rooms one floor has (the arrival stairwell, the forward stairwell, the halls, corridors, traps and the Safe Zone together; a boss floor gets 8 more for its boss chain). Floors are small levels of their own now, so this is far fewer than the ~100 rooms of an old ten-floor sector.")
                 .defineInRange("floorRooms", 28, 18, 40);
+        KEEP_DIGGERS_OUT = b.comment("3.48.2: Armorsauruses cannot enter the Mega-Dungeon (Tensura's dig-target search hung the server there for 60 seconds). false = the old behaviour.")
+                .define("keepDiggersOut", true);
         b.pop();
         SPEC = b.build();
     }

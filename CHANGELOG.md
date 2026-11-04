@@ -1,5 +1,13 @@
 # Changelog
 
+## [3.48.2] — Fix: no Armorsaurus in the Mega-Dungeon (a 60 second server hang in Tensura's dig AI)
+
+Report: the server thread was stuck for 60 s in Tensura 2.0.1.4 `SetRandomDigTarget.getTargetPosition` (the Armorsaurus's "pick a random place to dig" search) in the `nusmp:mega_dungeon` dimension, whose unbreakable floors leave that search no dig spot. The AI is Tensura's, so it is not patched.
+
+### FIXED
+- New `DiggerGuard`: an Armorsaurus can no longer join a level of the Mega-Dungeon, whatever spawned it (roster tags, wanderers, eggs). One set lookup per entity join in that one dimension, no state, server side. Server setting `mega.keepDiggersOut` (default true); false restores the old behaviour. The tags and wanderer rows are kept as they were.
+- Test `DiggerGuardTest`. Not reproduced in a game: the hang itself was read from the thread dump only. Armorsauruses already in the dimension are not removed by this; run `/kill @e[type=tensura:armorsaurus]` once.
+
 ## [3.48.1] — Fix: a Holy Weapon no longer stops its wielder from using tomes, wands, staffs and orbs
 
 Owner report: "Is the Shield Hero shield meant to stop me from using primordial relics and Magic tomes?" (these are not weapons, so holding a hero weapon should not stop you using or learning them).
