@@ -55,6 +55,7 @@ public final class NUCreativeTab {
                 for (var vl : com.newuniverse.nusmp.valkyrielance.ValkyrieLanceBoot.creativeItems()) output.accept(vl.get());                // the Valkyrie Drill Lance (creative only)
                 output.accept(com.newuniverse.nusmp.block.NUBlocks.GRIMOIRE_ALTAR_ITEM.get());
                 for (net.minecraft.world.item.ItemStack bw : com.newuniverse.nusmp.beastwill.BeastWillItems.creativeStacks()) output.accept(bw);             // 3.45.0: one Beast Will core per shipped will
+                for (net.minecraft.world.item.ItemStack mc : com.newuniverse.nusmp.manacore.ManaCoreItems.creativeStacks()) output.accept(mc);              // 3.51.0: the 24 rank Mana Cores
                 com.newuniverse.nusmp.labyrinth.LabyrinthCreative.addTo(output);                                       // 1.35.0: the Labyrinth's blocks and items
 
                 for (var relic : new net.neoforged.neoforge.registries.DeferredItem[]{com.newuniverse.nusmp.dungeon.nexus.relic.RelicItems.GLUTTON_CHALICE, com.newuniverse.nusmp.dungeon.nexus.relic.RelicItems.MANTLE_OF_THE_SCAVENGER,

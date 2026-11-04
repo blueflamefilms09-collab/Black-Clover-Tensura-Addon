@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 class BeastWillSchemaTest {
     private static final Path DIR = Path.of("src/main/resources/data/nusmp/beast_will");
-    private static final List<String> IDS = List.of("dragon_will", "shadow_panther_will", "elderwood_guardian_will", "lion_will");
+    private static final List<String> IDS = List.of("dragon_will", "shadow_panther_will", "elderwood_guardian_will", "lion_will", "thunder_fang_chimera_will");   // 3.51.0: the Thunder-Fang Chimera will of the AA beast core
 
     static BeastWillDef load(String id) throws Exception {
         BeastWillSchema.Parsed p = BeastWillSchema.parse(id, Files.readString(DIR.resolve(id + ".json")));
@@ -26,7 +26,7 @@ class BeastWillSchemaTest {
     }
 
     @Test
-    void theFourWillsExistAndEveryFileInTheFolderIsOneOfThem() throws Exception {
+    void theWillsExistAndEveryFileInTheFolderIsOneOfThem() throws Exception {
         List<String> found = new ArrayList<>();
         for (File f : DIR.toFile().listFiles((d, n) -> n.endsWith(".json"))) found.add(f.getName().replace(".json", ""));
         for (String id : IDS) assertTrue(found.contains(id), id + " is missing");

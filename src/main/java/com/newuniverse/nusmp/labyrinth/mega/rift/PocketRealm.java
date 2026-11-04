@@ -372,6 +372,7 @@ public final class PocketRealm extends SavedData {
         setDirty();
         PocketBuilder.openVault(level, pocket);
         com.newuniverse.nusmp.relics.djinn.DjinnSources.riftCleared(level, playersIn(level, pocket.slot), RiftConfig.DJINN_SEAL_CHANCE.get());   // 3.50.0: a way to find a Djinn Seal
+        com.newuniverse.nusmp.manacore.ManaCoreDrops.riftCleared(level, playersIn(level, pocket.slot), 0.03);   // 3.51.0: a small chance of an ancient rank Mana Core
         for (ServerPlayer m : playersIn(level, pocket.slot)) {
             m.displayClientMessage(Component.translatableWithFallback(boss ? "message.nusmp.mega.rift.boss.dead" : "message.nusmp.mega.rift.puzzle.solved",
                     boss ? "The guardian falls. The bars lift. The vault is open." : "The bars lift. The vault is open.").withStyle(ChatFormatting.GOLD), true);

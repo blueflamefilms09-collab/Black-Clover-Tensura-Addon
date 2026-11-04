@@ -1,5 +1,14 @@
 # Changelog
 
+## [3.51.0] — Rank Mana Cores E to SS (24 cores, 3D orbs)
+- NEW: 24 rank cores, ranks E, D, C, B, A, AA, S, SS, each as Standard, Beast and Ancient (item ids `core_<rank>_<variant>`). Press = right-click, Crouch + Press = shift + right-click; passives work while the core is held. Costs, cooldowns and caps are in `docs/mana_cores.md` (active effects cap at 32 targets, 30 blocks, 600 ticks).
+- NEW: Beast cores A and up (Shadow Panther, Thunder-Fang Chimera, Elderwood Guardian, Nihil Dragon) plug into the KEPT Beast Will system (Acquire / Integrate); new data-driven Chimera will.
+- NEW: SS Ancient "World Line Core / Dragon Fragment": World of Still Seconds (75,000 MP, 10 s freeze, players max 3 s, bosses 1 s) and Last Second of Creation (120,000 MP, 30 s countdown, 600 s cooldown).
+- NEW: `/manacore give|list` (op), server config `nusmp-manacore-server.toml`, drops from wild kills (one per player per gap), pocket-rift clears and vaults.
+- NEW: the 8 uploaded orb models reduced to 288-quad spheres (plus glow), 24 skins and icons (about 3.9 MB of source assets).
+- KEPT: the sector-key Mana Core (Labyrinth Guardian drop) and every other item.
+- Not seen in a game. Not done: Fragile Resonance (max MP), Cosmic Infusion; some passives are simplified (see the doc). Istaroth is a later release.
+
 ## [3.50.0] — Grimoires need 20,000 EP, a new way to find Djinn Seals, a fuller status menu
 - NEW: grimoires only call a soul of at least 20,000 EP (server setting `multiverse.minEp`, 0 = off). The Grimoire Summons, the Tower Wizard, the Altar and the ceremony all wait for it, and each says what is missing (EP shown against the need). REPLACES the level / play-time rule of the summons while `minEp` > 0 (the old settings are kept and used again at 0).
 - NEW: clearing a pocket rift (secret boss or puzzle) has a 6 % chance (`rift.djinnSealChance`, 0 = off) to give one Djinn Seal of a sleeping Djinn to a random player inside. One roll per cleared rift, and a rift clears once (one random draw; no tick, no packet). KEPT: floor bosses, vault chests, trading, admin grant, Dark Rukh Shards.

@@ -96,7 +96,7 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
 
     /** 1.24.0: the old list plus every 3D relic of Relics of Many Worlds. */
     static final List<Supplier<? extends Item>> WEAPONS = java.util.stream.Stream.of(BASE_WEAPONS.stream(), com.newuniverse.nusmp.relics.RelicCatalog.model3dItems().stream(),
-            com.newuniverse.nusmp.heroweapon.HeroItems.all().stream(), com.newuniverse.nusmp.labyrinth.loot.LootItems.renderables().stream(), com.newuniverse.nusmp.fairytail.storm.StormBoot.renderables().stream(), com.newuniverse.nusmp.firecast.FireCastBoot.renderables().stream(), com.newuniverse.nusmp.shishou.ShishouItems.renderables().stream(), com.newuniverse.nusmp.spiritblades.SpiritBladesBoot.renderables().stream(), com.newuniverse.nusmp.valkyrielance.ValkyrieLanceBoot.renderables().stream()).flatMap(s -> s).toList();      // 1.62.0: + the 21 hero weapons
+            com.newuniverse.nusmp.heroweapon.HeroItems.all().stream(), com.newuniverse.nusmp.labyrinth.loot.LootItems.renderables().stream(), com.newuniverse.nusmp.fairytail.storm.StormBoot.renderables().stream(), com.newuniverse.nusmp.firecast.FireCastBoot.renderables().stream(), com.newuniverse.nusmp.shishou.ShishouItems.renderables().stream(), com.newuniverse.nusmp.spiritblades.SpiritBladesBoot.renderables().stream(), com.newuniverse.nusmp.valkyrielance.ValkyrieLanceBoot.renderables().stream(), com.newuniverse.nusmp.manacore.CoreItems.renderables().stream()).flatMap(s -> s).toList();      // 1.62.0: + the 21 hero weapons; 3.51.0: + the 24 rank Mana Cores (manacore/CoreItems.renderables(), meshes from tools/gen_mana_core_models.py)
 
     static final int BODY = 0, VOID = 1, GLOW = 2;
 
