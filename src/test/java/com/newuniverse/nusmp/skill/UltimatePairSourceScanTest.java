@@ -73,7 +73,8 @@ class UltimatePairSourceScanTest {
         assertTrue(c.contains("SkillTargets."), "Nen finds creatures through the bounded SkillTargets helpers");
         assertTrue(c.split("getEntitiesOfClass\\(", -1).length - 1 <= 1, "at most one box query of its own (Gyo's, a fixed 24-block radius, at most 16 revealed)");
         assertTrue(c.contains("SkillDamage.hit("), "Nen damage goes through the balance law");
-        assertFalse(c.contains("onTick("), "Nen has no tick: its windows are game times in the tag");
+        // 3.48.5: the only tick is the aura refresh, gated to once every AURA_EVERY (40) ticks and by the nenVfx switch; the windows themselves are still game times in the tag
+        assertTrue(!c.contains("onTick(") || (c.contains("tickCount % AURA_EVERY") && c.contains("AURA_EVERY = 40") && c.contains("newFx()")), "Nen's tick must be the gated aura refresh only");
     }
 
     @Test

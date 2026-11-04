@@ -1,5 +1,8 @@
 # Changelog
 
+## [3.48.6] — Fix: 3.48.5 build (source-scan test)
+- The source-scan test that said "Nen has no tick" now allows the one gated tick of the aura refresh (every 40 ticks, only with `nenVfx` on). 3.48.5 contains the Nen VFX rework; this release is the same content with the test corrected.
+
 ## [3.48.5] — Nen VFX rework (REPLACED: the particle puffs)
 
 ### REPLACED / NEW
