@@ -1,5 +1,16 @@
 # Changelog
 
+## [3.55.0] — Hero weapons: crazy buffs, Legendary Shield counter-attacker
+- NEW: server setting block `[heroweapon.buff]` (file of the hero config), `enabled = true` by default; `false` restores the old numbers exactly.
+- NEW: a bound wielder with the weapon out deals x4 damage (`damageFactor`), the four Holy Weapons (Sword, Spear, Bow, Shield) x1.5 on top = x6.
+- NEW: technique cooldowns x0.5 (`cooldownFactor`) and magicule cost x0.5 (`costFactor`) for every bound wielder.
+- NEW: bound wielders take x0.6 damage (`damageTakenFactor`); the Legendary Shield takes x0.2 (`shieldDamageTakenFactor`) and throws back 75 % of every blow it takes (`shieldReflectShare`) up to 60 per blow (`shieldReflectCap`), as thorns damage, loop-guarded.
+- REPLACED: nothing removed; the dispatcher cooldown and the payment of techniques now pass through `HeroBuff` (a no-op with the setting off). The smoke self-test expects the buffed cooldown.
+- KEPT: the base stat table, the budget limits, bonds, forms, Curse Series, repel and leveling rules, all weapons.
+- Not built: Curse Series changes, leveling-distance penalty, new power-up methods (absorbing, copying, smelting).
+- Cost: one multiply per damage event, at most one extra `hurt` per incoming blow against a Shield wielder; no tick, no packet.
+- Not seen in a game: balance is untuned; bosses still obey the 6 %/s damage cap, so the x4/x6 does not delete them.
+
 ## [3.54.0] — Creative menu split into seven tabs
 - CHANGED: the one big creative tab is now seven: Grimoires (id `main` kept), Weapons, Armor, Relics & Cores, Spawn Eggs, Dungeon, Skills & Tools. Every item that was in the old tab is in exactly one of the new ones (grimoires, charter and canon books and the altar; weapons incl. hero weapons, Shishou, staffs and blades; robes; relics, Djinn seals and weapons, catalysts, Spirit/Devil cores, Beast Will cores, rank Mana Cores; every spawn egg; Labyrinth blocks, dungeon food and materials; skill books, codexes, sigils, the Wiki book). Items from the general list sort by type: armor by item type, weapons by their attack damage, the rest in Skills & Tools.
 - KEPT: every item, recipe, id and the creative-only rules (Djinn weapons need operator rights).

@@ -22,6 +22,7 @@ final class HeroPay {
 
     /** Pays {@code share} of the maximum magicules through {@code HeroCtx.pay}; null when the player cannot pay (nothing was spent). */
     static Receipt pay(HeroCtx c, double share) {
+        share = com.newuniverse.nusmp.heroweapon.HeroBuff.cost(share);   // 3.55.0
         if (share <= 0.0 || c.player.isCreative()) return Receipt.NOTHING;
         var ex = TensuraStorages.getExistenceFrom(c.player);
         if (ex == null) return Receipt.NOTHING;

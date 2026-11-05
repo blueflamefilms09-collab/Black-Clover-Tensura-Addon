@@ -50,6 +50,7 @@ public final class HeroCombat {
     public static void register(IEventBus bus) {
         bus.addListener(EventPriority.LOWEST, HeroCombat::onDamageDone);
         bus.addListener(HeroCombat::onIncoming);
+        com.newuniverse.nusmp.heroweapon.HeroBuffEvents.register(bus);   // 3.55.0
         bus.addListener(HeroCombat::onShieldBlock);
         bus.addListener(EventPriority.LOW, HeroCombat::onKill);
     }

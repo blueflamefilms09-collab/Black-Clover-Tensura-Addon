@@ -155,7 +155,7 @@ public final class HeroUse {
             SafeCast.fault("hero.skill.cooldown." + skill.id(), broken);
             base = 200;
         }
-        int ticks = DispatchRules.cooldownTicks(base, c.bondLevel(), HeroConfig.minCooldownTicks());
+        int ticks = DispatchRules.cooldownTicks(com.newuniverse.nusmp.heroweapon.HeroBuff.cooldown(base), c.bondLevel(), HeroConfig.minCooldownTicks());
         int lock = HeroConfig.skillGlobalLockTicks();
         if (player.isCreative()) {
             ticks = DispatchRules.creativeTicks(ticks, 10);

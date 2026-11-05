@@ -73,7 +73,7 @@ public final class HeroUseSelfTests {
             // ---- a good cast starts the cooldown and the lock; a repeat is refused
             if (!HeroUse.run(p, c, good)) bad.add("a ready technique was refused");
             if (casts[0] != 1) bad.add("a ready technique cast " + casts[0] + " times");
-            int want = DispatchRules.cooldownTicks(100, c.bondLevel(), HeroConfig.minCooldownTicks());
+            int want = DispatchRules.cooldownTicks(com.newuniverse.nusmp.heroweapon.HeroBuff.cooldown(100), c.bondLevel(), HeroConfig.minCooldownTicks());
             if (HeroUse.cooldownLeft(p, good.id()) != want) bad.add("the cooldown after a cast is " + HeroUse.cooldownLeft(p, good.id()) + ", expected " + want);
             if (HeroUse.lockLeft(p) != HeroConfig.skillGlobalLockTicks()) bad.add("the lock after a cast is " + HeroUse.lockLeft(p) + ", expected " + HeroConfig.skillGlobalLockTicks());
             if (HeroUse.run(p, c, good) || casts[0] != 1) bad.add("a technique on cooldown was cast again");

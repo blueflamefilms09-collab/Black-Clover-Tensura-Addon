@@ -17,6 +17,8 @@ public final class HeroConfig {
     public static final ModConfigSpec.BooleanValue CASTING_RELICS_ALLOWED;
     public static final ModConfigSpec.IntValue MAX_BONDS, REPEL_RADIUS, MAX_LEVEL, SHOCK_SLOW_TICKS, SKILL_GLOBAL_LOCK_TICKS, MIN_COOLDOWN_TICKS, KEY_SPACING_TICKS,
             MAX_KILL_EXP, REPEL_NOTICE_SECONDS;
+    public static final ModConfigSpec.BooleanValue BUFF_ENABLED;
+    public static final ModConfigSpec.DoubleValue BUFF_DAMAGE, BUFF_HOLY_EXTRA, BUFF_COOLDOWN, BUFF_COST, BUFF_TAKEN, BUFF_SHIELD_TAKEN, BUFF_REFLECT, BUFF_REFLECT_CAP;
     public static final ModConfigSpec.DoubleValue WEAPON_EXP_MULTIPLIER, SHOCK_DAMAGE, KILL_EXP_SHARE, BOSS_KILL_EXP_FACTOR;
 
     static {
@@ -64,6 +66,18 @@ public final class HeroConfig {
                 .defineInRange("keySpacingTicks", 4, 0, 40);
         SHOW_MESSAGES = b.comment("Action-bar lines for the weapon (summoned, put away, refused, level up). Off keeps the screen clear for streamers.")
                 .define("showMessages", true);
+        b.push("buff");
+        BUFF_ENABLED = b.comment("3.55.0 master switch of the hero weapon buffs below. Off: every weapon behaves exactly as before 3.55.0.").define("enabled", true);
+        BUFF_DAMAGE = b.comment("Factor on EVERY point of damage a bound wielder deals while their hero weapon is out (blows, techniques, arrows). Bosses still obey the boss damage cap.")
+                .defineInRange("damageFactor", 4.0, 1.0, 100.0);
+        BUFF_HOLY_EXTRA = b.comment("Extra factor on top of damageFactor for the four Holy Weapons (Shield, Sword, Spear, Bow).").defineInRange("holyExtraFactor", 1.5, 1.0, 100.0);
+        BUFF_COOLDOWN = b.comment("Factor on every technique cooldown (0.5 = half as long); the minCooldownTicks floor still holds.").defineInRange("cooldownFactor", 0.5, 0.05, 1.0);
+        BUFF_COST = b.comment("Factor on every technique's magicule cost (0.5 = half).").defineInRange("costFactor", 0.5, 0.0, 1.0);
+        BUFF_TAKEN = b.comment("Factor on all damage a bound wielder takes (0.6 = 40 percent less).").defineInRange("damageTakenFactor", 0.6, 0.0, 1.0);
+        BUFF_SHIELD_TAKEN = b.comment("The same for the wielder of the Legendary Shield (Naofumi): the supreme defence.").defineInRange("shieldDamageTakenFactor", 0.2, 0.0, 1.0);
+        BUFF_REFLECT = b.comment("Share of the damage the Legendary Shield's wielder takes that is thrown back at the attacker (the Counter). 0 = off.").defineInRange("shieldReflectShare", 0.75, 0.0, 10.0);
+        BUFF_REFLECT_CAP = b.comment("The most one reflected blow can deal.").defineInRange("shieldReflectCap", 60.0, 0.0, 10000.0);
+        b.pop();
         b.pop();
         SPEC = b.build();
     }
