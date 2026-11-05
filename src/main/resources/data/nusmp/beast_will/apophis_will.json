@@ -1,0 +1,177 @@
+{
+  "id": "apophis_will",
+  "name": "Apophis Will",
+  "beast": "Apophis, Serpent of Chaos and Darkness",
+  "affinity": "Chaos",
+  "legendary": true,
+  "minRank": "S",
+  "sources": [],
+  "keywords": [
+    "apophis",
+    "apep"
+  ],
+  "dropChance": 0.003,
+  "requireEp": 90000,
+  "hostRaces": [
+    "HUMAN",
+    "ELF",
+    "DWARF"
+  ],
+  "otherHostCompat": 0.6,
+  "assimilationSeconds": 12600,
+  "masterySeconds": 8000,
+  "assimilationDayCap": 0.12,
+  "masteryDayCap": 0.12,
+  "coreCooldownDays": 21,
+  "tint": 7220464,
+  "passive": [
+    {
+      "attribute": "minecraft:generic.movement_speed",
+      "op": "add",
+      "amount": 0.01
+    }
+  ],
+  "acquire": {
+    "unlockAssimilation": 0.1,
+    "unlockMastery": 0.0,
+    "drainPct": 0.55,
+    "strainPerSecond": 0.13,
+    "regen": 0.0,
+    "stats": [
+      {
+        "attribute": "minecraft:generic.armor",
+        "op": "add",
+        "amount": 3.0
+      },
+      {
+        "attribute": "minecraft:generic.armor_toughness",
+        "op": "add",
+        "amount": 1.0
+      },
+      {
+        "attribute": "minecraft:generic.max_health",
+        "op": "add",
+        "amount": 5.0
+      },
+      {
+        "attribute": "minecraft:generic.attack_damage",
+        "op": "add",
+        "amount": 3.0
+      },
+      {
+        "attribute": "minecraft:generic.knockback_resistance",
+        "op": "add",
+        "amount": 0.2
+      },
+      {
+        "attribute": "minecraft:generic.movement_speed",
+        "op": "mult",
+        "amount": 0.08
+      }
+    ],
+    "abilities": [
+      {
+        "id": "mesmerizing_gaze",
+        "kind": "dread_gaze",
+        "slot": 1,
+        "costPct": 6,
+        "cooldownTicks": 600,
+        "strain": 8,
+        "range": 0,
+        "radius": 10,
+        "durationTicks": 120,
+        "power": 1,
+        "maxTargets": 5,
+        "bossFactor": 0.4
+      },
+      {
+        "id": "chaos_spit",
+        "kind": "venom_spit",
+        "slot": 2,
+        "costPct": 5,
+        "cooldownTicks": 160,
+        "strain": 6,
+        "range": 7,
+        "radius": 7,
+        "durationTicks": 100,
+        "power": 3,
+        "maxTargets": 4,
+        "bossFactor": 0.6
+      }
+    ]
+  },
+  "integrate": {
+    "unlockAssimilation": 0.95,
+    "unlockMastery": 0.5,
+    "drainPct": 1.6,
+    "strainPerSecond": 0.52,
+    "regen": 0.0,
+    "stats": [
+      {
+        "attribute": "minecraft:generic.armor",
+        "op": "add",
+        "amount": 5.0
+      },
+      {
+        "attribute": "minecraft:generic.armor_toughness",
+        "op": "add",
+        "amount": 3.0
+      },
+      {
+        "attribute": "minecraft:generic.max_health",
+        "op": "add",
+        "amount": 8.0
+      },
+      {
+        "attribute": "minecraft:generic.attack_damage",
+        "op": "add",
+        "amount": 4.5
+      },
+      {
+        "attribute": "minecraft:generic.knockback_resistance",
+        "op": "add",
+        "amount": 0.4
+      },
+      {
+        "attribute": "minecraft:generic.movement_speed",
+        "op": "mult",
+        "amount": 0.12
+      },
+      {
+        "attribute": "minecraft:generic.attack_speed",
+        "op": "mult",
+        "amount": 0.1
+      }
+    ],
+    "abilities": [
+      {
+        "id": "chaos_coil",
+        "kind": "maelstrom",
+        "slot": 1,
+        "costPct": 12,
+        "cooldownTicks": 800,
+        "strain": 15,
+        "range": 0,
+        "radius": 10,
+        "durationTicks": 100,
+        "power": 6,
+        "maxTargets": 6,
+        "bossFactor": 0.3
+      },
+      {
+        "id": "endless_night",
+        "kind": "time_exclusion",
+        "slot": 2,
+        "costPct": 20,
+        "cooldownTicks": 1800,
+        "strain": 26,
+        "range": 0,
+        "radius": 7,
+        "durationTicks": 60,
+        "power": 1,
+        "maxTargets": 4,
+        "bossFactor": 0.0
+      }
+    ]
+  }
+}

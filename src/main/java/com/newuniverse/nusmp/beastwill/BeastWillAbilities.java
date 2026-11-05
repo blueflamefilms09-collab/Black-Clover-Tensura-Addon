@@ -71,6 +71,9 @@ public final class BeastWillAbilities {
             case "bark_ward" -> ward(p, def, a, scale);
             case "mane_surge" -> mane(p, def, a, scale);
             case "world_howl" -> howl(p, def, a, scale, mastery);
+            case "venom_spit" -> spit(p, def, a, scale, mastery);
+            case "maelstrom" -> maelstrom(p, def, a, scale, mastery);
+            case "dread_gaze" -> dread(p, def, a);
             default -> false;
         };
     }
@@ -148,6 +151,8 @@ public final class BeastWillAbilities {
 
     private static final float MAX_R = 8f;
 
+    private static BeastWillPictures.Pic picture(int kind) { return kind > BeastWillLook.CHIMERA ? BeastWillPictures.of(kind) : null; }
+
     private static float ringPower(double radius) { return (float) Math.max(0.6, Math.min(4.0, radius / 3.0)); }
 
     /** One big picture, if the shape is not null. Duration 0 = the picture's own length; the colour 0 = the picture's own colours (the lightning spear takes one). */
@@ -174,7 +179,10 @@ public final class BeastWillAbilities {
             case BeastWillLook.RAPTOR -> VfxShape.WIND_GALE;
             case BeastWillLook.SERPENT -> VfxShape.FIRE_SPIRAL;
             case BeastWillLook.CHIMERA -> VfxShape.LIGHTNING_SPEAR;
-            default -> null;
+            default -> {                                                                                                         // the 18 later wills: BeastWillPictures
+                BeastWillPictures.Pic pic = picture(BeastWillLook.kindOf(def.id()));
+                yield pic == null ? null : pic.travel();
+            }
         };
         if (s == VfxShape.TREE_ROOTS) {                                                                                 // roots erupt where the lash lands
             shape(p.serverLevel(), s, to, to, 1.2f);
@@ -199,7 +207,11 @@ public final class BeastWillAbilities {
             case BeastWillLook.RAPTOR -> shape(level, VfxShape.WIND_RING, at, up, r / 3f);
             case BeastWillLook.SERPENT -> shape(level, VfxShape.FIRE_WILD, at, up, Math.min(r, 4f));
             case BeastWillLook.CHIMERA -> shape(level, VfxShape.LIGHTNING_GOD, at, up, Math.min(r, 4f));
-            default -> { return; }
+            default -> {
+                BeastWillPictures.Pic pic = picture(BeastWillLook.kindOf(def.id()));                                          // the 18 later wills: BeastWillPictures
+                if (pic == null) return;
+                shape(level, pic.burst(), at.add(0, pic.lift(), 0), up.add(0, pic.lift(), 0), Math.min(pic.max(), r * pic.scale()));
+            }
         }
         tint(level, def, at.add(0, 1.0, 0), 10);
     }
@@ -497,6 +509,80 @@ public final class BeastWillAbilities {
         fx(level, false, p.position().add(0, 1.2, 0), 1, 0.0);
         shape(level, VfxShape.WIND_RING, p.position().add(0, 0.3, 0), p.position().add(0, 1.3, 0), ringPower(a.radius()));    // the howl runs out as rings
         burst(level, def, p.position(), Math.min(a.radius(), 8));                                                    // and this beast's own mark on top
+        return true;
+    }
+
+    // ------------------------------------------------------------------ the three kinds of the 18 later wills (docs/beastwill_new.md)
+    /** A poison cone: damage plus Poison (Wither from power 6) for the file's duration, on at most {@code maxTargets} creatures in front of the caster. Poison and Wither never kill by themselves in vanilla; a boss gets the boss factor of the damage and of the time. */
+    private static boolean spit(ServerPlayer p, BeastWillDef def, BeastWillDef.Ability a, double scale, double mastery) {
+        List<LivingEntity> seen = cone(p, Math.max(2, a.range()), 0.55, cap(a));
+        if (seen.isEmpty()) {
+            BeastWillFeedback.say(p, "no_target", false);
+            return false;
+        }
+        ServerLevel level = p.serverLevel();
+        Vec3 eye = p.getEyePosition(), look = p.getLookAngle();
+        var effect = a.power() >= 6 ? MobEffects.WITHER : MobEffects.POISON;
+        for (LivingEntity t : seen) {
+            hit(p, t, a.power() * scale * 0.7, mastery, a.bossFactor());
+            int ticks = ticksFor(t, a, Math.max(40, a.durationTicks()), false);
+            if (ticks > 0) t.addEffect(new MobEffectInstance(effect, ticks, 0, false, true));
+        }
+        Vec3 end = eye.add(look.scale(Math.min(Math.max(2, a.range()), 10)));
+        line(level, true, eye.add(look.scale(0.8)), end, 1);                                                          // 2 particles + the 10 of the burst's puff = 12 at most
+        travel(p, def, eye.add(look.scale(0.8)), end, 1.0f);
+        burst(level, def, end, 2.0);
+        level.playSound(null, p.blockPosition(), SoundEvents.SPIDER_HURT, SoundSource.PLAYERS, 0.8f, 0.6f);
+        return true;
+    }
+
+    /** A pull-in field: foes inside the radius are drawn toward the caster and slowed for a moment (a player only after the shared hard-control rule), with a little damage. At most {@code maxTargets}; bosses take the boss factor. */
+    private static boolean maelstrom(ServerPlayer p, BeastWillDef def, BeastWillDef.Ability a, double scale, double mastery) {
+        List<LivingEntity> seen = around(p, p.position(), a.radius(), cap(a));
+        if (seen.isEmpty()) {
+            BeastWillFeedback.say(p, "no_target", false);
+            return false;
+        }
+        boolean control = false, askedControl = false;
+        for (LivingEntity t : seen) {
+            double dx = p.getX() - t.getX(), dz = p.getZ() - t.getZ(), len = Math.max(0.5, Math.sqrt(dx * dx + dz * dz));
+            double pull = Math.min(1.2, a.power() * 0.2 * scale) * (bossy(t) ? a.bossFactor() : 1.0);
+            if (pull > 0.05 && len > 1.5) t.push(dx / len * pull, 0.1, dz / len * pull);
+            t.hurtMarked = true;
+            hit(p, t, a.power() * scale * 0.4, mastery, a.bossFactor());
+            if (t instanceof Player) {
+                if (!askedControl) {
+                    askedControl = true;
+                    control = BalanceLaw.beginControl(p);
+                }
+                if (!control) continue;
+            }
+            int ticks = ticksFor(t, a, Math.min(a.durationTicks(), 60), t instanceof Player);
+            if (ticks > 0) t.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, ticks, 1, false, true));
+        }
+        ServerLevel level = p.serverLevel();
+        burst(level, def, p.position(), Math.min(a.radius(), 8));                                                    // one picture for the whole field (10 particles in its puff)
+        level.playSound(null, p.blockPosition(), SoundEvents.ELDER_GUARDIAN_AMBIENT, SoundSource.PLAYERS, 0.5f, 0.6f);
+        return true;
+    }
+
+    /** Dread: foes in the radius are weakened and slowed (not held), and creatures that were hunting the caster lose their aim. No control effect, so no hard-control cooldown; bosses take the boss factor of the time. */
+    private static boolean dread(ServerPlayer p, BeastWillDef def, BeastWillDef.Ability a) {
+        List<LivingEntity> seen = around(p, p.position(), a.radius(), cap(a));
+        if (seen.isEmpty()) {
+            BeastWillFeedback.say(p, "no_target", false);
+            return false;
+        }
+        for (LivingEntity t : seen) {
+            int ticks = ticksFor(t, a, Math.max(40, a.durationTicks()), false);
+            if (ticks <= 0) continue;
+            t.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, ticks, 0, false, true));
+            t.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, Math.min(ticks, 60), 0, false, true));
+            if (t instanceof Mob m && m.getTarget() == p && !bossy(t)) m.setTarget(null);
+        }
+        fx(p.serverLevel(), true, p.getEyePosition(), 2, 0.3);
+        burst(p.serverLevel(), def, p.position(), Math.min(a.radius(), 8));
+        p.serverLevel().playSound(null, p.blockPosition(), SoundEvents.WARDEN_NEARBY_CLOSER, SoundSource.PLAYERS, 0.7f, 0.7f);
         return true;
     }
 }

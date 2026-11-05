@@ -143,6 +143,7 @@ public final class BeastWillManager {
             }
         }
         announceUnlocks(p, s, r);
+        if (prog.mastery >= 0.999f) com.newuniverse.nusmp.skill.BeastSkills.grantOnMastery(p, s.active);   // 3.58.0: a mastered will grants its Unique skill once
         reapply(p, s, def, prog, r);
         updateHash(p, s, r, now);
     }

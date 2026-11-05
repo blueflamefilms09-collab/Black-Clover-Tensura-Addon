@@ -1,0 +1,157 @@
+{
+  "id": "kitsune_will",
+  "name": "Kitsune Will",
+  "beast": "Kitsune, the Multi-Tailed Fox",
+  "affinity": "Illusion",
+  "legendary": false,
+  "minRank": "A",
+  "sources": [],
+  "keywords": [
+    "kitsune",
+    "nine_tail"
+  ],
+  "dropChance": 0.01,
+  "requireEp": 24000,
+  "hostRaces": [
+    "HUMAN",
+    "ELF",
+    "DWARF"
+  ],
+  "otherHostCompat": 0.6,
+  "assimilationSeconds": 5400,
+  "masterySeconds": 3500,
+  "assimilationDayCap": 0.3,
+  "masteryDayCap": 0.3,
+  "coreCooldownDays": 5,
+  "tint": 16751210,
+  "passive": [
+    {
+      "attribute": "minecraft:generic.movement_speed",
+      "op": "add",
+      "amount": 0.01
+    }
+  ],
+  "acquire": {
+    "unlockAssimilation": 0.1,
+    "unlockMastery": 0.0,
+    "drainPct": 0.5,
+    "strainPerSecond": 0.12,
+    "regen": 0.0,
+    "stats": [
+      {
+        "attribute": "minecraft:generic.movement_speed",
+        "op": "mult",
+        "amount": 0.08
+      },
+      {
+        "attribute": "minecraft:generic.attack_damage",
+        "op": "add",
+        "amount": 1.5
+      },
+      {
+        "attribute": "minecraft:generic.max_health",
+        "op": "add",
+        "amount": 3.0
+      },
+      {
+        "attribute": "minecraft:generic.attack_speed",
+        "op": "mult",
+        "amount": 0.05
+      }
+    ],
+    "abilities": [
+      {
+        "id": "fox_glamour",
+        "kind": "shadow_veil",
+        "slot": 1,
+        "costPct": 2,
+        "cooldownTicks": 400,
+        "strain": 3,
+        "range": 0,
+        "radius": 0,
+        "durationTicks": 120,
+        "power": 1,
+        "maxTargets": 1,
+        "bossFactor": 1.0
+      },
+      {
+        "id": "foxfire",
+        "kind": "draconic_pulse",
+        "slot": 2,
+        "costPct": 4,
+        "cooldownTicks": 160,
+        "strain": 6,
+        "range": 6,
+        "radius": 6,
+        "durationTicks": 40,
+        "power": 2.5,
+        "maxTargets": 4,
+        "bossFactor": 0.6
+      }
+    ]
+  },
+  "integrate": {
+    "unlockAssimilation": 0.95,
+    "unlockMastery": 0.5,
+    "drainPct": 1.25,
+    "strainPerSecond": 0.4,
+    "regen": 0.0,
+    "stats": [
+      {
+        "attribute": "minecraft:generic.movement_speed",
+        "op": "mult",
+        "amount": 0.14
+      },
+      {
+        "attribute": "minecraft:generic.attack_damage",
+        "op": "add",
+        "amount": 3.0
+      },
+      {
+        "attribute": "minecraft:generic.max_health",
+        "op": "add",
+        "amount": 6.0
+      },
+      {
+        "attribute": "minecraft:generic.attack_speed",
+        "op": "mult",
+        "amount": 0.12
+      },
+      {
+        "attribute": "minecraft:generic.jump_strength",
+        "op": "mult",
+        "amount": 0.1
+      }
+    ],
+    "abilities": [
+      {
+        "id": "fox_step",
+        "kind": "shadow_dash",
+        "slot": 1,
+        "costPct": 5,
+        "cooldownTicks": 120,
+        "strain": 6,
+        "range": 11,
+        "radius": 0,
+        "durationTicks": 0,
+        "power": 1,
+        "maxTargets": 1,
+        "bossFactor": 1.0
+      },
+      {
+        "id": "tails_of_dream",
+        "kind": "dread_gaze",
+        "slot": 2,
+        "costPct": 12,
+        "cooldownTicks": 900,
+        "strain": 13,
+        "range": 0,
+        "radius": 11,
+        "durationTicks": 120,
+        "power": 1,
+        "maxTargets": 6,
+        "bossFactor": 0.4
+      }
+    ]
+  }
+}

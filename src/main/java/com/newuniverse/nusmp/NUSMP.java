@@ -56,6 +56,7 @@ public class NUSMP {
         com.newuniverse.nusmp.entity.veldanava.skills.JibrilEvents.register(NeoForge.EVENT_BUS);              // 3.15.0: Jibril's passives (rigor, wings, parry, the Kingdom's floor), the hotbar lock
         com.newuniverse.nusmp.entity.veldanava.skills.SolomonEvents.register(NeoForge.EVENT_BUS);             // 3.18.0: Solomon's passives (mana skin, hazards, elemental absorption, magic bypass, foresight)
         com.newuniverse.nusmp.skill.DbPassives.register(NeoForge.EVENT_BUS);                                   // 3.56.0: the Dragon Ball passives (damage events)
+        com.newuniverse.nusmp.skill.BeastPassives.register(NeoForge.EVENT_BUS);                                // 3.58.0: the Beast Will skill passives (illusion dodge)
         com.newuniverse.nusmp.entity.veldanava.skills.HerculesEvents.register(NeoForge.EVENT_BUS);            // 3.19.0: Hercules' passives (adamantine body, strength, momentum, vigor)
         com.newuniverse.nusmp.entity.veldanava.pocket.PocketLabyrinth.register(NeoForge.EVENT_BUS);             // 3.14.0: Dimensional Labyrinth's pocket maze (nusmp:trial)
         com.newuniverse.nusmp.entity.zogratis.LuciusGodEffects.init();
@@ -437,6 +438,7 @@ public class NUSMP {
         com.newuniverse.nusmp.skill.ResetGuardSelfTests.register();
         com.newuniverse.nusmp.skill.RemovedSkillsSelfTests.register();
         com.newuniverse.nusmp.skill.DbSkillSelfTests.register();                                  // 3.56.0
+        com.newuniverse.nusmp.skill.BeastSkillSelfTests.register();                               // 3.58.0
         com.newuniverse.nusmp.skill.UltimatePairSelfTests.register();                                                                      // 3.46.0: Nen and the All Fiction rebuild
         NeoForge.EVENT_BUS.addListener((net.neoforged.neoforge.event.server.ServerStartingEvent e) -> { if (com.newuniverse.nusmp.skill.ResetGuard.enabled()) com.newuniverse.nusmp.skill.ResetGuard.protectScrollLists(); });
         // 0.41: Dream Magic's pocket dimension, Painting Magic's camouflage

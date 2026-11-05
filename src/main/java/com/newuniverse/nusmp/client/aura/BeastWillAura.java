@@ -11,7 +11,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 
 /**
- * Why: the look of a Beast Will form, {@code Aura.BEAST_WILL}. The server keeps the lease alive while the form is on and passes {@code style} = phase (bits 24..25), look kind (bits 26..29, see
+ * Why: the look of a Beast Will form, {@code Aura.BEAST_WILL}. The server keeps the lease alive while the form is on and passes {@code style} = phase (bits 24..25), look kind (bits 26..30, see
  * {@link BeastWillLook}) and tint (bits 0..23), so this painter needs no copy of the data files.
  * <ul>
  *   <li>OLD look (3.45.0, KEPT, still used for a will whose kind is unknown): two glowing eyes, slow motes, and in phase 2 a haze and two turning rings. Unchanged.</li>
@@ -23,7 +23,8 @@ import net.minecraft.util.Mth;
  * Cost per player per frame (nothing at all beyond 48 blocks, for an invisible player; no spirit from the owner's own first-person camera): FULL detail (at most {@link #FULL_PER_FRAME} players a frame,
  * within 24 blocks, phase 2): 2 eye quads + 6 motes + 1 body + 1 accent + 8 specks + 4 ring quads = at most 22 quads (the raptor's 4 ribbons replace the 8 specks: 18). LIGHT detail (phase 1, between 24 and
  * 48 blocks, or over the per-frame budget): 2 eyes + 4 or 5 motes + 1 body (+ 1 accent in phase 2) = at most 8. So with N players in view the worst frame is 6 * 22 + (N - 6) * 8 quads. A will without a
- * spirit keeps the old look: at most 17 quads. No allocation (maths on locals, sprite locations built once).
+ * spirit keeps the old look: at most 17 quads. The 18 later wills (docs/beastwill_new.md) use the same budget: the four whose heads multiply (hydra, typhon, scylla, orochi) draw 3 to 5 extra head quads
+ * in FULL phase-2 detail INSTEAD of the accent layer and the eight specks (2 + 6 + 1 + 5 + 4 = 18 quads at most); the rest are as above. No allocation (maths on locals, sprite locations built once).
  */
 public final class BeastWillAura {
     private BeastWillAura() {}
@@ -38,9 +39,11 @@ public final class BeastWillAura {
     private static final ResourceLocation[] BODY = new ResourceLocation[KINDS], ACC = new ResourceLocation[KINDS], SPECK = new ResourceLocation[KINDS];
 
     /** The accent colour of each kind (the accent layer and the specks are the will's tint mixed toward it). Index = kind. */
-    private static final int[] ACCENT = {0, 0xFF8A3A, 0x9A6CFF, 0x8FE06A, 0xFFE6A0, 0xE8F6FF, 0xC89B5A, 0xFFFFFF, 0xFFC24A, 0xDDEEFF};
+    private static final int[] ACCENT = {0, 0xFF8A3A, 0x9A6CFF, 0x8FE06A, 0xFFE6A0, 0xE8F6FF, 0xC89B5A, 0xFFFFFF, 0xFFC24A, 0xDDEEFF,
+            0xFFFFFF, 0xB8FFF0, 0xFF9A3A, 0xE8C890, 0xE0FF80, 0xE8FFE0, 0xC0FF60, 0xA0E8FF, 0xA0FFE8, 0xFFE060, 0xD8F0FF, 0xFFF0B0, 0xFFFFE0, 0xFF6060, 0xFFF0A0, 0xE0E8FF, 0xFFD890, 0xE0A0FF};
     /** How the specks of each kind move: 0 rise (embers, smoke), 1 fall (leaves), 2 orbit (shards), 3 flicker (bolts), 4 roll along the ground (dust), 5 wind ribbons. Index = kind. */
-    private static final int[] MODE = {0, 0, 0, 1, 2, 2, 4, 5, 0, 3};
+    private static final int[] MODE = {0, 0, 0, 1, 2, 2, 4, 5, 0, 3,
+            0, 5, 0, 4, 0, 0, 1, 0, 5, 3, 5, 4, 2, 0, 2, 3, 4, 0};
 
     private static long frame, lastMove, taken;
 
@@ -69,6 +72,43 @@ public final class BeastWillAura {
         ACC[BeastWillLook.SERPENT] = AuraRender.tex("particle/bwspirit_serpent_b");
         BODY[BeastWillLook.CHIMERA] = AuraRender.tex("particle/bwspirit_chimera_a");
         ACC[BeastWillLook.CHIMERA] = AuraRender.tex("particle/bwspirit_chimera_b");
+        // the 18 later wills (docs/beastwill_new.md), appended
+        BODY[BeastWillLook.FENRIR] = AuraRender.tex("particle/bwspirit_fenrir_a");
+        ACC[BeastWillLook.FENRIR] = AuraRender.tex("particle/bwspirit_fenrir_b");
+        BODY[BeastWillLook.JORMUNGANDR] = AuraRender.tex("particle/bwspirit_jormungandr_a");
+        ACC[BeastWillLook.JORMUNGANDR] = AuraRender.tex("particle/bwspirit_jormungandr_b");
+        BODY[BeastWillLook.CERBERUS] = AuraRender.tex("particle/bwspirit_cerberus_a");
+        ACC[BeastWillLook.CERBERUS] = AuraRender.tex("particle/bwspirit_cerberus_b");
+        BODY[BeastWillLook.MINOTAUR] = AuraRender.tex("particle/bwspirit_minotaur_a");
+        ACC[BeastWillLook.MINOTAUR] = AuraRender.tex("particle/bwspirit_minotaur_b");
+        BODY[BeastWillLook.HYDRA] = AuraRender.tex("particle/bwspirit_hydra_a");
+        ACC[BeastWillLook.HYDRA] = AuraRender.tex("particle/bwspirit_hydra_b");
+        BODY[BeastWillLook.CU_SITH] = AuraRender.tex("particle/bwspirit_cu_sith_a");
+        ACC[BeastWillLook.CU_SITH] = AuraRender.tex("particle/bwspirit_cu_sith_b");
+        BODY[BeastWillLook.NIDHOGGR] = AuraRender.tex("particle/bwspirit_nidhoggr_a");
+        ACC[BeastWillLook.NIDHOGGR] = AuraRender.tex("particle/bwspirit_nidhoggr_b");
+        BODY[BeastWillLook.HAFGUFA] = AuraRender.tex("particle/bwspirit_hafgufa_a");
+        ACC[BeastWillLook.HAFGUFA] = AuraRender.tex("particle/bwspirit_hafgufa_b");
+        BODY[BeastWillLook.KRAKEN] = AuraRender.tex("particle/bwspirit_kraken_a");
+        ACC[BeastWillLook.KRAKEN] = AuraRender.tex("particle/bwspirit_kraken_b");
+        BODY[BeastWillLook.TYPHON] = AuraRender.tex("particle/bwspirit_typhon_a");
+        ACC[BeastWillLook.TYPHON] = AuraRender.tex("particle/bwspirit_typhon_b");
+        BODY[BeastWillLook.SCYLLA] = AuraRender.tex("particle/bwspirit_scylla_charybdis_a");
+        ACC[BeastWillLook.SCYLLA] = AuraRender.tex("particle/bwspirit_scylla_charybdis_b");
+        BODY[BeastWillLook.SPHINX] = AuraRender.tex("particle/bwspirit_sphinx_a");
+        ACC[BeastWillLook.SPHINX] = AuraRender.tex("particle/bwspirit_sphinx_b");
+        BODY[BeastWillLook.PEGASUS] = AuraRender.tex("particle/bwspirit_pegasus_a");
+        ACC[BeastWillLook.PEGASUS] = AuraRender.tex("particle/bwspirit_pegasus_b");
+        BODY[BeastWillLook.OROCHI] = AuraRender.tex("particle/bwspirit_yamata_no_orochi_a");
+        ACC[BeastWillLook.OROCHI] = AuraRender.tex("particle/bwspirit_yamata_no_orochi_b");
+        BODY[BeastWillLook.KITSUNE] = AuraRender.tex("particle/bwspirit_kitsune_a");
+        ACC[BeastWillLook.KITSUNE] = AuraRender.tex("particle/bwspirit_kitsune_b");
+        BODY[BeastWillLook.NUE] = AuraRender.tex("particle/bwspirit_nue_a");
+        ACC[BeastWillLook.NUE] = AuraRender.tex("particle/bwspirit_nue_b");
+        BODY[BeastWillLook.AMMIT] = AuraRender.tex("particle/bwspirit_ammit_a");
+        ACC[BeastWillLook.AMMIT] = AuraRender.tex("particle/bwspirit_ammit_b");
+        BODY[BeastWillLook.APOPHIS] = AuraRender.tex("particle/bwspirit_apophis_a");
+        ACC[BeastWillLook.APOPHIS] = AuraRender.tex("particle/bwspirit_apophis_b");
         ResourceLocation ember = AuraRender.tex("particle/bwspirit_ember"), dust = AuraRender.tex("particle/bwspirit_dust"), leaf = AuraRender.tex("particle/bwspirit_leaf"),
                 shard = AuraRender.tex("particle/bwspirit_shard"), bolt = AuraRender.tex("particle/bwspirit_bolt"), ribbon = AuraRender.tex("particle/bwspirit_ribbon");
         SPECK[BeastWillLook.DRAGON] = ember;
@@ -80,6 +120,24 @@ public final class BeastWillAura {
         SPECK[BeastWillLook.RAPTOR] = ribbon;
         SPECK[BeastWillLook.SERPENT] = ember;
         SPECK[BeastWillLook.CHIMERA] = bolt;
+        SPECK[BeastWillLook.FENRIR] = ember;
+        SPECK[BeastWillLook.JORMUNGANDR] = ribbon;
+        SPECK[BeastWillLook.CERBERUS] = ember;
+        SPECK[BeastWillLook.MINOTAUR] = dust;
+        SPECK[BeastWillLook.HYDRA] = dust;
+        SPECK[BeastWillLook.CU_SITH] = ember;
+        SPECK[BeastWillLook.NIDHOGGR] = leaf;
+        SPECK[BeastWillLook.HAFGUFA] = dust;
+        SPECK[BeastWillLook.KRAKEN] = ribbon;
+        SPECK[BeastWillLook.TYPHON] = bolt;
+        SPECK[BeastWillLook.SCYLLA] = ribbon;
+        SPECK[BeastWillLook.SPHINX] = dust;
+        SPECK[BeastWillLook.PEGASUS] = shard;
+        SPECK[BeastWillLook.OROCHI] = ember;
+        SPECK[BeastWillLook.KITSUNE] = ember;
+        SPECK[BeastWillLook.NUE] = bolt;
+        SPECK[BeastWillLook.AMMIT] = dust;
+        SPECK[BeastWillLook.APOPHIS] = dust;
         PlayerAuraClient.register(Aura.BEAST_WILL, BeastWillAura::paint);
     }
 
@@ -188,8 +246,11 @@ public final class BeastWillAura {
         float breathe = strong ? 1f + 0.04f * Mth.sin(age * 0.13f) : 1f;
 
         // the accent layer first (further back): dragon wings flap, the lion's mane and the serpent's flames turn slowly, the rest hold still and breathe
-        if (strong && ACC[kind] != null) {
+        int heads = BeastWillLook.HEADS[kind];
+        if (strong && ACC[kind] != null && heads == 0) {
             float w = 1.55f, h = 1.55f, rot = 0f;
+            if (kind == BeastWillLook.FENRIR) rot = age * 0.004f;
+            if (kind == BeastWillLook.APOPHIS) rot = -age * 0.01f;
             if (kind == BeastWillLook.DRAGON) w *= 0.88f + 0.12f * Mth.sin(age * 0.16f);
             if (kind == BeastWillLook.LION) rot = age * 0.006f;
             if (kind == BeastWillLook.SERPENT || kind == BeastWillLook.CHIMERA) rot = age * 0.012f;
@@ -197,8 +258,15 @@ public final class BeastWillAura {
             if (kind == BeastWillLook.PANTHER) h *= 1f + 0.06f * Mth.sin(age * 0.05f);
             sprite(pose, c.buffers().getBuffer(AuraRender.additive(ACC[kind])), sway, cy - 0.05f, cz + 0.12f, w * breathe, h * breathe, rot, SealDraw.argb(0.62f * f * pulse, acc), light);
         }
+        if (strong && heads > 0 && ACC[kind] != null) {                                                    // heads that multiply (hydra, typhon, scylla, orochi): the extra heads sway apart, one quad each
+            VertexConsumer hv = c.buffers().getBuffer(AuraRender.additive(ACC[kind]));
+            for (int i = 0; i < heads; i++) {
+                float side = i - (heads - 1) * 0.5f, lean = side * 0.42f + Mth.sin(age * 0.05f + i * 1.7f) * 0.22f;
+                sprite(pose, hv, sway + side * 0.62f, cy - 0.5f - Math.abs(side) * 0.08f, cz + 0.12f - i * 0.01f, 0.55f, 0.55f, lean, SealDraw.argb(0.7f * f * pulse, acc), light);
+            }
+        }
         sprite(pose, c.buffers().getBuffer(AuraRender.additive(BODY[kind])), sway, cy, cz, half * breathe, half * breathe, 0f, SealDraw.argb((strong ? 0.78f : 0.40f) * f, SealDraw.mix(rgb, 0xFFFFFF, strong ? 0.25f : 0.1f)), light);
-        if (!full) return;
+        if (!full || heads > 0) return;
 
         // the specks that show the beast's element
         int mode = MODE[kind];

@@ -66,6 +66,7 @@ public final class SkillEvolution {
             return; // one evolution per check
         }
         DbSkills.evolve(player, skills);   // 3.56.0: the Dragon Ball pairs, kept in their own table
+        BeastSkills.evolve(player, skills);   // 3.58.0: the Beast Will pairs, kept in their own table
     }
 
     static void evolve(ServerPlayer player, Skills skills, ManasSkillInstance old, ManasSkill ult) {

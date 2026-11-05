@@ -130,7 +130,11 @@ public final class BeastWillRules {
             Map.entry("restraining_vines", new KindLimit(100, 8, 6, 400)),
             Map.entry("bark_ward", new KindLimit(200, 0, 1, 400)),
             Map.entry("mane_surge", new KindLimit(200, 0, 1, 300)),
-            Map.entry("world_howl", new KindLimit(60, 12, 10, 400)));
+            Map.entry("world_howl", new KindLimit(60, 12, 10, 400)),
+            // the three kinds of the 18 later wills (docs/beastwill_new.md): a poison cone, a pull-in field and a dread that makes hunters lose their aim
+            Map.entry("venom_spit", new KindLimit(120, 10, 6, 100)),
+            Map.entry("maelstrom", new KindLimit(100, 10, 6, 240)),
+            Map.entry("dread_gaze", new KindLimit(160, 16, 6, 300)));
 
     public static final double MAX_COST_PCT = 25, MAX_STRAIN = 40, MAX_DRAIN_PCT = 3, MAX_STRAIN_PER_SECOND = 2.5, MAX_RANGE = 24, MAX_POWER = 8, MAX_REGEN = 1.0;
     public static final int MAX_COOLDOWN = 12000, MAX_ABILITIES_PER_PHASE = 2;

@@ -49,7 +49,10 @@ class BeastWillLookTest {
         assertEquals(2, BeastWillLook.phase(old));
         assertEquals(BeastWillLook.UNKNOWN, BeastWillLook.kind(old), "an old style has no kind: the painter keeps the old look");
         assertEquals(0x7FD6FF, BeastWillLook.tint(old));
-        assertEquals(BeastWillLook.UNKNOWN, BeastWillLook.kind(BeastWillLook.style(1, 15, 0)), "a kind the table does not list is unknown");
+        assertEquals(BeastWillLook.UNKNOWN, BeastWillLook.kind(BeastWillLook.style(1, 31, 0)), "a kind the table does not list is unknown");
+        assertEquals(27, BeastWillLook.kind(BeastWillLook.style(2, 27, 0x123456)), "the five-bit field (bits 26..30) carries the 27th kind");
+        assertEquals(9, BeastWillLook.kind(BeastWillLook.style(1, 9, 0xFFFFFF)), "a kind written with the old four-bit field decodes the same");
+        assertEquals(0x6EFFFFFF, BeastWillLook.style(2, 27, 0xFFFFFF), "bit 31 stays free");
         assertEquals(BeastWillLook.UNKNOWN, BeastWillLook.kindOf("some_pack_will"));
         assertEquals(BeastWillLook.UNKNOWN, BeastWillLook.kindOf(null));
     }
@@ -67,9 +70,24 @@ class BeastWillLookTest {
                 assertTrue(kinds.add(k), id + " shares a kind with another will");
             }
         }
-        assertEquals(9, files, "nine shipped wills");
+        assertEquals(27, files, "nine first wills and the 18 later ones");
         assertEquals(BeastWillLook.COUNT - 1, kinds.size());
         assertEquals(BeastWillLook.COUNT, BeastWillLook.STEM.length);
+        assertEquals(BeastWillLook.COUNT, BeastWillLook.HEADS.length);
+        assertEquals(28, BeastWillLook.COUNT, "27 kinds and the unknown one; the field holds 32");
+    }
+
+    @Test
+    void theMultiplyingHeadsAreFewAndOnlyOnTheFourWillsThatHaveThem() throws IOException {
+        int total = 0;
+        for (int k = 0; k < BeastWillLook.COUNT; k++) {
+            assertTrue(BeastWillLook.HEADS[k] >= 0 && BeastWillLook.HEADS[k] <= 5, "at most five extra head quads for kind " + k);
+            if (BeastWillLook.HEADS[k] > 0) total++;
+        }
+        assertEquals(4, total, "hydra, typhon, scylla and charybdis, yamata no orochi");
+        assertEquals(5, BeastWillLook.HEADS[BeastWillLook.OROCHI], "eight heads: three painted, five swaying");
+        String c = code(SRC.resolve("client/aura/BeastWillAura.java"));
+        assertTrue(c.contains("BeastWillLook.HEADS[kind]") && c.contains("heads == 0") && c.contains("heads > 0"), "the heads replace the accent layer and the specks, so the quad cap of 22 holds");
     }
 
     @Test

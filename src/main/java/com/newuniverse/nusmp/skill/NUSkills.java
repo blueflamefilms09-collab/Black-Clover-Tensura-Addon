@@ -267,4 +267,7 @@ public final class NUSkills {
 
     // ---- 3.56.0: the 15 Dragon Ball skill pairs (Unique -> Ultimate), registered last so the order of the older entries is unchanged ----
     public static final int DRAGON_BALL = DbSkills.registerAll(SKILLS);
+
+    // ---- 3.58.0: the 27 Beast Will skill pairs (Unique -> Ultimate), after the Dragon Ball ones so no older order changes ----
+    public static final int BEAST_SKILLS = BeastSkills.registerAll(SKILLS);
 }

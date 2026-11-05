@@ -1,0 +1,157 @@
+{
+  "id": "fenrir_will",
+  "name": "Fenrir Will",
+  "beast": "Fenrir (God of War)",
+  "affinity": "Soul",
+  "legendary": false,
+  "minRank": "A",
+  "sources": [],
+  "keywords": [
+    "fenrir",
+    "direwolf"
+  ],
+  "dropChance": 0.01,
+  "requireEp": 26000,
+  "hostRaces": [
+    "HUMAN",
+    "ELF",
+    "DWARF"
+  ],
+  "otherHostCompat": 0.6,
+  "assimilationSeconds": 5400,
+  "masterySeconds": 3600,
+  "assimilationDayCap": 0.3,
+  "masteryDayCap": 0.3,
+  "coreCooldownDays": 5,
+  "tint": 14275839,
+  "passive": [
+    {
+      "attribute": "minecraft:generic.knockback_resistance",
+      "op": "add",
+      "amount": 0.05
+    }
+  ],
+  "acquire": {
+    "unlockAssimilation": 0.1,
+    "unlockMastery": 0.0,
+    "drainPct": 0.55,
+    "strainPerSecond": 0.12,
+    "regen": 0.0,
+    "stats": [
+      {
+        "attribute": "minecraft:generic.attack_damage",
+        "op": "add",
+        "amount": 2.0
+      },
+      {
+        "attribute": "minecraft:generic.max_health",
+        "op": "add",
+        "amount": 4.0
+      },
+      {
+        "attribute": "minecraft:generic.armor",
+        "op": "add",
+        "amount": 2.0
+      },
+      {
+        "attribute": "minecraft:generic.knockback_resistance",
+        "op": "add",
+        "amount": 0.3
+      }
+    ],
+    "abilities": [
+      {
+        "id": "soul_ward",
+        "kind": "bark_ward",
+        "slot": 1,
+        "costPct": 5,
+        "cooldownTicks": 500,
+        "strain": 6,
+        "range": 0,
+        "radius": 0,
+        "durationTicks": 120,
+        "power": 1,
+        "maxTargets": 1,
+        "bossFactor": 1.0
+      },
+      {
+        "id": "spirit_leap",
+        "kind": "shadow_dash",
+        "slot": 2,
+        "costPct": 4,
+        "cooldownTicks": 140,
+        "strain": 5,
+        "range": 7,
+        "radius": 0,
+        "durationTicks": 0,
+        "power": 1,
+        "maxTargets": 1,
+        "bossFactor": 1.0
+      }
+    ]
+  },
+  "integrate": {
+    "unlockAssimilation": 0.95,
+    "unlockMastery": 0.5,
+    "drainPct": 1.3,
+    "strainPerSecond": 0.42,
+    "regen": 0.0,
+    "stats": [
+      {
+        "attribute": "minecraft:generic.attack_damage",
+        "op": "add",
+        "amount": 3.5
+      },
+      {
+        "attribute": "minecraft:generic.max_health",
+        "op": "add",
+        "amount": 8.0
+      },
+      {
+        "attribute": "minecraft:generic.armor",
+        "op": "add",
+        "amount": 3.0
+      },
+      {
+        "attribute": "minecraft:generic.knockback_resistance",
+        "op": "add",
+        "amount": 0.5
+      },
+      {
+        "attribute": "minecraft:generic.movement_speed",
+        "op": "mult",
+        "amount": 0.08
+      }
+    ],
+    "abilities": [
+      {
+        "id": "garm_rush",
+        "kind": "shadow_dash",
+        "slot": 1,
+        "costPct": 7,
+        "cooldownTicks": 160,
+        "strain": 9,
+        "range": 13,
+        "radius": 0,
+        "durationTicks": 0,
+        "power": 1,
+        "maxTargets": 1,
+        "bossFactor": 1.0
+      },
+      {
+        "id": "soul_seal",
+        "kind": "restraining_vines",
+        "slot": 2,
+        "costPct": 11,
+        "cooldownTicks": 800,
+        "strain": 15,
+        "range": 0,
+        "radius": 6,
+        "durationTicks": 60,
+        "power": 1,
+        "maxTargets": 5,
+        "bossFactor": 0.25
+      }
+    ]
+  }
+}

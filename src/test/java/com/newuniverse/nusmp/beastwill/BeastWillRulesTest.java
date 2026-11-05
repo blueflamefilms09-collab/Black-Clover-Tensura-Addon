@@ -100,7 +100,7 @@ class BeastWillRulesTest {
 
     @Test
     void everyKindHasLimitsAndEveryStatTargetHasACap() {
-        assertEquals(12, BeastWillRules.KINDS.size());
+        assertEquals(15, BeastWillRules.KINDS.size(), "the twelve first kinds and venom_spit, maelstrom, dread_gaze");
         for (var e : BeastWillRules.KINDS.entrySet()) assertTrue(e.getValue().minCooldown() > 0 && e.getValue().maxTargets() >= 1, e.getKey());
         assertTrue(BeastWillRules.KINDS.get("time_exclusion").maxDuration() <= 100, "time exclusion is capped at five seconds");
         for (var e : BeastWillRules.ATTR_CAPS.entrySet()) assertTrue(e.getKey().startsWith("minecraft:generic.") && (e.getValue().maxAdd() > 0 || e.getValue().maxMult() > 0), e.getKey());

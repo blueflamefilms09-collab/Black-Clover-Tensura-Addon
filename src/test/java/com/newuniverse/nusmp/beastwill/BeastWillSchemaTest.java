@@ -21,6 +21,10 @@ class BeastWillSchemaTest {
     private static final List<String> IDS = List.of("dragon_will", "shadow_panther_will", "elderwood_guardian_will", "lion_will", "thunder_fang_chimera_will",
             "ridge_wolf_will", "crested_boar_will", "wind_skimmer_will", "flame_serpent_will");   // 3.52.0: wills of the E to B beast cores (rank C or B)   // 3.51.0: the Thunder-Fang Chimera will of the AA beast core
 
+    /** The 18 later wills (docs/beastwill_new.md); their own checks are in BeastWillNewTest. */
+    static final List<String> LATER = List.of("fenrir_will", "jormungandr_will", "cerberus_will", "minotaur_will", "hydra_will", "cu_sith_will", "nidhoggr_will", "hafgufa_will", "kraken_will",
+            "typhon_will", "scylla_charybdis_will", "sphinx_will", "pegasus_will", "yamata_no_orochi_will", "kitsune_will", "nue_will", "ammit_will", "apophis_will");
+
     static BeastWillDef load(String id) throws Exception {
         BeastWillSchema.Parsed p = BeastWillSchema.parse(id, Files.readString(DIR.resolve(id + ".json")));
         assertTrue(p.ok(), id + ": " + p.problems());
@@ -32,7 +36,9 @@ class BeastWillSchemaTest {
         List<String> found = new ArrayList<>();
         for (File f : DIR.toFile().listFiles((d, n) -> n.endsWith(".json"))) found.add(f.getName().replace(".json", ""));
         for (String id : IDS) assertTrue(found.contains(id), id + " is missing");
-        assertTrue(found.containsAll(IDS) && IDS.containsAll(found), "an unexpected will file: " + found);
+        List<String> all = new ArrayList<>(IDS);
+        all.addAll(LATER);
+        assertTrue(found.containsAll(all) && all.containsAll(found), "an unexpected will file: " + found);
     }
 
     @Test

@@ -18,7 +18,7 @@ class BeastCoreLookTest {
     @Test
     void everyShippedWillHasItsOwnFileTint() throws Exception {
         File[] files = Path.of("src/main/resources/data/nusmp/beast_will").toFile().listFiles((d, n) -> n.endsWith(".json"));
-        assertTrue(files != null && files.length >= 9);
+        assertTrue(files != null && files.length >= 27);
         Set<Integer> seen = new HashSet<>();
         for (File f : files) {
             String id = f.getName().replace(".json", "");

@@ -16,9 +16,17 @@ public final class BeastCoreLook {
     /** How far the body skin is pulled toward the will's colour (0 = untinted stone, 1 = the colour itself), and the same for the flat inventory icon. */
     public static final float BODY_MIX = 0.6f, ICON_MIX = 0.85f;
 
-    private static final Map<String, Integer> TINT = Map.of(
+    private static final Map<String, Integer> TINT = tints(Map.of(
             "dragon_will", 8378111, "shadow_panther_will", 4930188, "elderwood_guardian_will", 3129201, "lion_will", 14722362, "thunder_fang_chimera_will", 5945599,
-            "ridge_wolf_will", 10129280, "crested_boar_will", 9132587, "wind_skimmer_will", 10477768, "flame_serpent_will", 14701594);
+            "ridge_wolf_will", 10129280, "crested_boar_will", 9132587, "wind_skimmer_will", 10477768, "flame_serpent_will", 14701594),
+            // the 18 later wills (docs/beastwill_new.md), appended: fenrir .. apophis
+            "fenrir_will", 14275839, "jormungandr_will", 2005672, "cerberus_will", 10108880, "minotaur_will", 11880491, "hydra_will", 9418794, "cu_sith_will", 8191819, "nidhoggr_will", 12101674, "hafgufa_will", 3039952, "kraken_will", 948838, "typhon_will", 14695584, "scylla_charybdis_will", 8164272, "sphinx_will", 15126666, "pegasus_will", 16759000, "yamata_no_orochi_will", 14163516, "kitsune_will", 16751210, "nue_will", 5660782, "ammit_will", 11563146, "apophis_will", 7220464);
+
+    private static Map<String, Integer> tints(Map<String, Integer> first, Object... more) {
+        java.util.HashMap<String, Integer> all = new java.util.HashMap<>(first);
+        for (int i = 0; i + 1 < more.length; i += 2) all.put((String) more[i], (Integer) more[i + 1]);
+        return Map.copyOf(all);
+    }
 
     /** The will's colour, 0xRRGGBB. */
     public static int tint(String will) {

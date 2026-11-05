@@ -41,6 +41,9 @@ public final class BeastWillSelfTests {
     }
 
     private static final String[] IDS = {"dragon_will", "shadow_panther_will", "elderwood_guardian_will", "lion_will"};
+    /** The 18 later wills (docs/beastwill_new.md): each must be loaded, valid and have its own look kind. */
+    private static final String[] LATER = {"fenrir_will", "jormungandr_will", "cerberus_will", "minotaur_will", "hydra_will", "cu_sith_will", "nidhoggr_will", "hafgufa_will", "kraken_will", "typhon_will",
+            "scylla_charybdis_will", "sphinx_will", "pegasus_will", "yamata_no_orochi_will", "kitsune_will", "nue_will", "ammit_will", "apophis_will"};
 
     private static Result catalog(MinecraftServer server) {
         for (String id : IDS) {
@@ -49,6 +52,12 @@ public final class BeastWillSelfTests {
             String problem = d.problem();
             if (problem != null) return Result.fail(problem);
             if (!d.minRank().atLeast(BeastRank.A)) return Result.fail(id + " would drop from a beast below rank A");
+        }
+        for (String id : LATER) {
+            BeastWillDef d = BeastWillCatalog.get(id);
+            if (d == null) return Result.fail("the later will was not loaded: " + id + " (loaded " + BeastWillCatalog.size() + ")");
+            String problem = d.problem();
+            if (problem != null) return Result.fail(problem);
         }
         if (!BuiltInRegistries.ITEM.containsKey(ResourceLocation.fromNamespaceAndPath("nusmp", "beast_will_core"))) return Result.fail("the core item is not registered");
         if (!BuiltInRegistries.DATA_COMPONENT_TYPE.containsKey(ResourceLocation.fromNamespaceAndPath("nusmp", "beast_will_core"))) return Result.fail("the core component is not registered");
@@ -68,6 +77,7 @@ public final class BeastWillSelfTests {
             if (kind != BeastWillLook.UNKNOWN && !seen.add(kind)) return Result.fail(d.id() + " shares a look kind with another will");
         }
         for (String id : IDS) if (BeastWillLook.kindOf(id) == BeastWillLook.UNKNOWN) return Result.fail(id + " has no spirit look");
+        for (String id : LATER) if (BeastWillLook.kindOf(id) == BeastWillLook.UNKNOWN || BeastWillPictures.of(BeastWillLook.kindOf(id)) == null) return Result.fail(id + " has no spirit look or no ability picture");
         return Result.ok("the aura style carries phase, look kind and tint for " + BeastWillCatalog.size() + " wills; " + seen.size() + " distinct spirits");
     }
 
