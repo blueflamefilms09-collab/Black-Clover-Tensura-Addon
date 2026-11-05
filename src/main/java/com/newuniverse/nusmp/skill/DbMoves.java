@@ -230,7 +230,6 @@ final class DbMoves {
         t.addEffect(new MobEffectInstance(JudgmentEffects.ACTION_LOCK, BalanceLaw.controlTicks(t, Math.max(20, DbRules.lock(mv))), 0, false, true, true));
         t.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, BalanceLaw.controlTicks(t, 60), 0, false, true, true));
         status(p, t, mv);
-        p.getFoodData().setFoodLevel(Math.max(0, p.getFoodData().getFoodLevel() - 6));
         SkillFx.beam(level, p.getEyePosition(), t.position().add(0, t.getBbHeight() * 0.5, 0), false);
         SkillFx.ring(level, t.position(), 1.6, mv.rgb() & 0xFFFFFF);
         return true;

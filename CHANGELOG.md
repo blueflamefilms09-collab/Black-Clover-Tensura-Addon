@@ -1,5 +1,8 @@
 # Changelog
 
+## [3.57.1] — Fix: Dragon Ball vs the no-hunger rule
+- FIXED: the build test `NoHungerDrainTest` (the mod never touches the food bar) failed on two Dragon Ball lines. Removed: the Seal move no longer costs 6 food, and the Stamina passive no longer refills food and saturation (it keeps its buff-extend part). 3.56.0 / 3.57.0 content ships in this release.
+
 ## [3.57.0] — Beast Will spirits and solid cores
 - NEW: every Beast Will shows its own animal spirit in the form (Dragon, Panther, Elderwood Guardian, Lion, Ridge-Wolf, Crested Boar, Wind-Skimmer Raptor, Flame-Serpent, Thunder-Fang Chimera; the original four included): a body spirit in phase 1 and a second accent in phase 2 (wings, smoke, branches, mane, frost moon, dust, wind ribbons, flame wreath, lightning crown). 24 textures `particle/bwspirit_*`, `tools/beastwill/gen_spirit_textures.py`, doc `docs/beastwill_vfx.md`. Each ability also gets a per-will picture (at most 2 effect packets and 12 tinted particles per use). No new packet: the look rides in the existing aura style int.
 - FIXED (the see-through items): the 24 rank cores (E-SS x standard/beast/ancient) had every sphere face wound inside-out, so the near half was culled and you saw the far wall. Re-wound, glow moved to its own shell, icons made solid (`tools/solid_cores.py`, `docs/solid_cores.md`).

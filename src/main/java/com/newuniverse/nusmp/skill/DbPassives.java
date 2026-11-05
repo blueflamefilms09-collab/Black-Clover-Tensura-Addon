@@ -85,7 +85,7 @@ public final class DbPassives {
                 case SENSE -> { for (LivingEntity t : SkillTargets.foes(p, p.position(), mv.radius())) t.addEffect(new MobEffectInstance(MobEffects.GLOWING, 40, 0, false, false, false)); }
                 case AURA -> aura(p, mv, ult);
                 case EXTEND -> { extendSelf(p, 60); stealFrom(p, mv.radius()); }
-                case STAMINA -> { p.getFoodData().setFoodLevel(20); p.getFoodData().setSaturation(20f); extendSelf(p, 60); }
+                case STAMINA -> { extendSelf(p, 60); }
                 case REACTOR -> reactor(p, k);
                 case PACK -> pack(p, mv, k);
                 case GENIUS -> genius(p, mv);
