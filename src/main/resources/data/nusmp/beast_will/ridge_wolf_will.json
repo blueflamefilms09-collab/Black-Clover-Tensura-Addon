@@ -9,7 +9,7 @@
   "keywords": [
     "ridge_wolf"
   ],
-  "dropChance": 0.002,
+  "dropChance": 0.01,
   "requireEp": 2000,
   "hostRaces": [
     "HUMAN",

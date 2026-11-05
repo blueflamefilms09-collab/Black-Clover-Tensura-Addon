@@ -9,7 +9,7 @@
   "keywords": [
     "flame_serpent"
   ],
-  "dropChance": 0.002,
+  "dropChance": 0.01,
   "requireEp": 8000,
   "hostRaces": [
     "HUMAN",

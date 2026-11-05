@@ -108,7 +108,7 @@ class BeastWillSchemaTest {
     void aWillBeyondTheBoundsIsRejectedWithAReasonAndNeverHalfRead() throws Exception {
         String ok = Files.readString(DIR.resolve("lion_will.json"));
         String[][] breaks = {
-                {"\"minRank\": \"A\"", "\"minRank\": \"B\""},
+                {"\"minRank\": \"A\"", "\"minRank\": \"Z\""},
                 {"\"dropChance\": 0.02", "\"dropChance\": 0.5"},
                 {"\"kind\": \"world_howl\"", "\"kind\": \"nuke\""},
                 {"\"attribute\": \"minecraft:generic.attack_damage\",\n        \"op\": \"add\",\n        \"amount\": 4.0", "\"attribute\": \"minecraft:generic.attack_damage\",\n        \"op\": \"add\",\n        \"amount\": 90.0"},
