@@ -93,7 +93,7 @@
   "item.nusmp.grimoire": "Grimoire",
   "nusmp.skill.grimoire_magic": "Grimoire Magic",
   "nusmp.skill.grimoire_magic.description": "The magic of your grimoire. Hold your grimoire to cast. Four-leaf and five-leaf grimoires are stronger and cheaper to cast from.",
-  "itemGroup.nusmp.main": "Multiverse",
+  "itemGroup.nusmp.main": "Multiverse: Grimoires",
   "nusmp.skill.grimoire_flame": "Flame Magic",
   "nusmp.skill.grimoire_flame.description": "Grimoire magic: Flame Magic. Hold your grimoire to cast. Four-leaf and five-leaf grimoires cast stronger and cheaper.",
   "nusmp.skill.grimoire_explosion": "Explosion Magic",
@@ -17906,5 +17906,11 @@
   "manacore.core_b_beast.a2_legacy": "[Sneak + Press] Serpent Dash: a dash wrapped in dragon flame that burns what it crosses. Costs %s.",
   "item.nusmp.multiverse_wiki": "Multiverse Wiki",
   "nusmp.wiki.tip": "Right-click: the in-game wiki of every system. Also in the Multiverse menu (Wiki tab).",
-  "nusmp.codex.section.wiki": "Wiki"
+  "nusmp.codex.section.wiki": "Wiki",
+  "itemGroup.nusmp.weapons": "Multiverse: Weapons",
+  "itemGroup.nusmp.armor": "Multiverse: Armor",
+  "itemGroup.nusmp.relics": "Multiverse: Relics & Cores",
+  "itemGroup.nusmp.eggs": "Multiverse: Spawn Eggs",
+  "itemGroup.nusmp.dungeon": "Multiverse: Dungeon",
+  "itemGroup.nusmp.misc": "Multiverse: Skills & Tools"
 }

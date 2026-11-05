@@ -1,5 +1,11 @@
 # Changelog
 
+## [3.54.0] — Creative menu split into seven tabs
+- CHANGED: the one big creative tab is now seven: Grimoires (id `main` kept), Weapons, Armor, Relics & Cores, Spawn Eggs, Dungeon, Skills & Tools. Every item that was in the old tab is in exactly one of the new ones (grimoires, charter and canon books and the altar; weapons incl. hero weapons, Shishou, staffs and blades; robes; relics, Djinn seals and weapons, catalysts, Spirit/Devil cores, Beast Will cores, rank Mana Cores; every spawn egg; Labyrinth blocks, dungeon food and materials; skill books, codexes, sigils, the Wiki book). Items from the general list sort by type: armor by item type, weapons by their attack damage, the rest in Skills & Tools.
+- KEPT: every item, recipe, id and the creative-only rules (Djinn weapons need operator rights).
+- Cost: only when the creative menu is built on the client; no tick, no packet.
+- Not seen in a game: a few general items may sit in a different tab than you expect; tell me which and I will move them.
+
 ## [3.53.0] — In-game wiki: the Multiverse Wiki book and a Wiki tab in the menu
 - NEW: the Multiverse Wiki, an in-game wiki with one entry per system (menu, mana, grimoires, spirits, Djinns, Devil Contract, Beast Will, rank cores, ultimates, Shishou, relics and the Forge, weapons, Mega-Dungeon, rifts, bosses, discovery, avatars, economy, quests, commands, settings). It is a new Wiki tab in the existing Codex (the Multiverse menu), built from `assets/nusmp/codex/wiki/*.json`, so a pack or a later release adds an entry by adding a file (no Java).
 - NEW: the craftable Multiverse Wiki book (`nusmp:multiverse_wiki`; shapeless: book + amethyst shard + ender pearl). Right-click opens the Codex on the Wiki tab. Opening is client only.
