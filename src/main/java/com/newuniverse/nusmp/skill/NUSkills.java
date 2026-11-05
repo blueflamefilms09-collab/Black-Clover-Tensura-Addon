@@ -264,4 +264,7 @@ public final class NUSkills {
             SKILLS.register("solomon", com.newuniverse.nusmp.entity.veldanava.skills.SolomonSkill::new);
     public static final DeferredHolder<ManasSkill, com.newuniverse.nusmp.entity.veldanava.skills.HerculesSkill> HERCULES =
             SKILLS.register("hercules", com.newuniverse.nusmp.entity.veldanava.skills.HerculesSkill::new);
+
+    // ---- 3.56.0: the 15 Dragon Ball skill pairs (Unique -> Ultimate), registered last so the order of the older entries is unchanged ----
+    public static final int DRAGON_BALL = DbSkills.registerAll(SKILLS);
 }

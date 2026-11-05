@@ -220,6 +220,7 @@ public final class MultiverseCommands {
         root.then(com.newuniverse.nusmp.arc.ArcCommand.node());                                                // 1.58.0: arc list|info|summon|spawn_npc|story
         root.then(com.newuniverse.nusmp.arc.world.ArcWorldCommand.node());                                     // 1.61.0: arc dump | chronicle | arena | hub (merges into the core's arc node)
         root.then(bossNode);
+        root.then(com.newuniverse.nusmp.skill.DbSkills.node());                                          // 3.56.0: dragonball give|list
         root.then(com.newuniverse.nusmp.entity.veldanava.skills.UltimateCommand.node());                    // ultimate give|take: the five ultimate skills, now given by an admin (the Veldanava boss was removed)
         root.then(com.newuniverse.nusmp.labyrinth.mega.MegaCommands.node());                                           // 1.54.0: mega status|sector|tp|expand|regen|audit|plan|unseal|rooms|pools + dm|faction|rest|core|floors|system|flow|gear|selftest
 

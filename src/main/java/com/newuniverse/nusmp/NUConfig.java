@@ -74,7 +74,7 @@ public final class NUConfig {
     public static final ModConfigSpec.BooleanValue ZAGRED_BOSS_ENABLED, KOTODAMA_BOSS_REWARD;   // 0.47
     public static final ModConfigSpec.BooleanValue ANTI_MAGIC_EVENT_ONLY;                       // 0.48
     public static final ModConfigSpec.BooleanValue NEN_ENABLED, ALL_FICTION_REBUILT, NEN_VFX;          // 3.46.0
-    public static final ModConfigSpec.BooleanValue GATE_ENABLED, KI_ENABLED;                  // 3.47.0
+    public static final ModConfigSpec.BooleanValue GATE_ENABLED, KI_ENABLED, DB_ENABLED;                  // 3.47.0, 3.56.0
     public static final ModConfigSpec.IntValue PVP_HIT_CAP_PERCENT, SPELL_DAMAGE_PERCENT, SPELL_COOLDOWN_PERCENT;   // 0.48
     // Magic gear
     public static final ModConfigSpec.DoubleValue GEAR_REGEN_JUNIOR, GEAR_REGEN_SENIOR, GEAR_SPADE_REGEN_PENALTY, GEAR_CONDUCTION_DAMAGE;
@@ -218,6 +218,7 @@ public final class NUConfig {
         b.push("ultimates_3_47");
         GATE_ENABLED = b.comment("Gate of Babylon (Fate Ultimate, 3.47.0). false = the skill stays registered but every mode refuses and its damage hook does nothing.").define("gateEnabled", true);
         KI_ENABLED = b.comment("Ki (Dragon Ball Ultimate, 3.47.0). false = the skill stays registered but every mode refuses and its damage hook does nothing.").define("kiEnabled", true);
+        DB_ENABLED = b.comment("The 15 Dragon Ball skills (3.56.0). false = they stay registered but every mode refuses and the passives do nothing.").define("dragonBallEnabled", true);
         b.pop();
 
         SPEC = b.build();

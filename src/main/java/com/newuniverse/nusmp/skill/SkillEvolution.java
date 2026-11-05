@@ -65,9 +65,10 @@ public final class SkillEvolution {
             evolve(player, skills, owned.get(), ult);
             return; // one evolution per check
         }
+        DbSkills.evolve(player, skills);   // 3.56.0: the Dragon Ball pairs, kept in their own table
     }
 
-    private static void evolve(ServerPlayer player, Skills skills, ManasSkillInstance old, ManasSkill ult) {
+    static void evolve(ServerPlayer player, Skills skills, ManasSkillInstance old, ManasSkill ult) {
         ManasSkillInstance evolved = ult.createDefaultInstance();
         evolved.getOrCreateTag().merge(old.getOrCreateTag().copy()); // keep Faith points etc.
 
