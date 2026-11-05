@@ -1,0 +1,5 @@
+{
+  "title": "The Mega-Dungeon",
+  "text": "One singular, expanding dungeon: floor 0 is the Sanctuary Hub, then two roads, the Holy and the Abyssal, with themed floors joined by stairs. Floors plan themselves when they fail (mega.autoRetries). Each FTB team (or each player) gets its own instance. The deeper you go, the stronger and smarter the mobs and the better the drops; claims from FTB Chunks are refused inside. Vaults hold relics behind two seals; floor bosses drop the key. Hidden rooms on ordinary floors can hold relics. Use /multiverse mega regen <id> as an admin on a broken floor.",
+  "order": 13
+}

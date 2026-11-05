@@ -1,0 +1,5 @@
+{
+  "title": "Rank Mana Cores",
+  "text": "24 cores: ranks E, D, C, B, A, AA, S, SS, each as Standard, Beast or Ancient. Hold one for its passives. Press = right-click, Crouch + Press = shift + right-click. They drop from wild kills, pocket-rift clears and vaults; operators use /manacore give|list. Effects are capped (32 targets, 30 blocks, 600 ticks). The SS Ancient core is the World Line Core / Dragon Fragment: World of Still Seconds (75,000 MP, 10 s freeze, players max 3 s, bosses 1 s) and Last Second of Creation (120,000 MP, 30 s countdown, 600 s cooldown).",
+  "order": 8
+}

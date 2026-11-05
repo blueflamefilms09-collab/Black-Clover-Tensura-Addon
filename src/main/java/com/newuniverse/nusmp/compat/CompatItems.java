@@ -14,6 +14,10 @@ public final class CompatItems {
     public static final DeferredItem<CompatCodexItem> CODEX = NUItems.ITEMS.register("compat_codex",
             () -> new CompatCodexItem(new Item.Properties().stacksTo(1).rarity(Rarity.RARE)));
 
+    /** {@code nusmp:multiverse_wiki}: the craftable in-game wiki book (3.53.0); right-click opens the Codex on its Wiki tab. */
+    public static final DeferredItem<WikiBookItem> WIKI = NUItems.ITEMS.register("multiverse_wiki",
+            () -> new WikiBookItem(new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON)));
+
     public static void init() {}
 
     public static ItemStack codexStack() { return new ItemStack(CODEX.get()); }

@@ -1,0 +1,5 @@
+{
+  "title": "Djinns and Djinn Seals",
+  "text": "Djinns are sleeping spirit-beings you bind with their Seal. Seals come from floor bosses, vault chests, trading, Dark Rukh Shards and admin grants, and clearing a pocket rift has a 6% chance (rift.djinnSealChance) to give a Seal to a random player inside. The status menu shows your Djinn, its phase and trust. Djinn weapons are 3D weapons with their own effects.",
+  "order": 5
+}

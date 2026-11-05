@@ -46,6 +46,7 @@ public class CodexScreen extends Screen {
     private boolean dragging;
     private long lastNs;
     private int bx, by, bw, bh;                 // the book
+    private String startTitle;                   // 3.53.0: the tab the Wiki book opens on (null = the first)
     private final SageBlock sage = new SageBlock();   // the footer's analysis line (anime look)
     private int furnitureIdx = -1, furnitureRoom;
     private String furnitureTitle = "", furnitureLine = "";
@@ -57,12 +58,20 @@ public class CodexScreen extends Screen {
         this.pageList = CodexPages.all();
     }
 
+    /** Opens on the tab with this title (the Wiki book); an unknown title keeps the first tab. */
+    public CodexScreen startOn(String title) { startTitle = title; return this; }
+
     @Override
     protected void init() {
         bw = Math.min(width - 56, 440);
         bh = Math.min(height - 48, 260);
         bx = (width - bw) / 2 - 10;
         by = (height - bh - 20) / 2;
+        if (startTitle != null) {
+            for (int i = 0; i < pageList.size(); i++) if (startTitle.equals(pageList.get(i).title())) { index = i; break; }
+            startTitle = null;
+            keepTabVisible();
+        }
         if (UiPoses.ALL.size() > 0 && time == 0f) UiPoses.roll();
         addRenderableWidget(new ThemedButton(bx + bw - 94, by + bh + 4, 88, 16, Component.literal("Grimoire Slot"), b -> com.newuniverse.nusmp.client.grimoire.GrimoireSlotClient.open()));
     }

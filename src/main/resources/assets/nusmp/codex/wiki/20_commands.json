@@ -1,0 +1,5 @@
+{
+  "title": "Commands (players and admins)",
+  "text": "Players: /multiverse mana info, /multiverse mana affinity <loved|normal|hated>, /devilpact accept <price>. Admins: /manacore give|list, /devil status|grant|level|sacrifice|cooldown|clear, /veldanava skill <name>, /multiverse mega regen <id>, /multiverse mana stage|stone|corruption. Gameplay settings are server configs (nusmp-*-server.toml); looks are client configs.",
+  "order": 20
+}

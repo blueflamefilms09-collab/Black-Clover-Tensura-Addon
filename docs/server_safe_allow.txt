@@ -14,6 +14,7 @@ book/GrimoireSummon.java
 boss/bar/BossBarNet.java
 butoh/DanceStatePayload.java
 compat/CompatCodexItem.java
+compat/WikiBookItem.java
 core/discovery/Discovery.java
 dungeon/placed/PlacedClientBoot.java
 elite/hub/HubNet.java

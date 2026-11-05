@@ -1,0 +1,5 @@
+{
+  "title": "Grimoires and magic",
+  "text": "A grimoire chooses you at the ceremony and you choose its magic. Grimoires only call a soul of at least 20,000 EP (server setting multiverse.minEp, 0 = off); the Grimoire Summons, Tower Wizard and Altar each tell you what is missing. Every grimoire has 15 spells and also gets Mana Strike and Mana Zone as its last pages. Pages and spells stay ??? until you learn them. The Mana Method (hold to charge, runes) is a second style of casting.",
+  "order": 3
+}

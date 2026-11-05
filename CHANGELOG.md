@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.53.0] — In-game wiki: the Multiverse Wiki book and a Wiki tab in the menu
+- NEW: the Multiverse Wiki, an in-game wiki with one entry per system (menu, mana, grimoires, spirits, Djinns, Devil Contract, Beast Will, rank cores, ultimates, Shishou, relics and the Forge, weapons, Mega-Dungeon, rifts, bosses, discovery, avatars, economy, quests, commands, settings). It is a new Wiki tab in the existing Codex (the Multiverse menu), built from `assets/nusmp/codex/wiki/*.json`, so a pack or a later release adds an entry by adding a file (no Java).
+- NEW: the craftable Multiverse Wiki book (`nusmp:multiverse_wiki`; shapeless: book + amethyst shard + ender pearl). Right-click opens the Codex on the Wiki tab. Opening is client only.
+- KEPT: every other Codex tab, the Compatibility Codex and the Engraving Codex.
+- Cost (rule 11): no tick, no packet, no server work; the tab is read once when the menu opens (22 short entries).
+- Not seen in a game. Text is a first pass written from the mod's docs; per-spell and per-item pages are not included.
+
 ## [3.52.0] — Every beast core runs on Beast Will; Beast Will lives in the main menu
 - NEW: the E, D, C and B beast cores now carry a Beast Will too (Ridge-Wolf, Crested Boar, Wind-Skimmer Raptor, Flame-Serpent), so all eight beast cores (E to SS) use the Beast Will system (Acquire / Integrate, assimilation, mastery, strain). The four new wills come only from their cores (no natural drops); the A-and-up wills are KEPT.
 - REPLACED: the second active of the E to B beast cores (Savage Lunge, Hardened Hide, Gale Burst, Serpent Dash) is now the Beast Will form. Their texts stay in the lang file. The first active of every core is KEPT.

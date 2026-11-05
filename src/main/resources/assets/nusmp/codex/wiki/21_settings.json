@@ -1,0 +1,5 @@
+{
+  "title": "Settings and performance",
+  "text": "Server configs (gameplay): nusmp-manacore-server.toml, nusmp-beastwill-server.toml and the others; the multiverse, rift and mega sections hold minEp, djinnSealChance, autoRetries. Client settings change looks only, such as the Beast Will side panel (hud, off by default) and nenVfx. Every effect is capped per player and sent only to nearby players so a public server stays smooth.",
+  "order": 21
+}

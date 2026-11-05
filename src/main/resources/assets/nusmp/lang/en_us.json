@@ -17903,5 +17903,8 @@
   "manacore.core_e_beast.a2_legacy": "[Sneak + Press] Savage Lunge: a short dash that strikes what it meets. Costs %s.",
   "manacore.core_d_beast.a2_legacy": "[Sneak + Press] Hardened Hide: rocky skin: resistance for 8 s. Costs %s.",
   "manacore.core_c_beast.a2_legacy": "[Sneak + Press] Gale Burst: a gust that launches you high. Costs %s.",
-  "manacore.core_b_beast.a2_legacy": "[Sneak + Press] Serpent Dash: a dash wrapped in dragon flame that burns what it crosses. Costs %s."
+  "manacore.core_b_beast.a2_legacy": "[Sneak + Press] Serpent Dash: a dash wrapped in dragon flame that burns what it crosses. Costs %s.",
+  "item.nusmp.multiverse_wiki": "Multiverse Wiki",
+  "nusmp.wiki.tip": "Right-click: the in-game wiki of every system. Also in the Multiverse menu (Wiki tab).",
+  "nusmp.codex.section.wiki": "Wiki"
 }
