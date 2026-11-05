@@ -1,5 +1,8 @@
 # Changelog
 
+## [3.58.1] — Fix: Beast Will Core in the generated tables
+- FIXED: two build tests (`GripTableTest`, `WeaponAttributesTest`) failed because the new solid Beast Will Core was in the asset class table but not in the tools class table, the grip golden file or the Better Combat manifest. All three now list it. No gameplay change; 3.57.0 (Beast Will spirits, solid cores), 3.57.1 and 3.58.0 (Nen rework) ship in this release.
+
 ## [3.58.0] — Nen rework: new effects, six signature Hatsu
 - REPLACED (you asked): the Nen effects and abilities. The aura is now layered flame tongues in your Water Divination type colour (8 kinds) with a Ren burst, an En lattice dome, Gyo eyes, a Ko fist, homing aura bullets, conjured chains, a Manipulation needle and a Specialization field (10 new shapes `NEN_FLOW..NEN_DOMAIN`, 19 textures `particle/nen_*`, `NenArtLayer`).
 - REPLACED: the basics are stronger. Ten mends over time; Zetsu hides and heals and the blow that ends it is an ambush (x1.75); Ren bursts then boosts strength and speed; Gyo reveals and marks foes; En is a 12 s sense field that halves the first blow every 6 s; Ken reflects a share of each blow; Ko stores up to 3 s and strikes for 22-44; Shu / In / Ryu reworked.
