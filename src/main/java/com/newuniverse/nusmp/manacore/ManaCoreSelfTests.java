@@ -15,7 +15,7 @@ import net.minecraft.world.phys.Vec3;
 
 /**
  * Why: nothing of the rank Mana Cores can be seen by its author in a game, so the CI server smoke test boots the mod and runs these two (keys {@code manacore.table}, {@code manacore.player}).
- * {@code table}: the pure table validates, all 24 items are registered, the Thunder-Fang Chimera will of the AA beast core was loaded and is valid, every beast core of rank A or better names a will that exists.
+ * {@code table}: the pure table validates, all 24 items are registered, the Thunder-Fang Chimera will of the AA beast core was loaded and is valid, every beast core (E to SS) names a will that exists.
  * {@code player}: on a stand-in player a held core turns its passive modifiers on, taking it out of the hand turns them off, an active takes effect once and spawns no entity, its cooldown refuses the second press,
  * and a cleanup leaves no state behind.
  */
@@ -42,7 +42,7 @@ public final class ManaCoreSelfTests {
                 if (def.problem() != null) return Result.fail(def.problem());
             }
         }
-        return Result.ok("24 cores validate and are registered; every beast core of rank A or better has its Beast Will loaded and valid");
+        return Result.ok("24 cores validate and are registered; all eight beast cores have their Beast Will loaded and valid");
     }
 
     private static Result player(MinecraftServer server) {

@@ -1,5 +1,6 @@
 package com.newuniverse.nusmp.client.multiverse;
 
+import com.newuniverse.nusmp.client.beastwill.BeastWillMenu;
 import com.newuniverse.nusmp.client.ui.theme.MagicCircle;
 import com.newuniverse.nusmp.client.ui.theme.SageBlock;
 import com.newuniverse.nusmp.client.ui.theme.ThemedButton;
@@ -30,11 +31,24 @@ public class MultiverseStatusScreen extends Screen {
     static final int BG = 0xE0101016, BORDER = 0xFF3B3B4C, GOLD = 0xFFE8C468, TEXT = 0xFFE6E6EE, DIM = 0xFF9A9AAE, RED = 0xFFE05050;
 
     private final Screen parent;
+    /** 3.52.0: the Beast Will page of the menu (also opened straight by an absorb ask). */
+    private boolean beastView;
+    private ThemedButton tab;
+    /** This screen showed an absorb ask, so closing it unanswered declines (a screen it replaced must not decline the new ask). */
+    private boolean asking;
+    private final List<ThemedButton> beastButtons = new ArrayList<>();
 
     public MultiverseStatusScreen(Screen parent) {
+        this(parent, false);
+    }
+
+    public MultiverseStatusScreen(Screen parent, boolean beastView) {
         super(Component.literal("Multiverse Status"));
         this.parent = parent;
+        this.beastView = beastView;
     }
+
+    public Screen parent() { return parent; }
 
     @Override
     protected void init() {
@@ -42,6 +56,41 @@ public class MultiverseStatusScreen extends Screen {
         addRenderableWidget(new ThemedButton(8, height - 26, 88, 18, Component.translatableWithFallback("nusmp.gui_scale.button", "GUI Size"),
                 b -> minecraft.setScreen(new com.newuniverse.nusmp.client.ui.GuiSizeScreen(this, null))));
         addRenderableWidget(new ThemedButton(width - 96, height - 26, 88, 18, Component.literal("Grimoire Slot"), b -> com.newuniverse.nusmp.client.grimoire.GrimoireSlotClient.open()));
+        // 3.52.0: the Beast Will page: a tab button (the status grid and the page share the screen) and the page's own buttons
+        boolean wide = width >= 450;
+        tab = addRenderableWidget(new ThemedButton(104, wide ? height - 26 : height - 46, 80, 18, Component.empty(), b -> { beastView = !beastView; refreshBeast(); }));
+        beastButtons.clear();
+        if (asking = BeastWillMenu.asking()) beastView = true;
+        int bx = width / 2 - 90, by = height - 50;
+        if (asking) {
+            beastButtons.add(addRenderableWidget(new ThemedButton(bx, by, 88, 18, Component.translatable("nusmp.beastwill.confirm.absorb"), b -> { BeastWillMenu.answer(true); rebuild(); })));
+            beastButtons.add(addRenderableWidget(new ThemedButton(bx + 92, by, 88, 18, Component.translatable("nusmp.beastwill.confirm.decline"), b -> { BeastWillMenu.answer(false); rebuild(); })));
+            beastButtons.get(0).active = BeastWillMenu.askOk();
+        } else {
+            beastButtons.add(addRenderableWidget(new ThemedButton(bx, by, 58, 18, Component.translatable("nusmp.beastwill.menu.acquire"), b -> BeastWillMenu.acquire())));
+            beastButtons.add(addRenderableWidget(new ThemedButton(bx + 61, by, 58, 18, Component.translatable("nusmp.beastwill.menu.integrate"), b -> BeastWillMenu.integrate())));
+            beastButtons.add(addRenderableWidget(new ThemedButton(bx + 122, by, 58, 18, Component.translatable("nusmp.beastwill.menu.swap"), b -> BeastWillMenu.swap())));
+            for (ThemedButton t : beastButtons) t.active = BeastWillMenu.has();
+        }
+        refreshBeast();
+    }
+
+    private void refreshBeast() {
+        tab.setMessage(Component.translatable(beastView ? "nusmp.beastwill.menu.back" : "nusmp.beastwill.menu.tab"));
+        tab.active = !asking;                                                               // an unanswered ask keeps the page until Absorb / Decline / close
+        for (ThemedButton t : beastButtons) t.visible = beastView;
+    }
+
+    private void rebuild() { if (minecraft != null) minecraft.setScreen(new MultiverseStatusScreen(parent, true)); }
+
+    /** Closing with an absorb ask unanswered declines it, same as closing the old pop-up. */
+    @Override
+    public void removed() { if (asking) BeastWillMenu.declineIfOpen(); }
+
+    private void renderBeast(GuiGraphics g) {
+        g.drawCenteredString(font, Component.translatable("nusmp.beastwill.menu.title"), width / 2, 10, UiTheme.GOLD);
+        int h = BeastWillMenu.height();
+        BeastWillMenu.draw(g, font, width / 2 - BeastWillMenu.W / 2, Math.max(24, (height - 56 - h) / 2 + 12));
     }
 
     @Override
@@ -120,12 +169,15 @@ public class MultiverseStatusScreen extends Screen {
         }
         CompoundTag dj = s.getCompound("Djinn");
         if (dj.contains("Name")) out.add(new Block("Djinn", List.of(dj.getString("Name"), "Phase " + dj.getInt("Phase") + "  trust " + dj.getInt("Trust")), false));
+        String[] bw = BeastWillMenu.summary();                                                  // 3.52.0: read from the client's Beast Will cache, not from the status tag
+        if (bw != null) out.add(new Block("Beast Will", List.of(bw), false));
         return out;
     }
 
     @Override
     public void render(GuiGraphics g, int mouseX, int mouseY, float partial) {
         super.render(g, mouseX, mouseY, partial);
+        if (beastView) { renderBeast(g); return; }
         if (UiTheme.anime()) { renderAnime(g); return; }
         g.drawCenteredString(font, "MULTIVERSE STATUS", width / 2, 10, GOLD);
         List<Block> blocks = blocks(MultiverseStatusClient.status());

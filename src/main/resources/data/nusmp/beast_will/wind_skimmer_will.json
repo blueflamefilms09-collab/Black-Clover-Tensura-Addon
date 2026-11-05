@@ -1,0 +1,156 @@
+{
+  "id": "wind_skimmer_will",
+  "name": "Wind-Skimmer Raptor Will",
+  "beast": "Wind-Skimmer Raptor",
+  "affinity": "Wind",
+  "legendary": false,
+  "minRank": "C",
+  "sources": [],
+  "keywords": [
+    "wind_skimmer"
+  ],
+  "dropChance": 0.002,
+  "requireEp": 5000,
+  "hostRaces": [
+    "HUMAN",
+    "ELF",
+    "DWARF"
+  ],
+  "otherHostCompat": 0.6,
+  "assimilationSeconds": 3000,
+  "masterySeconds": 1800,
+  "assimilationDayCap": 0.4,
+  "masteryDayCap": 0.4,
+  "coreCooldownDays": 3,
+  "tint": 10477768,
+  "passive": [
+    {
+      "attribute": "minecraft:generic.movement_speed",
+      "op": "mult",
+      "amount": 0.02
+    }
+  ],
+  "acquire": {
+    "unlockAssimilation": 0.1,
+    "unlockMastery": 0.0,
+    "drainPct": 0.45,
+    "strainPerSecond": 0.1,
+    "regen": 0.0,
+    "stats": [
+      {
+        "attribute": "minecraft:generic.movement_speed",
+        "op": "mult",
+        "amount": 0.08
+      },
+      {
+        "attribute": "minecraft:generic.step_height",
+        "op": "add",
+        "amount": 0.2
+      },
+      {
+        "attribute": "minecraft:generic.jump_strength",
+        "op": "mult",
+        "amount": 0.08
+      },
+      {
+        "attribute": "minecraft:generic.safe_fall_distance",
+        "op": "add",
+        "amount": 4.0
+      }
+    ],
+    "abilities": [
+      {
+        "id": "shadow_dash",
+        "kind": "shadow_dash",
+        "slot": 1,
+        "costPct": 3,
+        "cooldownTicks": 100,
+        "strain": 4,
+        "range": 10,
+        "radius": 0,
+        "durationTicks": 0,
+        "power": 1,
+        "maxTargets": 1,
+        "bossFactor": 1.0
+      },
+      {
+        "id": "shadow_veil",
+        "kind": "shadow_veil",
+        "slot": 2,
+        "costPct": 3,
+        "cooldownTicks": 400,
+        "strain": 4,
+        "range": 0,
+        "radius": 0,
+        "durationTicks": 80,
+        "power": 1,
+        "maxTargets": 1,
+        "bossFactor": 1.0
+      }
+    ]
+  },
+  "integrate": {
+    "unlockAssimilation": 0.95,
+    "unlockMastery": 0.5,
+    "drainPct": 1.0,
+    "strainPerSecond": 0.35,
+    "regen": 0.0,
+    "stats": [
+      {
+        "attribute": "minecraft:generic.movement_speed",
+        "op": "mult",
+        "amount": 0.15
+      },
+      {
+        "attribute": "minecraft:generic.jump_strength",
+        "op": "mult",
+        "amount": 0.15
+      },
+      {
+        "attribute": "minecraft:generic.safe_fall_distance",
+        "op": "add",
+        "amount": 6.0
+      },
+      {
+        "attribute": "minecraft:generic.attack_damage",
+        "op": "add",
+        "amount": 2.0
+      },
+      {
+        "attribute": "minecraft:generic.attack_speed",
+        "op": "mult",
+        "amount": 0.08
+      }
+    ],
+    "abilities": [
+      {
+        "id": "draconic_pulse",
+        "kind": "draconic_pulse",
+        "slot": 1,
+        "costPct": 6,
+        "cooldownTicks": 140,
+        "strain": 8,
+        "range": 8,
+        "radius": 6,
+        "durationTicks": 30,
+        "power": 2,
+        "maxTargets": 5,
+        "bossFactor": 0.6
+      },
+      {
+        "id": "ambush",
+        "kind": "ambush",
+        "slot": 2,
+        "costPct": 6,
+        "cooldownTicks": 300,
+        "strain": 8,
+        "range": 10,
+        "radius": 0,
+        "durationTicks": 0,
+        "power": 5,
+        "maxTargets": 1,
+        "bossFactor": 0.5
+      }
+    ]
+  }
+}

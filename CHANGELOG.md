@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.52.0] — Every beast core runs on Beast Will; Beast Will lives in the main menu
+- NEW: the E, D, C and B beast cores now carry a Beast Will too (Ridge-Wolf, Crested Boar, Wind-Skimmer Raptor, Flame-Serpent), so all eight beast cores (E to SS) use the Beast Will system (Acquire / Integrate, assimilation, mastery, strain). The four new wills come only from their cores (no natural drops); the A-and-up wills are KEPT.
+- REPLACED: the second active of the E to B beast cores (Savage Lunge, Hardened Hide, Gale Burst, Serpent Dash) is now the Beast Will form. Their texts stay in the lang file. The first active of every core is KEPT.
+- NEW: the Multiverse status menu has a Beast Will page (tab button) with the will, bars, abilities with cooldowns, and Acquire / Integrate / Swap buttons, plus a Beast Will block in the status grid. The absorb question opens inside this menu (Absorb / Decline buttons; closing it declines).
+- CHANGED: the always-on Beast Will side panel is off by default (client setting `[beastwill] hud`, true brings it back); the old pop-up confirm returns with `confirmInMenu = false`. KEPT: the five keys, the Codex page.
+- Not seen in a game; Gradle tests ran only in CI.
+
 ## [3.51.0] — Rank Mana Cores E to SS (24 cores, 3D orbs)
 - NEW: 24 rank cores, ranks E, D, C, B, A, AA, S, SS, each as Standard, Beast and Ancient (item ids `core_<rank>_<variant>`). Press = right-click, Crouch + Press = shift + right-click; passives work while the core is held. Costs, cooldowns and caps are in `docs/mana_cores.md` (active effects cap at 32 targets, 30 blocks, 600 ticks).
 - NEW: Beast cores A and up (Shadow Panther, Thunder-Fang Chimera, Elderwood Guardian, Nihil Dragon) plug into the KEPT Beast Will system (Acquire / Integrate); new data-driven Chimera will.

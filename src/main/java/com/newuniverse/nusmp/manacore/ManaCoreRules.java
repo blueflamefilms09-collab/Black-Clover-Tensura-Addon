@@ -89,9 +89,9 @@ public final class ManaCoreRules {
         core(0, 0, "Crude Mana Pebble", null, pas("mana_leak", -0.0003, List.of(mult("attack_speed", 0.05)), NF),
                 act("core_spark", Kind.BUFF, 50, 400, 0, 0, 1, 200, 0, "minecraft:haste", 0),
                 act("mana_shard_toss", Kind.LINE, 80, 100, 0.4, 12, 1, 40, 0, "minecraft:slowness", 0));
-        core(0, 1, "Ridge-Wolf Fang Core", null, pas("beast_instinct", 0, List.of(add("attack_damage", 1.0)), List.of(fx("night_vision", 0)), "kill_heal", 0.03),
+        core(0, 1, "Ridge-Wolf Fang Core + Will", "ridge_wolf_will", pas("beast_instinct", 0, List.of(add("attack_damage", 1.0)), List.of(fx("night_vision", 0)), "kill_heal", 0.03, "beast_will", 1.0),
                 act("wolf_howl", Kind.BURST, 100, 200, 0.2, 6, 8, 60, 0, "minecraft:nausea", 0),
-                act("savage_lunge", Kind.DASH, 120, 120, 0.8, 6, 1, 0, 0, null, 0));
+                act("integrate_ridge_wolf_pack", Kind.BEAST_FORM, 0, 0, 0, 0, 1, 0, 0, null, 0));
         core(0, 2, "Relic-Scrap Core", null, pas("dormant_circuit", 0, NM, NF, "proj_absorb", 4.0, "proj_mp", 0.002),
                 act("overclock_pulse", Kind.BUFF, 150, 600, 0, 0, 1, 100, 0, "minecraft:haste", 2),
                 act("temporal_echo", Kind.ECHO, 200, 600, 0, 0, 1, 0, 0, null, 0));
@@ -99,9 +99,9 @@ public final class ManaCoreRules {
         core(1, 0, "Refined Sphere", null, pas("stable_channeling", 0, NM, NF, "cost_mult", 0.95, "aura_shield", 5.0),
                 act("mana_burst", Kind.BURST, 250, 160, 0.6, 5, 8, 0, 0, null, 0),
                 act("elemental_infusion", Kind.BUFF, 300, 400, 0, 0, 1, 300, 0, "minecraft:strength", 0));
-        core(1, 1, "Crested Boar Bile Core", null, pas("toxic_resilience", 0, NM, NF, "poison_immune", 1.0),
+        core(1, 1, "Crested Boar Bile Core + Will", "crested_boar_will", pas("toxic_resilience", 0, NM, NF, "poison_immune", 1.0, "beast_will", 1.0),
                 act("venom_spit", Kind.LINE, 280, 160, 0.4, 10, 6, 120, 0, "minecraft:poison", 0),
-                act("hardened_hide", Kind.BUFF, 350, 300, 0, 0, 1, 160, 0, "minecraft:resistance", 1));
+                act("integrate_crested_boar_charge", Kind.BEAST_FORM, 0, 0, 0, 0, 1, 0, 0, null, 0));
         core(1, 2, "Asura-Touched D-Core", null, pas("minor_spatial_anchor", 0, List.of(add("knockback_resistance", 0.6)), NF),
                 act("spatial_ripple", Kind.BLINK, 400, 140, 0.5, 4, 4, 0, 0, null, 0),
                 act("inertial_lock", Kind.FREEZE_TARGET, 450, 300, 0, 16, 1, 30, 0, null, 0));
@@ -109,9 +109,9 @@ public final class ManaCoreRules {
         core(2, 0, "Luminous Crystal Orb", null, pas("mana_resonance", 0, NM, List.of(fx("night_vision", 0)), "aoe_mult", 1.1),
                 act("luminous_beam", Kind.LINE, 600, 120, 1.0, 16, 3, 0, 0, null, 0),
                 act("c_tier_barrier", Kind.BARRIER, 750, 400, 0, 0, 1, 80, 0, "minecraft:absorption", 1));
-        core(2, 1, "Wind-Skimmer Core", null, pas("wind_rider", 0, List.of(mult("movement_speed", 0.15), add("safe_fall_distance", 256.0)), NF),
+        core(2, 1, "Wind-Skimmer Core + Will", "wind_skimmer_will", pas("wind_rider", 0, List.of(mult("movement_speed", 0.15), add("safe_fall_distance", 256.0)), NF, "beast_will", 1.0),
                 act("air_cutter", Kind.LINE, 650, 100, 1.0, 14, 4, 60, 0, "minecraft:wither", 0),
-                act("gale_burst", Kind.LEAP, 800, 200, 0, 0, 1, 60, 0, "minecraft:slow_falling", 0));
+                act("integrate_wind_skimmer_raptor", Kind.BEAST_FORM, 0, 0, 0, 0, 1, 0, 0, null, 0));
         core(2, 2, "Runebound C-Core", null, pas("spell_matrix", 0, NM, NF, "free_every", 3.0),
                 act("rune_trapping", Kind.RUNE, 700, 200, 0, 1.5, 1, 60, 0, null, 0),
                 act("kinetic_redirection", Kind.REDIRECT, 900, 300, 0, 6, 4, 0, 0, null, 0));
@@ -119,9 +119,9 @@ public final class ManaCoreRules {
         core(3, 0, "Plasma-Charged Sphere", null, pas("lightning_reflexes", 0, NM, NF, "dodge", 0.10, "chain_mult", 1.15),
                 act("chain_lightning_arc", Kind.CHAIN, 1200, 120, 1.0, 6, 5, 15, 0, "minecraft:slowness", 4),
                 act("static_field", Kind.AREA, 1500, 400, 0.5, 4, 8, 120, 0, "minecraft:slowness", 1));
-        core(3, 1, "Flame-Serpent Core", null, pas("magma_blood", 0.0005, NM, NF, "fire_immune", 1.0),
+        core(3, 1, "Flame-Serpent Core + Will", "flame_serpent_will", pas("magma_blood", 0.0005, NM, NF, "fire_immune", 1.0, "beast_will", 1.0),
                 act("inferno_eruption", Kind.BURST, 1400, 200, 1.0, 7, 10, 100, 0, "fire", 0),
-                act("serpent_dash", Kind.DASH, 1600, 160, 1.0, 8, 6, 100, 0, "fire", 0));
+                act("integrate_flame_serpent_coil", Kind.BEAST_FORM, 0, 0, 0, 0, 1, 0, 0, null, 0));
         core(3, 2, "Singularity B-Core", null, pas("gravity_well", 0, NM, NF, "item_pull", 5.0),
                 act("micro_singularity", Kind.PULL, 1800, 300, 0.6, 8, 8, 0, 0, null, 0),
                 act("mass_inversion", Kind.LAUNCH, 2000, 300, 0.3, 16, 1, 40, 0, "minecraft:levitation", 0));
@@ -220,7 +220,7 @@ public final class ManaCoreRules {
         for (Core c : CORES) {
             if (!ids.add(c.id())) return "duplicate id " + c.id();
             if (c.name().toLowerCase().contains("ista" + "roth")) return c.id() + " uses the old name (the SS ancient core is the Dragon Fragment)";
-            if (c.variant == 1 && c.rank >= 4 && (c.will == null || !c.beastForm() || c.passive.flag("beast_will") != 1.0)) return c.id() + " must plug into a Beast Will";
+            if (c.variant == 1 && (c.will == null || !c.beastForm() || c.passive.flag("beast_will") != 1.0)) return c.id() + " must plug into a Beast Will";
             if (c.variant != 1 && c.will != null) return c.id() + " is not a beast core but names a will";
             for (int n = 1; n <= 2; n++) {
                 Active a = c.active(n);

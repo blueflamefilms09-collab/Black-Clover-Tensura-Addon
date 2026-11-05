@@ -325,3 +325,18 @@ CI: self-tests `beastwill.catalog.load` (data files load and validate), `beastwi
 - **NEW**: the whole Beast Will system (rules, data, loader, store, ledger, drops, core item, acquisition and confirm screen, manager, 12 ability kinds, stealth, attributes, packets, HUD, Codex page, aura, 5 keys, 8 commands, SERVER config, 4 wills, tests, self-tests, docs, core icon).
 - **REPLACED**: nothing.
 - **KEPT**: everything else; shared files were only appended to (`Aura.BEAST_WILL`, `AuraRegistry`, `CodexPages`, `GuiMoveRegistry`, `GuiScaleRegistry`, `NUCreativeTab`, `NUSMP` hooks, the smoke list, the lang file).
+
+## 3.52.0: wills for the E to B beast cores
+
+All eight beast cores (E to SS) now offer a will through `BeastWillApi.offer` (sneak + press). Four new data wills, built only from existing ability kinds within `BeastWillRules` (no new kind, no bound raised):
+
+| Will | Min rank | Require EP | Assimilation / mastery | Acquire | Integrate |
+|---|---|---|---|---|---|
+| `ridge_wolf_will` | C | 2,000 | 1,800 s / 1,200 s | shadow_dash, mane_surge | world_howl, ambush |
+| `crested_boar_will` | C | 3,500 | 2,400 s / 1,500 s | bark_ward, shadow_dash | draconic_pulse, bark_ward |
+| `wind_skimmer_will` | C | 5,000 | 3,000 s / 1,800 s | shadow_dash, shadow_veil | draconic_pulse, ambush |
+| `flame_serpent_will` | B | 8,000 | 3,900 s / 2,400 s | vine_lash, bark_ward | draconic_pulse, shadow_dash |
+
+Change to the rules: `BeastWillDef.problem()` used to demand `minRank >= A`; it now demands `>= C` (every rank). The five original wills stay at A or better. `dropChance` stays in (0, 0.05] and `BeastWillConfig.minDropRank()` still floors natural drops at A, so these four come from their cores only (sources are empty). Worst-case cost: unchanged, since the same per-player caps, strain and single-active-will rules apply; four more small JSON files are read at load.
+
+- **NEW**: the 4 wills. **REPLACED**: the E to B beast core second actives. **KEPT**: all other wills, the A to SS cores, old lang keys.

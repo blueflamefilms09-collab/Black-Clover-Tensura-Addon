@@ -17,7 +17,9 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 class BeastWillSchemaTest {
     private static final Path DIR = Path.of("src/main/resources/data/nusmp/beast_will");
-    private static final List<String> IDS = List.of("dragon_will", "shadow_panther_will", "elderwood_guardian_will", "lion_will", "thunder_fang_chimera_will");   // 3.51.0: the Thunder-Fang Chimera will of the AA beast core
+    private static final List<String> NEW_LOW = List.of("ridge_wolf_will", "crested_boar_will", "wind_skimmer_will", "flame_serpent_will");
+    private static final List<String> IDS = List.of("dragon_will", "shadow_panther_will", "elderwood_guardian_will", "lion_will", "thunder_fang_chimera_will",
+            "ridge_wolf_will", "crested_boar_will", "wind_skimmer_will", "flame_serpent_will");   // 3.52.0: wills of the E to B beast cores (rank C or B)   // 3.51.0: the Thunder-Fang Chimera will of the AA beast core
 
     static BeastWillDef load(String id) throws Exception {
         BeastWillSchema.Parsed p = BeastWillSchema.parse(id, Files.readString(DIR.resolve(id + ".json")));
@@ -38,7 +40,8 @@ class BeastWillSchemaTest {
         for (String id : IDS) {
             BeastWillDef d = load(id);
             assertNull(d.problem());
-            assertTrue(d.minRank().atLeast(BeastRank.A), id);
+            assertTrue(d.minRank().atLeast(BeastRank.C), id);
+            if (!NEW_LOW.contains(id)) assertTrue(d.minRank().atLeast(BeastRank.A), id);
             assertEquals(id, d.id());
         }
     }

@@ -29,14 +29,13 @@ class ManaCoreRulesTest {
     }
 
     @Test
-    void beastCoresFromATowardPlugIntoTheBeastWillSystem() {
-        for (int rank = 4; rank < 8; rank++) {
+    void allEightBeastCoresPlugIntoTheBeastWillSystem() {
+        for (int rank = 0; rank < 8; rank++) {
             ManaCoreRules.Core c = ManaCoreRules.of(rank, 1);
             assertNotNull(c.will(), c.id());
             assertTrue(c.beastForm(), c.id());
             assertTrue(new File("src/main/resources/data/nusmp/beast_will/" + c.will() + ".json").isFile(), c.will());
         }
-        for (int rank = 0; rank < 4; rank++) assertFalse(ManaCoreRules.of(rank, 1).beastForm());
     }
 
     @Test

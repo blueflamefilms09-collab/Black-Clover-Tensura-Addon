@@ -10,6 +10,8 @@ public final class MultiverseClientConfig {
     public static final ModConfigSpec.ConfigValue<String> PANEL_RECT;
     public static final ModConfigSpec.BooleanValue BUTTON_FALLBACK;
     public static final ModConfigSpec.BooleanValue HIDE_HEAD_TEXT;
+    public static final ModConfigSpec.BooleanValue BEASTWILL_HUD;
+    public static final ModConfigSpec.BooleanValue BEASTWILL_CONFIRM_IN_MENU;
 
     static {
         ModConfigSpec.Builder b = new ModConfigSpec.Builder();
@@ -24,6 +26,11 @@ public final class MultiverseClientConfig {
         b.pop();
         b.push("hud");
         HIDE_HEAD_TEXT = b.comment("Hide every name, title or other text floating above players' heads.").define("hideHeadText", true);
+        b.pop();
+        b.push("beastwill");
+        BEASTWILL_HUD = b.comment("Draw the always-on Beast Will panel on the screen (the old look). Off: the Beast Will lives in the main menu (Multiverse status screen, Beast Will tab).")
+                .define("hud", false);
+        BEASTWILL_CONFIRM_IN_MENU = b.comment("Show the 'absorb this will?' ask as a page of the main menu. Off: the old pop-up window.").define("confirmInMenu", true);
         b.pop();
         SPEC = b.build();
     }

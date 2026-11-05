@@ -4,6 +4,8 @@ import com.mojang.blaze3d.platform.InputConstants;
 import com.newuniverse.nusmp.beastwill.BeastRank;
 import com.newuniverse.nusmp.beastwill.BeastWillNet;
 import com.newuniverse.nusmp.beastwill.BeastWillRules;
+import com.newuniverse.nusmp.client.multiverse.MultiverseClientConfig;
+import com.newuniverse.nusmp.client.multiverse.MultiverseStatusScreen;
 import com.newuniverse.nusmp.client.ui.move.GuiMove;
 import com.newuniverse.nusmp.client.ui.theme.UiBar;
 import com.newuniverse.nusmp.client.ui.theme.UiMath;
@@ -74,6 +76,7 @@ public final class BeastWillClient {
         sync = null;
         info = null;
         lines = null;
+        pending = null;
     }
 
     private static void onSync(BeastWillNet.Sync s) {
@@ -86,7 +89,25 @@ public final class BeastWillClient {
     private static void onPreview(BeastWillNet.Preview p) {
         Minecraft mc = Minecraft.getInstance();
         if (mc.player == null) return;
-        mc.setScreen(new BeastWillConfirmScreen(p));
+        if (MultiverseClientConfig.get(MultiverseClientConfig.BEASTWILL_CONFIRM_IN_MENU)) {   // 3.52.0: the ask is a page of the main menu, not a window of its own
+            pending = p;
+            mc.setScreen(new MultiverseStatusScreen(mc.screen instanceof MultiverseStatusScreen m ? m.parent() : mc.screen, true));
+        } else mc.setScreen(new BeastWillConfirmScreen(p));
+    }
+
+    /** The absorb ask waiting for an answer in the main menu (null = none). Closing the menu without answering declines. */
+    private static volatile BeastWillNet.Preview pending;
+
+    static BeastWillNet.Preview pending() { return pending; }
+
+    /** One ask from the main menu's buttons: same 3-tick throttle as the keys; the server validates everything. */
+    static void ask(int op, int arg) {
+        Minecraft mc = Minecraft.getInstance();
+        long now = mc.level == null ? 0 : mc.level.getGameTime();
+        BeastWillNet.Sync s = sync;
+        if (mc.player == null || mc.getConnection() == null || s == null || s.active().isEmpty() || now - lastAsk < 3) return;
+        lastAsk = now;
+        PacketDistributor.sendToServer(new BeastWillNet.Action(op, arg));
     }
 
     /** The cached state (null = no Beast Will): for the Codex page. */
@@ -130,7 +151,7 @@ public final class BeastWillClient {
     }
 
     /** Sends the player's answer to the absorption ask (used by the confirm screen). */
-    static void answer(boolean yes) { PacketDistributor.sendToServer(new BeastWillNet.Action(yes ? BeastWillNet.OP_CONFIRM : BeastWillNet.OP_DECLINE, 0)); }
+    static void answer(boolean yes) { pending = null; PacketDistributor.sendToServer(new BeastWillNet.Action(yes ? BeastWillNet.OP_CONFIRM : BeastWillNet.OP_DECLINE, 0)); }
 
     // ---------------------------------------------------------------- text
     static String name(String will) { return Component.translatableWithFallback("nusmp.beastwill." + will + ".name", will).getString(); }
@@ -146,12 +167,12 @@ public final class BeastWillClient {
 
     // ---------------------------------------------------------------- the HUD
     /** The text of the panel, rebuilt when a packet lands and twice a second. */
-    private record Lines(long builtAt, String title, String rank, String sub, String fit, String form, String assim, String mastery, String strain, int tier,
+    record Lines(long builtAt, String title, String rank, String sub, String fit, String form, String assim, String mastery, String strain, int tier,
                          List<String> unlock, List<String> abilities, String status, String keys, boolean mustWarn) {}
 
     private static volatile Lines lines;
 
-    private static Lines build(BeastWillNet.Sync s, BeastWillNet.Info i, long now) {
+    static Lines build(BeastWillNet.Sync s, BeastWillNet.Info i, long now) {
         boolean known = i != null;
         String title = name(s.active());
         String rank = known ? t("rank", rankName(i.rank())) : "";
@@ -201,15 +222,26 @@ public final class BeastWillClient {
         Minecraft mc = Minecraft.getInstance();
         BeastWillNet.Sync s = sync;
         if (s == null || s.active().isEmpty() || mc.options.hideGui || mc.player == null || mc.level == null) return;
+        if (!MultiverseClientConfig.get(MultiverseClientConfig.BEASTWILL_HUD)) return;    // 3.52.0: the panel lives in the main menu now; this setting brings the old HUD back
         long now = mc.level.getGameTime();
         BeastWillNet.Info i = info();
         Lines l = lines;
         if (l == null || now - l.builtAt() >= 10 || now < l.builtAt()) lines = l = build(s, i, now);
         Font font = mc.font;
-        int tint = i == null || i.tint() == 0 ? UiTheme.CYAN : 0xFF000000 | i.tint();
-        int h = 8 + 11 + 11 + 11 + 3 * 15 + l.unlock().size() * 10 + l.abilities().size() * 10 + (l.status().isEmpty() ? 0 : 10) + 11 + 4;
+        int h = height(l);
         int x = 6, y = Math.max(4, (g.guiHeight() - h) / 2);
         GuiMove.report("beastwill_hud", x, y, W, h);                                   // GUI Move / GUI Size: where the panel is drawn (the layer hook moves it)
+        paint(g, font, x, y, l, s, i);
+    }
+
+    static int height(Lines l) {
+        return 8 + 11 + 11 + 11 + 3 * 15 + l.unlock().size() * 10 + l.abilities().size() * 10 + (l.status().isEmpty() ? 0 : 10) + 11 + 4;
+    }
+
+    /** The panel itself (the HUD layer and the main menu draw the same thing). */
+    static void paint(GuiGraphics g, Font font, int x, int y, Lines l, BeastWillNet.Sync s, BeastWillNet.Info i) {
+        int tint = i == null || i.tint() == 0 ? UiTheme.CYAN : 0xFF000000 | i.tint();
+        int h = height(l);
         float time = UiTheme.now();
         float alert = l.tier() >= 3 ? 0.55f + 0.45f * UiMath.pulse(time, 8f, 0f) : l.tier() == 2 ? 0.6f : 0.25f;
         UiPanel.panel(g, x, y, W, h, l.tier() >= 2 ? UiTheme.RED : tint, alert, 0.92f);

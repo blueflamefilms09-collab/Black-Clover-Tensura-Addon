@@ -552,8 +552,8 @@ public final class ManaCoreActives {
         if (def == null) return fail(p, "will_missing");
         BeastWillState s = BeastWillStore.peek(p);
         if (s == null || !s.has(core.will())) {
-            BeastRank rank = core.rank() >= 7 ? BeastRank.SS : core.rank() >= 6 ? BeastRank.S : BeastRank.A;
-            return BeastWillApi.offer(p, core.will(), core.name().replace(" + Will", "").replace(" + Supreme Will", "").replace(" + Mythic Will", ""), rank, "");
+            BeastRank rank = core.rank() >= 7 ? BeastRank.SS : core.rank() >= 6 ? BeastRank.S : core.rank() >= 4 ? BeastRank.A : core.rank() == 3 ? BeastRank.B : BeastRank.C;
+            return BeastWillApi.offer(p, core.will(), core.name().replaceAll(" Core.*$", ""), rank, "");
         }
         if (!core.will().equals(s.active)) return fail(p, "will_swap");
         BeastWillManager.onAction(p, BeastWillNet.OP_FORM, 2);

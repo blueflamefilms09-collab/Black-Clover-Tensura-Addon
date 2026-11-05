@@ -78,7 +78,7 @@ public record BeastWillDef(String id, String name, String beast, String affinity
         if (name == null || name.length() < 4 || name.length() > 48 || !name.equals(name.strip())) return id + ": bad name";
         if (beast == null || beast.isBlank() || beast.length() > 48) return id + ": bad beast";
         if (affinity == null || affinity.isBlank() || affinity.length() > 24) return id + ": bad affinity";
-        if (minRank == null || !minRank.atLeast(BeastRank.A)) return id + ": a will only comes from an A rank beast or better";
+        if (minRank == null || !minRank.atLeast(BeastRank.C)) return id + ": a will needs a minimum beast rank";
         if (sources == null || keywords == null || (sources.isEmpty() && keywords.isEmpty())) return id + ": no creature gives it";
         for (String s : sources) if (!s.matches("[a-z0-9_.-]+:[a-z0-9_./-]+")) return id + ": bad source " + s;
         for (String k : keywords) if (!k.matches("[a-z0-9_]{3,24}")) return id + ": bad keyword " + k;
