@@ -20,7 +20,7 @@ public final class DbSkillSelfTests {
             ManasSkill u = SkillAPI.getSkillRegistry().get(DbSkills.UNIQUE.get(s.id()).getId());
             ManasSkill a = SkillAPI.getSkillRegistry().get(DbSkills.ULTIMATE.get(s.id()).getId());
             if (!(u instanceof DbSkill du) || !(a instanceof DbSkill da)) return Result.fail(s.id() + " is not registered as a Dragon Ball skill");
-            if (u.getType() != Skill.SkillType.UNIQUE || a.getType() != Skill.SkillType.ULTIMATE) return Result.fail(s.id() + ": wrong skill type");
+            if (du.getType() != Skill.SkillType.UNIQUE || da.getType() != Skill.SkillType.ULTIMATE) return Result.fail(s.id() + ": wrong skill type");
             if (du.wheel().size() != 2 || da.wheel().size() != s.actives().size()) return Result.fail(s.id() + ": the wheel does not match the table");
             n += 2;
         }

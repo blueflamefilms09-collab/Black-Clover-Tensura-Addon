@@ -1,5 +1,8 @@
 # Changelog
 
+## [3.56.1] — Fix: Dragon Ball build
+- FIXED: 3.56.0 did not compile (the `skill.db` self-test asked the registry's generic skill type for `getType()`); it now asks the Dragon Ball skill itself. No gameplay change; 3.56.0's content ships in this release.
+
 ## [3.56.0] — Fifteen Dragon Ball skills (Unique -> Ultimate)
 - NEW: 30 skills, 15 characters x (Unique + Ultimate): Goku (Wukong, Lord of Limitless Combat), Vegeta (Lord of Pride), Gohan (Lord of the Beast), Piccolo (Lord of Namek), Krillin (Lord of Technique), Android 18 (Lazuli, Lord of Infinite Energy), Android 17 (Lapis, Lord of Barriers), Goten (Lord of Inheritance), Trunks (Lord of the Future), Tien (Lord of the Crane), Yamcha (Lord of the Wolf), Chiaotzu (Lord of Telekinesis), Master Roshi (Lord of the Turtle School), Future Trunks (Lord of Hope), Bulma (Lord of Invention). 64 modes: toggle passives, Press / Crouch + Press actives and a mastery finisher each (God Kamehameha, Final Flash, Beast Special Beam Cannon, Special Beam Cannon, Destructo Disc, ...). Scaled by the Super Hero (2022) standing of each form (Gohan Beast on top). A Unique is half an Ultimate and evolves into it when mastered.
 - NEW: `/multiverse dragonball give <player> <id> [unique|ultimate]` and `list`; server setting `dragonBallEnabled`; 30 icons (`tools/gen_db_icons.py`); lang entries; doc `docs/dragonball_skills.md`; self-test `skill.db`; tests `DbRulesTest`.
