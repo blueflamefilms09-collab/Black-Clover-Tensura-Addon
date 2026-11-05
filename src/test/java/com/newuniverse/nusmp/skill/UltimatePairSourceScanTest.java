@@ -74,7 +74,7 @@ class UltimatePairSourceScanTest {
         assertTrue(c.split("getEntitiesOfClass\\(", -1).length - 1 <= 1, "at most one box query of its own (Gyo's, a fixed 24-block radius, at most 16 revealed)");
         assertTrue(c.contains("SkillDamage.hit("), "Nen damage goes through the balance law");
         // 3.48.5: the only tick is the aura refresh, gated to once every AURA_EVERY (40) ticks and by the nenVfx switch; the windows themselves are still game times in the tag
-        assertTrue(!c.contains("onTick(") || (c.contains("tickCount % AURA_EVERY") && c.contains("AURA_EVERY = 40") && c.contains("newFx()")), "Nen's tick must be the gated aura refresh only");
+        assertTrue(!c.contains("onTick(") || (c.contains("tickCount % AURA_EVERY") && c.contains("AURA_EVERY = 40") && c.contains("NenFx.on()")), "Nen's tick must be the gated aura refresh (3.57.0: plus the bounded NenHatsu.tick, tested in NenReworkSourceScanTest)");
     }
 
     @Test

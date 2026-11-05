@@ -74,6 +74,7 @@ public final class NUConfig {
     public static final ModConfigSpec.BooleanValue ZAGRED_BOSS_ENABLED, KOTODAMA_BOSS_REWARD;   // 0.47
     public static final ModConfigSpec.BooleanValue ANTI_MAGIC_EVENT_ONLY;                       // 0.48
     public static final ModConfigSpec.BooleanValue NEN_ENABLED, ALL_FICTION_REBUILT, NEN_VFX;          // 3.46.0
+    public static final ModConfigSpec.BooleanValue NEN_VFX_V2;          // 3.57.0
     public static final ModConfigSpec.BooleanValue GATE_ENABLED, KI_ENABLED, DB_ENABLED;                  // 3.47.0, 3.56.0
     public static final ModConfigSpec.IntValue PVP_HIT_CAP_PERCENT, SPELL_DAMAGE_PERCENT, SPELL_COOLDOWN_PERCENT;   // 0.48
     // Magic gear
@@ -213,6 +214,7 @@ public final class NUConfig {
         NEN_ENABLED = b.comment("Nen (Hunter x Hunter Ultimate, 3.46.0). false = the skill stays registered but every mode refuses and its damage hooks do nothing.").define("nenEnabled", true);
         NEN_VFX = b.comment("Nen's own effects (3.48.5: flowing aura, En sphere, Gyo eyes, hatsu impact and bolt). false = the particle puffs Nen had before.").define("nenVfx", true);
         ALL_FICTION_REBUILT = b.comment("All Fiction rebuild (3.46.0, ten modes). false = the old two modes only (Undo and Fiction) and the old death-refusal; the new modes refuse.").define("allFictionRebuilt", true);
+        NEN_VFX_V2 = b.comment("Nen's remade effects (3.57.0: layered flame aura, Ren burst, En lattice sphere, Gyo eyes, fist, homing bullets, chains, needle, field). false = the 3.48.5 look (nenVfx must be true for either).").define("nenVfxV2", true);
         b.pop();
 
         b.push("ultimates_3_47");

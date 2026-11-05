@@ -16,6 +16,7 @@ import com.newuniverse.nusmp.vfx.client.layer.UltThousandElfLayer;
 import com.newuniverse.nusmp.vfx.client.layer.UltDisasterFloodsLayer;
 import com.newuniverse.nusmp.vfx.client.layer.UltFinalDoseLayer;
 import com.newuniverse.nusmp.vfx.client.layer.NenLayer;
+import com.newuniverse.nusmp.vfx.client.layer.NenArtLayer;
 import com.newuniverse.nusmp.vfx.client.layer.UltDevouringShadowLayer;
 import com.newuniverse.nusmp.vfx.client.layer.UltChairmanStandLayer;
 import com.newuniverse.nusmp.vfx.client.layer.UltMonarchShadowsLayer;
@@ -151,6 +152,7 @@ public final class VfxManager {
         register(new UltDevouringShadowLayer());          // 3.29.0
         register(new UltFinalDoseLayer());          // 3.29.0
         register(new NenLayer());                   // 3.48.5
+        register(new NenArtLayer());                // 3.57.0 (the remade Nen look)
         register(new UltDisasterFloodsLayer());          // 3.29.0
         register(new UltThousandElfLayer());          // 3.29.0
 

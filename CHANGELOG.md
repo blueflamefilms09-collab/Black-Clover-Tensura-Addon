@@ -1,5 +1,13 @@
 # Changelog
 
+## [3.58.0] — Nen rework: new effects, six signature Hatsu
+- REPLACED (you asked): the Nen effects and abilities. The aura is now layered flame tongues in your Water Divination type colour (8 kinds) with a Ren burst, an En lattice dome, Gyo eyes, a Ko fist, homing aura bullets, conjured chains, a Manipulation needle and a Specialization field (10 new shapes `NEN_FLOW..NEN_DOMAIN`, 19 textures `particle/nen_*`, `NenArtLayer`).
+- REPLACED: the basics are stronger. Ten mends over time; Zetsu hides and heals and the blow that ends it is an ambush (x1.75); Ren bursts then boosts strength and speed; Gyo reveals and marks foes; En is a 12 s sense field that halves the first blow every 6 s; Ken reflects a share of each blow; Ko stores up to 3 s and strikes for 22-44; Shu / In / Ryu reworked.
+- REPLACED: the six Hatsu are signature moves: Enhancement a rushing fist scaled by Ko (wears armour, never breaks it); Emission a homing volley of 4 bullets (6 with Vow); Transmutation lightning / gum / rubber by stance; Conjuration 3 chains (5 with Vow); Manipulation a needle that redirects mobs and weakens players; Specialization a field that weakens, hurts and steals up to 2 buffs a pulse. Vow boosts every Hatsu.
+- KEPT: the 17 mode slots and their order (new modes only appended), the old public rule methods, the old looks: server setting `nenVfx=false` gives the old particles, `nenVfxV2=false` the old shapes (new setting `nenVfxV2`, default true).
+- Cost: at most 24 creatures per query, 6 bullets, 5 chains, 1 needle, 1 field of 9 pulses; no spawned entities; at most 3 auras per 40 ticks to nearby players; chains about 10 small packets/s; client peak 256 vertices (cap 400) with LOD.
+- Not seen in a game or compiled before this release: combat numbers are untuned (healing uses the plain heal, not the balance law); canon is from memory, no wiki could be read. Doc `docs/nen_rework.md`.
+
 ## [3.57.1] — Fix: Dragon Ball vs the no-hunger rule
 - FIXED: the build test `NoHungerDrainTest` (the mod never touches the food bar) failed on two Dragon Ball lines. Removed: the Seal move no longer costs 6 food, and the Stamina passive no longer refills food and saturation (it keeps its buff-extend part). 3.56.0 / 3.57.0 content ships in this release.
 

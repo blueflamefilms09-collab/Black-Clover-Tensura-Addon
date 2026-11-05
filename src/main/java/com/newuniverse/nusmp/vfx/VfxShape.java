@@ -457,7 +457,21 @@ public enum VfxShape {
     NEN_EN,
     NEN_GYO,
     NEN_IMPACT,
-    NEN_BEAM;
+    NEN_BEAM,
+    // 3.57.0 Nen rework (NenArtLayer, docs/nen_rework.md), appended after the 3.48.5 shapes, which stay (nenVfxV2 = false draws those):
+    // NEN_FLOW the aura of a window, follows the caster (power = kind 0 Ten, 1 Zetsu, 2 Ren, 3 Ken, 4 Ko, 5 Vow, 6 Shu, 7 Ryu, + a charge fraction for Ko); NEN_BURST the Ren burst and generic hit (power = size);
+    // NEN_SENSE the En sphere (power = radius, + 0.5 on a refresh); NEN_EYES Gyo (follows); NEN_FIST the Enhancement fist from -> to (power = 1 + charge); NEN_BULLET an aura bullet / stolen buff from -> to;
+    // NEN_SURGE Transmutation (power = 1 + nature 0 electric 1 gum 2 rubber, + radius / 10 for rubber); NEN_LINK a conjured chain from -> to; NEN_NEEDLE the Manipulation needle and strings from -> to; NEN_DOMAIN the Specialization field (follows, power = radius).
+    NEN_FLOW,
+    NEN_BURST,
+    NEN_SENSE,
+    NEN_EYES,
+    NEN_FIST,
+    NEN_BULLET,
+    NEN_SURGE,
+    NEN_LINK,
+    NEN_NEEDLE,
+    NEN_DOMAIN;
 
     public static VfxShape byId(int id) {
         VfxShape[] v = values();

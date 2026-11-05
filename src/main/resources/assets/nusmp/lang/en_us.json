@@ -17668,8 +17668,8 @@
   "nusmp.skill.msg.nen.en": "En: %s presences within your aura.",
   "nusmp.skill.msg.nen.ended": "Your aura settles.",
   "nusmp.skill.msg.nen.gyo": "Gyo: the aura gathers in your eyes.",
-  "nusmp.skill.msg.nen.ken": "Ken: you hold your ground.",
-  "nusmp.skill.msg.nen.ko": "Ko: all your aura gathers in one strike.",
+  "nusmp.skill.msg.nen.ken": "Ken: you hold your ground, and a third of every blow goes back at who struck.",
+  "nusmp.skill.msg.nen.ko": "Ko: all your aura gathers in one fist. Strike now, or wait: the longer, the harder.",
   "nusmp.skill.msg.nen.no_target": "Nothing in reach.",
   "nusmp.skill.msg.nen.off": "Nen is switched off on this server.",
   "nusmp.skill.msg.nen.ren": "Ren: your aura pours out.",
@@ -17679,9 +17679,9 @@
   "nusmp.skill.msg.nen.in": "In: your aura cannot be seen.",
   "nusmp.skill.msg.nen.ryu": "Ryu: your aura flows to where it is needed.",
   "nusmp.skill.msg.nen.vow_forbids": "Your vow forbids it.",
-  "nusmp.skill.msg.nen.zetsu": "Zetsu: your presence is gone. Striking breaks it.",
+  "nusmp.skill.msg.nen.zetsu": "Zetsu: your presence is gone and you rest. The blow that breaks it is an ambush.",
   "nusmp.skill.nen": "Nen",
-  "nusmp.skill.nen.description": "Ultimate. Hunter x Hunter's life energy in seventeen modes: Ten, Zetsu, Ren, Gyo, En, Ken, Ko, Shu, In, Ryu, the six Hatsu types (Enhancement, Transmutation, Emission, Conjuration, Manipulation, Specialization) and Vow and Limitation. Your Water Divination type decides how well each Hatsu works for you.",
+  "nusmp.skill.nen.description": "Ultimate. Hunter x Hunter's life energy in seventeen modes. Basics: Ten (mend and guard), Zetsu (hide and heal, the first blow is an ambush), Ren (burst of aura and power), Gyo (see and mark), En (a 12 s sense field that dodges the first blow), Ken (guard and reflect), Ko (store aura, then strike), Shu, In, Ryu. The six Hatsu are signature moves: Enhancement a rushing fist that wears armour, Emission a homing volley, Transmutation lightning / gum / rubber by stance, Conjuration chains, Manipulation a needle, Specialization a field that steals boons. Vow and Limitation boosts every Hatsu. Your Water Divination type decides how well each Hatsu works for you.",
   "nusmp.skill.gate_of_babylon": "Gate of Babylon",
   "nusmp.skill.gate_of_babylon.description": "Ultimate. The King of Heroes' vault from Fate in ten modes: Gate, Volley, Rain, Chains of Heaven, Golden Armour, Vimana, King's Aura, Gae Bolg, Ea and Elixir.",
   "nusmp.skill.ki": "Ki",
@@ -18006,5 +18006,8 @@
   "nusmp.skill.mode.db_bulma.genius_intellect": "Genius Intellect",
   "nusmp.skill.mode.db_bulma.scan_mode_3d": "3D Scan Mode",
   "nusmp.skill.mode.db_bulma.capsule_toss": "Capsule Toss",
-  "nusmp.skill.mode.db_bulma.dragon_radar_ping": "Dragon Radar Ping"
+  "nusmp.skill.mode.db_bulma.dragon_radar_ping": "Dragon Radar Ping",
+  "nusmp.skill.msg.nen.trans.electric": "Transmutation: your aura turns to lightning.",
+  "nusmp.skill.msg.nen.trans.gum": "Transmutation: your aura turns to gum.",
+  "nusmp.skill.msg.nen.trans.rubber": "Transmutation: your aura turns to rubber."
 }

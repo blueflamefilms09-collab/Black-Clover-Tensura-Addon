@@ -51,6 +51,11 @@ public final class UltimatePairSelfTests {
             if (NenRules.timed(m) && NenRules.duration(m) > 1200) return Result.fail("Nen mode " + id + " window too long: " + NenRules.duration(m));
         }
         if (NenRules.takenMultiplier(true, true, true, true) < 0.25 || NenRules.takenMultiplier(false, false, true, true) > 1.5) return Result.fail("Nen defence multiplier left its [0.25, 1.5] band");
+        // 3.57.0 rework: the signature moves stay inside their bounds, and the remade shapes follow the old beam
+        if (NenRules.volleyBullets(true) > 8 || NenRules.chains(true) > NenRules.chainSlots() || NenRules.fieldPulses(true) > 20 || NenRules.rubberMax() > 12 || NenRules.gumMax(true) > 8) return Result.fail("a Nen signature move grew past its bound");
+        if (NenRules.koStrike(1.0) > 44.001 || NenRules.fistMultiplier(1.0) > 2.401 || NenRules.shatterFraction(1.0, true) > 0.5) return Result.fail("Ko or the fist left its bound");
+        if (NenRules.surgeProperty(NenRules.surgePower(NenRules.RUBBER, 5.5)) != NenRules.RUBBER) return Result.fail("the surge power encoding does not round-trip");
+        if (com.newuniverse.nusmp.vfx.VfxShape.NEN_DOMAIN.ordinal() != com.newuniverse.nusmp.vfx.VfxShape.NEN_BEAM.ordinal() + 10) return Result.fail("the remade Nen shapes are not appended in order after NEN_BEAM");
         return Result.ok(NenRules.MODES + " modes, ids unique, costs and cooldowns in bounds; server setting nenEnabled=" + NUConfig.NEN_ENABLED.get());
     }
 

@@ -45,7 +45,8 @@ class NenRulesTest {
         assertTrue(NenRules.cancellable(NenRules.TEN) && NenRules.cancellable(NenRules.ZETSU) && NenRules.cancellable(NenRules.REN));
         assertTrue(NenRules.cancellable(NenRules.KEN) && NenRules.cancellable(NenRules.VOW));
         assertFalse(NenRules.cancellable(NenRules.KO), "Ko waits for its strike");
-        assertFalse(NenRules.timed(NenRules.EMIT) || NenRules.timed(NenRules.ENHANCE) || NenRules.timed(NenRules.GYO) || NenRules.timed(NenRules.EN), "the instant modes have no window");
+        assertFalse(NenRules.timed(NenRules.EMIT) || NenRules.timed(NenRules.ENHANCE) || NenRules.timed(NenRules.GYO), "the instant modes have no window");
+        assertTrue(NenRules.timed(NenRules.EN) && NenRules.cancellable(NenRules.EN), "3.57.0: En is a window of 12 s that can be dropped");
     }
 
     @Test
