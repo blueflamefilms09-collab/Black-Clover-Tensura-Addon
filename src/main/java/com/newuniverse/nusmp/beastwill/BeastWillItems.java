@@ -11,7 +11,7 @@ import java.util.UUID;
 
 /**
  * Why: the one item of the Beast Will system (3.45.0): {@code nusmp:beast_will_core}, the rare core that holds a beast's will. It has its own register (attached to the mod bus by {@link BeastWillBoot}), a flat
- * temporary icon, and no recipe: it only comes from a beast's drop or a command. The look is a flat generated icon (see {@code tools/beastwill/gen_core_icon.py}); a 3D hand model is not part of 3.45.0.
+ * icon (and, since the solid cores change, a 3D orb in hand), and no recipe: it only comes from a beast's drop or a command. The look is a flat generated icon (see {@code tools/beastwill/gen_core_icon.py}); a 3D hand model is not part of 3.45.0.
  */
 public final class BeastWillItems {
     private BeastWillItems() {}
@@ -20,6 +20,9 @@ public final class BeastWillItems {
 
     public static final DeferredItem<BeastWillCoreItem> CORE = REGISTER.register("beast_will_core",
             () -> new BeastWillCoreItem(new Item.Properties().stacksTo(1).rarity(Rarity.RARE).fireResistant()));
+
+    /** The one list the client's 3D hand renderer reads ({@code client.WeaponRenderer}, like {@code manacore.CoreItems.renderables()}): the core is drawn as a solid orb (docs/solid_cores.md). */
+    public static java.util.List<java.util.function.Supplier<? extends Item>> renderables() { return java.util.List.of(CORE); }
 
     /** The creative-tab cores: one per shipped will (display names, the will id decides what a core gives; the server reads the data file). */
     public static java.util.List<ItemStack> creativeStacks() {

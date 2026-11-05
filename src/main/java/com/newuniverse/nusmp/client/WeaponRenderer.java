@@ -35,6 +35,7 @@ import net.minecraft.world.item.ItemStack;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.ModelEvent;
+import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
 import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions;
 import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
 import org.joml.Matrix3f;
@@ -96,7 +97,7 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
 
     /** 1.24.0: the old list plus every 3D relic of Relics of Many Worlds. */
     static final List<Supplier<? extends Item>> WEAPONS = java.util.stream.Stream.of(BASE_WEAPONS.stream(), com.newuniverse.nusmp.relics.RelicCatalog.model3dItems().stream(),
-            com.newuniverse.nusmp.heroweapon.HeroItems.all().stream(), com.newuniverse.nusmp.labyrinth.loot.LootItems.renderables().stream(), com.newuniverse.nusmp.fairytail.storm.StormBoot.renderables().stream(), com.newuniverse.nusmp.firecast.FireCastBoot.renderables().stream(), com.newuniverse.nusmp.shishou.ShishouItems.renderables().stream(), com.newuniverse.nusmp.spiritblades.SpiritBladesBoot.renderables().stream(), com.newuniverse.nusmp.valkyrielance.ValkyrieLanceBoot.renderables().stream(), com.newuniverse.nusmp.manacore.CoreItems.renderables().stream()).flatMap(s -> s).toList();      // 1.62.0: + the 21 hero weapons; 3.51.0: + the 24 rank Mana Cores (manacore/CoreItems.renderables(), meshes from tools/gen_mana_core_models.py)
+            com.newuniverse.nusmp.heroweapon.HeroItems.all().stream(), com.newuniverse.nusmp.labyrinth.loot.LootItems.renderables().stream(), com.newuniverse.nusmp.fairytail.storm.StormBoot.renderables().stream(), com.newuniverse.nusmp.firecast.FireCastBoot.renderables().stream(), com.newuniverse.nusmp.shishou.ShishouItems.renderables().stream(), com.newuniverse.nusmp.spiritblades.SpiritBladesBoot.renderables().stream(), com.newuniverse.nusmp.valkyrielance.ValkyrieLanceBoot.renderables().stream(), com.newuniverse.nusmp.manacore.CoreItems.renderables().stream(), com.newuniverse.nusmp.beastwill.BeastWillItems.renderables().stream()).flatMap(s -> s).toList();      // 1.62.0: + the 21 hero weapons; 3.51.0: + the 24 rank Mana Cores (manacore/CoreItems.renderables(), meshes from tools/gen_mana_core_models.py); the Beast Will Core (docs/solid_cores.md)
 
     static final int BODY = 0, VOID = 1, GLOW = 2;
 
@@ -112,6 +113,9 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
     public static void init(IEventBus modBus) {
         modBus.addListener(WeaponRenderer::registerExtensions);
         modBus.addListener(WeaponRenderer::registerModels);
+        // docs/solid_cores.md: the flat icon of a Beast Will Core is neutral grey; this tints it with the colour of the core's will (the 3D orb is tinted in renderByItem)
+        modBus.addListener((RegisterColorHandlersEvent.Item e) -> e.register((stack, tintIndex) -> tintIndex == 0 ? com.newuniverse.nusmp.beastwill.BeastCoreLook.iconArgb(coreWill(stack)) : 0xFFFFFFFF,
+                com.newuniverse.nusmp.beastwill.BeastWillItems.CORE.get()));
         modBus.addListener((ModelEvent.BakingCompleted e) -> { MESHES.clear(); classes = null; WeaponGrip.clear(); ItemStateVariants.clearCache(); WeaponUpgrade.clear(); });     // a resource reload re-reads the meshes (1.102.0: and the upgraded ones)
         // 1.15.0: the Magebane Shield is a real shield; this is vanilla's own "blocking" predicate, which swaps in the raised-shield model
         modBus.addListener((FMLClientSetupEvent e) -> e.enqueueWork(ShieldClient::registerBlocking));      // 1.110.0: the same predicate on every shield-class item (below it stays for the Magebane Shield as before)
@@ -144,6 +148,13 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
 
     static void registerModels(ModelEvent.RegisterAdditional e) {
         for (Supplier<? extends Item> item : WEAPONS) e.register(icon(BuiltInRegistries.ITEM.getKey(item.get()).getPath()));
+    }
+
+    /** The will id of a Beast Will Core stack ("" for a bare core), null for any other item (docs/solid_cores.md). */
+    private static String coreWill(ItemStack stack) {
+        if (!(stack.getItem() instanceof com.newuniverse.nusmp.beastwill.BeastWillCoreItem)) return null;
+        com.newuniverse.nusmp.beastwill.BeastWillComponents.Core c = com.newuniverse.nusmp.beastwill.BeastWillComponents.of(stack);
+        return c == null ? "" : c.will();
     }
 
     static ModelResourceLocation icon(String id) { return ModelResourceLocation.standalone(DemonSlayerRenderer.rl("item/" + id + "_icon")); }
@@ -226,9 +237,10 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
             pose.translate(0f, -mesh.ymin, 0f);
         }
         PoseStack.Pose p = pose.last();
+        String coreWill = coreWill(stack);                                         // a Beast Will Core: its will's colour tints the body and the glow
         float spin = mesh.drillFrom == null ? 0f : drillAngle(ctx, time);                      // Valkyrie Drill Lance: the turn of the `drill*` part (0 and unused on every other mesh)
         emitLayer(pose, p, mesh, BODY, ItemRenderer.getFoilBufferDirect(buffers, RenderType.entityCutout(mesh.tex), false, stack.hasFoil()),
-                state.tint() ? VariantRules.BODY_TINT_5LEAF : 0xFFFFFFFF, light, overlay, spin);
+                state.tint() ? VariantRules.BODY_TINT_5LEAF : coreWill == null ? 0xFFFFFFFF : com.newuniverse.nusmp.beastwill.BeastCoreLook.bodyArgb(coreWill), light, overlay, spin);
         if (!mesh.layers[VOID].isEmpty()) {
             VertexConsumer vc = buffers.getBuffer(NURenderTypes.demonVoid());
             Matrix4f m = p.pose();
@@ -241,6 +253,7 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
         if (mesh.glowTex != null && !mesh.layers[GLOW].isEmpty() && upTier < com.newuniverse.nusmp.client.vupgrade.godb.UpgradeMath.TIER_FAR) {      // 1.102.0: no additive pass beyond 24 blocks for an upgraded weapon
             float k = VariantRules.pulse(time, mesh.glowSpeed, mesh.glowMin, mesh.glowMax, state.intensify() ? VariantRules.GENESIS_BOOST : 1f) * GodMeleeBRender.flicker(upTier, state.meshId(), time) * WeaponUpgrade.flicker(mesh, time);
             int rgb = state.tint() ? VariantRules.tintGlow(mesh.glowRgb) : mesh.glowRgb;
+            if (coreWill != null) rgb = com.newuniverse.nusmp.beastwill.BeastCoreLook.glowRgb(coreWill);
             if (ExSingularityFx.applies(id)) rgb = ExSingularityFx.glowRgb(time);          // EX-Singularity (Shishou): the glow walks through every hue (client/ExSingularityFx)
             int r = VariantRules.channel(rgb >> 16 & 255, k), g = VariantRules.channel(rgb >> 8 & 255, k), b = VariantRules.channel(rgb & 255, k);
             emitLayer(pose, p, mesh, GLOW, buffers.getBuffer(com.newuniverse.nusmp.client.SafeAdditive.additive(ExSingularityFx.glowTex(id, mesh))), 0xFF000000 | r << 16 | g << 8 | b, 0xF000F0, OverlayTexture.NO_OVERLAY, spin);

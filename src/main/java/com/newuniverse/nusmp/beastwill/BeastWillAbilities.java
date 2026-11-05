@@ -4,9 +4,12 @@ import com.newuniverse.nusmp.avatar.FtbTeamHelper;
 import com.newuniverse.nusmp.balance.BalanceLaw;
 import com.newuniverse.nusmp.boss.rules.BossIdentity;
 import com.newuniverse.nusmp.particle.fx.Fx;
+import com.newuniverse.nusmp.particle.fx.FxSlot;
 import com.newuniverse.nusmp.particle.fx.FxThemes;
 import com.newuniverse.nusmp.particle.fx.FxTone;
 import com.newuniverse.nusmp.song.SongTargets;
+import com.newuniverse.nusmp.vfx.VfxShape;
+import com.newuniverse.nusmp.vfx.VfxSpawn;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -43,7 +46,7 @@ public final class BeastWillAbilities {
     /** How long the time-exclusion telegraph lasts before it takes hold: long enough to step out of the ring. */
     public static final int TELEGRAPH_TICKS = 15;
 
-    private record Exclusion(net.minecraft.resources.ResourceKey<net.minecraft.world.level.Level> dimension, Vec3 center, long at, BeastWillDef.Ability ability, double scale) {}
+    private record Exclusion(net.minecraft.resources.ResourceKey<net.minecraft.world.level.Level> dimension, Vec3 center, long at, BeastWillDef.Ability ability, double scale, BeastWillDef def) {}
 
     private static final Map<UUID, Exclusion> PENDING = new ConcurrentHashMap<>();
 
@@ -56,18 +59,18 @@ public final class BeastWillAbilities {
     // ------------------------------------------------------------------ the entry point
     public static boolean run(ServerPlayer p, BeastWillDef def, BeastWillDef.Ability a, double scale, double mastery) {
         return switch (a.kind()) {
-            case "dragon_sight" -> sight(p, a);
-            case "draconic_pulse" -> pulse(p, a, scale, mastery);
-            case "time_exclusion" -> exclusion(p, a, scale);
-            case "shadow_veil" -> veil(p, a);
-            case "shadow_dash" -> dash(p, a);
-            case "ambush" -> ambush(p, a, scale, mastery);
-            case "vine_lash" -> lash(p, a, scale, mastery);
-            case "verdant_mend" -> mend(p, a, scale);
-            case "restraining_vines" -> restrain(p, a);
-            case "bark_ward" -> ward(p, a, scale);
-            case "mane_surge" -> mane(p, a, scale);
-            case "world_howl" -> howl(p, a, scale, mastery);
+            case "dragon_sight" -> sight(p, def, a);
+            case "draconic_pulse" -> pulse(p, def, a, scale, mastery);
+            case "time_exclusion" -> exclusion(p, def, a, scale);
+            case "shadow_veil" -> veil(p, def, a);
+            case "shadow_dash" -> dash(p, def, a);
+            case "ambush" -> ambush(p, def, a, scale, mastery);
+            case "vine_lash" -> lash(p, def, a, scale, mastery);
+            case "verdant_mend" -> mend(p, def, a, scale);
+            case "restraining_vines" -> restrain(p, def, a);
+            case "bark_ward" -> ward(p, def, a, scale);
+            case "mane_surge" -> mane(p, def, a, scale);
+            case "world_howl" -> howl(p, def, a, scale, mastery);
             default -> false;
         };
     }
@@ -138,8 +141,88 @@ public final class BeastWillAbilities {
         for (int i = 0; i <= steps; i++) fx(level, dark, from.add(d.scale(i / (double) Math.max(1, steps))), 1, 0.05);
     }
 
+    // ------------------------------------------------------------------ per-will pictures (3.57.0)
+    // Every ability sends at most TWO big pictures (VfxSpawn: one packet each, to players within 96 blocks, through the per-tick effect-packet budget) and one small puff of at most 12 tinted
+    // particles (Fx: through the particle budget). The abilities have cooldowns of 140+ ticks and an energy cost, so one player makes at most two packets per seven seconds. A will that the look
+    // table does not know gets no extra picture (the old particles only), so a data-pack will never breaks.
+
+    private static final float MAX_R = 8f;
+
+    private static float ringPower(double radius) { return (float) Math.max(0.6, Math.min(4.0, radius / 3.0)); }
+
+    /** One big picture, if the shape is not null. Duration 0 = the picture's own length; the colour 0 = the picture's own colours (the lightning spear takes one). */
+    private static void shape(ServerLevel level, VfxShape s, Vec3 from, Vec3 to, float power) {
+        if (s == null || level == null || from == null || to == null) return;
+        VfxSpawn.send(level, s, from, to, s == VfxShape.LIGHTNING_SPEAR ? 0xFFB8E4FF : 0, 0, power);
+    }
+
+    /** A puff of the will's own colour (the skill theme's mote, dyed with the tint), at most 12 per call. */
+    private static void tint(ServerLevel level, BeastWillDef def, Vec3 at, int count) {
+        if (def == null || at == null) return;
+        Fx.sprayTinted(level, FxThemes.SKILL, FxSlot.MOTE, def.tint(), 1.2f, at.x, at.y, at.z, Math.min(count, 12), 0.45, 0.5, 0.45, 0.03);
+    }
+
+    /** What this beast leaves along a line (a breath, a claw slash, a charge, a gust, a lightning strike, a spiral of flame, roots at the end). Ground beasts keep to the ground. */
+    private static void travel(ServerPlayer p, BeastWillDef def, Vec3 from, Vec3 to, float power) {
+        VfxShape s = switch (BeastWillLook.kindOf(def.id())) {
+            case BeastWillLook.DRAGON -> VfxShape.FLAME_TRAIL;
+            case BeastWillLook.PANTHER -> VfxShape.WIND_SLASH;
+            case BeastWillLook.ELDERWOOD -> VfxShape.TREE_ROOTS;
+            case BeastWillLook.LION -> VfxShape.FIRE_LION;
+            case BeastWillLook.WOLF -> VfxShape.SLASH_WAVE;
+            case BeastWillLook.BOAR -> VfxShape.EARTH_RAMPAGE;
+            case BeastWillLook.RAPTOR -> VfxShape.WIND_GALE;
+            case BeastWillLook.SERPENT -> VfxShape.FIRE_SPIRAL;
+            case BeastWillLook.CHIMERA -> VfxShape.LIGHTNING_SPEAR;
+            default -> null;
+        };
+        if (s == VfxShape.TREE_ROOTS) {                                                                                 // roots erupt where the lash lands
+            shape(p.serverLevel(), s, to, to, 1.2f);
+        } else if (s == VfxShape.EARTH_RAMPAGE) {
+            shape(p.serverLevel(), s, new Vec3(from.x, p.getY() + 0.1, from.z), new Vec3(to.x, p.getY() + 0.1, to.z), power);
+        } else {
+            shape(p.serverLevel(), s, from, to, power);
+        }
+    }
+
+    /** This beast's mark at a point (radius = the size of the field it covers, capped): flame burst, shadow pool, roots, light flare, gust or frost rings, stone claws, wild flame, lightning pillar. */
+    private static void burst(ServerLevel level, BeastWillDef def, Vec3 at, double radius) {
+        float r = (float) Math.max(0.8, Math.min(MAX_R, radius));
+        Vec3 up = at.add(0, 1, 0);
+        switch (BeastWillLook.kindOf(def.id())) {
+            case BeastWillLook.DRAGON -> shape(level, VfxShape.FIRE_BURST, at, up, r / 3f);
+            case BeastWillLook.PANTHER -> shape(level, VfxShape.SHADOW_POOL, at, up, r);
+            case BeastWillLook.ELDERWOOD -> shape(level, VfxShape.TREE_ROOTS, at, up, r);
+            case BeastWillLook.LION -> shape(level, VfxShape.LIGHT_FLARE, at.add(0, 1.4, 0), at.add(0, 1.4, 0), Math.min(1.5f, r / 3f));
+            case BeastWillLook.WOLF -> shape(level, VfxShape.WATER_RING, at, up, r / 3f);
+            case BeastWillLook.BOAR -> shape(level, VfxShape.EARTH_CLAWS, at, up, r);
+            case BeastWillLook.RAPTOR -> shape(level, VfxShape.WIND_RING, at, up, r / 3f);
+            case BeastWillLook.SERPENT -> shape(level, VfxShape.FIRE_WILD, at, up, Math.min(r, 4f));
+            case BeastWillLook.CHIMERA -> shape(level, VfxShape.LIGHTNING_GOD, at, up, Math.min(r, 4f));
+            default -> { return; }
+        }
+        tint(level, def, at.add(0, 1.0, 0), 10);
+    }
+
+    /** The surge of a buff on the caster (Mane Surge): the lion's flame lion bounds ahead, the wolf and the chimera wear a mantle of wind or lightning for a moment, the rest get their burst. */
+    private static void surge(ServerPlayer p, BeastWillDef def, int ticks) {
+        ServerLevel level = p.serverLevel();
+        int kind = BeastWillLook.kindOf(def.id());
+        Vec3 chest = p.position().add(0, 1.0, 0), look = p.getLookAngle();
+        if (kind == BeastWillLook.LION) {
+            shape(level, VfxShape.FIRE_LION, chest, chest.add(look.x * 7, 0, look.z * 7), 0.8f);
+            shape(level, VfxShape.LIGHT_FLARE, p.getEyePosition(), p.getEyePosition(), 0.9f);
+        } else if (kind == BeastWillLook.WOLF) {
+            VfxSpawn.sendFollowing(level, VfxShape.WIND_ZEPHYR, p, chest, 0, Math.max(20, ticks), 0.8f);
+        } else if (kind == BeastWillLook.CHIMERA) {
+            VfxSpawn.sendFollowing(level, VfxShape.LIGHTNING_FIEND, p, chest, 0, Math.max(20, ticks), 1.0f);
+        } else {
+            burst(level, def, p.position(), 2.0);
+        }
+    }
+
     // ------------------------------------------------------------------ dragon
-    private static boolean sight(ServerPlayer p, BeastWillDef.Ability a) {
+    private static boolean sight(ServerPlayer p, BeastWillDef def, BeastWillDef.Ability a) {
         List<LivingEntity> seen = around(p, p.position(), a.radius(), cap(a));
         if (seen.isEmpty()) {
             BeastWillFeedback.say(p, "no_target", false);
@@ -148,10 +231,13 @@ public final class BeastWillAbilities {
         for (LivingEntity t : seen) t.addEffect(new MobEffectInstance(MobEffects.GLOWING, Math.max(20, a.durationTicks()), 0, false, false));
         p.serverLevel().playSound(null, p.blockPosition(), SoundEvents.ENDER_DRAGON_GROWL, SoundSource.PLAYERS, 0.35f, 1.6f);
         fx(p.serverLevel(), true, p.getEyePosition(), 12, 0.4);
+        shape(p.serverLevel(), VfxShape.LIGHT_FLARE, p.getEyePosition(), p.getEyePosition(), 0.7f);                    // the dragon's eyes flare, then a ring runs out to the range of the sight
+        shape(p.serverLevel(), VfxShape.WIND_RING, p.position().add(0, 0.2, 0), p.position().add(0, 1.2, 0), ringPower(a.radius()));
+        tint(p.serverLevel(), def, p.getEyePosition(), 10);
         return true;
     }
 
-    private static boolean pulse(ServerPlayer p, BeastWillDef.Ability a, double scale, double mastery) {
+    private static boolean pulse(ServerPlayer p, BeastWillDef def, BeastWillDef.Ability a, double scale, double mastery) {
         ServerLevel level = p.serverLevel();
         Vec3 eye = p.getEyePosition(), look = p.getLookAngle();
         double range = Math.max(2, a.range());
@@ -161,12 +247,15 @@ public final class BeastWillAbilities {
             t.hurtMarked = true;
         }
         line(level, true, eye.add(look.scale(0.8)), eye.add(look.scale(Math.min(range, 10))), 8);
+        Vec3 end = eye.add(look.scale(Math.min(range, 10)));
+        travel(p, def, eye.add(look.scale(0.8)), end, 1.0f);                                                          // the breath, slash or gust of this beast
+        burst(level, def, end, 2.0);
         level.playSound(null, p.blockPosition(), SoundEvents.ENDER_DRAGON_SHOOT, SoundSource.PLAYERS, 0.5f, 1.2f);
         return true;
     }
 
     /** A time exclusion: a telegraph ring at the caster's spot, and 0.75 s later the foes still inside it are held for a few ticks. Nothing is paused: the game, the server and everyone outside the ring run on. */
-    private static boolean exclusion(ServerPlayer p, BeastWillDef.Ability a, double scale) {
+    private static boolean exclusion(ServerPlayer p, BeastWillDef def, BeastWillDef.Ability a, double scale) {
         if (PENDING.containsKey(p.getUUID())) return false;
         if (around(p, p.position(), a.radius(), cap(a)).isEmpty()) {
             BeastWillFeedback.say(p, "no_target", false);
@@ -176,9 +265,10 @@ public final class BeastWillAbilities {
             BeastWillFeedback.say(p, "control_cooldown", false, BalanceLaw.controlCooldownLeft(p) / 20);
             return false;
         }
-        PENDING.put(p.getUUID(), new Exclusion(p.level().dimension(), p.position(), p.level().getGameTime() + TELEGRAPH_TICKS, a, scale));
+        PENDING.put(p.getUUID(), new Exclusion(p.level().dimension(), p.position(), p.level().getGameTime() + TELEGRAPH_TICKS, a, scale, def));
         p.serverLevel().playSound(null, p.blockPosition(), SoundEvents.BEACON_ACTIVATE, SoundSource.PLAYERS, 0.8f, 0.5f);
         ring(p.serverLevel(), p.position(), a.radius());
+        VfxSpawn.send(p.serverLevel(), VfxShape.MAGIC_CIRCLE, p.position().add(0, 0.05, 0), p.position().add(0, 1, 0), 0, TELEGRAPH_TICKS + 5, (float) Math.min(MAX_R, a.radius()) / 1.6f);     // the circle of the exclusion, on the ground
         return true;
     }
 
@@ -212,6 +302,7 @@ public final class BeastWillAbilities {
             held++;
         }
         p.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, Math.max(20, a.durationTicks()), 0, false, false));
+        if (held > 0) burst(p.serverLevel(), e.def(), e.center(), a.radius());
         if (held == 0) BeastWillFeedback.say(p, "slipped_out", false);
     }
 
@@ -223,15 +314,16 @@ public final class BeastWillAbilities {
     }
 
     // ------------------------------------------------------------------ shadow
-    private static boolean veil(ServerPlayer p, BeastWillDef.Ability a) {
+    private static boolean veil(ServerPlayer p, BeastWillDef def, BeastWillDef.Ability a) {
         BeastWillStealth.veil(p, Math.max(20, a.durationTicks()));
         p.serverLevel().playSound(null, p.blockPosition(), SoundEvents.SCULK_SHRIEKER_SHRIEK, SoundSource.PLAYERS, 0.15f, 1.8f);
         fx(p.serverLevel(), true, p.position().add(0, 0.9, 0), 14, 0.3);
+        burst(p.serverLevel(), def, p.position(), 2.0);
         return true;
     }
 
     /** A dash along the ground. Every half block of the path is checked: loaded, inside the world border, nothing solid or an entity that blocks, not lava, and a spot the player may interact with. */
-    private static boolean dash(ServerPlayer p, BeastWillDef.Ability a) {
+    private static boolean dash(ServerPlayer p, BeastWillDef def, BeastWillDef.Ability a) {
         ServerLevel level = p.serverLevel();
         Vec3 look = p.getLookAngle();
         Vec3 dir = new Vec3(look.x, 0, look.z);
@@ -253,14 +345,16 @@ public final class BeastWillAbilities {
             return false;
         }
         fx(level, true, from.add(0, 0.9, 0), 10, 0.3);
+        travel(p, def, from.add(0, 0.9, 0), best.add(0, 0.9, 0), 1.0f);                                                // the streak the beast leaves along the dash
         p.teleportTo(best.x, best.y, best.z);
         p.fallDistance = 0;
         fx(level, true, best.add(0, 0.9, 0), 10, 0.3);
+        burst(level, def, best, 1.5);
         level.playSound(null, p.blockPosition(), SoundEvents.ENDERMAN_TELEPORT, SoundSource.PLAYERS, 0.3f, 1.7f);
         return true;
     }
 
-    private static boolean ambush(ServerPlayer p, BeastWillDef.Ability a, double scale, double mastery) {
+    private static boolean ambush(ServerPlayer p, BeastWillDef def, BeastWillDef.Ability a, double scale, double mastery) {
         List<LivingEntity> seen = cone(p, Math.max(2, a.range()), 0.7, 1);
         if (seen.isEmpty()) {
             BeastWillFeedback.say(p, "no_target", false);
@@ -285,13 +379,15 @@ public final class BeastWillAbilities {
             fx(level, true, behind.add(0, 0.9, 0), 8, 0.3);
         }
         hit(p, t, a.power() * scale * (unseen ? 1.5 : 1.0), mastery, a.bossFactor());
+        travel(p, def, p.getEyePosition(), t.getBoundingBox().getCenter(), 1.0f);                                      // the strike, then the mark it leaves on the target
+        burst(level, def, t.position(), 1.5);
         BeastWillStealth.reveal(p);
         level.playSound(null, p.blockPosition(), SoundEvents.PLAYER_ATTACK_CRIT, SoundSource.PLAYERS, 0.8f, 0.8f);
         return true;
     }
 
     // ------------------------------------------------------------------ elderwood
-    private static boolean lash(ServerPlayer p, BeastWillDef.Ability a, double scale, double mastery) {
+    private static boolean lash(ServerPlayer p, BeastWillDef def, BeastWillDef.Ability a, double scale, double mastery) {
         List<LivingEntity> seen = cone(p, Math.max(2, a.range()), 0.5, cap(a));
         if (seen.isEmpty()) {
             BeastWillFeedback.say(p, "no_target", false);
@@ -299,17 +395,19 @@ public final class BeastWillAbilities {
         }
         ServerLevel level = p.serverLevel();
         Vec3 from = p.getEyePosition().add(0, -0.4, 0);
+        int shown = 0;
         for (LivingEntity t : seen) {
             hit(p, t, a.power() * scale, mastery, a.bossFactor());
             int ticks = ticksFor(t, a, 20, false);
             if (ticks > 0) t.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, ticks, 1, false, true));
             line(level, false, from, t.getBoundingBox().getCenter(), 6);
+            if (shown++ < 2) travel(p, def, from, t.position(), 1.0f);                                                 // at most two big pictures, however many are hit
         }
         level.playSound(null, p.blockPosition(), SoundEvents.GRASS_BREAK, SoundSource.PLAYERS, 0.8f, 0.7f);
         return true;
     }
 
-    private static boolean mend(ServerPlayer p, BeastWillDef.Ability a, double scale) {
+    private static boolean mend(ServerPlayer p, BeastWillDef def, BeastWillDef.Ability a, double scale) {
         boolean poisoned = p.hasEffect(MobEffects.POISON);
         if (p.getHealth() >= p.getMaxHealth() - 0.5f && !poisoned) {
             BeastWillFeedback.say(p, "full_health", false);
@@ -318,11 +416,13 @@ public final class BeastWillAbilities {
         BalanceLaw.heal(p, (float) Math.max(0.5, a.power() * 2.0 * scale));
         p.removeEffect(MobEffects.POISON);
         fx(p.serverLevel(), false, p.position().add(0, 1.0, 0), 14, 0.4);
+        shape(p.serverLevel(), VfxShape.ELF_CIRCLE, p.position().add(0, 0.05, 0), p.position().add(0, 1, 0), 0.8f);   // a green rune circle under the healer
+        tint(p.serverLevel(), def, p.position().add(0, 1.0, 0), 10);
         return true;
     }
 
     /** Roots: Slowness VII for the capped control time. The vines are particles; there is no block to place and so nothing to clean up. Players get the shared hard-control rules, bosses the boss factor. */
-    private static boolean restrain(ServerPlayer p, BeastWillDef.Ability a) {
+    private static boolean restrain(ServerPlayer p, BeastWillDef def, BeastWillDef.Ability a) {
         List<LivingEntity> seen = around(p, p.position(), a.radius(), cap(a));
         if (seen.isEmpty()) {
             BeastWillFeedback.say(p, "no_target", false);
@@ -333,6 +433,7 @@ public final class BeastWillAbilities {
             return false;
         }
         int rooted = 0;
+        burst(p.serverLevel(), def, p.position(), a.radius());                                                           // one picture for the whole field, not one per target
         for (LivingEntity t : seen) {
             int ticks = ticksFor(t, a, a.durationTicks(), true);
             if (ticks <= 0) continue;
@@ -346,29 +447,31 @@ public final class BeastWillAbilities {
         return true;
     }
 
-    private static boolean ward(ServerPlayer p, BeastWillDef.Ability a, double scale) {
+    private static boolean ward(ServerPlayer p, BeastWillDef def, BeastWillDef.Ability a, double scale) {
         int ticks = Math.max(20, a.durationTicks());
         int amp = (int) Math.min(2, Math.floor(a.power() * scale * 1.2));
         p.addEffect(new MobEffectInstance(MobEffects.ABSORPTION, ticks, amp, false, true));
         p.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, ticks, 0, false, false));
         fx(p.serverLevel(), false, p.position().add(0, 1.0, 0), 16, 0.5);
+        burst(p.serverLevel(), def, p.position(), 2.0);
         p.serverLevel().playSound(null, p.blockPosition(), SoundEvents.WOOD_PLACE, SoundSource.PLAYERS, 1.0f, 0.5f);
         return true;
     }
 
     // ------------------------------------------------------------------ lion
-    private static boolean mane(ServerPlayer p, BeastWillDef.Ability a, double scale) {
+    private static boolean mane(ServerPlayer p, BeastWillDef def, BeastWillDef.Ability a, double scale) {
         int ticks = Math.max(20, a.durationTicks());
         p.addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, ticks, a.power() * scale >= 1.5 ? 1 : 0, false, true));
         p.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, ticks, 0, false, false));
         p.removeEffect(MobEffects.MOVEMENT_SLOWDOWN);
         fx(p.serverLevel(), false, p.position().add(0, 1.0, 0), 14, 0.4);
+        surge(p, def, Math.min(ticks, 80));
         p.serverLevel().playSound(null, p.blockPosition(), SoundEvents.RAVAGER_ROAR, SoundSource.PLAYERS, 0.4f, 1.3f);
         return true;
     }
 
     /** The roar: foes in the radius are pushed away and slowed for a moment (a player only pushed unless the shared control rule allows more); bosses take the boss factor. */
-    private static boolean howl(ServerPlayer p, BeastWillDef.Ability a, double scale, double mastery) {
+    private static boolean howl(ServerPlayer p, BeastWillDef def, BeastWillDef.Ability a, double scale, double mastery) {
         ServerLevel level = p.serverLevel();
         List<LivingEntity> seen = around(p, p.position(), a.radius(), cap(a));
         boolean control = false;
@@ -392,6 +495,8 @@ public final class BeastWillAbilities {
         level.playSound(null, p.blockPosition(), SoundEvents.RAVAGER_ROAR, SoundSource.PLAYERS, 1.4f, 0.55f);
         ring(level, p.position(), Math.min(a.radius(), 12));
         fx(level, false, p.position().add(0, 1.2, 0), 1, 0.0);
+        shape(level, VfxShape.WIND_RING, p.position().add(0, 0.3, 0), p.position().add(0, 1.3, 0), ringPower(a.radius()));    // the howl runs out as rings
+        burst(level, def, p.position(), Math.min(a.radius(), 8));                                                    // and this beast's own mark on top
         return true;
     }
 }

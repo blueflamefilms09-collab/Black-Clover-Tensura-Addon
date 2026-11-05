@@ -37,6 +37,7 @@ public final class BeastWillSelfTests {
         SelfTests.register("beastwill.catalog.load", BeastWillSelfTests::catalog);
         SelfTests.register("beastwill.rules.bounds", BeastWillSelfTests::rules);
         SelfTests.register("beastwill.player.roundtrip", BeastWillSelfTests::player);
+        SelfTests.register("beastwill.look.kinds", BeastWillSelfTests::look);
     }
 
     private static final String[] IDS = {"dragon_will", "shadow_panther_will", "elderwood_guardian_will", "lion_will"};
@@ -53,6 +54,21 @@ public final class BeastWillSelfTests {
         if (!BuiltInRegistries.DATA_COMPONENT_TYPE.containsKey(ResourceLocation.fromNamespaceAndPath("nusmp", "beast_will_core"))) return Result.fail("the core component is not registered");
         if (!BeastWillConfig.enabled() && BeastWillConfig.dropScale() < 0) return Result.fail("the config answered nonsense");
         return Result.ok(BeastWillCatalog.size() + " wills loaded and valid; the core item, component and save attachment are registered");
+    }
+
+    /** 3.57.0: the style the server sends to the clients carries the phase, the look kind and the tint of every loaded will, and every shipped will has its own look kind (the client draws that beast's spirit from it). */
+    private static Result look(MinecraftServer server) {
+        java.util.Set<Integer> seen = new java.util.HashSet<>();
+        for (BeastWillDef d : BeastWillCatalog.all()) {
+            int kind = BeastWillLook.kindOf(d.id());
+            for (int phase = 1; phase <= 2; phase++) {
+                int style = BeastWillManager.style(d, phase);
+                if (BeastWillLook.phase(style) != phase || BeastWillLook.kind(style) != kind || BeastWillLook.tint(style) != (d.tint() & 0xFFFFFF)) return Result.fail(d.id() + ": the aura style lost its phase, look kind or tint");
+            }
+            if (kind != BeastWillLook.UNKNOWN && !seen.add(kind)) return Result.fail(d.id() + " shares a look kind with another will");
+        }
+        for (String id : IDS) if (BeastWillLook.kindOf(id) == BeastWillLook.UNKNOWN) return Result.fail(id + " has no spirit look");
+        return Result.ok("the aura style carries phase, look kind and tint for " + BeastWillCatalog.size() + " wills; " + seen.size() + " distinct spirits");
     }
 
     private static Result rules(MinecraftServer server) {

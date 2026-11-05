@@ -1,5 +1,13 @@
 # Changelog
 
+## [3.57.0] — Beast Will spirits and solid cores
+- NEW: every Beast Will shows its own animal spirit in the form (Dragon, Panther, Elderwood Guardian, Lion, Ridge-Wolf, Crested Boar, Wind-Skimmer Raptor, Flame-Serpent, Thunder-Fang Chimera; the original four included): a body spirit in phase 1 and a second accent in phase 2 (wings, smoke, branches, mane, frost moon, dust, wind ribbons, flame wreath, lightning crown). 24 textures `particle/bwspirit_*`, `tools/beastwill/gen_spirit_textures.py`, doc `docs/beastwill_vfx.md`. Each ability also gets a per-will picture (at most 2 effect packets and 12 tinted particles per use). No new packet: the look rides in the existing aura style int.
+- FIXED (the see-through items): the 24 rank cores (E-SS x standard/beast/ancient) had every sphere face wound inside-out, so the near half was culled and you saw the far wall. Re-wound, glow moved to its own shell, icons made solid (`tools/solid_cores.py`, `docs/solid_cores.md`).
+- REPLACED: the flat Beast Will Core sprite is now a solid 3D orb (rough stone with glowing fissures), tinted per will (`BeastCoreLook`); the old sprite stays as the inventory icon (`beast_will_core_icon`), repainted solid.
+- KEPT: the old Beast Will look for unknown (data-pack) wills, all will data, every ability rule and number.
+- Cost: client at most 22 quads per player in full detail (within 24 blocks, first 6 players a frame), 8 in light detail, nothing beyond 48 blocks; a core in hand is at most 576 quads; server unchanged.
+- Not seen in a game or compiled before this release: spirit placement, sizes and the wolf / raptor art; the orb looks. Nen rework follows in the next release.
+
 ## [3.56.1] — Fix: Dragon Ball build
 - FIXED: 3.56.0 did not compile (the `skill.db` self-test asked the registry's generic skill type for `getType()`); it now asks the Dragon Ball skill itself. No gameplay change; 3.56.0's content ships in this release.
 

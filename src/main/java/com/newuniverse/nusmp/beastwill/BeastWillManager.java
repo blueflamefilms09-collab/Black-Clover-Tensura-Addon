@@ -251,8 +251,8 @@ public final class BeastWillManager {
         r.applied = key;
     }
 
-    /** The aura style: the phase in the top byte, the will's tint below (the client has no copy of the data files). */
-    public static int style(BeastWillDef def, int phase) { return (phase << 24) | (def.tint() & 0xFFFFFF); }
+    /** The aura style: the phase in bits 24..25, the look kind of the will in bits 26..29 ({@link BeastWillLook}, so the client can draw that beast's spirit), the tint below (the client has no copy of the data files). */
+    public static int style(BeastWillDef def, int phase) { return BeastWillLook.style(phase, BeastWillLook.kindOf(def.id()), def.tint()); }
 
     /** Takes the aura off the player; a stand-in with no connection (the self-test) has nothing to tell. */
     private static void auraOff(ServerPlayer p) {

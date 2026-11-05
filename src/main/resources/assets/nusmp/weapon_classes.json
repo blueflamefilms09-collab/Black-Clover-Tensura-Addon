@@ -496,6 +496,7 @@
     "core_s_ancient": "handitem",
     "core_ss_standard": "handitem",
     "core_ss_beast": "handitem",
-    "core_ss_ancient": "handitem"
+    "core_ss_ancient": "handitem",
+    "beast_will_core": "handitem"
   }
 }
