@@ -21,7 +21,9 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
 import net.neoforged.neoforge.event.level.BlockEvent;
+import net.neoforged.neoforge.event.server.ServerStoppingEvent;
 import net.neoforged.neoforge.event.tick.ServerTickEvent;
 
 import java.util.List;
@@ -37,7 +39,9 @@ public final class WizardLibrary {
 
     public static final ResourceKey<Level> DIMENSION = ResourceKey.create(Registries.DIMENSION, ResourceLocation.fromNamespaceAndPath("nusmp", "grimoire_library"));
     private static final String BOOK_TAG = "nusmp_library_book";
-    private static final int FLOOR_Y = 64, BOOKS = 26;
+    private static final int FLOOR_Y = 64, BOOKS = 26, SETTLE_TICKS = 60, MAX_NEW_BOOKS_PER_RUN = 8;
+    /** 3.59.1: game time the library last became occupied (-1 = empty). Books are only added once saved entities have had time to load, or a restart stacked a new set on the old one. */
+    private static long occupiedSince = -1;
     private static final String ORIGIN = "nusmp_library_origin";
 
     public static boolean inLibrary(net.minecraft.world.entity.Entity e) { return e.level().dimension() == DIMENSION; }
@@ -131,8 +135,12 @@ public final class WizardLibrary {
         List<ServerPlayer> players = lib.players();
         AABB all = new AABB(-80, FLOOR_Y - 20, -80, 80, FLOOR_Y + 60, 80);
         List<ItemEntity> books = lib.getEntitiesOfClass(ItemEntity.class, all, b -> b.getTags().contains(BOOK_TAG));
-        if (players.isEmpty()) { for (ItemEntity b : books) b.discard(); return; }
-        for (int i = books.size(); i < BOOKS; i++) {
+        if (players.isEmpty()) { occupiedSince = -1; for (ItemEntity b : books) b.discard(); return; }
+        long now = lib.getGameTime();
+        if (occupiedSince < 0) occupiedSince = now;
+        for (int i = BOOKS; i < books.size(); i++) books.get(i).discard();                  // 3.59.1: never more than BOOKS, whatever is found
+        boolean settled = now - occupiedSince >= SETTLE_TICKS;
+        for (int i = books.size(), made = 0; settled && i < BOOKS && made < MAX_NEW_BOOKS_PER_RUN; i++, made++) {
             ItemStack it = new ItemStack(i % 3 == 0 ? Items.ENCHANTED_BOOK : i % 3 == 1 ? Items.BOOK : Items.WRITABLE_BOOK);
             ItemEntity b = new ItemEntity(lib, 0.5, FLOOR_Y + 3, 0.5, it);
             b.setNoGravity(true);
@@ -148,6 +156,7 @@ public final class WizardLibrary {
             lib.addFreshEntity(b);
         }
         for (ItemEntity b : books) {
+            if (b.isRemoved()) continue;
             ServerPlayer near = players.get(0);
             for (ServerPlayer p : players) if (p.distanceToSqr(b) < near.distanceToSqr(b)) near = p;
             var d = b.getPersistentData();
@@ -159,6 +168,30 @@ public final class WizardLibrary {
             b.setDeltaMovement(to.scale(0.28));
             b.hurtMarked = true;
         }
+    }
+
+    /**
+     * 3.59.1: the fix for the runaway wizard and books. Saved entities load a moment after their chunk, so "no wizard here" and "no books here" were
+     * true right after a restart and a new wizard / a new set of 26 books was added on top of the saved ones, every time. Now (1) a library book that
+     * is LOADED FROM DISK is dropped (the books only exist while someone is inside and are made fresh), and (2) a Tower Wizard that joins a level with
+     * another one within 24 blocks is refused (the first one stays), so worlds that already hold thousands repair themselves as the chunk loads.
+     */
+    public static void onJoin(EntityJoinLevelEvent e) {
+        if (e.getLevel().isClientSide()) return;
+        var en = e.getEntity();
+        if (en instanceof ItemEntity it) {
+            if (e.loadedFromDisk() && it.getTags().contains(BOOK_TAG)) e.setCanceled(true);
+        } else if (en instanceof TowerWizardEntity w && e.getLevel() instanceof ServerLevel sl) {
+            if (!sl.getEntitiesOfClass(TowerWizardEntity.class, w.getBoundingBox().inflate(24), o -> o != w && !o.isRemoved()).isEmpty()) e.setCanceled(true);
+        }
+    }
+
+    /** The books are never saved with the world: they are removed as the server stops, and the room starts over the next time somebody enters. */
+    public static void onStopping(ServerStoppingEvent e) {
+        occupiedSince = -1;
+        ServerLevel lib = e.getServer().getLevel(DIMENSION);
+        if (lib == null) return;
+        for (ItemEntity b : lib.getEntitiesOfClass(ItemEntity.class, new AABB(-80, FLOOR_Y - 20, -80, 80, FLOOR_Y + 60, 80), b -> b.getTags().contains(BOOK_TAG))) b.discard();
     }
 
     /** Nothing in the library can be broken or taken (outside creative). */

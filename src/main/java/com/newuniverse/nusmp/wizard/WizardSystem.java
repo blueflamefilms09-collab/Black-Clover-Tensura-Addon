@@ -101,6 +101,7 @@ public final class WizardSystem {
     // ---------------------------------------------------------------- the wizard
     /** A wizard stands at the tower (spawned the first time an eligible mage comes near). */
     public static void ensureWizard(ServerLevel level, BlockPos at) {
+        if (!level.isLoaded(at)) return;                                                                    // 3.59.1: not while the chunk is still loading its saved wizard
         if (!level.getEntitiesOfClass(TowerWizardEntity.class, new AABB(at).inflate(24)).isEmpty()) return;
         TowerWizardEntity w = NUEntities.TOWER_WIZARD.get().create(level);
         if (w == null) return;

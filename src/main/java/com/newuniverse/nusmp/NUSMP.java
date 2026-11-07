@@ -330,6 +330,8 @@ public class NUSMP {
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.multiverse.Squads::onPlayerTick);
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.wizard.WizardLibrary::onServerTick);             // 1.11.0: the flying books
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.wizard.WizardLibrary::onBreak);
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.wizard.WizardLibrary::onJoin);                   // 3.59.1: no duplicate Tower Wizard, no stale library books from a save
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.wizard.WizardLibrary::onStopping);
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.wizard.WizardSystem::onPlayerTick);              // 1.6.0: the summons
         io.github.manasmods.tensura.event.TensuraEntityEvents.AWAKENING_EVENT.register((entity, flag) ->      // 1.8.0: the Wizard King cannot awaken as a hero or a demon lord
                 entity instanceof net.minecraft.world.entity.player.Player pl && com.newuniverse.nusmp.multiverse.WizardKing.isKing(pl)

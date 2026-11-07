@@ -355,7 +355,7 @@ public final class MultiverseCommands {
                     var w = com.newuniverse.nusmp.entity.NUEntities.TOWER_WIZARD.get().create(p.serverLevel());
                     if (w == null) return fail(ctx, "Could not create the wizard.");
                     w.moveTo(p.getX(), p.getY(), p.getZ(), p.getYRot(), 0f);
-                    p.serverLevel().addFreshEntity(w);
+                    if (!p.serverLevel().addFreshEntity(w)) return fail(ctx, "A Tower Wizard already stands within 24 blocks.");     // 3.59.1: one per place
                     return ok(ctx, "The Tower Wizard appears.");
                 })));
         root.then(Commands.literal("wizardking")                                                           // 1.6.0: the one-holder title
