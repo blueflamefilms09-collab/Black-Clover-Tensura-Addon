@@ -50,7 +50,7 @@ class BeastWillNewTest {
         BeastWillDef dragon = load("dragon_will");
         for (String id : LEGENDARY) {
             BeastWillDef d = load(id);
-            assertEquals(BeastRank.S, d.minRank(), id);
+            assertEquals(BeastRank.SS, d.minRank(), id + " (3.60.0 remake: the legendary three sit with the dragon)");
             assertTrue(d.dropChance() < dragon.dropChance(), id + " drops more rarely");
             assertTrue(d.assimilationSeconds() > dragon.assimilationSeconds() && d.masterySeconds() > 0.8 * dragon.masterySeconds(), id + " is slower");
             assertTrue(d.assimilationDayCap() < dragon.assimilationDayCap(), id + " is capped harder per day");
@@ -60,22 +60,23 @@ class BeastWillNewTest {
     }
 
     @Test
-    void rankFollowsTheBrief() throws Exception {
-        for (String id : List.of("minotaur_will", "hydra_will", "cu_sith_will")) assertEquals(BeastRank.B, load(id).minRank(), id);
-        for (String id : List.of("fenrir_will", "cerberus_will", "kraken_will", "scylla_charybdis_will", "sphinx_will", "pegasus_will", "kitsune_will", "nue_will", "ammit_will")) assertEquals(BeastRank.A, load(id).minRank(), id);
-        for (String id : List.of("jormungandr_will", "nidhoggr_will", "hafgufa_will")) {
+    void rankFollowsTheRemadeBrief() throws Exception {
+        // 3.60.0 (docs/beastwill_remake.md): the rank each remade will asks of its holder
+        for (String id : List.of("minotaur_will", "hydra_will", "cu_sith_will", "scylla_charybdis_will", "pegasus_will", "nue_will")) assertEquals(BeastRank.A, load(id).minRank(), id);
+        for (String id : List.of("fenrir_will", "cerberus_will", "kraken_will", "sphinx_will", "kitsune_will", "ammit_will", "jormungandr_will", "nidhoggr_will", "hafgufa_will")) {
             assertEquals(BeastRank.S, load(id).minRank(), id);
             assertFalse(load(id).legendary(), id);
         }
     }
 
     @Test
-    void theFenrirWillIsTheGodOfWarSoulWolfNotTheSunEater() throws Exception {
+    void theFenrirWillIsTheChainedWolfOfTheSoulAndSeals() throws Exception {
         BeastWillDef d = load("fenrir_will");
-        assertEquals("Fenrir (God of War)", d.beast());
+        assertEquals("Fenrir, the chained wolf", d.beast());
         assertEquals("Soul", d.affinity());
         assertEquals("restraining_vines", d.ability(BeastWillRules.INTEGRATE, 2).kind(), "the soul seal");
-        assertEquals("bark_ward", d.ability(BeastWillRules.ACQUIRE, 1).kind(), "the ward that protects the host");
+        assertEquals("shadow_dash", d.ability(BeastWillRules.ACQUIRE, 1).kind(), "the borrowed dash of the Acquire stage");
+        assertFalse(JsonParser.parseString(Files.readString(DIR.resolve("fenrir_will.json"))).getAsJsonObject().getAsJsonObject("acquire").get("equipPiece").getAsString().isBlank(), "every remade will names the one piece worn in Acquire");
     }
 
     @Test
@@ -112,7 +113,7 @@ class BeastWillNewTest {
         for (String id : BeastWillSchemaTest.LATER) {
             assertTrue(frag.has("nusmp.beastwill." + id + ".name") || en.contains("\"nusmp.beastwill." + id + ".name\""), id + " has no lang name");
             BeastWillDef d = load(id);
-            assertEquals(d.name(), frag.has(d.langKey("name")) ? frag.get(d.langKey("name")).getAsString() : d.name(), id + ": the lang name differs from the file name");
+            assertEquals(d.name(), JsonParser.parseString(en).getAsJsonObject().get(d.langKey("name")).getAsString(), id + ": the lang name differs from the file name");
             for (var ph : List.of(d.acquire(), d.integrate())) for (var a : ph.abilities()) {
                 String key = "nusmp.beastwill.ability." + a.id();
                 assertTrue(frag.has(key) || en.contains("\"" + key + "\""), a.id() + " has no lang name");

@@ -1,0 +1,140 @@
+{
+  "id": "hydra_will",
+  "name": "Hydra Will",
+  "beast": "Lernaean Hydra",
+  "affinity": "Venom",
+  "legendary": false,
+  "minRank": "B",
+  "sources": [],
+  "keywords": [
+    "hydra"
+  ],
+  "dropChance": 0.01,
+  "requireEp": 10000,
+  "hostRaces": [
+    "HUMAN",
+    "ELF",
+    "DWARF"
+  ],
+  "otherHostCompat": 0.6,
+  "assimilationSeconds": 4500,
+  "masterySeconds": 2900,
+  "assimilationDayCap": 0.3,
+  "masteryDayCap": 0.3,
+  "coreCooldownDays": 5,
+  "tint": 9418794,
+  "passive": [],
+  "acquire": {
+    "unlockAssimilation": 0.1,
+    "unlockMastery": 0.0,
+    "drainPct": 0.45,
+    "strainPerSecond": 0.1,
+    "regen": 0.0,
+    "stats": [
+      {
+        "attribute": "minecraft:generic.attack_damage",
+        "op": "add",
+        "amount": 1.5
+      },
+      {
+        "attribute": "minecraft:generic.max_health",
+        "op": "add",
+        "amount": 3.0
+      },
+      {
+        "attribute": "minecraft:generic.armor",
+        "op": "add",
+        "amount": 2.0
+      }
+    ],
+    "abilities": [
+      {
+        "id": "venom_fang",
+        "kind": "venom_spit",
+        "slot": 1,
+        "costPct": 3,
+        "cooldownTicks": 160,
+        "strain": 4,
+        "range": 6,
+        "radius": 6,
+        "durationTicks": 80,
+        "power": 2,
+        "maxTargets": 2,
+        "bossFactor": 0.6
+      },
+      {
+        "id": "head_regrowth",
+        "kind": "verdant_mend",
+        "slot": 2,
+        "costPct": 6,
+        "cooldownTicks": 800,
+        "strain": 6,
+        "range": 0,
+        "radius": 0,
+        "durationTicks": 100,
+        "power": 1.5,
+        "maxTargets": 1,
+        "bossFactor": 1.0
+      }
+    ]
+  },
+  "integrate": {
+    "unlockAssimilation": 0.95,
+    "unlockMastery": 0.5,
+    "drainPct": 1.0,
+    "strainPerSecond": 0.36,
+    "regen": 0.3,
+    "stats": [
+      {
+        "attribute": "minecraft:generic.attack_damage",
+        "op": "add",
+        "amount": 2.5
+      },
+      {
+        "attribute": "minecraft:generic.max_health",
+        "op": "add",
+        "amount": 7.0
+      },
+      {
+        "attribute": "minecraft:generic.armor",
+        "op": "add",
+        "amount": 3.0
+      },
+      {
+        "attribute": "minecraft:generic.knockback_resistance",
+        "op": "add",
+        "amount": 0.3
+      }
+    ],
+    "abilities": [
+      {
+        "id": "many_heads",
+        "kind": "vine_lash",
+        "slot": 1,
+        "costPct": 8,
+        "cooldownTicks": 140,
+        "strain": 9,
+        "range": 9,
+        "radius": 9,
+        "durationTicks": 40,
+        "power": 4,
+        "maxTargets": 3,
+        "bossFactor": 0.6
+      },
+      {
+        "id": "hydra_breath",
+        "kind": "venom_spit",
+        "slot": 2,
+        "costPct": 9,
+        "cooldownTicks": 300,
+        "strain": 11,
+        "range": 8,
+        "radius": 8,
+        "durationTicks": 120,
+        "power": 4,
+        "maxTargets": 4,
+        "bossFactor": 0.6
+      }
+    ]
+  }
+}

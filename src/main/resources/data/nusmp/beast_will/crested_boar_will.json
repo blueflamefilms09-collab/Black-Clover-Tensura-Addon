@@ -1,16 +1,16 @@
 {
   "id": "crested_boar_will",
   "name": "Crested Boar Will",
-  "beast": "Crested Boar",
+  "beast": "Crested Boar Elder",
   "affinity": "Stone",
   "legendary": false,
-  "minRank": "C",
+  "minRank": "A",
   "sources": [],
   "keywords": [
     "crested_boar"
   ],
-  "dropChance": 0.01,
-  "requireEp": 3500,
+  "dropChance": 0.015,
+  "requireEp": 10000,
   "hostRaces": [
     "HUMAN",
     "ELF",
@@ -22,7 +22,7 @@
   "assimilationDayCap": 0.45,
   "masteryDayCap": 0.45,
   "coreCooldownDays": 3,
-  "tint": 9132587,
+  "tint": 9336129,
   "passive": [
     {
       "attribute": "minecraft:generic.knockback_resistance",
@@ -33,7 +33,7 @@
   "acquire": {
     "unlockAssimilation": 0.1,
     "unlockMastery": 0.0,
-    "drainPct": 0.45,
+    "drainPct": 0.5,
     "strainPerSecond": 0.1,
     "regen": 0.0,
     "stats": [
@@ -55,10 +55,10 @@
     ],
     "abilities": [
       {
-        "id": "bark_ward",
+        "id": "crest_hide",
         "kind": "bark_ward",
         "slot": 1,
-        "costPct": 3,
+        "costPct": 4,
         "cooldownTicks": 500,
         "strain": 5,
         "range": 0,
@@ -66,10 +66,12 @@
         "durationTicks": 100,
         "power": 1,
         "maxTargets": 1,
-        "bossFactor": 1.0
+        "bossFactor": 1.0,
+        "name": "Crest Hide",
+        "effect": ""
       },
       {
-        "id": "shadow_dash",
+        "id": "rooting_rush",
         "kind": "shadow_dash",
         "slot": 2,
         "costPct": 4,
@@ -80,21 +82,29 @@
         "durationTicks": 0,
         "power": 1,
         "maxTargets": 1,
-        "bossFactor": 1.0
+        "bossFactor": 1.0,
+        "name": "Rooting Rush",
+        "effect": ""
       }
-    ]
+    ],
+    "equipPiece": "One pale stone tusk-guard clipped on the jaw; brown dust-kick streaks and a stone-grey impact afterimage."
   },
   "integrate": {
     "unlockAssimilation": 0.95,
     "unlockMastery": 0.5,
-    "drainPct": 1.0,
-    "strainPerSecond": 0.35,
+    "drainPct": 1.3,
+    "strainPerSecond": 0.55,
     "regen": 0.0,
     "stats": [
       {
         "attribute": "minecraft:generic.armor",
         "op": "add",
-        "amount": 3.0
+        "amount": 6.0
+      },
+      {
+        "attribute": "minecraft:generic.armor_toughness",
+        "op": "add",
+        "amount": 2.0
       },
       {
         "attribute": "minecraft:generic.max_health",
@@ -104,43 +114,69 @@
       {
         "attribute": "minecraft:generic.knockback_resistance",
         "op": "add",
-        "amount": 0.4
+        "amount": 0.6
       },
       {
         "attribute": "minecraft:generic.attack_damage",
         "op": "add",
-        "amount": 2.0
+        "amount": 3.5
       }
     ],
     "abilities": [
       {
-        "id": "draconic_pulse",
-        "kind": "draconic_pulse",
+        "id": "crest_gore",
+        "kind": "ambush",
         "slot": 1,
-        "costPct": 6,
-        "cooldownTicks": 160,
-        "strain": 8,
-        "range": 5,
-        "radius": 5,
-        "durationTicks": 30,
-        "power": 2,
-        "maxTargets": 4,
-        "bossFactor": 0.6
+        "costPct": 10,
+        "cooldownTicks": 260,
+        "strain": 14,
+        "range": 8,
+        "radius": 0,
+        "durationTicks": 0,
+        "power": 6,
+        "maxTargets": 1,
+        "bossFactor": 0.5,
+        "name": "Crest Gore",
+        "effect": ""
       },
       {
-        "id": "bark_ward",
-        "kind": "bark_ward",
+        "id": "tusk_quake",
+        "kind": "draconic_pulse",
         "slot": 2,
-        "costPct": 6,
-        "cooldownTicks": 600,
-        "strain": 8,
-        "range": 0,
-        "radius": 0,
-        "durationTicks": 160,
-        "power": 1,
-        "maxTargets": 1,
-        "bossFactor": 1.0
+        "costPct": 9,
+        "cooldownTicks": 160,
+        "strain": 12,
+        "range": 8,
+        "radius": 6,
+        "durationTicks": 60,
+        "power": 4,
+        "maxTargets": 6,
+        "bossFactor": 0.5,
+        "name": "Tusk Quake",
+        "effect": ""
       }
-    ]
+    ],
+    "transformation": "Full armoured form boar-beastman: tusked snout under a stone-crest helm, bristle ridge from skull to spine, hunched boulder pauldrons, hoofed digitigrade greaved legs, a short bristled tail and a stone tusk-lance on the forearm.",
+    "equip": {
+      "weapon": "A long stone tusk-lance grown from the right forearm.",
+      "armor": "Layered rock armour: stone-crest helm, hunched boulder pauldrons, banded stone greaves, hoof-plated feet.",
+      "hair_eyes": "Stone-hard bristle crest from skull to spine; small deep-set amber eyes.",
+      "aura": "Earth-brown aura with rock-dust and pebbles kicked up at the feet."
+    }
+  },
+  "beastNote": "Crested Boar Elder (A-class highland tusker)",
+  "lore": "The will of a highland tusker so old its bristle crest has turned to stone: it does not dodge, it walks through the blow and gores.",
+  "pitch": "The Crested Boar Elder is an A-class highland tusker whose bristle crest has turned to stone; it never dodges, it walks through the blow and gores. Acquire keeps you human with brown dust-kick streaks and one equipped piece, a stone tusk-guard on the jaw, for a hardened hide and a straight rooting rush. Integrate (Full armoured form) makes you a tusked, stone-crested boar-beastman in rock plate with a tusk-lance; it is the cheap A-rank tank with no ranged answer.",
+  "untrained": "An untrained holder cannot stop: the hide stiffens joints, the charge overruns the holder's own footing and strain climbs while the crest hardens the neck. CANON ADDENDUM 2: the will lies dormant in the holder's mana core until it is forcefully awakened (a flame sparked in the core); if the holder cannot suppress and balance it, the clashing energies wreck body and core and can kill (design: strain climbs fast, backlash damage, forced cancel at the cap); mastery means training both the holder's own core and the beast core, best taught by the beast itself. This will summons no beasts or hordes.",
+  "designTag": "DESIGN",
+  "spirit": {
+    "colors": [
+      "#8E7541",
+      "#4A3526",
+      "#EAD9B0"
+    ],
+    "echo": "A hulking boar-beastman in rock armour: tusked blunt snout under a stone-crest helm, ridge of stone bristles from skull to spine, massive hunched boulder pauldrons, hoofed digitigrade legs, short bristled tail, a tusk-lance on the forearm.",
+    "accent": "#EAD9B0",
+    "look": "A rust-brown orb crusted with ridged stone plates, two pale tusk curves wrapped round it and a dull ember glow in the cracks."
   }
 }

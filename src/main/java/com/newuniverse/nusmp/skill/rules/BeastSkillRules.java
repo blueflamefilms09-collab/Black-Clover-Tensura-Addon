@@ -90,250 +90,195 @@ public final class BeastSkillRules {
     private static final int BYP = DbRules.BYPASS, PAR = DbRules.PARALYZE, STUN = DbRules.STUN, FRZ = DbRules.FREEZE_PROJ, SNAP = DbRules.SNAP, BLIND = DbRules.BLIND, BLEED = DbRules.BLEED,
             HOME = DbRules.HOMING, IGN = DbRules.IGNORE_FRAMES, ARM = DbRules.ARMOR_BREAK, HEAL = DbRules.HEAL, MARK = DbRules.BURY;
 
-    // ---------------------------------------------------------------- the nine wills of 3.45.0
-    public static final Spec DRAGON = b("dragon", "Dragon Sovereign", "Wrath of the Mana Dragon", "Will of the Dragon", 0xFFFF8A2A, 1.00, true, "G:FIRE_PILLAR",
-            "Dragon: the strongest of the beast wills, legendary tier",
+    // ---------------------------------------------------------------- the nine wills of 3.45.0 (remade in 3.60.0)
+    public static final Spec DRAGON = b("dragon", "Dragon Sovereign", "Wrath of the Mana Dragon", "Wyrmheart", 0xFFB9A4FF, 1.0, true, "G:SPACE_TEAR",
+            "Dragon: The Dragon's Will, an Asuran dragon's will of the Indrath line (Aether) that Sylvia gave to Arthur",
             List.of(p("draconic_hide", "Draconic Hide", Pas.ARMOR, 6, 0), p("dragon_sight", "Dragon Sight", Pas.SENSE, 0, 28), p("draconic_vigor", "Draconic Vigor", Pas.REGEN, 0.015, 0)),
-            a("draconic_pulse", "Draconic Pulse", Prim.BLAST, 2000, 10, 60, 0, 9, 24, 0, SNAP | FRZ),
             a("dragon_breath", "Dragon Breath", Prim.BEAM, 3000, 12, 85, 52, 2.0, 12, 40, ARM),
-            c("wing_gale", "Wing Gale", Prim.STOP, 2600, 14, 40, 28, 4, 24, 30, FRZ | SNAP),
-            a("tail_crush", "Tail Crush", Prim.RUSH, 3400, 11, 50, 18, 0, 2, 20, ARM | SNAP),
+            a("aether_stasis", "Aether Stasis (Static Void)", Prim.STOP, 2600, 14, 40, 28, 4, 24, 30, FRZ | SNAP),
             f("dragon_kings_annihilation", "Dragon King's Annihilation", Prim.BEAM, 28000, 130, 150, 70, 4, 24, 60, BYP | FRZ | ARM | STUN));
 
-    public static final Spec SHADOW_PANTHER = b("shadow_panther", "Panther Sovereign", "Prowler of the Moonless Night", "Will of the Shadow Panther", 0xFF7A3CC8, 0.66, false, "G:SHADOW_POOL",
-            "Shadow Panther: a swift stalker, rare tier",
-            List.of(p("night_stride", "Night Stride", Pas.SWIFT, 0.25, 0), p("shadow_cloak", "Shadow Cloak", Pas.STEALTH, 0, 0), p("predators_grace", "Predator's Grace", Pas.ILLUSION, 0.20, 0)),
-            a("shadow_dash", "Shadow Dash", Prim.RUSH, 1800, 8, 40, 16, 0, 1, 20, SNAP | BLIND),
-            a("ambush_strike", "Ambush Strike", Prim.RUSH, 2600, 12, 70, 14, 0, 1, 0, IGN | BLEED),
-            c("claw_flurry", "Claw Flurry", Prim.BARRAGE, 3200, 14, 8, 8, 0, 10, 40, BLEED | STUN),
-            a("veil_of_night", "Veil of Night", Prim.VEIL, 2200, 20, 0, 10, 0, 1, 0, 0),
-            f("eclipse_of_a_thousand_claws", "Eclipse of a Thousand Claws", Prim.BARRAGE, 20000, 110, 12, 12, 0, 16, 60, BYP | BLEED | PAR));
+    public static final Spec SHADOW_PANTHER = b("shadow_panther", "Moonless Sovereign", "The Silence That Hunts", "Night Prowler", 0xFF5B3FA8, 0.7, false, "G:SHADOW_POOL",
+            "Shadow Panther: A panther of moonless dark that hushes wind and sound until it is only a rumour; the holder first borrows its reflexes",
+            List.of(p("night_stride", "Night Stride", Pas.SWIFT, 0.25, 0), p("shadow_cloak", "Shadow Cloak", Pas.STEALTH, 0, 0), p("predators_grace", "Predator's Grace", Pas.SENSE, 0, 16)),
+            a("ambush_strike", "Windsilence Pounce", Prim.RUSH, 1800, 8, 40, 16, 0, 1, 20, SNAP | BLIND),
+            a("claw_flurry", "Sound-Shear Claws", Prim.BARRAGE, 3200, 14, 8, 8, 0, 10, 40, BLEED | STUN),
+            f("eclipse_of_a_thousand_claws", "Moonless Hush", Prim.SEAL, 20000, 110, 0, 26, 0, 1, 160, PAR));
 
-    public static final Spec ELDERWOOD_GUARDIAN = b("elderwood_guardian", "Elderwood Sovereign", "Heart of the Ancient Grove", "Will of the Elderwood Guardian", 0xFF4FA04A, 0.64, false, "G:TREE_ROOTS",
-            "Elderwood Guardian: an ancient warden of the grove, rare tier",
-            List.of(p("bark_hide", "Bark Hide", Pas.ARMOR, 7, 0), p("heartwood_mend", "Heartwood Mend", Pas.REGEN, 0.02, 0), p("creeping_roots", "Creeping Roots", Pas.FROST, 0, 8)),
-            a("vine_lash", "Vine Lash", Prim.BEAM, 1800, 8, 45, 20, 1.0, 4, 30, STUN),
-            a("bark_ward", "Bark Ward", Prim.GUARD, 2400, 16, 0, 0, 8, 10, 200, HEAL),
-            c("restraining_roots", "Restraining Roots", Prim.SEAL, 3400, 22, 0, 26, 0, 1, 100, PAR),
-            a("verdant_mend", "Verdant Mend", Prim.CAPSULE, 3000, 24, 0, 0, 14, 24, 0, HEAL),
+    public static final Spec ELDERWOOD_GUARDIAN = b("elderwood_guardian", "Elder Grove Sovereign", "Heart of the Corrupted Grove", "Corrupted Grove", 0xFF1FBF5A, 0.7, false, "G:TREE_ROOTS",
+            "Elderwood Guardian: The will of a Vritra-corrupted, Hamadryad-like grove guardian",
+            List.of(p("bark_hide", "Bark Hide", Pas.ARMOR, 6, 0), p("creeping_blight", "Creeping Blight", Pas.BLIGHT, 0, 8), p("grove_sense", "Grove Sense", Pas.SENSE, 0, 16)),
+            a("vine_lance", "Vine Lance", Prim.BEAM, 1800, 8, 45, 20, 1.0, 4, 30, STUN),
+            a("restraining_roots", "Restraining Roots", Prim.SEAL, 3400, 22, 0, 26, 0, 1, 100, PAR),
             f("heart_of_the_elder_grove", "Heart of the Elder Grove", Prim.BLAST, 22000, 120, 90, 0, 14, 24, 120, PAR | SNAP | FRZ));
 
-    public static final Spec LION = b("lion", "Lion Sovereign", "King of the Golden Savanna", "Will of the Mana Lion", 0xFFE6B030, 0.68, false, "L:FIRE_LION",
-            "Lion: a pride king, rare tier",
-            List.of(p("mane_of_might", "Mane of Might", Pas.MIGHT, 2.0, 0), p("pride_bond", "Pride Bond", Pas.BOND, 0, 16), p("lions_courage", "Lion's Courage", Pas.FURY, 0, 0)),
-            a("roar_of_the_pride", "Roar of the Pride", Prim.BLAST, 2200, 12, 45, 0, 10, 24, 40, SNAP | STUN),
-            a("mane_surge", "Mane Surge", Prim.GUARD, 2600, 18, 0, 0, 8, 8, 200, HEAL),
+    public static final Spec LION = b("lion", "Sovereign of the Savanna", "King of the Golden Savanna", "Pride King", 0xFFE8B020, 0.68, false, "L:FIRE_LION",
+            "Lion: A pride-king lion's will: the first stage lends a lion's poise and a cub's roar, the second makes a lion king whose",
+            List.of(p("mane_of_might", "Mane of Might", Pas.MIGHT, 2.0, 0), p("pride_bond", "Pride's Watch", Pas.SENSE, 0, 16), p("lions_courage", "Lion's Courage", Pas.FURY, 0, 0)),
+            a("world_howl_beam", "World Howl", Prim.BEAM, 3000, 12, 85, 52, 2.0, 12, 40, ARM),
             a("royal_pounce", "Royal Pounce", Prim.RUSH, 2800, 10, 65, 18, 0, 1, 20, SNAP),
-            c("rend_and_tear", "Rend and Tear", Prim.BARRAGE, 3200, 14, 9, 8, 0, 8, 30, BLEED),
             f("sovereigns_roar", "Sovereign's Roar", Prim.STOP, 24000, 120, 100, 24, 6, 24, 100, STUN | SNAP | BYP | FRZ));
 
-    public static final Spec RIDGE_WOLF = b("ridge_wolf", "Wolf Sovereign", "Alpha of the Ridge", "Will of the Ridge Wolf", 0xFF8FA0B8, 0.50, false, "L:SLASH_WAVE",
-            "Ridge Wolf: a pack hunter, common tier",
+    public static final Spec RIDGE_WOLF = b("ridge_wolf", "Moonfang Alpha", "Alpha of the Ridge", "Pack Hunter", 0xFF79B1BA, 0.62, false, "L:SLASH_WAVE",
+            "Ridge-Elder Fang: The will of the elder wolf that rules a mountain ridge: it never loses a trail, hamstrings fleeing prey and calls its",
             List.of(p("pack_runner", "Pack Runner", Pas.SWIFT, 0.22, 0), p("keen_nose", "Keen Nose", Pas.SENSE, 0, 24), p("pack_bond", "Pack Bond", Pas.BOND, 0, 20)),
             a("fang_bite", "Fang Bite", Prim.RUSH, 1500, 8, 35, 14, 0, 2, 0, BLEED),
-            a("ridge_howl", "Ridge Howl", Prim.BLAST, 2000, 14, 30, 0, 9, 24, 30, STUN | SNAP),
-            c("pack_hunt", "Pack Hunt", Prim.BARRAGE, 2600, 14, 7, 8, 0, 12, 30, BLEED | STUN),
             a("pin_down", "Pin Down", Prim.SEAL, 2400, 16, 0, 20, 0, 1, 80, PAR),
-            f("hunt_of_a_thousand_fangs", "Hunt of a Thousand Fangs", Prim.BARRAGE, 15000, 100, 11, 10, 0, 20, 60, BLEED | IGN | STUN));
+            f("hunt_of_a_thousand_fangs", "The Long Hunt", Prim.BARRAGE, 15000, 100, 11, 10, 0, 20, 60, BLEED | IGN | STUN));
 
-    public static final Spec CRESTED_BOAR = b("crested_boar", "Boar Sovereign", "Unstoppable Tusk of the Highlands", "Will of the Crested Boar", 0xFFB06038, 0.52, false, "L:EARTH_RAMPAGE",
-            "Crested Boar: a charging bruiser, common tier",
+    public static final Spec CRESTED_BOAR = b("crested_boar", "Avalanche Sovereign", "Unstoppable Tusk of the Highlands", "Highland Tusker", 0xFF8E7541, 0.62, false, "L:EARTH_RAMPAGE",
+            "Crested Boar: The will of a highland tusker so old its bristle crest has turned to stone: it does not dodge, it walks through the",
             List.of(p("thick_hide", "Thick Hide", Pas.ARMOR, 5, 0), p("unstoppable_charge", "Unstoppable Charge", Pas.MIGHT, 1.5, 0), p("boars_fury", "Boar's Fury", Pas.FURY, 0, 0)),
             a("gore", "Gore", Prim.RUSH, 1800, 9, 55, 16, 0, 1, 20, SNAP | ARM),
-            a("tusk_sweep", "Tusk Sweep", Prim.BLAST, 2200, 12, 40, 0, 6, 16, 30, SNAP | STUN),
-            a("bulwark", "Bulwark", Prim.GUARD, 2400, 18, 0, 0, 6, 8, 160, FRZ),
-            c("trample", "Trample", Prim.STOP, 2800, 14, 45, 22, 3, 16, 40, SNAP | FRZ),
-            f("crested_avalanche", "Crested Avalanche", Prim.RUSH, 16000, 100, 90, 24, 0, 3, 60, ARM | SNAP | STUN | IGN));
+            a("trample", "Trample", Prim.STOP, 2800, 14, 45, 22, 3, 16, 40, SNAP | FRZ),
+            f("crested_avalanche", "Crested Avalanche", Prim.BLAST, 16000, 100, 90, 0, 14, 24, 120, PAR | SNAP | FRZ));
 
-    public static final Spec WIND_SKIMMER = b("wind_skimmer", "Skimmer Sovereign", "Rider of the Endless Gale", "Will of the Wind Skimmer", 0xFF5CD6B8, 0.54, false, "L:WIND_EMPEROR",
-            "Wind Skimmer: a fast flier, common tier",
-            List.of(p("gale_stride", "Gale Stride", Pas.SWIFT, 0.30, 0), p("featherfall", "Featherfall", Pas.FLIGHT, 0, 0), p("wind_veil", "Wind Veil", Pas.ILLUSION, 0.22, 0)),
+    public static final Spec WIND_SKIMMER = b("wind_skimmer", "Tempest Skimmer", "Rider of the Endless Gale", "Gale Skimmer", 0xFF2CFAFF, 0.62, false, "L:WIND_ZEPHYR",
+            "Wind-Skimmer Raptor: The will of an elder raptor that skims the top of the gale: it never lands hard, fades into clouds and falls on prey",
+            List.of(p("gale_stride", "Gale Stride", Pas.SWIFT, 0.3, 0), p("featherfall", "Featherfall", Pas.FLIGHT, 0, 0), p("wind_veil", "Wind Veil", Pas.ILLUSION, 0.22, 0)),
             a("gale_cut", "Gale Cut", Prim.BEAM, 1700, 7, 40, 36, 1.2, 6, 0, 0),
             a("skimming_dash", "Skimming Dash", Prim.RUSH, 1800, 9, 35, 22, 0, 1, 20, SNAP),
-            a("cyclone_ring", "Cyclone Ring", Prim.BLAST, 2400, 13, 35, 0, 8, 16, 30, SNAP | FRZ),
-            c("wind_wall", "Wind Wall", Prim.STOP, 2400, 14, 30, 20, 4, 16, 20, FRZ | SNAP),
             f("skimmers_tempest", "Skimmer's Tempest", Prim.BEAM, 18000, 100, 80, 60, 3, 24, 40, FRZ | SNAP));
 
-    public static final Spec FLAME_SERPENT = b("flame_serpent", "Serpent Sovereign", "Coil of the Burning Sky", "Will of the Flame Serpent", 0xFFE8501C, 0.66, false, "L:FIRE_SPIRAL",
-            "Flame Serpent: a molten coil, rare tier",
-            List.of(p("ember_scales", "Ember Scales", Pas.SCORCH, 0, 5), p("serpents_heat", "Serpent's Heat", Pas.ARMOR, 3, 0), p("coil_regeneration", "Coil Regeneration", Pas.REGEN, 0.012, 0)),
+    public static final Spec FLAME_SERPENT = b("flame_serpent", "Cremation Sovereign", "Elder of the Cooling Lava", "Molten Coil", 0xFFFF3A00, 0.66, false, "L:FIRE_SPIRAL",
+            "Flame-Serpent: The will of an elder serpent whose scales glow like cooling lava: it senses living heat, hides in heat haze, spits",
+            List.of(p("ember_scales", "Ember Scales", Pas.ARMOR, 3, 0), p("serpents_heat", "Serpent's Heat", Pas.SCORCH, 0, 5), p("coil_regeneration", "Coil Regeneration", Pas.REGEN, 0.012, 0)),
             a("fire_fang", "Fire Fang", Prim.RUSH, 1800, 8, 50, 14, 0, 1, 0, BLEED | SNAP),
             a("ember_spit", "Ember Spit", Prim.BEAM, 2000, 9, 55, 40, 1.2, 6, 0, ARM),
-            a("scorching_coil", "Scorching Coil", Prim.BLAST, 2600, 13, 50, 0, 8, 20, 40, SNAP | STUN),
-            c("heat_haze", "Heat Haze", Prim.VEIL, 2200, 18, 0, 10, 0, 1, 0, 0),
             f("serpents_cremation", "Serpent's Cremation", Prim.BEAM, 22000, 120, 115, 56, 3, 24, 60, BYP | ARM));
 
-    public static final Spec THUNDER_FANG_CHIMERA = b("thunder_fang_chimera", "Chimera Sovereign", "Three Heads of the Thunder", "Will of the Thunder Fang Chimera", 0xFFF2D83A, 0.72, false, "G:LIGHTNING_GOD",
-            "Thunder Fang Chimera: a storm hybrid, epic tier",
+    public static final Spec THUNDER_FANG_CHIMERA = b("thunder_fang_chimera", "Thunder-Fang Sovereign", "Lion, Ram and Serpent of the Storm", "Three-Headed Tempest", 0xFFF4F25C, 0.72, false, "G:LIGHTNING_GOD",
+            "Thunder-Fang Chimera: The will of a three-bodied storm beast: a lion's fangs, a ram's charge and a venomous serpent tail, all crackling with",
             List.of(p("thunder_pace", "Thunder Pace", Pas.SWIFT, 0.22, 0), p("chimeras_hunger", "Chimera's Hunger", Pas.MIGHT, 2.0, 0), p("storm_hide", "Storm Hide", Pas.ARMOR, 4, 0)),
             a("thunder_fang", "Thunder Fang", Prim.RUSH, 2000, 8, 60, 18, 0, 1, 20, IGN | STUN),
-            a("chain_bolt", "Chain Bolt", Prim.BEAM, 2200, 9, 60, 46, 1.4, 8, 30, STUN),
-            a("thunder_roar", "Thunder Roar", Prim.BLAST, 2800, 14, 55, 0, 9, 24, 40, SNAP | PAR),
-            c("triple_headed_assault", "Triple-Headed Assault", Prim.BARRAGE, 3400, 14, 10, 8, 0, 9, 30, STUN | BLEED),
+            a("chain_bolt", "Ram's Chain Bolt", Prim.BEAM, 2200, 9, 60, 46, 1.4, 8, 30, STUN),
             f("skyfall_of_the_chimera", "Skyfall of the Chimera", Prim.BLAST, 24000, 120, 110, 40, 14, 24, 100, PAR | FRZ | BYP | SNAP));
 
-    // ---------------------------------------------------------------- the eighteen legendary and mythic wills
-    /** God of War's Fenrir (the owner's word): Atreus's loyal wolf, whose soul-light was sealed into the giant wolf Garm. The moves are themed on that lore; the game's own moves are NOT verified. */
-    public static final Spec FENRIR = b("fenrir", "Fenrir Sovereign", "Soul-Light of the Giant Wolf", "Fenrir's Loyal Soul", 0xFFB8E4FF, 0.95, true, "G:PAINT_BEAST",
-            "Fenrir (God of War): the loyal wolf whose soul became a giant, legendary tier",
-            List.of(p("soul_light", "Soul-Light", Pas.REGEN, 0.02, 0), p("frostbound_coat", "Frostbound Coat", Pas.FROST, 0, 9), p("loyal_guardian", "Loyal Guardian", Pas.BOND, 0, 18)),
-            a("call_of_the_spirit_wolf", "Call of the Spirit Wolf", Prim.BLAST, 2400, 12, 55, 0, 10, 24, 40, SNAP | STUN),
-            a("soul_frost_breath", "Soul-Frost Breath", Prim.BEAM, 3000, 12, 80, 48, 2.0, 10, 50, STUN),
-            a("soul_seal", "Soul Seal", Prim.SEAL, 3600, 22, 0, 28, 0, 1, 100, PAR),
-            c("garms_pounce", "Garm's Pounce", Prim.RUSH, 2800, 10, 60, 20, 0, 2, 20, SNAP | IGN),
-            f("soul_of_the_wolf_unleashed", "Soul of the Wolf, Unleashed", Prim.BLAST, 26000, 130, 125, 14, 12, 24, 80, SNAP | BYP | STUN | FRZ | ARM));
+    // ---------------------------------------------------------------- the eighteen legendary and mythic wills (remade in 3.60.0)
+    public static final Spec FENRIR = b("fenrir", "Fenrir, Chain-Breaker", "The Wolf Who Breaks the Chain", "Loyal Soul-Light", 0xFF87F1FF, 0.95, false, "G:SEAL_CHAINS",
+            "Fenrir: A great pale wolf whose will is loyalty itself: a chain-breaker whose jaws gape wide at the end of the world",
+            List.of(p("soul_light", "Soul-Light", Pas.REGEN, 0.02, 0), p("frostbound_coat", "Frostbound Coat", Pas.FROST, 0, 9), p("loyal_stride", "Loyal Stride", Pas.SWIFT, 0.08, 0)),
+            a("garms_pounce", "Garm's Pounce", Prim.RUSH, 2800, 10, 60, 20, 0, 2, 20, SNAP | IGN),
+            a("soul_frost_howl", "Soul-Frost Howl", Prim.BLAST, 2400, 12, 55, 0, 10, 24, 40, SNAP | STUN),
+            f("gleipnir_breaks", "Gleipnir Breaks", Prim.BEAM, 26000, 130, 150, 70, 4, 24, 60, BYP | FRZ | ARM | STUN));
 
-    public static final Spec JORMUNGANDR = b("jormungandr", "Jormungandr Sovereign", "The Serpent Who Circles the World", "Will of the World Serpent", 0xFF3C8F7A, 0.96, true, "L:WATER_DRAGON",
-            "Jormungandr: the world serpent, legendary tier",
+    public static final Spec JORMUNGANDR = b("jormungandr", "The World-Circling Serpent", "The Serpent Who Circles the World", "Sea Serpent Jormungandr", 0xFF1F4FB0, 0.96, false, "G:WATERFX_ZONE",
+            "Jormungandr: The Midgard Serpent circles the world sea with its tail in its mouth; its venom meets Thor at Ragnarok",
             List.of(p("world_serpent_scales", "World-Serpent Scales", Pas.ARMOR, 7, 0), p("encircling_venom", "Encircling Venom", Pas.VENOM, 0, 6), p("ocean_blood", "Ocean Blood", Pas.TIDE, 0, 0)),
             a("venom_fang", "Venom Fang", Prim.RUSH, 2200, 9, 55, 16, 0, 1, 20, BLEED),
-            a("tidal_coil", "Tidal Coil", Prim.BLAST, 2800, 13, 55, 0, 10, 24, 40, SNAP | STUN),
-            a("constrict", "Constrict", Prim.SEAL, 3600, 20, 0, 24, 0, 1, 120, PAR),
-            c("tail_lash", "Tail Lash", Prim.STOP, 2600, 12, 50, 24, 4, 20, 30, FRZ | SNAP),
-            f("world_encircling_coil", "World-Encircling Coil", Prim.BLAST, 30000, 140, 120, 0, 18, 24, 140, PAR | STUN | ARM | FRZ | BYP));
+            a("tail_lash", "Tail Lash", Prim.STOP, 2600, 12, 50, 24, 4, 20, 30, FRZ | SNAP),
+            f("world_ring", "World Ring", Prim.STOP, 30000, 140, 100, 24, 6, 24, 100, STUN | SNAP | BYP | FRZ));
 
-    public static final Spec CERBERUS = b("cerberus", "Cerberus Sovereign", "Three Heads at the Gate of the Dead", "Will of the Hellhound", 0xFFC02828, 0.82, true, "F:SPACE_PORTAL",
-            "Cerberus: the three-headed hound of Hades, mythic tier",
-            List.of(p("gatekeepers_hide", "Gatekeeper's Hide", Pas.ARMOR, 5, 0), p("three_heads_vigil", "Three Heads' Vigil", Pas.SENSE, 0, 26), p("hellhound_fury", "Hellhound Fury", Pas.FURY, 0, 0)),
-            a("hellfire_bite", "Hellfire Bite", Prim.RUSH, 2200, 9, 55, 16, 0, 2, 0, BLEED | SNAP),
+    public static final Spec CERBERUS = b("cerberus", "Threefold Hellgate", "Keeper of the Threshold", "Hound of the Gate", 0xFF8C1010, 0.85, false, "F:SEAL_TRINITY",
+            "Cerberus: A giant mana hound with three snarling heads whose will keeps a threshold: nothing it guards gets out and nothing",
+            List.of(p("gatekeeper_hide", "Gatekeeper's Hide", Pas.ARMOR, 5, 0), p("three_heads_vigil", "Three Heads' Vigil", Pas.SENSE, 0, 26), p("hellhound_fury", "Hellhound Fury", Pas.FURY, 0, 0)),
+            a("fire_bite", "Hellfire Bite", Prim.RUSH, 2200, 9, 55, 16, 0, 2, 0, BLEED | SNAP),
             a("triple_bark", "Triple Bark", Prim.BLAST, 2400, 12, 45, 0, 9, 24, 40, STUN | SNAP),
-            a("hellfire_breath", "Hellfire Breath", Prim.BEAM, 3000, 12, 70, 36, 2.5, 10, 0, ARM),
-            c("guard_of_the_gate", "Guard of the Gate", Prim.GUARD, 2600, 18, 0, 0, 7, 8, 200, FRZ | HEAL),
-            f("triple_gate_of_hades", "Triple Gate of Hades", Prim.BARRAGE, 24000, 120, 15, 12, 0, 18, 80, BYP | PAR | BLEED));
+            f("hellgate_closes", "Hellgate Closes", Prim.SEAL, 24000, 120, 0, 26, 0, 1, 160, PAR));
 
-    public static final Spec MINOTAUR = b("minotaur", "Minotaur Sovereign", "Master of the Labyrinth", "Will of the Labyrinth Bull", 0xFFA6732E, 0.72, false, "G:EARTH_CLAWS",
-            "Minotaur: the bull of the labyrinth, epic tier",
-            List.of(p("labyrinth_hide", "Labyrinth Hide", Pas.ARMOR, 6, 0), p("bulls_rage", "Bull's Rage", Pas.FURY, 0, 0), p("maze_sense", "Maze Sense", Pas.SENSE, 0, 24)),
-            a("horn_charge", "Horn Charge", Prim.RUSH, 2400, 9, 70, 20, 0, 1, 20, SNAP | ARM),
-            a("labrys_cleave", "Labrys Cleave", Prim.BEAM, 2400, 10, 65, 8, 3, 6, 0, ARM),
-            c("bellowing_challenge", "Bellowing Challenge", Prim.BLAST, 2000, 14, 30, 0, 10, 24, 80, STUN | SNAP),
-            a("maze_wall", "Maze Wall", Prim.GUARD, 2400, 16, 0, 0, 6, 8, 180, FRZ),
-            f("labyrinths_last_charge", "Labyrinth's Last Charge", Prim.RUSH, 20000, 110, 120, 26, 0, 3, 60, ARM | STUN | IGN | SNAP));
+    public static final Spec MINOTAUR = b("minotaur", "Asterion, Lord of the Labyrinth", "The Beast at the Maze's Heart", "Bull of the Labyrinth", 0xFF534429, 0.75, false, "G:TRIAL_LABYRINTH",
+            "Minotaur: A bull-headed giant of the stone maze, enraged and untiring, who always finds the way to its prey",
+            List.of(p("bull_hide", "Bull Hide", Pas.ARMOR, 6, 0), p("maze_sense_pas", "Maze-Sense", Pas.SENSE, 0, 24), p("endless_rage", "Endless Rage", Pas.FURY, 0, 0)),
+            a("labyrinth_charge", "Labyrinth Charge", Prim.RUSH, 2400, 9, 70, 20, 0, 1, 20, SNAP | ARM),
+            a("labrys_cleave", "Labrys Cleave", Prim.BLAST, 2000, 14, 30, 0, 10, 24, 80, STUN | SNAP),
+            f("maze_closes", "The Maze Closes", Prim.SEAL, 20000, 110, 0, 26, 0, 1, 160, PAR));
 
-    public static final Spec HYDRA = b("hydra", "Hydra Sovereign", "The Head That Grows Back", "Will of the Many-Headed Serpent", 0xFF58C040, 0.84, true, "L:POISON_BREATH",
-            "Hydra: the many-headed marsh serpent, mythic tier",
+    public static final Spec HYDRA = b("hydra", "Lernaean Hydra, the Head That Grows Back", "Cut One, Two Grow", "Marsh Serpent", 0xFFB8E03A, 0.84, false, "L:POISON_BREATH",
+            "Hydra: The Lernaean Hydra of the marsh: poison breath, many necks, heads that grow back when cut",
             List.of(p("regrowing_flesh", "Regrowing Flesh", Pas.REGEN, 0.025, 0), p("hydra_venom", "Hydra Venom", Pas.VENOM, 0, 7), p("many_heads_vigil", "Many Heads' Vigil", Pas.SENSE, 0, 24)),
             a("venom_bite", "Venom Bite", Prim.RUSH, 2000, 9, 45, 16, 0, 2, 0, BLEED | SNAP),
             a("acid_spray", "Acid Spray", Prim.BEAM, 2400, 10, 50, 30, 3, 12, 0, ARM | BLEED),
-            c("multi_head_strike", "Multi-Head Strike", Prim.BARRAGE, 3200, 14, 8, 8, 0, 9, 30, BLEED),
-            a("heads_together", "Heads Together", Prim.GUARD, 2600, 18, 0, 0, 6, 8, 180, HEAL),
             f("regrowing_heads", "Regrowing Heads", Prim.BARRAGE, 22000, 110, 14, 10, 0, 22, 80, BLEED | HEAL | STUN));
 
-    public static final Spec KRAKEN = b("kraken", "Kraken Sovereign", "Terror of the Deep Sea", "Will of the Deep Terror", 0xFF2A5FA8, 0.88, true, "G:WATER_NEST",
-            "Kraken: the tentacled terror of the deep, mythic tier",
+    public static final Spec KRAKEN = b("kraken", "Kraken, Fleet-Dragger of the Abyss", "Terror of the Deep Sea", "Deep Terror", 0xFFFF6153, 0.88, false, "G:WATER_NEST",
+            "Kraken: The Kraken of the northern sea: arms that seize ships, ink that blots the sea and a whirlpool when it dives",
             List.of(p("abyssal_hide", "Abyssal Hide", Pas.ARMOR, 4, 0), p("tide_caller", "Tide Caller", Pas.TIDE, 0, 0), p("ink_cloak", "Ink Cloak", Pas.STEALTH, 0, 0)),
             a("tentacle_lash", "Tentacle Lash", Prim.BEAM, 2200, 10, 60, 14, 2, 6, 30, STUN),
-            a("ink_burst", "Ink Burst", Prim.VEIL, 2200, 18, 0, 10, 0, 1, 0, 0),
             a("crushing_grip", "Crushing Grip", Prim.SEAL, 3600, 20, 0, 24, 0, 1, 120, PAR),
-            c("maelstrom_pull", "Maelstrom Pull", Prim.BLAST, 2800, 14, 50, 0, 10, 24, 40, SNAP),
             f("fleet_drowning_maelstrom", "Fleet-Drowning Maelstrom", Prim.BLAST, 28000, 130, 115, 0, 18, 24, 120, STUN | SNAP | ARM | FRZ));
 
-    public static final Spec HAFGUFA = b("hafgufa", "Hafgufa Sovereign", "The Island That Swallows Fleets", "Will of the Island-Fish", 0xFF4A8A96, 0.80, true, "F:FOOD_MAW",
-            "Hafgufa: the island-sized sea beast, mythic tier",
-            List.of(p("island_hide", "Island Hide", Pas.ARMOR, 8, 0), p("deep_tide", "Deep Tide", Pas.TIDE, 0, 0), p("bait_glow", "Bait Glow", Pas.SENSE, 0, 30)),
+    public static final Spec HAFGUFA = b("hafgufa", "Hafgufa, the Island That Swallows Fleets", "The Sea-Island That Lures and Swallows", "Island-Fish", 0xFF00BABD, 0.8, false, "G:BOSS_TIDE_SPOUT",
+            "Hafgufa: The Hafgufa floats like an island and breathes a sweet scent that draws fish, then ships, into its maw",
+            List.of(p("island_hide", "Island Hide", Pas.ARMOR, 8, 0), p("deep_tide", "Deep Tide", Pas.TIDE, 0, 0), p("bait_glow_pas", "Lure Light", Pas.SENSE, 0, 30)),
+            a("sweet_breath_cloud", "Sweet Breath", Prim.SEAL, 3000, 20, 0, 26, 0, 1, 100, PAR),
             a("gaping_maw", "Gaping Maw", Prim.BLAST, 2600, 13, 55, 0, 9, 20, 40, SNAP | STUN),
-            a("sweet_breath", "Sweet Breath", Prim.SEAL, 3000, 20, 0, 26, 0, 1, 100, PAR),
-            a("tidal_spout", "Tidal Spout", Prim.BEAM, 2400, 10, 60, 40, 2, 10, 0, SNAP),
-            c("island_back", "Island Back", Prim.GUARD, 2600, 18, 0, 0, 8, 10, 200, FRZ | HEAL),
-            f("island_swallows_the_fleet", "The Island Swallows the Fleet", Prim.BLAST, 26000, 130, 110, 6, 16, 24, 100, PAR | ARM | STUN));
+            f("island_swallows_fleet", "The Island Swallows the Fleet", Prim.BLAST, 26000, 130, 110, 6, 16, 24, 100, PAR | ARM | STUN));
 
-    public static final Spec TYPHON = b("typhon", "Typhon Sovereign", "Father of All Monsters", "Will of the Storm Giant", 0xFFA050E0, 1.00, true, "G:LIGHTNING_GOD",
-            "Typhon: the father of monsters, legendary tier",
-            List.of(p("hundred_throats", "Hundred Throats", Pas.MIGHT, 3.0, 0), p("storm_hide", "Storm Hide", Pas.ARMOR, 6, 0), p("serpent_legs", "Serpent Legs", Pas.FLIGHT, 0, 0), p("monstrous_vitality", "Monstrous Vitality", Pas.REGEN, 0.015, 0)),
+    public static final Spec TYPHON = b("typhon", "Typhon, Father of All Monsters", "Father of All Monsters", "Storm Giant", 0xFFD80023, 1.0, true, "G:LIGHTNING_FIEND",
+            "Typhon: Typhon, Father of Monsters: a hundred dragon heads that roar with every voice, fire in the eyes and vipers at the thighs",
+            List.of(p("hundred_throats", "Hundred Throats", Pas.MIGHT, 3.0, 0), p("storm_hide", "Storm Hide", Pas.ARMOR, 6, 0), p("viper_coils", "Viper Coils", Pas.VENOM, 0, 0)),
             a("storm_bolt", "Storm Bolt", Prim.BEAM, 3200, 11, 90, 52, 2, 12, 40, STUN),
-            a("serpent_coil_lash", "Serpent Coil Lash", Prim.BLAST, 3000, 12, 60, 0, 10, 24, 50, SNAP | STUN),
-            c("venom_torrent", "Venom Torrent", Prim.STOP, 3000, 14, 60, 30, 5, 24, 40, FRZ | SNAP),
-            a("fire_breath", "Fire Breath", Prim.BEAM, 3400, 13, 85, 44, 3, 12, 0, ARM | BLEED),
-            f("hundred_headed_tempest", "Hundred-Headed Tempest", Prim.STOP, 30000, 150, 125, 40, 7, 24, 120, FRZ | SNAP | PAR | BYP));
+            a("viper_hiss", "Viper Hiss", Prim.STOP, 3000, 14, 60, 30, 5, 24, 40, FRZ | SNAP),
+            f("hundred_headed_tempest", "Hundred-Headed Tempest", Prim.BLAST, 30000, 150, 90, 0, 14, 24, 120, PAR | SNAP | FRZ));
 
-    public static final Spec SCYLLA_CHARYBDIS = b("scylla_charybdis", "Strait Sovereign", "Scylla Above, Charybdis Below", "Will of the Devouring Strait", 0xFF5E7FB0, 0.80, true, "G:WATER_NEST",
-            "Scylla and Charybdis: the six-headed rock and the whirlpool, mythic tier",
+    public static final Spec SCYLLA_CHARYBDIS = b("scylla_charybdis", "Scylla and Charybdis, the Devouring Strait", "Scylla Above, Charybdis Below", "Strait Pair", 0xFF047A73, 0.8, false, "G:BOSS_TIDE_VORTEX",
+            "Scylla and Charybdis: On opposite sides of the narrow strait: Scylla with six snapping dog heads on the cliff, Charybdis the whirlpool beneath",
             List.of(p("whirlpool_hide", "Whirlpool Hide", Pas.TIDE, 0, 0), p("six_heads_vigil", "Six Heads' Vigil", Pas.SENSE, 0, 24), p("narrow_strait", "Narrow Strait", Pas.ARMOR, 4, 0)),
             a("scyllas_snatch", "Scylla's Snatch", Prim.RUSH, 2400, 9, 60, 16, 0, 2, 20, SNAP | BLEED),
-            a("charybdis_whirl", "Charybdis Whirl", Prim.BLAST, 2800, 13, 50, 0, 9, 24, 40, SNAP | STUN),
-            c("six_headed_bite", "Six-Headed Bite", Prim.BARRAGE, 3000, 14, 9, 8, 0, 6, 30, BLEED | STUN),
-            a("strait_ward", "Strait Ward", Prim.GUARD, 2600, 18, 0, 0, 7, 8, 180, FRZ),
-            f("between_scylla_and_charybdis", "Between Scylla and Charybdis", Prim.BLAST, 26000, 130, 115, 0, 16, 24, 120, ARM | PAR | SNAP));
+            a("six_headed_bite", "Six-Headed Bite", Prim.BARRAGE, 3000, 14, 9, 8, 0, 6, 30, BLEED | STUN),
+            f("between_scylla_and_charybdis", "Between Scylla and Charybdis", Prim.STOP, 26000, 130, 100, 24, 6, 24, 100, STUN | SNAP | BYP | FRZ));
 
-    public static final Spec SPHINX = b("sphinx", "Sphinx Sovereign", "Keeper of the Last Riddle", "Will of the Riddler", 0xFFD8B050, 0.78, true, "G:GAME_BOARD",
-            "Sphinx: the riddling guardian, mythic tier",
-            List.of(p("riddlers_gaze", "Riddler's Gaze", Pas.SENSE, 0, 30), p("stone_poise", "Stone Poise", Pas.ARMOR, 5, 0), p("mirage_veil", "Mirage Veil", Pas.ILLUSION, 0.25, 0)),
-            a("riddle_gaze", "Riddle Gaze", Prim.SEAL, 3000, 18, 0, 28, 0, 1, 100, PAR | BLIND),
-            a("stone_paw", "Stone Paw", Prim.RUSH, 2400, 9, 55, 16, 0, 1, 20, SNAP),
-            c("sandstorm_wing", "Sandstorm Wing", Prim.STOP, 2400, 12, 40, 22, 5, 20, 30, FRZ | BLIND),
-            a("enigma_mark", "Enigma Mark", Prim.SCAN, 2000, 14, 0, 0, 24, 24, 0, MARK),
-            f("riddle_of_judgement", "Riddle of Judgement", Prim.PSYCHIC, 24000, 130, 80, 40, 0, 3, 140, PAR | BLIND | ARM));
+    public static final Spec SPHINX = b("sphinx", "The Sphinx, Keeper of the Last Riddle", "Who Walks on Four, Two, Then Three", "Riddle-Keeper", 0xFF3A6FE8, 0.8, false, "G:RUNE_WRITING",
+            "Sphinx: A winged stone-lion with a calm human face that asks one question and keeps the silence for those who cannot answer",
+            List.of(p("stone_poise", "Stone Poise", Pas.ARMOR, 5, 0), p("riddle_sight", "Riddle Sight", Pas.SENSE, 0, 24), p("calm_mind", "Calm Mind", Pas.ILLUSION, 0.15, 0)),
+            a("riddle_of_ages", "Riddle of the Ages", Prim.PSYCHIC, 2800, 16, 0, 36, 0, 3, 80, PAR | BLIND),
+            a("winged_pounce", "Winged Pounce", Prim.RUSH, 2400, 9, 55, 16, 0, 1, 20, SNAP),
+            f("the_last_riddle", "The Last Riddle", Prim.SEAL, 24000, 130, 0, 26, 0, 1, 160, PAR));
 
-    public static final Spec PEGASUS = b("pegasus", "Pegasus Sovereign", "Star-Mane of the Heavens", "Will of the Winged Steed", 0xFFF4F0D8, 0.70, false, "L:LIGHT_BLADE",
-            "Pegasus: the winged steed of the heavens, epic tier",
-            List.of(p("winged_stride", "Winged Stride", Pas.SWIFT, 0.25, 0), p("sky_dancer", "Sky Dancer", Pas.FLIGHT, 0, 0), p("holy_mane", "Holy Mane", Pas.REGEN, 0.015, 0)),
-            a("sky_charge", "Sky Charge", Prim.RUSH, 2200, 8, 55, 24, 0, 1, 20, SNAP),
-            a("wing_gale_p", "Wing Gale", Prim.STOP, 2400, 12, 35, 24, 4, 16, 20, FRZ | SNAP),
-            a("radiant_mane", "Radiant Mane", Prim.CAPSULE, 3000, 22, 0, 0, 12, 24, 0, HEAL),
-            c("starlight_hooves", "Starlight Hooves", Prim.BARRAGE, 3000, 12, 9, 8, 0, 8, 20, STUN),
-            f("meteor_charge", "Meteor Charge", Prim.RUSH, 20000, 110, 125, 36, 0, 4, 40, BYP | IGN | SNAP | ARM));
+    public static final Spec PEGASUS = b("pegasus", "Pegasus, Star-Mane of the Heavens", "The Horse That Became a Constellation", "Winged Steed's Gallop", 0xFFFFFFFF, 0.7, false, "L:WING_FX1",
+            "Pegasus: A winged stallion of pure light whose hoofbeat can open a healing spring and whose gallop crosses the sky like a",
+            List.of(p("wing_beat", "Wing Beat", Pas.FLIGHT, 0, 0), p("star_swiftness", "Star Swiftness", Pas.SWIFT, 0.12, 0), p("divine_mend", "Divine Mend", Pas.REGEN, 0.015, 0)),
+            a("hoof_strike", "Hoof Strike", Prim.BLAST, 2000, 10, 60, 0, 9, 24, 0, SNAP | FRZ),
+            a("thunderbearer", "Thunderbearer", Prim.BEAM, 3000, 12, 85, 52, 2.0, 12, 40, ARM),
+            f("star_gallop", "Star Gallop", Prim.RUSH, 20000, 110, 125, 36, 0, 4, 40, BYP | IGN | SNAP | ARM));
 
-    public static final Spec CU_SITH = b("cu_sith", "Cu Sith Sovereign", "Green Hound of the Fairy Hills", "Will of the Faerie Hound", 0xFF2F7A52, 0.62, false, "L:WIND_GALE",
-            "Cu Sith: the silent green faerie hound, rare tier",
-            List.of(p("silent_paws", "Silent Paws", Pas.STEALTH, 0, 0), p("hounds_pace", "Hound's Pace", Pas.SWIFT, 0.25, 0), p("faerie_senses", "Faerie Senses", Pas.SENSE, 0, 26)),
-            a("spectral_snap", "Spectral Snap", Prim.RUSH, 1800, 8, 40, 16, 0, 1, 0, BLEED | SNAP),
-            a("three_barks", "Three Barks", Prim.BLAST, 2400, 14, 35, 0, 9, 24, 60, STUN | SNAP),
-            a("hunters_mark", "Hunter's Mark", Prim.SCAN, 2000, 14, 0, 0, 24, 24, 0, MARK),
-            c("faerie_mist", "Faerie Mist", Prim.VEIL, 2400, 18, 0, 10, 0, 1, 0, 0),
-            f("hunt_of_the_green_hound", "Hunt of the Green Hound", Prim.BARRAGE, 17000, 100, 10, 14, 0, 18, 60, BLEED | IGN | PAR));
+    public static final Spec CU_SITH = b("cu_sith", "Harbinger of the Third Bark", "The Silent Green Death-Omen", "Moor Hound's Bay", 0xFF7CFF8A, 0.7, false, "L:MIST_MAGIC",
+            "Cu Sith: A green-furred ghost hound of the moors whose paws leave no sound; its will carries a death-omen across mist and",
+            List.of(p("silent_paws", "Silent Paws", Pas.STEALTH, 0, 0), p("moor_swiftness", "Moor Swiftness", Pas.SWIFT, 0.1, 0), p("terror_sense", "Terror Sense", Pas.SENSE, 0, 22)),
+            a("first_bark", "First Bark", Prim.BLAST, 2400, 14, 35, 0, 9, 24, 60, STUN | SNAP),
+            a("moor_fade", "Moor Fade", Prim.VEIL, 2400, 18, 0, 10, 0, 1, 0, 0),
+            f("the_third_bark", "The Third Bark", Prim.BLAST, 17000, 100, 90, 0, 14, 24, 120, PAR | SNAP | FRZ));
 
-    public static final Spec NIDHOGGR = b("nidhoggr", "Nidhoggr Sovereign", "Gnawer at the Root of the World", "Will of the Root-Gnawer", 0xFF5A2E6E, 0.94, true, "G:KOTO_SLUDGE",
-            "Nidhoggr: the dragon gnawing the world tree, legendary tier",
+    public static final Spec NIDHOGGR = b("nidhoggr", "Nidhoggr, Gnawer at the Root of the World", "The Hunger Under Yggdrasil", "Root Gnawer", 0xFF579F0B, 0.94, false, "G:TREE_DRAIN",
+            "Nidhoggr: Nidhoggr gnaws Yggdrasil's roots in Niflheim and feeds on the dead; its will carries rot and hunger, a Vritra-like decay",
             List.of(p("root_gnawer", "Root Gnawer", Pas.BLIGHT, 0, 6), p("corpse_hide", "Corpse Hide", Pas.ARMOR, 6, 0), p("deathless_hunger", "Deathless Hunger", Pas.FURY, 0, 0)),
             a("root_bite", "Root Bite", Prim.RUSH, 2400, 9, 65, 16, 0, 2, 0, BLEED | ARM),
             a("corpse_breath", "Corpse Breath", Prim.BEAM, 3000, 11, 70, 40, 2.5, 10, 0, BLEED),
-            a("hall_of_the_dead", "Hall of the Dead", Prim.BLAST, 2800, 13, 55, 0, 9, 20, 40, STUN),
-            c("dread_hide", "Dread Hide", Prim.GUARD, 2800, 18, 0, 0, 7, 8, 200, FRZ),
             f("ragnaroks_gnawing", "Ragnarok's Gnawing", Prim.BEAM, 28000, 130, 135, 60, 4, 24, 80, BYP | ARM | BLEED | STUN));
 
-    public static final Spec YAMATA_NO_OROCHI = b("yamata_no_orochi", "Orochi Sovereign", "Eight Heads, Eight Valleys", "Will of the Eight-Headed Serpent", 0xFFC02060, 0.98, true, "L:WATER_DRAGON",
-            "Yamata no Orochi: the eight-headed serpent, legendary tier",
-            List.of(p("eight_heads_vigil", "Eight Heads' Vigil", Pas.SENSE, 0, 28), p("eight_tails_scales", "Eight-Tail Scales", Pas.ARMOR, 6, 0), p("orochi_regeneration", "Orochi Regeneration", Pas.REGEN, 0.02, 0)),
-            a("head_strike", "Head Strike", Prim.RUSH, 2400, 8, 65, 16, 0, 2, 20, SNAP | BLEED),
-            a("sake_mist", "Poison Sake Mist", Prim.BLAST, 2800, 13, 50, 0, 10, 24, 40, STUN | BLEED),
-            c("eight_head_bite", "Eight-Head Bite", Prim.BARRAGE, 3200, 14, 9, 8, 0, 8, 30, BLEED),
-            a("valley_flood", "Valley Flood", Prim.STOP, 3000, 14, 55, 28, 5, 24, 40, FRZ | SNAP),
-            f("eight_head_calamity", "Eight-Head Calamity", Prim.BARRAGE, 30000, 150, 16, 14, 0, 24, 100, BYP | BLEED | STUN | PAR | ARM));
+    public static final Spec YAMATA_NO_OROCHI = b("yamata_no_orochi", "Yamata no Orochi, Eight Heads, Eight Valleys", "Eight Heads, Eight Tails, Eight Floods", "Eight-Headed Serpent", 0xFFE01070, 0.98, true, "L:WATER_DRAGON",
+            "Yamata no Orochi: The eight-headed, eight-tailed serpent of Izumo, with eyes red as winter cherries, brought floods and was drowned in",
+            List.of(p("eight_heads_vigil", "Eight Heads' Vigil", Pas.SENSE, 0, 28), p("eight_tails_scales", "Eight Tails' Scales", Pas.ARMOR, 6, 0), p("orochi_regeneration", "Orochi Regeneration", Pas.REGEN, 0.02, 0)),
+            a("poison_sake_mist", "Poison Sake Mist", Prim.BLAST, 2800, 13, 50, 0, 10, 24, 40, STUN | BLEED),
+            a("eight_head_bite", "Eight-Head Bite", Prim.BARRAGE, 3200, 14, 9, 8, 0, 8, 30, BLEED),
+            f("eight_valleys_flood", "Eight Valleys Flood", Prim.STOP, 30000, 150, 100, 24, 6, 24, 100, STUN | SNAP | BYP | FRZ));
 
-    public static final Spec KITSUNE = b("kitsune", "Kitsune Sovereign", "Nine Tails of the Foxfire", "Will of the Fox Spirit", 0xFFF08A3A, 0.76, false, "G:FIRE_WILD",
-            "Kitsune: the nine-tailed fox spirit, epic tier",
-            List.of(p("illusionist", "Illusionist", Pas.ILLUSION, 0.30, 0), p("foxfire_mantle", "Foxfire Mantle", Pas.SCORCH, 0, 4), p("nine_tails_grace", "Nine Tails' Grace", Pas.SWIFT, 0.20, 0)),
-            a("foxfire", "Foxfire", Prim.BEAM, 2200, 9, 55, 40, 1.4, 6, 0, BLEED),
-            a("fox_glamour", "Fox Glamour", Prim.VEIL, 2400, 18, 0, 10, 0, 1, 0, 0),
-            a("illusory_bind", "Illusory Bind", Prim.SEAL, 3200, 20, 0, 26, 0, 1, 100, PAR | BLIND),
-            c("tail_whip", "Tail Whip", Prim.STOP, 2400, 12, 40, 20, 4, 16, 20, FRZ | SNAP),
-            f("nine_tailed_foxfire_rite", "Nine-Tailed Foxfire Rite", Prim.BLAST, 24000, 120, 105, 0, 16, 24, 100, STUN | BLIND | SNAP | BYP));
+    public static final Spec KITSUNE = b("kitsune", "Nine-Tailed Dream Sovereign", "The Fox Who Owns the Dream", "Fox Glamour", 0xFFFF7FB0, 0.8, false, "G:DREAM_DOME",
+            "Kitsune: A fox spirit whose tails grow with its mana; its will bends light and mind with foxfire and glamour",
+            List.of(p("glamour_veil", "Glamour Veil", Pas.ILLUSION, 0, 0), p("foxfire_ward", "Foxfire Ward", Pas.SCORCH, 0, 5), p("light_paws", "Light Paws", Pas.SWIFT, 0.1, 0)),
+            a("fox_step", "Fox Step", Prim.RUSH, 3400, 11, 50, 18, 0, 2, 20, ARM | SNAP),
+            a("kitsunebi", "Kitsunebi", Prim.BARRAGE, 3200, 14, 8, 8, 0, 10, 40, BLEED | STUN),
+            f("nine_tails_unveiled", "Nine Tails Unveiled", Prim.VEIL, 24000, 120, 0, 10, 0, 1, 0, 0));
 
-    public static final Spec NUE = b("nue", "Nue Sovereign", "Omen of the Black Cloud", "Will of the Night-Cry Chimera", 0xFF4A4A6E, 0.74, false, "G:LIGHTNING_GOD",
-            "Nue: the ominous chimera of the night, epic tier",
-            List.of(p("black_cloud_veil", "Black Cloud Veil", Pas.STEALTH, 0, 0), p("tiger_strength", "Tiger Strength", Pas.MIGHT, 2.0, 0), p("serpent_tail", "Serpent Tail", Pas.VENOM, 0, 5)),
-            a("thunder_cry", "Thunder Cry", Prim.BLAST, 2400, 13, 50, 0, 9, 24, 40, STUN | SNAP),
-            a("shadow_flit", "Shadow Flit", Prim.RUSH, 2200, 9, 50, 22, 0, 1, 20, BLIND | SNAP),
-            a("serpent_tail_whip", "Serpent Tail Whip", Prim.BEAM, 2000, 9, 50, 12, 2, 6, 0, BLEED),
-            c("eerie_night_cry", "Eerie Night Cry", Prim.SEAL, 3000, 20, 0, 24, 0, 1, 100, PAR | BLIND),
-            f("black_cloud_calamity", "Black Cloud Calamity", Prim.BEAM, 22000, 120, 110, 50, 4, 24, 80, PAR | BYP | FRZ));
+    public static final Spec NUE = b("nue", "Nue, Chimera of the Black Cloud", "The Cry That Calls the Storm", "Omen of the Night-Cry", 0xFF7A55B8, 0.8, false, "G:STORM_CLOUD",
+            "Nue: A night-chimera wrapped in black cloud whose cry is an omen: those who hear it fall ill and are struck by lightning",
+            List.of(p("chimera_hide", "Chimera Hide", Pas.ARMOR, 4, 0), p("snake_venom", "Snake-Tail Venom", Pas.VENOM, 0, 6), p("night_senses", "Night Senses", Pas.SENSE, 0, 20)),
+            a("ominous_cry", "Ominous Cry", Prim.BLAST, 2400, 13, 50, 0, 9, 24, 40, STUN | SNAP),
+            a("tiger_pounce", "Tiger Pounce", Prim.RUSH, 2200, 9, 50, 22, 0, 1, 20, BLIND | SNAP),
+            f("black_storm_omen", "Black Storm Omen", Prim.BARRAGE, 22000, 120, 12, 12, 0, 16, 60, BYP | BLEED | PAR));
 
-    public static final Spec AMMIT = b("ammit", "Ammit Sovereign", "Devourer of the Unworthy Heart", "Will of the Heart-Eater", 0xFFD0A830, 0.76, true, "F:FOOD_MAW",
-            "Ammit: the devourer of the dead, mythic tier",
-            List.of(p("heart_weigher", "Heart Weigher", Pas.SENSE, 0, 28), p("devourer_hide", "Devourer's Hide", Pas.ARMOR, 5, 0), p("crocodile_jaws", "Crocodile Jaws", Pas.MIGHT, 2.0, 0)),
-            a("devouring_bite", "Devouring Bite", Prim.RUSH, 2400, 9, 65, 16, 0, 1, 0, BLEED | ARM),
-            a("judgement_gaze", "Judgement Gaze", Prim.SEAL, 3200, 20, 0, 26, 0, 1, 100, PAR | MARK),
-            a("hippo_stomp", "Hippo Stomp", Prim.BLAST, 2600, 13, 50, 0, 8, 20, 40, SNAP | STUN),
-            c("scales_of_maat", "Scales of Ma'at", Prim.SCAN, 2200, 16, 0, 0, 22, 24, 0, MARK),
-            f("devourer_of_the_unworthy_heart", "Devourer of the Unworthy Heart", Prim.DISC, 26000, 130, 145, 40, 1.4, 1, 0, BYP | IGN | ARM | HOME));
+    public static final Spec AMMIT = b("ammit", "Devourer of Judgement", "The Feather and the Maw", "Heart-Weigher", 0xFFD6CC8E, 0.85, false, "G:JUDGMENT_SIGIL",
+            "Ammit: A mana beast of the dust-lands that weighs the heart of every foe it meets and devours the ones found wanting; its will",
+            List.of(p("weighed_heart", "Weighed Heart", Pas.SENSE, 0, 22), p("hippo_hide", "Hippo Hide", Pas.ARMOR, 5, 0), p("sin_taste", "Sin's Taste", Pas.FURY, 0, 0)),
+            a("feather_scale", "Feather Scale", Prim.SEAL, 3200, 20, 0, 26, 0, 1, 100, PAR | MARK),
+            a("maw_of_the_nile", "Maw of the Nile", Prim.RUSH, 2400, 9, 65, 16, 0, 1, 0, BLEED | ARM),
+            f("devour_the_unworthy", "Devour the Unworthy", Prim.BLAST, 26000, 130, 90, 0, 14, 24, 120, PAR | SNAP | FRZ));
 
-    public static final Spec APOPHIS = b("apophis", "Apophis Sovereign", "Serpent of the Unending Night", "Will of the Chaos Serpent", 0xFF4B2A7A, 0.97, true, "G:NIHILITY_ZONE",
-            "Apophis: the serpent of chaos who swallows the sun, legendary tier",
-            List.of(p("chaos_blight", "Chaos Blight", Pas.BLIGHT, 0, 7), p("darkness_cloak", "Darkness Cloak", Pas.STEALTH, 0, 0), p("endless_hunger", "Endless Hunger", Pas.REGEN, 0.015, 0)),
+    public static final Spec APOPHIS = b("apophis", "Apep, Devourer of the Sun", "Serpent of the Unending Night", "Chaos Serpent", 0xFF6A0F8C, 0.97, true, "G:NIHILITY_ZONE",
+            "Apophis: Apep, the endless serpent that swallows Ra's sun each dusk",
+            List.of(p("chaos_blight", "Chaos Blight", Pas.BLIGHT, 0, 7), p("dusk_cloak", "Dusk Cloak", Pas.STEALTH, 0, 0), p("endless_hunger", "Endless Hunger", Pas.REGEN, 0.015, 0)),
             a("hypnotic_gaze", "Hypnotic Gaze", Prim.SEAL, 3200, 18, 0, 28, 0, 1, 100, PAR | BLIND),
             a("coil_of_chaos", "Coil of Chaos", Prim.BLAST, 3000, 13, 60, 0, 10, 24, 40, STUN | SNAP),
-            a("venom_spit", "Venom Spit", Prim.BEAM, 3000, 11, 75, 40, 2, 10, 0, BLEED | ARM),
-            c("veil_of_darkness", "Veil of Darkness", Prim.VEIL, 2800, 20, 0, 10, 0, 1, 0, 0),
             f("night_without_dawn", "Night Without Dawn", Prim.BLAST, 30000, 150, 130, 0, 20, 24, 160, BLIND | PAR | BYP | ARM | STUN | FRZ));
 
     /** All 27, the nine of 3.45.0 first, then the eighteen. Order is the registration order: only ever append. */

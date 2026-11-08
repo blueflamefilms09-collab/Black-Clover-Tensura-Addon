@@ -9,7 +9,7 @@
   "keywords": [
     "hafgufa"
   ],
-  "dropChance": 0.006,
+  "dropChance": 0.005,
   "requireEp": 52000,
   "hostRaces": [
     "HUMAN",
@@ -22,7 +22,7 @@
   "assimilationDayCap": 0.2,
   "masteryDayCap": 0.2,
   "coreCooldownDays": 10,
-  "tint": 3039952,
+  "tint": 47805,
   "passive": [
     {
       "attribute": "minecraft:generic.knockback_resistance",
@@ -40,22 +40,17 @@
       {
         "attribute": "minecraft:generic.armor",
         "op": "add",
-        "amount": 4.0
+        "amount": 3.0
       },
       {
         "attribute": "minecraft:generic.max_health",
         "op": "add",
-        "amount": 6.0
+        "amount": 4.0
       },
       {
         "attribute": "minecraft:generic.knockback_resistance",
         "op": "add",
-        "amount": 0.35
-      },
-      {
-        "attribute": "minecraft:generic.attack_damage",
-        "op": "add",
-        "amount": 2.0
+        "amount": 0.3
       }
     ],
     "abilities": [
@@ -65,92 +60,118 @@
         "slot": 1,
         "costPct": 5,
         "cooldownTicks": 500,
-        "strain": 7,
+        "strain": 5,
         "range": 0,
         "radius": 0,
         "durationTicks": 140,
         "power": 1.5,
         "maxTargets": 1,
-        "bossFactor": 1.0
+        "bossFactor": 1.0,
+        "name": "Barnacle Hide",
+        "effect": "A crust of barnacles hardens over the skin: reduced damage for about 7 seconds."
       },
       {
-        "id": "deep_sight",
+        "id": "lure_glow",
         "kind": "dragon_sight",
         "slot": 2,
         "costPct": 4,
-        "cooldownTicks": 600,
-        "strain": 5,
-        "range": 20,
-        "radius": 20,
-        "durationTicks": 140,
+        "cooldownTicks": 400,
+        "strain": 4,
+        "range": 18,
+        "radius": 18,
+        "durationTicks": 120,
         "power": 1,
         "maxTargets": 6,
-        "bossFactor": 1.0
+        "bossFactor": 1.0,
+        "name": "Lure Glow",
+        "effect": "The brow glows with a pale lure and the holder senses the creatures it draws near, outlining up to six."
       }
-    ]
+    ],
+    "equipPiece": "One barnacle-crusted shoulder guard on the left shoulder (the only equipped piece); a ripple under each heavy step."
   },
   "integrate": {
     "unlockAssimilation": 0.95,
     "unlockMastery": 0.5,
-    "drainPct": 1.4,
-    "strainPerSecond": 0.45,
+    "drainPct": 1.6,
+    "strainPerSecond": 1.0,
     "regen": 0.3,
     "stats": [
       {
         "attribute": "minecraft:generic.armor",
         "op": "add",
-        "amount": 7.0
-      },
-      {
-        "attribute": "minecraft:generic.armor_toughness",
-        "op": "add",
-        "amount": 3.0
+        "amount": 8
       },
       {
         "attribute": "minecraft:generic.max_health",
         "op": "add",
-        "amount": 12.0
+        "amount": 10
       },
       {
         "attribute": "minecraft:generic.knockback_resistance",
         "op": "add",
-        "amount": 0.7
+        "amount": 0.75
       },
       {
         "attribute": "minecraft:generic.attack_damage",
         "op": "add",
-        "amount": 3.0
+        "amount": 3
       }
     ],
     "abilities": [
       {
-        "id": "great_swallow",
-        "kind": "maelstrom",
+        "id": "sweet_breath",
+        "kind": "dread_gaze",
         "slot": 1,
-        "costPct": 14,
-        "cooldownTicks": 1000,
-        "strain": 18,
-        "range": 0,
-        "radius": 10,
-        "durationTicks": 80,
-        "power": 6,
+        "costPct": 10,
+        "cooldownTicks": 600,
+        "strain": 16,
+        "range": 14,
+        "radius": 12,
+        "durationTicks": 120,
+        "power": 2,
         "maxTargets": 6,
-        "bossFactor": 0.3
+        "bossFactor": 0.4,
+        "name": "Sweet Breath",
+        "effect": "A sweet-smelling cloud rolls out: foes inside are lulled, slowed and drawn to stumble toward the holder."
       },
       {
-        "id": "island_back",
-        "kind": "bark_ward",
+        "id": "great_swallow",
+        "kind": "maelstrom",
         "slot": 2,
-        "costPct": 10,
-        "cooldownTicks": 900,
-        "strain": 12,
+        "costPct": 15,
+        "cooldownTicks": 600,
+        "strain": 20,
         "range": 0,
-        "radius": 0,
-        "durationTicks": 200,
-        "power": 2,
-        "maxTargets": 1,
-        "bossFactor": 1.0
+        "radius": 10,
+        "durationTicks": 100,
+        "power": 5,
+        "maxTargets": 6,
+        "bossFactor": 0.35,
+        "name": "Great Swallow",
+        "effect": "The maw opens and a swallowing current drags foes in, then slams shut for heavy damage."
       }
-    ]
+    ],
+    "transformation": "Whole body becomes a fish-whale beastman in barnacle-island armour: wide gaping maw with rows of teeth, glowing lure bulb on the brow, kelp-green hair, shell plates across back and shoulders, broad finned clawed arms with a jawbone maul, thick digitigrade legs and a heavy fluke tail.",
+    "equip": {
+      "weapon": "A whale-jawbone maul: a curved jaw of teeth grown from the maw, swung two-handed.",
+      "armor": "Barnacle-island shell plates over back and shoulders, finned bracers, a heavy tail-fluke skirt.",
+      "hair_eyes": "Long sea-green hair drifting like kelp; eyes pale with a lure-light glow.",
+      "aura": "Sweet pale mist with slow rising bubbles."
+    }
+  },
+  "beastNote": "Hafgufa, the Island-Sized Sea Monster",
+  "lore": "The Hafgufa floats like an island and breathes a sweet scent that draws fish, then ships, into its maw. Its will is a patient, heavy tide.",
+  "pitch": "The Hafgufa is an island-sized sea monster that lures prey with a sweet mist and swallows it whole. Acquire keeps you human with heavy ripple-steps and one barnacle shoulder guard, lending a hard hide and a lure-light that outlines nearby creatures. Integrate makes you a broad fish-whale beastman in barnacle-island armour with a gaping maw and a fluke tail, a near-unbreakable tank whose lulling breath and swallow current cost a slow, tiring strain.",
+  "untrained": "An untrained holder tires and feels the lure: slow heavy limbs, a ringing sweetness in the nose and a hunger to walk into the dark water; strain climbs while standing still. Canon: a will that is not suppressed or balanced disrupts body and mana core and can eventually kill the holder, so the first Awakening (forced, a spark in the core) is the most dangerous moment and training both cores is the cure.",
+  "designTag": "DESIGN",
+  "spirit": {
+    "colors": [
+      "#00BABD",
+      "#B7D8C0",
+      "#E8E1B0"
+    ],
+    "echo": "A broad heavy fish-whale beastman: huge gaping maw, barnacled island-like back, finned clawed arms, thick tail fluke, a lure-glow on the brow.",
+    "accent": "#E8E1B0",
+    "look": "A barnacle-crusted teal orb shaped like a small island; a pale lure-light glows in a slit on its top and exhales faint bubbles."
   }
 }

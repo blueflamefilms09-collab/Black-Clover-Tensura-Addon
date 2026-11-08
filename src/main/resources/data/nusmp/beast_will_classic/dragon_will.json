@@ -1,0 +1,165 @@
+{
+  "id": "dragon_will",
+  "name": "Dragon Will",
+  "beast": "Aether Dragon (Sylvia-inspired)",
+  "affinity": "Aether",
+  "legendary": true,
+  "minRank": "S",
+  "sources": [
+    "iceandfire:fire_dragon",
+    "iceandfire:ice_dragon",
+    "iceandfire:lightning_dragon"
+  ],
+  "keywords": [
+    "dragon"
+  ],
+  "dropChance": 0.004,
+  "requireEp": 50000,
+  "hostRaces": [
+    "HUMAN",
+    "ELF",
+    "DWARF"
+  ],
+  "otherHostCompat": 0.5,
+  "assimilationSeconds": 10800,
+  "masterySeconds": 7200,
+  "assimilationDayCap": 0.15,
+  "masteryDayCap": 0.15,
+  "coreCooldownDays": 14,
+  "tint": 8378111,
+  "passive": [
+    {
+      "attribute": "minecraft:generic.knockback_resistance",
+      "op": "add",
+      "amount": 0.1
+    }
+  ],
+  "acquire": {
+    "unlockAssimilation": 0.1,
+    "unlockMastery": 0.0,
+    "drainPct": 0.5,
+    "strainPerSecond": 0.12,
+    "regen": 0.0,
+    "stats": [
+      {
+        "attribute": "minecraft:generic.armor",
+        "op": "add",
+        "amount": 3.0
+      },
+      {
+        "attribute": "minecraft:generic.armor_toughness",
+        "op": "add",
+        "amount": 1.0
+      },
+      {
+        "attribute": "minecraft:generic.knockback_resistance",
+        "op": "add",
+        "amount": 0.2
+      },
+      {
+        "attribute": "minecraft:generic.movement_speed",
+        "op": "mult",
+        "amount": 0.05
+      }
+    ],
+    "abilities": [
+      {
+        "id": "dragon_sight",
+        "kind": "dragon_sight",
+        "slot": 1,
+        "costPct": 3,
+        "cooldownTicks": 600,
+        "strain": 4,
+        "range": 20,
+        "radius": 20,
+        "durationTicks": 120,
+        "power": 1,
+        "maxTargets": 6,
+        "bossFactor": 1.0
+      },
+      {
+        "id": "draconic_pulse",
+        "kind": "draconic_pulse",
+        "slot": 2,
+        "costPct": 4,
+        "cooldownTicks": 160,
+        "strain": 6,
+        "range": 6,
+        "radius": 6,
+        "durationTicks": 40,
+        "power": 3,
+        "maxTargets": 4,
+        "bossFactor": 0.6
+      }
+    ]
+  },
+  "integrate": {
+    "unlockAssimilation": 0.95,
+    "unlockMastery": 0.5,
+    "drainPct": 1.4,
+    "strainPerSecond": 0.45,
+    "regen": 0.0,
+    "stats": [
+      {
+        "attribute": "minecraft:generic.armor",
+        "op": "add",
+        "amount": 6.0
+      },
+      {
+        "attribute": "minecraft:generic.armor_toughness",
+        "op": "add",
+        "amount": 3.0
+      },
+      {
+        "attribute": "minecraft:generic.knockback_resistance",
+        "op": "add",
+        "amount": 0.5
+      },
+      {
+        "attribute": "minecraft:generic.max_health",
+        "op": "add",
+        "amount": 6.0
+      },
+      {
+        "attribute": "minecraft:generic.attack_damage",
+        "op": "add",
+        "amount": 3.0
+      },
+      {
+        "attribute": "minecraft:generic.movement_speed",
+        "op": "mult",
+        "amount": 0.1
+      }
+    ],
+    "abilities": [
+      {
+        "id": "draconic_breath",
+        "kind": "draconic_pulse",
+        "slot": 1,
+        "costPct": 7,
+        "cooldownTicks": 140,
+        "strain": 9,
+        "range": 8,
+        "radius": 8,
+        "durationTicks": 60,
+        "power": 6,
+        "maxTargets": 6,
+        "bossFactor": 0.6
+      },
+      {
+        "id": "time_exclusion",
+        "kind": "time_exclusion",
+        "slot": 2,
+        "costPct": 18,
+        "cooldownTicks": 1800,
+        "strain": 24,
+        "range": 0,
+        "radius": 7,
+        "durationTicks": 60,
+        "power": 1,
+        "maxTargets": 4,
+        "bossFactor": 0.0
+      }
+    ]
+  }
+}

@@ -59,11 +59,11 @@ class BeastSkillRulesTest {
         for (Spec s : BeastSkillRules.SPECS) { assertFalse(taken.contains(s.id()), s.id()); assertFalse(taken.contains(s.uniqueId()), s.uniqueId()); }
     }
 
-    @Test void everyBeastHasPassivesFourActivesAndOneFinisher() {
+    @Test void everyBeastHasThreePassivesTwoActivesAndOneFinisher() {
         Set<String> finisherNames = new HashSet<>();
         for (Spec s : BeastSkillRules.SPECS) {
-            assertTrue(s.passives().size() >= 2 && s.passives().size() <= 4, s.id() + " passives");
-            assertEquals(5, s.actives().size(), s.id() + " wheel size (4 actives + the finisher)");
+            assertEquals(3, s.passives().size(), s.id() + " passives (the remake gives every beast three)");
+            assertEquals(3, s.actives().size(), s.id() + " wheel size (3.60.0 remake: 2 actives + the finisher)");
             assertEquals(2, s.uniqueActives().size(), s.id() + " unique wheel size");
             assertNotNull(s.finisher(), s.id() + " finisher");
             assertEquals(1, s.actives().stream().filter(Mode::mastery).count(), s.id() + " finisher count");
@@ -113,9 +113,9 @@ class BeastSkillRulesTest {
 
     @Test void theFenrirIsTheGodOfWarWolf() {
         Spec f = BeastSkillRules.FENRIR;
-        assertEquals("Soul of the Wolf, Unleashed", f.finisher().name());
+        assertEquals("Gleipnir Breaks", f.finisher().name());
         assertTrue(f.passives().stream().anyMatch(p -> p.name().contains("Soul")), "soul-light passive");
-        assertTrue(f.actives().stream().anyMatch(m -> m.name().contains("Soul Seal")), "soul-seal active");
+        assertTrue(f.actives().stream().anyMatch(m -> m.name().contains("Soul-Frost")), "soul-frost active");
     }
 
     @Test void everyFinisherShapeExistsInTheEffectEnum() throws Exception {

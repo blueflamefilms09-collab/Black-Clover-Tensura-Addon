@@ -25,6 +25,9 @@ import net.minecraft.util.Mth;
  * 48 blocks, or over the per-frame budget): 2 eyes + 4 or 5 motes + 1 body (+ 1 accent in phase 2) = at most 8. So with N players in view the worst frame is 6 * 22 + (N - 6) * 8 quads. A will without a
  * spirit keeps the old look: at most 17 quads. The 18 later wills (docs/beastwill_new.md) use the same budget: the four whose heads multiply (hydra, typhon, scylla, orochi) draw 3 to 5 extra head quads
  * in FULL phase-2 detail INSTEAD of the accent layer and the eight specks (2 + 6 + 1 + 5 + 4 = 18 quads at most); the rest are as above. No allocation (maths on locals, sprite locations built once).
+ * <p>3.60.0 (Beast Will remake, docs/beastwill_remake.md): the body and glow sprites are the remade forms ({@code bwform_*}: Acquire a running figure with the equipped piece burning, Integrate the
+ * armoured beast-humanoid; the glow layer is a rim halo, or one head for the four multi-headed wills). The quad counts above do not change (same layers, same size); the old set stays registered and
+ * is drawn when the client setting {@code beastwill.classicSpirits} is on.
  */
 public final class BeastWillAura {
     private BeastWillAura() {}
@@ -37,6 +40,8 @@ public final class BeastWillAura {
 
     private static ResourceLocation glint, orb, ring, haze;
     private static final ResourceLocation[] BODY = new ResourceLocation[KINDS], ACC = new ResourceLocation[KINDS], SPECK = new ResourceLocation[KINDS];
+    /** 3.60.0 (Beast Will remake): the remade forms, one set of three per will: Acquire (a running figure, the equipped piece burning), Integrate (the armoured beast-humanoid), and its glow layer (rim halo, or one head). */
+    private static final ResourceLocation[] FACQ = new ResourceLocation[KINDS], FBODY = new ResourceLocation[KINDS], FACC = new ResourceLocation[KINDS];
 
     /** The accent colour of each kind (the accent layer and the specks are the will's tint mixed toward it). Index = kind. */
     private static final int[] ACCENT = {0, 0xFF8A3A, 0x9A6CFF, 0x8FE06A, 0xFFE6A0, 0xE8F6FF, 0xC89B5A, 0xFFFFFF, 0xFFC24A, 0xDDEEFF,
@@ -138,6 +143,11 @@ public final class BeastWillAura {
         SPECK[BeastWillLook.NUE] = bolt;
         SPECK[BeastWillLook.AMMIT] = dust;
         SPECK[BeastWillLook.APOPHIS] = dust;
+        for (int k = 1; k < KINDS; k++) {                                                                  // the remade forms (tools/beastwill/remake/gen_form_textures.py)
+            FACQ[k] = AuraRender.tex("particle/bwform_" + BeastWillLook.STEM[k] + "_acq");
+            FBODY[k] = AuraRender.tex("particle/bwform_" + BeastWillLook.STEM[k] + "_body");
+            FACC[k] = AuraRender.tex("particle/bwform_" + BeastWillLook.STEM[k] + "_acc");
+        }
         PlayerAuraClient.register(Aura.BEAST_WILL, BeastWillAura::paint);
     }
 
@@ -240,6 +250,8 @@ public final class BeastWillAura {
      */
     private static void spirit(AuraContext c, PoseStack pose, int phase, int kind, int rgb, float f, float pulse, float age, int light, boolean full) {
         boolean strong = phase == 2;
+        boolean classic = BeastWillSpiritOptions.classic();                                                 // the old animal spirit (client setting beastwill.classicSpirits)
+        ResourceLocation bodyTex = classic ? BODY[kind] : strong ? FBODY[kind] : FACQ[kind], accTex = classic ? ACC[kind] : FACC[kind];
         int acc = SealDraw.mix(rgb, ACCENT[kind], 0.7f);
         float sway = Mth.sin(age * 0.045f) * 0.07f, bob = Mth.sin(age * 0.07f) * 0.05f;
         float half = strong ? 1.45f : 0.95f, cy = 1.47f - (strong ? 1.45f : 1.15f) + bob, cz = strong ? 0.75f : 0.6f;
@@ -247,7 +259,9 @@ public final class BeastWillAura {
 
         // the accent layer first (further back): dragon wings flap, the lion's mane and the serpent's flames turn slowly, the rest hold still and breathe
         int heads = BeastWillLook.HEADS[kind];
-        if (strong && ACC[kind] != null && heads == 0) {
+        if (strong && !classic && accTex != null && heads == 0) {                                          // remade: the rim halo and glowing parts sit exactly behind the body
+            sprite(pose, c.buffers().getBuffer(AuraRender.additive(accTex)), sway, cy, cz + 0.05f, half * breathe, half * breathe, 0f, SealDraw.argb(0.55f * f * pulse, acc), light);
+        } else if (strong && accTex != null && heads == 0) {
             float w = 1.55f, h = 1.55f, rot = 0f;
             if (kind == BeastWillLook.FENRIR) rot = age * 0.004f;
             if (kind == BeastWillLook.APOPHIS) rot = -age * 0.01f;
@@ -256,16 +270,16 @@ public final class BeastWillAura {
             if (kind == BeastWillLook.SERPENT || kind == BeastWillLook.CHIMERA) rot = age * 0.012f;
             if (kind == BeastWillLook.RAPTOR) { h *= 0.92f + 0.08f * Mth.sin(age * 0.2f); w *= 1.1f; }
             if (kind == BeastWillLook.PANTHER) h *= 1f + 0.06f * Mth.sin(age * 0.05f);
-            sprite(pose, c.buffers().getBuffer(AuraRender.additive(ACC[kind])), sway, cy - 0.05f, cz + 0.12f, w * breathe, h * breathe, rot, SealDraw.argb(0.62f * f * pulse, acc), light);
+            sprite(pose, c.buffers().getBuffer(AuraRender.additive(accTex)), sway, cy - 0.05f, cz + 0.12f, w * breathe, h * breathe, rot, SealDraw.argb(0.62f * f * pulse, acc), light);
         }
-        if (strong && heads > 0 && ACC[kind] != null) {                                                    // heads that multiply (hydra, typhon, scylla, orochi): the extra heads sway apart, one quad each
-            VertexConsumer hv = c.buffers().getBuffer(AuraRender.additive(ACC[kind]));
+        if (strong && heads > 0 && accTex != null) {                                                       // heads that multiply (hydra, typhon, scylla, orochi): the extra heads sway apart, one quad each
+            VertexConsumer hv = c.buffers().getBuffer(AuraRender.additive(accTex));
             for (int i = 0; i < heads; i++) {
                 float side = i - (heads - 1) * 0.5f, lean = side * 0.42f + Mth.sin(age * 0.05f + i * 1.7f) * 0.22f;
                 sprite(pose, hv, sway + side * 0.62f, cy - 0.5f - Math.abs(side) * 0.08f, cz + 0.12f - i * 0.01f, 0.55f, 0.55f, lean, SealDraw.argb(0.7f * f * pulse, acc), light);
             }
         }
-        sprite(pose, c.buffers().getBuffer(AuraRender.additive(BODY[kind])), sway, cy, cz, half * breathe, half * breathe, 0f, SealDraw.argb((strong ? 0.78f : 0.40f) * f, SealDraw.mix(rgb, 0xFFFFFF, strong ? 0.25f : 0.1f)), light);
+        sprite(pose, c.buffers().getBuffer(AuraRender.additive(bodyTex)), sway, cy, cz, half * breathe, half * breathe, 0f, SealDraw.argb((strong ? 0.78f : 0.40f) * f, SealDraw.mix(rgb, 0xFFFFFF, strong ? 0.25f : 0.1f)), light);
         if (!full || heads > 0) return;
 
         // the specks that show the beast's element

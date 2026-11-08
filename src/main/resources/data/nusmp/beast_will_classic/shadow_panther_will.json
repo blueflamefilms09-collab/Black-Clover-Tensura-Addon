@@ -1,0 +1,149 @@
+{
+  "id": "shadow_panther_will",
+  "name": "Shadow Panther Will",
+  "beast": "Shadow Panther",
+  "affinity": "Shadow",
+  "legendary": false,
+  "minRank": "A",
+  "sources": [],
+  "keywords": [
+    "panther",
+    "leopard",
+    "jaguar"
+  ],
+  "dropChance": 0.02,
+  "requireEp": 10000,
+  "hostRaces": [
+    "HUMAN",
+    "ELF",
+    "DWARF"
+  ],
+  "otherHostCompat": 0.6,
+  "assimilationSeconds": 5400,
+  "masterySeconds": 3600,
+  "assimilationDayCap": 0.3,
+  "masteryDayCap": 0.3,
+  "coreCooldownDays": 5,
+  "tint": 4930188,
+  "passive": [
+    {
+      "attribute": "minecraft:generic.movement_speed",
+      "op": "mult",
+      "amount": 0.02
+    }
+  ],
+  "acquire": {
+    "unlockAssimilation": 0.1,
+    "unlockMastery": 0.0,
+    "drainPct": 0.5,
+    "strainPerSecond": 0.12,
+    "regen": 0.0,
+    "stats": [
+      {
+        "attribute": "minecraft:generic.movement_speed",
+        "op": "mult",
+        "amount": 0.12
+      },
+      {
+        "attribute": "minecraft:generic.step_height",
+        "op": "add",
+        "amount": 0.4
+      },
+      {
+        "attribute": "minecraft:generic.jump_strength",
+        "op": "mult",
+        "amount": 0.1
+      },
+      {
+        "attribute": "minecraft:generic.attack_speed",
+        "op": "mult",
+        "amount": 0.05
+      }
+    ],
+    "abilities": [
+      {
+        "id": "shadow_veil",
+        "kind": "shadow_veil",
+        "slot": 1,
+        "costPct": 2,
+        "cooldownTicks": 400,
+        "strain": 3,
+        "range": 0,
+        "radius": 0,
+        "durationTicks": 120,
+        "power": 1,
+        "maxTargets": 1,
+        "bossFactor": 1.0
+      }
+    ]
+  },
+  "integrate": {
+    "unlockAssimilation": 0.95,
+    "unlockMastery": 0.5,
+    "drainPct": 1.2,
+    "strainPerSecond": 0.4,
+    "regen": 0.0,
+    "stats": [
+      {
+        "attribute": "minecraft:generic.movement_speed",
+        "op": "mult",
+        "amount": 0.22
+      },
+      {
+        "attribute": "minecraft:generic.attack_damage",
+        "op": "add",
+        "amount": 2.0
+      },
+      {
+        "attribute": "minecraft:generic.attack_speed",
+        "op": "mult",
+        "amount": 0.15
+      },
+      {
+        "attribute": "minecraft:generic.jump_strength",
+        "op": "mult",
+        "amount": 0.2
+      },
+      {
+        "attribute": "minecraft:generic.safe_fall_distance",
+        "op": "add",
+        "amount": 4.0
+      },
+      {
+        "attribute": "minecraft:generic.step_height",
+        "op": "add",
+        "amount": 0.5
+      }
+    ],
+    "abilities": [
+      {
+        "id": "shadow_dash",
+        "kind": "shadow_dash",
+        "slot": 1,
+        "costPct": 4,
+        "cooldownTicks": 100,
+        "strain": 6,
+        "range": 10,
+        "radius": 0,
+        "durationTicks": 0,
+        "power": 1,
+        "maxTargets": 1,
+        "bossFactor": 1.0
+      },
+      {
+        "id": "ambush",
+        "kind": "ambush",
+        "slot": 2,
+        "costPct": 8,
+        "cooldownTicks": 320,
+        "strain": 12,
+        "range": 8,
+        "radius": 0,
+        "durationTicks": 0,
+        "power": 7,
+        "maxTargets": 1,
+        "bossFactor": 0.5
+      }
+    ]
+  }
+}

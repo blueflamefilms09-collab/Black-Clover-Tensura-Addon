@@ -24,17 +24,20 @@ import java.util.Map;
 public final class BeastWillLoader implements ResourceManagerReloadListener {
     private static final Logger LOG = LogUtils.getLogger();
     public static final String ROOT = "beast_will";
+    /** 3.60.0: the 27 wills as they were before the remake, kept whole; the server setting {@code classicWills} makes the game read this folder instead of {@link #ROOT}. */
+    public static final String CLASSIC_ROOT = "beast_will_classic";
 
     @Override
     public void onResourceManagerReload(ResourceManager manager) {
         Map<String, BeastWillDef> out = new LinkedHashMap<>();
         List<String> rejected = new ArrayList<>();
         try {
-            Map<ResourceLocation, Resource> files = manager.listResources(ROOT, rl -> rl.getNamespace().equals("nusmp") && rl.getPath().endsWith(".json"));
+            String root = BeastWillConfig.classicWills() ? CLASSIC_ROOT : ROOT;
+            Map<ResourceLocation, Resource> files = manager.listResources(root, rl -> rl.getNamespace().equals("nusmp") && rl.getPath().endsWith(".json"));
             List<ResourceLocation> keys = new ArrayList<>(files.keySet());
             keys.sort(Comparator.comparing(ResourceLocation::toString));
             for (ResourceLocation rl : keys) {
-                String id = idOf(rl.getPath());
+                String id = idOf(root, rl.getPath());
                 if (id == null) continue;
                 BeastWillSchema.Parsed p;
                 try (InputStream in = files.get(rl).open()) {
@@ -57,8 +60,10 @@ public final class BeastWillLoader implements ResourceManagerReloadListener {
     }
 
     /** {@code beast_will/lion_will.json} gives {@code lion_will}; a file in a sub-folder is not a will's. */
-    static String idOf(String path) {
-        String p = path.startsWith(ROOT + "/") ? path.substring(ROOT.length() + 1) : path;
+    static String idOf(String path) { return idOf(ROOT, path); }
+
+    static String idOf(String root, String path) {
+        String p = path.startsWith(root + "/") ? path.substring(root.length() + 1) : path;
         if (!p.endsWith(".json")) return null;
         p = p.substring(0, p.length() - 5);
         return p.isEmpty() || p.contains("/") ? null : p;

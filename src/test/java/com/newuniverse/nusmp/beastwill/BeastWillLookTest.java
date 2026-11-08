@@ -121,6 +121,23 @@ class BeastWillLookTest {
         }
     }
 
+    /** 3.60.0 (Beast Will remake): the three remade form sprites of every will exist, are 192x192, safe for the additive pass, and the painter asks for them. */
+    @Test
+    void everyRemadeFormTextureExistsAndIsSafeForTheAdditivePass() throws IOException {
+        String painter = code(SRC.resolve("client/aura/BeastWillAura.java"));
+        assertTrue(painter.contains("\"particle/bwform_\"") && painter.contains("_acq\"") && painter.contains("_body\"") && painter.contains("_acc\""), "the painter must ask for the three form sprites");
+        assertTrue(painter.contains("BeastWillSpiritOptions.classic()"), "the old spirits stay behind the client setting");
+        for (int k = 1; k < BeastWillLook.COUNT; k++) {
+            for (String layer : new String[]{"acq", "body", "acc"}) {
+                String name = "bwform_" + BeastWillLook.STEM[k] + "_" + layer;
+                BufferedImage im = read(name);
+                assertEquals(192, im.getWidth(), name);
+                assertEquals(192, im.getHeight(), name);
+                assertSafe(name, im);
+            }
+        }
+    }
+
     private static void assertSafe(String name, BufferedImage im) {
         int w = im.getWidth(), h = im.getHeight();
         int[] corner = {0, 0, w - 1, 0, 0, h - 1, w - 1, h - 1};
@@ -145,8 +162,8 @@ class BeastWillLookTest {
         assertTrue(c.contains("BeastWillLook.kind(") && c.contains("kind > 0"), "an unknown kind keeps the old look");
         assertTrue(c.contains("self1p") && c.contains("!self1p"), "no spirit from the owner's own first-person camera");
         assertTrue(Pattern.compile("\\bi < (8|4);").matcher(c).find() && !c.contains("i < 9") && !c.contains("i < 16"), "the specks are capped at eight (four ribbons)");
-        assertEquals(3, count(c, "new ResourceLocation["), "only the three static tables allocate (once)");
-        assertEquals(3, count(c, "new "), "no other allocation anywhere in the painter");
+        assertEquals(6, count(c, "new ResourceLocation["), "only the six static tables allocate (once)");
+        assertEquals(6, count(c, "new "), "no other allocation anywhere in the painter");
         assertFalse(c.contains("Minecraft.getInstance()") || c.contains("new float") || c.contains("new int"), "no client singleton, no scratch arrays");
     }
 

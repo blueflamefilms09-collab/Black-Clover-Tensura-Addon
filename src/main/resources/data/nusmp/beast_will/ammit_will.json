@@ -4,12 +4,12 @@
   "beast": "Ammit, Devourer of the Dead",
   "affinity": "Judgement",
   "legendary": false,
-  "minRank": "A",
+  "minRank": "S",
   "sources": [],
   "keywords": [
     "ammit"
   ],
-  "dropChance": 0.01,
+  "dropChance": 0.006,
   "requireEp": 30000,
   "hostRaces": [
     "HUMAN",
@@ -22,7 +22,7 @@
   "assimilationDayCap": 0.3,
   "masteryDayCap": 0.3,
   "coreCooldownDays": 5,
-  "tint": 11563146,
+  "tint": 14077070,
   "passive": [
     {
       "attribute": "minecraft:generic.knockback_resistance",
@@ -33,67 +33,72 @@
   "acquire": {
     "unlockAssimilation": 0.1,
     "unlockMastery": 0.0,
-    "drainPct": 0.55,
-    "strainPerSecond": 0.12,
+    "drainPct": 0.6,
+    "strainPerSecond": 0.14,
     "regen": 0.0,
     "stats": [
       {
         "attribute": "minecraft:generic.attack_damage",
         "op": "add",
-        "amount": 2.5
-      },
-      {
-        "attribute": "minecraft:generic.max_health",
-        "op": "add",
-        "amount": 4.0
+        "amount": 1.5
       },
       {
         "attribute": "minecraft:generic.armor",
         "op": "add",
-        "amount": 2.0
+        "amount": 1.5
       },
       {
         "attribute": "minecraft:generic.knockback_resistance",
         "op": "add",
-        "amount": 0.25
+        "amount": 0.2
+      },
+      {
+        "attribute": "minecraft:generic.movement_speed",
+        "op": "mult",
+        "amount": 0.03
       }
     ],
     "abilities": [
       {
-        "id": "weighing_gaze",
-        "kind": "dread_gaze",
+        "id": "weighing_glance",
+        "kind": "dragon_sight",
         "slot": 1,
-        "costPct": 5,
-        "cooldownTicks": 600,
+        "costPct": 4,
+        "cooldownTicks": 500,
         "strain": 6,
-        "range": 0,
-        "radius": 9,
+        "range": 16,
+        "radius": 14,
         "durationTicks": 100,
         "power": 1,
-        "maxTargets": 4,
-        "bossFactor": 0.5
+        "maxTargets": 5,
+        "bossFactor": 0.5,
+        "name": "Weighing Glance",
+        "effect": ""
       },
       {
-        "id": "heart_feast",
-        "kind": "verdant_mend",
+        "id": "hippo_hide",
+        "kind": "bark_ward",
         "slot": 2,
-        "costPct": 7,
-        "cooldownTicks": 900,
-        "strain": 7,
+        "costPct": 4,
+        "cooldownTicks": 500,
+        "strain": 5,
         "range": 0,
         "radius": 0,
         "durationTicks": 100,
-        "power": 1.5,
+        "power": 1,
         "maxTargets": 1,
-        "bossFactor": 1.0
+        "bossFactor": 1.0,
+        "name": "Hippo Hide",
+        "effect": ""
       }
-    ]
+    ],
+    "equipPiece": "One crocodile-scale gauntlet on one hand; sand-gold streaks and a pale feather afterimage when the senses sharpen."
   },
   "integrate": {
     "unlockAssimilation": 0.95,
     "unlockMastery": 0.5,
-    "drainPct": 1.35,
-    "strainPerSecond": 0.43,
+    "drainPct": 1.7,
+    "strainPerSecond": 0.9,
     "regen": 0.0,
     "stats": [
       {
@@ -104,48 +109,84 @@
       {
         "attribute": "minecraft:generic.max_health",
         "op": "add",
-        "amount": 8.0
+        "amount": 6.0
       },
       {
         "attribute": "minecraft:generic.armor",
         "op": "add",
-        "amount": 4.0
+        "amount": 5.0
+      },
+      {
+        "attribute": "minecraft:generic.armor_toughness",
+        "op": "add",
+        "amount": 2.0
       },
       {
         "attribute": "minecraft:generic.knockback_resistance",
         "op": "add",
         "amount": 0.5
+      },
+      {
+        "attribute": "minecraft:generic.movement_speed",
+        "op": "mult",
+        "amount": 0.06
       }
     ],
     "abilities": [
       {
-        "id": "crocodile_snap",
+        "id": "death_roll_snap",
         "kind": "ambush",
         "slot": 1,
-        "costPct": 8,
-        "cooldownTicks": 300,
-        "strain": 11,
-        "range": 8,
+        "costPct": 12,
+        "cooldownTicks": 260,
+        "strain": 22,
+        "range": 6,
         "radius": 0,
         "durationTicks": 0,
-        "power": 7,
+        "power": 6,
         "maxTargets": 1,
-        "bossFactor": 0.5
+        "bossFactor": 0.35,
+        "name": "Death Roll Snap",
+        "effect": ""
       },
       {
-        "id": "devouring_judgement",
-        "kind": "restraining_vines",
+        "id": "heart_feast",
+        "kind": "verdant_mend",
         "slot": 2,
-        "costPct": 12,
-        "cooldownTicks": 800,
-        "strain": 15,
+        "costPct": 14,
+        "cooldownTicks": 520,
+        "strain": 20,
         "range": 0,
-        "radius": 6,
-        "durationTicks": 60,
-        "power": 1,
-        "maxTargets": 5,
-        "bossFactor": 0.25
+        "radius": 0,
+        "durationTicks": 160,
+        "power": 3,
+        "maxTargets": 1,
+        "bossFactor": 0.0,
+        "name": "Heart Feast",
+        "effect": ""
       }
-    ]
+    ],
+    "transformation": "Full armoured form Ammit-humanoid: long crocodile head and teeth, golden lion mane under a broad collar, broad clawed lion forearms holding a jaw-cleaver, heavy hippopotamus thigh plates, short digitigrade legs, a blunt scaled tail and a hovering feather-scale.",
+    "equip": {
+      "weapon": "A serrated crocodile-jaw cleaver (two gold fang blades) held in the clawed lion hand.",
+      "armor": "Sand-gold Egyptian plate: broad usekh-style collar over the lion mane, scale-plate hippo thighs, pharaoh-style bracers and a feather-scale pendant.",
+      "hair_eyes": "Thick golden lion mane; narrow amber crocodile eyes ringed with black kohl.",
+      "aura": "Sand-gold aura with black ash edges and a small hovering feather-scale."
+    }
+  },
+  "beastNote": "Ammit, Devourer of the Dead (crocodile head, lion forebody, hippopotamus hindquarters)",
+  "lore": "A mana beast of the dust-lands that weighs the heart of every foe it meets and devours the ones found wanting; its will lets a tamer feel the weight of sin and tear it out.",
+  "pitch": "Ammit is the Devourer of the Dead of Egyptian myth: crocodile head, lion forebody, hippopotamus hindquarters, who eats the hearts that are heavier than the feather. Acquire keeps you human with sand-gold streaks and one equipped piece, a single crocodile-scale gauntlet, to read the weight of a foe and harden your hide. Integrate (Full armoured form) makes you a croc-headed, lion-maned, hippo-thighed beastman in sand-gold plate with a jaw-blade, trading raw stats for a heart-eating self-heal at a heavy price.",
+  "untrained": "An untrained holder is weighed too: the borrowed hunger gnaws the holder's own heart, strain climbs while the holder fights and the will refuses to heal until mastered. CANON ADDENDUM 2: the will lies dormant in the holder's mana core until it is forcefully awakened (a flame sparked in the core); if the holder cannot suppress and balance it, the clashing energies wreck body and core and can kill (design: strain climbs fast, backlash damage, forced cancel at the cap); mastery means training both the holder's own core and the beast core, best taught by the beast itself. This will summons no beasts or hordes.",
+  "designTag": "DESIGN",
+  "spirit": {
+    "colors": [
+      "#D6CC8E",
+      "#1C1A14",
+      "#C58B1E"
+    ],
+    "echo": "A hunched croc-headed beastman in sand-gold Egyptian plate: long crocodile head with rows of teeth, golden lion mane under a broad collar, clawed lion forearms with a jaw-blade, heavy hippo thighs, short digitigrade legs, blunt scaled tail, a feather-scale over the chest.",
+    "accent": "#1C1A14",
+    "look": "A pale-sand orb with a black feather-shaped hollow in its centre and a small, slowly beating dark heart inside, sand drifting off its surface."
   }
 }

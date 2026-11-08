@@ -1,16 +1,16 @@
 {
   "id": "kitsune_will",
   "name": "Kitsune Will",
-  "beast": "Kitsune, the Multi-Tailed Fox",
+  "beast": "Kitsune, the Nine-Tailed Fox Spirit",
   "affinity": "Illusion",
   "legendary": false,
-  "minRank": "A",
+  "minRank": "S",
   "sources": [],
   "keywords": [
     "kitsune",
     "nine_tail"
   ],
-  "dropChance": 0.01,
+  "dropChance": 0.006,
   "requireEp": 24000,
   "hostRaces": [
     "HUMAN",
@@ -23,7 +23,7 @@
   "assimilationDayCap": 0.3,
   "masteryDayCap": 0.3,
   "coreCooldownDays": 5,
-  "tint": 16751210,
+  "tint": 16744368,
   "passive": [
     {
       "attribute": "minecraft:generic.movement_speed",
@@ -34,29 +34,29 @@
   "acquire": {
     "unlockAssimilation": 0.1,
     "unlockMastery": 0.0,
-    "drainPct": 0.5,
+    "drainPct": 0.55,
     "strainPerSecond": 0.12,
     "regen": 0.0,
     "stats": [
       {
         "attribute": "minecraft:generic.movement_speed",
         "op": "mult",
-        "amount": 0.08
+        "amount": 0.05
       },
       {
-        "attribute": "minecraft:generic.attack_damage",
-        "op": "add",
-        "amount": 1.5
+        "attribute": "minecraft:generic.jump_strength",
+        "op": "mult",
+        "amount": 0.1
       },
       {
         "attribute": "minecraft:generic.max_health",
         "op": "add",
-        "amount": 3.0
+        "amount": 2.0
       },
       {
-        "attribute": "minecraft:generic.attack_speed",
-        "op": "mult",
-        "amount": 0.05
+        "attribute": "minecraft:generic.attack_damage",
+        "op": "add",
+        "amount": 1.0
       }
     ],
     "abilities": [
@@ -64,94 +64,130 @@
         "id": "fox_glamour",
         "kind": "shadow_veil",
         "slot": 1,
-        "costPct": 2,
-        "cooldownTicks": 400,
-        "strain": 3,
+        "costPct": 5,
+        "cooldownTicks": 320,
+        "strain": 6,
         "range": 0,
         "radius": 0,
-        "durationTicks": 120,
-        "power": 1,
+        "durationTicks": 100,
+        "power": 2,
         "maxTargets": 1,
-        "bossFactor": 1.0
+        "bossFactor": 0.0,
+        "name": "Fox Glamour",
+        "effect": "A glamour of shifting light hides the tamer for about 5 seconds; afterimage decoys flicker nearby."
       },
       {
-        "id": "foxfire",
-        "kind": "draconic_pulse",
+        "id": "fox_hop",
+        "kind": "shadow_dash",
         "slot": 2,
         "costPct": 4,
-        "cooldownTicks": 160,
-        "strain": 6,
-        "range": 6,
-        "radius": 6,
-        "durationTicks": 40,
-        "power": 2.5,
-        "maxTargets": 4,
-        "bossFactor": 0.6
+        "cooldownTicks": 100,
+        "strain": 5,
+        "range": 8,
+        "radius": 0,
+        "durationTicks": 0,
+        "power": 1,
+        "maxTargets": 1,
+        "bossFactor": 0.0,
+        "name": "Fox Hop",
+        "effect": "A light quick hop forward, leaving a rose afterimage as a decoy."
       }
-    ]
+    ],
+    "equipPiece": "One tail of rose foxfire worn at the hip like a sash ornament (the only equipped piece), flicking as you hop."
   },
   "integrate": {
     "unlockAssimilation": 0.95,
     "unlockMastery": 0.5,
-    "drainPct": 1.25,
-    "strainPerSecond": 0.4,
+    "drainPct": 1.7,
+    "strainPerSecond": 0.85,
     "regen": 0.0,
     "stats": [
       {
         "attribute": "minecraft:generic.movement_speed",
         "op": "mult",
-        "amount": 0.14
+        "amount": 0.18
       },
       {
         "attribute": "minecraft:generic.attack_damage",
         "op": "add",
-        "amount": 3.0
+        "amount": 3.5
       },
       {
         "attribute": "minecraft:generic.max_health",
         "op": "add",
-        "amount": 6.0
+        "amount": 4.0
       },
       {
-        "attribute": "minecraft:generic.attack_speed",
-        "op": "mult",
-        "amount": 0.12
+        "attribute": "minecraft:generic.armor",
+        "op": "add",
+        "amount": 2.0
       },
       {
         "attribute": "minecraft:generic.jump_strength",
         "op": "mult",
-        "amount": 0.1
+        "amount": 0.25
+      },
+      {
+        "attribute": "minecraft:generic.attack_speed",
+        "op": "mult",
+        "amount": 0.15
       }
     ],
     "abilities": [
       {
-        "id": "fox_step",
-        "kind": "shadow_dash",
+        "id": "nine_tail_mirage",
+        "kind": "dread_gaze",
         "slot": 1,
-        "costPct": 5,
-        "cooldownTicks": 120,
-        "strain": 6,
-        "range": 11,
-        "radius": 0,
-        "durationTicks": 0,
-        "power": 1,
-        "maxTargets": 1,
-        "bossFactor": 1.0
+        "costPct": 14,
+        "cooldownTicks": 360,
+        "strain": 22,
+        "range": 16,
+        "radius": 14,
+        "durationTicks": 140,
+        "power": 5,
+        "maxTargets": 6,
+        "bossFactor": 0.3,
+        "name": "Nine-Tail Mirage",
+        "effect": "Nine tails sweep and foes see nine of the tamer: they lose aim and flee phantom flames (bosses resist)."
       },
       {
-        "id": "tails_of_dream",
-        "kind": "dread_gaze",
+        "id": "kitsunebi_ring",
+        "kind": "maelstrom",
         "slot": 2,
-        "costPct": 12,
-        "cooldownTicks": 900,
-        "strain": 13,
-        "range": 0,
-        "radius": 11,
-        "durationTicks": 120,
-        "power": 1,
+        "costPct": 16,
+        "cooldownTicks": 320,
+        "strain": 24,
+        "range": 10,
+        "radius": 9,
+        "durationTicks": 100,
+        "power": 5,
         "maxTargets": 6,
-        "bossFactor": 0.4
+        "bossFactor": 0.4,
+        "name": "Kitsunebi Ring",
+        "effect": "A ring of nine orbiting foxfires closes in and burns foes without igniting terrain."
       }
-    ]
+    ],
+    "transformation": "Whole body becomes a fox beastman in layered plate: fox head with tall pointed ears and amber slit eyes, rose-white hair, cream chest ruff, fine-clawed hands with a foxfire fan, digitigrade fox legs and nine tails each tipped with a floating foxfire.",
+    "equip": {
+      "weapon": "A folding war-fan of nine foxfire ribs that cuts and flicks fire.",
+      "armor": "Layered rose-and-cream shrine-maiden-style plate with a skirt of nine tail-guard fans and a ruffed collar.",
+      "hair_eyes": "Long rose-white hair with fox ears; amber slit eyes with a pink glow.",
+      "aura": "Floating foxfire orbs and a rose-gold glamour haze."
+    }
+  },
+  "beastNote": "Kitsune, the Nine-Tailed Fox Spirit",
+  "lore": "A fox spirit whose tails grow with its mana; its will bends light and mind with foxfire and glamour.",
+  "pitch": "The Kitsune is a clever nine-tailed fox spirit of Japanese myth that rules glamour and foxfire. Acquire keeps you human with one rose-fire tail ornament at the hip, lending quick hops and a glamour that hides you. Integrate makes you a slender fox beastman in layered shrine-maiden-style plate with tall ears and nine tail fans, a fast illusionist whose mirage and foxfire ring are paid for with a fragile body and a strain that spikes when an illusion misfires.",
+  "untrained": "An untrained holder is fooled by their own glamour: strain spikes when an illusion misfires and they lose track of which tail is real, so foes sometimes see the true holder and the holder sees decoys. Canon: a will that is not suppressed or balanced disrupts body and mana core and can eventually kill the holder, so the first Awakening (forced, a spark in the core) is the most dangerous moment and training both cores is the cure.",
+  "designTag": "DESIGN",
+  "spirit": {
+    "colors": [
+      "#FF7FB0",
+      "#8A2A5A",
+      "#FFF0D8"
+    ],
+    "echo": "A slender fox-beastman on digitigrade legs with large pointed fox ears, a narrow muzzle and amber slit eyes, a cream chest ruff, fine-clawed hands, and a fan of nine tails each tipped with pale rose foxfire.",
+    "accent": "#FFE2B8",
+    "look": "A rose-pink orb that flickers like a candle flame with nine thin curling tails of pale fire spiralling inside."
   }
 }

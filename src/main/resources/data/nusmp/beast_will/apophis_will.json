@@ -1,16 +1,16 @@
 {
   "id": "apophis_will",
   "name": "Apophis Will",
-  "beast": "Apophis, Serpent of Chaos and Darkness",
+  "beast": "Apophis",
   "affinity": "Chaos",
   "legendary": true,
-  "minRank": "S",
+  "minRank": "SS",
   "sources": [],
   "keywords": [
     "apophis",
     "apep"
   ],
-  "dropChance": 0.003,
+  "dropChance": 0.002,
   "requireEp": 90000,
   "hostRaces": [
     "HUMAN",
@@ -23,7 +23,7 @@
   "assimilationDayCap": 0.12,
   "masteryDayCap": 0.12,
   "coreCooldownDays": 21,
-  "tint": 7220464,
+  "tint": 9918382,
   "passive": [
     {
       "attribute": "minecraft:generic.movement_speed",
@@ -34,83 +34,73 @@
   "acquire": {
     "unlockAssimilation": 0.1,
     "unlockMastery": 0.0,
-    "drainPct": 0.55,
-    "strainPerSecond": 0.13,
+    "drainPct": 0.8,
+    "strainPerSecond": 0.2,
     "regen": 0.0,
     "stats": [
       {
-        "attribute": "minecraft:generic.armor",
-        "op": "add",
-        "amount": 3.0
-      },
-      {
         "attribute": "minecraft:generic.armor_toughness",
         "op": "add",
-        "amount": 1.0
+        "amount": 1.2
       },
       {
         "attribute": "minecraft:generic.max_health",
         "op": "add",
-        "amount": 5.0
-      },
-      {
-        "attribute": "minecraft:generic.attack_damage",
-        "op": "add",
-        "amount": 3.0
-      },
-      {
-        "attribute": "minecraft:generic.knockback_resistance",
-        "op": "add",
-        "amount": 0.2
+        "amount": 4.0
       },
       {
         "attribute": "minecraft:generic.movement_speed",
         "op": "mult",
-        "amount": 0.08
+        "amount": 0.06
       }
     ],
     "abilities": [
       {
-        "id": "mesmerizing_gaze",
-        "kind": "dread_gaze",
+        "id": "dusk_slither",
+        "kind": "shadow_veil",
         "slot": 1,
-        "costPct": 6,
-        "cooldownTicks": 600,
-        "strain": 8,
+        "costPct": 5,
+        "cooldownTicks": 400,
+        "strain": 5,
         "range": 0,
-        "radius": 10,
-        "durationTicks": 120,
+        "radius": 0,
+        "durationTicks": 100,
         "power": 1,
-        "maxTargets": 5,
-        "bossFactor": 0.4
+        "maxTargets": 1,
+        "bossFactor": 1.0,
+        "name": "Dusk Slither",
+        "effect": ""
       },
       {
-        "id": "chaos_spit",
-        "kind": "venom_spit",
+        "id": "coil_lash",
+        "kind": "vine_lash",
         "slot": 2,
-        "costPct": 5,
-        "cooldownTicks": 160,
-        "strain": 6,
-        "range": 7,
-        "radius": 7,
-        "durationTicks": 100,
-        "power": 3,
-        "maxTargets": 4,
-        "bossFactor": 0.6
+        "costPct": 4,
+        "cooldownTicks": 120,
+        "strain": 5,
+        "range": 6,
+        "radius": 4,
+        "durationTicks": 40,
+        "power": 2,
+        "maxTargets": 2,
+        "bossFactor": 0.3,
+        "name": "Coil Lash",
+        "effect": ""
       }
-    ]
+    ],
+    "equipPiece": "One black serpent-scale arm guard on one forearm; violet-black smear streaks that dim nearby light."
   },
   "integrate": {
     "unlockAssimilation": 0.95,
     "unlockMastery": 0.5,
-    "drainPct": 1.6,
-    "strainPerSecond": 0.52,
+    "drainPct": 2.0,
+    "strainPerSecond": 1.25,
     "regen": 0.0,
     "stats": [
       {
-        "attribute": "minecraft:generic.armor",
+        "attribute": "minecraft:generic.attack_damage",
         "op": "add",
-        "amount": 5.0
+        "amount": 6.0
       },
       {
         "attribute": "minecraft:generic.armor_toughness",
@@ -120,58 +110,74 @@
       {
         "attribute": "minecraft:generic.max_health",
         "op": "add",
-        "amount": 8.0
-      },
-      {
-        "attribute": "minecraft:generic.attack_damage",
-        "op": "add",
-        "amount": 4.5
-      },
-      {
-        "attribute": "minecraft:generic.knockback_resistance",
-        "op": "add",
-        "amount": 0.4
+        "amount": 10.0
       },
       {
         "attribute": "minecraft:generic.movement_speed",
         "op": "mult",
-        "amount": 0.12
+        "amount": 0.15
       },
       {
-        "attribute": "minecraft:generic.attack_speed",
-        "op": "mult",
-        "amount": 0.1
+        "attribute": "minecraft:generic.knockback_resistance",
+        "op": "add",
+        "amount": 0.5
       }
     ],
     "abilities": [
       {
-        "id": "chaos_coil",
-        "kind": "maelstrom",
+        "id": "mind_stopping_gaze",
+        "kind": "dread_gaze",
         "slot": 1,
-        "costPct": 12,
-        "cooldownTicks": 800,
-        "strain": 15,
-        "range": 0,
-        "radius": 10,
-        "durationTicks": 100,
-        "power": 6,
+        "costPct": 10,
+        "cooldownTicks": 500,
+        "strain": 18,
+        "range": 16,
+        "radius": 14,
+        "durationTicks": 140,
+        "power": 3,
         "maxTargets": 6,
-        "bossFactor": 0.3
+        "bossFactor": 0.4,
+        "name": "Mind-Stopping Gaze",
+        "effect": ""
       },
       {
-        "id": "endless_night",
+        "id": "sun_swallowed",
         "kind": "time_exclusion",
         "slot": 2,
-        "costPct": 20,
-        "cooldownTicks": 1800,
+        "costPct": 18,
+        "cooldownTicks": 1200,
         "strain": 26,
         "range": 0,
-        "radius": 7,
-        "durationTicks": 60,
-        "power": 1,
-        "maxTargets": 4,
-        "bossFactor": 0.0
+        "radius": 9,
+        "durationTicks": 80,
+        "power": 2,
+        "maxTargets": 5,
+        "bossFactor": 0.0,
+        "name": "Sun Swallowed",
+        "effect": ""
       }
-    ]
+    ],
+    "transformation": "Full armoured form Apep-humanoid: a flared cobra-hood collar, slit crimson eyes and fanged jaw, black scale plate armour on shoulders and back, scaled digitigrade greaved legs, a long segmented tail, clawed hands and a fang-scythe grown from the wrist.",
+    "equip": {
+      "weapon": "A curved black fang-scythe grown from the right wrist, dripping violet decay.",
+      "armor": "Black overlapping scale armour: flared cobra-hood collar plates, shoulder and back scale plates, scaled greaves, crimson-edged segmented tail guard.",
+      "hair_eyes": "Hair turns black and falls like a hood-cloth; slit crimson eyes with no white.",
+      "aura": "Violet-black aura that dims the light and sheds slow grey decay motes."
+    }
+  },
+  "beastNote": "Apophis (Apep), Serpent of Chaos and Darkness",
+  "lore": "Apep, the endless serpent that swallows Ra's sun each dusk. Its will has a Vritra-like decay: light dims and life withers around its gaze.",
+  "pitch": "Apophis (Apep) is the endless serpent of chaos that swallows Ra's sun-barque each dusk, and its will has a Vritra-like decay: light and life wither where it passes. Acquire keeps you human, gliding in violet-black smears with one equipped piece, a single serpent-scale arm guard, to hide at dusk and lash with coils. Integrate (Full armoured form) turns you into a cobra-hooded serpent-humanoid in black scale armour whose gaze stops minds and swallows the sun, and it drains mana at SS rates.",
+  "untrained": "An untrained holder is swallowed by the dark: the borrowed night dims the holder's own sight, the gaze turns on the holder and strain climbs fastest when the light is brightest. CANON ADDENDUM 2: the will lies dormant in the holder's mana core until it is forcefully awakened (a flame sparked in the core); if the holder cannot suppress and balance it, the clashing energies wreck body and core and can kill (design: strain climbs fast, backlash damage, forced cancel at the cap); mastery means training both the holder's own core and the beast core, best taught by the beast itself. This will summons no beasts or hordes.",
+  "designTag": "DESIGN",
+  "spirit": {
+    "colors": [
+      "#6A0F8C",
+      "#8F2BD9",
+      "#E0204A"
+    ],
+    "echo": "A tall cobra-hooded serpent-humanoid in black scale armour: wide flared hood, slit crimson eyes, fanged jaw, scaled digitigrade legs, long black segmented tail, fang-scythe on the wrist, shadow-ragged edges.",
+    "accent": "#E0204A",
+    "look": "A black orb with a slit-pupil crimson eye that never closes; a thin ring of eclipsed light circles it and the core drinks the glow around it."
   }
 }

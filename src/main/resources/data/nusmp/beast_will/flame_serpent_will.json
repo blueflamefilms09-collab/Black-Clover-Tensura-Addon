@@ -1,16 +1,16 @@
 {
   "id": "flame_serpent_will",
   "name": "Flame-Serpent Will",
-  "beast": "Flame-Serpent",
+  "beast": "Flame-Serpent Elder",
   "affinity": "Fire",
   "legendary": false,
-  "minRank": "B",
+  "minRank": "A",
   "sources": [],
   "keywords": [
     "flame_serpent"
   ],
-  "dropChance": 0.01,
-  "requireEp": 8000,
+  "dropChance": 0.012,
+  "requireEp": 12000,
   "hostRaces": [
     "HUMAN",
     "ELF",
@@ -22,7 +22,7 @@
   "assimilationDayCap": 0.35,
   "masteryDayCap": 0.35,
   "coreCooldownDays": 3,
-  "tint": 14701594,
+  "tint": 16726528,
   "passive": [
     {
       "attribute": "minecraft:generic.knockback_resistance",
@@ -33,12 +33,12 @@
   "acquire": {
     "unlockAssimilation": 0.1,
     "unlockMastery": 0.0,
-    "drainPct": 0.45,
+    "drainPct": 0.5,
     "strainPerSecond": 0.1,
     "regen": 0.0,
     "stats": [
       {
-        "attribute": "minecraft:generic.attack_damage",
+        "attribute": "minecraft:generic.armor",
         "op": "add",
         "amount": 2.0
       },
@@ -48,109 +48,145 @@
         "amount": 3.0
       },
       {
-        "attribute": "minecraft:generic.armor",
-        "op": "add",
-        "amount": 2.0
-      },
-      {
         "attribute": "minecraft:generic.knockback_resistance",
         "op": "add",
-        "amount": 0.2
+        "amount": 0.1
+      },
+      {
+        "attribute": "minecraft:generic.attack_damage",
+        "op": "add",
+        "amount": 1.0
       }
     ],
     "abilities": [
       {
-        "id": "vine_lash",
-        "kind": "vine_lash",
+        "id": "pit_heat_sense",
+        "kind": "dragon_sight",
         "slot": 1,
-        "costPct": 3,
-        "cooldownTicks": 100,
+        "costPct": 4,
+        "cooldownTicks": 300,
         "strain": 4,
-        "range": 8,
-        "radius": 8,
-        "durationTicks": 40,
-        "power": 2,
-        "maxTargets": 2,
-        "bossFactor": 0.6
+        "range": 16,
+        "radius": 14,
+        "durationTicks": 120,
+        "power": 1,
+        "maxTargets": 6,
+        "bossFactor": 1.0,
+        "name": "Pit-Viper Heat Sense",
+        "effect": ""
       },
       {
-        "id": "bark_ward",
-        "kind": "bark_ward",
+        "id": "heat_haze",
+        "kind": "shadow_veil",
         "slot": 2,
-        "costPct": 4,
-        "cooldownTicks": 600,
-        "strain": 6,
+        "costPct": 3,
+        "cooldownTicks": 400,
+        "strain": 4,
         "range": 0,
         "radius": 0,
         "durationTicks": 100,
-        "power": 1,
+        "power": 3,
         "maxTargets": 1,
-        "bossFactor": 1.0
+        "bossFactor": 0.6,
+        "name": "Heat Haze",
+        "effect": ""
       }
-    ]
+    ],
+    "equipPiece": "One ember-scale armlet on a forearm, a few scales glowing; heat-haze streaks and a small ember trail at the heels."
   },
   "integrate": {
     "unlockAssimilation": 0.95,
     "unlockMastery": 0.5,
-    "drainPct": 1.0,
-    "strainPerSecond": 0.35,
+    "drainPct": 1.4,
+    "strainPerSecond": 0.6,
     "regen": 0.0,
     "stats": [
       {
-        "attribute": "minecraft:generic.attack_damage",
+        "attribute": "minecraft:generic.armor",
         "op": "add",
-        "amount": 3.0
+        "amount": 5.0
+      },
+      {
+        "attribute": "minecraft:generic.armor_toughness",
+        "op": "add",
+        "amount": 2.0
       },
       {
         "attribute": "minecraft:generic.max_health",
         "op": "add",
-        "amount": 6.0
-      },
-      {
-        "attribute": "minecraft:generic.armor",
-        "op": "add",
-        "amount": 3.0
+        "amount": 8.0
       },
       {
         "attribute": "minecraft:generic.knockback_resistance",
         "op": "add",
-        "amount": 0.4
+        "amount": 0.3
       },
       {
-        "attribute": "minecraft:generic.movement_speed",
+        "attribute": "minecraft:generic.attack_damage",
+        "op": "add",
+        "amount": 4.0
+      },
+      {
+        "attribute": "minecraft:generic.attack_speed",
         "op": "mult",
-        "amount": 0.06
+        "amount": 0.08
       }
     ],
     "abilities": [
       {
-        "id": "draconic_pulse",
-        "kind": "draconic_pulse",
+        "id": "magma_spit",
+        "kind": "venom_spit",
         "slot": 1,
-        "costPct": 8,
+        "costPct": 10,
         "cooldownTicks": 140,
-        "strain": 10,
-        "range": 8,
-        "radius": 8,
-        "durationTicks": 60,
-        "power": 4,
-        "maxTargets": 6,
-        "bossFactor": 0.6
+        "strain": 14,
+        "range": 12,
+        "radius": 4,
+        "durationTicks": 100,
+        "power": 5,
+        "maxTargets": 3,
+        "bossFactor": 0.5,
+        "name": "Magma Spit",
+        "effect": ""
       },
       {
-        "id": "shadow_dash",
-        "kind": "shadow_dash",
+        "id": "molten_coil",
+        "kind": "restraining_vines",
         "slot": 2,
-        "costPct": 6,
-        "cooldownTicks": 160,
-        "strain": 8,
+        "costPct": 12,
+        "cooldownTicks": 500,
+        "strain": 16,
         "range": 8,
-        "radius": 0,
-        "durationTicks": 0,
-        "power": 1,
-        "maxTargets": 1,
-        "bossFactor": 1.0
+        "radius": 6,
+        "durationTicks": 100,
+        "power": 3,
+        "maxTargets": 3,
+        "bossFactor": 0.25,
+        "name": "Molten Coil",
+        "effect": ""
       }
-    ]
+    ],
+    "transformation": "Full armoured form serpent-beastman: wedge head with a flared hood-crest helm, slit molten eyes and fanged jaw, black ember-seam scale plate, clawed digitigrade greaves, a thick ember tail, a forked tongue with spit sacs and a molten fang-blade on the forearm.",
+    "equip": {
+      "weapon": "A curved molten fang-blade grown from the forearm, dripping slag.",
+      "armor": "Black scale plate with glowing ember seams: flared hood-crest helm, scaled pauldrons and bracers, clawed greaves.",
+      "hair_eyes": "Hair burns away into a flared hood crest; slit molten eyes.",
+      "aura": "Red-orange heat aura with rising sparks and haze."
+    }
+  },
+  "beastNote": "Flame-Serpent Elder (A-class cinder coil)",
+  "lore": "The will of an elder serpent whose scales glow like cooling lava: it senses living heat, hides in heat haze, spits molten venom and coils around what it kills.",
+  "pitch": "The Flame-Serpent Elder is an A-class cinder coil whose scales glow like cooling lava; it senses living heat, hides in haze and spits molten venom. Acquire keeps you human with heat-haze streaks and one equipped piece, a single ember-scale armlet, to see warm bodies through walls and blur in heat haze. Integrate (Full armoured form) makes you a hooded serpent-beastman in black ember-seam plate with a fang-blade, spitting magma and coiling foes; it is the ranged burn A-rank, with less armour than the boar.",
+  "untrained": "An untrained holder is scorched from inside: ember seams open on the skin, the screen shimmers with heat, and strain rises with every spit or coil. The will lay dormant until forcibly awakened; if the holder cannot balance it the clash tears at body and core and can kill, and only training the holder's own core and the beast core (best teacher: the beast itself) tames it.",
+  "designTag": "DESIGN",
+  "spirit": {
+    "colors": [
+      "#FF3A00",
+      "#3A0F0A",
+      "#FFC13A"
+    ],
+    "echo": "A lithe serpent-beastman in black ember-seam plate: wedge head with a flared hood crest, slit molten eyes, scaled body with glowing ember seams, clawed digitigrade feet, a thick ember-trailing tail, a molten fang-blade.",
+    "accent": "#FFC13A",
+    "look": "A glowing red-orange orb with black cooled-crust scales and a slit gold pupil that slowly narrows and widens."
   }
 }

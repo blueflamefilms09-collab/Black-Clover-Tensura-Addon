@@ -56,7 +56,7 @@ class BeastWillSchemaTest {
     void theDragonIsLegendaryAndRarerAndSlowerThanTheRare() throws Exception {
         BeastWillDef dragon = load("dragon_will");
         assertTrue(dragon.legendary());
-        assertEquals(BeastRank.S, dragon.minRank());
+        assertEquals(BeastRank.SS, dragon.minRank(), "3.60.0 remake: the dragon asks an SS holder");
         for (String id : IDS) {
             if (id.equals("dragon_will")) continue;
             BeastWillDef o = load(id);
@@ -83,31 +83,49 @@ class BeastWillSchemaTest {
     }
 
     @Test
-    void theNamedAbilitiesOfTheOwnersBriefAreThere() throws Exception {
-        assertNotNull(load("dragon_will").ability(BeastWillRules.INTEGRATE, 2));
-        assertEquals("time_exclusion", load("dragon_will").ability(BeastWillRules.INTEGRATE, 2).kind());
-        assertEquals("shadow_dash", load("shadow_panther_will").ability(BeastWillRules.INTEGRATE, 1).kind());
+    void theNamedAbilitiesOfTheRemadeBriefAreThere() throws Exception {
+        // 3.60.0 (docs/beastwill_remake.md): the kinds the remade design gives these wills
+        assertEquals("time_exclusion", load("dragon_will").ability(BeastWillRules.ACQUIRE, 1).kind());
+        assertEquals("dragon_sight", load("dragon_will").ability(BeastWillRules.INTEGRATE, 1).kind());
+        assertEquals("shadow_dash", load("shadow_panther_will").ability(BeastWillRules.ACQUIRE, 1).kind());
+        assertEquals("shadow_veil", load("shadow_panther_will").ability(BeastWillRules.INTEGRATE, 1).kind());
         assertEquals("ambush", load("shadow_panther_will").ability(BeastWillRules.INTEGRATE, 2).kind());
         assertEquals("vine_lash", load("elderwood_guardian_will").ability(BeastWillRules.ACQUIRE, 1).kind());
-        assertEquals("restraining_vines", load("elderwood_guardian_will").ability(BeastWillRules.INTEGRATE, 1).kind());
-        assertEquals("bark_ward", load("elderwood_guardian_will").ability(BeastWillRules.INTEGRATE, 2).kind());
+        assertEquals("restraining_vines", load("elderwood_guardian_will").ability(BeastWillRules.ACQUIRE, 2).kind());
         assertEquals("world_howl", load("lion_will").ability(BeastWillRules.INTEGRATE, 1).kind());
     }
 
     @Test
-    void theTimeExclusionIsShortSmallFewAndSlowToComeBackAndNeverHoldsABoss() throws Exception {
-        BeastWillDef.Ability te = load("dragon_will").ability(BeastWillRules.INTEGRATE, 2);
-        assertTrue(te.durationTicks() <= 100, "at most five seconds");
-        assertTrue(te.radius() <= 10 && te.maxTargets() <= 6);
-        assertTrue(te.cooldownTicks() >= 600, "at least thirty seconds apart");
-        assertEquals(0.0, te.bossFactor(), "a boss is immune");
+    void everyTimeExclusionIsShortSmallFewAndSlowToComeBackAndNeverHoldsABoss() throws Exception {
+        int seen = 0;
+        for (String id : IDS) for (int ph : new int[]{BeastWillRules.ACQUIRE, BeastWillRules.INTEGRATE}) for (int slot = 1; slot <= 2; slot++) {
+            BeastWillDef.Ability te = load(id).ability(ph, slot);
+            if (te == null || !te.kind().equals("time_exclusion")) continue;
+            seen++;
+            assertTrue(te.durationTicks() <= 100, "at most five seconds");
+            assertTrue(te.radius() <= 10 && te.maxTargets() <= 6);
+            assertTrue(te.cooldownTicks() >= 600, "at least thirty seconds apart");
+            assertEquals(0.0, te.bossFactor(), "a boss is immune");
+        }
+        for (String id : BeastWillSchemaTest.LATER) for (int ph : new int[]{BeastWillRules.ACQUIRE, BeastWillRules.INTEGRATE}) for (int slot = 1; slot <= 2; slot++) {
+            BeastWillDef.Ability te = load(id).ability(ph, slot);
+            if (te == null || !te.kind().equals("time_exclusion")) continue;
+            seen++;
+            assertEquals(0.0, te.bossFactor(), id + ": a boss is immune");
+            assertTrue(te.durationTicks() <= 100 && te.radius() <= 10 && te.maxTargets() <= 6 && te.cooldownTicks() >= 600, id);
+        }
+        assertTrue(seen >= 1, "the dragon holds");
     }
 
     @Test
     void theHardControlsKeepBossResistanceAndWindUpSoCounterplayExists() throws Exception {
-        assertTrue(load("elderwood_guardian_will").ability(BeastWillRules.INTEGRATE, 1).bossFactor() <= 0.25);
+        assertTrue(load("elderwood_guardian_will").ability(BeastWillRules.ACQUIRE, 2).bossFactor() <= 0.25);
         assertTrue(load("lion_will").ability(BeastWillRules.INTEGRATE, 1).bossFactor() <= 0.25);
         assertTrue(load("lion_will").ability(BeastWillRules.INTEGRATE, 1).durationTicks() <= 60, "a stagger of at most three seconds");
+        for (String id : IDS) for (int ph : new int[]{BeastWillRules.ACQUIRE, BeastWillRules.INTEGRATE}) for (int slot = 1; slot <= 2; slot++) {
+            BeastWillDef.Ability a = load(id).ability(ph, slot);
+            if (a != null && (a.kind().equals("world_howl") || a.kind().equals("restraining_vines"))) assertTrue(a.bossFactor() <= 0.25, id + ": " + a.id() + " keeps boss resistance");
+        }
     }
 
     @Test
@@ -115,9 +133,9 @@ class BeastWillSchemaTest {
         String ok = Files.readString(DIR.resolve("lion_will.json"));
         String[][] breaks = {
                 {"\"minRank\": \"A\"", "\"minRank\": \"Z\""},
-                {"\"dropChance\": 0.02", "\"dropChance\": 0.5"},
+                {"\"dropChance\": 0.012", "\"dropChance\": 0.5"},
                 {"\"kind\": \"world_howl\"", "\"kind\": \"nuke\""},
-                {"\"attribute\": \"minecraft:generic.attack_damage\",\n        \"op\": \"add\",\n        \"amount\": 4.0", "\"attribute\": \"minecraft:generic.attack_damage\",\n        \"op\": \"add\",\n        \"amount\": 90.0"},
+                {"\"attribute\": \"minecraft:generic.attack_damage\",\n        \"op\": \"add\",\n        \"amount\": 2.0", "\"attribute\": \"minecraft:generic.attack_damage\",\n        \"op\": \"add\",\n        \"amount\": 90.0"},
                 {"\"bossFactor\": 0.25", "\"bossFactor\": 7"},
                 {"\"id\": \"lion_will\"", "\"id\": \"other_will\""},
         };

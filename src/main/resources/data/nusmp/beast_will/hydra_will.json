@@ -4,13 +4,13 @@
   "beast": "Lernaean Hydra",
   "affinity": "Venom",
   "legendary": false,
-  "minRank": "B",
+  "minRank": "A",
   "sources": [],
   "keywords": [
     "hydra"
   ],
-  "dropChance": 0.01,
-  "requireEp": 10000,
+  "dropChance": 0.012,
+  "requireEp": 20000,
   "hostRaces": [
     "HUMAN",
     "ELF",
@@ -22,119 +22,150 @@
   "assimilationDayCap": 0.3,
   "masteryDayCap": 0.3,
   "coreCooldownDays": 5,
-  "tint": 9418794,
+  "tint": 12116026,
   "passive": [],
   "acquire": {
     "unlockAssimilation": 0.1,
     "unlockMastery": 0.0,
-    "drainPct": 0.45,
-    "strainPerSecond": 0.1,
+    "drainPct": 0.5,
+    "strainPerSecond": 0.12,
     "regen": 0.0,
     "stats": [
       {
-        "attribute": "minecraft:generic.attack_damage",
-        "op": "add",
-        "amount": 1.5
-      },
-      {
         "attribute": "minecraft:generic.max_health",
         "op": "add",
-        "amount": 3.0
+        "amount": 4.0
       },
       {
         "attribute": "minecraft:generic.armor",
         "op": "add",
-        "amount": 2.0
+        "amount": 1.5
+      },
+      {
+        "attribute": "minecraft:generic.attack_speed",
+        "op": "mult",
+        "amount": 0.08
       }
     ],
     "abilities": [
       {
-        "id": "venom_fang",
+        "id": "marsh_fang",
         "kind": "venom_spit",
         "slot": 1,
         "costPct": 3,
         "cooldownTicks": 160,
         "strain": 4,
         "range": 6,
-        "radius": 6,
+        "radius": 0,
         "durationTicks": 80,
-        "power": 2,
-        "maxTargets": 2,
-        "bossFactor": 0.6
+        "power": 1,
+        "maxTargets": 1,
+        "bossFactor": 0.5,
+        "name": "Marsh Fang",
+        "effect": "A weak single venom spit that poisons one close target."
       },
       {
-        "id": "head_regrowth",
+        "id": "scab_over",
         "kind": "verdant_mend",
         "slot": 2,
-        "costPct": 6,
-        "cooldownTicks": 800,
-        "strain": 6,
+        "costPct": 4,
+        "cooldownTicks": 600,
+        "strain": 4,
         "range": 0,
         "radius": 0,
-        "durationTicks": 100,
-        "power": 1.5,
+        "durationTicks": 120,
+        "power": 1,
         "maxTargets": 1,
-        "bossFactor": 1.0
+        "bossFactor": 1.0,
+        "name": "Scab-Over",
+        "effect": "A small slow heal that closes cuts: borrowed regeneration."
       }
-    ]
+    ],
+    "equipPiece": "One green snake-scale gauntlet on the right forearm (the only equipped piece); green venom streaks and a thin afterimage on quick strikes."
   },
   "integrate": {
     "unlockAssimilation": 0.95,
     "unlockMastery": 0.5,
-    "drainPct": 1.0,
-    "strainPerSecond": 0.36,
+    "drainPct": 1.4,
+    "strainPerSecond": 0.8,
     "regen": 0.3,
     "stats": [
       {
-        "attribute": "minecraft:generic.attack_damage",
-        "op": "add",
-        "amount": 2.5
-      },
-      {
         "attribute": "minecraft:generic.max_health",
         "op": "add",
-        "amount": 7.0
+        "amount": 10
+      },
+      {
+        "attribute": "minecraft:generic.attack_damage",
+        "op": "add",
+        "amount": 4
       },
       {
         "attribute": "minecraft:generic.armor",
         "op": "add",
-        "amount": 3.0
+        "amount": 4
       },
       {
-        "attribute": "minecraft:generic.knockback_resistance",
-        "op": "add",
-        "amount": 0.3
+        "attribute": "minecraft:generic.attack_speed",
+        "op": "mult",
+        "amount": 0.25
       }
     ],
     "abilities": [
       {
-        "id": "many_heads",
+        "id": "nine_head_strike",
         "kind": "vine_lash",
         "slot": 1,
-        "costPct": 8,
-        "cooldownTicks": 140,
-        "strain": 9,
+        "costPct": 9,
+        "cooldownTicks": 100,
+        "strain": 12,
         "range": 9,
-        "radius": 9,
-        "durationTicks": 40,
+        "radius": 8,
+        "durationTicks": 60,
         "power": 4,
         "maxTargets": 3,
-        "bossFactor": 0.6
+        "bossFactor": 0.5,
+        "name": "Nine-Head Strike",
+        "effect": "Several heads lash out at up to three foes at once; the afterimages show nine necks."
       },
       {
-        "id": "hydra_breath",
-        "kind": "venom_spit",
+        "id": "heads_regrow",
+        "kind": "verdant_mend",
         "slot": 2,
-        "costPct": 9,
-        "cooldownTicks": 300,
-        "strain": 11,
-        "range": 8,
-        "radius": 8,
-        "durationTicks": 120,
-        "power": 4,
-        "maxTargets": 4,
-        "bossFactor": 0.6
+        "costPct": 14,
+        "cooldownTicks": 500,
+        "strain": 16,
+        "range": 0,
+        "radius": 0,
+        "durationTicks": 200,
+        "power": 3,
+        "maxTargets": 1,
+        "bossFactor": 1.0,
+        "name": "Heads Regrow",
+        "effect": "A big regrowth heal over several seconds; the glowing neck-stump grows a new head."
       }
-    ]
+    ],
+    "transformation": "Whole body becomes a marsh hydra-humanoid in scale armour: a fanged reptile head with slit yellow eyes, five extra snake-necked heads rising from the shoulders and back, one stump that visibly regrows, webbed claws, digitigrade legs and a thick spiked tail.",
+    "equip": {
+      "weapon": "A segmented fang-sword whose hilt is a snake head, grown from a tooth of the main head.",
+      "armor": "Overlapping marsh-green scale mail with a collar of five snake-necked pauldron heads.",
+      "hair_eyes": "Hair splitting into thin green snake-locks; slit yellow eyes.",
+      "aura": "Dripping green venom mist."
+    }
+  },
+  "beastNote": "Lernaean Hydra",
+  "lore": "The Lernaean Hydra of the marsh: poison breath, many necks, heads that grow back when cut. Its will mends flesh but keeps the holder in pain.",
+  "pitch": "The Lernaean Hydra is a marsh monster of poison and many necks whose heads regrow when cut. Acquire keeps you human with one green snake-scale gauntlet, lending a weak venom spit and a slow heal. Integrate makes you a marsh-green beastman in scale armour with a fanged head, five snake-necked pauldron heads and a thick spiked tail, a fast multi-strike healer paid for with constant venom fever and strain.",
+  "untrained": "An untrained holder feels heads straining out of their neck: burning poison in the blood, fever and spasms when the will wakes, and a wound that closes badly and aches. The will lay dormant until forcibly awakened; if the holder cannot balance it the clash tears at body and core and can kill, and only training the holder's own core and the beast core (best teacher: the beast itself) tames it.",
+  "designTag": "DESIGN",
+  "spirit": {
+    "colors": [
+      "#B8E03A",
+      "#1F6B2A",
+      "#F2E85A"
+    ],
+    "echo": "A marsh-green many-necked beastman: a main reptile head and five extra snake-necked heads fanned from the shoulders and back, one stump regrowing, webbed claws, a thick spiked tail.",
+    "accent": "#1F6B2A",
+    "look": "A lime-green orb with several thin dark necks coiled round it, each ending in a tiny glinting fang, one neck stump slowly regrowing."
   }
 }

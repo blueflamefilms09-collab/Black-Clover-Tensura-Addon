@@ -1,0 +1,157 @@
+{
+  "id": "scylla_charybdis_will",
+  "name": "Scylla and Charybdis Will",
+  "beast": "Scylla and Charybdis, the Strait Pair",
+  "affinity": "Strait",
+  "legendary": false,
+  "minRank": "A",
+  "sources": [],
+  "keywords": [
+    "scylla",
+    "charybdis"
+  ],
+  "dropChance": 0.01,
+  "requireEp": 28000,
+  "hostRaces": [
+    "HUMAN",
+    "ELF",
+    "DWARF"
+  ],
+  "otherHostCompat": 0.6,
+  "assimilationSeconds": 5400,
+  "masterySeconds": 3600,
+  "assimilationDayCap": 0.3,
+  "masteryDayCap": 0.3,
+  "coreCooldownDays": 5,
+  "tint": 8164272,
+  "passive": [
+    {
+      "attribute": "minecraft:generic.knockback_resistance",
+      "op": "add",
+      "amount": 0.05
+    }
+  ],
+  "acquire": {
+    "unlockAssimilation": 0.1,
+    "unlockMastery": 0.0,
+    "drainPct": 0.55,
+    "strainPerSecond": 0.12,
+    "regen": 0.0,
+    "stats": [
+      {
+        "attribute": "minecraft:generic.attack_damage",
+        "op": "add",
+        "amount": 2.0
+      },
+      {
+        "attribute": "minecraft:generic.max_health",
+        "op": "add",
+        "amount": 4.0
+      },
+      {
+        "attribute": "minecraft:generic.armor",
+        "op": "add",
+        "amount": 3.0
+      },
+      {
+        "attribute": "minecraft:generic.knockback_resistance",
+        "op": "add",
+        "amount": 0.25
+      }
+    ],
+    "abilities": [
+      {
+        "id": "rock_heads",
+        "kind": "vine_lash",
+        "slot": 1,
+        "costPct": 3,
+        "cooldownTicks": 100,
+        "strain": 4,
+        "range": 8,
+        "radius": 8,
+        "durationTicks": 40,
+        "power": 3,
+        "maxTargets": 3,
+        "bossFactor": 0.6
+      },
+      {
+        "id": "strait_ward",
+        "kind": "bark_ward",
+        "slot": 2,
+        "costPct": 4,
+        "cooldownTicks": 600,
+        "strain": 6,
+        "range": 0,
+        "radius": 0,
+        "durationTicks": 100,
+        "power": 1,
+        "maxTargets": 1,
+        "bossFactor": 1.0
+      }
+    ]
+  },
+  "integrate": {
+    "unlockAssimilation": 0.95,
+    "unlockMastery": 0.5,
+    "drainPct": 1.3,
+    "strainPerSecond": 0.42,
+    "regen": 0.0,
+    "stats": [
+      {
+        "attribute": "minecraft:generic.attack_damage",
+        "op": "add",
+        "amount": 3.5
+      },
+      {
+        "attribute": "minecraft:generic.max_health",
+        "op": "add",
+        "amount": 8.0
+      },
+      {
+        "attribute": "minecraft:generic.armor",
+        "op": "add",
+        "amount": 5.0
+      },
+      {
+        "attribute": "minecraft:generic.armor_toughness",
+        "op": "add",
+        "amount": 1.0
+      },
+      {
+        "attribute": "minecraft:generic.knockback_resistance",
+        "op": "add",
+        "amount": 0.5
+      }
+    ],
+    "abilities": [
+      {
+        "id": "scylla_heads",
+        "kind": "venom_spit",
+        "slot": 1,
+        "costPct": 9,
+        "cooldownTicks": 200,
+        "strain": 10,
+        "range": 9,
+        "radius": 9,
+        "durationTicks": 100,
+        "power": 4,
+        "maxTargets": 5,
+        "bossFactor": 0.5
+      },
+      {
+        "id": "charybdis_pull",
+        "kind": "maelstrom",
+        "slot": 2,
+        "costPct": 12,
+        "cooldownTicks": 900,
+        "strain": 14,
+        "range": 0,
+        "radius": 9,
+        "durationTicks": 60,
+        "power": 4,
+        "maxTargets": 6,
+        "bossFactor": 0.4
+      }
+    ]
+  }
+}

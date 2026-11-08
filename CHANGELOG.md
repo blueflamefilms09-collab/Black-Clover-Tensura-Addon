@@ -1,5 +1,15 @@
 # Changelog
 
+## [3.60.0] — Beast Will remake: all 27 wills, borrowed strengths and armoured beast-humanoids
+- REPLACED (you asked): all 27 Beast Wills. Acquire keeps you a human who borrows the beast's strengths and wears ONE piece of it; Integrate makes you a full armoured beast-humanoid with a signature weapon. Every will has new names, lore, rank, drop chance, two named abilities per stage, a form (piece, armour, weapon, hair, eyes, aura) and its own core colour (27 distinct). No summoned armies; the Shadow Panther drains mana fast; Kraken is rank S, Shadow Panther rank A.
+- REPLACED: the 27 Beast Will skill sets: 3 passives, 2 actives and the mastery finisher per beast (the Unique keeps the first passive and two actives at half strength). The old skill rows are kept as text in `tools/beastwill/remake/`.
+- REPLACED: the in-game spirits: 81 new sprites, a running figure with the burning piece in Acquire and the armoured beast-humanoid with a glow layer in Integrate.
+- NEW: the mastery finisher speaks its own incantation (one action-bar line to the caster); the core tooltip shows the will's lore line; 450 new lang lines.
+- NEW settings: server `beastwill.classicWills` loads the old 27 wills (`data/nusmp/beast_will_classic`); client `beastwill.classicSpirits` (`nusmp-beastwill-spirit-client.toml`) draws the old animal spirits.
+- KEPT: all 27 ids and saves, assimilation and mastery progress, hosts, caps, unlock levels, the core items, the engine's boss and attribute limits (a hold never takes a boss, hard controls keep boss resistance), the old spirits and will files, the 54 skill ids and icons.
+- Cost: nothing new per tick on the server and no new packets; client at most 22 quads per player in full detail (18 for the multi-headed wills), 8 light, nothing beyond 48 blocks; 1.6 MB of new sprites. Doc `docs/beastwill_remake.md`.
+- Not seen in a game and Gradle not run before this release: balance numbers are starting values, the spirits are sprite holograms behind the player (not real armour on the model), skills lost two of the old actives per beast, and a few abilities reuse the nearest engine kind (Sphinx petrify = hold, Hydra / Yamata lashes, Nue lightning).
+
 ## [3.59.1] — Fix: the Tower Wizard and library books piling up
 - FIXED: the Tower Wizard spawned again and again and the Grimoire Library filled with books until joining crashed. After a restart the saved wizard and books load a moment late, and the mod added a new wizard and 26 new books on top of them every time. Now: a library book loaded from the save is dropped (the books are made fresh while someone is inside and removed when the server stops), a second Tower Wizard within 24 blocks of one is refused, no wizard is added into a chunk that is still loading, and at most 26 books ever exist. A world that already has the pile repairs itself as the library loads, no need to delete the entities folder.
 - Cost: one entity query only when a wizard joins a level; books are added at most 8 per half second and only after the room has been occupied for 3 seconds; nothing else changes.

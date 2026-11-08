@@ -10,7 +10,7 @@
     "jormungandr",
     "tempest_serpent"
   ],
-  "dropChance": 0.006,
+  "dropChance": 0.005,
   "requireEp": 60000,
   "hostRaces": [
     "HUMAN",
@@ -23,7 +23,7 @@
   "assimilationDayCap": 0.2,
   "masteryDayCap": 0.2,
   "coreCooldownDays": 10,
-  "tint": 2005672,
+  "tint": 2052016,
   "passive": [
     {
       "attribute": "minecraft:generic.knockback_resistance",
@@ -34,93 +34,93 @@
   "acquire": {
     "unlockAssimilation": 0.1,
     "unlockMastery": 0.0,
-    "drainPct": 0.5,
-    "strainPerSecond": 0.12,
+    "drainPct": 0.7,
+    "strainPerSecond": 0.15,
     "regen": 0.0,
     "stats": [
       {
-        "attribute": "minecraft:generic.armor",
-        "op": "add",
-        "amount": 3.0
-      },
-      {
         "attribute": "minecraft:generic.max_health",
         "op": "add",
-        "amount": 5.0
+        "amount": 3.5
       },
       {
-        "attribute": "minecraft:generic.attack_damage",
+        "attribute": "minecraft:generic.armor",
         "op": "add",
         "amount": 2.5
       },
       {
-        "attribute": "minecraft:generic.knockback_resistance",
-        "op": "add",
-        "amount": 0.3
+        "attribute": "minecraft:generic.movement_speed",
+        "op": "mult",
+        "amount": 0.04
       }
     ],
     "abilities": [
       {
-        "id": "venom_tide",
-        "kind": "venom_spit",
+        "id": "eel_slip",
+        "kind": "shadow_dash",
         "slot": 1,
         "costPct": 4,
-        "cooldownTicks": 180,
-        "strain": 5,
-        "range": 7,
-        "radius": 7,
-        "durationTicks": 100,
-        "power": 3,
-        "maxTargets": 3,
-        "bossFactor": 0.6
+        "cooldownTicks": 120,
+        "strain": 4,
+        "range": 8,
+        "radius": 0,
+        "durationTicks": 0,
+        "power": 1.5,
+        "maxTargets": 1,
+        "bossFactor": 1.0,
+        "name": "Eel Slip",
+        "effect": "A slippery eel-like dash forward in a spray of water."
       },
       {
-        "id": "scale_ward",
-        "kind": "bark_ward",
+        "id": "brine_fang",
+        "kind": "venom_spit",
         "slot": 2,
         "costPct": 5,
-        "cooldownTicks": 600,
-        "strain": 7,
-        "range": 0,
-        "radius": 0,
-        "durationTicks": 120,
-        "power": 1,
-        "maxTargets": 1,
-        "bossFactor": 1.0
+        "cooldownTicks": 200,
+        "strain": 6,
+        "range": 8,
+        "radius": 4,
+        "durationTicks": 60,
+        "power": 2,
+        "maxTargets": 2,
+        "bossFactor": 0.5,
+        "name": "Brine Fang",
+        "effect": "A weak brine-venom spit that poisons up to two foes at close range."
       }
-    ]
+    ],
+    "equipPiece": "One wet blue-green sea-scale guard on the right forearm (the only equipped piece); blue water-streak afterimages."
   },
   "integrate": {
     "unlockAssimilation": 0.95,
     "unlockMastery": 0.5,
-    "drainPct": 1.4,
-    "strainPerSecond": 0.45,
+    "drainPct": 1.8,
+    "strainPerSecond": 1.1,
     "regen": 0.0,
     "stats": [
       {
-        "attribute": "minecraft:generic.armor",
-        "op": "add",
-        "amount": 6.0
-      },
-      {
-        "attribute": "minecraft:generic.armor_toughness",
-        "op": "add",
-        "amount": 2.0
-      },
-      {
         "attribute": "minecraft:generic.max_health",
         "op": "add",
-        "amount": 10.0
+        "amount": 10
       },
       {
-        "attribute": "minecraft:generic.attack_damage",
+        "attribute": "minecraft:generic.armor",
         "op": "add",
-        "amount": 4.0
+        "amount": 7
       },
       {
         "attribute": "minecraft:generic.knockback_resistance",
         "op": "add",
-        "amount": 0.6
+        "amount": 0.7
+      },
+      {
+        "attribute": "minecraft:generic.attack_damage",
+        "op": "add",
+        "amount": 5.0
+      },
+      {
+        "attribute": "minecraft:generic.movement_speed",
+        "op": "mult",
+        "amount": 0.1
       }
     ],
     "abilities": [
@@ -128,30 +128,56 @@
         "id": "world_coil",
         "kind": "restraining_vines",
         "slot": 1,
-        "costPct": 13,
-        "cooldownTicks": 900,
-        "strain": 18,
-        "range": 0,
-        "radius": 7,
-        "durationTicks": 60,
-        "power": 1,
+        "costPct": 14,
+        "cooldownTicks": 700,
+        "strain": 20,
+        "range": 14,
+        "radius": 8,
+        "durationTicks": 100,
+        "power": 3,
         "maxTargets": 6,
-        "bossFactor": 0.25
+        "bossFactor": 0.25,
+        "name": "World Coil",
+        "effect": "A ring of coils rises and holds up to six foes in place (bosses resist)."
       },
       {
-        "id": "sea_deluge",
+        "id": "ocean_rises",
         "kind": "maelstrom",
         "slot": 2,
         "costPct": 14,
-        "cooldownTicks": 1000,
+        "cooldownTicks": 400,
         "strain": 18,
         "range": 0,
         "radius": 10,
-        "durationTicks": 80,
-        "power": 5,
+        "durationTicks": 100,
+        "power": 4,
         "maxTargets": 6,
-        "bossFactor": 0.4
+        "bossFactor": 0.4,
+        "name": "The Ocean Rises",
+        "effect": "A wave of sea water crashes in a ring around the holder, damaging and pushing back foes."
       }
-    ]
+    ],
+    "transformation": "Whole body becomes a Midgard-humanoid in sea-scale plate: fanged jaw with fin crest, sea-green eyes, sea-blue hair, webbed claws holding a fang halberd, finned digitigrade legs and a thick coil-like tail.",
+    "equip": {
+      "weapon": "A serpent-fang halberd: a curved fang blade on a coil-wrapped shaft.",
+      "armor": "Deep-blue overlapping sea-scale plate with a belt-ring of a serpent biting its tail, finned greaves.",
+      "hair_eyes": "Long sea-blue hair drifting like current; sea-green slit eyes.",
+      "aura": "Swirling brine droplets and a faint tide ring at the feet."
+    }
+  },
+  "beastNote": "Jormungandr, the Midgard Serpent",
+  "lore": "The Midgard Serpent circles the world sea with its tail in its mouth; its venom meets Thor at Ragnarok.",
+  "pitch": "Jormungandr is the Midgard Serpent that circles the world sea biting its own tail and dies with Thor at Ragnarok. Acquire keeps you human with one sea-scale arm guard, lending an eel-quick dash and a weak brine spit. Integrate makes you a deep-blue serpent beastman in sea-scale plate with a fanged fin-crested jaw and a coiling tail, the heaviest-draining Beast Will of the S-class, whose coil trap and tidal ring leave you exhausted.",
+  "untrained": "An untrained holder is drowned by the sea: the borrowed coil tightens around the holder's own ribs, every ability leaves a salt burn and strain spikes when the tail-ring closes. CANON ADDENDUM 2: the will lies dormant in the holder's mana core until it is forcefully awakened (a flame sparked in the core); if the holder cannot suppress and balance it, the clashing energies wreck body and core and can kill (design: strain climbs fast, backlash damage, forced cancel at the cap); mastery means training both the holder's own core and the beast core, best taught by the beast itself. This will summons no beasts or hordes.",
+  "designTag": "DESIGN",
+  "spirit": {
+    "colors": [
+      "#1F4FB0",
+      "#0B2A5A",
+      "#7CFFB2"
+    ],
+    "echo": "A deep-blue sea-serpent beastman: wide fanged jaw with a fin crest, thick scaled coil-like tail, wet shimmering scales, webbed claws.",
+    "accent": "#7CFFB2",
+    "look": "A deep-blue ring-shaped orb: a tiny serpent biting its tail inside a sphere of swirling sea water."
   }
 }

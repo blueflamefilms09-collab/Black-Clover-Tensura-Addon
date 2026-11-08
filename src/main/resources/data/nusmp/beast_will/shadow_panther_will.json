@@ -11,7 +11,7 @@
     "leopard",
     "jaguar"
   ],
-  "dropChance": 0.02,
+  "dropChance": 0.015,
   "requireEp": 10000,
   "hostRaces": [
     "HUMAN",
@@ -24,7 +24,7 @@
   "assimilationDayCap": 0.3,
   "masteryDayCap": 0.3,
   "coreCooldownDays": 5,
-  "tint": 4930188,
+  "tint": 5921376,
   "passive": [
     {
       "attribute": "minecraft:generic.movement_speed",
@@ -42,62 +42,76 @@
       {
         "attribute": "minecraft:generic.movement_speed",
         "op": "mult",
-        "amount": 0.12
+        "amount": 0.08
       },
       {
         "attribute": "minecraft:generic.step_height",
         "op": "add",
-        "amount": 0.4
+        "amount": 0.2
       },
       {
         "attribute": "minecraft:generic.jump_strength",
         "op": "mult",
-        "amount": 0.1
+        "amount": 0.06
       },
       {
         "attribute": "minecraft:generic.attack_speed",
         "op": "mult",
-        "amount": 0.05
+        "amount": 0.04
       }
     ],
     "abilities": [
       {
-        "id": "shadow_veil",
-        "kind": "shadow_veil",
+        "id": "night_step",
+        "kind": "shadow_dash",
         "slot": 1,
-        "costPct": 2,
-        "cooldownTicks": 400,
-        "strain": 3,
-        "range": 0,
+        "costPct": 3,
+        "cooldownTicks": 100,
+        "strain": 4,
+        "range": 8,
         "radius": 0,
-        "durationTicks": 120,
+        "durationTicks": 0,
         "power": 1,
         "maxTargets": 1,
-        "bossFactor": 1.0
+        "bossFactor": 1.0,
+        "name": "Peak Reflex Step",
+        "effect": ""
+      },
+      {
+        "id": "afterimage_sidestep",
+        "kind": "shadow_dash",
+        "slot": 2,
+        "costPct": 3,
+        "cooldownTicks": 140,
+        "strain": 3,
+        "range": 4,
+        "radius": 0,
+        "durationTicks": 0,
+        "power": 0.5,
+        "maxTargets": 1,
+        "bossFactor": 1.0,
+        "name": "Afterimage Sidestep",
+        "effect": ""
       }
-    ]
+    ],
+    "equipPiece": "A single ragged shadow-smoke tail-sash at the hip that flicks behind the runner like a panther tail (the only equipped piece)."
   },
   "integrate": {
     "unlockAssimilation": 0.95,
     "unlockMastery": 0.5,
-    "drainPct": 1.2,
-    "strainPerSecond": 0.4,
+    "drainPct": 2.2,
+    "strainPerSecond": 1.0,
     "regen": 0.0,
     "stats": [
       {
         "attribute": "minecraft:generic.movement_speed",
         "op": "mult",
-        "amount": 0.22
+        "amount": 0.2
       },
       {
-        "attribute": "minecraft:generic.attack_damage",
+        "attribute": "minecraft:generic.step_height",
         "op": "add",
-        "amount": 2.0
-      },
-      {
-        "attribute": "minecraft:generic.attack_speed",
-        "op": "mult",
-        "amount": 0.15
+        "amount": 0.5
       },
       {
         "attribute": "minecraft:generic.jump_strength",
@@ -105,45 +119,76 @@
         "amount": 0.2
       },
       {
+        "attribute": "minecraft:generic.attack_speed",
+        "op": "mult",
+        "amount": 0.15
+      },
+      {
+        "attribute": "minecraft:generic.attack_damage",
+        "op": "add",
+        "amount": 3.0
+      },
+      {
         "attribute": "minecraft:generic.safe_fall_distance",
         "op": "add",
         "amount": 4.0
-      },
-      {
-        "attribute": "minecraft:generic.step_height",
-        "op": "add",
-        "amount": 0.5
       }
     ],
     "abilities": [
       {
-        "id": "shadow_dash",
-        "kind": "shadow_dash",
+        "id": "windsilence_shroud",
+        "kind": "shadow_veil",
         "slot": 1,
-        "costPct": 4,
-        "cooldownTicks": 100,
-        "strain": 6,
-        "range": 10,
+        "costPct": 12,
+        "cooldownTicks": 400,
+        "strain": 12,
+        "range": 0,
         "radius": 0,
-        "durationTicks": 0,
-        "power": 1,
+        "durationTicks": 120,
+        "power": 4,
         "maxTargets": 1,
-        "bossFactor": 1.0
+        "bossFactor": 1.0,
+        "name": "Shadow-Merge Windsilence",
+        "effect": ""
       },
       {
-        "id": "ambush",
+        "id": "throat_pounce",
         "kind": "ambush",
         "slot": 2,
-        "costPct": 8,
-        "cooldownTicks": 320,
-        "strain": 12,
-        "range": 8,
+        "costPct": 10,
+        "cooldownTicks": 240,
+        "strain": 14,
+        "range": 12,
         "radius": 0,
         "durationTicks": 0,
-        "power": 7,
+        "power": 6,
         "maxTargets": 1,
-        "bossFactor": 0.5
+        "bossFactor": 0.4,
+        "name": "Throat Pounce",
+        "effect": ""
       }
-    ]
+    ],
+    "transformation": "Full armoured form: the whole body becomes a panther-humanoid wrapped in ragged shadow armor: pointed cat ears with a brow-guard, acid-yellow slit eyes, clawed gauntlets, digitigrade crouching legs with spiked greaves, a whip tail and a torn shadow mantle; a shadow claw-blade grows from the right hand. Drains mana extremely fast (canon drawback), the highest drain in the roster.",
+    "equip": {
+      "weapon": "A long shadow claw-blade (katar) formed on the right hand from the dark; it makes no sound when it cuts.",
+      "armor": "Ragged black shadow-plate: a torn silence mantle over the shoulders, cat-eared brow-guard, clawed gauntlets and spiked greaves; violet piping so it can be seen.",
+      "hair_eyes": "Black hair swept back into a ragged ruff, glowing acid-yellow slit eyes.",
+      "aura": "Violet-black smoke with ragged edges peeling off the body and a muffled ring of silence under the feet."
+    }
+  },
+  "beastNote": "Shadow Panther (A-class; the wiki rates Virion's panther AA)",
+  "lore": "A panther of moonless dark that hushes wind and sound until it is only a rumour; the holder first borrows its reflexes, then becomes the silence it hunts in.",
+  "pitch": "The Shadow Panther is a black cat of the dark that erases wind and sound around it. Acquire keeps you human, blurring in violet afterimages with one shadow tail-sash flicking at your hip. Integrate (Full armoured form) turns you into a panther-humanoid in ragged shadow armor with a claw-blade, and its price is the fastest mana drain of any will.",
+  "untrained": "An untrained holder's own shadow tears loose in pain: ragged shadow flickers off the body, hearing drops out in short bursts and every dash adds extra strain; the form burns mana so fast that an unbalanced will can wreck the core and kill the host. The will lies dormant in the core until it is forcibly awakened; training both the holder's own core and the beast core is the cure.",
+  "designTag": "CANON-BASE",
+  "spirit": {
+    "colors": [
+      "#14141C",
+      "#6A2FB0",
+      "#D6FF4A"
+    ],
+    "echo": "A crouched panther beastman in ragged shadow armor: cat ears, glowing slit eyes, clawed gauntlets, digitigrade stalking stance, whip tail, torn shadow edges and one claw-blade; the black body needs a violet rim and yellow eyes to be seen.",
+    "accent": "#D6FF4A",
+    "look": "A near-black orb whose surface frays into ragged smoke, with a thin violet rim light so it reads on dark ground and two slit acid-yellow glints like cat eyes opening in it."
   }
 }

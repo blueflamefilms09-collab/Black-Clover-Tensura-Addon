@@ -1,10 +1,10 @@
 {
   "id": "dragon_will",
   "name": "Dragon Will",
-  "beast": "Aether Dragon (Sylvia-inspired)",
+  "beast": "Mana Dragon",
   "affinity": "Aether",
   "legendary": true,
-  "minRank": "S",
+  "minRank": "SS",
   "sources": [
     "iceandfire:fire_dragon",
     "iceandfire:ice_dragon",
@@ -26,7 +26,7 @@
   "assimilationDayCap": 0.15,
   "masteryDayCap": 0.15,
   "coreCooldownDays": 14,
-  "tint": 8378111,
+  "tint": 12166399,
   "passive": [
     {
       "attribute": "minecraft:generic.knockback_resistance",
@@ -37,24 +37,19 @@
   "acquire": {
     "unlockAssimilation": 0.1,
     "unlockMastery": 0.0,
-    "drainPct": 0.5,
-    "strainPerSecond": 0.12,
+    "drainPct": 0.8,
+    "strainPerSecond": 0.24,
     "regen": 0.0,
     "stats": [
       {
         "attribute": "minecraft:generic.armor",
-        "op": "add",
-        "amount": 3.0
-      },
-      {
-        "attribute": "minecraft:generic.armor_toughness",
         "op": "add",
         "amount": 1.0
       },
       {
         "attribute": "minecraft:generic.knockback_resistance",
         "op": "add",
-        "amount": 0.2
+        "amount": 0.12
       },
       {
         "attribute": "minecraft:generic.movement_speed",
@@ -64,40 +59,45 @@
     ],
     "abilities": [
       {
-        "id": "dragon_sight",
-        "kind": "dragon_sight",
+        "id": "static_void",
+        "kind": "time_exclusion",
         "slot": 1,
-        "costPct": 3,
-        "cooldownTicks": 600,
-        "strain": 4,
-        "range": 20,
-        "radius": 20,
-        "durationTicks": 120,
-        "power": 1,
-        "maxTargets": 6,
-        "bossFactor": 1.0
-      },
-      {
-        "id": "draconic_pulse",
-        "kind": "draconic_pulse",
-        "slot": 2,
-        "costPct": 4,
-        "cooldownTicks": 160,
-        "strain": 6,
-        "range": 6,
+        "costPct": 12,
+        "cooldownTicks": 1200,
+        "strain": 14,
+        "range": 0,
         "radius": 6,
         "durationTicks": 40,
-        "power": 3,
-        "maxTargets": 4,
-        "bossFactor": 0.6
+        "power": 1,
+        "maxTargets": 3,
+        "bossFactor": 0.0,
+        "name": "Static Void",
+        "effect": ""
+      },
+      {
+        "id": "aether_step",
+        "kind": "shadow_dash",
+        "slot": 2,
+        "costPct": 5,
+        "cooldownTicks": 160,
+        "strain": 6,
+        "range": 10,
+        "radius": 0,
+        "durationTicks": 0,
+        "power": 1,
+        "maxTargets": 1,
+        "bossFactor": 1.0,
+        "name": "Aether Step",
+        "effect": ""
       }
-    ]
+    ],
+    "equipPiece": "One lavender aether-rune gauntlet on the casting forearm (gold runes glow when Static Void fires); body stays human."
   },
   "integrate": {
     "unlockAssimilation": 0.95,
     "unlockMastery": 0.5,
-    "drainPct": 1.4,
-    "strainPerSecond": 0.45,
+    "drainPct": 2.0,
+    "strainPerSecond": 1.35,
     "regen": 0.0,
     "stats": [
       {
@@ -113,53 +113,79 @@
       {
         "attribute": "minecraft:generic.knockback_resistance",
         "op": "add",
-        "amount": 0.5
-      },
-      {
-        "attribute": "minecraft:generic.max_health",
-        "op": "add",
-        "amount": 6.0
-      },
-      {
-        "attribute": "minecraft:generic.attack_damage",
-        "op": "add",
-        "amount": 3.0
+        "amount": 0.4
       },
       {
         "attribute": "minecraft:generic.movement_speed",
         "op": "mult",
-        "amount": 0.1
+        "amount": 0.14
+      },
+      {
+        "attribute": "minecraft:generic.max_health",
+        "op": "add",
+        "amount": 10.0
+      },
+      {
+        "attribute": "minecraft:generic.attack_damage",
+        "op": "add",
+        "amount": 5.0
       }
     ],
     "abilities": [
       {
-        "id": "draconic_breath",
-        "kind": "draconic_pulse",
+        "id": "realmheart_sight",
+        "kind": "dragon_sight",
         "slot": 1,
-        "costPct": 7,
-        "cooldownTicks": 140,
-        "strain": 9,
+        "costPct": 6,
+        "cooldownTicks": 400,
+        "strain": 10,
+        "range": 24,
+        "radius": 24,
+        "durationTicks": 160,
+        "power": 2,
+        "maxTargets": 8,
+        "bossFactor": 1.0,
+        "name": "Realmheart Sight",
+        "effect": ""
+      },
+      {
+        "id": "dragon_breath_pulse",
+        "kind": "draconic_pulse",
+        "slot": 2,
+        "costPct": 14,
+        "cooldownTicks": 200,
+        "strain": 16,
         "range": 8,
         "radius": 8,
         "durationTicks": 60,
-        "power": 6,
+        "power": 5,
         "maxTargets": 6,
-        "bossFactor": 0.6
-      },
-      {
-        "id": "time_exclusion",
-        "kind": "time_exclusion",
-        "slot": 2,
-        "costPct": 18,
-        "cooldownTicks": 1800,
-        "strain": 24,
-        "range": 0,
-        "radius": 7,
-        "durationTicks": 60,
-        "power": 1,
-        "maxTargets": 4,
-        "bossFactor": 0.0
+        "bossFactor": 0.5,
+        "name": "Aether Breath Pulse",
+        "effect": ""
       }
-    ]
+    ],
+    "transformation": "Full armoured form Realmheart dragon-humanoid: white-orange-tipped mane over swept horns, glowing lavender eyes with gold under-eye runes, gold runes down both arms, ornate white-lavender dragon plate on shoulders and spine, digitigrade clawed greaved legs, a long spined tail, two membrane wings and an aether-fang blade grown from the forearm.",
+    "equip": {
+      "weapon": "A long aether-glass dragon-fang blade grown from the right forearm, gold runes down the flat.",
+      "armor": "Ornate white-and-lavender dragon plate: scaled pauldrons, spine ridge plates, runed bracers and greaves, a folded two-wing membrane cape.",
+      "hair_eyes": "Hair turns white with orange tips and sweeps back over two horns; eyes glow lavender, gold runes under the eyes.",
+      "aura": "Lavender-gold aether aura with drifting rune motes and a faint space-warp shimmer."
+    }
+  },
+  "beastNote": "Mana Dragon (Sylvia, who gave her will to Arthur)",
+  "lore": "The Dragon's Will, an Asuran dragon's will of the Indrath line (Aether) that Sylvia gave to Arthur. A holder first borrows its grip on aether (Static Void); only a trained one becomes the Realmheart dragon-humanoid.",
+  "pitch": "Sylvia's Dragon Will is the will of an Asuran dragon of the Indrath line, handed to Arthur. Acquire keeps you human with lavender afterimages and one equipped piece, a single aether-rune gauntlet, so you can step through aether and briefly freeze time (Static Void). Integrate (Realmheart) makes you a white-maned dragon-humanoid in gold-runed aether plate that sees mana and bends space; it burns the highest drain in the roster and is painful until mastered.",
+  "untrained": "Canon: Arthur felt pain from Sylvia's will. DESIGN: the highest strain of any will (acquire 0.28/s, integrate 1.4/s); an untrained holder's screen shudders, aether backlash burns mana and hearts whenever Static Void or the breath is cast past the trained level. CANON ADDENDUM 2: the will lies dormant in the holder's mana core until it is forcefully awakened (a flame sparked in the core); if the holder cannot suppress and balance it, the clashing energies wreck body and core and can kill (design: strain climbs fast, backlash damage, forced cancel at the cap); mastery means training both the holder's own core and the beast core, best taught by the beast itself. This will summons no beasts or hordes.",
+  "designTag": "CANON-BASE",
+  "spirit": {
+    "colors": [
+      "#B9A4FF",
+      "#F2F0FF",
+      "#E3B341"
+    ],
+    "echo": "A tall dragon-humanoid in white and lavender aether plate: swept-back horned head, white mane, slit lavender-gold eyes, scaled digitigrade legs, thick spined tail, two membrane wings, clawed hands, aether-fang blade.",
+    "accent": "#E3B341",
+    "look": "A faceted lavender-aether orb with a slit gold pupil, two slow-turning gold rune rings and a faint folded-wing glimmer inside."
   }
 }

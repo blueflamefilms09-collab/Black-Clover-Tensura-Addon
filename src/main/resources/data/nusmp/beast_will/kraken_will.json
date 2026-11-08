@@ -4,13 +4,13 @@
   "beast": "Kraken, the Fleet-Dragger",
   "affinity": "Abyss",
   "legendary": false,
-  "minRank": "A",
+  "minRank": "S",
   "sources": [],
   "keywords": [
     "kraken"
   ],
-  "dropChance": 0.01,
-  "requireEp": 24000,
+  "dropChance": 0.006,
+  "requireEp": 40000,
   "hostRaces": [
     "HUMAN",
     "ELF",
@@ -22,7 +22,7 @@
   "assimilationDayCap": 0.3,
   "masteryDayCap": 0.3,
   "coreCooldownDays": 5,
-  "tint": 948838,
+  "tint": 16736595,
   "passive": [
     {
       "attribute": "minecraft:generic.knockback_resistance",
@@ -45,74 +45,79 @@
       {
         "attribute": "minecraft:generic.max_health",
         "op": "add",
-        "amount": 4.0
-      },
-      {
-        "attribute": "minecraft:generic.armor",
-        "op": "add",
-        "amount": 2.0
+        "amount": 3.2
       },
       {
         "attribute": "minecraft:generic.knockback_resistance",
         "op": "add",
-        "amount": 0.2
+        "amount": 0.16
       }
     ],
     "abilities": [
       {
-        "id": "tentacle_lash",
-        "kind": "vine_lash",
-        "slot": 1,
-        "costPct": 3,
-        "cooldownTicks": 100,
-        "strain": 4,
-        "range": 8,
-        "radius": 8,
-        "durationTicks": 40,
-        "power": 3,
-        "maxTargets": 3,
-        "bossFactor": 0.6
-      },
-      {
-        "id": "ink_veil",
+        "id": "ink_cloud",
         "kind": "shadow_veil",
-        "slot": 2,
-        "costPct": 3,
-        "cooldownTicks": 500,
+        "slot": 1,
+        "costPct": 4,
+        "cooldownTicks": 450,
         "strain": 4,
         "range": 0,
         "radius": 0,
         "durationTicks": 100,
         "power": 1,
         "maxTargets": 1,
-        "bossFactor": 1.0
+        "bossFactor": 1.0,
+        "name": "Ink Cloud",
+        "effect": "A burst of dark ink hides the holder for about 5 seconds."
+      },
+      {
+        "id": "jet_dash",
+        "kind": "shadow_dash",
+        "slot": 2,
+        "costPct": 3,
+        "cooldownTicks": 100,
+        "strain": 4,
+        "range": 8,
+        "radius": 0,
+        "durationTicks": 0,
+        "power": 1,
+        "maxTargets": 1,
+        "bossFactor": 1.0,
+        "name": "Jet Dash",
+        "effect": "A squid-style jet: a quick dash away or forward in a spray of ink."
       }
-    ]
+    ],
+    "equipPiece": "One coral-red sucker-ringed tentacle sleeve on the left forearm (the only equipped piece); ink wisps and coral afterimages on each dodge."
   },
   "integrate": {
     "unlockAssimilation": 0.95,
     "unlockMastery": 0.5,
-    "drainPct": 1.3,
-    "strainPerSecond": 0.42,
+    "drainPct": 1.6,
+    "strainPerSecond": 0.9,
     "regen": 0.0,
     "stats": [
       {
         "attribute": "minecraft:generic.attack_damage",
         "op": "add",
-        "amount": 3.0
+        "amount": 5
       },
       {
         "attribute": "minecraft:generic.max_health",
         "op": "add",
-        "amount": 9.0
+        "amount": 8
       },
       {
         "attribute": "minecraft:generic.armor",
         "op": "add",
-        "amount": 4.0
+        "amount": 5
       },
       {
         "attribute": "minecraft:generic.knockback_resistance",
+        "op": "add",
+        "amount": 0.4
+      },
+      {
+        "attribute": "minecraft:generic.step_height",
         "op": "add",
         "amount": 0.4
       }
@@ -122,30 +127,56 @@
         "id": "tentacle_grip",
         "kind": "restraining_vines",
         "slot": 1,
-        "costPct": 10,
-        "cooldownTicks": 700,
-        "strain": 14,
-        "range": 0,
-        "radius": 6,
-        "durationTicks": 60,
-        "power": 1,
-        "maxTargets": 5,
-        "bossFactor": 0.25
+        "costPct": 11,
+        "cooldownTicks": 600,
+        "strain": 16,
+        "range": 12,
+        "radius": 7,
+        "durationTicks": 90,
+        "power": 3,
+        "maxTargets": 4,
+        "bossFactor": 0.25,
+        "name": "Tentacle Grip",
+        "effect": "Tentacles seize up to four foes and crush them in a hold (bosses resist)."
       },
       {
         "id": "whirlpool_drag",
         "kind": "maelstrom",
         "slot": 2,
-        "costPct": 10,
-        "cooldownTicks": 700,
-        "strain": 12,
+        "costPct": 13,
+        "cooldownTicks": 500,
+        "strain": 18,
         "range": 0,
-        "radius": 8,
-        "durationTicks": 60,
-        "power": 3,
-        "maxTargets": 6,
-        "bossFactor": 0.4
+        "radius": 9,
+        "durationTicks": 90,
+        "power": 4,
+        "maxTargets": 5,
+        "bossFactor": 0.3,
+        "name": "Whirlpool Drag",
+        "effect": "The kraken dives in place: a whirlpool drags nearby foes toward it, spinning them in ink."
       }
-    ]
+    ],
+    "transformation": "Whole body becomes a kraken beastman in coral mantle plate: bulbous mantle-hood head with a beak and glowing cyan eyes, four long tentacles from the back, two suckered clawed arms with an anchor-trident, a tentacle skirt over digitigrade legs and an ink-cloud aura.",
+    "equip": {
+      "weapon": "A ship-breaker anchor-trident with a sucker-ringed shaft.",
+      "armor": "Coral-red mantle plate with a beaked hood-helm and sucker-ringed bracers over a short tentacle skirt.",
+      "hair_eyes": "Ink-indigo hair hanging like a mantle; glowing cyan eyes.",
+      "aura": "A swirling ink cloud with cold bubbles."
+    }
+  },
+  "beastNote": "Kraken, the Fleet-Dragger",
+  "lore": "The Kraken of the northern sea: arms that seize ships, ink that blots the sea and a whirlpool when it dives.",
+  "pitch": "The Kraken is the colossal cephalopod of Scandinavian myth that drags whole fleets down and makes a whirlpool when it dives. Acquire keeps you human with one suckered tentacle sleeve, lending an ink cloud and a squid-jet dash. Integrate makes you a coral-red squid beastman in mantle plate with a beaked hood, cyan eyes and four back tentacles, a grabber and puller of crowds paid for with cold breathless strain.",
+  "untrained": "An untrained holder feels cold phantom arms squeezing their ribs and ink-black sickness; breath fails as if underwater and strain climbs on every grip. Canon: a will that is not suppressed or balanced disrupts body and mana core and can eventually kill the holder, so the first Awakening (forced, a spark in the core) is the most dangerous moment and training both cores is the cure.",
+  "designTag": "DESIGN",
+  "spirit": {
+    "colors": [
+      "#FF6153",
+      "#2B1B6E",
+      "#3FE0D0"
+    ],
+    "echo": "A hunched red squid-beastman: bulbous mantle-hood head, glowing cyan eyes, a beak, four long tentacles from the back, suckered clawed arms, a skirt of short tentacles over digitigrade legs.",
+    "accent": "#2B1B6E",
+    "look": "A coral-red orb ringed by slowly writhing tentacle shapes with a small glowing cyan ink eye in the middle."
   }
 }

@@ -1,16 +1,16 @@
 {
   "id": "wind_skimmer_will",
   "name": "Wind-Skimmer Raptor Will",
-  "beast": "Wind-Skimmer Raptor",
+  "beast": "Gale Skimmer Elder",
   "affinity": "Wind",
   "legendary": false,
-  "minRank": "C",
+  "minRank": "A",
   "sources": [],
   "keywords": [
     "wind_skimmer"
   ],
-  "dropChance": 0.01,
-  "requireEp": 5000,
+  "dropChance": 0.015,
+  "requireEp": 12000,
   "hostRaces": [
     "HUMAN",
     "ELF",
@@ -22,7 +22,7 @@
   "assimilationDayCap": 0.4,
   "masteryDayCap": 0.4,
   "coreCooldownDays": 3,
-  "tint": 10477768,
+  "tint": 2947839,
   "passive": [
     {
       "attribute": "minecraft:generic.movement_speed",
@@ -33,7 +33,7 @@
   "acquire": {
     "unlockAssimilation": 0.1,
     "unlockMastery": 0.0,
-    "drainPct": 0.45,
+    "drainPct": 0.5,
     "strainPerSecond": 0.1,
     "regen": 0.0,
     "stats": [
@@ -45,7 +45,7 @@
       {
         "attribute": "minecraft:generic.step_height",
         "op": "add",
-        "amount": 0.2
+        "amount": 0.1
       },
       {
         "attribute": "minecraft:generic.jump_strength",
@@ -55,12 +55,12 @@
       {
         "attribute": "minecraft:generic.safe_fall_distance",
         "op": "add",
-        "amount": 4.0
+        "amount": 3.0
       }
     ],
     "abilities": [
       {
-        "id": "shadow_dash",
+        "id": "skim_step",
         "kind": "shadow_dash",
         "slot": 1,
         "costPct": 3,
@@ -71,10 +71,12 @@
         "durationTicks": 0,
         "power": 1,
         "maxTargets": 1,
-        "bossFactor": 1.0
+        "bossFactor": 1.0,
+        "name": "Skim Step",
+        "effect": "A low fast skim forward along the air, long streaks behind."
       },
       {
-        "id": "shadow_veil",
+        "id": "cloud_veil",
         "kind": "shadow_veil",
         "slot": 2,
         "costPct": 3,
@@ -85,26 +87,34 @@
         "durationTicks": 80,
         "power": 1,
         "maxTargets": 1,
-        "bossFactor": 1.0
+        "bossFactor": 1.0,
+        "name": "Cloud Veil",
+        "effect": "A thin cloud wraps the holder and blurs them for a few seconds."
       }
-    ]
+    ],
+    "equipPiece": "A single cyan feathered wing-vambrace on the left forearm (the only equipped piece)."
   },
   "integrate": {
     "unlockAssimilation": 0.95,
     "unlockMastery": 0.5,
-    "drainPct": 1.0,
-    "strainPerSecond": 0.35,
+    "drainPct": 1.1,
+    "strainPerSecond": 0.42,
     "regen": 0.0,
     "stats": [
       {
         "attribute": "minecraft:generic.movement_speed",
         "op": "mult",
-        "amount": 0.15
+        "amount": 0.24
+      },
+      {
+        "attribute": "minecraft:generic.step_height",
+        "op": "add",
+        "amount": 0.3
       },
       {
         "attribute": "minecraft:generic.jump_strength",
         "op": "mult",
-        "amount": 0.15
+        "amount": 0.3
       },
       {
         "attribute": "minecraft:generic.safe_fall_distance",
@@ -112,45 +122,66 @@
         "amount": 6.0
       },
       {
-        "attribute": "minecraft:generic.attack_damage",
-        "op": "add",
-        "amount": 2.0
-      },
-      {
         "attribute": "minecraft:generic.attack_speed",
         "op": "mult",
-        "amount": 0.08
+        "amount": 0.12
       }
     ],
     "abilities": [
       {
-        "id": "draconic_pulse",
+        "id": "wingbeat_burst",
         "kind": "draconic_pulse",
         "slot": 1,
-        "costPct": 6,
-        "cooldownTicks": 140,
-        "strain": 8,
-        "range": 8,
+        "costPct": 7,
+        "cooldownTicks": 120,
+        "strain": 10,
+        "range": 6,
         "radius": 6,
-        "durationTicks": 30,
-        "power": 2,
-        "maxTargets": 5,
-        "bossFactor": 0.6
+        "durationTicks": 40,
+        "power": 3,
+        "maxTargets": 6,
+        "bossFactor": 0.3,
+        "name": "Wingbeat Burst",
+        "effect": "A downward wingbeat throws a gust ring that pushes and bruises everything near."
       },
       {
-        "id": "ambush",
-        "kind": "ambush",
+        "id": "cyclone_wake",
+        "kind": "maelstrom",
         "slot": 2,
-        "costPct": 6,
-        "cooldownTicks": 300,
-        "strain": 8,
+        "costPct": 12,
+        "cooldownTicks": 320,
+        "strain": 14,
         "range": 10,
-        "radius": 0,
-        "durationTicks": 0,
-        "power": 5,
-        "maxTargets": 1,
-        "bossFactor": 0.5
+        "radius": 10,
+        "durationTicks": 100,
+        "power": 3,
+        "maxTargets": 6,
+        "bossFactor": 0.3,
+        "name": "Cyclone Wake",
+        "effect": "The raptor circles and leaves a cyclone in its wake that drags foes along and slows them."
       }
-    ]
+    ],
+    "transformation": "Full armoured form: the whole body becomes a raptor-beastman in light feathered armor: beaked head with a feather crest, sharp amber eyes, two wing-arm vambraces with long primary feathers, a down-feather ruff, digitigrade talon greaves and a fan of long tail feathers; a feather-edged wind-talon blade forms on the right wing-arm.",
+    "equip": {
+      "weapon": "A long feather-edged wind-talon blade formed from the primary feathers of the right wing-arm.",
+      "armor": "Light white-and-blue feathered cuirass, wing-arm vambraces with long primaries and talon greaves.",
+      "hair_eyes": "A swept feather crest for hair, sharp amber eyes.",
+      "aura": "A cyan-white gale trail around the body."
+    }
+  },
+  "beastNote": "Gale Skimmer Elder (A-class sky raptor)",
+  "lore": "The will of an elder raptor that skims the top of the gale: it never lands hard, fades into clouds and falls on prey from the wind.",
+  "pitch": "The Gale Skimmer is an A-class sky raptor that never lands hard and falls on prey out of the wind. Acquire keeps you human, skimming in air streaks with one cyan feathered wing-vambrace. Integrate (Full armoured form) makes you a raptor-beastman in feathered armor with a wind-talon blade: the best mobility, but little armor and a slightly higher drain than the wolf.",
+  "untrained": "An untrained holder is thrown by their own wind: the body wobbles in mid-air, falls are not cushioned as expected and strain climbs with every dash and dive. Canon: a will that is not suppressed or balanced disrupts body and mana core and can eventually kill the holder, so the first Awakening (forced, a spark in the core) is the most dangerous moment and training both cores is the cure.",
+  "designTag": "DESIGN",
+  "spirit": {
+    "colors": [
+      "#2CFAFF",
+      "#F2FFFF",
+      "#3A7CC8"
+    ],
+    "echo": "A slim raptor beastman in light feathered armor: beaked head with a feather crest, sharp amber eyes, wing-arm vambraces with long primaries, digitigrade talon feet, streaming tail feathers, a wind-talon blade.",
+    "accent": "#3A7CC8",
+    "look": "A bright cyan orb with drifting white feathers and thin spiral wind lines orbiting it like the eye of a storm."
   }
 }

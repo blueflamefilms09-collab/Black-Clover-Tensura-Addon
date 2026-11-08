@@ -4,12 +4,12 @@
   "beast": "Thunder-Fang Chimera",
   "affinity": "Lightning",
   "legendary": false,
-  "minRank": "A",
+  "minRank": "S",
   "sources": [],
   "keywords": [
     "chimera"
   ],
-  "dropChance": 0.01,
+  "dropChance": 0.006,
   "requireEp": 30000,
   "hostRaces": [
     "HUMAN",
@@ -22,7 +22,7 @@
   "assimilationDayCap": 0.3,
   "masteryDayCap": 0.3,
   "coreCooldownDays": 5,
-  "tint": 5945599,
+  "tint": 16052828,
   "passive": [
     {
       "attribute": "minecraft:generic.knockback_resistance",
@@ -33,59 +33,83 @@
   "acquire": {
     "unlockAssimilation": 0.1,
     "unlockMastery": 0.0,
-    "drainPct": 0.55,
-    "strainPerSecond": 0.12,
+    "drainPct": 0.6,
+    "strainPerSecond": 0.14,
     "regen": 0.0,
     "stats": [
       {
+        "attribute": "minecraft:generic.movement_speed",
+        "op": "mult",
+        "amount": 0.06
+      },
+      {
         "attribute": "minecraft:generic.attack_damage",
         "op": "add",
-        "amount": 2.0
+        "amount": 1.5
       },
       {
         "attribute": "minecraft:generic.max_health",
         "op": "add",
-        "amount": 4.0
-      },
-      {
-        "attribute": "minecraft:generic.armor",
-        "op": "add",
-        "amount": 2.0
+        "amount": 3.0
       },
       {
         "attribute": "minecraft:generic.knockback_resistance",
         "op": "add",
-        "amount": 0.3
+        "amount": 0.2
       }
     ],
     "abilities": [
       {
-        "id": "mane_surge",
-        "kind": "mane_surge",
+        "id": "static_step",
+        "kind": "shadow_dash",
         "slot": 1,
-        "costPct": 4,
-        "cooldownTicks": 600,
-        "strain": 5,
-        "range": 0,
+        "costPct": 3,
+        "cooldownTicks": 100,
+        "strain": 4,
+        "range": 8,
         "radius": 0,
-        "durationTicks": 120,
+        "durationTicks": 0,
         "power": 1,
         "maxTargets": 1,
-        "bossFactor": 1.0
+        "bossFactor": 1.0,
+        "name": "Static Step",
+        "effect": ""
+      },
+      {
+        "id": "ram_brace",
+        "kind": "mane_surge",
+        "slot": 2,
+        "costPct": 5,
+        "cooldownTicks": 400,
+        "strain": 6,
+        "range": 0,
+        "radius": 0,
+        "durationTicks": 100,
+        "power": 1.5,
+        "maxTargets": 1,
+        "bossFactor": 0.0,
+        "name": "Ram's Brace",
+        "effect": ""
       }
-    ]
+    ],
+    "equipPiece": "A single ram-horn bracer on the left forearm, sparking at the tip (the only equipped piece)."
   },
   "integrate": {
     "unlockAssimilation": 0.95,
     "unlockMastery": 0.5,
-    "drainPct": 1.3,
-    "strainPerSecond": 0.42,
+    "drainPct": 1.6,
+    "strainPerSecond": 0.8,
     "regen": 0.0,
     "stats": [
       {
+        "attribute": "minecraft:generic.movement_speed",
+        "op": "mult",
+        "amount": 0.14
+      },
+      {
         "attribute": "minecraft:generic.attack_damage",
         "op": "add",
-        "amount": 4.0
+        "amount": 5.0
       },
       {
         "attribute": "minecraft:generic.max_health",
@@ -95,48 +119,74 @@
       {
         "attribute": "minecraft:generic.armor",
         "op": "add",
-        "amount": 2.0
+        "amount": 4.0
       },
       {
         "attribute": "minecraft:generic.knockback_resistance",
         "op": "add",
-        "amount": 0.6
+        "amount": 0.5
       },
       {
-        "attribute": "minecraft:generic.movement_speed",
+        "attribute": "minecraft:generic.attack_speed",
         "op": "mult",
-        "amount": 0.05
+        "amount": 0.12
       }
     ],
     "abilities": [
       {
-        "id": "world_howl",
-        "kind": "world_howl",
+        "id": "storm_venom_spit",
+        "kind": "venom_spit",
         "slot": 1,
-        "costPct": 12,
-        "cooldownTicks": 900,
-        "strain": 16,
-        "range": 10,
-        "radius": 10,
-        "durationTicks": 40,
-        "power": 1.2,
-        "maxTargets": 8,
-        "bossFactor": 0.25
+        "costPct": 10,
+        "cooldownTicks": 160,
+        "strain": 12,
+        "range": 12,
+        "radius": 4,
+        "durationTicks": 100,
+        "power": 5,
+        "maxTargets": 3,
+        "bossFactor": 0.5,
+        "name": "Storm-Venom Spit",
+        "effect": ""
       },
       {
-        "id": "mane_surge",
-        "kind": "mane_surge",
+        "id": "thunder_maelstrom",
+        "kind": "maelstrom",
         "slot": 2,
-        "costPct": 6,
-        "cooldownTicks": 500,
-        "strain": 7,
-        "range": 0,
-        "radius": 0,
-        "durationTicks": 160,
-        "power": 2,
-        "maxTargets": 1,
-        "bossFactor": 1.0
+        "costPct": 14,
+        "cooldownTicks": 360,
+        "strain": 18,
+        "range": 12,
+        "radius": 10,
+        "durationTicks": 100,
+        "power": 4,
+        "maxTargets": 6,
+        "bossFactor": 0.4,
+        "name": "Thunder Maelstrom",
+        "effect": ""
       }
-    ]
+    ],
+    "transformation": "Full armoured form: the whole body becomes a three-natured chimera-humanoid in storm-iron armor: lion head with fangs and a static mane, a ram head with curled horns on the left shoulder guard, a serpent-headed tail in a scale sheath, clawed forelimbs and digitigrade legs with greaves; a ram-horn thunder lance forms in the hand.",
+    "equip": {
+      "weapon": "A ram-horn thunder lance with a lion-fang head, crackling with arcs.",
+      "armor": "Lion-mane pauldron plates, a curled ram-horn shoulder guard (the second head), serpent-scale tail sheath and storm-iron greaves.",
+      "hair_eyes": "A mane of crackling static for hair, blue-white glowing eyes.",
+      "aura": "Yellow-blue storm aura with arcing bolts."
+    }
+  },
+  "beastNote": "Thunder-Fang Chimera (lion head, ram head, serpent tail)",
+  "lore": "The will of a three-bodied storm beast: a lion's fangs, a ram's charge and a venomous serpent tail, all crackling with thunder.",
+  "pitch": "The Thunder-Fang Chimera is a lion, ram and serpent in one storm-wrapped beast. Acquire keeps you human, trailing yellow static with one sparking ram-horn bracer. Integrate (Full armoured form) makes you a lion-headed beastman with a ram-head shoulder guard, serpent tail and a thunder lance, at a higher drain than any A will.",
+  "untrained": "An untrained holder's three instincts fight each other: static arcs over the body, limbs twitch against the holder's wishes (screen jitter) and strain jumps on every discharge. The will lay dormant until forcibly awakened; if the holder cannot balance it the clash tears at body and core and can kill, and only training the holder's own core and the beast core (best teacher: the beast itself) tames it.",
+  "designTag": "DESIGN",
+  "spirit": {
+    "colors": [
+      "#F4F25C",
+      "#3A4A8A",
+      "#BFE9FF"
+    ],
+    "echo": "A lion-headed beastman in storm-iron armor with a ram's head on the left shoulder guard and a serpent-headed tail; fanged jaws, curled horns, a static mane, digitigrade legs, a thunder lance.",
+    "accent": "#3A4A8A",
+    "look": "A pale-yellow orb split into three bands (mane gold, ram-horn spiral, serpent scale) with a blue-white arc crawling around it."
   }
 }

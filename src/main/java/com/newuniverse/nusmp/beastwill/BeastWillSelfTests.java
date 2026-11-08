@@ -143,7 +143,7 @@ public final class BeastWillSelfTests {
             s.phase = BeastWillRules.ACQUIRE;
             AABB box = new AABB(at, at).inflate(48);
             int before = level.getEntities((Entity) null, box, e -> true).size();
-            BeastWillDef.Ability mane = lion.ability(BeastWillRules.ACQUIRE, 2) != null ? lion.ability(BeastWillRules.ACQUIRE, 2) : lion.ability(BeastWillRules.ACQUIRE, 1);
+            BeastWillDef.Ability mane = lion.ability(BeastWillRules.ACQUIRE, 1);                                   // 3.60.0: slot 1 is still the self-only Pride's Poise (slot 2 is now a roar that needs a target)
             if (mane == null || !BeastWillAbilities.run(p, lion, mane, 1.0, 0.5)) return Result.fail("the lion's own ability did not take effect on its caster");
             int after = level.getEntities((Entity) null, box, e -> true).size();
             if (after > before) return Result.fail("an ability spawned " + (after - before) + " entities");

@@ -4,13 +4,13 @@
   "beast": "Cerberus, Three-Headed Hound of Hades",
   "affinity": "Underworld",
   "legendary": false,
-  "minRank": "A",
+  "minRank": "S",
   "sources": [],
   "keywords": [
     "cerberus",
     "hellhound"
   ],
-  "dropChance": 0.01,
+  "dropChance": 0.006,
   "requireEp": 22000,
   "hostRaces": [
     "HUMAN",
@@ -23,7 +23,7 @@
   "assimilationDayCap": 0.3,
   "masteryDayCap": 0.3,
   "coreCooldownDays": 5,
-  "tint": 10108880,
+  "tint": 11425880,
   "passive": [
     {
       "attribute": "minecraft:generic.knockback_resistance",
@@ -34,88 +34,103 @@
   "acquire": {
     "unlockAssimilation": 0.1,
     "unlockMastery": 0.0,
-    "drainPct": 0.55,
-    "strainPerSecond": 0.12,
+    "drainPct": 0.6,
+    "strainPerSecond": 0.15,
     "regen": 0.0,
     "stats": [
       {
-        "attribute": "minecraft:generic.attack_damage",
-        "op": "add",
-        "amount": 2.0
-      },
-      {
-        "attribute": "minecraft:generic.max_health",
-        "op": "add",
-        "amount": 4.0
-      },
-      {
         "attribute": "minecraft:generic.armor",
         "op": "add",
-        "amount": 2.0
+        "amount": 1.5
       },
       {
         "attribute": "minecraft:generic.knockback_resistance",
         "op": "add",
-        "amount": 0.25
+        "amount": 0.2
+      },
+      {
+        "attribute": "minecraft:generic.attack_damage",
+        "op": "add",
+        "amount": 1.0
+      },
+      {
+        "attribute": "minecraft:generic.movement_speed",
+        "op": "mult",
+        "amount": 0.03
       }
     ],
     "abilities": [
       {
-        "id": "guard_stare",
-        "kind": "dread_gaze",
+        "id": "threshold_guard",
+        "kind": "bark_ward",
         "slot": 1,
-        "costPct": 5,
-        "cooldownTicks": 600,
+        "costPct": 6,
+        "cooldownTicks": 420,
         "strain": 6,
         "range": 0,
-        "radius": 9,
+        "radius": 0,
         "durationTicks": 100,
-        "power": 1,
-        "maxTargets": 4,
-        "bossFactor": 0.5
+        "power": 3,
+        "maxTargets": 1,
+        "bossFactor": 0.0,
+        "name": "Threshold Guard",
+        "effect": "Planted stance: the tamer shrugs off knockback and some damage for a short time, a faint triple-ring glow at the feet."
       },
       {
         "id": "hound_lunge",
         "kind": "shadow_dash",
         "slot": 2,
-        "costPct": 3,
-        "cooldownTicks": 120,
-        "strain": 4,
-        "range": 7,
+        "costPct": 5,
+        "cooldownTicks": 80,
+        "strain": 6,
+        "range": 8,
         "radius": 0,
         "durationTicks": 0,
-        "power": 1,
+        "power": 2,
         "maxTargets": 1,
-        "bossFactor": 1.0
+        "bossFactor": 0.0,
+        "name": "Hound Lunge",
+        "effect": "A short sudden hound lunge forward with red afterimages."
       }
-    ]
+    ],
+    "equipPiece": "One spiked hound-collar bracer on one forearm; three faint claw-scar glows on it while guarding."
   },
   "integrate": {
     "unlockAssimilation": 0.95,
     "unlockMastery": 0.5,
-    "drainPct": 1.35,
-    "strainPerSecond": 0.43,
+    "drainPct": 1.9,
+    "strainPerSecond": 1.1,
     "regen": 0.0,
     "stats": [
       {
         "attribute": "minecraft:generic.attack_damage",
         "op": "add",
-        "amount": 4.0
+        "amount": 5.0
       },
       {
         "attribute": "minecraft:generic.max_health",
         "op": "add",
-        "amount": 7.0
+        "amount": 6.0
       },
       {
         "attribute": "minecraft:generic.armor",
         "op": "add",
-        "amount": 3.0
+        "amount": 6.0
+      },
+      {
+        "attribute": "minecraft:generic.armor_toughness",
+        "op": "add",
+        "amount": 2.0
       },
       {
         "attribute": "minecraft:generic.knockback_resistance",
         "op": "add",
-        "amount": 0.5
+        "amount": 0.55
+      },
+      {
+        "attribute": "minecraft:generic.attack_speed",
+        "op": "mult",
+        "amount": 0.1
       }
     ],
     "abilities": [
@@ -123,30 +138,56 @@
         "id": "triple_howl",
         "kind": "world_howl",
         "slot": 1,
-        "costPct": 12,
-        "cooldownTicks": 900,
-        "strain": 16,
-        "range": 9,
-        "radius": 9,
+        "costPct": 14,
+        "cooldownTicks": 480,
+        "strain": 24,
+        "range": 0,
+        "radius": 10,
         "durationTicks": 40,
-        "power": 1.2,
-        "maxTargets": 8,
-        "bossFactor": 0.25
+        "power": 5,
+        "maxTargets": 9,
+        "bossFactor": 0.25,
+        "name": "Triple Howl",
+        "effect": "All three heads howl: nearby foes are rattled, slowed and flinch (the gate-guard's fear); allies nearby gain nerve."
       },
       {
         "id": "hellfire_breath",
         "kind": "draconic_pulse",
         "slot": 2,
-        "costPct": 9,
-        "cooldownTicks": 160,
-        "strain": 11,
-        "range": 8,
-        "radius": 8,
-        "durationTicks": 60,
-        "power": 5,
-        "maxTargets": 6,
-        "bossFactor": 0.6
+        "costPct": 15,
+        "cooldownTicks": 200,
+        "strain": 24,
+        "range": 12,
+        "radius": 7,
+        "durationTicks": 80,
+        "power": 6,
+        "maxTargets": 5,
+        "bossFactor": 0.5,
+        "name": "Hellfire Breath",
+        "effect": "The three heads breathe hellfire in a cone of black-red flame that burns and blinds."
       }
-    ]
+    ],
+    "transformation": "Full armoured form three-headed hound-beastman: a central hound head with glowing red eyes plus two extra hound heads on the shoulders, ember-edged fur mantle over studded plate, flame-clawed hands, digitigrade iron-greaved hound legs, an ember-tipped tail and a spiked collar ridge.",
+    "equip": {
+      "weapon": "Hellfire claw-blades grown over both clawed hands (the three-headed chain-spike is the Mastery seal).",
+      "armor": "Black gatekeeper plate: a spiked collar ridge, studded pauldrons, iron-banded greaves and a fur mantle edged with embers.",
+      "hair_eyes": "Black ember-edged fur mane; three pairs of glowing red hound eyes (centre and two shoulder heads).",
+      "aura": "Red hellfire aura with low flame licking at the feet."
+    }
+  },
+  "beastNote": "Cerberus, Three-Headed Hound of Hades",
+  "lore": "A giant mana hound with three snarling heads whose will keeps a threshold: nothing it guards gets out and nothing unwelcome gets in.",
+  "pitch": "Cerberus is the three-headed hound of Hades who lets nothing out of the gate and nothing unwelcome in. Acquire keeps you human, planting your feet like a gate and lunging, with one equipped piece, a single spiked hound-collar bracer, for a short guard stance and a hound lunge. Integrate (Full armoured form) makes you a black-furred three-headed hound-beastman in ember-edged gate armour with hellfire claws; it is the heaviest stat bruiser of the S ranks at a high price.",
+  "untrained": "An untrained holder hears three voices and cannot tell which is their own: strain spikes in bursts, vision doubles, and hellfire scorches them from inside. Canon: a will that is not suppressed or balanced disrupts body and mana core and can eventually kill the holder, so the first Awakening (forced, a spark in the core) is the most dangerous moment and training both cores is the cure.",
+  "designTag": "DESIGN",
+  "spirit": {
+    "colors": [
+      "#8C1010",
+      "#2A0C0C",
+      "#FF7A2A"
+    ],
+    "echo": "A massive three-headed hound-beastman in black gate armour: a central snarling hound head and two extra heads rising from the shoulders, ember-edged black fur mantle, spiked collar ridge, clawed hands with flame claws, digitigrade hound legs, ember-tipped tail.",
+    "accent": "#FF7A2A",
+    "look": "A blood-red orb with three small glowing ember eyes in a triangle and a ring of low flame licking around it."
   }
 }

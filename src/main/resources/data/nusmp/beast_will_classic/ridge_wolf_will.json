@@ -1,0 +1,146 @@
+{
+  "id": "ridge_wolf_will",
+  "name": "Ridge-Wolf Fang Will",
+  "beast": "Ridge-Wolf",
+  "affinity": "Fang",
+  "legendary": false,
+  "minRank": "C",
+  "sources": [],
+  "keywords": [
+    "ridge_wolf"
+  ],
+  "dropChance": 0.01,
+  "requireEp": 2000,
+  "hostRaces": [
+    "HUMAN",
+    "ELF",
+    "DWARF"
+  ],
+  "otherHostCompat": 0.6,
+  "assimilationSeconds": 1800,
+  "masterySeconds": 1200,
+  "assimilationDayCap": 0.5,
+  "masteryDayCap": 0.5,
+  "coreCooldownDays": 3,
+  "tint": 10129280,
+  "passive": [
+    {
+      "attribute": "minecraft:generic.movement_speed",
+      "op": "mult",
+      "amount": 0.01
+    }
+  ],
+  "acquire": {
+    "unlockAssimilation": 0.1,
+    "unlockMastery": 0.0,
+    "drainPct": 0.45,
+    "strainPerSecond": 0.1,
+    "regen": 0.0,
+    "stats": [
+      {
+        "attribute": "minecraft:generic.attack_damage",
+        "op": "add",
+        "amount": 1.0
+      },
+      {
+        "attribute": "minecraft:generic.knockback_resistance",
+        "op": "add",
+        "amount": 0.1
+      },
+      {
+        "attribute": "minecraft:generic.movement_speed",
+        "op": "mult",
+        "amount": 0.04
+      }
+    ],
+    "abilities": [
+      {
+        "id": "shadow_dash",
+        "kind": "shadow_dash",
+        "slot": 1,
+        "costPct": 3,
+        "cooldownTicks": 100,
+        "strain": 4,
+        "range": 6,
+        "radius": 0,
+        "durationTicks": 0,
+        "power": 1,
+        "maxTargets": 1,
+        "bossFactor": 1.0
+      },
+      {
+        "id": "mane_surge",
+        "kind": "mane_surge",
+        "slot": 2,
+        "costPct": 3,
+        "cooldownTicks": 400,
+        "strain": 4,
+        "range": 0,
+        "radius": 0,
+        "durationTicks": 100,
+        "power": 1,
+        "maxTargets": 1,
+        "bossFactor": 1.0
+      }
+    ]
+  },
+  "integrate": {
+    "unlockAssimilation": 0.95,
+    "unlockMastery": 0.5,
+    "drainPct": 1.0,
+    "strainPerSecond": 0.35,
+    "regen": 0.0,
+    "stats": [
+      {
+        "attribute": "minecraft:generic.attack_damage",
+        "op": "add",
+        "amount": 2.0
+      },
+      {
+        "attribute": "minecraft:generic.max_health",
+        "op": "add",
+        "amount": 4.0
+      },
+      {
+        "attribute": "minecraft:generic.knockback_resistance",
+        "op": "add",
+        "amount": 0.3
+      },
+      {
+        "attribute": "minecraft:generic.movement_speed",
+        "op": "mult",
+        "amount": 0.08
+      }
+    ],
+    "abilities": [
+      {
+        "id": "world_howl",
+        "kind": "world_howl",
+        "slot": 1,
+        "costPct": 8,
+        "cooldownTicks": 600,
+        "strain": 10,
+        "range": 6,
+        "radius": 6,
+        "durationTicks": 30,
+        "power": 1,
+        "maxTargets": 5,
+        "bossFactor": 0.25
+      },
+      {
+        "id": "ambush",
+        "kind": "ambush",
+        "slot": 2,
+        "costPct": 6,
+        "cooldownTicks": 300,
+        "strain": 8,
+        "range": 6,
+        "radius": 0,
+        "durationTicks": 0,
+        "power": 4,
+        "maxTargets": 1,
+        "bossFactor": 0.5
+      }
+    ]
+  }
+}

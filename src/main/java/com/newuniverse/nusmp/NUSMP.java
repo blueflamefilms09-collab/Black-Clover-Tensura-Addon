@@ -204,6 +204,7 @@ public class NUSMP {
             modContainer.registerConfig(ModConfig.Type.CLIENT, com.newuniverse.nusmp.client.corpse.CorpseClientConfig.SPEC, "nusmp-corpse-client.toml");   // corpse.classicLooks
             modEventBus.addListener(com.newuniverse.nusmp.client.corpse.CorpseClient::addLayers);
             com.newuniverse.nusmp.client.aura.NoelleFormsClientConfig.init(modEventBus, modContainer);                       // 1.99.0: noelleForms.classicLook (nusmp-noelle-forms-client.toml): the first Valkyrie Dress look
+            com.newuniverse.nusmp.client.aura.BeastWillSpiritClientConfig.init(modEventBus, modContainer);                   // 3.60.0: beastwill.classicSpirits (nusmp-beastwill-spirit-client.toml): the old Beast Will animal spirits
             com.newuniverse.nusmp.client.song.SongClient.init(modEventBus);
             com.newuniverse.nusmp.client.shishou.ShishouClient.init(modEventBus);      // Shishou: the throw / cast / next-skill keys, the movable HUD, the body renderer, the concealed tooltip
             com.newuniverse.nusmp.client.companion.CompanionClient.init(modEventBus, modContainer);                           // companions: the talk screen, the speech bubbles, the sample companion's renderer, nusmp-companions-client.toml

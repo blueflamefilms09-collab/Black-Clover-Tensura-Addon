@@ -23,7 +23,7 @@
   "assimilationDayCap": 0.3,
   "masteryDayCap": 0.3,
   "coreCooldownDays": 5,
-  "tint": 8164272,
+  "tint": 293491,
   "passive": [
     {
       "attribute": "minecraft:generic.knockback_resistance",
@@ -44,68 +44,63 @@
         "amount": 2.0
       },
       {
-        "attribute": "minecraft:generic.max_health",
-        "op": "add",
-        "amount": 4.0
-      },
-      {
         "attribute": "minecraft:generic.armor",
         "op": "add",
-        "amount": 3.0
+        "amount": 2.0
       },
       {
-        "attribute": "minecraft:generic.knockback_resistance",
-        "op": "add",
-        "amount": 0.25
+        "attribute": "minecraft:generic.attack_speed",
+        "op": "mult",
+        "amount": 0.08
       }
     ],
     "abilities": [
       {
-        "id": "rock_heads",
-        "kind": "vine_lash",
+        "id": "rock_snatch",
+        "kind": "shadow_dash",
         "slot": 1,
-        "costPct": 3,
-        "cooldownTicks": 100,
-        "strain": 4,
-        "range": 8,
-        "radius": 8,
-        "durationTicks": 40,
-        "power": 3,
-        "maxTargets": 3,
-        "bossFactor": 0.6
+        "costPct": 4,
+        "cooldownTicks": 140,
+        "strain": 5,
+        "range": 6,
+        "radius": 0,
+        "durationTicks": 0,
+        "power": 1,
+        "maxTargets": 1,
+        "bossFactor": 1.0,
+        "name": "Rock Snatch",
+        "effect": "A short darting lunge along the cliff edge, a head-shaped streak snapping ahead."
       },
       {
-        "id": "strait_ward",
+        "id": "strait_rock",
         "kind": "bark_ward",
         "slot": 2,
         "costPct": 4,
-        "cooldownTicks": 600,
-        "strain": 6,
+        "cooldownTicks": 550,
+        "strain": 5,
         "range": 0,
         "radius": 0,
-        "durationTicks": 100,
-        "power": 1,
+        "durationTicks": 110,
+        "power": 1.2,
         "maxTargets": 1,
-        "bossFactor": 1.0
+        "bossFactor": 1.0,
+        "name": "Strait Rock",
+        "effect": ""
       }
-    ]
+    ],
+    "equipPiece": "A single stone-grey cliff pauldron with a carved snarling dog-head on one shoulder (the only equipped piece)."
   },
   "integrate": {
     "unlockAssimilation": 0.95,
     "unlockMastery": 0.5,
-    "drainPct": 1.3,
-    "strainPerSecond": 0.42,
+    "drainPct": 1.5,
+    "strainPerSecond": 0.85,
     "regen": 0.0,
     "stats": [
       {
         "attribute": "minecraft:generic.attack_damage",
         "op": "add",
-        "amount": 3.5
-      },
-      {
-        "attribute": "minecraft:generic.max_health",
-        "op": "add",
-        "amount": 8.0
+        "amount": 5.5
       },
       {
         "attribute": "minecraft:generic.armor",
@@ -113,45 +108,71 @@
         "amount": 5.0
       },
       {
-        "attribute": "minecraft:generic.armor_toughness",
-        "op": "add",
-        "amount": 1.0
-      },
-      {
         "attribute": "minecraft:generic.knockback_resistance",
         "op": "add",
         "amount": 0.5
+      },
+      {
+        "attribute": "minecraft:generic.attack_speed",
+        "op": "mult",
+        "amount": 0.2
       }
     ],
     "abilities": [
       {
-        "id": "scylla_heads",
-        "kind": "venom_spit",
+        "id": "six_heads_snap",
+        "kind": "draconic_pulse",
         "slot": 1,
         "costPct": 9,
-        "cooldownTicks": 200,
-        "strain": 10,
-        "range": 9,
-        "radius": 9,
-        "durationTicks": 100,
-        "power": 4,
-        "maxTargets": 5,
-        "bossFactor": 0.5
+        "cooldownTicks": 140,
+        "strain": 12,
+        "range": 8,
+        "radius": 8,
+        "durationTicks": 60,
+        "power": 3,
+        "maxTargets": 6,
+        "bossFactor": 0.4,
+        "name": "Six Heads Snap",
+        "effect": ""
       },
       {
-        "id": "charybdis_pull",
+        "id": "charybdis_gulp",
         "kind": "maelstrom",
         "slot": 2,
-        "costPct": 12,
-        "cooldownTicks": 900,
-        "strain": 14,
+        "costPct": 13,
+        "cooldownTicks": 600,
+        "strain": 17,
         "range": 0,
-        "radius": 9,
-        "durationTicks": 60,
+        "radius": 10,
+        "durationTicks": 100,
         "power": 4,
         "maxTargets": 6,
-        "bossFactor": 0.4
+        "bossFactor": 0.35,
+        "name": "Charybdis Gulp",
+        "effect": ""
       }
-    ]
+    ],
+    "transformation": "Full armoured form: the whole body becomes a strait-humanoid in cliff-stone armor: six dog-head shoulder guards that snap on thin necks, stone-grey plates on chest and arms, clawed hands, wave-scale teal plating on the lower body, digitigrade legs and a short fin-tail; a spear of stone and whirlpool water forms in the hand.",
+    "equip": {
+      "weapon": "A long barnacled spear of stone and whirlpool water, with a spinning teal vortex around its head.",
+      "armor": "Stone-grey cliff plates on chest and arms, six dog-head shoulder guards (drawn as three twin-head quads), teal wave-scale plating on the lower body.",
+      "hair_eyes": "Sea-green wet hair streaming back, red glowing eyes.",
+      "aura": "Teal spray with a small swirling vortex at the feet."
+    }
+  },
+  "beastNote": "Scylla and Charybdis, the Strait Pair",
+  "lore": "On opposite sides of the narrow strait: Scylla with six snapping dog heads on the cliff, Charybdis the whirlpool beneath.",
+  "pitch": "Scylla and Charybdis are the strait pair of Greek myth: six snapping dog heads on the cliff and a ship-eating whirlpool below. Acquire keeps you human, darting in teal streaks with one dog-head cliff pauldron. Integrate (Full armoured form) makes you a stone-armored, six-headed beastman with a whirlpool spear, and costs a medium-high drain because the two halves pull against each other.",
+  "untrained": "An untrained holder is torn two ways: the heads snap at the holder's own shoulders, the whirlpool drags at the legs and strain builds whenever both halves act together. CANON ADDENDUM 2: the will lies dormant in the holder's mana core until it is forcefully awakened (a flame sparked in the core); if the holder cannot suppress and balance it, the clashing energies wreck body and core and can kill (design: strain climbs fast, backlash damage, forced cancel at the cap); mastery means training both the holder's own core and the beast core, best taught by the beast itself. This will summons no beasts or hordes.",
+  "designTag": "DESIGN",
+  "spirit": {
+    "colors": [
+      "#047A73",
+      "#8C8F99",
+      "#B23A3A"
+    ],
+    "echo": "A rocky six-headed beastman in cliff armor: stone-grey plates, six snapping dog heads on thin necks from the shoulders (three twin-head quads), teal wave-scale lower body, a whirlpool spear.",
+    "accent": "#B23A3A",
+    "look": "A grey rock orb split in half: one side jagged with six tiny snarling heads, the other a spinning teal whirlpool."
   }
 }

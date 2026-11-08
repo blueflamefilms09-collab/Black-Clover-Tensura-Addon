@@ -40,6 +40,8 @@ public final class BeastWillCoreItem extends Item {
         }
         tip.add(Component.translatable("item.nusmp.beast_will_core.of", BeastWillText.name(c.will())).withStyle(ChatFormatting.GOLD));
         tip.add(Component.translatable("item.nusmp.beast_will_core.beast", c.beast().isBlank() ? "?" : c.beast(), c.rankValue().name()).withStyle(ChatFormatting.GRAY));
+        String lore = "nusmp.beastwill." + c.will() + ".lore";
+        if (net.minecraft.locale.Language.getInstance().has(lore)) tip.add(Component.translatable(lore).withStyle(ChatFormatting.ITALIC, ChatFormatting.GRAY));   // 3.60.0: the remade will's lore line
         tip.add(Component.translatable("item.nusmp.beast_will_core.use").withStyle(ChatFormatting.DARK_GRAY));
     }
 }

@@ -1,16 +1,16 @@
 {
   "id": "ridge_wolf_will",
-  "name": "Ridge-Wolf Fang Will",
-  "beast": "Ridge-Wolf",
+  "name": "Ridge-Elder Fang Will",
+  "beast": "Ridge-Wolf Elder",
   "affinity": "Fang",
   "legendary": false,
-  "minRank": "C",
+  "minRank": "A",
   "sources": [],
   "keywords": [
     "ridge_wolf"
   ],
-  "dropChance": 0.01,
-  "requireEp": 2000,
+  "dropChance": 0.015,
+  "requireEp": 9000,
   "hostRaces": [
     "HUMAN",
     "ELF",
@@ -22,7 +22,7 @@
   "assimilationDayCap": 0.5,
   "masteryDayCap": 0.5,
   "coreCooldownDays": 3,
-  "tint": 10129280,
+  "tint": 7975354,
   "passive": [
     {
       "attribute": "minecraft:generic.movement_speed",
@@ -33,10 +33,15 @@
   "acquire": {
     "unlockAssimilation": 0.1,
     "unlockMastery": 0.0,
-    "drainPct": 0.45,
+    "drainPct": 0.5,
     "strainPerSecond": 0.1,
     "regen": 0.0,
     "stats": [
+      {
+        "attribute": "minecraft:generic.movement_speed",
+        "op": "mult",
+        "amount": 0.06
+      },
       {
         "attribute": "minecraft:generic.attack_damage",
         "op": "add",
@@ -45,102 +50,143 @@
       {
         "attribute": "minecraft:generic.knockback_resistance",
         "op": "add",
-        "amount": 0.1
+        "amount": 0.08
       },
       {
-        "attribute": "minecraft:generic.movement_speed",
-        "op": "mult",
-        "amount": 0.04
+        "attribute": "minecraft:generic.step_height",
+        "op": "add",
+        "amount": 0.2
       }
     ],
     "abilities": [
       {
-        "id": "shadow_dash",
+        "id": "lope_burst",
         "kind": "shadow_dash",
         "slot": 1,
         "costPct": 3,
         "cooldownTicks": 100,
         "strain": 4,
-        "range": 6,
+        "range": 8,
         "radius": 0,
         "durationTicks": 0,
         "power": 1,
         "maxTargets": 1,
-        "bossFactor": 1.0
+        "bossFactor": 1.0,
+        "name": "Lope Burst",
+        "effect": "A long lope forward on borrowed wolf speed, pale streaks behind."
       },
       {
-        "id": "mane_surge",
-        "kind": "mane_surge",
+        "id": "scent_trail",
+        "kind": "dragon_sight",
         "slot": 2,
         "costPct": 3,
-        "cooldownTicks": 400,
+        "cooldownTicks": 600,
         "strain": 4,
-        "range": 0,
-        "radius": 0,
-        "durationTicks": 100,
+        "range": 20,
+        "radius": 20,
+        "durationTicks": 120,
         "power": 1,
-        "maxTargets": 1,
-        "bossFactor": 1.0
+        "maxTargets": 5,
+        "bossFactor": 1.0,
+        "name": "Scent Trail",
+        "effect": "The borrowed nose lights the scent trails of up to five nearby creatures for a few seconds."
       }
-    ]
+    ],
+    "equipPiece": "A single moon-silver fang-bracer on the right forearm (the only equipped piece)."
   },
   "integrate": {
     "unlockAssimilation": 0.95,
     "unlockMastery": 0.5,
     "drainPct": 1.0,
-    "strainPerSecond": 0.35,
+    "strainPerSecond": 0.38,
     "regen": 0.0,
     "stats": [
       {
-        "attribute": "minecraft:generic.attack_damage",
-        "op": "add",
-        "amount": 2.0
+        "attribute": "minecraft:generic.movement_speed",
+        "op": "mult",
+        "amount": 0.16
       },
       {
-        "attribute": "minecraft:generic.max_health",
+        "attribute": "minecraft:generic.attack_damage",
         "op": "add",
-        "amount": 4.0
+        "amount": 3.0
       },
       {
         "attribute": "minecraft:generic.knockback_resistance",
         "op": "add",
-        "amount": 0.3
+        "amount": 0.2
       },
       {
-        "attribute": "minecraft:generic.movement_speed",
+        "attribute": "minecraft:generic.attack_speed",
         "op": "mult",
-        "amount": 0.08
+        "amount": 0.1
+      },
+      {
+        "attribute": "minecraft:generic.jump_strength",
+        "op": "mult",
+        "amount": 0.12
+      },
+      {
+        "attribute": "minecraft:generic.step_height",
+        "op": "add",
+        "amount": 0.4
       }
     ],
     "abilities": [
       {
-        "id": "world_howl",
-        "kind": "world_howl",
-        "slot": 1,
-        "costPct": 8,
-        "cooldownTicks": 600,
-        "strain": 10,
-        "range": 6,
-        "radius": 6,
-        "durationTicks": 30,
-        "power": 1,
-        "maxTargets": 5,
-        "bossFactor": 0.25
-      },
-      {
-        "id": "ambush",
+        "id": "hamstring_lunge",
         "kind": "ambush",
-        "slot": 2,
-        "costPct": 6,
-        "cooldownTicks": 300,
-        "strain": 8,
-        "range": 6,
+        "slot": 1,
+        "costPct": 9,
+        "cooldownTicks": 200,
+        "strain": 12,
+        "range": 10,
         "radius": 0,
         "durationTicks": 0,
         "power": 4,
         "maxTargets": 1,
-        "bossFactor": 0.5
+        "bossFactor": 0.4,
+        "name": "Hamstring Lunge",
+        "effect": "A pounce from behind that hamstrings the target: damage and a short slow."
+      },
+      {
+        "id": "pack_call",
+        "kind": "world_howl",
+        "slot": 2,
+        "costPct": 11,
+        "cooldownTicks": 450,
+        "strain": 14,
+        "range": 10,
+        "radius": 10,
+        "durationTicks": 60,
+        "power": 2,
+        "maxTargets": 8,
+        "bossFactor": 0.2,
+        "name": "Pack Call",
+        "effect": "The elder howls: nearby allies surge with speed and foes flinch. Only the howl, no beasts are summoned (Beast Tamers command no armies)."
       }
-    ]
+    ],
+    "transformation": "Full armoured form: the whole body becomes a wolf-beastman in grey steel-fur armor: long fanged muzzle, tall pointed ears, thick silver ruff collar, long claws on furred arms, digitigrade legs with moon-scar greaves and a bushy tail; a moon-silver fang sword grows from the right forearm.",
+    "equip": {
+      "weapon": "A moon-silver fang sword grown from the forearm bracer; its edge is serrated like a jaw.",
+      "armor": "Grey steel-fur plate: a silver ruff collar, fanged pauldrons and moon-scar greaves.",
+      "hair_eyes": "A grey mane swept back into the neck ruff, pale gold eyes.",
+      "aura": "Steel-teal moonlight with drifting silver fur tufts."
+    }
+  },
+  "beastNote": "Ridge-Wolf Elder (A-class alpha of the ridge)",
+  "lore": "The will of the elder wolf that rules a mountain ridge: it never loses a trail, hamstrings fleeing prey and calls its pack to the kill.",
+  "pitch": "The Ridge-Elder is an A-class alpha wolf that never loses a trail and hamstrings fleeing prey. Acquire keeps you human, loping in steel streaks with one moon-silver fang-bracer. Integrate (Full armoured form) makes you a wolf-beastman in steel-fur plate with a fang sword, at the cheapest drain among the A wills.",
+  "untrained": "An untrained holder is ruled by the hunt: nose and ears overload, the holder snaps at allies and strain climbs while a trail is held, and the pack call costs extra strain. Canon: a will that is not suppressed or balanced disrupts body and mana core and can eventually kill the holder, so the first Awakening (forced, a spark in the core) is the most dangerous moment and training both cores is the cure.",
+  "designTag": "DESIGN",
+  "spirit": {
+    "colors": [
+      "#79B1BA",
+      "#2E3A4A",
+      "#E3F0FF"
+    ],
+    "echo": "A lean upright wolf beastman in grey steel-fur plate: long fanged muzzle, tall pointed ears, silver ruff collar, clawed furred hands, digitigrade lope stance, bushy tail, a moon-silver fang sword.",
+    "accent": "#E3F0FF",
+    "look": "A cold steel-teal orb with a pale crescent-moon scar across it and fine silver fur tufts drifting round."
   }
 }

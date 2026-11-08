@@ -4,12 +4,12 @@
   "beast": "Typhon, the Deadliest Monster",
   "affinity": "Storm Fire",
   "legendary": true,
-  "minRank": "S",
+  "minRank": "SS",
   "sources": [],
   "keywords": [
     "typhon"
   ],
-  "dropChance": 0.002,
+  "dropChance": 0.0015,
   "requireEp": 100000,
   "hostRaces": [
     "HUMAN",
@@ -22,7 +22,7 @@
   "assimilationDayCap": 0.12,
   "masteryDayCap": 0.12,
   "coreCooldownDays": 21,
-  "tint": 14695584,
+  "tint": 14961765,
   "passive": [
     {
       "attribute": "minecraft:generic.knockback_resistance",
@@ -33,139 +33,155 @@
   "acquire": {
     "unlockAssimilation": 0.1,
     "unlockMastery": 0.0,
-    "drainPct": 0.55,
-    "strainPerSecond": 0.13,
+    "drainPct": 0.8,
+    "strainPerSecond": 0.16,
     "regen": 0.0,
     "stats": [
-      {
-        "attribute": "minecraft:generic.armor",
-        "op": "add",
-        "amount": 4.0
-      },
-      {
-        "attribute": "minecraft:generic.armor_toughness",
-        "op": "add",
-        "amount": 1.0
-      },
-      {
-        "attribute": "minecraft:generic.max_health",
-        "op": "add",
-        "amount": 6.0
-      },
       {
         "attribute": "minecraft:generic.attack_damage",
         "op": "add",
         "amount": 3.0
-      },
-      {
-        "attribute": "minecraft:generic.knockback_resistance",
-        "op": "add",
-        "amount": 0.3
       },
       {
         "attribute": "minecraft:generic.movement_speed",
         "op": "mult",
-        "amount": 0.05
-      }
-    ],
-    "abilities": [
-      {
-        "id": "storm_roar",
-        "kind": "world_howl",
-        "slot": 1,
-        "costPct": 6,
-        "cooldownTicks": 700,
-        "strain": 8,
-        "range": 8,
-        "radius": 8,
-        "durationTicks": 40,
-        "power": 1.5,
-        "maxTargets": 6,
-        "bossFactor": 0.25
+        "amount": 0.08
       },
       {
-        "id": "serpent_bite",
-        "kind": "venom_spit",
-        "slot": 2,
-        "costPct": 5,
-        "cooldownTicks": 160,
-        "strain": 6,
-        "range": 7,
-        "radius": 7,
-        "durationTicks": 100,
-        "power": 3,
-        "maxTargets": 4,
-        "bossFactor": 0.6
-      }
-    ]
-  },
-  "integrate": {
-    "unlockAssimilation": 0.95,
-    "unlockMastery": 0.5,
-    "drainPct": 1.6,
-    "strainPerSecond": 0.52,
-    "regen": 0.0,
-    "stats": [
-      {
-        "attribute": "minecraft:generic.armor",
-        "op": "add",
-        "amount": 7.0
-      },
-      {
-        "attribute": "minecraft:generic.armor_toughness",
-        "op": "add",
-        "amount": 3.0
-      },
-      {
-        "attribute": "minecraft:generic.max_health",
-        "op": "add",
-        "amount": 10.0
-      },
-      {
-        "attribute": "minecraft:generic.attack_damage",
-        "op": "add",
-        "amount": 5.0
-      },
-      {
-        "attribute": "minecraft:generic.knockback_resistance",
-        "op": "add",
-        "amount": 0.7
-      },
-      {
-        "attribute": "minecraft:generic.movement_speed",
+        "attribute": "minecraft:generic.jump_strength",
         "op": "mult",
         "amount": 0.08
       }
     ],
     "abilities": [
       {
-        "id": "storm_flame_breath",
-        "kind": "draconic_pulse",
+        "id": "gale_leap",
+        "kind": "shadow_dash",
         "slot": 1,
-        "costPct": 9,
-        "cooldownTicks": 140,
-        "strain": 11,
-        "range": 8,
-        "radius": 8,
-        "durationTicks": 60,
-        "power": 6.5,
-        "maxTargets": 6,
-        "bossFactor": 0.6
+        "costPct": 4,
+        "cooldownTicks": 80,
+        "strain": 5,
+        "range": 12,
+        "radius": 0,
+        "durationTicks": 0,
+        "power": 1.5,
+        "maxTargets": 1,
+        "bossFactor": 1.0,
+        "name": "Gale Leap",
+        "effect": "A huge sprinting leap on borrowed storm speed, red-gold streaks and sparks behind."
       },
       {
-        "id": "titan_roar",
-        "kind": "world_howl",
+        "id": "storm_eye",
+        "kind": "dragon_sight",
+        "slot": 2,
+        "costPct": 4,
+        "cooldownTicks": 400,
+        "strain": 4,
+        "range": 20,
+        "radius": 20,
+        "durationTicks": 100,
+        "power": 1,
+        "maxTargets": 6,
+        "bossFactor": 1.0,
+        "name": "Storm Eye",
+        "effect": "The cheek mark flares and the holder sees through rain and smoke, outlining up to six creatures."
+      }
+    ],
+    "equipPiece": "A single storm-iron arm-guard with a lightning fork cut into it, on the right forearm (the only equipped piece)."
+  },
+  "integrate": {
+    "unlockAssimilation": 0.95,
+    "unlockMastery": 0.5,
+    "drainPct": 2.1,
+    "strainPerSecond": 1.4,
+    "regen": 0.0,
+    "stats": [
+      {
+        "attribute": "minecraft:generic.attack_damage",
+        "op": "add",
+        "amount": 8
+      },
+      {
+        "attribute": "minecraft:generic.armor",
+        "op": "add",
+        "amount": 7
+      },
+      {
+        "attribute": "minecraft:generic.max_health",
+        "op": "add",
+        "amount": 12
+      },
+      {
+        "attribute": "minecraft:generic.knockback_resistance",
+        "op": "add",
+        "amount": 0.6
+      },
+      {
+        "attribute": "minecraft:generic.movement_speed",
+        "op": "mult",
+        "amount": 0.2
+      },
+      {
+        "attribute": "minecraft:generic.jump_strength",
+        "op": "mult",
+        "amount": 0.2
+      }
+    ],
+    "abilities": [
+      {
+        "id": "storm_fire_breath",
+        "kind": "draconic_pulse",
+        "slot": 1,
+        "costPct": 14,
+        "cooldownTicks": 160,
+        "strain": 16,
+        "range": 8,
+        "radius": 8,
+        "durationTicks": 80,
+        "power": 6,
+        "maxTargets": 6,
+        "bossFactor": 0.4,
+        "name": "Storm-Fire Breath",
+        "effect": "Fire and lightning breathed from the dragon heads in a short storm cone that burns and stuns."
+      },
+      {
+        "id": "typhoon_vortex",
+        "kind": "maelstrom",
         "slot": 2,
         "costPct": 16,
-        "cooldownTicks": 1400,
-        "strain": 22,
-        "range": 12,
-        "radius": 12,
-        "durationTicks": 60,
-        "power": 3,
-        "maxTargets": 10,
-        "bossFactor": 0.25
+        "cooldownTicks": 360,
+        "strain": 20,
+        "range": 10,
+        "radius": 10,
+        "durationTicks": 100,
+        "power": 5,
+        "maxTargets": 6,
+        "bossFactor": 0.3,
+        "name": "Typhoon Vortex",
+        "effect": "A storm vortex of wind, fire and sparks rises around the giant, pulls foes in and hurls them out."
       }
-    ]
+    ],
+    "transformation": "Full armoured form: the whole body becomes a storm-giant beastman in black storm-iron armor: a central dragon head with fiery eyes plus four small dragon heads on the pauldrons, storm-cloud wings, two viper tails from the hips, clawed arms, digitigrade clawed legs and a fiery spine ridge; a forked lightning-and-flame polearm forms in the hand.",
+    "equip": {
+      "weapon": "A forked polearm of lightning and flame formed in the right hand.",
+      "armor": "Black storm-iron plates with ember seams, five dragon-head pauldrons (one big, four small), a storm-cloud wing mantle and clawed greaves.",
+      "hair_eyes": "Flame-red hair streaming upward, burning gold eyes.",
+      "aura": "Crackling lightning and smoke with a fiery spine ridge."
+    }
+  },
+  "beastNote": "Typhon, the Deadliest Monster",
+  "lore": "Typhon, Father of Monsters: a hundred dragon heads that roar with every voice, fire in the eyes and vipers at the thighs.",
+  "pitch": "Typhon is the Father of Monsters of Greek myth, a hundred-headed storm-and-fire giant with vipers at its thighs. Acquire keeps you human, leaping in red-gold streaks with one storm-iron arm-guard. Integrate (Full armoured form) makes you a five-headed storm-giant in black iron armor with a lightning polearm, the strongest kit of all wills, paid for with the second-highest drain and the heaviest strain.",
+  "untrained": "An untrained holder is blasted by their own thunder voice: ringing ears, scorching fever and uncontrolled flashes of lightning that hit the holder first. Canon: a will that is not suppressed or balanced disrupts body and mana core and can eventually kill the holder, so the first Awakening (forced, a spark in the core) is the most dangerous moment and training both cores is the cure.",
+  "designTag": "DESIGN",
+  "spirit": {
+    "colors": [
+      "#D80023",
+      "#FFC21F",
+      "#3D7BFF"
+    ],
+    "echo": "A towering storm-giant beastman in black storm-iron armor: one big dragon head with burning eyes and four small dragon heads on the pauldrons, storm-cloud wings, two viper tails, clawed arms, digitigrade legs, fiery spine and a forked polearm.",
+    "accent": "#FFC21F",
+    "look": "A storm-orb of swirling black cloud with a molten red-fire core and tiny gold lightning forks."
   }
 }

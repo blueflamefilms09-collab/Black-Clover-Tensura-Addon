@@ -9,7 +9,7 @@
   "keywords": [
     "pegasus"
   ],
-  "dropChance": 0.01,
+  "dropChance": 0.012,
   "requireEp": 20000,
   "hostRaces": [
     "HUMAN",
@@ -22,7 +22,7 @@
   "assimilationDayCap": 0.3,
   "masteryDayCap": 0.3,
   "coreCooldownDays": 5,
-  "tint": 16759000,
+  "tint": 16777215,
   "passive": [
     {
       "attribute": "minecraft:generic.movement_speed",
@@ -40,7 +40,7 @@
       {
         "attribute": "minecraft:generic.movement_speed",
         "op": "mult",
-        "amount": 0.1
+        "amount": 0.06
       },
       {
         "attribute": "minecraft:generic.jump_strength",
@@ -50,7 +50,7 @@
       {
         "attribute": "minecraft:generic.safe_fall_distance",
         "op": "add",
-        "amount": 4.0
+        "amount": 3.0
       },
       {
         "attribute": "minecraft:generic.max_health",
@@ -63,53 +63,63 @@
         "id": "sky_leap",
         "kind": "shadow_dash",
         "slot": 1,
-        "costPct": 3,
-        "cooldownTicks": 120,
-        "strain": 4,
-        "range": 9,
+        "costPct": 5,
+        "cooldownTicks": 80,
+        "strain": 6,
+        "range": 10,
         "radius": 0,
         "durationTicks": 0,
         "power": 1,
         "maxTargets": 1,
-        "bossFactor": 1.0
+        "bossFactor": 0.0,
+        "name": "Sky Leap",
+        "effect": ""
       },
       {
-        "id": "radiant_mend",
-        "kind": "verdant_mend",
+        "id": "star_mane_gallop",
+        "kind": "mane_surge",
         "slot": 2,
         "costPct": 6,
-        "cooldownTicks": 800,
+        "cooldownTicks": 400,
         "strain": 6,
         "range": 0,
         "radius": 0,
         "durationTicks": 100,
-        "power": 1.5,
+        "power": 1,
         "maxTargets": 1,
-        "bossFactor": 1.0
+        "bossFactor": 0.0,
+        "name": "Star-Mane Gallop",
+        "effect": ""
       }
-    ]
+    ],
+    "equipPiece": "A single golden winged anklet on one ankle (a short white feather-tuft on a gold band) (the only equipped piece)."
   },
   "integrate": {
     "unlockAssimilation": 0.95,
     "unlockMastery": 0.5,
-    "drainPct": 1.2,
-    "strainPerSecond": 0.38,
+    "drainPct": 1.4,
+    "strainPerSecond": 0.65,
     "regen": 0.0,
     "stats": [
       {
         "attribute": "minecraft:generic.movement_speed",
         "op": "mult",
-        "amount": 0.2
+        "amount": 0.25
       },
       {
         "attribute": "minecraft:generic.jump_strength",
         "op": "mult",
-        "amount": 0.3
+        "amount": 0.35
       },
       {
         "attribute": "minecraft:generic.safe_fall_distance",
         "op": "add",
         "amount": 6.0
+      },
+      {
+        "attribute": "minecraft:generic.step_height",
+        "op": "add",
+        "amount": 0.5
       },
       {
         "attribute": "minecraft:generic.max_health",
@@ -119,43 +129,64 @@
       {
         "attribute": "minecraft:generic.attack_damage",
         "op": "add",
-        "amount": 2.0
-      },
-      {
-        "attribute": "minecraft:generic.armor",
-        "op": "add",
-        "amount": 2.0
+        "amount": 3.0
       }
     ],
     "abilities": [
       {
-        "id": "star_gallop",
-        "kind": "shadow_dash",
-        "slot": 1,
-        "costPct": 6,
-        "cooldownTicks": 140,
-        "strain": 7,
-        "range": 15,
-        "radius": 0,
-        "durationTicks": 0,
-        "power": 1,
-        "maxTargets": 1,
-        "bossFactor": 1.0
-      },
-      {
-        "id": "divine_mend",
+        "id": "hippocrene_spring",
         "kind": "verdant_mend",
-        "slot": 2,
-        "costPct": 10,
-        "cooldownTicks": 900,
-        "strain": 10,
+        "slot": 1,
+        "costPct": 16,
+        "cooldownTicks": 420,
+        "strain": 22,
         "range": 0,
         "radius": 0,
-        "durationTicks": 100,
-        "power": 3,
+        "durationTicks": 160,
+        "power": 4,
         "maxTargets": 1,
-        "bossFactor": 1.0
+        "bossFactor": 0.0,
+        "name": "Hippocrene Spring",
+        "effect": ""
+      },
+      {
+        "id": "thunderbearer_hoof",
+        "kind": "draconic_pulse",
+        "slot": 2,
+        "costPct": 10,
+        "cooldownTicks": 180,
+        "strain": 14,
+        "range": 8,
+        "radius": 6,
+        "durationTicks": 40,
+        "power": 4,
+        "maxTargets": 4,
+        "bossFactor": 0.5,
+        "name": "Thunderbearer's Hoof",
+        "effect": ""
       }
-    ]
+    ],
+    "transformation": "Full armoured form: the whole body becomes a Pegasus-humanoid in white-gold barding: horse head with a starlit white mane, two large feathered wings, a long white horsetail, golden-hooved digitigrade legs with hoof greaves and hoof-nailed hands; a thunderbolt lance of light forms in the right hand.",
+    "equip": {
+      "weapon": "A thunderbolt lance of white-gold light (Zeus's bolt) held in the right hand.",
+      "armor": "White-gold horse barding: winged pauldrons, a starlit chest plate, golden hoof greaves.",
+      "hair_eyes": "A long white mane tied with starlight, star-blue glowing eyes.",
+      "aura": "White-gold glow with falling star motes."
+    }
+  },
+  "beastNote": "Pegasus, the Divine Winged Stallion",
+  "lore": "A winged stallion of pure light whose hoofbeat can open a healing spring and whose gallop crosses the sky like a falling star.",
+  "pitch": "Pegasus is the winged stallion of Greek myth that opened a spring with its hoof and carried Zeus's thunderbolts. Acquire keeps you human, galloping in star-trails with one golden winged anklet. Integrate (Full armoured form) makes you a horse-headed, winged beastman in white-gold barding with a bolt-lance, and costs a medium drain with a slow heal as your only mend.",
+  "untrained": "An untrained holder is overwhelmed by the horse's urge to run: the legs bolt past the holder's control, falls hurt more and the healing spring refuses to open until the will is mastered. CANON ADDENDUM 2: the will lies dormant in the holder's mana core until it is forcefully awakened (a flame sparked in the core); if the holder cannot suppress and balance it, the clashing energies wreck body and core and can kill (design: strain climbs fast, backlash damage, forced cancel at the cap); mastery means training both the holder's own core and the beast core, best taught by the beast itself. This will summons no beasts or hordes.",
+  "designTag": "DESIGN",
+  "spirit": {
+    "colors": [
+      "#FFFFFF",
+      "#8FD0FF",
+      "#D9B34A"
+    ],
+    "echo": "A tall winged stallion-man in white-gold barding on hoofed digitigrade legs: horse head, long white mane tied with starlight, large feathered wings, long horsetail, golden hooves, hoof-nailed hands, a bolt-lance of light.",
+    "accent": "#8FD0FF",
+    "look": "A bright white orb with a tiny feathered wing outline inside and a small blue-gold star turning slowly above it."
   }
 }

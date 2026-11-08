@@ -9,7 +9,7 @@
   "keywords": [
     "nue"
   ],
-  "dropChance": 0.01,
+  "dropChance": 0.012,
   "requireEp": 28000,
   "hostRaces": [
     "HUMAN",
@@ -22,7 +22,7 @@
   "assimilationDayCap": 0.3,
   "masteryDayCap": 0.3,
   "coreCooldownDays": 5,
-  "tint": 5660782,
+  "tint": 8017336,
   "passive": [
     {
       "attribute": "minecraft:generic.knockback_resistance",
@@ -34,77 +34,87 @@
     "unlockAssimilation": 0.1,
     "unlockMastery": 0.0,
     "drainPct": 0.55,
-    "strainPerSecond": 0.12,
+    "strainPerSecond": 0.13,
     "regen": 0.0,
     "stats": [
       {
+        "attribute": "minecraft:generic.movement_speed",
+        "op": "mult",
+        "amount": 0.04
+      },
+      {
+        "attribute": "minecraft:generic.jump_strength",
+        "op": "mult",
+        "amount": 0.12
+      },
+      {
         "attribute": "minecraft:generic.attack_damage",
         "op": "add",
-        "amount": 2.0
+        "amount": 1.0
       },
       {
         "attribute": "minecraft:generic.max_health",
         "op": "add",
-        "amount": 4.0
-      },
-      {
-        "attribute": "minecraft:generic.armor",
-        "op": "add",
         "amount": 2.0
-      },
-      {
-        "attribute": "minecraft:generic.knockback_resistance",
-        "op": "add",
-        "amount": 0.25
       }
     ],
     "abilities": [
       {
-        "id": "ominous_cry",
-        "kind": "dread_gaze",
+        "id": "tiger_bound",
+        "kind": "shadow_dash",
         "slot": 1,
-        "costPct": 5,
-        "cooldownTicks": 600,
-        "strain": 6,
-        "range": 0,
-        "radius": 10,
-        "durationTicks": 100,
-        "power": 1,
-        "maxTargets": 5,
-        "bossFactor": 0.5
+        "costPct": 4,
+        "cooldownTicks": 80,
+        "strain": 5,
+        "range": 8,
+        "radius": 0,
+        "durationTicks": 0,
+        "power": 1.5,
+        "maxTargets": 1,
+        "bossFactor": 0.0,
+        "name": "Tiger Bound",
+        "effect": "A sudden crouching tiger bound forward."
       },
       {
-        "id": "night_mist",
+        "id": "cloud_cloak",
         "kind": "shadow_veil",
         "slot": 2,
-        "costPct": 3,
-        "cooldownTicks": 500,
-        "strain": 4,
+        "costPct": 4,
+        "cooldownTicks": 400,
+        "strain": 5,
         "range": 0,
         "radius": 0,
         "durationTicks": 100,
-        "power": 1,
+        "power": 2,
         "maxTargets": 1,
-        "bossFactor": 1.0
+        "bossFactor": 0.5,
+        "name": "Black-Cloud Cloak",
+        "effect": "A cloak of black cloud hides the tamer for about 5 seconds."
       }
-    ]
+    ],
+    "equipPiece": "One shadow snake-tail anklet coiled round one ankle (the only equipped piece); dark-cloud streaks and crouching-bound afterimages."
   },
   "integrate": {
     "unlockAssimilation": 0.95,
     "unlockMastery": 0.5,
-    "drainPct": 1.35,
-    "strainPerSecond": 0.43,
+    "drainPct": 1.6,
+    "strainPerSecond": 0.9,
     "regen": 0.0,
     "stats": [
       {
         "attribute": "minecraft:generic.attack_damage",
         "op": "add",
-        "amount": 3.5
+        "amount": 5.0
+      },
+      {
+        "attribute": "minecraft:generic.movement_speed",
+        "op": "mult",
+        "amount": 0.14
       },
       {
         "attribute": "minecraft:generic.max_health",
         "op": "add",
-        "amount": 7.0
+        "amount": 5.0
       },
       {
         "attribute": "minecraft:generic.armor",
@@ -112,45 +122,71 @@
         "amount": 3.0
       },
       {
-        "attribute": "minecraft:generic.knockback_resistance",
-        "op": "add",
-        "amount": 0.5
+        "attribute": "minecraft:generic.jump_strength",
+        "op": "mult",
+        "amount": 0.2
       },
       {
-        "attribute": "minecraft:generic.movement_speed",
+        "attribute": "minecraft:generic.attack_speed",
         "op": "mult",
-        "amount": 0.05
+        "amount": 0.12
       }
     ],
     "abilities": [
       {
-        "id": "black_lightning",
+        "id": "black_cloud_lightning",
         "kind": "draconic_pulse",
         "slot": 1,
-        "costPct": 9,
-        "cooldownTicks": 160,
-        "strain": 11,
-        "range": 8,
+        "costPct": 14,
+        "cooldownTicks": 200,
+        "strain": 22,
+        "range": 14,
         "radius": 8,
-        "durationTicks": 60,
+        "durationTicks": 80,
         "power": 5,
-        "maxTargets": 5,
-        "bossFactor": 0.6
+        "maxTargets": 6,
+        "bossFactor": 0.5,
+        "name": "Black-Cloud Lightning",
+        "effect": "A bolt of yellow lightning from the black cloud strikes up to six foes in a short line."
       },
       {
-        "id": "snake_tail",
-        "kind": "venom_spit",
+        "id": "night_cry",
+        "kind": "dread_gaze",
         "slot": 2,
-        "costPct": 7,
-        "cooldownTicks": 240,
-        "strain": 9,
-        "range": 7,
-        "radius": 7,
-        "durationTicks": 100,
+        "costPct": 12,
+        "cooldownTicks": 360,
+        "strain": 20,
+        "range": 16,
+        "radius": 12,
+        "durationTicks": 140,
         "power": 3,
-        "maxTargets": 3,
-        "bossFactor": 0.6
+        "maxTargets": 5,
+        "bossFactor": 0.3,
+        "name": "Ominous Night-Cry",
+        "effect": "An ominous night-cry sickens and frightens foes in a ring (bosses resist)."
       }
-    ]
+    ],
+    "transformation": "Whole body becomes the night-chimera in storm-violet plate: pale ape-like face with glowing yellow eyes, tanuki-grey mane, tiger-striped clawed forearms with a lightning glaive, digitigrade tiger legs, a long snake tail with a hissing head and a black storm cloud around the shoulders.",
+    "equip": {
+      "weapon": "A forked lightning glaive with a snake-tail cord.",
+      "armor": "Storm-violet tiger-striped pelt plate with a monkey-face pauldron mask and a cloud-wisp mantle.",
+      "hair_eyes": "Shaggy tanuki-grey mane around a pale ape face; glowing yellow eyes.",
+      "aura": "A black storm cloud with yellow lightning flickers."
+    }
+  },
+  "beastNote": "Nue, the Chimera of Dread (monkey face, tanuki body, tiger limbs, snake tail)",
+  "lore": "A night-chimera wrapped in black cloud whose cry is an omen: those who hear it fall ill and are struck by lightning.",
+  "pitch": "The Nue is the chimera yokai of Japanese myth with a monkey face, tanuki body, tiger limbs and snake tail, whose night-cry brings omen and lightning. Acquire keeps you human with one snake-tail anklet of shadow, lending a tiger bound and a black-cloud cloak. Integrate makes you a hunched night-chimera beastman in storm-violet pelt plate with an ape face, tiger claws and a hissing snake tail, a lightning-and-fear caster paid for with a strain that spikes every time the cry rings.",
+  "untrained": "An untrained holder is hit by their own omen: the black cloud rolls over them, strain jumps with each cry and static shocks burn their hands. The will lay dormant until forcibly awakened; if the holder cannot balance it the clash tears at body and core and can kill, and only training the holder's own core and the beast core (best teacher: the beast itself) tames it.",
+  "designTag": "DESIGN",
+  "spirit": {
+    "colors": [
+      "#7A55B8",
+      "#14142B",
+      "#E8E04A"
+    ],
+    "echo": "A hunched chimera-man with a pale ape-like face and sharp eyes, tanuki-thick torso fur, tiger-striped clawed arms and digitigrade legs, a long snake tail with a hissing head, wrapped in a black cloud with yellow flickers.",
+    "accent": "#E8E04A",
+    "look": "A violet orb of churning black cloud with a flicker of yellow lightning and a faint ape-eyed face drifting in the mist."
   }
 }

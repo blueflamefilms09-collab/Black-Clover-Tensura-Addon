@@ -1,0 +1,161 @@
+{
+  "id": "pegasus_will",
+  "name": "Pegasus Will",
+  "beast": "Pegasus, the Divine Winged Stallion",
+  "affinity": "Light",
+  "legendary": false,
+  "minRank": "A",
+  "sources": [],
+  "keywords": [
+    "pegasus"
+  ],
+  "dropChance": 0.01,
+  "requireEp": 20000,
+  "hostRaces": [
+    "HUMAN",
+    "ELF",
+    "DWARF"
+  ],
+  "otherHostCompat": 0.6,
+  "assimilationSeconds": 5000,
+  "masterySeconds": 3300,
+  "assimilationDayCap": 0.3,
+  "masteryDayCap": 0.3,
+  "coreCooldownDays": 5,
+  "tint": 16759000,
+  "passive": [
+    {
+      "attribute": "minecraft:generic.movement_speed",
+      "op": "add",
+      "amount": 0.015
+    }
+  ],
+  "acquire": {
+    "unlockAssimilation": 0.1,
+    "unlockMastery": 0.0,
+    "drainPct": 0.5,
+    "strainPerSecond": 0.1,
+    "regen": 0.0,
+    "stats": [
+      {
+        "attribute": "minecraft:generic.movement_speed",
+        "op": "mult",
+        "amount": 0.1
+      },
+      {
+        "attribute": "minecraft:generic.jump_strength",
+        "op": "mult",
+        "amount": 0.15
+      },
+      {
+        "attribute": "minecraft:generic.safe_fall_distance",
+        "op": "add",
+        "amount": 4.0
+      },
+      {
+        "attribute": "minecraft:generic.max_health",
+        "op": "add",
+        "amount": 2.0
+      }
+    ],
+    "abilities": [
+      {
+        "id": "sky_leap",
+        "kind": "shadow_dash",
+        "slot": 1,
+        "costPct": 3,
+        "cooldownTicks": 120,
+        "strain": 4,
+        "range": 9,
+        "radius": 0,
+        "durationTicks": 0,
+        "power": 1,
+        "maxTargets": 1,
+        "bossFactor": 1.0
+      },
+      {
+        "id": "radiant_mend",
+        "kind": "verdant_mend",
+        "slot": 2,
+        "costPct": 6,
+        "cooldownTicks": 800,
+        "strain": 6,
+        "range": 0,
+        "radius": 0,
+        "durationTicks": 100,
+        "power": 1.5,
+        "maxTargets": 1,
+        "bossFactor": 1.0
+      }
+    ]
+  },
+  "integrate": {
+    "unlockAssimilation": 0.95,
+    "unlockMastery": 0.5,
+    "drainPct": 1.2,
+    "strainPerSecond": 0.38,
+    "regen": 0.0,
+    "stats": [
+      {
+        "attribute": "minecraft:generic.movement_speed",
+        "op": "mult",
+        "amount": 0.2
+      },
+      {
+        "attribute": "minecraft:generic.jump_strength",
+        "op": "mult",
+        "amount": 0.3
+      },
+      {
+        "attribute": "minecraft:generic.safe_fall_distance",
+        "op": "add",
+        "amount": 6.0
+      },
+      {
+        "attribute": "minecraft:generic.max_health",
+        "op": "add",
+        "amount": 6.0
+      },
+      {
+        "attribute": "minecraft:generic.attack_damage",
+        "op": "add",
+        "amount": 2.0
+      },
+      {
+        "attribute": "minecraft:generic.armor",
+        "op": "add",
+        "amount": 2.0
+      }
+    ],
+    "abilities": [
+      {
+        "id": "star_gallop",
+        "kind": "shadow_dash",
+        "slot": 1,
+        "costPct": 6,
+        "cooldownTicks": 140,
+        "strain": 7,
+        "range": 15,
+        "radius": 0,
+        "durationTicks": 0,
+        "power": 1,
+        "maxTargets": 1,
+        "bossFactor": 1.0
+      },
+      {
+        "id": "divine_mend",
+        "kind": "verdant_mend",
+        "slot": 2,
+        "costPct": 10,
+        "cooldownTicks": 900,
+        "strain": 10,
+        "range": 0,
+        "radius": 0,
+        "durationTicks": 100,
+        "power": 3,
+        "maxTargets": 1,
+        "bossFactor": 1.0
+      }
+    ]
+  }
+}

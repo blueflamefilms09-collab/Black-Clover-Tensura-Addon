@@ -99,6 +99,7 @@ public class BeastSkill extends NUSkill {
         int seconds = BeastPassives.cooldownSeconds(BeastSkillRules.cooldown(m, mastered));
         if (seconds > 0) instance.setCoolDown(seconds, idx);
         SkillUtil.castVfx(p, spec.rgb());
+        if (m.mastery()) p.displayClientMessage(Component.translatableWithFallback("nusmp.beastwill.incant." + spec.key(), ""), true);   // 3.60.0: the finisher's own incantation, one action-bar line to the caster
         grow(instance, p, 1);
     }
 }

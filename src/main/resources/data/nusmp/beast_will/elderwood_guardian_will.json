@@ -4,15 +4,15 @@
   "beast": "Elderwood Guardian",
   "affinity": "Plant",
   "legendary": false,
-  "minRank": "A",
+  "minRank": "S",
   "sources": [],
   "keywords": [
     "treant",
     "dryad",
     "elderwood"
   ],
-  "dropChance": 0.02,
-  "requireEp": 15000,
+  "dropChance": 0.006,
+  "requireEp": 30000,
   "hostRaces": [
     "HUMAN",
     "ELF",
@@ -24,73 +24,78 @@
   "assimilationDayCap": 0.3,
   "masteryDayCap": 0.3,
   "coreCooldownDays": 5,
-  "tint": 3129201,
+  "tint": 2080602,
   "passive": [],
   "acquire": {
     "unlockAssimilation": 0.1,
     "unlockMastery": 0.0,
-    "drainPct": 0.55,
-    "strainPerSecond": 0.12,
+    "drainPct": 0.7,
+    "strainPerSecond": 0.3,
     "regen": 0.25,
     "stats": [
       {
         "attribute": "minecraft:generic.armor",
         "op": "add",
-        "amount": 2.0
-      },
-      {
-        "attribute": "minecraft:generic.max_health",
-        "op": "add",
-        "amount": 2.0
+        "amount": 1.5
       },
       {
         "attribute": "minecraft:generic.knockback_resistance",
         "op": "add",
         "amount": 0.1
+      },
+      {
+        "attribute": "minecraft:generic.movement_speed",
+        "op": "mult",
+        "amount": 0.03
       }
     ],
     "abilities": [
       {
-        "id": "vine_lash",
+        "id": "emerald_vine_lash",
         "kind": "vine_lash",
         "slot": 1,
         "costPct": 3,
         "cooldownTicks": 100,
-        "strain": 4,
+        "strain": 5,
         "range": 8,
-        "radius": 8,
+        "radius": 6,
         "durationTicks": 40,
-        "power": 3,
+        "power": 2.5,
         "maxTargets": 2,
-        "bossFactor": 0.6
+        "bossFactor": 0.6,
+        "name": "Emerald Vine Lash",
+        "effect": "Thin emerald vines snap out of the grass at up to two foes: a light lash and a short snare."
       },
       {
-        "id": "verdant_mend",
-        "kind": "verdant_mend",
+        "id": "grass_burst_snare",
+        "kind": "restraining_vines",
         "slot": 2,
         "costPct": 6,
-        "cooldownTicks": 800,
-        "strain": 6,
-        "range": 0,
-        "radius": 0,
-        "durationTicks": 100,
-        "power": 1.5,
-        "maxTargets": 1,
-        "bossFactor": 1.0
+        "cooldownTicks": 600,
+        "strain": 8,
+        "range": 10,
+        "radius": 5,
+        "durationTicks": 60,
+        "power": 2,
+        "maxTargets": 3,
+        "bossFactor": 0.25,
+        "name": "Grass Burst Snare",
+        "effect": "The aura bursts out under the feet through the grass: vines hold up to three foes for a moment."
       }
-    ]
+    ],
+    "equipPiece": "One bark-and-vine bracer on a forearm with a single black blight vein under it; thin emerald second-skin glow, grass bursts under the feet."
   },
   "integrate": {
     "unlockAssimilation": 0.95,
     "unlockMastery": 0.5,
-    "drainPct": 1.3,
-    "strainPerSecond": 0.42,
+    "drainPct": 1.9,
+    "strainPerSecond": 1.4,
     "regen": 0.5,
     "stats": [
       {
         "attribute": "minecraft:generic.armor",
         "op": "add",
-        "amount": 5.0
+        "amount": 4.0
       },
       {
         "attribute": "minecraft:generic.armor_toughness",
@@ -98,50 +103,81 @@
         "amount": 2.0
       },
       {
-        "attribute": "minecraft:generic.max_health",
+        "attribute": "minecraft:generic.attack_damage",
         "op": "add",
-        "amount": 8.0
+        "amount": 5.5
       },
       {
         "attribute": "minecraft:generic.knockback_resistance",
         "op": "add",
-        "amount": 0.4
+        "amount": 0.3
       },
       {
-        "attribute": "minecraft:generic.attack_damage",
-        "op": "add",
-        "amount": 1.5
+        "attribute": "minecraft:generic.attack_speed",
+        "op": "mult",
+        "amount": 0.2
+      },
+      {
+        "attribute": "minecraft:generic.movement_speed",
+        "op": "mult",
+        "amount": 0.1
       }
     ],
     "abilities": [
       {
-        "id": "restraining_vines",
-        "kind": "restraining_vines",
+        "id": "aura_twin_blades",
+        "kind": "ambush",
         "slot": 1,
         "costPct": 10,
-        "cooldownTicks": 600,
-        "strain": 14,
-        "range": 0,
-        "radius": 6,
-        "durationTicks": 60,
-        "power": 1,
-        "maxTargets": 5,
-        "bossFactor": 0.25
+        "cooldownTicks": 240,
+        "strain": 18,
+        "range": 10,
+        "radius": 0,
+        "durationTicks": 0,
+        "power": 5,
+        "maxTargets": 1,
+        "bossFactor": 0.5,
+        "name": "Aura Twin Blades",
+        "effect": "The coiling aura sharpens into dual blades and the holder flashes onto one target for a double cut."
       },
       {
-        "id": "bark_ward",
-        "kind": "bark_ward",
+        "id": "corrupted_coil_burst",
+        "kind": "draconic_pulse",
         "slot": 2,
-        "costPct": 8,
-        "cooldownTicks": 700,
-        "strain": 10,
-        "range": 0,
-        "radius": 0,
-        "durationTicks": 120,
-        "power": 1,
-        "maxTargets": 1,
-        "bossFactor": 1.0
+        "costPct": 14,
+        "cooldownTicks": 200,
+        "strain": 28,
+        "range": 8,
+        "radius": 8,
+        "durationTicks": 80,
+        "power": 5,
+        "maxTargets": 6,
+        "bossFactor": 0.4,
+        "name": "Corrupted Coil Burst",
+        "effect": "The thick aura coils out in a ring of thorned vines and blight, hitting everything around; it costs heavy strain because the will is corrupted."
       }
-    ]
+    ],
+    "transformation": "Full armoured form treant-beastman: antler-branch crown, forest-green hair, hollow turquoise eyes, thorned bark armour on shoulders and back, root-toed digitigrade clawed greaves, vine-wrapped arms ending in two aura blades, a trailing vine tail and black blight veins over the chest.",
+    "equip": {
+      "weapon": "Twin emerald aura blades coiled from the vine-wrapped forearms (the Guardian's vine lance is the Mastery move).",
+      "armor": "Thorned bark armour: antler-branch crown, bark plates on shoulders and back, vine-bound bracers and root-toed greaves, black blight veins over the chest.",
+      "hair_eyes": "Hair turns forest-green, pale skin, hollow glowing turquoise eyes with markings.",
+      "aura": "Thick coiling emerald aura with black blight motes and falling leaves."
+    }
+  },
+  "beastNote": "Elderwood Guardian (corrupted S-class plant beast, centaur-like body of entangled vines)",
+  "lore": "The will of a Vritra-corrupted, Hamadryad-like grove guardian. It lends vines and emerald aura, but it pushes back: a holder who is not trained enough is overwhelmed.",
+  "pitch": "The Elderwood Guardian was a Vritra-corrupted S-class plant beast of entangled vines (a Hamadryad-like grove), and Tessia holds its will. Acquire keeps you human in a thin emerald second-skin glow with one equipped piece, a single bark-vine bracer, to lash and snare with vines. Integrate (Full armoured form) makes you a green-haired, turquoise-eyed treant-beastman in thorned bark armour with twin aura blades; it has the hardest control in the roster, no healing, and will overwhelm an untrained holder.",
+  "untrained": "Hardest will to control in the roster. Canon: even a trained holder must train more or the corrupted will overwhelms them. DESIGN: highest strain of every will (Acquire 0.28, Integrate 1.4); past a strain threshold black blight veins climb the body, abilities cost extra strain and the vines turn on the holder (a short self-root); the awakening needs an outside flame in the core and a forced or neglected one can kill the host.",
+  "designTag": "CANON-BASE",
+  "spirit": {
+    "colors": [
+      "#1FBF5A",
+      "#0F2A1A",
+      "#35E0D0"
+    ],
+    "echo": "A tall treant-beastman in thorned bark armour: antler-branch crowned head with forest-green hair and hollow turquoise eyes, bark-plated shoulders, vine-bound arms ending in twin aura blades, root-toed digitigrade legs, a trailing vine tail, black blight veins, a thick emerald aura.",
+    "accent": "#2FD8C8",
+    "look": "A knotted heartwood orb with a cracked bark husk showing emerald glow, black blight veins crawling over it and a turquoise spark in the crack."
   }
 }

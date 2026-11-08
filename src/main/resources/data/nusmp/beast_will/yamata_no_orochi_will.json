@@ -4,12 +4,12 @@
   "beast": "Yamata no Orochi, the Eight-Headed Dragon",
   "affinity": "Flood",
   "legendary": true,
-  "minRank": "S",
+  "minRank": "SS",
   "sources": [],
   "keywords": [
     "orochi"
   ],
-  "dropChance": 0.003,
+  "dropChance": 0.0025,
   "requireEp": 80000,
   "hostRaces": [
     "HUMAN",
@@ -22,7 +22,7 @@
   "assimilationDayCap": 0.12,
   "masteryDayCap": 0.12,
   "coreCooldownDays": 21,
-  "tint": 14163516,
+  "tint": 14684272,
   "passive": [
     {
       "attribute": "minecraft:generic.knockback_resistance",
@@ -33,88 +33,83 @@
   "acquire": {
     "unlockAssimilation": 0.1,
     "unlockMastery": 0.0,
-    "drainPct": 0.55,
-    "strainPerSecond": 0.13,
+    "drainPct": 0.7,
+    "strainPerSecond": 0.14,
     "regen": 0.0,
     "stats": [
       {
-        "attribute": "minecraft:generic.armor",
-        "op": "add",
-        "amount": 4.0
-      },
-      {
         "attribute": "minecraft:generic.max_health",
         "op": "add",
-        "amount": 6.0
+        "amount": 4.8
       },
       {
-        "attribute": "minecraft:generic.attack_damage",
+        "attribute": "minecraft:generic.armor",
         "op": "add",
-        "amount": 3.0
+        "amount": 2.4
       },
       {
-        "attribute": "minecraft:generic.knockback_resistance",
-        "op": "add",
-        "amount": 0.25
+        "attribute": "minecraft:generic.attack_speed",
+        "op": "mult",
+        "amount": 0.06
       }
     ],
     "abilities": [
       {
-        "id": "two_fangs",
-        "kind": "venom_spit",
+        "id": "eight_valley_sight",
+        "kind": "dragon_sight",
         "slot": 1,
-        "costPct": 5,
-        "cooldownTicks": 160,
-        "strain": 6,
-        "range": 7,
-        "radius": 7,
-        "durationTicks": 100,
-        "power": 3,
-        "maxTargets": 3,
-        "bossFactor": 0.6
-      },
-      {
-        "id": "river_scale",
-        "kind": "bark_ward",
-        "slot": 2,
-        "costPct": 5,
-        "cooldownTicks": 600,
-        "strain": 7,
-        "range": 0,
-        "radius": 0,
+        "costPct": 4,
+        "cooldownTicks": 400,
+        "strain": 4,
+        "range": 20,
+        "radius": 14,
         "durationTicks": 120,
         "power": 1,
+        "maxTargets": 6,
+        "bossFactor": 1.0,
+        "name": "Eight-Valley Sight",
+        "effect": ""
+      },
+      {
+        "id": "serpent_dart",
+        "kind": "shadow_dash",
+        "slot": 2,
+        "costPct": 4,
+        "cooldownTicks": 120,
+        "strain": 4,
+        "range": 8,
+        "radius": 0,
+        "durationTicks": 0,
+        "power": 1.5,
         "maxTargets": 1,
-        "bossFactor": 1.0
+        "bossFactor": 1.0,
+        "name": "Serpent Dart",
+        "effect": ""
       }
-    ]
+    ],
+    "equipPiece": "A single crimson scale gauntlet on the right arm with a small serpent-head knuckle (the only equipped piece)."
   },
   "integrate": {
     "unlockAssimilation": 0.95,
     "unlockMastery": 0.5,
-    "drainPct": 1.55,
-    "strainPerSecond": 0.5,
+    "drainPct": 2.0,
+    "strainPerSecond": 1.2,
     "regen": 0.0,
     "stats": [
       {
-        "attribute": "minecraft:generic.armor",
-        "op": "add",
-        "amount": 6.0
-      },
-      {
-        "attribute": "minecraft:generic.armor_toughness",
-        "op": "add",
-        "amount": 2.0
-      },
-      {
         "attribute": "minecraft:generic.max_health",
         "op": "add",
-        "amount": 10.0
+        "amount": 12
+      },
+      {
+        "attribute": "minecraft:generic.armor",
+        "op": "add",
+        "amount": 6
       },
       {
         "attribute": "minecraft:generic.attack_damage",
         "op": "add",
-        "amount": 4.0
+        "amount": 5
       },
       {
         "attribute": "minecraft:generic.knockback_resistance",
@@ -122,40 +117,71 @@
         "amount": 0.5
       },
       {
+        "attribute": "minecraft:generic.attack_speed",
+        "op": "mult",
+        "amount": 0.15
+      },
+      {
         "attribute": "minecraft:generic.movement_speed",
         "op": "mult",
-        "amount": 0.06
+        "amount": 0.1
       }
     ],
     "abilities": [
       {
-        "id": "eight_heads",
-        "kind": "venom_spit",
+        "id": "eightfold_strike",
+        "kind": "vine_lash",
         "slot": 1,
         "costPct": 10,
-        "cooldownTicks": 140,
+        "cooldownTicks": 100,
         "strain": 12,
-        "range": 9,
+        "range": 10,
         "radius": 9,
-        "durationTicks": 100,
+        "durationTicks": 60,
         "power": 4.5,
-        "maxTargets": 6,
-        "bossFactor": 0.5
+        "maxTargets": 3,
+        "bossFactor": 0.5,
+        "name": "Eightfold Strike",
+        "effect": ""
       },
       {
-        "id": "blood_flood",
+        "id": "valley_flood",
         "kind": "maelstrom",
         "slot": 2,
-        "costPct": 16,
-        "cooldownTicks": 1300,
-        "strain": 22,
+        "costPct": 14,
+        "cooldownTicks": 600,
+        "strain": 18,
         "range": 0,
         "radius": 10,
         "durationTicks": 100,
         "power": 5,
         "maxTargets": 6,
-        "bossFactor": 0.3
+        "bossFactor": 0.3,
+        "name": "Valley Flood",
+        "effect": ""
       }
-    ]
+    ],
+    "transformation": "Full armoured form: the whole body becomes an eight-headed dragon beastman in cypress-bark scale armor: a crimson dragon head with winter-cherry eyes, seven more serpent heads on long necks as a collar fan, clawed gauntlets, digitigrade legs and a fan of eight tails from which a gold-bladed sword is drawn.",
+    "equip": {
+      "weapon": "A gold-bladed sword drawn out of the tail fan (the sword found in the Orochi's tail in the myth).",
+      "armor": "Mossy cypress-bark scale plates, a collar of seven serpent-head guards fanned behind the main head, clawed gauntlets and eight-tail skirt plates.",
+      "hair_eyes": "Dark crimson hair, winter-cherry red glowing eyes.",
+      "aura": "Flood water and rising mist."
+    }
+  },
+  "beastNote": "Yamata no Orochi, the Eight-Headed Dragon",
+  "lore": "The eight-headed, eight-tailed serpent of Izumo, with eyes red as winter cherries, brought floods and was drowned in sake.",
+  "pitch": "Yamata no Orochi is the eight-headed, eight-tailed flood serpent of Japanese myth, drowned in sake. Acquire keeps you human, leaping in crimson streaks with one scale gauntlet. Integrate (Full armoured form) makes you an eight-headed dragon beastman in cypress-bark armor with the tail-sword, a legendary kit paid for with a very high drain and strain.",
+  "untrained": "An untrained holder is torn by eight conflicting urges: heads of fever, flooding thirst and a drunken stagger that drops their guard. The will lay dormant until forcibly awakened; if the holder cannot balance it the clash tears at body and core and can kill, and only training the holder's own core and the beast core (best teacher: the beast itself) tames it.",
+  "designTag": "DESIGN",
+  "spirit": {
+    "colors": [
+      "#E01070",
+      "#F2C94C",
+      "#3A0D1A"
+    ],
+    "echo": "An eight-headed dragon beastman in cypress-bark scale armor: a main crimson head with seven serpent heads fanned behind on long necks, eight tails, winter-cherry red eyes and a gold-bladed sword.",
+    "accent": "#F2C94C",
+    "look": "A deep magenta-red orb with eight glints like winter-cherry eyes ringed round it and a gold blade-glint in its core."
   }
 }

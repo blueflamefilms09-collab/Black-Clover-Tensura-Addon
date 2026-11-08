@@ -16,11 +16,11 @@ public final class BeastCoreLook {
     /** How far the body skin is pulled toward the will's colour (0 = untinted stone, 1 = the colour itself), and the same for the flat inventory icon. */
     public static final float BODY_MIX = 0.6f, ICON_MIX = 0.85f;
 
+    /** 3.60.0 (Beast Will remake): the colours are the remade palette (tools/beastwill/remake/palette.json); the pre-remake colours are the {@code tint} of data/nusmp/beast_will_classic. */
     private static final Map<String, Integer> TINT = tints(Map.of(
-            "dragon_will", 8378111, "shadow_panther_will", 4930188, "elderwood_guardian_will", 3129201, "lion_will", 14722362, "thunder_fang_chimera_will", 5945599,
-            "ridge_wolf_will", 10129280, "crested_boar_will", 9132587, "wind_skimmer_will", 10477768, "flame_serpent_will", 14701594),
+            "dragon_will", 12166399, "shadow_panther_will", 5921376, "elderwood_guardian_will", 2080602, "lion_will", 15249440, "thunder_fang_chimera_will", 16052828, "ridge_wolf_will", 7975354, "crested_boar_will", 9336129, "wind_skimmer_will", 2947839, "flame_serpent_will", 16726528),
             // the 18 later wills (docs/beastwill_new.md), appended: fenrir .. apophis
-            "fenrir_will", 14275839, "jormungandr_will", 2005672, "cerberus_will", 10108880, "minotaur_will", 11880491, "hydra_will", 9418794, "cu_sith_will", 8191819, "nidhoggr_will", 12101674, "hafgufa_will", 3039952, "kraken_will", 948838, "typhon_will", 14695584, "scylla_charybdis_will", 8164272, "sphinx_will", 15126666, "pegasus_will", 16759000, "yamata_no_orochi_will", 14163516, "kitsune_will", 16751210, "nue_will", 5660782, "ammit_will", 11563146, "apophis_will", 7220464);
+            "fenrir_will", 8909311, "jormungandr_will", 2052016, "cerberus_will", 11425880, "minotaur_will", 8879209, "hydra_will", 12116026, "cu_sith_will", 8191882, "nidhoggr_will", 5742347, "hafgufa_will", 47805, "kraken_will", 16736595, "typhon_will", 14961765, "scylla_charybdis_will", 293491, "sphinx_will", 3829736, "pegasus_will", 16777215, "yamata_no_orochi_will", 14684272, "kitsune_will", 16744368, "nue_will", 8017336, "ammit_will", 14077070, "apophis_will", 9918382);
 
     private static Map<String, Integer> tints(Map<String, Integer> first, Object... more) {
         java.util.HashMap<String, Integer> all = new java.util.HashMap<>(first);
