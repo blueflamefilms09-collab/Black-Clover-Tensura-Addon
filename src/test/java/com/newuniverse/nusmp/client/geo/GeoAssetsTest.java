@@ -28,6 +28,12 @@ class GeoAssetsTest {
 
     private static String stem(File f) { return f.getName().replace(".geo.json", "").replace(".animation.json", ""); }
 
+    /** 3.61.0: the Beast Will form pieces ({@code bwf_<stem>_arm_<piece>}) all read ONE shared sheet {@code bwf_<stem>} (BeastWillForms sets it with GeoSpec.skin), so the sheet is the will's, not the piece's. */
+    private static String sheet(File f) {
+        String s = stem(f);
+        return s.startsWith("bwf_") && s.contains("_arm_") ? s.substring(0, s.indexOf("_arm_")) : s;
+    }
+
     @Test
     void boxUvIsVanillasLayout() {
         JsonObject o = JsonParser.parseString("{\"format_version\":\"1.12.0\",\"minecraft:geometry\":[{\"description\":{\"identifier\":\"geometry.t\",\"texture_width\":64,\"texture_height\":32},"
@@ -78,15 +84,15 @@ class GeoAssetsTest {
                     }
                 }
             }
-            File tex = new File(TEX, stem(f) + ".png");
+            File tex = new File(TEX, sheet(f) + ".png");
             assertTrue(tex.isFile(), f.getName() + ": missing texture " + tex.getName());
             BufferedImage img = ImageIO.read(tex);
             assertEquals(m.texW, img.getWidth(), f.getName() + ": texture width differs from texture_width");
             assertEquals(m.texH, img.getHeight(), f.getName() + ": texture height differs from texture_height");
-            File glow = new File(TEX, stem(f) + "_glow.png");
+            File glow = new File(TEX, sheet(f) + "_glow.png");
             if (glow.isFile()) {
                 BufferedImage g = ImageIO.read(glow);
-                if (stem(f).startsWith("sylph_") && stem(f).endsWith("_wings")) {
+                if (sheet(f).startsWith("sylph_") && sheet(f).endsWith("_wings")) {
                     // the Sylph's wing glow map is the iridescent SHEEN: several phases of the wing sheet's layout stacked top to bottom at half size (client/prop/SheenUv shifts V to show a phase)
                     assertEquals(img.getWidth(), g.getWidth() * 2, f.getName() + ": the sheen sheet is half as wide as the wing sheet");
                     assertEquals(0, (g.getHeight() * 2) % img.getHeight(), f.getName() + ": the sheen sheet holds whole phases of the wing sheet's height");
