@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.61.0] — Beast Will forms rebuilt as real 3D cube bodies, with idle animation
+- REPLACED (you asked): the in-game look of all 27 Beast Wills. The flat sprites are now detailed 3D models made of many small, angled, layered cubes, worn on your head, body, arms and legs, with a tail and wings where the beast has them. Acquire still shows only the forearm bracer with claws.
+- NEW: idle animation on every form: breathing, swaying tails (three bones), flapping wings, twitching ears, swaying manes, extra heads on their own necks (Cerberus, Hydra, Typhon, Yamata no Orochi, Scylla & Charybdis), Kraken tentacles, Hafgufa's bobbing island, Fenrir's swinging chains, the Flame Serpent's flickering tail flame.
+- NEW setting: client `beastwill.flatSpirits` (default off) draws the 3.60.0 flat sprites again. KEPT: the classic spirits switch, all server logic, saves and skills.
+- Cost: client drawing only; at most 318 cubes (1908 quads) per player, full detail within 24 blocks for 4 players per frame, 6 more without glow, nothing beyond 48 blocks; no new packets or server work. Doc `docs/beastwill_forms.md`.
+- Not seen in a game and Gradle not run before this release: previews are from a software renderer, not Minecraft.
+
 ## [3.60.0] — Beast Will remake: all 27 wills, borrowed strengths and armoured beast-humanoids
 - REPLACED (you asked): all 27 Beast Wills. Acquire keeps you a human who borrows the beast's strengths and wears ONE piece of it; Integrate makes you a full armoured beast-humanoid with a signature weapon. Every will has new names, lore, rank, drop chance, two named abilities per stage, a form (piece, armour, weapon, hair, eyes, aura) and its own core colour (27 distinct). No summoned armies; the Shadow Panther drains mana fast; Kraken is rank S, Shadow Panther rank A.
 - REPLACED: the 27 Beast Will skill sets: 3 passives, 2 actives and the mastery finisher per beast (the Unique keeps the first passive and two actives at half strength). The old skill rows are kept as text in `tools/beastwill/remake/`.

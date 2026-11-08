@@ -188,10 +188,13 @@ public final class BeastWillAura {
         int bright = SealDraw.mix(rgb, 0xFFFFFF, 0.35f);
         boolean strong = phase == 2;
         boolean spirit = kind > 0 && BODY[kind] != null;
+        // 0. (3.61.0) the 3D cube form of the will, anchored on the player's own body parts; drawn before the camera-facing sprites below (they turn the pose). It replaces the flat spirit and, in
+        // Integrate, the eye glints (its head has eyes); the motes and the rings stay. The settings beastwill.classicSpirits / flatSpirits bring the sprites back.
+        boolean form = !BeastWillSpiritOptions.classic() && !BeastWillSpiritOptions.flat() && BeastWillForms.paint(c, phase, kind, rgb, pulse);
         SealDraw.camera(pose);
 
         // 1. the eyes: two glints at eye height in front of the face, turned with the head
-        if (!self1p) {
+        if (!self1p && !(form && strong)) {
             VertexConsumer ev = c.buffers().getBuffer(AuraRender.additive(glint));
             float yaw = c.netHeadYaw() * Mth.DEG_TO_RAD, cs = Mth.cos(yaw), sn = Mth.sin(yaw);
             float size = (strong ? 0.13f : 0.075f) * pulse;
@@ -213,7 +216,7 @@ public final class BeastWillAura {
         }
 
         // 3. the animal spirit (known wills only; never from the owner's own first-person camera)
-        if (spirit && !self1p) {
+        if (spirit && !self1p && !form) {
             long s0 = PerfProbe.begin();
             try {
                 spirit(c, pose, phase, kind, rgb, f, pulse, age, light, !far && strong && admitFull());

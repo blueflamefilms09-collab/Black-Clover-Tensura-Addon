@@ -1,0 +1,27 @@
+dragon: head body armL armR legL legR tail wings acq
+elder: head body armL armR legL legR acq
+panther: head body armL armR legL legR tail acq
+lion: head body armL armR legL legR tail acq
+wolf: head body armL armR legL legR tail acq
+chimera: head body armL armR legL legR tail wings acq
+boar: head body armL armR legL legR tail acq
+raptor: head body armL armR legL legR tail wings acq
+serpent: head body armL armR legL legR tail acq
+ammit: head body armL armR legL legR tail acq
+apophis: head body armL armR legL legR tail wings acq
+cerberus: head body armL armR legL legR tail acq
+fenrir: head body armL armR legL legR tail acq
+cu_sith: head body armL armR legL legR tail acq
+kitsune: head body armL armR legL legR tail acq
+nue: head body armL armR legL legR tail acq
+pegasus: head body armL armR legL legR tail wings acq
+minotaur: head body armL armR legL legR tail acq
+sphinx: head body armL armR legL legR tail wings acq
+hafgufa: head body armL armR legL legR tail acq
+hydra: head body armL armR legL legR tail acq
+jormungandr: head body armL armR legL legR tail acq
+kraken: head body armL armR legL legR acq
+nidhoggr: head body armL armR legL legR tail wings acq
+scylla_charybdis: head body armL armR legL legR acq
+typhon: head body armL armR legL legR tail wings acq
+yamata_no_orochi: head body armL armR legL legR tail acq

@@ -14,13 +14,15 @@ public final class BeastWillSpiritClientConfig {
     private BeastWillSpiritClientConfig() {}
 
     public static final ModConfigSpec SPEC;
-    public static final ModConfigSpec.BooleanValue CLASSIC_SPIRITS;
+    public static final ModConfigSpec.BooleanValue CLASSIC_SPIRITS, FLAT_SPIRITS;
 
     static {
         ModConfigSpec.Builder b = new ModConfigSpec.Builder();
         b.push("beastwill");
         CLASSIC_SPIRITS = b.comment("true: a Beast Will form is drawn with its old animal spirit (3.57.0 / 3.59.0) instead of the remade form. Looks only.")
                 .define("classicSpirits", false);
+        FLAT_SPIRITS = b.comment("true: a Beast Will form is drawn with the flat painted sprites of 3.60.0 instead of the 3D cube forms (3.61.0). Looks only.")
+                .define("flatSpirits", false);
         b.pop();
         SPEC = b.build();
     }
@@ -33,6 +35,6 @@ public final class BeastWillSpiritClientConfig {
     }
 
     private static void apply() {
-        try { BeastWillSpiritOptions.setClassic(CLASSIC_SPIRITS.get()); } catch (IllegalStateException unloaded) { BeastWillSpiritOptions.setClassic(false); }
+        try { BeastWillSpiritOptions.setClassic(CLASSIC_SPIRITS.get()); BeastWillSpiritOptions.setFlat(FLAT_SPIRITS.get()); } catch (IllegalStateException unloaded) { BeastWillSpiritOptions.setClassic(false); BeastWillSpiritOptions.setFlat(false); }
     }
 }

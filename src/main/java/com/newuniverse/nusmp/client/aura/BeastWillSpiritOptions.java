@@ -13,4 +13,11 @@ public final class BeastWillSpiritOptions {
     public static boolean classic() { return classic; }
 
     public static void setClassic(boolean on) { classic = on; }
+
+    private static volatile boolean flat;
+
+    /** 3.61.0: true = the flat painted sprites of 3.60.0 (client setting {@code beastwill.flatSpirits}) instead of the 3D cube forms. */
+    public static boolean flat() { return flat; }
+
+    public static void setFlat(boolean on) { flat = on; }
 }
