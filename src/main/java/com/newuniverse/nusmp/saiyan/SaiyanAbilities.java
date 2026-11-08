@@ -2,9 +2,10 @@ package com.newuniverse.nusmp.saiyan;
 
 import com.newuniverse.nusmp.avatar.FtbTeamHelper;
 import com.newuniverse.nusmp.balance.BalanceLaw;
-import com.newuniverse.nusmp.perf.PerfParticles;
+import com.newuniverse.nusmp.particle.fx.Fx;
+import com.newuniverse.nusmp.particle.fx.FxOld;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
 import com.newuniverse.nusmp.song.SongTargets;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -107,9 +108,9 @@ final class SaiyanAbilities {
         int n = (int) Math.min(MAX_TRAIL, Math.max(2, len / 1.5));
         for (int i = 1; i <= n; i++) {
             Vec3 q = from.add(d.scale(i / (double) n));
-            PerfParticles.send(level, ParticleTypes.END_ROD, q.x, q.y, q.z, 1, 0.03, 0.03, 0.03, 0.0);
+            Fx.spray(level, FxThemes.WORLD, FxOld.END_ROD, q.x, q.y, q.z, 1, 0.03, 0.03, 0.03, 0.0);
         }
-        PerfParticles.send(level, ParticleTypes.ELECTRIC_SPARK, to.x, to.y, to.z, 5, 0.2, 0.2, 0.2, 0.05);
+        Fx.spray(level, FxThemes.WORLD, FxOld.ELECTRIC_SPARK, to.x, to.y, to.z, 5, 0.2, 0.2, 0.2, 0.05);
     }
 
     /** Deals {@code raw} through the balance law as magic damage; returns what was dealt. */

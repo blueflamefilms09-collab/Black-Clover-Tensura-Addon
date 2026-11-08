@@ -70,7 +70,7 @@ class SaiyanSourceScanTest {
         String a = code("SaiyanAbilities.java");
         assertTrue(a.contains("SongTargets.isFoe") && a.contains("FtbTeamHelper.sameTeam") && a.contains("mayInteract"), "foes only, teams and protected places respected");
         assertTrue(a.contains("BalanceLaw.damage("), "damage goes through the balance law");
-        assertTrue(a.contains("PerfParticles.send(") && !a.contains("sendParticles("), "particles go through the budget");
+        assertTrue(a.contains("Fx.spray(") && !a.contains("sendParticles(") && !a.contains("ParticleTypes."), "particles go through the budget");
         assertTrue(a.contains("MAX_TRAIL") && a.contains("MAX_CANDIDATES"), "the trail and the candidate list are bounded");
         assertTrue(code("SaiyanConfig.java").contains("defineInRange(\"barrageRays\", 5, 1, 8)"), "a barrage is at most eight rays");
     }
