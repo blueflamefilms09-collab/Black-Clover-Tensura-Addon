@@ -1,5 +1,13 @@
 # Changelog
 
+## [3.64.0] — Black Clover bosses three times as strong
+- NEW (you asked): every boss of the *Black Clover* work has **3x maximum health** and **deals 3x damage**: the Dark Triad (Dante, Vanica, Zenon), Lucius, the Devil Avatar, Zagred, the Midnight Sun elves (Fana, Rades, Rhya, Patolli), the early-arc bosses and the Spade Kingdom bosses. Goliath, the Charybdis Spawn and the other works' bosses are untouched.
+- NEW: server setting `bossRules.blackCloverStatMultiplier` in `nusmp-boss-rules-server.toml` (default 3, up to 10, 1 = off).
+- Health is one saved maximum-health modifier (a new boss is full, a wounded one keeps its share of the bar, other health scaling multiplies with it). Damage covers melee, spells and Lucius's true damage; a boosted hit never takes more than half of a victim's maximum health in one blow.
+- KEPT: speed, armour, moves, phases, barriers, drops, the buff engine and its `buffMultiplier`. REPLACED: nothing.
+- Cost: nothing per tick, no scan, no packet; one registry lookup per damage event with an attacker. Doc `docs/black_clover_bosses.md`; tests `BossStatMathTest`, `BossStatSourceScanTest`, smoke key `boss.stats`.
+- Not seen in a game; Gradle not run locally (CI compiles). The balance of 3x on numbers tuned for 1x needs play-testing.
+
 ## [3.63.0] — Saiyan race, Stage 1 (Foundation) and the legendary-weapon consumables fix
 - NEW: the Saiyan race (Stage 1 of 8). `/saiyan race <player> on|off` (operators). Racial bonuses: strength +35% (melee damage), durability +30% (damage taken), speed +20%, attack speed +15%, jump +25%, knockback resistance +15%, stamina +40%, combat experience +20%; they grow with Battle Power up to caps. Everything is a server setting (`nusmp-saiyan-server.toml`).
 - NEW: Ki IS the Tensura magicule for a Saiyan (your decision). The race adds +100 flat and +30% capacity and 2% extra regeneration per second once the Ki has awakened; the Saiyan HUD shows it as a Ki bar and Tensura's own magicule bar is hidden for a Saiyan. Everything that spends magicule already spends Ki.
