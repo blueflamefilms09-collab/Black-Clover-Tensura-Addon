@@ -3,6 +3,7 @@ package com.newuniverse.nusmp.heroweapon;
 import com.newuniverse.nusmp.core.magic.profile.SafeCast;
 import com.newuniverse.nusmp.heroweapon.bond.HeroLoan;
 import com.newuniverse.nusmp.heroweapon.forms.HeroForms;
+import com.newuniverse.nusmp.heroweapon.rules.ConsumablePass;
 import com.newuniverse.nusmp.heroweapon.skill.HeroCombat;
 import com.newuniverse.nusmp.heroweapon.skill.HeroUse;
 import net.minecraft.core.component.DataComponents;
@@ -17,6 +18,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
@@ -89,6 +91,8 @@ public class HeroWeaponItem extends Item {
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
+        if (hand == InteractionHand.MAIN_HAND && ConsumablePass.offhandFirst(HeroConfig.consumablesFirst(), player.isShiftKeyDown(), offhandKind(player), canEatOffhand(player)))
+            return InteractionResultHolder.pass(stack);                                      // 3.63.0: a food or potion in the off hand gets the click (vanilla tries the off hand after a pass)
         if (kind.style() == HeroStyle.BLOCK && hand == InteractionHand.OFF_HAND) {            // 1.110.0: a shield is raised from either hand, like vanilla's; the techniques stay on the main hand
             player.startUsingItem(hand);
             return InteractionResultHolder.consume(stack);
@@ -110,6 +114,21 @@ public class HeroWeaponItem extends Item {
             return InteractionResultHolder.consume(stack);
         }
         return InteractionResultHolder.pass(stack);
+    }
+
+    /** What the off hand holds, as the click rule needs it: a drink, a food, or nothing usable. Reads only the stack's use animation and food component (same on both sides). */
+    private static ConsumablePass.Kind offhandKind(Player player) {
+        ItemStack off = player.getOffhandItem();
+        if (off.isEmpty()) return ConsumablePass.Kind.NONE;
+        UseAnim a = off.getUseAnimation();
+        if (a == UseAnim.DRINK) return ConsumablePass.Kind.DRINK;
+        return a == UseAnim.EAT && off.get(DataComponents.FOOD) != null ? ConsumablePass.Kind.FOOD : ConsumablePass.Kind.NONE;
+    }
+
+    /** Can the player eat the off-hand food right now (hungry, or the food can always be eaten)? */
+    private static boolean canEatOffhand(Player player) {
+        FoodProperties f = player.getOffhandItem().get(DataComponents.FOOD);
+        return f != null && player.canEat(f.canAlwaysEat());
     }
 
     /** The string was let go: a drawn style hands the release (and how long it was drawn) to the weapon's logic. */

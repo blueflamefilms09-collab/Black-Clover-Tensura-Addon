@@ -1,5 +1,15 @@
 # Changelog
 
+## [3.63.0] — Saiyan race, Stage 1 (Foundation) and the legendary-weapon consumables fix
+- NEW: the Saiyan race (Stage 1 of 8). `/saiyan race <player> on|off` (operators). Racial bonuses: strength +35% (melee damage), durability +30% (damage taken), speed +20%, attack speed +15%, jump +25%, knockback resistance +15%, stamina +40%, combat experience +20%; they grow with Battle Power up to caps. Everything is a server setting (`nusmp-saiyan-server.toml`).
+- NEW: Ki IS the Tensura magicule for a Saiyan (your decision). The race adds +100 flat and +30% capacity and 2% extra regeneration per second once the Ki has awakened; the Saiyan HUD shows it as a Ki bar and Tensura's own magicule bar is hidden for a Saiyan. Everything that spends magicule already spends Ki.
+- NEW: Battle Power with six ranks (Low-Class to Transcendent, 100 to 10,000,000+) from kills, with the anti-farm rules: weak creatures give nothing, repeats are worth less, a daily cap, young creatures give nothing, allies/pets/players give nothing.
+- NEW: Ki Awakening (sneak still 10 s), Ki Blast (`,`) and Rapid Ki Barrage (`-`): server raycasts through the balance law, foes only, no entity spawned. Stamina bar, Saiyan HUD (movable in GUI Move / GUI Size), `/saiyan status`.
+- FIXED: legendary weapons blocked eating and drinking. With a hero weapon in the main hand, right-click now uses food or a drink in the off hand; sneak + right-click still uses the weapon. Setting `consumablesFirst` in `nusmp-heroweapon-server.toml` (default on) restores the old behaviour when off.
+- KEPT: everything else, including `KiSkill`, `db_goku`, the `Race` enum and the questionnaire. REPLACED: nothing.
+- Cost: one lookup per player per tick, one small upkeep per Saiyan per second, at most 4 packets a second per Saiyan; a Ki Blast is 1 raycast + 1 entity query + at most 21 budgeted particles (a Barrage up to 8 of those); nothing spawned. Doc `docs/saiyan.md`.
+- Not seen in a game; Gradle not run locally (CI compiles). The Tensura magicule bar is hidden by layer name (logged in the client log if it does not match). Stages 2 to 8 (flight, sensing, forms, Goku, Ultra Instinct) are not in this release.
+
 ## [3.62.0] — Beast Will arms and wings rebuilt
 - REPLACED (you asked): the arms of all 27 Beast Will forms. They were about 5 units longer than your own arm and hung to the thigh; they now end at hip level like your arm, with a layered sleeve, shoulder guard, elbow guard, trimmed forearm guard, knuckle plates and short curved claws. Weapons moved up with the hand.
 - REPLACED (you asked): the wings of the 8 winged wills. Membrane wings (Dragon, Typhon, Nidhoggr, Apophis, Chimera) are now a thick two-part arm with a wrist knuckle and thumb claw, long curved fingers and skin stretched between them with a scalloped edge, the last skin running back to the waist; the wing tip has its own bone so it flexes. Feather wings (Pegasus, Wind Skimmer, Sphinx) are a curved arm with primaries, secondaries and coverts as flat blades lying in the wing plane, like an angel wing.

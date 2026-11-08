@@ -77,6 +77,7 @@ public final class RaceBuffs {
     /** What the status panel shows: the Tensura race's own name (plus "Devil" when set). */
     public static String displayName(Player p) {
         if (MultiverseProfile.race(p) == Race.DEVIL) return Race.DEVIL.displayName;
+        if (com.newuniverse.nusmp.saiyan.SaiyanStore.isSaiyan(p)) return "Saiyan";                              // 3.63.0: the Saiyan race is a flag of its own, not a Race entry
         return tensuraRace(p).map(i -> i.getDisplayName().getString()).orElse(MultiverseProfile.race(p).displayName);
     }
 

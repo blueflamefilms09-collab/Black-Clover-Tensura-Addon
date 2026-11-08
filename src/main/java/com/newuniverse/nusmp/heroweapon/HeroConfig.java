@@ -14,7 +14,7 @@ public final class HeroConfig {
     public static final ModConfigSpec SPEC;
 
     public static final ModConfigSpec.BooleanValue ENABLED, HOLY_UNIQUE, VASSAL_UNIQUE, HOLY_REJECTS_OTHERS, REPEL_XP, ADOPT_STACKS, SHOW_MESSAGES;
-    public static final ModConfigSpec.BooleanValue CASTING_RELICS_ALLOWED;
+    public static final ModConfigSpec.BooleanValue CASTING_RELICS_ALLOWED, CONSUMABLES_FIRST;
     public static final ModConfigSpec.IntValue MAX_BONDS, REPEL_RADIUS, MAX_LEVEL, SHOCK_SLOW_TICKS, SKILL_GLOBAL_LOCK_TICKS, MIN_COOLDOWN_TICKS, KEY_SPACING_TICKS,
             MAX_KILL_EXP, REPEL_NOTICE_SECONDS;
     public static final ModConfigSpec.BooleanValue BUFF_ENABLED;
@@ -36,6 +36,8 @@ public final class HeroConfig {
                 .define("holyRejectsOthers", true);
         CASTING_RELICS_ALLOWED = b.comment("3.48.1: relics that are not fought with (tomes, wands, staffs, orbs) are never rejected by restriction one, so a Holy Weapon's wielder can still use and learn from them. Off: they count as weapons again (the old behaviour).")
                 .define("castingRelicsAllowed", true);
+        CONSUMABLES_FIRST = b.comment("3.63.0: a hero weapon in the main hand lets the use key go to a food (when hungry) or a potion in the OFF hand, so consumables can be used while holding the Shield, Bow, Sword or Spear. Sneak + use is still the weapon's own gesture. Off: the weapon takes every click (the old behaviour).")
+                .define("consumablesFirst", true);
         REPEL_XP = b.comment("Restriction three: two Holy wielders within repelRadius of each other gain no experience (orbs, kill experience, the weapon's own experience).")
                 .define("repelXp", true);
         REPEL_RADIUS = b.comment("Blocks within which two Holy wielders of the same dimension repel each other's experience.")
@@ -103,6 +105,7 @@ public final class HeroConfig {
 
     public static boolean holyRejectsOthers() { return get(HOLY_REJECTS_OTHERS); }
     public static boolean castingRelicsAllowed() { return get(CASTING_RELICS_ALLOWED); }
+    public static boolean consumablesFirst() { return get(CONSUMABLES_FIRST); }
 
     public static boolean repelXp() { return get(REPEL_XP); }
 

@@ -118,6 +118,7 @@ public class NUSMP {
         com.newuniverse.nusmp.devil.DevilBoot.init(modEventBus, modContainer);                                          // 3.48.0: Devil Contract system: tiers, assimilation key, Devil Union + 24 h cooldown, sacrifices, nusmp-devil-server.toml, the packets, /devil, self-tests devil.*
         com.newuniverse.nusmp.manacore.ManaCoreBoot.init(modEventBus, modContainer);                                    // 3.51.0: the 24 rank Mana Cores (E to SS, standard / beast / ancient), nusmp-manacore-server.toml, /manacore, self-tests manacore.*
         com.newuniverse.nusmp.beastwill.BeastWillBoot.init(modEventBus, modContainer);                                  // 3.45.0: Beast Will (TBATE-inspired): data-driven wills, cores, assimilation, Acquire / Integrate forms, nusmp-beastwill-server.toml, the packets, the events, /beastwill, self-tests beastwill.*
+        com.newuniverse.nusmp.saiyan.SaiyanBoot.init(modEventBus, modContainer);                                        // 3.63.0: Saiyan race (Stage 1): Ki = magicule, stamina, Battle Power, Ki Blast / Barrage, nusmp-saiyan-server.toml, the packets, the events, /saiyan, self-tests saiyan.*
 
         com.newuniverse.nusmp.core.magic.profile.RetiredAttachments.ATTACHMENTS.register(modEventBus);                      // the saved attachments of the removed Celestial Spirit Magic and Requip stay registered (save compatibility)
         com.newuniverse.nusmp.heroweapon.HeroWeaponSystem.init(modEventBus, modContainer);                                  // 1.62.0: the weapons of The Rising of the Shield Hero: Holy, Seven Star and Vassal Weapons (registers its own items, components, attachment and configs)
@@ -210,6 +211,7 @@ public class NUSMP {
             com.newuniverse.nusmp.client.companion.CompanionClient.init(modEventBus, modContainer);                           // companions: the talk screen, the speech bubbles, the sample companion's renderer, nusmp-companions-client.toml
             com.newuniverse.nusmp.client.devil.DevilClient.init(modEventBus, modContainer);                                  // 3.48.0 Devil Contract: the key, the HUD, the Weg layer (markings, horns, wings), the eye shade, nusmp-devil-client.toml
             com.newuniverse.nusmp.client.beastwill.BeastWillClient.init(modEventBus);                                       // 3.45.0 Beast Will: the keys, the HUD panel, the absorption screen
+            com.newuniverse.nusmp.client.saiyan.SaiyanClient.init(modEventBus);                                             // 3.63.0 Saiyan: the two Ki keys, the HUD panel, Ki replacing Tensura's magicule bar
 
             com.newuniverse.nusmp.client.spiritlight.SpiritLightClient.init(modEventBus);        // Spirit of Light: the seraph's spoken-line player (no keys since 3.0.0)
 
