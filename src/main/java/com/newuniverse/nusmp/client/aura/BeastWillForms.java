@@ -15,7 +15,7 @@ import net.minecraft.util.Mth;
  *
  * <p>Cost, per player per frame: nothing beyond 48 blocks (the caller's cull) or for an invisible player. Within 24 blocks and under the per-frame budget ({@link NoelleFormRules#MAX_FULL_PER_FRAME}
  * players) the whole model plus its glow pass; the next {@link NoelleFormRules#MAX_FAR_PER_FRAME} players draw the model without the glow pass; every player over those is not drawn at all (the eyes
- * and motes stay). Biggest will (Typhon): 312 cubes = 1872 quads, so the worst frame (every one of the 10 admitted players wearing Typhon) is 4 * 2 * 1872 (colour + glow pass) + 6 * 1872 = about 26k quads; with a typical will (150 cubes, 900 quads) about 13k. Acquire
+ * and motes stay). Biggest will (Typhon): 384 cubes = 1976 quads, so the worst frame (every one of the 10 admitted players wearing Typhon) is 4 * 2 * 1976 (colour + glow pass) + 6 * 1976 = about 27.7k quads; with a typical will (150 cubes, 900 quads) about 13k. Acquire
  * is the bracer alone: at most 14 cubes. The sets are built once per kind; nothing is allocated per frame.
  */
 public final class BeastWillForms {

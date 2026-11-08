@@ -75,22 +75,25 @@ LEGS = {"digi": ("shadow_panther_will", "ridge_wolf_will", "wind_skimmer_will", 
 
 
 def weapon(c, kind):
+    HY = 1.7                                                          # the hand sits 1.7 higher since 3.62.0 (shorter arm), the weapons follow it
+    wsg = lambda c_, part, p0, p1, *a, **k: sg(c_, part, (p0[0], p0[1] + HY, p0[2]), (p1[0], p1[1] + HY, p1[2]), *a, **k)
+    wcu = lambda c_, part, ctr, *a, **k: cu(c_, part, (ctr[0], ctr[1] + HY, ctr[2]), *a, **k)
     if kind == "fang":
-        sg(c, "armR", (-6, 8.5, -2.4), (-6.4, 1.2, -8.0), 1.8, 1.4, "membrane" if False else "plate", pad=.3)
-        sg(c, "armR", (-6.0, 8.0, -3.0), (-6.2, 3.0, -9.6), 1.2, 1.2, "glow", pad=.2)
+        wsg(c, "armR", (-6, 8.5, -2.4), (-6.4, 1.2, -8.0), 1.8, 1.4, "membrane" if False else "plate", pad=.3)
+        wsg(c, "armR", (-6.0, 8.0, -3.0), (-6.2, 3.0, -9.6), 1.2, 1.2, "glow", pad=.2)
     elif kind == "sword":
-        sg(c, "armR", (-6.2, 8.5, -2.6), (-6.4, 6.0, -12.4), 1.2, 3.0, "plate", pad=.2)
-        sg(c, "armR", (-6.2, 8.5, -2.6), (-6.4, 6.0, -12.4), 0.6, 3.4, "glow", pad=.1)
-        cu(c, "armR", (-6.2, 8.4, -3.0), (4.8, 1.0, 1.0), "gold")
+        wsg(c, "armR", (-6.2, 8.5, -2.6), (-6.4, 6.0, -12.4), 1.2, 3.0, "plate", pad=.2)
+        wsg(c, "armR", (-6.2, 8.5, -2.6), (-6.4, 6.0, -12.4), 0.6, 3.4, "glow", pad=.1)
+        wcu(c, "armR", (-6.2, 8.4, -3.0), (4.8, 1.0, 1.0), "gold")
     elif kind == "twin":
-        for s in (-1, 1): sg(c, "armR" if s < 0 else "armL", (s * 6.0, 8.5, -2.6), (s * 6.4, 5.0, -9.0), 1.4, 1.6, "plate", pad=.3)
+        for s in (-1, 1): wsg(c, "armR" if s < 0 else "armL", (s * 6.0, 8.5, -2.6), (s * 6.4, 5.0, -9.0), 1.4, 1.6, "plate", pad=.3)
     elif kind in ("lance", "staff", "axe"):
-        sg(c, "armR", (-6.2, 9.0, 0.4), (-6.2, 9.0, -14.0), 1.0, 1.0, "gold" if kind == "lance" else "leather", pad=.2)
-        if kind == "lance": sg(c, "armR", (-6.2, 9.0, -14.0), (-6.2, 9.0, -18.6), 1.8, 1.0, "plate", pad=.2)
-        if kind == "axe": cu(c, "armR", (-6.2, 9.0, -13.0), (1.0, 5.6, 4.4), "plate"); cu(c, "armR", (-6.2, 9.0, -14.6), (.8, 4.0, 1.6), "gold")
-        if kind == "staff": cu(c, "armR", (-6.2, 9.0, -14.6), (2.4, 2.4, 2.4), "glow", rot=(45, 0, 45))
+        wsg(c, "armR", (-6.2, 9.0, 0.4), (-6.2, 9.0, -14.0), 1.0, 1.0, "gold" if kind == "lance" else "leather", pad=.2)
+        if kind == "lance": wsg(c, "armR", (-6.2, 9.0, -14.0), (-6.2, 9.0, -18.6), 1.8, 1.0, "plate", pad=.2)
+        if kind == "axe": wcu(c, "armR", (-6.2, 9.0, -13.0), (1.0, 5.6, 4.4), "plate"); wcu(c, "armR", (-6.2, 9.0, -14.6), (.8, 4.0, 1.6), "gold")
+        if kind == "staff": wcu(c, "armR", (-6.2, 9.0, -14.6), (2.4, 2.4, 2.4), "glow", rot=(45, 0, 45))
     elif kind == "fan":
-        for k in range(5): sg(c, "armR", (-6.2, 9.0, -3.0), (-6.2 + (k - 2) * 1.9, 9.0 + 4 - abs(k - 2) * .6, -9.0), 1.6, .6, "cloth" if k % 2 else "belly", pad=.2)
+        for k in range(5): wsg(c, "armR", (-6.2, 9.0, -3.0), (-6.2 + (k - 2) * 1.9, 9.0 + 4 - abs(k - 2) * .6, -9.0), 1.6, .6, "cloth" if k % 2 else "belly", pad=.2)
 
 
 def build(wid):
@@ -174,9 +177,9 @@ def build(wid):
         sc.cur = "root"
     if wid == "fenrir_will":
         for s_ in (-1, 1):
-            sc.def_bone("chain" + ("L" if s_ > 0 else "R"), (s_ * 6.0, 10.0, -1.0), None, [("rot", 0, 9.0, 2, 0.0 if s_ > 0 else .5), ("rot", 2, 5.0, 2, .25)])
+            sc.def_bone("chain" + ("L" if s_ > 0 else "R"), (s_ * 6.0, 11.0, -1.0), None, [("rot", 0, 9.0, 2, 0.0 if s_ > 0 else .5), ("rot", 2, 5.0, 2, .25)])
             sc.cur = "chain" + ("L" if s_ > 0 else "R")
-            for k in range(5): cu(c, "armL" if s_ > 0 else "armR", (s_ * 6.0, 8.2 - k * 2.0, -1.0 + (k % 2) * .4), (1.8 if k % 2 == 0 else .6, 2.2, .6 if k % 2 == 0 else 1.8), "gold", rot=(0, 0, 0))
+            for k in range(5): cu(c, "armL" if s_ > 0 else "armR", (s_ * 6.0, 10.4 - k * 1.7, -1.0 + (k % 2) * .4), (1.8 if k % 2 == 0 else .6, 2.2, .6 if k % 2 == 0 else 1.8), "gold", rot=(0, 0, 0))
             sc.cur = "root"
     # ---- tail, wings, weapon
     if sp["tail"] != "none": tail(c, sp["tail"])

@@ -89,7 +89,7 @@ def export(wid):
     Image.fromarray(gl, "RGBA").save(os.path.join(ROOT, "textures", "entity", key + "_glow.png"), optimize=True)
     shim = Shim(sh)
     parts = []
-    groups["acq"] = [b for b in groups.get("armR", []) if b.c[1] < 14.8]                                    # the ONE piece of the Acquire stage: bracer, paw, claws (and the weapon) of the right forearm
+    groups["acq"] = [b for b in groups.get("armR", []) if b.c[1] < 14.8 and not b.bone.startswith("chain")]                                    # the ONE piece of the Acquire stage: bracer, paw, claws (and the weapon) of the right forearm
     for name in ("head", "body", "armL", "armR", "legL", "legR", "tail", "wings", "acq"):
         boxes = groups.get(name)
         if not boxes: continue
@@ -119,11 +119,15 @@ def export(wid):
                     fwn = min(1.0, max(fw * 3.0 / nT, .12)); fhn = min(1.0, max(fh * 3.0 / nT, .12))
                     fi = {(0, 1): 0, (0, -1): 1, (1, 1): 2, (1, -1): 3, (2, 1): 4, (2, -1): 5}[(ai, sgn)]
                     ox = ((k * 37 + fi * 11) % 9) / 9 * (1 - fwn); oy = ((k * 53 + fi * 7) % 9) / 9 * (1 - fhn)
+                    if b.faces is not None and fi not in b.faces: continue
                     faces[FACE[(ai, sgn)]] = ("t_%s_%d" % (b.mat.name, kk), 3.0, False, (ox, oy, ox + fwn, oy + fhn))
             m.box(b.bone if b.bone != "root" else "root", b.c, b.s, b.R, faces)
         m.save()
         clips = clip_of(sc, bones)
         if clips: G.write_animations(ident, clips)
+        else:                                                              # a stale clip of an earlier export would name bones the model no longer has
+            old = os.path.join(ROOT, "animations", "entity", ident + ".animation.json")
+            if os.path.exists(old): os.remove(old)
         parts.append(name)
     return st, parts, len(sc.boxes)
 

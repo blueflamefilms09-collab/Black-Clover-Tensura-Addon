@@ -82,32 +82,41 @@ def scale_plates(c, mat="plate", n=3):
 
 
 # ====================================================================================================================== arms
-def arm(c, side, pn, upper="body", sleeve="fur", pauldron=True, claws=3, claw_len=2.4, paw="body", bracer=True, tuft=False, spiked=False, fin=False):
+def arm(c, side, pn, upper="body", sleeve="fur", pauldron=True, claws=3, claw_len=2.0, paw="body", bracer=True, tuft=False, spiked=False, fin=False):
+    """3.62.0 arm: the same length as the player's own (shoulder guard at 24.8, hand at 10..13, the claws end near 8.6), a layered sleeve, an elbow guard, a trimmed forearm guard, a hand with knuckles and curved claws.
+    The old (3.61.0) arm was 5 units longer and hung to the thigh."""
     x = side * 6.0
+    o = side
     if pauldron:
-        cu(c, pn, (x, 22.4, 0), (6.8, 2.2, 6.6), "plate")
-        cu(c, pn, (x, 21.0, 0), (6.2, 1.2, 6.0), "leather")
-        cu(c, pn, (x, 23.8, 0), (5.6, 1.4, 5.4), "plate", dt=1)
+        cu(c, pn, (x, 23.4, 0), (6.8, 2.0, 6.4), "plate")
+        cu(c, pn, (x + o * .3, 24.7, 0), (5.6, 1.2, 5.4), "plate", dt=1)
+        cu(c, pn, (x, 21.9, 0), (6.2, 1.0, 5.9), "leather")
         if spiked:
-            sg(c, pn, (x + side * 1.0, 24.4, 0), (x + side * 2.8, 27.8, .2), 1.8, 1.8, "plate", dt=1, pad=.3)
-        cu(c, pn, (x + side * .5, 24.7, -2.4), (1.2, 1.2, .6), "glow", rot=(0, 0, 45))
-    cu(c, pn, (x, 18.0, 0), (5.0, 6.8, 5.0), upper)
-    cu(c, pn, (x, 18.0, -2.55), (3.6, 5.8, .6), "belly")
+            sg(c, pn, (x + o * 1.0, 25.0, 0), (x + o * 2.8, 28.0, .2), 1.8, 1.8, "plate", dt=1, pad=.3)
+        cu(c, pn, (x + o * .5, 25.0, -2.5), (1.2, 1.2, .6), "glow", rot=(0, 0, 45))
+    cu(c, pn, (x, 19.4, 0), (5.0, 4.4, 5.0), upper)                        # upper arm, in three stacked layers
+    cu(c, pn, (x + o * .25, 16.6, 0), (5.2, 2.4, 5.2), upper, dt=-1)
+    cu(c, pn, (x, 19.3, -2.55), (3.4, 3.8, .6), "belly")
+    cu(c, pn, (x + o * 2.2, 20.6, 0), (1.2, 2.0, 3.6), "plate", dt=1, rot=(0, 0, o * 12))   # shoulder plate on the outer side
+    cu(c, pn, (x, 17.2, 2.5), (1.8, 1.8, 1.4), "plate", rot=(0, 0, 45))     # elbow guard
     if tuft:
-        for k in range(3): sg(c, pn, (x + side * 2.4, 19.5 - k * 2, 0), (x + side * 3.6, 16.5 - k * 2.2, .6), 2.0, 1.4, upper if k % 2 else "back", dt=-1)
+        c.sc.def_bone("furA" + pn, (x + o * 2.4, 19.6, 0), None, [("rot", 2, 6 * o, 2, 0.0 if o > 0 else .4), ("rot", 0, 4, 2, .2)])
+        for k in range(3): sg(c, pn, (x + o * 2.4, 19.5 - k * 1.8, 0), (x + o * 3.8, 17.0 - k * 2.0, .6), 2.0, 1.4, upper if k % 2 else "back", dt=-1, bone="furA" + pn)
     if bracer:
-        cu(c, pn, (x, 12.9, 0), (5.2, 4.6, 5.2), "plate")
-        cu(c, pn, (x, 14.5, 0), (5.6, .9, 5.6), "plate", dt=1)
-        cu(c, pn, (x, 11.3, 0), (5.6, .9, 5.6), "leather")
+        cu(c, pn, (x, 14.4, 0), (5.2, 3.6, 5.2), "plate")
+        cu(c, pn, (x, 16.3, 0), (5.6, .8, 5.6), "plate", dt=1)
+        cu(c, pn, (x, 12.5, 0), (5.6, .8, 5.6), "leather")
     else:
-        cu(c, pn, (x, 12.9, 0), (4.8, 4.6, 4.8), upper)
-    cu(c, pn, (x, 9.5, -.2), (4.8, 3.4, 4.8), paw)
+        cu(c, pn, (x, 14.4, 0), (4.8, 3.6, 4.8), upper)
+    cu(c, pn, (x, 11.2, -.1), (4.6, 2.4, 4.6), paw)                          # hand
+    for k in range(2):
+        cu(c, pn, (x + (k - .5) * 2.2, 12.0, -2.5), (1.4, 1.0, .8), "plate", dt=1)   # knuckle plates
     for k in range(claws):
-        o = (k - (claws - 1) / 2)
-        sg(c, pn, (x + o * 1.3, 8.4, -2.2), (x + o * 1.5, 8.4 - claw_len * .8, -3.1 - claw_len * .3), .8, .9, "claw", pad=.3)
-        cu(c, pn, (x + o * 1.55, 8.4 - claw_len * .8 - .6, -3.3 - claw_len * .3), (.6, .8, .6), "claw")
+        q = (k - (claws - 1) / 2)
+        sg(c, pn, (x + q * 1.3, 10.4, -2.0), (x + q * 1.45, 9.2, -3.0), .8, .9, "claw", pad=.3)
+        sg(c, pn, (x + q * 1.45, 9.2, -3.0), (x + q * 1.5, 8.5 - claw_len * .15, -2.7), .55, .6, "claw", pad=.15)
     if fin:
-        for k in range(3): sg(c, pn, (x + side * 2.6, 17.5 - k * 2.6, .4), (x + side * 5.6, 16.0 - k * 2.9, 1.2), 1.0, 2.6, "plate", dt=1 - k % 2, pad=.2)
+        for k in range(3): sg(c, pn, (x + side * 2.6, 17.5 - k * 2.2, .4), (x + side * 5.4, 16.2 - k * 2.4, 1.2), 1.0, 2.2, "plate", dt=1 - k % 2, pad=.2)
 
 
 def leg_straight(c, side, pn, thigh="body", toes=3):
@@ -238,36 +247,7 @@ def tail(c, kind, base=(0, 13.0, 2.6), length=1.0):
 
 
 # ====================================================================================================================== wings
-def wing_membrane(c, side, span=22, rise=14, drop=15, fingers=4, bone_w=1.4, tattered=False, root=(3.4, 21.0, 2.8), name="wing"):
-    s = side; r = V(root[0] * s, root[1], root[2])
-    elbow = r + V(s * span * .38, rise * .6, 4.0)
-    wrist = elbow + V(s * span * .34, rise * .32, 2.2)
-    bn = f"{name}{'L' if s > 0 else 'R'}"
-    c.sc.def_bone(bn, r, None, [("rot", 2, 14 * s, 3, 0.0), ("rot", 0, 3, 3, 0.25)])
-    cn(c, "back", [r, elbow, wrist], [bone_w * 1.5, bone_w * 1.2, bone_w], [bone_w * 1.5, bone_w * 1.2, bone_w], "plate", bone=bn)
-    tips = []
-    for k in range(fingers):
-        t = k / (fingers - 1)
-        tip = wrist + V(s * (span * .3 * (1 - t * .35) - 1.0), (rise * .18) * (1 - t * 1.9) - t * drop * .7, 2.0 + t * 5.0)
-        tips.append(tip)
-        cn(c, "back", [wrist, tip], [bone_w * .8], [bone_w * .8], "plate", bone=bn, pad=.2)
-    # membrane panels between the arm bone, the fingers and the body
-    prev_a, prev_b = r, wrist
-    rng = np.random.default_rng(int(abs(side) * 7 + span))
-    for k, tip in enumerate(tips + [r + V(s * 1.0, -drop * .6, 2.0)]):
-        a0, b0, a1, b1 = prev_a, prev_b, wrist if k < len(tips) else r, tip
-        for j in range(5):
-            u0, u1 = j / 5, (j + 1) / 5
-            p = (a0 * (1 - u0) + b0 * u0, a1 * (1 - u0) + b1 * u0)
-            q = (a0 * (1 - u1) + b0 * u1, a1 * (1 - u1) + b1 * u1)
-            if tattered and rng.random() < .35 and j > 1: continue
-            cen = (p[0] + p[1] + q[0] + q[1]) / 4
-            right = (p[1] - p[0] + q[1] - q[0]) / 2
-            up = (q[0] - p[0] + q[1] - p[1]) / 2
-            cu(c, "back", cen, (max(np.linalg.norm(right), .6) + .4, .45, max(np.linalg.norm(up), .6) + .4), "membrane", rot=_frame(up, V(0, 1, 0)) if False else _plane(right, up), bone=bn, dt=(k + j) % 2)
-        prev_a, prev_b = wrist, tip
-        prev_a = wrist
-    return tips
+SLAB = {2, 3}        # a thin slab only draws its two big faces (a third of the quads)
 
 
 def _plane(right, up):
@@ -276,20 +256,93 @@ def _plane(right, up):
     return np.stack([x, y, z], axis=1)
 
 
-def wing_feather(c, side, n=9, span=20, root=(3.4, 21.0, 2.8), layers=3, name="wing"):
-    s = side; r = V(root[0] * s, root[1], root[2]); bn = f"{name}{'L' if s > 0 else 'R'}"
+def _fan(c, O, A, B, bone, mat="membrane", cell=5.6, depth=.2, tattered=None, k0=0):
+    """fills the triangle O, A, B with thin slabs in rows from O; the far edge is scalloped (cut in towards O between A and B), so a wing reads as stretched skin between its fingers"""
+    O, A, B = V(*O), V(*A), V(*B)
+    nu = max(2, int(round(max(np.linalg.norm(A - O), np.linalg.norm(B - O)) / cell)))
+    nv = max(1, int(round(np.linalg.norm(B - A) / cell)))
+    P = lambda u, v: O + u * ((A * (1 - v) + B * v) - O)
+    for i in range(nu):
+        for j in range(nv):
+            u0, u1, v0, v1 = i / nu, (i + 1) / nu, j / nv, (j + 1) / nv
+            vm = (v0 + v1) / 2
+            umax = 1.0 - depth * math.sin(math.pi * vm)
+            if (u0 + u1) / 2 > umax + .02: continue
+            u1 = min(u1, umax)
+            if u1 - u0 < .06: continue
+            if tattered is not None and u1 > .55 and tattered.random() < .35: continue
+            cen = (P(u0, v0) + P(u0, v1) + P(u1, v0) + P(u1, v1)) / 4
+            right = (P(u0, v1) - P(u0, v0) + P(u1, v1) - P(u1, v0)) / 2
+            up = (P(u1, v0) - P(u0, v0) + P(u1, v1) - P(u0, v1)) / 2
+            cu(c, "back", cen, (max(float(np.linalg.norm(right)), .6) + .5, .45, max(float(np.linalg.norm(up)), .6) + .5), mat, rot=_plane(right, up), bone=bone, dt=-1 if (i + j) % 3 == 0 else 0, faces=SLAB)
+
+
+def wing_membrane(c, side, span=22, rise=14, drop=15, fingers=4, bone_w=1.4, tattered=False, root=(3.4, 21.0, 2.8), name="wing"):
+    """3.62.0 bat / dragon wing: a thick two-part arm rising up and out from the shoulder blade, a wrist knuckle with a thumb claw, long curved fingers fanned downward, skin stretched between them with a scalloped
+    edge, and the last skin running back to the waist. The outer half (fingers and skin between them) has its own bone, so the wing tip flexes."""
+    s = side; r = V(root[0] * s, root[1], root[2]); k1 = span / 22.0; k2 = rise / 14.0
+    bn = f"{name}{'L' if s > 0 else 'R'}"; tb = f"{name}tip{'L' if s > 0 else 'R'}"
+    elbow = r + V(s * 8.0 * k1, 7.0 * k2, 3.0)
+    wrist = elbow + V(s * 7.0 * k1, 9.0 * k2, 2.0)
     c.sc.def_bone(bn, r, None, [("rot", 2, 12 * s, 3, 0.0), ("rot", 0, 3, 3, 0.25)])
-    A = [r, r + V(s * 5, 5, 2.2), r + V(s * 11, 9, 3.4)]
-    cn(c, "back", A, [2.4, 2.0], [2.4, 2.0], "body", bone=bn)
-    for L in range(layers):
-        for i in range(n):
-            t = i / (n - 1)
-            a = math.radians(-38 + t * 100)
-            base = A[0] * (1 - t) + A[2] * t + V(0, -.6 * L, .5 * L)
-            ln = (8 + 12 * t) * (1 - L * .26) * (span / 20.0)
-            tip = base + V(s * math.cos(a) * ln, math.sin(a) * ln, 2.6 + L * .6)
-            sg(c, "back", base, tip, 2.8 - L * .3, .8, "plate" if (i + L) % 2 else "feather", bone=bn, dt=(i % 3) - 1 + (L > 1), pad=.4)
-            sg(c, "back", base + (tip - base) * .15, tip, .6, 1.0, "feather2", bone=bn, pad=.1)
+    c.sc.def_bone(tb, wrist, bn, [("rot", 2, 7 * s, 3, 0.16), ("rot", 0, 3, 3, 0.4)])
+    cn(c, "back", [r, elbow], [bone_w * 1.9], [bone_w * 1.9], "plate", bone=bn, pad=.4)
+    cn(c, "back", [elbow, wrist], [bone_w * 1.5], [bone_w * 1.5], "plate", bone=tb, pad=.4)
+    cu(c, "back", elbow, (bone_w * 2.3,) * 3, "plate", dt=1, bone=bn)
+    cu(c, "back", wrist, (bone_w * 2.0,) * 3, "plate", dt=1, bone=tb)
+    sg(c, "back", wrist, wrist + V(s * 1.2 * k1, 4.2 * k2, -.8), bone_w * 1.1, bone_w * 1.1, "claw", bone=tb, pad=.2)          # thumb claw
+    n = fingers
+    phis = [math.radians(a) for a in ([-6, 26, 62] if n == 3 else [-8, 20, 50, 80])]
+    lens = ([15, 17, 13] if n == 3 else [17, 19, 17, 13])
+    tips = []
+    for k in range(n):
+        d = V(s * math.cos(phis[k]), -math.sin(phis[k]), 0)
+        L = lens[k] * k1 if phis[k] < 0.9 else lens[k] * (k1 + k2) / 2
+        tip = wrist + d * L + V(0, 0, 1.6 + k * 1.1)
+        mid = wrist + d * L * .5 + V(0, 1.6 * (1 - k / max(n - 1, 1)) + .4, .8 + k * .5)
+        tips.append(tip)
+        cn(c, "back", [wrist, mid, tip], taper(bone_w * 1.1, bone_w * .5, 3), taper(bone_w * 1.1, bone_w * .5, 3), "plate", bone=tb, pad=.35)
+        sg(c, "back", tip, tip + d * 1.8 + V(0, -.6, .4), bone_w * .6, bone_w * .6, "claw", bone=tb, pad=.1)
+    rng = np.random.default_rng(int(abs(side) * 7 + span)) if tattered else None
+    hip = V(s * 1.6, 13.0, 3.2)
+    for k in range(n - 1): _fan(c, wrist, tips[k], tips[k + 1], tb, depth=.2, tattered=rng, k0=k)
+    _fan(c, wrist, tips[-1], hip, bn, depth=.16, tattered=rng, k0=n)
+    _fan(c, wrist, hip, r + V(s * .4, -.6, .3), bn, depth=.0, tattered=None, k0=n + 1)
+    return tips
+
+
+def wing_feather(c, side, n=9, span=20, root=(3.4, 21.0, 2.8), layers=3, name="wing"):
+    """3.62.0 feathered wing: a curved arm along the leading edge, long primaries fanned from the wrist, a row of secondaries along the forearm, and short coverts on top. Every feather is a flat blade lying in the wing plane."""
+    s = side; r = V(root[0] * s, root[1], root[2]); k = span / 20.0
+    bn = f"{name}{'L' if s > 0 else 'R'}"; tb = f"{name}tip{'L' if s > 0 else 'R'}"
+    elbow = r + V(s * 6.0 * k, 6.5 * k, 2.2)
+    wrist = r + V(s * 12.5 * k, 14.0 * k, 4.2)
+    c.sc.def_bone(bn, r, None, [("rot", 2, 10 * s, 3, 0.0), ("rot", 0, 3, 3, 0.25)])
+    c.sc.def_bone(tb, wrist, bn, [("rot", 2, 8 * s, 3, 0.16), ("rot", 0, 3, 3, 0.4)])
+    cn(c, "back", [r, elbow], [2.6], [2.6], "body", bone=bn, pad=.4)
+    cn(c, "back", [elbow, wrist], [2.1], [2.1], "body", bone=tb, pad=.4)
+    cu(c, "back", wrist, (2.6, 2.6, 2.6), "gold", dt=1, bone=tb)
+    arm_pt = lambda t: (r * (1 - t / .5) + elbow * (t / .5)) if t < .5 else (elbow * (1 - (t - .5) / .5) + wrist * ((t - .5) / .5))
+    k_ = 0
+
+    def feather(t, phi, ln, w, mat, lift, bone, dt):
+        base = arm_pt(t) + V(0, 0, lift)
+        d = V(s * math.cos(math.radians(phi)), -math.sin(math.radians(phi)), 0)
+        tip = base + d * ln + V(0, 0, 1.5 + ln * .12)
+        return sg(c, "back", base, tip, w, .55, mat, up=(0, 0, 1), bone=bone, dt=dt, pad=.4, faces=SLAB), base, tip
+    prim = [14, 17, 19, 19, 17, 14, 11]
+    for i, ln in enumerate(prim):                                           # primaries, outermost first
+        _, b0, tp = feather(1.0 - .01 * i, 6 + i * 9.0, ln * k, 2.7, "feather", .3 * i, tb, (i % 3) - 1)
+        if i % 2 == 0: sg(c, "back", b0 + (tp - b0) * .12 + V(0, 0, .35), tp + V(0, 0, .35), .55, .45, "feather2", up=(0, 0, 1), bone=tb, pad=.1, faces=SLAB)
+    sec = [14, 14, 13, 13, 12, 11, 10, 9]
+    for i, ln in enumerate(sec):                                           # secondaries along the forearm and upper arm
+        t = .9 - i * .105
+        feather(t, 66 + i * 2.6, ln * k, 3.0, "feather", .5 + .2 * i, tb if t > .5 else bn, (i % 3) - 1)
+    for i, ln in enumerate(prim[:6]):                                      # coverts: short feathers over the roots of the long ones
+        feather(1.0 - .01 * i - .05, 6 + i * 9.0, ln * k * .45, 2.6, "plate", .9 + .3 * i, tb, 1 - (i % 3))
+    for i in range(6):
+        t = .88 - i * .13
+        feather(t, 68 + i * 3, sec[i] * k * .4, 2.8, "plate", 1.3 + .2 * i, tb if t > .5 else bn, 1 - (i % 3))
 
 
 # ====================================================================================================================== mane / crest

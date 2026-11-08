@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 /**
  * Why (3.61.0): the 3D cube forms of the 27 Beast Wills are generated files (tools/beastwill/remake/forms_export.py), and a model that is missing or outside its texture would silently draw nothing
  * (or a logged warning on every reload). This reads the real files and pins: the table has exactly the 27 stems of {@code BeastWillLook.STEM}; every listed piece has its geo file, every piece with a
- * bone has its animation, the shared sheet and its glow map exist at the size the geo declares; every cube's uv lies inside the sheet; the cost is bounded (a will has at most 320 cubes, the Acquire
+ * bone has its animation, the shared sheet and its glow map exist at the size the geo declares; every cube's uv lies inside the sheet; the cost is bounded (a will has at most 400 cubes and 2000 quads, the Acquire
  * piece at most 16); the body, head, both arms and both legs exist for every will; and the painter and the switch are wired. Pure (file reads); the working directory is the project root.
  */
 class BeastWillFormsTest {
@@ -43,7 +43,7 @@ class BeastWillFormsTest {
             File sheet = RES.resolve("textures/entity/" + key + ".png").toFile(), glow = RES.resolve("textures/entity/" + key + "_glow.png").toFile();
             assertTrue(sheet.exists() && glow.exists(), key + " sheet or glow missing");
             BufferedImage img = javax.imageio.ImageIO.read(sheet);
-            int total = 0;
+            int total = 0, quads = 0;
             for (String piece : BeastWillFormTable.parts(stem).split(" ")) {
                 Path geo = RES.resolve("geo/entity/" + key + "_arm_" + piece + ".geo.json");
                 assertTrue(Files.exists(geo), geo + " missing");
@@ -51,7 +51,7 @@ class BeastWillFormsTest {
                 JsonObject d = g.getAsJsonObject("description");
                 assertEquals(img.getWidth(), d.get("texture_width").getAsInt(), key + " " + piece);
                 assertEquals(img.getHeight(), d.get("texture_height").getAsInt(), key + " " + piece);
-                int cubes = 0;
+                int cubes = 0, pq = 0;
                 boolean bones = false;
                 for (JsonElement be : g.getAsJsonArray("bones")) {
                     JsonObject b = be.getAsJsonObject();
@@ -59,6 +59,7 @@ class BeastWillFormsTest {
                     JsonArray cs = b.has("cubes") ? b.getAsJsonArray("cubes") : new JsonArray();
                     for (JsonElement ce : cs) {
                         cubes++;
+                        pq += ce.getAsJsonObject().getAsJsonObject("uv").size();
                         for (var f : ce.getAsJsonObject().getAsJsonObject("uv").entrySet()) {
                             JsonArray uv = f.getValue().getAsJsonObject().getAsJsonArray("uv"), sz = f.getValue().getAsJsonObject().getAsJsonArray("uv_size");
                             double x0 = uv.get(0).getAsDouble(), y0 = uv.get(1).getAsDouble(), x1 = x0 + sz.get(0).getAsDouble(), y1 = y0 + sz.get(1).getAsDouble();
@@ -68,10 +69,11 @@ class BeastWillFormsTest {
                 }
                 assertTrue(cubes > 0, key + " " + piece + " is empty");
                 if (piece.equals("acq")) assertTrue(cubes <= 16, key + ": the Acquire piece is " + cubes + " cubes");
-                else total += cubes;
+                else { total += cubes; quads += pq; }
                 if (bones) assertTrue(Files.exists(RES.resolve("animations/entity/" + key + "_arm_" + piece + ".animation.json")), key + " " + piece + " has bones but no animation");
             }
-            assertTrue(total <= 320, key + " has " + total + " cubes (cap 320)");
+            assertTrue(total <= 400, key + " has " + total + " cubes (cap 400)");
+            assertTrue(quads <= 2000, key + " has " + quads + " quads (cap 2000)");
         }
     }
 

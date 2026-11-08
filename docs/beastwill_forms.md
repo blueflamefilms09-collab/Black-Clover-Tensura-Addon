@@ -1,4 +1,4 @@
-# Beast Will forms: 3D cube bodies (3.61.0)
+# Beast Will forms: 3D cube bodies (3.61.0, arms and wings rebuilt in 3.62.0)
 
 The 3.60.0 spirits were flat painted sprites behind the player. In 3.61.0 each of the 27 Beast Wills is a real 3D model made of many small, angled, layered cubes
 (Minecraft-detailed: stepped and angled horns, tails and tentacles, layered fur and feathers, plated armour with trim, glowing eyes and gems). Flat shapes stay
@@ -17,6 +17,12 @@ Breathing chest and cloth; swaying tail (three nested bones, so it whips from th
 Typhon, Yamata no Orochi and Scylla & Charybdis sway on their own necks; Kraken's tentacles; the floating island of Hafgufa bobs; Fenrir's chains swing; the Flame Serpent's tail flame pulses.
 All motion is a few degrees of rotation (tested to stay under 40 degrees, scale within 20 percent).
 
+## Arms and wings (3.62.0)
+- Arms end at hip level like the player's own arm (the claws stop about 3.5 units below the wrist); the hand, claws and weapons moved up by 1.7. Acquire is still the forearm guard, hand and claws (at most 16 cubes).
+- Membrane wings: arm bone, elbow and wrist knuckles, thumb claw, curved fingers, skin as thin slabs with a scalloped trailing edge; the outer half has its own bone (`wingtipL/R`).
+- Feather wings: curved arm, primaries, secondaries, two rows of coverts; every feather is a flat blade in the wing plane.
+- Thin slabs (skin, feathers) write only their two big faces. Caps per will: 400 cubes and 2000 quads (tested).
+
 ## Settings
 - Client `beastwill.flatSpirits` (default off): draws the flat 3.60.0 sprites instead. `beastwill.classicSpirits` still draws the old animal spirits.
 
@@ -27,7 +33,7 @@ All motion is a few degrees of rotation (tested to stay under 40 degrees, scale 
 
 ## Worst-case cost
 Server: nothing, this is client drawing only. Client per player per frame: nothing beyond 48 blocks or when invisible; within 24 blocks and the per-frame budget (4 players) the whole model with a glow pass,
-the next 6 players the model without glow, the rest nothing. Biggest will (Typhon): 318 cubes = 1908 quads; worst frame (10 admitted players all in Typhon) is about 4 x 2 x 1908 + 6 x 1908 = 26.7k quads; a typical will (150 cubes, 900 quads) about 13k.
+the next 6 players the model without glow, the rest nothing. Biggest will (Typhon): 384 cubes = 1976 quads; worst frame (10 admitted players all in Typhon) is about 4 x 2 x 1976 + 6 x 1976 = 27.7k quads; a typical will (150 cubes, 900 quads) about 13k.
 The Acquire piece is at most 16 cubes. Sets are built once per kind, no per-frame allocation. Animation is sampled from the clip, no extra packets.
 
 ## Not seen in a game

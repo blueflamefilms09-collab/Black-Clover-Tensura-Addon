@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.62.0] — Beast Will arms and wings rebuilt
+- REPLACED (you asked): the arms of all 27 Beast Will forms. They were about 5 units longer than your own arm and hung to the thigh; they now end at hip level like your arm, with a layered sleeve, shoulder guard, elbow guard, trimmed forearm guard, knuckle plates and short curved claws. Weapons moved up with the hand.
+- REPLACED (you asked): the wings of the 8 winged wills. Membrane wings (Dragon, Typhon, Nidhoggr, Apophis, Chimera) are now a thick two-part arm with a wrist knuckle and thumb claw, long curved fingers and skin stretched between them with a scalloped edge, the last skin running back to the waist; the wing tip has its own bone so it flexes. Feather wings (Pegasus, Wind Skimmer, Sphinx) are a curved arm with primaries, secondaries and coverts as flat blades lying in the wing plane, like an angel wing.
+- NEW: thin wing skin and feathers only draw their two big faces (a third of the quads), so the wings cost less per cube. The per-will cap is now 400 cubes and 2000 quads (was 320 cubes). Typhon is the biggest at 1976 quads.
+- KEPT: everything else of 3.61.0 (heads, bodies, legs, tails, animations, the `flatSpirits` switch).
+- Not seen in a game; previews come from a software renderer. Gradle not run locally.
+
 ## [3.61.0] — Beast Will forms rebuilt as real 3D cube bodies, with idle animation
 - REPLACED (you asked): the in-game look of all 27 Beast Wills. The flat sprites are now detailed 3D models made of many small, angled, layered cubes, worn on your head, body, arms and legs, with a tail and wings where the beast has them. Acquire still shows only the forearm bracer with claws.
 - NEW: idle animation on every form: breathing, swaying tails (three bones), flapping wings, twitching ears, swaying manes, extra heads on their own necks (Cerberus, Hydra, Typhon, Yamata no Orochi, Scylla & Charybdis), Kraken tentacles, Hafgufa's bobbing island, Fenrir's swinging chains, the Flame Serpent's flickering tail flame.
