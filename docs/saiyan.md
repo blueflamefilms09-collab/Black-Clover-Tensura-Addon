@@ -172,7 +172,8 @@ Not in this release (by your instruction or by design): the Great Ape / Golden G
 
 ## Caveats (honest, 3.65.0)
 - Nothing was seen in a game and Gradle was not run locally; CI is the compile and the smoke test.
-- The flight speeds and the server-side speed check are heuristics: a very laggy server could produce a false violation (the flight simply ends and can be started again). `speedScale` in `[saiyan.flight]` raises the allowed speed.
+- The flight speeds and the server-side speed check are heuristics: a very laggy server could produce a false violation (the flight simply ends and can be started again). `speedScale` in `[saiyan.flight]` raises the allowed speed. The check reads the distance moved in a second, so a teleport or an ender pearl in mid-flight also ends the flight ("too fast"); start it again.
+- Switching between two forms with the next / previous keys while transformed skips the cool-down between forms (the Ki price of the new form is still paid); entering a form from Base obeys it.
 - The Goku awakening needs Battle Power 100,000 by default, which takes real play; every number is a server setting and `/saiyan ultimate` lets an operator grant it.
 - Super Saiyan 4 Limit Breaker has no natural unlock yet (operator flag only).
 - The radar is a HUD panel, not markers in the world.

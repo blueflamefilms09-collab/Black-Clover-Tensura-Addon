@@ -142,12 +142,12 @@ public final class SaiyanStage2SelfTests {
             s.zenkaiAt = -1;
             s.zenkaiDay = -1;
             s.zenkaiToday = 0;
-            r.nearDeathAt = now - 1000;
+            r.nearDeathAt = Math.max(0L, now - 1000);
             r.lastDamaged = now - 1000;
             p.setHealth(p.getMaxHealth());
             SaiyanCombat.second(p, s, r, now);
             if (s.zenkai != 1 || !(s.battlePower > bp)) return Result.fail("a recovered near-death gave no Zenkai");
-            r.nearDeathAt = now - 1000;
+            r.nearDeathAt = Math.max(0L, now - 1000);
             SaiyanCombat.second(p, s, r, now);
             if (s.zenkai != 1) return Result.fail("a second Zenkai came inside the cool-down");
             if (SaiyanCombat.kindOf(p.damageSources().magic()) != SaiyanCombatRules.Kind.MAGIC || SaiyanCombat.kindOf(p.damageSources().inFire()) != SaiyanCombatRules.Kind.FIRE) return Result.fail("the damage kinds are not told apart");

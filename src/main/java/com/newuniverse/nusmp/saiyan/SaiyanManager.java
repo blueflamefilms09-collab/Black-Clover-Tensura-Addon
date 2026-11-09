@@ -283,6 +283,7 @@ public final class SaiyanManager {
         }
         long now = p.level().getGameTime();
         s.clampClock(now, 24000);
+        SaiyanAttributes.clearForm(p);          // the run was just dropped, so no form is active: a change of dimension must not leave its speed behind
         Run r = runOf(p);
         if (SaiyanFlight.release(p)) r.safeFallUntil = now + 100;          // a change of dimension ends the flight: the fall is safe
         if (SaiyanConfig.enabled()) {
