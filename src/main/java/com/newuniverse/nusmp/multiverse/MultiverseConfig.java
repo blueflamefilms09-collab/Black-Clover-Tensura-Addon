@@ -30,6 +30,9 @@ public final class MultiverseConfig {
     public static final ModConfigSpec.BooleanValue MISSION_STARS;
     public static final ModConfigSpec.IntValue MISSION_TASK, MISSION_GOAL, MISSION_CHALLENGE;
     public static final ModConfigSpec.ConfigValue<java.util.List<? extends String>> MISSION_EXCLUDE;
+    /** 3.68.0: the Mission Board, conduct (black stars) and the Star Awards Festival. */
+    public static final ModConfigSpec.BooleanValue BOARD_ENABLED, CONDUCT_ENABLED, AWARDS_ENABLED;
+    public static final ModConfigSpec.IntValue BOARD_PER_DAY, BOARD_MINUTES, BOARD_REWARD_PERCENT, CONDUCT_VILLAGER, CONDUCT_SQUADMATE, CONDUCT_COOLDOWN, AWARDS_DAYS, AWARDS_FIRST, AWARDS_SECOND, AWARDS_THIRD;
     // squads
     public static final ModConfigSpec.ConfigValue<String> SQUAD_MIN_RANK_CREATE, SQUAD_MIN_RANK_JOIN;
     public static final ModConfigSpec.IntValue SQUAD_MAX_SIZE;
@@ -89,6 +92,28 @@ public final class MultiverseConfig {
         MISSION_CHALLENGE = b.comment("Gold stars for a mission shown as a challenge.").defineInRange("starsChallenge", 5, 0, 100);
         MISSION_EXCLUDE = b.comment("Advancement paths (or folders, with a trailing slash) that give no stars, e.g. \"magic/\" or \"root\".")
                 .defineListAllowEmpty("exclude", List.of("root"), () -> "", o -> o instanceof String);
+        b.pop();
+
+        b.push("board");
+        BOARD_ENABLED = b.comment("3.68.0: the Magic Knight Mission Board (/multiverse mission): three offers a day, scaled to your rank; kills count by themselves; gold stars as the reward.").define("enabled", true);
+        BOARD_PER_DAY = b.comment("Missions one knight can finish per day (a day is 20 real minutes).").defineInRange("perDay", 5, 1, 100);
+        BOARD_MINUTES = b.comment("Real minutes a taken mission lasts.").defineInRange("minutes", 30, 1, 1440);
+        BOARD_REWARD_PERCENT = b.comment("Reward scale in percent (100 = one gold star per few kills, see docs/magic_knights.md).").defineInRange("rewardPercent", 100, 0, 1000);
+        b.pop();
+
+        b.push("conduct");
+        CONDUCT_ENABLED = b.comment("3.68.0: black stars for conduct unbecoming a Magic Knight.").define("enabled", true);
+        CONDUCT_VILLAGER = b.comment("Black stars for killing a villager or a wandering trader.").defineInRange("villagerBlackStars", 1, 0, 100);
+        CONDUCT_SQUADMATE = b.comment("Black stars for killing a member of your own squad.").defineInRange("squadmateBlackStars", 2, 0, 100);
+        CONDUCT_COOLDOWN = b.comment("Seconds between two black stars of this kind for one player (stops a pile-up).").defineInRange("cooldownSeconds", 60, 0, 86400);
+        b.pop();
+
+        b.push("awards");
+        AWARDS_ENABLED = b.comment("3.68.0: the Star Awards Festival: every N in-game days the standings are announced and the top three squads' online members get gold stars.").define("enabled", true);
+        AWARDS_DAYS = b.comment("In-game days between two festivals (24000 ticks each).").defineInRange("days", 28, 1, 3650);
+        AWARDS_FIRST = b.comment("Gold stars for each online member of the first squad.").defineInRange("first", 5, 0, 1000);
+        AWARDS_SECOND = b.defineInRange("second", 3, 0, 1000);
+        AWARDS_THIRD = b.defineInRange("third", 1, 0, 1000);
         b.pop();
 
         b.push("squads");

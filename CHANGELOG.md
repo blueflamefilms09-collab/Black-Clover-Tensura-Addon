@@ -1,5 +1,15 @@
 # Changelog
 
+## [3.68.0] — Magic Knight system: Mission Board, conduct, Star Awards Festival, the nine squad styles
+- NEW: **Mission Board** `/multiverse mission` (`take <1-3>`, `status`, `abandon`): three offers a day scaled to your rank (hostile creatures, undead, arthropods, raiders); your kills count by themselves; finishing pays gold stars. One at a time, 30 minutes, 5 a day, no penalty for abandoning.
+- NEW: **Conduct**: a killed villager or trader gives 1 black star, a killed squadmate 2, at most once a minute.
+- NEW: **Star Awards Festival**: every 28 in-game days the standings are announced and the online members of the top three squads get 5 / 3 / 1 gold stars (`/multiverse squad awards` holds one at once, admin).
+- NEW: **Squad styles**: `/multiverse squad style <style>` gives a squad the name, colour, captain and line of one of the nine squads of the anime (Golden Dawn, Silver Eagle, Crimson Lion Kings, Blue Rose Maidens, Black Bull, Aqua Deer, Green Praying Mantis, Purple Orca, Coral Peacock). Cosmetic.
+- Server settings in `nusmp-multiverse-server.toml`, groups `[board]`, `[conduct]`, `[awards]` (each has an `enabled` switch).
+- Cost: no tick work; one event per creature a player kills; the festival check every 10 seconds. Tests `KnightSystemRulesTest`, `KnightSystemSourceScanTest`, smoke keys `knights.rules` and `knights.player`. Doc `docs/magic_knights.md`.
+- REPLACED: nothing. KEPT: ranks, stars, squads, the Wizard King, the ceremony, mission stars from advancements.
+- Not seen in a game; Gradle not run locally (CI compiles). The wiki pages could not be fetched (hosts blocked), so the squad facts come from search summaries (see the doc). Not in this release: the Entrance Exam, squad hideouts, captain powers, a graphical board, offline festival payouts.
+
 ## [3.67.0] — Gold stars from missions, automatically
 - NEW: finishing a **mission** (any `nusmp:` advancement shown in the advancement tree, i.e. the questline) now gives **gold stars** by itself: a task 1, a goal 2, a challenge 5. Each mission pays **once per player** (a revoked and re-earned mission pays nothing). The stars go through the same path as the admin command, so the social-class bonus, grimoire mastery, squad score, automatic promotion (one class per 10 net stars) and the Wizard King count all follow.
 - Server settings in `nusmp-multiverse-server.toml`, group `[missions]`: `enabled`, `starsTask`, `starsGoal`, `starsChallenge` (each 0..100) and `exclude` (advancement paths, or folders with a trailing `/`; `root` by default).

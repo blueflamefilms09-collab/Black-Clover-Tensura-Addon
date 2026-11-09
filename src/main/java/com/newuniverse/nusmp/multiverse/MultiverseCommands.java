@@ -297,6 +297,17 @@ public final class MultiverseCommands {
                             return ok(ctx, "Ceremony eligibility flag: " + v);
                         })))));
 
+        // ---------------------------------------------------------------- mission board (3.68.0)
+        root.then(Commands.literal("mission")
+                .executes(ctx -> { for (Component c : MissionBoard.list(ctx.getSource().getPlayerOrException())) ctx.getSource().sendSuccess(() -> c, false); return 1; })
+                .then(Commands.literal("take").then(Commands.argument("slot", IntegerArgumentType.integer(1, MissionBoardRules.OFFERS)).executes(ctx -> {
+                    Component c = MissionBoard.take(ctx.getSource().getPlayerOrException(), IntegerArgumentType.getInteger(ctx, "slot"));
+                    ctx.getSource().sendSuccess(() -> c, false);
+                    return 1;
+                })))
+                .then(Commands.literal("status").executes(ctx -> { for (Component c : MissionBoard.status(ctx.getSource().getPlayerOrException())) ctx.getSource().sendSuccess(() -> c, false); return 1; }))
+                .then(Commands.literal("abandon").executes(ctx -> { Component c = MissionBoard.abandon(ctx.getSource().getPlayerOrException()); ctx.getSource().sendSuccess(() -> c, false); return 1; })));
+
         // ---------------------------------------------------------------- squads
         root.then(Commands.literal("squad")
                 .then(Commands.literal("create").then(Commands.argument("name", StringArgumentType.greedyString()).executes(ctx -> {
@@ -326,6 +337,10 @@ public final class MultiverseCommands {
                     }
                     return all.size();
                 }))
+                .then(Commands.literal("style").then(Commands.argument("style", StringArgumentType.word())
+                        .suggests((c, bl) -> { for (SquadStyle st : SquadStyle.values()) bl.suggest(st.id()); return bl.buildFuture(); })
+                        .executes(ctx -> { Squads.setStyle(ctx.getSource().getPlayerOrException(), StringArgumentType.getString(ctx, "style")); return 1; })))
+                .then(Commands.literal("awards").requires(MultiverseCommands::admin).executes(ctx -> { StarAwards.hold(ctx.getSource().getServer()); return 1; }))
                 .then(Commands.literal("setcaptain").then(Commands.argument("player", EntityArgument.player()).executes(ctx -> {
                     Squads.setCaptain(ctx.getSource().getPlayerOrException(), EntityArgument.getPlayer(ctx, "player"));
                     return 1;

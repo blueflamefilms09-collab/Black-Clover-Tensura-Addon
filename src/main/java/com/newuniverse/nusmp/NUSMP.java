@@ -334,6 +334,10 @@ public class NUSMP {
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.multiverse.Squads::onPlayerTick);
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.multiverse.MissionStars::onAdvancement);
         com.newuniverse.nusmp.multiverse.MissionStarsSelfTests.register();
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.multiverse.MissionBoard::onDeath);
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.multiverse.KnightConduct::onDeath);
+        NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.multiverse.StarAwards::onTick);
+        com.newuniverse.nusmp.multiverse.KnightSystemSelfTests.register();
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.wizard.WizardLibrary::onServerTick);             // 1.11.0: the flying books
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.wizard.WizardLibrary::onBreak);
         NeoForge.EVENT_BUS.addListener(com.newuniverse.nusmp.wizard.WizardLibrary::onJoin);                   // 3.59.1: no duplicate Tower Wizard, no stale library books from a save

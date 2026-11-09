@@ -122,6 +122,7 @@ public final class Squads {
             String name = "";
             int color = 0xFFD4AF37;
             UUID vice;
+            String style = "";
             final Map<UUID, int[]> lastStars = new HashMap<>();    // member -> {gold, black}
         }
 
@@ -139,6 +140,7 @@ public final class Squads {
                 s.name = c.getString("Name");
                 s.color = c.contains("Color") ? c.getInt("Color") : s.color;
                 if (c.hasUUID("Vice")) s.vice = c.getUUID("Vice");
+                s.style = c.getString("Style");
                 CompoundTag stars = c.getCompound("Stars");
                 for (String m : stars.getAllKeys()) {
                     try { s.lastStars.put(UUID.fromString(m), stars.getIntArray(m)); } catch (IllegalArgumentException ignored) {}
@@ -155,6 +157,7 @@ public final class Squads {
                 c.putString("Name", s.name);
                 c.putInt("Color", s.color);
                 if (s.vice != null) c.putUUID("Vice", s.vice);
+                c.putString("Style", s.style);
                 CompoundTag stars = new CompoundTag();
                 s.lastStars.forEach((m, v) -> stars.putIntArray(m.toString(), v));
                 c.put("Stars", stars);
@@ -288,6 +291,20 @@ public final class Squads {
         MultiverseSync.markDirty(target);
     }
 
+    /** 3.68.0: the captain gives the squad the look of one of the nine squads of the anime (name, colour, captain; cosmetic). */
+    public static void setStyle(ServerPlayer p, String id) {
+        if (!available()) { p.sendSystemMessage(REQUIRES_FTB); return; }
+        Optional<Membership> m = membership(p);
+        if (m.isEmpty() || !p.getUUID().equals(Ftb.owner(m.get().team))) { fail(p, "Only the captain can choose the squad's style."); return; }
+        SquadStyle st = SquadStyle.byId(id);
+        if (st == null) { fail(p, "Unknown style. Choose one of: " + java.util.Arrays.stream(SquadStyle.values()).map(SquadStyle::id).collect(java.util.stream.Collectors.joining(", ")) + "."); return; }
+        m.get().squad.style = st.id();
+        m.get().squad.color = 0xFF000000 | st.color;
+        Data.get(p.getServer()).setDirty();
+        p.sendSystemMessage(Component.literal(m.get().squad.name + " now carries the " + st.display + " style (" + st.captain + "'s squad). " + st.blurb).withStyle(ChatFormatting.GOLD));
+        MultiverseSync.markDirty(p);
+    }
+
     public static List<Component> info(ServerPlayer p) {
         List<Component> out = new ArrayList<>();
         if (!available()) { out.add(REQUIRES_FTB); return out; }
@@ -298,6 +315,8 @@ public final class Squads {
         int score = score(server, m.get().teamId, s);
         int place = 1;
         for (Standing st : standings(server)) { if (st.teamId().equals(m.get().teamId)) break; place++; }
+        SquadStyle styled = SquadStyle.byId(s.style);
+        if (styled != null) out.add(Component.literal(" Style: " + styled.display + " (" + styled.captain + ") - " + styled.blurb).withStyle(ChatFormatting.DARK_AQUA));
         out.add(Component.literal(s.name).withStyle(ChatFormatting.GOLD, ChatFormatting.BOLD)
                 .append(Component.literal("  score " + score + ", standing #" + place).withStyle(ChatFormatting.WHITE)));
         for (UUID id : Ftb.members(m.get().team)) {

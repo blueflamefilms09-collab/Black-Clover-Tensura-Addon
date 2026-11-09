@@ -111,6 +111,15 @@ public final class MultiverseProfile {
 
     public static final int MAX_MISSIONS = 4096;
 
+    /** A small named record inside the profile (the Mission Board state, the conduct clock); empty when never written. */
+    public static CompoundTag section(Player p, String name) { return read(p).getCompound(name).copy(); }
+
+    public static void putSection(ServerPlayer p, String name, CompoundTag t) {
+        CompoundTag all = read(p);
+        if (t == null || t.isEmpty()) all.remove(name); else all.put(name, t);
+        write(p, all);
+    }
+
     // ---------------------------------------------------------------- class & race
     public static SocialClass socialClass(Player p) {
         SocialClass c = SocialClass.byName(read(p).getString("Social"));
