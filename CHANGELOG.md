@@ -1,5 +1,16 @@
 # Changelog
 
+## [3.69.0] — Saiyan look: battle armour, flame aura, glowing eyes, fur and tail, and a big charge-up (no hair)
+- NEW: **Saiyan battle armour** forged onto the body when a form starts and shattered when it ends: white breastplate with a navy lower lame and a gold crest, stepped shoulder pads, gloves and boots with gold bands, gold hip guards that sway, a scouter with a glowing lens over the left eye, and cyan energy seams that take the colour of the form. Real 3D pieces (9 models with glow maps, 89 cubes in all), the same engine as the Flame armour.
+- NEW: **Aura**: tall flame tongues in two rings round the body, a soft column of the form's colour behind them, a slow ring on the ground, and lightning in the stronger forms (Super Saiyan 2 and 3, Blue and Ultra Instinct upgrades, Limit Breaker). Glowing eyes in the form's colour, drawn only when the face turns to the camera.
+- NEW: **Super Saiyan 4 forms** get red (or pink for the Limit Breaker) fur over the body and a swaying tail instead of the armour.
+- NEW: **Charge-up** when a form starts (46 ticks, bigger for the stronger forms): rocks lift off the ground, streaks of energy are pulled into the chest, cracks spread over the ground, then a flash, a column of light shoots up and two shockwave rings run out. The aura grows in with it.
+- **Hair is not drawn** (on hold at your request); the hair maths stays in `tools/saiyan_look_parked/`.
+- Client settings in `nusmp-saiyan-look-client.toml`, group `[saiyan]`: `looks` (false restores the old plain particles), `armour`, `chargeUp`, `fullDetail`. Looks only; the server never reads them.
+- Cost: the server sends one small packet a second per transformed Saiyan to the players who can see them (none for a Saiyan with no form). On a client a Saiyan in full detail draws under 190 quads at the busiest moment of the charge-up plus the nine armour pieces; beyond 32 blocks the light version (about a fifth), beyond 64 blocks nothing. No allocation per frame. Tests `SaiyanLookTest`, `SaiyanLookSourceScanTest`, smoke key `saiyan.look.rules`. Doc `docs/saiyan.md`.
+- REPLACED: nothing (before this a transformed Saiyan only had a few server particles, which are kept). KEPT: every form, rule and number.
+- Not seen in a game; Gradle not run locally (CI compiles). The previews are mockups, not the game's renderer. Not in this release: hair, new sounds, God Bind, Dragon Fist, Giant Avatar (next).
+
 ## [3.68.0] — Magic Knight system: Mission Board, conduct, Star Awards Festival, the nine squad styles
 - NEW: **Mission Board** `/multiverse mission` (`take <1-3>`, `status`, `abandon`): three offers a day scaled to your rank (hostile creatures, undead, arthropods, raiders); your kills count by themselves; finishing pays gold stars. One at a time, 30 minutes, 5 a day, no penalty for abandoning.
 - NEW: **Conduct**: a killed villager or trader gives 1 black star, a killed squadmate 2, at most once a minute.

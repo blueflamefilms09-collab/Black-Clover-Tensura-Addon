@@ -1,5 +1,7 @@
 package com.newuniverse.nusmp.saiyan;
 
+import com.newuniverse.nusmp.aura.Aura;
+import com.newuniverse.nusmp.aura.PlayerAuras;
 import com.newuniverse.nusmp.particle.fx.Fx;
 import com.newuniverse.nusmp.particle.fx.FxOld;
 import com.newuniverse.nusmp.particle.fx.FxSlot;
@@ -136,6 +138,7 @@ final class SaiyanFormEngine {
         var level = p.serverLevel();
         Fx.sprayTinted(level, FxThemes.WORLD, FxSlot.SPARK, f.rgb() & 0xFFFFFF, 1.2f, p.getX(), p.getY() + 1.0, p.getZ(), 14, 0.5, 0.9, 0.5, 0.12);
         level.playSound(null, p.getX(), p.getY(), p.getZ(), SoundEvents.BEACON_ACTIVATE, SoundSource.PLAYERS, 0.6f, 1.3f);
+        lookOn(p, f);
         return true;
     }
 
@@ -148,9 +151,23 @@ final class SaiyanFormEngine {
         r.dirty = true;
         if (f == null) return;
         r.formReadyAt = now + f.cooldown();
+        lookEnd(p, f);
         msg(p, why, f, true);
         p.serverLevel().playSound(null, p.getX(), p.getY(), p.getZ(), SoundEvents.BEACON_DEACTIVATE, SoundSource.PLAYERS, 0.5f, 1.4f);
     }
+
+    /** 3.69.0: tells the players who can see this Saiyan which form it wears (the client draws the look; a lease of 3 s, renewed once a second while the form lasts). */
+    static void lookOn(ServerPlayer p, SaiyanForms.Form f) {
+        if (p.connection != null) PlayerAuras.set(p, Aura.SAIYAN, LOOK_LEASE, SaiyanForms.code(f.id()));
+    }
+
+    /** Shortens the lease to the length of the armour's shatter, so the look ends with the form (the same style keeps the client's clock). */
+    static void lookEnd(ServerPlayer p, SaiyanForms.Form f) {
+        if (f != null && p.connection != null) PlayerAuras.set(p, Aura.SAIYAN, LOOK_SHATTER, SaiyanForms.code(f.id()));
+    }
+
+    /** Ticks a look lease lasts, and ticks it lasts once the form is over (the armour shatters in the last 18). */
+    static final int LOOK_LEASE = 60, LOOK_SHATTER = 18;
 
     /** The silent version for death, logout and race removal (the attributes are cleared by the caller). */
     static void reset(SaiyanManager.Run r) {
@@ -219,6 +236,7 @@ final class SaiyanFormEngine {
     static void aura(ServerPlayer p, SaiyanManager.Run r) {
         SaiyanForms.Form f = active(r);
         if (f == null) return;
+        if ((p.tickCount % 20) == 0) lookOn(p, f);
         Fx.sprayTinted(p.serverLevel(), FxThemes.WORLD, FxSlot.MOTE, f.rgb() & 0xFFFFFF, 1.0f, p.getX(), p.getY() + 1.0, p.getZ(), 3, 0.35, 0.8, 0.35, 0.02);
         if (f.aura() == SaiyanForms.Aura.ELECTRIC) Fx.spray(p.serverLevel(), FxThemes.WORLD, FxOld.ELECTRIC_SPARK, p.getX(), p.getY() + 1.0, p.getZ(), 2, 0.4, 0.8, 0.4, 0.05);
     }

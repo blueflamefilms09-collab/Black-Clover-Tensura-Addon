@@ -134,6 +134,7 @@ public final class SaiyanManager {
     /** Everything that is switched on and needs the system: the flight, the forms, the charge, the radar and the suppression stop (the system was disabled, or the race was taken away). */
     private static void stopActive(ServerPlayer p, Run r, long now) {
         if (r.flying) SaiyanFlight.stop(p, r, now);
+        SaiyanFormEngine.lookEnd(p, SaiyanFormEngine.active(r));
         SaiyanFormEngine.reset(r);
         GokuAbilities.cancel(r);
         SaiyanTechniques.cancel(r);

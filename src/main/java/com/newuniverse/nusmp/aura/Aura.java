@@ -100,5 +100,7 @@ public enum Aura {
     /** Spirit Dive remake: Fuegoleon's flaming right arm while the Salamander is his; the style is book.FuegoleonArmRules.STYLE (client.aura.FuegoleonArmAura; also drawn in first person by client.aura.FireArmFirstPerson) */
     FUEGOLEON_ARM,
     /** 3.45.0 Beast Will: the subtle (Acquire) or full (Integrate) manifestation of a bound will; the style packs the phase and the will's tint (beastwill.BeastWillManager.style; client.aura.BeastWillAura) */
-    BEAST_WILL
+    BEAST_WILL,
+    /** 3.69.0 Saiyan: the look of a transformed Saiyan (eyes, flame aura, battle armour, SS4 fur and tail, the charge-up); the style is SaiyanForms.code(form) (client.aura.SaiyanAura) */
+    SAIYAN
 }

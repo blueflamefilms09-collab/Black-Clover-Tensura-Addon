@@ -27,5 +27,6 @@ public final class SaiyanBoot {
         SaiyanSelfTests.register();
         SaiyanStage2SelfTests.register();
         SaiyanTechSelfTests.register();
+        SaiyanLookSelfTests.register();
     }
 }
