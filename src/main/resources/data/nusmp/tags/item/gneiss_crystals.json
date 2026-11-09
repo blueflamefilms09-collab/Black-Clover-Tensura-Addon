@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "nusmp:gneiss_crystal",
+    { "id": "tensura:gneiss_crystal", "required": false },
+    { "id": "tensura_lower:gneiss_crystal", "required": false }
+  ]
+}
