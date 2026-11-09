@@ -55,7 +55,7 @@ class SaiyanSourceScanTest {
         for (String f : files()) {
             String c = code(f);
             assertFalse(Pattern.compile("static\\s+(?:final\\s+|volatile\\s+)*(?:ServerPlayer|Player|FakePlayer)\\s+\\w+").matcher(c).find(), f + " has a static player");
-            assertFalse(Pattern.compile("static\\s+[^;=(]*Map<(?!UUID)[^>]*,").matcher(c).find(), f + " has a static map that is not keyed by UUID");
+            assertFalse(Pattern.compile("static\\s+[^;=(]*Map<(?!UUID)(?![^;=(]*ModConfigSpec)[^;=(]*>\\s*\\w+\\s*[=;]").matcher(c).find(), f + " has a static map that is not keyed by UUID (a table of config values is fine)");
         }
     }
 
@@ -120,5 +120,93 @@ class SaiyanSourceScanTest {
         for (String k : keys) assertTrue(lang.contains("\"" + k + "\""), "the language file lacks " + k);
         Matcher say = Pattern.compile("say\\(p, \"([a-z_]+)\"").matcher(code("SaiyanAbilities.java"));
         while (say.find()) assertTrue(lang.contains("\"nusmp.saiyan.msg." + say.group(1) + "\""), "the language file lacks the message " + say.group(1));
+    }
+
+    // ------------------------------------------------------------------ 3.65.0: Stage 2, the Goku path and the forms
+    @Test
+    void theStage2PureClassesNameNoGameType() throws IOException {
+        for (String f : List.of("SaiyanForms.java", "SaiyanUltimates.java", "GokuRules.java", "SaiyanFlightRules.java", "SaiyanSenseRules.java", "SaiyanCombatRules.java", "SaiyanTraining.java")) {
+            assertFalse(Pattern.compile("(?m)^import (net\\.minecraft|net\\.neoforged|io\\.github|com\\.mojang)").matcher(code(f)).find(), f + " must stay pure (it is unit tested without a game)");
+        }
+    }
+
+    @Test
+    void particlesOnlyGoThroughTheFxFacade() throws IOException {
+        for (String f : files()) {
+            if (f.equals("SaiyanSelfTests.java") || f.equals("SaiyanStage2SelfTests.java")) continue;
+            String c = code(f);
+            assertFalse(c.contains("sendParticles(") || c.contains("ParticleTypes."), f + " draws particles outside the budgeted Fx facade");
+        }
+    }
+
+    @Test
+    void flightTakesBackOnlyWhatItGaveAndTheSpeedIsCheckedOnTheServer() throws IOException {
+        String c = code("SaiyanFlight.java");
+        assertTrue(c.contains("MARK = \"nusmp_saiyan_flight\"") && c.contains("d.getBoolean(MARK)") && c.contains("d.remove(MARK)"), "the flight we give is marked and only a marked flight is taken back");
+        assertTrue(c.contains("p.isCreative() || p.isSpectator()"), "creative and spectator flight is never taken away");
+        assertTrue(c.contains("SaiyanFlightRules.speedOk("), "the server checks the speed of the flight");
+        assertTrue(c.contains("onUpdateAbilities"), "the client is told when the ability changes");
+        assertTrue(code("SaiyanManager.java").contains("SaiyanFlight.release"), "a logout, a death and a removed race give the ability back");
+    }
+
+    @Test
+    void theRadarHasAServerWideBudgetAndABoundedList() throws IOException {
+        String c = code("SaiyanSenses.java");
+        assertTrue(c.contains("SCANS_PER_TICK") && c.contains("MAX_CANDIDATES") && c.contains("getEntitiesOfClass("), "one bounded query, at most a few per tick on the whole server");
+        assertTrue(c.contains("now - r.lastPing < 40"), "a radar acts once every two seconds");
+        assertTrue(c.contains("SaiyanSenseRules.MAX_ENTRIES"), "the list sent to the client is bounded");
+    }
+
+    @Test
+    void theDodgeCanNeverPassTheHardCapAndCostsAStaminaAndACooldown() throws IOException {
+        String c = code("SaiyanCombat.java");
+        assertTrue(c.contains("SaiyanCombatRules.capped(") && c.contains("SaiyanCombatRules.budgetOk(") && c.contains("reflexReadyAt"), "a dodge has a cap, a budget per window and a cool-down");
+        String r = code("SaiyanCombatRules.java");
+        assertTrue(r.contains("HARD_DODGE_CAP = 0.75"), "no source can dodge more than three blows in four");
+    }
+
+    @Test
+    void theKamehamehaAndTheComboAreRaycastsAndOneQueryEach() throws IOException {
+        String c = code("GokuAbilities.java");
+        assertTrue(c.contains("level.clip(") && c.contains("getEntitiesOfClass("), "a beam is one raycast and one entity query");
+        assertTrue(c.contains("MAX_CANDIDATES") && c.contains("MAX_BEAM_PARTICLES"), "the candidates and the beam particles are bounded");
+        assertTrue(c.contains("SaiyanAbilities.allowed("), "the beam and the combo only hit foes the rules allow");
+        assertTrue(c.contains("SaiyanAbilities.hurt(") && c.contains("SaiyanAbilities.hurtBlow("), "damage goes through the balance law");
+    }
+
+    @Test
+    void theFormTableIsTheOnlyPlaceAFormIsDefinedAndTheEngineKnowsNoForm() throws IOException {
+        String e = code("SaiyanFormEngine.java");
+        for (SaiyanForms.Form f : SaiyanForms.ALL) assertFalse(e.contains("\"" + f.id() + "\""), "the engine must not name the form " + f.id() + ": a new form is a new row of the table");
+        assertTrue(code("SaiyanConfig.java").contains("for (SaiyanForms.Form f : SaiyanForms.ALL)"), "every form gets its server settings from the table");
+    }
+
+    @Test
+    void everyStage2TextKeyIsInTheLanguageFile() throws IOException {
+        String lang = Files.readString(ROOT.resolve("src/main/resources/assets/nusmp/lang/en_us.json"), StandardCharsets.UTF_8);
+        List<String> keys = new ArrayList<>();
+        for (SaiyanForms.Form f : SaiyanForms.ALL) keys.add(f.key());
+        for (SaiyanFlightRules.Tier t : SaiyanFlightRules.Tier.values()) keys.add(t.key());
+        for (SaiyanSenseRules.Tier t : SaiyanSenseRules.Tier.values()) keys.add(t.key());
+        for (SaiyanUltimates.Ultimate u : SaiyanUltimates.ALL) {
+            keys.add(u.nameKey());
+            keys.add(u.epithetKey());
+        }
+        Pattern lit = Pattern.compile("(?:say\\(p, |msg\\(p, |deactivate\\(p, s, r, now, )\"([a-z_0-9]+)\"");
+        Pattern direct = Pattern.compile("translatable\\(\"(nusmp\\.[a-z_0-9.]*[a-z_0-9])\"");
+        for (String f : files()) {
+            if (f.equals("SaiyanSelfTests.java") || f.equals("SaiyanStage2SelfTests.java")) continue;
+            String c = code(f);
+            Matcher m = lit.matcher(c);
+            while (m.find()) keys.add("nusmp.saiyan.msg." + m.group(1));
+            Matcher d = direct.matcher(c);
+            while (d.find()) keys.add(d.group(1));
+        }
+        Matcher h = Pattern.compile("\\bt\\(\"([a-z_0-9]+)\"").matcher(Files.readString(ROOT.resolve("src/main/java/com/newuniverse/nusmp/client/saiyan/SaiyanClient.java")));
+        while (h.find()) keys.add("nusmp.saiyan.hud." + h.group(1));
+        Matcher k = Pattern.compile("new KeyMapping\\(\"(key\\.nusmp\\.saiyan_[a-z_]+)\"").matcher(Files.readString(ROOT.resolve("src/main/java/com/newuniverse/nusmp/client/saiyan/SaiyanClient.java")));
+        while (k.find()) keys.add(k.group(1));
+        assertTrue(keys.size() > 40, "the scan found the keys it should");
+        for (String key : keys) assertTrue(lang.contains("\"" + key + "\""), "the language file lacks " + key);
     }
 }

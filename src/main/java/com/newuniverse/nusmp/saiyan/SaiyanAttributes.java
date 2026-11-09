@@ -20,7 +20,17 @@ public final class SaiyanAttributes {
 
     private static ResourceLocation id(String name) { return ResourceLocation.fromNamespaceAndPath("nusmp", "saiyan/" + name); }
 
-    private static final ResourceLocation SPEED = id("speed"), ATTACK_SPEED = id("attack_speed"), JUMP = id("jump"), KNOCKBACK = id("knockback"), KI_CAPACITY = id("ki_capacity"), KI_BASE = id("ki_base");
+    private static final ResourceLocation SPEED = id("speed"), ATTACK_SPEED = id("attack_speed"), JUMP = id("jump"), KNOCKBACK = id("knockback"), KI_CAPACITY = id("ki_capacity"), KI_BASE = id("ki_base"),
+            FORM_SPEED = id("form_speed"), FORM_ATTACK_SPEED = id("form_attack_speed");
+
+    /** A form's movement and attack-speed change (3.65.0; negative = slower, as Super Saiyan 3). Replaces the last one; both are transient and removed by {@link #clear}. */
+    public static void applyForm(ServerPlayer p, double speed, double attackSpeed) {
+        set(p, Attributes.MOVEMENT_SPEED, FORM_SPEED, Math.max(-0.9, Math.min(1.0, speed)), AttributeModifier.Operation.ADD_MULTIPLIED_BASE);
+        set(p, Attributes.ATTACK_SPEED, FORM_ATTACK_SPEED, Math.max(-0.9, Math.min(1.0, attackSpeed)), AttributeModifier.Operation.ADD_MULTIPLIED_BASE);
+    }
+
+    /** Takes a form's modifiers off. */
+    public static void clearForm(ServerPlayer p) { applyForm(p, 0.0, 0.0); }
 
     /** Puts the modifiers for these bonuses on the player, replacing the old ones only where the value changed. {@code kiBase} is the flat Ki every Saiyan has (the spec's "Ki capacity 100"). */
     public static void apply(ServerPlayer p, SaiyanRules.Table t, double kiBase) {
@@ -40,11 +50,13 @@ public final class SaiyanAttributes {
         set(p, Attributes.KNOCKBACK_RESISTANCE, KNOCKBACK, 0.0, AttributeModifier.Operation.ADD_VALUE);
         set(p, TensuraAttributes.MAX_MAGICULE, KI_BASE, 0.0, AttributeModifier.Operation.ADD_VALUE);
         set(p, TensuraAttributes.MAX_MAGICULE, KI_CAPACITY, 0.0, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);
+        clearForm(p);
     }
 
     /** True while any modifier of the system is on the player (the self-test reads it). */
     public static boolean any(ServerPlayer p) {
-        return has(p, Attributes.MOVEMENT_SPEED, SPEED) || has(p, Attributes.ATTACK_SPEED, ATTACK_SPEED) || has(p, Attributes.JUMP_STRENGTH, JUMP)
+        return has(p, Attributes.MOVEMENT_SPEED, FORM_SPEED) || has(p, Attributes.ATTACK_SPEED, FORM_ATTACK_SPEED)
+                || has(p, Attributes.MOVEMENT_SPEED, SPEED) || has(p, Attributes.ATTACK_SPEED, ATTACK_SPEED) || has(p, Attributes.JUMP_STRENGTH, JUMP)
                 || has(p, Attributes.KNOCKBACK_RESISTANCE, KNOCKBACK) || has(p, TensuraAttributes.MAX_MAGICULE, KI_CAPACITY) || has(p, TensuraAttributes.MAX_MAGICULE, KI_BASE);
     }
 
@@ -57,7 +69,7 @@ public final class SaiyanAttributes {
         AttributeInstance inst = p.getAttribute(attribute);
         if (inst == null) return;
         AttributeModifier now = inst.getModifier(id);
-        if (!(amount > 1.0e-6)) {
+        if (!(Math.abs(amount) > 1.0e-6)) {
             if (now != null) inst.removeModifier(id);
             return;
         }

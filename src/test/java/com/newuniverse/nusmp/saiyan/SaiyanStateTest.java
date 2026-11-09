@@ -1,5 +1,8 @@
 package com.newuniverse.nusmp.saiyan;
 
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.StringTag;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -85,5 +88,69 @@ class SaiyanStateTest {
         SaiyanState c = SaiyanTag.fromTag(bad);
         assertEquals(SaiyanRules.START_BP, c.battlePower, 1e-9);
         assertTrue(c.stamina <= 1.0e9);
+    }
+
+    @Test
+    void theStage2FieldsRoundTripAndAJunkSaveIsClamped() {
+        SaiyanState s = new SaiyanState();
+        s.saiyan = true;
+        s.uses.put("flight", 77);
+        s.zenkai = 3;
+        s.zenkaiAt = 5000;
+        s.zenkaiDay = 4;
+        s.zenkaiToday = 1;
+        s.ultimate = SaiyanUltimates.GOKU;
+        s.hardMartialKills = 2;
+        s.trialKills = 4;
+        s.training.put("ki", 12.5);
+        s.formMastery.put("super_saiyan", 0.4);
+        s.unlocked.add("super_saiyan");
+        s.flags.add("limit_breaker");
+        s.selectedForm = "super_saiyan";
+        s.strain = 33.0;
+        s.formSecondsToday = 120.0;
+        SaiyanState b = SaiyanTag.fromTag(SaiyanTag.toTag(s));
+        assertEquals(77, b.uses("flight"));
+        assertEquals(3, b.zenkai);
+        assertEquals(5000, b.zenkaiAt);
+        assertEquals(SaiyanUltimates.GOKU, b.ultimate);
+        assertEquals(2, b.hardMartialKills);
+        assertEquals(4, b.trialKills);
+        assertEquals(12.5, b.training.get("ki"), 1e-9);
+        assertEquals(0.4, b.mastery("super_saiyan"), 1e-9);
+        assertTrue(b.unlocked.contains("super_saiyan") && b.flags.contains("limit_breaker"));
+        assertEquals("super_saiyan", b.selectedForm);
+        assertEquals(33.0, b.strain, 1e-9);
+        assertEquals(120.0, b.formSecondsToday, 1e-9);
+
+        CompoundTag junk = SaiyanTag.toTag(s);
+        ListTag bad = new ListTag();
+        bad.add(StringTag.valueOf("nonsense_form"));
+        bad.add(StringTag.valueOf("super_saiyan"));
+        junk.put("unlocked", bad);
+        junk.putString("ultimate", "nope");
+        junk.putString("selected", "nonsense_form");
+        junk.putDouble("strain", 9999.0);
+        junk.putInt("zenkai", -5);
+        SaiyanState c = SaiyanTag.fromTag(junk);
+        assertEquals(1, c.unlocked.size());
+        assertEquals("", c.ultimate);
+        assertEquals("", c.selectedForm);
+        assertEquals(100.0, c.strain, 1e-9);
+        assertEquals(0, c.zenkai);
+    }
+
+    @Test
+    void aVersionOneSaveLoadsWithTheNewFieldsEmpty() {
+        CompoundTag v1 = new CompoundTag();
+        v1.putInt("v", 1);
+        v1.putBoolean("saiyan", true);
+        v1.putDouble("bp", 2500.0);
+        SaiyanState s = SaiyanTag.fromTag(v1);
+        assertTrue(s.saiyan);
+        assertEquals(2500.0, s.battlePower, 1e-9);
+        assertTrue(s.unlocked.isEmpty() && s.flags.isEmpty() && s.uses.isEmpty());
+        assertEquals("", s.ultimate);
+        assertEquals(0, s.zenkai);
     }
 }

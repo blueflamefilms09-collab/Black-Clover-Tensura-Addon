@@ -22,6 +22,7 @@ public final class SaiyanEvents {
         bus.addListener(SaiyanEvents::onDimension);
         bus.addListener(SaiyanEvents::onDeath);
         bus.addListener(SaiyanManager::onIncomingDamage);
+        bus.addListener(SaiyanFlight::onFall);
         bus.addListener((ServerStoppingEvent e) -> SaiyanManager.clearAll());
     }
 
@@ -38,6 +39,6 @@ public final class SaiyanEvents {
     /** A Saiyan died (the body goes) and/or a Saiyan killed something (Battle Power, under the anti-farm rules). */
     static void onDeath(LivingDeathEvent e) {
         if (e.getEntity() instanceof ServerPlayer p) SaiyanManager.onDeath(p);
-        if (e.getSource().getEntity() instanceof ServerPlayer killer) SaiyanManager.creditKill(killer, e.getEntity());
+        if (e.getSource().getEntity() instanceof ServerPlayer killer) SaiyanManager.creditKill(killer, e.getEntity(), e.getSource());
     }
 }

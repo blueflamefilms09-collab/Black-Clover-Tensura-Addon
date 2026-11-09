@@ -1,8 +1,8 @@
-# Saiyan race — Stage 1: Foundation (3.63.0)
+# Saiyan race — Stage 1 Foundation (3.63.0) and Stage 2 Combat, Goku and the form roster (3.65.0)
 
-Source of the design: the PDF "Saiyan Race System – The Warrior's Ascension" and the text copy you sent. This release is **Stage 1 only** of the eight-stage roadmap
-(1 Foundation, 2 Combat, 3 Transformation framework, 4 Basic transformations, 5 Ultimate awakening and Goku, 6 Advanced forms, 7 Ultra Instinct, 8 Polish).
-Nothing in Stages 2–8 is in this release.
+Source of the design: the PDF "Saiyan Race System – The Warrior's Ascension" and the text copy you sent, and (3.65.0) your chart "All Saiyan Forms of Goku".
+3.63.0 was **Stage 1** of the eight-stage roadmap (1 Foundation, 2 Combat, 3 Transformation framework, 4 Basic transformations, 5 Ultimate awakening and Goku, 6 Advanced forms, 7 Ultra Instinct, 8 Polish).
+3.65.0 builds Stage 2 (combat) and a data-driven version of Stages 3–7 (the form engine, Goku, the 16-form roster including Ultra Instinct) on top of it; the part that is Stage 1 is described first and unchanged. See **Stage 2 and the Goku path (3.65.0)** below. Stage 8 (polish: models, hair, sounds, animations) is not in this release.
 
 ## What a Saiyan is in this build
 A Saiyan is a **flag on the player** (`/saiyan race <player> on`), not an entry of the `Race` enum, so the questionnaire, the race pool and every existing `switch` over races stay untouched.
@@ -100,5 +100,80 @@ Frieza and other non-Saiyan lines stay **separate racial evolutions**, not Saiya
 - Balance numbers are starting values (the spec's table, a log-scale growth, a 1%-per-kill gain, a 10% daily cap).
 - The Ki attacks are raycasts, not projectile entities, so they hit instantly and cannot be dodged by moving; this is the price of costing nothing to spawn or clean up.
 
-## Open decision
-The mod already has `KiSkill` and a `db_goku` content set. They are kept untouched. Say whether the Saiyan Stage 5 Goku path should replace them, wrap them, or live next to them.
+## Decision on `KiSkill` / `db_goku` (answered in 3.65.0)
+The old open question "replace, wrap or live next to?" is decided: **live next to**. `KiSkill` and the `db_goku` content stay registered and untouched (rule 2). The Saiyan Goku path is a separate Ultimate Skill, **Son Goku, King of Martial Arts**, in `SaiyanUltimates`, restricted to Saiyans, and every higher form that needs it checks that Ultimate, never `db_goku`.
+
+# Stage 2 and the Goku path (3.65.0)
+
+Everything below is server-decided; the client sends one byte (an action number) and draws what the server sends. The action numbers are range-checked, rate-limited (one per 4 ticks; the Kamehameha release is never rate-limited so a charge can always be let go) and the sender must be a real server player who is a Saiyan.
+
+## Keys (all rebindable, category "Saiyan")
+`,` Ki Blast · `-` Rapid Ki Barrage · `G` Ki Flight on/off · Left Alt Master burst flight · Insert Saiyan Senses (radar) · Home Ki Suppression · End Rock-Scissors-Paper (press to start, press again for each part) · Delete **hold** Kamehameha (release to fire) · `` ` `` form on/off · Page Up / Page Down next / previous form. The defaults avoid every key this mod already uses; rebind in Options → Controls.
+
+## Ki Flight (five tiers)
+Novice (hover only, at most `hoverSeconds` = 10 s), Apprentice, Adept, Expert, Master. A tier is earned by seconds spent really moving in flight (120 / 600 / 1800 / 5400 s, all in `[saiyan.flight]`). Each tier is faster and cheaper per second than the last; Master adds a **burst** (Left Alt: a dash of `burstSpeed` blocks per tick, with a Ki and stamina price and a cooldown).
+How it works without cheating the server: the Saiyan is given the creative flight ability for as long as the flight lasts and it is taken back afterwards (only what we gave, marked `nusmp_saiyan_flight`; creative and spectator players are never touched). Each second the server compares the distance moved with the tier's allowed speed (`SaiyanFlightRules.speedOk`); a violation ends the flight (no teleport back). Touching the ground for three seconds ends it; Ki is paid every second; running out of Ki ends it; fall damage is cancelled while flying and for five seconds after it ends, so running dry in the air is not a death sentence. Flight ends on logout, death, dimension change and when the race is removed.
+
+## Saiyan Senses (16 / 32 / 64 / 128 blocks) and Ki Suppression
+Insert pays a little Ki and turns on a radar for `durationSeconds` (10 s). Tier = number of sensings (Beginner 16 blocks, Intermediate after 30, Advanced after 150, Master after 500 = 128 blocks). The radar is a 64×64 panel inside the existing Saiyan HUD (forward is up), at most 32 dots, coloured by kind (creature, player, boss) and sized by power signature. Home toggles **Ki Suppression**: a small Ki cost per second, and a suppressed Saiyan does not show on another Saiyan's radar. It does **not** change what mobs notice.
+Cost: one entity query per sensing player every 2 s, at most 4 radar queries server-wide per tick, ≤ 64 candidates examined, ≤ 32 entries (~7 bytes each) in one packet every 2 s.
+
+## Warrior's Reflex, Battle Adaptation, Zenkai
+- **Warrior's Reflex:** an automatic dodge of a blow with an attacker. Chance 3% → 15% with rank (`reflexBase`, `reflexMax`), a cooldown (2 s), a stamina price, at most 3 dodges per 20 s window, and a hard cap of 75% from any source (including the Ultra Instinct dodges). A dodge cancels the damage event and plays a spark.
+- **Battle Adaptation:** the more times one kind of damage (melee, projectile, fire, explosion, magic) hits you inside one fight, the less it hurts, up to 15% after 10 hits; the memory is gone after 600 ticks without damage.
+- **Zenkai:** a blow that leaves you under 20% health, from a foe at least half your Battle Power, marks a near-death; if you then recover to 60% health unhurt for five seconds you gain a permanent Battle Power share (5%, divided by 1 + 0.25 × Zenkai so far), at most one per game day and 24000 ticks apart. `/saiyan zenkai <player>` (operators) gives one.
+- **Training:** hits on worthy foes (not on weak ones) fill four daily-capped meters — physical, Ki, martial, divine — that the form unlock rules read. Weak creatures give nothing.
+
+## Son Goku, King of Martial Arts (Ultimate Skill)
+The registry `SaiyanUltimates` is a table: an Ultimate has an id, a race restriction, awakening needs and a trial; the Goku entry is `Race.SAIYAN`-only, so Frieza and the other lines stay **separate racial evolutions**, not Saiyan Ultimates; a later Ultimate is a new row.
+**Awakening needs** (all in `[saiyan.goku]`): Battle Power 100,000; 5 universal techniques mastered (Blast, Barrage, Flight, Senses, Suppression); Adept flight; Intermediate senses; 1 challenging foe beaten with martial arts; 1 Zenkai; the **Trial of the Martial King** (10 martial victories over foes at least 75% of your power). It is checked every 5 s; when it is met you get a title, a message and a short effect. An operator can give or remove it: `/saiyan ultimate <player> goku|none`.
+**Kamehameha** (hold Delete): charging takes `kamehamehaChargeSeconds` (6 s; mastery of the technique cuts it by up to 40%) and pays Ki every second; a release before 10 ticks fizzles. The release fires one beam: a quick shot does 35% of the damage, 40% of the range, a narrow width and passes through one foe; a full charge does 100% damage, the whole range, 2 blocks of width and passes through up to eight foes, with more knockback (none on bosses) and a Ki price from 40% to 100% of `kamehamehaCostPercent`. One raycast (blocks stop it, no block is touched) + one entity query (≤ 64 candidates) + ≤ 57 budgeted particles per release; damage goes through the balance law and the active form's factor.
+**Rock, Scissors 'N' Paper** (End): a three-part timed combo. **Rock** is a direct punch with a short lunge (one foe, reach 4.5), **Scissors** a fast precision strike (one foe, reach 5, 70% damage), **Paper** an open-palm shockwave that throws everything in front of it (up to 8 foes, 80% damage, 130% of that when all three were chained). Each part is one press of the key, inside 30 ticks of the last part and not sooner than 6 ticks after it (the inputs are timed; an early press is ignored); a late press starts a new Rock. Each part costs Ki and stamina; one entity query per part; the blows go through the balance law as the Saiyan's own attack (so they count as martial hits for the kill rules). A new combo cannot start for 40 ticks after Paper.
+
+## The form roster (data-driven: `SaiyanForms.ALL`)
+16 forms plus Base, from your chart, **without the two ape forms** (as you said): Kaio-ken, False Super Saiyan, Super Saiyan, Super Saiyan Full Power, Super Saiyan 2, Super Saiyan 3, Super Saiyan 4, Super Full Power Super Saiyan 4, Super Saiyan 4 Limit Breaker, Super Saiyan God, Super Saiyan Blue, Perfected Super Saiyan Blue, Super Saiyan Blue Kaio-Ken, Ultra Instinct Sign, Perfected Ultra Instinct, True Ultra Instinct. Because Super Saiyan 4 normally needs the Golden Ape, it needs **70% mastery of Super Saiyan 2** instead.
+A form is a row: id, branch, whether it needs the Goku Ultimate, parent forms and the mastery share they need, Battle Power, Zenkai count, a training need, an operator flag, Ki to enter, Ki and stamina per second, damage / defence / speed / attack-speed bonuses, the cooldown before another form, the mastery time and an aura colour. The same table feeds the engine, the commands, the config (every number of every form is a server setting in `[saiyan.forms.<id>]`) and the tests. Adding a form is adding a row.
+- **Earning:** every 5 s the engine checks each form's rules; a form that meets all of them is unlocked for good. `/saiyan forms` shows what you have and what is missing; `/saiyan form <id>` selects one.
+- **Using:** the form key enters the selected form (the first unlocked if none is selected) or leaves the active one; Page Up / Down cycle (and switch at once while transformed). Entering costs Ki and needs stamina; the form's Ki and stamina drain are paid every second (less as mastery grows: a mastered form drains 60% of a new one); running out ends it with its own message.
+- **Mastery:** only real fighting seconds count (within 10 s of dealing or taking a hit), capped per game day (`masteryCapSecondsPerDay` = 1800) — no idle farming. A new form works at 85% strength, a mastered one at 100%.
+- **Kaio-ken:** its multiplier steps up with mastery (x2, x3, x4) and builds a **strain** meter; a full meter ends the form and the strain takes a share of the maximum stamina until it fades.
+- **Ultra Instinct:** the Sign adds a real, capped dodge with a flow meter; Perfected and True UI dodge better and open a counter window (the next blow is stronger). All still capped at 75% and rate-limited.
+- **Limit Breaker:** needs the operator flag `limit_breaker` (`/saiyan flag <player> limit_breaker`) because it has no natural unlock yet.
+- The effects are speed and attack-speed attribute modifiers (transient, removed on leaving the form, death, logout and race removal), the damage and defence factors in the damage event, and an aura of tinted motes. No model, hair or animation changes (Stage 8).
+
+## Commands added
+`/saiyan forms`, `/saiyan form <id>` (anyone); operators: `/saiyan unlock <player> <form>`, `/saiyan flag <player> <flag>`, `/saiyan ultimate <player> goku|none`, `/saiyan zenkai <player>`. `/saiyan status` now also shows flight and sense tier, the Ultimate, Zenkai count, training and which Goku requirements are still missing.
+
+## Cost (rule 11), worst case for 3.65.0
+- Per Saiyan, per second: flight / senses / forms / Zenkai upkeep (a few comparisons), one form-unlock check every 5 s (16 rule checks, no allocation but a short list), up to 2 aura sprays a second through `Fx` (budgeted).
+- Per damage event of a Saiyan: a handful of comparisons (dodge roll, adaptation lookup, form factors); no entity query.
+- Radar: one `getEntitiesOfClass` per sensing player every 2 s, ≤ 4 per tick for the whole server, ≤ 64 examined, ≤ 32 reported.
+- Kamehameha: 1 raycast + 1 entity query per release. Combo: 1 query per part. Blast / Barrage unchanged. **No entity spawned, no block touched, no chunk loaded** (pinned by `SaiyanSourceScanTest`).
+- Network: the state packet grew to 24 fields but is still sent only when something changed, at most about 4 a second per Saiyan; radar pings ≤ 32 × 7 bytes every 2 s to the one player who sensed; nothing is sent to other players.
+- Memory per Saiyan: the `Run` record (UUID-keyed, dropped at logout/death/race removal) plus a saved state of ≤ 32 unlocked forms, ≤ 32 mastery values, four training meters.
+
+## NEW / REPLACED / KEPT (3.65.0)
+- **NEW:** Ki Flight (5 tiers, burst), Saiyan Senses (4 tiers, radar), Ki Suppression, Warrior's Reflex, Battle Adaptation, Zenkai, the four training meters, the Ultimate Skill registry with *Son Goku, King of Martial Arts* (awakening, trial, Kamehameha, Rock-Scissors-Paper), the form engine and the 16-form roster, `/saiyan` commands, 11 new keys, the radar / form / charge HUD, server config groups `flight`, `senses`, `passives`, `goku`, `forms`, self-tests `saiyan.stage2.*` and `saiyan.goku.*`, tests `SaiyanStage2RulesTest`, `SaiyanFormsTest`, `GokuRulesTest`.
+- **REPLACED:** nothing. (Ki Blast / Barrage gained form bonuses and training; their numbers and keys are unchanged.)
+- **KEPT:** `KiSkill`, `db_goku`, every Tensura race and skill, the questionnaire, the `Race` enum, all saves (the Saiyan save format is read both ways: version 1 saves load with the new fields empty).
+
+## How to test the new parts in Minecraft
+1. `/saiyan race @s on`, `/saiyan awaken @s`, `/saiyan bp @s set 150000`.
+2. Press `G`: you lift off (Novice hover); `/saiyan status` shows the tier. Land and wait 3 s: flight ends. Fall from a height after flight ends: no damage for 5 s.
+3. Press Insert: the radar panel shows nearby creatures for 10 s. Press Home: Ki Suppression; another Saiyan's radar no longer shows you.
+4. Get hit by mobs: sometimes "dodge" sparks; after several hits of one kind the damage drops a little.
+5. `/saiyan ultimate @s goku`, hold Delete for a few seconds near a mob and release: a beam. Press End three times in quick succession (about every 0.3–1 s): Rock, Scissors, Paper.
+6. `/saiyan forms` lists what is missing; `/saiyan unlock @s super_saiyan`, press `` ` ``: you transform, the aura shows, Ki drains; press it again to leave. Fight to build mastery.
+7. `/saiyan zenkai @s` gives a Zenkai at once.
+
+## Completed / incomplete (3.65.0)
+Completed: everything above.
+Not in this release (by your instruction or by design): the Great Ape / Golden Great Ape; models, hair and animations; sound assets; Spirit Bomb, Instant Transmission, God Bind, Dragon Fist and Meteor Combination; the Giant Avatar; Ki Barrier, Deflection and Energy Transfer; the spec's other physical techniques and gravity training; block damage from the Kamehameha; Ki Suppression hiding from mob AI (it hides only from Saiyan senses). Spec extras left for later: Grade 2/3, Super Saiyan 2 Berserk, the Time Power forms, Blue Berserk, Kaio-ken x10 / x20.
+
+## Caveats (honest, 3.65.0)
+- Nothing was seen in a game and Gradle was not run locally; CI is the compile and the smoke test.
+- The flight speeds and the server-side speed check are heuristics: a very laggy server could produce a false violation (the flight simply ends and can be started again). `speedScale` in `[saiyan.flight]` raises the allowed speed.
+- The Goku awakening needs Battle Power 100,000 by default, which takes real play; every number is a server setting and `/saiyan ultimate` lets an operator grant it.
+- Super Saiyan 4 Limit Breaker has no natural unlock yet (operator flag only).
+- The radar is a HUD panel, not markers in the world.
+- All form and technique numbers are starting balance from the spec's table and the chart; they need play-testing.

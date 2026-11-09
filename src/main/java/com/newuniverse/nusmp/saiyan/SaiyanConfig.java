@@ -16,6 +16,17 @@ public final class SaiyanConfig {
             BLAST_COST, BLAST_DAMAGE, BLAST_RANGE, BARRAGE_COST, BARRAGE_STAMINA, BARRAGE_SHARE, KI_DAMAGE_GAIN;
     private static final ModConfigSpec.IntValue MIN_VICTIM_AGE, REPEAT_LIMIT, REPEAT_WINDOW, BLAST_COOLDOWN, BARRAGE_COOLDOWN, BARRAGE_RAYS, AWAKEN_SECONDS, BLAST_STAMINA_X10;
 
+    // ---- 3.65.0: Stage 2 (flight, senses, passives), the Goku path and the forms
+    private static final ModConfigSpec.BooleanValue FLIGHT_ON, ZENKAI_ON, GOKU_ON, FORMS_ON;
+    private static final ModConfigSpec.DoubleValue FLIGHT_SPEED, FLIGHT_KI, FLIGHT_START, BURST_COST, BURST_STAMINA, BURST_SPEED, SENSE_RADIUS, SENSE_COST, SUPPRESS_COST,
+            REFLEX_BASE, REFLEX_MAX, REFLEX_STAMINA, ADAPT_MAX, ZENKAI_NEAR, ZENKAI_RECOVER, ZENKAI_RATIO, ZENKAI_GAIN, ZENKAI_DECAY, TRAIN_SCALE,
+            AWAKEN_BP, HARD_RATIO, KAME_DAMAGE, KAME_RANGE, KAME_COST, KAME_CHARGE, KAME_CHARGE_KI, RSP_DAMAGE, RSP_COST, RSP_STAMINA, FORM_DAMAGE, FORM_DRAIN;
+    private static final ModConfigSpec.IntValue HOVER_SECONDS, BURST_COOLDOWN, SENSE_COOLDOWN, SENSE_SECONDS, REFLEX_COOLDOWN, ADAPT_HITS, ADAPT_RESET, ZENKAI_COOLDOWN, ZENKAI_PER_DAY,
+            AWAKEN_TECH, AWAKEN_FLIGHT, AWAKEN_SENSE, AWAKEN_HARD, AWAKEN_ZENKAI, TRIAL_KILLS, KAME_COOLDOWN, KAME_MIN_TICKS, RSP_WINDOW, RSP_GAP, RSP_COOLDOWN, RSP_PAPER_MAX, FORM_MASTERY_DAY;
+    private static final ModConfigSpec.IntValue[] FLIGHT_TIER_SECONDS = new ModConfigSpec.IntValue[4], SENSE_TIER_SCANS = new ModConfigSpec.IntValue[3];
+    /** Per form: {minBattlePower, damage, defense, kiDrainPercentPerSecond}. */
+    private static final java.util.Map<String, ModConfigSpec.DoubleValue[]> FORM_CFG = new java.util.LinkedHashMap<>();
+
     static {
         ModConfigSpec.Builder b = new ModConfigSpec.Builder();
         b.push("saiyan");
@@ -77,6 +88,99 @@ public final class SaiyanConfig {
         BARRAGE_COOLDOWN = b.comment("Rapid Ki Barrage cooldown in ticks.").defineInRange("barrageCooldownTicks", 60, 1, 2400);
         KI_DAMAGE_GAIN = b.comment("How much Ki attack damage grows with Battle Power: base * (1 + gain * growth).").defineInRange("kiDamageGrowth", 1.5, 0.0, 20.0);
         HIT_PLAYERS = b.comment("Ki attacks may hit other players (they must still be foes: PvP setting, teams and protected claims are respected). false = creatures only.").define("hitPlayers", true);
+        b.pop();
+
+        // ------------------------------------------------------------ 3.65.0: Ki Flight
+        b.push("flight");
+        FLIGHT_ON = b.comment("Ki Flight (key G). false = no Saiyan can fly with Ki.").define("enabled", true);
+        FLIGHT_SPEED = b.comment("Multiplier on the flying speed of every tier (creative flight is 0.05; the result is cut at 0.30). 1 = the tiers as designed.").defineInRange("speedScale", 1.0, 0.0, 3.0);
+        FLIGHT_KI = b.comment("Multiplier on the Ki flight costs per second.").defineInRange("kiScale", 1.0, 0.0, 10.0);
+        FLIGHT_START = b.comment("Ki cost of taking off, in percent of the maximum.").defineInRange("startCostPercent", 1.0, 0.0, 100.0);
+        HOVER_SECONDS = b.comment("A Novice can only hover this many seconds before landing.").defineInRange("hoverSeconds", 10, 1, 300);
+        FLIGHT_TIER_SECONDS[0] = b.comment("Flight seconds (really moving) that earn each tier: Apprentice, Adept, Expert, Master.").defineInRange("apprenticeSeconds", 120, 1, 1_000_000);
+        FLIGHT_TIER_SECONDS[1] = b.defineInRange("adeptSeconds", 600, 1, 1_000_000);
+        FLIGHT_TIER_SECONDS[2] = b.defineInRange("expertSeconds", 1800, 1, 1_000_000);
+        FLIGHT_TIER_SECONDS[3] = b.defineInRange("masterSeconds", 5400, 1, 1_000_000);
+        BURST_COST = b.comment("Master burst flight: Ki cost in percent of the maximum.").defineInRange("burstCostPercent", 4.0, 0.0, 100.0);
+        BURST_STAMINA = b.comment("Master burst flight: stamina cost.").defineInRange("burstStamina", 15.0, 0.0, 1000.0);
+        BURST_COOLDOWN = b.comment("Master burst flight cooldown in ticks.").defineInRange("burstCooldownTicks", 80, 1, 2400);
+        BURST_SPEED = b.comment("Master burst flight: blocks per tick of the dash (1.8 = 36 blocks a second).").defineInRange("burstSpeed", 1.8, 0.5, 3.0);
+        b.pop();
+
+        // ------------------------------------------------------------ Saiyan Senses and Ki Suppression
+        b.push("senses");
+        SENSE_RADIUS = b.comment("The largest radius the senses can reach whatever the tier (tiers: 16, 32, 64, 128 blocks).").defineInRange("maxRadius", 128.0, 16.0, 256.0);
+        SENSE_COST = b.comment("Ki cost of one sensing, in percent of the maximum.").defineInRange("costPercent", 1.0, 0.0, 100.0);
+        SENSE_COOLDOWN = b.comment("Ticks between two sensings.").defineInRange("cooldownTicks", 100, 1, 2400);
+        SENSE_SECONDS = b.comment("Seconds the radar stays on after a sensing (it refreshes every two seconds).").defineInRange("durationSeconds", 10, 2, 60);
+        SENSE_TIER_SCANS[0] = b.comment("Sensings that earn each tier: Intermediate, Advanced, Master.").defineInRange("intermediateScans", 30, 1, 1_000_000);
+        SENSE_TIER_SCANS[1] = b.defineInRange("advancedScans", 150, 1, 1_000_000);
+        SENSE_TIER_SCANS[2] = b.defineInRange("masterScans", 500, 1, 1_000_000);
+        SUPPRESS_COST = b.comment("Ki Suppression: Ki per second while it is on, in percent of the maximum.").defineInRange("suppressCostPercentPerSecond", 0.2, 0.0, 50.0);
+        b.pop();
+
+        // ------------------------------------------------------------ Warrior's Reflex, Battle Adaptation, Zenkai
+        b.push("passives");
+        REFLEX_BASE = b.comment("Warrior's Reflex: dodge chance at the lowest Battle Power (0.03 = 3%). Never above 75% from any source.").defineInRange("reflexBase", 0.03, 0.0, 0.75);
+        REFLEX_MAX = b.comment("Warrior's Reflex: dodge chance at the highest rank.").defineInRange("reflexMax", 0.15, 0.0, 0.75);
+        REFLEX_STAMINA = b.comment("Stamina one dodge costs.").defineInRange("reflexStamina", 8.0, 0.0, 1000.0);
+        REFLEX_COOLDOWN = b.comment("Ticks before the next reflex dodge.").defineInRange("reflexCooldownTicks", 40, 1, 2400);
+        ADAPT_MAX = b.comment("Battle Adaptation: the most resistance to one kind of damage (0.15 = 15%).").defineInRange("adaptationMax", 0.15, 0.0, 0.5);
+        ADAPT_HITS = b.comment("Hits of one kind of damage that reach the full resistance.").defineInRange("adaptationHits", 10, 1, 1000);
+        ADAPT_RESET = b.comment("Ticks without damage after which the adaptation is gone (the fight is over).").defineInRange("adaptationResetTicks", 600, 20, 72000);
+        ZENKAI_ON = b.comment("Zenkai: a permanent Battle Power gain for surviving a near-death against a dangerous foe. false = off.").define("zenkaiEnabled", true);
+        ZENKAI_NEAR = b.comment("A blow that leaves you at or under this share of your health is a near-death.").defineInRange("zenkaiNearDeath", 0.20, 0.01, 0.9);
+        ZENKAI_RECOVER = b.comment("You must recover to this share of your health, unhurt for five seconds, for the Zenkai to count.").defineInRange("zenkaiRecover", 0.60, 0.05, 1.0);
+        ZENKAI_RATIO = b.comment("The attacker's power must be at least this share of your Battle Power (a weak foe is no dangerous fight).").defineInRange("zenkaiMinRatio", 0.5, 0.0, 10.0);
+        ZENKAI_GAIN = b.comment("Share of the current Battle Power one Zenkai gives (0.05 = 5%), before the diminishing returns.").defineInRange("zenkaiGain", 0.05, 0.0, 1.0);
+        ZENKAI_DECAY = b.comment("Each Zenkai already received divides the next by (1 + this * count).").defineInRange("zenkaiDecay", 0.25, 0.0, 10.0);
+        ZENKAI_COOLDOWN = b.comment("Ticks between two Zenkai (24000 = one game day).").defineInRange("zenkaiCooldownTicks", 24000, 0, 1_728_000);
+        ZENKAI_PER_DAY = b.comment("Zenkai per game day at most.").defineInRange("zenkaiPerDay", 1, 0, 10);
+        TRAIN_SCALE = b.comment("Multiplier on the daily caps of the four training kinds (physical, Ki, martial, divine).").defineInRange("trainingScale", 1.0, 0.0, 5.0);
+        b.pop();
+
+        // ------------------------------------------------------------ the Goku path
+        b.push("goku");
+        GOKU_ON = b.comment("Son Goku, King of Martial Arts: the Ultimate Skill a Saiyan can awaken (Kamehameha, Rock Scissors 'N' Paper and the higher forms). false = off.").define("enabled", true);
+        AWAKEN_BP = b.comment("Awakening: the Battle Power needed (100000 = Legendary Warrior).").defineInRange("awakenBattlePower", 100_000.0, 100.0, SaiyanRules.BP_HARD_CAP);
+        AWAKEN_TECH = b.comment("Awakening: universal techniques that must be mastered (of the five: Ki Blast, Rapid Ki Barrage, Ki Flight, Saiyan Senses, Ki Suppression).").defineInRange("awakenTechniques", 5, 1, 5);
+        AWAKEN_FLIGHT = b.comment("Awakening: the Ki Flight tier needed (0 Novice .. 4 Master). Advanced Ki control = Adept flight (2) and Intermediate senses (1).").defineInRange("awakenFlightTier", 2, 0, 4);
+        AWAKEN_SENSE = b.comment("Awakening: the Saiyan Senses tier needed (0 Beginner .. 3 Master).").defineInRange("awakenSenseTier", 1, 0, 3);
+        AWAKEN_HARD = b.comment("Awakening: challenging foes beaten with martial arts.").defineInRange("awakenHardMartialKills", 1, 0, 1000);
+        AWAKEN_ZENKAI = b.comment("Awakening: Zenkai (surviving a major battle against a stronger enemy) needed.").defineInRange("awakenZenkai", 1, 0, 1000);
+        TRIAL_KILLS = b.comment("Trial of the Martial King: hard martial victories needed.").defineInRange("trialVictories", 10, 0, 1000);
+        HARD_RATIO = b.comment("A foe is challenging when its power is at least this share of your Battle Power (and it still teaches you something).").defineInRange("challengingRatio", 0.4, 0.0, 10.0);
+        KAME_DAMAGE = b.comment("Kamehameha: damage of a full charge before the balance law.").defineInRange("kamehamehaDamage", 40.0, 0.0, 10000.0);
+        KAME_RANGE = b.comment("Kamehameha: range in blocks of a full charge.").defineInRange("kamehamehaRange", 56.0, 8.0, 96.0);
+        KAME_COST = b.comment("Kamehameha: Ki of the release for a full charge, in percent of the maximum.").defineInRange("kamehamehaCostPercent", 12.0, 0.0, 100.0);
+        KAME_CHARGE = b.comment("Kamehameha: seconds of a full charge before mastery.").defineInRange("kamehamehaChargeSeconds", 6.0, 1.0, 30.0);
+        KAME_CHARGE_KI = b.comment("Kamehameha: Ki per second while charging, in percent of the maximum.").defineInRange("kamehamehaChargeCostPercentPerSecond", 1.0, 0.0, 50.0);
+        KAME_COOLDOWN = b.comment("Kamehameha cooldown in ticks.").defineInRange("kamehamehaCooldownTicks", 100, 1, 2400);
+        KAME_MIN_TICKS = b.comment("A release before this many ticks fizzles.").defineInRange("kamehamehaMinTicks", 10, 0, 200);
+        RSP_DAMAGE = b.comment("Rock, Scissors 'N' Paper: base damage of a blow before the balance law.").defineInRange("rspDamage", 8.0, 0.0, 10000.0);
+        RSP_COST = b.comment("Rock, Scissors 'N' Paper: Ki per part, in percent of the maximum.").defineInRange("rspCostPercent", 1.5, 0.0, 100.0);
+        RSP_STAMINA = b.comment("Rock, Scissors 'N' Paper: stamina per part.").defineInRange("rspStamina", 4.0, 0.0, 1000.0);
+        RSP_WINDOW = b.comment("Ticks in which the next part must follow the last one.").defineInRange("rspWindowTicks", 30, 6, 200);
+        RSP_GAP = b.comment("Ticks that must pass before the next part counts (the inputs are timed).").defineInRange("rspMinGapTicks", 6, 1, 100);
+        RSP_COOLDOWN = b.comment("Ticks before a new combo can start after Paper.").defineInRange("rspCooldownTicks", 40, 1, 1200);
+        RSP_PAPER_MAX = b.comment("Most foes the Paper shockwave hits.").defineInRange("rspPaperTargets", 8, 1, 16);
+        b.pop();
+
+        // ------------------------------------------------------------ the forms
+        b.push("forms");
+        FORMS_ON = b.comment("Saiyan forms (Kaio-ken, Super Saiyan and the rest of the roster). false = no form can be entered.").define("enabled", true);
+        FORM_DAMAGE = b.comment("Multiplier on every form's damage bonus.").defineInRange("damageScale", 1.0, 0.0, 5.0);
+        FORM_DRAIN = b.comment("Multiplier on every form's Ki drain.").defineInRange("drainScale", 1.0, 0.0, 10.0);
+        FORM_MASTERY_DAY = b.comment("Seconds of real fighting that count toward form mastery per game day (no idle farming).").defineInRange("masteryCapSecondsPerDay", 1800, 60, 86400);
+        for (SaiyanForms.Form f : SaiyanForms.ALL) {
+            b.push(f.id());
+            FORM_CFG.put(f.id(), new ModConfigSpec.DoubleValue[] {
+                    b.comment("Battle Power needed to unlock " + f.id() + ".").defineInRange("minBattlePower", f.minBp(), SaiyanRules.START_BP, SaiyanRules.BP_HARD_CAP),
+                    b.comment("Damage bonus (0.75 = +75%).").defineInRange("damage", f.damage(), 0.0, 10.0),
+                    b.comment("Defence bonus (0.35 = damage taken divided by 1.35).").defineInRange("defense", f.defense(), 0.0, 5.0),
+                    b.comment("Ki drain per second, in percent of the maximum Ki.").defineInRange("kiDrainPercentPerSecond", f.drain(), 0.0, 100.0)});
+            b.pop();
+        }
         b.pop();
         b.pop();
         SPEC = b.build();
@@ -141,4 +245,90 @@ public final class SaiyanConfig {
     public static double barrageShare() { return num(BARRAGE_SHARE, 0.35, 0, 2); }
     public static int barrageCooldown() { return whole(BARRAGE_COOLDOWN, 60, 1, 2400); }
     public static double kiDamageGrowth() { return num(KI_DAMAGE_GAIN, 1.5, 0, 20); }
+
+    // ------------------------------------------------------------------ 3.65.0 getters (each clamped again on read)
+    public static boolean flightEnabled() { return on(FLIGHT_ON, true); }
+    public static double flightSpeedScale() { return num(FLIGHT_SPEED, 1.0, 0, 3); }
+    public static double flightKiScale() { return num(FLIGHT_KI, 1.0, 0, 10); }
+    public static double flightStart() { return num(FLIGHT_START, 1.0, 0, 100); }
+    public static int hoverSeconds() { return whole(HOVER_SECONDS, 10, 1, 300); }
+    public static double burstCost() { return num(BURST_COST, 4.0, 0, 100); }
+    public static double burstStamina() { return num(BURST_STAMINA, 15.0, 0, 1000); }
+    public static int burstCooldown() { return whole(BURST_COOLDOWN, 80, 1, 2400); }
+    public static double burstSpeed() { return num(BURST_SPEED, 1.8, 0.5, 3.0); }
+
+    /** Flight seconds that earn each of the five tiers (the first is 0), kept rising. */
+    public static int[] flightSeconds() {
+        int[] d = SaiyanFlightRules.SECONDS;
+        int[] out = new int[5];
+        for (int i = 1; i < 5; i++) out[i] = Math.max(out[i - 1] + 1, whole(FLIGHT_TIER_SECONDS[i - 1], d[i], 1, 1_000_000));
+        return out;
+    }
+
+    public static double senseMaxRadius() { return num(SENSE_RADIUS, 128.0, 16, 256); }
+    public static double senseCost() { return num(SENSE_COST, 1.0, 0, 100); }
+    public static int senseCooldown() { return whole(SENSE_COOLDOWN, 100, 1, 2400); }
+    public static int senseSeconds() { return whole(SENSE_SECONDS, 10, 2, 60); }
+    public static double suppressCost() { return num(SUPPRESS_COST, 0.2, 0, 50); }
+
+    /** Sensings that earn each of the four tiers (the first is 0), kept rising. */
+    public static int[] senseScans() {
+        int[] d = SaiyanSenseRules.USES;
+        int[] out = new int[4];
+        for (int i = 1; i < 4; i++) out[i] = Math.max(out[i - 1] + 1, whole(SENSE_TIER_SCANS[i - 1], d[i], 1, 1_000_000));
+        return out;
+    }
+
+    public static double reflexBase() { return num(REFLEX_BASE, 0.03, 0, 0.75); }
+    public static double reflexMax() { return num(REFLEX_MAX, 0.15, 0, 0.75); }
+    public static double reflexStamina() { return num(REFLEX_STAMINA, 8.0, 0, 1000); }
+    public static int reflexCooldown() { return whole(REFLEX_COOLDOWN, 40, 1, 2400); }
+    public static double adaptMax() { return num(ADAPT_MAX, 0.15, 0, 0.5); }
+    public static int adaptHits() { return whole(ADAPT_HITS, 10, 1, 1000); }
+    public static int adaptReset() { return whole(ADAPT_RESET, 600, 20, 72000); }
+    public static boolean zenkaiEnabled() { return on(ZENKAI_ON, true); }
+    public static double zenkaiNear() { return num(ZENKAI_NEAR, 0.20, 0.01, 0.9); }
+    public static double zenkaiRecover() { return num(ZENKAI_RECOVER, 0.60, 0.05, 1.0); }
+    public static double zenkaiRatio() { return num(ZENKAI_RATIO, 0.5, 0, 10); }
+    public static double zenkaiGain() { return num(ZENKAI_GAIN, 0.05, 0, 1); }
+    public static double zenkaiDecay() { return num(ZENKAI_DECAY, 0.25, 0, 10); }
+    public static int zenkaiCooldown() { return whole(ZENKAI_COOLDOWN, 24000, 0, 1_728_000); }
+    public static int zenkaiPerDay() { return whole(ZENKAI_PER_DAY, 1, 0, 10); }
+    public static double trainingScale() { return num(TRAIN_SCALE, 1.0, 0, 5); }
+
+    public static boolean gokuEnabled() { return on(GOKU_ON, true); }
+    public static double challengingRatio() { return num(HARD_RATIO, 0.4, 0, 10); }
+
+    /** What the Goku awakening asks for, as set by the server. */
+    public static SaiyanUltimates.Need gokuNeed() {
+        return new SaiyanUltimates.Need(num(AWAKEN_BP, 100_000.0, 100, SaiyanRules.BP_HARD_CAP), whole(AWAKEN_TECH, 5, 1, 5), whole(AWAKEN_FLIGHT, 2, 0, 4), whole(AWAKEN_SENSE, 1, 0, 3),
+                whole(AWAKEN_HARD, 1, 0, 1000), whole(AWAKEN_ZENKAI, 1, 0, 1000), whole(TRIAL_KILLS, 10, 0, 1000));
+    }
+
+    public static double kameDamage() { return num(KAME_DAMAGE, 40.0, 0, 10000); }
+    public static double kameRange() { return num(KAME_RANGE, 56.0, 8, 96); }
+    public static double kameCost() { return num(KAME_COST, 12.0, 0, 100); }
+    public static double kameChargeSeconds() { return num(KAME_CHARGE, 6.0, 1, 30); }
+    public static double kameChargeCost() { return num(KAME_CHARGE_KI, 1.0, 0, 50); }
+    public static int kameCooldown() { return whole(KAME_COOLDOWN, 100, 1, 2400); }
+    public static int kameMinTicks() { return whole(KAME_MIN_TICKS, 10, 0, 200); }
+    public static double rspDamage() { return num(RSP_DAMAGE, 8.0, 0, 10000); }
+    public static double rspCost() { return num(RSP_COST, 1.5, 0, 100); }
+    public static double rspStamina() { return num(RSP_STAMINA, 4.0, 0, 1000); }
+    public static int rspWindow() { return whole(RSP_WINDOW, 30, 6, 200); }
+    public static int rspGap() { return whole(RSP_GAP, 6, 1, 100); }
+    public static int rspCooldown() { return whole(RSP_COOLDOWN, 40, 1, 1200); }
+    public static int rspPaperMax() { return whole(RSP_PAPER_MAX, 8, 1, 16); }
+
+    public static boolean formsEnabled() { return on(FORMS_ON, true); }
+    public static double formDamageScale() { return num(FORM_DAMAGE, 1.0, 0, 5); }
+    public static double formDrainScale() { return num(FORM_DRAIN, 1.0, 0, 10); }
+    public static int formMasteryCap() { return whole(FORM_MASTERY_DAY, 1800, 60, 86400); }
+
+    private static ModConfigSpec.DoubleValue[] formCfg(SaiyanForms.Form f) { return FORM_CFG.get(f.id()); }
+
+    public static double formMinBp(SaiyanForms.Form f) { return num(formCfg(f)[0], f.minBp(), SaiyanRules.START_BP, SaiyanRules.BP_HARD_CAP); }
+    public static double formDamage(SaiyanForms.Form f) { return num(formCfg(f)[1], f.damage(), 0, 10) * formDamageScale(); }
+    public static double formDefense(SaiyanForms.Form f) { return num(formCfg(f)[2], f.defense(), 0, 5); }
+    public static double formDrain(SaiyanForms.Form f) { return num(formCfg(f)[3], f.drain(), 0, 100) * formDrainScale(); }
 }

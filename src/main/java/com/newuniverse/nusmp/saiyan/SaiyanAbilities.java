@@ -55,10 +55,10 @@ final class SaiyanAbilities {
         return s.ready(kind, now) && !p.isSpectator();
     }
 
-    private static void say(ServerPlayer p, String key) { p.displayClientMessage(Component.translatable("nusmp.saiyan.msg." + key), true); }
+    static void say(ServerPlayer p, String key) { p.displayClientMessage(Component.translatable("nusmp.saiyan.msg." + key), true); }
 
     /** Pays the stamina and the Ki of an attack, or says why not (nothing is taken then). */
-    private static boolean pay(ServerPlayer p, SaiyanState s, double stamina, double kiPercent) {
+    static boolean pay(ServerPlayer p, SaiyanState s, double stamina, double kiPercent) {
         if (!p.isCreative() && s.stamina < stamina) {
             say(p, "no_stamina");
             return false;
@@ -113,11 +113,32 @@ final class SaiyanAbilities {
         Fx.spray(level, FxThemes.WORLD, FxOld.ELECTRIC_SPARK, to.x, to.y, to.z, 5, 0.2, 0.2, 0.2, 0.05);
     }
 
-    /** Deals {@code raw} through the balance law as magic damage; returns what was dealt. */
-    private static float hurt(ServerPlayer p, LivingEntity t, double raw, double mastery) {
-        float dmg = BalanceLaw.damage(p, t, (float) Math.max(0.0, raw), mastery);
+    /** Deals {@code raw} (raised by the active form) through the balance law as magic damage; returns what was dealt. */
+    static float hurt(ServerPlayer p, LivingEntity t, double raw, double mastery) {
+        SaiyanState s = SaiyanStore.peek(p);
+        SaiyanManager.Run r = SaiyanManager.peekRun(p);
+        double form = s != null && r != null ? SaiyanFormEngine.damageFactor(s, r) : 1.0;
+        float dmg = BalanceLaw.damage(p, t, (float) Math.max(0.0, raw * form), mastery);
         if (dmg <= 0.01f) return 0f;
         t.hurt(p.damageSources().indirectMagic(p, p), dmg);
+        if (r != null) r.lastCombat = p.level().getGameTime();
+        return dmg;
+    }
+
+    /**
+     * A martial technique's blow ({@code raw} already carries the strength and form bonuses): through the balance law, dealt as the Saiyan's own attack (so it counts as a martial hit for the kill
+     * rules) with the bonus of the damage event switched off, and with the hurt cool-down cleared so the timed parts of a combo are not eaten by it.
+     */
+    static float hurtBlow(ServerPlayer p, LivingEntity t, double raw, double mastery) {
+        float dmg = BalanceLaw.damage(p, t, (float) Math.max(0.0, raw), mastery);
+        if (dmg <= 0.01f) return 0f;
+        SaiyanCombat.skipBonus = true;
+        try {
+            t.invulnerableTime = 0;
+            t.hurt(p.damageSources().playerAttack(p), dmg);
+        } finally {
+            SaiyanCombat.skipBonus = false;
+        }
         return dmg;
     }
 
@@ -134,6 +155,8 @@ final class SaiyanAbilities {
         if (h.target() != null) {
             double raw = SaiyanRules.kiDamage(SaiyanConfig.blastDamage(), SaiyanConfig.kiDamageGrowth(), s.battlePower);
             if (hurt(p, h.target(), raw, mastery) > 0f && !BalanceLaw.isBoss(h.target())) h.target().knockback(0.3, -p.getLookAngle().x, -p.getLookAngle().z);
+            s.use("blast", 1);
+            SaiyanCombat.trainOn(s, h.target(), SaiyanTraining.Cat.KI, now);
         }
         sound(p, 1.6f);
         return true;
@@ -152,7 +175,11 @@ final class SaiyanAbilities {
             Hit h = ray(p, dir, SaiyanConfig.blastRange());
             if (h.target() != null) sums.merge(h.target(), each, Double::sum);
         }
-        for (Map.Entry<LivingEntity, Double> e : new ArrayList<>(sums.entrySet())) hurt(p, e.getKey(), e.getValue(), mastery);
+        for (Map.Entry<LivingEntity, Double> e : new ArrayList<>(sums.entrySet())) {
+            hurt(p, e.getKey(), e.getValue(), mastery);
+            SaiyanCombat.trainOn(s, e.getKey(), SaiyanTraining.Cat.KI, now);
+        }
+        if (!sums.isEmpty()) s.use("barrage", 1);
         sound(p, 1.9f);
         return true;
     }
