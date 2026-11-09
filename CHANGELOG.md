@@ -1,5 +1,8 @@
 # Changelog
 
+## [3.69.1] — fix: the Saiyan look table broke a source-scan test (the 3.69.0 build could not pass)
+- FIXED: `SaiyanLook`'s table of 16 rows is now a plain list instead of a static map, so `SaiyanSourceScanTest.noStaticPlayerAndEveryPerPlayerMapIsKeyedByUuid` passes. No behaviour change: same looks, same lookups. This release is the first build that carries the 3.69.0 Saiyan look.
+
 ## [3.69.0] — Saiyan look: battle armour, flame aura, glowing eyes, fur and tail, and a big charge-up (no hair)
 - NEW: **Saiyan battle armour** forged onto the body when a form starts and shattered when it ends: white breastplate with a navy lower lame and a gold crest, stepped shoulder pads, gloves and boots with gold bands, gold hip guards that sway, a scouter with a glowing lens over the left eye, and cyan energy seams that take the colour of the form. Real 3D pieces (9 models with glow maps, 89 cubes in all), the same engine as the Flame armour.
 - NEW: **Aura**: tall flame tongues in two rings round the body, a soft column of the form's colour behind them, a slow ring on the ground, and lightning in the stronger forms (Super Saiyan 2 and 3, Blue and Ultra Instinct upgrades, Limit Breaker). Glowing eyes in the form's colour, drawn only when the face turns to the camera.

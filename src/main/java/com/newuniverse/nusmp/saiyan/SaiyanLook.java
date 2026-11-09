@@ -1,7 +1,5 @@
 package com.newuniverse.nusmp.saiyan;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
 
 /**
  * Why: the LOOK of every Saiyan form (3.69.0, Stage 8) as pure data and pure math, so the client painter ({@code client.aura.SaiyanAura}), the preview, the tests and the budget all read one table.
@@ -44,9 +42,11 @@ public final class SaiyanLook {
         return new Look(id, eyes, eyeGlow, glow, fur, tail, flames, bolts, auraH, burst, armour);
     }
 
-    private static final Map<String, Look> TABLE = new LinkedHashMap<>();
+    private static final java.util.List<Look> TABLE = new java.util.ArrayList<>();   // 16 rows, a plain list so a lookup is a short scan (and the per-player-map scan test has nothing to flag)
 
-    private static void add(Look k) { TABLE.put(k.id(), k); }
+    private static void add(Look k) { TABLE.add(k); }
+
+    private static Look byId(String id) { for (Look k : TABLE) if (k.id().equals(id)) return k; return null; }
 
     static {
         //   id                                  eyes    glow?  aura      fur       tail    fl bolt  H     burst armour
@@ -69,15 +69,15 @@ public final class SaiyanLook {
     }
 
     /** The look of a form id, or null (Base has none). */
-    public static Look of(String formId) { return formId == null ? null : TABLE.get(formId); }
+    public static Look of(String formId) { return formId == null ? null : byId(formId); }
 
     /** The look for the code carried by the aura packet ({@link SaiyanForms#code}); null for 0 / unknown. */
     public static Look ofCode(int code) {
         SaiyanForms.Form f = SaiyanForms.ofCode(code);
-        return f == null ? null : TABLE.get(f.id());
+        return f == null ? null : byId(f.id());
     }
 
-    public static java.util.Collection<Look> all() { return TABLE.values(); }
+    public static java.util.Collection<Look> all() { return java.util.Collections.unmodifiableList(TABLE); }
 
     // ------------------------------------------------------------------ the charge-up (t = ticks since the form began)
     /** 0..1: how far the gathering has come (0 at the start, 1 at {@link #GATHER_TICKS}). */
