@@ -8,6 +8,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.monster.Zombie;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
@@ -85,6 +86,8 @@ public final class SaiyanTechSelfTests {
             if (foe == null) return Result.fail("could not make a test zombie");
             foe.setPos(p.getX(), p.getY(), p.getZ() + 3.0);
             foe.setNoAi(true);
+            foe.getAttribute(Attributes.MAX_HEALTH).setBaseValue(2000.0);
+            foe.setHealth(2000f);
             level.addFreshEntity(foe);
             int before = level.getEntities((Entity) null, box, e -> true).size();
 
@@ -107,6 +110,8 @@ public final class SaiyanTechSelfTests {
             if (!SaiyanTechniques.bombStart(p, s, r, now) || !r.tech.gathering) return Result.fail("the Spirit Bomb did not start gathering");
             SaiyanTechniques.bombRelease(p, s, r, now + 1);
             if (r.tech.gathering || r.tech.bombFlying || s.uses("spirit") != 0) return Result.fail("a Spirit Bomb thrown too soon did not fizzle");
+            if (s.ready("spirit", now + 1)) return Result.fail("a fizzled Spirit Bomb started no cool-down");
+            s.readyAt.clear();
             SaiyanTechniques.bombStart(p, s, r, now);
             if (!SaiyanTechniques.bombRelease(p, s, r, now + 200) || !r.tech.bombFlying || r.tech.landAt <= now + 200 || s.uses("spirit") != 1 || s.ready("spirit", now + 200)) return Result.fail("a gathered Spirit Bomb was not thrown");
             SaiyanTechniques.flightTick(p, s, r, now + 200 + 1);

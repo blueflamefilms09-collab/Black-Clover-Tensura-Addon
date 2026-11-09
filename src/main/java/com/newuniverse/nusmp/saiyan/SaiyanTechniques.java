@@ -13,8 +13,10 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.TamableAnimal;
 import net.minecraft.world.entity.decoration.ArmorStand;
 import net.minecraft.world.entity.monster.Enemy;
+import net.minecraft.world.entity.npc.AbstractVillager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
@@ -33,7 +35,7 @@ import java.util.UUID;
  * client only asks (see {@link SaiyanNet}). State lives in the per-player {@link State} of the player's run (dropped on death, logout and change of dimension). Cost: no entity is ever spawned; a Spirit Bomb
  * gathers with one entity query a second (at most {@link SaiyanTechRules#MAX_SOURCES} counted) and 1 particle burst per half second, flies as at most 3 particles every 2 ticks and blasts with one query
  * (at most {@link SaiyanTechRules#MAX_BLAST_TARGETS} looked at, 30 particles); a transmission is at most 12 box checks; a Meteor Combination is at most 16 strikes 3 ticks apart (one UUID lookup each);
- * a barrier is two comparisons per blow. A teleport never goes to a player who is not an ally, never loads a chunk and always ends the fall damage of the arrival.
+ * a barrier is two comparisons per blow. A transmission never locks onto a player who is not an ally (the Meteor Combination's catch-up flash goes only to a foe {@code SaiyanAbilities.allowed} lets it strike), never loads a chunk and always ends the fall damage of the arrival.
  */
 final class SaiyanTechniques {
     private SaiyanTechniques() {}
@@ -80,6 +82,9 @@ final class SaiyanTechniques {
         }
         return true;
     }
+
+    /** Ends only the gathering (out of Ki): a barrier or a meteor rush that is running goes on. */
+    private static void stopGather(SaiyanManager.Run r) { r.tech.gathering = false; r.dirty = true; }
 
     /** Stops everything that is running (the system was switched off, the race was taken away). */
     static void cancel(SaiyanManager.Run r) { r.tech.clear(); r.dirty = true; }
@@ -161,6 +166,7 @@ final class SaiyanTechniques {
 
     /** Puts the Saiyan at {@code dest}: no fall damage for five seconds, the flight's last position moved with it (the move is not a speeding flight). */
     private static void moveTo(ServerPlayer p, Vec3 dest, SaiyanManager.Run r, long now) {
+        if (p.isPassenger()) p.stopRiding();
         if (p.connection != null) p.connection.teleport(dest.x, dest.y, dest.z, p.getYRot(), p.getXRot());
         else p.setPos(dest.x, dest.y, dest.z);
         p.fallDistance = 0f;
@@ -259,7 +265,7 @@ final class SaiyanTechniques {
         long held = now - t.gatherStart;
         if (held > 0 && held % 20 == 0) {
             if (!SaiyanKi.pay(p, SaiyanConfig.sbChargeCost())) {
-                cancel(r);
+                stopGather(r);
                 SaiyanAbilities.say(p, "no_ki");
                 return;
             }
@@ -276,12 +282,12 @@ final class SaiyanTechniques {
         if (held >= (long) (SaiyanConfig.sbChargeSeconds() * 20.0) + 100L) bombRelease(p, s, r, now);
     }
 
-    /** One query: the living friends within the feed radius (players only if allies; hostile creatures, bosses and armour stands never feed it). Bounded by {@link SaiyanTechRules#MAX_SOURCES}. */
+    /** One query: the living friends within the feed radius (allied players, villagers and tamed pets only; hostile creatures, bosses and armour stands never feed it). Bounded by {@link SaiyanTechRules#MAX_SOURCES}. */
     static int countFriends(ServerPlayer p) {
         double rad = SaiyanConfig.sbFeedRadius();
         List<LivingEntity> near = p.serverLevel().getEntitiesOfClass(LivingEntity.class, p.getBoundingBox().inflate(rad, rad * 0.5, rad),
                 e -> e != p && e.isAlive() && !e.isSpectator() && !(e instanceof ArmorStand) && !(e instanceof Enemy) && !BalanceLaw.isBoss(e)
-                        && (!(e instanceof Player o) || SongTargets.isAlly(p, o)));
+                        && (e instanceof Player o ? SongTargets.isAlly(p, o) : (e instanceof AbstractVillager || (e instanceof TamableAnimal ta && ta.isTame()))));
         return Math.min(near.size(), SaiyanTechRules.MAX_SOURCES);
     }
 
@@ -293,6 +299,7 @@ final class SaiyanTechniques {
         r.dirty = true;
         long held = now - t.gatherStart;
         if (held < SaiyanConfig.sbMinTicks()) {
+            s.startCooldown("spirit", now, 20);
             SaiyanAbilities.say(p, "sb_fizzle");
             return true;
         }
@@ -328,7 +335,7 @@ final class SaiyanTechniques {
         State t = r.tech;
         if (!t.bombFlying) return;
         ServerLevel level = p.serverLevel();
-        if (!p.isAlive() || t.dim == null || !t.dim.equals(level.dimension()) || t.from == null || t.to == null) {
+        if (!p.isAlive() || !SaiyanConfig.techEnabled() || t.dim == null || !t.dim.equals(level.dimension()) || t.from == null || t.to == null) {
             t.bombFlying = false;
             return;
         }
