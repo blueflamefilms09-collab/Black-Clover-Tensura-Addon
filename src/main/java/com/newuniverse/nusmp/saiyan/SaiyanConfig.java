@@ -30,6 +30,10 @@ public final class SaiyanConfig {
     private static final ModConfigSpec.BooleanValue TECH_ON;
     private static final ModConfigSpec.DoubleValue IT_RANGE, IT_BLINK, IT_COST, BAR_POOL, BAR_COST, SB_DAMAGE, SB_RADIUS, SB_RANGE, SB_CHARGE, SB_SOURCE_RADIUS, SB_COST, SB_CHARGE_KI,
             MET_DAMAGE, MET_COST, MET_STAMINA, MET_RANGE;
+    // ---- 3.71.0: Dragon Fist, God Bind, Ki Deflection, Energy Transfer
+    private static final ModConfigSpec.BooleanValue TECH3_ON;
+    private static final ModConfigSpec.DoubleValue DRG_DAMAGE, DRG_COST, DRG_STAMINA, DRG_RANGE, DRG_UNLOCK, BND_RANGE, BND_COST, BND_SECONDS, BND_BOSS, BND_PLAYER, DEF_COST, DEF_RADIUS, DEF_BOOST, ENG_COST, ENG_LOSS, ENG_CAP, ENG_RANGE;
+    private static final ModConfigSpec.IntValue DRG_STEPS, DRG_COOLDOWN, BND_COOLDOWN, DEF_SECONDS, DEF_COOLDOWN, ENG_COOLDOWN;
     private static final ModConfigSpec.IntValue IT_COOLDOWN, BAR_SECONDS, BAR_COOLDOWN, SB_COOLDOWN, SB_MIN_TICKS, SB_TRAVEL_MAX, MET_HITS, MET_INTERVAL, MET_COOLDOWN;
 
     static {
@@ -217,6 +221,34 @@ public final class SaiyanConfig {
         MET_INTERVAL = b.comment("Meteor Combination: ticks between strikes.").defineInRange("meteorIntervalTicks", 3, 1, 20);
         MET_COOLDOWN = b.comment("Meteor Combination cooldown in ticks.").defineInRange("meteorCooldownTicks", 300, 1, 12000);
         b.pop();
+
+        // ------------------------------------------------------------ 3.71.0: Dragon Fist, God Bind, Ki Deflection, Energy Transfer
+        b.push("techniques3");
+        TECH3_ON = b.comment("Dragon Fist, God Bind, Ki Deflection and Energy Transfer. false = none of the four can be used.").define("enabled", true);
+        DRG_DAMAGE = b.comment("Dragon Fist: damage of one step before the balance law (the last blow is three times this).").defineInRange("dragonFistDamage", 30.0, 0.0, 10000.0);
+        DRG_COST = b.comment("Dragon Fist: Ki per use, in percent of the maximum.").defineInRange("dragonFistCostPercent", 8.0, 0.0, 100.0);
+        DRG_STAMINA = b.comment("Dragon Fist: stamina per use.").defineInRange("dragonFistStamina", 30.0, 0.0, 1000.0);
+        DRG_RANGE = b.comment("Dragon Fist: how close (blocks) the foe must be.").defineInRange("dragonFistRange", 5.0, 2.0, 12.0);
+        DRG_UNLOCK = b.comment("Dragon Fist: martial training points a Saiyan needs before it can be used (a day gives at most 60).").defineInRange("dragonFistUnlockTraining", 15.0, 0.0, 10000.0);
+        DRG_STEPS = b.comment("Dragon Fist: steps of the dragon's rise, two ticks each (at most 8).").defineInRange("dragonFistSteps", 6, 2, 8);
+        DRG_COOLDOWN = b.comment("Dragon Fist cooldown in ticks.").defineInRange("dragonFistCooldownTicks", 400, 1, 12000);
+        BND_RANGE = b.comment("God Bind: how far (blocks) the foe it locks onto can be.").defineInRange("godBindRange", 24.0, 4.0, 48.0);
+        BND_COST = b.comment("God Bind: Ki per use, in percent of the maximum.").defineInRange("godBindCostPercent", 10.0, 0.0, 100.0);
+        BND_SECONDS = b.comment("God Bind: seconds an ordinary foe is held (at most 30).").defineInRange("godBindSeconds", 6.0, 0.5, 30.0);
+        BND_BOSS = b.comment("God Bind: the share of the time a boss is held (it breaks free sooner).").defineInRange("godBindBossShare", 0.25, 0.0, 1.0);
+        BND_PLAYER = b.comment("God Bind: the share of the time a player is held.").defineInRange("godBindPlayerShare", 0.5, 0.0, 1.0);
+        BND_COOLDOWN = b.comment("God Bind cooldown in ticks.").defineInRange("godBindCooldownTicks", 600, 1, 12000);
+        DEF_COST = b.comment("Ki Deflection: Ki per use, in percent of the maximum.").defineInRange("kiDeflectionCostPercent", 4.0, 0.0, 100.0);
+        DEF_SECONDS = b.comment("Ki Deflection: seconds the window stays open.").defineInRange("kiDeflectionSeconds", 4, 1, 20);
+        DEF_RADIUS = b.comment("Ki Deflection: how far (blocks) from the Saiyan a projectile is turned.").defineInRange("kiDeflectionRadius", 4.0, 1.0, 8.0);
+        DEF_BOOST = b.comment("Ki Deflection: the speed of a turned projectile compared with its own.").defineInRange("kiDeflectionSpeedBoost", 1.2, 0.5, 3.0);
+        DEF_COOLDOWN = b.comment("Ki Deflection cooldown in ticks.").defineInRange("kiDeflectionCooldownTicks", 300, 1, 12000);
+        ENG_COST = b.comment("Energy Transfer: Ki given per use, in percent of the giver's maximum.").defineInRange("energyTransferCostPercent", 20.0, 0.0, 100.0);
+        ENG_LOSS = b.comment("Energy Transfer: the share of the given Ki that is lost on the way (0.2 = the ally gets 80%).").defineInRange("energyTransferLoss", 0.2, 0.0, 0.9);
+        ENG_CAP = b.comment("Energy Transfer: the most an ally can receive from one use, in percent of the ally's maximum.").defineInRange("energyTransferReceiveCapPercent", 30.0, 0.0, 100.0);
+        ENG_RANGE = b.comment("Energy Transfer: how close (blocks) the ally must be.").defineInRange("energyTransferRange", 8.0, 2.0, 24.0);
+        ENG_COOLDOWN = b.comment("Energy Transfer cooldown in ticks.").defineInRange("energyTransferCooldownTicks", 600, 1, 12000);
+        b.pop();
         b.pop();
         SPEC = b.build();
     }
@@ -357,6 +389,31 @@ public final class SaiyanConfig {
     public static double meteorRange() { return num(MET_RANGE, 16.0, 4, 48); }
     public static int meteorInterval() { return whole(MET_INTERVAL, 3, 1, 20); }
     public static int meteorCooldown() { return whole(MET_COOLDOWN, 300, 1, 12000); }
+
+    public static boolean tech3Enabled() { return on(TECH3_ON, true); }
+    public static double dragonDamage() { return num(DRG_DAMAGE, 30.0, 0, 10000); }
+    public static double dragonCost() { return num(DRG_COST, 8.0, 0, 100); }
+    public static double dragonStamina() { return num(DRG_STAMINA, 30.0, 0, 1000); }
+    public static double dragonRange() { return num(DRG_RANGE, 5.0, 2, 12); }
+    public static double dragonUnlock() { return num(DRG_UNLOCK, 15.0, 0, 10000); }
+    public static int dragonSteps() { return whole(DRG_STEPS, 6, 2, 8); }
+    public static int dragonCooldown() { return whole(DRG_COOLDOWN, 400, 1, 12000); }
+    public static double bindRange() { return num(BND_RANGE, 24.0, 4, 48); }
+    public static double bindCost() { return num(BND_COST, 10.0, 0, 100); }
+    public static double bindSeconds() { return num(BND_SECONDS, 6.0, 0.5, 30); }
+    public static double bindBossShare() { return num(BND_BOSS, 0.25, 0, 1); }
+    public static double bindPlayerShare() { return num(BND_PLAYER, 0.5, 0, 1); }
+    public static int bindCooldown() { return whole(BND_COOLDOWN, 600, 1, 12000); }
+    public static double deflectCost() { return num(DEF_COST, 4.0, 0, 100); }
+    public static int deflectSeconds() { return whole(DEF_SECONDS, 4, 1, 20); }
+    public static double deflectRadius() { return num(DEF_RADIUS, 4.0, 1, 8); }
+    public static double deflectBoost() { return num(DEF_BOOST, 1.2, 0.5, 3); }
+    public static int deflectCooldown() { return whole(DEF_COOLDOWN, 300, 1, 12000); }
+    public static double energyCost() { return num(ENG_COST, 20.0, 0, 100); }
+    public static double energyLoss() { return num(ENG_LOSS, 0.2, 0, 0.9); }
+    public static double energyCap() { return num(ENG_CAP, 30.0, 0, 100); }
+    public static double energyRange() { return num(ENG_RANGE, 8.0, 2, 24); }
+    public static int energyCooldown() { return whole(ENG_COOLDOWN, 600, 1, 12000); }
 
     public static boolean gokuEnabled() { return on(GOKU_ON, true); }
     public static double challengingRatio() { return num(HARD_RATIO, 0.4, 0, 10); }

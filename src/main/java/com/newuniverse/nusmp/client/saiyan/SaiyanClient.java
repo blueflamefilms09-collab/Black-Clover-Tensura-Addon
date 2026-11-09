@@ -66,6 +66,11 @@ public final class SaiyanClient {
     public static final KeyMapping BARRIER = new KeyMapping("key.nusmp.saiyan_barrier", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_RIGHT_BRACKET, CATEGORY);
     public static final KeyMapping SPIRIT = new KeyMapping("key.nusmp.saiyan_spirit_bomb", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_LEFT_BRACKET, CATEGORY);
     public static final KeyMapping METEOR = new KeyMapping("key.nusmp.saiyan_meteor", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_SEMICOLON, CATEGORY);
+    // 3.71.0: Dragon Fist, God Bind, Ki Deflection, Energy Transfer (numpad keys, all rebindable)
+    public static final KeyMapping DRAGON = new KeyMapping("key.nusmp.saiyan_dragon_fist", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_KP_1, CATEGORY);
+    public static final KeyMapping BIND = new KeyMapping("key.nusmp.saiyan_god_bind", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_KP_2, CATEGORY);
+    public static final KeyMapping DEFLECT = new KeyMapping("key.nusmp.saiyan_ki_deflection", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_KP_3, CATEGORY);
+    public static final KeyMapping ENERGY = new KeyMapping("key.nusmp.saiyan_energy_transfer", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_KP_4, CATEGORY);
     public static final KeyMapping FORM = new KeyMapping("key.nusmp.saiyan_form", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_GRAVE_ACCENT, CATEGORY);
     public static final KeyMapping FORM_NEXT = new KeyMapping("key.nusmp.saiyan_form_next", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_PAGE_UP, CATEGORY);
     public static final KeyMapping FORM_PREV = new KeyMapping("key.nusmp.saiyan_form_prev", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_PAGE_DOWN, CATEGORY);
@@ -98,6 +103,10 @@ public final class SaiyanClient {
             e.register(BARRIER);
             e.register(SPIRIT);
             e.register(METEOR);
+            e.register(DRAGON);
+            e.register(BIND);
+            e.register(DEFLECT);
+            e.register(ENERGY);
             e.register(FORM);
             e.register(FORM_NEXT);
             e.register(FORM_PREV);
@@ -164,6 +173,10 @@ public final class SaiyanClient {
         press(TRANSMIT, can, now, SaiyanNet.OP_TRANSMIT);
         press(BARRIER, can, now, SaiyanNet.OP_BARRIER);
         press(METEOR, can, now, SaiyanNet.OP_METEOR);
+        press(DRAGON, can, now, SaiyanNet.OP_DRAGON);
+        press(BIND, can, now, SaiyanNet.OP_BIND);
+        press(DEFLECT, can, now, SaiyanNet.OP_DEFLECT);
+        press(ENERGY, can, now, SaiyanNet.OP_ENERGY);
         SaiyanNet.Ping pg = ping;
         if (pg != null && now > pingUntil) ping = null;
     }

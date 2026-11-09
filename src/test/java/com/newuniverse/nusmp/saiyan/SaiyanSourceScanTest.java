@@ -62,7 +62,7 @@ class SaiyanSourceScanTest {
     @Test
     void anAttackNeverPlacesABlockSpawnsAnEntityOrLoadsAChunk() throws IOException {
         Pattern bad = Pattern.compile("addFreshEntity|\\.setBlock\\(|setBlockAndUpdate|destroyBlock|getChunk\\(|forceChunk|setChunkForced|loadChunk|\\.explode\\(|Explosion|LightningBolt|createEntity|\\.spawn\\(|EntityType\\.[A-Z_]+\\.create");
-        for (String f : files()) if (!f.equals("SaiyanSelfTests.java") && !f.equals("SaiyanTechSelfTests.java")) assertFalse(bad.matcher(code(f)).find(), f + " places a block, spawns an entity, loads a chunk or explodes: a Ki attack is a raycast and a few particles");
+        for (String f : files()) if (!f.equals("SaiyanSelfTests.java") && !f.equals("SaiyanTechSelfTests.java") && !f.equals("SaiyanTech3SelfTests.java")) assertFalse(bad.matcher(code(f)).find(), f + " places a block, spawns an entity, loads a chunk or explodes: a Ki attack is a raycast and a few particles");
     }
 
     @Test

@@ -267,5 +267,7 @@
   "nusmp.skill.unbreakable_will": "Unbreakable Will",
   "nusmp.skill.unbreakable_will.description": "Unique. Passive. Once in a long while, survive a killing blow and stand back up. Press to see whether your will is ready.",
   "nusmp.skill.wynn_fimbulvetr": "Wynn Fimbulvetr",
-  "nusmp.skill.wynn_fimbulvetr.description": "Chanted magic (3 lines). A blizzard falls on the spot you look at: it freezes everything in it and keeps chilling whatever stays."
+  "nusmp.skill.wynn_fimbulvetr.description": "Chanted magic (3 lines). A blizzard falls on the spot you look at: it freezes everything in it and keeps chilling whatever stays.",
+  "nusmp.skill.adaptability": "Adaptability",
+  "nusmp.skill.adaptability.description": "Unique. Toggle. A skill that evolves through punishment: every kind of damage you survive is learned, so the next hit of that kind hurts less; Severance is adapted to completely, resistances are learned faster, and your skills slowly gain mastery."
 }

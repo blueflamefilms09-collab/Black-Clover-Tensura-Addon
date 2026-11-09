@@ -55,7 +55,7 @@ class SaiyanTechSourceScanTest {
     @Test
     void theAsksAreValidatedAndAReleaseIsNeverDropped() throws IOException {
         String n = read(SAIYAN + "SaiyanNet.java");
-        assertTrue(n.contains("op >= OP_BLAST && op <= OP_METEOR"), "the range check covers the new ops");
+        assertTrue(n.contains("op >= OP_BLAST && op <= OP_ENERGY"), "the range check covers the new ops");
         String m = read(SAIYAN + "SaiyanManager.java");
         assertTrue(m.indexOf("OP_SPIRIT_RELEASE") < m.indexOf("MIN_GAP_TICKS"), "the Spirit Bomb release is handled before the rate limit, so a gather can not stay stuck");
         for (String op : new String[] {"OP_TRANSMIT", "OP_BARRIER", "OP_SPIRIT_START", "OP_METEOR"}) assertTrue(m.contains("case SaiyanNet." + op), op + " must be routed");

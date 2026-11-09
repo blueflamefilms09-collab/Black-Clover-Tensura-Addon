@@ -270,4 +270,8 @@ public final class NUSkills {
 
     // ---- 3.58.0: the 27 Beast Will skill pairs (Unique -> Ultimate), after the Dragon Ball ones so no older order changes ----
     public static final int BEAST_SKILLS = BeastSkills.registerAll(SKILLS);
+
+    // ---- 3.70.0: Adaptability (Unique, toggle): learns every kind of damage it survives. Grant: /multiverse adaptability give <player> (or /tensura edit <player> ability grant nusmp:adaptability). Registered last so no older order changes ----
+    public static final DeferredHolder<ManasSkill, com.newuniverse.nusmp.adaptability.AdaptabilitySkill> ADAPTABILITY =
+            SKILLS.register("adaptability", com.newuniverse.nusmp.adaptability.AdaptabilitySkill::new);
 }

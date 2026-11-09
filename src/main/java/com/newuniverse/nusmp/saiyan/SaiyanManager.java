@@ -63,6 +63,8 @@ public final class SaiyanManager {
         long formReadyAt;
         // ---- 3.66.0: Ki Barrier, Instant Transmission, Spirit Bomb, Meteor Combination
         final SaiyanTechniques.State tech = new SaiyanTechniques.State();
+        // ---- 3.71.0: Dragon Fist, God Bind, Ki Deflection, Energy Transfer
+        final SaiyanTechniques3.State tech3 = new SaiyanTechniques3.State();
     }
 
     private static final Map<UUID, Run> RUN = new ConcurrentHashMap<>();
@@ -92,6 +94,7 @@ public final class SaiyanManager {
         if (r.tech.gathering) SaiyanTechniques.gatherTick(p, s, r, now);
         if (r.tech.bombFlying) SaiyanTechniques.flightTick(p, s, r, now);
         if (r.tech.meteorLeft > 0) SaiyanTechniques.meteorTick(p, s, r, now);
+        if (r.tech3.busy()) SaiyanTechniques3.tick(p, s, r, now);
         if (r.radarLeft > 0) SaiyanSenses.radarTick(p, s, r, now);
         if (!r.form.isEmpty() && (p.tickCount % 10) == 0) SaiyanFormEngine.aura(p, r);
         if (r.dirty && now - r.lastSent >= 5) send(p, s, r, now);
@@ -138,6 +141,7 @@ public final class SaiyanManager {
         SaiyanFormEngine.reset(r);
         GokuAbilities.cancel(r);
         SaiyanTechniques.cancel(r);
+        SaiyanTechniques3.cancel(r);
         r.radarLeft = 0;
         r.suppressed = false;
         r.comboStage = 0;
@@ -202,6 +206,10 @@ public final class SaiyanManager {
             case SaiyanNet.OP_BARRIER -> SaiyanTechniques.barrier(p, s, r, now);
             case SaiyanNet.OP_SPIRIT_START -> SaiyanTechniques.bombStart(p, s, r, now);
             case SaiyanNet.OP_METEOR -> SaiyanTechniques.meteor(p, s, r, now);
+            case SaiyanNet.OP_DRAGON -> SaiyanTechniques3.dragon(p, s, r, now);
+            case SaiyanNet.OP_BIND -> SaiyanTechniques3.bind(p, s, r, now);
+            case SaiyanNet.OP_DEFLECT -> SaiyanTechniques3.deflect(p, s, r, now);
+            case SaiyanNet.OP_ENERGY -> SaiyanTechniques3.energy(p, s, r, now);
             default -> false;
         };
         if (did) r.dirty = true;
