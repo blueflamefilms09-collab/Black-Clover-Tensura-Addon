@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.65.1] — Fix: an Illusioner casting blindness with no target crashed the server
+- FIXED: a mob in a dungeon, the Illusioner, "tried to cast blindness on thin air and the server did not enjoy it" (a NullPointerException). In vanilla the Illusioner's blindness spell, and the Evoker's fang spell, read their target again at the moment they cast, and the game only re-checks that the target is still there on every second tick; the many spells of this mod that make mobs forget you can take the target away in that gap.
+- The fix wraps those two spell goals when an Illusioner or Evoker enters the world: they now need a living target to start, to go on and to tick, and a cast whose target was taken away just stops (a NullPointerException from inside the goal is also caught and logged once). Same priority, flags, sounds and spell; nothing else about the mob changes.
+- Cost: two comparisons per tick for an Illusioner or Evoker that is casting, nothing for any other mob; the goal list is read once when the spellcaster joins. No scan, no packet, no entity. Tests `SpellcasterGuardRulesTest`, `SpellcasterGuardSourceScanTest`, smoke key `mobfix.spellcaster` (it makes the crash happen on purpose with an Illusioner and an Evoker that are not in the world).
+- KEPT / REPLACED: nothing replaced; the vanilla goals still do the casting.
+- I did not have the crash log, so this rests on the report ("Illusioner, blindness, no target"); if the log names something else, send it. Not seen in a game; Gradle not run locally (CI compiles).
+
 ## [3.65.0] — Saiyan Stage 2: flight, senses, combat passives, Goku and the 16-form roster
 - NEW: **Ki Flight** with five tiers (Novice hover, Apprentice, Adept, Expert, Master with a burst dash). `G` to fly, Left Alt to burst. The server checks the speed every second and ends a flight that breaks the tier's limit; fall damage is cancelled while flying and for five seconds after.
 - NEW: **Saiyan Senses** (16 / 32 / 64 / 128 blocks by tier): a radar panel in the Saiyan HUD (Insert). **Ki Suppression** (Home) hides you from other Saiyans' senses.
