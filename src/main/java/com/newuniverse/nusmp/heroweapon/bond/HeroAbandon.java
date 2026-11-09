@@ -26,8 +26,11 @@ public final class HeroAbandon {
     public enum Result { ASKED, DONE, NO_BOND, DISABLED, LOCKED, NOT_ASKED }
 
     /** First step: remembers the question. */
-    public static Result ask(ServerPlayer p) {
-        Result why = refusal(p);
+    public static Result ask(ServerPlayer p) { return ask(p, false); }
+
+    /** {@code crystal}: the asking comes from a Crystal of Release, which works even when {@code abandonAllowed} (the command) is off. */
+    public static Result ask(ServerPlayer p, boolean crystal) {
+        Result why = refusal(p, crystal);
         if (why != null) return why;
         long now = p.level().getGameTime();
         prune(now);
@@ -36,8 +39,10 @@ public final class HeroAbandon {
     }
 
     /** Second step: gives the weapon up when the question is still open. */
-    public static Result confirm(ServerPlayer p) {
-        Result why = refusal(p);
+    public static Result confirm(ServerPlayer p) { return confirm(p, false); }
+
+    public static Result confirm(ServerPlayer p, boolean crystal) {
+        Result why = refusal(p, crystal);
         if (why != null) return why;
         long now = p.level().getGameTime();
         Long at = ASKED.remove(p.getUUID());
@@ -48,8 +53,8 @@ public final class HeroAbandon {
     /** The weapon the player would give up (null when none), for the question's text. */
     public static HeroKind weapon(ServerPlayer p) { return HeroBonds.kindOf(p); }
 
-    private static Result refusal(ServerPlayer p) {
-        if (!HeroConfig.abandonAllowed()) return Result.DISABLED;
+    private static Result refusal(ServerPlayer p, boolean crystal) {
+        if (!crystal && !HeroConfig.abandonAllowed()) return Result.DISABLED;
         if (!HeroBonds.has(p)) return Result.NO_BOND;
         if (HeroCurse.locked(p)) return Result.LOCKED;
         return null;

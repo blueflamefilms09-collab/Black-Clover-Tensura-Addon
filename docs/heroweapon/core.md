@@ -287,3 +287,9 @@ Nothing ran in the game. The whole project cannot be compiled here; my files wer
 
 ## Giving up your own weapon (3.72.0)
 `/multiverse hero abandon` asks, `/multiverse hero abandon confirm` (within 30 s, `HeroAbandonRules.CONFIRM_TICKS`) gives the weapon up through `HeroBonds.release`, the same path as the operator's `release <player>`. Refused while `HeroCurse.locked`, and when the server setting `abandonAllowed` is off. State: `HeroAbandon.ASKED`, UUID-keyed game-time ticks, pruned on every call, capped at 64.
+
+
+## Crystal of Release, the equip question, anime strength (3.73.0)
+* **Release for regular players:** `nusmp:gneiss_crystal` (quartz corners, polished deepslate edges, amethyst shard centre) sits in the MIDDLE of the Crystal of Release (`nusmp:release_crystal`): `HMH / MGM / HMH` with `H` = `tensura:high_quality_magic_crystal`, `M` = `tensura:medium_quality_magic_crystal`. First right click asks, the second within 30 s (`HeroAbandonRules.CONFIRM_TICKS`) calls `HeroBonds.release` and spends one crystal; the curse refuses it. `HeroAbandon.ask/confirm(p, crystal=true)` skips only the `abandonAllowed` check.
+* **Equip question:** `GemChoosing.finish` with `[gem] confirmEquip` (default true) hands the finished ritual to `GemOffer.make`; `/multiverse hero accept` runs `GemChoosing.complete` (gates re-checked, one gem spent, weapon bound and summoned), `decline` only closes the question. The gem stays in the inventory throughout.
+* **Strength:** `HeroBuff.damageFactor(kind, level)` = old factor x `animeDamageFactor` x `(1 + animeLevelBonus * level / 100)`; `HeroBuff.taken` is also multiplied by `animeDamageTakenFactor`. Worst case per hit: one multiplication; the boss damage cap still applies.

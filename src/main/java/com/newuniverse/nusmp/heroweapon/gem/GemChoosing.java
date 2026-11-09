@@ -202,14 +202,35 @@ public final class GemChoosing {
      * The game's own use timer ran out with the key still held, which is the moment a weapon answers. Returns the stack the hand holds afterwards: the same
      * stack, spent (count zero) when a weapon was bound and the player is not in creative mode, untouched when the gem refused.
      */
-    public static ItemStack finish(ServerPlayer p, CallingGemItem gem, ItemStack stack) {
+    public static ItemStack finish(ServerPlayer p, CallingGemItem gem, ItemStack stack) { return finish(p, gem, stack, GemConfig.confirmEquip()); }
+
+    /** The same with the "ask first" switch given (the self-test drives both ways). With {@code confirm} the gem is kept and the player is asked; {@link GemOffer#accept} then calls {@link #complete}. */
+    static ItemStack finish(ServerPlayer p, CallingGemItem gem, ItemStack stack, boolean confirm) {
         Active a = ACTIVE.remove(p.getUUID());
         if (a == null || a.ritual.state() == GemRitual.State.INTERRUPTED) return stack;     // nothing running, or the player has been told it broke
         HeroKind seal = gem.kind();
+        if (confirm) {
+            GemRules.Denial d = GemRules.decideAtEnd(facts(p, seal));
+            if (d != GemRules.Denial.NONE) {
+                GemFx.say(p, denialText(p, d, seal));
+                return stack;
+            }
+            GemOffer.make(p, seal);                                                          // the weapon has answered; whether it is taken is the player's word
+            return stack;
+        }
+        complete(p, seal, stack);
+        return stack;
+    }
+
+    /**
+     * The moment a weapon is taken: checks the route and the gates once more (an operator may have bound the player meanwhile, or another player taken the weapon),
+     * tries the weapons in order, and only when a bind succeeded spends one gem of {@code stack} (a creative player keeps it). Returns true when a weapon was bound.
+     */
+    static boolean complete(ServerPlayer p, HeroKind seal, ItemStack stack) {
         GemRules.Denial d = GemRules.decideAtEnd(facts(p, seal));
         if (d != GemRules.Denial.NONE) {
             GemFx.say(p, denialText(p, d, seal));
-            return stack;
+            return false;
         }
         List<HeroKind> order = seal != null ? List.of(seal) : GemRules.shuffled(holyCandidates(p), p.getRandom()::nextInt);
         HeroKind bound = null;
@@ -224,12 +245,12 @@ public final class GemChoosing {
         if (bound == null) {
             GemFx.say(p, seal != null ? GemText.msg(GemMessages.REFUSED_SEAL, seal.display(), why == null ? "not now" : why)
                     : why == null ? GemText.msg(GemMessages.NONE_FREE) : GemText.msg(GemMessages.REFUSED_GEM, why));
-            return stack;
+            return false;
         }
         stack.consume(1, p);                                                                 // before anything that can fail: a bound player must never keep the gem
         if (!p.isCreative() && !p.isSpectator()) SUMMON.add(p.getUUID());
         GemFx.chosen(p, bound, seal == null);
-        return stack;
+        return true;
     }
 
     // ------------------------------------------------------------------ housekeeping
@@ -260,12 +281,14 @@ public final class GemChoosing {
     public static void forget(UUID id) {
         ACTIVE.remove(id);
         SUMMON.remove(id);
+        GemOffer.forget(id);
     }
 
     /** Forgets everything (the server stopped). */
     public static void clear() {
         ACTIVE.clear();
         SUMMON.clear();
+        GemOffer.clear();
     }
 
     /** Whether a ritual runs for this player (the self-test asks). */

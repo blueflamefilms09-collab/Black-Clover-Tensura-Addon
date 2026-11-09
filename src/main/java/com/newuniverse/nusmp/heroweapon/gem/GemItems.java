@@ -34,7 +34,14 @@ public final class GemItems {
     /** {@code nusmp:gem_fragment}: the shard every Vassal Seal is made from. */
     public static final DeferredItem<GemFragmentItem> GEM_FRAGMENT;
 
+    /** {@code nusmp:gneiss_crystal} (3.73.0): the banded stone crystal that sits in the middle of a Crystal of Release. */
+    public static final DeferredItem<Item> GNEISS_CRYSTAL;
+    /** {@code nusmp:release_crystal} (3.73.0): releases the holder's hero or vassal weapon (asks first). */
+    public static final DeferredItem<ReleaseCrystalItem> RELEASE_CRYSTAL;
+
     static {
+        GNEISS_CRYSTAL = REGISTER.register("gneiss_crystal", () -> new Item(new Item.Properties().rarity(Rarity.UNCOMMON)));
+        RELEASE_CRYSTAL = REGISTER.register("release_crystal", () -> new ReleaseCrystalItem(new Item.Properties().stacksTo(16).rarity(Rarity.RARE)));
         CALLING_GEM = REGISTER.register(GemCatalog.HOLY_ID, () -> new CallingGemItem(null, new Item.Properties().stacksTo(1).rarity(Rarity.EPIC).fireResistant()));
         GEM_FRAGMENT = REGISTER.register(GemCatalog.FRAGMENT_ID, () -> new GemFragmentItem(new Item.Properties().rarity(Rarity.UNCOMMON)));
         for (HeroKind k : GemCatalog.sealKinds())
@@ -71,6 +78,8 @@ public final class GemItems {
         out.add(CALLING_GEM.get());
         out.add(GEM_FRAGMENT.get());
         for (HeroKind k : GemCatalog.sealKinds()) out.add(seal(k));
+        out.add(GNEISS_CRYSTAL.get());
+        out.add(RELEASE_CRYSTAL.get());
         return out;
     }
 }

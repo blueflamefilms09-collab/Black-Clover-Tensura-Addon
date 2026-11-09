@@ -11,6 +11,15 @@ public final class HeroBuff {
 
     public static double damageFactor(HeroKind kind, double base, double holyExtra) { return kind != null && kind.isHoly() ? base * holyExtra : base; }
 
+    /** 3.73.0: the damage factor at a given weapon level: the buff above times the anime factor, which grows with the level (all through the config). */
+    public static double damageFactor(HeroKind kind, int level) {
+        if (!on()) return 1.0;
+        return damageFactor(kind) * anime(HeroConfig.get(HeroConfig.ANIME_DAMAGE), HeroConfig.get(HeroConfig.ANIME_LEVEL_BONUS), level);
+    }
+
+    /** The anime factor alone: {@code base * (1 + bonus * level / 100)}, the level held between 0 and 100. */
+    public static double anime(double base, double bonus, int level) { return base * (1.0 + bonus * Math.max(0, Math.min(100, level)) / 100.0); }
+
     /** A technique cooldown after the buff (never below 1 tick; the dispatcher's floor applies after this). */
     public static int cooldown(int ticks) { return on() ? cooldown(ticks, HeroConfig.get(HeroConfig.BUFF_COOLDOWN)) : ticks; }
 
@@ -22,7 +31,7 @@ public final class HeroBuff {
     /** Damage a bound wielder of {@code kind} takes, after the buff. */
     public static float taken(HeroKind kind, float in) {
         if (!on()) return in;
-        return taken(kind, in, HeroConfig.get(HeroConfig.BUFF_TAKEN), HeroConfig.get(HeroConfig.BUFF_SHIELD_TAKEN));
+        return (float) (taken(kind, in, HeroConfig.get(HeroConfig.BUFF_TAKEN), HeroConfig.get(HeroConfig.BUFF_SHIELD_TAKEN)) * HeroConfig.get(HeroConfig.ANIME_TAKEN));
     }
 
     public static float taken(HeroKind kind, float in, double general, double shield) { return (float) (in * (kind == HeroKind.SHIELD ? Math.min(general, shield) : general)); }

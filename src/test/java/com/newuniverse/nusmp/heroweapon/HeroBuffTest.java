@@ -27,4 +27,13 @@ class HeroBuffTest {
         assertEquals(60f, HeroBuff.reflect(1000f, 0.75, 60.0), 1e-4);
         assertEquals(0f, HeroBuff.reflect(-5f, 0.75, 60.0), 1e-4);
     }
+
+    @Test void animeFactorGrowsWithTheLevelAndHoldsItsBounds() {
+        assertEquals(2.0, HeroBuff.anime(2.0, 1.0, 0), 1e-9);
+        assertEquals(3.0, HeroBuff.anime(2.0, 1.0, 50), 1e-9);
+        assertEquals(4.0, HeroBuff.anime(2.0, 1.0, 100), 1e-9);
+        assertEquals(4.0, HeroBuff.anime(2.0, 1.0, 5000), 1e-9);
+        assertEquals(2.0, HeroBuff.anime(2.0, 1.0, -9), 1e-9);
+        assertEquals(2.0, HeroBuff.anime(2.0, 0.0, 100), 1e-9);
+    }
 }

@@ -31,7 +31,7 @@ public final class HeroBuffEvents {
             // the wielder deals damage with the weapon out
             if (e.getSource().getEntity() instanceof ServerPlayer dealer && HeroBonds.has(dealer)) {
                 HeroCtx c = HeroCtx.of(dealer);
-                if (c != null && !c.stack.isEmpty()) e.setAmount((float) (e.getAmount() * HeroBuff.damageFactor(c.kind)));
+                if (c != null && !c.stack.isEmpty()) e.setAmount((float) (e.getAmount() * HeroBuff.damageFactor(c.kind, HeroBonds.of(dealer).level())));
             }
             // the wielder takes damage
             if (e.getEntity() instanceof ServerPlayer p && HeroBonds.has(p)) {

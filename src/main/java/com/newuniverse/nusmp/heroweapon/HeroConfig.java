@@ -18,7 +18,7 @@ public final class HeroConfig {
     public static final ModConfigSpec.IntValue MAX_BONDS, REPEL_RADIUS, MAX_LEVEL, SHOCK_SLOW_TICKS, SKILL_GLOBAL_LOCK_TICKS, MIN_COOLDOWN_TICKS, KEY_SPACING_TICKS,
             MAX_KILL_EXP, REPEL_NOTICE_SECONDS;
     public static final ModConfigSpec.BooleanValue BUFF_ENABLED;
-    public static final ModConfigSpec.DoubleValue BUFF_DAMAGE, BUFF_HOLY_EXTRA, BUFF_COOLDOWN, BUFF_COST, BUFF_TAKEN, BUFF_SHIELD_TAKEN, BUFF_REFLECT, BUFF_REFLECT_CAP;
+    public static final ModConfigSpec.DoubleValue BUFF_DAMAGE, BUFF_HOLY_EXTRA, BUFF_COOLDOWN, BUFF_COST, BUFF_TAKEN, BUFF_SHIELD_TAKEN, BUFF_REFLECT, BUFF_REFLECT_CAP, ANIME_DAMAGE, ANIME_LEVEL_BONUS, ANIME_TAKEN;
     public static final ModConfigSpec.DoubleValue WEAPON_EXP_MULTIPLIER, SHOCK_DAMAGE, KILL_EXP_SHARE, BOSS_KILL_EXP_FACTOR;
 
     static {
@@ -81,6 +81,12 @@ public final class HeroConfig {
         BUFF_SHIELD_TAKEN = b.comment("The same for the wielder of the Legendary Shield (Naofumi): the supreme defence.").defineInRange("shieldDamageTakenFactor", 0.2, 0.0, 1.0);
         BUFF_REFLECT = b.comment("Share of the damage the Legendary Shield's wielder takes that is thrown back at the attacker (the Counter). 0 = off.").defineInRange("shieldReflectShare", 0.75, 0.0, 10.0);
         BUFF_REFLECT_CAP = b.comment("The most one reflected blow can deal.").defineInRange("shieldReflectCap", 60.0, 0.0, 10000.0);
+        ANIME_DAMAGE = b.comment("3.73.0 'as in the anime': one more factor on top of damageFactor for every hero and vassal weapon wielder (1.0 = off). Bosses still obey the boss damage cap.")
+                .defineInRange("animeDamageFactor", 2.0, 1.0, 100.0);
+        ANIME_LEVEL_BONUS = b.comment("3.73.0: the weapon grows with its wielder. The anime factor is multiplied by 1 + levelBonus * level / 100, so at level 100 it is (1 + levelBonus) times as strong (1.0 = double). 0 = off.")
+                .defineInRange("animeLevelBonus", 1.0, 0.0, 20.0);
+        ANIME_TAKEN = b.comment("3.73.0: one more factor on all damage a bound wielder takes, on top of damageTakenFactor / shieldDamageTakenFactor (0.75 = a quarter less again; 1.0 = off).")
+                .defineInRange("animeDamageTakenFactor", 0.75, 0.0, 1.0);
         b.pop();
         b.pop();
         SPEC = b.build();

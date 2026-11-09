@@ -13,7 +13,7 @@ public final class GemConfig {
     public static final ModConfigSpec SPEC;
     public static final ModConfigSpec.IntValue RITUAL_SECONDS, OPEN_ABOVE;
     public static final ModConfigSpec.DoubleValue MOVE_TOLERANCE, SPEED_TOLERANCE;
-    public static final ModConfigSpec.BooleanValue RECIPES, HOLY_FREE_ONLY, EFFECTS;
+    public static final ModConfigSpec.BooleanValue RECIPES, HOLY_FREE_ONLY, EFFECTS, CONFIRM_EQUIP;
 
     static {
         ModConfigSpec.Builder b = new ModConfigSpec.Builder();
@@ -35,6 +35,9 @@ public final class GemConfig {
                 .define("holyGemFreeOnly", true);
         EFFECTS = b.comment("The ritual circle, the pillar of light and the sounds. The countdown, the title and the messages stay.")
                 .define("effects", true);
+        CONFIRM_EQUIP = b.comment("3.73.0: when a gem or a Seal has chosen a player, the weapon is NOT bound at once: the player is asked 'Do you want to equip it?' with two clickable choices",
+                "(/multiverse hero accept or decline, open for 30 seconds) and the gem is kept until they accept. Off: the weapon binds the moment the ritual ends (the old behaviour).")
+                .define("confirmEquip", true);
         b.pop();
         SPEC = b.build();
     }
@@ -60,4 +63,6 @@ public final class GemConfig {
     public static boolean holyFreeOnly() { return get(HOLY_FREE_ONLY); }
 
     public static boolean effects() { return get(EFFECTS); }
+
+    public static boolean confirmEquip() { return get(CONFIRM_EQUIP); }
 }

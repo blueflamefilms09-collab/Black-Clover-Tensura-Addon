@@ -225,7 +225,7 @@ final class GemSelfTests {
                 CallingGemItem gem = GemItems.seal(seal);
                 ItemStack stack = new ItemStack(gem);
                 bad.addAll(runToCompletion(p, seal, good));
-                ItemStack back = GemChoosing.finish(p, gem, stack);
+                ItemStack back = GemChoosing.finish(p, gem, stack, false);
                 if (HeroBonds.kindOf(p) != seal) bad.add("the Seal of " + seal + " bound " + HeroBonds.kindOf(p));
                 if (!back.isEmpty()) bad.add("the Seal was not spent");
                 if (!GemChoosing.summonPending(id)) bad.add("the chosen weapon is not waiting to be put in the hand");
@@ -240,11 +240,21 @@ final class GemSelfTests {
                     CallingGemItem gem2 = GemItems.seal(other);
                     ItemStack stack2 = new ItemStack(gem2);
                     bad.addAll(runToCompletion(p, other, lied));
-                    GemChoosing.finish(p, gem2, stack2);
+                    GemChoosing.finish(p, gem2, stack2, false);
                     if (stack2.isEmpty() || HeroBonds.kindOf(p) != seal) bad.add("a gem answered a player who already carried a weapon");
                 }
                 HeroBonds.release(p);
                 if (HeroBonds.has(p)) bad.add("the bond could not be released");
+
+                // 3.73.0: with the question switched on the gem only asks: nothing is bound and the gem is kept until the player says yes
+                bad.addAll(runToCompletion(p, seal, good));
+                ItemStack kept = new ItemStack(gem);
+                GemChoosing.finish(p, gem, kept, true);
+                if (HeroBonds.has(p)) bad.add("a weapon was bound before the player said yes");
+                if (kept.isEmpty()) bad.add("the gem was spent before the player said yes");
+                if (!GemOffer.pending(id, p.level().getGameTime())) bad.add("no question was asked");
+                GemOffer.decline(p);
+                if (GemOffer.pending(id, p.level().getGameTime())) bad.add("the question stayed open after no");
             }
 
             // the Holy Calling Gem
@@ -257,7 +267,7 @@ final class GemSelfTests {
                 } else {
                     bad.addAll(runToCompletion(p, null, holy));
                     ItemStack stack = GemItems.holyStack();
-                    GemChoosing.finish(p, GemItems.CALLING_GEM.get(), stack);
+                    GemChoosing.finish(p, GemItems.CALLING_GEM.get(), stack, false);
                     HeroKind got = HeroBonds.kindOf(p);
                     if (got == null) note += ", the Holy Calling Gem bound nothing although a Holy Weapon was free";
                     else if (!got.isHoly()) bad.add("the Holy Calling Gem bound " + got + ", which is not a Legendary Weapon");

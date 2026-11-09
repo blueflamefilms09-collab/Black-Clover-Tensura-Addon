@@ -18,6 +18,7 @@ import com.newuniverse.nusmp.heroweapon.forms.FormsCommands;
 import com.newuniverse.nusmp.heroweapon.forms.HeroForm;
 import com.newuniverse.nusmp.heroweapon.forms.HeroForms;
 import com.newuniverse.nusmp.heroweapon.gem.GemCommands;
+import com.newuniverse.nusmp.heroweapon.gem.GemOffer;
 import com.newuniverse.nusmp.heroweapon.rules.HeroInterference;
 import com.newuniverse.nusmp.heroweapon.skill.HeroUse;
 import net.minecraft.ChatFormatting;
@@ -53,6 +54,8 @@ public final class HeroCommand {
                 .then(Commands.literal("list").executes(HeroCommand::list))
                 .then(Commands.literal("summon").executes(ctx -> summon(ctx, true)))
                 .then(Commands.literal("dismiss").executes(ctx -> summon(ctx, false)))
+                .then(Commands.literal("accept").executes(ctx -> offer(ctx, true)))
+                .then(Commands.literal("decline").executes(ctx -> offer(ctx, false)))
                 .then(Commands.literal("abandon").executes(ctx -> abandon(ctx, false))
                         .then(Commands.literal("confirm").executes(ctx -> abandon(ctx, true))))
                 .then(Commands.literal("bind").requires(s -> s.hasPermission(2))
@@ -177,6 +180,20 @@ public final class HeroCommand {
             case DISABLED -> { return fail(ctx, "Giving up a hero weapon is switched off on this server; ask an operator."); }
             case LOCKED -> { return fail(ctx, "The curse holds you: the weapon cannot be given up now."); }
             case NOT_ASKED -> { return fail(ctx, "Nothing to confirm (or it took too long). Type /multiverse hero abandon first."); }
+        }
+        return 1;
+    }
+
+    // ================================================================ "do you want to equip it?" (3.73.0)
+    private static int offer(CommandContext<CommandSourceStack> ctx, boolean yes) throws CommandSyntaxException {
+        ServerPlayer p = ctx.getSource().getPlayerOrException();
+        GemOffer.Result r = yes ? GemOffer.accept(p) : GemOffer.decline(p);
+        switch (r) {
+            case BOUND -> { return 1; }                                                      // the gem's own title and messages say the rest
+            case DECLINED -> say(ctx, "You did not take it. Your gem is kept; use it again when you are ready.");
+            case NONE -> { return fail(ctx, "No weapon is waiting for your answer (or it took longer than 30 seconds). Use your gem again."); }
+            case GEM_GONE -> { return fail(ctx, "The gem is no longer with you."); }
+            case REFUSED -> { return fail(ctx, "The weapon cannot be taken now (see the message above). Your gem is kept."); }
         }
         return 1;
     }
