@@ -5,6 +5,7 @@ import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
+import com.newuniverse.nusmp.heroweapon.bond.HeroAbandon;
 import com.newuniverse.nusmp.heroweapon.bond.HeroBond;
 import com.newuniverse.nusmp.heroweapon.bond.HeroBonds;
 import com.newuniverse.nusmp.heroweapon.bond.HeroLevels;
@@ -52,6 +53,8 @@ public final class HeroCommand {
                 .then(Commands.literal("list").executes(HeroCommand::list))
                 .then(Commands.literal("summon").executes(ctx -> summon(ctx, true)))
                 .then(Commands.literal("dismiss").executes(ctx -> summon(ctx, false)))
+                .then(Commands.literal("abandon").executes(ctx -> abandon(ctx, false))
+                        .then(Commands.literal("confirm").executes(ctx -> abandon(ctx, true))))
                 .then(Commands.literal("bind").requires(s -> s.hasPermission(2))
                         .then(Commands.argument("player", EntityArgument.player())
                                 .then(Commands.argument("weapon", StringArgumentType.word()).suggests((c, b) -> SharedSuggestionProvider.suggest(weaponIds(), b))
@@ -160,6 +163,22 @@ public final class HeroCommand {
             case DISABLED -> "The hero weapons are switched off on this server.";
             default -> "That cannot be done now.";
         });
+    }
+
+    // ================================================================ giving up your own weapon (3.72.0)
+    private static int abandon(CommandContext<CommandSourceStack> ctx, boolean confirm) throws CommandSyntaxException {
+        ServerPlayer p = ctx.getSource().getPlayerOrException();
+        HeroKind was = HeroAbandon.weapon(p);
+        HeroAbandon.Result r = confirm ? HeroAbandon.confirm(p) : HeroAbandon.ask(p);
+        switch (r) {
+            case ASKED -> say(ctx, "Give up the " + (was == null ? "weapon" : was.display()) + "? Its level, forms and mastery are lost for good. Type /multiverse hero abandon confirm within 30 seconds to do it.");
+            case DONE -> say(ctx, "You gave up the " + (was == null ? "weapon" : was.display()) + ". It is gone, with its level, forms and mastery.");
+            case NO_BOND -> { return fail(ctx, "You have no hero weapon."); }
+            case DISABLED -> { return fail(ctx, "Giving up a hero weapon is switched off on this server; ask an operator."); }
+            case LOCKED -> { return fail(ctx, "The curse holds you: the weapon cannot be given up now."); }
+            case NOT_ASKED -> { return fail(ctx, "Nothing to confirm (or it took too long). Type /multiverse hero abandon first."); }
+        }
+        return 1;
     }
 
     // ================================================================ operators

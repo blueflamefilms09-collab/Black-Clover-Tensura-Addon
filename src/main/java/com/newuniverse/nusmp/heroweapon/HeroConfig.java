@@ -13,7 +13,7 @@ import net.neoforged.neoforge.common.ModConfigSpec;
 public final class HeroConfig {
     public static final ModConfigSpec SPEC;
 
-    public static final ModConfigSpec.BooleanValue ENABLED, HOLY_UNIQUE, VASSAL_UNIQUE, HOLY_REJECTS_OTHERS, REPEL_XP, ADOPT_STACKS, SHOW_MESSAGES;
+    public static final ModConfigSpec.BooleanValue ENABLED, HOLY_UNIQUE, VASSAL_UNIQUE, HOLY_REJECTS_OTHERS, REPEL_XP, ADOPT_STACKS, SHOW_MESSAGES, ABANDON_ALLOWED;
     public static final ModConfigSpec.BooleanValue CASTING_RELICS_ALLOWED, CONSUMABLES_FIRST;
     public static final ModConfigSpec.IntValue MAX_BONDS, REPEL_RADIUS, MAX_LEVEL, SHOCK_SLOW_TICKS, SKILL_GLOBAL_LOCK_TICKS, MIN_COOLDOWN_TICKS, KEY_SPACING_TICKS,
             MAX_KILL_EXP, REPEL_NOTICE_SECONDS;
@@ -68,6 +68,8 @@ public final class HeroConfig {
                 .defineInRange("keySpacingTicks", 4, 0, 40);
         SHOW_MESSAGES = b.comment("Action-bar lines for the weapon (summoned, put away, refused, level up). Off keeps the screen clear for streamers.")
                 .define("showMessages", true);
+        ABANDON_ALLOWED = b.comment("3.72.0: a player may give up their own hero weapon with /multiverse hero abandon (then abandon confirm within 30 seconds). Its level, forms and mastery are lost. Off: only an operator can release a weapon. Never while the curse holds the wielder.")
+                .define("abandonAllowed", true);
         b.push("buff");
         BUFF_ENABLED = b.comment("3.55.0 master switch of the hero weapon buffs below. Off: every weapon behaves exactly as before 3.55.0.").define("enabled", true);
         BUFF_DAMAGE = b.comment("Factor on EVERY point of damage a bound wielder deals while their hero weapon is out (blows, techniques, arrows). Bosses still obey the boss damage cap.")
@@ -136,4 +138,6 @@ public final class HeroConfig {
     public static int keySpacingTicks() { return get(KEY_SPACING_TICKS); }
 
     public static boolean showMessages() { return get(SHOW_MESSAGES); }
+
+    public static boolean abandonAllowed() { return get(ABANDON_ALLOWED); }
 }

@@ -283,3 +283,7 @@ Nothing ran in the game. The whole project cannot be compiled here; my files wer
 * **Weapons:** the dispatcher already does the payment, cooldown, lock, mastery, experience and quest hook; a skill returns true or false and nothing else. `onHit` already gets the experience and mastery of the blow.
 * **Art:** the `blocking`, `pull` and `pulling` predicates exist; `<id>_curse` meshes are used when present; `HeroColors` is the one place to align the HUD gem colours with the models' gems.
 * **Lead:** the lang fragment is `$S/hero/frag/hcore.lang.json`; engravings lines for the table take effect on the next projection and by the one-a-second engraving tick; no `NUSMP` or `MultiverseCommands` line is needed.
+
+
+## Giving up your own weapon (3.72.0)
+`/multiverse hero abandon` asks, `/multiverse hero abandon confirm` (within 30 s, `HeroAbandonRules.CONFIRM_TICKS`) gives the weapon up through `HeroBonds.release`, the same path as the operator's `release <player>`. Refused while `HeroCurse.locked`, and when the server setting `abandonAllowed` is off. State: `HeroAbandon.ASKED`, UUID-keyed game-time ticks, pruned on every call, capped at 64.

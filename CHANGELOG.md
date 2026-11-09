@@ -1,5 +1,11 @@
 # Changelog
 
+## [3.72.0] — a player can give up their own hero weapon
+- NEW: **`/multiverse hero abandon`**, then **`/multiverse hero abandon confirm`** within 30 seconds: you give up your own hero weapon. It goes through the same release an operator uses, so the weapon is put away, a unique Holy Weapon is freed in the register for someone else, and the forms and the client are told. Its level, forms and mastery are lost for good, which is why it asks first. Refused while the curse holds you, and when the new server setting `abandonAllowed` (config `nusmp-heroweapon-server.toml`, group of the core settings, default true) is off.
+- KEPT: the operator's `/multiverse hero release <player>` and `/multiverse hero registry clear <weapon>`, unchanged.
+- Cost: a map lookup per command; one game-time tick per asking player in a UUID-keyed map, pruned on every call and capped at 64. No packet of its own. Test `HeroAbandonRulesTest`; the `hero.rules` self-test also checks the window.
+- Not seen in a game; Gradle not run locally. If you meant a different way to remove hero weapons (for example taking a weapon away from another player without being an operator, or removing a gem or curse from a weapon), tell me which and it is a small follow-up.
+
 ## [3.71.0] — Saiyan power-up, animated: body animation, ray burst, tremor and wind, all eased
 - NEW: **the power-up is animated.** When a form starts the Saiyan's body plays a new clip, `saiyan_charge` (2.3 s, through the existing cast-animation system): a crouch with the fists drawn back, the arms pulling in while the whole body trembles harder and harder, a snap open (chest up, arms thrown out, a small rise) on the same tick as the flash, a hold while the tremor dies away, then a settle into a power stance. Every span is eased in 0.05 s steps; it starts and ends near rest, and the engine's fade in (3 ticks) and fade out (6 ticks) join it to the normal pose.
 - NEW: **ray burst** behind the Saiyan (new texture `saiyan_burst.png`): a white-hot core and long rays, two layers turning against each other, that swell with the gathering, flare at the burst and fade out softly by tick 64. It sits a little behind the body so the body stays in front. Not drawn from the owner's own camera.

@@ -50,6 +50,9 @@ public final class HeroRulesSelfTests {
     }
 
     private static SelfTests.Result rules(MinecraftServer server) {
+        // 3.72.0: giving up your own weapon needs a question and a confirmation inside the window
+        if (HeroAbandonRules.confirmed(null, 5L) || !HeroAbandonRules.confirmed(5L, 5L + HeroAbandonRules.CONFIRM_TICKS) || HeroAbandonRules.confirmed(5L, 6L + HeroAbandonRules.CONFIRM_TICKS))
+            return fail("the abandon confirmation window is wrong");
         if (!HeroConfig.enabled()) return ok("skipped: heroweapon.enabled is false in the config");
         ServerLevel level = server.overworld();
         FakePlayer a = SelfTests.player(level, "hero_core_r1", 0.5, 100, 0.5);
