@@ -18738,5 +18738,20 @@
   "key.nusmp.saiyan_kamehameha": "Saiyan: Kamehameha (hold, release)",
   "key.nusmp.saiyan_form": "Saiyan: Form on/off",
   "key.nusmp.saiyan_form_next": "Saiyan: Next form",
-  "key.nusmp.saiyan_form_prev": "Saiyan: Previous form"
+  "key.nusmp.saiyan_form_prev": "Saiyan: Previous form",
+  "nusmp.saiyan.msg.barrier_on": "Ki Barrier up: it soaks the next blows.",
+  "nusmp.saiyan.msg.barrier_break": "Your Ki Barrier shatters!",
+  "nusmp.saiyan.msg.barrier_down": "Your Ki Barrier fades.",
+  "nusmp.saiyan.msg.it_lock": "Instant Transmission: you flash to the Ki you locked onto.",
+  "nusmp.saiyan.msg.it_blink": "Instant Transmission: you blink ahead.",
+  "nusmp.saiyan.msg.it_blocked": "Instant Transmission fails: no safe place to land.",
+  "nusmp.saiyan.msg.sb_start": "Spirit Bomb: you raise your hands and gather energy from the living around you.",
+  "nusmp.saiyan.msg.sb_fizzle": "The Spirit Bomb fizzles: thrown too soon.",
+  "nusmp.saiyan.msg.sb_throw": "Spirit Bomb!",
+  "nusmp.saiyan.msg.meteor_start": "Meteor Combination!",
+  "nusmp.saiyan.msg.meteor_none": "Meteor Combination needs a foe in front of you.",
+  "key.nusmp.saiyan_transmit": "Saiyan: Instant Transmission",
+  "key.nusmp.saiyan_barrier": "Saiyan: Ki Barrier",
+  "key.nusmp.saiyan_spirit_bomb": "Saiyan: Spirit Bomb (hold, release)",
+  "key.nusmp.saiyan_meteor": "Saiyan: Meteor Combination"
 }

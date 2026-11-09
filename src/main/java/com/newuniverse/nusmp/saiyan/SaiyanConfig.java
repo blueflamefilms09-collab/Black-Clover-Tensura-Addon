@@ -26,6 +26,11 @@ public final class SaiyanConfig {
     private static final ModConfigSpec.IntValue[] FLIGHT_TIER_SECONDS = new ModConfigSpec.IntValue[4], SENSE_TIER_SCANS = new ModConfigSpec.IntValue[3];
     /** Per form: {minBattlePower, damage, defense, kiDrainPercentPerSecond}. */
     private static final java.util.Map<String, ModConfigSpec.DoubleValue[]> FORM_CFG = new java.util.LinkedHashMap<>();
+    // ---- 3.66.0: the four new techniques
+    private static final ModConfigSpec.BooleanValue TECH_ON;
+    private static final ModConfigSpec.DoubleValue IT_RANGE, IT_BLINK, IT_COST, BAR_POOL, BAR_COST, SB_DAMAGE, SB_RADIUS, SB_RANGE, SB_CHARGE, SB_SOURCE_RADIUS, SB_COST, SB_CHARGE_KI,
+            MET_DAMAGE, MET_COST, MET_STAMINA, MET_RANGE;
+    private static final ModConfigSpec.IntValue IT_COOLDOWN, BAR_SECONDS, BAR_COOLDOWN, SB_COOLDOWN, SB_MIN_TICKS, SB_TRAVEL_MAX, MET_HITS, MET_INTERVAL, MET_COOLDOWN;
 
     static {
         ModConfigSpec.Builder b = new ModConfigSpec.Builder();
@@ -182,6 +187,36 @@ public final class SaiyanConfig {
             b.pop();
         }
         b.pop();
+
+        // ------------------------------------------------------------ 3.66.0: Instant Transmission, Spirit Bomb, Ki Barrier, Meteor Combination
+        b.push("techniques");
+        TECH_ON = b.comment("Instant Transmission, Spirit Bomb, Ki Barrier and Meteor Combination. false = none of the four can be used.").define("enabled", true);
+        IT_RANGE = b.comment("Instant Transmission: the farthest creature (blocks) it can lock onto.").defineInRange("instantTransmissionRange", 64.0, 8.0, 128.0);
+        IT_BLINK = b.comment("Instant Transmission: the farthest blink (blocks) when nothing is locked onto. Kept small: the blink reads blocks along the line.").defineInRange("instantTransmissionBlink", 24.0, 4.0, 48.0);
+        IT_COST = b.comment("Instant Transmission: Ki per use, in percent of the maximum.").defineInRange("instantTransmissionCostPercent", 6.0, 0.0, 100.0);
+        IT_COOLDOWN = b.comment("Instant Transmission cooldown in ticks.").defineInRange("instantTransmissionCooldownTicks", 160, 1, 6000);
+        BAR_POOL = b.comment("Ki Barrier: the damage the barrier soaks before Battle Power growth (up to three times this at the top).").defineInRange("barrierPool", 60.0, 1.0, 100000.0);
+        BAR_SECONDS = b.comment("Ki Barrier: seconds it stands if it is not broken.").defineInRange("barrierSeconds", 8, 1, 60);
+        BAR_COST = b.comment("Ki Barrier: Ki per use, in percent of the maximum.").defineInRange("barrierCostPercent", 5.0, 0.0, 100.0);
+        BAR_COOLDOWN = b.comment("Ki Barrier cooldown in ticks.").defineInRange("barrierCooldownTicks", 400, 1, 12000);
+        SB_DAMAGE = b.comment("Spirit Bomb: damage of a full charge before the balance law.").defineInRange("spiritBombDamage", 120.0, 0.0, 100000.0);
+        SB_RADIUS = b.comment("Spirit Bomb: blast radius in blocks of a full charge.").defineInRange("spiritBombRadius", 8.0, 2.0, 16.0);
+        SB_RANGE = b.comment("Spirit Bomb: how far the bomb can be thrown (blocks).").defineInRange("spiritBombRange", 48.0, 8.0, 96.0);
+        SB_CHARGE = b.comment("Spirit Bomb: seconds of a full charge for a lone Saiyan (friends nearby make it faster).").defineInRange("spiritBombChargeSeconds", 8.0, 1.0, 60.0);
+        SB_SOURCE_RADIUS = b.comment("Spirit Bomb: how far (blocks) living friends feed the bomb.").defineInRange("spiritBombFeedRadius", 24.0, 4.0, 48.0);
+        SB_COST = b.comment("Spirit Bomb: Ki of the throw for a full charge, in percent of the maximum.").defineInRange("spiritBombCostPercent", 15.0, 0.0, 100.0);
+        SB_CHARGE_KI = b.comment("Spirit Bomb: Ki per second while gathering, in percent of the maximum.").defineInRange("spiritBombChargeCostPercentPerSecond", 0.5, 0.0, 50.0);
+        SB_COOLDOWN = b.comment("Spirit Bomb cooldown in ticks.").defineInRange("spiritBombCooldownTicks", 600, 1, 24000);
+        SB_MIN_TICKS = b.comment("A throw before this many ticks of gathering fizzles.").defineInRange("spiritBombMinTicks", 40, 0, 400);
+        SB_TRAVEL_MAX = b.comment("Spirit Bomb: the longest the thrown bomb travels before it lands, in ticks.").defineInRange("spiritBombTravelMaxTicks", 60, 10, 200);
+        MET_HITS = b.comment("Meteor Combination: strikes in the rush (at most 16).").defineInRange("meteorHits", 8, 1, 16);
+        MET_DAMAGE = b.comment("Meteor Combination: damage of an ordinary strike before the balance law (the last strike is three times this).").defineInRange("meteorDamage", 6.0, 0.0, 10000.0);
+        MET_COST = b.comment("Meteor Combination: Ki per use, in percent of the maximum.").defineInRange("meteorCostPercent", 6.0, 0.0, 100.0);
+        MET_STAMINA = b.comment("Meteor Combination: stamina per use.").defineInRange("meteorStamina", 20.0, 0.0, 1000.0);
+        MET_RANGE = b.comment("Meteor Combination: how far (blocks) the foe it locks onto can be.").defineInRange("meteorRange", 16.0, 4.0, 48.0);
+        MET_INTERVAL = b.comment("Meteor Combination: ticks between strikes.").defineInRange("meteorIntervalTicks", 3, 1, 20);
+        MET_COOLDOWN = b.comment("Meteor Combination cooldown in ticks.").defineInRange("meteorCooldownTicks", 300, 1, 12000);
+        b.pop();
         b.pop();
         SPEC = b.build();
     }
@@ -295,6 +330,33 @@ public final class SaiyanConfig {
     public static int zenkaiCooldown() { return whole(ZENKAI_COOLDOWN, 24000, 0, 1_728_000); }
     public static int zenkaiPerDay() { return whole(ZENKAI_PER_DAY, 1, 0, 10); }
     public static double trainingScale() { return num(TRAIN_SCALE, 1.0, 0, 5); }
+
+    public static boolean techEnabled() { return on(TECH_ON, true); }
+    public static double itRange() { return num(IT_RANGE, 64.0, 8, 128); }
+    public static double itBlink() { return num(IT_BLINK, 24.0, 4, 48); }
+    public static double itCost() { return num(IT_COST, 6.0, 0, 100); }
+    public static int itCooldown() { return whole(IT_COOLDOWN, 160, 1, 6000); }
+    public static double barrierPool() { return num(BAR_POOL, 60.0, 1, 100000); }
+    public static int barrierSeconds() { return whole(BAR_SECONDS, 8, 1, 60); }
+    public static double barrierCost() { return num(BAR_COST, 5.0, 0, 100); }
+    public static int barrierCooldown() { return whole(BAR_COOLDOWN, 400, 1, 12000); }
+    public static double sbDamage() { return num(SB_DAMAGE, 120.0, 0, 100000); }
+    public static double sbRadius() { return num(SB_RADIUS, 8.0, 2, 16); }
+    public static double sbRange() { return num(SB_RANGE, 48.0, 8, 96); }
+    public static double sbChargeSeconds() { return num(SB_CHARGE, 8.0, 1, 60); }
+    public static double sbFeedRadius() { return num(SB_SOURCE_RADIUS, 24.0, 4, 48); }
+    public static double sbCost() { return num(SB_COST, 15.0, 0, 100); }
+    public static double sbChargeCost() { return num(SB_CHARGE_KI, 0.5, 0, 50); }
+    public static int sbCooldown() { return whole(SB_COOLDOWN, 600, 1, 24000); }
+    public static int sbMinTicks() { return whole(SB_MIN_TICKS, 40, 0, 400); }
+    public static int sbTravelMax() { return whole(SB_TRAVEL_MAX, 60, 10, 200); }
+    public static int meteorHits() { return whole(MET_HITS, 8, 1, 16); }
+    public static double meteorDamage() { return num(MET_DAMAGE, 6.0, 0, 10000); }
+    public static double meteorCost() { return num(MET_COST, 6.0, 0, 100); }
+    public static double meteorStamina() { return num(MET_STAMINA, 20.0, 0, 1000); }
+    public static double meteorRange() { return num(MET_RANGE, 16.0, 4, 48); }
+    public static int meteorInterval() { return whole(MET_INTERVAL, 3, 1, 20); }
+    public static int meteorCooldown() { return whole(MET_COOLDOWN, 300, 1, 12000); }
 
     public static boolean gokuEnabled() { return on(GOKU_ON, true); }
     public static double challengingRatio() { return num(HARD_RATIO, 0.4, 0, 10); }

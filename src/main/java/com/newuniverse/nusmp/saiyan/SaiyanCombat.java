@@ -55,6 +55,7 @@ final class SaiyanCombat {
         }
         double mul = SaiyanRules.takenFactor(SaiyanConfig.bonuses(s.battlePower).durability()) * SaiyanFormEngine.takenFactor(s, r) * (1.0 - resist);
         float after = (float) (e.getAmount() * mul);
+        after = SaiyanTechniques.absorb(v, r, after, now);                  // 3.66.0: a Ki Barrier soaks part of the blow
         e.setAmount(after);
 
         if (src.getEntity() instanceof LivingEntity a && a != v) {

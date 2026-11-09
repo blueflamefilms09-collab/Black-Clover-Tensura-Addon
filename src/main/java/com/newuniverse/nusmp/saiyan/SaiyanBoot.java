@@ -26,5 +26,6 @@ public final class SaiyanBoot {
         SaiyanCommands.register(NeoForge.EVENT_BUS);
         SaiyanSelfTests.register();
         SaiyanStage2SelfTests.register();
+        SaiyanTechSelfTests.register();
     }
 }

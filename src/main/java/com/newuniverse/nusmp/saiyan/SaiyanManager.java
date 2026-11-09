@@ -61,6 +61,8 @@ public final class SaiyanManager {
         String form = "";
         int kaioStage = 1;
         long formReadyAt;
+        // ---- 3.66.0: Ki Barrier, Instant Transmission, Spirit Bomb, Meteor Combination
+        final SaiyanTechniques.State tech = new SaiyanTechniques.State();
     }
 
     private static final Map<UUID, Run> RUN = new ConcurrentHashMap<>();
@@ -87,6 +89,9 @@ public final class SaiyanManager {
         long now = p.level().getGameTime();
         if ((p.tickCount % 20) == 0) second(p, s, r, now);
         if (r.charging) GokuAbilities.chargeTick(p, s, r, now);
+        if (r.tech.gathering) SaiyanTechniques.gatherTick(p, s, r, now);
+        if (r.tech.bombFlying) SaiyanTechniques.flightTick(p, s, r, now);
+        if (r.tech.meteorLeft > 0) SaiyanTechniques.meteorTick(p, s, r, now);
         if (r.radarLeft > 0) SaiyanSenses.radarTick(p, s, r, now);
         if (!r.form.isEmpty() && (p.tickCount % 10) == 0) SaiyanFormEngine.aura(p, r);
         if (r.dirty && now - r.lastSent >= 5) send(p, s, r, now);
@@ -115,6 +120,7 @@ public final class SaiyanManager {
         SaiyanFormEngine.second(p, s, r, now);
         SaiyanCombat.second(p, s, r, now);
         GokuAbilities.second(r, now);
+        SaiyanTechniques.second(p, r, now);
         if ((p.tickCount % 100) == 0) GokuAbilities.awakeningCheck(p, s, r);
         r.lx = p.getX();
         r.ly = p.getY();
@@ -130,6 +136,7 @@ public final class SaiyanManager {
         if (r.flying) SaiyanFlight.stop(p, r, now);
         SaiyanFormEngine.reset(r);
         GokuAbilities.cancel(r);
+        SaiyanTechniques.cancel(r);
         r.radarLeft = 0;
         r.suppressed = false;
         r.comboStage = 0;
@@ -166,6 +173,14 @@ public final class SaiyanManager {
             }
             return;
         }
+        if (op == SaiyanNet.OP_SPIRIT_RELEASE) {                        // the same for the Spirit Bomb
+            if (SaiyanConfig.enabled()) {
+                if (SaiyanTechniques.bombRelease(p, s, r, now)) r.dirty = true;
+            } else {
+                SaiyanTechniques.cancel(r);
+            }
+            return;
+        }
         if (!SaiyanConfig.enabled()) return;
         if (now >= r.lastAsk && now - r.lastAsk < SaiyanNet.MIN_GAP_TICKS) return;
         r.lastAsk = now;
@@ -182,6 +197,10 @@ public final class SaiyanManager {
             case SaiyanNet.OP_FORM_TOGGLE -> SaiyanFormEngine.toggle(p, s, r, now);
             case SaiyanNet.OP_FORM_NEXT -> SaiyanFormEngine.cycle(p, s, r, now, 1);
             case SaiyanNet.OP_FORM_PREV -> SaiyanFormEngine.cycle(p, s, r, now, -1);
+            case SaiyanNet.OP_TRANSMIT -> SaiyanTechniques.transmit(p, s, r, now);
+            case SaiyanNet.OP_BARRIER -> SaiyanTechniques.barrier(p, s, r, now);
+            case SaiyanNet.OP_SPIRIT_START -> SaiyanTechniques.bombStart(p, s, r, now);
+            case SaiyanNet.OP_METEOR -> SaiyanTechniques.meteor(p, s, r, now);
             default -> false;
         };
         if (did) r.dirty = true;
@@ -342,7 +361,7 @@ public final class SaiyanManager {
         int st = sMax <= 0.0 ? 0 : (int) Math.round(Math.max(0.0, s.stamina) / sMax * 100.0);
         SaiyanForms.Form f = SaiyanFormEngine.active(r);
         return Objects.hash(ki, st, Math.round(kiMax), Math.round(s.battlePower), s.awakened, meditatePct(r), SaiyanConfig.enabled(), r.form, s.selectedForm, SaiyanFlight.tier(s), r.flying,
-                SaiyanSenses.tier(s), r.suppressed, r.radarLeft > 0, GokuAbilities.isGoku(s), GokuAbilities.chargePercent(s, r, now) / 10, r.comboStage, f == null ? 0 : (int) (s.mastery(f.id()) * 20.0),
+                SaiyanSenses.tier(s), r.suppressed, r.radarLeft > 0, GokuAbilities.isGoku(s), Math.max(GokuAbilities.chargePercent(s, r, now), SaiyanTechniques.chargePercent(r, now)) / 10, r.comboStage, f == null ? 0 : (int) (s.mastery(f.id()) * 20.0),
                 (int) (s.strain / 5.0));
     }
 
@@ -356,7 +375,7 @@ public final class SaiyanManager {
         return new SaiyanNet.Sync(true, (float) SaiyanKi.current(p), (float) SaiyanKi.max(p), (float) (s.stamina < 0.0 ? sMax : s.stamina), (float) sMax, s.battlePower, s.rank().ordinal(),
                 s.awakened, cd(s, "blast", now), cd(s, "barrage", now), s.awakened ? 100 : meditatePct(r),
                 SaiyanForms.code(r.form), SaiyanForms.code(s.selectedForm), SaiyanFlight.tier(s).ordinal(), r.flying, SaiyanSenses.tier(s).ordinal(), r.suppressed, GokuAbilities.isGoku(s),
-                GokuAbilities.chargePercent(s, r, now), r.comboStage, f == null ? 0 : (int) Math.round(s.mastery(f.id()) * 100.0), (int) Math.round(s.strain), cd(s, "kame", now), cd(s, "sense", now));
+                Math.max(GokuAbilities.chargePercent(s, r, now), SaiyanTechniques.chargePercent(r, now)), r.comboStage, f == null ? 0 : (int) Math.round(s.mastery(f.id()) * 100.0), (int) Math.round(s.strain), cd(s, "kame", now), cd(s, "sense", now));
     }
 
     private static void send(ServerPlayer p, SaiyanState s, Run r, long now) {

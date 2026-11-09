@@ -61,6 +61,11 @@ public final class SaiyanClient {
     public static final KeyMapping SUPPRESS = new KeyMapping("key.nusmp.saiyan_suppress", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_HOME, CATEGORY);
     public static final KeyMapping COMBO = new KeyMapping("key.nusmp.saiyan_combo", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_END, CATEGORY);
     public static final KeyMapping KAME = new KeyMapping("key.nusmp.saiyan_kamehameha", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_DELETE, CATEGORY);
+    // 3.66.0: the four new techniques (keys the rest of the mod does not use; all rebindable)
+    public static final KeyMapping TRANSMIT = new KeyMapping("key.nusmp.saiyan_transmit", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_BACKSLASH, CATEGORY);
+    public static final KeyMapping BARRIER = new KeyMapping("key.nusmp.saiyan_barrier", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_RIGHT_BRACKET, CATEGORY);
+    public static final KeyMapping SPIRIT = new KeyMapping("key.nusmp.saiyan_spirit_bomb", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_LEFT_BRACKET, CATEGORY);
+    public static final KeyMapping METEOR = new KeyMapping("key.nusmp.saiyan_meteor", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_SEMICOLON, CATEGORY);
     public static final KeyMapping FORM = new KeyMapping("key.nusmp.saiyan_form", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_GRAVE_ACCENT, CATEGORY);
     public static final KeyMapping FORM_NEXT = new KeyMapping("key.nusmp.saiyan_form_next", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_PAGE_UP, CATEGORY);
     public static final KeyMapping FORM_PREV = new KeyMapping("key.nusmp.saiyan_form_prev", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_PAGE_DOWN, CATEGORY);
@@ -74,7 +79,7 @@ public final class SaiyanClient {
     private static volatile SaiyanNet.Ping ping;
     private static long pingUntil;
     /** True while the Kamehameha key is held (so a release is sent exactly once). */
-    private static boolean kameHeld;
+    private static boolean kameHeld, spiritHeld;
     /** Tensura layer names already written to the log (so the owner can see the real ids if the bar is not hidden). */
     private static final Set<String> SEEN = new HashSet<>();
 
@@ -89,6 +94,10 @@ public final class SaiyanClient {
             e.register(SUPPRESS);
             e.register(COMBO);
             e.register(KAME);
+            e.register(TRANSMIT);
+            e.register(BARRIER);
+            e.register(SPIRIT);
+            e.register(METEOR);
             e.register(FORM);
             e.register(FORM_NEXT);
             e.register(FORM_PREV);
@@ -106,6 +115,7 @@ public final class SaiyanClient {
         lines = null;
         ping = null;
         kameHeld = false;
+        spiritHeld = false;
     }
 
     private static void onPing(SaiyanNet.Ping p) {
@@ -150,6 +160,10 @@ public final class SaiyanClient {
         press(FORM_NEXT, can, now, SaiyanNet.OP_FORM_NEXT);
         press(FORM_PREV, can, now, SaiyanNet.OP_FORM_PREV);
         kamehameha(can, now);
+        spiritBomb(can, now);
+        press(TRANSMIT, can, now, SaiyanNet.OP_TRANSMIT);
+        press(BARRIER, can, now, SaiyanNet.OP_BARRIER);
+        press(METEOR, can, now, SaiyanNet.OP_METEOR);
         SaiyanNet.Ping pg = ping;
         if (pg != null && now > pingUntil) ping = null;
     }
@@ -165,6 +179,20 @@ public final class SaiyanClient {
         } else if (!down && kameHeld) {
             kameHeld = false;
             PacketDistributor.sendToServer(new SaiyanNet.Action(SaiyanNet.OP_KAME_RELEASE));
+        }
+    }
+
+    /** Hold to gather, release to throw: the same as the Kamehameha (the release is always sent, so a gather can not stay stuck). */
+    private static void spiritBomb(boolean can, long now) {
+        while (SPIRIT.consumeClick()) { /* the held state below is what counts */ }
+        boolean down = can && SPIRIT.isDown();
+        if (down && !spiritHeld) {
+            spiritHeld = true;
+            lastAsk = now;
+            PacketDistributor.sendToServer(new SaiyanNet.Action(SaiyanNet.OP_SPIRIT_START));
+        } else if (!down && spiritHeld) {
+            spiritHeld = false;
+            PacketDistributor.sendToServer(new SaiyanNet.Action(SaiyanNet.OP_SPIRIT_RELEASE));
         }
     }
 

@@ -1,5 +1,15 @@
 # Changelog
 
+## [3.66.0] — Saiyan techniques II: Ki Barrier, Instant Transmission, Spirit Bomb, Meteor Combination
+- NEW: **Ki Barrier** (any awakened Saiyan, key `]`): a shield that soaks a pool of damage (60, up to three times that with Battle Power) for 8 seconds; what it cannot soak goes through.
+- NEW (Son Goku): **Instant Transmission** (key `\`): teleport to the creature you look at (a player only if an ally) or blink where you look; no fall damage on arrival, never into an unloaded chunk.
+- NEW (Son Goku): **Spirit Bomb** (hold `[`, release): gather energy, faster and stronger for every living friend nearby (animals, villagers, allied players, at most 24), then throw it where you look; it lands after a travel time and blasts every foe in the radius. No block damage.
+- NEW (Son Goku): **Meteor Combination** (key `;`): lock onto a foe and rush it with 8 timed strikes, the last one three times as strong.
+- Server settings in `nusmp-saiyan-server.toml`, group `[saiyan.techniques]` (one switch `enabled`; every number is a setting). 4 rebindable keys, 15 text lines, ops 13 to 17 of the Saiyan packet (range-checked and rate limited, a Spirit Bomb release is never dropped).
+- Cost: no entity spawned, no block touched, no chunk loaded; Spirit Bomb one query a second while gathering plus one for the blast (at most 64 creatures); Instant Transmission one raycast, one query, at most 12 box checks; Meteor Combination at most 16 strikes; Ki Barrier two comparisons per blow. Tests `SaiyanTechRulesTest`, `SaiyanTechSourceScanTest`, smoke keys `saiyan.tech.rules` and `saiyan.tech.player`. Doc `docs/saiyan.md`.
+- REPLACED: nothing. KEPT: everything else (the Kamehameha and Rock Scissors 'N' Paper share the HUD charge bar with the Spirit Bomb).
+- Not seen in a game; Gradle not run locally (CI compiles). Not in this release: God Bind, Dragon Fist, Giant Avatar; new sounds; a HUD cool-down line for the four. The Dragon Ball wiki and ja Wikipedia could not be reached from the build session. A Saiyan look layer (hair, eyes, aura per form) was started and parked in `tools/saiyan_look_parked/` when you asked for techniques instead.
+
 ## [3.65.1] — Fix: an Illusioner casting blindness with no target crashed the server
 - FIXED: a mob in a dungeon, the Illusioner, "tried to cast blindness on thin air and the server did not enjoy it" (a NullPointerException). In vanilla the Illusioner's blindness spell, and the Evoker's fang spell, read their target again at the moment they cast, and the game only re-checks that the target is still there on every second tick; the many spells of this mod that make mobs forget you can take the target away in that gap.
 - The fix wraps those two spell goals when an Illusioner or Evoker enters the world: they now need a living target to start, to go on and to tick, and a cast whose target was taken away just stops (a NullPointerException from inside the goal is also caught and logged once). Same priority, flags, sounds and spell; nothing else about the mob changes.

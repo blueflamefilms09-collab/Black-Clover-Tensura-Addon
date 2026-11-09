@@ -23,7 +23,8 @@ public final class SaiyanNet {
     private SaiyanNet() {}
 
     public static final int OP_BLAST = 1, OP_BARRAGE = 2, OP_FLIGHT = 3, OP_BURST = 4, OP_SENSE = 5, OP_SUPPRESS = 6, OP_COMBO = 7, OP_KAME_START = 8, OP_KAME_RELEASE = 9,
-            OP_FORM_TOGGLE = 10, OP_FORM_NEXT = 11, OP_FORM_PREV = 12;
+            OP_FORM_TOGGLE = 10, OP_FORM_NEXT = 11, OP_FORM_PREV = 12,
+            OP_TRANSMIT = 13, OP_BARRIER = 14, OP_SPIRIT_START = 15, OP_SPIRIT_RELEASE = 16, OP_METEOR = 17;
     public static final int MIN_GAP_TICKS = 4;
 
     /** Set by the client at start-up; null on a dedicated server. */
@@ -110,7 +111,7 @@ public final class SaiyanNet {
     }
 
     /** True for an ask the server will look at; everything else is dropped without a word. */
-    static boolean valid(int op) { return op >= OP_BLAST && op <= OP_FORM_PREV; }
+    static boolean valid(int op) { return op >= OP_BLAST && op <= OP_METEOR; }
 
     static void onAction(ServerPlayer p, int op) {
         if (!valid(op)) return;
