@@ -26,6 +26,10 @@ public final class MultiverseConfig {
     // ranks & stars
     public static final ModConfigSpec.BooleanValue AUTO_PROMOTE;
     public static final ModConfigSpec.IntValue STARS_PER_CLASS;
+    /** 3.67.0: gold stars from missions (the questline advancements). */
+    public static final ModConfigSpec.BooleanValue MISSION_STARS;
+    public static final ModConfigSpec.IntValue MISSION_TASK, MISSION_GOAL, MISSION_CHALLENGE;
+    public static final ModConfigSpec.ConfigValue<java.util.List<? extends String>> MISSION_EXCLUDE;
     // squads
     public static final ModConfigSpec.ConfigValue<String> SQUAD_MIN_RANK_CREATE, SQUAD_MIN_RANK_JOIN;
     public static final ModConfigSpec.IntValue SQUAD_MAX_SIZE;
@@ -76,6 +80,15 @@ public final class MultiverseConfig {
         AUTO_PROMOTE = b.comment("Promote one class per STARS_PER_CLASS net stars (Junior 5th -> ... -> Senior 1st). Grand / Wizard King are admin-only.")
                 .define("autoPromote", true);
         STARS_PER_CLASS = b.defineInRange("starsPerClass", 10, 1, 10000);
+        b.pop();
+
+        b.push("missions");
+        MISSION_STARS = b.comment("3.67.0: finishing a mission (any nusmp: advancement shown in the advancement tree) gives gold stars, once per player per mission.").define("enabled", true);
+        MISSION_TASK = b.comment("Gold stars for a mission shown as a task.").defineInRange("starsTask", 1, 0, 100);
+        MISSION_GOAL = b.comment("Gold stars for a mission shown as a goal.").defineInRange("starsGoal", 2, 0, 100);
+        MISSION_CHALLENGE = b.comment("Gold stars for a mission shown as a challenge.").defineInRange("starsChallenge", 5, 0, 100);
+        MISSION_EXCLUDE = b.comment("Advancement paths (or folders, with a trailing slash) that give no stars, e.g. \"magic/\" or \"root\".")
+                .defineListAllowEmpty("exclude", List.of("root"), () -> "", o -> o instanceof String);
         b.pop();
 
         b.push("squads");

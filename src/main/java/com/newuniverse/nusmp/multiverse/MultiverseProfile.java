@@ -89,6 +89,28 @@ public final class MultiverseProfile {
         if (now < 15 && earned > now) setRank(p, KnightRank.rankOfStep(earned), KnightRank.classOfStep(earned));
     }
 
+    // ---------------------------------------------------------------- missions (3.67.0)
+    private static final String MISSIONS = "Missions";
+
+    /** True once this mission (an advancement id) has already paid its stars to the player. */
+    public static boolean missionDone(Player p, String id) {
+        net.minecraft.nbt.ListTag l = read(p).getList(MISSIONS, net.minecraft.nbt.Tag.TAG_STRING);
+        for (int i = 0; i < l.size(); i++) if (l.getString(i).equals(id)) return true;
+        return false;
+    }
+
+    /** Remembers that this mission paid its stars (at most {@link #MAX_MISSIONS} are kept; the list is a guard against paying twice, not a log). */
+    public static void markMission(ServerPlayer p, String id) {
+        CompoundTag t = read(p);
+        net.minecraft.nbt.ListTag l = t.getList(MISSIONS, net.minecraft.nbt.Tag.TAG_STRING);
+        if (l.size() >= MAX_MISSIONS) return;
+        l.add(net.minecraft.nbt.StringTag.valueOf(id));
+        t.put(MISSIONS, l);
+        write(p, t);
+    }
+
+    public static final int MAX_MISSIONS = 4096;
+
     // ---------------------------------------------------------------- class & race
     public static SocialClass socialClass(Player p) {
         SocialClass c = SocialClass.byName(read(p).getString("Social"));

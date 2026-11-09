@@ -1,5 +1,13 @@
 # Changelog
 
+## [3.67.0] — Gold stars from missions, automatically
+- NEW: finishing a **mission** (any `nusmp:` advancement shown in the advancement tree, i.e. the questline) now gives **gold stars** by itself: a task 1, a goal 2, a challenge 5. Each mission pays **once per player** (a revoked and re-earned mission pays nothing). The stars go through the same path as the admin command, so the social-class bonus, grimoire mastery, squad score, automatic promotion (one class per 10 net stars) and the Wizard King count all follow.
+- Server settings in `nusmp-multiverse-server.toml`, group `[missions]`: `enabled`, `starsTask`, `starsGoal`, `starsChallenge` (each 0..100) and `exclude` (advancement paths, or folders with a trailing `/`; `root` by default).
+- A chat line "Mission complete: <title> +N gold stars" and the usual action-bar star message.
+- Cost: one event per advancement a player earns, no tick work, no packet of its own; the paid list holds at most 4096 ids in the player's profile. Tests `MissionStarRulesTest`, smoke keys `missions.rules` and `missions.player`. Doc `docs/mission_stars.md`.
+- REPLACED: nothing (`/multiverse stars add` still works). KEPT: everything else.
+- Not seen in a game; Gradle not run locally (CI compiles). With the shipped advancements (249 tasks, 144 goals, 60 challenges) the stars add up to about 840, so a player reaches Senior 1st Class (140 stars) after a sixth of them; raise `starsPerClass` if that is too fast. Stars are not given for advancements finished before this update.
+
 ## [3.66.0] — Saiyan techniques II: Ki Barrier, Instant Transmission, Spirit Bomb, Meteor Combination
 - NEW: **Ki Barrier** (any awakened Saiyan, key `]`): a shield that soaks a pool of damage (60, up to three times that with Battle Power) for 8 seconds; what it cannot soak goes through.
 - NEW (Son Goku): **Instant Transmission** (key `\`): teleport to the creature you look at (a player only if an ally) or blink where you look; no fall damage on arrival, never into an unloaded chunk.
