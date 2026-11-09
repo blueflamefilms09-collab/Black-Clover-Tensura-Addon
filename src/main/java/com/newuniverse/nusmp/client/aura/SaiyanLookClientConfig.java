@@ -15,8 +15,8 @@ public final class SaiyanLookClientConfig {
     private SaiyanLookClientConfig() {}
 
     public static final ModConfigSpec SPEC;
-    public static final ModConfigSpec.BooleanValue LOOKS, ARMOUR, CHARGE_UP, FULL_DETAIL;
-    private static volatile boolean looks = true, armour = true, chargeUp = true, full = true;
+    public static final ModConfigSpec.BooleanValue LOOKS, ARMOUR, CHARGE_UP, FULL_DETAIL, CHARGE_ANIM;
+    private static volatile boolean looks = true, armour = true, chargeUp = true, full = true, chargeAnim = true;
 
     static {
         ModConfigSpec.Builder b = new ModConfigSpec.Builder();
@@ -29,6 +29,8 @@ public final class SaiyanLookClientConfig {
                 .define("chargeUp", true);
         FULL_DETAIL = b.comment("true: nearby Saiyans also get fur, a tail, lightning and rock chips in the forms that have them. false: the light version everywhere (about a fifth of the quads). Looks only.")
                 .define("fullDetail", true);
+        CHARGE_ANIM = b.comment("true: the body of a Saiyan powering up is animated (crouch, trembling flex, the snap open at the burst). false: the body keeps its normal pose. Looks only (3.71.0).")
+                .define("chargeAnimation", true);
         b.pop();
         SPEC = b.build();
     }
@@ -37,6 +39,7 @@ public final class SaiyanLookClientConfig {
     public static boolean armour() { return armour; }
     public static boolean chargeUp() { return chargeUp; }
     public static boolean fullDetail() { return full; }
+    public static boolean chargeAnimation() { return chargeAnim; }
 
     /** Registers the file and the reload hook (client only; called from NUSMP in the client block). */
     public static void init(IEventBus modBus, ModContainer container) {
@@ -47,9 +50,9 @@ public final class SaiyanLookClientConfig {
 
     private static void apply() {
         try {
-            looks = LOOKS.get(); armour = ARMOUR.get(); chargeUp = CHARGE_UP.get(); full = FULL_DETAIL.get();
+            looks = LOOKS.get(); armour = ARMOUR.get(); chargeUp = CHARGE_UP.get(); full = FULL_DETAIL.get(); chargeAnim = CHARGE_ANIM.get();
         } catch (IllegalStateException unloaded) {
-            looks = true; armour = true; chargeUp = true; full = true;
+            looks = true; armour = true; chargeUp = true; full = true; chargeAnim = true;
         }
     }
 }

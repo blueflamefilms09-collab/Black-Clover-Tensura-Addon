@@ -1,7 +1,8 @@
 """Front-view MOCKUP of the Saiyan looks (3.69.0: eyes, flame aura, armour, SS4 fur + tail, the charge-up; NO hair) on a blocky player. Not the game's own renderer.
 Reads the look table out of SaiyanLook.java and ports its charge-up maths, so what it shows is what the table says.
 usage: python3 tools/saiyan_look_preview/preview_saiyan_look.py forms out.png [form_id ...]
-       python3 tools/saiyan_look_preview/preview_saiyan_look.py charge out.png [form_id]"""
+       python3 tools/saiyan_look_preview/preview_saiyan_look.py charge out.png [form_id]
+       python3 tools/saiyan_look_preview/preview_saiyan_look.py pose out.png     (the saiyan_charge body clip as stick figures)"""
 import math, os, re, sys
 from PIL import Image, ImageChops, ImageDraw, ImageFilter
 
@@ -28,7 +29,26 @@ def mix(a, b, t): return tuple(int(a[i] * (1 - t) + b[i] * t) for i in range(3))
 def flash(t):
     if t < 0 or t > GATHER + 10: return 0.0
     if t <= GATHER: return 0.25 * (t / GATHER) ** 2
-    u = (t - GATHER) / 10; return 1 - u * u
+    if t < GATHER + 3: return 0.25 + 0.75 * smooth((t - GATHER) / 3)
+    u = (t - GATHER - 3) / 7; return 1 - u * u
+HALO_END = 64
+def halo(t):
+    if t <= 0 or t >= HALO_END: return 0.0
+    if t <= GATHER: return 0.6 * smooth(t / GATHER)
+    if t < GATHER + 4: return 0.6 + 0.4 * smooth((t - GATHER) / 4)
+    return 1 - smooth((t - GATHER - 4) / (HALO_END - GATHER - 4))
+def halo_size(t, b): return 1.2 + (1.7 + 2.2 * b) * halo(t)
+def shake(t):
+    if t <= 0 or t >= GATHER + 26: return 0.0
+    if t <= GATHER: return 0.8 * smooth(t / GATHER)
+    if t < GATHER + 2: return 0.8 + 0.1 * (t - GATHER)
+    return 1 - smooth((t - GATHER - 2) / 24)
+def wind_alpha(t):
+    if t <= 3 or t >= HALO_END: return 0.0
+    return smooth((t - 3) / 10) * (1 - smooth((t - 48) / 16))
+def wind(i, t):
+    ph = (t / 12 + i / 8) % 1; a = i * 2.39996 + 0.4 * hsh(i + 90); r = 0.55 + 0.7 * hsh(i + 91)
+    return math.cos(a) * r, ph * (2.4 + 0.8 * hsh(i + 92)), math.sin(a) * r, wind_alpha(t) * math.sin(math.pi * ph), 0.7 + 0.6 * hsh(i + 93)
 def pillar(t):
     s = GATHER - 4
     if t < s or t >= BURST: return 0.0
@@ -87,6 +107,14 @@ def render(fid, t=None, S=110, W=None, H=None, armour=True):
     layer = Image.new('RGBA', (W, H), (0, 0, 0, 0))
     def put(im, pos): layer.alpha_composite(im, pos)
     ch = t is not None
+    # --- the ray burst behind the Saiyan (drawn first: the body stays in front of it)
+    if ch and halo(t) > 0.01:
+        hl = halo(t); size = int(halo_size(t, b) * 2 * S)
+        hlayer = Image.new('RGBA', (W, H), (0, 0, 0, 0))
+        for sc, rot, colr, al in ((1.0, t * 0.7, mix(col, (255, 255, 255), 0.3), 0.85), (0.62, 28 - t * 1.15, mix((255, 255, 255), col, 0.15), 0.7)):
+            im = tinted(tex('burst'), colr, al * hl).rotate(rot, resample=Image.BICUBIC).resize((max(2, int(size * sc)),) * 2)
+            hlayer.alpha_composite(im, (int(cx - im.width / 2), int(Y(1.15) - im.height / 2)))
+        img = add(img, hlayer.filter(ImageFilter.GaussianBlur(3))); img = add(img, hlayer)
     # --- ground: cracks and rings
     if ch:
         cr, ca = crack_r(t, b), crack_a(t)
@@ -108,7 +136,7 @@ def render(fid, t=None, S=110, W=None, H=None, armour=True):
                 im = tinted(tex('pillar'), cc, al * pa).resize((max(2, int(2 * ww * S)), max(2, int(hh * S)))); put(im, (int(cx - im.width / 2), int(ground - im.height)))
     # --- aura flames
     if k:
-        n = k['flames']; grow = 0.35 + 0.65 * smooth(t / GATHER) if ch else 1.0
+        n = k['flames']; grow = 0.12 + 0.88 * smooth(t / GATHER) if ch else 1.0
         hh = (k['auraH'] + 0.5) * grow; hz = tinted(tex('pillar'), col, 0.26).resize((int(2 * 0.85 * S), max(2, int(hh * S)))); put(hz, (int(cx - hz.width / 2), int(ground - hz.height)))
         fl = tinted(tex('flame'), col, 0.8)
         for i in range(n):
@@ -197,10 +225,43 @@ def sheet(ims, labels, cols):
         x, y = (n % cols) * im.width, (n // cols) * im.height; out.paste(im, (x, y)); d.text((x + 8, y + 6), lb, fill=(255, 255, 255, 255))
     return out
 
+def pose_strip(out):
+    """The saiyan_charge body clip as stick figures, front view (side swing) and side view (forward swing), at the story poses."""
+    import json
+    c = json.load(open(os.path.join(ROOT, 'src/main/resources/assets/nusmp/animations/player/cast.animation.json')))['animations']['saiyan_charge']['bones']
+    def at(bone, ch, t):
+        ks = sorted((float(k), v) for k, v in c[bone][ch].items())
+        for (t0, a), (t1, b2) in zip(ks, ks[1:]):
+            if t0 <= t <= t1:
+                u = (t - t0) / max(1e-6, t1 - t0); return [a[i] + (b2[i] - a[i]) * u for i in range(3)]
+        return ks[-1][1] if t > ks[-1][0] else ks[0][1]
+    times = [0.0, 0.35, 0.70, 1.00, 1.25, 1.65, 2.30]; Wp, Hp = 150, 230; out_im = Image.new('RGB', (Wp * len(times), Hp * 2 + 24), (22, 24, 34)); d = ImageDraw.Draw(out_im)
+    for n, t in enumerate(times):
+        body = at('body', 'rotation', t); bpos = at('body', 'position', t)[1] if 'position' in c['body'] else 0
+        la, ra = at('left_arm', 'rotation', t), at('right_arm', 'rotation', t)
+        for view in (0, 1):
+            ox, oy = n * Wp + Wp // 2, 24 + view * Hp + 40
+            sh = (ox, oy + 50 - bpos * 2)
+            tilt = math.radians(body[0]) if view else 0
+            hip = (sh[0] + (math.sin(tilt) * 70 if view else 0), sh[1] + 70)
+            d.line([sh, hip], fill=(220, 220, 230), width=8); d.ellipse([sh[0] - 14, sh[1] - 34, sh[0] + 14, sh[1] - 6], outline=(220, 220, 230), width=3)
+            for lg, dx in (('left_leg', -10), ('right_leg', 10)):
+                d.line([hip, (hip[0] + dx * (0 if view else 1), hip[1] + 70)], fill=(120, 130, 190), width=7)
+            for arm, v, sgn in ((la, la, -1), (ra, ra, 1)):
+                if view == 0: ang = math.radians(v[2]); end = (sh[0] + sgn * 0 + math.sin(ang) * 62 * (1 if v[2] != 0 else 0) + (sgn * 0) , sh[1] + math.cos(ang) * 62 * (1 if True else 0))
+                else: ang = math.radians(v[0]); end = (sh[0] - math.sin(ang) * 62 * -1, sh[1] + math.cos(ang) * 62)
+                start = (sh[0] + sgn * (14 if view == 0 else 0), sh[1])
+                if view == 0: end = (start[0] + math.sin(ang) * 62, start[1] + math.cos(ang) * 62)
+                d.line([start, end], fill=(240, 190, 80) if sgn < 0 else (255, 150, 60), width=7)
+        d.text((n * Wp + 8, 4), 't=%.2fs (tick %d)  front / side below' % (t, round(t * 20)), fill=(255, 255, 255))
+    out_im.save(out)
+
 def main():
     mode = sys.argv[1] if len(sys.argv) > 1 else 'forms'; out = sys.argv[2] if len(sys.argv) > 2 else 'look_preview.png'
+    if mode == 'pose':
+        pose_strip(out); print(out); return
     if mode == 'charge':
-        fid = sys.argv[3] if len(sys.argv) > 3 else 'super_saiyan'; ts = [0, 8, 16, 22, 26, 32, 40, 52]
+        fid = sys.argv[3] if len(sys.argv) > 3 else 'super_saiyan'; ts = [0, 10, 18, 22, 25, 32, 44, 58]
         ims = [render(fid, t) for t in ts]; sheet(ims, ['%s  t=%d ticks%s' % (fid, t, '  (burst)' if t == 22 else '') for t in ts], 4).save(out)
     else:
         ids = sys.argv[3:] or ['super_saiyan', 'super_saiyan_2', 'super_saiyan_3', 'super_saiyan_4', 'super_saiyan_god', 'super_saiyan_blue', 'perfected_ultra_instinct', 'true_ultra_instinct']

@@ -22,11 +22,13 @@ public final class SaiyanLook {
     public static final double FAR = 64.0;
     /** The most quads one look may draw in full detail, charge-up included (a test pins every row under it). */
     public static final int MAX_QUADS = 190;
-    public static final int MAX_FLAMES = 12, MAX_BOLTS = 8, MAX_CHIPS = 10, MAX_STREAKS = 12;
+    public static final int MAX_FLAMES = 12, MAX_BOLTS = 8, MAX_CHIPS = 10, MAX_STREAKS = 12, MAX_WIND = 8;
     /** Ticks of the gathering part of the charge-up (rocks lift, streaks flow in, cracks spread). */
     public static final int GATHER_TICKS = 22;
     /** Ticks the whole charge-up lasts (the burst, the column of light and the rings end here). */
     public static final int BURST_TICKS = 46;
+    /** Tick at which the ray burst behind a power-up has faded out (before the cracks, so the end is soft). */
+    public static final int HALO_END = 64;
     /** Ticks until the ground cracks have faded. */
     public static final int CRACK_TICKS = 78;
 
@@ -83,12 +85,61 @@ public final class SaiyanLook {
     /** 0..1: how far the gathering has come (0 at the start, 1 at {@link #GATHER_TICKS}). */
     public static float gather(float t) { return clamp01(t / GATHER_TICKS); }
 
-    /** 0..1: the white flash at the heart of the power-up; builds slowly through the gathering, peaks at the burst, dies in about 10 ticks. */
+    /**
+     * 0..1: the white flash at the heart of the power-up. It builds slowly through the gathering (0.25 at the burst), rises smoothly to its peak three ticks later and dies away by ten ticks after the
+     * burst; continuous everywhere (3.71.0: it used to jump from 0.25 to 1 at the burst).
+     */
     public static float flash(float t) {
         if (t < 0f || t > GATHER_TICKS + 10f) return 0f;
         if (t <= GATHER_TICKS) { float u = t / GATHER_TICKS; return 0.25f * u * u; }
-        float u = (t - GATHER_TICKS) / 10f;
+        if (t < GATHER_TICKS + 3f) return 0.25f + 0.75f * smooth((t - GATHER_TICKS) / 3f);
+        float u = (t - GATHER_TICKS - 3f) / 7f;
         return 1f - u * u;
+    }
+
+    /**
+     * 0..1: how bright the ray burst behind the Saiyan is (the big radial backdrop of a power-up). It swells with the gathering (0.6 at the burst), rises to full three ticks after it, then fades away smoothly by
+     * {@link #HALO_END}; continuous everywhere and 0 at both ends.
+     */
+    public static float halo(float t) {
+        if (t <= 0f || t >= HALO_END) return 0f;
+        if (t <= GATHER_TICKS) return 0.6f * smooth(t / GATHER_TICKS);
+        if (t < GATHER_TICKS + 4f) return 0.6f + 0.4f * smooth((t - GATHER_TICKS) / 4f);
+        return 1f - smooth((t - GATHER_TICKS - 4f) / (HALO_END - GATHER_TICKS - 4f));
+    }
+
+    /** Half size (blocks) of the ray burst: it grows with its brightness, bigger for the stronger forms. */
+    public static float haloSize(float t, float burst) { return 1.2f + (1.7f + 2.2f * burst) * halo(t); }
+
+    /**
+     * 0..1: how hard the body and the aura tremble. It builds with the gathering (0.8 at the burst), peaks just after it and dies away by 26 ticks later; continuous and 0 at both ends. (The body clip
+     * {@code saiyan_charge} trembles on the same timeline.)
+     */
+    public static float shake(float t) {
+        if (t <= 0f || t >= GATHER_TICKS + 26f) return 0f;
+        if (t <= GATHER_TICKS) return 0.8f * smooth(t / GATHER_TICKS);
+        if (t < GATHER_TICKS + 2f) return 0.8f + 0.1f * (t - GATHER_TICKS);
+        return 1f - smooth((t - GATHER_TICKS - 2f) / 24f);
+    }
+
+    /** 0..1: the opacity of the rising wind round the body (fades in over ten ticks, out over sixteen; 0 at both ends). */
+    public static float windAlpha(float t) {
+        if (t <= 3f || t >= HALO_END) return 0f;
+        return smooth((t - 3f) / 10f) * (1f - smooth((t - 48f) / 16f));
+    }
+
+    /**
+     * Wind streak i rising along the body: out[0] x, out[1] height above the ground, out[2] z (blocks, centred on the body), out[3] its 0..1 opacity, out[4] its length (blocks). Each streak climbs
+     * from the ground to above the head in about 12 ticks, over and over, fading in and out along the way.
+     */
+    public static void wind(int i, float t, float[] out) {
+        float ph = (t / 12f + i / (float) MAX_WIND) % 1f;
+        float a = i * 2.39996f + 0.4f * hash(i + 90), r = 0.55f + 0.7f * hash(i + 91);
+        out[0] = (float) Math.cos(a) * r;
+        out[1] = ph * (2.4f + 0.8f * hash(i + 92));
+        out[2] = (float) Math.sin(a) * r;
+        out[3] = windAlpha(t) * (float) Math.sin(Math.PI * ph);
+        out[4] = 0.7f + 0.6f * hash(i + 93);
     }
 
     /** 0..1: the height of the column of light as a share of its full height; it shoots up at the burst, holds a moment, then thins and fades out by {@link #BURST_TICKS}. */
@@ -207,8 +258,8 @@ public final class SaiyanLook {
     /** The number of quads a look draws at its busiest (t = the middle of the charge-up); far = the light version (beyond {@link #NEAR} blocks). */
     public static int quads(Look k, boolean far) {
         int flames = Math.min(k.flames(), MAX_FLAMES), bolts = Math.min(k.bolts(), MAX_BOLTS);
-        if (far) return flames / 2 + 1 + (k.eyeGlow() ? 2 : 0) + 2 + MAX_STREAKS / 2 + 2 + 2 + 2;
-        return flames + 1 + bolts + (k.eyeGlow() ? 4 : 0) + 2 + (k.hasFur() ? 72 : 0) + (k.tail() ? 12 : 0) + MAX_CHIPS + MAX_STREAKS + 2 + 2 + 4 + 2;
+        if (far) return flames / 2 + 1 + (k.eyeGlow() ? 2 : 0) + 2 + MAX_STREAKS / 2 + 2 + 2 + 2 + 1 + MAX_WIND / 2;
+        return flames + 1 + bolts + (k.eyeGlow() ? 4 : 0) + 2 + (k.hasFur() ? 72 : 0) + (k.tail() ? 12 : 0) + MAX_CHIPS + MAX_STREAKS + 2 + 2 + 4 + 2 + 2 + MAX_WIND;
     }
 
     private static float smooth(float x) { x = clamp01(x); return x * x * (3f - 2f * x); }

@@ -42,12 +42,18 @@ public final class SaiyanLookSelfTests {
                     SaiyanLook.chip(i, t, b, o);
                     if (Float.isNaN(o[1] + o[2]) || o[1] > 6f || o[2] > 3f || o[2] < 0f) return Result.fail(k.id() + ": rock chip " + i + " left its bound at tick " + t);
                 }
+                if (SaiyanLook.halo(t) < 0f || SaiyanLook.halo(t) > 1f || SaiyanLook.shake(t) > 1f || SaiyanLook.windAlpha(t) > 1f || SaiyanLook.haloSize(t, b) > 6.2f)
+                    return Result.fail(k.id() + ": a power-up envelope left its bound at tick " + t);                                  // 3.71.0: the ray burst, the tremor and the wind
+                for (int i = 0; i < SaiyanLook.MAX_WIND; i++) {
+                    SaiyanLook.wind(i, t, o);
+                    if (Float.isNaN(o[0] + o[1] + o[2] + o[3] + o[4]) || o[1] < 0f || o[1] > 3.3f || o[3] < 0f || o[3] > 1f) return Result.fail(k.id() + ": wind streak " + i + " left its bound at tick " + t);
+                }
                 for (int i = 0; i < SaiyanLook.MAX_STREAKS; i++) {
                     SaiyanLook.streak(i, t, o);
                     if (Float.isNaN(o[0] + o[1] + o[2] + o[3]) || Math.abs(o[0]) > 3.7f || Math.abs(o[2]) > 3.7f || o[3] < 0f || o[3] > 1f) return Result.fail(k.id() + ": streak " + i + " left its bound at tick " + t);
                 }
             }
         }
-        return Result.ok(SaiyanLook.all().size() + " forms have a look inside the quad budget, Aura.SAIYAN is the last slot, and every charge-up size stays bounded for its whole length");
+        return Result.ok(SaiyanLook.all().size() + " forms have a look inside the quad budget, Aura.SAIYAN is the last slot, and every charge-up size (ray burst, tremor and wind included) stays bounded for its whole length");
     }
 }

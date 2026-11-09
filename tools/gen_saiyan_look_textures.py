@@ -249,8 +249,32 @@ def spark():
     save(additive(np.clip(cross + core, 0, 1)), "saiyan_spark")
 
 
+def burst():
+    """The ray burst behind a power-up (additive, camera-facing, 256x256): a white-hot core, a soft halo and long tapering rays that fan out and fade to nothing at the edge (the bright backdrop of a Saiyan powering up)."""
+    n = 256
+    yy, xx = np.mgrid[0:n, 0:n].astype(np.float32)
+    dx, dy = (xx - n / 2 + 0.5) / (n / 2), (yy - n / 2 + 0.5) / (n / 2)
+    r = np.hypot(dx, dy)
+    ang = np.arctan2(dy, dx)
+    rng = np.random.default_rng(7)
+    rays = np.zeros_like(r)
+    count = 16
+    for i in range(count):
+        a0 = (i + rng.uniform(-0.25, 0.25)) * 2 * np.pi / count
+        width = rng.uniform(0.09, 0.17)                    # half angle at the root, radians
+        reach = rng.uniform(0.62, 1.0)                       # how far this ray runs (share of the radius)
+        d = np.abs((ang - a0 + np.pi) % (2 * np.pi) - np.pi)
+        taper = width * np.clip(1.0 - r / reach, 0, 1)       # a ray narrows towards its tip
+        body = np.clip(1.0 - d / np.maximum(taper, 1e-4), 0, 1) ** 1.4
+        rays = np.maximum(rays, body * np.clip(1.0 - r / reach, 0, 1) ** 0.7 * np.clip(r / 0.06, 0, 1))
+    halo = np.clip(1.0 - r, 0, 1) ** 1.6 * 0.62
+    core = np.clip(1.0 - r / 0.4, 0, 1) ** 1.3
+    edge = np.clip((1.0 - r) / 0.08, 0, 1)
+    save(additive(np.clip(rays * 0.9 + halo + core, 0, 1) * edge), "saiyan_burst")
+
+
 if __name__ == "__main__":
     flame(); bolt(); ring(); eye(); fur(); tail()
-    crack(); pillar(); streak(); chip(); spark()
+    crack(); pillar(); streak(); chip(); spark(); burst()
     if "--hair" in __import__("sys").argv:      # hair is on hold: the strand texture is only written when asked
         strand()

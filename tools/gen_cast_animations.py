@@ -340,6 +340,87 @@ def append_dance():
         f.write("\n")
     print("appended", len(DANCE_CLIPS), "dance clips to", path)
 
+# ---- 3.71.0: the Saiyan power-up (saiyan.SaiyanFormEngine plays it when a form starts; 46 ticks = SaiyanLook.BURST_TICKS, the burst lands at tick 22-25 with the flash) ----
+# Rest -> crouch with the fists drawn back -> the arms pull in and the whole body trembles harder -> a snap open (arms out, chest up) timed with the flash -> hold while the
+# tremor dies away -> settle into a power stance. Every span is eased with smoothstep sub-keys every 0.05 s (the client interpolates linearly), the tremor is keyed in, and the first and
+# last poses are close to rest, so the engine's fade in (3 ticks) and fade out (6 ticks) join it to the walking pose without a pop. Run with --append-saiyan: only this clip is added.
+SAIYAN_BONES = ("body", "left_arm", "right_arm", "left_leg", "right_leg")
+SAIYAN_STEP = 0.05
+
+
+def _sp(body=((0, 0, 0), (0, 0, 0)), la=(0, 0, -5), ra=(0, 0, 5), ll=(0, 0, 0), rl=(0, 0, 0)):
+    return {"body": (list(body[0]), list(body[1])), "left_arm": (list(la), [0, 0, 0]), "right_arm": (list(ra), [0, 0, 0]),
+            "left_leg": (list(ll), [0, 0, 0]), "right_leg": (list(rl), [0, 0, 0])}
+
+
+def _smooth(x):
+    x = max(0.0, min(1.0, x))
+    return x * x * (3 - 2 * x)
+
+
+def _tremor(t):
+    """Degrees of shake at time t: grows while the energy gathers, peaks at the burst, dies away."""
+    if t < 0.35:
+        return 0.0
+    if t < 1.0:
+        return 3.5 * _smooth((t - 0.35) / 0.65)
+    if t < 1.25:
+        return 3.5 + 1.5 * _smooth((t - 1.0) / 0.25)
+    if t < 2.0:
+        return 5.0 * (1.0 - _smooth((t - 1.25) / 0.75))
+    return 0.0
+
+
+def saiyan_charge():
+    import math
+    story = [
+        (0.00, _sp()),
+        (0.35, _sp(body=((12, 0, 0), (0, -1.6, 0)), la=(18, 0, -14), ra=(18, 0, 14), ll=(-9, 0, 0), rl=(9, 0, 0))),                    # the crouch, fists drawn back
+        (0.70, _sp(body=((11, 0, 0), (0, -1.4, 0)), la=(-42, 20, -26), ra=(-42, -20, 26), ll=(-9, 0, 0), rl=(9, 0, 0))),               # the arms start to draw in
+        (1.00, _sp(body=((10, 0, 0), (0, -1.2, 0)), la=(-78, 34, -40), ra=(-78, -34, 40), ll=(-9, 0, 0), rl=(9, 0, 0))),               # the flex: elbows out, fists to the chest
+        (1.25, _sp(body=((-10, 0, 0), (0, 0.9, 0)), la=(-14, 0, -80), ra=(-14, 0, 80), ll=(-5, 0, 0), rl=(5, 0, 0))),                   # the snap open: chest up, arms thrown out, a little rise
+        (1.65, _sp(body=((-7, 0, 0), (0, 0.6, 0)), la=(-10, 0, -66), ra=(-10, 0, 66), ll=(-4, 0, 0), rl=(4, 0, 0))),                    # the hold
+        (2.30, _sp(body=((0, 0, 0), (0, 0, 0)), la=(2, 0, -16), ra=(2, 0, 16), ll=(0, 0, 0), rl=(0, 0, 0))),                            # settles into the power stance
+    ]
+    length = story[-1][0]
+    keys = []
+    steps = int(round(length / SAIYAN_STEP))
+    for n in range(steps + 1):
+        t = round(n * SAIYAN_STEP, 2)
+        for (t0, p0), (t1, p1) in zip(story, story[1:]):
+            if t0 <= t <= t1:
+                k = _smooth((t - t0) / (t1 - t0))
+                pose = {b: (_lerp3(p0[b][0], p1[b][0], k), _lerp3(p0[b][1], p1[b][1], k)) for b in SAIYAN_BONES}
+                break
+        a = _tremor(t)
+        if a > 0:
+            for i, b in enumerate(("left_arm", "right_arm", "body")):
+                ph = i * 2.1
+                rot = list(pose[b][0])
+                rot[0] += a * 0.55 * math.sin(t * 44.0 + ph)
+                rot[1] += a * 0.35 * math.sin(t * 38.0 + ph + 1.0)
+                rot[2] += a * 0.55 * math.sin(t * 41.0 + ph + 2.0)
+                pose[b] = (rot, pose[b][1])
+        keys.append((t, pose))
+    return clip(length, False, keys)
+
+
+SAIYAN_CLIPS = {"saiyan_charge": saiyan_charge()}
+CLIPS.update(SAIYAN_CLIPS)
+
+
+def append_saiyan():
+    """Adds (or refreshes) only the saiyan_* clips in the existing file and leaves every other clip exactly as it is on disk."""
+    path = os.path.normpath(OUT)
+    with open(path) as f:
+        data = json.load(f)
+    data["animations"].update(SAIYAN_CLIPS)
+    with open(path, "w", newline="\n") as f:
+        json.dump(data, f, indent=1)
+        f.write("\n")
+    print("appended", len(SAIYAN_CLIPS), "saiyan clips to", path)
+
+
 
 def main():
     if "--append-dance" in sys.argv:
@@ -347,6 +428,9 @@ def main():
         return
     if "--append-fire" in sys.argv:
         append_fire()
+        return
+    if "--append-saiyan" in sys.argv:
+        append_saiyan()
         return
     data = {"format_version": "1.8.0", "animations": CLIPS}
     os.makedirs(os.path.dirname(OUT), exist_ok=True)

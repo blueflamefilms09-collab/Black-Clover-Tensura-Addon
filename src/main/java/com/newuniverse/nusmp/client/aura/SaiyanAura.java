@@ -36,7 +36,7 @@ public final class SaiyanAura {
     private static final float FEET = 1.5f;
     private static final int FB = PropDraw.FULL_BRIGHT, WHITE = 0xFFFFFF;
 
-    private static ResourceLocation flame, bolt, ring, eye, fur, tail, crack, pillar, streak, chip, spark;
+    private static ResourceLocation flame, bolt, ring, eye, fur, tail, crack, pillar, streak, chip, spark, burstTex;
     private static final float[] TMP = new float[7];
 
     /** The armour pieces, in draw order (tools/gen_saiyan_armor_geo.py). The delays and fly-in directions are the Djinn full equip's, like the other armours. */
@@ -63,6 +63,7 @@ public final class SaiyanAura {
         pillar = AuraRender.tex("particle/saiyan_pillar");
         streak = AuraRender.tex("particle/saiyan_streak");
         chip = AuraRender.tex("particle/saiyan_chip");
+        burstTex = AuraRender.tex("particle/saiyan_burst");
         spark = AuraRender.tex("particle/saiyan_spark");
         PlayerAuraClient.register(Aura.SAIYAN, SaiyanAura::paint);
     }
@@ -112,18 +113,20 @@ public final class SaiyanAura {
         int n = Math.min(k.flames(), SaiyanLook.MAX_FLAMES);
         if (far) n /= 2;
         if (n <= 0) return;
-        float grow = SaiyanLookClientConfig.chargeUp() ? 0.35f + 0.65f * smooth(SaiyanLook.gather(t)) : 1f;
+        float grow = SaiyanLookClientConfig.chargeUp() ? 0.12f + 0.88f * smooth(SaiyanLook.gather(t)) : 1f;
+        // the aura trembles with the effort while the power gathers and for a moment after the burst (0 in the steady state)
+        float shk = SaiyanLookClientConfig.chargeUp() ? SaiyanLook.shake(t) * 0.07f : 0f;
         // the body haze: one tall soft column of the form's colour behind the flames, so the aura has a silhouette
         VertexConsumer hz = c.buffers().getBuffer(AuraRender.additive(pillar));
         float hh = (k.auraH() + 0.5f) * 0.5f * grow;
-        upright(pose, hz, 0f, FEET - hh, 0f, 0.85f, hh, SealDraw.argb(0.26f * f * pulse, k.glow()));
+        upright(pose, hz, shk * Mth.sin(age * 2.9f), FEET - hh, shk * Mth.cos(age * 3.3f), 0.85f, hh, SealDraw.argb(0.26f * f * pulse, k.glow()));
         VertexConsumer vc = c.buffers().getBuffer(AuraRender.additive(flame));
         for (int i = 0; i < n; i++) {
             float a = i * Mth.TWO_PI / n + age * 0.012f * (i % 2 == 0 ? 1f : -1f) + SaiyanLook.hash(i) * 0.5f;
             float r = (i % 2 == 0 ? 0.52f : 0.80f) + 0.08f * Mth.sin(age * 0.1f + i * 1.7f);
             float h = SaiyanLook.flameHeight(k, i, age) * grow;
             float hw = (0.26f + 0.07f * SaiyanLook.hash(i + 7)) * (0.8f + 0.2f * grow);
-            upright(pose, vc, Mth.cos(a) * r, FEET - h * 0.5f - 0.04f, Mth.sin(a) * r * 0.9f, hw, h * 0.5f, SealDraw.argb(0.8f * f * pulse, k.glow()));
+            upright(pose, vc, Mth.cos(a) * r + shk * Mth.sin(age * 2.7f + i * 1.9f), FEET - h * 0.5f - 0.04f, Mth.sin(a) * r * 0.9f + shk * Mth.cos(age * 3.1f + i * 2.3f), hw, h * 0.5f, SealDraw.argb(0.8f * f * pulse, k.glow()));
         }
     }
 
@@ -190,6 +193,29 @@ public final class SaiyanAura {
     private static void chargeUp(PoseStack pose, AuraContext c, SaiyanLook.Look k, float t, float age, float f, boolean full, boolean far, boolean self1p) {
         float burst = k.burst(), flash = SaiyanLook.flash(t);
         int glow = k.glow(), hot = SealDraw.mix(glow, WHITE, 0.55f);
+
+        // the ray burst behind the Saiyan: a big radial backdrop of white-hot light that swells with the gathering, flares at the burst and fades out softly. Two layers turn against each other, and it
+        // sits a little behind the body (along the view) so the body stays in front of it. Never from the owner's own camera (it would fill the screen).
+        float halo = SaiyanLook.halo(t);
+        if (halo > 0.01f && !self1p) {
+            VertexConsumer vc = c.buffers().getBuffer(AuraRender.additive(burstTex));
+            float[] cam = SealDraw.CAM;
+            float bx = cam[6] * 0.9f, by = FEET - 1.15f + cam[7] * 0.9f, bz = cam[8] * 0.9f, size = SaiyanLook.haloSize(t, burst);
+            sprite(pose, vc, bx, by, bz, size, size, age * 0.012f, SealDraw.argb(0.85f * halo * f, SealDraw.mix(glow, WHITE, 0.3f)));
+            sprite(pose, vc, bx, by, bz, size * 0.62f, size * 0.62f, 0.5f - age * 0.02f, SealDraw.argb(0.7f * halo * f, SealDraw.mix(WHITE, glow, 0.15f)));
+        }
+
+        // the wind rising round the body (half as many streaks in the light version)
+        if (SaiyanLook.windAlpha(t) > 0.01f) {
+            VertexConsumer vc = c.buffers().getBuffer(AuraRender.additive(streak));
+            int col = SealDraw.mix(glow, WHITE, 0.45f);
+            for (int i = 0; i < SaiyanLook.MAX_WIND; i += far ? 2 : 1) {
+                SaiyanLook.wind(i, t, TMP);
+                if (TMP[3] < 0.02f) continue;
+                float hy = FEET - TMP[1], len = TMP[4];
+                strip(pose, vc, TMP[0], hy + len, TMP[2], TMP[0], hy, TMP[2], 0.07f, 0f, 1f, SealDraw.argb(0.8f * TMP[3] * f, col), FB);
+            }
+        }
 
         // the ground cracks, white-hot at the burst, cooling
         float cr = SaiyanLook.crackRadius(t, burst), ca = SaiyanLook.crackAlpha(t);

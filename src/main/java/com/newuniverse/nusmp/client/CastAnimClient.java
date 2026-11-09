@@ -45,6 +45,7 @@ public final class CastAnimClient {
     public static void receive(int entityId, String clip) {
         Minecraft mc = Minecraft.getInstance();
         if (mc.level == null) return;
+        if (com.newuniverse.nusmp.anim.CastAnim.SAIYAN_CHARGE.equals(clip) && !com.newuniverse.nusmp.client.aura.SaiyanLookClientConfig.chargeAnimation()) return;   // 3.71.0: the owner's setting
         for (Iterator<Integer> it = STATES.keySet().iterator(); it.hasNext(); ) if (mc.level.getEntity(it.next()) == null) it.remove();
         Entity e = mc.level.getEntity(entityId);
         if (e == null) return;

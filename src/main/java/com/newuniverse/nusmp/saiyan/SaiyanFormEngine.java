@@ -139,6 +139,7 @@ final class SaiyanFormEngine {
         Fx.sprayTinted(level, FxThemes.WORLD, FxSlot.SPARK, f.rgb() & 0xFFFFFF, 1.2f, p.getX(), p.getY() + 1.0, p.getZ(), 14, 0.5, 0.9, 0.5, 0.12);
         level.playSound(null, p.getX(), p.getY(), p.getZ(), SoundEvents.BEACON_ACTIVATE, SoundSource.PLAYERS, 0.6f, 1.3f);
         lookOn(p, f);
+        if (p.connection != null) com.newuniverse.nusmp.anim.CastAnim.play(p, com.newuniverse.nusmp.anim.CastAnim.SAIYAN_CHARGE);   // 3.71.0: the power-up body animation (one small packet to the players who can see it)
         return true;
     }
 

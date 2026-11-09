@@ -24,6 +24,9 @@ public final class CastAnim {
     public static final String FIRE_BAT_SWING = "fire_bat_swing", FIRE_PUNCH_A = "fire_punch_a", FIRE_PUNCH_B = "fire_punch_b", FIRE_PUNCH_FINISHER = "fire_punch_finisher",
             FIRE_CHARGE = "fire_charge", FIRE_CHARGE_RELEASE = "fire_charge_release";
 
+    /** 3.71.0: the Saiyan power-up (46 ticks, tools/gen_cast_animations.py --append-saiyan); {@code saiyan.SaiyanFormEngine} plays it when a form starts. */
+    public static final String SAIYAN_CHARGE = "saiyan_charge";
+
     /** Plays a clip on the player for everyone who sees them; a one-shot returns to the previous loop when it finishes. */
     public static void play(ServerPlayer p, String clip) {
         PacketDistributor.sendToPlayersTrackingEntityAndSelf(p, new CastAnimPayload(p.getId(), clip));
