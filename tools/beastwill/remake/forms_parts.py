@@ -202,8 +202,8 @@ def leg_straight(c, side, pn, thigh="body", toes=3):
     cu(c, pn, (x, 6.6, 0), (4.4, 1.2, 4.4), "dark")                         # the knee joint, dark and narrow
     cu(c, pn, (x, 3.9, .2), (4.9, 4.4, 4.9), "plate")                       # greave, flared
     cu(c, pn, (x, 6.5, -2.5), (2.8, 1.4, .8), "gold")                       # knee cap
-    cu(c, pn, (x, 1.0, -1.8), (4.4, 2.0, 6.6), thigh)
-    for k in range(toes): sg(c, pn, (x + (k - (toes - 1) / 2) * 1.3, .6, -5.0), (x + (k - (toes - 1) / 2) * 1.4, .4, -6.5), .8, .8, "claw", pad=.3)
+    cu(c, pn, (x, .9, -1.2), (4.2, 1.8, 5.2), thigh)                         # 3.77.0: a shorter, lower foot
+    for k in range(toes): sg(c, pn, (x + (k - (toes - 1) / 2) * 1.3, .6, -3.8), (x + (k - (toes - 1) / 2) * 1.4, .4, -5.3), .8, .8, "claw", pad=.3)
 
 
 def leg_digi(c, side, pn, thigh="body", hoof=False, toes=3, tall=1.0):
@@ -217,13 +217,14 @@ def leg_digi(c, side, pn, thigh="body", hoof=False, toes=3, tall=1.0):
     sg(c, pn, (x, 6.8, -1.2), (x, 4.2, 0.4), 4.2, 4.2, "plate", dt=1, pad=0)
     cu(c, pn, (x, 7.9, -3.4), (2.6, 1.3, .9), "gold")
     if hoof:
-        cu(c, pn, (x, 1.1, -1.4), (4.2, 2.2, 5.4), "dark")
-        cu(c, pn, (x, .6, -3.4), (4.0, 1.2, 2.6), "claw")
+        cu(c, pn, (x, 1.1, -1.0), (4.0, 2.2, 4.4), "dark")
+        cu(c, pn, (x, .6, -2.6), (3.8, 1.2, 2.2), "claw")
     else:
-        cu(c, pn, (x, 1.0, -1.4), (3.8, 2.0, 6.0), thigh)
-        cu(c, pn, (x, .8, -3.6), (3.6, 1.5, 2.6), "belly")
-        for k in range(toes): sg(c, pn, (x + (k - (toes - 1) / 2) * 1.2, .6, -4.8), (x + (k - (toes - 1) / 2) * 1.3, .4, -6.4), .7, .8, "claw", pad=.3)
-    sg(c, pn, (x, 4.0, 2.2), (x, 1.8, 3.8), .9, 1.0, "claw", pad=.2)
+        cu(c, pn, (x, .9, -1.0), (3.6, 1.8, 4.8), thigh)                     # 3.77.0: a shorter paw
+        cu(c, pn, (x, .8, -2.8), (3.4, 1.4, 2.2), "belly")
+        for k in range(toes): sg(c, pn, (x + (k - (toes - 1) / 2) * 1.2, .6, -3.8), (x + (k - (toes - 1) / 2) * 1.3, .4, -5.3), .7, .8, "claw", pad=.3)
+    cu(c, pn, (x, 3.4, 2.3), (2.8, 2.6, 1.8), "back", rot=(-25, 0, 0), dt=-1)       # 3.77.0: the hock, a joint standing out behind the heel
+    sg(c, pn, (x, 4.0, 2.6), (x, 1.8, 4.2), .9, 1.0, "claw", pad=.2)
 
 
 # ====================================================================================================================== ears, horns
@@ -281,7 +282,7 @@ def tail(c, kind, base=(0, 13.0, 2.6), length=1.0):
     b = V(*base)
     if kind in ("whip", "thick", "spiked", "tuft", "curl", "serpent", "serpent2", "fluke", "bushy", "flame", "feather", "fox"):
         n = 10                                                       # more, smaller steps = a smoother curve (3.61.0)
-        thick = 1.3 * {"whip": 1.8, "thick": 4.4, "spiked": 4.0, "tuft": 2.4, "curl": 2.4, "serpent": 3.0, "serpent2": 2.6, "fluke": 3.8, "bushy": 3.6, "flame": 3.0, "feather": 2.6, "fox": 3.2}[kind]
+        thick = 1.45 * {"whip": 1.8, "thick": 4.4, "spiked": 4.0, "tuft": 2.4, "curl": 2.4, "serpent": 3.0, "serpent2": 2.6, "fluke": 3.8, "bushy": 3.6, "flame": 3.0, "feather": 2.6, "fox": 3.2}[kind]
         L = {"whip": 22, "thick": 19, "spiked": 22, "tuft": 17, "curl": 15, "serpent": 22, "serpent2": 23, "fluke": 18, "bushy": 18, "flame": 18, "feather": 16, "fox": 17}[kind] * length
         droop = {"whip": 8, "thick": 5, "spiked": 6, "tuft": 6, "curl": -3, "serpent": 6, "serpent2": 4, "fluke": 1, "bushy": 3, "flame": 3, "feather": 4, "fox": 4}[kind]
         sides = (-1, 1) if kind == "serpent2" else ((-1, 0, 1) if kind == "fox" else (0,))      # 3.76.0: the kitsune fans three tails

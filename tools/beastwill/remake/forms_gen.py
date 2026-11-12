@@ -169,6 +169,8 @@ def build(wid):
         emblem(c, kind=st.get("emblem", "gem"))
     belt_and_cloth(c, front_cloth=wid not in ("hafgufa_will", "kraken_will", "scylla_charybdis_will"))
     if sp.get("spikes"): spine_ridge(c, size=st.get("spine", 2.2))
+    elif wid != "hafgufa_will":                                               # 3.77.0: every back has a ridge that breaks the box outline: fur, a dorsal fin, leaves or scale plates
+        spine_ridge(c, n=4, size=1.9, mat="mane" if sp.get("mane") else ("membrane" if st.get("shoulder") == "fin" else ("leaf" if kind == "plant" else "plate")))
     # ---- arms
     arm(c, 1, "armL", pauldron_kind=st.get("shoulder", "slab"), spiked=bool(sp.get("spikes")), fin=bool(sp.get("fins")))
     arm(c, -1, "armR", pauldron_kind=st.get("shoulder", "slab"), spiked=bool(sp.get("spikes")), fin=bool(sp.get("fins")))
@@ -199,7 +201,7 @@ def build(wid):
             sc.def_bone(nb, base, None, [("rot", 2, 4.0 * (1 if sx >= 0 else -1), 2, i * .17), ("rot", 0, 5.0, 2, i * .17 + .2)])
             with sc.in_bone(nb):
                 cn(c, "body", pts, taper(3.0, 2.2, 5), taper(3.0, 2.2, 5), "body", mat2="belly")
-                head(c, sub, tip + V(0, 1.0, -1.2), .62, "body", ear="none")
+                head(c, sub, tip + V(0, 1.0, -1.2), .62, "body", ear="none", lite=n > 2)          # 3.77.0: the two side heads of Cerberus are whole heads; four or seven are the light version
     if sp.get("waistheads"):
         for i in range(sp["waistheads"]):
             a = math.radians(-100 + i * 200 / (sp["waistheads"] - 1))
@@ -210,7 +212,7 @@ def build(wid):
             sc.def_bone(wb, base, None, [("rot", 0, 6.0, 2, i * .21), ("rot", 2, 5.0 * (1 if math.sin(a) >= 0 else -1), 2, i * .21 + .3)])
             with sc.in_bone(wb):
                 cn(c, "body", pts, taper(3.0, 2.2, 4), taper(3.0, 2.2, 4), "body", mat2="back")
-                head(c, "wolf", tip + V(0, .2, -.8), .55, "body", ear="none")
+                head(c, "wolf", tip + V(0, .2, -.8), .55, "body", ear="none", lite=True)
     if sp.get("tentacles"):
         for i in range(sp["tentacles"]):
             a = -78 + i * 156 / (sp["tentacles"] - 1)
