@@ -9,7 +9,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write        # 3.83.1: the hero weapon contact sheets are committed to the pushed branch (docs/previews/ingame), nothing else is written
 
 jobs:
   shot:
@@ -80,6 +80,44 @@ jobs:
                       print('SHOT', b[i:i + 200])
                   print('SHOTEND')
           PY
+
+      - name: Hero weapon contact sheets, committed to this branch (docs/previews/ingame)
+        if: always()
+        run: |
+          python3 - <<'PY'
+          import glob, os
+          from PIL import Image, ImageDraw
+          os.makedirs('docs/previews/ingame', exist_ok=True)
+          for kind, tile in (('hero3', (300, 300)), ('hero1', (320, 240))):
+              files = sorted(glob.glob('run/client/clientshot/%s_*.png' % kind))
+              if not files:
+                  continue
+              cols = 7
+              rows = (len(files) + cols - 1) // cols
+              sheet = Image.new('RGB', (cols * tile[0], rows * (tile[1] + 14)), (16, 18, 24))
+              d = ImageDraw.Draw(sheet)
+              for i, p in enumerate(files):
+                  im = Image.open(p).convert('RGB')
+                  w, h = im.size
+                  if kind == 'hero3':                                    # the player in the middle of the frame
+                      box = (w // 2 - 240, h // 2 - 260, w // 2 + 240, h // 2 + 220)
+                  else:                                                  # first person: the right half, where the hand is
+                      box = (w // 2 - 80, h // 4, w, h)
+                  c = im.crop(box).resize(tile, Image.LANCZOS)
+                  x, y = (i % cols) * tile[0], (i // cols) * (tile[1] + 14)
+                  sheet.paste(c, (x, y + 14))
+                  d.text((x + 4, y + 2), os.path.basename(p)[len(kind) + 1:-4], fill=(255, 220, 120))
+              sheet.save('docs/previews/ingame/%s.jpg' % ('hero_third_person' if kind == 'hero3' else 'hero_first_person'), quality=82)
+              print('sheet', kind, sheet.size, len(files))
+          PY
+          if ls docs/previews/ingame/*.jpg >/dev/null 2>&1; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add docs/previews/ingame
+            git commit -m "In-game screenshots of the hero weapons (from the client screenshot run) [skip ci]" || exit 0
+            git pull --rebase --autostash origin "${GITHUB_REF_NAME}"
+            git push origin HEAD:"${GITHUB_REF_NAME}"
+          fi
 
       - name: What the driver and the worn layer said
         if: always()

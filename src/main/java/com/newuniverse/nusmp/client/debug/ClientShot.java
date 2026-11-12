@@ -47,6 +47,11 @@ public final class ClientShot {
     private static final boolean ON = System.getProperty("nusmp.clientshot") != null;
     private static final long LIMIT_NANOS = 40L * 60L * 1_000_000_000L;
     private static final String[] ARMOUR = {"armor.head mask_of_mind_melting", "armor.feet ruby_boots_of_planestriding"};
+    /** 3.83.1: the 21 hero weapons, held one after the other and photographed in third and first person (the Blender-made models had only been seen in the software preview). */
+    private static final String[] HERO = {"legendary_sword", "legendary_shield", "legendary_spear", "legendary_bow", "vassal_hammer", "vassal_claw", "vassal_axe", "vassal_whip", "vassal_staff",
+            "vassal_gauntlet", "vassal_projectile", "vassal_katana", "vassal_scythe", "vassal_fan", "vassal_harpoon", "vassal_chain", "vassal_carriage", "vassal_book", "vassal_mirror",
+            "vassal_instrument", "vassal_sewing_set"};
+    private static int heroI;
 
     private static long started;
     private static int ticks, stage, wait, joinedTicks;
@@ -201,6 +206,31 @@ public final class ClientShot {
                 undeadI++;
                 stage = 7;
                 wait = 10;
+            }
+            case 9 -> {                                                                      // 3.83.1: the hero weapons in the main hand
+                if (heroI >= HERO.length) {
+                    mc.player.connection.sendCommand("item replace entity @s weapon.mainhand with minecraft:air");
+                    stage = 12;
+                    break;
+                }
+                mc.player.connection.sendCommand("item replace entity @s weapon.mainhand with nusmp:" + HERO[heroI]);
+                mc.options.setCameraType(CameraType.THIRD_PERSON_FRONT);
+                mc.setScreen(null);
+                stage = 10;
+                wait = 30;
+            }
+            case 10 -> {
+                say("hero " + HERO[heroI] + ": main hand holds " + p.getMainHandItem().getItem());
+                shot(mc, "hero3_" + HERO[heroI]);
+                mc.options.setCameraType(CameraType.FIRST_PERSON);
+                stage = 11;
+                wait = 20;
+            }
+            case 11 -> {
+                shot(mc, "hero1_" + HERO[heroI]);
+                heroI++;
+                stage = 9;
+                wait = 4;
             }
             default -> {
                 say("done");
