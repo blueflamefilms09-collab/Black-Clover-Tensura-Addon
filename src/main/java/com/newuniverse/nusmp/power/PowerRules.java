@@ -13,6 +13,19 @@ public final class PowerRules {
         return Math.max(1.0, Math.max(clean(djinn), Math.max(clean(beast), clean(vassal))));
     }
 
+    /** The smallest lead the four Legendary Weapons keep over the Seven Star and Vassal Weapons, whatever the settings say. */
+    public static final double MIN_LEGENDARY_MARGIN = 1.1;
+
+    /**
+     * 3.78.1, the owner's rule "the four Legendary Weapons always stay on top": a Legendary Weapon's factor is the Vassal factor times the margin, and the margin is never under
+     * {@link #MIN_LEGENDARY_MARGIN}. With the Vassal raise switched off (1) the Legendary Weapons get no raise either: the hero weapon buff's own Holy factor already keeps them ahead.
+     */
+    public static double legendary(double vassal, double margin) {
+        double v = clean(vassal);
+        if (v <= 1.0) return 1.0;
+        return v * Math.max(MIN_LEGENDARY_MARGIN, Double.isNaN(margin) ? MIN_LEGENDARY_MARGIN : Math.min(margin, 100.0));      // no upper clamp at the Vassal cap: even at vassalFactor 1000 the lead holds
+    }
+
     private static double clean(double f) { return Double.isNaN(f) || f < 1.0 ? 1.0 : Math.min(f, 1000.0); }
 
     /** The blow after the raise. {@code pvpShare}: the most of a player's maximum health one raised blow may take (0.4 = 40 %); a blow that was already larger is left as it was. */

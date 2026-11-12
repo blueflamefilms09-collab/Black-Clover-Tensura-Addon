@@ -18,8 +18,8 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
 
 /**
- * Why: the 3.74.0 power raise on the server, on the damage event only (no tick, no packet, no state): a player whose Djinn is out, who holds a Beast Will phase, or who has a Seven Star / Vassal
- * Weapon out deals {@link PowerRules#factor} times the damage, held at the PvP hit cap against players; a Djinn bearer or Beast Will holder takes {@code damageTakenFactor} of what hits them.
+ * Why: the 3.74.0 power raise on the server, on the damage event only (no tick, no packet, no state): a player whose Djinn is out, who holds a Beast Will phase, or who has a hero weapon
+ * out (Seven Star / Vassal, and since 3.78.1 the four Legendary Weapons with a larger factor so they stay on top) deals {@link PowerRules#factor} times the damage, held at the PvP hit cap against players; a Djinn bearer or Beast Will holder takes {@code damageTakenFactor} of what hits them.
  * LOW priority: after the hero weapon buff and the relic riders have set their amounts, before the LOWEST listeners (boss caps, shields that read the final blow). Cost: for a player with none of
  * the three, two attachment lookups; nothing per tick.
  */
@@ -33,7 +33,7 @@ public final class PowerEvents {
         SafeCast.tick("power.boost", () -> {
             LivingEntity target = e.getEntity();
             if (e.getSource().getEntity() instanceof ServerPlayer dealer && dealer != target) {
-                double f = PowerRules.factor(djinnOut(dealer) ? PowerConfig.djinn() : 1.0, beastHeld(dealer) ? PowerConfig.beastWill() : 1.0, vassalOut(dealer) ? PowerConfig.vassal() : 1.0);
+                double f = Math.max(PowerRules.factor(djinnOut(dealer) ? PowerConfig.djinn() : 1.0, beastHeld(dealer) ? PowerConfig.beastWill() : 1.0, 1.0), heroFactor(dealer));      // the hero factor is taken as it is (a Legendary one may pass the 1000 clamp of the others)
                 if (f > 1.0) e.setAmount(PowerRules.dealt(e.getAmount(), f, target instanceof Player, target.getMaxHealth(), NUGameRules.pvpHitCap(target.level())));
             }
             if (target instanceof ServerPlayer p && (djinnOut(p) || beastHeld(p))) e.setAmount(PowerRules.taken(e.getAmount(), PowerConfig.taken()));
@@ -53,12 +53,13 @@ public final class PowerEvents {
         return s != null && !s.active.isEmpty() && s.phase > 0;
     }
 
-    /** A Seven Star or Vassal Weapon is out (the bond is not Holy and the weapon's stack is in the hand). */
-    static boolean vassalOut(ServerPlayer p) {
-        if (!HeroBonds.has(p)) return false;
+    /** The factor of the hero weapon in the hand: the Vassal factor for a Seven Star or Vassal Weapon, the larger Legendary factor for one of the four Holy Weapons, 1 with none out. */
+    static double heroFactor(ServerPlayer p) {
+        if (!HeroBonds.has(p)) return 1.0;
         HeroKind k = HeroBonds.kindOf(p);
-        if (k == null || k.isHoly()) return false;
+        if (k == null) return 1.0;
         HeroCtx c = HeroCtx.of(p);
-        return c != null && !c.stack.isEmpty();
+        if (c == null || c.stack.isEmpty()) return 1.0;
+        return k.isHoly() ? PowerConfig.legendary() : PowerConfig.vassal();
     }
 }

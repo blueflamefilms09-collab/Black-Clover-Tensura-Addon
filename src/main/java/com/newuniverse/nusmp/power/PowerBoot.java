@@ -28,7 +28,8 @@ public final class PowerBoot {
             if (PowerRules.dealt(10f, 25, true, 20f, 0.4) != 10f) return Result.fail("a blow already over the PvP cap was changed");
             if (PowerRules.dealt(2f, 25, true, 20f, 0.4) != 8f) return Result.fail("a player took more than the PvP cap from a raised blow");
             if (PowerRules.taken(10f, 0.5) != 5f || PowerRules.taken(10f, 7) != 10f) return Result.fail("the damage a wielder takes left [0, as it was]");
-            return Result.ok("power: djinn x" + PowerConfig.djinn() + ", beast will x" + PowerConfig.beastWill() + ", vassal x" + PowerConfig.vassal() + ", largest wins, PvP capped, taken x" + PowerConfig.taken());
+            if (PowerRules.legendary(25, 0.2) < 25 * PowerRules.MIN_LEGENDARY_MARGIN - 1e-9 || PowerConfig.legendary() <= PowerConfig.vassal() && PowerConfig.vassal() > 1.0) return Result.fail("a Vassal Weapon could pass a Legendary one");
+            return Result.ok("power: legendary x" + PowerConfig.legendary() + ", djinn x" + PowerConfig.djinn() + ", beast will x" + PowerConfig.beastWill() + ", vassal x" + PowerConfig.vassal() + ", largest wins, PvP capped, taken x" + PowerConfig.taken());
         });
     }
 }

@@ -26,4 +26,13 @@ class PowerRulesTest {
         assertEquals(10f, PowerRules.taken(10f, 3.0), 1e-4);
         assertEquals(0f, PowerRules.taken(10f, -1.0), 1e-4);
     }
+
+    @Test void theLegendaryWeaponsAlwaysStayAboveTheVassalOnes() {
+        assertEquals(37.5, PowerRules.legendary(25, 1.5), 1e-9);
+        assertEquals(27.5, PowerRules.legendary(25, 0.1), 1e-9);            // a margin under the floor is lifted to it
+        assertEquals(27.5, PowerRules.legendary(25, Double.NaN), 1e-9);
+        assertEquals(1.0, PowerRules.legendary(1, 5), 1e-9);                // no Vassal raise: no Legendary raise either
+        for (double v : new double[] {1.01, 2, 25, 400, 1000}) for (double m : new double[] {-3, 0, 1, 1.1, 1.5, 100})
+            assertTrue(PowerRules.legendary(v, m) >= v * PowerRules.MIN_LEGENDARY_MARGIN - 1e-9, v + " x " + m);
+    }
 }

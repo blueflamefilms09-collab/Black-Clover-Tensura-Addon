@@ -1,5 +1,9 @@
 # Changelog
 
+## [3.78.1] — the four Legendary Weapons always stay on top
+- FIXED (the owner's rule): since 3.74.0 the Seven Star and Vassal Weapons out-damaged the Legendary Shield, Sword, Spear and Bow. A Legendary wielder now gets `vassalFactor x legendaryMargin` (default 25 x 1.5 = 37.5) from the same power hook, on top of the hero weapon buff's Holy factor: 450 times a bare blow at level 1 against the Vassal Weapons' 200. New setting `legendaryMargin` in `nusmp-power-server.toml`; it can not be set under 1.1, so no setting puts a Vassal Weapon ahead.
+- KEPT: every other number; the PvP hit cap. Tests: `PowerRulesTest`, self-test `power.rules`.
+
 ## [3.78.0] — Beast Will heads: fierce faces instead of cartoon ones
 - REPLACED (asked for: the Beast Wills "look ass"; second pass after 3.76.0): **the heads of all 27 Beast Will forms**. Every head now has a projecting muzzle or snout, a separate open lower jaw with fangs, cheek wedges, slanted brow ridges over narrow glowing eyes and a sloped forehead: long muzzles for the wolves and the fox, sabre fangs for the panther and the lion, a wedge snout with a nose horn and jaw frill for the dragons, forked tongues for the serpents, tusks for the boar, a nose ring for the Minotaur, a hooked beak for the Wind-Skimmer. The cartoon faces are gone: the Kraken has slit eyes and hanging arms, the Hafgufa a tusked maw, the Elderwood a bark mask. The side heads of Cerberus, Hydra, Typhon, Yamata and Scylla are real heads.
 - Silhouette: shorter feet and paws, a visible hock on the digitigrade legs, a ridge down the back, slightly thicker tails. The figure is NOT taller or leaner: the form wraps the player's own body.

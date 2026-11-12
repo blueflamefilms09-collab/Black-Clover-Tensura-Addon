@@ -23,3 +23,7 @@ Blows, spells, techniques and arrows are all raised, because the factor sits on 
 **NEW**: package `power`, the config file, self-test `power.rules`. **REPLACED**: nothing. **KEPT**: every number of the three systems (the factor sits on top), the relic balance law, the PvP caps, boss caps (they run after this hook).
 
 **Not seen in a game.** The numbers are the owner's; the PvP cap is the mod's existing one.
+
+## The four Legendary Weapons always stay on top (3.78.1)
+
+The owner's rule. A wielder with the Shield, Sword, Spear or Bow out now gets `vassalFactor x legendaryMargin` (default 25 x 1.5 = 37.5) from the same hook, and the hero weapon buff's Holy factor still multiplies on top. `legendaryMargin` can not be set under 1.1 (`PowerRules.MIN_LEGENDARY_MARGIN`), so no combination of settings puts a Vassal Weapon ahead. With the defaults a level-1 wielder deals, against a bare blow: Vassal 4 x 2 x 25 = 200 times, Legendary 4 x 1.5 x 2 x 37.5 = 450 times; at weapon level 100 both double. With `vassalFactor = 1` neither is raised and the Legendary Weapons keep their 3.73.0 lead (x 1.5). Against players the PvP hit cap holds for both.
