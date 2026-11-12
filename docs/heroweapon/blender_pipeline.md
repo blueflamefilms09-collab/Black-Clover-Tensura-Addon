@@ -62,7 +62,15 @@ only their baked shapes are in the skin.
 
 Client drawing only. No server, network or tick cost. Worst case per weapon: 2800 quads per frame while it is on screen, as before.
 
-## Not verified
+## Seen in a game, and not
 
-Nothing was seen in a game: the hold in first and third person, the glow in the dark and the brightness of the baked skins under
-the game's own lighting were judged on the software preview only.
+Seen (3.83.4 to 3.83.7, the CI client screenshot run, `docs/previews/ingame/`): all 21 base looks in a real client under the game's own
+lighting, in the player's hand in first person and in third person, in an armour stand's hand and on an item display. Each is bound and
+summoned the way a player gets it (`/multiverse hero bind`, `/multiverse hero summon`). They draw textured and lit, none black, none missing.
+
+Not seen in a game: the curse looks, the bow's draw stages, the glow in the dark, the old models behind `classicHeroWeaponModels`, and a side
+view of the third-person hold (the run photographs the player from the front, where a weapon pointing at the camera looks short). The run
+uses a software GL driver, so colours and brightness on a real graphics card may differ slightly.
+
+To repeat the check: push a commit whose message contains `[clientshot]`; the run commits `hero_first_person.jpg`, `hero_third_person.jpg`
+and `hero_log.txt` to the pushed branch.

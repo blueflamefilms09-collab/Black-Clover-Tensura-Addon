@@ -1,5 +1,9 @@
 # Changelog
 
+## [3.83.8] — the pipeline doc says what was seen in a game
+- CHANGED (docs only): `docs/heroweapon/blender_pipeline.md` now lists what the in-game runs of 3.83.4 to 3.83.7 showed (all 21 base looks in the player's hand in first and third person, on an armour stand and on an item display: textured, lit, none missing) and what is still unseen in a game (the curse looks, the bow's draw stages, the glow in the dark, the classic models, a side view of the hold).
+- KEPT: everything in the game.
+
 ## [3.83.7] — in-game run: a clean third-person picture
 - CHANGED (checking, not gameplay): the run hides the chat for the hero weapon part (the command replies covered the player) and crops the third-person pictures closer.
 - Seen in game in 3.83.6, in the player's own hand in first person: all 21 Blender-made hero weapons, textured and lit, none missing, none black.
