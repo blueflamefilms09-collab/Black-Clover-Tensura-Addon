@@ -214,6 +214,10 @@ public final class ClientShot {
                     mc.player.connection.sendCommand("gamemode survival");
                     mc.player.connection.sendCommand("kill @e[type=!minecraft:player]");
                     mc.player.connection.sendCommand("time set noon");
+                    // 3.83.4: an armour stand and an item display beside the view hold the same weapon: the hero rules only act on players, so the model is seen in a hand whatever the bond does
+                    mc.player.connection.sendCommand("tp @s ~ ~ ~ 0 0");
+                    mc.player.connection.sendCommand("summon minecraft:armor_stand ~-1.7 ~ ~3 {ShowArms:1b,NoBasePlate:1b,NoGravity:1b,Rotation:[180f,0f],Tags:[\"shot\"]}");
+                    mc.player.connection.sendCommand("summon minecraft:item_display ~1.7 ~1.3 ~3 {Tags:[\"shot\"],item_display:\"thirdperson_righthand\",Rotation:[180f,0f],item:{id:\"minecraft:stick\",count:1}}");
                     wait = 60;
                     break;
                 }
@@ -227,6 +231,8 @@ public final class ClientShot {
                 mc.player.connection.sendCommand("multiverse hero release @s");
                 mc.player.connection.sendCommand("multiverse hero bind @s " + HERO[heroI]);
                 mc.player.connection.sendCommand("multiverse hero summon");
+                mc.player.connection.sendCommand("item replace entity @e[type=minecraft:armor_stand,tag=shot,limit=1] weapon.mainhand with nusmp:" + HERO[heroI]);
+                mc.player.connection.sendCommand("data merge entity @e[type=minecraft:item_display,tag=shot,limit=1] {item:{id:\"nusmp:" + HERO[heroI] + "\",count:1}}");
                 mc.options.setCameraType(CameraType.THIRD_PERSON_FRONT);
                 mc.setScreen(null);
                 stage = 10;
@@ -234,6 +240,7 @@ public final class ClientShot {
             }
             case 10 -> {
                 say("hero " + HERO[heroI] + ": main hand holds " + p.getMainHandItem().getItem());
+                heroServerState(mc, p, HERO[heroI]);
                 shot(mc, "hero3_" + HERO[heroI]);
                 mc.options.setCameraType(CameraType.FIRST_PERSON);
                 stage = 11;
@@ -260,6 +267,35 @@ public final class ClientShot {
                 wait = 1_000_000;
             }
         }
+    }
+
+    /** 3.83.4: what the integrated server holds for the player after the summon (mode, bond, selected slot, every stack), so an empty hand can be explained from the log. */
+    private static void heroServerState(Minecraft mc, Player p, String id) {
+        var server = mc.getSingleplayerServer();
+        if (server == null) {
+            say("hero " + id + " server: no integrated server");
+            return;
+        }
+        server.execute(() -> {
+            try {
+                var sp = server.getPlayerList().getPlayer(p.getUUID());
+                if (sp == null) {
+                    say("hero " + id + " server: no server player");
+                    return;
+                }
+                var b = com.newuniverse.nusmp.heroweapon.bond.HeroBonds.of(sp);
+                var inv = sp.getInventory();
+                StringBuilder sb = new StringBuilder();
+                for (int i = 0; i < inv.getContainerSize(); i++) {
+                    var st = inv.getItem(i);
+                    if (!st.isEmpty()) sb.append(i).append('=').append(st.getItem()).append(' ');
+                }
+                say("hero " + id + " server: mode " + sp.gameMode.getGameModeForPlayer() + ", bound " + b.isBound() + ", kind " + b.kind() + ", summoned " + b.summoned() + ", selected " + inv.selected
+                        + ", stacks [" + sb.toString().trim() + "]");
+            } catch (RuntimeException ex) {
+                LOG.error("[clientshot] hero {} server state threw", id, ex);
+            }
+        });
     }
 
     /** Any screen the mod opens on joining (a questionnaire, a notice) is closed so the camera can see the body. */

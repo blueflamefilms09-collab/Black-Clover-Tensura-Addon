@@ -1,5 +1,9 @@
 # Changelog
 
+## [3.83.4] — the in-game run explains itself, and shows each hero weapon on an armour stand
+- CHANGED (checking, not gameplay): the run of 3.83.3 bound and summoned every weapon (the game said so), but the hand stayed empty and the log did not say why. The run now writes what the server holds after each summon (game mode, bond, selected slot, every stack) and commits those lines as `docs/previews/ingame/hero_log.txt`. Beside the view it also puts an armour stand and an item display holding the same weapon: the hero rules only act on players, so the model is seen in a hand whatever the bond does.
+- KEPT: everything in the game.
+
 ## [3.83.3] — the in-game screenshot run bonds the player to each hero weapon
 - FIXED (checking, not gameplay): the run of 3.83.2 still showed empty hands. A hero weapon given as a plain item is wiped from a player who is not bound to it, in creative mode too. The run now does what a player does: for each weapon it releases the bond, binds the player to that weapon and summons it (`/multiverse hero release | bind | summon`), in survival mode, then takes the two pictures.
 - KEPT: everything in the game.

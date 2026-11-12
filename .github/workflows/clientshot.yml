@@ -88,11 +88,11 @@ jobs:
           import glob, os
           from PIL import Image, ImageDraw
           os.makedirs('docs/previews/ingame', exist_ok=True)
-          for kind, tile in (('hero3', (360, 360)), ('hero1', (400, 300))):
+          for kind, tile in (('hero3', (360, 360)), ('hero1', (640, 360))):
               files = sorted(glob.glob('run/client/clientshot/%s_*.png' % kind))
               if not files:
                   continue
-              cols = 7
+              cols = 7 if kind == 'hero3' else 3
               rows = (len(files) + cols - 1) // cols
               sheet = Image.new('RGB', (cols * tile[0], rows * (tile[1] + 14)), (16, 18, 24))
               d = ImageDraw.Draw(sheet)
@@ -102,7 +102,7 @@ jobs:
                   if kind == 'hero3':                                    # the player in the middle of the frame
                       box = (w // 2 - 260, h // 2 - 280, w // 2 + 260, h // 2 + 240)
                   else:                                                  # first person: the right half, where the hand is
-                      box = (w // 2 - 160, h // 6, w, h)
+                      box = (0, 0, w, h)                                 # the whole frame: the armour stand left, the item display right, the hand below
                   c = im.crop(box).resize(tile, Image.LANCZOS)
                   x, y = (i % cols) * tile[0], (i // cols) * (tile[1] + 14)
                   sheet.paste(c, (x, y + 14))
@@ -110,6 +110,7 @@ jobs:
               sheet.save('docs/previews/ingame/%s.jpg' % ('hero_third_person' if kind == 'hero3' else 'hero_first_person'), quality=82)
               print('sheet', kind, sheet.size, len(files))
           PY
+          grep -E "clientshot\] hero|\[CHAT\].*(hero|Legendary|Vassal|Bound|Released|summon)|nusmp.*heroweapon|WeaponRenderer|MeshCap" client.log | cut -c1-600 | head -400 > docs/previews/ingame/hero_log.txt || true
           if ls docs/previews/ingame/*.jpg >/dev/null 2>&1; then
             git config user.name "github-actions[bot]"
             git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
