@@ -81,8 +81,8 @@ final class DjinnMagic {
         }
         ServerLevel l = p.serverLevel();
         Vec3 at = target.position().add(0, target.getBbHeight() * 0.6, 0);
-        com.newuniverse.nusmp.particle.rukh.RukhFx.spray(l, com.newuniverse.nusmp.relics.djinn.DjinnFx.align(d.affinity()), at.x, at.y, at.z, 6, 0.25, 0.3, 0.25, 0.05);
-        com.newuniverse.nusmp.particle.rukh.RukhFx.spray(l, com.newuniverse.nusmp.relics.Fx.align(d.glow()), at.x, at.y, at.z, 4, 0.25, 0.3, 0.25, 0.02);
+        DjinnFx.themed(l, d.affinity(), at.x, at.y, at.z, 6, 0.25, 0.3, 0.25, 0.05);
+        DjinnFx.tinted(l, d.glow(), at.x, at.y, at.z, 4, 0.25, 0.3, 0.25, 0.02);
     }
 
     private static void special(ServerPlayer p, Djinn d, Djinn.Trait t, LivingEntity target, float total, float bonus, int streak) {
@@ -159,7 +159,7 @@ final class DjinnMagic {
         Vec3 from = p.position().add(0, p.getBbHeight() + 0.5, 0), to = best.position().add(0, best.getBbHeight() * 0.6, 0);
         Fx.damage(p, best, 2.0f, DjinnFx.damageType(d.affinity()));
         DjinnFx.line(p.serverLevel(), from, to, DjinnFx.particle(d.affinity()), 14);
-        com.newuniverse.nusmp.particle.rukh.RukhFx.spray(p.serverLevel(), com.newuniverse.nusmp.relics.Fx.align(d.glow()), to.x, to.y, to.z, 5, 0.2, 0.2, 0.2, 0.02);
+        DjinnFx.tinted(p.serverLevel(), d.glow(), to.x, to.y, to.z, 5, 0.2, 0.2, 0.2, 0.02);
         sound(p.serverLevel(), best.blockPosition(), SoundEvents.AMETHYST_BLOCK_CHIME, 0.7f, 1.5f);
     }
 
@@ -204,6 +204,7 @@ final class DjinnMagic {
         DjinnFx.ring(l, c, R, d.color(), (int) (R * 5), 0.12);
         DjinnFx.ring(l, c, Math.max(1.0, R * prog), d.glow(), (int) (R * 4 * Math.max(0.3, prog)), 0.22);
         if (age == 0 || age == 32) Fx.ring(l, c, R * 0.6, d.glow());
+        if (age == 0) DjinnFx.mesh(l, d, DjinnLook.Moment.ZONE, c, null, R);                                                              // 3.75.0: the element's field under the spell while it charges
         switch (x.shape()) {
             case BOLTS -> { for (Vec3 pt : r.points) DjinnFx.ring(l, pt, 1.6, prog > 0.6 ? d.glow() : d.color(), 12, 0.15); }
             case COLUMNS -> { for (Vec3 pt : r.points) DjinnFx.ring(l, pt, 2.6, prog > 0.6 ? d.glow() : d.color(), 16, 0.15); }
@@ -218,7 +219,7 @@ final class DjinnMagic {
                 for (int arm = 0; arm < 3; arm++)
                     for (int i = 0; i < 8; i++) {
                         double rr = R * (1.0 - i / 9.0), a = age * 0.25 + arm * 2.0944 + i * 0.5;
-                        com.newuniverse.nusmp.particle.rukh.RukhFx.spray(l, com.newuniverse.nusmp.relics.djinn.DjinnFx.align(d.affinity()), c.x + Math.cos(a) * rr, c.y + 0.3 + i * 0.35, c.z + Math.sin(a) * rr, 1, 0, 0, 0, 0);
+                        DjinnFx.themed(l, d.affinity(), c.x + Math.cos(a) * rr, c.y + 0.3 + i * 0.35, c.z + Math.sin(a) * rr, 1, 0, 0, 0, 0);
                     }
             }
             case HEAL_FIELD -> DjinnFx.ring(l, c, R * 0.5, 0xA8FF9A, 24, 0.3);
@@ -230,7 +231,7 @@ final class DjinnMagic {
                 }
                 for (int i = 0; i <= 12; i++) {
                     double[] v = WeaponGeo.turn(r.dir.x, r.dir.z, -CONE_HALF_ANGLE + 2 * CONE_HALF_ANGLE * i / 12.0);
-                    com.newuniverse.nusmp.particle.rukh.RukhFx.spray(l, com.newuniverse.nusmp.relics.Fx.align(d.glow()), c.x + v[0] * R, c.y + 0.2, c.z + v[1] * R, 1, 0, 0, 0, 0);
+                    DjinnFx.tinted(l, d.glow(), c.x + v[0] * R, c.y + 0.2, c.z + v[1] * R, 1, 0, 0, 0, 0);
                 }
             }
             case QUAKE -> { for (int k = 1; k < 3; k++) DjinnFx.ring(l, c, R * k / 3.0, k == 2 ? d.glow() : d.color(), (int) (R * 2.5 * k), 0.15); }
@@ -242,8 +243,8 @@ final class DjinnMagic {
             case IMPLODE -> DjinnFx.ring(l, c, Math.max(1.0, R * (1.0 - prog) + 1.0), d.glow(), 28, 0.3);
             default -> { }
         }
-        com.newuniverse.nusmp.particle.rukh.RukhFx.spray(l, com.newuniverse.nusmp.relics.djinn.DjinnFx.align(d.affinity()), p.getX(), p.getY() + 1.0, p.getZ(), 6, 0.4, 0.8, 0.4, 0.03);
-        com.newuniverse.nusmp.particle.rukh.RukhFx.spray(l, com.newuniverse.nusmp.relics.Fx.align(d.glow()), p.getX(), p.getY() + 2.0, p.getZ(), 4, 0.3, 0.5, 0.3, 0.0);
+        DjinnFx.themed(l, d.affinity(), p.getX(), p.getY() + 1.0, p.getZ(), 6, 0.4, 0.8, 0.4, 0.03);
+        DjinnFx.tinted(l, d.glow(), p.getX(), p.getY() + 2.0, p.getZ(), 4, 0.3, 0.5, 0.3, 0.0);
         if (age % 20 == 0) sound(l, p.blockPosition(), SoundEvents.AMETHYST_BLOCK_RESONATE, 2.2f, 0.6f + (float) prog);
     }
 
@@ -299,6 +300,7 @@ final class DjinnMagic {
     private static void burst(ServerPlayer p, DjinnEngine.Run r, double shove, double lift, boolean wave) {
         ServerLevel l = p.serverLevel();
         Djinn d = r.djinn;
+        DjinnFx.mesh(l, d, DjinnLook.Moment.IMPACT, r.centre.add(0, 0.6, 0), null, d.extreme().radius() * 0.4);                 // 3.75.0: the element's own blast
         double R = d.extreme().radius();
         Vec3 c = r.centre;
         for (LivingEntity t : DjinnTargets.foesNear(p, c, R)) {
@@ -308,13 +310,14 @@ final class DjinnMagic {
         for (int k = 1; k <= 3; k++) DjinnFx.ring(l, c, R * k / 3.0, k == 3 ? d.glow() : d.color(), (int) (R * 4 * k / 2.0), 0.25 * k);
         com.newuniverse.nusmp.particle.rukh.RukhFx.spray(l, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, c.x, c.y + 1, c.z, 1, 0, 0, 0, 0);
         com.newuniverse.nusmp.particle.rukh.RukhFx.spray(l, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, c.x, c.y + 0.8, c.z, wave ? 80 : 6, R * 0.35, 0.6, R * 0.35, 0.1);
-        com.newuniverse.nusmp.particle.rukh.RukhFx.spray(l, com.newuniverse.nusmp.relics.djinn.DjinnFx.align(d.affinity()), c.x, c.y + 0.8, c.z, 60, R * 0.4, 0.8, R * 0.4, 0.12);
+        DjinnFx.themed(l, d.affinity(), c.x, c.y + 0.8, c.z, 60, R * 0.4, 0.8, R * 0.4, 0.12);
         sound(l, p.blockPosition(), SoundEvents.GENERIC_EXPLODE.value(), 3.0f, 0.7f);
     }
 
     private static void bolt(ServerPlayer p, DjinnEngine.Run r, Vec3 at) {
         ServerLevel l = p.serverLevel();
         Djinn d = r.djinn;
+        DjinnFx.mesh(l, d, DjinnLook.Moment.STRIKE, at, null, 3.0);                                                                // 3.75.0: a pillar, a bolt, roots ... of the element
         for (LivingEntity t : DjinnTargets.foesNear(p, at, 3.0)) hit(p, r, t, 0.7, 2);
         DjinnFx.column(l, at.x, at.y, at.y + 16, at.z, com.newuniverse.nusmp.particle.rukh.RukhParticles.light(), 32);
         DjinnFx.column(l, at.x, at.y, at.y + 12, at.z, DjinnFx.dust(d.glow(), 1.6f), 24);
@@ -327,6 +330,7 @@ final class DjinnMagic {
     private static void column(ServerPlayer p, DjinnEngine.Run r, Vec3 at) {
         ServerLevel l = p.serverLevel();
         Djinn d = r.djinn;
+        DjinnFx.mesh(l, d, DjinnLook.Moment.STRIKE, at, null, 2.6);
         for (LivingEntity t : DjinnTargets.foesNear(p, at, 2.6)) if (hit(p, r, t, 1.0, 1)) push(t, at, 0.2, 0.9);
         DjinnFx.column(l, at.x, at.y, at.y + 14, at.z, DjinnFx.particle(d.affinity()), 36);
         DjinnFx.column(l, at.x, at.y, at.y + 14, at.z, DjinnFx.dust(d.glow(), 1.8f), 30);
@@ -337,6 +341,7 @@ final class DjinnMagic {
     private static void vortex(ServerPlayer p, DjinnEngine.Run r) {
         ServerLevel l = p.serverLevel();
         Djinn d = r.djinn;
+        DjinnFx.mesh(l, d, DjinnLook.Moment.ZONE, r.centre, null, d.extreme().radius());
         double R = d.extreme().radius();
         Vec3 c = r.centre;
         for (LivingEntity t : DjinnTargets.foesNear(p, c, R)) {
@@ -349,7 +354,7 @@ final class DjinnMagic {
         for (int arm = 0; arm < 4; arm++)
             for (int i = 0; i < 14; i++) {
                 double rr = R * (1.0 - i / 15.0), a = arm * Math.PI / 2 + i * 0.55;
-                com.newuniverse.nusmp.particle.rukh.RukhFx.spray(l, com.newuniverse.nusmp.relics.djinn.DjinnFx.align(d.affinity()), c.x + Math.cos(a) * rr, c.y + 0.3 + i * 0.45, c.z + Math.sin(a) * rr, 2, 0.1, 0.1, 0.1, 0.02);
+                DjinnFx.themed(l, d.affinity(), c.x + Math.cos(a) * rr, c.y + 0.3 + i * 0.45, c.z + Math.sin(a) * rr, 2, 0.1, 0.1, 0.1, 0.02);
             }
         DjinnFx.ring(l, c, R, d.glow(), (int) (R * 5), 0.3);
         com.newuniverse.nusmp.particle.rukh.RukhFx.spray(l, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, c.x, c.y + 1, c.z, 2, 1.0, 0.5, 1.0, 0.0);
@@ -359,6 +364,7 @@ final class DjinnMagic {
     private static void beam(ServerPlayer p, DjinnEngine.Run r) {
         ServerLevel l = p.serverLevel();
         Djinn d = r.djinn;
+        DjinnFx.mesh(l, d, DjinnLook.Moment.CAST, r.centre.add(0, 1.0, 0), r.centre.add(r.dir.scale(d.extreme().radius())).add(0, 1.0, 0), 2.2);
         double R = d.extreme().radius();
         Vec3 c = r.centre, dir = r.dir;
         for (LivingEntity t : DjinnTargets.foesNear(p, c.add(dir.scale(R * 0.5)), R * 0.5 + 3.0)) {
@@ -413,6 +419,7 @@ final class DjinnMagic {
     private static void drop(ServerPlayer p, DjinnEngine.Run r, Vec3 at) {
         ServerLevel l = p.serverLevel();
         Djinn d = r.djinn;
+        DjinnFx.mesh(l, d, DjinnLook.Moment.STRIKE, at, null, 2.6);
         for (LivingEntity t : DjinnTargets.foesNear(p, at, 2.6)) hit(p, r, t, 0.5, 2);
         DjinnFx.column(l, at.x, at.y, at.y + 12, at.z, DjinnFx.particle(d.affinity()), 24);
         DjinnFx.column(l, at.x, at.y, at.y + 10, at.z, DjinnFx.dust(d.glow(), 1.5f), 18);
@@ -425,6 +432,7 @@ final class DjinnMagic {
     private static void cone(ServerPlayer p, DjinnEngine.Run r) {
         ServerLevel l = p.serverLevel();
         Djinn d = r.djinn;
+        DjinnFx.mesh(l, d, DjinnLook.Moment.CAST, r.centre.add(0, 1.0, 0), r.centre.add(r.dir.scale(d.extreme().radius())).add(0, 1.0, 0), 2.6);
         double R = d.extreme().radius();
         Vec3 c = r.centre, dir = r.dir;
         for (LivingEntity t : DjinnTargets.foesNear(p, c, R)) {
@@ -448,6 +456,7 @@ final class DjinnMagic {
     private static void quake(ServerPlayer p, DjinnEngine.Run r, int step) {
         ServerLevel l = p.serverLevel();
         Djinn d = r.djinn;
+        DjinnFx.mesh(l, d, DjinnLook.Moment.IMPACT, r.centre.add(0, 0.3, 0), null, d.extreme().radius() * (step + 1) / 3.0 * 0.4);
         double R = d.extreme().radius(), inner = R * step / 3.0, outer = R * (step + 1) / 3.0;
         Vec3 c = r.centre;
         for (LivingEntity t : DjinnTargets.foesNear(p, c, R)) {
@@ -457,7 +466,7 @@ final class DjinnMagic {
         }
         DjinnFx.ring(l, c, outer, d.glow(), (int) (outer * 5), 0.3);
         DjinnFx.ring(l, c, Math.max(1.0, outer - 1.0), d.color(), (int) (outer * 4), 0.1);
-        com.newuniverse.nusmp.particle.rukh.RukhFx.spray(l, com.newuniverse.nusmp.relics.djinn.DjinnFx.align(d.affinity()), c.x, c.y + 0.5, c.z, 50, outer * 0.4, 0.5, outer * 0.4, 0.25);
+        DjinnFx.themed(l, d.affinity(), c.x, c.y + 0.5, c.z, 50, outer * 0.4, 0.5, outer * 0.4, 0.25);
         sound(l, p.blockPosition(), SoundEvents.GENERIC_EXPLODE.value(), 2.0f, 0.5f + 0.2f * step);
         sound(l, p.blockPosition(), SoundEvents.IRON_GOLEM_ATTACK, 1.6f, 0.5f);
     }
@@ -466,6 +475,10 @@ final class DjinnMagic {
     private static void cross(ServerPlayer p, DjinnEngine.Run r) {
         ServerLevel l = p.serverLevel();
         Djinn d = r.djinn;
+        for (int q = 0; q < 4; q++) {                                                                                                // 3.75.0: one arm of the element along each axis
+            Vec3 arm = q < 2 ? r.dir : new Vec3(-r.dir.z, 0, r.dir.x);
+            DjinnFx.mesh(l, d, DjinnLook.Moment.CAST, r.centre.add(0, 1.0, 0), r.centre.add(arm.scale((q % 2 == 0 ? 1 : -1) * d.extreme().radius())).add(0, 1.0, 0), 1.8);
+        }
         double R = d.extreme().radius();
         Vec3 c = r.centre, dir = r.dir, side = new Vec3(-dir.z, 0, dir.x);
         for (LivingEntity t : DjinnTargets.foesNear(p, c, R + 2.0)) {
@@ -490,6 +503,7 @@ final class DjinnMagic {
     private static void implode(ServerPlayer p, DjinnEngine.Run r, int step) {
         ServerLevel l = p.serverLevel();
         Djinn d = r.djinn;
+        if (step == 1) DjinnFx.mesh(l, d, DjinnLook.Moment.IMPACT, r.centre.add(0, 0.6, 0), null, d.extreme().radius() * 0.4);
         double R = d.extreme().radius();
         Vec3 c = r.centre;
         if (step == 0) {
@@ -497,7 +511,7 @@ final class DjinnMagic {
             for (int arm = 0; arm < 4; arm++)
                 for (int i = 0; i < 10; i++) {
                     double rr = R * (1.0 - i / 11.0), a = arm * Math.PI / 2 + i * 0.5;
-                    com.newuniverse.nusmp.particle.rukh.RukhFx.spray(l, com.newuniverse.nusmp.relics.djinn.DjinnFx.align(d.affinity()), c.x + Math.cos(a) * rr, c.y + 0.4 + i * 0.2, c.z + Math.sin(a) * rr, 1, 0.1, 0.1, 0.1, 0.02);
+                    DjinnFx.themed(l, d.affinity(), c.x + Math.cos(a) * rr, c.y + 0.4 + i * 0.2, c.z + Math.sin(a) * rr, 1, 0.1, 0.1, 0.1, 0.02);
                 }
             DjinnFx.ring(l, c, R, d.color(), (int) (R * 4), 0.3);
             sound(l, p.blockPosition(), SoundEvents.WARDEN_SONIC_CHARGE, 2.0f, 0.8f);
@@ -509,14 +523,15 @@ final class DjinnMagic {
         }
         for (int k = 1; k <= 3; k++) DjinnFx.ring(l, c, R * k / 3.0, k == 3 ? d.glow() : d.color(), (int) (R * 4 * k / 2.0), 0.25 * k);
         com.newuniverse.nusmp.particle.rukh.RukhFx.spray(l, com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT, c.x, c.y + 1, c.z, 2, 0, 0, 0, 0);
-        com.newuniverse.nusmp.particle.rukh.RukhFx.spray(l, com.newuniverse.nusmp.relics.djinn.DjinnFx.align(d.affinity()), c.x, c.y + 0.8, c.z, 60, R * 0.4, 0.8, R * 0.4, 0.2);
+        DjinnFx.themed(l, d.affinity(), c.x, c.y + 0.8, c.z, 60, R * 0.4, 0.8, R * 0.4, 0.2);
         sound(l, p.blockPosition(), SoundEvents.GENERIC_EXPLODE.value(), 3.0f, 0.6f);
     }
 
     /** A bolt-shaped decoration for the cast's first moment: the caster flares. */
     static void flare(ServerPlayer p, Djinn d, ParticleOptions extra) {
         ServerLevel l = p.serverLevel();
-        com.newuniverse.nusmp.particle.rukh.RukhFx.spray(l, com.newuniverse.nusmp.relics.Fx.alignOf(extra), p.getX(), p.getY() + 1, p.getZ(), 24, 0.5, 0.9, 0.5, 0.05);
-        com.newuniverse.nusmp.particle.rukh.RukhFx.spray(l, com.newuniverse.nusmp.relics.Fx.align(d.glow()), p.getX(), p.getY() + 1, p.getZ(), 24, 0.5, 0.9, 0.5, 0.0);
+        DjinnFx.themed(l, d.affinity(), p.getX(), p.getY() + 1, p.getZ(), 24, 0.5, 0.9, 0.5, 0.05);                         // 3.75.0: was a Rukh whatever the element ('extra' is kept for the callers)
+        DjinnFx.mesh(l, d, DjinnLook.Moment.IMPACT, p.position().add(0, 1.0, 0), null, 1.6);
+        DjinnFx.tinted(l, d.glow(), p.getX(), p.getY() + 1, p.getZ(), 24, 0.5, 0.9, 0.5, 0.0);
     }
 }

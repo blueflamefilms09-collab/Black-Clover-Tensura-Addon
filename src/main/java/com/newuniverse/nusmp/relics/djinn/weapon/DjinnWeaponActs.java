@@ -274,8 +274,8 @@ public final class DjinnWeaponActs {
             double a = -half + (2 * half) * i / (n - 1);
             double[] v = WeaponGeo.turn(c.flat.x, c.flat.z, a);
             double x = c.p.getX() + v[0] * radius, z = c.p.getZ() + v[1] * radius, y = c.p.getY() + 1.0;
-            com.newuniverse.nusmp.particle.rukh.RukhFx.spray(c.l, com.newuniverse.nusmp.relics.Fx.alignOf(o), x, y, z, 1, 0.05, 0.1, 0.05, 0.01);
-            if (i % 2 == 0) com.newuniverse.nusmp.particle.rukh.RukhFx.spray(c.l, com.newuniverse.nusmp.relics.Fx.align(rgb), x, y - 0.3, z, 1, 0.05, 0.05, 0.05, 0.0);
+            DjinnWeaponBridge.emit(c.l, o, x, y, z, 1, 0.05, 0.1, 0.05, 0.01);
+            if (i % 2 == 0) DjinnWeaponBridge.tinted(c.l, rgb, x, y - 0.3, z, 1, 0.05, 0.05, 0.05, 0.0);
         }
     }
 
@@ -284,6 +284,7 @@ public final class DjinnWeaponActs {
     private static void rings(Ctx c, Vec3 at, double r) {
         DjinnWeaponBridge.ring(c.l, at, r, c.color, (int) (r * 6), 0.15);
         DjinnWeaponBridge.ring(c.l, at, r * 0.6, c.glow, (int) (r * 4), 0.3);
+        if (!c.dark) DjinnWeaponBridge.mesh(c.l, c.d, com.newuniverse.nusmp.relics.djinn.DjinnLook.Moment.IMPACT, at.add(0, 0.5, 0), null, r * 0.4);     // 3.75.0: the element's own blast (a dark Djinn keeps the black Rukh)
     }
 
     // ================================================================ BAAL
@@ -362,7 +363,7 @@ public final class DjinnWeaponActs {
         for (int i = -3; i <= 3; i++) {
             Vec3 base = c.feet().add(c.flat.scale(3.2)).add(side.scale(i));
             DjinnWeaponBridge.column(c.l, base.x, base.y, base.y + 2.4, base.z, com.newuniverse.nusmp.particle.rukh.RukhParticles.light(), 7);
-            com.newuniverse.nusmp.particle.rukh.RukhFx.spray(c.l, com.newuniverse.nusmp.relics.Fx.align(c.glow), base.x, base.y + 1.2, base.z, 2, 0.1, 0.6, 0.1, 0.0);
+            DjinnWeaponBridge.tinted(c.l, c.glow, base.x, base.y + 1.2, base.z, 2, 0.1, 0.6, 0.1, 0.0);
         }
         snd(c, SoundEvents.BLAZE_SHOOT, 1.2f, 0.7f);
     }
@@ -683,7 +684,7 @@ public final class DjinnWeaponActs {
                 double r = 3.0 + i * 1.0, bend = side * Math.sin(i / 6.0 * Math.PI) * 1.2;
                 Vec3 pt = new Vec3(px + v[0] * r + nx * bend, c.p.getY() + 1.0, pz + v[1] * r + nz * bend);
                 if (prev != null) DjinnWeaponBridge.line(c.l, prev, pt, com.newuniverse.nusmp.particle.rukh.RukhParticles.light(), 6);
-                com.newuniverse.nusmp.particle.rukh.RukhFx.spray(c.l, com.newuniverse.nusmp.relics.Fx.align(c.glow), pt.x, pt.y, pt.z, 1, 0.05, 0.05, 0.05, 0.0);
+                DjinnWeaponBridge.tinted(c.l, c.glow, pt.x, pt.y, pt.z, 1, 0.05, 0.05, 0.05, 0.0);
                 prev = pt;
             }
         }
@@ -867,7 +868,7 @@ public final class DjinnWeaponActs {
                 for (int i = -3; i <= 3; i++) {
                     Vec3 base = c.feet().add(c.flat.scale(Math.min(c.range, 3.5))).add(side.scale(i * step));
                     DjinnWeaponBridge.column(c.l, base.x, base.y, base.y + 2.4, base.z, c.fx(), 7);
-                    com.newuniverse.nusmp.particle.rukh.RukhFx.spray(c.l, com.newuniverse.nusmp.relics.Fx.align(c.glow), base.x, base.y + 1.2, base.z, 2, 0.1, 0.6, 0.1, 0.0);
+                    DjinnWeaponBridge.tinted(c.l, c.glow, base.x, base.y + 1.2, base.z, 2, 0.1, 0.6, 0.1, 0.0);
                 }
                 themeSound(c, 1.3f, 0.7f);
             }

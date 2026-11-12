@@ -43,7 +43,16 @@ public final class DjinnWeaponBridge {
 
     public static ParticleOptions particle(Djinn d) { return DjinnFx.particle(d.affinity()); }
 
-    public static net.minecraft.core.particles.SimpleParticleType dust(int rgb, float size) { return DjinnFx.dust(rgb, size); }
+    public static ParticleOptions dust(int rgb, float size) { return DjinnFx.dust(rgb, size); }
+
+    /** 3.75.0: drop-in for {@code RukhFx.spray(l, Fx.align(rgb), ..)}: the colour's element, dyed. */
+    public static void tinted(ServerLevel l, int rgb, double x, double y, double z, int count, double dx, double dy, double dz, double speed) { DjinnFx.tinted(l, rgb, x, y, z, count, dx, dy, dz, speed); }
+
+    /** 3.75.0: sends an option from {@link #particle} or {@link #dust}: themed ones through the particle facade, a Rukh as before. */
+    public static void emit(ServerLevel l, ParticleOptions o, double x, double y, double z, int count, double dx, double dy, double dz, double speed) { DjinnFx.emit(l, o, x, y, z, count, dx, dy, dz, speed); }
+
+    /** 3.75.0: the mesh effect of the Djinn's element at a moment of a technique. */
+    public static void mesh(ServerLevel l, Djinn d, DjinnLook.Moment m, Vec3 at, Vec3 to, double power) { DjinnFx.mesh(l, d, m, at, to, power); }
 
     public static void ring(ServerLevel l, Vec3 at, double radius, int rgb, int points, double lift) { DjinnFx.ring(l, at, radius, rgb, points, lift); }
 

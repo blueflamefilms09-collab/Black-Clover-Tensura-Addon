@@ -410,4 +410,10 @@ public final class Fx {
     public static void stream(Level l, ThemeKey k, Vec3 from, Vec3 to, int perTick) {
         stream(l, k, from, to, FxTone.LIGHT, perTick);
     }
+
+    /** 3.75.0: sends a ready-made option of this facade (from {@code options(..)}, possibly re-dyed with {@code TintedParticleOptions.with}) through the same switch and budgets; at most 96 a call. */
+    public static int sprayOptions(Level l, ParticleOptions o, double x, double y, double z, int count, double dx, double dy, double dz, double speed) {
+        if (l == null || o == null) return 0;
+        return dispatch(l, o, fallback(FxSlot.MOTE, toneOf(o)), count, x, y, z, dx, dy, dz, speed, 96);
+    }
 }

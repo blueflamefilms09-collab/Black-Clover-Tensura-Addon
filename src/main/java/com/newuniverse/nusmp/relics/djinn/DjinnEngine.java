@@ -528,7 +528,7 @@ public final class DjinnEngine {
         double a = (now - r.rukhStart) * 0.35;
         for (int i = 0; i < 3; i++) {
             double ang = a + i * 2.094, rr = 3.5 - ((now - r.rukhStart + i * 6) % 24) / 24.0 * 3.0;
-            com.newuniverse.nusmp.particle.rukh.RukhFx.spray(l, com.newuniverse.nusmp.relics.Fx.align(d.glow()), p.getX() + Math.cos(ang) * rr, p.getY() + 0.3 + rr * 0.4, p.getZ() + Math.sin(ang) * rr, 1, 0, 0, 0, 0);
+            DjinnFx.tinted(l, d.glow(), p.getX() + Math.cos(ang) * rr, p.getY() + 0.3 + rr * 0.4, p.getZ() + Math.sin(ang) * rr, 1, 0, 0, 0, 0);
         }
         if ((now - r.rukhStart) % 20 < 4) {
             double density = com.newuniverse.nusmp.mana.ManaLaw.density(l, p.blockPosition());
@@ -676,11 +676,11 @@ public final class DjinnEngine {
         ServerLevel l = p.serverLevel();
         boolean full = s.phase() >= DjinnPhaseRules.FULL;
         Vec3 hand = p.getEyePosition().add(p.getLookAngle().scale(0.8)).add(0, -0.5, 0);
-        com.newuniverse.nusmp.particle.rukh.RukhFx.spray(l, com.newuniverse.nusmp.relics.Fx.align(d.glow()), hand.x, hand.y, hand.z, 2, 0.1, 0.1, 0.1, 0.0);
-        com.newuniverse.nusmp.particle.rukh.RukhFx.spray(l, com.newuniverse.nusmp.relics.djinn.DjinnFx.align(d.affinity()), hand.x, hand.y, hand.z, 1, 0.12, 0.12, 0.12, 0.01);
+        DjinnFx.tinted(l, d.glow(), hand.x, hand.y, hand.z, 2, 0.1, 0.1, 0.1, 0.0);
+        DjinnFx.themed(l, d.affinity(), hand.x, hand.y, hand.z, 1, 0.12, 0.12, 0.12, 0.01);
         if (full) {
-            com.newuniverse.nusmp.particle.rukh.RukhFx.spray(l, com.newuniverse.nusmp.relics.djinn.DjinnFx.align(d.affinity()), p.getX(), p.getY() + 1.0, p.getZ(), 3, 0.4, 0.7, 0.4, 0.02);
-            com.newuniverse.nusmp.particle.rukh.RukhFx.spray(l, com.newuniverse.nusmp.relics.Fx.align(d.color()), p.getX(), p.getY() + 0.2, p.getZ(), 2, 0.3, 0.1, 0.3, 0.0);
+            DjinnFx.themed(l, d.affinity(), p.getX(), p.getY() + 1.0, p.getZ(), 3, 0.4, 0.7, 0.4, 0.02);
+            DjinnFx.tinted(l, d.color(), p.getX(), p.getY() + 0.2, p.getZ(), 2, 0.3, 0.1, 0.3, 0.0);
         }
     }
 

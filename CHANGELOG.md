@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.75.0] — a Djinn's magic is drawn in its own element
+- NEW: each of the eight kinds of Djinn magic has its own look (`DjinnLook`): Heat embers and fire pillars, Lightning sparks and bolts from the sky, Water droplets and crashes, Wind gales and tornadoes, Life leaves, blooms and roots, Strength rock, Sound rings, Light rays and pillars. The Extreme Magic gets a field while it charges and an element effect for every strike; equipping and the metal vessel's techniques get an element impact; every ring, line and aura uses the element's particles dyed in the Djinn's colour. Until now all 36 Djinn used the same white-gold Rukh. Preview: `docs/previews/djinn_look/djinn_elements.png`.
+- NEW: server setting `[djinnLook] typedVfx` in `nusmp-djinn-bind-server.toml` (true; false = the old look).
+- KEPT: every number and timing of the spells, the white Rukh flashes, the Dark Djinn's black Rukh.
+- Cost: the same particle counts as before; at most about 10 mesh-effect packets per Extreme Magic casting, 1 per equip or technique impact, all through the effect budget. Tests `DjinnLookTest`, self-test `djinn.look`. Doc `docs/djinn_look.md`.
+- This build also carries 3.74.0 (below), whose own build failed on the order of the smoke list (`boss.stats` must stay last before `tier`).
+
 ## [3.74.0] — Djinns, Beast Wills and Vassal Weapons 25 times stronger
 - NEW: one server-side power raise (`power/`, `nusmp-power-server.toml`, `[power]`): a player whose **Djinn is out** (Lesser Summon and up), who **holds a Beast Will phase**, or who has a **Seven Star / Vassal Weapon out** deals `djinnFactor` / `beastWillFactor` / `vassalFactor` (default 25 each) times the damage, on blows, spells, techniques and arrows alike. Several at once: the largest factor, never the product. Against players the raised blow is held at the existing PvP hit cap (40 % of the victim's maximum health). A Djinn bearer or Beast Will holder also takes `damageTakenFactor` (0.5) of every blow. `enabled = false` restores 3.73.0.
 - NOTE: the Vassal factor sits on top of the hero weapon buff, so Vassal Weapons now out-damage the four Legendary Weapons (which this release does not touch); `holyExtraFactor` in `nusmp-heroweapon-server.toml` raises those.

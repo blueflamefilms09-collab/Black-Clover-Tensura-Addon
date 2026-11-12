@@ -1,0 +1,591 @@
+{
+ "_comment": "3.75.0: the Djinn elements (DjinnLook): the IMPACT and STRIKE shape of each of the eight kinds of Djinn magic in the colour of its first Djinn. python tools/vfx_preview/preview.py djinn_<element>_<moment>",
+ "djinn_heat_impact": {
+  "layer": "FireV2Layer",
+  "shape": "FLAMEFX_BURST",
+  "from": [
+   0.0,
+   0.0,
+   6.0
+  ],
+  "to": [
+   0.0,
+   1.0,
+   6.0
+  ],
+  "power": 1.4,
+  "duration": 28,
+  "cam": [
+   -5.0,
+   2.6,
+   0.0
+  ],
+  "target": [
+   0,
+   1.0,
+   6
+  ],
+  "ages": [
+   3,
+   6,
+   10
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ],
+  "sky": [
+   0.3,
+   0.34,
+   0.44
+  ],
+  "color": "FFFF5A14"
+ },
+ "djinn_heat_strike": {
+  "layer": "FireSpellLayer",
+  "shape": "FIRE_PILLAR",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   1,
+   0
+  ],
+  "power": 1.0,
+  "duration": 30,
+  "cam": [
+   0,
+   2.0,
+   -7
+  ],
+  "target": [
+   0,
+   2,
+   0
+  ],
+  "ages": [
+   3,
+   10,
+   22
+  ],
+  "figures": [
+   [
+    2.5,
+    0,
+    1,
+    1.8
+   ]
+  ],
+  "sky": [
+   0.25,
+   0.22,
+   0.3
+  ],
+  "color": "FFFF5A14"
+ },
+ "djinn_lightning_impact": {
+  "layer": "LightningFxLayer",
+  "shape": "LIGHTNINGFX_BURST",
+  "from": [
+   0,
+   0,
+   6
+  ],
+  "to": [
+   0,
+   1,
+   6
+  ],
+  "power": 1.4,
+  "duration": 24,
+  "cam": [
+   -5.0,
+   2.6,
+   0.0
+  ],
+  "target": [
+   0,
+   1.0,
+   6
+  ],
+  "ages": [
+   1,
+   10,
+   22
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ],
+  "sky": [
+   0.3,
+   0.34,
+   0.44
+  ],
+  "color": "FF3C8CFF"
+ },
+ "djinn_water_impact": {
+  "layer": "WaterBcLayer",
+  "shape": "WATERFX_BURST",
+  "from": [
+   0.0,
+   0.0,
+   6.0
+  ],
+  "to": [
+   0.0,
+   1.0,
+   6.0
+  ],
+  "power": 1.4,
+  "duration": 28,
+  "cam": [
+   -4.6,
+   2.2,
+   2.0
+  ],
+  "target": [
+   0,
+   0.9,
+   6.0
+  ],
+  "ages": [
+   3,
+   8,
+   16
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0.5,
+    1.8
+   ]
+  ],
+  "color": "FF2D9CDB"
+ },
+ "djinn_water_strike": {
+  "layer": "WaterSpellLayer",
+  "shape": "WATER_BURST",
+  "from": [
+   0,
+   0.8,
+   0
+  ],
+  "to": [
+   0,
+   0.8,
+   0
+  ],
+  "power": 1.2,
+  "duration": 24,
+  "cam": [
+   0,
+   2.2,
+   -7
+  ],
+  "target": [
+   0,
+   0.8,
+   0
+  ],
+  "ages": [
+   3,
+   8,
+   16
+  ],
+  "figures": [
+   [
+    2.5,
+    0,
+    1,
+    1.8
+   ]
+  ],
+  "color": "FF2D9CDB"
+ },
+ "djinn_wind_impact": {
+  "layer": "WindMagicLayer",
+  "shape": "WIND_RING",
+  "from": [
+   0,
+   0.2,
+   0
+  ],
+  "to": [
+   0,
+   1,
+   0
+  ],
+  "power": 1.0,
+  "duration": 30,
+  "cam": [
+   0,
+   3.5,
+   -8
+  ],
+  "target": [
+   0,
+   1.2,
+   0
+  ],
+  "ages": [
+   4,
+   18,
+   26
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ],
+  "color": "FF62D6A0"
+ },
+ "djinn_wind_strike": {
+  "layer": "WindSpellLayer",
+  "shape": "WIND_TORNADO",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   1,
+   0
+  ],
+  "power": 5.0,
+  "duration": 100,
+  "cam": [
+   0,
+   4,
+   -17
+  ],
+  "target": [
+   0,
+   5,
+   0
+  ],
+  "ages": [
+   6,
+   40,
+   92
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ],
+   [
+    3,
+    0,
+    1,
+    1.8
+   ]
+  ],
+  "sky": [
+   0.42,
+   0.5,
+   0.58
+  ],
+  "color": "FF62D6A0"
+ },
+ "djinn_life_impact": {
+  "layer": "PlantLayer",
+  "shape": "PLANT_FX3",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   0,
+   0
+  ],
+  "power": 2.4,
+  "duration": 28,
+  "cam": [
+   5.5,
+   3.4,
+   7
+  ],
+  "target": [
+   0,
+   1.5,
+   0
+  ],
+  "ages": [
+   1,
+   10,
+   24
+  ],
+  "figures": [
+   [
+    2.2,
+    0,
+    1.0,
+    1.8
+   ]
+  ],
+  "color": "FF58C75A"
+ },
+ "djinn_life_strike": {
+  "layer": "LightTreeLayer",
+  "shape": "TREE_ROOTS",
+  "from": [
+   0,
+   0,
+   3
+  ],
+  "to": [
+   0,
+   1,
+   3
+  ],
+  "power": 4,
+  "duration": 60,
+  "cam": [
+   6,
+   4,
+   -3
+  ],
+  "target": [
+   0,
+   0.5,
+   3
+  ],
+  "ages": [
+   4,
+   10,
+   40
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ],
+  "seed": 12,
+  "color": "FF58C75A"
+ },
+ "djinn_strength_impact": {
+  "layer": "EarthFamilyLayer",
+  "shape": "EARTHFAM_BURST",
+  "color": "FFD43A3A",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   1,
+   0
+  ],
+  "power": 1.4,
+  "duration": 28,
+  "cam": [
+   5.5,
+   3.2,
+   6.5
+  ],
+  "target": [
+   0,
+   1.0,
+   0
+  ],
+  "ages": [
+   2,
+   9,
+   24
+  ],
+  "figures": [
+   [
+    2.2,
+    0,
+    0.6,
+    1.8
+   ]
+  ]
+ },
+ "djinn_strength_strike": {
+  "layer": "EarthFamilyLayer",
+  "shape": "EARTHFAM_BURST",
+  "color": "FFD43A3A",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   1,
+   0
+  ],
+  "power": 1.4,
+  "duration": 28,
+  "cam": [
+   5.5,
+   3.2,
+   6.5
+  ],
+  "target": [
+   0,
+   1.0,
+   0
+  ],
+  "ages": [
+   2,
+   9,
+   24
+  ],
+  "figures": [
+   [
+    2.2,
+    0,
+    0.6,
+    1.8
+   ]
+  ]
+ },
+ "djinn_sound_impact": {
+  "layer": "SoundFxLayer",
+  "shape": "SOUND_FX3",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   1,
+   0
+  ],
+  "power": 6.0,
+  "duration": 30,
+  "cam": [
+   4.5,
+   2.8,
+   4.5
+  ],
+  "target": [
+   0,
+   1.3,
+   0
+  ],
+  "ages": [
+   2,
+   20,
+   29
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ],
+  "color": "FFB77BFF"
+ },
+ "djinn_light_impact": {
+  "layer": "LightTreeLayer",
+  "shape": "LIGHT_FLARE",
+  "from": [
+   0,
+   1.5,
+   3
+  ],
+  "to": [
+   0,
+   1.5,
+   3
+  ],
+  "power": 1.2,
+  "duration": 12,
+  "cam": [
+   2,
+   1.8,
+   -2
+  ],
+  "target": [
+   0,
+   1.4,
+   3
+  ],
+  "ages": [
+   1,
+   4,
+   9
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ],
+  "color": "FFFFE070"
+ },
+ "djinn_light_strike": {
+  "layer": "ZogratisDivineLayer",
+  "shape": "DIVINE_PILLAR",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   1,
+   0
+  ],
+  "power": 3,
+  "duration": 30,
+  "color": "FFFFE070",
+  "seed": 12345,
+  "cam": [
+   8,
+   5,
+   8
+  ],
+  "target": [
+   0,
+   4,
+   0
+  ],
+  "ages": [
+   3,
+   20,
+   28
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    -3,
+    1.8
+   ]
+  ]
+ }
+}

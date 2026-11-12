@@ -1,5 +1,12 @@
 package com.newuniverse.nusmp.relics.djinn;
 
+import com.newuniverse.nusmp.particle.fx.FxSlot;
+import com.newuniverse.nusmp.particle.fx.FxTone;
+import com.newuniverse.nusmp.particle.fx.ThemeKey;
+import com.newuniverse.nusmp.particle.fx.TintedParticleOptions;
+import com.newuniverse.nusmp.particle.rukh.RukhFx;
+import com.newuniverse.nusmp.vfx.VfxShape;
+import com.newuniverse.nusmp.vfx.VfxSpawn;
 import io.github.manasmods.tensura.registry.attribute.TensuraAttributes;
 import net.minecraft.core.Holder;
 import net.minecraft.core.particles.ParticleOptions;
@@ -51,12 +58,74 @@ final class DjinnFx {
         return com.newuniverse.nusmp.particle.rukh.RukhFx.Alignment.LIGHT;
     }
 
+    // ---------------------------------------------------------------- 3.75.0: each element in its own look (DjinnLook); typedVfx = false gives the Rukh back
+    private static final ThemeKey[] KEYS = new ThemeKey[Affinity.values().length];
+    private static final VfxShape[][] SHAPES = new VfxShape[Affinity.values().length][DjinnLook.Moment.values().length];
+
+    static {
+        for (Affinity a : Affinity.values()) {
+            KEYS[a.ordinal()] = ThemeKey.of(DjinnLook.theme(a));
+            for (DjinnLook.Moment m : DjinnLook.Moment.values()) {
+                try {
+                    SHAPES[a.ordinal()][m.ordinal()] = VfxShape.valueOf(DjinnLook.shape(a, m));
+                } catch (IllegalArgumentException unknown) {
+                    SHAPES[a.ordinal()][m.ordinal()] = null;                                 // a shape that was renamed: that moment simply has no mesh
+                }
+            }
+        }
+    }
+
+    static boolean typed() { return DjinnBindConfig.typedVfx(); }
+
+    /** The element's own mote (an ember, a spark, a droplet ...); the Light Rukh with typedVfx off. */
     static ParticleOptions particle(Affinity a) {
+        if (a != null && typed()) {
+            ParticleOptions o = com.newuniverse.nusmp.particle.fx.Fx.options(KEYS[a.ordinal()], FxSlot.MOTE);
+            if (o != null) return o;
+        }
         return com.newuniverse.nusmp.particle.rukh.RukhParticles.of(align(a));
     }
 
-    static net.minecraft.core.particles.SimpleParticleType dust(int rgb, float size) {
+    /** A Djinn's colour as a particle: the accent particle of its element dyed with that colour; a Rukh for a colour no Djinn owns, or with typedVfx off. */
+    static ParticleOptions dust(int rgb, float size) {
+        Affinity a = typed() ? DjinnLook.affinityOf(rgb) : null;
+        if (a != null && com.newuniverse.nusmp.particle.fx.Fx.options(KEYS[a.ordinal()], FxSlot.ACCENT) instanceof TintedParticleOptions t) return t.with(rgb & 0xFFFFFF, Mth.clamp(size, 0.5f, 2.5f));
         return com.newuniverse.nusmp.relics.Fx.dust(rgb, size);
+    }
+
+    /** Sends one of the options above: the themed ones through the particle facade (its switch and budgets), a Rukh through the Rukh emitter as before. */
+    static void emit(ServerLevel l, ParticleOptions o, double x, double y, double z, int count, double dx, double dy, double dz, double speed) {
+        if (o instanceof TintedParticleOptions) com.newuniverse.nusmp.particle.fx.Fx.sprayOptions(l, o, x, y, z, count, dx, dy, dz, speed);
+        else RukhFx.spray(l, com.newuniverse.nusmp.relics.Fx.alignOf(o), x, y, z, count, dx, dy, dz, speed);
+    }
+
+    /** Drop-in for {@code RukhFx.spray(l, align(affinity), ..)}: the element's motes, at most 12 a call like the Rukh. */
+    static void themed(ServerLevel l, Affinity a, double x, double y, double z, int count, double dx, double dy, double dz, double speed) {
+        if (a != null && typed()) com.newuniverse.nusmp.particle.fx.Fx.spray(l, KEYS[a.ordinal()], FxTone.LIGHT, x, y, z, count, dx, dy, dz, speed);
+        else RukhFx.spray(l, align(a), x, y, z, count, dx, dy, dz, speed);
+    }
+
+    /** Drop-in for {@code RukhFx.spray(l, Fx.align(rgb), ..)}: the colour's element, dyed; a Rukh for a colour no Djinn owns. */
+    static void tinted(ServerLevel l, int rgb, double x, double y, double z, int count, double dx, double dy, double dz, double speed) {
+        Affinity a = typed() ? DjinnLook.affinityOf(rgb) : null;
+        if (a != null) com.newuniverse.nusmp.particle.fx.Fx.sprayTinted(l, KEYS[a.ordinal()], FxSlot.ACCENT, rgb & 0xFFFFFF, 1.0f, x, y, z, Math.min(count, 12), dx, dy, dz, speed);
+        else RukhFx.spray(l, com.newuniverse.nusmp.relics.Fx.align(rgb), x, y, z, count, dx, dy, dz, speed);
+    }
+
+    /**
+     * The mesh effect of a Djinn's element for a moment of its spell (one packet to the players near, through the effect budget). {@code at} is where it happens; {@code to} is where a CAST
+     * travels to (ignored by the others); {@code power} is the radius of a ZONE or a STRIKE and the size of an IMPACT or a CAST. Nothing with typedVfx off.
+     */
+    static void mesh(ServerLevel l, Djinn d, DjinnLook.Moment m, Vec3 at, Vec3 to, double power) {
+        if (l == null || d == null || at == null || !typed()) return;
+        VfxShape s = SHAPES[d.affinity().ordinal()][m.ordinal()];
+        if (s == null) return;
+        Vec3 from = at, end = to == null ? at.add(0, 1, 0) : to;
+        if (m == DjinnLook.Moment.STRIKE && DjinnLook.fromSky(d.affinity())) {
+            from = at.add(0, 14, 0);
+            end = at;
+        }
+        VfxSpawn.send(l, s, from, end, 0xFF000000 | (d.color() & 0xFFFFFF), DjinnLook.ticks(m), (float) Mth.clamp(power, 0.5, 16.0));
     }
 
     /** A ring of dust lying on the ground: {@code points} particles (clamped to 8..96). */
@@ -65,14 +134,14 @@ final class DjinnFx {
         net.minecraft.core.particles.ParticleOptions d = dust(rgb, 1.3f);
         for (int i = 0; i < n; i++) {
             double a = i * (Math.PI * 2 / n);
-            com.newuniverse.nusmp.particle.rukh.RukhFx.spray(l, com.newuniverse.nusmp.relics.Fx.alignOf(d), at.x + Math.cos(a) * radius, at.y + lift, at.z + Math.sin(a) * radius, 1, 0, 0.01, 0, 0);
+            emit(l, d, at.x + Math.cos(a) * radius, at.y + lift, at.z + Math.sin(a) * radius, 1, 0, 0.01, 0, 0);
         }
     }
 
     /** A vertical column of particles from y0 up to y1: at most 40 of them. */
     static void column(ServerLevel l, double x, double y0, double y1, double z, ParticleOptions o, int count) {
         int n = Mth.clamp(count, 2, 40);
-        for (int i = 0; i < n; i++) com.newuniverse.nusmp.particle.rukh.RukhFx.spray(l, com.newuniverse.nusmp.relics.Fx.alignOf(o), x, y0 + (y1 - y0) * i / (n - 1), z, 1, 0.05, 0, 0.05, 0);
+        for (int i = 0; i < n; i++) emit(l, o, x, y0 + (y1 - y0) * i / (n - 1), z, 1, 0.05, 0, 0.05, 0);
     }
 
     /** A line of particles between two points: at most 40 of them. */
@@ -80,7 +149,7 @@ final class DjinnFx {
         int n = Mth.clamp(count, 2, 40);
         for (int i = 0; i < n; i++) {
             double t = i / (double) (n - 1);
-            com.newuniverse.nusmp.particle.rukh.RukhFx.spray(l, com.newuniverse.nusmp.relics.Fx.alignOf(o), Mth.lerp(t, a.x, b.x), Mth.lerp(t, a.y, b.y), Mth.lerp(t, a.z, b.z), 1, 0, 0, 0, 0);
+            emit(l, o, Mth.lerp(t, a.x, b.x), Mth.lerp(t, a.y, b.y), Mth.lerp(t, a.z, b.z), 1, 0, 0, 0, 0);
         }
     }
 

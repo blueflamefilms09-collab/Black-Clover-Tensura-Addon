@@ -45,6 +45,23 @@ public final class DjinnSelfTests {
 
     public static void register() {
         SelfTests.register("djinn.core_rebuild", DjinnSelfTests::coreRebuild);
+        SelfTests.register("djinn.look", server -> {                                                                        // 3.75.0: every element has its own theme and four mesh effects that exist
+            java.util.Set<String> themes = new java.util.HashSet<>();
+            for (Affinity a : Affinity.values()) {
+                if (!themes.add(DjinnLook.theme(a))) return SelfTests.Result.fail("two elements share the particle theme " + DjinnLook.theme(a));
+                for (DjinnLook.Moment m : DjinnLook.Moment.values()) {
+                    try {
+                        com.newuniverse.nusmp.vfx.VfxShape.valueOf(DjinnLook.shape(a, m));
+                    } catch (IllegalArgumentException e) {
+                        return SelfTests.Result.fail(a + " " + m + " names the unknown effect " + DjinnLook.shape(a, m));
+                    }
+                }
+            }
+            int own = 0;
+            for (Djinn d : Djinn.values()) if (DjinnLook.affinityOf(d.color()) == d.affinity()) own++;
+            if (own < Djinn.values().length - 2) return SelfTests.Result.fail("only " + own + " Djinn colours lead to their own element");
+            return SelfTests.Result.ok("djinn look: 8 elements, 8 themes, 32 mesh effects, " + own + "/" + Djinn.values().length + " body colours resolve, typedVfx=" + DjinnBindConfig.typedVfx());
+        });
         DjinnBindSelfTest.register();                                                            // 1.101.0: djinn.bc_bind
         TinyDjinnSelfTest.register();                                                            // 1.105.0: djinn.tiny
     }
