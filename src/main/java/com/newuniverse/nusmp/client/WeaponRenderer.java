@@ -386,9 +386,9 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
 
     private static boolean classicSeen;
 
-    /** The base looks of the hero weapons, Legendary and Vassal (the curse looks were not remodelled in 3.79.0, so they have no classic copy; a missing classic file falls back to the new mesh). */
+    /** The looks of the hero weapons, Legendary and Vassal, that have a classic copy: the base looks, and the curse looks of the Legendary Weapons (made in Blender after the base looks; a missing classic file falls back to the new mesh). */
     static boolean isClassicLegendary(String id) {
-        return (id.startsWith("legendary_") || id.startsWith("vassal_")) && !id.contains("_curse");
+        return id.startsWith("legendary_") || id.startsWith("vassal_");
     }
 
     /**

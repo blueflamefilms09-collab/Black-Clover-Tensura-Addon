@@ -18,7 +18,7 @@ The mod's own tools still write the mesh file (`tools/relics/mesh_lib.py`: the `
 ## Files
 
 - `tools/blender/bl_lib.py` — the pipeline: scene and studio light, materials, modelling helpers, `finish()` (join, unwrap, bake, export).
-- `tools/blender/legendary.py` — sword, shield, spear, bow (and the bow's three draw stages on one skin).
+- `tools/blender/legendary.py` — sword, shield, spear, bow (and the bow's three draw stages on one skin), and since 3.83.0 their curse looks (`--only sword_curse,shield_curse,spear_curse,bow_curse`): the same models in a `curse` mode.
 - `tools/blender/seven_star.py` — hammer, claw, axe, whip, staff, gauntlet, projectile.
 - `tools/blender/vassal_a.py` — katana, scythe, fan, harpoon, chain.
 - `tools/blender/vassal_b.py` — carriage, book, mirror, instrument, sewing set.
@@ -44,7 +44,7 @@ only their baked shapes are in the skin.
 ## Rules the builders keep
 
 - Each weapon keeps the length, the grip position and the `place` line of the model it replaces, so the hand, the display
-  transforms, the size class and the grip table still fit. Icons, item models, ids and the curse looks are untouched.
+  transforms, the size class and the grip table still fit. Icons, item models and ids are untouched.
 - At most 2800 quad lines per mesh including the glow copies (the runtime cap is 3000). The extra detail costs nothing in game: it
   is in the skin.
 - Thin bake-only details use materials without the Bevel node (it would average a thin plate's top with its underside) and sit
@@ -55,7 +55,8 @@ only their baked shapes are in the skin.
 - The models of before 3.79.0 stay in `weapon_meshes/classic` and `textures/entity/weapon/classic`; the client setting
   `classicHeroWeaponModels` (`nusmp-heroweapon-client.toml`, section `models`) draws them.
 - The 3.79.0 code-built models are replaced by the Blender ones (asked for by the owner); their generators
-  (`tools/heroweapon/art_hart1.py` .. `art_hart4.py`) stay and still build the curse looks.
+  (`tools/heroweapon/art_hart1.py` .. `art_hart4.py`) stay in the repo; since 3.83.0 the curse looks are Blender-made too, and the old
+  curse looks are in the classic folders as well.
 
 ## Cost
 

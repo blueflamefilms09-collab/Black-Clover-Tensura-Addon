@@ -25,7 +25,7 @@ public final class HeroClientConfig {
         HUD_SCALE = b.comment("Size of the panel (1.0 is the normal size).").defineInRange("scale", 1.0, 0.5, 3.0);
         b.pop();
         b.push("models");
-        CLASSIC_LEGENDARY = b.comment("true = draw the hero weapons (the 4 Legendary and the 17 Vassal Weapons) with the models they had before 3.79.0. Only the look changes.")
+        CLASSIC_LEGENDARY = b.comment("true = draw the hero weapons (the 4 Legendary with their curse looks, and the 17 Vassal Weapons) with the models they had before 3.79.0. Only the look changes.")
                 .define("classicHeroWeaponModels", false);
         b.pop();
         SPEC = b.build();

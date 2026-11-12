@@ -1979,7 +1979,7 @@
   "class": "bow",
   "fraction": 0.5,
   "source": "class",
-  "x": 16.78,
+  "x": 19.73,
   "y": 0.0,
   "z": 0.0
  },
@@ -1989,7 +1989,7 @@
   "source": "class",
   "x": 31.25,
   "y": 0.0,
-  "z": 0.062
+  "z": 0.068
  },
  "legendary_bow_curse_pull2": {
   "class": "bow",
@@ -1997,7 +1997,7 @@
   "source": "class",
   "x": 13.25,
   "y": 0.0,
-  "z": 0.062
+  "z": 0.068
  },
  "legendary_bow_curse_pull3": {
   "class": "bow",
@@ -2005,7 +2005,7 @@
   "source": "class",
   "x": 3.25,
   "y": 0.0,
-  "z": 0.062
+  "z": 0.068
  },
  "legendary_bow_pull1": {
   "class": "bow",
@@ -2045,7 +2045,7 @@
   "source": "class",
   "x": 0.0,
   "y": 0.0,
-  "z": 5.236
+  "z": 5.213
  },
  "legendary_spear": {
   "class": "spear",
