@@ -22,6 +22,7 @@ public final class DevilBoot {
         container.registerConfig(ModConfig.Type.SERVER, DevilConfig.SPEC, "nusmp-devil-server.toml");
         modBus.addListener(DevilNet::registerPayloads);
         DevilContracts.register(NeoForge.EVENT_BUS);
+        DevilCombat.register(NeoForge.EVENT_BUS);                                            // 3.76.0: the attribute's combat effect, the Brand
         DevilCommands.register(NeoForge.EVENT_BUS);
         DevilSelfTests.register();
     }

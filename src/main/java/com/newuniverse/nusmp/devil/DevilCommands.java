@@ -33,10 +33,22 @@ public final class DevilCommands {
     private static final com.mojang.brigadier.suggestion.SuggestionProvider<CommandSourceStack> SACS = (c, b) ->
             SharedSuggestionProvider.suggest(Arrays.stream(Sacrifice.values()).map(s -> s.name().toLowerCase(Locale.ROOT)), b);
 
+    private static final com.mojang.brigadier.suggestion.SuggestionProvider<CommandSourceStack> WORLDS = (c, b) ->
+            SharedSuggestionProvider.suggest(Arrays.stream(DevilWorld.values()).map(DevilWorld::key), b);
+    private static final com.mojang.brigadier.suggestion.SuggestionProvider<CommandSourceStack> DEVILS = (c, b) -> {
+        for (int i = 0; i < WorldDevil.count(); i++) b.suggest(WorldDevil.at(i).id());
+        return b.buildFuture();
+    };
+
     private static void onRegister(RegisterCommandsEvent e) {
         e.getDispatcher().register(Commands.literal("devil")
                 .then(Commands.literal("status").executes(c -> status(c, c.getSource().getPlayerOrException()))
                         .then(Commands.argument("player", EntityArgument.player()).requires(s -> s.hasPermission(2)).executes(c -> status(c, EntityArgument.getPlayer(c, "player")))))
+                .then(Commands.literal("worlds").executes(c -> worlds(c)))
+                .then(Commands.literal("world").then(Commands.argument("world", StringArgumentType.word()).suggests(WORLDS).executes(c -> world(c, StringArgumentType.getString(c, "world")))))
+                .then(Commands.literal("call").then(Commands.argument("devil", StringArgumentType.word()).suggests(DEVILS).executes(c -> call(c, StringArgumentType.getString(c, "devil")))))
+                .then(Commands.literal("sign").executes(c -> DevilRituals.sign(c.getSource().getPlayerOrException()) ? 1 : 0))
+                .then(Commands.literal("refuse").executes(c -> DevilRituals.refuse(c.getSource().getPlayerOrException()) ? 1 : 0))
                 .then(Commands.literal("grant").requires(s -> s.hasPermission(2))
                         .then(Commands.argument("player", EntityArgument.player()).then(Commands.argument("tier", StringArgumentType.word()).suggests(TIERS)
                                 .executes(c -> grant(c, EntityArgument.getPlayer(c, "player"), StringArgumentType.getString(c, "tier"), null))
@@ -71,7 +83,7 @@ public final class DevilCommands {
         DevilContract d = DevilStore.peek(p);
         if (d == null || !d.hasContract()) return say(c, p.getName().getString() + " has no devil contract.");
         long now = DevilContracts.time(p);
-        StringBuilder sb = new StringBuilder(p.getName().getString()).append(": ").append(d.tier.key()).append(" devil, ").append(d.attribute.key())
+        StringBuilder sb = new StringBuilder(p.getName().getString()).append(": ").append(d.devil.isEmpty() || WorldDevil.byId(d.devil) == null ? "" : WorldDevil.byId(d.devil).name() + " (" + WorldDevil.byId(d.devil).world().label + "), ").append(d.tier.key()).append(" devil, ").append(d.attribute.key())
                 .append(", assimilation ").append(Math.round(d.assimilation)).append("%").append(d.assimilating ? " (rising)" : "");
         if (d.inUnion()) sb.append(", Devil Union ").append(DevilRules.secondsLeft(d.unionUntil, now)).append(" s left");
         else if (DevilRules.cooling(d.unionReadyAt, now)) sb.append(", union locked for ").append(DevilRules.secondsLeft(d.unionReadyAt, now)).append(" s");
@@ -117,6 +129,46 @@ public final class DevilCommands {
         return say(c, p.getName().getString() + (add ? " now carries " : " no longer carries ") + s.name().toLowerCase(Locale.ROOT) + ".");
     }
 
+    // ================================================================ 3.76.0: the devils of other worlds
+    private static int worlds(CommandContext<CommandSourceStack> c) throws CommandSyntaxException {
+        ServerPlayer p = c.getSource().getPlayerOrException();
+        if (!DevilRituals.on()) return fail(c, DevilRitualRules.Denial.DISABLED.text);
+        p.sendSystemMessage(Component.literal("Devils answer from eight worlds. Each is called in its own way:").withStyle(net.minecraft.ChatFormatting.DARK_RED, net.minecraft.ChatFormatting.BOLD));
+        for (DevilWorld w : DevilWorld.values()) {
+            p.sendSystemMessage(Component.literal(" [" + w.label + "] ").withStyle(s -> s.withColor(w.color | 0x404040)
+                            .withClickEvent(new net.minecraft.network.chat.ClickEvent(net.minecraft.network.chat.ClickEvent.Action.RUN_COMMAND, "/devil world " + w.key()))
+                            .withHoverEvent(new net.minecraft.network.chat.HoverEvent(net.minecraft.network.chat.HoverEvent.Action.SHOW_TEXT, Component.literal(w.need + "\nPrice: " + w.price))))
+                    .append(Component.literal(w.ritual + ", " + WorldDevil.countOf(w) + (WorldDevil.countOf(w) == 1 ? " devil" : " devils")).withStyle(net.minecraft.ChatFormatting.GRAY)));
+        }
+        return 1;
+    }
+
+    private static int world(CommandContext<CommandSourceStack> c, String name) throws CommandSyntaxException {
+        ServerPlayer p = c.getSource().getPlayerOrException();
+        DevilWorld w = DevilWorld.byName(name);
+        if (w == null) return fail(c, "No such world. Try /devil worlds.");
+        p.sendSystemMessage(Component.literal(w.label + ": " + w.ritual).withColor(w.color | 0x404040));
+        p.sendSystemMessage(Component.literal("  It asks: " + w.need).withStyle(net.minecraft.ChatFormatting.GRAY));
+        p.sendSystemMessage(Component.literal("  Price: " + w.price).withStyle(net.minecraft.ChatFormatting.GRAY));
+        for (int i = 0; i < WorldDevil.count(); i++) {
+            WorldDevil d = WorldDevil.at(i);
+            if (d.world() != w) continue;
+            DevilRules.Effect fx = DevilRules.effect(d.attribute());
+            p.sendSystemMessage(Component.literal("  [Call " + d.name() + "] ").withStyle(s -> s.withColor(d.color() | 0x404040)
+                            .withClickEvent(new net.minecraft.network.chat.ClickEvent(net.minecraft.network.chat.ClickEvent.Action.RUN_COMMAND, "/devil call " + d.id()))
+                            .withHoverEvent(new net.minecraft.network.chat.HoverEvent(net.minecraft.network.chat.HoverEvent.Action.SHOW_TEXT, Component.literal(fx.blurb()))))
+                    .append(Component.literal(d.title() + ": " + d.tier().key() + ", " + d.attribute().key().replace('_', ' ')).withStyle(net.minecraft.ChatFormatting.GRAY)));
+        }
+        return 1;
+    }
+
+    private static int call(CommandContext<CommandSourceStack> c, String id) throws CommandSyntaxException {
+        ServerPlayer p = c.getSource().getPlayerOrException();
+        WorldDevil d = WorldDevil.byId(id);
+        if (d == null) return fail(c, "No devil answers to that name. Try /devil worlds.");
+        return DevilRituals.begin(p, d) == DevilRitualRules.Denial.NONE ? 1 : 0;
+    }
+
     private static int cooldownReset(CommandContext<CommandSourceStack> c, ServerPlayer p) {
         DevilContract d = DevilStore.peek(p);
         if (d == null || !d.hasContract()) return fail(c, p.getName().getString() + " has no devil contract.");
@@ -130,6 +182,9 @@ public final class DevilCommands {
         if (d == null) return say(c, p.getName().getString() + " had no devil contract.");
         d.tier = DevilTier.NONE;
         d.attribute = DevilAttribute.NONE;
+        d.devil = "";
+        d.offer = "";
+        d.ritual = null;
         d.sacrifices.clear();
         d.resetLive();
         d.unionReadyAt = 0;

@@ -23,6 +23,8 @@ public final class DevilContract {
     /** Game time the union may begin again (0 = it may). */
     public long unionReadyAt;
     public final EnumSet<Sacrifice> sacrifices = EnumSet.noneOf(Sacrifice.class);
+    /** 3.76.0: the id of the devil of another world this contract is with ({@link WorldDevil}); "" for the old grimoire devils. */
+    public String devil = "";
 
     // ---- live (not saved) ----
     public boolean assimilating;
@@ -30,6 +32,10 @@ public final class DevilContract {
     /** What was last sent to the owner and to the players who can see them (-1 = nothing yet). */
     public int sentSelf = -1, sentVisual = -1;
     public long lastAsk = Long.MIN_VALUE / 2;
+    /** 3.76.0, live: the ritual that is running (null = none), the devil whose offer is open and since when, the last ritual and the last attribute effect (game times). */
+    public DevilRitualRun ritual;
+    public String offer = "";
+    public long offerAt, lastRitual = -1, lastEffect = Long.MIN_VALUE / 2;
 
     /** Nothing worth saving: a player who never had a contract keeps no attachment. */
     public boolean isEmpty() { return tier == DevilTier.NONE && sacrifices.isEmpty() && unionReadyAt == 0 && unionUntil == 0 && assimilation == 0; }
@@ -72,6 +78,7 @@ public final class DevilContract {
         ListTag list = new ListTag();
         for (Sacrifice s : c.sacrifices) list.add(StringTag.valueOf(s.name()));
         t.put("sac", list);
+        if (!c.devil.isEmpty()) t.putString("devil", c.devil);
         return t;
     }
 
@@ -82,6 +89,8 @@ public final class DevilContract {
         c.assimilation = DevilRules.clampF(t.getFloat("level"), 0f, 100f);
         c.unionUntil = Math.max(0L, t.getLong("union"));
         c.unionReadyAt = Math.max(0L, t.getLong("ready"));
+        String devil = t.getString("devil");
+        c.devil = WorldDevil.byId(devil) != null ? WorldDevil.byId(devil).id() : "";
         ListTag list = t.getList("sac", Tag.TAG_STRING);
         for (int i = 0; i < list.size() && i < Sacrifice.values().length * 2; i++) {
             Sacrifice s = Sacrifice.byName(list.getString(i));

@@ -10,8 +10,8 @@ import net.neoforged.neoforge.common.ModConfigSpec;
  */
 public final class DevilConfig {
     public static final ModConfigSpec SPEC;
-    private static final ModConfigSpec.BooleanValue ENABLED, ALLOW_FLIGHT, HALF_HEALTH, EYE_REACH, DEATH_COOLDOWN;
-    private static final ModConfigSpec.DoubleValue DRAIN_SCALE, STAT_SCALE;
+    private static final ModConfigSpec.BooleanValue ENABLED, ALLOW_FLIGHT, HALF_HEALTH, EYE_REACH, DEATH_COOLDOWN, WORLDS, EFFECTS;
+    private static final ModConfigSpec.DoubleValue DRAIN_SCALE, STAT_SCALE, EFFECT_SCALE;
     private static final ModConfigSpec.IntValue UNION_SECONDS, COOLDOWN_HOURS;
 
     static {
@@ -34,6 +34,15 @@ public final class DevilConfig {
         b.push("sacrifices");
         HALF_HEALTH = b.comment("The 'half' price halves the maximum health for good (it stays through death). false = it is only recorded.").define("halfHealth", true);
         EYE_REACH = b.comment("A lost eye also shortens how far the player can reach (depth perception). false = a lost eye only changes the screen (client side).").define("eyeReachPenalty", true);
+        b.pop();
+        b.push("worlds");
+        WORLDS = b.comment("3.76.0: devils of eight anime worlds can be called with /devil worlds (Black Clover, Chainsaw Man, Black Butler, Blue Exorcist, Tensura, Dororo, Berserk, Fairy Tail), each by its own ritual.",
+                "false = the rituals do not begin (contracts already signed stay); the old grimoire devils are not touched either way.").define("enabled", true);
+        b.pop();
+        b.push("attribute");
+        EFFECTS = b.comment("3.76.0: the devil's attribute acts in a fight while the devil is let in (from 20 % assimilation): extra damage and its own effect on the host's blows. false = the attribute is a label, as before 3.76.0.")
+                .define("combatEffects", true);
+        EFFECT_SCALE = b.comment("Multiplier on the extra damage of the attribute (the bonus is never more than three times the blow).").defineInRange("effectScale", 1.0, 0.0, 10.0);
         b.pop();
         b.pop();
         SPEC = b.build();
@@ -60,4 +69,7 @@ public final class DevilConfig {
     public static boolean allowFlight() { return on(ALLOW_FLIGHT, true); }
     public static boolean halfHealth() { return on(HALF_HEALTH, true); }
     public static boolean eyeReach() { return on(EYE_REACH, true); }
+    public static boolean worlds() { return on(WORLDS, true); }
+    public static boolean attributeEffects() { return on(EFFECTS, true); }
+    public static double effectScale() { return num(EFFECT_SCALE, 1.0, 0, 10); }
 }

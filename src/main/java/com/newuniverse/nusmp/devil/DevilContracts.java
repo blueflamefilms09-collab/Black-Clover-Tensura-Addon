@@ -40,6 +40,7 @@ public final class DevilContracts {
     static final String OLD_UNION_KEY = "nusmp_devil_form_since";
 
     private static final ResourceLocation STR = rl("devil_strength"), SPD = rl("devil_speed"), FLY = rl("devil_flight"), HALF = rl("devil_sacrifice_half_hp"), EYE = rl("devil_sacrifice_eye_reach");
+    private static final ResourceLocation FLESH = rl("devil_sacrifice_flesh");
 
     private static ResourceLocation rl(String path) { return ResourceLocation.fromNamespaceAndPath("nusmp", path); }
 
@@ -55,6 +56,12 @@ public final class DevilContracts {
     }
 
     static long time(ServerPlayer p) { return p.serverLevel().getServer().overworld().getGameTime(); }
+
+    /** 3.76.0: true when the player's contract is with a devil of another world (it has no grimoire pact behind it, so the one-bond rule asks here). */
+    public static boolean hasWorldDevil(ServerPlayer p) {
+        DevilContract c = DevilStore.peek(p);
+        return c != null && c.hasContract() && !c.devil.isEmpty();
+    }
 
     public static boolean oldUnionActive(ServerPlayer p) { return p.getPersistentData().getLong(OLD_UNION_KEY) > 0; }
 
@@ -120,7 +127,9 @@ public final class DevilContracts {
 
     // ---------------------------------------------------------------- the second
     static void onTick(PlayerTickEvent.Post e) {
-        if (!(e.getEntity() instanceof ServerPlayer p) || p.tickCount % 20 != 0) return;
+        if (!(e.getEntity() instanceof ServerPlayer p)) return;
+        DevilRituals.tick(p);                                                                // 3.76.0: a running ritual is stepped every tick; one lookup when none runs
+        if (p.tickCount % 20 != 0) return;
         DevilContract c = DevilStore.peek(p);
         if (c == null || !c.hasContract()) return;
         second(p, c, time(p));
@@ -194,6 +203,7 @@ public final class DevilContracts {
         boolean on = DevilConfig.enabled();
         boolean half = on && DevilConfig.halfHealth() && c.sacrifices.contains(Sacrifice.HALF_HEALTH);
         setModifier(p, Attributes.MAX_HEALTH, HALF, half ? DevilRules.HALF_HEALTH_MULT : 0, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL, true);
+        setModifier(p, Attributes.MAX_HEALTH, FLESH, on && c.sacrifices.contains(Sacrifice.FLESH) ? DevilRules.FLESH_HEALTH : 0, AttributeModifier.Operation.ADD_VALUE, true);      // 3.76.0: a piece of the body
         if (p.getHealth() > p.getMaxHealth()) p.setHealth(p.getMaxHealth());
         int eyes = on && DevilConfig.eyeReach() ? c.eyes() : 0;
         setModifier(p, Attributes.ENTITY_INTERACTION_RANGE, EYE, DevilRules.eyeReachPenalty(eyes), AttributeModifier.Operation.ADD_VALUE, false);
@@ -285,6 +295,7 @@ public final class DevilContracts {
         if (c == null || !c.hasContract()) return;
         if (c.inUnion()) endUnion(p, c, time(p), "death");
         else { c.assimilation = 0f; c.assimilating = false; }
+        if (DevilConfig.enabled() && c.sacrifices.contains(Sacrifice.SOUL_DEBT) && p.experienceLevel > 0) p.giveExperienceLevels(-p.experienceLevel);      // 3.76.0: the soul is owed: a death takes every level
     }
 
     /** The data was copied to the new body by NeoForge; only the live part starts again from nothing. */

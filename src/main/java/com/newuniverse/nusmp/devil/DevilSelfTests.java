@@ -26,6 +26,7 @@ public final class DevilSelfTests {
         SelfTests.register("devil.contract.registry", DevilSelfTests::registry);
         SelfTests.register("devil.rules.bounds", DevilSelfTests::rules);
         SelfTests.register("devil.store.roundtrip", DevilSelfTests::store);
+        SelfTests.register("devil.worlds", DevilSelfTests::worlds);                                  // 3.76.0
     }
 
     private static Result registry(MinecraftServer server) {
@@ -71,5 +72,36 @@ public final class DevilSelfTests {
         DevilContract d = DevilContract.fromTag(bad);
         if (d.tier != DevilTier.NONE || d.assimilation != 100f || d.unionUntil != 0L) return Result.fail("a damaged tag was not clamped");
         return Result.ok("a contract survives its tag; a damaged tag is clamped");
+    }
+
+    /** 3.76.0: the roster of the eight worlds is whole, every devil has a working attribute and a price the store keeps, the ritual rules refuse what they must, and the numbers stay bounded. */
+    private static Result worlds(MinecraftServer server) {
+        java.util.HashSet<String> ids = new java.util.HashSet<>();
+        for (int i = 0; i < WorldDevil.count(); i++) {
+            WorldDevil d = WorldDevil.at(i);
+            if (!ids.add(d.id())) return Result.fail("two devils share the id " + d.id());
+            if (d.tier() == DevilTier.NONE || d.attribute() == DevilAttribute.NONE) return Result.fail(d.id() + " has no tier or no attribute");
+            DevilRules.Effect fx = DevilRules.effect(d.attribute());
+            if (fx.bonus() <= 0 || fx.blurb().isEmpty()) return Result.fail("the attribute of " + d.id() + " does nothing");
+            DevilContract c = new DevilContract();
+            c.tier = d.tier();
+            c.attribute = d.attribute();
+            c.devil = d.id();
+            for (Sacrifice s : Sacrifice.values()) if ((d.priceMask() & s.bit()) != 0) c.sacrifices.add(s);
+            DevilContract back = DevilContract.fromTag(DevilContract.toTag(c));
+            if (!back.devil.equals(d.id()) || back.tier != d.tier() || back.attribute != d.attribute() || back.sacrificeMask() != c.sacrificeMask()) return Result.fail("the contract with " + d.id() + " does not survive a save");
+        }
+        for (DevilWorld w : DevilWorld.values()) {
+            if (WorldDevil.countOf(w) < 1) return Result.fail(w + " has no devil");
+            if (w.ticks < 40 || w.ticks > 400) return Result.fail("the ritual of " + w + " runs " + w.ticks + " ticks");
+            DevilRitualRules.Facts none = new DevilRitualRules.Facts(true, false, false, -1, 1.0, 20f, false, false, false, 0, 0, 0.0, true);
+            DevilRitualRules.Denial d = DevilRitualRules.check(w, none);
+            if (w != DevilWorld.CHAINSAW_MAN && d == DevilRitualRules.Denial.NONE) return Result.fail(w + " began for a caller who brought nothing");
+            if (DevilRitualRules.check(w, new DevilRitualRules.Facts(true, true, false, -1, 0.1, 20f, true, true, true, 64, 99, 1.0, false)) != DevilRitualRules.Denial.BOND) return Result.fail(w + " began for a caller who holds a bond");
+        }
+        if (DevilRules.effectPower(DevilTier.SUPREME, 19f, false) != 0.0 || DevilRules.effectPower(DevilTier.SUPREME, 100f, true) > 1.5 + 1e-9) return Result.fail("the attribute's power left [0, 1.5]");
+        if (DevilRules.effectBonus(10f, DevilRules.effect(DevilAttribute.CAUSALITY), 1.5, 10.0) > 30f) return Result.fail("an attribute bonus passed three times the blow");
+        if (DevilRitualRules.bindingBlow(3f, 20f) > 1f + 1e-6 || DevilRitualRules.bindingBlow(1f, 20f) != 0f) return Result.fail("the devil's blow could take the last heart");
+        return Result.ok("devil worlds: " + DevilWorld.values().length + " worlds, " + WorldDevil.count() + " devils, every attribute acts, prices survive a save, rituals refuse the unprepared; worlds=" + DevilConfig.worlds());
     }
 }

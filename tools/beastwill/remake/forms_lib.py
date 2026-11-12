@@ -56,8 +56,18 @@ def _noise(rng, w, h, sx, sy):
     return a * (1 - fy) + b * fy
 
 
+PIX = 2          # 3.76.0: texels per painted pixel (the tile is drawn on an n/PIX grid and scaled up, so the look is a few clean pixels per cube face, not speckle)
+
+
 def pattern_field(mat, n):
     """luminance variation (-1..1) and glow mask (0..1) of the material's tile"""
+    m = max(2, n // PIX)
+    L, G = _pattern_field(mat, m)
+    up = lambda a: np.repeat(np.repeat(a, PIX, axis=0), PIX, axis=1)[:n, :n]
+    return up(L), up(G)
+
+
+def _pattern_field(mat, n):
     rng = np.random.default_rng(mat.seed * 7919 + 13)
     yy, xx = np.mgrid[0:n, 0:n].astype(float)
     p = mat.pattern
@@ -97,18 +107,19 @@ def pattern_field(mat, n):
     return np.clip(L, -1, 1), np.clip(G, 0, 1)
 
 
-TONE_K = (-.62, -.30, 0.0, .13, .28)         # dark -> light along dark/base/light
+TONE_K = (-.62, -.34, 0.0, .15, .30)         # dark -> light along dark/base/light
+PATTERN_AMP = .13                            # 3.76.0: was .26; the pattern is a hint, the tone steps carry the form
 
 
 def tone_color(mat, k):
     t = TONE_K[k]
-    return mixc(mat.base, mat.dark, -t / .62 * .85) if t < 0 else mixc(mat.base, mat.light, t * 1.6)
+    return mixc(mat.base, mat.dark, -t / .62 * .84) if t < 0 else mixc(mat.base, mat.light, t * 1.9)
 
 
 def paint_tone(mat, k):
     n = mat.size
     L, G = pattern_field(mat, n)
-    col = tone_color(mat, k)[None, None, :] * (1 + L[..., None] * .26)
+    col = tone_color(mat, k)[None, None, :] * (1 + L[..., None] * PATTERN_AMP)
     out = np.zeros((n, n, 4)); out[..., :3] = np.clip(col, 0, 255); out[..., 3] = 255
     glow = np.zeros((n, n, 4))
     if mat.glow_amt > 0:

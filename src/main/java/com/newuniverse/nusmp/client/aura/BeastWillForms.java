@@ -21,7 +21,8 @@ import net.minecraft.util.Mth;
 public final class BeastWillForms {
     private BeastWillForms() {}
 
-    private static final Forms[] SETS = new Forms[BeastWillLook.COUNT];
+    /** [0] the 3.76.0 look, [1] the models of 3.61.0 / 3.62.0 ({@code bwf_<stem>_v1...}, client setting beastwill.classicForms). */
+    private static final Forms[][] SETS = new Forms[2][BeastWillLook.COUNT];
 
     private static final class Forms { NoelleFormRig.Set full, acq; }
 
@@ -29,10 +30,11 @@ public final class BeastWillForms {
     public static boolean has(int kind) { return kind > 0 && kind < BeastWillLook.COUNT && !BeastWillFormTable.parts(BeastWillLook.STEM[kind]).isEmpty(); }
 
     private static Forms of(int kind) {
-        Forms s = SETS[kind];
+        int v = BeastWillSpiritOptions.classicForms() ? 1 : 0;
+        Forms s = SETS[v][kind];
         if (s != null) return s;
         s = new Forms();
-        String stem = BeastWillLook.STEM[kind], key = "bwf_" + stem;
+        String stem = BeastWillLook.STEM[kind], key = "bwf_" + stem + (v == 1 ? "_v1" : "");
         java.util.List<Piece> list = new java.util.ArrayList<>();
         add(list, stem, "body", Anchor.BODY, 0f, 0f, 0f, 5f, false, "idle");
         add(list, stem, "armL", Anchor.ARM_L, 2f, 9f, 0f, 0f, false, "idle");
@@ -46,7 +48,7 @@ public final class BeastWillForms {
         java.util.List<Piece> a = new java.util.ArrayList<>();
         add(a, stem, "acq", Anchor.ARM_R, 0f, -9f, 0f, 0f, false, null);
         s.acq = new NoelleFormRig.Set(key, key, a.toArray(new Piece[0]));
-        SETS[kind] = s;
+        SETS[v][kind] = s;
         return s;
     }
 

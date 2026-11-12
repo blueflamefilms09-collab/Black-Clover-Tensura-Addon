@@ -2,10 +2,12 @@ package com.newuniverse.nusmp.devil;
 
 /**
  * Why: the forbidden magic a devil lends (3.48.0). In this release it is data: stored with the contract, shown on the HUD and in /devil status, and chosen from the magic of the grimoire the contract was
- * made on ({@link #forMagic}). It has no combat effect yet: the devils' own attacks are not part of 3.48.0. Stored BY NAME, appended only.
+ * made on ({@link #forMagic}). Since 3.76.0 every attribute has a combat effect while the devil is let in ({@link DevilRules#effect}). Stored BY NAME, appended only.
  */
 public enum DevilAttribute {
-    NONE, GRAVITY, SPATIAL, CURSE, ANTI_MAGIC, FLAME, WORD, TIME;
+    NONE, GRAVITY, SPATIAL, CURSE, ANTI_MAGIC, FLAME, WORD, TIME,
+    /** 3.76.0, the devils of the other worlds (appended). */
+    BEAST, FORESIGHT, GHOST, SOUL, ROT, EARTH, WATER, LIGHT, ETHER, CAUSALITY;
 
     public static DevilAttribute byName(String s) {
         if (s != null) for (DevilAttribute a : values()) if (a.name().equals(s)) return a;

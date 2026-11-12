@@ -82,8 +82,10 @@ class Scene:
 
 
 def _tone_k(nrm):
-    d = float(np.dot(unit(nrm), LIGHT))
-    return int(np.clip(round((d + .6) / 1.5 * (TONES - 1)), 0, TONES - 1))
+    n = unit(nrm)
+    d = float(np.dot(n, LIGHT))
+    k = int(np.clip(round((d + .6) / 1.5 * (TONES - 1)), 0, TONES - 1))
+    return max(k, 1) if n[2] > .5 else k        # 3.76.0: a fill light from behind: the back of a form (what a third-person player sees of their own beast) is a shade, not the darkest tone
 
 
 def mirror_x(sc, part_from, part_to, bones=None):

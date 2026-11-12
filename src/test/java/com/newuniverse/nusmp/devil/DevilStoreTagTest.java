@@ -70,7 +70,7 @@ class DevilStoreTagTest {
     @Test
     void theEnumsAreStoredByNameAndOnlyAppended() {
         assertArrayEquals(new String[]{"NONE", "LOW", "MID", "HIGH", "SUPREME"}, names(DevilTier.values()), "tiers: append only");
-        assertArrayEquals(new String[]{"HALF_HEALTH", "LOST_EYE_LEFT", "LOST_EYE_RIGHT"}, names(Sacrifice.values()), "sacrifices: append only (the network mask uses the position)");
+        assertArrayEquals(new String[]{"HALF_HEALTH", "LOST_EYE_LEFT", "LOST_EYE_RIGHT", "FLESH", "SOUL_DEBT", "BRANDED"}, names(Sacrifice.values()), "sacrifices: append only (the network mask uses the position)");
         assertEquals(DevilTier.NONE, DevilTier.byOrdinal(-1));
         assertEquals(DevilTier.NONE, DevilTier.byOrdinal(99));
         assertEquals(DevilTier.SUPREME, DevilTier.byOrdinal(4));

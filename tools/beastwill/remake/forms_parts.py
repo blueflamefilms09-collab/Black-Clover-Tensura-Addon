@@ -37,38 +37,75 @@ def taper(a, b, n): return list(np.linspace(a, b, n))
 
 
 # ====================================================================================================================== body
-def torso(c, bulk=1.0, belly="belly", back="back", cloak=False):
-    sp = c.sp
-    cu(c, "body", (0, 18, 0), (9.0 * bulk, 12.2, 4.8 * bulk), "body")
-    cu(c, "body", (0, 17.2, -2.5 * bulk), (6.4 * bulk, 9.0, .9), belly)
-    for i in range(3): cu(c, "body", (0, 20.2 - i * 2.4, -3.0 * bulk), ((5.6 - i * .5) * bulk, 1.7, .7), belly, dt=1 if i % 2 else 0)
-    cu(c, "body", (0, 18.4, 2.55 * bulk), (8.2 * bulk, 10.6, .8), back)
+def torso(c, bulk=1.0, belly="belly", back="back", cloak=False, chest="belly"):
+    """3.76.0: a fitted, V-shaped trunk instead of one inflated box: a dark under-layer hugging the player's body, a broad chest piece over the upper half, two angled pectoral plates,
+    abdominal bands that narrow towards the belt, and dark flanks, so the waist reads narrow and the shoulders wide. `chest` = the material of the pectorals (plate for an armoured will)."""
+    cu(c, "body", (0, 18, 0), (8.5, 12.2, 4.5), back)                                             # the under-layer: flanks and waist stay dark
+    cu(c, "body", (0, 21.3, -.1), (9.3 * bulk, 5.2, 5.1 * bulk), "body")                           # the chest block, shoulders to the bottom of the ribs
+    for s_ in (-1, 1):
+        cu(c, "body", (s_ * 2.25, 21.3, -2.7 * bulk), (4.1, 3.8, .9), chest, rot=(0, 0, s_ * -7), dt=1 if chest != "plate" else 0)   # pectorals, tilted to a V
+    for i, (y, w) in enumerate(((17.5, 5.6), (15.7, 4.8), (14.0, 4.0))):
+        cu(c, "body", (0, y, -2.45), (w * bulk, 1.5, .7), belly, dt=(i % 2))                        # abdominal bands, narrowing down
+    cu(c, "body", (0, 20.6, 2.55 * bulk), (8.6 * bulk, 6.4, .9), "body", dt=-1)                    # shoulder blades
+    cu(c, "body", (0, 15.6, 2.4), (5.4, 4.6, .7), back, dt=-1)                                     # the small of the back
 
 
-def belt_and_cloth(c, cloth="cloth", w=9.6, front_cloth=True):
-    cu(c, "body", (0, 12.6, 0), (w, 1.8, 5.2), "leather")
-    cu(c, "body", (0, 12.6, -2.8), (2.6, 2.0, .7), "plate")
-    cu(c, "body", (0, 12.6, -3.2), (1.0, 1.0, .5), "glow")
+def belt_and_cloth(c, cloth="cloth", w=9.0, front_cloth=True):
+    cu(c, "body", (0, 12.6, 0), (w, 1.8, 5.0), "leather")
+    cu(c, "body", (0, 12.6, -2.7), (2.6, 2.2, .7), "gold")
+    cu(c, "body", (0, 12.6, -3.1), (1.0, 1.0, .5), "glow")
     if front_cloth:
         c.sc.def_bone("clothF", (0, 11.8, -2.7), None, [("rot", 0, 5, 2, 0.0)])
         c.sc.def_bone("clothB", (0, 11.8, 2.7), None, [("rot", 0, -4, 2, 0.35)])
-        for i, x in enumerate((-3.4, -1.1, 1.1, 3.4)):
-            cu(c, "body", (x, 9.6 - (i % 2) * .6, -2.75), (2.1, 4.4 - (i % 2) * 1.2, .8), cloth, dt=(i % 2), bone="clothF")
-        cu(c, "body", (0, 9.6, 2.7), (5.6, 4.6, .8), cloth, dt=-1, bone="clothB")
+        for i, (x, ln, wd) in enumerate(((-3.3, 3.4, 1.9), (0, 6.6, 2.8), (3.3, 3.4, 1.9))):         # a long centre tabard between two short side tassets (was four equal flaps)
+            cu(c, "body", (x, 11.7 - ln / 2, -2.75), (wd, ln, .8), cloth, dt=0 if i == 1 else -1, bone="clothF")
+        cu(c, "body", (0, 5.9, -2.8), (2.8, 1.0, .9), "gold", bone="clothF")
+        cu(c, "body", (0, 9.2, 2.7), (5.4, 5.4, .8), cloth, dt=-1, bone="clothB")
 
 
-def gorget(c, w=9.6):
-    cu(c, "body", (0, 24.2, 0), (w, 1.6, 5.4), "plate")
-    cu(c, "body", (0, 25.0, -.2), (w - 1.2, 1.0, 4.6), "plate", dt=1)
+def gorget(c, w=9.4, kind="plate"):
+    """the collar: plate (a stepped metal ring), ruff (a ring of fur tufts for the wolves, lions and foxes), scale (overlapping scale bands) or none"""
+    if kind == "plate":
+        cu(c, "body", (0, 24.2, 0), (w, 1.5, 5.3), "plate")
+        cu(c, "body", (0, 25.0, -.2), (w - 1.6, 1.0, 4.5), "gold")
+    elif kind == "scale":
+        cu(c, "body", (0, 24.2, 0), (w - .2, 1.4, 5.3), "back")
+        for i in range(3): cu(c, "body", ((i - 1) * 2.9, 24.3, -2.75), (2.6, 1.9, .7), "plate", rot=(0, 0, 45), dt=i % 2)
+    elif kind == "ruff":
+        cu(c, "body", (0, 24.2, 0), (w - .4, 1.4, 5.2), "back")
+        for i in range(7):
+            a = math.radians(-78 + i * 26)
+            d = V(math.sin(a), 0, -math.cos(a))
+            base = V(0, 24.6, 0) + d * V(4.2, 1, 2.6)
+            sg(c, "body", base, base + d * 1.5 + V(0, -2.6 - (i % 2) * .8, 0), 2.6, 1.6, "mane" if i % 2 == 0 else "belly", pad=.5, dt=(i % 3) - 1)
 
 
-def emblem(c, y=19.8, kind="sun"):
-    cu(c, "body", (0, y, -3.3), (2.4, 2.4, .8), "plate", rot=(0, 0, 45))
-    cu(c, "body", (0, y, -3.4), (1.0, 1.0, 1.0), "glow")
+def emblem(c, y=19.9, kind="gem"):
+    """the mark between the pectorals, per beast family: sun (rays), fang (two fangs round a gem), chevron (stacked scale chevrons), eye (a slit eye), leaf, or the plain gem"""
+    z = -3.35
     if kind == "sun":
+        cu(c, "body", (0, y, z), (2.2, 2.2, .8), "gold", rot=(0, 0, 45))
+        cu(c, "body", (0, y, z - .15), (1.0, 1.0, .9), "glow")
         for k in range(8):
             a = math.radians(k * 45)
-            cu(c, "body", (math.sin(a) * 2.5, y + math.cos(a) * 2.5, -3.2), (.6, 1.4, .6), "plate", rot=(0, 0, -k * 45), dt=1)
+            cu(c, "body", (math.sin(a) * 2.4, y + math.cos(a) * 2.4, z + .1), (.6, 1.3, .6), "gold", rot=(0, 0, -k * 45), dt=1)
+    elif kind == "fang":
+        cu(c, "body", (0, y + .3, z), (1.3, 1.3, .8), "glow", rot=(0, 0, 45))
+        for s_ in (-1, 1): sg(c, "body", (s_ * 1.5, y + 1.6, z), (s_ * .5, y - 2.2, z - .2), 1.1, .8, "claw", pad=.2)
+    elif kind == "chevron":
+        for i in range(3):
+            for s_ in (-1, 1): cu(c, "body", (s_ * (1.15 - i * .12), y + 1.6 - i * 1.5, z + .05), (2.5 - i * .5, .8, .7), "gold" if i == 1 else "plate", rot=(0, 0, s_ * 32), dt=1)
+        cu(c, "body", (0, y - 2.2, z - .1), (.9, .9, .8), "glow", rot=(0, 0, 45))
+    elif kind == "eye":
+        cu(c, "body", (0, y, z), (3.6, 1.6, .7), "dark")
+        cu(c, "body", (0, y, z - .15), (2.4, 1.0, .7), "glow")
+        cu(c, "body", (0, y, z - .3), (.6, 1.4, .6), "dark")
+    elif kind == "leaf":
+        for k, a in enumerate((-40, 0, 40)): sg(c, "body", (0, y - 1.4, z), (math.sin(math.radians(a)) * 2.6, y - 1.4 + math.cos(math.radians(a)) * 2.8, z - .1), 1.5, .7, "leaf", pad=.2, dt=k % 2)
+        cu(c, "body", (0, y - 1.4, z - .2), (1.0, 1.0, .8), "glow", rot=(0, 0, 45))
+    else:
+        cu(c, "body", (0, y, z), (2.4, 2.4, .8), "gold", rot=(0, 0, 45))
+        cu(c, "body", (0, y, z - .15), (1.1, 1.1, .9), "glow", rot=(0, 0, 45))
 
 
 def spine_ridge(c, n=5, size=2.2, mat="plate", y0=23.0, dy=2.0, z=2.9, lean=.7):
@@ -82,30 +119,69 @@ def scale_plates(c, mat="plate", n=3):
 
 
 # ====================================================================================================================== arms
-def arm(c, side, pn, upper="body", sleeve="fur", pauldron=True, claws=3, claw_len=2.0, paw="body", bracer=True, tuft=False, spiked=False, fin=False):
-    """3.62.0 arm: the same length as the player's own (shoulder guard at 24.8, hand at 10..13, the claws end near 8.6), a layered sleeve, an elbow guard, a trimmed forearm guard, a hand with knuckles and curved claws.
-    The old (3.61.0) arm was 5 units longer and hung to the thigh."""
+def pauldron(c, side, pn, kind="slab"):
+    """3.76.0: the shoulder piece, per beast family (every will used to wear the same slab and gem). At most 5 cubes."""
+    x = side * 6.0; o = side
+    if kind == "none": return
+    if kind == "sleek":                                                    # one low plate and a trim line: the fast, lean wills
+        cu(c, pn, (x + o * .2, 23.6, 0), (5.4, 1.6, 5.4), "plate")
+        cu(c, pn, (x + o * 1.6, 23.2, 0), (2.2, .9, 5.8), "gold", rot=(0, 0, o * -18))
+        return
+    if kind == "fur":                                                      # a shaggy shoulder: a fur lump and tufts standing out and back
+        cu(c, pn, (x, 23.5, 0), (6.2, 2.2, 6.0), "mane")
+        for k, (dz, up) in enumerate(((-1.8, 1.4), (0, 2.4), (1.8, 1.6))):
+            sg(c, pn, (x + o * 1.4, 24.0, dz), (x + o * 4.2, 24.6 + up, dz * 1.4 + .4), 2.2, 1.7, "mane2" if k % 2 else "mane", pad=.5, dt=k % 2)
+        return
+    if kind == "round":                                                    # a heavy boulder of a shoulder with a rim: the bulls and boars
+        cu(c, pn, (x + o * .3, 23.7, 0), (7.4, 3.0, 6.8), "plate")
+        cu(c, pn, (x + o * .7, 25.5, 0), (5.2, 1.3, 4.8), "plate", dt=1)
+        cu(c, pn, (x + o * .3, 22.1, 0), (7.6, .7, 7.0), "gold")
+        cu(c, pn, (x + o * 1.2, 26.2, 0), (1.6, 1.2, 1.6), "gold", rot=(0, 45, 0))
+        return
+    if kind == "scale":                                                    # three overlapping plates stepping outward and down
+        for k in range(3):
+            cu(c, pn, (x + o * (k * 1.0 - .4), 24.4 - k * 1.1, 0), (4.2, 1.3, 6.4 - k * .5), "plate", rot=(0, 0, o * (-10 - k * 9)), dt=1 - k % 2)
+        cu(c, pn, (x - o * .6, 25.2, -2.6), (1.1, 1.1, .6), "glow", rot=(0, 0, 45))
+        return
+    if kind == "fin":                                                      # a plate and two fin blades sweeping up and back: the sea wills
+        cu(c, pn, (x, 23.5, 0), (6.4, 1.9, 6.0), "plate")
+        for k in range(2): sg(c, pn, (x + o * (.6 + k * 1.6), 24.2, -.6 + k * 1.2), (x + o * (2.6 + k * 2.2), 27.4 - k * .9, 1.6 + k * 1.4), 1.0, 3.0, "gold" if k else "membrane", pad=.3, dt=k)
+        return
+    if kind == "feather":                                                  # layered feather blades lying back over the shoulder
+        cu(c, pn, (x, 23.5, 0), (6.0, 1.7, 5.8), "plate")
+        for k in range(3): sg(c, pn, (x + o * (k - 1) * 1.5, 24.4, -1.6), (x + o * ((k - 1) * 2.0 + 1.2), 25.2 + (1 - abs(k - 1)) * .9, 4.2), 2.2, .7, "feather" if k % 2 == 0 else "belly", pad=.3, dt=k % 2)
+        return
+    if kind == "bone":                                                     # ribs of bone over a dark pad
+        cu(c, pn, (x, 23.3, 0), (6.2, 1.8, 5.8), "dark")
+        for k in range(3): sg(c, pn, (x - o * 2.2, 24.4, (k - 1) * 2.0), (x + o * 3.6, 23.4 + k * .2, (k - 1) * 2.4), 1.2, 1.2, "claw", pad=.3, dt=k % 2)
+        return
+    cu(c, pn, (x, 23.4, 0), (6.6, 2.0, 6.2), "plate")                      # slab (and spike): the knightly plate
+    cu(c, pn, (x + o * .3, 24.7, 0), (5.2, 1.2, 5.0), "plate", dt=1)
+    cu(c, pn, (x, 22.2, 0), (6.9, .6, 6.5), "gold")
+    if kind == "spike":
+        sg(c, pn, (x + o * 1.0, 25.0, 0), (x + o * 3.4, 29.4, .4), 2.0, 2.0, "claw", dt=1, pad=.3)
+        sg(c, pn, (x + o * 2.4, 24.4, 1.4), (x + o * 4.6, 26.6, 2.6), 1.3, 1.3, "claw", pad=.2)
+    else:
+        cu(c, pn, (x + o * .5, 25.0, -2.4), (1.2, 1.2, .6), "glow", rot=(0, 0, 45))
+
+
+def arm(c, side, pn, upper="body", sleeve="fur", pauldron_kind="slab", claws=3, claw_len=2.0, paw="body", bracer=True, tuft=False, spiked=False, fin=False):
+    """3.62.0 arm: the same length as the player's own (shoulder guard at 24.8, hand at 10..13, the claws end near 8.6). 3.76.0: tapered (a slimmer upper arm, a dark elbow joint, a flared, trimmed
+    forearm guard) and the shoulder piece is chosen per beast family ({@link pauldron})."""
     x = side * 6.0
     o = side
-    if pauldron:
-        cu(c, pn, (x, 23.4, 0), (6.8, 2.0, 6.4), "plate")
-        cu(c, pn, (x + o * .3, 24.7, 0), (5.6, 1.2, 5.4), "plate", dt=1)
-        cu(c, pn, (x, 21.9, 0), (6.2, 1.0, 5.9), "leather")
-        if spiked:
-            sg(c, pn, (x + o * 1.0, 25.0, 0), (x + o * 2.8, 28.0, .2), 1.8, 1.8, "plate", dt=1, pad=.3)
-        cu(c, pn, (x + o * .5, 25.0, -2.5), (1.2, 1.2, .6), "glow", rot=(0, 0, 45))
-    cu(c, pn, (x, 19.4, 0), (5.0, 4.4, 5.0), upper)                        # upper arm, in three stacked layers
-    cu(c, pn, (x + o * .25, 16.6, 0), (5.2, 2.4, 5.2), upper, dt=-1)
-    cu(c, pn, (x, 19.3, -2.55), (3.4, 3.8, .6), "belly")
-    cu(c, pn, (x + o * 2.2, 20.6, 0), (1.2, 2.0, 3.6), "plate", dt=1, rot=(0, 0, o * 12))   # shoulder plate on the outer side
-    cu(c, pn, (x, 17.2, 2.5), (1.8, 1.8, 1.4), "plate", rot=(0, 0, 45))     # elbow guard
+    pauldron(c, side, pn, "spike" if (spiked and pauldron_kind == "slab") else pauldron_kind)
+    cu(c, pn, (x, 19.6, 0), (4.7, 4.6, 4.7), upper)                        # upper arm
+    cu(c, pn, (x, 16.7, 0), (4.4, 1.6, 4.4), "dark")                       # the elbow joint, dark and narrow
+    cu(c, pn, (x + o * 2.15, 20.0, 0), (1.0, 3.0, 3.4), "plate", dt=1, rot=(0, 0, o * 10))   # a plate on the outer side
+    cu(c, pn, (x, 17.0, 2.4), (1.8, 1.8, 1.4), "gold", rot=(0, 0, 45))      # elbow guard
     if tuft:
         c.sc.def_bone("furA" + pn, (x + o * 2.4, 19.6, 0), None, [("rot", 2, 6 * o, 2, 0.0 if o > 0 else .4), ("rot", 0, 4, 2, .2)])
         for k in range(3): sg(c, pn, (x + o * 2.4, 19.5 - k * 1.8, 0), (x + o * 3.8, 17.0 - k * 2.0, .6), 2.0, 1.4, upper if k % 2 else "back", dt=-1, bone="furA" + pn)
     if bracer:
-        cu(c, pn, (x, 14.4, 0), (5.2, 3.6, 5.2), "plate")
-        cu(c, pn, (x, 16.3, 0), (5.6, .8, 5.6), "plate", dt=1)
-        cu(c, pn, (x, 12.5, 0), (5.6, .8, 5.6), "leather")
+        cu(c, pn, (x, 14.3, 0), (5.3, 3.6, 5.3), "plate")
+        cu(c, pn, (x, 16.0, 0), (5.9, .8, 5.9), "gold")
+        cu(c, pn, (x, 12.5, 0), (5.7, .8, 5.7), "leather")
     else:
         cu(c, pn, (x, 14.4, 0), (4.8, 3.6, 4.8), upper)
     cu(c, pn, (x, 11.2, -.1), (4.6, 2.4, 4.6), paw)                          # hand
@@ -116,16 +192,16 @@ def arm(c, side, pn, upper="body", sleeve="fur", pauldron=True, claws=3, claw_le
         sg(c, pn, (x + q * 1.3, 10.4, -2.0), (x + q * 1.45, 9.2, -3.0), .8, .9, "claw", pad=.3)
         sg(c, pn, (x + q * 1.45, 9.2, -3.0), (x + q * 1.5, 8.5 - claw_len * .15, -2.7), .55, .6, "claw", pad=.15)
     if fin:
-        for k in range(3): sg(c, pn, (x + side * 2.6, 17.5 - k * 2.2, .4), (x + side * 5.4, 16.2 - k * 2.4, 1.2), 1.0, 2.2, "plate", dt=1 - k % 2, pad=.2)
+        for k in range(3): sg(c, pn, (x + side * 2.6, 17.5 - k * 2.2, .4), (x + side * 5.4, 16.2 - k * 2.4, 1.2), 1.0, 2.2, "membrane", dt=1 - k % 2, pad=.2)
 
 
 def leg_straight(c, side, pn, thigh="body", toes=3):
     x = side * 2.0
-    cu(c, pn, (x, 9.4, 0), (4.8, 5.4, 5.0), thigh)
-    cu(c, pn, (x, 9.4, -2.6), (3.2, 4.4, .5), "belly")
-    cu(c, pn, (x, 6.4, 0), (4.6, 1.0, 4.9), "plate")
-    cu(c, pn, (x, 4.0, .2), (4.4, 4.6, 4.6), "plate")
-    cu(c, pn, (x, 6.2, -2.4), (3.4, 1.4, .6), "plate", dt=1)
+    cu(c, pn, (x, 9.6, 0), (4.6, 4.8, 4.7), thigh)
+    cu(c, pn, (x, 9.6, -2.45), (2.8, 3.6, .5), "plate", dt=1)                # thigh guard
+    cu(c, pn, (x, 6.6, 0), (4.4, 1.2, 4.4), "dark")                         # the knee joint, dark and narrow
+    cu(c, pn, (x, 3.9, .2), (4.9, 4.4, 4.9), "plate")                       # greave, flared
+    cu(c, pn, (x, 6.5, -2.5), (2.8, 1.4, .8), "gold")                       # knee cap
     cu(c, pn, (x, 1.0, -1.8), (4.4, 2.0, 6.6), thigh)
     for k in range(toes): sg(c, pn, (x + (k - (toes - 1) / 2) * 1.3, .6, -5.0), (x + (k - (toes - 1) / 2) * 1.4, .4, -6.5), .8, .8, "claw", pad=.3)
 
@@ -137,9 +213,9 @@ def leg_digi(c, side, pn, thigh="body", hoof=False, toes=3, tall=1.0):
     cu(c, pn, (x, 12.2, 0), (4.8, 1.6, 4.8), "leather")
     sg(c, pn, (x, 13.0, .6), (x, 8.0, -2.2), 4.8, 5.0, thigh, pad=1.0)
     cu(c, pn, (x, 10.4, -3.0), (3.2, 3.6, .6), "belly", rot=(-30, 0, 0))
-    sg(c, pn, (x, 8.0, -2.2), (x, 2.6, 1.6), 3.4, 3.6, "plate", pad=.8)
-    sg(c, pn, (x, 6.8, -1.2), (x, 4.2, 0.4), 4.0, 4.0, "plate", dt=1, pad=0)
-    cu(c, pn, (x, 7.8, -3.4), (3.2, 1.6, 1.0), "plate", dt=1)
+    sg(c, pn, (x, 8.0, -2.2), (x, 2.6, 1.6), 3.4, 3.6, "back", pad=.8)
+    sg(c, pn, (x, 6.8, -1.2), (x, 4.2, 0.4), 4.2, 4.2, "plate", dt=1, pad=0)
+    cu(c, pn, (x, 7.9, -3.4), (2.6, 1.3, .9), "gold")
     if hoof:
         cu(c, pn, (x, 1.1, -1.4), (4.2, 2.2, 5.4), "dark")
         cu(c, pn, (x, .6, -3.4), (4.0, 1.2, 2.6), "claw")
@@ -174,13 +250,14 @@ def ears(c, kind, H, sc_=1.0, mat="body", inner="dark"):
 
 
 def horns(c, kind, H, mat="claw", scale=1.0):
+    k = scale; kx = 1 + (k - 1) * .5                                       # 3.76.0: `scale` works for the swept and bull horns: they grow up and back, and half as much outward
     for s in (-1, 1):
         if kind == "swept":
-            pts = curve(H + V(s * 2.8, 4.5, .6), H + V(s * 5.6, 8.6, 8.0), V(s * 1.0, 5.0, 1.0), 6)
-            cn(c, "head", pts, taper(2.2, .5, 6), taper(2.2, .5, 6), mat, up=(0, 1, 0), mat2="plate")
+            pts = curve(H + V(s * 2.8, 4.5, .6), H + V(s * 5.6 * kx, 4.5 + 4.1 * k, .6 + 7.4 * k), V(s * 1.0, 5.0 * k, 1.0), 6)
+            cn(c, "head", pts, taper(2.2 * kx, .5, 6), taper(2.2 * kx, .5, 6), mat, up=(0, 1, 0), mat2="gold")
         elif kind == "bull":
-            pts = curve(H + V(s * 4.0, 3.0, -.6), H + V(s * 7.2, 9.0, -3.4), V(s * 3.4, -1.0, 0), 6)
-            cn(c, "head", pts, taper(2.4, .6, 6), taper(2.4, .6, 6), mat)
+            pts = curve(H + V(s * 4.0, 3.0, -.6), H + V(s * (4.0 + 3.2 * kx), 3.0 + 6.0 * k, -.6 - 2.8 * k), V(s * 3.4 * k, -1.0, 0), 6)
+            cn(c, "head", pts, taper(2.4 * kx, .6, 6), taper(2.4 * kx, .6, 6), mat)
         elif kind == "ram":
             pts = [H + V(s * 3.4, 3.6, -.6), H + V(s * 6.0, 4.4, -.6), H + V(s * 7.0, 2.0, -.4), H + V(s * 6.0, .0, 0.2), H + V(s * 4.6, 0.6, 0.8)]
             cn(c, "head", pts, taper(2.6, 1.2, 5), taper(2.4, 1.2, 5), mat)
@@ -207,9 +284,10 @@ def tail(c, kind, base=(0, 13.0, 2.6), length=1.0):
         thick = 1.3 * {"whip": 1.8, "thick": 4.4, "spiked": 4.0, "tuft": 2.4, "curl": 2.4, "serpent": 3.0, "serpent2": 2.6, "fluke": 3.8, "bushy": 3.6, "flame": 3.0, "feather": 2.6, "fox": 3.2}[kind]
         L = {"whip": 22, "thick": 19, "spiked": 22, "tuft": 17, "curl": 15, "serpent": 22, "serpent2": 23, "fluke": 18, "bushy": 18, "flame": 18, "feather": 16, "fox": 17}[kind] * length
         droop = {"whip": 8, "thick": 5, "spiked": 6, "tuft": 6, "curl": -3, "serpent": 6, "serpent2": 4, "fluke": 1, "bushy": 3, "flame": 3, "feather": 4, "fox": 4}[kind]
-        sides = (-1, 1) if kind == "serpent2" else (0,)
+        sides = (-1, 1) if kind == "serpent2" else ((-1, 0, 1) if kind == "fox" else (0,))      # 3.76.0: the kitsune fans three tails
+        fan = 8.5 if kind == "fox" else 3.0
         for sd in sides:
-            pts = [b + V(sd * 3.0 * (i / (n - 1)) * (1 if sd else 0), -droop * (i / (n - 1)) ** 1.4 + (math.sin(i / (n - 1) * math.pi) * 2.5 if kind in ("whip", "curl", "serpent") else 0) - (0), (i / (n - 1)) * L) for i in range(n)]
+            pts = [b + V(sd * fan * (i / (n - 1)) * (1 if sd else 0), -droop * (i / (n - 1)) ** 1.4 + (math.sin(i / (n - 1) * math.pi) * 2.5 if kind in ("whip", "curl", "serpent") else 0) - (0), (i / (n - 1)) * L) for i in range(n)]
             ws = taper(thick, thick * (.5 if kind != "bushy" else 1.0), n)
             sfx = "" if not sd else ("L" if sd > 0 else "R")
             TB = [("tail", "tail2", "tail3")[min(2, i * 3 // (n - 1))] + sfx for i in range(n - 1)]

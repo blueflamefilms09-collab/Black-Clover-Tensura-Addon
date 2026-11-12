@@ -257,6 +257,9 @@ final class Wave0Contract {
                         .withClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/infernalpact " + k.key()))
                         .withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, Component.literal(describe(k))))));
             }
+            p.sendSystemMessage(Component.literal(" [Or call a devil of another world]").withStyle(s -> s.withColor(ChatFormatting.DARK_PURPLE)       // 3.76.0
+                    .withClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/devil worlds"))
+                    .withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, Component.literal("Black Clover, Chainsaw Man, Black Butler, Blue Exorcist, Tensura, Dororo, Berserk, Fairy Tail: each world has its own ritual.")))));
         });
     }
 

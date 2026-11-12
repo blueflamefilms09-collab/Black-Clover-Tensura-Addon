@@ -82,6 +82,7 @@ public final class Bonds {
 
     private static boolean holdsDevil(ServerPlayer p) {
         if (ForbiddenMagic.devilOf(p) != null) return true;
+        if (com.newuniverse.nusmp.devil.DevilContracts.hasWorldDevil(p)) return true;                        // 3.76.0: a contract with a devil of another world is a Devil bond too
         if (!p.getPersistentData().getCompound(net.minecraft.world.entity.player.Player.PERSISTED_NBT_TAG).getString(INFERNAL_CONTRACT).isEmpty()) return true;      // a signed Infernal Contract (wave 0) is a Devil bond
         return GrimoirePages.grimoireOf(p).map(i -> !i.getOrCreateTag().getString("Devil").isEmpty()).orElse(false) || AntiMagic.lord(p).isPresent();
     }

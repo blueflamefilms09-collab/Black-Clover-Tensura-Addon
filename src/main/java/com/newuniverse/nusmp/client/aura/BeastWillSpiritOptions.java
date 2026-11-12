@@ -20,4 +20,11 @@ public final class BeastWillSpiritOptions {
     public static boolean flat() { return flat; }
 
     public static void setFlat(boolean on) { flat = on; }
+
+    private static volatile boolean classicForms;
+
+    /** 3.76.0: true = the 3D forms as they were before the look pass (client setting {@code beastwill.classicForms}; the files {@code bwf_<stem>_v1...}). */
+    public static boolean classicForms() { return classicForms; }
+
+    public static void setClassicForms(boolean on) { classicForms = on; }
 }

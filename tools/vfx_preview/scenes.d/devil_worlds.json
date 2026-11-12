@@ -1,0 +1,970 @@
+{
+ "_comment": "3.76.0: the summoning of a devil in each anime world (devil/DevilRituals): three of the effects each ritual shows, in the world's colour.",
+ "devil_black_clover_1": {
+  "layer": "DarkFxLayer",
+  "shape": "DARKFX_ZONE",
+  "from": [
+   0,
+   0,
+   6
+  ],
+  "to": [
+   0,
+   1,
+   6
+  ],
+  "power": 4.0,
+  "duration": 80,
+  "cam": [
+   -6.0,
+   4.0,
+   -1.0
+  ],
+  "target": [
+   0,
+   0.8,
+   6
+  ],
+  "ages": [
+   40
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ],
+   [
+    3,
+    0,
+    6,
+    1.8
+   ]
+  ],
+  "sky": [
+   0.5,
+   0.55,
+   0.66
+  ],
+  "color": "FFC81E2D"
+ },
+ "devil_black_clover_2": {
+  "layer": "DarkFxLayer",
+  "shape": "DARKFX_BURST",
+  "from": [
+   0,
+   0,
+   6
+  ],
+  "to": [
+   0,
+   1,
+   6
+  ],
+  "power": 1.4,
+  "duration": 30,
+  "cam": [
+   -5.0,
+   2.6,
+   0.0
+  ],
+  "target": [
+   0,
+   1.4,
+   6
+  ],
+  "ages": [
+   14
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ],
+  "sky": [
+   0.5,
+   0.55,
+   0.66
+  ],
+  "color": "FFC81E2D"
+ },
+ "devil_chainsaw_man_0": {
+  "layer": "ArcaneSpellLayer2",
+  "shape": "SHADOW_POOL",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   1,
+   0
+  ],
+  "power": 3,
+  "duration": 60,
+  "cam": [
+   0,
+   3.5,
+   -7
+  ],
+  "target": [
+   0,
+   0.5,
+   0
+  ],
+  "ages": [
+   16
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ],
+  "color": "FFB01020"
+ },
+ "devil_chainsaw_man_1": {
+  "layer": "ArcaneSpellLayer2",
+  "shape": "FOOD_MAW",
+  "from": [
+   0,
+   1.6,
+   3
+  ],
+  "to": [
+   0,
+   1.6,
+   8
+  ],
+  "power": 1,
+  "duration": 40,
+  "cam": [
+   3,
+   2,
+   -3
+  ],
+  "target": [
+   0,
+   1.6,
+   3
+  ],
+  "ages": [
+   16
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ],
+  "color": "FFB01020"
+ },
+ "devil_chainsaw_man_2": {
+  "layer": "ZogratisBloodLayer",
+  "shape": "BLOOD_DOWNPOUR",
+  "color": "FFB01020",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   1,
+   0
+  ],
+  "power": 12.0,
+  "duration": 60,
+  "cam": [
+   10.75,
+   9.77,
+   -23.46
+  ],
+  "target": [
+   0,
+   3.0,
+   0
+  ],
+  "ages": [
+   22
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ],
+   [
+    9.35,
+    0,
+    0,
+    1.8
+   ],
+   [
+    -5.95,
+    0,
+    6.8,
+    1.8
+   ],
+   [
+    1.7,
+    0,
+    -8.5,
+    1.8
+   ]
+  ],
+  "sky": [
+   0.3,
+   0.34,
+   0.44
+  ]
+ },
+ "devil_black_butler_0": {
+  "layer": "DarkFxLayer",
+  "shape": "DARKFX_ZONE",
+  "from": [
+   0,
+   0,
+   6
+  ],
+  "to": [
+   0,
+   1,
+   6
+  ],
+  "power": 4.0,
+  "duration": 80,
+  "cam": [
+   -6.0,
+   4.0,
+   -1.0
+  ],
+  "target": [
+   0,
+   0.8,
+   6
+  ],
+  "ages": [
+   40
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ],
+   [
+    3,
+    0,
+    6,
+    1.8
+   ]
+  ],
+  "sky": [
+   0.5,
+   0.55,
+   0.66
+  ],
+  "color": "FF7A3CC8"
+ },
+ "devil_black_butler_1": {
+  "layer": "ArcaneSpellLayer",
+  "shape": "ALCHEMY_CIRCLE",
+  "from": [
+   0,
+   1.3,
+   1.5
+  ],
+  "to": [
+   0,
+   1.3,
+   4
+  ],
+  "power": 1,
+  "duration": 30,
+  "cam": [
+   3,
+   2,
+   -3
+  ],
+  "target": [
+   0,
+   1.3,
+   1.5
+  ],
+  "ages": [
+   12
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ],
+  "color": "FF7A3CC8"
+ },
+ "devil_black_butler_2": {
+  "layer": "LightTreeLayer",
+  "shape": "LIGHT_FLARE",
+  "from": [
+   0,
+   1.5,
+   3
+  ],
+  "to": [
+   0,
+   1.5,
+   3
+  ],
+  "power": 1.2,
+  "duration": 12,
+  "cam": [
+   2,
+   1.8,
+   -2
+  ],
+  "target": [
+   0,
+   1.4,
+   3
+  ],
+  "ages": [
+   4
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ],
+  "color": "FF7A3CC8"
+ },
+ "devil_blue_exorcist_1": {
+  "layer": "AuraLayer",
+  "shape": "SPIRIT_AURA",
+  "from": [
+   0,
+   1,
+   0
+  ],
+  "to": [
+   0,
+   1,
+   0
+  ],
+  "power": 1.0,
+  "duration": 200,
+  "cam": [
+   -5.5,
+   2.6,
+   -1.5
+  ],
+  "target": [
+   0,
+   2,
+   3.5
+  ],
+  "ages": [
+   12
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ],
+  "sky": [
+   0.04,
+   0.06,
+   0.16
+  ],
+  "horizon": [
+   0.16,
+   0.17,
+   0.32
+  ],
+  "floor": [
+   0.1,
+   0.11,
+   0.17
+  ],
+  "note": "Star Shield page: empower, sendFollowing with SPIRIT_AURA (not a star effect at all)",
+  "color": "FF3A7BFF"
+ },
+ "devil_blue_exorcist_2": {
+  "layer": "FireV2Layer",
+  "shape": "FLAMEFX_BURST",
+  "from": [
+   0.0,
+   0.0,
+   6.0
+  ],
+  "to": [
+   0.0,
+   1.0,
+   6.0
+  ],
+  "power": 1.4,
+  "duration": 28,
+  "cam": [
+   -5.0,
+   2.6,
+   0.0
+  ],
+  "target": [
+   0,
+   1.0,
+   6
+  ],
+  "ages": [
+   6
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ],
+  "sky": [
+   0.3,
+   0.34,
+   0.44
+  ],
+  "color": "FF3A7BFF"
+ },
+ "devil_tensura_0": {
+  "layer": "ZogratisSpaceLayer",
+  "shape": "SPACE_RINGGATE",
+  "from": [
+   0,
+   2,
+   3
+  ],
+  "to": [
+   0,
+   2,
+   6
+  ],
+  "power": 2.2,
+  "duration": 40,
+  "color": "FF2A1A3A",
+  "seed": 12344,
+  "cam": [
+   5,
+   3,
+   -3
+  ],
+  "target": [
+   0,
+   2,
+   3
+  ],
+  "ages": [
+   25
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    -3,
+    1.8
+   ]
+  ]
+ },
+ "devil_tensura_1": {
+  "layer": "ZogratisDivineLayer",
+  "shape": "SOUL_VORTEX",
+  "color": "FF2A1A3A",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   1,
+   0
+  ],
+  "power": 8.0,
+  "duration": 40,
+  "cam": [
+   9.9,
+   9.0,
+   -21.6
+  ],
+  "target": [
+   0,
+   1.5,
+   0
+  ],
+  "ages": [
+   24
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ],
+   [
+    9.9,
+    0,
+    0,
+    1.8
+   ],
+   [
+    -6.3,
+    0,
+    7.2,
+    1.8
+   ],
+   [
+    1.8,
+    0,
+    -9.0,
+    1.8
+   ]
+  ],
+  "sky": [
+   0.3,
+   0.34,
+   0.44
+  ]
+ },
+ "devil_tensura_2": {
+  "layer": "ZogratisDivineLayer",
+  "shape": "DIVINE_PILLAR",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   1,
+   0
+  ],
+  "power": 3,
+  "duration": 30,
+  "color": "FF2A1A3A",
+  "seed": 12345,
+  "cam": [
+   8,
+   5,
+   8
+  ],
+  "target": [
+   0,
+   4,
+   0
+  ],
+  "ages": [
+   20
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    -3,
+    1.8
+   ]
+  ]
+ },
+ "devil_dororo_0": {
+  "layer": "StoneBossLayer",
+  "shape": "BOSS_STONE_RING",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   1,
+   0
+  ],
+  "power": 14,
+  "duration": 40,
+  "cam": [
+   0,
+   12,
+   26
+  ],
+  "target": [
+   0,
+   0,
+   0
+  ],
+  "ages": [
+   24
+  ],
+  "seed": 12346,
+  "figures": [
+   [
+    4,
+    0,
+    2,
+    1.8
+   ]
+  ],
+  "color": "FF8A6A3A"
+ },
+ "devil_dororo_1": {
+  "layer": "CurseLayer",
+  "shape": "CURSE_FX1",
+  "from": [
+   0,
+   1.4,
+   0
+  ],
+  "to": [
+   0,
+   1.3,
+   4.5
+  ],
+  "power": 1.0,
+  "duration": 16,
+  "cam": [
+   -3.4,
+   1.8,
+   2.0
+  ],
+  "target": [
+   0,
+   1.3,
+   2.3
+  ],
+  "ages": [
+   12
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    -0.4,
+    1.8
+   ],
+   [
+    0,
+    0,
+    4.9,
+    1.8
+   ]
+  ],
+  "color": "FF8A6A3A"
+ },
+ "devil_dororo_2": {
+  "layer": "ZogratisBloodLayer",
+  "shape": "BLOOD_ARCS",
+  "from": [
+   0,
+   1,
+   0
+  ],
+  "to": [
+   0,
+   1,
+   10
+  ],
+  "power": 1,
+  "duration": 14,
+  "color": "FF8A6A3A",
+  "seed": 12344,
+  "cam": [
+   8,
+   3,
+   3
+  ],
+  "target": [
+   0,
+   1.5,
+   5
+  ],
+  "ages": [
+   8
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    -3,
+    1.8
+   ]
+  ]
+ },
+ "devil_berserk_0": {
+  "layer": "DarkMagicLayer",
+  "shape": "DARK_BLACK_MOON",
+  "from": [
+   0,
+   0,
+   0
+  ],
+  "to": [
+   0,
+   1,
+   0
+  ],
+  "power": 6.0,
+  "duration": 200,
+  "cam": [
+   0,
+   1.7,
+   -9
+  ],
+  "target": [
+   0,
+   11,
+   0
+  ],
+  "ages": [
+   60
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ],
+   [
+    5,
+    0,
+    3,
+    1.8
+   ]
+  ],
+  "sky": [
+   0.3,
+   0.34,
+   0.44
+  ],
+  "color": "FF8A0A14"
+ },
+ "devil_berserk_2": {
+  "layer": "ZogratisBloodLayer",
+  "shape": "BLOOD_SIGIL",
+  "color": "FF8A0A14",
+  "from": [
+   0,
+   0.1,
+   0
+  ],
+  "to": [
+   0,
+   1,
+   0
+  ],
+  "power": 17.0,
+  "duration": 60,
+  "cam": [
+   9.35,
+   8.5,
+   -20.4
+  ],
+  "target": [
+   0,
+   0.5,
+   0
+  ],
+  "ages": [
+   40
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ],
+   [
+    9.35,
+    0,
+    0,
+    1.8
+   ],
+   [
+    -5.95,
+    0,
+    6.8,
+    1.8
+   ],
+   [
+    1.7,
+    0,
+    -8.5,
+    1.8
+   ]
+  ],
+  "sky": [
+   0.3,
+   0.34,
+   0.44
+  ]
+ },
+ "devil_fairy_tail_0": {
+  "layer": "RuneWritingLayer",
+  "shape": "RUNE_WRITING",
+  "from": [
+   0,
+   70,
+   2.6
+  ],
+  "to": [
+   0,
+   69.95,
+   3.6
+  ],
+  "power": 1.0,
+  "duration": 28,
+  "seed": 7,
+  "budget": 1200,
+  "cam": [
+   0.3,
+   70.55,
+   -0.35
+  ],
+  "target": [
+   0,
+   69.9,
+   2.6
+  ],
+  "ages": [
+   15
+  ],
+  "figures": [
+   [
+    0,
+    68.38,
+    0,
+    1.8
+   ]
+  ],
+  "ground": 68.38,
+  "sky": [
+   0.14,
+   0.18,
+   0.2
+  ],
+  "horizon": [
+   0.22,
+   0.26,
+   0.28
+  ],
+  "_comment": "The Mana Method rune through the real RuneWritingLayer (a True Flame rune: seed 7 = both runes + True Magic + fire; charge 18 + 10 tail). The open grimoire is the real item model drawn by client.manamethod.RuneClient, which this headless tool cannot draw: only its gold glow shows here.",
+  "color": "FF6A3CFF"
+ },
+ "devil_fairy_tail_1": {
+  "layer": "KotodamaLayer",
+  "shape": "KOTO_WORDS",
+  "from": [
+   0,
+   2.2,
+   2.2
+  ],
+  "to": [
+   0,
+   2.2,
+   6
+  ],
+  "power": 1.2,
+  "duration": 40,
+  "seed": 31489,
+  "cam": [
+   1.2,
+   2.0,
+   -2.5
+  ],
+  "target": [
+   0,
+   2.1,
+   2.2
+  ],
+  "ages": [
+   16
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    0,
+    1.8
+   ]
+  ],
+  "color": "FF6A3CFF"
+ },
+ "devil_fairy_tail_2": {
+  "layer": "DemonFireLayer",
+  "shape": "DEMON_FIRE_FX1",
+  "from": [
+   0,
+   1.5,
+   0
+  ],
+  "to": [
+   0,
+   1.5,
+   14
+  ],
+  "power": 1.0,
+  "duration": 16,
+  "cam": [
+   8.5,
+   2.6,
+   7.0
+  ],
+  "target": [
+   0,
+   1.5,
+   7.0
+  ],
+  "ages": [
+   11
+  ],
+  "figures": [
+   [
+    0,
+    0,
+    -0.6,
+    1.8
+   ],
+   [
+    0,
+    0,
+    14.6,
+    1.8
+   ]
+  ],
+  "sky": [
+   0.22,
+   0.2,
+   0.3
+  ],
+  "horizon": [
+   0.5,
+   0.45,
+   0.48
+  ],
+  "color": "FF6A3CFF"
+ }
+}

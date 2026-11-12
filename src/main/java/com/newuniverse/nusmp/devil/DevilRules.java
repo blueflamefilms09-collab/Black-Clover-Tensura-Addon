@@ -169,4 +169,65 @@ public final class DevilRules {
     public static float clampF(float v, float lo, float hi) { return Float.isNaN(v) ? lo : Math.max(lo, Math.min(hi, v)); }
 
     public static double clampD(double v, double lo, double hi) { return Double.isNaN(v) ? lo : Math.max(lo, Math.min(hi, v)); }
+
+    // ---------------------------------------------------------------- 3.76.0: what a devil's attribute does in a fight
+    /**
+     * The combat effect of an attribute, on the blows of a host who has let the devil in. {@code bonus}: extra damage as a share of the blow at 100 % assimilation with a Supreme devil;
+     * {@code effectId}: a mob effect put on the target ("" = none; "nusmp:burn" = fire); {@code heal}: share of the blow given back to the host; {@code strip}: the target loses its
+     * protective effects. Pure data, read by {@code DevilCombat}.
+     */
+    public record Effect(double bonus, String effectId, int ticks, int amp, double heal, boolean strip, String blurb) {}
+
+    private static final Effect NO_EFFECT = new Effect(0, "", 0, 0, 0, false, "");
+
+    public static Effect effect(DevilAttribute a) {
+        if (a == null) return NO_EFFECT;
+        return switch (a) {
+            case NONE -> NO_EFFECT;
+            case GRAVITY -> new Effect(0.30, "minecraft:slowness", 60, 2, 0, false, "Your blows fall with a devil's weight: the foe is crushed to a crawl.");
+            case SPATIAL -> new Effect(0.55, "", 0, 0, 0, false, "Your blows cut through space: a great deal of extra damage.");
+            case CURSE -> new Effect(0.25, "minecraft:wither", 80, 1, 0, false, "Your blows carry a curse that eats the foe.");
+            case ANTI_MAGIC -> new Effect(0.30, "", 0, 0, 0, true, "Your blows cancel magic: the foe loses its protections.");
+            case FLAME -> new Effect(0.35, "nusmp:burn", 120, 0, 0, false, "Your blows burn with hellfire.");
+            case WORD -> new Effect(0.20, "minecraft:weakness", 80, 1, 0, false, "Your word binds: the foe is weakened.");
+            case TIME -> new Effect(0.20, "minecraft:slowness", 30, 4, 0, false, "Your blows stop the foe's time for a moment.");
+            case BEAST -> new Effect(0.50, "", 0, 0, 0, false, "The beast bites with you: a great deal of extra damage.");
+            case FORESIGHT -> new Effect(0.35, "minecraft:glowing", 100, 0, 0, false, "You have seen this blow land: it strikes where the foe is open, and marks it.");
+            case GHOST -> new Effect(0.15, "minecraft:slowness", 50, 5, 0, false, "Unseen hands seize the foe and hold it.");
+            case SOUL -> new Effect(0.25, "", 0, 0, 0.25, false, "The demon feeds: a quarter of each blow comes back to you as health.");
+            case ROT -> new Effect(0.20, "minecraft:poison", 100, 1, 0, false, "Your blows rot what they touch.");
+            case EARTH -> new Effect(0.35, "minecraft:slowness", 40, 1, 0, false, "Your blows land like falling rock.");
+            case WATER -> new Effect(0.25, "minecraft:mining_fatigue", 80, 1, 0, false, "Your blows drown the foe's strength.");
+            case LIGHT -> new Effect(0.40, "minecraft:glowing", 100, 0, 0, false, "Your blows burn with light, and the foe is marked.");
+            case ETHER -> new Effect(0.55, "", 0, 0, 0, false, "Raw ether bursts from your blows.");
+            case CAUSALITY -> new Effect(0.60, "", 0, 0, 0.10, false, "The current of causality carries your blows: the greatest extra damage, and a little life back.");
+        };
+    }
+
+    /** The assimilation from which the attribute acts. */
+    public static final float EFFECT_FROM = 20f;
+    /** Ticks between two attribute effects of one host (a sweep or a fast weapon cannot stack them). */
+    public static final int EFFECT_GAP = 20;
+
+    /** How strongly the effect acts, 0..1.5: nothing under 20 %, growing with the level, the tier's share, times 1.5 in the union. */
+    public static double effectPower(DevilTier t, float level, boolean union) {
+        if (level < EFFECT_FROM) return 0.0;
+        double tier = switch (t) { case LOW -> 0.4; case MID -> 0.6; case HIGH -> 0.8; case SUPREME -> 1.0; default -> 0.0; };
+        return tier * smooth(clampF(level, 0f, 100f) / 100.0) * (union ? 1.5 : 1.0);
+    }
+
+    /** The extra damage of one blow: the blow times the attribute's bonus times the power, never more than three times the blow. */
+    public static float effectBonus(float blow, Effect e, double power, double scale) {
+        if (!(blow > 0f) || e == null || power <= 0) return 0f;
+        return (float) Math.min(blow * 3.0, blow * e.bonus() * power * clampD(scale, 0.0, 10.0));
+    }
+
+    /** May the effect act again? */
+    public static boolean effectReady(long last, long now) { return now - last >= EFFECT_GAP || now < last; }
+
+    /** The Brand of Sacrifice: what a monster's blow becomes for a branded host. */
+    public static float branded(float blow) { return blow > 0f ? blow * 1.2f : blow; }
+
+    /** A piece of the body: two hearts of maximum health. */
+    public static final double FLESH_HEALTH = -4.0;
 }

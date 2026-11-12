@@ -5,7 +5,9 @@ package com.newuniverse.nusmp.devil;
  * These are the new ones: half of the maximum health, and a lost eye. Stored BY NAME, appended only; {@link #bit} is the position in the mask the network sends.
  */
 public enum Sacrifice {
-    HALF_HEALTH, LOST_EYE_LEFT, LOST_EYE_RIGHT;
+    HALF_HEALTH, LOST_EYE_LEFT, LOST_EYE_RIGHT,
+    /** 3.76.0 (appended): a piece of the body (two hearts of maximum health); the soul (every death takes all experience levels); the Brand (monsters hit a fifth harder). */
+    FLESH, SOUL_DEBT, BRANDED;
 
     public int bit() { return 1 << ordinal(); }
 
