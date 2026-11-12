@@ -14,7 +14,7 @@ import java.util.Set;
 
 /**
  * Caster-attached effects (all follow the caster):
- * SPIRIT_AURA: glowing spirit spirals orbiting head and shoulders + a body glow (Spirit Dive look).
+ * SPIRIT_AURA: a rising sheath of flame tongues in the caster's colour with a bright core, climbing sparks, a body glow and a rune band on the ground (3.77.0: the spirals were removed on the owner's order).
  * MANA_CHARGE: mana motes converging into the caster while chanting.
  * SPELL_CARD: removed on the owner's order (1.110.0): it drew a flat picture of a card in the world and nothing draws it any more (the enum constant stays for saves and ordinals).
  * WEAPON_CONSTRUCTS: spectral swords, axes and shields orbiting the caster.
@@ -34,35 +34,57 @@ public class AuraLayer extends AbstractVfxLayer {
         }
     }
 
+    /**
+     * 3.77.0, remade on the owner's order (the orbiting spiral glyphs are gone): a real aura. A sheath of flame tongues in the caster's colour rises from the feet past the head and
+     * flickers, a brighter thin core runs inside it, sparks climb through it, the body glows, and a rune band turns on the ground while a pulse runs out from the feet. It ignites in
+     * the first tenth of its life and dies down in the last. At most about 230 of the shape's 400 vertices.
+     */
     private void aura(VfxInstance inst, VfxRenderContext ctx, VfxVertexBuffer buf) {
         float t = inst.progress(ctx.partialTick), age = inst.ageTicks(ctx.partialTick);
         float alpha = VfxAnim.fadeInOut(t, 0.06f, 0.15f);
+        float ignite = VfxAnim.easeOutBack(Mth.clamp(t * 10f, 0f, 1f));
         Vec3 base = inst.from(ctx);
-        int col = inst.color, light = VfxVertexBuffer.whiten(col, 0.5f);
+        int col = inst.color, light = VfxVertexBuffer.whiten(col, 0.55f), clear = VfxVertexBuffer.withAlpha(light, 0f);
         float p = inst.power;
-        // Spirals: two rings (head, shoulders) bobbing and spinning, like the reference image.
-        int n = ctx.seg(7, 4);
+        double feetY = -0.95;
+        // the sheath: tongues of flame standing round the body, each with its own height and flicker
+        int n = ctx.seg(8, 5);
         for (int i = 0; i < n; i++) {
-            float a = VfxAnim.runeOrbit(i, n, age, 1.4f);
-            float h = (i % 2 == 0 ? 1.95f : 1.35f) + 0.12f * Mth.sin(age * 0.15f + i);
-            float r = (i % 2 == 0 ? 0.55f : 0.8f) * p;
-            Vector3f q = ctx.rel(base.add(Mth.cos(a) * r, h - 1, Mth.sin(a) * r));
-            buf.billboard(ctx, VfxTextures.SPIRIT_SPIRAL, VfxBlend.ADD, q, 0.42f * p, -age * 0.25f + i, VfxVertexBuffer.withAlpha(col, alpha));
+            float a = Mth.TWO_PI * i / n + age * 0.035f;
+            float flick = 0.82f + 0.18f * Mth.sin(age * 0.55f + i * 2.1f);
+            float r = (0.36f + 0.06f * Mth.sin(age * 0.2f + i)) * p;
+            float h = (2.25f + 0.55f * Mth.sin(i * 1.7f + age * 0.11f)) * p * flick * ignite;
+            Vector3f foot = ctx.rel(base.add(Mth.cos(a) * r, feetY, Mth.sin(a) * r));
+            Vector3f tip = ctx.rel(base.add(Mth.cos(a) * r * 0.35, feetY + h, Mth.sin(a) * r * 0.35));
+            buf.beam(ctx, VfxTextures.FLAME, VfxBlend.ADD, foot, tip, 0.62f * p, 0.06f * p, 3, -age * 0.09f - i * 0.37f, VfxVertexBuffer.withAlpha(col, alpha * 0.85f), clear);
         }
-        // Body glow + arm wisps
+        // the core: fewer, thinner, brighter, faster
+        int m = ctx.seg(4, 3);
+        for (int i = 0; i < m; i++) {
+            float a = Mth.TWO_PI * i / m - age * 0.06f;
+            float r = 0.16f * p;
+            float h = (1.9f + 0.4f * Mth.sin(i * 2.3f + age * 0.17f)) * p * ignite;
+            Vector3f foot = ctx.rel(base.add(Mth.cos(a) * r, feetY + 0.1, Mth.sin(a) * r));
+            Vector3f tip = ctx.rel(base.add(0, feetY + h, 0));
+            buf.beam(ctx, VfxTextures.FLAME, VfxBlend.ADD, foot, tip, 0.34f * p, 0.04f * p, 3, -age * 0.15f - i * 0.5f, VfxVertexBuffer.withAlpha(light, alpha * 0.9f), clear);
+        }
+        // the body's glow, breathing
         Vector3f chest = ctx.rel(base.add(0, 0.2, 0));
-        VfxBloom.glow(ctx, buf, chest, 0.9f * p, col, alpha * (0.6f + 0.2f * VfxAnim.pulse(age, 1.5f)));
-        RandomSource r = RandomSource.create(inst.seed + inst.age() / 3);
-        int motes = ctx.seg(10, 4);
-        for (int i = 0; i < motes; i++) {
-            float life = ((age * 0.04f) + i / (float) motes) % 1f;
-            float a = i * 2.4f;
-            Vector3f q = ctx.rel(base.add(Mth.cos(a) * 0.45 * p, -0.9 + life * 2.4, Mth.sin(a) * 0.45 * p));
-            buf.billboard(ctx, VfxTextures.MANA_MOTE, VfxBlend.ADD, q, 0.16f * (1 - life), 0, VfxVertexBuffer.withAlpha(light, alpha * (1 - life)));
+        VfxBloom.glow(ctx, buf, chest, 1.15f * p, col, alpha * (0.55f + 0.2f * VfxAnim.pulse(age, 1.2f)));
+        // sparks climbing through the sheath
+        int sparks = ctx.seg(8, 4);
+        for (int i = 0; i < sparks; i++) {
+            float life = ((age * 0.045f) + i / (float) sparks) % 1f;
+            float a = i * 2.39996f + life * 2.2f;
+            float r = (0.5f - 0.25f * life) * p;
+            Vector3f q = ctx.rel(base.add(Mth.cos(a) * r, feetY + life * 2.6 * p, Mth.sin(a) * r));
+            buf.billboard(ctx, VfxTextures.SPARK, VfxBlend.ADD, q, 0.2f * p * (1 - life * 0.7f), age * 0.3f + i, VfxVertexBuffer.withAlpha(light, alpha * (1 - life)));
         }
-        // Wind ring at the feet
-        VfxPose feet = VfxPose.ground(ctx.rel(base.add(0, -0.95, 0))).spin(age * 0.1f);
-        buf.ring(VfxTextures.WIND_SLASH, VfxBlend.WIND, feet, 0.7f * p, 1.0f * p, ctx.seg(16, 8), 2, age * 0.05f, VfxVertexBuffer.withAlpha(col, alpha * 0.8f));
+        // the ground: a rune band turning under the feet, and a pulse running out
+        VfxPose feet = VfxPose.ground(ctx.rel(base.add(0, feetY, 0))).spin(age * 0.06f);
+        buf.ring(VfxTextures.RUNE_RING, VfxBlend.ADD, feet, 0.78f * p, 1.02f * p, ctx.seg(16, 8), 2, age * 0.01f, VfxVertexBuffer.withAlpha(col, alpha * 0.9f));
+        float wave = (age % 30f) / 30f;
+        VfxBloom.planeGlow(buf, feet, (0.5f + 1.3f * wave) * p, col, alpha * 0.45f * (1 - wave));
     }
 
     private void charge(VfxInstance inst, VfxRenderContext ctx, VfxVertexBuffer buf) {

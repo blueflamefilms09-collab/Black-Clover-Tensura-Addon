@@ -35,7 +35,7 @@ public final class DevilContract {
     /** 3.76.0, live: the ritual that is running (null = none), the devil whose offer is open and since when, the last ritual and the last attribute effect (game times). */
     public DevilRitualRun ritual;
     public String offer = "";
-    public long offerAt, lastRitual = -1, lastEffect = Long.MIN_VALUE / 2;
+    public long offerAt, lastRitual = -1, lastEffect = Long.MIN_VALUE / 2, flashUntil;
 
     /** Nothing worth saving: a player who never had a contract keeps no attachment. */
     public boolean isEmpty() { return tier == DevilTier.NONE && sacrifices.isEmpty() && unionReadyAt == 0 && unionUntil == 0 && assimilation == 0; }

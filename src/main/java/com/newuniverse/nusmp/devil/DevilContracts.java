@@ -324,7 +324,7 @@ public final class DevilContracts {
 
     private static int selfKey(ServerPlayer p, DevilContract c, long now) {
         int flags = flags(p, c, now);
-        return c.tier.ordinal() | (c.attribute.ordinal() << 3) | (Math.round(c.assimilation) << 6) | (flags << 13) | (c.sacrificeMask() << 17);
+        return c.tier.ordinal() | (c.attribute.ordinal() << 3) | (Math.round(c.assimilation) << 8) | (flags << 15) | (c.sacrificeMask() << 19);      // 3.77.0: the attribute has 5 bits now (18 of them), the sacrifices 6
     }
 
     private static int flags(ServerPlayer p, DevilContract c, long now) {
@@ -335,6 +335,7 @@ public final class DevilContracts {
     static void syncIfChanged(ServerPlayer p, DevilContract c, long now) {
         int self = selfKey(p, c, now);
         if (self != c.sentSelf) { c.sentSelf = self; DevilNet.sendSelf(p, buildSync(p, c, now)); }
+        if (now < c.flashUntil) return;                                                       // 3.77.0: the devil shows itself on the signer for three seconds; the true picture follows
         int vis = visualKey(c);
         if (vis != c.sentVisual) {
             boolean nothingBefore = c.sentVisual == -1 && vis == 0;

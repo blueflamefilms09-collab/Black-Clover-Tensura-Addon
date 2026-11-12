@@ -32,7 +32,7 @@ import net.minecraft.world.phys.Vec3;
  * and breaks it when the caller leaves the circle. At the end the devil makes its offer (two clickable words in chat); {@link #sign} takes the lasting price and writes the contract, which from
  * then on is the 3.48.0 contract (assimilation key, Devil Union, markings) with the devil's tier and attribute.
  *
- * <p>Cost (rule 11): nothing for a player with no ritual (one attachment lookup a tick). A running ritual is a distance check a tick, at most 6 pictures in its 4 to 10 seconds (one packet each to
+ * <p>Cost (rule 11): nothing for a player with no ritual (one attachment lookup a tick). A running ritual is a distance check a tick, at most 8 pictures in its 4 to 10 seconds (one packet each to
  * players within 96 blocks, through the effect budget), at most 6 particles every 10 ticks through the particle budget, and a handful of chat lines to the caller. No entity is spawned, no block
  * is changed, nothing is scanned, nothing is kept in a static map.
  */
@@ -147,6 +147,9 @@ public final class DevilRituals {
         stage(p, d, r, t);
         if (t >= d.world().ticks) {
             c.ritual = null;
+            Vec3 front = new Vec3(r.x + r.faceX * 3.0, r.y + 0.05, r.z + r.faceZ * 3.0);              // 3.77.0: the devil itself: a shadow with burning eyes over its sigil, three blocks in front, while it waits for the answer
+            shape(p, VfxShape.BOSS_DEVIL_SIGIL, front, front.add(0, 1, 0), d.color(), 80, 2.5);
+            shape(p, VfxShape.SHADOW_UNITE, front, front.add(0, 1, 0), d.color(), 200, 1.4);
             offer(p, c, d);
         }
     }
@@ -294,6 +297,10 @@ public final class DevilRituals {
         DevilContracts.applySacrifices(p, c);
         DevilContracts.applyStats(p, c);
         DevilContracts.syncNow(p, c);
+        DevilNet.sendVisual(p, new DevilNet.Visual(p.getId(), d.tier().ordinal(), 100, true));       // 3.77.0: for three seconds the signer wears the devil whole: markings, horns, wings, the union's glow
+        c.sentVisual = -2;
+        c.flashUntil = now + 60;
+        VfxSpawn.sendFollowing(p.serverLevel(), VfxShape.SHADOW_UNITE, p, p.position().add(0, 1, 0), 0xFF000000 | (d.color() & 0xFFFFFF), 60, 1.2f);      // the devil's shadow settles on the signer
         Vec3 at = p.position().add(0, 0.05, 0);
         shape(p, VfxShape.DEVIL_CIRCLE, at, at.add(0, 1, 0), d.color(), 40, 2.0);
         sound(p, SoundEvents.WITHER_SPAWN, 0.7f, 1.2f);

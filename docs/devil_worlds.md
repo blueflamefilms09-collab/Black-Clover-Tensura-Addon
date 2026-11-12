@@ -78,7 +78,7 @@ The wiki pages themselves could not be opened from the build machine (the fandom
 ## Cost (rule 11)
 
 - A player with no ritual: one attachment lookup a tick (`DevilRituals.tick`), as cheap as the once-a-second lookup it joins.
-- A running ritual (one per player at most, 4 to 10 seconds, a 60 second gap between two): a distance check a tick; at most 6 mesh effects in all, one packet each to players within 96 blocks through `PerfBudgets.effectPacket`; 6 particles every 10 ticks through the particle budget; a few chat lines to the caller. The largest effect measured by the previewer is the rune wheel (736 of its 1200 vertex budget); the others are 48 to 296 vertices.
+- A running ritual (one per player at most, 4 to 10 seconds, a 60 second gap between two): a distance check a tick; at most 8 mesh effects in all (the last two are the devil itself: a shadow with burning eyes over its sigil, three blocks in front of the caller while the offer is open), one packet each to players within 96 blocks through `PerfBudgets.effectPacket`; 6 particles every 10 ticks through the particle budget; a few chat lines to the caller. The largest effect measured by the previewer is the rune wheel (736 of its 1200 vertex budget); the others are 48 to 296 vertices.
 - The attribute effect: on the damage event, at most once a second per host: one multiplication, at most one mob effect, 8 particles.
 - No entity is spawned, no block is changed, no world is scanned, nothing is kept in a static collection (`DevilSourceScanTest` pins all of this for the whole package). The ritual and the open offer live in the unsaved part of the contract attachment, so a logout or a death simply ends them.
 
@@ -89,7 +89,7 @@ NEW: `DevilWorld`, `WorldDevil`, `DevilRitualRules`, `DevilRitualRun`, `DevilRit
 ## Not included, not seen
 
 - **Nothing was seen in a game.** The summoning previews are single frames from the offline previewer; three effects (the devil circle, the plain magic circle and the Berserk zone) could not be rendered by it and are known only as existing effects of the mod.
-- The devils do not appear as bodies: a summoning is effects, sound and words. A devil entity that stands in the circle would be a separate job.
+- The devil appears as a shadow with burning eyes over a sigil (an existing effect in its colour), not as a modelled body. On signing, the signer wears the devil whole for three seconds (markings, horns, wings, the union glow). A devil entity with its own model would be a separate job.
 - A world devil's contract cannot be ended by the player; an operator's `/devil clear <player>` forgets it (the sacrifices go with it).
 - The HUD shows the tier and the attribute, not the devil's name (`/devil status` does).
 - The balance of the prices against the tiers is a first proposal.

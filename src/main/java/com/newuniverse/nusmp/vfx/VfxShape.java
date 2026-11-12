@@ -21,7 +21,7 @@ public enum VfxShape {
     SPATIAL_RIFT,            // spinning rift disc at 'from'
     MIRROR_PANE,             // glowing pane at 'from' facing 'to'
     THREAD_LINE,             // thin glowing line from -> to
-    SPIRIT_AURA,             // spirit spirals orbiting the caster (Spirit Dive, devil, reinforcement)
+    SPIRIT_AURA,             // a rising flame-tongue aura round the caster in its colour (Spirit Dive, devil, reinforcement); 3.77.0: was orbiting spirals
     MANA_CHARGE,             // mana motes converging into the caster while chanting
     SPELL_CARD,              // floating spell card with the grimoire's icon (seed = magic ordinal)
     WEAPON_CONSTRUCTS,       // spectral swords / axes / shields orbiting the caster
