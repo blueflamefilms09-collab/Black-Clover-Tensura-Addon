@@ -44,6 +44,30 @@ from art_hart2_kit import shade, mix                               # noqa: E402
 ml, w, V = K.ml, K.w, K.V
 K.register_materials()
 
+# ---------------------------------------------------------------- the 3.79.0 look pass (docs/heroweapon/art_hart2_v2.md): shared ornament
+# Why: the owner asked for better weapon models. Every Seven Star weapon gets a larger gem with a halo engraved round it on the glow skin, heavier proportions, layered fittings
+# and a line of small runes where it has a plate to carry them. The old looks are kept as weapon_meshes_classic/<id>.txt with their skins.
+def halo(atlas, part, axis, sign, centre, r, rgb, strength=0.9, width=0.7):
+    """A glowing engraved ring round a gem on the face of the part that carries it (a = right, b = up as a viewer of that face sees them)."""
+    pts = [(centre[0] + r * math.cos(2 * math.pi * i / 28.0), centre[1] + r * math.sin(2 * math.pi * i / 28.0)) for i in range(29)]
+    K.engrave(atlas, part, axis, sign, segments=list(zip(pts[:-1], pts[1:])), width=width, dark=0.45, glow_rgb=rgb, glow_strength=strength)
+
+
+def runes(atlas, part, axis, sign, start, step, n, size, rgb, seed=7, strength=0.7, width=0.45):
+    """n small rune glyphs in a row on a face: a stem and one or two branches each, engraved and softly lit. Deterministic (seeded)."""
+    rng = np.random.RandomState(seed)
+    segs = []
+    for i in range(n):
+        cx, cy = start[0] + step[0] * i, start[1] + step[1] * i
+        h = size / 2.0
+        segs.append(((cx, cy - h), (cx, cy + h)))
+        for _ in range(1 + rng.randint(2)):
+            y0 = cy + (rng.randint(3) - 1) * h * 0.6
+            sx = 1 if rng.randint(2) else -1
+            segs.append(((cx, y0), (cx + sx * h * 0.75, y0 + (rng.randint(3) - 1) * h * 0.7)))
+    K.engrave(atlas, part, axis, sign, segments=segs, width=width, dark=0.5, glow_rgb=rgb, glow_strength=strength)
+
+
 CLASS_OF = {"vassal_hammer": "hammer", "vassal_claw": "shortsword", "vassal_axe": "battleaxe", "vassal_whip": "coilwhip",
             "vassal_staff": "staff", "vassal_gauntlet": "handitem", "vassal_projectile": "dagger"}
 
@@ -64,12 +88,12 @@ H_AMBER, H_AMBER_GLOW = K.hx("FF9A2E"), K.hx("FF9A2E")
 H_BUTT = -11.0                  # the pommel cap's lowest point
 H_HAFT_TOP = 146.0              # the haft runs up into the head
 H_HEAD_YC = 144.0               # the head's centre height: 144 + half the hub 31 = 175, the weapon is 186 long
-H_BLOCK_HY, H_BLOCK_HZ = 27.0, 24.5                  # half height (y) and half depth (z) of the two blocks: a head 54 tall and 49 thick (a square-ish block, 0.34 on the face)
-H_HUB_HY, H_HUB_HZ = 31.0, 28.0                      # the hub between the blocks stands 4 higher and 3.5 wider all round
-H_FRONT_X, H_HUB_X, H_REAR_X = (-36.0, -11.0), (-11.0, 11.0), (11.0, 28.0)    # front block 25 long, hub 22, rear block 17: the front is longer than the rear
-H_PLATE = 5.5                   # the face plates stand this far beyond the blocks (the striking face and the peen); head 33 + 41 + 11 = 85 long, 0.58 blocks in the hand
+H_BLOCK_HY, H_BLOCK_HZ = 30.5, 27.5                  # half height (y) and half depth (z) of the two blocks: a head 54 tall and 49 thick (a square-ish block, 0.34 on the face)
+H_HUB_HY, H_HUB_HZ = 35.0, 31.5                      # the hub between the blocks stands 4 higher and 3.5 wider all round
+H_FRONT_X, H_HUB_X, H_REAR_X = (-41.0, -12.5), (-12.5, 12.5), (12.5, 32.0)    # front block 25 long, hub 22, rear block 17: the front is longer than the rear
+H_PLATE = 6.5                   # the face plates stand this far beyond the blocks (the striking face and the peen); head 33 + 41 + 11 = 85 long, 0.58 blocks in the hand
 H_GRIP_Y = (18.0, 62.0)         # the leather grip (the hand is at a quarter of the 186 long weapon: y = 35)
-H_MED_R, H_BEZEL_R, H_GEM_R = 13.5, 9.0, 6.6         # the brass medallion on each cheek, the seven-sided bezel, the cabochon (a 27 wide medallion on a 39 high flat of the hub)
+H_MED_R, H_BEZEL_R, H_GEM_R = 17.0, 12.2, 9.2         # the brass medallion on each cheek, the seven-sided bezel, the cabochon (a 27 wide medallion on a 39 high flat of the hub)
 
 
 def build_hammer():
@@ -80,26 +104,26 @@ def build_hammer():
     sec_hub = ml.octagon(2.0, 2.0, 0.36)                                  # the hub has big flats: the medallion must sit flat on it
     # ---- haft: dark walnut, a long swelling lathe (slim in the grip, strong under the head)
     haft = K.add(m, "haft", "hero_walnut", base=H_WALNUT, smooth=60, uv_mode="loft", wear=0.6)
-    ml.lathe(haft, "y", (0, 0, 0), [(0.0, 3.2), (20.0, 3.5), (60.0, 3.3), (100.0, 3.8), (126.0, 4.5), (H_HAFT_TOP, 5.0)], sides=12)
+    ml.lathe(haft, "y", (0, 0, 0), [(0.0, 3.7), (20.0, 4.0), (60.0, 3.8), (100.0, 4.4), (126.0, 5.2), (H_HAFT_TOP, 5.8)], sides=12)
     # ---- grip: black-brown leather, spiral wrapped (the spiral is the brass wire below)
     grip = K.add(m, "grip_wrap", "hero_dark_leather", base=H_LEATHER, smooth=60, uv_mode="loft", wear=0.7)
     y0, y1 = H_GRIP_Y
-    ml.loft(grip, "y", (0, 0, 0), [(y0, 0.92, 0.92), (y0 + 4, 1.0, 1.0), ((y0 + y1) / 2, 1.05, 1.05), (y1 - 4, 1.0, 1.0), (y1, 0.92, 0.92)], ml.circle(4.1, 12))
+    ml.loft(grip, "y", (0, 0, 0), [(y0, 0.92, 0.92), (y0 + 4, 1.0, 1.0), ((y0 + y1) / 2, 1.05, 1.05), (y1 - 4, 1.0, 1.0), (y1, 0.92, 0.92)], ml.circle(4.7, 12))
     # ---- brass fittings: bands at the ends of the grip and under the head, two straps (langets) up the haft, a wire wound over the grip
     fit = K.add(m, "haft_fittings", "hero_brass", base=H_BRASS, smooth=50, wear=0.6)
-    for yy in (y0 - 3.0, y1 + 0.5, 100.0):
-        ml.collar(fit, yy, 4.9, 3.0, lip=0.8, sides=10)
+    for yy in (y0 - 3.0, y1 + 0.5, 82.0, 100.0):
+        ml.collar(fit, yy, 5.6, 3.0, lip=0.8, sides=10)
     for sgn in (-1, 1):
-        ml.bar(fit, (0, 100.0, sgn * 3.9), (0, 122.0, sgn * 4.5), 4.6, 1.0, up=(0, 0, sgn), taper=6.0, end_scale=0.4)
-    wire = [(4.42 * math.cos(2 * math.pi * 6.5 * t), y0 + 2.0 + (y1 - y0 - 4.0) * t, 4.42 * math.sin(2 * math.pi * 6.5 * t)) for t in np.linspace(0, 1, 42)]
+        ml.bar(fit, (0, 100.0, sgn * 4.5), (0, 122.0, sgn * 5.2), 5.2, 1.2, up=(0, 0, sgn), taper=6.0, end_scale=0.4)
+    wire = [(5.0 * math.cos(2 * math.pi * 6.5 * t), y0 + 2.0 + (y1 - y0 - 4.0) * t, 5.0 * math.sin(2 * math.pi * 6.5 * t)) for t in np.linspace(0, 1, 42)]
     ml.sweep(fit, wire, ml.circle(0.45, 4), scales=lambda t: (1.0, 1.0) if 0.02 < t < 0.98 else (0.3, 0.3), caps=(False, False))
     # ---- the pommel cap: a flat, heavy brass cap (a short rounded bulb, no spike: the doc asks for a flat pommel cap)
     pom = K.add(m, "pommel_cap", "hero_brass", base=H_BRASS, smooth=40, wear=0.6)
-    ml.lathe(pom, "y", (0, 0, 0), [(H_BUTT, 3.4), (H_BUTT + 1.4, 5.6), (-4.0, 6.0), (1.0, 5.8), (5.0, 5.4), (9.0, 4.0), (11.0, 3.4)], sides=10)
+    ml.lathe(pom, "y", (0, 0, 0), [(H_BUTT, 4.0), (H_BUTT + 1.4, 6.8), (-4.0, 7.4), (1.0, 7.0), (5.0, 6.2), (9.0, 4.8), (11.0, 4.0)], sides=10)
     # ---- the short collar under the head: a brass cone flaring into the head's underside
     col = K.add(m, "neck_collar", "hero_brass", base=H_BRASS, smooth=45, wear=0.6)
     yb = yc - H_HUB_HY
-    ml.lathe(col, "y", (0, 0, 0), [(yb - 14.0, 5.2), (yb - 7.0, 6.6), (yb - 1.5, 10.5), (yb + 2.0, 12.0)], sides=12)
+    ml.lathe(col, "y", (0, 0, 0), [(yb - 16.0, 6.0), (yb - 12.0, 8.2), (yb - 9.0, 6.6), (yb - 6.0, 8.0), (yb - 1.5, 12.5), (yb + 2.0, 14.0)], sides=12)
     # ---- the two blocks: forged dark iron, octagonal prisms, a little waisted (forged, not milled)
     bl = K.add(m, "head_blocks", "hero_dark_steel", base=H_IRON, smooth=30, wear=0.7)
     (fa, fb), (ha, hb), (ra, rb) = H_FRONT_X, H_HUB_X, H_REAR_X
@@ -128,20 +152,32 @@ def build_hammer():
         K.rivet_ring(riv, (0.0, yc, sgn * (zc + 1.6)), H_MED_R - 2.2, 1.35, n=7, axis=ax)
         K.star_bezel(bez, (0.0, yc, sgn * (zc + 2.0)), H_BEZEL_R, 3.0, axis=ax)
         K.cabochon(gem, (0.0, yc, sgn * (zc + 4.0)), H_GEM_R, 4.4, axis=ax, sides=14)
-    K.rivet_ring(riv, (xr - 0.3, yc, 0.0), 19.0, 1.5, n=7, axis="x")      # the rear face: seven rivets in the seven-star ring
+    K.rivet_ring(riv, (xr - 0.3, yc, 0.0), 21.0, 1.6, n=7, axis="x")      # the rear face: seven rivets in the seven-star ring
+    # ---- 3.79.0: brass straps along the cut corners of both blocks (a banded, forged head), a crown of three studs on top of the hub, and a ring of amber fire on each face
+    k_ = 0.76
+    for (xa, xb_) in ((fa + 2.0, fb - 3.0), (ra + 3.0, rb - 2.0)):
+        for s1 in (-1, 1):
+            for s2 in (-1, 1):
+                ml.bar(bd, (xa, yc + s1 * H_BLOCK_HY * k_, s2 * H_BLOCK_HZ * k_), (xb_, yc + s1 * H_BLOCK_HY * k_, s2 * H_BLOCK_HZ * k_), 6.0, 1.6, up=(0, s1 * 0.7071, s2 * 0.7071), taper=3.0, end_scale=0.6)
+    for xs, ln, r0 in ((-7.0, 8.0, 4.4), (0.0, 12.0, 5.4), (7.0, 8.0, 4.4)):
+        K.spike(bd, (xs, yc + H_HUB_HY - 1.0, 0.0), (0, 1, 0), ln, r0, 0.8, sides=4)
+    fire = K.add(m, "face_fire_rings", "hero_gem", base=H_AMBER, smooth=60, uv_mode="loft", wear=0.0)
+    K.torus(fire, (xf - 0.3, yc, 0.0), H_BLOCK_HY * 0.62, 2.1, plane="yz", n=12, sides=3)
+    K.torus(fire, (xr + 0.3, yc, 0.0), H_BLOCK_HY * 0.52, 1.8, plane="yz", n=12, sides=3)
     # ---- skin
     atlas = K.lay(m)
-    K.paint_gem(atlas, gem, H_AMBER)
+    K.paint_gem(atlas, gem, H_AMBER, glow=0.9)
+    K.glow_all(atlas, fire, H_AMBER_GLOW, 0.9, core=0.5)
     # the seven-star mark: the Big Dipper on the striking face (the front plate, mesh -x, seen by the one it is swung at) in amber dots and thin lines; the same on the rear face
     # (the face the first-person camera sees) and, fainter, on the cheeks round the gem; a thin amber line along the rim of each face plate
     for sgn, scale_ in ((-1, 1.7), (1, 1.5)):
         K.dipper_engraving(atlas, fp, "x", sgn, (0.0, yc), scale_, rotate_deg=(-14.0 if sgn < 0 else 14.0), glow_rgb=H_AMBER_GLOW, width=0.7, dot_r=1.5, strong=0.9, mirror=(sgn > 0))
         rim_r = H_BLOCK_HY * 0.80
         octo = [(rim_r * math.cos(math.radians(22.5 + 45 * i)) * (H_BLOCK_HZ / H_BLOCK_HY), yc + rim_r * math.sin(math.radians(22.5 + 45 * i))) for i in range(9)]
-        K.engrave(atlas, fp, "x", sgn, segments=list(zip(octo[:-1], octo[1:])), width=0.6, dark=0.5, glow_rgb=H_AMBER_GLOW, glow_strength=0.32)
+        K.engrave(atlas, fp, "x", sgn, segments=list(zip(octo[:-1], octo[1:])), width=0.8, dark=0.5, glow_rgb=H_AMBER_GLOW, glow_strength=0.75)
     for part in ("head_blocks", "head_hub"):
         for sgn in (1, -1):
-            K.dipper_engraving(atlas, m.part(part), "z", sgn, (0.0, yc), 2.1, rotate_deg=-5.0, glow_rgb=H_AMBER_GLOW, width=0.7, dot_r=1.4, strong=0.55)
+            K.dipper_engraving(atlas, m.part(part), "z", sgn, (0.0, yc), 2.35, rotate_deg=-5.0, glow_rgb=H_AMBER_GLOW, width=0.8, dot_r=1.6, strong=0.8)
     return m, atlas
 
 
@@ -159,14 +195,14 @@ A_POLL, A_IRON, A_GOLD = K.hx("6E7686"), K.hx("2F3238"), K.hx("B8893A")        #
 A_ASH, A_LEATHER = K.hx("9C7A4E"), K.hx("2E2018")                              # the haft, the grip wrap
 A_EMERALD = K.hx("35E07C")
 A_BUTT, A_HEAD_Y = -12.0, 150.0 # the butt cap's spike tip (the lowest point) and the height of the hub's centre
-A_HUB_HY, A_HUB_HX, A_HUB_HZ = 20.0, 11.0, 11.0      # half height / width / depth of the hub block the bit and the poll grow out of (a 40 tall, 22 wide block)
+A_HUB_HY, A_HUB_HX, A_HUB_HZ = 23.0, 13.0, 13.0      # half height / width / depth of the hub block the bit and the poll grow out of (a 40 tall, 22 wide block)
 A_GRIP_Y = (18.0, 74.0)         # the black-brown grip wrap (the hand at a quarter of the 205 long weapon is y = 39)
 # the bearded bit, measured from the haft axis outwards: root half heights above and below the centre line, the heights at the two horns and where they are, the edge
 # (the front-most point) and the root thickness. 112 tall at the horns, 60 reach from the hub: far above the 0.75 head minimum of the class.
-A_BIT = dict(d0=6.0, h_hub_top=15.0, h_hub_bot=19.0, h_top=44.0, d_top=40.0, h_bot=68.0, d_bot=50.0, d_tip=66.0, t_hub=9.0)
-A_POLL_X = (11.0, 31.0, 36.0)   # the poll: from the hub to its end block, then the face plate; the rear face carries the seven-star mark and the back spike
-A_SPIKE = 15.0                  # the short back spike on the poll
-A_GEM_R, A_BEZEL_R = 6.4, 9.2   # the emerald and its seven-sided setting on the hub cheek
+A_BIT = dict(d0=7.0, h_hub_top=17.0, h_hub_bot=21.0, h_top=57.0, d_top=48.0, h_bot=85.0, d_bot=60.0, d_tip=80.0, t_hub=10.5)
+A_POLL_X = (13.0, 34.0, 39.5)   # the poll: from the hub to its end block, then the face plate; the rear face carries the seven-star mark and the back spike
+A_SPIKE = 27.0                  # the short back spike on the poll
+A_GEM_R, A_BEZEL_R = 8.6, 11.4   # the emerald and its seven-sided setting on the hub cheek
 
 
 def bit_profile(k):
@@ -201,17 +237,17 @@ def build_axe():
     yc = A_HEAD_Y
     # ---- haft: a straight octagonal shaft of pale ash, strong under the head
     haft = K.add(m, "haft", "hero_walnut", base=A_ASH, smooth=30, wear=0.6, along="v")
-    ml.loft(haft, "y", (0, 0, 0), [(0.0, 3.0, 3.0), (30.0, 3.5, 3.5), (80.0, 3.3, 3.3), (120.0, 3.9, 3.9), (yc, 4.5, 4.5)], ml.octagon(2.0, 2.0, 0.55))
+    ml.loft(haft, "y", (0, 0, 0), [(0.0, 3.5, 3.5), (30.0, 4.0, 4.0), (80.0, 3.8, 3.8), (120.0, 4.5, 4.5), (yc, 5.2, 5.2)], ml.octagon(2.0, 2.0, 0.55))
     grip = K.add(m, "grip_wrap", "hero_dark_leather", base=A_LEATHER, smooth=60, uv_mode="loft", wear=0.7)
     y0, y1 = A_GRIP_Y
-    ml.loft(grip, "y", (0, 0, 0), [(y0, 0.93, 0.93), (y0 + 4, 1.0, 1.0), ((y0 + y1) / 2, 1.05, 1.05), (y1 - 4, 1.0, 1.0), (y1, 0.93, 0.93)], ml.circle(4.4, 12))
+    ml.loft(grip, "y", (0, 0, 0), [(y0, 0.93, 0.93), (y0 + 4, 1.0, 1.0), ((y0 + y1) / 2, 1.05, 1.05), (y1 - 4, 1.0, 1.0), (y1, 0.93, 0.93)], ml.circle(5.0, 12))
     # ---- dark iron fittings with gold trim: rings at the ends of the grip and under the head, the butt cap with its spike, the langets
     fit = K.add(m, "haft_fittings", "hero_dark_steel", base=A_IRON, smooth=40, wear=0.6)
-    for yy in (y0 - 3.0, y1 + 0.5, 112.0):
-        ml.collar(fit, yy, 5.2, 3.0, lip=0.8, sides=10)
-    ml.lathe(fit, "y", (0, 0, 0), [(A_BUTT, 0.0), (-6.0, 1.8), (0.0, 4.6), (4.0, 4.9), (8.0, 4.2)], sides=8)
+    for yy in (y0 - 3.0, y1 + 0.5, 94.0, 112.0):
+        ml.collar(fit, yy, 5.9, 3.0, lip=0.8, sides=10)
+    ml.lathe(fit, "y", (0, 0, 0), [(A_BUTT, 0.0), (-6.0, 2.2), (0.0, 5.4), (4.0, 5.8), (8.0, 4.9)], sides=8)
     for sgn in (-1, 1):                                                       # langets: iron straps from the head down the haft
-        ml.bar(fit, (0, 112.0, sgn * 4.2), (0, yc - A_HUB_HY, sgn * 4.7), 4.8, 1.0, up=(0, 0, sgn), taper=6.0, end_scale=0.4)
+        ml.bar(fit, (0, 112.0, sgn * 4.8), (0, yc - A_HUB_HY, sgn * 5.4), 5.4, 1.2, up=(0, 0, sgn), taper=6.0, end_scale=0.4)
     # ---- the hub, the eye of the axe: dark iron, gold rims at both ends; the bit and the poll grow out of its sides
     hub = K.add(m, "head_hub", "hero_dark_steel", base=A_IRON, smooth=30, wear=0.5)
     ml.loft(hub, "y", (0, 0, 0), [(yc - A_HUB_HY, A_HUB_HX * 0.80, A_HUB_HZ * 0.80), (yc - A_HUB_HY + 4, A_HUB_HX, A_HUB_HZ), (yc + A_HUB_HY - 4, A_HUB_HX, A_HUB_HZ), (yc + A_HUB_HY, A_HUB_HX * 0.80, A_HUB_HZ * 0.80)],
@@ -234,10 +270,12 @@ def build_axe():
     xp0, xp1, xp2 = A_POLL_X
     poll = K.add(m, "poll_block", "hero_steel", base=A_POLL, smooth=30, wear=0.6)
     sec_poll = ml.octagon(2.0, 2.0, 0.40)
-    ml.loft(poll, "x", (0, yc, 0), [(xp0, 13.0, 11.5), (xp0 + 5.0, 15.5, 13.5), (xp1 - 3.0, 15.5, 13.5), (xp1, 14.0, 12.2)], sec_poll)
-    ml.loft(poll, "x", (0, yc, 0), [(xp1 - 0.5, 14.0, 12.2), (xp1 + 1.6, 17.0, 14.8), (xp2 - 1.0, 17.0, 14.8), (xp2, 14.5, 12.4)], sec_poll)
+    ml.loft(poll, "x", (0, yc, 0), [(xp0, 15.0, 13.2), (xp0 + 5.0, 17.8, 15.5), (xp1 - 3.0, 17.8, 15.5), (xp1, 16.1, 14.0)], sec_poll)
+    ml.loft(poll, "x", (0, yc, 0), [(xp1 - 0.5, 16.1, 14.0), (xp1 + 1.6, 19.6, 17.0), (xp2 - 1.0, 19.6, 17.0), (xp2, 16.7, 14.3)], sec_poll)
     spike = K.add(m, "back_spike", "hero_steel", base=A_POLL, smooth=30, wear=0.5)
-    ml.loft(spike, "x", (0, yc, 0), [(xp2 - 0.5, 6.4, 5.6), (xp2 + A_SPIKE * 0.5, 4.2, 3.6), (xp2 + A_SPIKE, 0.0, 0.0)], ml.octagon(2.0, 2.0, 0.5))
+    ml.loft(spike, "x", (0, yc, 0), [(xp2 - 0.5, 8.4, 7.2), (xp2 + A_SPIKE * 0.45, 5.4, 4.4), (xp2 + A_SPIKE, 0.0, 0.0)], ml.octagon(2.0, 2.0, 0.5))
+    for sg in (-1, 1):                                                        # 3.79.0: a short fang above and below the poll (a war axe, not a felling axe)
+        K.spike(spike, ((xp0 + xp1) / 2.0, yc + sg * 16.5, 0.0), (0.35, sg, 0.0), 11.0, 4.0, 0.0, sides=4)
     # ---- gold trim: rims round the hub and a collar at the foot of the haft's top (the gold of the doc is trim only)
     trim = K.add(m, "hub_trim", "hero_brass", base=A_GOLD, smooth=30, wear=0.5)
     for yy in (yc - A_HUB_HY - 1.0, yc + A_HUB_HY - 3.0):
@@ -252,15 +290,25 @@ def build_axe():
         K.cabochon(gem, (0.0, yc, sgn * (A_HUB_HZ + 1.6)), A_GEM_R, 4.2, axis=ax, sides=14)
     # ---- the top of the haft: a short iron cap with a small spear point (a woodcutter's axe has none; a Seven Star one carries a finial)
     fin = K.add(m, "haft_cap", "hero_dark_steel", base=A_IRON, smooth=35, wear=0.5)
-    ml.loft(fin, "y", (0, 0, 0), [(yc + A_HUB_HY - 1.0, 3.6, 3.2), (yc + A_HUB_HY + 6.0, 4.6, 3.6), (yc + A_HUB_HY + 14.0, 6.4, 4.0), (yc + A_HUB_HY + 24.0, 0.0, 0.0)], ml.lozenge(2.0, 2.0, 0.0))
+    ml.loft(fin, "y", (0, 0, 0), [(yc + A_HUB_HY - 1.0, 4.4, 3.8), (yc + A_HUB_HY + 7.0, 5.6, 4.2), (yc + A_HUB_HY + 16.0, 9.0, 4.8), (yc + A_HUB_HY + 34.0, 0.0, 0.0)], ml.lozenge(2.0, 2.0, 0.0))
+    for sg in (-1, 1):                                                        # 3.79.0: two barbs at the foot of the spear point
+        K.spike(fin, (sg * 4.0, yc + A_HUB_HY + 9.0, 0.0), (sg, 0.75, 0.0), 10.0, 2.6, 0.0, sides=4)
+    # ---- 3.79.0: the edge burns: a bead of emerald light lying along the whole cutting edge, horn to horn (its own part, bright on the glow skin)
+    efire = K.add(m, "edge_fire", "hero_gem", base=mix(A_EMERALD, (255, 255, 255), 0.35), smooth=60, uv_mode="loft", wear=0.0)
+    epts = [(-dd, yc + float(top(dd)), 0.0) for dd in [d_top + (d_tip - d_top) * (1 - math.cos(math.pi / 2 * j / 8.0)) for j in range(0, 8)]]
+    epts += [(-dd, yc - float(bot(dd)), 0.0) for dd in [d_tip - (d_tip - d_bot) * (1 - math.cos(math.pi / 2 * j / 8.0)) for j in range(0, 9)]]
+    ml.sweep(efire, epts, ml.lozenge(1.0, 1.0, 0.0), scales=lambda t: (0.9 + 0.9 * math.sin(math.pi * min(1.0, max(0.0, t))), 1.1 + 0.7 * math.sin(math.pi * min(1.0, max(0.0, t)))), caps=(True, True), up=(0, 0, 1))
     # ---- skin
     atlas = K.lay(m)
-    K.paint_gem(atlas, gem, A_EMERALD)
+    K.paint_gem(atlas, gem, A_EMERALD, glow=0.9)
+    K.glow_all(atlas, efire, A_EMERALD, 0.9, core=0.5)
+    for sgn in (1, -1):                                                        # a row of six runes on the upper cheek of the blade, both faces
+        runes(atlas, bit, "z", sgn, (-22.0 * sgn, yc + 19.0), (-4.9 * sgn, 0.6), 6, 5.6, A_EMERALD, seed=11, strength=0.75)
     K.etched_bit(atlas, bit, top, bot, yc, d0, d_tip, steel=A_STEEL, bevel=A_BEVEL, inlay=A_INLAY, inlay_glow=A_EMERALD)
     # the seven-star mark: the Big Dipper in tiny green dots with the faintest lines on the broad face of the blade near the eye, and seven dots round the back spike on the poll
     for sgn in (1, -1):
         K.dipper_engraving(atlas, bit, "z", sgn, (-30.0 * sgn, yc - 3.0), 1.4, rotate_deg=-10.0, glow_rgb=A_EMERALD, width=0.5, dot_r=1.35, strong=0.9)
-    pts = [(a_, b_ + yc) for (a_, b_) in K.ring_points(7, 11.0, 90.0)]
+    pts = [(a_, b_ + yc) for (a_, b_) in K.ring_points(7, 13.0, 90.0)]
     K.engrave(atlas, poll, "x", 1, segments=[], dots=pts, width=0.5, dot_r=1.25, dark=0.5, glow_rgb=A_EMERALD, glow_strength=0.9)
     return m, atlas
 
@@ -277,10 +325,10 @@ STAFF_GRIP = 0.40
 S_INDIGO, S_SILVER, S_SILVER_HI = K.hx("262A5A"), K.hx("D3DAEA"), K.hx("F4F7FF")  # the doc's palette: lacquered shaft, the metal, its bright edges
 S_GOLD, S_LEATHER, S_STAR = K.hx("E7D79A"), K.hx("3A2C3F"), K.hx("A9B5FF")        # pale gold trim, grip leather, the seven stars
 S_VIOLET = K.hx("7B8CFF")       # the gem, glow 7B8CFF
-S_BUTT, S_SHAFT_TOP, S_HEAD_Y = -9.0, 186.0, 236.0     # the foot's tip (lowest point), the top of the shaft where the collar begins, the common centre of the ring and the gem
-S_RING_R = 21.0                 # radius of both rings: a ring head 46 wide (outer) on a 275 long staff, 0.17 of the length
-S_RING_A_TUBE = 2.5             # tube radius of the big ring (xy plane, the profile view)
-S_GEM_R, S_GEM_LONG = 11.0, 1.5 # the floating gem: seven-sided double pyramid, girdle radius and length over radius of each half (0.05 of the length, the doc)
+S_BUTT, S_SHAFT_TOP, S_HEAD_Y = -9.0, 186.0, 241.0     # the foot's tip (lowest point), the top of the shaft where the collar begins, the common centre of the ring and the gem
+S_RING_R = 25.0                 # radius of both rings: a ring head 46 wide (outer) on a 275 long staff, 0.17 of the length
+S_RING_A_TUBE = 3.1             # tube radius of the big ring (xy plane, the profile view)
+S_GEM_R, S_GEM_LONG = 14.0, 1.5 # the floating gem: seven-sided double pyramid, girdle radius and length over radius of each half (0.05 of the length, the doc)
 S_GRIP_Y = (80.0, 128.0)        # the grip leather (the hand is at 40 percent of the 280 long weapon: y = 103)
 S_STARS = (22.0, 76.0)          # the seven stars run down the shaft below the grip
 
@@ -292,23 +340,23 @@ def build_staff():
     R = S_RING_R
     # ---- shaft: lacquered dark indigo, a long gently swelling lathe
     shaft = K.add(m, "shaft", "hero_ebony", base=S_INDIGO, smooth=60, uv_mode="loft", wear=0.4)
-    ml.lathe(shaft, "y", (0, 0, 0), [(0.0, 3.6), (30.0, 3.8), (80.0, 3.9), (130.0, 4.0), (170.0, 3.8), (S_SHAFT_TOP + 4.0, 4.2)], sides=12)
+    ml.lathe(shaft, "y", (0, 0, 0), [(0.0, 4.1), (30.0, 4.3), (80.0, 4.4), (130.0, 4.5), (170.0, 4.3), (S_SHAFT_TOP + 4.0, 4.8)], sides=12)
     grip = K.add(m, "grip_wrap", "hero_dark_leather", base=S_LEATHER, smooth=60, uv_mode="loft", wear=0.7)
     y0, y1 = S_GRIP_Y
-    ml.loft(grip, "y", (0, 0, 0), [(y0, 0.93, 0.93), (y0 + 4, 1.0, 1.0), ((y0 + y1) / 2, 1.05, 1.05), (y1 - 4, 1.0, 1.0), (y1, 0.93, 0.93)], ml.circle(4.5, 12))
+    ml.loft(grip, "y", (0, 0, 0), [(y0, 0.93, 0.93), (y0 + 4, 1.0, 1.0), ((y0 + y1) / 2, 1.05, 1.05), (y1 - 4, 1.0, 1.0), (y1, 0.93, 0.93)], ml.circle(5.0, 12))
     # ---- silver bands on the shaft (round ones at the ends of the grip, two higher up), pale gold bands next to them
     bands = K.add(m, "shaft_bands", "hero_white_steel", base=S_SILVER, smooth=45, wear=0.4)
     for yy in (y0 - 3.0, y1 + 0.5, 150.0, 172.0):
-        ml.collar(bands, yy, 5.2, 3.0, lip=0.8, sides=10)
+        ml.collar(bands, yy, 5.8, 3.0, lip=0.8, sides=10)
     trim = K.add(m, "gold_trim", "hero_old_gold", base=S_GOLD, smooth=45, wear=0.4)
     for yy in (y0 - 6.0, y1 + 3.6, 146.5, 168.5):
-        ml.collar(trim, yy, 4.9, 1.4, lip=0.35, sides=10)
+        ml.collar(trim, yy, 5.5, 1.4, lip=0.35, sides=10)
     # ---- the foot: a pointed silver ferrule on the butt
     fer = K.add(m, "foot", "hero_white_steel", base=S_SILVER, smooth=40, wear=0.5)
-    ml.lathe(fer, "y", (0, 0, 0), [(S_BUTT, 0.0), (-4.0, 1.6), (1.0, 4.0), (6.0, 5.0), (10.0, 4.5), (13.0, 4.0)], sides=8)
+    ml.lathe(fer, "y", (0, 0, 0), [(S_BUTT, 0.0), (-4.0, 1.9), (1.0, 4.6), (6.0, 5.7), (10.0, 5.1), (13.0, 4.5)], sides=8)
     # ---- the collar under the head: a silver sleeve that flares into a cup, and four small curved prongs that hold the ring
     vase = K.add(m, "collar", "hero_white_steel", base=S_SILVER, smooth=45, wear=0.4)
-    ml.lathe(vase, "y", (0, 0, 0), [(S_SHAFT_TOP - 2.0, 4.2), (S_SHAFT_TOP + 5.0, 6.6), (S_SHAFT_TOP + 11.0, 8.6), (yc - R - 12.0, 5.6), (yc - R - 5.0, 4.2), (yc - R - 1.5, 3.2)], sides=12)
+    ml.lathe(vase, "y", (0, 0, 0), [(S_SHAFT_TOP - 2.0, 4.8), (S_SHAFT_TOP + 5.0, 7.6), (S_SHAFT_TOP + 11.0, 10.0), (yc - R - 12.0, 6.4), (yc - R - 5.0, 4.8), (yc - R - 1.5, 3.6)], sides=12)
     prongs = K.add(m, "prongs", "hero_white_steel", base=S_SILVER, smooth=45, uv_mode="loft", wear=0.4)
     for sx, ang, dz in ((-1, 36.0, 2.4), (-1, 62.0, -2.4), (1, 36.0, -2.4), (1, 62.0, 2.4)):    # four prongs, two each side, a little apart in depth, from the collar up to the ring
         end = V((sx * R * math.cos(math.radians(ang)), yc - R * math.sin(math.radians(ang)), dz))
@@ -322,23 +370,34 @@ def build_staff():
     K.torus(inner, (0.0, yc, 0.0), R - S_RING_A_TUBE - 0.4, 0.9, plane="xy", n=30, sides=5)
     # ---- the small upturned crescent on top of the ring (pale gold): an arc of 220 degrees open to the sky, tapering to two points
     cres = K.add(m, "crescent", "hero_old_gold", base=S_GOLD, smooth=40, uv_mode="loft", wear=0.4)
-    rc, cy0 = 8.5, yc + R + 2.6 + 6.0
+    rc, cy0 = 11.5, yc + R + 3.2 + 8.0
     cpts = []
     for i in range(0, 15):
         a_ = math.radians(-20.0 - 220.0 * i / 14.0)                           # from the right tip down through the bottom to the left tip, the opening up
         cpts.append((rc * math.cos(a_), cy0 + rc * math.sin(a_) * 1.0, 0.0))
-    ml.sweep(cres, cpts, ml.bevelled(2.0, 2.0, 0.4), scales=lambda t: ((0.2 + 2.6 * math.sin(math.pi * min(1.0, max(0.0, t))) ** 0.8), (0.2 + 1.5 * math.sin(math.pi * min(1.0, max(0.0, t))) ** 0.8)), caps=(True, True), up=(0, 0, 1))
+    ml.sweep(cres, cpts, ml.bevelled(2.0, 2.0, 0.4), scales=lambda t: ((0.2 + 3.4 * math.sin(math.pi * min(1.0, max(0.0, t))) ** 0.8), (0.2 + 2.0 * math.sin(math.pi * min(1.0, max(0.0, t))) ** 0.8)), caps=(True, True), up=(0, 0, 1))
+    # ---- 3.79.0: a crown of six gold rays on the outside of the ring (a sun round the gem), a second ring across the first (an armillary: the head reads from the edge too) and two
+    #      silver wings sweeping up from the collar beside the ring
+    for ang, ln in ((0.0, 12.0), (38.0, 16.0), (66.0, 13.0), (114.0, 13.0), (142.0, 16.0), (180.0, 12.0)):
+        ca_, sa_ = math.cos(math.radians(ang)), math.sin(math.radians(ang))
+        K.spike(cres, (ca_ * (R + S_RING_A_TUBE * 0.4), yc + sa_ * (R + S_RING_A_TUBE * 0.4), 0.0), (ca_, sa_, 0.0), ln, 2.9, 0.0, sides=4)
+    orbit = K.add(m, "orbit_ring", "hero_old_gold", base=S_GOLD, smooth=50, uv_mode="loft", wear=0.4)
+    K.torus(orbit, (0.0, yc, 0.0), R * 0.80, 1.5, plane="yz", n=22, sides=4)
+    for sx in (-1, 1):
+        wp = K.bezier((sx * 6.0, S_SHAFT_TOP + 9.0, 0.0), (sx * 24.0, S_SHAFT_TOP + 8.0, 0.0), (sx * (R + 9.0), yc - R * 0.55, 0.0), (sx * (R + 11.0), yc + 2.0, 0.0), 11)
+        ml.sweep(prongs, wp, ml.bevelled(2.0, 2.0, 0.4), scales=lambda t: ((3.8 * (1.0 - t) ** 0.8 + 0.15) if t < 0.995 else 0.0, (1.3 * (1.0 - t) ** 0.7 + 0.12) if t < 0.995 else 0.0), caps=(True, True), up=(0, 0, 1))
     # ---- the floating gem: a seven-sided double pyramid, violet-blue, held by nothing
     gem = K.add(m, "gem", "hero_gem", smooth=0, uv_mode="loft", wear=0.0)
     ml.gem(gem, (0.0, yc, 0.0), S_GEM_R, long=S_GEM_LONG, sides=7, axis="y")
     # ---- skin
     atlas = K.lay(m)
-    K.paint_cut_gem(atlas, gem, S_VIOLET)
-    K.glow_all(atlas, inner, S_VIOLET, 0.35, core=0.2)
+    K.paint_cut_gem(atlas, gem, S_VIOLET, glow=0.95)
+    K.glow_all(atlas, inner, S_VIOLET, 0.7, core=0.3)
+    K.glow_all(atlas, orbit, S_VIOLET, 0.45, core=0.2)
     # the seven stars down the front of the shaft (both faces: the +z side and the -z side), lighter than the lacquer, soft on the glow skin
     ts = [(y_ / (S_SHAFT_TOP + 4.0)) for y_ in np.linspace(S_STARS[0], S_STARS[1], 7)]
     for col in (0.25, 0.75):
-        K.stars_on_loft(atlas, shaft, ts, [col] * 7, 2.5, S_STAR, light=S_STAR, glow_rgb=S_STAR, glow_strength=0.55)
+        K.stars_on_loft(atlas, shaft, ts, [col] * 7, 3.2, S_STAR, light=S_STAR, glow_rgb=S_STAR, glow_strength=0.85)
     return m, atlas
 
 
@@ -351,7 +410,7 @@ def build_staff():
 # side by side across it, so the profile view shows the whole fan); the plate and the gem face +-z, the faces onlookers and the first-person camera see; the blades curve toward -x
 # like a katana's. The doc aims at 0.75 blocks from strap to blade tips: a cuff that small could not close round a player's arm (0.25 wide), so the claw is 1.0 long, the blades
 # about half of it.
-CLAW_APPARENT = 1.00            # blocks in the hand: shortsword class is 1.0 - 1.3, the nearest size class of the table (a hand weapon with blades as long as a dagger's)
+CLAW_APPARENT = 1.08            # blocks in the hand: shortsword class is 1.0 - 1.3, the nearest size class of the table (a hand weapon with blades as long as a dagger's)
 CLAW_GRIP = 0.20
 C_LEATHER, C_STITCH, C_STEEL, C_BEVEL = K.hx("3A2A22"), K.hx("6B4A33"), K.hx("8E96A8"), K.hx("B9C2D6")        # the doc's palette
 C_BLADE, C_ROOT, C_EDGE, C_GOLD = K.hx("C9D2E3"), K.hx("5A6070"), K.hx("8FB4FF"), K.hx("B8893A")
@@ -359,14 +418,14 @@ C_AMBER = K.hx("FFA030")
 C_CUFF_Y, C_HAND_Y, C_BAR_Y = (0.0, 40.0), (34.0, 74.0), 76.0   # the bracer, the hand plate (they overlap), the knuckle bar the talons grow from
 C_CUFF_AB = (17.5, 12.5)        # half width (x: the width of the hand) and half depth (z) of the bracer: 35 wide, 0.28 blocks at the scale below, wider than a player's 0.25 wide arm
 C_HAND_AB = (18.0, 12.8)        # the plate over the hand is a little wider than the bracer
-C_GEM_R, C_BEZEL_R = 5.6, 8.0   # the cabochon (about 0.1 across in the hand) and the small seven-sided bezel on the back of the hand
+C_GEM_R, C_BEZEL_R = 7.4, 10.2  # the cabochon (about 0.1 across in the hand) and the small seven-sided bezel on the back of the hand
 # the talons as cubic Beziers in the xy plane: base, two controls, tip (all x, y), base half width and half thickness; lengths 92, 86 and 66 and a thumb spur of 44, a little less
 # fanned than the first sketch (the doc says "slightly outward"); the two small hooks behind the blades are the spurs of the doc
 C_TALONS = {
-    "mid": ((0.0, C_BAR_Y), (0.0, C_BAR_Y + 34.0), (-4.0, C_BAR_Y + 64.0), (-15.0, C_BAR_Y + 92.0), 5.4, 3.0),
-    "left": ((-13.0, C_BAR_Y), (-16.0, C_BAR_Y + 28.0), (-26.0, C_BAR_Y + 54.0), (-40.0, C_BAR_Y + 78.0), 4.9, 2.7),
-    "right": ((13.0, C_BAR_Y), (14.0, C_BAR_Y + 24.0), (14.0, C_BAR_Y + 44.0), (7.0, C_BAR_Y + 62.0), 4.6, 2.6),
-    "spur_thumb": ((-16.0, 42.0), (-27.0, 50.0), (-36.0, 62.0), (-41.0, 80.0), 4.4, 2.5),
+    "mid": ((0.0, C_BAR_Y), (0.0, C_BAR_Y + 38.0), (-4.0, C_BAR_Y + 72.0), (-17.0, C_BAR_Y + 106.0), 7.0, 3.5),      # v2: longer, broader blades (were 92 / 78 / 62 long)
+    "left": ((-13.0, C_BAR_Y), (-16.0, C_BAR_Y + 32.0), (-29.0, C_BAR_Y + 62.0), (-46.0, C_BAR_Y + 90.0), 6.4, 3.2),
+    "right": ((13.0, C_BAR_Y), (14.0, C_BAR_Y + 28.0), (15.0, C_BAR_Y + 52.0), (8.0, C_BAR_Y + 74.0), 6.0, 3.0),
+    "spur_thumb": ((-16.0, 42.0), (-28.0, 50.0), (-38.0, 64.0), (-44.0, 88.0), 5.4, 2.9),
     "spur_left": ((-21.0, C_BAR_Y - 2.0), (-28.0, C_BAR_Y - 4.0), (-33.0, C_BAR_Y - 12.0), (-33.0, C_BAR_Y - 22.0), 3.2, 2.0),
     "spur_right": ((21.0, C_BAR_Y - 2.0), (28.0, C_BAR_Y - 4.0), (33.0, C_BAR_Y - 12.0), (33.0, C_BAR_Y - 22.0), 3.2, 2.0),
 }
@@ -388,6 +447,9 @@ def build_claw():
     lames = K.add(m, "cuff_lames", "hero_steel", base=C_STEEL, smooth=40, wear=0.7)
     for y0, y1, k0 in ((2.0, 9.0, 1.06), (13.0, 19.0, 0.97), (23.0, 29.0, 0.88)):
         ml.loft(lames, "y", (0, 0, 0), [(y0, ca * k0 * 0.97, cb * k0 * 0.97), (y0 + 1.0, ca * k0 * 1.04, cb * k0 * 1.04), (y1 - 1.0, ca * k0 * 1.04, cb * k0 * 1.04), (y1, ca * k0 * 0.97, cb * k0 * 0.97)], ell)
+    for sg in (-1, 1):                                                         # v2: three swept steel fins down each side of the bracer (the hand's two narrow sides)
+        for y0, k0, ln in ((8.0, 1.06, 10.0), (18.0, 0.97, 12.0), (28.0, 0.88, 13.0)):     # they stay above y = 0: the cuff mouth is the mesh's origin (HandWrap)
+            ml.bar(lames, (sg * (ca * k0 - 0.5), y0 + 1.5, 0.0), (sg * (ca * k0 + ln * 0.66), y0 - ln * 0.74, 0.0), 2.2, 4.6, up=(0, 0, 1), taper=1.4, end_scale=0.08)
     gold = K.add(m, "buckles", "hero_brass", base=C_GOLD, smooth=30, wear=0.4)
     for yb, kk in ((10.5, 0.97), (26.5, 0.88)):
         for sgn in (-1, 1):
@@ -407,11 +469,14 @@ def build_claw():
     for nm in ("mid", "left", "right"):
         p0, p1 = C_TALONS[nm][0], C_TALONS[nm][1]
         d = V((p1[0] - p0[0], p1[1] - p0[1], 0.0))
-        ml.lathe(kb, tuple(d), (p0[0], p0[1] - 5.0, 0.0), [(0.0, 5.2), (5.0, 6.6), (9.0, 6.2), (12.0, 4.6)], sides=8)
+        ml.lathe(kb, tuple(d), (p0[0], p0[1] - 5.0, 0.0), [(0.0, 5.8), (5.0, 7.6), (9.0, 7.2), (13.0, 5.2)], sides=8)
+    for xs in (-6.5, 6.5):                                                     # v2: a gold knuckle spike on each face between the blade sockets
+        for sgn in (-1, 1):
+            K.spike(kb, (xs, C_BAR_Y - 1.0, sgn * 6.4), (0.0, 0.55, sgn), 9.0, 3.0, 0.0, sides=4)
     # ---- the blades: swept lozenges that taper to needle points (a dark root, bright steel beyond), the thumb spur and the two small hooks behind the blades
     tal = K.add(m, "blades", "hero_blade_steel", base=C_BLADE, smooth=40, wear=0.5, uv_mode="loft")
     for nm, (p0, p1, p2, p3, w0, t0) in C_TALONS.items():
-        pts = K.bezier((p0[0], p0[1], 0.0), (p1[0], p1[1], 0.0), (p2[0], p2[1], 0.0), (p3[0], p3[1], 0.0), 18 if not nm.startswith("spur_l") and nm != "spur_right" else 10)
+        pts = K.bezier((p0[0], p0[1], 0.0), (p1[0], p1[1], 0.0), (p2[0], p2[1], 0.0), (p3[0], p3[1], 0.0), (12 if nm == "spur_thumb" else 14) if not nm.startswith("spur_l") and nm != "spur_right" else 8)
         ml.sweep(tal, pts, ml.bevelled(2.0, 2.0, 0.55), scales=lambda t, w0=w0, t0=t0: ((w0 * (1.0 - t) ** 0.85 + 0.12) if t < 0.995 else 0.0, (t0 * (1.0 - t) ** 0.7 + 0.1) if t < 0.995 else 0.0), up=(0, 0, 1))
     # ---- the gem on both sides of the back plate (the doc's one cabochon, visible from either side), in its small seven-sided gold bezel
     bez = K.add(m, "gem_bezels", "hero_brass", base=C_GOLD, smooth=30, wear=0.4)
@@ -422,10 +487,12 @@ def build_claw():
         K.cabochon(gem, (0.0, 54.0, sgn * (hb + 1.0)), C_GEM_R, 3.8, axis=ax, sides=14)
     # ---- skin
     atlas = K.lay(m)
-    K.paint_gem(atlas, gem, C_AMBER)
+    K.paint_gem(atlas, gem, C_AMBER, glow=0.9)
+    for sgn in (1, -1):                                                  # v2: a lit ring round the gem
+        halo(atlas, hp, "z", sgn, (0.0, 54.0), C_BEZEL_R * 1.04 + 2.0, C_AMBER, strength=0.8)
     # the seven-star mark on the back plate: the Big Dipper out from the gem in thin lines and seven tiny amber dots, on both sides
     for sgn in (1, -1):
-        K.dipper_engraving(atlas, hp, "z", sgn, (0.0, 52.0), 1.35, rotate_deg=-8.0, glow_rgb=C_AMBER, width=0.6, dot_r=1.1, strong=0.85)
+        K.dipper_engraving(atlas, hp, "z", sgn, (0.0, 52.0), 1.5, rotate_deg=-8.0, glow_rgb=C_AMBER, width=0.7, dot_r=1.3, strong=0.9)
 
     def blades(c):                                                       # a dark root, bright steel beyond; a cold hairline of glow along the two knife edges
         T = np.clip(c.T, 0, 1)
@@ -433,10 +500,10 @@ def build_claw():
         k_ = np.clip(1.0 - T / 0.16, 0, 1)[..., None]
         c.img[..., :3] = c.img[..., :3] * (1 - k_) + root * k_ * (0.85 + 0.3 * c.img[..., :3] / 255.0)
         S = c.S
-        e = np.exp(-(((S - 0.0) / 0.05) ** 2)) + np.exp(-(((S - 1.0) / 0.05) ** 2)) + np.exp(-(((S - 0.5) / 0.05) ** 2))
+        e = np.exp(-(((S - 0.0) / 0.075) ** 2)) + np.exp(-(((S - 1.0) / 0.075) ** 2)) + np.exp(-(((S - 0.5) / 0.075) ** 2))
         gl = np.zeros(c.img.shape, np.float32)
         gl[..., :3] = np.array(C_EDGE, np.float32)
-        gl[..., 3] = np.clip(e * np.clip((T - 0.12) * 1.6, 0, 1), 0, 1) * 85
+        gl[..., 3] = np.clip(e * np.clip((T - 0.10) * 2.2, 0, 1), 0, 1) * 170      # v2: a clearly lit edge (was 85)
         c.glow[...] = np.maximum(c.glow, gl)
     w.paint_part(atlas, tal, blades)
     return m, atlas
@@ -461,7 +528,7 @@ G_HAND_Y = (36.0, 70.0)         # the hand shell
 G_HAND_AB = (10.5, 13.0)        # its half height (x, the back of the hand is the +x face) and half width (z)
 G_FINGER_Z = (-9.9, -3.3, 3.3, 9.9)   # the four fingers side by side across the hand, 6.6 apart, each 4.3 in radius (they touch, as in a fist)
 G_FINGER_R = 4.3
-G_GEM_R, G_BEZEL_R = 6.0, 8.8   # the amber cabochon (oval) and its seven-sided setting on the back of the hand (and, a little smaller, on the side plate)
+G_GEM_R, G_BEZEL_R = 7.2, 9.8   # the amber cabochon (oval) and its seven-sided setting on the back of the hand (and, a little smaller, on the side plate)
 
 
 def finger_path(z, cx=1.2, cy=68.0, a=5.4, b=8.2, n_arc=11):
@@ -488,7 +555,19 @@ def build_gauntlet():
     lames = K.add(m, "vambrace_lames", "hero_steel", base=K.hx("B4BCC9"), smooth=40, wear=0.6)
     for y0, y1, k0 in ((9.0, 13.0, 0.92), (21.0, 25.0, 0.82)):
         ml.loft(lames, "y", (0, 0, 0), [(y0, ca * k0 * 0.98, cz * k0 * 0.98), (y0 + 0.9, ca * k0 * 1.05, cz * k0 * 1.05), (y1 - 0.9, ca * k0 * 1.05, cz * k0 * 1.05), (y1, ca * k0 * 0.98, cz * k0 * 0.98)], ell)
+    # v2: rivets round both lames, three swept fins down the back of the forearm (+x) and two on each side, a guard bar across the knuckles
+    for y0, k0 in ((11.0, 0.92), (23.0, 0.82)):
+        for i in range(8):
+            a_ = 2 * math.pi * (i + 0.5) / 8.0
+            K.rivet(lames, (ca * k0 * 1.05 * math.cos(a_), y0, cz * k0 * 1.05 * math.sin(a_)), 1.25, normal=(math.cos(a_) / ca, 0.0, math.sin(a_) / cz))
+    for y0, k0, ln in ((8.5, 0.96, 9.0), (17.0, 0.86, 10.0), (25.5, 0.80, 11.0)):
+        ml.bar(lames, (ca * k0 - 0.6, y0 + 2.0, 0.0), (ca * k0 + ln * 0.66, y0 - ln * 0.70, 0.0), 2.2, 4.4, up=(0, 0, 1), taper=1.4, end_scale=0.08)
+    for sgn in (-1, 1):
+        for y0, k0, ln in ((13.0, 0.92, 8.0), (22.5, 0.84, 9.0)):
+            ml.bar(lames, (0.0, y0 + 2.0, sgn * (cz * k0 - 0.6)), (0.0, y0 - ln * 0.70, sgn * (cz * k0 + ln * 0.62)), 2.0, 3.8, up=(1, 0, 0), taper=1.4, end_scale=0.08)
+    ml.bar(lames, (ha * 0.90, 70.6, -hz * 0.90), (ha * 0.90, 70.6, hz * 0.90), 4.6, 2.0, up=(1, 0, 0), taper=2.0, section="oct", end_scale=0.6)
     trim = K.add(m, "cuff_trim", "hero_brass", base=G_ORANGE, smooth=40, wear=0.5)
+    ml.loft(trim, "y", (0, 0, 0), [(33.4, ca * 0.86, cz * 0.88), (34.1, ca * 0.94, cz * 0.96), (35.4, ca * 0.94, cz * 0.96), (36.1, ca * 0.86, cz * 0.88)], ell)      # v2: a second orange roll at the wrist
     ml.loft(trim, "y", (0, 0, 0), [(-0.8, ca * 0.98, cz * 0.98), (0.2, ca * 1.06, cz * 1.06), (3.2, ca * 1.06, cz * 1.06), (4.2, ca * 0.98, cz * 0.98)], ell)
     fur = K.add(m, "cuff_fur", "hero_cord", base=G_FUR, smooth=70, uv_mode="loft", wear=0.2)
     fpts = [(ca * 0.93 * math.cos(2 * math.pi * i / 20.0), -0.6, cz * 0.93 * math.sin(2 * math.pi * i / 20.0)) for i in range(21)]
@@ -512,7 +591,7 @@ def build_gauntlet():
     ml.sweep(fin, K.bezier(thumb[0], thumb[1], thumb[2], thumb[3], 12), ml.octagon(2.0, 2.0, 0.55), scales=lambda t: (5.0 - 1.0 * t, 5.0 - 1.0 * t), caps=(True, True), up=(1, 0, 0))
     studs = K.add(m, "knuckle_studs", "hero_brass", base=G_ORANGE, smooth=30, wear=0.4)
     for z in G_FINGER_Z:
-        K.spike(studs, (1.2 + 5.4 * math.cos(math.radians(50)) + 1.8, 68.0 + 8.2 * math.sin(math.radians(50)), z), (0.45, 0.89, 0.0), 7.0, 2.9, 0.0, sides=4)
+        K.spike(studs, (1.2 + 5.4 * math.cos(math.radians(50)) + 1.8, 68.0 + 8.2 * math.sin(math.radians(50)), z), (0.45, 0.89, 0.0), 12.5, 3.7, 0.0, sides=4)       # v2: tiger-claw studs (were 7 long)
     # ---- the gem: the back of the hand (+x, an oval along the hand) and a smaller one on the side plate (-z), each in a seven-sided gold bezel
     bez = K.add(m, "gem_bezels", "hero_brass", base=G_GOLD, smooth=30, wear=0.4)
     gem = K.add(m, "gems", "hero_gem", smooth=70, uv_mode="loft", wear=0.0)
@@ -522,7 +601,7 @@ def build_gauntlet():
     K.cabochon(gem, (0.0, 52.0, -(hz + 0.9)), G_GEM_R * 0.8, 3.6, axis="-z", sides=14)
     # ---- skin
     atlas = K.lay(m)
-    K.paint_gem(atlas, gem, G_AMBER)
+    K.paint_gem(atlas, gem, G_AMBER, glow=0.9)
     # darker recesses: a groove panel round the gem on the back of the hand and on the side plate (enamel_rect in the dark recess colour, with an orange hairline), the two bands
     # of every finger are dark seams across it. The bevel gives the panel a shadowed upper-left lip and a lit lower-right lip so that it reads as a sunk plate and not as a hole
     # (the recess colour of the doc, #4A5160, is close to a grey-blue sky or a preview background)
@@ -536,10 +615,10 @@ def build_gauntlet():
     w.paint_part(atlas, fin, seams)
     # the thin orange engraving across the back plate (the Big Dipper out from under the gem, soft; at this scale the tail star lies about 4 texels above the panel's lower line,
     # the head stars sit under the finger plates) and a heptagram through seven dots on the side plate
-    K.dipper_engraving(atlas, hand, "x", 1, (0.0, 54.0), 0.9, rotate_deg=-90.0, glow_rgb=G_AMBER, width=0.5, dot_r=1.0, strong=0.8)
+    K.dipper_engraving(atlas, hand, "x", 1, (0.0, 54.0), 0.9, rotate_deg=-90.0, glow_rgb=G_AMBER, width=0.6, dot_r=1.1, strong=0.9)
     pts = [(a_, b_ + 52.0) for (a_, b_) in K.ring_points(7, 9.5, 90.0)]
-    K.engrave(atlas, hand, "z", -1, segments=[(pts[i], pts[(i + 2) % 7]) for i in range(7)], dots=pts, width=0.5, dot_r=1.0, dark=0.5, glow_rgb=G_AMBER, glow_strength=0.7)
-    K.glow_all(atlas, studs, G_AMBER, 0.28, core=0.3)
+    K.engrave(atlas, hand, "z", -1, segments=[(pts[i], pts[(i + 2) % 7]) for i in range(7)], dots=pts, width=0.6, dot_r=1.1, dark=0.5, glow_rgb=G_AMBER, glow_strength=0.85)
+    K.glow_all(atlas, studs, G_AMBER, 0.75, core=0.5)
 
     def fluff(c):                                                  # the fur: white with warm grey shadow and soft noise, no hard texture
         n = w.noise2(c.img.shape[:2], 2.2, 55)
@@ -556,16 +635,16 @@ def build_gauntlet():
 # vassal chariot; forms Chain, Mace, Rope Whip, Morning Star (Gigantic Star), Dragon Hourglass Sand Whip (Portal Whip) (wiki summaries; no look described): design. The whole cord
 # is ONE sweep (about 70 points), so the weapon costs few quads. Mesh y runs along the grip and the lash; the coil and the lash curve in the xy plane (the coil turned out of it,
 # so the first-person camera sees it as a ring too); mesh -x is the side the lash leans to (forward).
-WHIP_APPARENT = 1.62            # blocks in the hand: class coilwhip is 1.1 - 1.7 and the doc asks for about 1.5; 1.62 also satisfies the extended `whip` class (1.6 - 2.4), so the weapon passes the audit even before the class fragment is merged
+WHIP_APPARENT = 1.69            # blocks in the hand: class coilwhip is 1.1 - 1.7 and the doc asks for about 1.5; 1.62 also satisfies the extended `whip` class (1.6 - 2.4), so the weapon passes the audit even before the class fragment is merged
 WHIP_GRIP = 0.15
 W_LEATHER, W_BRAID, W_GOLD, W_STEEL = K.hx("4A3426"), K.hx("6B4A33"), K.hx("C9A24A"), K.hx("9AA3B2")     # the doc's palette
 W_VIOLET = K.hx("9B5CFF")
-W_BUTT = -8.0                   # the pommel's back
+W_BUTT = -12.0                  # the pommel's back
 W_HANDLE_Y = (0.0, 46.0)        # the braided handle: 28 percent of the weapon, the hand at 15 percent of the length (y = 15)
 W_COIL_C, W_COIL_R = (14.0, 64.0), (15.5, 10.5)   # the centre of the loops beside the handle, their radius going from the first loop to the second
 W_COIL_TILT = 32.0              # the loops are turned this many degrees about y out of the profile plane, so the first-person camera (looking along +x) sees them as a ring too
-W_CORD_R = (3.1, 1.15)          # the cord's radius in the coil and at the very tip
-W_GEM_R, W_BEZEL_R = 5.2, 7.6   # the pommel's cabochon (about 0.1 across) and its seven-sided bezel
+W_CORD_R = (3.8, 1.75)          # the cord's radius in the coil and at the very tip
+W_GEM_R, W_BEZEL_R = 6.8, 9.2   # the pommel's cabochon (about 0.1 across) and its seven-sided bezel
 
 
 def whip_path():
@@ -596,25 +675,29 @@ def build_whip():
     # ---- the handle: braided dark leather, a little swollen in the middle, gold rings at both ends and a gold wire spiral
     hd = K.add(m, "grip_braid", "hero_dark_leather", base=W_LEATHER, smooth=60, uv_mode="loft", wear=0.7)
     y0, y1 = W_HANDLE_Y
-    ml.loft(hd, "y", (0, 0, 0), [(y0 - 2.0, 0.84, 0.84), (y0 + 3.0, 1.0, 1.0), ((y0 + y1) / 2, 1.1, 1.1), (y1 - 5.0, 1.0, 1.0), (y1, 0.86, 0.86)], ml.circle(4.3, 10))
+    ml.loft(hd, "y", (0, 0, 0), [(y0 - 2.0, 0.84, 0.84), (y0 + 3.0, 1.0, 1.0), ((y0 + y1) / 2, 1.1, 1.1), (y1 - 5.0, 1.0, 1.0), (y1, 0.86, 0.86)], ml.circle(4.9, 10))
     gold = K.add(m, "handle_rings", "hero_brass", base=W_GOLD, smooth=45, wear=0.5)
     for yy in (y0 - 3.5, y1 - 7.0):
-        ml.collar(gold, yy, 5.1, 3.4, lip=0.9, sides=10)
-    wire = [(4.95 * math.cos(2 * math.pi * 5.5 * t), y0 + 4.0 + (y1 - y0 - 18.0) * t, 4.95 * math.sin(2 * math.pi * 5.5 * t)) for t in np.linspace(0, 1, 36)]
-    ml.sweep(gold, wire, ml.circle(0.42, 4), scales=lambda t: (1.0, 1.0) if 0.03 < t < 0.97 else (0.3, 0.3), caps=(False, False))
+        ml.collar(gold, yy, 5.8, 3.6, lip=0.9, sides=10)
+    wire = [(5.6 * math.cos(2 * math.pi * 5.5 * t), y0 + 4.0 + (y1 - y0 - 18.0) * t, 5.6 * math.sin(2 * math.pi * 5.5 * t)) for t in np.linspace(0, 1, 36)]
+    ml.sweep(gold, wire, ml.circle(0.5, 4), scales=lambda t: (1.0, 1.0) if 0.03 < t < 0.97 else (0.3, 0.3), caps=(False, False))
     # ---- the guard disc where the handle meets the lash (a gold disc facing +-z, the seven-star mark engraved on it)
     gd = K.add(m, "guard_disc", "hero_brass", base=W_GOLD, smooth=40, wear=0.5)
-    ml.lathe(gd, "z", (0.0, y1 + 1.0, 0.0), [(-2.2, 7.6), (-1.0, 8.4), (1.0, 8.4), (2.2, 7.6)], sides=18)
+    ml.lathe(gd, "z", (0.0, y1 + 1.0, 0.0), [(-2.6, 9.6), (-1.2, 10.8), (1.2, 10.8), (2.6, 9.6)], sides=18)
+    for i in range(1, 7):                                                      # v2: a seven-pointed star guard (the top point is the cord itself)
+        a_ = math.pi / 2 + 2 * math.pi * i / 7.0
+        K.spike(gd, (9.6 * math.cos(a_), y1 + 1.0 + 9.6 * math.sin(a_), 0.0), (math.cos(a_), math.sin(a_), 0.0), 7.5, 2.6, 0.0, sides=4)
     # ---- the pommel: a gold disc facing +-z, a violet gem on each face in a seven-sided bezel, a short taper to the handle
     pom = K.add(m, "pommel", "hero_brass", base=W_GOLD, smooth=40, wear=0.5)
-    ml.lathe(pom, "z", (0.0, W_BUTT + 6.0, 0.0), [(-4.6, 6.2), (-3.4, 7.4), (3.4, 7.4), (4.6, 6.2)], sides=18)
-    ml.loft(pom, "y", (0.0, 0.0, 0.0), [(W_BUTT + 0.5, 0.0, 0.0), (W_BUTT + 3.0, 3.0, 3.0), (y0 - 1.0, 4.0, 4.0)], ml.circle(1.0, 8))
+    ml.lathe(pom, "z", (0.0, W_BUTT + 6.0, 0.0), [(-5.0, 8.4), (-3.6, 9.8), (3.6, 9.8), (5.0, 8.4)], sides=18)
+    ml.loft(pom, "y", (0.0, 0.0, 0.0), [(W_BUTT + 0.5, 0.0, 0.0), (W_BUTT + 3.0, 3.0, 3.0), (y0 - 1.0, 4.6, 4.6)], ml.circle(1.0, 8))
+    K.spike(pom, (0.0, W_BUTT - 3.0, 0.0), (0, -1, 0), 9.0, 3.2, 0.0, sides=4)           # v2: a butt spike under the pommel
     bez = K.add(m, "gem_bezels", "hero_brass", base=W_GOLD, smooth=30, wear=0.4)
     gem = K.add(m, "gems", "hero_gem", smooth=70, uv_mode="loft", wear=0.0)
     for sgn in (-1, 1):
         ax = "z" if sgn > 0 else "-z"
-        K.star_bezel(bez, (0.0, W_BUTT + 6.0, sgn * 3.6), W_BEZEL_R, 2.0, axis=ax)
-        K.cabochon(gem, (0.0, W_BUTT + 6.0, sgn * 4.8), W_GEM_R, 3.4, axis=ax, sides=12)
+        K.star_bezel(bez, (0.0, W_BUTT + 6.0, sgn * 4.0), W_BEZEL_R, 2.2, axis=ax)
+        K.cabochon(gem, (0.0, W_BUTT + 6.0, sgn * 5.4), W_GEM_R, 4.0, axis=ax, sides=12)
     # ---- the cord: handle top, the coil and the lash as one braided sweep
     cord = K.add(m, "coil_and_lash", "hero_dark_leather", base=W_LEATHER, smooth=60, uv_mode="loft", wear=0.6)
     pts = whip_path()
@@ -626,38 +709,47 @@ def build_whip():
     e1 = K.unit(np.cross(d, ref))
     e2 = np.cross(d, e1)
     cage = K.add(m, "tip_cage", "hero_brass", base=W_GOLD, smooth=45, uv_mode="loft", wear=0.4)
-    ml.lathe(cage, tuple(d), tuple(tip - d * 4.0), [(0.0, 1.0), (2.0, 2.8), (5.0, 3.6)], sides=7)
-    c0_ = tip + d * 10.0
+    TS = 1.5                                                                   # v2: the tip is a real morning star, half as large again
+    ml.lathe(cage, tuple(d), tuple(tip - d * 5.0), [(0.0, 1.6), (2.5, 4.0), (6.5, 5.2)], sides=7)
+    c0_ = tip + d * 10.0 * TS
     for k_ in range(4):
         a_ = math.pi / 4 + k_ * math.pi / 2
         off = e1 * math.cos(a_) + e2 * math.sin(a_)
-        bar_pts = [tuple(tip + d * 1.5 + off * 3.2), tuple(c0_ + off * 6.4 - d * 3.0), tuple(c0_ + off * 6.6 + d * 2.0), tuple(c0_ + d * 9.6 + off * 2.2)]
-        ml.sweep(cage, K.bezier(*bar_pts, 6), ml.circle(0.75, 4), caps=(True, True), up=(0, 0, 1))
+        bar_pts = [tuple(tip + d * 1.5 + off * 3.2 * TS), tuple(c0_ + (off * 6.4 - d * 3.0) * TS), tuple(c0_ + (off * 6.6 + d * 2.0) * TS), tuple(c0_ + (d * 9.6 + off * 2.2) * TS)]
+        ml.sweep(cage, K.bezier(*bar_pts, 6), ml.circle(1.1, 4), caps=(True, True), up=(0, 0, 1))
     spk = K.add(m, "tip_spikes", "hero_steel", base=W_STEEL, smooth=30, wear=0.4)
     for k_ in range(4):
         a_ = k_ * math.pi / 2
         off = e1 * math.cos(a_) + e2 * math.sin(a_)
-        K.spike(spk, tuple(c0_ + d * 9.0 + off * 1.8), tuple(d * 0.8 + off * 0.6), 5.0, 1.2, 0.0, sides=4)
+        K.spike(spk, tuple(c0_ + (d * 9.0 + off * 1.8) * TS), tuple(d * 0.8 + off * 0.6), 9.0, 2.0, 0.0, sides=4)
+        K.spike(spk, tuple(c0_ + off * 5.6 * TS), tuple(off), 9.5, 2.3, 0.0, sides=4)              # four more round the ball's girdle, between the cage bars
+    K.spike(spk, tuple(c0_ + d * 12.5 * TS), tuple(d), 9.0, 2.2, 0.0, sides=4)
+    n_p = len(pts)
+    for j, i in enumerate(range(n_p - 17, n_p - 3, 3)):                         # steel barbs along the free lash, alternating sides, leaning toward the tip
+        pp = V(pts[i], float)
+        dd = K.unit(V(pts[i + 1], float) - V(pts[i - 1], float))
+        side = K.unit(np.cross(dd, ref)) * (1 if j % 2 == 0 else -1)
+        K.spike(spk, tuple(pp + side * 1.2), tuple(side + dd * 0.9), 6.5, 1.5, 0.0, sides=4)
     tgem = K.add(m, "tip_gem", "hero_gem", smooth=0, uv_mode="loft", wear=0.0)
-    ml.gem(tgem, tuple(c0_), 4.6, long=1.35, sides=8, axis=tuple(d))
+    ml.gem(tgem, tuple(c0_), 4.6 * TS, long=1.35, sides=8, axis=tuple(d))
     # ---- skin
     atlas = K.lay(m)
-    K.paint_gem(atlas, gem, W_VIOLET)
-    K.paint_cut_gem(atlas, tgem, W_VIOLET, facets=8)
+    K.paint_gem(atlas, gem, W_VIOLET, glow=0.9)
+    K.paint_cut_gem(atlas, tgem, W_VIOLET, glow=0.95, facets=8)
     K.braid(atlas, cord, dark=0.55, period_a=2.4, period_b=3.4, light=0.35)
     K.braid(atlas, hd, dark=0.6, period_a=2.0, period_b=2.8, light=0.30)
     # a hairline of violet thread inlaid along the lash, brighter toward the tip (soft glow), and the seven-star mark on the guard disc
     def thread(c):
         S = c.S
-        line = np.exp(-(((S - 0.5) / 0.05) ** 2))
+        line = np.exp(-(((S - 0.5) / 0.08) ** 2))
         gl = np.zeros(c.img.shape, np.float32)
         gl[..., :3] = np.array(W_VIOLET, np.float32)
-        gl[..., 3] = line * np.clip((c.T - 0.50) * 2.0, 0, 1) ** 1.2 * 70
+        gl[..., 3] = line * np.clip((c.T - 0.50) * 2.0, 0, 1) ** 0.8 * 170          # v2: a clearly lit thread (was 70)
         c.glow[...] = np.maximum(c.glow, gl)
         c.img[..., :3] = c.img[..., :3] * (1 - 0.35 * line[..., None]) + np.array(W_VIOLET, np.float32) * 0.35 * line[..., None] * np.clip((c.T - 0.50) * 2.0, 0, 1)[..., None]
     w.paint_part(atlas, cord, thread)
     for sgn in (1, -1):
-        K.dipper_engraving(atlas, gd, "z", sgn, (0.0, y1 + 1.0), 0.55, rotate_deg=-10.0, glow_rgb=W_VIOLET, width=0.35, dot_r=0.7, strong=0.9)
+        K.dipper_engraving(atlas, gd, "z", sgn, (0.0, y1 + 1.0), 0.72, rotate_deg=-10.0, glow_rgb=W_VIOLET, width=0.45, dot_r=0.9, strong=0.95)
     return m, atlas
 
 
@@ -674,12 +766,12 @@ PROJ_GRIP = 0.20
 P_AQUA, P_WHITE, P_VEIN = K.hx("A8EDE6"), K.hx("E6FFFB"), K.hx("6BCFC4")           # the doc's palette: the blade, its edges, the veins
 P_TEAL, P_TEAL_HI, P_CORD_A, P_CORD_B = K.hx("24545A"), K.hx("4FA3A8"), K.hx("1C3F44"), K.hx("3C7C80")
 P_EMERALD, P_CORE = K.hx("38F0C0"), K.hx("B8FFEA")
-P_RING_R, P_RING_T = 7.6, 1.6   # the ring pommel: centreline radius and tube radius (the ring is 0.15 of the length across, 16.4 on a 110 long knife)
+P_RING_R, P_RING_T = 9.0, 1.9   # the ring pommel: centreline radius and tube radius (the ring is 0.15 of the length across, 16.4 on a 110 long knife)
 P_GRIP_Y = (15.0, 41.0)         # the cord-wrapped grip, 0.25 of the length
 P_GUARD_Y = 42.5                # the oval guard
 P_BLADE_Y = (44.0, 109.0)       # the blade, 0.6 of the length, tip at 109
-P_BLADE_W = [(0.0, 4.4), (0.08, 6.2), (0.30, 7.4), (0.55, 6.4), (0.78, 3.8), (0.94, 1.3), (1.0, 0.0)]   # half widths along the blade (fraction of its length): a leaf, widest at a third
-P_GEM_R = 4.6                   # the gem boss on the ring (0.05 of the length, a little more as a boss)
+P_BLADE_W = [(0.0, 5.6), (0.08, 8.2), (0.30, 9.8), (0.55, 8.2), (0.78, 4.8), (0.94, 1.6), (1.0, 0.0)]   # half widths along the blade (fraction of its length): a leaf, widest at a third
+P_GEM_R = 6.0                   # the gem boss on the ring (0.05 of the length, a little more as a boss)
 
 
 def build_projectile():
@@ -702,28 +794,42 @@ def build_projectile():
         ml.sweep(glint, pts, ml.lozenge(1.0, 1.0, 0.0), scales=lambda t: (0.5 * (1.0 - 0.7 * t) + 0.12, 0.55 * (1.0 - 0.6 * t) + 0.12), caps=(True, True), up=(0, 0, 1))
     # ---- the guard: a short dark oval with brighter edges
     gd = K.add(m, "guard", "hero_dark_steel", base=P_TEAL, smooth=40, wear=0.5)
-    w.ellipsoid(gd, (0.0, P_GUARD_Y, 0.0), 8.2, 2.1, 3.6, sides=14, stacks=6)
+    w.ellipsoid(gd, (0.0, P_GUARD_Y, 0.0), 10.2, 2.4, 4.2, sides=14, stacks=6)
+    for sgn in (-1, 1):                                                        # v2: winged quillons that sweep up beside the blade's foot
+        qp = K.bezier((sgn * 7.0, P_GUARD_Y, 0.0), (sgn * 15.0, P_GUARD_Y + 0.5, 0.0), (sgn * 19.0, P_GUARD_Y + 8.0, 0.0), (sgn * 15.5, P_GUARD_Y + 19.0, 0.0), 8)
+        ml.sweep(gd, qp, ml.lozenge(2.0, 2.0, 0.0), scales=lambda t: ((2.3 * (1.0 - t) ** 0.8 + 0.1) if t < 0.995 else 0.0, (1.7 * (1.0 - t) ** 0.8 + 0.1) if t < 0.995 else 0.0), caps=(True, False), up=(0, 0, 1))
+        qp = K.bezier((sgn * 7.0, P_GUARD_Y, 0.0), (sgn * 12.0, P_GUARD_Y - 1.0, 0.0), (sgn * 14.5, P_GUARD_Y - 5.0, 0.0), (sgn * 13.0, P_GUARD_Y - 10.5, 0.0), 6)
+        ml.sweep(gd, qp, ml.lozenge(2.0, 2.0, 0.0), scales=lambda t: ((1.8 * (1.0 - t) ** 0.8 + 0.1) if t < 0.995 else 0.0, (1.4 * (1.0 - t) ** 0.8 + 0.1) if t < 0.995 else 0.0), caps=(True, False), up=(0, 0, 1))
     # ---- the grip: a cord wrap in two tones, a little swollen, with a bead at each end
     grip = K.add(m, "grip", "hero_cord", base=P_CORD_A, smooth=60, uv_mode="loft", wear=0.4)
     y0, y1 = P_GRIP_Y
-    ml.loft(grip, "y", (0, 0, 0), [(y0, 0.86, 0.86), (y0 + 3.0, 1.0, 1.0), ((y0 + y1) / 2, 1.1, 1.1), (y1 - 3.0, 1.0, 1.0), (y1, 0.88, 0.88)], ml.circle(3.1, 10))
+    ml.loft(grip, "y", (0, 0, 0), [(y0, 0.86, 0.86), (y0 + 3.0, 1.0, 1.0), ((y0 + y1) / 2, 1.1, 1.1), (y1 - 3.0, 1.0, 1.0), (y1, 0.88, 0.88)], ml.circle(3.5, 10))
     # ---- the ring pommel and the gem boss at its lowest point (both faces), the short cord loop hanging from it
     ring = K.add(m, "pommel_ring", "hero_dark_steel", base=P_TEAL, smooth=50, uv_mode="loft", wear=0.5)
-    cy = P_RING_R - 0.2
+    cy = y0 - P_RING_R                                                          # the ring hangs from the grip's foot (v2: a larger ring, so its lowest point is below y = 0)
     K.torus(ring, (0.0, cy, 0.0), P_RING_R, P_RING_T, plane="xy", n=22, sides=6)
-    ml.loft(ring, "y", (0, 0, 0), [(y0 - 4.0, 2.4, 2.4), (y0 + 1.0, 3.0, 3.0)], ml.circle(1.0, 8))             # the neck that joins the ring to the grip
+    ml.loft(ring, "y", (0, 0, 0), [(y0 - 4.0, 2.8, 2.8), (y0 + 1.0, 3.4, 3.4)], ml.circle(1.0, 8))             # the neck that joins the ring to the grip
     bez = K.add(m, "gem_bezels", "hero_dark_steel", base=P_TEAL_HI, smooth=30, wear=0.4)
     gem = K.add(m, "gem", "hero_gem", smooth=70, uv_mode="loft", wear=0.0)
     for sgn in (-1, 1):
         ax = "z" if sgn > 0 else "-z"
-        K.star_bezel(bez, (0.0, 0.8, sgn * 0.6), P_GEM_R + 2.4, 1.8, axis=ax)
-        K.cabochon(gem, (0.0, 0.8, sgn * 1.7), P_GEM_R, 3.2, axis=ax, sides=12)
+        K.star_bezel(bez, (0.0, cy - P_RING_R + 1.0, sgn * 0.7), P_GEM_R + 2.6, 2.0, axis=ax)
+        K.cabochon(gem, (0.0, cy - P_RING_R + 1.0, sgn * 1.9), P_GEM_R, 3.8, axis=ax, sides=12)
+        zf = 0.34 * max(float(wf(0.11)), 0.0) + 0.25                           # v2: a second, smaller core gem in the blade's foot
+        K.star_bezel(bez, (0.0, yb0 + 7.0, sgn * (zf - 1.2)), 4.6, 1.5, axis=ax)
+        K.cabochon(gem, (0.0, yb0 + 7.0, sgn * (zf - 0.2)), 3.2, 2.4, axis=ax, sides=10)
     loop = K.add(m, "cord_loop", "hero_cord", base=P_CORD_B, smooth=60, uv_mode="loft", wear=0.3)
-    cp = [(-5.4, 3.0, 0.0), (-8.2, -2.0, 0.6), (-8.6, -9.0, 1.0), (-6.4, -15.0, 0.6), (-4.4, -17.0, 0.0)]
+    kr = P_RING_R / 7.6
+    cp = [(x_ * kr, cy + (y_ - 7.4) * kr, z_) for (x_, y_, z_) in [(-5.4, 3.0, 0.0), (-8.2, -2.0, 0.6), (-8.6, -9.0, 1.0), (-6.4, -15.0, 0.6), (-4.4, -17.0, 0.0)]]
     ml.sweep(loop, cp, ml.circle(0.95, 5), scales=lambda t: (1.0, 1.0) if t < 0.86 else (1.0 + 1.6 * (t - 0.86) / 0.14, 1.0 + 1.6 * (t - 0.86) / 0.14), caps=(True, True), up=(0, 0, 1))
+    # ---- v2: two small crystal shards that float beside the blade (lit on the glow skin)
+    shards = K.add(m, "shards", "hero_gem", base=P_AQUA, smooth=0, uv_mode="loft", wear=0.0)
+    ml.gem(shards, (-15.5, yb0 + 34.0, 0.0), 2.6, long=2.6, sides=6, axis="y")
+    ml.gem(shards, (14.5, yb0 + 42.0, 0.0), 2.1, long=2.6, sides=6, axis="y")
     # ---- skin
     atlas = K.lay(m)
-    K.paint_gem(atlas, gem, P_EMERALD)
+    K.paint_gem(atlas, gem, P_EMERALD, glow=0.9)
+    K.paint_cut_gem(atlas, shards, P_EMERALD, glow=0.85, facets=6)
 
     def crystal(c):                                                 # aqua in the middle, white at the edges, veins along the ridge like a crack in ice, a faint sheen on the glow skin
         S, T = c.S, c.T
@@ -739,15 +845,17 @@ def build_projectile():
         c.img[..., :3] = col
         gl = np.zeros(c.img.shape, np.float32)
         gl[..., :3] = np.array(P_EMERALD, np.float32)
-        gl[..., 3] = np.clip(ridge * 0.9 + edge * 0.15, 0, 1) * np.clip(T * 1.4, 0, 1) * 46
+        gl[..., 3] = np.clip(ridge * 0.9 + edge * 0.25, 0, 1) * np.clip(T * 1.4 + 0.25, 0, 1) * 150      # v2: a lit channel each side of the ridge (was 46)
         c.glow[...] = np.maximum(c.glow, gl)
     w.paint_part(atlas, blade, crystal)
+    for sgn in (1, -1):                                                  # v2: five runes up each face, on the flat beside the ridge
+        runes(atlas, blade, "z", sgn, (3.6, yb0 + 15.0), (-0.25, 6.6), 5, 4.0, P_EMERALD, seed=23, strength=0.85)
 
     def glint_paint(c):                                             # near white, a touch of glow so the edges look lit from inside
         c.img[..., :3] = np.array(P_WHITE, np.float32) * (0.9 + 0.1 * w.noise2(c.img.shape[:2], 2.0, 8)[..., None])
         gl = np.zeros(c.img.shape, np.float32)
         gl[..., :3] = np.array(P_CORE, np.float32)
-        gl[..., 3] = 60
+        gl[..., 3] = 150
         c.glow[...] = np.maximum(c.glow, gl)
     w.paint_part(atlas, glint, glint_paint)
 

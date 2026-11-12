@@ -94,11 +94,11 @@ def face_range(sec, side=+1, axis=1):
 MIRROR_REAL_M = 1.20           # apparent length in the hand, blocks: the class `shield` is 0.9 to 1.2 (the logic doc asks for about 1.3 with the handle)
 MIRROR_GRIP_AT = 0.25          # the hand holds a quarter of the way up the whole mesh (the sprite's hand point, display_presets' first-person anchor): that is on the fluted grip, y 5.8 to 23.6
 M_HEAD_Y = 51.0                # the centre of the oval
-M_FR_A, M_FR_B = 11.2, 16.4    # the semi-axes of the frame's centre line: the head is 26 cm across and 38 tall with the rim (about 0.55 x 0.8 blocks beside a 1.3 block weapon)
-M_RIM_W, M_RIM_T = 3.4, 2.0    # the rim moulding: width across, thickness through
+M_FR_A, M_FR_B = 12.6, 18.0    # the semi-axes of the frame's centre line: the head is 26 cm across and 38 tall with the rim (about 0.55 x 0.8 blocks beside a 1.3 block weapon)
+M_RIM_W, M_RIM_T = 4.2, 2.6    # the rim moulding: width across, thickness through
 M_EGG, M_WAIST = 0.08, 0.10    # the outline: wider at the top than at the neck
-M_GLASS_IN = 1.45              # the glass reaches this far in from the frame's centre line (it tucks under the rim)
-M_GEM = (3.2, 4.2, 2.0)        # the crown gem's semi-axes (across, along y, through z): about 0.1 blocks tall in the hand
+M_GLASS_IN = 1.85              # the glass reaches this far in from the frame's centre line (it tucks under the rim)
+M_GEM = (4.0, 5.1, 2.5)        # the crown gem's semi-axes (across, along y, through z): about 0.1 blocks tall in the hand
 M_GEM_RGB = (79, 216, 232)     # aquamarine, #4FD8E8 of the logic doc
 M_GEM_GLOW = (127, 242, 255)   # #7FF2FF
 M_TARNISH = (141, 152, 165)    # the tarnish in the grooves of the handle, #8D98A5
@@ -116,13 +116,13 @@ def build_mirror():
     rim_sec = ml.octagon(M_RIM_W, M_RIM_T, 0.62)
     # ---- the handle: a round pommel with the ring and chain, the fluted grip, the collar with the flared neck
     pm = k.part(m, "pommel", "silver_bright", smooth=60, uv_mode="loft", wear=0.35)
-    ml.lathe(pm, "y", (0, 0, 0), [(0.0, 0.0), (0.5, 1.2), (1.6, 2.15), (3.0, 2.35), (4.2, 1.85), (5.2, 1.3), (6.0, 1.15)], sides=14)
+    ml.lathe(pm, "y", (0, 0, 0), [(0.0, 0.0), (0.6, 1.5), (1.8, 2.6), (3.4, 2.9), (4.8, 2.3), (5.6, 1.6), (6.0, 1.3)], sides=14)
     gr = k.part(m, "grip", "silver_bright", smooth=45, uv_mode="loft", wear=0.4)
     flute = w1.scallop(1.0, M_FLUTES, 0.16, pts=M_FLUTES * 3)
-    ml.loft(gr, "y", (0, 0, 0), [(5.8, 1.15, 1.15), (7.4, 1.5, 1.5), (14.5, 1.7, 1.7), (22.0, 1.5, 1.5), (23.6, 1.2, 1.2)], flute)
+    ml.loft(gr, "y", (0, 0, 0), [(5.8, 1.3, 1.3), (7.4, 1.75, 1.75), (14.5, 2.0, 2.0), (22.0, 1.75, 1.75), (23.6, 1.4, 1.4)], flute)
     co = k.part(m, "collar", "silver_bright", smooth=55, uv_mode="loft", wear=0.35)
-    st = [(23.2, 1.35, 1.35), (23.8, 2.3, 2.3), (25.2, 2.6, 2.6), (26.6, 2.3, 2.3), (27.4, 1.7, 1.7),                       # the ferrule
-          (28.6, 2.1, 1.6), (30.4, 3.1, 1.3), (32.2, 4.4, 1.15), (33.6, 5.0, 1.05)]                                         # the neck flares and flattens into the frame
+    st = [(23.2, 1.5, 1.5), (23.8, 2.7, 2.7), (25.2, 3.1, 3.1), (26.6, 2.7, 2.7), (27.4, 2.0, 2.0),                       # the ferrule
+          (28.6, 2.5, 1.9), (30.4, 3.6, 1.5), (32.2, 5.0, 1.3), (33.6, 5.8, 1.2)]                                         # the neck flares and flattens into the frame
     ml.loft(co, "y", (0, 0, 0), st, ml.circle(1.0, 14))
     cl = k.part(m, "chain_loop", "silver_bright", smooth=60, uv_mode="loft", wear=0.4)
     k.sweep_loop(cl, [(0.0, -1.2 - 1.4 - 1.4 * math.cos(a), 1.4 * math.sin(a)) for a in np.linspace(0, 2 * math.pi, 8, endpoint=False)], ml.circle(0.34, 4), up=(1, 0, 0))
@@ -134,11 +134,11 @@ def build_mirror():
     rim = k.part(m, "head_rim", "silver_bright", smooth=42, uv_mode="loft", wear=0.4)
     k.sweep_loop(rim, mirror_outline(n=M_N), rim_sec, up=(0, 0, 1))
     bz = k.part(m, "head_bezel", "silver_bright", smooth=70, uv_mode="loft", wear=0.3)
-    bez = [(x, y, 1.0) for (x, y, _z) in mirror_outline(1.0 - 1.65 / M_FR_A, 1.0 - 1.65 / M_FR_B, n=M_N)]
-    k.sweep_loop(bz, bez, ml.circle(0.42, 4), up=(0, 0, 1))
+    bez = [(x, y, 1.25) for (x, y, _z) in mirror_outline(1.0 - 2.0 / M_FR_A, 1.0 - 2.0 / M_FR_B, n=M_N)]
+    k.sweep_loop(bz, bez, ml.circle(0.55, 4), up=(0, 0, 1))
     bd = k.part(m, "head_beads", "pearl", smooth=70, wear=0.1, glow=False)
     for p in k.arc_points(k.closed_loop(mirror_outline(n=64)), M_BEADS + 1)[:-1]:
-        ml.loft(bd, (0, 0, 1), (p[0], p[1], 0.8), [(0.0, 1.0, 1.0), (0.62, 0.8, 0.8)], ml.circle(0.86, 5), caps=(False, True))
+        ml.loft(bd, (0, 0, 1), (p[0], p[1], 1.1), [(0.0, 1.0, 1.0), (0.8, 0.8, 0.8)], ml.circle(1.1, 5), caps=(False, True))
     # ---- the glass (a very shallow dome set below the rim) and the back plate
     gl = k.part(m, "head_glass", "silver_bright", smooth=30, wear=0.1)
     gout = [(x, y - M_HEAD_Y) for (x, y, _z) in mirror_outline(1.0 - M_GLASS_IN / M_FR_A, 1.0 - M_GLASS_IN / M_FR_B, n=M_N)]
@@ -151,30 +151,30 @@ def build_mirror():
     # ---- the two volutes beside the neck, the crest of three lobes and the gem in its claws
     sc = k.part(m, "scrolls", "silver_bright", smooth=55, uv_mode="loft", wear=0.4)
     for sgn in (1, -1):
-        lead = [(3.4, 34.0, 0.5), (5.0, 33.7, 0.55)]
-        coil = k.spiral_points((9.4, 35.8), 3.5, 0.9, 1.2, -164, n=18, z=0.6, ccw=(sgn > 0))
+        lead = [(3.8, 33.4, 0.6), (6.0, 33.0, 0.7)]
+        coil = k.spiral_points((11.6, 35.2), 4.6, 1.2, 1.5, -164, n=18, z=0.7, ccw=(sgn > 0))
         pts = k.catmull([(sgn * x, y, z) for (x, y, z) in lead] + [(sgn * x, y, z) for (x, y, z) in coil[::2]], per=2)
-        ml.sweep(sc, pts, ml.circle(1.0, 4), scales=lambda t: ((1.15 - 0.62 * t) * (1.0 if t < 0.97 else 0.5), (1.15 - 0.62 * t) * 0.85), up=(0, 0, 1))
+        ml.sweep(sc, pts, ml.circle(1.0, 4), scales=lambda t: ((1.5 - 0.8 * t) * (1.0 if t < 0.97 else 0.5), (1.5 - 0.8 * t) * 0.85), up=(0, 0, 1))
         side = [mirror_outline(1.0 + 0.30 / M_FR_A, 1.0 + 0.30 / M_FR_B, n=96)[i] for i in range(52, 78)]               # a thin vine along the frame's side
         vine = [(-x if sgn > 0 else x, y, 0.5) for (x, y, _z) in side]
         ml.sweep(sc, vine[::3], ml.circle(1.0, 4), scales=lambda t: ((0.5 - 0.22 * t) if t < 0.97 else 0.0,) * 2, up=(0, 0, 1))
     ct = k.part(m, "crest", "silver_bright", smooth=40, uv_mode="loft", wear=0.3)
     top = M_HEAD_Y + M_FR_B * 0.985
     cy = top + 0.6
-    petals = [([(0.0, cy + 2.0), (0.0, cy + 5.5), (0.0, cy + 9.5), (0.0, cy + 13.5)], 4.8, 0.8),
-              ([(2.8, cy + 1.4), (5.6, cy + 2.2), (8.0, cy + 5.0), (8.6, cy + 10.0)], 4.0, 0.7),
-              ([(-2.8, cy + 1.4), (-5.6, cy + 2.2), (-8.0, cy + 5.0), (-8.6, cy + 10.0)], 4.0, 0.7)]
+    petals = [([(0.0, cy + 2.0), (0.0, cy + 6.5), (0.0, cy + 12.0), (0.0, cy + 17.5)], 6.4, 1.0),
+              ([(3.2, cy + 1.4), (6.8, cy + 2.6), (10.0, cy + 6.4), (10.8, cy + 13.0)], 5.2, 0.9),
+              ([(-3.2, cy + 1.4), (-6.8, cy + 2.6), (-10.0, cy + 6.4), (-10.8, cy + 13.0)], 5.2, 0.9)]
     for pts2, wd, th in petals:
-        path = k.catmull([(x, y, 1.45) for (x, y) in pts2], per=4)
+        path = k.catmull([(x, y, 1.7) for (x, y) in pts2], per=4)
         ml.sweep(ct, path, ml.lozenge(1.0, 1.0), scales=lambda t, wd=wd, th=th: (wd * (math.sin(math.pi * min(1.0, t * 0.92 + 0.08)) ** 0.7) if t < 0.99 else 0.0, th if t < 0.99 else 0.0), up=(0, 0, 1))
     gs = k.part(m, "gem_claws", "silver_bright", smooth=50, uv_mode="loft", wear=0.3)
-    ml.loft(gs, "z", (0.0, cy, 0.6), [(0.0, 4.2, 5.2), (1.0, 4.7, 5.8), (2.0, 4.1, 5.0), (3.0, 2.9, 3.6)], ml.circle(1.0, 14), caps=(True, False))
+    ml.loft(gs, "z", (0.0, cy, 0.6), [(0.0, 5.0, 6.2), (1.0, 5.6, 6.9), (2.0, 4.9, 6.0), (3.0, 3.5, 4.3)], ml.circle(1.0, 14), caps=(True, False))
     for a in range(0, 360, 60):                                                       # six claws that hold the cabochon
         ca, sa = math.cos(math.radians(a + 30)), math.sin(math.radians(a + 30))
-        base = (4.0 * ca, cy + 5.0 * sa, 2.2)
+        base = (4.8 * ca, cy + 6.0 * sa, 2.2)
         k.cone(gs, base, (-0.38 * ca, -0.38 * sa, 1.0), 4.0, 0.6, sides=4, r_tip=0.24, closed_base=False)
     gm = k.part(m, "head_gem", "crystal", glow=True, smooth=40, uv_mode="loft", base=M_GEM_RGB)
-    k.dome(gm, (0.0, cy, 2.95), M_GEM[0] * 0.92, M_GEM[1] * 0.92, M_GEM[2], sides=12, stacks=8)
+    k.dome(gm, (0.0, cy, 3.2), M_GEM[0] * 0.92, M_GEM[1] * 0.92, M_GEM[2], sides=12, stacks=8)
     atlas = k.lay_out(m)
     paint_mirror(m, atlas)
     return m, atlas
@@ -193,8 +193,8 @@ def paint_mirror(m, atlas):
             k.engrave(c, k.band(np.abs(c.A - yw), 0.0, 0.13, 0.05) * front, 0.55, 0.4)
         k.noise(c, 14, 3, 0.05)
     w1.paint_part(atlas, m.part("head_rim"), p_rim)
-    w1.paint_part(atlas, m.part("head_bezel"), lambda c: k.tone(c, k.band(c.S, 0.2, 0.3, 0.08), 1.2))
-    w1.paint_part(atlas, m.part("head_beads"), lambda c: k.glow_on(c, np.ones(c.A.shape, np.float32), (221, 246, 255), 0.22, 0.2))
+    w1.paint_part(atlas, m.part("head_bezel"), lambda c: (k.tone(c, k.band(c.S, 0.2, 0.3, 0.08), 1.2), k.fill_glow(c, M_GEM_GLOW, 0.7, 0.35)))      # 3.79.0: the ring round the glass is lit (the pearls' faint light paid for it)
+    w1.paint_part(atlas, m.part("head_beads"), lambda c: k.noise(c, 8, 4, 0.03))
 
     def p_glass(c):
         x, y = c.A, c.B - M_HEAD_Y
@@ -214,8 +214,8 @@ def paint_mirror(m, atlas):
             star = np.maximum(k.seg_mask(x, y, (sx - sz, sy), (sx + sz, sy), 0.14, 0.07), k.seg_mask(x, y, (sx, sy - sz * 1.4), (sx, sy + sz * 1.4), 0.14, 0.07))
             k.mix_to(c, star, (255, 255, 255), 1.0)
             k.glow_on(c, star, (191, 239, 255), 1.0, 0.5)
-        k.glow_on(c, sheen, (191, 239, 255), 0.40, 0.4)                                                          # #BFEFFF: strongest in the diagonal band
-        k.glow_on(c, k.smooth01(r, 0.80, 0.93) * (1 - k.smooth01(r, 0.95, 1.0)), (191, 239, 255), 0.30, 0.3)     # and at the rim
+        k.glow_on(c, sheen, (191, 239, 255), 0.60, 0.4)                                                          # #BFEFFF: strongest in the diagonal band
+        k.glow_on(c, k.smooth01(r, 0.80, 0.93) * (1 - k.smooth01(r, 0.95, 1.0)), (191, 239, 255), 0.55, 0.3)     # and at the rim
     w1.paint_part(atlas, m.part("head_glass"), p_glass)
 
     def p_back(c):
@@ -301,16 +301,16 @@ def icon_mirror():
 HARPOON_REAL_M = 2.40           # apparent length in the hand: class `staff` is 2.0 to 2.6 (a harpoon is shorter than a lance; class spear starts at 2.8)
 HARPOON_GRIP_AT = 0.25
 H_LEN = 279.0                   # the whole mesh, cm: the point is at this y
-H_SHAFT_R = 2.45                # the haft's radius, cm: a 4.9 cm haft is a thick whaling pole
+H_SHAFT_R = 3.05                # the haft's radius, cm: a 4.9 cm haft is a thick whaling pole
 H_Y_GRIP = (32.0, 108.0)        # the leather wrap: centred on a quarter of the length, where the hand is
 H_Y_EYELET = 187.0              # the iron eyelet the line runs through, just below the socket
 H_Y_SOCKET = (196.0, 238.0)     # the iron socket that takes the haft
 H_BANDS = (70.0, 138.0, 190.0)  # the three bronze rings on the shaft (the first two also hide the seams between the three pieces of the haft)
-H_GEM = (2.7, 3.7, 1.8)         # the gem's semi-axes (across, along y, through z), cm: 0.045 x 0.064 blocks in the hand (it must sit on a socket 0.08 blocks wide)
+H_GEM = (3.9, 5.3, 2.5)         # the gem's semi-axes (across, along y, through z), cm: 0.045 x 0.064 blocks in the hand (it must sit on a socket 0.08 blocks wide)
 H_GEM_RGB = (127, 230, 255)     # #7FE6FF, an electric blue-white cabochon
 H_GEM_GLOW = (191, 246, 255)    # #BFF6FF
 H_VEIN = (159, 239, 255)        # #9FEFFF, the glowing lightning vein
-H_BOLT = [(0.2, 250.6), (1.9, 254.6), (-1.6, 258.4), (1.8, 262.8), (-1.0, 266.8), (0.5, 271.0), (0.0, 275.0)]      # the vein down the middle of the head: (x, y) on its face
+H_BOLT = [(0.3, 251.0), (3.0, 255.0), (-2.6, 259.0), (2.8, 263.4), (-1.6, 267.4), (0.8, 271.4), (0.0, 275.0)]      # the vein down the middle of the head: (x, y) on its face
 
 
 def build_harpoon():
@@ -318,7 +318,7 @@ def build_harpoon():
     R = H_SHAFT_R
     # ---- the weighted butt cap: an iron ball and a band
     bt = k.part(m, "butt", "iron_dark", smooth=60, uv_mode="loft", wear=0.6)
-    ml.lathe(bt, "y", (0, 0, 0), [(0.0, 0.0), (0.6, 1.5), (2.0, 3.0), (4.2, 3.35), (6.4, 3.0), (8.0, 2.4), (9.6, 2.9), (11.4, 2.9), (12.4, R)], sides=12)
+    ml.lathe(bt, "y", (0, 0, 0), [(0.0, 0.0), (0.6, 2.0), (2.0, 4.0), (4.2, 4.5), (6.4, 4.0), (8.0, 3.1), (9.6, 3.7), (11.4, 3.7), (12.4, R)], sides=12)
     # ---- the haft in three pieces (one skin strip each: a 2 m strip would force a tiny scale on the whole atlas)
     sh = k.part(m, "shaft", "wood", smooth=70, uv_mode="loft", wear=0.55, base=(78, 56, 40))
     cuts = [12.4, H_BANDS[0], H_BANDS[1], 200.0]
@@ -326,10 +326,10 @@ def build_harpoon():
     for y0, y1 in zip(cuts[:-1], cuts[1:]):
         ml.lathe(sh, "y", (0, 0, 0), [(y, rad(y)) for y in np.linspace(y0, y1, 5)], sides=10)
     gp = k.part(m, "grip_wrap", "brown_leather", smooth=60, uv_mode="loft", wear=0.5)
-    ml.lathe(gp, "y", (0, 0, 0), [(H_Y_GRIP[0], rad(H_Y_GRIP[0]) + 0.1), (H_Y_GRIP[0] + 1.6, 2.95), (H_Y_GRIP[1] - 1.6, 2.95), (H_Y_GRIP[1], rad(H_Y_GRIP[1]) + 0.1)], sides=10)
+    ml.lathe(gp, "y", (0, 0, 0), [(H_Y_GRIP[0], rad(H_Y_GRIP[0]) + 0.1), (H_Y_GRIP[0] + 1.6, R + 0.55), (H_Y_GRIP[1] - 1.6, R + 0.55), (H_Y_GRIP[1], rad(H_Y_GRIP[1]) + 0.1)], sides=10)
     bn = k.part(m, "bands", "bronze", smooth=60, uv_mode="loft", wear=0.45)
     for y in H_BANDS:
-        ml.collar(bn, y - 1.4, 3.1, 2.8, lip=0.6, sides=10)
+        ml.collar(bn, y - 1.6, R + 0.75, 3.2, lip=0.7, sides=10)
     # ---- the line: two loose coils on the haft, the run between them, the run to the eyelet and the loop that hangs from the eyelet
     rp = k.part(m, "rope", "rope", smooth=75, uv_mode="loft", wear=0.4)
     ca = w1.helix(lambda t: R + 0.62, 112.0, 130.0, 2.6, 26, phase=0.0)
@@ -343,30 +343,32 @@ def build_harpoon():
     loop = k.catmull([(-11.4, H_Y_EYELET - 3.6, 0.4), (-13.8, 172.0, 1.0), (-14.8, 160.0, 1.6), (-12.2, 150.5, 1.4), (-8.6, 153.0, 1.0), (-7.0, 164.0, 0.8), (-7.0, 176.0, 0.5), (-6.4, H_Y_EYELET - 3.4, 0.3)], per=4)
     ml.sweep(rp, loop, ml.circle(1.0, 4), scales=lambda t: (0.62, 0.62), caps=(False, False))
     ey = k.part(m, "eyelet", "iron_dark", smooth=65, uv_mode="loft", wear=0.6)
-    ml.collar(ey, H_Y_EYELET - 1.6, 3.3, 3.2, lip=0.6, sides=10)
+    ml.collar(ey, H_Y_EYELET - 1.6, R + 0.95, 3.2, lip=0.6, sides=10)
     ring = [(-8.2 + 5.0 * math.cos(a), H_Y_EYELET + 5.0 * math.sin(a), 0.0) for a in np.linspace(0, 2 * math.pi, 14, endpoint=False)]
     k.sweep_loop(ey, ring, ml.circle(0.95, 5), up=(0, 0, 1))
     # ---- the socket: a long iron cone with three bronze trims, and the neck of the head with the gem in two claws
     so = k.part(m, "socket", "iron_dark", smooth=55, uv_mode="loft", wear=0.45)
-    prof = [(196.0, 4.3), (197.8, 4.55), (200.0, 3.7), (205.0, 3.35), (212.0, 3.0), (222.0, 2.4), (230.0, 1.9), (238.0, 1.6)]
+    prof = [(196.0, 5.2), (197.8, 5.6), (200.0, 4.7), (205.0, 4.3), (212.0, 3.9), (222.0, 3.3), (230.0, 2.8), (238.0, 2.4)]
     ml.lathe(so, "y", (0, 0, 0), prof, sides=14)
     sb = k.part(m, "socket_bands", "bronze", smooth=60, uv_mode="loft", wear=0.35)
-    for y, r in ((201.0, 3.8), (217.0, 2.9), (229.5, 2.2)):
+    for y, r in ((201.0, 4.8), (217.0, 3.8), (229.5, 3.05)):
         ml.collar(sb, y, r, 1.5, lip=0.4, sides=12)
     hn = k.part(m, "head_neck", "iron_dark", smooth=55, uv_mode="loft", wear=0.5)
-    ml.loft(hn, "y", (0, 0, 0), [(236.5, 1.7, 1.7), (238.6, 3.4, 3.4), (243.0, 4.4, 4.4), (247.0, 3.2, 3.2), (249.0, 1.6, 1.6)], ml.circle(1.0, 12))
+    ml.loft(hn, "y", (0, 0, 0), [(236.5, 2.5, 2.5), (238.6, 4.6, 4.6), (243.0, 5.8, 5.8), (247.0, 4.4, 4.4), (249.0, 2.4, 2.4)], ml.circle(1.0, 12))
     for sgn in (1, -1):                                                           # two iron claws, above and below the gem
-        k.cone(hn, (0.0, 243.0 + sgn * 4.4, 4.0), (0.0, -sgn * 0.5, 1.0), 3.2, 0.7, sides=4, r_tip=0.25)
+        k.cone(hn, (0.0, 243.0 + sgn * 6.0, 5.3), (0.0, -sgn * 0.5, 1.0), 4.2, 0.95, sides=4, r_tip=0.3)
     gm = k.part(m, "gem", "crystal", glow=True, smooth=40, uv_mode="loft", base=H_GEM_RGB)
-    k.dome(gm, (0.0, 243.0, 4.2), *H_GEM, sides=10, stacks=7)
+    k.dome(gm, (0.0, 243.0, 5.5), *H_GEM, sides=10, stacks=7)
     # ---- the head: the leaf of the blade and two large swept-back barbs
     bl = k.part(m, "head_blade", "steel_blue", smooth=28, wear=0.45)
-    st = [(248.4, 2.4, 1.0), (251.4, 8.6, 1.6), (255.6, 12.0, 1.85), (261.0, 10.6, 1.75), (267.4, 6.8, 1.35), (273.4, 3.0, 0.9), (H_LEN, 0.0, 0.0)]
+    st = [(248.4, 3.4, 1.5), (251.4, 14.0, 2.4), (255.6, 19.5, 2.8), (261.0, 17.0, 2.6), (267.4, 10.8, 2.0), (273.4, 4.6, 1.2), (H_LEN, 0.0, 0.0)]
     ml.loft(bl, "y", (0, 0, 0), st, ml.lozenge(1.0, 1.0, 0.3))
     bb = k.part(m, "head_barbs", "steel_blue", smooth=40, wear=0.45)
     for sgn in (1, -1):
-        path = k.catmull([(sgn * 3.2, 257.6, 0.0), (sgn * 8.4, 256.6, 0.0), (sgn * 12.8, 252.0, 0.0), (sgn * 14.4, 244.0, 0.0)], per=5)
-        ml.sweep(bb, path, ml.lozenge(1.0, 1.0, 0.25), scales=lambda t: ((4.2 - 3.9 * t, 1.25 - 0.7 * t) if t < 0.985 else (0.0, 0.0)), up=(0, 0, 1))
+        path = k.catmull([(sgn * 5.0, 258.0, 0.0), (sgn * 13.5, 256.0, 0.0), (sgn * 20.5, 248.0, 0.0), (sgn * 23.5, 232.0, 0.0)], per=5)
+        ml.sweep(bb, path, ml.lozenge(1.0, 1.0, 0.25), scales=lambda t: ((6.8 - 6.4 * t, 1.9 - 1.1 * t) if t < 0.985 else (0.0, 0.0)), up=(0, 0, 1))
+        low = k.catmull([(sgn * 2.2, 236.0, 0.0), (sgn * 6.5, 234.5, 0.0), (sgn * 10.0, 229.0, 0.0), (sgn * 11.0, 220.0, 0.0)], per=4)      # 3.79.0: a second, smaller pair of barbs on the socket
+        ml.sweep(bb, low, ml.lozenge(1.0, 1.0, 0.25), scales=lambda t: ((3.6 - 3.3 * t, 1.3 - 0.7 * t) if t < 0.985 else (0.0, 0.0)), up=(0, 0, 1))
     atlas = k.lay_out(m)
     paint_harpoon(m, atlas)
     return m, atlas
@@ -406,24 +408,25 @@ def paint_harpoon(m, atlas):
     w1.paint_part(atlas, m.part("socket"), p_socket)
     w1.paint_part(atlas, m.part("socket_bands"), lambda c: k.engrave(c, k.stripes(c.A, 0.7, 0.1, 0.0, 0.04), 0.45, 0.4))
     w1.paint_part(atlas, m.part("head_neck"), lambda c: (k.engrave(c, k.stripes(c.A, 1.0, 0.16, 0.0, 0.05), 0.4, 0.3), k.noise(c, 10, 2, 0.06)))
-    w1.paint_part(atlas, m.part("gem"), lambda c: k.gem_cabochon(c, H_GEM_RGB, hi=(0.25, 0.4), glow_color=H_GEM_GLOW, glow=0.6))
+    w1.paint_part(atlas, m.part("gem"), lambda c: k.gem_cabochon(c, H_GEM_RGB, hi=(0.25, 0.4), glow_color=H_GEM_GLOW, glow=0.9))
     w1.paint_part(atlas, m.part("eyelet"), lambda c: k.fill_glow(c, H_VEIN, 0.16, 0.1) if c.B.max() > 10.0 else None)               # a faint ring round the eyelet (the long strip is the ring, the short one its collar)
 
     def p_blade(c):
         x, y = c.A, c.B
-        zig = k.poly_mask(x, y, H_BOLT, 0.3, 0.08)
+        zig = k.poly_mask(x, y, H_BOLT, 0.5, 0.12)
         centre = k.seg_mask(x, y, (0.0, 247.5), (0.0, 277.0), 0.28, 0.08)
         k.mix_to(c, centre * (1 - zig), (94, 114, 133), 0.8)                       # the darker centre line, #5E7285
         k.mix_to(c, zig, (232, 244, 255), 0.95)
         k.glow_on(c, zig, H_VEIN, 1.0, 0.6)
-        k.glow_on(c, k.poly_mask(x, y, H_BOLT, 1.2, 0.4) * 0.45, H_VEIN, 0.35, 0.2)
-        half = 12.0 * np.clip(1.0 - np.abs(y - 255.4) / 24.0, 0.05, 1.0)
+        k.glow_on(c, k.poly_mask(x, y, H_BOLT, 2.2, 0.7) * 0.55, H_VEIN, 0.5, 0.2)
+        half = 19.5 * np.clip(1.0 - np.abs(y - 255.4) / 24.0, 0.05, 1.0)
         k.mix_to(c, k.smooth01(np.abs(x) / half, 0.82, 1.0), (221, 233, 242), 0.7)  # the bright honed edge, #DDE9F2
+        k.glow_on(c, k.smooth01(np.abs(x) / half, 0.9, 1.0) * 0.6, H_VEIN, 0.5, 0.2)   # 3.79.0: the edge itself is faintly lit
     w1.paint_part(atlas, m.part("head_blade"), p_blade)
 
     def p_barb(c):
         crook = 0.25 + 0.03 * (4.0 * np.abs(np.mod(c.T * 5.0, 1.0) - 0.5) - 1.0)           # a crooked line along the front ridge of the barb
-        v = k.band(np.abs(c.S - crook), 0.0, 0.014, 0.008)
+        v = k.band(np.abs(c.S - crook), 0.0, 0.022, 0.012)
         k.mix_to(c, v, (232, 244, 255), 0.9)
         k.glow_on(c, v, H_VEIN, 0.9, 0.5)
         k.mix_to(c, k.band(c.S, 0.0, 0.08, 0.04) + k.band(c.S, 0.5, 0.58, 0.04), (221, 233, 242), 0.6)
@@ -462,11 +465,11 @@ def icon_harpoon():
 # links and the sag are mine.
 CHAIN_REAL_M = 1.75            # apparent length along the weapon's axis: class `whip` is 1.6 to 2.4 (the chain falls away from that axis, so its path is about 2.4 blocks)
 CHAIN_GRIP_AT = 0.25
-C_LINK_L, C_LINK_W, C_WIRE = 12.4, 7.4, 1.6      # the centre line of a link: length, width, and the wire's radius, cm (a heavy 15 cm link, a ship's chain)
+C_LINK_L, C_LINK_W, C_WIRE = 12.8, 8.6, 2.0      # the centre line of a link: length, width, and the wire's radius, cm (a heavy 15 cm link, a ship's chain)
 C_PITCH = C_LINK_L - 2 * C_WIRE                  # interlocking: the next link's wire passes through this link's hole
 C_LINKS = 15
 C_PATH = [(0.0, 56.0), (0.6, 72.0), (0.2, 92.0), (-3.0, 112.0), (-11.0, 130.0), (-25.0, 143.0), (-45.0, 151.0), (-66.0, 153.0)]       # the chain's centre line: out along +y, then down toward -x
-C_GEM = (3.1, 3.8, 1.8)                          # the gem's semi-axes (across, along y, through z), cm: 0.062 x 0.078 blocks in the hand, in an iron bezel on the clasp
+C_GEM = (4.5, 5.5, 2.5)                          # the gem's semi-axes (across, along y, through z), cm: 0.062 x 0.078 blocks in the hand, in an iron bezel on the clasp
 C_GEM_RGB = (127, 163, 199)                      # #7FA3C7, slate blue
 C_GEM_GLOW = (191, 216, 238)                     # #BFD8EE
 C_LINK_GLOW = (143, 176, 204)                    # #8FB0CC, the faint glow of the first three links
@@ -476,7 +479,12 @@ def build_chain():
     m = ml.Mesh("vassal_chain")
     # ---- the hand grip: a heavy pommel, the leather-wrapped grip (the wrap is painted), a short strap
     gc = k.part(m, "grip_cap", "iron_black", smooth=60, uv_mode="loft", wear=0.6)
-    ml.lathe(gc, "y", (0, 0, 0), [(-5.0, 0.0), (-4.4, 2.0), (-2.4, 3.9), (0.6, 4.2), (2.6, 3.4), (3.6, 2.8)], sides=12)
+    ml.lathe(gc, "y", (0, 0, 0), [(-6.5, 0.0), (-5.6, 2.6), (-3.0, 5.0), (0.6, 5.3), (2.6, 4.0), (3.6, 2.9)], sides=12)
+    bow = k.catmull([(3.2, 3.0, 0.0), (8.4, 8.0, 0.0), (9.6, 24.0, 0.0), (8.4, 40.0, 0.0), (3.4, 45.5, 0.0)], per=4)                      # 3.79.0: a blackened knuckle bow from the pommel to the clasp, with three studs
+    kb = k.part(m, "knuckle_bow", "iron_black", smooth=60, uv_mode="loft", wear=0.6)        # its own part: in grip_cap its quads would move the `grip` line (the hand)
+    ml.sweep(kb, bow, ml.rounded_rect(2.6, 1.1, 0.3, 1), caps=(True, True), up=(0, 0, 1))
+    for yy in (14.0, 24.0, 34.0):
+        k.cone(kb, (9.9, yy, 0.0), (1.0, 0.0, 0.0), 3.4, 1.5, sides=4, r_tip=0.2)
     gr = k.part(m, "grip", "dark_leather", smooth=60, uv_mode="loft", wear=0.6)
     ml.lathe(gr, "y", (0, 0, 0), [(3.2, 2.9), (6.0, 3.15), (14.0, 3.35), (30.0, 3.15), (40.0, 3.0), (46.0, 3.2)], sides=12)
     sp = k.part(m, "strap", "dark_leather", smooth=50, uv_mode="loft", wear=0.6)
@@ -484,7 +492,7 @@ def build_chain():
     ml.sweep(sp, loop, ml.rounded_rect(1.8, 0.6, 0.2, 1), caps=(True, True), up=(0, 0, 1))
     # ---- the clasp: a blackened collar, the ring the first link runs through, a hook, the gem in an iron bezel
     cl = k.part(m, "clasp", "iron_black", smooth=55, uv_mode="loft", wear=0.55)
-    ml.lathe(cl, "y", (0, 0, 0), [(45.0, 3.2), (46.5, 5.0), (49.0, 5.8), (52.0, 5.0), (54.0, 3.4), (56.0, 2.2)], sides=12)
+    ml.lathe(cl, "y", (0, 0, 0), [(45.0, 3.4), (46.5, 5.8), (49.0, 6.8), (52.0, 5.8), (54.0, 3.8), (56.0, 2.4)], sides=12)
     arm = ml.rounded_rect(2.0, 2.8, 0.6, 2)
     for sx in (-1, 1):                                                                # the clevis: two forged ears the first link hangs between
         ml.loft(cl, "y", (sx * 3.7, 0, 0), [(52.5, 1.0, 1.0), (59.2, 1.0, 1.0), (60.8, 0.72, 0.85), (61.7, 0.36, 0.5)], arm)
@@ -493,9 +501,9 @@ def build_chain():
     hook = k.catmull([(3.7, 60.4, 0.0), (5.6, 63.4, 0.0), (3.0, 66.0, 0.0), (0.4, 64.2, 0.0), (0.3, 62.0, 0.0)], per=4)               # the hook that closes over the pin
     ml.sweep(cl, hook, ml.circle(1.0, 5), scales=lambda t: ((1.3 - 0.8 * t, 1.3 - 0.8 * t) if t < 0.97 else (0.0, 0.0)), up=(0, 0, 1))
     bz = k.part(m, "clasp_bezel", "iron_black", smooth=50, uv_mode="loft", wear=0.5)
-    ml.loft(bz, "z", (0.0, 49.5, 4.0), [(0.0, 3.9, 4.6), (0.9, 4.3, 5.1), (1.9, 3.6, 4.3), (2.6, 2.8, 3.4)], ml.circle(1.0, 12), caps=(True, False))
+    ml.loft(bz, "z", (0.0, 49.5, 4.6), [(0.0, 5.6, 6.6), (1.1, 6.1, 7.2), (2.3, 5.2, 6.2), (3.1, 4.1, 5.0)], ml.circle(1.0, 12), caps=(True, False))
     gm = k.part(m, "gem", "crystal", glow=True, smooth=40, uv_mode="loft", base=C_GEM_RGB)
-    k.dome(gm, (0.0, 49.5, 5.8), *C_GEM, sides=10, stacks=7)
+    k.dome(gm, (0.0, 49.5, 6.9), *C_GEM, sides=10, stacks=7)
     # ---- the links: fifteen, turned alternately, along the S-curve
     path = k.catmull([(x, y, 0.0) for (x, y) in C_PATH], per=10)
     lk = k.part(m, "links", "dull_steel", smooth=70, uv_mode="loft", wear=0.7)
@@ -514,15 +522,16 @@ def build_chain():
     ml.loft(sw, tuple(te), tuple(e), [(0.0, 2.4, 2.4), (1.6, 3.2, 3.2), (5.2, 3.2, 3.2), (6.8, 2.4, 2.4), (8.0, 1.8, 1.8)], ml.circle(1.0, 10))
     wt = k.part(m, "weight", "iron_dark", smooth=55, uv_mode="loft", wear=0.65)
     bar0 = e + te * 8.0
-    ml.loft(wt, tuple(te), tuple(bar0), [(0.0, 3.0, 3.0), (3.0, 4.0, 4.0), (14.0, 4.2, 4.2), (16.0, 3.6, 3.6)], ml.circle(1.0, 10))
-    ball_c = bar0 + te * (16.0 + 8.8)
-    k.ball(wt, tuple(ball_c), 9.4, sides=12, stacks=8)
+    ml.loft(wt, tuple(te), tuple(bar0), [(0.0, 3.4, 3.4), (3.0, 4.8, 4.8), (14.0, 5.2, 5.2), (16.0, 4.4, 4.4)], ml.circle(1.0, 10))
+    ball_c = bar0 + te * (16.0 + 11.6)
+    k.ball(wt, tuple(ball_c), 12.6, sides=12, stacks=8)
     sk = k.part(m, "spikes", "iron_stud", smooth=40, uv_mode="loft", wear=0.4)
     side = unit(np.cross(zax, te))
-    for ang in (45, 135, 225, 315):
-        d = side * math.cos(math.radians(ang)) + zax * math.sin(math.radians(ang))
-        k.cone(sk, tuple(ball_c + d * 7.6), tuple(d), 7.4, 2.7, sides=5, r_tip=0.35)
-    k.cone(sk, tuple(ball_c + te * 8.2), tuple(te), 7.8, 2.8, sides=5, r_tip=0.35)
+    for ang in (0, 45, 90, 135, 180, 225, 270, 315):                                      # eight spikes round the ball: four long ones square to the chain, four shorter ones leaning forward
+        lean = 0.0 if ang % 90 == 0 else 0.55
+        d = unit(side * math.cos(math.radians(ang)) + zax * math.sin(math.radians(ang)) + te * lean)
+        k.cone(sk, tuple(ball_c + d * 10.6), tuple(d), 11.5 if lean == 0.0 else 8.5, 3.3 if lean == 0.0 else 2.6, sides=5, r_tip=0.3)
+    k.cone(sk, tuple(ball_c + te * 11.2), tuple(te), 13.0, 3.6, sides=5, r_tip=0.3)
     atlas = k.lay_out(m)
     paint_chain(m, atlas)
     return m, atlas
@@ -539,8 +548,8 @@ def paint_chain(m, atlas):
         k.mix_to(c, k.smooth01(w1.noise2(c.A.shape, 7, 17 + n), 0.62, 0.8) * 0.8, rust, 0.75)                       # rust-brown patches, different on every link
         k.mix_to(c, k.band(c.S, 0.2, 0.3, 0.1) * k.smooth01(w1.noise2(c.A.shape, 5, 29 + n), 0.35, 0.7), wear, 0.8)  # bright wear on the outer curve
         k.tone(c, k.smooth01(w1.noise2(c.A.shape, 9, 3 + n), 0.7, 0.9), 0.7)                                          # soot
-        if n < 3:                                                                                                       # the first three links nearest the clasp breathe faintly
-            k.fill_glow(c, C_LINK_GLOW, 0.2, 0.15)
+        if n < 7:                                                                                                       # 3.79.0: the light runs seven links out from the clasp, fading (was three)
+            k.fill_glow(c, C_LINK_GLOW, 0.36 - 0.04 * n, 0.15)
     w1.paint_part(atlas, m.part("links"), p_links)
 
     def p_grip(c):
@@ -550,8 +559,16 @@ def paint_chain(m, atlas):
         k.noise(c, 8, 6, 0.07)
     w1.paint_part(atlas, m.part("grip"), p_grip)
     w1.paint_part(atlas, m.part("strap"), lambda c: k.noise(c, 6, 4, 0.08))
-    w1.paint_part(atlas, m.part("gem"), lambda c: k.gem_cabochon(c, C_GEM_RGB, hi=(0.25, 0.4), glow_color=C_GEM_GLOW, glow=0.55, body=0.7))
-    for nm in ("clasp", "clasp_bezel", "swivel", "weight", "grip_cap", "spikes"):
+    w1.paint_part(atlas, m.part("gem"), lambda c: k.gem_cabochon(c, C_GEM_RGB, hi=(0.25, 0.4), glow_color=C_GEM_GLOW, glow=0.9, body=0.7))
+
+    def p_weight(c):                                                                                                   # dark iron with two engraved, lit bands (a morning star that glows from its seams)
+        k.noise(c, 10, 5, 0.08)
+        seam = k.stripes(c.B, 6.0, 0.5, 1.0, 0.2)
+        k.engrave(c, seam, 0.5, 0.3)
+        k.glow_on(c, seam, C_GEM_GLOW, 0.7, 0.3)
+    w1.paint_part(atlas, m.part("weight"), p_weight)
+    w1.paint_part(atlas, m.part("spikes"), lambda c: (k.noise(c, 10, 5, 0.06), k.mix_to(c, k.smooth01(c.B / max(1e-6, float(c.B.max())), 0.55, 1.0), (214, 222, 230), 0.8)))
+    for nm in ("clasp", "clasp_bezel", "swivel", "grip_cap", "knuckle_bow"):
         w1.paint_part(atlas, m.part(nm), lambda c: (k.noise(c, 10, 5, 0.08), k.engrave(c, k.stripes(c.B, 1.6, 0.12, 0.3, 0.05) * 0.5, 0.3, 0.2)))
 
 
@@ -590,7 +607,7 @@ INSTRUMENT_REAL_M = 1.15       # apparent length in the hand, blocks (violin and
 INSTRUMENT_HAND_AT = 0.58      # the hand holds the neck where it leaves the body, about half way along: the body hangs behind the hand, the scroll and the bow tip lead
 V_GEM_RGB = (255, 122, 200)    # #FF7AC8, a rose-coral cabochon: a lens 5.4 cm long (x) and 3.6 cm across, 0.084 x 0.055 blocks in the hand (the profile is in build_instrument)
 V_GEM_GLOW = (255, 154, 216)   # #FF9AD8
-V_BODY = [(0.0, 0.0), (5.0, 0.35), (8.9, 2.4), (10.25, 7.0), (9.4, 12.0), (6.8, 15.2), (5.6, 17.8), (6.4, 20.4), (8.1, 24.0), (8.35, 28.6), (7.0, 32.8), (4.0, 35.0), (0.0, 35.5)]
+V_BODY = [(0.0, 0.0), (5.6, 0.35), (10.0, 2.4), (11.6, 7.0), (10.6, 12.0), (7.4, 15.2), (6.0, 17.8), (7.0, 20.4), (9.2, 24.0), (9.5, 28.6), (7.9, 32.8), (4.5, 35.0), (0.0, 35.5)]      # 3.79.0: 12 % broader
 V_BODY_LEN = 35.5              # the body of a full-size violin, cm; the right half is listed above, the left is its mirror
 V_BRIDGE_Y, V_NUT_Y = 16.0, 48.5   # a 32.5 cm string length
 V_FB_END_Y = 21.5              # the fingerboard is 27 cm long
@@ -646,7 +663,7 @@ def build_instrument():
     st = k.part(m, "strings", "gold_string", smooth=70, uv_mode="loft", wear=0.1)
     for xb, xn in zip(V_STRING_X["bridge"], V_STRING_X["nut"]):
         pts = [(xb * 0.55, 3.6, 2.0), (xb, V_BRIDGE_Y, 4.95), (lerp_x(xb, xn, 0.5), 32.0, 4.3), (xn, V_NUT_Y, 3.7)]
-        ml.sweep(st, k.catmull(pts, per=3), ml.circle(0.2, 3), caps=(False, False), up=(0, 0, 1))
+        ml.sweep(st, k.catmull(pts, per=3), ml.circle(0.28, 4), caps=(False, False), up=(0, 0, 1))
     # ---- the bridge, the tailpiece, the chin rest, the end button: maple and ebony fittings
     br = k.part(m, "bridge", "maple_bridge", smooth=35, wear=0.15)
     prof = [(-2.1, 1.35), (-1.55, 1.35), (-1.2, 1.9), (-1.05, 2.5), (-1.5, 3.1), (-1.75, 4.0), (-1.2, 4.75), (-0.6, 4.95), (0.6, 4.95), (1.2, 4.75), (1.75, 4.0), (1.5, 3.1), (1.05, 2.5), (1.2, 1.9), (1.55, 1.35), (2.1, 1.35), (1.4, 2.0), (-1.4, 2.0)]
@@ -657,13 +674,15 @@ def build_instrument():
     ml.lathe(ft, "y", (0, 0, 0), [(-1.2, 0.0), (-1.0, 0.8), (0.2, 0.95), (0.9, 0.5)], sides=8)
     # ---- the gem in the eye of the scroll, in two gold rings with claws (one on each side of the scroll)
     gm = k.part(m, "gem", "crystal", glow=True, smooth=40, uv_mode="loft", base=V_GEM_RGB)
-    ml.lathe(gm, "x", (0, cy, cz), [(-2.7, 0.0), (-2.3, 0.95), (-1.6, 1.5), (-0.7, 1.78), (0.7, 1.78), (1.6, 1.5), (2.3, 0.95), (2.7, 0.0)], sides=10)
+    ml.lathe(gm, "x", (0, cy, cz), [(-3.4, 0.0), (-2.9, 1.2), (-2.0, 1.9), (-0.9, 2.25), (0.9, 2.25), (2.0, 1.9), (2.9, 1.2), (3.4, 0.0)], sides=12)
     gc = k.part(m, "gold_fittings", "gold_warm", smooth=50, uv_mode="loft", wear=0.3)
     for sgn in (1, -1):
-        k.sweep_loop(gc, [(sgn * 1.55, cy + 1.95 * math.cos(a), cz + 1.95 * math.sin(a)) for a in np.linspace(0, 2 * math.pi, 10, endpoint=False)], ml.circle(0.34, 4), up=(1, 0, 0))
+        k.sweep_loop(gc, [(sgn * 1.95, cy + 2.5 * math.cos(a), cz + 2.5 * math.sin(a)) for a in np.linspace(0, 2 * math.pi, 8, endpoint=False)], ml.circle(0.44, 4), up=(1, 0, 0))
         for a in (45, 135, 225, 315):
             ca, sa = math.cos(math.radians(a)), math.sin(math.radians(a))
-            k.cone(gc, (sgn * 1.5, cy + 1.95 * ca, cz + 1.95 * sa), (sgn * 0.8, -0.5 * ca, -0.5 * sa), 1.5, 0.3, sides=4, r_tip=0.12)
+            k.cone(gc, (sgn * 1.9, cy + 2.5 * ca, cz + 2.5 * sa), (sgn * 0.8, -0.5 * ca, -0.5 * sa), 1.9, 0.4, sides=4, r_tip=0.15)
+    for yy in (37.5, 40.5, 43.5):                                                   # 3.79.0: three gold collars on the neck below the pegbox
+        ml.collar(gc, yy, 1.85 if yy < 40 else 1.6, 0.7, lip=0.2, sides=8, axis=(0, 1, 0), origin=(0.0, 0.0, 0.0))
     # ---- the bow laid across the strings, tip forward
     F, T = V_BOW_FROG, V_BOW_TIP
     d = unit(V(T) - V(F))
@@ -671,7 +690,7 @@ def build_instrument():
     side = unit(np.cross(d, (0.0, 0.0, 1.0)))
     stick_pts = [tuple(V(F) + d * (length * t) + V((0, 0, 1)) * (1.0 * math.sin(math.pi * t))) for t in np.linspace(0.0, 1.0, 14)]
     bs = k.part(m, "bow_stick", "bow_wood", smooth=70, uv_mode="loft", wear=0.3)
-    ml.sweep(bs, stick_pts, ml.circle(1.0, 6), scales=lambda t: (0.46 - 0.15 * t, 0.46 - 0.15 * t), caps=(True, True))
+    ml.sweep(bs, stick_pts, ml.circle(1.0, 6), scales=lambda t: (0.6 - 0.2 * t, 0.6 - 0.2 * t), caps=(True, True))
     k.dome(bs, tuple(V(T) + d * 0.6 - V((0, 0, 0.6))), 1.1, 2.4, 1.0, sides=8, stacks=5)
     bh = k.part(m, "bow_hair", "hair", smooth=30, uv_mode="loft", wear=0.1)
     off = side * 1.3                                                          # the bow is tilted a little so the hair shows beside the stick
@@ -722,6 +741,8 @@ def paint_instrument(m, atlas):
             k.tone(c, k.smooth01(f, 0.55, 0.95) * inside, 0.72)
         k.mix_to(c, k.band(d, 0.38, 0.46, 0.03) + k.band(d, 0.66, 0.74, 0.03), (30, 14, 6), 0.9)              # the dark lines of the purfling ...
         k.mix_to(c, k.band(d, 0.48, 0.64, 0.03), purfling, 0.9 if not flame else 0.0)                          # ... and its thin gold inlay on the top plate
+        if not flame:
+            k.glow_on(c, k.band(d, 0.46, 0.66, 0.03) * inside, (255, 200, 110), 0.55, 0.3)                      # 3.79.0: the inlay is lit
         return x, y
 
     def p_top(c):
@@ -760,7 +781,7 @@ def paint_instrument(m, atlas):
         k.tone(c, k.smooth01(f, 0.6, 0.95), 0.78)
         k.noise(c, 8, 6, 0.06)
     w1.paint_part(atlas, m.part("neck_scroll"), p_neck)
-    w1.paint_part(atlas, m.part("strings"), lambda c: k.fill_glow(c, (255, 233, 176), 0.10, 0.2))
+    w1.paint_part(atlas, m.part("strings"), lambda c: k.fill_glow(c, (255, 226, 150), 0.6, 0.35))
     w1.paint_part(atlas, m.part("gem"), lambda c: k.gem_lens(c, V_GEM_RGB, glow_color=V_GEM_GLOW, glow=0.6))
 
     def p_bridge(c):
@@ -776,7 +797,7 @@ def paint_instrument(m, atlas):
             k.mix_to(c, k.band(c.S, 0.0, 0.05, 0.03) + k.band(c.S, 0.5, 0.55, 0.03), (130, 92, 60), 0.6)
         k.noise(c, 10, 8, 0.05)
     w1.paint_part(atlas, m.part("bow_stick"), p_stick)
-    w1.paint_part(atlas, m.part("bow_hair"), lambda c: k.noise(c, 4, 9, 0.06))
+    w1.paint_part(atlas, m.part("bow_hair"), lambda c: (k.noise(c, 4, 9, 0.06), k.fill_glow(c, (255, 240, 220), 0.45, 0.3)))
 
 
 def icon_instrument():
@@ -813,11 +834,11 @@ def icon_instrument():
 # design; the sizes are mine.
 SEW_REAL_M = 1.30              # apparent length in the hand, blocks: class `rapier` is 1.0 to 1.3 (the doc: about 1.5 in all with the spool)
 SEW_GRIP_AT = 0.25
-S_FLANGE_R = 6.5               # flange radius (a 13 cm spool, about 0.15 blocks across)
-S_CORE_R, S_WOUND_R = 3.4, 4.6
+S_FLANGE_R = 8.0               # flange radius (a 13 cm spool, about 0.15 blocks across)
+S_CORE_R, S_WOUND_R = 4.2, 5.7
 S_NEEDLE_TOP = 111.0           # the point of the needle, cm: the mesh runs from the thimble pommel at -11.6 up to here; the scissors hang a little below the spool
-S_EYE = (36.0, 1.7, 8.3)       # the eye: its centre y and semi-axes (x, y)
-S_GEM = (3.9, 3.3, 3.9)        # the gem's semi-axes (x, along y, z), cm: 0.083 x 0.070 x 0.083 blocks in the hand, a dome in the top flange's silver bezel
+S_EYE = (36.0, 2.6, 9.6)       # the eye: its centre y and semi-axes (x, y)
+S_GEM = (4.9, 4.1, 4.9)        # the gem's semi-axes (x, along y, z), cm: 0.083 x 0.070 x 0.083 blocks in the hand, a dome in the top flange's silver bezel
 S_GEM_RGB = (166, 77, 255)     # #A64DFF, an amethyst
 S_GEM_GLOW = (215, 168, 255)   # #D7A8FF
 S_THREAD_A, S_THREAD_B = (192, 58, 120), (122, 63, 181)       # crimson silk fading to violet: #C03A78 to #7A3FB5
@@ -829,49 +850,54 @@ def build_sewing_set():
     m = ml.Mesh("vassal_sewing_set")
     # ---- the spool: the core and two flanges in violet lacquered wood, silver rims, the wound silk
     gc = k.part(m, "grip_core", "violet_wood", smooth=45, uv_mode="loft", wear=0.2)
-    ml.lathe(gc, "y", (0, 0, 0), [(0.0, 0.0), (0.15, 5.6), (0.6, S_FLANGE_R), (1.5, S_FLANGE_R), (1.95, 5.7), (2.3, S_CORE_R), (21.7, S_CORE_R), (22.05, 5.7), (22.5, S_FLANGE_R),
-                                  (23.4, S_FLANGE_R), (23.85, 5.6), (24.0, 3.0)], sides=16)
+    ml.lathe(gc, "y", (0, 0, 0), [(0.0, 0.0), (0.15, S_FLANGE_R - 0.9), (0.6, S_FLANGE_R), (1.5, S_FLANGE_R), (1.95, S_FLANGE_R - 0.8), (2.3, S_CORE_R), (21.7, S_CORE_R), (22.05, S_FLANGE_R - 0.8), (22.5, S_FLANGE_R),
+                                  (23.4, S_FLANGE_R), (23.85, S_FLANGE_R - 0.9), (24.0, 3.8)], sides=16)
     gr = k.part(m, "grip_rims", "silver_rim", smooth=55, uv_mode="loft", wear=0.35)
     for y in (0.35, 22.35):
         ml.collar(gr, y, S_FLANGE_R + 0.18, 1.45, lip=0.35, sides=16)
     th0 = k.part(m, "grip_thimble", "silver_rim", smooth=55, uv_mode="loft", wear=0.35)                      # the needle's blunt end comes out of the spool into a thimble: the pommel
-    ml.lathe(th0, "y", (0, 0, 0), [(-11.6, 0.0), (-11.2, 2.0), (-9.6, 3.5), (-6.0, 4.4), (-2.4, 4.9), (-0.6, 5.0), (0.2, 3.6)], sides=14)
+    ml.lathe(th0, "y", (0, 0, 0), [(-11.6, 0.0), (-11.2, 2.5), (-9.6, 4.4), (-6.0, 5.5), (-2.4, 6.1), (-0.6, 6.3), (0.2, 4.5)], sides=14)
     gt = k.part(m, "grip_thread", "silk", smooth=75, uv_mode="loft", wear=0.2)
     ml.lathe(gt, "y", (0, 0, 0), [(2.3, S_CORE_R), (2.7, S_WOUND_R - 0.3), (3.4, S_WOUND_R), (20.6, S_WOUND_R), (21.3, S_WOUND_R - 0.3), (21.7, S_CORE_R)], sides=16)
     # ---- the gem in the top flange, in a silver bezel, with the needle through it
     bz = k.part(m, "gem_bezel", "silver_rim", smooth=50, uv_mode="loft", wear=0.3)
-    ml.lathe(bz, "y", (0, 0, 0), [(23.9, 4.6), (24.4, 4.9), (25.2, 4.5), (25.8, 4.0)], sides=14)
+    ml.lathe(bz, "y", (0, 0, 0), [(23.9, 5.8), (24.4, 6.2), (25.2, 5.7), (25.8, 5.1)], sides=14)
+    for a in range(0, 360, 45):                                                       # 3.79.0: eight silver claws round the gem
+        ca, sa = math.cos(math.radians(a)), math.sin(math.radians(a))
+        k.cone(bz, (5.5 * ca, 25.0, 5.5 * sa), (-0.35 * ca, 1.0, -0.35 * sa), 3.6, 0.6, sides=4, r_tip=0.22, closed_base=False)
     gm = k.part(m, "gem", "crystal", glow=True, smooth=40, uv_mode="loft", base=S_GEM_RGB)
     k.dome(gm, (0.0, 26.6, 0.0), *S_GEM, sides=12, stacks=8)
     # ---- the needle: a shank, the large oval eye, the long shaft to the point
     ne = k.part(m, "needle_eye", "needle_steel", smooth=60, uv_mode="loft", wear=0.25)
-    ml.loft(ne, "y", (0, 0, 0), [(25.0, 1.6, 1.6), (28.2, 1.2, 1.2), (S_EYE[0] - S_EYE[2] + 0.6, 1.0, 1.0)], ml.circle(1.0, 8))
+    ml.loft(ne, "y", (0, 0, 0), [(25.0, 2.6, 2.6), (28.2, 2.1, 2.1), (S_EYE[0] - S_EYE[2] + 0.6, 1.8, 1.8)], ml.circle(1.0, 8))
     eye = [(S_EYE[1] * math.cos(a), S_EYE[0] + S_EYE[2] * math.sin(a), 0.0) for a in np.linspace(0, 2 * math.pi, 16, endpoint=False)]
-    k.sweep_loop(ne, eye, ml.circle(0.62, 5), up=(0, 0, 1))
+    k.sweep_loop(ne, eye, ml.circle(1.0, 5), up=(0, 0, 1))
     np_ = k.part(m, "needle_point", "needle_steel", smooth=60, uv_mode="loft", wear=0.25)
-    ml.loft(np_, "y", (0, 0, 0), [(S_EYE[0] + S_EYE[2] - 0.6, 1.0, 1.0), (50.0, 1.25, 1.25), (70.0, 1.1, 1.1), (92.0, 0.7, 0.7), (104.0, 0.36, 0.36), (S_NEEDLE_TOP, 0.0, 0.0)], ml.circle(1.0, 8))
+    ml.loft(np_, "y", (0, 0, 0), [(S_EYE[0] + S_EYE[2] - 0.6, 1.8, 1.8), (50.0, 2.3, 2.3), (70.0, 2.0, 2.0), (92.0, 1.3, 1.3), (104.0, 0.65, 0.65), (S_NEEDLE_TOP, 0.0, 0.0)], ml.circle(1.0, 8))
     # ---- the thread: from the wound silk up over the gem, through the eye from the front to the back, then out in a loose S in the air. It is ONE spline (two splines
     #      joined end to end kink at the join) and it never turns back down: the run rises to the eye, and behind the eye it keeps clear of the ring and the shaft.
     th = k.part(m, "thread_trail", "silk", smooth=75, uv_mode="loft", wear=0.2)
     eye_in = S_EYE[0] - 3.0                                                                    # where the thread crosses the plane of the eye: in the hole, above the gem
-    run = [(S_WOUND_R * 0.7, 21.0, S_WOUND_R * 0.7), (4.0, 25.4, 2.9), (2.9, 28.6, 2.4), (1.2, 30.4, 1.0), (0.0, eye_in, 0.0)]
+    run = [(S_WOUND_R * 0.7, 21.0, S_WOUND_R * 0.7), (6.0, 25.4, 3.6), (3.6, 28.8, 2.8), (1.4, 30.4, 1.2), (0.0, eye_in, 0.0)]
     trail = [(-0.2, 36.4, -0.9), (-0.5, 40.0, -1.0), (-2.6, 47.0, -1.2), (-8.0, 56.0, 4.6), (-14.0, 66.0, 6.0), (-10.0, 80.0, 2.0), (-4.0, 91.0, -3.4), (-9.0, 101.0, -6.0), (-16.0, 108.0, -5.0)]
-    ml.sweep(th, k.catmull(run + trail, per=4), ml.circle(1.0, 4), scales=lambda t: (0.5 - 0.12 * t, 0.5 - 0.12 * t), caps=(True, True))
+    ml.sweep(th, k.catmull(run + trail, per=4), ml.circle(1.0, 4), scales=lambda t: (0.7 - 0.16 * t, 0.7 - 0.16 * t), caps=(True, True))
+    hel = [(-(2.9 - 0.9 * u) * math.cos(2 * math.pi * 3.5 * u), 46.0 + 46.0 * u, (2.9 - 0.9 * u) * math.sin(2 * math.pi * 3.5 * u)) for u in np.linspace(0.0, 1.0, 29)]     # 3.79.0: the silk winds round the shaft in a helix (it does not touch the free thread)
+    ml.sweep(th, k.catmull(hel, per=1), ml.circle(1.0, 4), scales=lambda t: (0.5 - 0.1 * t, 0.5 - 0.1 * t), caps=(True, True))
     # ---- the scissors hang from the spool's side on a ring and a cord (-x is down in the hand)
     cd = k.part(m, "cord", "cord", smooth=70, uv_mode="loft", wear=0.3)
     k.sweep_loop(cd, [(S_WOUND_R + 0.3) * np.array([math.cos(a), 0.0, math.sin(a)]) + np.array([0.0, 21.0, 0.0]) for a in np.linspace(0, 2 * math.pi, 12, endpoint=False)], ml.circle(0.36, 4), up=(0, 1, 0))
-    cord = k.catmull([(-S_WOUND_R - 0.3, 21.0, 0.0), (-8.6, 19.4, 0.2), (-13.0, 18.4, 0.2), (-17.4, 17.4, 0.2), (-19.0, 16.3, 0.2)], per=4)
-    ml.sweep(cd, cord, ml.circle(1.0, 4), scales=lambda t: (0.42, 0.42), caps=(True, True))
+    cord = k.catmull([(-S_WOUND_R - 0.3, 21.0, 0.0), (-9.6, 19.4, 0.2), (-14.0, 18.4, 0.2), (-18.4, 17.4, 0.2), (-20.6, 16.6, 0.2)], per=4)
+    ml.sweep(cd, cord, ml.circle(1.0, 4), scales=lambda t: (0.55, 0.55), caps=(True, True))
     sc = k.part(m, "scissors", "steel_light", smooth=40, wear=0.35)
     px, py = S_PIVOT
     for sgn in (1, -1):
         z = 0.3 * sgn
-        tip = (px - 15.0, py + sgn * 1.8, z)
-        k.leaf_plate(sc, (px + 1.0, py, z), unit((tip[0] - px, tip[1] - py, 0.0)), 16.0, 2.5, 0.65, normal=(0, 0, 1), base_w=0.8, widest=0.15, tip_w=0.0)
-        shank = k.catmull([(px + 1.0, py, z), (px + 4.6, py + sgn * 1.7, z), (px + 7.6, py + sgn * 3.8, z)], per=3)
+        tip = (px - 19.0, py + sgn * 2.2, z)
+        k.leaf_plate(sc, (px + 1.0, py, z), unit((tip[0] - px, tip[1] - py, 0.0)), 20.0, 3.2, 0.85, normal=(0, 0, 1), base_w=0.8, widest=0.15, tip_w=0.0)
+        shank = k.catmull([(px + 1.0, py, z), (px + 5.0, py + sgn * 2.0, z), (px + 8.6, py + sgn * 4.4, z)], per=3)
         ml.sweep(sc, shank, ml.circle(1.0, 4), scales=lambda t: (0.6, 0.5), caps=(True, True))
-        ring = [(px + 10.2 + 2.5 * math.cos(a), py + sgn * 5.2 + 2.5 * math.sin(a), z) for a in np.linspace(0, 2 * math.pi, 10, endpoint=False)]
-        k.sweep_loop(sc, ring, ml.circle(0.55, 4), up=(0, 0, 1))
+        ring = [(px + 11.8 + 3.1 * math.cos(a), py + sgn * 6.2 + 3.1 * math.sin(a), z) for a in np.linspace(0, 2 * math.pi, 10, endpoint=False)]
+        k.sweep_loop(sc, ring, ml.circle(0.75, 4), up=(0, 0, 1))
     k.dome(sc, (px, py, 0.0), 0.8, 0.8, 0.8, sides=6, stacks=4)
     atlas = k.lay_out(m)
     paint_sewing_set(m, atlas)
@@ -883,7 +909,7 @@ def paint_sewing_set(m, atlas):
         k.noise(c, 14, 3, 0.05)
         k.engrave(c, k.stripes(c.A, 1.2, 0.12, 0.0, 0.05) * (k.band(c.B, 0.6, 1.9, 0.05) + k.band(c.B, 22.4, 23.7, 0.05)), 0.4, 0.3)
     w1.paint_part(atlas, m.part("grip_core"), p_core)
-    w1.paint_part(atlas, m.part("grip_rims"), lambda c: k.engrave(c, k.stripes(c.A, 0.9, 0.1, 0.0, 0.04), 0.4, 0.3))
+    w1.paint_part(atlas, m.part("grip_rims"), lambda c: (k.engrave(c, k.stripes(c.A, 0.9, 0.1, 0.0, 0.04), 0.4, 0.3), k.fill_glow(c, S_GEM_GLOW, 0.3, 0.2)))
 
     def p_thimble(c):                                                                 # the dimples of a thimble: a staggered grid of little pits
         row = np.floor(c.B / 1.5)
@@ -897,23 +923,23 @@ def paint_sewing_set(m, atlas):
         k.mix_to(c, np.ones(c.A.shape, np.float32), S_THREAD_A, 0.55)
         k.noise(c, 8, 4, 0.05)
     w1.paint_part(atlas, m.part("grip_thread"), p_wound)
-    w1.paint_part(atlas, m.part("gem"), lambda c: k.gem_cabochon(c, S_GEM_RGB, hi=(0.25, 0.4), glow_color=S_GEM_GLOW, glow=0.6))
+    w1.paint_part(atlas, m.part("gem"), lambda c: k.gem_cabochon(c, S_GEM_RGB, hi=(0.25, 0.4), glow_color=S_GEM_GLOW, glow=0.9))
     w1.paint_part(atlas, m.part("gem_bezel"), lambda c: k.engrave(c, k.stripes(c.A, 0.8, 0.1, 0.0, 0.04), 0.4, 0.3))
 
     def p_needle(c):
         k.noise(c, 20, 6, 0.04)
         k.mix_to(c, k.band(c.S, 0.2, 0.3, 0.05), (232, 216, 255), 0.5)                  # a hair-thin bright line down the needle
-        k.glow_on(c, k.band(c.S, 0.24, 0.26, 0.02), (232, 216, 255), 0.5, 0.3)
+        k.glow_on(c, k.band(c.S, 0.2, 0.3, 0.04), (232, 216, 255), 0.9, 0.4)
     w1.paint_part(atlas, m.part("needle_point"), p_needle)
-    w1.paint_part(atlas, m.part("needle_eye"), lambda c: (k.noise(c, 14, 6, 0.04), k.glow_on(c, k.band(c.S, 0.24, 0.26, 0.02), (232, 216, 255), 0.5, 0.3)))
+    w1.paint_part(atlas, m.part("needle_eye"), lambda c: (k.noise(c, 14, 6, 0.04), k.fill_glow(c, (232, 216, 255), 0.7, 0.4)))
 
     def p_thread(c):
         t = np.clip(c.T, 0, 1)[..., None]
         col = np.array(S_THREAD_A, np.float32) * (1 - t) + np.array(S_THREAD_B, np.float32) * t
         c.img[..., :3] = col * (0.8 + 0.3 * k.smooth01(np.sin(c.A * 9.0 + c.B * 5.0), -1.0, 1.0)[..., None])
         c.img[..., 3] = 255
-        k.fill_glow(c, S_THREAD_GLOW, 0.10, 0.3)
-        k.glow_on(c, np.clip(c.T, 0, 1), S_THREAD_GLOW, 0.5, 0.35)                            # brighter toward the free end
+        k.fill_glow(c, S_THREAD_GLOW, 0.35, 0.3)
+        k.glow_on(c, np.clip(c.T, 0, 1), S_THREAD_GLOW, 0.95, 0.4)                            # brighter toward the free end
     w1.paint_part(atlas, m.part("thread_trail"), p_thread)
     w1.paint_part(atlas, m.part("cord"), lambda c: k.tone(c, k.stripes(c.A * 1.0 + c.B * 2.0, 0.5, 0.25, 0.0, 0.08), 0.7))
 

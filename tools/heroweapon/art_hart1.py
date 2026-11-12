@@ -624,6 +624,11 @@ SH_STRAP_Y = -9.0              # the arm strap and the hand grip behind the shie
 SH_SPIKES = 12                 # the Wrath shield's rim spikes (long and short alternating)
 SH_MAW = 12                    # the Wrath shield's teeth round the gem
 
+# 3.79.0, the base look only ("better weapon models"): a gem a third larger on a fuller boss, with more layers on the face. The Wrath look keeps the numbers above.
+SH2_GEM_R, SH2_GEM_H, SH2_GEM_Z = 6.6, 5.2, 6.3
+SH2_BOSS_PROFILE = [(2.6, SH_BOSS_R), (3.4, SH_BOSS_R - 0.2), (4.5, 11.7), (5.4, 10.9), (6.0, 9.7), (SH2_GEM_Z, 7.8)]   # the same footprint, a broader and higher crown
+SH2_RUNE_R = 21.7               # the ring of glowing runes between the bead and the border lines
+
 _SH_FRONT = w1.hermite([(0, 3.5), (6, 3.45), (10, 3.1), (13, 2.2), (16, 1.4), (20, 1.1), (25, 1.05), (28, 1.3), (SH_EDGE_R, 1.5)])
 _SH_BACK = w1.hermite([(0, -0.7), (10, -1.0), (20, -1.4), (27, -1.7), (SH_EDGE_R, -1.7)])
 
@@ -637,13 +642,13 @@ def shield_plate(m, curse):
     p = add(m, "plate", "iron" if curse else "steel", base=BLACK_IRON if curse else STEEL, smooth=40, wear=0.6)
     back = [(r, float(_SH_BACK(r))) for r in (0.0, 10.0, 20.0, SH_EDGE_R)]                          # out along the dished back
     front = [(r, shield_front(r)) for r in (SH_EDGE_R, 26.0, 22.5, 19.0, 15.5, 12.0, 8.0, 4.0, 0.0)]   # up the edge, in along the face
-    revolve(p, back + front, sides=32 if curse else 40)
+    revolve(p, back + front, sides=32)                                  # 3.79.0: 32 sides in both looks (the base look spends the quads on its new layers)
     return p
 
 
 def shield_rim(m, curse):
     p = add(m, "rim", "iron" if curse else "gold", base=(58, 50, 62) if curse else WHITE_GOLD, smooth=40, uv_mode="loft", wear=0.7)
-    band_loop(p, SH_RIM_R, 0.0, ml.octagon(SH_RIM_W, SH_RIM_T, 1.0), n=36 if curse else 48, arcs=4)
+    band_loop(p, SH_RIM_R, 0.0, ml.octagon(SH_RIM_W, SH_RIM_T, 1.0), n=36, arcs=4)
     return p
 
 
@@ -653,12 +658,36 @@ def shield_ribs(m, curse):
     for k in range(4):
         phi = k * math.pi / 2
         pts = [(r * math.cos(phi), r * math.sin(phi), shield_front(r) + 0.3) for r in np.linspace(SH_RIB_R0, SH_RIB_R1, 8)]
-        ml.sweep(ribs, pts, ml.lozenge(1.0, 1.0), scales=lambda t: (3.4 * (1 - 0.72 * t), 1.25 * (1 - 0.35 * t)), caps=(True, True), up=(0, 0, 1))
+        ml.sweep(ribs, pts, ml.lozenge(1.0, 1.0), scales=(lambda t: (3.4 * (1 - 0.72 * t), 1.25 * (1 - 0.35 * t))) if curse else (lambda t: (4.8 * (1 - 0.7 * t), 1.8 * (1 - 0.35 * t))),
+                 caps=(True, True), up=(0, 0, 1))
     bead = add(m, "field_ring", "iron" if curse else "gold", base=(48, 42, 54) if curse else WHITE_GOLD, smooth=60, uv_mode="loft", wear=0.6)
-    sd, nn = (5, 24) if curse else (6, 40)
+    sd, nn = (5, 24) if curse else (4, 32)
     band_loop(bead, SH_BEAD_R, shield_front(SH_BEAD_R) + 0.35, ml.circle(0.85, sd), n=nn, arcs=4)
-    band_loop(bead, SH_BOSS_R + 0.15, 2.75, ml.circle(0.9, sd), n=nn, arcs=2)                       # the collar where the boss meets the plate
+    band_loop(bead, SH_BOSS_R + 0.15, 2.75, ml.circle(0.9 if curse else 1.1, sd), n=nn, arcs=2)                       # the collar where the boss meets the plate
     return ribs, bead
+
+
+def shield2_layers(m):
+    """3.79.0, the base look's new layers: four steel leaf plates on the diagonals with a gold spine each (with the four cardinal ribs: an eight-pointed star), a second
+    gold rim inside the rolled one (a stepped double border), a gold ring round the boss's shoulder, and a small green stone at each cardinal rib's tip."""
+    wp = add(m, "wing_plates", "steel", base=STEEL_BRIGHT, smooth=30, wear=0.5)
+    sp = add(m, "plate_spines", "gold", base=WHITE_GOLD, smooth=45, uv_mode="loft", wear=0.5)
+    for k in range(4):
+        phi = math.pi / 4 + k * math.pi / 2
+        ca, sa = math.cos(phi), math.sin(phi)
+        pts = [(r * ca, r * sa, shield_front(r) + 0.55) for r in np.linspace(16.6, 27.7, 8)]
+        ml.sweep(wp, pts, ml.lozenge(1.0, 1.0), scales=lambda t: (9.0 * math.sin(math.pi * min(max(t, 0.0), 1.0)) ** 0.8 + 0.25, 1.1), caps=(True, True), up=(0, 0, 1))
+        pts = [(r * ca, r * sa, shield_front(r) + 1.15) for r in np.linspace(17.4, 26.8, 6)]
+        ml.sweep(sp, pts, ml.lozenge(1.0, 1.0), scales=lambda t: (2.4 * math.sin(math.pi * min(max(t, 0.0), 1.0)) ** 0.6 + 0.2, 1.2), caps=(True, True), up=(0, 0, 1))
+    ir = add(m, "inner_rim", "gold", base=WHITE_GOLD, smooth=60, uv_mode="loft", wear=0.6)
+    band_loop(ir, 27.75, shield_front(27.75) + 0.45, ml.circle(1.0, 4), n=24, arcs=4)
+    band_loop(ir, 10.5, 5.7, ml.circle(0.95, 4), n=16, arcs=2)                                        # the ring on the boss's shoulder
+    rg = add(m, "rim_gems", "crystal", base=GEM["shield"], glow=True, smooth=60, uv_mode="loft")
+    for k in range(4):
+        a = k * math.pi / 2
+        r = SH_RIB_R1 - 0.6
+        ml.lathe(rg, "z", (r * math.cos(a), r * math.sin(a), shield_front(r) + 0.7), [(-0.2, 1.75), (0.5, 1.7), (1.2, 1.2), (1.6, 0.0)], sides=6, caps=(False, False))
+    return wp, sp, ir, rg
 
 
 def rivet(part, pos, r, sides=5, h=None):
@@ -672,7 +701,7 @@ def shield_studs(m, curse):
     for i in range(0 if curse else 12):                                  # the rivets of the rim band (the Wrath look has spikes there instead)
         a = 2 * math.pi * (i + 0.5) / 12
         rivet(s, (SH_RIM_R * math.cos(a), SH_RIM_R * math.sin(a), SH_RIM_T / 2 - 0.1), 0.95, 4)
-    for k in range(4):                                                   # the studs at the ribs' tips
+    for k in range(4 if curse else 0):                                   # the studs at the ribs' tips (3.79.0: the base look has a green stone there, shield2_layers)
         a = k * math.pi / 2
         r = SH_RIB_R1 - 1.0
         rivet(s, (r * math.cos(a), r * math.sin(a), shield_front(r) + 0.6), 1.45, 6)
@@ -682,7 +711,7 @@ def shield_studs(m, curse):
 def shield_boss(m, curse):
     """The boss: a smooth dome that rises from the plate to the gem's bezel (its eight flutes are painted, a sculpted flute only made it lumpy)."""
     b = add(m, "boss", "iron" if curse else "steel", base=(44, 38, 50) if curse else (112, 120, 138), smooth=45, wear=0.5, uv_mode="loft")
-    ml.lathe(b, "z", (0, 0, 0), SH_BOSS_PROFILE, sides=32 if curse else 40, caps=(False, True))
+    ml.lathe(b, "z", (0, 0, 0), SH_BOSS_PROFILE if curse else SH2_BOSS_PROFILE, sides=32, caps=(False, True))
     return b
 
 
@@ -690,7 +719,8 @@ def shield_gem(m, curse):
     """The cabochon: a smooth dome in a bezel. The base look holds it with eight small gold claws; the Wrath look has a maw of twelve long teeth round it (the
     stone is an eye in a gaping mouth)."""
     bez = add(m, "gem_setting", "iron" if curse else "gold", base=(60, 50, 64) if curse else WHITE_GOLD, smooth=50 if not curse else 35, wear=0.4)
-    band_loop(bez, SH_GEM_R + 0.55, SH_GEM_Z + 0.15, ml.circle(1.05, 6), n=24 if curse else 32, arcs=1)
+    GR, GH, GZ = (SH_GEM_R, SH_GEM_H, SH_GEM_Z) if curse else (SH2_GEM_R, SH2_GEM_H, SH2_GEM_Z)
+    band_loop(bez, GR + 0.55, GZ + 0.15, ml.circle(1.05, 6) if curse else ml.circle(1.25, 5), n=24, arcs=1)
     if curse:
         for i in range(SH_MAW):
             a = 2 * math.pi * (i + 0.5) / SH_MAW
@@ -701,13 +731,13 @@ def shield_gem(m, curse):
     else:
         for i in range(8):
             a = 2 * math.pi * (i + 0.5) / 8
-            base = (SH_GEM_R * 1.02 * math.cos(a), SH_GEM_R * 1.02 * math.sin(a), SH_GEM_Z + 0.2)
+            base = (GR * 1.02 * math.cos(a), GR * 1.02 * math.sin(a), GZ + 0.2)
             d = (-math.cos(a) * 0.55, -math.sin(a) * 0.55, 0.85)
-            fang(bez, base, d, 3.6, 1.5, 1.0, up=(0, 0, 1), n=4)
+            fang(bez, base, d, 4.4, 1.9, 1.1, up=(0, 0, 1), n=4)
     g = add(m, "gem", "crystal", base=SIN["shield"] if curse else GEM["shield"], glow=True, smooth=60, uv_mode="loft")
-    prof = [(-0.5, SH_GEM_R * 0.86), (0.0, SH_GEM_R), (SH_GEM_H * 0.3, SH_GEM_R * 0.97), (SH_GEM_H * 0.62, SH_GEM_R * 0.78), (SH_GEM_H * 0.86, SH_GEM_R * 0.4),
-            (SH_GEM_H, 0.0)]
-    ml.lathe(g, "z", (0, 0, SH_GEM_Z), prof, sides=16, caps=(True, False))
+    prof = [(-0.5, GR * 0.86), (0.0, GR), (GH * 0.3, GR * 0.97), (GH * 0.62, GR * 0.78), (GH * 0.86, GR * 0.4),
+            (GH, 0.0)]
+    ml.lathe(g, "z", (0, 0, GZ), prof, sides=16, caps=(True, False))
     return bez, g
 
 
@@ -745,7 +775,7 @@ def paint_shield(m, atlas, curse):
     if curse:
         return paint_shield_curse(m, atlas)
     gem_rgb, gem_hi = GEM["shield"], (150, 255, 190)
-    paint_metal(atlas, m, ["rim", "ribs", "field_ring", "gem_setting"], seed=100)
+    paint_metal(atlas, m, ["rim", "ribs", "field_ring", "gem_setting", "plate_spines", "inner_rim"], seed=100)
 
     def plate(c):
         if c.kind == "dom" and c.g.key == (2, -1):                                       # the back: darker spun steel, a faint border line
@@ -782,6 +812,18 @@ def paint_shield(m, atlas, curse):
         blend(c.img, (30, 60, 52), dm, 0.9)                                              # four diamonds of dark enamel set in the ring ...
         glow_into(c, gem_rgb, np.clip(dm * 1.0, 0, 1), 0.9)                              # ... lit from within in the gem's green
         glow_into(c, gem_rgb, band(rho, SH_BOSS_R + 1.6, 0.14), 0.4)                     # a thin inlay line round the boss
+        groove(c, band(rho, SH2_RUNE_R - 1.75, 0.2), 0.45)                               # 3.79.0: a band of runes between the bead and the border, lit in the gem's green
+        groove(c, band(rho, SH2_RUNE_R + 1.75, 0.2), 0.45)
+        seg = (th / (2 * math.pi)) * 40.0
+        ph, idx = seg % 1.0, np.floor(seg)
+        arc = np.abs(ph - 0.5) * (2 * math.pi * SH2_RUNE_R / 40.0)                        # the distance along the ring from the middle of the cell, in cm
+        dr = rho - SH2_RUNE_R
+        stem = (arc < 0.2) * (np.abs(dr) < 1.15)
+        bar = (np.abs(dr - 0.55 * np.sin(idx * 2.3)) < 0.2) * (arc < 0.75) * (np.cos(idx * 1.3) > -0.3)
+        hook = (np.abs(arc - 0.55) < 0.18) * (dr * np.sign(np.sin(idx * 3.1) + 0.01) > 0.1) * (np.abs(dr) < 1.0) * (np.sin(idx * 1.9) > 0.1)
+        rune = np.clip(stem + bar + hook, 0, 1).astype(np.float32)
+        blend(c.img, (26, 58, 48), rune, 0.9)
+        glow_into(c, gem_rgb, rune * 0.9, 0.8)
 
     def rim(c):
         if c.kind != "loft":
@@ -795,10 +837,23 @@ def paint_shield(m, atlas, curse):
         shade = 0.78 + 0.5 * np.clip(t, 0, 1) ** 1.2 + 0.05 * (noise(c, 4, 2) - 0.5)
         c.img[..., :3] = np.clip(base[None, None, :] * shade[..., None], 0, 255)
         c.img[..., 3] = 255
-        turn, rad = lathe_theta(c, SH_BOSS_PROFILE)
+        turn, rad = lathe_theta(c, SH2_BOSS_PROFILE)
         flute = 0.5 + 0.5 * np.cos(turn * 16 * math.pi)                                   # eight soft flutes (a thin engraved line would stair-step on the skin)
         tone(c.img, flute * smooth01(t, 0.05, 0.35), 0.82)
         tone(c.img, band(t, 0.78, 0.22), 1.15)
+        glow_into(c, gem_rgb, smooth01(t, 0.72, 1.0) * 0.8, 0.7, core=0.3)                # 3.79.0: the gem's halo on the boss's crown
+
+    def wing(c):
+        base = np.array((188, 196, 212), np.float32)
+        c.img[..., :3] = np.clip(base[None, None, :] * (1 + 0.10 * (noise(c, 14, 21) - 0.5) + 0.04 * (noise(c, 2.5, 22) - 0.5))[..., None], 0, 255)
+        c.img[..., 3] = 255
+        if c.kind == "dom":
+            rho, th = polar(c)
+            groove(c, band(rho, 20.0, 0.2) + band(rho, 23.6, 0.2), 0.4)                    # two engraved arcs across each plate: feather rows
+
+    def small_gem(c):
+        t = np.clip(c.T, 0, 1)
+        to_gem(c, gem_rgb, gem_hi, 0.2 + 0.8 * t ** 0.8, core=0.25)
 
     def gem(c):
         t = np.clip(c.T, 0, 1)
@@ -809,6 +864,8 @@ def paint_shield(m, atlas, curse):
     paint_group(atlas, m.part("rim"), rim)
     paint_group(atlas, m.part("boss"), boss)
     paint_group(atlas, m.part("gem"), gem)
+    paint_group(atlas, m.part("wing_plates"), wing)
+    paint_group(atlas, m.part("rim_gems"), small_gem)
 
 
 def crack_lines(seed, n_main, r0, r1, wobble, step=1.7):
@@ -945,6 +1002,8 @@ def build_shield(curse=False, write=True):
     shield_back(m, curse)
     if curse:
         shield_wrath(m)
+    else:
+        shield2_layers(m)
     atlas = lay(m)
     paint_shield(m, atlas, curse)
     if not write:
@@ -976,6 +1035,15 @@ _SW_W = w1.hermite([(32, 6.8), (60, 6.7), (90, 6.4), (110, 5.9), (126, 5.0), (13
 _SW_T = w1.hermite([(32, 1.7), (80, 1.5), (120, 1.1), (150, 0.25)])                                                    # blade thickness
 
 
+# 3.79.0, the base look only ("better weapon models"): a broader blade, a gem a third larger in a deeper guard. The curse look keeps the 1.62.0 numbers above.
+SW2_GEM_R, SW2_GEM_D = 5.0, 4.5
+SW2_GUARD_T = 5.4
+SW2_GEM_PROFILE = [(-SW2_GEM_D, 0.0), (-SW2_GEM_D * 0.86, SW2_GEM_R * 0.52), (-SW2_GEM_D * 0.55, SW2_GEM_R * 0.86), (-SW2_GEM_D * 0.25, SW2_GEM_R * 0.98), (0.0, SW2_GEM_R),
+                   (SW2_GEM_D * 0.25, SW2_GEM_R * 0.98), (SW2_GEM_D * 0.55, SW2_GEM_R * 0.86), (SW2_GEM_D * 0.86, SW2_GEM_R * 0.52), (SW2_GEM_D, 0.0)]
+_SW2_W = w1.hermite([(32, 10.2), (46, 9.6), (70, 9.2), (100, 8.6), (120, 7.6), (133, 6.0), (142, 3.9), (147.5, 1.7), (150, 0.0)])   # a broad hero's blade, a strong point
+_SW2_T = w1.hermite([(32, 2.3), (80, 2.0), (120, 1.5), (150, 0.3)])
+
+
 SW_TOOTH = 6.4                 # the curse blade's tooth pitch (cm), its tooth height and the span the teeth run over
 SW_TOOTH_H = 2.0
 SW_TEETH_Y = (50.0, 140.0)
@@ -984,7 +1052,7 @@ SW_TEETH_Y = (50.0, 140.0)
 def sword_width(y, curse):
     """The full width of the blade at height y: the leaf envelope, and for the curse look a row of backward-hooked teeth on both edges (each tooth
     rises abruptly at its tip and slopes back to the next valley, like a shark's, so the blade catches what it cuts)."""
-    w = max(float(_SW_W(y)), 0.0)
+    w = max(float((_SW_W if curse else _SW2_W)(y)), 0.0)
     if curse and SW_TEETH_Y[0] <= y < SW_TEETH_Y[1]:
         t = ((y - SW_TEETH_Y[0]) / SW_TOOTH) % 1.0
         fade = min(1.0, (y - SW_TEETH_Y[0]) / 8.0, (SW_TEETH_Y[1] - y) / 14.0)
@@ -1014,7 +1082,7 @@ def sword_blade(m, curse):
     st = []
     for y in sword_stations(curse):
         w = sword_width(y, curse)
-        t = max(float(_SW_T(y)), 0.0)
+        t = max(float((_SW_T if curse else _SW2_T)(y)), 0.0)
         st.append((y, w, t) if y < 150.0 else (y, 0.0, 0.0))
     ml.loft(b, "y", (0, 0, 0), st, ml.bevelled(1.0, 1.0, 0.42), caps=(True, True))
     return b
@@ -1024,7 +1092,10 @@ def sword_guard(m, curse):
     """The crossguard: a core block and, each side, a long wing curving up toward the blade and a short feather curving down toward the grip. The curse look turns
     the wings into two hooked mandibles with teeth on their inner edge, and a row of teeth clamps the blade's root: the sword is a maw."""
     g = add(m, "guard", "iron" if curse else "gold", base=(46, 38, 52) if curse else WHITE_GOLD, smooth=40, wear=0.5)
-    ml.loft(g, "y", (0, 0, 0), [(26.6, 0.75, 0.75), (27.5, 1.0, 1.0), (31.4, 1.0, 1.0), (33.0, 0.8, 0.8)], ml.rounded_rect(10.0, SW_GUARD_T, 1.2, 2), caps=(True, True))
+    if curse:
+        ml.loft(g, "y", (0, 0, 0), [(26.6, 0.75, 0.75), (27.5, 1.0, 1.0), (31.4, 1.0, 1.0), (33.0, 0.8, 0.8)], ml.rounded_rect(10.0, SW_GUARD_T, 1.2, 2), caps=(True, True))
+    else:                                                                # 3.79.0: a taller, deeper core that cradles the larger gem
+        ml.loft(g, "y", (0, 0, 0), [(24.4, 0.6, 0.7), (25.6, 0.92, 1.0), (29.6, 1.0, 1.0), (33.6, 0.92, 1.0), (35.2, 0.62, 0.72)], ml.rounded_rect(14.4, SW2_GUARD_T, 1.7, 2), caps=(True, True))
     if curse:
         for sgn in (-1, 1):
             p0, p1, p2, p3 = (sgn * 4.0, SW_GUARD_Y + 0.6, 0.0), (sgn * 17.0, SW_GUARD_Y - 1.0, 0.0), (sgn * 21.0, SW_GUARD_Y + 12.0, 0.0), (sgn * 15.0, SW_GUARD_Y + 17.0, 0.0)
@@ -1042,39 +1113,52 @@ def sword_guard(m, curse):
                 x = -3.0 + 1.5 * i
                 cone(g, (x, 32.4, zs * (SW_GUARD_T / 2 - 0.3)), (0.0, 0.93, zs * 0.18), 4.8 if i % 2 == 0 else 3.6, 0.8, sides=4)
         return g
-    for sgn in (-1, 1):
-        for (x0, x1, y0, rise, pw, w0, t0) in ((3.8, 19.0, SW_GUARD_Y + 0.4, 7.4, 1.7, 4.8, 2.8), (3.8, 13.6, SW_GUARD_Y - 1.2, -5.8, 1.5, 3.5, 2.3)):
-            pts = [(sgn * (x0 + (x1 - x0) * t), y0 + rise * t ** pw, 0.0) for t in np.linspace(0, 1, 8)]
+    for sgn in (-1, 1):                                                  # 3.79.0: three feathers a side (a great wing sweeping up round the blade, a level one, one down round the grip)
+        for (x0, x1, y0, rise, pw, w0, t0) in ((5.6, 27.0, SW_GUARD_Y + 1.2, 15.0, 1.9, 7.4, 3.6), (5.6, 21.0, SW_GUARD_Y - 0.4, 3.4, 1.5, 4.8, 2.9),
+                                               (5.2, 16.0, SW_GUARD_Y - 2.2, -8.6, 1.5, 4.4, 2.6)):
+            pts = [(sgn * (x0 + (x1 - x0) * t), y0 + rise * t ** pw, 0.0) for t in np.linspace(0, 1, 9)]
             ml.sweep(g, pts, ml.lozenge(1.0, 1.0), scales=lambda t, w0=w0, t0=t0: (0.0, 0.0) if t > 0.985 else (w0 * (1 - 0.9 * t ** 0.9), t0 * (1 - 0.8 * t)),
                      caps=(True, False), up=(0, 0, 1))
+    lg = add(m, "langets", "gold", base=WHITE_GOLD, smooth=40, wear=0.5)        # a gold tongue up each face of the blade's root: layered ornament over the steel
+    for zs in (-1, 1):
+        pts = [(0.0, 35.0 + 24.0 * t, zs * (float(_SW2_T(35.0 + 24.0 * t)) / 2 + 0.22)) for t in np.linspace(0, 1, 6)]
+        ml.sweep(lg, pts, ml.lozenge(1.0, 1.0), scales=lambda t: (0.0, 0.0) if t > 0.985 else (5.4 * (1 - t) ** 0.75 + 0.15, 0.6), caps=(True, False), up=(0, 0, 1))
     return g
 
 
 def sword_gem(m, curse):
     """The lens-shaped cabochon through the guard (it shows on both faces) and its two round bezels."""
     bez = add(m, "gem_setting", "iron" if curse else "gold", base=(60, 50, 64) if curse else WHITE_GOLD, smooth=50, wear=0.4)
+    gr_, gt_ = (SW_GEM_R, SW_GUARD_T) if curse else (SW2_GEM_R, SW2_GUARD_T)
     for sgn in (-1, 1):
-        band_loop(bez, SW_GEM_R + 0.35, sgn * (SW_GUARD_T / 2 - 0.1), ml.circle(0.75, 6), n=18, arcs=1, cx=0.0, cy=SW_GUARD_Y)
+        band_loop(bez, gr_ + (0.35 if curse else 0.5), sgn * (gt_ / 2 - 0.1), ml.circle(0.75 if curse else 1.0, 6), n=18 if curse else 22, arcs=1, cx=0.0, cy=SW_GUARD_Y)
     g = add(m, "gem", "crystal", base=SIN["sword"] if curse else GEM["sword"], glow=True, smooth=60, uv_mode=None if curse else "loft")   # the eye is mapped flat: a straight pupil
-    ml.lathe(g, "z", (0, SW_GUARD_Y, 0), SW_GEM_PROFILE, sides=18, caps=(False, False))
+    ml.lathe(g, "z", (0, SW_GUARD_Y, 0), SW_GEM_PROFILE if curse else SW2_GEM_PROFILE, sides=18, caps=(False, False))
     return bez, g
 
 
 def sword_hilt(m, curse):
     """Pommel, wrapped grip, its three gold rings and the collar where the blade leaves the guard."""
     pm = add(m, "pommel", "iron" if curse else "gold", base=(58, 50, 62) if curse else WHITE_GOLD, smooth=45, wear=0.5, uv_mode="loft")
-    ml.lathe(pm, "y", (0, 0, 0), [(0.0, 0.0), (0.4, 1.4), (1.2, 2.5), (2.4, 3.2), (3.6, 3.45), (4.8, 3.1), (5.9, 2.3), (6.6, 1.7), (SW_POMMEL_TOP, 1.45)], sides=16, caps=(False, True))
+    if curse:
+        ml.lathe(pm, "y", (0, 0, 0), [(0.0, 0.0), (0.4, 1.4), (1.2, 2.5), (2.4, 3.2), (3.6, 3.45), (4.8, 3.1), (5.9, 2.3), (6.6, 1.7), (SW_POMMEL_TOP, 1.45)], sides=16, caps=(False, True))
+    else:                                                                # 3.79.0: a faceted, heavier pommel: a point, a crown of eight flats, a waist
+        ml.lathe(pm, "y", (0, 0, 0), [(0.0, 0.0), (0.5, 1.5), (1.5, 3.3), (2.9, 4.4), (4.1, 4.6), (5.0, 3.9), (5.7, 2.5), (6.4, 2.9), (SW_POMMEL_TOP, 1.7)], sides=8, caps=(False, True))
     if curse:                                                            # six spikes radiate from the pommel: a hungry mace-head
         for k in range(6):
             a = 2 * math.pi * k / 6
             cone(pm, (3.1 * math.cos(a), 3.6, 3.1 * math.sin(a)), (math.cos(a), -0.15, math.sin(a)), 4.4, 1.0, sides=4)
     gr = add(m, "grip", "leather", base=(24, 22, 30) if curse else (40, 58, 112), smooth=50, wear=0.6, uv_mode="loft")
-    ml.lathe(gr, "y", (0, 0, 0), [(SW_GRIP[0], 1.5), (8.0, 1.72), (16.0, 1.9), (25.0, 1.72), (SW_GRIP[1], 1.5)], sides=10, caps=(False, False))
+    k_ = 1.0 if curse else 1.16                                           # 3.79.0: the base look's grip is a sixth stouter, with four rings
+    ml.lathe(gr, "y", (0, 0, 0), [(SW_GRIP[0], 1.5 * k_), (8.0, 1.72 * k_), (16.0, 1.9 * k_), (25.0, 1.72 * k_), (SW_GRIP[1], 1.5 * k_)], sides=10, caps=(False, False))
     rg = add(m, "grip_rings", "iron" if curse else "gold", base=(58, 50, 62) if curse else WHITE_GOLD, smooth=50, wear=0.4)
-    for y in (SW_GRIP[0] + 0.3, 16.4, SW_GRIP[1] - 1.4):
-        ml.collar(rg, y, 2.0, 1.1, lip=0.3, sides=12, axis="y")
+    for y in ((SW_GRIP[0] + 0.3, 16.4, SW_GRIP[1] - 1.4) if curse else (SW_GRIP[0] + 0.3, 11.4, 16.4, 21.4)):
+        ml.collar(rg, y, 2.0 * k_, 1.1, lip=0.3, sides=12, axis="y")
     bc = add(m, "blade_collar", "iron" if curse else "gold", base=(58, 50, 62) if curse else WHITE_GOLD, smooth=40, wear=0.5)
-    ml.loft(bc, "y", (0, 0, 0), [(31.2, 0.9, 0.9), (32.0, 1.0, 1.0), (35.6, 1.0, 1.0), (36.6, 0.72, 0.72)], ml.rounded_rect(8.0, 3.1, 0.9, 2), caps=(False, True))
+    if curse:
+        ml.loft(bc, "y", (0, 0, 0), [(31.2, 0.9, 0.9), (32.0, 1.0, 1.0), (35.6, 1.0, 1.0), (36.6, 0.72, 0.72)], ml.rounded_rect(8.0, 3.1, 0.9, 2), caps=(False, True))
+    else:
+        ml.loft(bc, "y", (0, 0, 0), [(34.0, 0.92, 0.9), (35.0, 1.0, 1.0), (38.2, 1.0, 1.0), (39.6, 0.74, 0.72)], ml.rounded_rect(11.6, 3.9, 1.0, 2), caps=(False, True))
     return pm, gr, rg, bc
 
 
@@ -1083,7 +1167,7 @@ def paint_sword(m, atlas, curse):
     if curse:
         return paint_sword_curse(m, atlas)
     gem_rgb, gem_hi = GEM["sword"], (170, 214, 255)
-    paint_metal(atlas, m, ["pommel", "grip_rings", "blade_collar", "guard", "gem_setting"], seed=200)
+    paint_metal(atlas, m, ["pommel", "grip_rings", "blade_collar", "guard", "gem_setting", "langets"], seed=200)
 
     def blade(c):
         if c.kind != "dom":
@@ -1091,7 +1175,7 @@ def paint_sword(m, atlas, curse):
         ax, sg = c.g.key
         if ax == 2:                                                                     # the two flat faces: a: x (or -x), b: y
             x, y = c.A, c.B
-            hw = np.maximum(np.interp(y, [32, 150], [3.4, 0.0]), 0.2)
+            hw = np.maximum(np.interp(y, _SW2_TAB_Y, _SW2_TAB_W) / 2, 0.2)               # 3.79.0: the broad blade's own half width
             base = np.array((200, 208, 222), np.float32)
             shade = 1 + 0.07 * (noise(c, 22, 4 + sg) - 0.5) + 0.04 * (noise(c, 2.5, 7) - 0.5)
             c.img[..., :3] = np.clip(base[None, None, :] * shade[..., None], 0, 255)
@@ -1099,14 +1183,25 @@ def paint_sword(m, atlas, curse):
             across = np.abs(x) / np.maximum(hw, 0.2)
             tone(c.img, smooth01(across, 0.7, 1.0), 1.12)                                # the ground edge catches the light
             tone(c.img, band(across, 0.0, 0.5) * 0.4, 0.9)
-            fl = np.interp(y, [34, 44, 112, 134], [0.0, 1.0, 1.0, 0.0])                   # the fuller: engraved twin lines round a glowing core
-            groove(c, (band(np.abs(x), 0.95, 0.2) * fl) * (y > 33), 0.55)
-            core = band(x, 0.0, 0.34) * np.clip(fl, 0, 1) * smooth01(y, 36, 44) * (1 - smooth01(y, 110, 132))
-            blend(c.img, (60, 110, 190), core, 0.8)
-            glow_into(c, gem_rgb, core, 0.9)
-        else:                                                                           # the ground bevels
+            fl = np.interp(y, [36, 48, 118, 140], [0.0, 1.0, 1.0, 0.0])                   # the fuller: a wide channel between two engraved lines ...
+            groove(c, (band(np.abs(x), 1.75, 0.24) * fl) * (y > 35), 0.55)
+            chan = (np.abs(x) < 1.6) * np.clip(fl, 0, 1)
+            tone(c.img, chan, 0.8)
+            core = band(x, 0.0, 0.3) * np.clip(fl, 0, 1) * smooth01(y, 40, 50) * (1 - smooth01(y, 116, 138))   # ... a glowing spine down its middle ...
+            ph = ((y - 60.0) / 6.4) % 1.0                                                 # ... and a row of rune strokes either side of it, lit in the gem's blue
+            k = np.floor((y - 60.0) / 6.4)
+            off = 0.72 + 0.26 * np.sin(k * 2.4)
+            rune = band(np.abs(x), off, 0.2) * band(ph, 0.5, 0.36) + band(np.abs(x), 0.95, 0.5) * band(ph, 0.5 + 0.22 * np.cos(k * 1.7), 0.07)
+            rune = np.clip(rune, 0, 1) * (y > 60) * (y < 112)
+            lit = np.clip(core + rune, 0, 1)
+            blend(c.img, (60, 110, 190), lit, 0.8)
+            glow_into(c, gem_rgb, lit, 0.9)
+            edge = smooth01(across, 0.8, 0.9) * (1 - smooth01(across, 0.93, 1.0)) * (y > 40)   # a hair of light just inside each ground edge
+            glow_into(c, gem_rgb, edge * 0.55, 0.5, core=0.5)
+        else:                                                                           # the ground bevels: bright, with a faint blue light along them
             c.img[..., :3] = np.clip(np.array((226, 232, 242), np.float32)[None, None, :] * (1 + 0.05 * (noise(c, 12, 3) - 0.5))[..., None], 0, 255)
             c.img[..., 3] = 255
+            glow_into(c, gem_rgb, np.full(c.img.shape[:2], 0.3, np.float32), 0.3, core=0.6)
 
     def grip(c):
         ph = ((c.B + c.A * 0.55) / 3.1) % 1.0                                             # the wrap: diagonal bands with a stitched seam between them
@@ -1126,6 +1221,8 @@ def paint_sword(m, atlas, curse):
     paint_group(atlas, m.part("gem"), gem)
 
 
+_SW2_TAB_Y = np.linspace(32.0, 150.0, 240)
+_SW2_TAB_W = np.array([max(float(_SW2_W(v)), 0.0) for v in _SW2_TAB_Y])
 _SW_TAB_Y = np.linspace(32.0, 150.0, 400)
 
 
@@ -1460,20 +1557,161 @@ def paint_spear_curse(m, atlas):
     paint_group(atlas, m.part("gem"), gem)
 
 
+# ---------------------------------------------------------------- 3.79.0: the base look rebuilt ("better weapon models"; the curse look keeps the 1.62.0 builders above)
+# A hero's partisan, not a needle: a shaft half as thick again, a broad leaf head two thirds wider and longer, a steel crescent lug each side of it, larger gold wings,
+# an orb half as big again in a heavier cage, and a counterweight at the butt. Same length (330), same hold (the wrap), so the hand and the place line are unchanged.
+SP2_SOCKET = (216.0, 238.0)
+SP2_GEM_Y, SP2_GEM_R = 245.5, 5.6
+SP2_BLADE = (252.0, 330.0)
+SP2_SOCKET_PROFILE = [(SP2_SOCKET[0], 2.55), (SP2_SOCKET[0] + 2.0, 3.6), (SP2_SOCKET[0] + 6.0, 3.4), (SP2_SOCKET[0] + 14.0, 2.95), (SP2_SOCKET[1] - 1.5, 3.7), (SP2_SOCKET[1], 2.8)]
+_SP2_W = w1.hermite([(252, 5.0), (258, 14.0), (268, 23.0), (280, 27.0), (296, 23.6), (310, 16.2), (320, 8.6), (326.5, 3.5), (330, 0.0)])
+_SP2_T = w1.hermite([(252, 3.2), (268, 4.3), (295, 3.5), (318, 2.3), (330, 0.0)])
+_SP2_TAB_Y = np.linspace(SP2_BLADE[0], SP2_BLADE[1], 80)
+_SP2_TAB_W = np.array([max(float(_SP2_W(v)), 0.0) for v in _SP2_TAB_Y])
+
+
+def spear2_shaft(m):
+    bc = add(m, "butt_cap", "steel", base=STEEL_BRIGHT, smooth=45, wear=0.5, uv_mode="loft")
+    ml.lathe(bc, "y", (0, 0, 0), [(0.0, 0.0), (3.5, 1.5), (8.0, 3.1), (11.5, 3.8), (13.6, 3.4), (15.4, 2.6), (SP_SHAFT[0] + 2.4, 2.4)], sides=8, caps=(False, False))   # a faceted counterweight ending in a spike
+    sh = add(m, "shaft", "silver", base=(206, 210, 222), smooth=50, wear=0.5, uv_mode="loft")
+    ys = [SP_SHAFT[0] + 2.0, 72.0, 130.0, 188.0, SP2_SOCKET[0] + 1.0]
+    rs = [2.3, 2.42, 2.46, 2.4, 2.25]
+    for k in range(4):
+        ml.lathe(sh, "y", (0, 0, 0), [(ys[k], rs[k]), (ys[k + 1], rs[k + 1])], sides=10, caps=(False, False))
+    gw = add(m, "grip_wrap", "leather", base=(124, 30, 44), smooth=55, wear=0.6, uv_mode="loft")
+    ml.lathe(gw, "y", (0, 0, 0), [(SP_WRAP[0], 2.55), (SP_WRAP[0] + 2.0, 2.76), (SP_WRAP[1] - 2.0, 2.76), (SP_WRAP[1], 2.55)], sides=10, caps=(False, False))
+    bd = add(m, "bands", "gold", base=WHITE_GOLD, smooth=50, wear=0.4, uv_mode="loft")
+    for y in SP_BANDS[:6] + (207.0, SP_WRAP[0] - 1.8, SP_WRAP[1] + 0.4, 17.6):
+        ml.collar(bd, y, 2.9, 1.5, lip=0.35, sides=10, axis="y", caps=(False, False))
+    return bc, sh, gw, bd
+
+
+def spear2_socket(m):
+    so = add(m, "socket", "gold", base=WHITE_GOLD, smooth=45, wear=0.4, uv_mode="loft")
+    ml.lathe(so, "y", (0, 0, 0), SP2_SOCKET_PROFILE, sides=12, caps=(False, False))
+    cl = add(m, "claws", "gold", base=WHITE_GOLD, smooth=40, wear=0.4)
+    for k in range(4):                                                   # four prongs caging the orb, meeting under the head
+        a = k * math.pi / 2 + math.pi / 4
+        ca, sa = math.cos(a), math.sin(a)
+        pts = []
+        for t in np.linspace(0, 1, 7):
+            rr = 3.3 + 3.5 * math.sin(math.pi * t) ** 0.8 * (1 - 0.4 * t)
+            pts.append((rr * ca, SP2_SOCKET[1] - 1.0 + (SP2_BLADE[0] - SP2_SOCKET[1] + 3.0) * t, rr * sa))
+        ml.sweep(cl, pts, ml.lozenge(1.0, 1.0), scales=lambda t: (2.1 * (1 - 0.5 * t), 0.95), caps=(True, True), up=(0, 1, 0))
+    wg = add(m, "wings", "gold", base=WHITE_GOLD, smooth=40, wear=0.5)
+    for sgn in (-1, 1):                                                  # two gold feathers a side sweeping down and out from the head's collar
+        for (span, drop, w0, t0) in ((19.0, 31.0, 4.6, 2.2), (12.0, 15.0, 3.2, 1.7)):
+            pts = [(sgn * (3.0 + span * t), SP2_BLADE[0] - 0.5 - drop * t ** 1.6, 0.0) for t in np.linspace(0, 1, 8)]
+            ml.sweep(wg, pts, ml.lozenge(1.0, 1.0), scales=lambda t, w0=w0, t0=t0: (0.0, 0.0) if t > 0.985 else (w0 * (1 - 0.88 * t), t0 * (1 - 0.6 * t)), caps=(True, False), up=(0, 0, 1))
+    lu = add(m, "lugs", "steel", base=STEEL_BRIGHT, smooth=25, wear=0.5)   # the partisan's side blades: a steel crescent each side of the head, hooked up toward the point
+    for sgn in (-1, 1):
+        pts = bezier((sgn * 3.4, SP2_BLADE[0] + 2.5, 0.0), (sgn * 23.0, SP2_BLADE[0] - 2.0, 0.0), (sgn * 26.0, SP2_BLADE[0] + 18.0, 0.0), 10, (sgn * 17.5, SP2_BLADE[0] + 33.0, 0.0))
+        ml.sweep(lu, pts, ml.lozenge(1.0, 1.0), scales=lambda t: (0.0, 0.0) if t > 0.985 else (6.6 * (1 - t) ** 0.85 + 0.25, 2.2 * (1 - 0.7 * t)), caps=(True, False), up=(0, 0, 1))
+    return so, cl, wg, lu
+
+
+def spear2_head(m):
+    g = add(m, "gem", "crystal", base=GEM["spear"], glow=True, smooth=60, uv_mode="loft")
+    sphere(g, (0, SP2_GEM_Y, 0), SP2_GEM_R, sides=14, stacks=9)
+    hd = add(m, "spearhead", "steel", base=STEEL_BRIGHT, smooth=18, wear=0.5)
+    ys = [252.0, 255.0, 259.0, 264.0, 270.0, 277.0, 285.0, 293.0, 301.0, 309.0, 316.0, 322.0, 326.5, 329.2, 330.0]
+    st = [(y, max(float(_SP2_W(y)), 0.0), max(float(_SP2_T(y)), 0.0)) if y < 330.0 else (y, 0.0, 0.0) for y in ys]
+    ml.loft(hd, "y", (0, 0, 0), st, ml.lozenge(1.0, 1.0), caps=(True, True))
+    hc = add(m, "head_collar", "gold", base=WHITE_GOLD, smooth=45, wear=0.4, uv_mode="loft")
+    ml.lathe(hc, "y", (0, 0, 0), [(SP2_BLADE[0] - 3.2, 2.6), (SP2_BLADE[0] - 2.0, 4.0), (SP2_BLADE[0] + 1.4, 4.0), (SP2_BLADE[0] + 2.8, 2.8)], sides=12, caps=(False, False))
+    return g, hd, hc
+
+
+def paint_spear2(m, atlas):
+    """The skin of the rebuilt base spear: the 1.62.0 base skin's ideas on the new shapes (a mirror head with fuller lines, the red wrap, the clock ticks on the socket), with a
+    broad glowing channel down the head and a line of light on the lugs."""
+    gem_rgb, gem_hi = GEM["spear"], (255, 150, 150)
+    paint_metal(atlas, m, ["butt_cap", "shaft", "bands", "claws", "wings", "head_collar"], seed=300)
+
+    def head(c):
+        if c.kind != "dom":
+            return
+        ax, sg = c.g.key
+        if ax != 2:
+            c.img[..., :3] = np.array((228, 234, 244), np.float32)
+            c.img[..., 3] = 255
+            return
+        x, y = c.A, c.B
+        hw = np.maximum(np.interp(y, _SP2_TAB_Y, _SP2_TAB_W) / 2, 0.2)
+        base = np.array((206, 214, 228), np.float32)
+        shade = 1 + 0.07 * (noise(c, 20, 6 + sg) - 0.5) + 0.04 * (noise(c, 2.5, 5) - 0.5)
+        c.img[..., :3] = np.clip(base[None, None, :] * shade[..., None], 0, 255)
+        c.img[..., 3] = 255
+        across = np.abs(x) / hw
+        tone(c.img, smooth01(across, 0.62, 1.0), 1.14)
+        tone(c.img, band(across, 0.0, 0.34) * 0.5, 0.9)
+        along = (y > SP2_BLADE[0] + 8) * (y < SP2_BLADE[1] - 9)
+        groove(c, band(np.abs(x) - 0.58 * hw, 0.0, 0.26) * along, 0.5)
+        groove(c, band(np.abs(x), 2.0, 0.26) * (y > SP2_BLADE[0] + 8) * (y < SP2_BLADE[1] - 20), 0.5)           # the channel's two walls
+        mid = band(x, 0.0, 1.3) * smooth01(y, SP2_BLADE[0] + 7, SP2_BLADE[0] + 16) * (1 - smooth01(y, SP2_BLADE[1] - 26, SP2_BLADE[1] - 10))
+        blend(c.img, (150, 40, 54), mid, 0.85)
+        glow_into(c, gem_rgb, mid, 0.9)                                                 # the channel glows red
+        edge = smooth01(across, 0.82, 0.92) * (1 - smooth01(across, 0.94, 1.0))
+        glow_into(c, gem_rgb, edge * 0.5, 0.45, core=0.5)
+
+    def lugs(c):
+        base = np.array((214, 222, 234), np.float32)
+        c.img[..., :3] = np.clip(base[None, None, :] * (1 + 0.08 * (noise(c, 10, 31) - 0.5))[..., None], 0, 255)
+        c.img[..., 3] = 255
+        if c.kind == "loft":
+            glow_into(c, gem_rgb, band(c.S, 0.5, 0.1) * np.clip(1 - np.clip(c.T, 0, 1) * 1.15, 0, 1) * 0.7, 0.6)
+
+    def socket(c):
+        turn, _ = lathe_theta(c, SP2_SOCKET_PROFILE)
+        base = np.array(WHITE_GOLD, np.float32)
+        c.img[..., :3] = np.clip(base[None, None, :] * (1 + 0.10 * (noise(c, 3, 4) - 0.5))[..., None], 0, 255)
+        c.img[..., 3] = 255
+        dial = np.clip(band(c.T, 0.62, 0.2) * 1.8, 0, 1)
+        tone(c.img, dial, 0.72)
+        blend(c.img, (255, 238, 176), band((turn * 12.0) % 1.0, 0.5, 0.2) * dial, 0.9)
+        groove(c, band(c.T, 0.4, 0.035) + band(c.T, 0.84, 0.035), 0.5)
+
+    def wrap(c):
+        ph = ((c.B + c.A * 0.7) / 3.0) % 1.0
+        base = np.array((124, 30, 44), np.float32)
+        shade = 0.8 + 0.3 * np.sin(ph * math.pi) ** 1.5 + 0.06 * (noise(c, 3, 9) - 0.5)
+        c.img[..., :3] = np.clip(base[None, None, :] * shade[..., None], 0, 255)
+        c.img[..., 3] = 255
+        groove(c, band(ph, 0.0, 0.07) + band(ph, 1.0, 0.07), 0.55)
+
+    def gem(c):
+        t = 0.25 + 0.75 * np.clip(1 - np.abs(2 * c.T - 1) ** 1.3, 0, 1)
+        hl = np.exp(-(((c.S - 0.3) / 0.08) ** 2) - (((c.T - 0.68) / 0.13) ** 2))
+        to_gem(c, gem_rgb, gem_hi, t, spec=np.clip(hl * 0.8, 0, 1), core=0.15)
+
+    paint_group(atlas, m.part("spearhead"), head)
+    paint_group(atlas, m.part("lugs"), lugs)
+    paint_group(atlas, m.part("socket"), socket)
+    paint_group(atlas, m.part("grip_wrap"), wrap)
+    paint_group(atlas, m.part("gem"), gem)
+
+
 def build_spear(curse=False, write=True):
     iid = "legendary_spear_curse" if curse else "legendary_spear"
     base = "legendary_spear"
     if write and not curse:
         write_icon(base)
     m = ml.Mesh(iid)
-    spear_shaft(m, curse)
-    spear_socket(m, curse)
-    spear_gem(m, curse)
-    spear_head(m, curse)
     if curse:
+        spear_shaft(m, curse)
+        spear_socket(m, curse)
+        spear_gem(m, curse)
+        spear_head(m, curse)
         spear_lust(m)
+    else:                                                                # 3.79.0: the rebuilt base look
+        spear2_shaft(m)
+        spear2_socket(m)
+        spear2_head(m)
     atlas = lay(m)
-    paint_spear(m, atlas, curse)
+    if curse:
+        paint_spear(m, atlas, curse)
+    else:
+        paint_spear2(m, atlas)
     if not write:
         return m, atlas
     if not curse:
@@ -1502,6 +1740,12 @@ _BW_RISER_W = w1.hermite([(-14, 3.0), (-10, 3.7), (-5, 4.0), (0, 3.9), (4, 5.8),
 _BW_RISER_T = w1.hermite([(-14, 3.4), (-10, 4.4), (-5, 4.7), (0, 4.6), (4, 5.0), (7.6, 5.2), (11, 4.2), (14, 3.4)])      # and its thickness (z)
 
 
+# 3.79.0, the base look only ("better weapon models"): a broader riser that carries a gem half as large again. The Bow of Pride keeps the numbers above.
+BW2_GEM_R, BW2_GEM_D = 4.7, 5.4
+_BW2_RISER_W = w1.hermite([(-15, 5.0), (-11, 6.4), (-5, 5.6), (0, 5.6), (4, 9.0), (7.6, 11.4), (11.5, 8.0), (15, 5.4)])
+_BW2_RISER_T = w1.hermite([(-15, 5.6), (-11, 6.8), (-5, 6.4), (0, 6.4), (4, 6.6), (7.6, 6.4), (11.5, 6.4), (15, 5.8)])
+
+
 def bow_x(y):
     """x of the limb's centre line at height y: the riser is straight, then the limbs fall away to the tips and curl forward again."""
     u = max(0.0, (abs(y) - BW_RISER) / (BW_HALF - BW_RISER))
@@ -1524,7 +1768,8 @@ def bow_limbs(m, curse):
     mat = ("iron", (44, 36, 62)) if curse else ("silver", (226, 230, 240))
     for sgn, name in ((1, "limb_upper"), (-1, "limb_lower")):
         p = add(m, name, mat[0], base=mat[1], smooth=55, uv_mode="loft", wear=0.5)
-        ml.sweep(p, limb_path(sgn), ml.ellipse(1.0, 1.0, 8), scales=lambda t: (0.0, 0.0) if t > 0.992 else (limb_half(t, 1.75, 0.62), limb_half(t, 2.5, 0.85)),
+        lw = (1.75, 0.62, 2.5, 0.85) if curse else (2.6, 0.95, 3.4, 1.1)               # 3.79.0: the base look's limbs are half as thick again
+        ml.sweep(p, limb_path(sgn), ml.ellipse(1.0, 1.0, 8), scales=lambda t, lw=lw: (0.0, 0.0) if t > 0.992 else (limb_half(t, lw[0], lw[1]), limb_half(t, lw[2], lw[3])),
                  caps=(True, True), up=(0, 0, 1))
     inl = add(m, "limb_inlay", "iron" if curse else "gold", base=(80, 40, 120) if curse else WHITE_GOLD, smooth=45, uv_mode="loft", wear=0.4)
     for sgn in (1, -1):
@@ -1533,8 +1778,9 @@ def bow_limbs(m, curse):
             for i in range(0, 11):
                 t = i / 10
                 y = sgn * (BW_RISER + 1.0 + (BW_HALF - BW_RISER - 10.0) * t)
-                pts.append((bow_x(y), y, zs * limb_half(t, 2.35, 0.8)))
-            ml.sweep(inl, pts, ml.lozenge(1.0, 1.0), scales=lambda t: (limb_half(t, 1.5, 0.5), 0.34), caps=(True, True), up=(0, 0, 1))
+                pts.append((bow_x(y), y, zs * (limb_half(t, 2.35, 0.8) if curse else limb_half(t, 3.22, 1.12))))
+            ml.sweep(inl, pts, ml.lozenge(1.0, 1.0), scales=(lambda t: (limb_half(t, 1.5, 0.5), 0.34)) if curse else (lambda t: (limb_half(t, 2.4, 0.7), 0.42)),
+                     caps=(True, True), up=(0, 0, 1))
     tp = add(m, "limb_horns" if curse else "limb_tips", "iron" if curse else "gold", base=(44, 34, 64) if curse else WHITE_GOLD, smooth=45, wear=0.4, uv_mode="loft")
     for sgn in (1, -1):
         y1 = sgn * BW_HALF
@@ -1544,10 +1790,38 @@ def bow_limbs(m, curse):
     return tp
 
 
+def bow2_flourish(m):
+    """3.79.0, the base look's new gold: a blade fin along the front edge of each limb's root (limb_ so it flexes with the draw), two blades that sweep forward
+    and outward from the riser like a crown round the gem, and a forward talon on each tip (limb_ too)."""
+    fin = add(m, "limb_blades", "gold", base=WHITE_GOLD, smooth=40, uv_mode="loft", wear=0.4)
+    for sgn in (1, -1):
+        pts, ws = [], []
+        for i in range(9):
+            t = i / 8
+            y = 13.0 + 35.0 * t
+            hw = limb_half((y - (BW_RISER - 1.0)) / (BW_HALF - BW_RISER + 1.0), 2.6, 0.95)
+            w = 5.2 * math.sin(math.pi * t) ** 0.6 * (1 - 0.35 * t) + 0.25
+            pts.append((bow_x(y) + hw + 0.3 * w, sgn * y, 0.0))
+            ws.append(w)
+        ml.sweep(fin, pts, ml.lozenge(1.0, 1.0), scales=lambda t, ws=ws: (float(np.interp(t, np.linspace(0, 1, 9), ws)), 1.3), caps=(True, True), up=(0, 0, 1))
+    fb = m.part("wings")                                                 # in the feathers' part (the pull states may have 14 named parts at most)
+    for sgn in (1, -1):
+        p0 = V((BW_BELLY + 1.5, sgn * 12.0, 0.0))
+        ml.sweep(fb, bezier(p0, V((BW_BELLY + 8.0, sgn * 13.0, 0.0)), V((BW_BELLY + 12.0, sgn * 25.0, 0.0)), 6), ml.lozenge(1.0, 1.0),
+                 scales=lambda t: (0.0, 0.0) if t > 0.985 else (4.6 * (1 - t ** 1.3) ** 0.8 + 0.1, 1.6 * (1 - 0.5 * t)), caps=(True, False), up=(0, 0, 1))
+    sp = m.part("limb_tips")
+    for sgn in (1, -1):
+        y0 = BW_HALF - 7.0
+        p0 = V((bow_x(y0) + 0.4, sgn * y0, 0.0))
+        horn(sp, tuple(p0), tuple(p0 + V((4.6, sgn * 1.2, 0.0))), tuple(p0 + V((9.0, sgn * 7.6, 0.0))), 1.35, sides=5, n=6, up=(0, 0, 1))
+    return fin, fb, sp
+
+
 def bow_riser(m, curse):
     r = add(m, "riser", "iron" if curse else "gold", base=(58, 46, 78) if curse else WHITE_GOLD, smooth=45, wear=0.5)
-    ys = [-14.0, -10.0, -5.0, 0.0, 4.0, 7.6, 11.0, 14.0]
-    ml.loft(r, "y", (BW_BELLY, 0, 0), [(y, float(_BW_RISER_W(y)), float(_BW_RISER_T(y))) for y in ys], ml.rounded_rect(1.0, 1.0, 0.22, 2), caps=(True, True))
+    ys = [-14.0, -10.0, -5.0, 0.0, 4.0, 7.6, 11.0, 14.0] if curse else [-15.0, -11.0, -5.0, 0.0, 4.0, 7.6, 11.5, 15.0]
+    rw, rt = (_BW_RISER_W, _BW_RISER_T) if curse else (_BW2_RISER_W, _BW2_RISER_T)
+    ml.loft(r, "y", (BW_BELLY, 0, 0), [(y, float(rw(y)), float(rt(y))) for y in ys], ml.rounded_rect(1.0, 1.0, 0.22, 2), caps=(True, True))
     gw = add(m, "grip_wrap", "leather", base=(40, 28, 56) if curse else (206, 178, 120), smooth=55, wear=0.6, uv_mode="loft")
     ml.loft(gw, "y", (BW_BELLY, 0, 0), [(-9.6, 4.5, 4.8), (-8.4, 4.9, 5.2), (0.4, 4.9, 5.2), (1.8, 4.5, 4.8)], ml.ellipse(1.0, 1.0, 10), caps=(False, False))
     return r, gw
@@ -1560,7 +1834,8 @@ def bow_wings(m, curse):
     if curse:
         blades = ((BW_BELLY - 2.0, 10.5, BW_BELLY - 19.0, 46.0, 4.6), (BW_BELLY - 2.0, 9.5, BW_BELLY - 16.0, 33.0, 4.0), (BW_BELLY - 2.0, 8.5, BW_BELLY - 10.5, 22.0, 3.2))
     else:
-        blades = ((BW_BELLY - 2.0, 10.5, BW_BELLY - 15.5, 36.0, 4.2), (BW_BELLY - 2.0, 9.5, BW_BELLY - 12.0, 24.0, 3.2))
+        # 3.79.0: three feathers a side, longer and broader (they stay in front of the string at x = 7)
+        blades = ((BW_BELLY - 2.0, 11.5, BW_BELLY - 13.5, 47.0, 5.8), (BW_BELLY - 2.0, 10.5, BW_BELLY - 12.5, 34.0, 4.8), (BW_BELLY - 2.0, 9.5, BW_BELLY - 9.5, 22.0, 3.8))
     for sgn in (1, -1):
         for (rx, ry, ex, ey, w0) in blades:
             p0 = V((rx, sgn * ry, 0.0))
@@ -1596,9 +1871,12 @@ def bow_crest(m):
 def bow_gem(m, curse):
     bez = add(m, "gem_setting", "iron" if curse else "gold", base=(60, 46, 80) if curse else WHITE_GOLD, smooth=50, wear=0.4)
     for sgn in (-1, 1):
-        band_loop(bez, BW_GEM_R + 0.35, sgn * 2.55, ml.circle(0.7, 5), n=14, arcs=1, cx=BW_BELLY, cy=BW_GEM_Y)
+        if curse:
+            band_loop(bez, BW_GEM_R + 0.35, sgn * 2.55, ml.circle(0.7, 5), n=14, arcs=1, cx=BW_BELLY, cy=BW_GEM_Y)
+        else:
+            band_loop(bez, BW2_GEM_R + 0.3, sgn * 3.1, ml.circle(0.95, 5), n=18, arcs=1, cx=BW_BELLY, cy=BW_GEM_Y)
     g = add(m, "gem", "crystal", base=SIN["bow"] if curse else GEM["bow"], glow=True, smooth=60, uv_mode="loft")
-    d, r = BW_GEM_D, BW_GEM_R
+    d, r = (BW_GEM_D, BW_GEM_R) if curse else (BW2_GEM_D, BW2_GEM_R)
     prof = [(-d, 0.0), (-d * 0.86, r * 0.52), (-d * 0.55, r * 0.86), (-d * 0.25, r * 0.98), (0.0, r), (d * 0.25, r * 0.98), (d * 0.55, r * 0.86), (d * 0.86, r * 0.52), (d, 0.0)]
     ml.lathe(g, "z", (BW_BELLY, BW_GEM_Y, 0), prof, sides=16, caps=(False, False))
     return bez, g
@@ -1675,7 +1953,7 @@ def paint_bow(m, atlas, curse):
     glow of the inlay, the crest and the horns in the curse look."""
     violet, hot = SIN["bow"], (225, 190, 255)
     gem_rgb, gem_hi = (violet, hot) if curse else (GEM["bow"], (255, 246, 190))
-    paint_metal(atlas, m, ["riser", "gem_setting"] + (["limb_horns"] if curse else ["limb_tips", "limb_inlay"]), sheen=0.2 if curse else 0.14, grain=0.08 if curse else 0.045, seed=400)
+    paint_metal(atlas, m, ["riser", "gem_setting"] + (["limb_horns"] if curse else ["limb_tips", "limb_inlay", "limb_blades"]), sheen=0.2 if curse else 0.14, grain=0.08 if curse else 0.045, seed=400)
 
     def limb(c):
         base = np.array((38, 30, 54) if curse else (226, 230, 240), np.float32)
@@ -1771,6 +2049,8 @@ def build_bow(curse=False, write=True):
     bow_gem(m, curse)
     if curse:
         bow_crest(m)
+    else:
+        bow2_flourish(m)
     bow_string(m, curse)
     bow_arrow(m, curse)
     atlas = lay(m)

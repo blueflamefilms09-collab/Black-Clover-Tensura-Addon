@@ -1971,7 +1971,7 @@
   "class": "bow",
   "fraction": 0.5,
   "source": "class",
-  "x": 16.83,
+  "x": 17.175,
   "y": 0.0,
   "z": 0.0
  },
@@ -2037,7 +2037,7 @@
   "source": "class",
   "x": 0.0,
   "y": 0.0,
-  "z": 4.175
+  "z": 4.85
  },
  "legendary_shield_curse": {
   "class": "shield",
@@ -2049,10 +2049,10 @@
  },
  "legendary_spear": {
   "class": "spear",
-  "fraction": 0.224,
+  "fraction": 0.233,
   "source": "directive",
   "x": 0.0,
-  "y": 73.92,
+  "y": 76.89,
   "z": 0.0
  },
  "legendary_spear_curse": {
@@ -2065,10 +2065,10 @@
  },
  "legendary_sword": {
   "class": "longsword",
-  "fraction": 0.084,
+  "fraction": 0.092,
   "source": "directive",
   "x": 0.0,
-  "y": 12.6,
+  "y": 13.8,
   "z": 0.0
  },
  "legendary_sword_curse": {
@@ -3177,10 +3177,10 @@
  },
  "sz/vassal_projectile": {
   "class": "dagger",
-  "fraction": 0.366,
+  "fraction": 0.394,
   "source": "directive",
   "x": 0.0,
-  "y": 28.015,
+  "y": 28.018,
   "z": 0.0
  },
  "sz/void_origin_katana": {
@@ -4825,42 +4825,42 @@
  },
  "vassal_axe": {
   "class": "battleaxe",
-  "fraction": 0.282,
+  "fraction": 0.264,
   "source": "directive",
   "x": 0.0,
-  "y": 46.092,
+  "y": 45.955,
   "z": 0.0
  },
  "vassal_book": {
   "class": "handitem",
   "fraction": 0.5,
   "source": "class",
-  "x": 0.94,
+  "x": 0.812,
   "y": 18.186,
-  "z": 1.152
+  "z": 1.41
  },
  "vassal_carriage": {
   "class": "handitem",
   "fraction": 0.5,
   "source": "class",
-  "x": -46.739,
+  "x": -49.704,
   "y": 59.864,
   "z": 0.0
  },
  "vassal_chain": {
   "class": "whip",
-  "fraction": 0.081,
+  "fraction": 0.082,
   "source": "directive",
-  "x": -5.659,
-  "y": 8.891,
+  "x": -0.708,
+  "y": 8.617,
   "z": 0.0
  },
  "vassal_claw": {
   "class": "shortsword",
-  "fraction": 0.119,
+  "fraction": 0.11,
   "source": "directive",
   "x": 0.0,
-  "y": 19.992,
+  "y": 20.02,
   "z": 0.0
  },
  "vassal_fan": {
@@ -4868,24 +4868,24 @@
   "fraction": 0.12,
   "source": "override",
   "x": 0.7,
-  "y": -29.133,
+  "y": -28.629,
   "z": 0.0
  },
  "vassal_gauntlet": {
   "class": "handitem",
   "fraction": 0.5,
   "source": "class",
-  "x": 1.103,
-  "y": 38.838,
-  "z": 1.415
+  "x": 1.877,
+  "y": 41.293,
+  "z": 1.213
  },
  "vassal_hammer": {
   "class": "hammer",
-  "fraction": 0.271,
+  "fraction": 0.254,
   "source": "directive",
-  "x": 0.062,
-  "y": 39.91,
-  "z": 0.105
+  "x": -0.03,
+  "y": 40.054,
+  "z": 0.144
  },
  "vassal_harpoon": {
   "class": "staff",
@@ -4901,63 +4901,63 @@
   "source": "class",
   "x": 0.0,
   "y": 13.635,
-  "z": 1.002
+  "z": 1.058
  },
  "vassal_katana": {
   "class": "katana",
-  "fraction": 0.121,
+  "fraction": 0.125,
   "source": "directive",
-  "x": 0.0,
-  "y": 9.602,
+  "x": 2.686,
+  "y": 9.062,
   "z": 0.0
  },
  "vassal_mirror": {
   "class": "shield",
   "fraction": 0.5,
   "source": "class",
-  "x": 0.085,
-  "y": 34.377,
-  "z": -0.084
+  "x": 0.079,
+  "y": 37.165,
+  "z": 0.125
  },
  "vassal_projectile": {
   "class": "dagger",
-  "fraction": 0.366,
+  "fraction": 0.394,
   "source": "directive",
   "x": 0.0,
-  "y": 28.015,
+  "y": 28.018,
   "z": 0.0
  },
  "vassal_scythe": {
   "class": "scythe",
-  "fraction": 0.137,
+  "fraction": 0.132,
   "source": "directive",
   "x": 0.0,
-  "y": 31.984,
+  "y": 33.392,
   "z": 0.0
  },
  "vassal_sewing_set": {
   "class": "rapier",
   "fraction": 0.185,
   "source": "directive",
-  "x": -30.109,
+  "x": -30.976,
   "y": 11.081,
   "z": 0.0
  },
  "vassal_staff": {
   "class": "staff",
-  "fraction": 0.401,
+  "fraction": 0.381,
   "source": "directive",
   "x": 0.0,
-  "y": 104.13,
+  "y": 103.897,
   "z": 0.0
  },
  "vassal_whip": {
   "class": "coilwhip",
-  "fraction": 0.171,
+  "fraction": 0.212,
   "source": "directive",
-  "x": -0.002,
-  "y": 22.969,
-  "z": 0.013
+  "x": 0.0,
+  "y": 23.056,
+  "z": 0.087
  },
  "viola_of_moonlit_spirits": {
   "class": "handitem",

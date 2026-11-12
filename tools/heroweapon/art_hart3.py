@@ -113,23 +113,23 @@ def finish_weapon(item_id, m, atlas, glow, upright=False, third_scale=None, disp
 SCY_REAL_M = 2.35                  # apparent length in the third person hand: the scythe class is 2.0 to 2.6, a legendary weapon takes the upper half
 SCY_GRIP = 0.30                    # the class table's grip share: the hand stays where it is when the weapon grows
 SCY_SNATH_Y0, SCY_SNATH_Y1 = 26.0, 206.0      # the pole runs from the spiked disc to the cuff (180 cm of a 240 cm weapon: a real snath is 150 to 170 cm of 220)
-SCY_SNATH_R0, SCY_SNATH_R1 = 2.0, 1.75         # pole radius at the foot and under the cuff (a 4 cm pole, as a real snath is 3.5 to 4.5 cm through)
+SCY_SNATH_R0, SCY_SNATH_R1 = 2.6, 2.25         # pole radius at the foot and under the cuff (a 4 cm pole, as a real snath is 3.5 to 4.5 cm through)
 SCY_SNATH_BOW = 1.5                            # a real snath is S-curved; the pole bows this far (cm) either side of its axis
-SCY_DISC_Y, SCY_DISC_R, SCY_DISC_T = 24.0, 8.4, 1.9     # the spiked wheel at the handle's end (the listing's "spiked disc"): height, radius, half thickness
-SCY_DISC_SPIKES, SCY_DISC_SPIKE_L = 8, 7.0              # eight thorns round the rim
+SCY_DISC_Y, SCY_DISC_R, SCY_DISC_T = 24.0, 10.5, 2.3     # the spiked wheel at the handle's end (the listing's "spiked disc"): height, radius, half thickness
+SCY_DISC_SPIKES, SCY_DISC_SPIKE_L = 8, 9.5              # eight thorns round the rim
 SCY_CUFF_Y0 = 184.0                            # the bronze socket the blade sits in starts here (28 cm tall)
 SCY_BLADE_ROOT = (0.0, 213.0)                  # where the centre line of the blade crosses the pole's axis
-SCY_BLADE_TAIL = (13.0, 211.0)                 # the heel: a spike that reaches back behind the pole (the reaper's counter-blade)
-SCY_BLADE_TIP = (-88.0, 164.0)                 # the point: 88 cm forward of the pole and 49 cm below the root (the hook of a reaper's blade, about a third of 240)
-SCY_BLADE_W = ((0.0, 0.0), (0.06, 12.0), (0.12, 21.0), (0.26, 25.0), (0.50, 19.0), (0.75, 10.5), (0.92, 4.2), (1.0, 0.0))   # width spine to edge along the blade (cm)
-SCY_BLADE_T0, SCY_BLADE_T1 = 2.4, 0.8          # thickness at the heel and at the point
-SCY_GEM_R, SCY_GEM_HALF = 5.4, 7.6             # the amethyst: girdle radius and how far its points reach out of the plate's middle on each side
+SCY_BLADE_TAIL = (30.0, 196.0)                 # the heel: a spike that reaches back behind the pole (the reaper's counter-blade)
+SCY_BLADE_TIP = (-106.0, 150.0)                # the point: 88 cm forward of the pole and 49 cm below the root (the hook of a reaper's blade, about a third of 240)
+SCY_BLADE_W = ((0.0, 0.0), (0.07, 11.0), (0.16, 24.0), (0.22, 33.0), (0.34, 37.0), (0.55, 29.0), (0.78, 16.0), (0.93, 6.5), (1.0, 0.0))   # width spine to edge along the blade (cm)
+SCY_BLADE_T0, SCY_BLADE_T1 = 3.0, 0.9          # thickness at the heel and at the point
+SCY_GEM_R, SCY_GEM_HALF = 7.2, 9.4             # the amethyst: girdle radius and how far its points reach out of the plate's middle on each side
 SCY_GEM_AT = (-3.0, 211.5)                     # in the heel medallion, at the root of the blade
-SCY_PLATE_R, SCY_PLATE_T = 8.6, 2.0            # the bronze medallion the stone is set in: radius and half thickness
-SCY_HALO_R = 14.0                              # the ring of light round the jewel (the spinning disc of the swing); glow skin only
+SCY_PLATE_R, SCY_PLATE_T = 11.4, 2.5            # the bronze medallion the stone is set in: radius and half thickness
+SCY_HALO_R = 19.0                              # the ring of light round the jewel (the spinning disc of the swing); glow skin only
 SCY_COL = dict(black=(30, 24, 42), steel=(178, 190, 210), spine=(109, 116, 130), bronze=(168, 130, 66), silver=(194, 202, 216), crimson=(110, 27, 43), amethyst=(104, 44, 190), cloth=(84, 40, 128))
 SCY_GLOW = (150, 78, 255)                      # the amethyst's light
-SCY_FEATHERS = ((-3.4, 195.0, 1.7, -0.30, 28.0), (-3.2, 195.0, 0.0, -0.08, 22.0), (-3.0, 195.0, -1.7, 0.16, 17.0))     # plume: x, y, z of the root, lean, length
+SCY_FEATHERS = ((-4.2, 193.0, 2.2, -0.30, 40.0), (-4.0, 193.0, 0.0, -0.08, 32.0), (-3.8, 193.0, -2.2, 0.16, 25.0))     # plume: x, y, z of the root, lean, length
 
 
 def _scy_snath_x(y):
@@ -140,8 +140,8 @@ def _scy_snath_x(y):
 
 def _scy_blade_centre():
     """The centre line of the blade as a polyline: the heel spike, the root over the pole, then a long forward sweep that hooks down to the point."""
-    heel = L.bezier(SCY_BLADE_TAIL, (8.0, 212.0), (4.0, 213.0), SCY_BLADE_ROOT, 6)
-    sweep = L.bezier(SCY_BLADE_ROOT, (-30.0, 230.0), (-80.0, 224.0), SCY_BLADE_TIP, 40)
+    heel = L.bezier(SCY_BLADE_TAIL, (24.0, 210.0), (10.0, 214.0), SCY_BLADE_ROOT, 10)
+    sweep = L.bezier(SCY_BLADE_ROOT, (-36.0, 238.0), (-98.0, 230.0), SCY_BLADE_TIP, 40)
     return L.to3(heel[:-1] + sweep)
 
 
@@ -163,23 +163,23 @@ def build_vassal_scythe():
     gr = L.add(m, "snath_rings", "silver", base=SCY_COL["silver"], smooth=45, wear=0.5)
     for (ya, yb) in ((52.0, 94.0), (122.0, 150.0)):
         zs = np.linspace(ya, yb, 4)
-        L.tube(gw, [(_scy_snath_x(y), y, 0.0) for y in zs], 2.35, sides=8, up=(0, 0, 1))
+        L.tube(gw, [(_scy_snath_x(y), y, 0.0) for y in zs], 2.95, sides=8, up=(0, 0, 1))
         for y in (ya - 1.6, yb):
-            ml.collar(gr, y, 2.9, 1.6, lip=0.35, sides=8, axis="y", origin=(_scy_snath_x(y), 0, 0), caps=(False, False))
+            ml.collar(gr, y, 3.55, 1.8, lip=0.4, sides=8, axis="y", origin=(_scy_snath_x(y), 0, 0), caps=(False, False))
     for y in (110.0, 172.0):
-        ml.collar(gr, y, 2.6, 1.3, lip=0.3, sides=8, axis="y", origin=(_scy_snath_x(y), 0, 0), caps=(False, False))
+        ml.collar(gr, y, 3.2, 1.5, lip=0.35, sides=8, axis="y", origin=(_scy_snath_x(y), 0, 0), caps=(False, False))
     # ---- the butt: a long spike, then the crowned wheel of ten thorns
     bt = L.add(m, "butt_cone", "steel", base=(176, 186, 204), smooth=45, wear=0.6)
-    ml.lathe(bt, "y", (0, SCY_SNATH_Y0 - 2.0, 0), [(-SCY_SNATH_Y0 + 2.0, 0.0), (-SCY_SNATH_Y0 + 8.0, 0.9), (-10.0, 1.5), (-5.0, 2.3), (-2.0, 3.0), (0.0, 2.2), (2.0, 2.0)], sides=8)
+    ml.lathe(bt, "y", (0, SCY_SNATH_Y0 - 2.0, 0), [(-SCY_SNATH_Y0 + 2.0, 0.0), (-SCY_SNATH_Y0 + 8.0, 1.2), (-10.0, 2.0), (-5.0, 3.0), (-2.0, 3.8), (0.0, 2.9), (2.0, 2.6)], sides=8)
     bd = L.add(m, "butt_disc", "obsidian", base=(36, 28, 50), smooth=40, wear=0.4)
     ml.lathe(bd, "y", (0, SCY_DISC_Y, 0), [(-SCY_DISC_T, 2.4), (-SCY_DISC_T * 0.4, SCY_DISC_R * 0.92), (0.0, SCY_DISC_R), (SCY_DISC_T * 0.4, SCY_DISC_R * 0.92), (SCY_DISC_T, 2.4)], sides=16)
     for k in range(SCY_DISC_SPIKES):
         a = 2 * math.pi * k / SCY_DISC_SPIKES
         base = (SCY_DISC_R * math.cos(a) * 0.95, SCY_DISC_Y, SCY_DISC_R * math.sin(a) * 0.95)
-        L.spike(bd, base, (math.cos(a), -0.30, math.sin(a)), SCY_DISC_SPIKE_L, 1.3, sides=4)
+        L.spike(bd, base, (math.cos(a), -0.30, math.sin(a)), SCY_DISC_SPIKE_L, 1.7, sides=4)
     # ---- the cuff: the bronze socket under the blade
     cf = L.add(m, "cuff", "bronze", base=SCY_COL["bronze"], smooth=45, wear=0.5)
-    ml.lathe(cf, "y", (_scy_snath_x(SCY_CUFF_Y0), SCY_CUFF_Y0, 0), [(0.0, 2.5), (1.5, 3.4), (6.0, 3.2), (9.0, 3.9), (12.0, 3.1), (18.0, 3.1), (24.0, 2.4), (28.0, 2.0)], sides=12)
+    ml.lathe(cf, "y", (_scy_snath_x(SCY_CUFF_Y0), SCY_CUFF_Y0, 0), [(0.0, 3.1), (1.5, 4.3), (6.0, 4.0), (9.0, 5.0), (12.0, 3.9), (18.0, 3.9), (24.0, 3.1), (28.0, 2.6)], sides=12)
     # ---- the blade: one-edged section, width and thickness tapering from the heel to the point, the edge on the inside of the hook
     bl = L.add(m, "blade", "steel", base=SCY_COL["steel"], smooth=18, uv_mode=None, wear=0.35)
     sec = L.single_edge(bevel=0.34, spine_round=0.12, spine_flat=0.6)
@@ -194,30 +194,34 @@ def build_vassal_scythe():
     ts = np.linspace(0.10, 0.94, 18)
     spine = [tuple(list(cl.at(t, 0.5 * wf(t) - 0.15)) + [0.0]) for t in ts]
     ml.sweep(sb, spine, ml.octagon(1.0, 1.0, 0.3), scales=lambda t: (1.5 * math.sin(math.pi * min(1.0, t * 1.0)) ** 0.35, thick(0.10 + 0.84 * t) + 1.0), up=(0, 0, 1))
+    for tq, ln in ((0.20, 13.0), (0.31, 11.0), (0.42, 9.0), (0.53, 7.0)):                # 3.79.0: four fangs standing out of the spine, shrinking toward the point
+        b0, b1 = cl.at(tq, 0.5 * wf(tq) - 0.6), cl.at(tq + 0.035, 0.5 * wf(tq + 0.035) + ln)
+        dv = (float(b1[0] - b0[0]), float(b1[1] - b0[1]), 0.0)
+        L.spike(sb, (float(b0[0]), float(b0[1]), 0.0), dv, math.hypot(dv[0], dv[1]), 2.3, sides=4)
     # ---- the violet line along the cutting edge on both faces (the glow skin of the blade)
     rn = L.add(m, "blade_runes", "crystal", base=(150, 84, 235), glow=True, smooth=0, uv_mode="loft")
     for sgn in (1, -1):
         ts2 = np.linspace(0.14, 0.90, 16)
         line = [tuple(list(cl.at(t, -0.20 * wf(t))) + [sgn * (thick(t) / 2 + 0.05)]) for t in ts2]
-        ml.sweep(rn, line, ml.lozenge(1.0, 1.0), scales=lambda t: (1.3 * (1 - 0.75 * t) if t < 0.97 else 0.0, 0.5 if t < 0.97 else 0.0), up=(0, 0, 1))
+        ml.sweep(rn, line, ml.lozenge(1.0, 1.0), scales=lambda t: (2.2 * (1 - 0.75 * t) if t < 0.97 else 0.0, 0.6 if t < 0.97 else 0.0), up=(0, 0, 1))
     # ---- the bronze heel medallion with the amethyst set through it (it shows on both faces)
     gx, gy = SCY_GEM_AT
     hp = L.add(m, "heel_plate", "bronze", base=SCY_COL["bronze"], smooth=40, wear=0.5)
-    ml.lathe(hp, "z", (gx, gy, 0), [(-SCY_PLATE_T, 5.6), (-SCY_PLATE_T * 0.7, SCY_PLATE_R * 0.9), (-0.5, SCY_PLATE_R), (0.5, SCY_PLATE_R), (SCY_PLATE_T * 0.7, SCY_PLATE_R * 0.9), (SCY_PLATE_T, 5.6)], sides=16)
+    ml.lathe(hp, "z", (gx, gy, 0), [(-SCY_PLATE_T, 7.4), (-SCY_PLATE_T * 0.7, SCY_PLATE_R * 0.9), (-0.5, SCY_PLATE_R), (0.5, SCY_PLATE_R), (SCY_PLATE_T * 0.7, SCY_PLATE_R * 0.9), (SCY_PLATE_T, 7.4)], sides=16)
     gs = L.add(m, "gem_setting", "bronze", base=(204, 164, 84), smooth=50, wear=0.4)
     for sgn in (1, -1):
-        L.torus(gs, (gx, gy, sgn * (SCY_PLATE_T + 0.15)), 4.6, 0.8, (0, 0, 1), n=14, sides=5)
+        L.torus(gs, (gx, gy, sgn * (SCY_PLATE_T + 0.15)), 6.1, 1.0, (0, 0, 1), n=14, sides=5)
         for k in range(6):
             a = 2 * math.pi * k / 6 + 0.26
-            L.spike(gs, (gx + 4.7 * math.cos(a), gy + 4.7 * math.sin(a), sgn * (SCY_PLATE_T + 0.1)), (-0.28 * math.cos(a), -0.28 * math.sin(a), sgn * 1.0), 2.4, 0.6, sides=3, r_tip=0.2)
+            L.spike(gs, (gx + 6.2 * math.cos(a), gy + 6.2 * math.sin(a), sgn * (SCY_PLATE_T + 0.1)), (-0.28 * math.cos(a), -0.28 * math.sin(a), sgn * 1.0), 3.2, 0.8, sides=3, r_tip=0.2)
     gem = L.add(m, "gem", "crystal", base=SCY_COL["amethyst"], glow=True, smooth=0)
     L.bicone(gem, (gx, gy, 0.0), SCY_GEM_R, SCY_GEM_HALF, sides=6, axis="z")
     # ---- the spinning disc of the swing, as a halo that only the glow skin draws: a thin ring round the jewel with twelve ticks on it
     hl = m.add(ml.Part("disc_halo", layer=2, material="crystal", base=(150, 84, 235), smooth=0, uv_mode="loft"))
     for sgn in (1, -1):                                                     # one ring on each face, just outside the blade's skin, so each shows from its own side
         zz = sgn * (SCY_BLADE_T0 / 2 + 0.45)
-        L.torus(hl, (gx, gy, zz), SCY_HALO_R, 0.4, (0, 0, 1), n=24, sides=3)
-        L.torus(hl, (gx, gy, zz), SCY_HALO_R * 0.80, 0.24, (0, 0, 1), n=20, sides=3)
+        L.torus(hl, (gx, gy, zz), SCY_HALO_R, 0.55, (0, 0, 1), n=24, sides=3)
+        L.torus(hl, (gx, gy, zz), SCY_HALO_R * 0.80, 0.32, (0, 0, 1), n=20, sides=3)
         for k in range(8):
             a = 2 * math.pi * k / 8 + math.pi / 8
             ml.loft(hl, (math.cos(a), math.sin(a), 0.0), (gx + SCY_HALO_R * 0.80 * math.cos(a), gy + SCY_HALO_R * 0.80 * math.sin(a), zz),
@@ -225,7 +229,7 @@ def build_vassal_scythe():
     # ---- the plume: three feathers of dark violet cloth under the cuff (the accessory Naofumi made)
     pl = L.add(m, "plume", "cloth", base=SCY_COL["cloth"], smooth=20, wear=0.2)
     for (px, py, pz, lean, ln) in SCY_FEATHERS:
-        ml.bar(pl, (px, py, pz), (px + lean * ln, py - ln, pz + 0.25 * lean * ln), 3.4, 0.2, up=(0, 0, 1), taper=ln * 0.55, end_scale=0.06)
+        ml.bar(pl, (px, py, pz), (px + lean * ln, py - ln, pz + 0.25 * lean * ln), 4.8, 0.25, up=(0, 0, 1), taper=ln * 0.55, end_scale=0.06)
 
     atlas = L.lay(m)
     _paint_scythe(m, atlas, cl, wf)
@@ -263,7 +267,7 @@ def _paint_scythe(m, atlas, cl, wf):
         L.blend(c.img, (214, 220, 240), bevel * 0.85)                   # the polished cutting edge
         L.blend(c.img, (250, 252, 255), L.smoothstep(-0.46, -0.5, uf) * 0.7)
         L.blend(c.img, (74, 82, 102), np.exp(-(((uf - 0.30) / 0.03) ** 2)) * ((t > 0.11) & (t < 0.93)) * 0.65)      # a fine groove along the back of the blade
-        w.set_glow(c, SCY_GLOW, 0.55, mask=np.exp(-(((uf + 0.465) / 0.032) ** 2)) * ((t > 0.08) & (t < 0.97)) * 0.9, core=0.2)     # the violet line along the cutting edge
+        w.set_glow(c, SCY_GLOW, 0.95, mask=np.exp(-(((uf + 0.455) / 0.05) ** 2)) * ((t > 0.08) & (t < 0.97)), core=0.3)     # the violet line along the cutting edge
     w.paint_part(atlas, m.part("blade"), blade)
 
     def feathers(d):                                                    # engraved feather strokes between the rune line and the back
@@ -278,7 +282,7 @@ def _paint_scythe(m, atlas, cl, wf):
         L.decal(atlas, m.part("blade"), "z", sgn, feathers)
     L.paint_gem(atlas, m.part("gem"), SCY_COL["amethyst"], SCY_GLOW, strength=0.85, core=0.08)
     L.glow_part(atlas, m.part("blade_runes"), SCY_GLOW, 0.8, 0.05)
-    L.glow_part(atlas, m.part("disc_halo"), SCY_GLOW, 0.55, 0.05)
+    L.glow_part(atlas, m.part("disc_halo"), SCY_GLOW, 0.8, 0.1)
 
 
 # ================================================================ Vassal Katana
@@ -294,17 +298,17 @@ KAT_REAL_M = 1.66
 KAT_GRIP = 0.20
 KAT_NAGASA = 72.0                  # blade length (a real katana blade is 60 to 73 cm)
 KAT_Y_BASE = 30.6                  # where the blade leaves the habaki: pommel end 0, hilt 27 cm, guard, collar
-KAT_W0, KAT_W1 = 3.1, 2.3          # blade width at the base and at the yokote (real: about 3.0 and 2.1 cm)
-KAT_T0, KAT_T1 = 0.78, 0.55        # blade thickness (kasane) at the base and at the yokote (real: 0.7 and 0.5)
-KAT_KISSAKI = 4.6                  # length of the point
-KAT_SORI = 3.0                     # the tip is bent this far toward the edge, -x (real sori is 1 to 2.5 cm; a little more reads in the hand)
-KAT_TSUBA_R, KAT_TSUBA_T = 4.3, 0.38      # the guard: radius (real 3.5 to 4.2) and half thickness (real 0.3 to 0.5)
+KAT_W0, KAT_W1 = 4.4, 3.3          # blade width at the base and at the yokote (real: about 3.0 and 2.1 cm; 3.79.0 look pass: a broader, heavier blade that reads in the hand)
+KAT_T0, KAT_T1 = 1.05, 0.72        # blade thickness (kasane) at the base and at the yokote (real: 0.7 and 0.5)
+KAT_KISSAKI = 7.5                  # length of the point (a long o-kissaki)
+KAT_SORI = 5.2                     # the tip is bent this far toward the edge, -x (real sori is 1 to 2.5 cm; a little more reads in the hand)
+KAT_TSUBA_R, KAT_TSUBA_T = 6.4, 0.50      # the guard: radius (real 3.5 to 4.2) and half thickness (real 0.3 to 0.5)
 KAT_Y_TSUBA = 29.9
 KAT_TSUKA_Y0, KAT_TSUKA_Y1 = 1.2, 28.2    # the wrapped hilt (27 cm, a two handed grip)
 KAT_COL = dict(steel=(176, 188, 208), iron=(43, 43, 51), gold=(205, 165, 76), ito=(35, 58, 107), same=(233, 230, 221), pink=(196, 66, 124))
 KAT_GLOW = (255, 124, 178)         # the sakura pink stones' light
-KAT_GEM_Y = KAT_Y_BASE + 2.3       # the main stone sits through the gold collar, a little above the guard
-KAT_GEM_R = 1.15                   # its girdle radius (the page: about 0.04 block)
+KAT_GEM_Y = KAT_Y_BASE + 2.9       # the main stone sits through the gold collar, a little above the guard
+KAT_GEM_R = 1.9                    # its girdle radius (the page: about 0.04 block)
 
 
 def _kat_spine_x(s):
@@ -347,11 +351,11 @@ def build_vassal_katana():
     ml.sweep(bl, path, sec, scales=sc, up=(0, 0, 1))
     # ---- habaki (the blade collar) and the two washers
     hb = L.add(m, "habaki", "gold", base=KAT_COL["gold"], smooth=40, wear=0.4)
-    ml.lathe(hb, "y", (0, KAT_Y_BASE, 0), [(0.0, 1.55), (0.5, 1.75), (3.6, 1.55), (4.2, 1.35), (4.7, 1.0)], sides=12, squash=0.52)
-    ml.lathe(hb, "y", (0, KAT_Y_TSUBA + KAT_TSUBA_T, 0), [(0.0, 2.3), (0.3, 2.45), (0.5, 2.3)], sides=12, squash=0.62)
-    ml.lathe(hb, "y", (0, KAT_Y_TSUBA - KAT_TSUBA_T - 0.5, 0), [(0.0, 2.3), (0.2, 2.45), (0.5, 2.3)], sides=12, squash=0.62)
+    ml.lathe(hb, "y", (0, KAT_Y_BASE, 0), [(0.0, 2.2), (0.6, 2.5), (5.0, 2.25), (5.8, 1.95), (6.5, 1.45)], sides=12, squash=0.52)
+    ml.lathe(hb, "y", (0, KAT_Y_TSUBA + KAT_TSUBA_T, 0), [(0.0, 3.1), (0.35, 3.35), (0.6, 3.1)], sides=12, squash=0.62)
+    ml.lathe(hb, "y", (0, KAT_Y_TSUBA - KAT_TSUBA_T - 0.6, 0), [(0.0, 3.1), (0.25, 3.35), (0.6, 3.1)], sides=12, squash=0.62)
     hg = L.add(m, "habaki_gem", "crystal", base=KAT_COL["pink"], glow=True, smooth=0)               # the main stone: a pointed bicone set through the collar so it shows on both faces
-    ml.lathe(hg, "z", (0, KAT_GEM_Y, 0), [(-1.75, 0.0), (-0.3, KAT_GEM_R), (0.3, KAT_GEM_R), (1.75, 0.0)], sides=8, caps=(False, False))
+    ml.lathe(hg, "z", (0, KAT_GEM_Y, 0), [(-2.5, 0.0), (-0.4, KAT_GEM_R), (0.4, KAT_GEM_R), (2.5, 0.0)], sides=8, caps=(False, False))
     # ---- the guard: an iron five-petal blossom with a petal-shaped opening in each lobe (cut through the skin)
     ts = L.add(m, "tsuba", "iron", base=KAT_COL["iron"], smooth=35, wear=0.6)
     L.polar_prism(ts, "y", (0, KAT_Y_TSUBA, 0), KAT_TSUBA_T, _kat_sakura(KAT_TSUBA_R), n=60, bevel=0.04)
@@ -361,25 +365,35 @@ def build_vassal_katana():
             a = 2 * math.pi * k / 5 + math.pi / 2
             c, sn = math.cos(a), math.sin(a)
             y = KAT_Y_TSUBA + sgn * (KAT_TSUBA_T + 0.02)
-            ml.bar(ti, (1.0 * c, y, 1.0 * sn), (3.1 * c, y, 3.1 * sn), 1.25, 0.16, up=(0, sgn, 0), taper=0.7, end_scale=0.35)
+            ml.bar(ti, (1.5 * c, y, 1.5 * sn), (4.7 * c, y, 4.7 * sn), 1.9, 0.2, up=(0, sgn, 0), taper=1.0, end_scale=0.35)
     # ---- the hilt: ray skin under indigo lacing, a slightly oval section that swells in the middle, then the collar and the two blossom menuki
     tk = L.add(m, "tsuka_wrap", "cloth", base=KAT_COL["ito"], smooth=45, uv_mode="loft", wear=0.4)
     st = []
     for i in range(11):
         f = i / 10
         st.append((KAT_TSUKA_Y0 + (KAT_TSUKA_Y1 - KAT_TSUKA_Y0) * f, 1.0 + 0.10 * math.sin(math.pi * f) - 0.05 * f, 0.84 + 0.08 * math.sin(math.pi * f)))
-    ml.loft(tk, "y", (0, 0, 0), st, ml.circle(1.45, 12))
+    ml.loft(tk, "y", (0, 0, 0), st, ml.circle(1.85, 12))
     fu = L.add(m, "guard_collar", "gold", base=KAT_COL["gold"], smooth=40, wear=0.4)
-    ml.lathe(fu, "y", (0, KAT_TSUKA_Y1 - 0.4, 0), [(0.0, 1.55), (0.3, 1.78), (1.7, 1.78), (2.0, 1.55)], sides=12, squash=0.86)
+    ml.lathe(fu, "y", (0, KAT_TSUKA_Y1 - 0.4, 0), [(0.0, 1.95), (0.3, 2.25), (1.7, 2.25), (2.0, 1.95)], sides=12, squash=0.86)
     mk = L.add(m, "menuki", "gold", base=(236, 192, 100), smooth=30, wear=0.3)
     for sgn in (1, -1):                                                   # two small gold domes on each side of the hilt, under the lacing
         for y0 in (9.5, 17.5):
-            L.cabochon(mk, (0.0, y0, sgn * 1.15), 0.7, 0.4, axis=(0, 0, sgn), sides=6, band=0.05, steps=2)
+            L.cabochon(mk, (0.0, y0, sgn * 1.5), 0.95, 0.5, axis=(0, 0, sgn), sides=6, band=0.05, steps=2)
     # ---- the pommel: a gold cap and a second, smaller pink stone, a faceted drop, set in its end
     pc = L.add(m, "pommel_cap", "gold", base=KAT_COL["gold"], smooth=40, wear=0.4)
-    ml.lathe(pc, "y", (0, 0.0, 0), [(0.0, 1.35), (0.35, 1.6), (0.8, 1.85), (1.6, 1.8), (1.9, 1.95), (2.5, 1.95), (2.8, 1.78), (3.4, 1.6)], sides=12, squash=0.86)
+    ml.lathe(pc, "y", (0, 0.0, 0), [(0.0, 1.7), (0.35, 2.0), (0.8, 2.35), (1.6, 2.3), (1.9, 2.5), (2.5, 2.5), (2.8, 2.25), (3.4, 2.0)], sides=12, squash=0.86)
     gem = L.add(m, "pommel_gem", "crystal", base=KAT_COL["pink"], glow=True, smooth=0)
-    ml.lathe(gem, "y", (0, 0.0, 0), [(0.5, 1.15), (0.0, 1.6), (-0.8, 1.7), (-1.8, 1.3), (-2.7, 0.65), (-3.2, 0.0)], sides=8, squash=0.9)
+    ml.lathe(gem, "y", (0, 0.0, 0), [(0.5, 1.5), (0.0, 2.1), (-1.0, 2.25), (-2.4, 1.7), (-3.6, 0.85), (-4.3, 0.0)], sides=8, squash=0.9)
+    # ---- 3.79.0 look pass: gold petal langets that climb the base of the blade on both faces, and a silk cord with two tassels from the pommel
+    lg = L.add(m, "blade_langets", "gold", base=(232, 188, 96), smooth=30, wear=0.3)
+    for sgn in (1, -1):
+        for (dx, ln, wd) in ((-0.55, 13.0, 1.9), (0.75, 9.0, 1.5), (-1.55, 7.0, 1.3)):
+            ml.bar(lg, (dx, KAT_Y_BASE + 4.6, sgn * (KAT_T0 / 2 + 0.06)), (dx - 0.9 * (ln / 13.0), KAT_Y_BASE + 4.6 + ln, sgn * (KAT_T0 / 2 + 0.03)), wd, 0.22, up=(0, 0, sgn), taper=ln * 0.5, end_scale=0.08)
+    sg_ = L.add(m, "sageo", "cloth", base=KAT_COL["pink"], smooth=50, uv_mode="loft", wear=0.1)                # tied under the guard, hanging beside the hilt (inside the weapon's own length, so the placement does not move)
+    L.tube(sg_, [(2.0, KAT_TSUKA_Y1 - 1.2, 0.0), (4.2, KAT_TSUKA_Y1 - 3.0, 0.5), (5.6, KAT_TSUKA_Y1 - 7.5, 0.2), (5.9, KAT_TSUKA_Y1 - 12.0, -0.2)], 0.42, sides=5, up=(0, 0, 1))
+    L.torus(sg_, (0.0, KAT_TSUKA_Y1 - 1.2, 0.0), 2.25, 0.36, (0, 1, 0), n=12, sides=4)
+    for i, (dx, dz, ln) in enumerate(((-0.6, 0.4, 8.0), (0.1, -0.4, 10.0), (0.7, 0.3, 7.5))):
+        ml.bar(sg_, (5.9 + dx * 0.4, KAT_TSUKA_Y1 - 12.0, dz * 0.4), (5.9 + dx * 1.8, KAT_TSUKA_Y1 - 12.0 - ln, dz * 1.6), 0.9, 0.12, up=(0, 0, 1), taper=ln * 0.35, end_scale=0.45)
 
     atlas = L.lay(m)
     _paint_katana(m, atlas)
@@ -415,7 +429,9 @@ def _paint_katana(m, atlas):
         c.img[..., :3] = np.clip(col, 0, 255)
         nioi = np.exp(-(((up - hamon) / 0.05) ** 2))                                  # the soft white mist along the hardening line
         L.blend(c.img, (252, 253, 255), nioi * 0.5)
-        w.set_glow(c, KAT_GLOW, 0.4, mask=np.exp(-(((up - hamon - 0.02) / 0.05) ** 2)) * (s > 0.04) * (s < 0.97) * 0.8, core=0.2)
+        hi = np.exp(-(((up + 0.26) / 0.035) ** 2)) * (s > 0.10) * (s < 0.80)             # the groove (bo-hi) under the ridge: dark steel, lit from inside
+        L.blend(c.img, (58, 44, 70), hi * 0.85)
+        w.set_glow(c, KAT_GLOW, 0.85, mask=np.maximum(np.exp(-(((up - hamon - 0.02) / 0.06) ** 2)) * (s > 0.04) * (s < 0.97), np.exp(-(((up + 0.26) / 0.018) ** 2)) * (s > 0.10) * (s < 0.80)), core=0.3)
     w.paint_part(atlas, m.part("blade"), blade)
 
     def lacing(c):
@@ -456,16 +472,16 @@ def _paint_katana(m, atlas):
             petal = []
             for j in range(14):
                 th = 2 * math.pi * j / 14
-                lx, ly = 0.55 * math.cos(th), 0.95 * math.sin(th)          # 1.1 wide and 1.9 long, standing on the radius at 2.9 (in the valley between two inlays)
-                petal.append(((2.9 + ly) * ca - lx * sa, KAT_Y_TSUBA, (2.9 + ly) * sa + lx * ca))
+                lx, ly = 0.82 * math.cos(th), 1.4 * math.sin(th)           # standing on the radius at 4.3 (in the valley between two inlays), scaled with the 6.4 cm guard
+                petal.append(((4.3 + ly) * ca - lx * sa, KAT_Y_TSUBA, (4.3 + ly) * sa + lx * ca))
             d.polygon_m(petal, cut=True)
-            d.line_m(petal + [petal[0]], 0.2, glow=(255, 134, 179, 150))
+            d.line_m(petal + [petal[0]], 0.3, glow=(255, 134, 179, 220))
         rim = [(rim_r(2 * math.pi * j / 60) * math.cos(2 * math.pi * j / 60), KAT_Y_TSUBA, rim_r(2 * math.pi * j / 60) * math.sin(2 * math.pi * j / 60)) for j in range(61)]
-        d.line_m(rim, 0.16, rgb=(214, 172, 82, 235), glow=(255, 140, 180, 110))
+        d.line_m(rim, 0.24, rgb=(214, 172, 82, 235), glow=(255, 140, 180, 170))
     for sgn in (1, -1):
         L.decal(atlas, m.part("tsuba"), "y", sgn, tsuba_face)
-    L.paint_gem(atlas, m.part("pommel_gem"), KAT_COL["pink"], KAT_GLOW, strength=0.62, core=0.06, facets=8)
-    L.paint_gem(atlas, m.part("habaki_gem"), KAT_COL["pink"], KAT_GLOW, strength=0.75, core=0.1, facets=8)
+    L.paint_gem(atlas, m.part("pommel_gem"), KAT_COL["pink"], KAT_GLOW, strength=0.8, core=0.1, facets=8)
+    L.paint_gem(atlas, m.part("habaki_gem"), KAT_COL["pink"], KAT_GLOW, strength=0.95, core=0.18, facets=8)
 
 
 # ================================================================ Vassal Fan
@@ -485,8 +501,8 @@ FAN_LEAF_IN = 5.2                  # the leaf starts this far from the pivot; be
 FAN_PLEAT = 0.45                   # the leaf zig-zags this far (cm) either side of its plane between the ribs, like a folded fan
 FAN_PIVOT = (0.0, 2.8)             # the pivot (kaname)
 FAN_HANDLE_Y0 = -16.0
-FAN_TEETH = 33                     # small steel serrations along the top arc, one every five degrees
-FAN_COL = dict(ink=(21, 21, 27), steel=(154, 163, 173), face=(217, 228, 236), silver=(197, 206, 216), tassel=(179, 32, 42), petal=(247, 221, 230), jewel=(34, 150, 196))
+FAN_TEETH = 21                     # steel teeth along the top arc, one every eight degrees (3.79.0: fewer and larger, so the rim reads as a blade)
+FAN_COL = dict(ink=(21, 21, 27), steel=(170, 180, 194), face=(30, 34, 66), silver=(197, 206, 216), tassel=(179, 32, 42), petal=(247, 221, 230), jewel=(34, 150, 196))
 FAN_GLOW = (92, 225, 255)          # the spirit cyan jewel's light
 
 
@@ -538,26 +554,26 @@ def build_vassal_fan():
     rb = L.add(m, "fan_ribs", "obsidian", base=FAN_COL["ink"], smooth=40, uv_mode="loft", wear=0.3)
     for k in range(1, FAN_STICKS - 1):
         d = _fan_dir(_fan_angle(k))
-        ml.loft(rb, d, (px, py, _fan_z(k)), [(1.0, 0.9, 0.45), (FAN_R - 2.0, 1.5, 0.5), (FAN_R + 0.6, 1.8, 0.5), (FAN_R + 1.3, 1.5, 0.45), (FAN_R + 1.9, 0.5, 0.3)], ml.octagon(1.0, 1.0, 0.22))
+        ml.loft(rb, d, (px, py, _fan_z(k)), [(1.0, 1.1, 0.5), (FAN_R - 2.0, 1.9, 0.55), (FAN_R + 0.8, 2.4, 0.55), (FAN_R + 3.0, 1.7, 0.45), (FAN_R + 6.5, 0.25, 0.2)], ml.octagon(1.0, 1.0, 0.22))
     # ---- a thin silver band along the rim of the leaf, so the half disc has a bright outline
     rm_ = L.add(m, "leaf_rim", "silver", base=FAN_COL["silver"], smooth=45, uv_mode="loft", wear=0.3)
-    L.tube(rm_, [(px + (FAN_R + 0.05) * math.sin(ph), py + (FAN_R + 0.05) * math.cos(ph), 0.0) for ph in np.linspace(-FAN_HALF * 0.99, FAN_HALF * 0.99, 26)], 0.6, sides=5, up=(0, 0, 1))
+    L.tube(rm_, [(px + (FAN_R + 0.05) * math.sin(ph), py + (FAN_R + 0.05) * math.cos(ph), 0.0) for ph in np.linspace(-FAN_HALF * 0.99, FAN_HALF * 0.99, 26)], 0.9, sides=5, up=(0, 0, 1))
     # ---- the two outer sticks: sharpened steel blades (a flat-ground double edge), ending in a point
     gd = L.add(m, "fan_guards", "steel", base=FAN_COL["steel"], smooth=30, uv_mode="loft", wear=0.3)
     for k in (0, FAN_STICKS - 1):
         d = _fan_dir(_fan_angle(k))
-        ml.loft(gd, d, (px, py, 0.0), [(-1.0, 2.6, 1.4), (FAN_R * 0.5, 3.2, 1.5), (FAN_R + 0.6, 3.5, 1.4), (FAN_R + 2.6, 2.6, 1.1), (FAN_R + 5.2, 0.4, 0.5)], ml.bevelled(1.0, 1.0, 0.5))
+        ml.loft(gd, d, (px, py, 0.0), [(-1.0, 3.6, 1.7), (FAN_R * 0.5, 5.0, 1.9), (FAN_R + 0.6, 5.8, 1.7), (FAN_R + 5.0, 4.0, 1.2), (FAN_R + 12.0, 0.4, 0.5)], ml.bevelled(1.0, 1.0, 0.5))
     # ---- the serrations: small steel teeth standing out of the rim along the top arc, between the ribs
     tt = L.add(m, "fan_teeth", "steel", base=FAN_COL["steel"], smooth=20, wear=0.3)
     for i in range(FAN_TEETH):
         ph = -math.radians(80.0) + math.radians(160.0) * i / (FAN_TEETH - 1)
         d = _fan_dir(ph)
-        L.spike(tt, (px + (FAN_R - 0.2) * d[0], py + (FAN_R - 0.2) * d[1], 0.0), d, 2.5, 0.85, sides=3, r_tip=0.0)
+        L.spike(tt, (px + (FAN_R - 0.2) * d[0], py + (FAN_R - 0.2) * d[1], 0.0), d, 4.6, 1.5, sides=3, r_tip=0.0)
     # ---- the pivot: a steel collar with the jewel set through it
     pp = L.add(m, "pivot_plate", "steel", base=FAN_COL["silver"], smooth=40, wear=0.4)
-    ml.lathe(pp, "z", (px, py, 0.0), [(-1.7, 3.0), (-1.3, 4.3), (-0.4, 4.6), (0.4, 4.6), (1.3, 4.3), (1.7, 3.0)], sides=16)
+    ml.lathe(pp, "z", (px, py, 0.0), [(-2.1, 4.2), (-1.6, 5.9), (-0.5, 6.3), (0.5, 6.3), (1.6, 5.9), (2.1, 4.2)], sides=16)
     gem = L.add(m, "pivot_gem", "crystal", base=FAN_COL["jewel"], glow=True, smooth=0)
-    w.ellipsoid(gem, (px, py, 0.0), 2.7, 2.7, 3.4, sides=12, stacks=8)
+    w.ellipsoid(gem, (px, py, 0.0), 3.9, 3.9, 4.4, sides=12, stacks=8)
     # ---- the handle: lacquer wrapped in cord, with silver rings, widening toward the pivot
     hd = L.add(m, "handle", "obsidian", base=FAN_COL["ink"], smooth=50, uv_mode="loft", wear=0.3)
     ml.lathe(hd, "y", (0, FAN_HANDLE_Y0, 0), [(0.0, 1.1), (0.7, 1.55), (3.0, 1.65), (8.0, 1.85), (13.0, 2.1), (16.0, 2.3), (18.0, 2.5), (19.3, 2.2)], sides=10, squash=0.82)
@@ -603,22 +619,23 @@ def _paint_fan(m, atlas):
         pleat = np.where((np.floor(u).astype(int) % 2) == 0, 1.0, -1.0)
         fibre = w.noise2(c.img.shape[:2], 1.6, 31) - 0.5
         weave = w.noise2(c.img.shape[:2], 5.0, 32) - 0.5
-        shade = 1.0 + 0.07 * pleat * (1 - fold) - 0.10 * (1 - fold) ** 2 + 0.05 * fibre + 0.04 * weave + 0.05 * np.clip((r - 14.0) / 30.0, 0, 1)
-        col = face[None, None, :] * shade[..., None]
+        shade = 1.0 + 0.16 * pleat * (1 - fold) - 0.18 * (1 - fold) ** 2 + 0.10 * fibre + 0.08 * weave
+        rimward = np.clip((r - 10.0) / (FAN_R - 10.0), 0, 1)[..., None]                     # midnight at the pivot, a deep violet-blue toward the rim
+        col = (face[None, None, :] * (1 - rimward) + np.array([58, 44, 122], np.float32)[None, None, :] * rimward) * shade[..., None]
         c.img[..., :3] = np.clip(col, 0, 255)
     w.paint_part(atlas, m.part("fan_leaf"), paper)
 
     def embroidery(d):
-        sil, sg = (176, 190, 208, 235), (110, 230, 255, 70)
+        sil, sg = (214, 226, 244, 255), (110, 230, 255, 170)
         pink, pink_edge = (247, 221, 230, 255), (176, 150, 170, 255)
         R = FAN_R
 
         def arc(r, a0, a1, n=48):
             return [(px + r * math.sin(a0 + (a1 - a0) * i / n), py + r * math.cos(a0 + (a1 - a0) * i / n)) for i in range(n + 1)]
-        for r, wcm in ((R - 2.2, 0.36), (R - 3.5, 0.18), (FAN_LEAF_IN + 5.0, 0.2)):                     # the double border and a fine ring near the pivot
+        for r, wcm in ((R - 2.2, 0.55), (R - 3.7, 0.28), (R - 5.0, 0.16), (FAN_LEAF_IN + 5.0, 0.3)):                     # the double border and a fine ring near the pivot
             d.line(arc(r, -FAN_HALF + 0.05, FAN_HALF - 0.05), wcm, rgb=sil, glow=sg)
         pts, twigs = _fan_branch()
-        d.line([(p[0], p[1]) for p in pts], 0.62, rgb=(108, 124, 150, 255), glow=sg)               # the branch, in silver thread
+        d.line([(p[0], p[1]) for p in pts], 0.8, rgb=(176, 190, 214, 255), glow=sg)                # the branch, in silver thread
         d.line([(p[0] + 0.05, p[1] + 0.25) for p in pts], 0.2, rgb=(214, 224, 238, 220))
         blossoms = []
         for t in (0.07, 0.20, 0.50, 0.74, 0.97):
@@ -677,10 +694,10 @@ def _paint_fan(m, atlas):
         L.blend(c.img, (244, 248, 255), edge * 0.9)
     w.paint_part(atlas, m.part("fan_guards"), blade)
     w.paint_part(atlas, m.part("fan_teeth"), blade)
-    w.paint_part(atlas, m.part("leaf_rim"), lambda c: (L.shade_img(c.img, 1.0), w.set_glow(c, FAN_GLOW, 0.10, mask=np.full(c.img.shape[:2], 0.6, np.float32), core=0.0)))
-    L.paint_gem(atlas, m.part("pivot_gem"), FAN_COL["jewel"], FAN_GLOW, strength=0.8, core=0.25, facets=12)
+    w.paint_part(atlas, m.part("leaf_rim"), lambda c: (L.shade_img(c.img, 1.0), w.set_glow(c, FAN_GLOW, 0.5, mask=np.full(c.img.shape[:2], 0.8, np.float32), core=0.1)))
+    L.paint_gem(atlas, m.part("pivot_gem"), FAN_COL["jewel"], FAN_GLOW, strength=0.95, core=0.3, facets=12)
     L.paint_gem(atlas, m.part("charm_bead"), FAN_COL["jewel"], FAN_GLOW, strength=0.8, core=0.25, facets=10)
-    L.glow_part(atlas, m.part("pivot_plate"), FAN_GLOW, 0.12, 0.05)                           # a soft ring of light round the collar
+    L.glow_part(atlas, m.part("pivot_plate"), FAN_GLOW, 0.22, 0.05)                           # a soft ring of light round the collar
 
 
 # ================================================================ Vassal Carriage
@@ -716,8 +733,10 @@ CAR_CANOPY_U = (58.0, CAR_TOP_U)   # the canopy's rim to its top: a dome 11.6 cm
 CAR_CANOPY_PLAN = (86.0, 62.0, 15.0)     # its length, width and corner radius (with the rim's 3.5 % flare it spans y = 0 to 89: flush with the tail, 5 cm over the dash)
 CAR_LIP = 2.4                      # the straight rim band before the dome begins (painted gold)
 CAR_PLUME_U, CAR_PLUME_F, CAR_PLUME_Z = 63.8, 75.0, 24.0         # where the two plumes root: on the canopy's front corners (the dome is 64 cm high there)
-CAR_FEATHERS = ((-14.0, 24.0, 6.2), (8.0, 30.0, 6.8), (30.0, 22.0, 6.0))      # each plume: three feathers (lean from upright in degrees, length, width in cm); a lean is toward the nose
+CAR_FEATHERS = ((-14.0, 30.0, 7.4), (8.0, 36.0, 8.2), (30.0, 27.0, 7.2))      # each plume: three feathers (lean from upright in degrees, length, width in cm); a lean is toward the nose
+CAR_SPOKES = 12                    # 3.79.0: spokes per wheel (the painter reads this too)
 CAR_FEATHER_T, CAR_FEATHER_GAP = 1.6, 1.7        # a feather is 1.6 cm thick (the floor of the model is 1.44), stacked 1.7 cm apart so they do not fight
+CAR_FENDERS = set()                # ids of the mudguards' loft records: the painter lights a line along them
 CABIN_START = {}                   # how far along the cabin wall each of its three sweeps starts (cm), by the sweep's loft record: the painter needs it to run a pattern on across the joints
 CAR_MIN = 0.012 * CAR_L            # 1.44 cm: nothing is thinner than this
 CAR_COL = dict(ivory=(242, 235, 214), gold=(216, 169, 58), blue=(47, 75, 134), walnut=(107, 68, 41), plume=(255, 255, 255), sky=(112, 172, 232), amber=(255, 194, 71))
@@ -764,10 +783,10 @@ def _car_wheel(m, name, zc):
     wp = L.add(m, name, "wood", base=CAR_COL["walnut"], smooth=40, wear=0.35)
     ring = [(cx + (R - 1.9) * math.cos(a), cy + (R - 1.9) * math.sin(a), zc) for a in np.linspace(0, 2 * math.pi, 21)]
     ml.sweep(wp, ring, [(-0.5, -0.5), (0.5, -0.5), (0.5, 0.5), (-0.5, 0.5)], scales=lambda t: (3.8, CAR_WHEEL_T), caps=(False, False), up=(0, 0, 1))      # felloe 3.8 deep, 5.0 wide
-    for k in range(8):
-        a = 2 * math.pi * k / 8 + math.pi / 8
-        ml.loft(wp, (math.cos(a), math.sin(a), 0.0), (cx, cy, zc), [(2.5, 2.8, 2.0), (R - 3.0, 2.2, 1.6)], ml.rect_ring(1.0, 1.0), caps=(False, False), up=(0, 0, 1))
-    ml.lathe(wp, "z", (cx, cy, zc), [(-2.9, 3.0), (-2.2, 4.6), (2.2, 4.6), (2.9, 3.0)], sides=10)
+    for k in range(CAR_SPOKES):                                    # 3.79.0: twelve spokes (was eight), a little heavier
+        a = 2 * math.pi * k / CAR_SPOKES + math.pi / CAR_SPOKES
+        ml.loft(wp, (math.cos(a), math.sin(a), 0.0), (cx, cy, zc), [(3.0, 3.2, 2.2), (R - 3.0, 2.5, 1.7)], ml.rect_ring(1.0, 1.0), caps=(False, False), up=(0, 0, 1))
+    ml.lathe(wp, "z", (cx, cy, zc), [(-3.2, 3.6), (-2.4, 6.2), (2.4, 6.2), (3.2, 3.6)], sides=12)
     sgn = 1.0 if zc > 0 else -1.0
     ml.lathe(wp, "z", (cx, cy, zc + sgn * 2.4), [(0.0, 2.9), (sgn * 0.45, 2.5), (sgn * 0.9, 0.0)], sides=10)
     return wp
@@ -816,6 +835,19 @@ def build_vassal_carriage():
     ps = L.add(m, "posts", "gold", base=CAR_COL["gold"], smooth=45, uv_mode="loft", wear=0.35)
     for (pf, pz, u0) in ((6.0, -26.0, CAR_POST_U[0]), (6.0, 26.0, CAR_POST_U[0]), (72.0, -21.9, CAR_POST_U[2]), (72.0, 21.9, CAR_POST_U[2])):     # each stands on the wall's centre line
         ml.loft(ps, CAR_UP, _up(u0, pf, pz), [(0.0, 1.0, 1.0), (CAR_POST_U[1] - u0, 1.0, 1.0)], ml.circle(1.8, 8), caps=(False, False))
+    # 3.79.0: a gold mudguard arching over each wheel (outside the cabin, inside the width over the wheels) with three stays, and a crown of eight prongs round the roof jewel
+    fr = CAR_WHEEL_R + 3.2
+    for sgn in (1, -1):
+        zf = sgn * CAR_WHEEL_Z
+        arc = [(-(CAR_WHEEL_R + fr * math.sin(a)), CAR_AXLE_F + fr * math.cos(a), zf) for a in np.radians(np.linspace(-32.0, 212.0, 15))]
+        CAR_FENDERS.add(id(ml.sweep(ps, arc, ml.rounded_rect(1.0, 1.0, 0.3, 1), scales=lambda t: (1.4, 6.0), caps=(True, True), up=(0, 0, 1)).record))
+        for aa in (-32.0, 90.0, 212.0):
+            a = math.radians(aa)
+            L.rod(ps, (-(CAR_WHEEL_R + fr * math.sin(a)), CAR_AXLE_F + fr * math.cos(a), zf), _up(CAR_FLOOR_U[1] + 8.0 + (14.0 if aa == 90.0 else 0.0), CAR_AXLE_F + fr * math.cos(a), sgn * (CAR_BODY_HW + 1.0)), 1.0, 1.0, sides=5)
+    for k in range(8):
+        a = 2 * math.pi * k / 8
+        L.spike(ps, _up(CAR_TOP_U - 0.4, CAR_CANOPY_F + 4.6 * math.cos(a), 4.6 * math.sin(a)), (-1.0, 0.45 * math.cos(a), 0.45 * math.sin(a)), 6.0, 0.9, sides=4)
+    L.torus(ps, _up(CAR_TOP_U - 0.2, CAR_CANOPY_F, 0.0), 4.7, 0.8, (1, 0, 0), n=14, sides=5)
     cn = L.add(m, "canopy", "bone", base=CAR_COL["ivory"], smooth=40, wear=0.2)
     ml.loft(cn, CAR_UP, _up(CAR_CANOPY_U[0], CAR_CANOPY_F, 0.0), _canopy_profile(), ml.rounded_rect(CAR_CANOPY_PLAN[0], CAR_CANOPY_PLAN[1], CAR_CANOPY_PLAN[2], 4))
     # ---- the benches: the driver's in the middle ahead, the rear bench for two with a back; deep blue upholstery
@@ -838,15 +870,15 @@ def build_vassal_carriage():
     ln = L.add(m, "lantern", "gold", base=CAR_COL["gold"], smooth=40, wear=0.3)
     lf, lu = 94.0, 50.0
     L.tube(ln, [_up(CAR_CANOPY_U[0] + 3.0, 86.0, 0.0), _up(CAR_CANOPY_U[0] + 5.0, 90.0, 0.0), _up(lu + 11.0, lf, 0.0)], 1.5, sides=6, up=CAR_UP)
-    ml.lathe(ln, CAR_UP, _up(lu - 1.4, lf, 0.0), [(0.0, 2.6), (1.4, 3.8), (1.9, 3.5)], sides=8)                         # the base plate of the cage
-    ml.lathe(ln, CAR_UP, _up(lu + 9.0, lf, 0.0), [(0.0, 3.6), (1.2, 4.2), (3.4, 0.0)], sides=8)                          # the roof cap
+    ml.lathe(ln, CAR_UP, _up(lu - 1.4, lf, 0.0), [(0.0, 3.2), (1.4, 4.7), (1.9, 4.4)], sides=8)                         # the base plate of the cage
+    ml.lathe(ln, CAR_UP, _up(lu + 9.0, lf, 0.0), [(0.0, 4.5), (1.2, 5.2), (4.6, 0.0)], sides=8)                          # the roof cap
     for k in range(4):
         a = 2 * math.pi * k / 4 + math.pi / 4
-        L.rod(ln, _up(lu + 0.4, lf + 3.2 * math.cos(a), 3.2 * math.sin(a)), _up(lu + 9.4, lf + 3.2 * math.cos(a), 3.2 * math.sin(a)), 0.9, 0.9, sides=5)    # four corner bars
+        L.rod(ln, _up(lu + 0.4, lf + 4.1 * math.cos(a), 4.1 * math.sin(a)), _up(lu + 9.4, lf + 4.1 * math.cos(a), 4.1 * math.sin(a)), 1.0, 1.0, sides=5)    # four corner bars
     # ---- the jewels: a faceted amber stone in the lantern and one on the roof (the series puts the weapon's jewel there)
     gm = L.add(m, "gem", "crystal", base=CAR_COL["amber"], glow=True, smooth=0, uv_mode="loft")
-    L.bicone(gm, _up(lu + 4.7, lf, 0.0), 2.7, 4.0, sides=8, axis=CAR_UP)
-    ml.lathe(gm, CAR_UP, _up(CAR_TOP_U - 0.6, CAR_CANOPY_F, 0.0), [(-1.6, 0.0), (0.0, 2.6), (1.4, 3.5), (2.8, 3.5), (4.6, 2.2), (6.8, 0.0)], sides=8, caps=(False, False))
+    L.bicone(gm, _up(lu + 4.7, lf, 0.0), 3.5, 5.2, sides=8, axis=CAR_UP)
+    ml.lathe(gm, CAR_UP, _up(CAR_TOP_U - 0.6, CAR_CANOPY_F, 0.0), [(-1.6, 0.0), (0.0, 3.2), (1.4, 4.2), (2.8, 4.2), (5.2, 2.6), (8.0, 0.0)], sides=8, caps=(False, False))
     gc = L.add(m, "plumes", "cloth", base=CAR_COL["plume"], smooth=25, uv_mode="loft", wear=0.2)                          # the feathers stand on the front posts
     for sgn in (1, -1):
         for k, (ang, ln_, wd) in enumerate(CAR_FEATHERS):
@@ -936,8 +968,9 @@ def _paint_carriage(m, atlas):
             if c.g.key[0] == 2:
                 r = np.hypot(X - cxw, Y - cyw)
                 ang = np.arctan2(Y - cyw, X - cxw)
-                ph = np.mod(ang - math.radians(22.5), math.pi / 4)
-                dsp = r * np.sin(np.minimum(ph, math.pi / 4 - ph))              # cm from the axis of the nearest spoke
+                step = 2 * math.pi / CAR_SPOKES
+                ph = np.mod(ang - step / 2, step)
+                dsp = r * np.sin(np.minimum(ph, step - ph))              # cm from the axis of the nearest spoke
                 grain = 0.5 + 0.5 * np.sin(r * 1.9 + n * 7.0)
                 wood = walnut[None, None, :] * (0.78 + 0.26 * grain + 0.30 * n + 0.18 * (1.0 - np.clip(dsp / 1.6, 0, 1)))[..., None]
                 fel = L.smoothstep(R - 3.95, R - 3.75, r)[..., None]
@@ -946,14 +979,14 @@ def _paint_carriage(m, atlas):
                 bevel = np.maximum(_band(r - (R - 0.5), 0.34), _band(r - (R - 3.3), 0.30))
                 groove = _band(r - (R - 1.9), 0.42)
                 col = col * (1 - 0.55 * groove[..., None] * fel) + gold_hi[None, None, :] * (0.55 * bevel[..., None] * fel)
-                hub = L.smoothstep(4.95, 4.7, r)[..., None]
+                hub = L.smoothstep(6.55, 6.3, r)[..., None]
                 hub_col = gold[None, None, :] * (0.95 + 0.25 * n)[..., None]
-                ring = np.maximum(_band(r - 3.05, 0.3), _band(r - 4.55, 0.25))
+                ring = np.maximum(_band(r - 3.9, 0.3), _band(r - 6.0, 0.25))
                 hub_col = hub_col * (1 - 0.5 * ring[..., None]) + gold_hi[None, None, :] * (0.25 * _band(r - 1.6, 0.35)[..., None])
                 col = col * (1 - hub) + hub_col * hub
                 c.img[..., :3] = np.clip(col, 0, 255)
                 if c.g.key[1] == (1 if zc > 0 else -1):                          # the hub cap on the outer face holds a faint amber light
-                    shine(c, CAR_GLOW, L.smoothstep(2.9, 1.6, r), 0.30)
+                    shine(c, CAR_GLOW, L.smoothstep(3.3, 1.8, r), 0.7)
             else:
                 dz = np.abs(Z - zc)
                 gold_col = gold[None, None, :] * (0.90 + 0.34 * n)[..., None]
@@ -1020,6 +1053,9 @@ def _paint_carriage(m, atlas):
             ends = np.minimum(c.B, c.g.ext[1] - c.B)
             mix(c, gold_hi, _band(ends - 1.1, 0.5), 0.8)
             mix(c, gold_lo, _band(ends - 2.1, 0.25), 0.6)
+        if c.kind == "loft" and id(c.g.origin) in CAR_FENDERS:                   # a lit amber line down the middle of each broad face of a mudguard
+            seg, u, ln = L.ring_coords(c)
+            shine(c, CAR_GLOW, (ln > 4.0) * _band(u - ln / 2, 0.8, 0.3), 0.55)
     w.paint_part(atlas, m.part("posts"), posts)
 
     # ---------------------------------------------------------------- the cabin: outer wall ivory with two gold beads and a vine of light, inner wall blue padding
@@ -1160,7 +1196,7 @@ def _paint_carriage(m, atlas):
     w.paint_part(atlas, m.part("plumes"), feathers)
 
     # ---------------------------------------------------------------- the jewels: faceted amber, the strongest light of the glow skin
-    L.paint_gem(atlas, m.part("gem"), CAR_JEWEL, CAR_GLOW, strength=0.55, core=0.06, facets=8)
+    L.paint_gem(atlas, m.part("gem"), CAR_JEWEL, CAR_GLOW, strength=0.85, core=0.1, facets=8)
 
 
 # ================================================================ Vassal Book
@@ -1176,10 +1212,10 @@ BOOK_H, BOOK_W, BOOK_T = 36.0, 26.0, 8.5       # a large spellbook: 36 cm tall, 
 BOOK_BOARD = 0.9                               # a cover board's thickness
 BOOK_OVER = 0.7                                # the boards stand this far beyond the pages on three sides
 BOOK_FRAME_INSET = 2.0                         # the raised gold frame on the front cover
-BOOK_GEM_R, BOOK_GEM_H = 4.1, 2.6              # the sapphire: radius of its base and height of its dome
+BOOK_GEM_R, BOOK_GEM_H = 5.0, 3.6              # the sapphire: radius of its base and height of its dome
 BOOK_GEM_AT = (0.6, 21.0)                      # the jewel on the front cover (x from the middle, y up from the foot): above the middle, the emblem has room below it
-BOOK_STAR_OUT, BOOK_STAR_IN = 9.2, 6.2         # the gold star the jewel sits in: radius over its eight points and between them
-BOOK_CORNER = 5.2                              # a corner cap's leg length
+BOOK_STAR_OUT, BOOK_STAR_IN = 9.6, 6.8         # the gold star the jewel sits in: radius over its eight points and between them
+BOOK_CORNER = 7.0                              # a corner cap's leg length
 BOOK_THIRD = 0.72                              # third person display scale (upright items use 0.55; a heavy tome is drawn larger)
 BOOK_VIEW_H = 0.78                             # the cover is drawn this tall (blocks) in the item cube; the loose pages and the ribbon stand out beyond it
 BOOK_COL = dict(teal=(31, 59, 82), teal_dark=(24, 46, 66), gold=(201, 162, 74), page=(239, 230, 207), ribbon=(166, 35, 46), strap=(58, 42, 32), sapphire=(40, 112, 240))
@@ -1220,25 +1256,33 @@ def build_vassal_book():
     sb = L.add(m, "spine_bands", "gold", base=gold, smooth=40, wear=0.4)
     for k in range(4):
         y = BOOK_H * (0.14 + 0.24 * k)
-        ml.lathe(sb, "y", (x0 + 0.5, y - 0.6, 0.0), [(0.0, 2.5), (0.3, 2.72), (0.9, 2.72), (1.2, 2.5)], sides=14, squash=BOOK_T / 2 / 2.4 * 1.0, caps=(False, False))
+        ml.lathe(sb, "y", (x0 + 0.5, y - 0.9, 0.0), [(0.0, 2.5), (0.4, 2.9), (1.4, 2.9), (1.8, 2.5)], sides=14, squash=BOOK_T / 2 / 2.4 * 1.0, caps=(False, False))
+    for y in (1.0, BOOK_H - 1.8):                                              # 3.79.0: a broad gold cap at head and foot of the spine
+        ml.lathe(sb, "y", (x0 + 0.5, y, 0.0), [(0.0, 2.5), (0.5, 3.0), (1.3, 3.0), (1.8, 2.5)], sides=14, squash=BOOK_T / 2 / 2.4 * 1.0, caps=(False, False))
     # ---- the four gilded corner caps and the raised gold frame on the front cover
     cc = L.add(m, "corner_caps", "gold", base=gold, smooth=35, wear=0.5)
     tri = lambda sx, sy: [(0.0, 0.0), (sx * BOOK_CORNER, 0.0), (0.0, sy * BOOK_CORNER)]
     for (cx_, cy_, sx, sy) in ((x0 - 0.1, BOOK_H, 1, -1), (x1 + BOOK_OVER, BOOK_H, -1, -1), (x0 - 0.1, 0.0, 1, 1), (x1 + BOOK_OVER, 0.0, -1, 1)):
         pts = tri(sx, sy) if sx * sy < 0 else tri(sx, sy)[::-1]
-        ml.loft(cc, "z", (cx_, cy_, zf - 0.02), [0.0, 0.42], pts)
+        ml.loft(cc, "z", (cx_, cy_, zf - 0.02), [0.0, 0.7], pts)
+        L.spike(cc, (cx_ + sx * 2.2, cy_ + sy * 2.2, zf + 0.6), (0.0, 0.0, 1.0), 1.4, 0.8, sides=6, r_tip=0.25)             # 3.79.0: a domed boss on every corner cap
     fr = L.add(m, "cover_frame", "gold", base=gold, smooth=40, wear=0.4)
     a = BOOK_FRAME_INSET
     fp = [(x0 + a + 0.6, a, zf), (x1 - a + 0.4, a, zf), (x1 - a + 0.4, BOOK_H - a, zf), (x0 + a + 0.6, BOOK_H - a, zf)]
     for i in range(4):
         ml.bar(fr, fp[i], fp[(i + 1) % 4], 0.7, 0.2, up=(0, 0, 1), section="rect")
+    a2 = BOOK_FRAME_INSET + 1.9                                                # 3.79.0: a second, finer frame inside the first
+    fp2 = [(x0 + a2 + 0.6, a2, zf), (x1 - a2 + 0.4, a2, zf), (x1 - a2 + 0.4, BOOK_H - a2, zf), (x0 + a2 + 0.6, BOOK_H - a2, zf)]
+    for i in range(4):
+        ml.bar(fr, fp2[i], fp2[(i + 1) % 4], 0.36, 0.14, up=(0, 0, 1), section="rect")
     # ---- the gold eight-point star the jewel sits in, with a ring round the stone and eight small prongs over its edge
     gs = L.add(m, "gem_mount", "gold", base=(222, 184, 92), smooth=45, wear=0.3)
     L.polar_prism(gs, "z", (gx, gy, zf + 0.22), 0.3, lambda th: BOOK_STAR_IN + (BOOK_STAR_OUT - BOOK_STAR_IN) * (0.5 + 0.5 * math.cos(8.0 * th)) ** 2.2, n=64, bevel=0.04)
-    L.torus(gs, (gx, gy, zf + 0.6), BOOK_GEM_R + 0.35, 0.65, (0, 0, 1), n=18, sides=5)
+    L.torus(gs, (gx, gy, zf + 0.6), BOOK_GEM_R + 0.35, 0.75, (0, 0, 1), n=20, sides=5)
+    L.torus(gs, (gx, gy, zf + 0.45), BOOK_STAR_IN + 0.2, 0.45, (0, 0, 1), n=24, sides=4)               # 3.79.0: a second ring where the star's points start
     for k in range(8):
         ang = 2 * math.pi * k / 8 + math.pi / 8
-        L.spike(gs, (gx + (BOOK_GEM_R + 0.45) * math.cos(ang), gy + (BOOK_GEM_R + 0.45) * math.sin(ang), zf + 0.5), (-0.5 * math.cos(ang), -0.5 * math.sin(ang), 1.0), 2.1, 0.52, sides=3, r_tip=0.2)
+        L.spike(gs, (gx + (BOOK_GEM_R + 0.45) * math.cos(ang), gy + (BOOK_GEM_R + 0.45) * math.sin(ang), zf + 0.5), (-0.5 * math.cos(ang), -0.5 * math.sin(ang), 1.0), 3.0, 0.62, sides=3, r_tip=0.2)
     # ---- the quill-and-feather emblem under the star: a raised feather with its quill, and one small feather crossing it
     em = L.add(m, "emblem", "gold", base=(214, 176, 82), smooth=40, wear=0.4)
     _book_feather(em, (gx - 6.6, 6.0), 12.0, 13.2, 3.5, zf + 0.12)
@@ -1250,7 +1294,7 @@ def build_vassal_book():
     cl = L.add(m, "clasp_strap", "leather", base=BOOK_COL["strap"], smooth=30, wear=0.5)
     sx0, sy0, sz = x1 + BOOK_OVER, BOOK_H * 0.70, zf - 0.55
     strap = [(sx0 - 0.4, sy0), (sx0 + 1.2, sy0 + 0.1), (sx0 + 2.6, sy0 - 1.5), (sx0 + 3.2, sy0 - 4.6), (sx0 + 3.2, sy0 - 8.6), (sx0 + 2.8, sy0 - 12.6), (sx0 + 2.3, sy0 - 15.6)]
-    ml.sweep(cl, [(px_, py_, sz) for (px_, py_) in strap], ml.rect_ring(1.0, 1.0), scales=[(0.4, 2.7)] * len(strap), up=(0, 0, 1))
+    ml.sweep(cl, [(px_, py_, sz) for (px_, py_) in strap], ml.rect_ring(1.0, 1.0), scales=[(0.45, 3.4)] * len(strap), up=(0, 0, 1))
     bx, by = strap[-1][0] + 0.15, strap[-1][1] - 1.6                            # the buckle: a gold frame lying in the strap's plane, with its tongue
     bk = L.add(m, "buckle", "gold", base=gold, smooth=35, wear=0.4)
     fz = 1.75
@@ -1308,7 +1352,7 @@ def _paint_book(m, atlas, centre):
         # the rune ring: sixteen ticks round the star, glowing, and a thin glowing circle outside them
         for k in range(16):
             ang = math.radians(k * 22.5 + 11.25)
-            r0, r1 = 10.0, 11.1
+            r0, r1 = 10.4, 11.6
             d.line_m([(cx0 + r0 * math.cos(ang), cy0 + r0 * math.sin(ang), z), (cx0 + r1 * math.cos(ang), cy0 + r1 * math.sin(ang), z)], 0.3, rgb=(120, 190, 255, 255), glow=(90, 170, 255, 235))
         d.line_m([(cx0 + 11.7 * math.cos(2 * math.pi * k / 48), cy0 + 11.7 * math.sin(2 * math.pi * k / 48), z) for k in range(49)], 0.26, rgb=(120, 190, 255, 220), glow=(90, 170, 255, 170))
         # four channels from the ring to the corner caps, with a node halfway: the way the book draws materials in
@@ -1348,8 +1392,8 @@ def _paint_book(m, atlas, centre):
     def pages(c):
         n = np.sin(c.B * 11.0 + c.A * 0.15)[..., None] * 9
         base = np.array(BOOK_COL["page"], np.float32) * (0.94 + 0.1 * (w.noise2(c.img.shape[:2], 3, 63)[..., None] - 0.5))
-        c.img[..., :3] = np.clip(base + n, 0, 255)
-        w.set_glow(c, (255, 214, 140), 0.07, mask=np.full(c.img.shape[:2], 0.6, np.float32), core=0.0)      # the page block's edge: a very faint warm light
+        c.img[..., :3] = np.clip(base * np.array([0.99, 0.95, 0.80], np.float32) + n, 0, 255)                  # 3.79.0: gilt page edges
+        w.set_glow(c, (255, 214, 140), 0.16, mask=np.full(c.img.shape[:2], 0.6, np.float32), core=0.0)      # the page block's edge: a very faint warm light
     w.paint_part(atlas, m.part("pages"), pages)
 
     def spine(c):
@@ -1390,9 +1434,9 @@ def _paint_book(m, atlas, centre):
         L.blend(c.img, (70, 78, 96), line * 0.75)
         w.set_glow(c, BOOK_PAGE_GLOW, 0.55, mask=line.astype(np.float32) * 0.9, core=0.25)
     w.paint_part(atlas, m.part("loose_pages"), sheets)
-    L.glow_part(atlas, m.part("gem_mount"), (255, 214, 140), 0.14, 0.05)
-    L.glow_part(atlas, m.part("cover_frame"), (255, 214, 140), 0.10, 0.05)
-    L.paint_gem(atlas, m.part("gem"), BOOK_COL["sapphire"], BOOK_GLOW, strength=0.85, core=0.2, facets=1)
+    L.glow_part(atlas, m.part("gem_mount"), (255, 214, 140), 0.3, 0.1)
+    L.glow_part(atlas, m.part("cover_frame"), (255, 214, 140), 0.2, 0.08)
+    L.paint_gem(atlas, m.part("gem"), BOOK_COL["sapphire"], BOOK_GLOW, strength=1.0, core=0.3, facets=1)
 
     def emblem_barbs(d):                                                          # fine barbs on the two raised feathers: short dark strokes slanting away from the rachis
         if d.g.key[0] != 2:

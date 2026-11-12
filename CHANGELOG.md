@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.79.0] — the hero weapons look better: all 21 remodelled
+- REPLACED (asked for: "I want to make the weapons look better"): the in-hand models of **all 21 hero weapons**: the 4 Legendary Weapons (sword, shield, spear, bow with its three draw stages), the 7 Seven Star Weapons (hammer, claw, axe, whip, staff, gauntlet, projectile) and the 10 other Vassal Weapons (katana, scythe, fan, harpoon, chain, carriage, book, mirror, instrument, sewing set). Bolder silhouettes, heavier heads and guards, layered ornament, larger glowing gems and lit edges: the sword has a broad blade and a swept winged guard, the shield a rune ring and rim gems, the spear a winged head with lugs, the bow feathered limbs; the hammer and staff carry star rings, the katana a tassel, the scythe a spined blade, the fan a dark lit leaf, the chain a banded spiked head.
+- KEPT: the old models, complete (`weapon_meshes/classic`, `textures/entity/weapon/classic`). New client setting `classicHeroWeaponModels` in `nusmp-heroweapon-client.toml` ([models], default off) draws them again; it only changes the look. Also kept: the 16x16 inventory icons, the curse looks of the Legendary Weapons, every id, size class, grip and engraving.
+- This is the code-built pass. The owner has since asked for the weapons to be made in Blender; that pass follows as its own release and replaces these models (the classic set stays).
+- Cost: client drawing only, no server or network change. Worst mesh 2784 quad lines (the shield), all under the 3000-quad cap.
+- Before/after sheets: `docs/previews/legendary_weapons/`, `docs/previews/seven_star_weapons/`, `docs/previews/vassal_weapons/`. Docs: `docs/heroweapon/art_hart1_v2.md`, `art_hart2_v2.md`, `art_vassal_v2.md`. Not seen in a game.
+
 ## [3.78.1] — the four Legendary Weapons always stay on top
 - FIXED (the owner's rule): since 3.74.0 the Seven Star and Vassal Weapons out-damaged the Legendary Shield, Sword, Spear and Bow. A Legendary wielder now gets `vassalFactor x legendaryMargin` (default 25 x 1.5 = 37.5) from the same power hook, on top of the hero weapon buff's Holy factor: 450 times a bare blow at level 1 against the Vassal Weapons' 200. New setting `legendaryMargin` in `nusmp-power-server.toml`; it can not be set under 1.1, so no setting puts a Vassal Weapon ahead.
 - KEPT: every other number; the PvP hit cap. Tests: `PowerRulesTest`, self-test `power.rules`.

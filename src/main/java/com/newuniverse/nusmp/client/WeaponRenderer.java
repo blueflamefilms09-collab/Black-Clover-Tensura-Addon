@@ -366,10 +366,29 @@ public class WeaponRenderer extends BlockEntityWithoutLevelRenderer {
 
     /** The parsed mesh for an item id, read once per resource reload; null if it is missing or broken (the icon is used). */
     static Mesh plainMesh(String id) {
+        boolean classic = com.newuniverse.nusmp.client.heroweapon.HeroClientConfig.classicModels();
+        if (classic != classicSeen) {                                               // 3.79.0: the setting was switched: read the meshes again (as a resource reload does)
+            classicSeen = classic;
+            MESHES.clear();
+            WeaponGrip.clear();
+            ItemStateVariants.clearCache();
+        }
         if (MESHES.containsKey(id)) return MESHES.get(id);
-        Mesh mesh = read(id, "weapon_meshes/" + id + ".txt", null, null);
+        Mesh mesh = null;
+        if (classic && isClassicLegendary(id)) {                                    // the model of before 3.79.0, under the same id (so the class, grip and display tables still apply)
+            String skin = "textures/entity/weapon/classic/" + id.replaceAll("_pull[123]$", "");
+            mesh = read(id, "weapon_meshes/classic/" + id + ".txt", DemonSlayerRenderer.rl(skin + ".png"), DemonSlayerRenderer.rl(skin + "_glow.png"));
+        }
+        if (mesh == null) mesh = read(id, "weapon_meshes/" + id + ".txt", null, null);
         MESHES.put(id, mesh);
         return mesh;
+    }
+
+    private static boolean classicSeen;
+
+    /** The base looks of the hero weapons, Legendary and Vassal (the curse looks were not remodelled in 3.79.0, so they have no classic copy; a missing classic file falls back to the new mesh). */
+    static boolean isClassicLegendary(String id) {
+        return (id.startsWith("legendary_") || id.startsWith("vassal_")) && !id.contains("_curse");
     }
 
     /**

@@ -13,6 +13,8 @@ public final class HeroClientConfig {
     public static final ModConfigSpec.BooleanValue HUD;
     public static final ModConfigSpec.IntValue HUD_X, HUD_Y;
     public static final ModConfigSpec.DoubleValue HUD_SCALE;
+    /** 3.79.0: the 21 hero weapons (4 Legendary, 17 Vassal) got new models; true draws the models they had before (weapon_meshes/classic, textures/entity/weapon/classic). Looks only. */
+    public static final ModConfigSpec.BooleanValue CLASSIC_LEGENDARY;
 
     static {
         ModConfigSpec.Builder b = new ModConfigSpec.Builder();
@@ -21,6 +23,10 @@ public final class HeroClientConfig {
         HUD_X = b.comment("Pixels from the left edge of the screen.").defineInRange("x", 6, 0, 4000);
         HUD_Y = b.comment("Pixels from the bottom edge of the screen to the bottom of the panel.").defineInRange("y", 6, 0, 4000);
         HUD_SCALE = b.comment("Size of the panel (1.0 is the normal size).").defineInRange("scale", 1.0, 0.5, 3.0);
+        b.pop();
+        b.push("models");
+        CLASSIC_LEGENDARY = b.comment("true = draw the hero weapons (the 4 Legendary and the 17 Vassal Weapons) with the models they had before 3.79.0. Only the look changes.")
+                .define("classicHeroWeaponModels", false);
         b.pop();
         SPEC = b.build();
     }
@@ -35,6 +41,8 @@ public final class HeroClientConfig {
             return v.getDefault();
         }
     }
+
+    public static boolean classicModels() { return get(CLASSIC_LEGENDARY); }
 
     public static boolean hud() { return get(HUD); }
 
