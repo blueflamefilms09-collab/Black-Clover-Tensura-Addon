@@ -217,7 +217,7 @@ public final class ClientShot {
                     // 3.83.4: an armour stand and an item display beside the view hold the same weapon: the hero rules only act on players, so the model is seen in a hand whatever the bond does
                     mc.player.connection.sendCommand("tp @s ~ ~ ~ 0 0");
                     mc.player.connection.sendCommand("summon minecraft:armor_stand ~-1.7 ~ ~3 {ShowArms:1b,NoBasePlate:1b,NoGravity:1b,Rotation:[180f,0f],Tags:[\"shot\"]}");
-                    mc.player.connection.sendCommand("summon minecraft:item_display ~1.7 ~1.3 ~3 {Tags:[\"shot\"],item_display:\"thirdperson_righthand\",Rotation:[180f,0f],item:{id:\"minecraft:stick\",count:1}}");
+                    mc.player.connection.sendCommand("summon minecraft:item_display ~1.6 ~1.5 ~3.6 {Tags:[\"shot\"],item_display:\"thirdperson_righthand\",Rotation:[180f,0f],transformation:{left_rotation:[0f,0f,0f,1f],right_rotation:[0f,0f,0f,1f],translation:[0f,0f,0f],scale:[2f,2f,2f]},item:{id:\"minecraft:stick\",count:1}}");
                     wait = 60;
                     break;
                 }
@@ -240,6 +240,13 @@ public final class ClientShot {
             }
             case 10 -> {
                 say("hero " + HERO[heroI] + ": main hand holds " + p.getMainHandItem().getItem());
+                StringBuilder own = new StringBuilder();                                   // 3.83.5: the CLIENT's copy of the inventory, to compare with the server's
+                var cinv = p.getInventory();
+                for (int i = 0; i < cinv.getContainerSize(); i++) {
+                    var st = cinv.getItem(i);
+                    if (!st.isEmpty()) own.append(i).append('=').append(st.getItem()).append(' ');
+                }
+                say("hero " + HERO[heroI] + " client: selected " + cinv.selected + ", menu " + p.containerMenu.getClass().getSimpleName() + ", stacks [" + own.toString().trim() + "]");
                 heroServerState(mc, p, HERO[heroI]);
                 shot(mc, "hero3_" + HERO[heroI]);
                 mc.options.setCameraType(CameraType.FIRST_PERSON);

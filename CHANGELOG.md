@@ -1,5 +1,9 @@
 # Changelog
 
+## [3.83.5] — in-game run: the client's own inventory is logged, the item display is larger
+- CHANGED (checking, not gameplay): the run of 3.83.4 gave the first real in-game pictures of the Blender-made hero weapons (on an armour stand and an item display: textured, lit, no missing faces). It also showed that after a summon the SERVER holds the weapon in the selected slot while the CLIENT's hand is empty. The run now also logs the client's copy of the inventory, to tell a missing sync from a wrong slot, and draws the item display twice as large.
+- KEPT: everything in the game.
+
 ## [3.83.4] — the in-game run explains itself, and shows each hero weapon on an armour stand
 - CHANGED (checking, not gameplay): the run of 3.83.3 bound and summoned every weapon (the game said so), but the hand stayed empty and the log did not say why. The run now writes what the server holds after each summon (game mode, bond, selected slot, every stack) and commits those lines as `docs/previews/ingame/hero_log.txt`. Beside the view it also puts an armour stand and an item display holding the same weapon: the hero rules only act on players, so the model is seen in a hand whatever the bond does.
 - KEPT: everything in the game.
