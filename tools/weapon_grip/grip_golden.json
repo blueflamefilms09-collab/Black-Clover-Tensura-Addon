@@ -4828,16 +4828,16 @@
   "fraction": 0.264,
   "source": "directive",
   "x": 0.0,
-  "y": 45.955,
+  "y": 45.948,
   "z": 0.0
  },
  "vassal_book": {
   "class": "handitem",
   "fraction": 0.5,
   "source": "class",
-  "x": 0.812,
+  "x": 0.833,
   "y": 18.186,
-  "z": 1.41
+  "z": 1.415
  },
  "vassal_carriage": {
   "class": "handitem",
@@ -4860,7 +4860,7 @@
   "fraction": 0.11,
   "source": "directive",
   "x": 0.0,
-  "y": 20.02,
+  "y": 20.013,
   "z": 0.0
  },
  "vassal_fan": {
@@ -4875,17 +4875,17 @@
   "class": "handitem",
   "fraction": 0.5,
   "source": "class",
-  "x": 1.877,
-  "y": 41.293,
-  "z": 1.213
+  "x": 1.743,
+  "y": 41.279,
+  "z": 1.235
  },
  "vassal_hammer": {
   "class": "hammer",
   "fraction": 0.254,
   "source": "directive",
-  "x": -0.03,
+  "x": 0.0,
   "y": 40.054,
-  "z": 0.144
+  "z": 0.0
  },
  "vassal_harpoon": {
   "class": "staff",
@@ -4901,7 +4901,7 @@
   "source": "class",
   "x": 0.0,
   "y": 13.635,
-  "z": 1.058
+  "z": 0.195
  },
  "vassal_katana": {
   "class": "katana",
@@ -4915,9 +4915,9 @@
   "class": "shield",
   "fraction": 0.5,
   "source": "class",
-  "x": 0.079,
+  "x": 0.0,
   "y": 37.165,
-  "z": 0.125
+  "z": 0.0
  },
  "vassal_projectile": {
   "class": "dagger",
@@ -4937,18 +4937,18 @@
  },
  "vassal_sewing_set": {
   "class": "rapier",
-  "fraction": 0.185,
+  "fraction": 0.188,
   "source": "directive",
-  "x": -30.976,
-  "y": 11.081,
-  "z": 0.0
+  "x": -20.727,
+  "y": 11.449,
+  "z": -0.933
  },
  "vassal_staff": {
   "class": "staff",
   "fraction": 0.381,
   "source": "directive",
   "x": 0.0,
-  "y": 103.897,
+  "y": 103.89,
   "z": 0.0
  },
  "vassal_whip": {
@@ -4956,8 +4956,8 @@
   "fraction": 0.212,
   "source": "directive",
   "x": 0.0,
-  "y": 23.056,
-  "z": 0.087
+  "y": 23.064,
+  "z": 0.0
  },
  "viola_of_moonlit_spirits": {
   "class": "handitem",

@@ -1,7 +1,7 @@
 # Hero weapons made in Blender (3.80.0)
 
-The owner asked for the hero weapons to be made in Blender. From 3.80.0 the in-hand models of the hero weapons (first the 4 Legendary, then the
-7 Seven Star and the 10 other Vassal Weapons as their scripts land) are modelled, unwrapped and baked in Blender, then exported to the mod's own weapon mesh format.
+The owner asked for the hero weapons to be made in Blender. From 3.80.0 the in-hand models of the hero weapons (the 4 Legendary in 3.80.0, five Vassal in 3.81.0,
+the 7 Seven Star and the last five Vassal in 3.82.0: all 21) are modelled, unwrapped and baked in Blender, then exported to the mod's own weapon mesh format.
 
 ## What Blender does
 
