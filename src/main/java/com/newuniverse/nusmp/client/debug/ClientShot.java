@@ -123,6 +123,7 @@ public final class ClientShot {
                 if (joinedTicks > 240) stage = 1;
             }
             case 1 -> {                                                                      // dress the player, as the owner's screenshots show
+                serverResync(mc, p);
                 for (String a : ARMOUR) {
                     String[] x = a.split(" ");
                     mc.player.connection.sendCommand("item replace entity @s " + x[0] + " with nusmp:" + x[1]);
@@ -211,6 +212,7 @@ public final class ClientShot {
             case 9 -> {                                                                      // 3.83.1: the hero weapons in the main hand
                 if (!heroReady) {                                                            // 3.83.3: survival (the bond needs it), and nothing standing before the camera
                     heroReady = true;
+                    serverResync(mc, p);
                     mc.player.connection.sendCommand("gamemode survival");
                     mc.player.connection.sendCommand("kill @e[type=!minecraft:player]");
                     mc.player.connection.sendCommand("time set noon");
@@ -276,6 +278,28 @@ public final class ClientShot {
         }
     }
 
+    /**
+     * 3.83.6: the run closes any screen the mod opens with {@code setScreen(null)}, which tells the server nothing. If that screen was a menu, the server went on believing it open and sent
+     * the player's inventory changes for that menu only, so the client's own inventory stayed empty (the armour relics and the hero weapons were on the server and never in the pictures).
+     * This closes whatever menu the server holds for the player and sends the whole inventory again.
+     */
+    private static void serverResync(Minecraft mc, Player p) {
+        var server = mc.getSingleplayerServer();
+        if (server == null) return;
+        server.execute(() -> {
+            try {
+                var sp = server.getPlayerList().getPlayer(p.getUUID());
+                if (sp == null) return;
+                String was = sp.containerMenu.getClass().getSimpleName();
+                if (sp.containerMenu != sp.inventoryMenu) sp.closeContainer();
+                sp.inventoryMenu.sendAllDataToRemote();
+                say("server menu was " + was + ", now " + sp.containerMenu.getClass().getSimpleName() + "; inventory sent again");
+            } catch (RuntimeException ex) {
+                LOG.error("[clientshot] the inventory resync threw", ex);
+            }
+        });
+    }
+
     /** 3.83.4: what the integrated server holds for the player after the summon (mode, bond, selected slot, every stack), so an empty hand can be explained from the log. */
     private static void heroServerState(Minecraft mc, Player p, String id) {
         var server = mc.getSingleplayerServer();
@@ -297,7 +321,7 @@ public final class ClientShot {
                     var st = inv.getItem(i);
                     if (!st.isEmpty()) sb.append(i).append('=').append(st.getItem()).append(' ');
                 }
-                say("hero " + id + " server: mode " + sp.gameMode.getGameModeForPlayer() + ", bound " + b.isBound() + ", kind " + b.kind() + ", summoned " + b.summoned() + ", selected " + inv.selected
+                say("hero " + id + " server: menu " + sp.containerMenu.getClass().getSimpleName() + ", mode " + sp.gameMode.getGameModeForPlayer() + ", bound " + b.isBound() + ", kind " + b.kind() + ", summoned " + b.summoned() + ", selected " + inv.selected
                         + ", stacks [" + sb.toString().trim() + "]");
             } catch (RuntimeException ex) {
                 LOG.error("[clientshot] hero {} server state threw", id, ex);

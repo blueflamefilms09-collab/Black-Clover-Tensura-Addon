@@ -1,5 +1,10 @@
 # Changelog
 
+## [3.83.6] — in-game run: the client gets its inventory again
+- FIXED (checking, not gameplay): the run of 3.83.5 showed the client's inventory empty while the server held the armour relics and the summoned hero weapon. The cause is in the run itself, not in the hero weapons: it closes the screens the mod opens with a client-only call, and where that screen was a menu the server kept it open and sent inventory changes for that menu only. The run now closes the server's menu for the player and sends the whole inventory again before it dresses the player and before the hero weapons.
+- Seen in game in 3.83.5 (item display and armour stand): all 21 Blender-made hero weapons draw textured and lit, with no black or missing faces.
+- KEPT: everything in the game.
+
 ## [3.83.5] — in-game run: the client's own inventory is logged, the item display is larger
 - CHANGED (checking, not gameplay): the run of 3.83.4 gave the first real in-game pictures of the Blender-made hero weapons (on an armour stand and an item display: textured, lit, no missing faces). It also showed that after a summon the SERVER holds the weapon in the selected slot while the CLIENT's hand is empty. The run now also logs the client's copy of the inventory, to tell a missing sync from a wrong slot, and draws the item display twice as large.
 - KEPT: everything in the game.

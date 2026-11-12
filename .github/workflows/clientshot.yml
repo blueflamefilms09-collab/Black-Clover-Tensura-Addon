@@ -110,7 +110,7 @@ jobs:
               sheet.save('docs/previews/ingame/%s.jpg' % ('hero_third_person' if kind == 'hero3' else 'hero_first_person'), quality=82)
               print('sheet', kind, sheet.size, len(files))
           PY
-          grep -E "clientshot\] hero|\[CHAT\].*(hero|Legendary|Vassal|Bound|Released|summon)|nusmp.*heroweapon|WeaponRenderer|MeshCap" client.log | cut -c1-600 | head -400 > docs/previews/ingame/hero_log.txt || true
+          grep -E "clientshot\] hero|clientshot\] server menu|\[CHAT\].*(hero|Legendary|Vassal|Bound|Released|summon)|nusmp.*heroweapon|WeaponRenderer|MeshCap" client.log | cut -c1-600 | head -400 > docs/previews/ingame/hero_log.txt || true
           if ls docs/previews/ingame/*.jpg >/dev/null 2>&1; then
             git config user.name "github-actions[bot]"
             git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
