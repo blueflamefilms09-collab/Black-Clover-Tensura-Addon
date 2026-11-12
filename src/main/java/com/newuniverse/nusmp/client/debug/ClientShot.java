@@ -52,6 +52,7 @@ public final class ClientShot {
             "vassal_gauntlet", "vassal_projectile", "vassal_katana", "vassal_scythe", "vassal_fan", "vassal_harpoon", "vassal_chain", "vassal_carriage", "vassal_book", "vassal_mirror",
             "vassal_instrument", "vassal_sewing_set"};
     private static int heroI;
+    private static boolean heroReady;
 
     private static long started;
     private static int ticks, stage, wait, joinedTicks;
@@ -208,6 +209,15 @@ public final class ClientShot {
                 wait = 10;
             }
             case 9 -> {                                                                      // 3.83.1: the hero weapons in the main hand
+                if (!heroReady) {                                                            // 3.83.2: creative mode (there a hero weapon is a plain item: no bond, no refusal), and nothing standing before the camera
+                    heroReady = true;
+                    mc.player.connection.sendCommand("gamemode creative");
+                    mc.player.connection.sendCommand("kill @e[type=!minecraft:player]");
+                    mc.player.connection.sendCommand("time set noon");
+                    wait = 60;
+                    break;
+                }
+                mc.gui.getChat().clearMessages(false);
                 if (heroI >= HERO.length) {
                     mc.player.connection.sendCommand("item replace entity @s weapon.mainhand with minecraft:air");
                     stage = 12;

@@ -1,5 +1,10 @@
 # Changelog
 
+## [3.83.2] — the in-game screenshot run actually shows the hero weapons
+- FIXED (checking, not gameplay): the first in-game run of 3.83.1 showed no weapon. A survival player without a bond may not hold a hero weapon (the hero system took each one away again), and the undead summoned earlier in the run stood in front of the camera. The run now switches to creative mode for this part (there a hero weapon is a plain item), removes the other entities, clears the chat, and crops wider.
+- Also noted: the build of 3.83.0 compiled and passed its tests, but its release step was refused by GitHub (403), so 3.83.0 has no release of its own; 3.83.1 and later contain it.
+- KEPT: everything in the game.
+
 ## [3.83.1] — the hero weapons get looked at in a real game
 - NEW (checking, not gameplay): the CI client screenshot run (`.github/workflows/clientshot.yml`, `client/debug/ClientShot.java`, only for a commit marked `[clientshot]`) now puts each of the 21 hero weapons in the player's main hand and photographs it in third and in first person. The run tiles the pictures into two contact sheets and commits them to the pushed branch as `docs/previews/ingame/hero_third_person.jpg` and `hero_first_person.jpg`, so the Blender-made models can be judged as the game draws them instead of on the software preview only. For that one step the workflow's permission is `contents: write`; it writes nothing but those two files.
 - KEPT: everything in the game. No model, rule, packet or setting changes; the driver only runs with `-Dnusmp.clientshot=1`.

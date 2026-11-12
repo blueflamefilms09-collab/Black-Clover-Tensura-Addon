@@ -88,7 +88,7 @@ jobs:
           import glob, os
           from PIL import Image, ImageDraw
           os.makedirs('docs/previews/ingame', exist_ok=True)
-          for kind, tile in (('hero3', (300, 300)), ('hero1', (320, 240))):
+          for kind, tile in (('hero3', (360, 360)), ('hero1', (400, 300))):
               files = sorted(glob.glob('run/client/clientshot/%s_*.png' % kind))
               if not files:
                   continue
@@ -100,9 +100,9 @@ jobs:
                   im = Image.open(p).convert('RGB')
                   w, h = im.size
                   if kind == 'hero3':                                    # the player in the middle of the frame
-                      box = (w // 2 - 240, h // 2 - 260, w // 2 + 240, h // 2 + 220)
+                      box = (w // 2 - 300, h // 2 - 300, w // 2 + 300, h // 2 + 300)
                   else:                                                  # first person: the right half, where the hand is
-                      box = (w // 2 - 80, h // 4, w, h)
+                      box = (w // 2 - 160, h // 6, w, h)
                   c = im.crop(box).resize(tile, Image.LANCZOS)
                   x, y = (i % cols) * tile[0], (i // cols) * (tile[1] + 14)
                   sheet.paste(c, (x, y + 14))
