@@ -1,5 +1,11 @@
 # Changelog
 
+## [3.74.0] — Djinns, Beast Wills and Vassal Weapons 25 times stronger
+- NEW: one server-side power raise (`power/`, `nusmp-power-server.toml`, `[power]`): a player whose **Djinn is out** (Lesser Summon and up), who **holds a Beast Will phase**, or who has a **Seven Star / Vassal Weapon out** deals `djinnFactor` / `beastWillFactor` / `vassalFactor` (default 25 each) times the damage, on blows, spells, techniques and arrows alike. Several at once: the largest factor, never the product. Against players the raised blow is held at the existing PvP hit cap (40 % of the victim's maximum health). A Djinn bearer or Beast Will holder also takes `damageTakenFactor` (0.5) of every blow. `enabled = false` restores 3.73.0.
+- NOTE: the Vassal factor sits on top of the hero weapon buff, so Vassal Weapons now out-damage the four Legendary Weapons (which this release does not touch); `holyExtraFactor` in `nusmp-heroweapon-server.toml` raises those.
+- KEPT: every base number of the three systems, the relic balance law, PvP and boss caps.
+- Cost: the damage event only; two attachment lookups and one multiplication per player-dealt blow; no tick, packet or state. Tests: `PowerRulesTest`, self-test `power.rules`. Doc: `docs/power_raise.md`.
+
 ## [3.73.0] — Crystal of Release, "do you want to equip it?", anime-strength hero weapons
 - NEW: **Gneiss Crystal** (`nusmp:gneiss_crystal`) — shaped recipe: quartz at the corners, polished deepslate on the edges, an amethyst shard in the middle.
 - NEW: **Crystal of Release** (`nusmp:release_crystal`) — for regular players, no operator needed: the Gneiss Crystal in the MIDDLE of the grid (the item tag `#nusmp:gneiss_crystals`: our own `nusmp:gneiss_crystal`, plus `tensura:gneiss_crystal` and `tensura_lower:gneiss_crystal` when those mods have one; a data pack can add the exact id of the owner's mod to that tag), Tensura high-quality magic crystals at the corners and medium-quality magic crystals on the edges. Right click once: it asks (names the weapon, what is lost); right click again within 30 seconds: the hero or vassal weapon is released through `HeroBonds.release` (loan ends, a unique Holy Weapon is freed, forms and client told) and ONE crystal is spent. Refused while the curse holds the wielder. Works whatever `abandonAllowed` says (that one switches the command).
