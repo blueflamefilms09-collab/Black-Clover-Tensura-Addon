@@ -1,127 +1,129 @@
-[21:27:37] [Render thread/INFO] [minecraft/ChatComponent]: [System] [CHAT] Dev has no hero weapon.
-[21:27:37] [Render thread/INFO] [minecraft/ChatComponent]: [System] [CHAT] Bound Dev to the Legendary Sword. They summon it with the summon key, or /multiverse hero summon.
-[21:27:37] [Render thread/INFO] [minecraft/ChatComponent]: [System] [CHAT] Replaced a slot on Armor Stand with [Legendary Sword]
-[21:27:39] [Render thread/INFO] [co.ne.nu.cl.de.ClientShot/]: [clientshot] hero legendary_sword: main hand holds minecraft:air
-[21:27:39] [Render thread/INFO] [co.ne.nu.cl.de.ClientShot/]: [clientshot] hero legendary_sword client: selected 0, menu InventoryMenu, stacks []
-[21:27:39] [Server thread/INFO] [co.ne.nu.cl.de.ClientShot/]: [clientshot] hero legendary_sword server: mode SURVIVAL, bound true, kind SWORD, summoned true, selected 0, stacks [0=nusmp:legendary_sword 36=nusmp:ruby_boots_of_planestriding 39=nusmp:mask_of_mind_melting]
-[21:27:40] [Render thread/INFO] [minecraft/ChatComponent]: [System] [CHAT] Released Dev from the Legendary Sword. Its level, forms and mastery are gone.
-[21:27:40] [Render thread/INFO] [minecraft/ChatComponent]: [System] [CHAT] Bound Dev to the Legendary Shield. They summon it with the summon key, or /multiverse hero summon.
-[21:27:40] [Render thread/INFO] [minecraft/ChatComponent]: [System] [CHAT] Replaced a slot on Armor Stand with [Legendary Shield]
-[21:27:42] [Render thread/INFO] [co.ne.nu.cl.de.ClientShot/]: [clientshot] hero legendary_shield: main hand holds minecraft:air
-[21:27:42] [Render thread/INFO] [co.ne.nu.cl.de.ClientShot/]: [clientshot] hero legendary_shield client: selected 0, menu InventoryMenu, stacks []
-[21:27:42] [Server thread/INFO] [co.ne.nu.cl.de.ClientShot/]: [clientshot] hero legendary_shield server: mode SURVIVAL, bound true, kind SHIELD, summoned true, selected 0, stacks [0=nusmp:legendary_shield 36=nusmp:ruby_boots_of_planestriding 39=nusmp:mask_of_mind_melting]
-[21:27:44] [Render thread/INFO] [minecraft/ChatComponent]: [System] [CHAT] Released Dev from the Legendary Shield. Its level, forms and mastery are gone.
-[21:27:44] [Render thread/INFO] [minecraft/ChatComponent]: [System] [CHAT] Bound Dev to the Legendary Spear. They summon it with the summon key, or /multiverse hero summon.
-[21:27:44] [Render thread/INFO] [minecraft/ChatComponent]: [System] [CHAT] Replaced a slot on Armor Stand with [Legendary Spear]
-[21:27:46] [Render thread/INFO] [co.ne.nu.cl.de.ClientShot/]: [clientshot] hero legendary_spear: main hand holds minecraft:air
-[21:27:46] [Render thread/INFO] [co.ne.nu.cl.de.ClientShot/]: [clientshot] hero legendary_spear client: selected 0, menu InventoryMenu, stacks []
-[21:27:46] [Server thread/INFO] [co.ne.nu.cl.de.ClientShot/]: [clientshot] hero legendary_spear server: mode SURVIVAL, bound true, kind SPEAR, summoned true, selected 0, stacks [0=nusmp:legendary_spear 36=nusmp:ruby_boots_of_planestriding 39=nusmp:mask_of_mind_melting]
-[21:27:47] [Render thread/INFO] [minecraft/ChatComponent]: [System] [CHAT] Released Dev from the Legendary Spear. Its level, forms and mastery are gone.
-[21:27:47] [Render thread/INFO] [minecraft/ChatComponent]: [System] [CHAT] Bound Dev to the Legendary Bow. They summon it with the summon key, or /multiverse hero summon.
-[21:27:47] [Render thread/INFO] [minecraft/ChatComponent]: [System] [CHAT] Replaced a slot on Armor Stand with [Legendary Bow]
-[21:27:49] [Render thread/INFO] [co.ne.nu.cl.de.ClientShot/]: [clientshot] hero legendary_bow: main hand holds minecraft:air
-[21:27:49] [Render thread/INFO] [co.ne.nu.cl.de.ClientShot/]: [clientshot] hero legendary_bow client: selected 0, menu InventoryMenu, stacks []
-[21:27:49] [Server thread/INFO] [co.ne.nu.cl.de.ClientShot/]: [clientshot] hero legendary_bow server: mode SURVIVAL, bound true, kind BOW, summoned true, selected 0, stacks [0=nusmp:legendary_bow 36=nusmp:ruby_boots_of_planestriding 39=nusmp:mask_of_mind_melting]
-[21:27:50] [Render thread/INFO] [minecraft/ChatComponent]: [System] [CHAT] Released Dev from the Legendary Bow. Its level, forms and mastery are gone.
-[21:27:50] [Render thread/INFO] [minecraft/ChatComponent]: [System] [CHAT] Bound Dev to the Vassal Hammer. They summon it with the summon key, or /multiverse hero summon.
-[21:27:50] [Render thread/INFO] [minecraft/ChatComponent]: [System] [CHAT] Replaced a slot on Armor Stand with [Vassal Hammer]
-[21:27:52] [Render thread/INFO] [co.ne.nu.cl.de.ClientShot/]: [clientshot] hero vassal_hammer: main hand holds minecraft:air
-[21:27:52] [Render thread/INFO] [co.ne.nu.cl.de.ClientShot/]: [clientshot] hero vassal_hammer client: selected 0, menu InventoryMenu, stacks []
-[21:27:52] [Server thread/INFO] [co.ne.nu.cl.de.ClientShot/]: [clientshot] hero vassal_hammer server: mode SURVIVAL, bound true, kind HAMMER, summoned true, selected 0, stacks [0=nusmp:vassal_hammer 36=nusmp:ruby_boots_of_planestriding 39=nusmp:mask_of_mind_melting]
-[21:27:54] [Render thread/INFO] [minecraft/ChatComponent]: [System] [CHAT] Released Dev from the Vassal Hammer. Its level, forms and mastery are gone.
-[21:27:54] [Render thread/INFO] [minecraft/ChatComponent]: [System] [CHAT] Bound Dev to the Vassal Claw. They summon it with the summon key, or /multiverse hero summon.
-[21:27:54] [Render thread/INFO] [minecraft/ChatComponent]: [System] [CHAT] Replaced a slot on Armor Stand with [Vassal Claw]
-[21:27:56] [Render thread/INFO] [co.ne.nu.cl.de.ClientShot/]: [clientshot] hero vassal_claw: main hand holds minecraft:air
-[21:27:56] [Render thread/INFO] [co.ne.nu.cl.de.ClientShot/]: [clientshot] hero vassal_claw client: selected 0, menu InventoryMenu, stacks []
-[21:27:56] [Server thread/INFO] [co.ne.nu.cl.de.ClientShot/]: [clientshot] hero vassal_claw server: mode SURVIVAL, bound true, kind CLAW, summoned true, selected 0, stacks [0=nusmp:vassal_claw 36=nusmp:ruby_boots_of_planestriding 39=nusmp:mask_of_mind_melting]
-[21:27:57] [Render thread/INFO] [minecraft/ChatComponent]: [System] [CHAT] Released Dev from the Vassal Claw. Its level, forms and mastery are gone.
-[21:27:57] [Render thread/INFO] [minecraft/ChatComponent]: [System] [CHAT] Bound Dev to the Vassal Axe. They summon it with the summon key, or /multiverse hero summon.
-[21:27:57] [Render thread/INFO] [minecraft/ChatComponent]: [System] [CHAT] Replaced a slot on Armor Stand with [Vassal Axe]
-[21:27:59] [Render thread/INFO] [co.ne.nu.cl.de.ClientShot/]: [clientshot] hero vassal_axe: main hand holds minecraft:air
-[21:27:59] [Render thread/INFO] [co.ne.nu.cl.de.ClientShot/]: [clientshot] hero vassal_axe client: selected 0, menu InventoryMenu, stacks []
-[21:27:59] [Server thread/INFO] [co.ne.nu.cl.de.ClientShot/]: [clientshot] hero vassal_axe server: mode SURVIVAL, bound true, kind AXE, summoned true, selected 0, stacks [0=nusmp:vassal_axe 36=nusmp:ruby_boots_of_planestriding 39=nusmp:mask_of_mind_melting]
-[21:28:00] [Render thread/INFO] [minecraft/ChatComponent]: [System] [CHAT] Released Dev from the Vassal Axe. Its level, forms and mastery are gone.
-[21:28:00] [Render thread/INFO] [minecraft/ChatComponent]: [System] [CHAT] Bound Dev to the Vassal Whip. They summon it with the summon key, or /multiverse hero summon.
-[21:28:00] [Render thread/INFO] [minecraft/ChatComponent]: [System] [CHAT] Replaced a slot on Armor Stand with [Vassal Whip]
-[21:28:02] [Render thread/INFO] [co.ne.nu.cl.de.ClientShot/]: [clientshot] hero vassal_whip: main hand holds minecraft:air
-[21:28:02] [Render thread/INFO] [co.ne.nu.cl.de.ClientShot/]: [clientshot] hero vassal_whip client: selected 0, menu InventoryMenu, stacks []
-[21:28:02] [Server thread/INFO] [co.ne.nu.cl.de.ClientShot/]: [clientshot] hero vassal_whip server: mode SURVIVAL, bound true, kind WHIP, summoned true, selected 0, stacks [0=nusmp:vassal_whip 36=nusmp:ruby_boots_of_planestriding 39=nusmp:mask_of_mind_melting]
-[21:28:04] [Render thread/INFO] [minecraft/ChatComponent]: [System] [CHAT] Released Dev from the Vassal Whip. Its level, forms and mastery are gone.
-[21:28:04] [Render thread/INFO] [minecraft/ChatComponent]: [System] [CHAT] Bound Dev to the Vassal Staff. They summon it with the summon key, or /multiverse hero summon.
-[21:28:04] [Render thread/INFO] [minecraft/ChatComponent]: [System] [CHAT] Replaced a slot on Armor Stand with [Vassal Staff]
-[21:28:06] [Render thread/INFO] [co.ne.nu.cl.de.ClientShot/]: [clientshot] hero vassal_staff: main hand holds minecraft:air
-[21:28:06] [Render thread/INFO] [co.ne.nu.cl.de.ClientShot/]: [clientshot] hero vassal_staff client: selected 0, menu InventoryMenu, stacks []
-[21:28:06] [Server thread/INFO] [co.ne.nu.cl.de.ClientShot/]: [clientshot] hero vassal_staff server: mode SURVIVAL, bound true, kind STAFF, summoned true, selected 0, stacks [0=nusmp:vassal_staff 36=nusmp:ruby_boots_of_planestriding 39=nusmp:mask_of_mind_melting]
-[21:28:07] [Render thread/INFO] [minecraft/ChatComponent]: [System] [CHAT] Released Dev from the Vassal Staff. Its level, forms and mastery are gone.
-[21:28:07] [Render thread/INFO] [minecraft/ChatComponent]: [System] [CHAT] Bound Dev to the Vassal Gauntlet. They summon it with the summon key, or /multiverse hero summon.
-[21:28:07] [Render thread/INFO] [minecraft/ChatComponent]: [System] [CHAT] Replaced a slot on Armor Stand with [Vassal Gauntlet]
-[21:28:09] [Render thread/INFO] [co.ne.nu.cl.de.ClientShot/]: [clientshot] hero vassal_gauntlet: main hand holds minecraft:air
-[21:28:09] [Render thread/INFO] [co.ne.nu.cl.de.ClientShot/]: [clientshot] hero vassal_gauntlet client: selected 0, menu InventoryMenu, stacks []
-[21:28:09] [Server thread/INFO] [co.ne.nu.cl.de.ClientShot/]: [clientshot] hero vassal_gauntlet server: mode SURVIVAL, bound true, kind GAUNTLET, summoned true, selected 0, stacks [0=nusmp:vassal_gauntlet 36=nusmp:ruby_boots_of_planestriding 39=nusmp:mask_of_mind_melting]
-[21:28:10] [Render thread/INFO] [minecraft/ChatComponent]: [System] [CHAT] Released Dev from the Vassal Gauntlet. Its level, forms and mastery are gone.
-[21:28:10] [Render thread/INFO] [minecraft/ChatComponent]: [System] [CHAT] Bound Dev to the Vassal Projectile. They summon it with the summon key, or /multiverse hero summon.
-[21:28:10] [Render thread/INFO] [minecraft/ChatComponent]: [System] [CHAT] Replaced a slot on Armor Stand with [Vassal Projectile]
-[21:28:12] [Render thread/INFO] [co.ne.nu.cl.de.ClientShot/]: [clientshot] hero vassal_projectile: main hand holds minecraft:air
-[21:28:12] [Render thread/INFO] [co.ne.nu.cl.de.ClientShot/]: [clientshot] hero vassal_projectile client: selected 0, menu InventoryMenu, stacks []
-[21:28:12] [Server thread/INFO] [co.ne.nu.cl.de.ClientShot/]: [clientshot] hero vassal_projectile server: mode SURVIVAL, bound true, kind PROJECTILE, summoned true, selected 0, stacks [0=nusmp:vassal_projectile 36=nusmp:ruby_boots_of_planestriding 39=nusmp:mask_of_mind_melting]
-[21:28:14] [Render thread/INFO] [minecraft/ChatComponent]: [System] [CHAT] Released Dev from the Vassal Projectile. Its level, forms and mastery are gone.
-[21:28:14] [Render thread/INFO] [minecraft/ChatComponent]: [System] [CHAT] Bound Dev to the Vassal Katana. They summon it with the summon key, or /multiverse hero summon.
-[21:28:14] [Render thread/INFO] [minecraft/ChatComponent]: [System] [CHAT] Replaced a slot on Armor Stand with [Vassal Katana]
-[21:28:16] [Render thread/INFO] [co.ne.nu.cl.de.ClientShot/]: [clientshot] hero vassal_katana: main hand holds minecraft:air
-[21:28:16] [Render thread/INFO] [co.ne.nu.cl.de.ClientShot/]: [clientshot] hero vassal_katana client: selected 0, menu InventoryMenu, stacks []
-[21:28:16] [Server thread/INFO] [co.ne.nu.cl.de.ClientShot/]: [clientshot] hero vassal_katana server: mode SURVIVAL, bound true, kind KATANA, summoned true, selected 0, stacks [0=nusmp:vassal_katana 36=nusmp:ruby_boots_of_planestriding 39=nusmp:mask_of_mind_melting]
-[21:28:17] [Render thread/INFO] [minecraft/ChatComponent]: [System] [CHAT] Released Dev from the Vassal Katana. Its level, forms and mastery are gone.
-[21:28:17] [Render thread/INFO] [minecraft/ChatComponent]: [System] [CHAT] Bound Dev to the Vassal Scythe. They summon it with the summon key, or /multiverse hero summon.
-[21:28:17] [Render thread/INFO] [minecraft/ChatComponent]: [System] [CHAT] Replaced a slot on Armor Stand with [Vassal Scythe]
-[21:28:19] [Render thread/INFO] [co.ne.nu.cl.de.ClientShot/]: [clientshot] hero vassal_scythe: main hand holds minecraft:air
-[21:28:19] [Render thread/INFO] [co.ne.nu.cl.de.ClientShot/]: [clientshot] hero vassal_scythe client: selected 0, menu InventoryMenu, stacks []
-[21:28:19] [Server thread/INFO] [co.ne.nu.cl.de.ClientShot/]: [clientshot] hero vassal_scythe server: mode SURVIVAL, bound true, kind SCYTHE, summoned true, selected 0, stacks [0=nusmp:vassal_scythe 36=nusmp:ruby_boots_of_planestriding 39=nusmp:mask_of_mind_melting]
-[21:28:21] [Render thread/INFO] [minecraft/ChatComponent]: [System] [CHAT] Released Dev from the Vassal Scythe. Its level, forms and mastery are gone.
-[21:28:21] [Render thread/INFO] [minecraft/ChatComponent]: [System] [CHAT] Bound Dev to the Vassal Fan. They summon it with the summon key, or /multiverse hero summon.
-[21:28:21] [Render thread/INFO] [minecraft/ChatComponent]: [System] [CHAT] Replaced a slot on Armor Stand with [Vassal Fan]
-[21:28:23] [Render thread/INFO] [co.ne.nu.cl.de.ClientShot/]: [clientshot] hero vassal_fan: main hand holds minecraft:air
-[21:28:23] [Render thread/INFO] [co.ne.nu.cl.de.ClientShot/]: [clientshot] hero vassal_fan client: selected 0, menu InventoryMenu, stacks []
-[21:28:23] [Server thread/INFO] [co.ne.nu.cl.de.ClientShot/]: [clientshot] hero vassal_fan server: mode SURVIVAL, bound true, kind FAN, summoned true, selected 0, stacks [0=nusmp:vassal_fan 36=nusmp:ruby_boots_of_planestriding 39=nusmp:mask_of_mind_melting]
-[21:28:24] [Render thread/INFO] [minecraft/ChatComponent]: [System] [CHAT] Released Dev from the Vassal Fan. Its level, forms and mastery are gone.
-[21:28:24] [Render thread/INFO] [minecraft/ChatComponent]: [System] [CHAT] Bound Dev to the Vassal Harpoon. They summon it with the summon key, or /multiverse hero summon.
-[21:28:24] [Render thread/INFO] [minecraft/ChatComponent]: [System] [CHAT] Replaced a slot on Armor Stand with [Vassal Harpoon]
-[21:28:26] [Render thread/INFO] [co.ne.nu.cl.de.ClientShot/]: [clientshot] hero vassal_harpoon: main hand holds minecraft:air
-[21:28:26] [Render thread/INFO] [co.ne.nu.cl.de.ClientShot/]: [clientshot] hero vassal_harpoon client: selected 0, menu InventoryMenu, stacks []
-[21:28:26] [Server thread/INFO] [co.ne.nu.cl.de.ClientShot/]: [clientshot] hero vassal_harpoon server: mode SURVIVAL, bound true, kind HARPOON, summoned true, selected 0, stacks [0=nusmp:vassal_harpoon 36=nusmp:ruby_boots_of_planestriding 39=nusmp:mask_of_mind_melting]
-[21:28:27] [Render thread/INFO] [minecraft/ChatComponent]: [System] [CHAT] Released Dev from the Vassal Harpoon. Its level, forms and mastery are gone.
-[21:28:27] [Render thread/INFO] [minecraft/ChatComponent]: [System] [CHAT] Bound Dev to the Vassal Chain. They summon it with the summon key, or /multiverse hero summon.
-[21:28:27] [Render thread/INFO] [minecraft/ChatComponent]: [System] [CHAT] Replaced a slot on Armor Stand with [Vassal Chain]
-[21:28:29] [Render thread/INFO] [co.ne.nu.cl.de.ClientShot/]: [clientshot] hero vassal_chain: main hand holds minecraft:air
-[21:28:29] [Render thread/INFO] [co.ne.nu.cl.de.ClientShot/]: [clientshot] hero vassal_chain client: selected 0, menu InventoryMenu, stacks []
-[21:28:29] [Server thread/INFO] [co.ne.nu.cl.de.ClientShot/]: [clientshot] hero vassal_chain server: mode SURVIVAL, bound true, kind CHAIN, summoned true, selected 0, stacks [0=nusmp:vassal_chain 36=nusmp:ruby_boots_of_planestriding 39=nusmp:mask_of_mind_melting]
-[21:28:31] [Render thread/INFO] [minecraft/ChatComponent]: [System] [CHAT] Released Dev from the Vassal Chain. Its level, forms and mastery are gone.
-[21:28:31] [Render thread/INFO] [minecraft/ChatComponent]: [System] [CHAT] Bound Dev to the Vassal Carriage. They summon it with the summon key, or /multiverse hero summon.
-[21:28:31] [Render thread/INFO] [minecraft/ChatComponent]: [System] [CHAT] Replaced a slot on Armor Stand with [Vassal Carriage]
-[21:28:33] [Render thread/INFO] [co.ne.nu.cl.de.ClientShot/]: [clientshot] hero vassal_carriage: main hand holds minecraft:air
-[21:28:33] [Render thread/INFO] [co.ne.nu.cl.de.ClientShot/]: [clientshot] hero vassal_carriage client: selected 0, menu InventoryMenu, stacks []
-[21:28:33] [Server thread/INFO] [co.ne.nu.cl.de.ClientShot/]: [clientshot] hero vassal_carriage server: mode SURVIVAL, bound true, kind CARRIAGE, summoned true, selected 0, stacks [0=nusmp:vassal_carriage 36=nusmp:ruby_boots_of_planestriding 39=nusmp:mask_of_mind_melting]
-[21:28:34] [Render thread/INFO] [minecraft/ChatComponent]: [System] [CHAT] Released Dev from the Vassal Carriage. Its level, forms and mastery are gone.
-[21:28:34] [Render thread/INFO] [minecraft/ChatComponent]: [System] [CHAT] Bound Dev to the Vassal Book. They summon it with the summon key, or /multiverse hero summon.
-[21:28:34] [Render thread/INFO] [minecraft/ChatComponent]: [System] [CHAT] Replaced a slot on Armor Stand with [Vassal Book]
-[21:28:36] [Render thread/INFO] [co.ne.nu.cl.de.ClientShot/]: [clientshot] hero vassal_book: main hand holds minecraft:air
-[21:28:36] [Render thread/INFO] [co.ne.nu.cl.de.ClientShot/]: [clientshot] hero vassal_book client: selected 0, menu InventoryMenu, stacks []
-[21:28:36] [Server thread/INFO] [co.ne.nu.cl.de.ClientShot/]: [clientshot] hero vassal_book server: mode SURVIVAL, bound true, kind BOOK, summoned true, selected 0, stacks [0=nusmp:vassal_book 36=nusmp:ruby_boots_of_planestriding 39=nusmp:mask_of_mind_melting]
-[21:28:37] [Render thread/INFO] [minecraft/ChatComponent]: [System] [CHAT] Released Dev from the Vassal Book. Its level, forms and mastery are gone.
-[21:28:37] [Render thread/INFO] [minecraft/ChatComponent]: [System] [CHAT] Bound Dev to the Vassal Mirror. They summon it with the summon key, or /multiverse hero summon.
-[21:28:37] [Render thread/INFO] [minecraft/ChatComponent]: [System] [CHAT] Replaced a slot on Armor Stand with [Vassal Mirror]
-[21:28:39] [Render thread/INFO] [co.ne.nu.cl.de.ClientShot/]: [clientshot] hero vassal_mirror: main hand holds minecraft:air
-[21:28:39] [Render thread/INFO] [co.ne.nu.cl.de.ClientShot/]: [clientshot] hero vassal_mirror client: selected 0, menu InventoryMenu, stacks []
-[21:28:39] [Server thread/INFO] [co.ne.nu.cl.de.ClientShot/]: [clientshot] hero vassal_mirror server: mode SURVIVAL, bound true, kind MIRROR, summoned true, selected 0, stacks [0=nusmp:vassal_mirror 36=nusmp:ruby_boots_of_planestriding 39=nusmp:mask_of_mind_melting]
-[21:28:41] [Render thread/INFO] [minecraft/ChatComponent]: [System] [CHAT] Released Dev from the Vassal Mirror. Its level, forms and mastery are gone.
-[21:28:41] [Render thread/INFO] [minecraft/ChatComponent]: [System] [CHAT] Bound Dev to the Vassal Musical Instrument. They summon it with the summon key, or /multiverse hero summon.
-[21:28:41] [Render thread/INFO] [minecraft/ChatComponent]: [System] [CHAT] Replaced a slot on Armor Stand with [Vassal Musical Instrument]
-[21:28:43] [Render thread/INFO] [co.ne.nu.cl.de.ClientShot/]: [clientshot] hero vassal_instrument: main hand holds minecraft:air
-[21:28:43] [Render thread/INFO] [co.ne.nu.cl.de.ClientShot/]: [clientshot] hero vassal_instrument client: selected 0, menu InventoryMenu, stacks []
-[21:28:43] [Server thread/INFO] [co.ne.nu.cl.de.ClientShot/]: [clientshot] hero vassal_instrument server: mode SURVIVAL, bound true, kind INSTRUMENT, summoned true, selected 0, stacks [0=nusmp:vassal_instrument 36=nusmp:ruby_boots_of_planestriding 39=nusmp:mask_of_mind_melting]
-[21:28:44] [Render thread/INFO] [minecraft/ChatComponent]: [System] [CHAT] Released Dev from the Vassal Musical Instrument. Its level, forms and mastery are gone.
-[21:28:44] [Render thread/INFO] [minecraft/ChatComponent]: [System] [CHAT] Bound Dev to the Vassal Sewing Set. They summon it with the summon key, or /multiverse hero summon.
-[21:28:44] [Render thread/INFO] [minecraft/ChatComponent]: [System] [CHAT] Replaced a slot on Armor Stand with [Vassal Sewing Set]
-[21:28:46] [Render thread/INFO] [co.ne.nu.cl.de.ClientShot/]: [clientshot] hero vassal_sewing_set: main hand holds minecraft:air
-[21:28:46] [Render thread/INFO] [co.ne.nu.cl.de.ClientShot/]: [clientshot] hero vassal_sewing_set client: selected 0, menu InventoryMenu, stacks []
-[21:28:46] [Server thread/INFO] [co.ne.nu.cl.de.ClientShot/]: [clientshot] hero vassal_sewing_set server: mode SURVIVAL, bound true, kind SEWING_SET, summoned true, selected 0, stacks [0=nusmp:vassal_sewing_set 36=nusmp:ruby_boots_of_planestriding 39=nusmp:mask_of_mind_melting]
-[21:28:47] [Render thread/INFO] [minecraft/ChatComponent]: [System] [CHAT] Released Dev from the Vassal Sewing Set. Its level, forms and mastery are gone.
+[21:37:40] [Server thread/INFO] [co.ne.nu.cl.de.ClientShot/]: [clientshot] server menu was ReincarnationMenu, now InventoryMenu; inventory sent again
+[21:38:12] [Server thread/INFO] [co.ne.nu.cl.de.ClientShot/]: [clientshot] server menu was InventoryMenu, now InventoryMenu; inventory sent again
+[21:38:15] [Render thread/INFO] [minecraft/ChatComponent]: [System] [CHAT] Dev has no hero weapon.
+[21:38:15] [Render thread/INFO] [minecraft/ChatComponent]: [System] [CHAT] Bound Dev to the Legendary Sword. They summon it with the summon key, or /multiverse hero summon.
+[21:38:15] [Render thread/INFO] [minecraft/ChatComponent]: [System] [CHAT] Replaced a slot on Armor Stand with [Legendary Sword]
+[21:38:17] [Render thread/INFO] [co.ne.nu.cl.de.ClientShot/]: [clientshot] hero legendary_sword: main hand holds nusmp:legendary_sword
+[21:38:17] [Render thread/INFO] [co.ne.nu.cl.de.ClientShot/]: [clientshot] hero legendary_sword client: selected 0, menu InventoryMenu, stacks [0=nusmp:legendary_sword 36=nusmp:ruby_boots_of_planestriding 39=nusmp:mask_of_mind_melting]
+[21:38:17] [Server thread/INFO] [co.ne.nu.cl.de.ClientShot/]: [clientshot] hero legendary_sword server: menu InventoryMenu, mode SURVIVAL, bound true, kind SWORD, summoned true, selected 0, stacks [0=nusmp:legendary_sword 36=nusmp:ruby_boots_of_planestriding 39=nusmp:mask_of_mind_melting]
+[21:38:18] [Render thread/INFO] [minecraft/ChatComponent]: [System] [CHAT] Released Dev from the Legendary Sword. Its level, forms and mastery are gone.
+[21:38:18] [Render thread/INFO] [minecraft/ChatComponent]: [System] [CHAT] Bound Dev to the Legendary Shield. They summon it with the summon key, or /multiverse hero summon.
+[21:38:18] [Render thread/INFO] [minecraft/ChatComponent]: [System] [CHAT] Replaced a slot on Armor Stand with [Legendary Shield]
+[21:38:20] [Render thread/INFO] [co.ne.nu.cl.de.ClientShot/]: [clientshot] hero legendary_shield: main hand holds nusmp:legendary_shield
+[21:38:20] [Render thread/INFO] [co.ne.nu.cl.de.ClientShot/]: [clientshot] hero legendary_shield client: selected 0, menu InventoryMenu, stacks [0=nusmp:legendary_shield 36=nusmp:ruby_boots_of_planestriding 39=nusmp:mask_of_mind_melting]
+[21:38:20] [Server thread/INFO] [co.ne.nu.cl.de.ClientShot/]: [clientshot] hero legendary_shield server: menu InventoryMenu, mode SURVIVAL, bound true, kind SHIELD, summoned true, selected 0, stacks [0=nusmp:legendary_shield 36=nusmp:ruby_boots_of_planestriding 39=nusmp:mask_of_mind_melting]
+[21:38:21] [Render thread/INFO] [minecraft/ChatComponent]: [System] [CHAT] Released Dev from the Legendary Shield. Its level, forms and mastery are gone.
+[21:38:21] [Render thread/INFO] [minecraft/ChatComponent]: [System] [CHAT] Bound Dev to the Legendary Spear. They summon it with the summon key, or /multiverse hero summon.
+[21:38:21] [Render thread/INFO] [minecraft/ChatComponent]: [System] [CHAT] Replaced a slot on Armor Stand with [Legendary Spear]
+[21:38:23] [Render thread/INFO] [co.ne.nu.cl.de.ClientShot/]: [clientshot] hero legendary_spear: main hand holds nusmp:legendary_spear
+[21:38:23] [Render thread/INFO] [co.ne.nu.cl.de.ClientShot/]: [clientshot] hero legendary_spear client: selected 0, menu InventoryMenu, stacks [0=nusmp:legendary_spear 36=nusmp:ruby_boots_of_planestriding 39=nusmp:mask_of_mind_melting]
+[21:38:23] [Server thread/INFO] [co.ne.nu.cl.de.ClientShot/]: [clientshot] hero legendary_spear server: menu InventoryMenu, mode SURVIVAL, bound true, kind SPEAR, summoned true, selected 0, stacks [0=nusmp:legendary_spear 36=nusmp:ruby_boots_of_planestriding 39=nusmp:mask_of_mind_melting]
+[21:38:25] [Render thread/INFO] [minecraft/ChatComponent]: [System] [CHAT] Released Dev from the Legendary Spear. Its level, forms and mastery are gone.
+[21:38:25] [Render thread/INFO] [minecraft/ChatComponent]: [System] [CHAT] Bound Dev to the Legendary Bow. They summon it with the summon key, or /multiverse hero summon.
+[21:38:25] [Render thread/INFO] [minecraft/ChatComponent]: [System] [CHAT] Replaced a slot on Armor Stand with [Legendary Bow]
+[21:38:27] [Render thread/INFO] [co.ne.nu.cl.de.ClientShot/]: [clientshot] hero legendary_bow: main hand holds nusmp:legendary_bow
+[21:38:27] [Render thread/INFO] [co.ne.nu.cl.de.ClientShot/]: [clientshot] hero legendary_bow client: selected 0, menu InventoryMenu, stacks [0=nusmp:legendary_bow 36=nusmp:ruby_boots_of_planestriding 39=nusmp:mask_of_mind_melting]
+[21:38:27] [Server thread/INFO] [co.ne.nu.cl.de.ClientShot/]: [clientshot] hero legendary_bow server: menu InventoryMenu, mode SURVIVAL, bound true, kind BOW, summoned true, selected 0, stacks [0=nusmp:legendary_bow 36=nusmp:ruby_boots_of_planestriding 39=nusmp:mask_of_mind_melting]
+[21:38:28] [Render thread/INFO] [minecraft/ChatComponent]: [System] [CHAT] Released Dev from the Legendary Bow. Its level, forms and mastery are gone.
+[21:38:28] [Render thread/INFO] [minecraft/ChatComponent]: [System] [CHAT] Bound Dev to the Vassal Hammer. They summon it with the summon key, or /multiverse hero summon.
+[21:38:28] [Render thread/INFO] [minecraft/ChatComponent]: [System] [CHAT] Replaced a slot on Armor Stand with [Vassal Hammer]
+[21:38:30] [Render thread/INFO] [co.ne.nu.cl.de.ClientShot/]: [clientshot] hero vassal_hammer: main hand holds nusmp:vassal_hammer
+[21:38:30] [Render thread/INFO] [co.ne.nu.cl.de.ClientShot/]: [clientshot] hero vassal_hammer client: selected 0, menu InventoryMenu, stacks [0=nusmp:vassal_hammer 36=nusmp:ruby_boots_of_planestriding 39=nusmp:mask_of_mind_melting]
+[21:38:30] [Server thread/INFO] [co.ne.nu.cl.de.ClientShot/]: [clientshot] hero vassal_hammer server: menu InventoryMenu, mode SURVIVAL, bound true, kind HAMMER, summoned true, selected 0, stacks [0=nusmp:vassal_hammer 36=nusmp:ruby_boots_of_planestriding 39=nusmp:mask_of_mind_melting]
+[21:38:31] [Render thread/INFO] [minecraft/ChatComponent]: [System] [CHAT] Released Dev from the Vassal Hammer. Its level, forms and mastery are gone.
+[21:38:31] [Render thread/INFO] [minecraft/ChatComponent]: [System] [CHAT] Bound Dev to the Vassal Claw. They summon it with the summon key, or /multiverse hero summon.
+[21:38:31] [Render thread/INFO] [minecraft/ChatComponent]: [System] [CHAT] Replaced a slot on Armor Stand with [Vassal Claw]
+[21:38:33] [Render thread/INFO] [co.ne.nu.cl.de.ClientShot/]: [clientshot] hero vassal_claw: main hand holds nusmp:vassal_claw
+[21:38:33] [Render thread/INFO] [co.ne.nu.cl.de.ClientShot/]: [clientshot] hero vassal_claw client: selected 0, menu InventoryMenu, stacks [0=nusmp:vassal_claw 36=nusmp:ruby_boots_of_planestriding 39=nusmp:mask_of_mind_melting]
+[21:38:33] [Server thread/INFO] [co.ne.nu.cl.de.ClientShot/]: [clientshot] hero vassal_claw server: menu InventoryMenu, mode SURVIVAL, bound true, kind CLAW, summoned true, selected 0, stacks [0=nusmp:vassal_claw 36=nusmp:ruby_boots_of_planestriding 39=nusmp:mask_of_mind_melting]
+[21:38:35] [Render thread/INFO] [minecraft/ChatComponent]: [System] [CHAT] Released Dev from the Vassal Claw. Its level, forms and mastery are gone.
+[21:38:35] [Render thread/INFO] [minecraft/ChatComponent]: [System] [CHAT] Bound Dev to the Vassal Axe. They summon it with the summon key, or /multiverse hero summon.
+[21:38:35] [Render thread/INFO] [minecraft/ChatComponent]: [System] [CHAT] Replaced a slot on Armor Stand with [Vassal Axe]
+[21:38:37] [Render thread/INFO] [co.ne.nu.cl.de.ClientShot/]: [clientshot] hero vassal_axe: main hand holds nusmp:vassal_axe
+[21:38:37] [Render thread/INFO] [co.ne.nu.cl.de.ClientShot/]: [clientshot] hero vassal_axe client: selected 0, menu InventoryMenu, stacks [0=nusmp:vassal_axe 36=nusmp:ruby_boots_of_planestriding 39=nusmp:mask_of_mind_melting]
+[21:38:37] [Server thread/INFO] [co.ne.nu.cl.de.ClientShot/]: [clientshot] hero vassal_axe server: menu InventoryMenu, mode SURVIVAL, bound true, kind AXE, summoned true, selected 0, stacks [0=nusmp:vassal_axe 36=nusmp:ruby_boots_of_planestriding 39=nusmp:mask_of_mind_melting]
+[21:38:38] [Render thread/INFO] [minecraft/ChatComponent]: [System] [CHAT] Released Dev from the Vassal Axe. Its level, forms and mastery are gone.
+[21:38:38] [Render thread/INFO] [minecraft/ChatComponent]: [System] [CHAT] Bound Dev to the Vassal Whip. They summon it with the summon key, or /multiverse hero summon.
+[21:38:38] [Render thread/INFO] [minecraft/ChatComponent]: [System] [CHAT] Replaced a slot on Armor Stand with [Vassal Whip]
+[21:38:40] [Render thread/INFO] [co.ne.nu.cl.de.ClientShot/]: [clientshot] hero vassal_whip: main hand holds nusmp:vassal_whip
+[21:38:40] [Render thread/INFO] [co.ne.nu.cl.de.ClientShot/]: [clientshot] hero vassal_whip client: selected 0, menu InventoryMenu, stacks [0=nusmp:vassal_whip 36=nusmp:ruby_boots_of_planestriding 39=nusmp:mask_of_mind_melting]
+[21:38:40] [Server thread/INFO] [co.ne.nu.cl.de.ClientShot/]: [clientshot] hero vassal_whip server: menu InventoryMenu, mode SURVIVAL, bound true, kind WHIP, summoned true, selected 0, stacks [0=nusmp:vassal_whip 36=nusmp:ruby_boots_of_planestriding 39=nusmp:mask_of_mind_melting]
+[21:38:41] [Render thread/INFO] [minecraft/ChatComponent]: [System] [CHAT] Released Dev from the Vassal Whip. Its level, forms and mastery are gone.
+[21:38:41] [Render thread/INFO] [minecraft/ChatComponent]: [System] [CHAT] Bound Dev to the Vassal Staff. They summon it with the summon key, or /multiverse hero summon.
+[21:38:41] [Render thread/INFO] [minecraft/ChatComponent]: [System] [CHAT] Replaced a slot on Armor Stand with [Vassal Staff]
+[21:38:43] [Render thread/INFO] [co.ne.nu.cl.de.ClientShot/]: [clientshot] hero vassal_staff: main hand holds nusmp:vassal_staff
+[21:38:43] [Render thread/INFO] [co.ne.nu.cl.de.ClientShot/]: [clientshot] hero vassal_staff client: selected 0, menu InventoryMenu, stacks [0=nusmp:vassal_staff 36=nusmp:ruby_boots_of_planestriding 39=nusmp:mask_of_mind_melting]
+[21:38:43] [Server thread/INFO] [co.ne.nu.cl.de.ClientShot/]: [clientshot] hero vassal_staff server: menu InventoryMenu, mode SURVIVAL, bound true, kind STAFF, summoned true, selected 0, stacks [0=nusmp:vassal_staff 36=nusmp:ruby_boots_of_planestriding 39=nusmp:mask_of_mind_melting]
+[21:38:45] [Render thread/INFO] [minecraft/ChatComponent]: [System] [CHAT] Released Dev from the Vassal Staff. Its level, forms and mastery are gone.
+[21:38:45] [Render thread/INFO] [minecraft/ChatComponent]: [System] [CHAT] Bound Dev to the Vassal Gauntlet. They summon it with the summon key, or /multiverse hero summon.
+[21:38:45] [Render thread/INFO] [minecraft/ChatComponent]: [System] [CHAT] Replaced a slot on Armor Stand with [Vassal Gauntlet]
+[21:38:47] [Render thread/INFO] [co.ne.nu.cl.de.ClientShot/]: [clientshot] hero vassal_gauntlet: main hand holds nusmp:vassal_gauntlet
+[21:38:47] [Render thread/INFO] [co.ne.nu.cl.de.ClientShot/]: [clientshot] hero vassal_gauntlet client: selected 0, menu InventoryMenu, stacks [0=nusmp:vassal_gauntlet 36=nusmp:ruby_boots_of_planestriding 39=nusmp:mask_of_mind_melting]
+[21:38:47] [Server thread/INFO] [co.ne.nu.cl.de.ClientShot/]: [clientshot] hero vassal_gauntlet server: menu InventoryMenu, mode SURVIVAL, bound true, kind GAUNTLET, summoned true, selected 0, stacks [0=nusmp:vassal_gauntlet 36=nusmp:ruby_boots_of_planestriding 39=nusmp:mask_of_mind_melting]
+[21:38:48] [Render thread/INFO] [minecraft/ChatComponent]: [System] [CHAT] Released Dev from the Vassal Gauntlet. Its level, forms and mastery are gone.
+[21:38:48] [Render thread/INFO] [minecraft/ChatComponent]: [System] [CHAT] Bound Dev to the Vassal Projectile. They summon it with the summon key, or /multiverse hero summon.
+[21:38:48] [Render thread/INFO] [minecraft/ChatComponent]: [System] [CHAT] Replaced a slot on Armor Stand with [Vassal Projectile]
+[21:38:50] [Render thread/INFO] [co.ne.nu.cl.de.ClientShot/]: [clientshot] hero vassal_projectile: main hand holds nusmp:vassal_projectile
+[21:38:50] [Render thread/INFO] [co.ne.nu.cl.de.ClientShot/]: [clientshot] hero vassal_projectile client: selected 0, menu InventoryMenu, stacks [0=nusmp:vassal_projectile 36=nusmp:ruby_boots_of_planestriding 39=nusmp:mask_of_mind_melting]
+[21:38:50] [Server thread/INFO] [co.ne.nu.cl.de.ClientShot/]: [clientshot] hero vassal_projectile server: menu InventoryMenu, mode SURVIVAL, bound true, kind PROJECTILE, summoned true, selected 0, stacks [0=nusmp:vassal_projectile 36=nusmp:ruby_boots_of_planestriding 39=nusmp:mask_of_mind_melting]
+[21:38:52] [Render thread/INFO] [minecraft/ChatComponent]: [System] [CHAT] Released Dev from the Vassal Projectile. Its level, forms and mastery are gone.
+[21:38:52] [Render thread/INFO] [minecraft/ChatComponent]: [System] [CHAT] Bound Dev to the Vassal Katana. They summon it with the summon key, or /multiverse hero summon.
+[21:38:52] [Render thread/INFO] [minecraft/ChatComponent]: [System] [CHAT] Replaced a slot on Armor Stand with [Vassal Katana]
+[21:38:54] [Render thread/INFO] [co.ne.nu.cl.de.ClientShot/]: [clientshot] hero vassal_katana: main hand holds nusmp:vassal_katana
+[21:38:54] [Render thread/INFO] [co.ne.nu.cl.de.ClientShot/]: [clientshot] hero vassal_katana client: selected 0, menu InventoryMenu, stacks [0=nusmp:vassal_katana 36=nusmp:ruby_boots_of_planestriding 39=nusmp:mask_of_mind_melting]
+[21:38:54] [Server thread/INFO] [co.ne.nu.cl.de.ClientShot/]: [clientshot] hero vassal_katana server: menu InventoryMenu, mode SURVIVAL, bound true, kind KATANA, summoned true, selected 0, stacks [0=nusmp:vassal_katana 36=nusmp:ruby_boots_of_planestriding 39=nusmp:mask_of_mind_melting]
+[21:38:55] [Render thread/INFO] [minecraft/ChatComponent]: [System] [CHAT] Released Dev from the Vassal Katana. Its level, forms and mastery are gone.
+[21:38:55] [Render thread/INFO] [minecraft/ChatComponent]: [System] [CHAT] Bound Dev to the Vassal Scythe. They summon it with the summon key, or /multiverse hero summon.
+[21:38:55] [Render thread/INFO] [minecraft/ChatComponent]: [System] [CHAT] Replaced a slot on Armor Stand with [Vassal Scythe]
+[21:38:57] [Render thread/INFO] [co.ne.nu.cl.de.ClientShot/]: [clientshot] hero vassal_scythe: main hand holds nusmp:vassal_scythe
+[21:38:57] [Render thread/INFO] [co.ne.nu.cl.de.ClientShot/]: [clientshot] hero vassal_scythe client: selected 0, menu InventoryMenu, stacks [0=nusmp:vassal_scythe 36=nusmp:ruby_boots_of_planestriding 39=nusmp:mask_of_mind_melting]
+[21:38:57] [Server thread/INFO] [co.ne.nu.cl.de.ClientShot/]: [clientshot] hero vassal_scythe server: menu InventoryMenu, mode SURVIVAL, bound true, kind SCYTHE, summoned true, selected 0, stacks [0=nusmp:vassal_scythe 36=nusmp:ruby_boots_of_planestriding 39=nusmp:mask_of_mind_melting]
+[21:38:58] [Render thread/INFO] [minecraft/ChatComponent]: [System] [CHAT] Released Dev from the Vassal Scythe. Its level, forms and mastery are gone.
+[21:38:58] [Render thread/INFO] [minecraft/ChatComponent]: [System] [CHAT] Bound Dev to the Vassal Fan. They summon it with the summon key, or /multiverse hero summon.
+[21:38:58] [Render thread/INFO] [minecraft/ChatComponent]: [System] [CHAT] Replaced a slot on Armor Stand with [Vassal Fan]
+[21:39:00] [Render thread/INFO] [co.ne.nu.cl.de.ClientShot/]: [clientshot] hero vassal_fan: main hand holds nusmp:vassal_fan
+[21:39:00] [Render thread/INFO] [co.ne.nu.cl.de.ClientShot/]: [clientshot] hero vassal_fan client: selected 0, menu InventoryMenu, stacks [0=nusmp:vassal_fan 36=nusmp:ruby_boots_of_planestriding 39=nusmp:mask_of_mind_melting]
+[21:39:00] [Server thread/INFO] [co.ne.nu.cl.de.ClientShot/]: [clientshot] hero vassal_fan server: menu InventoryMenu, mode SURVIVAL, bound true, kind FAN, summoned true, selected 0, stacks [0=nusmp:vassal_fan 36=nusmp:ruby_boots_of_planestriding 39=nusmp:mask_of_mind_melting]
+[21:39:02] [Render thread/INFO] [minecraft/ChatComponent]: [System] [CHAT] Released Dev from the Vassal Fan. Its level, forms and mastery are gone.
+[21:39:02] [Render thread/INFO] [minecraft/ChatComponent]: [System] [CHAT] Bound Dev to the Vassal Harpoon. They summon it with the summon key, or /multiverse hero summon.
+[21:39:02] [Render thread/INFO] [minecraft/ChatComponent]: [System] [CHAT] Replaced a slot on Armor Stand with [Vassal Harpoon]
+[21:39:04] [Render thread/INFO] [co.ne.nu.cl.de.ClientShot/]: [clientshot] hero vassal_harpoon: main hand holds nusmp:vassal_harpoon
+[21:39:04] [Render thread/INFO] [co.ne.nu.cl.de.ClientShot/]: [clientshot] hero vassal_harpoon client: selected 0, menu InventoryMenu, stacks [0=nusmp:vassal_harpoon 36=nusmp:ruby_boots_of_planestriding 39=nusmp:mask_of_mind_melting]
+[21:39:04] [Server thread/INFO] [co.ne.nu.cl.de.ClientShot/]: [clientshot] hero vassal_harpoon server: menu InventoryMenu, mode SURVIVAL, bound true, kind HARPOON, summoned true, selected 0, stacks [0=nusmp:vassal_harpoon 36=nusmp:ruby_boots_of_planestriding 39=nusmp:mask_of_mind_melting]
+[21:39:05] [Render thread/INFO] [minecraft/ChatComponent]: [System] [CHAT] Released Dev from the Vassal Harpoon. Its level, forms and mastery are gone.
+[21:39:05] [Render thread/INFO] [minecraft/ChatComponent]: [System] [CHAT] Bound Dev to the Vassal Chain. They summon it with the summon key, or /multiverse hero summon.
+[21:39:05] [Render thread/INFO] [minecraft/ChatComponent]: [System] [CHAT] Replaced a slot on Armor Stand with [Vassal Chain]
+[21:39:07] [Render thread/INFO] [co.ne.nu.cl.de.ClientShot/]: [clientshot] hero vassal_chain: main hand holds nusmp:vassal_chain
+[21:39:07] [Render thread/INFO] [co.ne.nu.cl.de.ClientShot/]: [clientshot] hero vassal_chain client: selected 0, menu InventoryMenu, stacks [0=nusmp:vassal_chain 36=nusmp:ruby_boots_of_planestriding 39=nusmp:mask_of_mind_melting]
+[21:39:07] [Server thread/INFO] [co.ne.nu.cl.de.ClientShot/]: [clientshot] hero vassal_chain server: menu InventoryMenu, mode SURVIVAL, bound true, kind CHAIN, summoned true, selected 0, stacks [0=nusmp:vassal_chain 36=nusmp:ruby_boots_of_planestriding 39=nusmp:mask_of_mind_melting]
+[21:39:08] [Render thread/INFO] [minecraft/ChatComponent]: [System] [CHAT] Released Dev from the Vassal Chain. Its level, forms and mastery are gone.
+[21:39:08] [Render thread/INFO] [minecraft/ChatComponent]: [System] [CHAT] Bound Dev to the Vassal Carriage. They summon it with the summon key, or /multiverse hero summon.
+[21:39:08] [Render thread/INFO] [minecraft/ChatComponent]: [System] [CHAT] Replaced a slot on Armor Stand with [Vassal Carriage]
+[21:39:10] [Render thread/INFO] [co.ne.nu.cl.de.ClientShot/]: [clientshot] hero vassal_carriage: main hand holds nusmp:vassal_carriage
+[21:39:10] [Render thread/INFO] [co.ne.nu.cl.de.ClientShot/]: [clientshot] hero vassal_carriage client: selected 0, menu InventoryMenu, stacks [0=nusmp:vassal_carriage 36=nusmp:ruby_boots_of_planestriding 39=nusmp:mask_of_mind_melting]
+[21:39:10] [Server thread/INFO] [co.ne.nu.cl.de.ClientShot/]: [clientshot] hero vassal_carriage server: menu InventoryMenu, mode SURVIVAL, bound true, kind CARRIAGE, summoned true, selected 0, stacks [0=nusmp:vassal_carriage 36=nusmp:ruby_boots_of_planestriding 39=nusmp:mask_of_mind_melting]
+[21:39:12] [Render thread/INFO] [minecraft/ChatComponent]: [System] [CHAT] Released Dev from the Vassal Carriage. Its level, forms and mastery are gone.
+[21:39:12] [Render thread/INFO] [minecraft/ChatComponent]: [System] [CHAT] Bound Dev to the Vassal Book. They summon it with the summon key, or /multiverse hero summon.
+[21:39:12] [Render thread/INFO] [minecraft/ChatComponent]: [System] [CHAT] Replaced a slot on Armor Stand with [Vassal Book]
+[21:39:14] [Render thread/INFO] [co.ne.nu.cl.de.ClientShot/]: [clientshot] hero vassal_book: main hand holds nusmp:vassal_book
+[21:39:14] [Render thread/INFO] [co.ne.nu.cl.de.ClientShot/]: [clientshot] hero vassal_book client: selected 0, menu InventoryMenu, stacks [0=nusmp:vassal_book 36=nusmp:ruby_boots_of_planestriding 39=nusmp:mask_of_mind_melting]
+[21:39:14] [Server thread/INFO] [co.ne.nu.cl.de.ClientShot/]: [clientshot] hero vassal_book server: menu InventoryMenu, mode SURVIVAL, bound true, kind BOOK, summoned true, selected 0, stacks [0=nusmp:vassal_book 36=nusmp:ruby_boots_of_planestriding 39=nusmp:mask_of_mind_melting]
+[21:39:15] [Render thread/INFO] [minecraft/ChatComponent]: [System] [CHAT] Released Dev from the Vassal Book. Its level, forms and mastery are gone.
+[21:39:15] [Render thread/INFO] [minecraft/ChatComponent]: [System] [CHAT] Bound Dev to the Vassal Mirror. They summon it with the summon key, or /multiverse hero summon.
+[21:39:15] [Render thread/INFO] [minecraft/ChatComponent]: [System] [CHAT] Replaced a slot on Armor Stand with [Vassal Mirror]
+[21:39:17] [Render thread/INFO] [co.ne.nu.cl.de.ClientShot/]: [clientshot] hero vassal_mirror: main hand holds nusmp:vassal_mirror
+[21:39:17] [Render thread/INFO] [co.ne.nu.cl.de.ClientShot/]: [clientshot] hero vassal_mirror client: selected 0, menu InventoryMenu, stacks [0=nusmp:vassal_mirror 36=nusmp:ruby_boots_of_planestriding 39=nusmp:mask_of_mind_melting]
+[21:39:17] [Server thread/INFO] [co.ne.nu.cl.de.ClientShot/]: [clientshot] hero vassal_mirror server: menu InventoryMenu, mode SURVIVAL, bound true, kind MIRROR, summoned true, selected 0, stacks [0=nusmp:vassal_mirror 36=nusmp:ruby_boots_of_planestriding 39=nusmp:mask_of_mind_melting]
+[21:39:18] [Render thread/INFO] [minecraft/ChatComponent]: [System] [CHAT] Released Dev from the Vassal Mirror. Its level, forms and mastery are gone.
+[21:39:18] [Render thread/INFO] [minecraft/ChatComponent]: [System] [CHAT] Bound Dev to the Vassal Musical Instrument. They summon it with the summon key, or /multiverse hero summon.
+[21:39:18] [Render thread/INFO] [minecraft/ChatComponent]: [System] [CHAT] Replaced a slot on Armor Stand with [Vassal Musical Instrument]
+[21:39:20] [Render thread/INFO] [co.ne.nu.cl.de.ClientShot/]: [clientshot] hero vassal_instrument: main hand holds nusmp:vassal_instrument
+[21:39:20] [Render thread/INFO] [co.ne.nu.cl.de.ClientShot/]: [clientshot] hero vassal_instrument client: selected 0, menu InventoryMenu, stacks [0=nusmp:vassal_instrument 36=nusmp:ruby_boots_of_planestriding 39=nusmp:mask_of_mind_melting]
+[21:39:20] [Server thread/INFO] [co.ne.nu.cl.de.ClientShot/]: [clientshot] hero vassal_instrument server: menu InventoryMenu, mode SURVIVAL, bound true, kind INSTRUMENT, summoned true, selected 0, stacks [0=nusmp:vassal_instrument 36=nusmp:ruby_boots_of_planestriding 39=nusmp:mask_of_mind_melting]
+[21:39:22] [Render thread/INFO] [minecraft/ChatComponent]: [System] [CHAT] Released Dev from the Vassal Musical Instrument. Its level, forms and mastery are gone.
+[21:39:22] [Render thread/INFO] [minecraft/ChatComponent]: [System] [CHAT] Bound Dev to the Vassal Sewing Set. They summon it with the summon key, or /multiverse hero summon.
+[21:39:22] [Render thread/INFO] [minecraft/ChatComponent]: [System] [CHAT] Replaced a slot on Armor Stand with [Vassal Sewing Set]
+[21:39:24] [Render thread/INFO] [co.ne.nu.cl.de.ClientShot/]: [clientshot] hero vassal_sewing_set: main hand holds nusmp:vassal_sewing_set
+[21:39:24] [Render thread/INFO] [co.ne.nu.cl.de.ClientShot/]: [clientshot] hero vassal_sewing_set client: selected 0, menu InventoryMenu, stacks [0=nusmp:vassal_sewing_set 36=nusmp:ruby_boots_of_planestriding 39=nusmp:mask_of_mind_melting]
+[21:39:24] [Server thread/INFO] [co.ne.nu.cl.de.ClientShot/]: [clientshot] hero vassal_sewing_set server: menu InventoryMenu, mode SURVIVAL, bound true, kind SEWING_SET, summoned true, selected 0, stacks [0=nusmp:vassal_sewing_set 36=nusmp:ruby_boots_of_planestriding 39=nusmp:mask_of_mind_melting]
+[21:39:25] [Render thread/INFO] [minecraft/ChatComponent]: [System] [CHAT] Released Dev from the Vassal Sewing Set. Its level, forms and mastery are gone.
