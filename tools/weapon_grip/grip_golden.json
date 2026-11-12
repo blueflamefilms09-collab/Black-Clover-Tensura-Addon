@@ -1971,7 +1971,7 @@
   "class": "bow",
   "fraction": 0.5,
   "source": "class",
-  "x": 17.175,
+  "x": 17.576,
   "y": 0.0,
   "z": 0.0
  },
@@ -2013,7 +2013,7 @@
   "source": "class",
   "x": 31.25,
   "y": 0.0,
-  "z": 0.062
+  "z": 0.0
  },
  "legendary_bow_pull2": {
   "class": "bow",
@@ -2021,7 +2021,7 @@
   "source": "class",
   "x": 13.25,
   "y": 0.0,
-  "z": 0.062
+  "z": 0.0
  },
  "legendary_bow_pull3": {
   "class": "bow",
@@ -2029,7 +2029,7 @@
   "source": "class",
   "x": 3.25,
   "y": 0.0,
-  "z": 0.062
+  "z": 0.0
  },
  "legendary_shield": {
   "class": "shield",
@@ -2037,7 +2037,7 @@
   "source": "class",
   "x": 0.0,
   "y": 0.0,
-  "z": 4.85
+  "z": 4.824
  },
  "legendary_shield_curse": {
   "class": "shield",
@@ -2065,10 +2065,10 @@
  },
  "legendary_sword": {
   "class": "longsword",
-  "fraction": 0.092,
+  "fraction": 0.076,
   "source": "directive",
   "x": 0.0,
-  "y": 13.8,
+  "y": 11.4,
   "z": 0.0
  },
  "legendary_sword_curse": {
