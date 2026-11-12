@@ -3169,10 +3169,10 @@
  },
  "sz/vassal_katana": {
   "class": "katana",
-  "fraction": 0.121,
+  "fraction": 0.125,
   "source": "directive",
-  "x": 0.0,
-  "y": 9.602,
+  "x": 3.203,
+  "y": 9.062,
   "z": 0.0
  },
  "sz/vassal_projectile": {
@@ -4851,8 +4851,8 @@
   "class": "whip",
   "fraction": 0.082,
   "source": "directive",
-  "x": -0.708,
-  "y": 8.617,
+  "x": -0.765,
+  "y": 8.613,
   "z": 0.0
  },
  "vassal_claw": {
@@ -4867,8 +4867,8 @@
   "class": "handitem",
   "fraction": 0.12,
   "source": "override",
-  "x": 0.7,
-  "y": -28.629,
+  "x": 0.85,
+  "y": -28.628,
   "z": 0.0
  },
  "vassal_gauntlet": {
@@ -4907,7 +4907,7 @@
   "class": "katana",
   "fraction": 0.125,
   "source": "directive",
-  "x": 2.686,
+  "x": 2.79,
   "y": 9.062,
   "z": 0.0
  },
@@ -4932,7 +4932,7 @@
   "fraction": 0.132,
   "source": "directive",
   "x": 0.0,
-  "y": 33.392,
+  "y": 33.396,
   "z": 0.0
  },
  "vassal_sewing_set": {
