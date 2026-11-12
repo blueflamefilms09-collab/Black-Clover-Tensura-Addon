@@ -1,7 +1,12 @@
 # Changelog
 
+## [3.83.7] — in-game run: a clean third-person picture
+- CHANGED (checking, not gameplay): the run hides the chat for the hero weapon part (the command replies covered the player) and crops the third-person pictures closer.
+- Seen in game in 3.83.6, in the player's own hand in first person: all 21 Blender-made hero weapons, textured and lit, none missing, none black.
+- KEPT: everything in the game.
+
 ## [3.83.6] — in-game run: the client gets its inventory again
-- FIXED (checking, not gameplay): the run of 3.83.5 showed the client's inventory empty while the server held the armour relics and the summoned hero weapon. The cause is in the run itself, not in the hero weapons: it closes the screens the mod opens with a client-only call, and where that screen was a menu the server kept it open and sent inventory changes for that menu only. The run now closes the server's menu for the player and sends the whole inventory again before it dresses the player and before the hero weapons.
+- FIXED (checking, not gameplay): the run of 3.83.5 showed the client's inventory empty while the server held the armour relics and the summoned hero weapon. The cause was in the run itself, not in the hero weapons, and the 3.83.6 run confirmed it: the run closes the screens that open on joining with a client-only call, the server still held Tensura's reincarnation menu open for the player, and so it sent inventory changes for that menu only. The run now closes the server's menu for the player and sends the whole inventory again before it dresses the player and before the hero weapons. (This also explains why the worn armour relics were never in this run's pictures before.)
 - Seen in game in 3.83.5 (item display and armour stand): all 21 Blender-made hero weapons draw textured and lit, with no black or missing faces.
 - KEPT: everything in the game.
 

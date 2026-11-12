@@ -213,6 +213,7 @@ public final class ClientShot {
                 if (!heroReady) {                                                            // 3.83.3: survival (the bond needs it), and nothing standing before the camera
                     heroReady = true;
                     serverResync(mc, p);
+                    mc.options.chatVisibility().set(net.minecraft.world.entity.player.ChatVisiblity.HIDDEN);      // 3.83.7: the command replies covered the player in the third-person pictures
                     mc.player.connection.sendCommand("gamemode survival");
                     mc.player.connection.sendCommand("kill @e[type=!minecraft:player]");
                     mc.player.connection.sendCommand("time set noon");
