@@ -209,9 +209,9 @@ public final class ClientShot {
                 wait = 10;
             }
             case 9 -> {                                                                      // 3.83.1: the hero weapons in the main hand
-                if (!heroReady) {                                                            // 3.83.2: creative mode (there a hero weapon is a plain item: no bond, no refusal), and nothing standing before the camera
+                if (!heroReady) {                                                            // 3.83.3: survival (the bond needs it), and nothing standing before the camera
                     heroReady = true;
-                    mc.player.connection.sendCommand("gamemode creative");
+                    mc.player.connection.sendCommand("gamemode survival");
                     mc.player.connection.sendCommand("kill @e[type=!minecraft:player]");
                     mc.player.connection.sendCommand("time set noon");
                     wait = 60;
@@ -219,15 +219,18 @@ public final class ClientShot {
                 }
                 mc.gui.getChat().clearMessages(false);
                 if (heroI >= HERO.length) {
-                    mc.player.connection.sendCommand("item replace entity @s weapon.mainhand with minecraft:air");
+                    mc.player.connection.sendCommand("multiverse hero release @s");
                     stage = 12;
                     break;
                 }
-                mc.player.connection.sendCommand("item replace entity @s weapon.mainhand with nusmp:" + HERO[heroI]);
+                // 3.83.3: a hero weapon given as a plain item is wiped from an unbound player (HeroLoan), so the run bonds the player to each weapon in turn and summons it
+                mc.player.connection.sendCommand("multiverse hero release @s");
+                mc.player.connection.sendCommand("multiverse hero bind @s " + HERO[heroI]);
+                mc.player.connection.sendCommand("multiverse hero summon");
                 mc.options.setCameraType(CameraType.THIRD_PERSON_FRONT);
                 mc.setScreen(null);
                 stage = 10;
-                wait = 30;
+                wait = 40;
             }
             case 10 -> {
                 say("hero " + HERO[heroI] + ": main hand holds " + p.getMainHandItem().getItem());

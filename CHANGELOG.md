@@ -1,5 +1,9 @@
 # Changelog
 
+## [3.83.3] — the in-game screenshot run bonds the player to each hero weapon
+- FIXED (checking, not gameplay): the run of 3.83.2 still showed empty hands. A hero weapon given as a plain item is wiped from a player who is not bound to it, in creative mode too. The run now does what a player does: for each weapon it releases the bond, binds the player to that weapon and summons it (`/multiverse hero release | bind | summon`), in survival mode, then takes the two pictures.
+- KEPT: everything in the game.
+
 ## [3.83.2] — the in-game screenshot run actually shows the hero weapons
 - FIXED (checking, not gameplay): the first in-game run of 3.83.1 showed no weapon. A survival player without a bond may not hold a hero weapon (the hero system took each one away again), and the undead summoned earlier in the run stood in front of the camera. The run now switches to creative mode for this part (there a hero weapon is a plain item), removes the other entities, clears the chat, and crops wider.
 - Also noted: the build of 3.83.0 compiled and passed its tests, but its release step was refused by GitHub (403), so 3.83.0 has no release of its own; 3.83.1 and later contain it.

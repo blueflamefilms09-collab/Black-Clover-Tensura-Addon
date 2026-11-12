@@ -100,7 +100,7 @@ jobs:
                   im = Image.open(p).convert('RGB')
                   w, h = im.size
                   if kind == 'hero3':                                    # the player in the middle of the frame
-                      box = (w // 2 - 300, h // 2 - 300, w // 2 + 300, h // 2 + 300)
+                      box = (w // 2 - 260, h // 2 - 280, w // 2 + 260, h // 2 + 240)
                   else:                                                  # first person: the right half, where the hand is
                       box = (w // 2 - 160, h // 6, w, h)
                   c = im.crop(box).resize(tile, Image.LANCZOS)
