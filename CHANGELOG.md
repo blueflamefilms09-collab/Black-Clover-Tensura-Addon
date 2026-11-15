@@ -1,5 +1,10 @@
 # Changelog
 
+## [3.83.9] — the mod is called Anime Multiverse
+- REPLACED (asked for: the pack should be called "Anime Multiverse"): the display name in the mod list is now **Anime Multiverse** (it was "Multiverse"); README title updated.
+- KEPT: the internal mod id `nusmp` (changing it would break every save, config file name and asset path), the jar file name `multiverse-of-anime-<version>.jar`, and the in-game texts that say "Multiverse of Anime" (key-binding category, tooltip footer, advancement tab).
+- Cost: none (metadata only).
+
 ## [3.83.8] — the pipeline doc says what was seen in a game
 - CHANGED (docs only): `docs/heroweapon/blender_pipeline.md` now lists what the in-game runs of 3.83.4 to 3.83.7 showed (all 21 base looks in the player's hand in first and third person, on an armour stand and on an item display: textured, lit, none missing) and what is still unseen in a game (the curse looks, the bow's draw stages, the glow in the dark, the classic models, a side view of the hold).
 - KEPT: everything in the game.
