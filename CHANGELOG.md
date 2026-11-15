@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.86.0] — skill icon polish pass (first step of the skill-icon upgrade)
+- REPLACED (asked for: "upgrade the icons of all my skills, they look ass"): 365 skill icons (grimoire, buff and ultimate icons, Beast Will icons, the unique and ultimate skill icons) get a finishing pass: stronger colour and contrast, light from the top-left with shade to the bottom-right, a soft vignette that holds the eye on the emblem, sharper edges, a dark outer rim. Same ids, same 32x32 size, same paths (the skill lists of ManasCore still draw them).
+- KEPT: every original icon, whole, under `textures/skill/classic/<same path>` (the polish always starts from those copies, so running it twice changes nothing more). Not touched: layers (`sym_`, `bg_`, `mod_`), sheets, the animated Veldanava strips, the Dragon Ball icons (replaced with the Dragon Ball rework).
+- NEW: `tools/icon_polish.py` (deterministic; `python tools/icon_polish.py`).
+- Honest limit: this is a finishing filter, not new drawings. The emblems themselves (for example the beast heads) keep their shapes; redrawing them is the next step of the icon upgrade.
+- Cost: none at run time (same file sizes, same textures); not seen in a game.
+
 ## [3.85.2] — compile fix for 3.85.1
 - FIXED: two dust-particle trails of the Greed forms (Bow lock-on, Dual Blades) called the new theme-based `trail` with a dust option; `trail` has an overload for plain particle options again. No behaviour change.
 - KEPT: everything of 3.85.1. Cost: unchanged.
