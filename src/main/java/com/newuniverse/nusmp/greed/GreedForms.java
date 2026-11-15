@@ -94,6 +94,13 @@ public final class GreedForms {
         t.hurt(magic ? p.serverLevel().damageSources().magic() : p.serverLevel().damageSources().playerAttack(p), (float) (amount * GreedConfig.damage()));
     }
 
+    private static void trail(ServerLevel level, ParticleOptions o, Vec3 from, Vec3 dir, double range, int every) {
+        for (int i = 1; i <= range; i += every) {
+            Vec3 c = from.add(dir.scale(i));
+            PerfParticles.send(level, o, c.x, c.y, c.z, 2, 0.05, 0.05, 0.05, 0.0);
+        }
+    }
+
     private static void trail(ServerLevel level, ThemeKey theme, Vec3 from, Vec3 dir, double range, int every) {
         for (int i = 1; i <= range; i += every) {
             Vec3 c = from.add(dir.scale(i));

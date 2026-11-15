@@ -1,5 +1,9 @@
 # Changelog
 
+## [3.85.2] — compile fix for 3.85.1
+- FIXED: two dust-particle trails of the Greed forms (Bow lock-on, Dual Blades) called the new theme-based `trail` with a dust option; `trail` has an overload for plain particle options again. No behaviour change.
+- KEPT: everything of 3.85.1. Cost: unchanged.
+
 ## [3.85.1] — Black Sword Greed passes the repo rules (the 3.85.0 build did not pass its tests)
 - FIXED: the sword's effects use the mod's own particle themes (`Fx.spray`, dark tone) instead of vanilla particles; the starvation hit is magic damage, not the starve type (hunger ban); the starvation HUD is listed as a fixed GUI with its reason; the Greed shield is filed as "class table only" in `ShieldSet.CLASS_ONLY` and its model carries no blocking override (it draws as a normal 3D weapon, blocks through the item's own use animation); the smoke list has `greed` before `boss.stats`.
 - KEPT: everything of 3.85.0. Cost: unchanged.
