@@ -22,7 +22,7 @@ SKIP_PART = ("_anim", "_hd", "_strip")
 
 def skip(rel):
     base = os.path.basename(rel)
-    return (rel.startswith("classic" + os.sep) or base.startswith(SKIP_PREFIX) or any(p in base for p in SKIP_PART))
+    return (os.path.exists(os.path.join(TEX, "hd", rel)) or rel.startswith("hd" + os.sep) or rel.startswith("classic" + os.sep) or base.startswith(SKIP_PREFIX) or any(p in base for p in SKIP_PART))
 
 
 def polish(im):

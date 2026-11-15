@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.87.0] — skill icons redrawn with relief, rich backgrounds and gem frames
+- REPLACED (asked for: "give the icons a better design, not like a little kid drew them, more detail"): the 195 grimoire and Beast Will icons (every grimoire magic in its active, buff and ultimate icon, and every Beast Will Unique and Ultimate icon) are redrawn by the new `tools/icon_forge.py`: each emblem is a bevelled, lit relief (top-left light, highlights, contour engraving, rim light in the magic colour, soft drop shadow), on a richer background (energy streaks, rune circles with star seals, sparks, rays for the Ultimates) inside an ornate frame with corner gems and edge studs (gold for active and Ultimate Beast Wills, silver for buff and Unique, black iron for ultimate). Same ids, same paths, same 32x32 size.
+- NEW: a 128x128 high-detail copy of each of those icons under `textures/skill/hd/<same path>` (not drawn by the game yet: the skill lists of ManasCore take the 32 px path, and drawing the HD copies in the mod's own screens is the next step).
+- KEPT: every original icon, whole, under `textures/skill/classic/<same path>`. The 3.86.0 polish pass keeps working for the other icons (it skips the redrawn ones).
+- Not redrawn yet: the single unique skills (Gate of Babylon, Six Eyes, Hestia, ...), the Veldanava icons and the Dragon Ball icons (replaced by the Dragon Ball rework). Their shapes are still the old ones with the 3.86.0 polish.
+- Cost: none at run time (same 32 px textures); not seen in a game.
+
 ## [3.86.0] — skill icon polish pass (first step of the skill-icon upgrade)
 - REPLACED (asked for: "upgrade the icons of all my skills, they look ass"): 365 skill icons (grimoire, buff and ultimate icons, Beast Will icons, the unique and ultimate skill icons) get a finishing pass: stronger colour and contrast, light from the top-left with shade to the bottom-right, a soft vignette that holds the eye on the emblem, sharper edges, a dark outer rim. Same ids, same 32x32 size, same paths (the skill lists of ManasCore still draw them).
 - KEPT: every original icon, whole, under `textures/skill/classic/<same path>` (the polish always starts from those copies, so running it twice changes nothing more). Not touched: layers (`sym_`, `bg_`, `mod_`), sheets, the animated Veldanava strips, the Dragon Ball icons (replaced with the Dragon Ball rework).
