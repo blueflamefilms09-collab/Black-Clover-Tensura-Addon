@@ -27,6 +27,7 @@
 8. **Always publish completed updates and fixes.** Commit and push the completed change to the current working branch, then
    publish its build as a GitHub pre-release with the mod JAR attached. Do not push directly to `main` or `master` unless
    the owner explicitly asks; if build or release publication is blocked, report the blocker clearly.
+13. **Weapons and items that should work with Better Combat do.** Every melee weapon (swords, spears, scythes, gauntlets, staffs, dual blades, ...) and every item that is swung or held like one gets a Better Combat file in `data/anime_multiverse/weapon_attributes/` that fits its lore and its form (right hand / two-handed / dual wield, reach, swing animations from Better Combat's own list). Run `python tools/bettercombat/gen_attributes.py` for a new weapon; `WeaponAttributesTest` fails the build if a melee weapon has none. Ranged weapons and shields get the matching compatibility (bows draw and release, shields block through the vanilla shield path). When a weapon changes form, each form keeps its own fitting attributes.
 
 Build: `gradlew.bat build` (JDK 21) -> `build/libs/multiverse-of-anime-<version>.jar`.
 Preview VFX without the game: `python tools/vfx_preview/preview.py`.
