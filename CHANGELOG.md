@@ -1,5 +1,9 @@
 # Changelog
 
+## [3.85.1] — Black Sword Greed passes the repo rules (the 3.85.0 build did not pass its tests)
+- FIXED: the sword's effects use the mod's own particle themes (`Fx.spray`, dark tone) instead of vanilla particles; the starvation hit is magic damage, not the starve type (hunger ban); the starvation HUD is listed as a fixed GUI with its reason; the Greed shield is filed as "class table only" in `ShieldSet.CLASS_ONLY` and its model carries no blocking override (it draws as a normal 3D weapon, blocks through the item's own use animation); the smoke list has `greed` before `boss.stats`.
+- KEPT: everything of 3.85.0. Cost: unchanged.
+
 ## [3.85.0] — the Black Sword Greed and the skill Lord of Gluttonous Greed
 - NEW (asked for: "Start building the black sword of greed", from the Berserk of Gluttony blueprint): a one-per-world, soul-bound sword with eight forms (Sword, Bow, Scythe, Shield, Staff, Gauntlets, Spear, Dual Blades, Level Zero), eight tiers opened by devouring, hunger and Half-Starvation, a skill vault, Soul Sever, one Secret Technique per form, and the Ultimate skill **Lord of Gluttonous Greed** (3 modes). Key `R` switches the open forms. `/multiverse greed ...` for operators and the wielder.
 - NEW: 8 items with 3D models made in Blender (`tools/blender/black_sword_greed.py`), Tensura engravings per form, Better Combat files for the melee forms, a skill icon, the server config `nusmp-greed-server.toml`, tests (`GreedRulesTest`, `GreedSourceScanTest`) and the self-tests `greed.rules`, `greed.world`, `greed.forms`.

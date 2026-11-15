@@ -141,13 +141,5 @@
         1.0
       ]
     }
-  },
-  "overrides": [
-    {
-      "predicate": {
-        "blocking": 1
-      },
-      "model": "anime_multiverse:item/black_sword_greed_shield_blocking"
-    }
-  ]
+  }
 }

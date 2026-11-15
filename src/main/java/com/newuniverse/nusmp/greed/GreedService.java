@@ -507,7 +507,7 @@ public final class GreedService {
                 release(p.getServer(), p.getUUID(), level, p.position());
                 return;
             }
-            p.hurt(level.damageSources().starve(), dmg);
+            p.hurt(level.damageSources().magic(), dmg);   // the sword devours its wielder: magic damage, not the starve type (hunger ban)
         }
     }
 

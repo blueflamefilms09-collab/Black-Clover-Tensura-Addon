@@ -1,5 +1,9 @@
 package com.newuniverse.nusmp.greed;
 
+import com.newuniverse.nusmp.particle.fx.Fx;
+import com.newuniverse.nusmp.particle.fx.FxThemes;
+import com.newuniverse.nusmp.particle.fx.FxTone;
+import com.newuniverse.nusmp.particle.fx.ThemeKey;
 import com.newuniverse.nusmp.perf.PerfParticles;
 import io.github.manasmods.tensura.storage.TensuraStorages;
 import io.github.manasmods.tensura.util.EnergyHelper;
@@ -90,10 +94,10 @@ public final class GreedForms {
         t.hurt(magic ? p.serverLevel().damageSources().magic() : p.serverLevel().damageSources().playerAttack(p), (float) (amount * GreedConfig.damage()));
     }
 
-    private static void trail(ServerLevel level, ParticleOptions o, Vec3 from, Vec3 dir, double range, int every) {
+    private static void trail(ServerLevel level, ThemeKey theme, Vec3 from, Vec3 dir, double range, int every) {
         for (int i = 1; i <= range; i += every) {
             Vec3 c = from.add(dir.scale(i));
-            PerfParticles.send(level, o, c.x, c.y, c.z, 2, 0.05, 0.05, 0.05, 0.0);
+            Fx.spray(level, theme, FxTone.DARK, c.x, c.y, c.z, 2, 0.05, 0.05, 0.05, 0.0);
         }
     }
 
@@ -128,7 +132,7 @@ public final class GreedForms {
         }
         restoreMagicule(p, Math.min(5.0, hit.size()));
         Vec3 eye = p.getEyePosition();
-        trail(p.serverLevel(), ParticleTypes.SOUL_FIRE_FLAME, eye, p.getLookAngle(), 14, 2);
+        trail(p.serverLevel(), FxThemes.ITEM_ROTDOOM, eye, p.getLookAngle(), 14, 2);
         sound(p, SoundEvents.BLAZE_SHOOT, 0.8f, 0.6f);
     }
 
@@ -184,7 +188,7 @@ public final class GreedForms {
             LivingEntity t = hit.get(0);
             hurt(p, t, (float) (6.0 + Math.min(chargeTicks, 20) * 0.4 + atk * 0.6), true);
         }
-        trail(p.serverLevel(), ParticleTypes.SOUL_FIRE_FLAME, p.getEyePosition(), p.getLookAngle(), 48, 4);
+        trail(p.serverLevel(), FxThemes.ITEM_ROTDOOM, p.getEyePosition(), p.getLookAngle(), 48, 4);
         sound(p, SoundEvents.ARROW_SHOOT, 1.0f, 0.7f);
     }
 
@@ -220,7 +224,7 @@ public final class GreedForms {
 
     private static void piercingMeteor(ServerPlayer p, double power) {
         for (LivingEntity t : alongRay(p, 32.0, 1.4, GreedRules.MAX_TARGETS)) hurt(p, t, (float) (22.0 + power * 2.2), true);
-        trail(p.serverLevel(), ParticleTypes.SOUL_FIRE_FLAME, p.getEyePosition(), p.getLookAngle(), 32, 2);
+        trail(p.serverLevel(), FxThemes.ITEM_ROTDOOM, p.getEyePosition(), p.getLookAngle(), 32, 2);
         sound(p, SoundEvents.WARDEN_SONIC_BOOM, 0.8f, 1.4f);
     }
 
@@ -233,7 +237,7 @@ public final class GreedForms {
             heal += 3.0f;
         }
         p.heal(Math.min(30.0f, heal));
-        PerfParticles.send(p.serverLevel(), ParticleTypes.SWEEP_ATTACK, p.getX(), p.getY() + 1.0, p.getZ(), 6, 2.0, 0.5, 2.0, 0.0);
+        Fx.spray(p.serverLevel(), FxThemes.MAGIC_SWORD, FxTone.DARK, p.getX(), p.getY() + 1.0, p.getZ(), 6, 2.0, 0.5, 2.0, 0.0);
         sound(p, SoundEvents.WITHER_SHOOT, 0.9f, 0.8f);
     }
 
@@ -254,7 +258,7 @@ public final class GreedForms {
             if (n++ >= GreedRules.MAX_TARGETS) break;
             e.heal((float) (20.0 + power * 2.0));
             for (MobEffectInstance m : new ArrayList<>(e.getActiveEffects())) if (!m.getEffect().value().isBeneficial()) e.removeEffect(m.getEffect());
-            PerfParticles.send(level, ParticleTypes.END_ROD, e.getX(), e.getY() + 1.0, e.getZ(), 10, 0.4, 0.8, 0.4, 0.04);
+            Fx.spray(level, FxThemes.ITEM_ROTDOOM, FxTone.DARK, e.getX(), e.getY() + 1.0, e.getZ(), 10, 0.4, 0.8, 0.4, 0.04);
         }
         sound(p, SoundEvents.BEACON_POWER_SELECT, 1.0f, 1.2f);
     }
@@ -262,7 +266,7 @@ public final class GreedForms {
     private static void dimensionDestruction(ServerPlayer p, double power) {
         for (LivingEntity t : alongRay(p, 10.0, 3.5, GreedRules.MAX_TARGETS)) {
             hurt(p, t, (float) (20.0 + power * 2.0), true);
-            PerfParticles.send(p.serverLevel(), ParticleTypes.PORTAL, t.getX(), t.getY() + 1.0, t.getZ(), 12, 0.3, 0.6, 0.3, 0.3);
+            Fx.spray(p.serverLevel(), FxThemes.MAGIC_SPATIAL, FxTone.DARK, t.getX(), t.getY() + 1.0, t.getZ(), 12, 0.3, 0.6, 0.3, 0.3);
         }
         sound(p, SoundEvents.ENDER_DRAGON_GROWL, 0.6f, 1.6f);
     }

@@ -22,7 +22,7 @@ public final class ShieldSet {
             "hylian_hero_shield");
 
     /** Ids the class table (assets/anime_multiverse/weapon_classes.json) files under "shield" that are not held-up shields. */
-    public static final Set<String> CLASS_ONLY = Set.of("vassal_mirror");
+    public static final Set<String> CLASS_ONLY = Set.of("vassal_mirror", "black_sword_greed_shield");
 
     /** The suffixes of the extra meshes of one shield (a curse form, the level-of-detail mesh, an orbiting piece of an upgraded mesh). */
     private static final String[] MESH_SUFFIXES = {"_curse", "_lod", "_orbit"};
