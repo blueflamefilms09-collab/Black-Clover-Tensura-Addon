@@ -4,6 +4,7 @@
 - FIXED: the rename of 3.84.0 shortened every `nusmp:` id by a hard-coded 6 letters in a few places (the id is now 17 letters): the relic, hero-kind, marker-kind and faction readers (`Relic`, `HeroKind`, `MarkerKind`, `FactionDef`, `FactionParser`) and the tests that read ids from data files now cut after the colon at the right place.
 - FIXED: the rename script had also rewritten the Java package inside test file paths (`"newuniverse", "nusmp"`, `newuniverse\\.nusmp` in patterns); those are back to the package name, so the source-scan tests find their files again (116 files).
 - FIXED: the data files under `docs/` that tests read (djinn roster, visual-upgrade lists, Rukh scope, the labyrinth wildcard example) use the new id; the wildcard example folder moved to `data/anime_multiverse`.
+- FIXED: the 706 structure templates (`.nbt`, labyrinth rooms, hub plaza, treasure rooms) now name `anime_multiverse:` blocks and loot tables themselves (13,681 names, rewritten with `tools/rename_modid_nbt.py`, so they no longer depend on the old-id alias); the mechanics data was regenerated (its stored hash covers an id); the companion-line check and three case tests learned the longer id.
 - KEPT: everything of 3.84.0 (new id `anime_multiverse`, old ids and `/nusmp` still work).
 - Cost: none at run time.
 

@@ -38,7 +38,7 @@ class ChestRulesTest {
         for (ChestRules r : List.of(D, new ChestRules(Set.of(), List.of()), new ChestRules(Set.of("minecraft:chests/x"), List.of("vault")))) {
             assertEquals(ChestRules.Kind.NONE, r.classify("anime_multiverse", "chests/dungeon_relic_vault"), "the vault holds relics (and its path names a vault, so it would be a treasure chest)");
             assertEquals(ChestRules.Kind.NONE, r.classify("anime_multiverse", "chests/labyrinth_pedestal"), "the pedestal holds exactly its relic");
-            assertEquals(ChestRules.Kind.NONE, r.classify("NuSmp", "Chests/Dungeon_Relic_Vault"), "case does not matter");
+            assertEquals(ChestRules.Kind.NONE, r.classify("Anime_Multiverse", "Chests/Dungeon_Relic_Vault"), "case does not matter");
         }
         assertEquals(Set.of("anime_multiverse:chests/dungeon_relic_vault", "anime_multiverse:chests/labyrinth_pedestal"), ChestRules.ALWAYS_EXCLUDED);
         assertFalse(D.classify("othermod", "chests/labyrinth_pedestal") == ChestRules.Kind.NONE, "only OUR two tables are relic tables; another mod's table of that name is its own");
@@ -56,7 +56,7 @@ class ChestRulesTest {
 
     @Test
     void theDataFileCanAddExclusionsAndWordsAndWordsAreNormalised() {
-        ChestRules r = new ChestRules(Set.of(" Nusmp:Chests/Special_Reserve ", "", "  "), List.of(" Hoard ", "", "  "));
+        ChestRules r = new ChestRules(Set.of(" Anime_Multiverse:Chests/Special_Reserve ", "", "  "), List.of(" Hoard ", "", "  "));
         assertEquals(ChestRules.Kind.NONE, r.classify("anime_multiverse", "chests/special_reserve"));
         assertEquals(ChestRules.Kind.TREASURE, r.classify("anime_multiverse", "chests/dragon_hoard"));
         assertEquals(ChestRules.Kind.STANDARD, r.classify("anime_multiverse", "chests/boss_loot"), "the file REPLACED the words, so 'boss' is no longer one");

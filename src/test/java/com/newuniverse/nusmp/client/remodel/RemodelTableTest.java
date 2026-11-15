@@ -155,7 +155,7 @@ class RemodelTableTest {
             Matcher m = literal.matcher(src);
             while (m.find()) {
                 String s = m.group(1);
-                if (s.equals("cast_big")) continue;
+                if (s.equals("cast_big") || s.equals("anime_multiverse")) continue;
                 assertTrue(known.contains(s), file + ".java names \"" + s + "\", which is neither an entity, a model, a second form nor a skin of RemodelTable");
             }
         }

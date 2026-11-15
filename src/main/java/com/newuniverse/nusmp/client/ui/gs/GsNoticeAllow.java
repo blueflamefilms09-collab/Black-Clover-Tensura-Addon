@@ -31,7 +31,7 @@ public final class GsNoticeAllow {
 
     /** A companion looking after the player from her pouch ("anime_multiverse.companion.<name>.use"): the one companion line the crest mirrors. */
     static boolean companionHeal(String key) {
-        return key.startsWith("anime_multiverse.companion.") && key.endsWith(".use") && key.indexOf('.', 16) == key.length() - 4;
+        return key.startsWith("anime_multiverse.companion.") && key.endsWith(".use") && key.indexOf('.', 27) == key.length() - 4;
     }
 
     /** The kind (colour) of a mirrored key: warnings and refusals read as WARN, exhaustion as BAD, the rest as INFO. */

@@ -47,7 +47,7 @@ class ClaimBlockRulesTest {
 
     @Test
     void caseDoesNotMatter() {
-        assertTrue(ClaimBlockRules.blocked("NUSMP:Mega_Dungeon", "anime_multiverse:*"));
-        assertTrue(ClaimBlockRules.blocked("anime_multiverse:mega_dungeon", " NUSMP:* "));
+        assertTrue(ClaimBlockRules.blocked("ANIME_MULTIVERSE:Mega_Dungeon", "anime_multiverse:*"));
+        assertTrue(ClaimBlockRules.blocked("anime_multiverse:mega_dungeon", " ANIME_MULTIVERSE:* "));
     }
 }
