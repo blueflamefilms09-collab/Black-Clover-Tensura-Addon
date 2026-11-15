@@ -66,6 +66,7 @@ public final class NUCreativeTab {
                 for (var ai : com.newuniverse.nusmp.arc.world.ArcWorldItems.creativeItems()) o.apply(G.MISC).accept(ai.get());            // 1.61.0: the Chronicle Sigil
                 for (net.minecraft.world.item.ItemStack st : com.newuniverse.nusmp.skilltree.SkillBookSystem.creativeItems()) o.apply(G.MISC).accept(st);     // 1.96.0: one Skill Book per unique skill
                 o.apply(G.WEAPONS).accept(com.newuniverse.nusmp.shishou.ShishouItems.creativeStack());                                      // Shishou: a bare stack; it becomes the sword only when no Shishou exists, else it dissolves (the one-per-world cap)
+                o.apply(G.WEAPONS).accept(com.newuniverse.nusmp.greed.GreedItems.creativeStack());                                         // the Black Sword Greed: a bare stack; it becomes THE sword only when none exists (the 1-of-1 rule), else it dissolves
                 for (net.minecraft.world.item.Item hw : com.newuniverse.nusmp.heroweapon.HeroWeaponSystem.creativeItems()) o.apply(G.WEAPONS).accept(hw);   // 1.62.0: the 21 hero weapons and the Calling Gems
                 o.apply(G.WEAPONS).accept(com.newuniverse.nusmp.fairytail.storm.StormBoot.STAFF.get());                                          // Storm Magic (Fairy Tail): the Stormcaller Staff
                 o.apply(G.WEAPONS).accept(com.newuniverse.nusmp.firecast.FireCastBoot.BAT.get());                                                // fire casting: Magna's Soul Bat

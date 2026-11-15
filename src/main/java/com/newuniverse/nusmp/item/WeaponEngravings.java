@@ -113,7 +113,16 @@ public final class WeaponEngravings {
             Map.entry("spirit_of_zephyr", List.of(e("severance", 1), e("barrier_piercing", 1), e("holy_weapon", 1))),    // Spirit of Zephyr: a clean cut that parts wards, light of the wind spirit
             Map.entry("spirit_of_boreas", List.of(e("magic_interference", 1))),                                         // Spirit of Boreas: its arrow of light jams the magic it strikes
             // the Valkyrie Drill Lance (valkyrielance.ValkyrieLanceBoot; a creative-display item): the spiral lance of water of the Valkyrie Dress bores through wards, boosts water, breaks what it drills, a spell-made weapon
-            Map.entry("valkyrie_drill_lance", List.of(e("barrier_piercing", 3), e("elemental_boost", 2), e("crushing", 1), e("magic_weapon", 1))));
+            Map.entry("valkyrie_drill_lance", List.of(e("barrier_piercing", 3), e("elemental_boost", 2), e("crushing", 1), e("magic_weapon", 1))),
+            // the Black Sword Greed (greed.GreedBoot; eight forms, one item id each): a hungry blade that devours: severance and a breaker of wards in every form, each form adds what it does
+            Map.entry("black_sword_greed", List.of(e("severance", 2), e("barrier_piercing", 2), e("sturdy", 2))),                     // the broadsword: cuts clean, parts wards, never breaks
+            Map.entry("black_sword_greed_bow", List.of(e("barrier_piercing", 2), e("magic_weapon", 1), e("swift", 1))),                // the bow: its magicule arrow parts wards
+            Map.entry("black_sword_greed_scythe", List.of(e("severance", 3), e("magic_interference", 1), e("sturdy", 1))),            // the scythe: Soul Sever, severs and jams
+            Map.entry("black_sword_greed_shield", List.of(e("sturdy", 3), e("magic_interference", 1))),                                // the shield: hard, drinks magic
+            Map.entry("black_sword_greed_staff", List.of(e("elemental_boost", 2), e("magic_weapon", 2), e("magic_interference", 1))),  // the staff: Black Flames, a casting focus
+            Map.entry("black_sword_greed_gauntlets", List.of(e("crushing", 2), e("barrier_piercing", 1), e("sturdy", 2))),             // the gauntlets: break what they grip
+            Map.entry("black_sword_greed_spear", List.of(e("barrier_piercing", 3), e("severance", 1), e("crushing", 1))),              // the spear: breaks guards and barriers
+            Map.entry("black_sword_greed_dual_blades", List.of(e("severance", 3), e("barrier_piercing", 3), e("swift", 2), e("sturdy", 2))));   // Level Zero: the most refined edge
 
     static final String FLAG = "NUEngraved";
 

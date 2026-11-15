@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.85.0] — the Black Sword Greed and the skill Lord of Gluttonous Greed
+- NEW (asked for: "Start building the black sword of greed", from the Berserk of Gluttony blueprint): a one-per-world, soul-bound sword with eight forms (Sword, Bow, Scythe, Shield, Staff, Gauntlets, Spear, Dual Blades, Level Zero), eight tiers opened by devouring, hunger and Half-Starvation, a skill vault, Soul Sever, one Secret Technique per form, and the Ultimate skill **Lord of Gluttonous Greed** (3 modes). Key `R` switches the open forms. `/multiverse greed ...` for operators and the wielder.
+- NEW: 8 items with 3D models made in Blender (`tools/blender/black_sword_greed.py`), Tensura engravings per form, Better Combat files for the melee forms, a skill icon, the server config `nusmp-greed-server.toml`, tests (`GreedRulesTest`, `GreedSourceScanTest`) and the self-tests `greed.rules`, `greed.world`, `greed.forms`.
+- REPLACED: nothing. KEPT: everything else (shared files only got appended lines).
+- Cost: bounded, see `docs/items/black_sword_greed.md` (one inventory scan per player per second, at most 16 targets per technique, two small packets, nothing per frame).
+- Not seen in a game; CI is the only compile and test check of the Minecraft glue.
+
 ## [3.84.1] — fixes for the id rename (the 3.84.0 build did not pass its tests)
 - FIXED: the rename of 3.84.0 shortened every `nusmp:` id by a hard-coded 6 letters in a few places (the id is now 17 letters): the relic, hero-kind, marker-kind and faction readers (`Relic`, `HeroKind`, `MarkerKind`, `FactionDef`, `FactionParser`) and the tests that read ids from data files now cut after the colon at the right place.
 - FIXED: the rename script had also rewritten the Java package inside test file paths (`"newuniverse", "nusmp"`, `newuniverse\\.nusmp` in patterns); those are back to the package name, so the source-scan tests find their files again (116 files).

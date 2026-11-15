@@ -274,4 +274,8 @@ public final class NUSkills {
     // ---- 3.70.0: Adaptability (Unique, toggle): learns every kind of damage it survives. Grant: /multiverse adaptability give <player> (or /tensura edit <player> ability grant anime_multiverse:adaptability). Registered last so no older order changes ----
     public static final DeferredHolder<ManasSkill, com.newuniverse.nusmp.adaptability.AdaptabilitySkill> ADAPTABILITY =
             SKILLS.register("adaptability", com.newuniverse.nusmp.adaptability.AdaptabilitySkill::new);
+
+    // ---- 3.85.0: Lord of Gluttonous Greed (Ultimate), the skill of the Black Sword Greed (greed package). Registered last so no older order changes ----
+    public static final DeferredHolder<ManasSkill, LordOfGluttonousGreedSkill> LORD_OF_GLUTTONOUS_GREED =
+            SKILLS.register("lord_of_gluttonous_greed", LordOfGluttonousGreedSkill::new);
 }
