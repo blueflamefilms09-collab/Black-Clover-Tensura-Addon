@@ -1,7 +1,7 @@
 # Avatar system, part AV3: creation screen, networking, appearance, renderer (release 1.51.0)
 
 Everything here is NEW (nothing like it existed; the Devil Avatar boss in `entity/avatar` and `client/avatar/AvatarRenderer` + `AvatarClient` is a different thing and was not touched).
-Namespace note: the owner's spec says `multiverse_mod`; the real mod id is `nusmp`, so ids and datapack paths use `nusmp` (`nusmp:player_avatar`, `data/nusmp/avatar_races/`).
+Namespace note: the owner's spec says `multiverse_mod`; the real mod id is `anime_multiverse`, so ids and datapack paths use `anime_multiverse` (`anime_multiverse:player_avatar`, `data/anime_multiverse/avatar_races/`).
 Nothing was run in the game. What was checked: the pure classes were compiled and unit-tested with the JUnit shim; the Minecraft-facing classes were type-checked against the API stubs (the stubs lack Screen/EditBox/Minecraft and the payload classes, so the screens were reviewed by hand against the 1.21.1 API dump, see "Unverified").
 
 ## Classes and why they exist

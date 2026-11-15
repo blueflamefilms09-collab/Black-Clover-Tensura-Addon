@@ -58,7 +58,7 @@ def write_fx(items):
 
 def check_act_shapes(items):
     """The act table accepts only the shapes of VuActTable.SHAPES and at most MAX_STEPS steps per act (a test and the game's own parser say so): fail here, not in the build."""
-    src = open(os.path.join(MT.ROOT, "src", "main", "java", "com", "newuniverse", "anime_multiverse", "relics", "vu", "VuActTable.java"), encoding="utf-8").read()
+    src = open(os.path.join(MT.ROOT, "src", "main", "java", "com", "newuniverse", "nusmp", "relics", "vu", "VuActTable.java"), encoding="utf-8").read()
     block = src[src.index("SHAPES = Set.of("):src.index("WHERE = Set.of")]
     shapes = set(re.findall(r'"([A-Z_0-9]+)"', block))
     maxsteps = int(re.search(r"MAX_STEPS = (\d+)", src).group(1))
@@ -89,7 +89,7 @@ def write_acts(items):
 
 def verify(items):
     """The acts of each relic in Wave101.java and the keys of its act effects must be the same set."""
-    src = open(os.path.join(MT.ROOT, "src", "main", "java", "com", "newuniverse", "anime_multiverse", "relics", "wave", "Wave101.java"), encoding="utf-8").read()
+    src = open(os.path.join(MT.ROOT, "src", "main", "java", "com", "newuniverse", "nusmp", "relics", "wave", "Wave101.java"), encoding="utf-8").read()
     bad = []
     for it in items:
         m = re.search(r'RelicDef\.of\("%s",' % it.rid, src)

@@ -3,7 +3,7 @@
 New in 1.73.0 (nothing like it existed). Code: `labyrinth/mega/rift/`, client `client/labyrinth/rift/`, relics `relics/wave/RiftActs.java` + `Wave36` (generated from `tools/relics/relic_rows_rift.py`).
 
 ## The rift block
-`nusmp:dimensional_rift`: invisible block (render shape INVISIBLE), no collision, unbreakable and immovable, light 11, no item. Its block entity holds the type, age, life left, seed and the destination, ticks on both sides and syncs type/life/stability to the client.
+`anime_multiverse:dimensional_rift`: invisible block (render shape INVISIBLE), no collision, unbreakable and immovable, light 11, no item. Its block entity holds the type, age, life left, seed and the destination, ticks on both sides and syncs type/life/stability to the client.
 `DimensionalRiftRenderer` draws a 2.6 block pointed-oval window that turns to face the camera, a rim, jagged arcs re-rolled every 3 ticks from the seed (cyan shortcut, violet pocket, gold return, green exit) and a soft glow; the window uses a skybox render type (End star field for shortcuts, the mod's crimson void for pockets, the End gateway field for return and exit). It opens over 1.5 s and gutters in its last 4 s; an unstable shortcut is drawn dim. Particles are Light and Dark Rukh only.
 
 ## Type B: shortcut rifts

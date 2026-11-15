@@ -1,7 +1,7 @@
 # Avatar personalities, chatter, Yandere and the caster (AV2, release 1.51.0)
 
 Everything here is NEW (nothing like it existed). The only existing thing touched is the contract enum `ChatEvent`, which got one value appended
-(`JEALOUS_WARN`). Datapack namespace note: the mod id is `nusmp` (the owner's brief said `multiverse_mod`), so data is `data/nusmp/avatar_chatter/*.json`.
+(`JEALOUS_WARN`). Datapack namespace note: the mod id is `anime_multiverse` (the owner's brief said `multiverse_mod`), so data is `data/anime_multiverse/avatar_chatter/*.json`.
 
 ## What it does
 * **Personality behaviour** (`AvatarPersonalityTraits`, pure table): follow distance, aggro range, retreat HP, attack speed, cooldown multiplier,
@@ -70,7 +70,7 @@ Tsundere protective bonus, the personality attack-speed modifier. All goals read
 `yandereInterceptShare` (0.7), `yandereFrenzySeconds` (15), `yandereExhaustionSeconds` (6), `frenzyHealthBurnPerCast` (2.0), `frenzySpeedBonus` (0.3).
 
 ## Data
-`data/nusmp/avatar_chatter/<personality>.json`: `{"personality":"TSUNDERE","events":{"COMBAT_START":["...", ...], ...}}`. A pack may add a file for the same personality;
+`data/anime_multiverse/avatar_chatter/<personality>.json`: `{"personality":"TSUNDERE","events":{"COMBAT_START":["...", ...], ...}}`. A pack may add a file for the same personality;
 its lines are ADDED to the shipped ones. Placeholders: {name} {creator} {target} {skill} {grimoire} {dungeon} {relic} {magicule}. The source of the shipped files is
 `tools/avatar/chatter_data/*.py`; `python tools/avatar/gen_chatter.py` validates (>= 14 distinct lines per event, < 160 characters, known placeholders) and rewrites the JSON.
 

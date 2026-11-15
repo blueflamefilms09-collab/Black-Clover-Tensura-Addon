@@ -90,7 +90,7 @@ spawned during loading never throws).
    ```java
    modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.arc.midnight.MidnightConfig.SPEC, "nusmp-midnight-server.toml");
    ```
-3. Language: merge the fragment `arc/frag/s1b.lang.json` of the scratchpad (four `entity.nusmp.<id>` names) into `assets/nusmp/lang/en_us.json`.
+3. Language: merge the fragment `arc/frag/s1b.lang.json` of the scratchpad (four `entity.anime_multiverse.<id>` names) into `assets/anime_multiverse/lang/en_us.json`.
 4. Charter Grimoires: run `python3 tools/gen_arc_grimoire_assets.py` once the four lines of step 1 are in.
 5. Renderers: nothing to do (`ArcClient` registers one for every boss of `ArcEntities`). The models, animations and textures are generated and committed
    (`python3 -B tools/gen_arc_characters.py --check` passes).

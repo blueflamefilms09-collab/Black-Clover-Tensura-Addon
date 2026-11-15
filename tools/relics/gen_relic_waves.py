@@ -20,7 +20,7 @@ import relic_rows_lib as RL  # noqa: E402
 
 ROOT = os.path.abspath(os.path.join(HERE, "..", ".."))
 RES = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse")
-WAVE_DIR = os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "anime_multiverse", "relics", "wave")
+WAVE_DIR = os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "nusmp", "relics", "wave")
 LANG = os.path.join(RES, "lang", "en_us.json")
 BEGIN, END = "_generated.relic_waves.begin", "_generated.relic_waves.end"
 

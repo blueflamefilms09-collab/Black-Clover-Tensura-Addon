@@ -17,7 +17,7 @@ There is no grid solver. The Mega-Dungeon is built by `MegaAssembler`, a **jigsa
 | WFC | Mega-Dungeon |
 |---|---|
 | tile | a template (a room) turned 0..3 quarter turns |
-| socket | a jigsaw block at the centre of a module (9 blocks) on a wall; `nusmp:mega_door` (ordinary) or one of the three boss-chain names |
+| socket | a jigsaw block at the centre of a module (9 blocks) on a wall; `anime_multiverse:mega_door` (ordinary) or one of the three boss-chain names |
 | adjacency rule | `Socket.canAttach`: the source's target equals the candidate's name and the two face each other; every doorway is on the 9-block grid, so "line up" is an integer comparison |
 | cell to collapse | the next open socket of a piece, in breadth-first order |
 | collapse | draw templates from the socket's weighted pool; the **first** (template, rotation, socket) that fits inside the region, overlaps nothing and obeys the recipe limits is placed |

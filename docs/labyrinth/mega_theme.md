@@ -1,7 +1,7 @@
 # Region Themes and the Crucible of Choice (builder THEME, 1.54.0 and 1.55.0)
 
 Part of the Mega-Dungeon (`docs/labyrinth/mega.md`, `docs/labyrinth/mega_floors.md`). This builder owns four things: the **Region Theme processor**
-`nusmp:region_theme` with the **eleven theme files** that say what each sector looks, sounds and bites like; the **Crucible of Choice**, the vault at the end of
+`anime_multiverse:region_theme` with the **eleven theme files** that say what each sector looks, sounds and bites like; the **Crucible of Choice**, the vault at the end of
 a sector where exactly three relics float and taking ONE of them forfeits the rest and starts a catastrophe; the **relic roads**, which let the relic that was
 taken decide the theme (and the ruleset) of the NEXT sector; and the **six vault templates** the Crucible lives in.
 
@@ -15,8 +15,8 @@ exactly what that leaves unverified. Every class, file and strategy below says W
 
 | Part | Status | Notes |
 |---|---|---|
-| Structure processor `nusmp:region_theme`, `ThemeSwap` (suffix rules), `ThemeDef` / `ThemeDefs` / `ThemeTables` | NEW | The processor list `nusmp:mega_interior` (ARCH) already names it first. |
-| Theme files `data/nusmp/mega/themes/*.json` (eleven) | NEW | The brief said nine; `RegionTheme` gained `RADIANT` and `ABYSS` in 1.55.0, so there are eleven. A test pins "every `RegionTheme` has a file". |
+| Structure processor `anime_multiverse:region_theme`, `ThemeSwap` (suffix rules), `ThemeDef` / `ThemeDefs` / `ThemeTables` | NEW | The processor list `anime_multiverse:mega_interior` (ARCH) already names it first. |
+| Theme files `data/anime_multiverse/mega/themes/*.json` (eleven) | NEW | The brief said nine; `RegionTheme` gained `RADIANT` and `ABYSS` in 1.55.0, so there are eleven. A test pins "every `RegionTheme` has a file". |
 | Theme light, mood sound and danger (`light`, `sound`, `danger` in the theme files) | NEW | Optional fields; a file without them is the baseline's light, silence and danger 1. |
 | Ambient particle and mood sound handler (`ThemeAmbient`) | NEW | |
 | Crucible of Choice: vault ticker, offer, pick hook, catastrophes (collapse, flood, spirit), Cursed Spirit roster | NEW | Extends the existing Relic Pedestal; relics stay 100 % unobtainable by normal play. |
@@ -56,7 +56,7 @@ command) is a pure function of saved data and survives a restart.
 
 ## 3. The processor and the swap rule
 
-`RegionThemeProcessor` (`nusmp:region_theme`, a `StructureProcessor` with a unit codec) reads the sector being built from `RegionContext` (a ThreadLocal the
+`RegionThemeProcessor` (`anime_multiverse:region_theme`, a `StructureProcessor` with a unit codec) reads the sector being built from `RegionContext` (a ThreadLocal the
 generator sets for each piece) and rewrites the template's palette blocks. WHY a ThreadLocal: a processor sees one block at a time and knows nothing about the
 sector; world generation of the Overworld runs on other threads at the same time and must never see a sector's theme; with no context (a datapack Jigsaw,
 `/place`, the old Spire) the processor returns every block untouched. The new state is `target.withPropertiesOf(state)`, so a stair keeps its facing, half
@@ -87,7 +87,7 @@ campfires of the templates into warm ones (15 instead of 10); Abyss, Shadow and 
 
 ## 4. The eleven themes
 
-`RegionTheme` names them (append-only, the ordinal is never saved); `data/nusmp/mega/themes/<id>.json` says what they mean. The lead's follow-up spoke of twelve
+`RegionTheme` names them (append-only, the ordinal is never saved); `data/anime_multiverse/mega/themes/<id>.json` says what they mean. The lead's follow-up spoke of twelve
 themes: the enum has eleven (the original nine and `RADIANT`, `ABYSS`), and every one has a file.
 
 | Theme | brick | tile | polished | chiseled | cobbled | cracked_brick | cracked_tile | rock | wood |
@@ -115,7 +115,7 @@ themes: the enum has eleven (the original nine and `RADIANT`, `ABYSS`), and ever
 | Storm | #2FB5A8 | 3 / 1 / 2 | electric_spark | 0 | entity.lightning_bolt.thunder (0.25, 0.9, 9) | 1.1 | none |
 | Shadow | #3B3558 | 1 / 2 / 4 | sculk_soul | -2 | ambient.soul_sand_valley.mood (0.55, 1.0, 5) | 1.15 | warm lights to soul lights |
 | Astral | #F0E6B8 | 1 / 3 / 2 | end_rod | +2 | block.amethyst_block.resonate (0.4, 1.0, 6) | 0.95 | quartz stairs and slabs, diorite and prismarine walls |
-| Radiant | #FFD95A | 3 / 2 / 1 | nusmp:light_rukh | +3 | block.bell.resonate (0.3, 0.7, 8) | 0.8 | soul lights to warm lights, diorite walls |
+| Radiant | #FFD95A | 3 / 2 / 1 | anime_multiverse:light_rukh | +3 | block.bell.resonate (0.3, 0.7, 8) | 0.8 | soul lights to warm lights, diorite walls |
 | Abyss | #1F4F57 | 1 / 3 / 3 | soul_fire_flame | -4 | entity.warden.heartbeat (0.5, 0.8, 4) | 1.3 | warm lights to soul lights |
 
 Reading the table: the Holy road's signature theme Radiant is the brightest, the kindest and its sky is thick with Light Rukh; the Abyssal road's Abyss is the darkest,
@@ -209,7 +209,7 @@ lesser prize than the one before it; the depth is paid for by the catastrophe an
 
 ## 6. The relic roads: the relic taken decides the next ten floors
 
-`RelicThemes` (pure) maps a relic to a **road**: `Road(theme, ruleset)`. The theme comes from, in order: (a) the explicit table `data/nusmp/mega/relic_themes.json` (the famous relics, placed by their lore;
+`RelicThemes` (pure) maps a relic to a **road**: `Road(theme, ruleset)`. The theme comes from, in order: (a) the explicit table `data/anime_multiverse/mega/relic_themes.json` (the famous relics, placed by their lore;
 about 137 entries), (b) the relic words: the non-baseline theme with the most DISTINCT `relics.keywords` that begin a word of the relic's id or card name (word-prefix, so `ice` does not hide in
 "Voice"; a tie goes to the theme that comes first in the enum), (c) a stable hash of the relic id (FNV-1a and splitmix64, pinned by a test) over every theme but the baseline. The baseline Gravity
 is reachable only from the table, which is also what stops a generic word such as "stone" from sending every Infinity Stone to the heavy road. Unknown relics therefore still lead somewhere, always to the same place.
@@ -230,9 +230,9 @@ that road names), so **no field was added to `Sector`**; section 14 says what th
 
 | File | WHY it is data | Read by |
 |---|---|---|
-| `data/nusmp/mega/themes/<id>.json` (11) | what a theme looks, sounds and bites like is the owner's to retune without a mod update | `ThemeDefs` (resource-manager reload listener: one broken file is skipped with a log line, the rest still load) |
-| `data/nusmp/mega/relic_themes.json` | the hand-made half of the relic-to-theme map and the ruleset names | `RelicThemeMap` (reload listener; missing or broken: every relic is placed by words or hash) |
-| `data/nusmp/mega/cursed_spirits.json` | the best candidates for a "massive Cursed Spirit" are other mods' monsters (the Tensura daemons, hounds, moths, weavers, the phantaspore) whose ids and strength the owner will tune | `CursedSpirits` (an id no loaded mod registers is skipped; with nothing left the catastrophe becomes a collapse) |
+| `data/anime_multiverse/mega/themes/<id>.json` (11) | what a theme looks, sounds and bites like is the owner's to retune without a mod update | `ThemeDefs` (resource-manager reload listener: one broken file is skipped with a log line, the rest still load) |
+| `data/anime_multiverse/mega/relic_themes.json` | the hand-made half of the relic-to-theme map and the ruleset names | `RelicThemeMap` (reload listener; missing or broken: every relic is placed by words or hash) |
+| `data/anime_multiverse/mega/cursed_spirits.json` | the best candidates for a "massive Cursed Spirit" are other mods' monsters (the Tensura daemons, hounds, moths, weavers, the phantaspore) whose ids and strength the owner will tune | `CursedSpirits` (an id no loaded mod registers is skipped; with nothing left the catastrophe becomes a collapse) |
 
 ---------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -240,7 +240,7 @@ that road names), so **no field was added to `Sector`**; section 14 says what th
 
 Six deterministic templates in the shared palette (the deepslate and dark-oak families, so the processor restyles the architecture) plus neutral accents the theme leaves alone (gold blocks, red carpet,
 stained glass, soul lanterns, candles, iron bars, chains, skulls, lightning rods, banners). The only custom block is the Relic Pedestal, placed WITHOUT block-entity data (the Crucible fills it). Each has ONE socket,
-the entry on the south face at offset 13 (`nusmp:mega_vault`, an open hole: the vault is attached TO the antechamber), one `vault_center` marker, one `pedestal;slot=i` marker in the air cell directly above each
+the entry on the south face at offset 13 (`anime_multiverse:mega_vault`, an open hole: the vault is attached TO the antechamber), one `vault_center` marker, one `pedestal;slot=i` marker in the air cell directly above each
 pedestal, no spawn marker and no other door: the way out is the way in. The red carpet runs from the door to the relics and the strip is declared clear, so nothing solid is ever put on the route out.
 
 | Template | Size | Pedestals | Look |
@@ -288,7 +288,7 @@ All plain `define` / `defineInRange` (never `defineInList`); every reader answer
 * `reset <sector>`: puts a vault back to UNOPENED (stopping its catastrophe, emptying its pedestals) and rolls a new offer, so the whole choice can be tried again;
 * `catastrophe <collapse|flood|spirit>`: runs one around YOU as a test; it never resolves the Crucible and never touches a vault's saved state.
 
-Quest key: `mega.crucible_choice` (argument: the relic id), fired on a successful pick. Lang keys: `message.nusmp.mega.crucible.*` (fragment `mth.lang.json`).
+Quest key: `mega.crucible_choice` (argument: the relic id), fired on a successful pick. Lang keys: `message.anime_multiverse.mega.crucible.*` (fragment `mth.lang.json`).
 
 ---------------------------------------------------------------------------------------------------------------------------------------------
 

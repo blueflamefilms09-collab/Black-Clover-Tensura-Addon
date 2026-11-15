@@ -34,7 +34,7 @@ class RukhPurgeScopeTest {
 
     private static final Pattern BAD = Pattern.compile("ParticleTypes\\.|DustParticleOptions|new\\s+DustColorTransitionOptions|ItemParticleOption|BlockParticleOption");
     // first argument of addParticle( / sendParticles( must be a plain variable (then a comma) or a RukhParticles type
-    private static final Pattern CALL = Pattern.compile("\\b(?:addParticle|sendParticles)\\(\\s*(?!(?:$|[a-z_][A-Za-z0-9_]*\\s*,|(?:com\\.newuniverse\\.anime_multiverse\\.particle\\.rukh\\.)?RukhParticles\\.))");
+    private static final Pattern CALL = Pattern.compile("\\b(?:addParticle|sendParticles)\\(\\s*(?!(?:$|[a-z_][A-Za-z0-9_]*\\s*,|(?:com\\.newuniverse\\.nusmp\\.particle\\.rukh\\.)?RukhParticles\\.))");
 
     /** Glob to regex: {@code **} crosses folders, {@code *} and {@code ?} stay in one, {@code [..]} / {@code [!..]} are classes. */
     static Pattern glob(String g) {

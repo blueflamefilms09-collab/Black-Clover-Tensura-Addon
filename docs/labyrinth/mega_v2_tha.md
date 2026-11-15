@@ -15,12 +15,12 @@ what that leaves unverified. Every file and strategy below says WHY it is the wa
 | Part | Status | Notes |
 |---|---|---|
 | `RegionTheme` entries `HOLY_CHURCH`, `CELESTIAL_COURT`, `SKY_CITADEL`, `MOUNTAIN_MONASTERY` (all `Route.HOLY`) | NEW | Appended after `ABYSS`; nothing else in the enum touched. They are `exclusive()` (ordinal 11 and later): never drawn on the Abyssal road. |
-| `data/nusmp/mega/themes/<id>.json` (four) | NEW | Palette families, explicit swaps, keywords, catastrophes, ambient, light, sound, danger, `_why`. |
+| `data/anime_multiverse/mega/themes/<id>.json` (four) | NEW | Palette families, explicit swaps, keywords, catastrophes, ambient, light, sound, danger, `_why`. |
 | 27 signature rooms (`structure/mega/<folder>/<id>_<room>.nbt`) | NEW | Seven for the Church, seven for the Court, six for the Citadel, seven for the Monastery. No existing room was changed. |
-| `data/nusmp/mega/template_themes/<id>.json` (four) | NEW | The rule "this room is drawn only in a sector of its theme" and the pool weights of the rooms. |
-| `data/nusmp/mega/encounters/<id>.json` (four) | NEW | 13 entries each, all four bands. |
-| `data/nusmp/mega/factions/*.json` (eleven) | EDITED | Four lines each: the weight of every faction in the four new themes (`FactionDataTest` demands a weight for EVERY theme in EVERY faction file). The entity tag files are untouched. |
-| `data/nusmp/mega/relic_themes.json` | EDITED | 20 relics moved to the new themes (section 9), four ruleset names added. Nothing removed: every relic is still listed once. |
+| `data/anime_multiverse/mega/template_themes/<id>.json` (four) | NEW | The rule "this room is drawn only in a sector of its theme" and the pool weights of the rooms. |
+| `data/anime_multiverse/mega/encounters/<id>.json` (four) | NEW | 13 entries each, all four bands. |
+| `data/anime_multiverse/mega/factions/*.json` (eleven) | EDITED | Four lines each: the weight of every faction in the four new themes (`FactionDataTest` demands a weight for EVERY theme in EVERY faction file). The entity tag files are untouched. |
+| `data/anime_multiverse/mega/relic_themes.json` | EDITED | 20 relics moved to the new themes (section 9), four ruleset names added. Nothing removed: every relic is still listed once. |
 | Generated pools `worldgen/template_pool/mega/side.json`, `safe.json` and `src/test/resources/mega/catalog.json` | REGENERATED | By `gen_mega_pools.py` and `mega_catalog.py`; the lead regenerates once more after the merge. |
 | Tests: `GoodRoadThemesDataTest` | NEW | Seven checks of the glue between rooms, files and pools (section 10). |
 | Tests: theme lists of `ThemeDataTest`, `RelicThemesDataTest`, `EncounterDataTest` | EDITED | My four ids appended to their `SHIPPED` / `THEMES` lists; two hard-coded counts replaced by the size of the list. |
@@ -60,7 +60,7 @@ network from this environment (`getaddrinfo ENOTFOUND` for every host tried), so
 
 ---------------------------------------------------------------------------------------------------------------------------------------------
 
-## 3. Palettes, light and mood (`data/nusmp/mega/themes/<id>.json`)
+## 3. Palettes, light and mood (`data/anime_multiverse/mega/themes/<id>.json`)
 
 The rooms are written in the deepslate palette of `mega_lib` and the Region Theme turns it into the theme's families at generation time (`mega_theme.md` section 3). So a theme file is
 nine family slots plus an explicit map. Each file keeps its own `_why`; the numbers:
@@ -175,15 +175,15 @@ the old tables did not list, so without the patch a garden floor would count as 
 * **Trials** (`tribunal`, `thunder_court`, `duel_ring`): the Sealed Archway of 1.36.0 written the way `gen_mega_rooms2.py` writes it: a ward rune in the floor of each doorway, eight spawn
   glyphs on the floor, the keystone hung from the roof on a chain with `radius 13`, `reset 60` and the roster of the wave. They carry no `spawn` marker (the keystone sends the wave) and are not
   ambushes. Rosters: tribunal 3 living armour + 2 vex; thunder court 2 breeze + 3 vex; duel ring 1 iron golem + 2 living armour.
-* **Puzzle** (`confessional`): `nusmp:sigil_plate` x4 (one colour each), `nusmp:riddle_stone` with the sequence blue, red, green, gold, `nusmp:gatekeeper_door[kind=puzzle]` and a closet whose
-  chests use `nusmp:chests/labyrinth_trial`. The order is the same in every copy of the room (the Spire's puzzle rooms do the same).
+* **Puzzle** (`confessional`): `anime_multiverse:sigil_plate` x4 (one colour each), `anime_multiverse:riddle_stone` with the sequence blue, red, green, gold, `anime_multiverse:gatekeeper_door[kind=puzzle]` and a closet whose
+  chests use `anime_multiverse:chests/labyrinth_trial`. The order is the same in every copy of the room (the Spire's puzzle rooms do the same).
 * **Trap** (`cloud_chasm`): no custom block. The hazard is the drop, the rickety bridges and the island that is a lure, and it never traps (ladders, a ring ledge).
 
 ---------------------------------------------------------------------------------------------------------------------------------------------
 
-## 6. How often the rooms appear (`data/nusmp/mega/template_themes/<id>.json`)
+## 6. How often the rooms appear (`data/anime_multiverse/mega/template_themes/<id>.json`)
 
-Format of `mega_v2.md` 5.1: `templates` (prefixes `nusmp:mega/<folder>/<id>_`) and `relative` (weights per prefix, read by `gen_mega_pools.py`). `TemplateThemes` makes a room drawable only
+Format of `mega_v2.md` 5.1: `templates` (prefixes `anime_multiverse:mega/<folder>/<id>_`) and `relative` (weights per prefix, read by `gen_mega_pools.py`). `TemplateThemes` makes a room drawable only
 in a sector of its theme. Weights as written: hall 60, set 10, trap 8, treasure 8, trial 6, puzzle 6, safe 10 (only the folders a theme uses).
 
 **What the pool maths gives (computed with the real `pool_elements` of `gen_mega_pools.py`).** A template's weight is `share * 20 * relative / (sum of the relative weights of every template of that
@@ -211,11 +211,11 @@ every other folder (the safe rooms included).
 
 ---------------------------------------------------------------------------------------------------------------------------------------------
 
-## 7. Encounter tables (`data/nusmp/mega/encounters/<id>.json`)
+## 7. Encounter tables (`data/anime_multiverse/mega/encounters/<id>.json`)
 
 Format and rules of `mega_enc.md` and `EncounterDataTest` (8 to 14 entries, all four bands, a first monster the band can pay, only ids that exist, ascii only, a `Why:` comment, entry ids unique
-over all files, message keys `message.nusmp.mega.enc.<theme>.<entry>`). Each table has 13 entries (3 minor, 5 standard, 3 hard, 2 ambush), an evergreen entry in the minor and standard bands (no `needs`,
-no upper threat; the standard one names explicit ids, so a thin tag on the first floors still gives a fight, the minor one is the room's own people as in the older tables, except at the Citadel where it is one or two phantoms), the first sector offers only minor and standard fights, and every id is a vanilla entity, `nusmp:living_armor`,
+over all files, message keys `message.anime_multiverse.mega.enc.<theme>.<entry>`). Each table has 13 entries (3 minor, 5 standard, 3 hard, 2 ambush), an evergreen entry in the minor and standard bands (no `needs`,
+no upper threat; the standard one names explicit ids, so a thin tag on the first floors still gives a fight, the minor one is the room's own people as in the older tables, except at the Citadel where it is one or two phantoms), the first sector offers only minor and standard fights, and every id is a vanilla entity, `anime_multiverse:living_armor`,
 a Tensura entity that other tables already use, or a faction tag. Entry ids carry the theme's word (`church_`, `court_`, `sky_`, `monastery_`) because four builders write tables at the same time.
 
 | Theme | Roll bonus, budget | Default faction | Design (and why) |
@@ -234,12 +234,12 @@ theme's rooms that name none (the rooms of this builder all name theirs). Each t
 
 ## 8. Language (`$S/arc/frag/tha.lang.json`)
 
-31 keys: the four theme names (`message.nusmp.mega.mgd.theme.<id>`, read by the Guardian), one flavour line each (`...<id>.flavour`: nothing reads it yet, it is the line a loading
+31 keys: the four theme names (`message.anime_multiverse.mega.mgd.theme.<id>`, read by the Guardian), one flavour line each (`...<id>.flavour`: nothing reads it yet, it is the line a loading
 screen or the status command could show), and the 23 encounter messages. The lead merges the fragment into `en_us.json`; `EncounterDataTest.messagesAreTranslatedOnceTheFragmentIsMerged` fails a half-merged table.
 
 ---------------------------------------------------------------------------------------------------------------------------------------------
 
-## 9. Relic roads (`data/nusmp/mega/relic_themes.json`)
+## 9. Relic roads (`data/anime_multiverse/mega/relic_themes.json`)
 
 A relic leads to the theme that the explicit table names, else the theme whose keywords it carries, else a hash. All 137 relics of Unique grade and above are already in the explicit table, so a
 new theme can only be reached by moving entries (and `RelicThemesDataTest` demands at least five relics for every shipped theme and at most a quarter of all for one). Twenty relics moved, by
@@ -260,7 +260,7 @@ from this table (a conflict on that line is the lead's to decide; the alternativ
 
 ## 10. Tests
 
-* `GoodRoadThemesDataTest` (new, 7 checks, 0.1 s): the enum entry, palette, table and template_themes file exist; the file names its theme and every prefix is `nusmp:mega/<folder>/<id>_`; the
+* `GoodRoadThemesDataTest` (new, 7 checks, 0.1 s): the enum entry, palette, table and template_themes file exist; the file names its theme and every prefix is `anime_multiverse:mega/<folder>/<id>_`; the
   folders of the prefixes are exactly the folders that hold the theme's templates (a prefix with no room is a typo, a room with no prefix is free for every theme); `TemplateThemes` built from
   the same files allows each room in its own theme and in no other of the four, nor in gravity, radiant or abyss; `relative` weighs exactly the prefixes with whole weights; at least five rooms,
   two halls, a set piece, a danger room and a calm room; every room is in the generated `side` pool (and `safe` for safe rooms). Mutation check: a one-letter typo in one prefix fails four of the seven.
@@ -295,7 +295,7 @@ Nothing here ran in the game. In particular:
   sources; lit copper bulbs placed by a template might flip state on a neighbour update (the Storm Spire and Thunder Court rely on them for part of their light, but the room is lit without them).
 * **Water.** Fountains, ponds and pools are shut in by blocks (`mega_arch_check` proves no source is open to a side or below). Nobody has seen them in the game.
 * **Entities.** Armor stands (statues) are template entities, as in the first edition; a Sealed Archway keystone, ward runes and spawn glyphs are written like the Spire's trial rooms, which were
-  not run either. The wave rosters (`breeze`, `vex`, `iron_golem`, `nusmp:living_armor`) are existing ids; whether three breezes are too hard for a first trial is a balance judgement nobody has played.
+  not run either. The wave rosters (`breeze`, `vex`, `iron_golem`, `anime_multiverse:living_armor`) are existing ids; whether three breezes are too hard for a first trial is a balance judgement nobody has played.
 * **Ladders and bridges.** Ladders end at the row of the block they climb onto (the pit chamber of the first edition does the same); whether a player steps off in the game is unplayed. The walk
   graph of the static check does not model a jump, so the island of the chasm is reached only over the whole bridge in the model.
 * **Pools.** The numbers of section 6 are arithmetic over the generator's own functions; the in-game draw is the assembler's (GEN2) and was not run.

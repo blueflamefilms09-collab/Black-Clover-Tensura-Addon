@@ -3,7 +3,7 @@
 Six looks hand-painted at 256x256 (every model pixel is a 4x4 texel block). None has a `_form2`. The painters are
 `tools/arc_hd/chars/{nozel_silva,luck_voltia,magna_swing,finral_roulacase,charmy_pappitson,gordon_agrippa}.py` with the shared helpers in
 `tools/arc_hd/chars/_bc2.py` (the underscore keeps the kit out of the generator and out of the module test). Output:
-`src/main/resources/assets/nusmp/textures/entity/playermodel/<id>.png` (+ `finral_roulacase_glow.png`, the only glow map of the group) and
+`src/main/resources/assets/anime_multiverse/textures/entity/playermodel/<id>.png` (+ `finral_roulacase_glow.png`, the only glow map of the group) and
 `tools/arc_hd/looks/<id>.json` for each id. `looks.json` is merged by the lead (`merge_looks.py`), not here.
 
 Previews: `docs/previews/arc_hd/bc2_front_back.png` (front and back of all six, extras on) and `docs/previews/arc_hd/bc2_close.png` (bust of all six).

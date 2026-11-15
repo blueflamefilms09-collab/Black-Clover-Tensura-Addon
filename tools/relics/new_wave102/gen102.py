@@ -22,7 +22,7 @@ import relic_rows_lib as RL  # noqa: E402
 from roster102 import WEAPONS, GEAR, GEAR_META, WORN_GOD  # noqa: E402
 
 ROOT = os.path.abspath(os.path.join(HERE, "..", "..", ".."))
-JAVA = os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "anime_multiverse", "relics", "wave")
+JAVA = os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "nusmp", "relics", "wave")
 RES = os.path.join(ROOT, "src", "main", "resources")
 
 RANGES = {"SPECIAL": (35, 55), "GOD": (190, 240)}

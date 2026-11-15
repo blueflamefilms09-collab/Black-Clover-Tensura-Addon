@@ -227,7 +227,7 @@ def check_pool_contents(pools, templates_present, errors, warns, proc_lists):
 
 
 THEME_DIR = os.path.join(DATA, "mega", "template_themes")
-REGION_THEME_JAVA = os.path.join(JAVA, "com", "newuniverse", "anime_multiverse", "labyrinth", "mega", "RegionTheme.java")
+REGION_THEME_JAVA = os.path.join(JAVA, "com", "newuniverse", "nusmp", "labyrinth", "mega", "RegionTheme.java")
 
 
 def region_theme_ids():

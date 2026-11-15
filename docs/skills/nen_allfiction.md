@@ -6,7 +6,7 @@ Owner: "Nen (Hunter x Hunter) as a new Ultimate", "All Fiction is a yes but we a
 
 Both are Ultimates in the skill wheel (the mode key cycles, the skill key presses the current mode). Windows are stored as the game time they end at in the skill tag of the one player who owns the skill, so nothing ticks for them and nothing has to be cleaned up on logout, death or a dimension change.
 
-### Nen (`nusmp:nen`, NEW) — 10 modes
+### Nen (`anime_multiverse:nen`, NEW) — 10 modes
 | # | Mode | What it does |
 |---|------|--------------|
 | 0 | Ten | 45 s: aura round the body, hits do 0.8x. A second press ends it. |
@@ -20,9 +20,9 @@ Both are Ultimates in the skill wheel (the mode key cycles, the skill key presse
 | 8 | Hatsu: Emission | An aura bolt, 24 blocks, pierces up to 3 (12 each). |
 | 9 | Vow and Limitation | 30 s: no Ten/Zetsu/Ken, 1.25x damage taken, hatsu (Enhancement, Emission, Ko) hit 1.75x. A second press ends it. |
 
-Costs (Magicule) 600 / 500 / 1500 / 400 / 1000 / 1200 / 2000 / 1500 / 1800 / 0. Numbers: `skill/rules/NenRules.java`. All damage goes through `SkillDamage.hit` (the balance law: a player is never one-shot). Obtain: `/tensura edit <player> ability grant nusmp:nen`. Switch: server setting `ultimates_3_46.nenEnabled` (off: the modes refuse and the hooks do nothing).
+Costs (Magicule) 600 / 500 / 1500 / 400 / 1000 / 1200 / 2000 / 1500 / 1800 / 0. Numbers: `skill/rules/NenRules.java`. All damage goes through `SkillDamage.hit` (the balance law: a player is never one-shot). Obtain: `/tensura edit <player> ability grant anime_multiverse:nen`. Switch: server setting `ultimates_3_46.nenEnabled` (off: the modes refuse and the hooks do nothing).
 
-### All Fiction (`nusmp:all_fiction`, REPLACED by a rebuild) — 10 modes
+### All Fiction (`anime_multiverse:all_fiction`, REPLACED by a rebuild) — 10 modes
 | # | Mode | What it does |
 |---|------|--------------|
 | 0 | Undo (kept) | Health back to what it was 5 s ago, harmful effects gone. |
@@ -41,7 +41,7 @@ Passive (kept, unchanged): once every 15 minutes your own death becomes fiction.
 ## NEW / REPLACED / KEPT
 - NEW: Nen (skill, rules, icon, lang, config, tests, self-tests); All Fiction modes 2-9 (Annul Damage, Rewind Step, Erase Effects, Nullify Strike, Unmake, Share the Fiction, Stand Up, World Fiction); the five-second position memory; settings `nenEnabled`, `allFictionRebuilt`; self-tests `skill.nen.registry`, `skill.fiction.rebuild`.
 - REPLACED: the All Fiction skill class (two modes -> ten), by the owner's word ("fully rebuilding it").
-- KEPT: the id `nusmp:all_fiction`, its icon, Undo and Fiction with their ids, numbers and lang keys, the health memory (`H0..H4`), the death passive and `DeathReadyAt`, the evolution Book Maker -> All Fiction, every other skill. Shared files were only appended to.
+- KEPT: the id `anime_multiverse:all_fiction`, its icon, Undo and Fiction with their ids, numbers and lang keys, the health memory (`H0..H4`), the death passive and `DeathReadyAt`, the evolution Book Maker -> All Fiction, every other skill. Shared files were only appended to.
 
 ## Worst-case cost (rule 11)
 - Server, per press: Nen looks at no more than 24 creatures (`SkillTargets.MAX_FOES`) and hits at most 3; Gyo makes one box query with a fixed 24-block radius and reveals at most 16. All Fiction: Unmake erases at most 32 projectiles in one box query, Share touches at most 8 allies, Rewind is one teleport and one collision check, Erase Effects one look.

@@ -24,7 +24,7 @@ Old behaviour is never removed (rule 2): every new thing sits next to the old on
 
 ## NEW / REPLACED / KEPT
 
-* **NEW**: everything in `mana/method/*`, `client/manamethod/RuneClient`, the packet `nusmp:mana_method_rune`, config `nusmp-mana-method-server.toml`, five pages, self-tests `magic.mana_method*`, lang fragment `tools/lang/mana_method.json`, doc `docs/magic/mana_method.md`.
+* **NEW**: everything in `mana/method/*`, `client/manamethod/RuneClient`, the packet `anime_multiverse:mana_method_rune`, config `nusmp-mana-method-server.toml`, five pages, self-tests `magic.mana_method*`, lang fragment `tools/lang/mana_method.json`, doc `docs/magic/mana_method.md`.
 * **REPLACED**: nothing. The Mana Method is new next to the older True Magic page.
 * **KEPT**: `TrueMagic` / `TrueMagicRules` (the page `true_magic_rune_array` and its tests), the Rune Stone, the Heart perk, `SpellRuntime`, every old page and mode number.
 

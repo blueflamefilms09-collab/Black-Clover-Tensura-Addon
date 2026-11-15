@@ -27,9 +27,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * the owner's; the command tree is attached with the same root literal as the player's {@code /dungeon}; and the one-line registration is in {@code MegaSystem}.
  */
 public class AdminSpecTest {
-    private static final Path TREE = Path.of("src", "main", "java", "com", "newuniverse", "anime_multiverse", "labyrinth", "mega", "admin", "AdminTree.java");
-    private static final Path PLAYER = Path.of("src", "main", "java", "com", "newuniverse", "anime_multiverse", "labyrinth", "mega", "lock", "DungeonCommand.java");
-    private static final Path MEGA_SYSTEM = Path.of("src", "main", "java", "com", "newuniverse", "anime_multiverse", "labyrinth", "mega", "MegaSystem.java");
+    private static final Path TREE = Path.of("src", "main", "java", "com", "newuniverse", "nusmp", "labyrinth", "mega", "admin", "AdminTree.java");
+    private static final Path PLAYER = Path.of("src", "main", "java", "com", "newuniverse", "nusmp", "labyrinth", "mega", "lock", "DungeonCommand.java");
+    private static final Path MEGA_SYSTEM = Path.of("src", "main", "java", "com", "newuniverse", "nusmp", "labyrinth", "mega", "MegaSystem.java");
 
     private static String read(Path p) throws IOException { return Files.readString(p, StandardCharsets.UTF_8); }
 

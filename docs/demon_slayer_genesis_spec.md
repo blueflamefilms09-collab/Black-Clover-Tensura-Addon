@@ -1,6 +1,6 @@
 # The Genesis Demon-Slayer Sword (0.48)
 
-**Replacement:** the 0.28 Demon-Slayer Sword. The item id `nusmp:demon_slayer_sword` is unchanged, so swords already drawn keep working. Black Divider stays on right-click. The old 32×32 sprite is still the inventory icon, kept as the model `item/demon_slayer_sword_icon`.
+**Replacement:** the 0.28 Demon-Slayer Sword. The item id `anime_multiverse:demon_slayer_sword` is unchanged, so swords already drawn keep working. Black Divider stays on right-click. The old 32×32 sprite is still the inventory icon, kept as the model `item/demon_slayer_sword_icon`.
 
 ## Lore
 Asta's first sword, drawn from a five-leaf grimoire. It is a crude, dirty greatsword with a split running up from the guard, and it was forged around nothing. Where other blades cut flesh, this one cuts the *concept* of an existence. Wherever magic wants to be, the blade answers with an absence: the dark spots on its face are holes into that absence, and when it strikes at full force it shatters into the void it came from.
@@ -15,7 +15,7 @@ Asta's first sword, drawn from a five-leaf grimoire. It is a crude, dirty greats
 - **Damage:** `max(50, EP^0.6 / 2) × affinity × (1 + 0.25 × magic deficiency) × spellDamagePercent`.
   - **Affinity:** 1.15 with Anti-Magic, 1.4 as the Anti-Magic Lord, 1.75 in Black Form.
   - **Magic deficiency:** how empty your magicule pool is.
-- **True damage:** it goes through the damage type `nusmp:conceptual_severance`. That type is tagged to bypass armour, enchantments, effects, the hit cooldown (i-frames) and shields.
+- **True damage:** it goes through the damage type `anime_multiverse:conceptual_severance`. That type is tagged to bypass armour, enchantments, effects, the hit cooldown (i-frames) and shields.
 - **Spiritual damage:** a quarter of the hit, also dealt as spiritual damage.
 - **Caps:** a player loses at most the PvP hit cap of their max health per hit (default 40%). A boss loses at most 15%.
 
@@ -48,7 +48,7 @@ The tooltip shows it as dots. A data change does not replay the hand's draw anim
 - **Model:** `client/DemonSlayerMesh.java` is plain geometry with no Minecraft classes. `client/DemonSlayerRenderer.java` draws it through a BEWLR.
   - **Body:** a broad, chipped, slightly tapering blade with a slanted tip, a riveted crossguard with chunky ends, a cloth-wrapped grip, and a pommel with a crimson stone.
   - **Texture:** `textures/entity/demon_slayer_sword.png`, 64×64, from `tools/gen_demon_slayer_textures.py`.
-- **Dimensional parallax:** the split (a slot through the blade, with walls) and the dark spots on both faces use the core shader `nusmp:rendertype_demon_void`. It is the end portal's parallax star layers, recoloured crimson and black, drifting faster and pulsing.
+- **Dimensional parallax:** the split (a slot through the blade, with walls) and the dark spots on both faces use the core shader `anime_multiverse:rendertype_demon_void`. It is the end portal's parallax star layers, recoloured crimson and black, drifting faster and pulsing.
   - If the shader fails to load, vanilla's end-portal look is used.
 - **Five-leaf bloom:** a near-black clover on both pommel faces. It grows with resonance. A crimson glow behind it pulses between crimson and black, faster and brighter near stronger beings.
 - **Fracture:** for 1.5 s of Black Meteorite (`MeteorUntil`), the blade breaks into four shards. They drift apart, tilt and shiver, with crimson light between them, then re-form.

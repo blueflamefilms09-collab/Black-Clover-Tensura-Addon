@@ -38,7 +38,7 @@ class JudgmentSourceScanTest {
     @Test
     void theServerCodeNamesNoClientClass() throws IOException {
         Pattern client = Pattern.compile("net\\.minecraft\\.client\\.|com\\.mojang\\.blaze3d\\.|net\\.neoforged\\.neoforge\\.client\\.|Minecraft\\.getInstance\\(");
-        Pattern ours = Pattern.compile("com\\.newuniverse\\.anime_multiverse\\.client\\.");
+        Pattern ours = Pattern.compile("com\\.newuniverse\\.nusmp\\.client\\.");
         List<String> bad = new ArrayList<>();
         for (Path p : files()) {
             String c = code(read(p));

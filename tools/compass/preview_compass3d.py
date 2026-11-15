@@ -19,7 +19,7 @@ from PIL import Image
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.abspath(os.path.join(HERE, "..", ".."))
-MESH = os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "anime_multiverse", "compass3d", "CompassMesh.java")
+MESH = os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "nusmp", "compass3d", "CompassMesh.java")
 TEX = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse", "textures", "entity", "compass3d")
 OUT = os.path.join(ROOT, "docs", "previews", "compass_3d")
 BUILD = os.path.join(ROOT, "build", "compass_preview")

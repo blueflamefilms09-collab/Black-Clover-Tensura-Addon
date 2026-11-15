@@ -20,7 +20,7 @@ ASSETS = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multive
 OUT = os.path.join(ASSETS, "sounds", "voice", "undine")
 SOUNDS_JSON = os.path.join(ASSETS, "sounds.json")
 LANG = os.path.join(ROOT, "tools", "lang", "undine.json")
-JAVA = os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "anime_multiverse", "undine", "UndineLines.java")
+JAVA = os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "nusmp", "undine", "UndineLines.java")
 REPORT = os.path.join(HERE, "undine_voice_report.json")
 CHAIN = ("silenceremove=start_periods=1:start_threshold=-45dB:start_silence=0.04,areverse,"
          "silenceremove=start_periods=1:start_threshold=-45dB:start_silence=0.12,areverse,"

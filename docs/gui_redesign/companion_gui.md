@@ -37,7 +37,7 @@ Bubbles use the same skin; with the theme off or `CLASSIC` the old bubble is dra
 
 ## Files
 
-`client/companion/gs/` (pure: `GsTalkLayout`, `GsTalkFrame`, `GsTalkPainter`, `GsHit`, `GsIcons`, `GsCanvas`, `GiftMemory`, `BondStory`, `Mood`, `MoodTimer`, `CompanionCues`, `OptionKinds`, `PortraitPlan`, `FaceInfo`, `TypeWriter`, `RapportMeter`, `PouchRing`, `CompanionStyle`, `BubbleStyle`; game side: `GsTalkScreen`, `GsCanvasImpl`), `client/companion/CompanionScreens.java`, `TalkHost`, edits to `TalkScreen`, `CompanionClient`, `BubbleClient`, `GsNotices`, `GsNoticeAllow`, `GuiMoveRegistry`, `Bond` (one method made public). Lang keys: `nusmp.companion.gs.*` in `tools/lang/companions.json`.
+`client/companion/gs/` (pure: `GsTalkLayout`, `GsTalkFrame`, `GsTalkPainter`, `GsHit`, `GsIcons`, `GsCanvas`, `GiftMemory`, `BondStory`, `Mood`, `MoodTimer`, `CompanionCues`, `OptionKinds`, `PortraitPlan`, `FaceInfo`, `TypeWriter`, `RapportMeter`, `PouchRing`, `CompanionStyle`, `BubbleStyle`; game side: `GsTalkScreen`, `GsCanvasImpl`), `client/companion/CompanionScreens.java`, `TalkHost`, edits to `TalkScreen`, `CompanionClient`, `BubbleClient`, `GsNotices`, `GsNoticeAllow`, `GuiMoveRegistry`, `Bond` (one method made public). Lang keys: `anime_multiverse.companion.gs.*` in `tools/lang/companions.json`.
 
 ## Tests
 

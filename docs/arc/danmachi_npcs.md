@@ -1,7 +1,7 @@
 # The friends of the Dungeon: six NPCs of the DanMachi saga
 
-Part of [`danmachi.md`](danmachi.md). Six friendly characters of the shared NPC entity (`nusmp:arc_npc`, see `docs/arc/core.md`): a record each in `DanMachiNpcs`, a model each in `tools/arc/char_<id>.py`
-(the art kit), a dialogue file each in `data/nusmp/arc/dialogue/<id>.json`. They never fight; they greet, give hints that follow the story, and four of them ask for the fall of one monster.
+Part of [`danmachi.md`](danmachi.md). Six friendly characters of the shared NPC entity (`anime_multiverse:arc_npc`, see `docs/arc/core.md`): a record each in `DanMachiNpcs`, a model each in `tools/arc/char_<id>.py`
+(the art kit), a dialogue file each in `data/anime_multiverse/arc/dialogue/<id>.json`. They never fight; they greet, give hints that follow the story, and four of them ask for the fall of one monster.
 
 ## 1. Roles (and what the shared entity does not have)
 

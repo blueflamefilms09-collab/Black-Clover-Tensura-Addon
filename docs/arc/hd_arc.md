@@ -4,7 +4,7 @@
 (section 1) or "`meliodas_form2` stays on the baseline" (section 5), that was the state of the pilot and is kept as history. The group notes, one per batch of characters, with what each painter found weaker than the
 owner's references and the hair problems that belong to the hair engine: `hd_arc_sds1.md` (Meliodas, King, Diane, Ban + second forms), `hd_arc_sds2.md` (Gowther, Merlin, Escanor), `hd_arc_bc1.md` .. `hd_arc_bc7.md`
 (the Black Clover characters, the Zogratis four, Fana, Lucifero, Zagred, the Dark Disciple). Their previews are `docs/previews/arc_hd/<group>_front_back.png` and `<group>_close.png`. Section 6 below shows the hair table of
-the baseline pass; **23 looks changed hair style when they were painted** (the final values are in `src/main/resources/assets/nusmp/playermodel/looks.json`):
+the baseline pass; **23 looks changed hair style when they were painted** (the final values are in `src/main/resources/assets/anime_multiverse/playermodel/looks.json`):
 `asta`, `yami_sukehiro`, `leopold_vermillion` -> `anime_spike_tall`; `meliodas`, `meliodas_form2` -> `anime_spike_tall`; `escanor_form2` -> `anime_spike_tall`; `fana_form2` -> `anime_spike_swept`;
 `gowther` -> `anime_short`; `dante_zogratis`, `dante_zogratis_form2` -> `pompadour`; `fana`, `lucifero`, `lucifero_form2`, `vanessa_enoteca` -> `anime_long_open`; `rades_spirito` -> `anime_long_open`;
 `gauche_adlai`, `heath_grice`, `heath_grice_form2`, `morris_libardirt`, `morris_libardirt_form2` -> `anime_short_open`; `klaus_lunettes` -> `anime_bangs_long`; `revchi_salik` -> `anime_swept`; `zora_ideale` -> `anime_spiky`.
@@ -36,7 +36,7 @@ tools/arc/char_*.py (the art-kit specs)  ->  tools/playermodel/gen_skins.py pain
                                   |
                   tools/arc_hd/gen_arc_hd.py  ->  skins/<name>.png (+ _glow.png)  and  tools/arc_hd/looks/<name>.json (the look entry)
                                   |
-                  tools/arc_hd/merge_looks.py ->  assets/nusmp/playermodel/looks.json (entries replaced, every other byte untouched)
+                  tools/arc_hd/merge_looks.py ->  assets/anime_multiverse/playermodel/looks.json (entries replaced, every other byte untouched)
 ```
 
 * `tools/arc_hd/roster.py`: the ids. `hair_map.py`: the kit hair of each look and why. `arc_hdlib.py`: the one module a character painter imports (`blueprint`, `bridge`, `baseline`, `lay`, `materials_for`).

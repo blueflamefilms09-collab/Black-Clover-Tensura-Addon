@@ -17,7 +17,7 @@ Elsdocia is the one exception (400 base, `item/ElsdociaRules.isLegacyException` 
 ## The code
 
 * `relics/GradeDamage` (pure): `range(grade)`, `damage(grade, weaponType)`, `raised(...)` for tier ascension, `typeOfId(path)` (the class of
-  `assets/nusmp/weapon_classes.json`, else the keyword guess of `WeaponClasses`). `relics/GradeDamageItems.weaponTypeOf(ItemStack | RelicDef)`.
+  `assets/anime_multiverse/weapon_classes.json`, else the keyword guess of `WeaponClasses`). `relics/GradeDamageItems.weaponTypeOf(ItemStack | RelicDef)`.
 * `relics/WeaponGrades` (pure): grade and type of the fixed (non-card) weapons, and `djinn(kind, dark)`.
 * The damage is a place in the range: `min + factor * (max - min)`, rounded to half points. Light and fast weapons sit low and make it up in speed,
   swords and spears mid, heavy weapons high, ranged weapons on their own scale. Attack speed and grades are unchanged.

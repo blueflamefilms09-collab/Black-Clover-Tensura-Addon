@@ -108,7 +108,7 @@ public final class FactionParser {
             Object cut = d.get("meat");
             if (cut instanceof String s) {
                 String c = s.trim().toLowerCase(Locale.ROOT);
-                if (c.startsWith("anime_multiverse:")) c = c.substring(6);
+                if (c.startsWith("anime_multiverse:")) c = c.substring(17);
                 if (FactionDef.CUTS.contains(c)) meat = c;
                 else problems.add(id + ": drops.meat '" + s + "' is not one of " + FactionDef.CUTS + "; using " + DEFAULT_CUT);
             } else if (cut != null) problems.add(id + ": drops.meat must be a string");

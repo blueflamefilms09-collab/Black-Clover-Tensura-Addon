@@ -75,7 +75,7 @@ class SpiritBladesAssetsTest {
 
     @Test
     void theEngravingsAreTheOnesTheOwnerNamed() throws IOException {
-        String eng = read(Path.of("src", "main", "java", "com", "newuniverse", "anime_multiverse", "item", "WeaponEngravings.java"));
+        String eng = read(Path.of("src", "main", "java", "com", "newuniverse", "nusmp", "item", "WeaponEngravings.java"));
         int at = eng.indexOf("Map.entry(\"" + SWORD + "\"");
         assertTrue(at > 0);
         String line = eng.substring(at, eng.indexOf('\n', at));
@@ -115,7 +115,7 @@ class SpiritBladesAssetsTest {
 
     @Test
     void theBladesAreCreativeOnlyNothingHandsThemOut() throws IOException {
-        String tab = read(Path.of("src", "main", "java", "com", "newuniverse", "anime_multiverse", "NUCreativeTab.java"));
+        String tab = read(Path.of("src", "main", "java", "com", "newuniverse", "nusmp", "NUCreativeTab.java"));
         assertTrue(tab.contains("SpiritBladesBoot.creativeItems()"), "in the creative tab");
         List<String> hits = new ArrayList<>();
         try (Stream<Path> files = Files.walk(RES.resolve("data"))) {
@@ -133,10 +133,10 @@ class SpiritBladesAssetsTest {
 
     @Test
     void theWeaponRendererDrawsThem() throws IOException {
-        String r = read(Path.of("src", "main", "java", "com", "newuniverse", "anime_multiverse", "client", "WeaponRenderer.java"));
+        String r = read(Path.of("src", "main", "java", "com", "newuniverse", "nusmp", "client", "WeaponRenderer.java"));
         assertTrue(r.contains("SpiritBladesBoot.renderables()"), "listed as 3D weapons");
         assertTrue(r.contains("SpiritBladesFx.extras("), "the leaves are drawn");
-        String v = read(Path.of("src", "main", "java", "com", "newuniverse", "anime_multiverse", "client", "relics", "item", "ItemStateVariants.java"));
+        String v = read(Path.of("src", "main", "java", "com", "newuniverse", "nusmp", "client", "relics", "item", "ItemStateVariants.java"));
         assertTrue(v.contains("spiritblades.BoreasBowItem"), "the bow's draw stages are chosen (its pull meshes carry the arrow)");
     }
 

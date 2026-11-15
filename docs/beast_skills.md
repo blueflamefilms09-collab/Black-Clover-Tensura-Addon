@@ -8,7 +8,7 @@ Every Beast Will (the nine of 3.45.0 and the eighteen legendary and mythic ones)
 * **Obtain:**
   * master the Beast Will itself (mastery 100 %): the Unique of that beast is granted once (a one-time flag per beast on the player, nothing if the player already owns the Unique or the Ultimate; server setting `beastSkillGrantOnMastery`, default true). The hook is one line in `BeastWillManager.second` (`BeastSkills.grantOnMastery`);
   * `/multiverse beastskill give <player> <id> [unique|ultimate]` (permission 2; `<id>` is `bw_<key>`, `bw_<key>_unique`, the key or the will id) and `/multiverse beastskill list`;
-  * `/tensura edit <player> ability grant nusmp:bw_<key>_unique`.
+  * `/tensura edit <player> ability grant anime_multiverse:bw_<key>_unique`.
 * **Evolution:** a MASTERED Unique plus the server's minimum EP (`EVOLUTION_MIN_EP`) turns into the Ultimate, checked in the same 5-second player check as every other pair (`SkillEvolution` calls `BeastSkills.evolve` right after `DbSkills.evolve`; the older evolution table is untouched and still has exactly seven entries).
 * **Passives** sit under the skill's one ON/OFF toggle. The Unique form has only the first passive at half strength; the Ultimate has all of them.
 * **Actives** are on the mode wheel. "(crouch)" modes need sneaking. The Unique wheel is the first two actives at half strength; the Ultimate wheel has four actives plus **one mastery-only finisher** that is unique to the beast and answers only a mastered skill (cheaper and faster once mastered).

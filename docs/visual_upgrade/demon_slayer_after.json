@@ -10,7 +10,7 @@
       "kind": "greatsword",
       "meshes": {
         "demon_slayer_sword": {
-          "file": "src/main/resources/assets/nusmp/weapon_meshes_vu/demon_slayer_sword.txt",
+          "file": "src/main/resources/assets/anime_multiverse/weapon_meshes_vu/demon_slayer_sword.txt",
           "quads": {
             "body": 4296,
             "void": 88,
@@ -26,7 +26,7 @@
           "flares": 7,
           "animation_groups": 19,
           "lod": {
-            "file": "src/main/resources/assets/nusmp/weapon_meshes_vu/demon_slayer_sword_lod.txt",
+            "file": "src/main/resources/assets/anime_multiverse/weapon_meshes_vu/demon_slayer_sword_lod.txt",
             "quads": {
               "body": 347,
               "void": 44,
@@ -40,7 +40,7 @@
         }
       },
       "mesh": {
-        "file": "src/main/resources/assets/nusmp/weapon_meshes_vu/demon_slayer_sword.txt",
+        "file": "src/main/resources/assets/anime_multiverse/weapon_meshes_vu/demon_slayer_sword.txt",
         "quads": {
           "body": 4296,
           "void": 88,
@@ -56,7 +56,7 @@
         "flares": 7,
         "animation_groups": 19,
         "lod": {
-          "file": "src/main/resources/assets/nusmp/weapon_meshes_vu/demon_slayer_sword_lod.txt",
+          "file": "src/main/resources/assets/anime_multiverse/weapon_meshes_vu/demon_slayer_sword_lod.txt",
           "quads": {
             "body": 347,
             "void": 44,
@@ -141,7 +141,7 @@
         "black_meteorite",
         "conceptual_severance"
       ],
-      "sound_loop": "nusmp:item.genesis.demon_slayer.absence_hum_loop",
+      "sound_loop": "anime_multiverse:item.genesis.demon_slayer.absence_hum_loop",
       "lod": {
         "mesh": "demon_slayer_sword_lod",
         "near": 12.0,

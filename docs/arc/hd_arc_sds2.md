@@ -3,7 +3,7 @@
 Six looks hand-painted at 256x256 (every model pixel is a 4x4 texel block), each with the glow map the look already had (Escanor's base form has none, as before).
 The painters are `tools/arc_hd/chars/{gowther,merlin,escanor}.py` plus the thin `*_form2.py` loaders (each `paint()` calls `paint_form()` of `_gowther.py` /
 `_merlin.py` / `_escanor.py` with the palette of the form), and the shared helpers in `tools/arc_hd/chars/_sds2.py` (the underscore keeps these files out of the
-generator and out of the module test). Output: `src/main/resources/assets/nusmp/textures/entity/playermodel/<id>.png` (+ `_glow.png`) and
+generator and out of the module test). Output: `src/main/resources/assets/anime_multiverse/textures/entity/playermodel/<id>.png` (+ `_glow.png`) and
 `tools/arc_hd/looks/<id>.json` for each id. `looks.json` is merged by the lead (`merge_looks.py`), not here.
 
 Previews: `docs/previews/arc_hd/sds2_front_back.png` (front and back of all six, extras on) and `docs/previews/arc_hd/sds2_close.png` (bust of all six).

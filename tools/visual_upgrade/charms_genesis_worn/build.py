@@ -83,7 +83,7 @@ def wave_acts():
     """relic id -> the act keys its RelicDef declares, read from the wave sources (the generator checks its act effects against them)."""
     import glob
     import re
-    root = os.path.join(MT.ROOT, "src", "main", "java", "com", "newuniverse", "anime_multiverse", "relics", "wave")
+    root = os.path.join(MT.ROOT, "src", "main", "java", "com", "newuniverse", "nusmp", "relics", "wave")
     src = {f: open(f, encoding="utf8").read() for f in glob.glob(root + "/*.java")}
     consts = {}
     for t in src.values():

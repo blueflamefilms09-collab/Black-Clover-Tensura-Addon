@@ -36,12 +36,12 @@ class GuardAssetsTest {
     /** {@code anime_multiverse:block/x} to the file of that model; vanilla ids resolve to null (they are the game's). */
     private static String modelFile(String id) {
         if (!id.startsWith("anime_multiverse:")) return null;
-        return ASSETS + "models/" + id.substring(6) + ".json";
+        return ASSETS + "models/" + id.substring(17) + ".json";
     }
 
     private static String textureFile(String id) {
         if (!id.startsWith("anime_multiverse:")) return null;
-        return ASSETS + "textures/" + id.substring(6) + ".png";
+        return ASSETS + "textures/" + id.substring(17) + ".png";
     }
 
     /** Every texture a model names (the values of its "textures" object that are not references to another slot). */

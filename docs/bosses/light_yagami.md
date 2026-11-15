@@ -8,7 +8,7 @@ Not a fight: a scripted gag scene against a nearby survival player. He has about
 
 1. **Chip beat (70 ticks, 3.5 s).** His over-serious monologue; the voice line "I'll take a potato chip... and eat it!" plays at the start, the eating sound at tick 44.
 2. **Pen beat, raise (40 ticks, 2 s).** He raises the hand and the pen.
-3. **Pen beat, write (80 ticks, 4 s).** The pen is on the page; a brush sound every 10 ticks. On the last tick: if `lightDeathNoteLethal` is true the player takes a REAL death through the normal death flow (damage type `nusmp:death_note`, message "<player> died of a heart attack"), and one of two random quotes ("Just as planned." / "I am justice!") plays as a sound and as a chat line. If the setting is false the ending is a harmless joke message.
+3. **Pen beat, write (80 ticks, 4 s).** The pen is on the page; a brush sound every 10 ticks. On the last tick: if `lightDeathNoteLethal` is true the player takes a REAL death through the normal death flow (damage type `anime_multiverse:death_note`, message "<player> died of a heart attack"), and one of two random quotes ("Just as planned." / "I am justice!") plays as a sound and as a chat line. If the setting is false the ending is a harmless joke message.
 
 Total 190 ticks (9.5 s). Counterplay: the scene is cancelled by killing Light, knocking him more than 1.5 blocks, one hit of at least 20 percent of his max HP, the target dying, logging out, changing dimension, turning creative/spectator, or going beyond 26 blocks. A cancelled scene gives a taunt line, a 60 s cooldown on that player and the reward: 2 to 4 baked potatoes named "Light's Potato Chip" (always), plus "Ryuk's Apple" if he died in the middle of a scene. A Totem of Undying works as usual (the damage type is NOT in `bypasses_invulnerability`; it IS in the armor/effects/enchantments/shield/cooldown/resistance bypass tags, so only the Totem or a cancel saves the player). Creative and spectator players are never chosen.
 
@@ -34,16 +34,16 @@ The look is an ORIGINAL design, not a likeness of any existing character: a neat
 
 To use your own skin, overwrite these files and keep the names and ids (nothing else needs to change):
 
-- `src/main/resources/assets/nusmp/textures/entity/playermodel/light_yagami.png` (64x64, slim arms) and `light_yagami_glow.png`
-- `src/main/resources/assets/nusmp/textures/entity/arc_light_yagami.png` and `arc_light_yagami_glow.png` (the fallback skin)
+- `src/main/resources/assets/anime_multiverse/textures/entity/playermodel/light_yagami.png` (64x64, slim arms) and `light_yagami_glow.png`
+- `src/main/resources/assets/anime_multiverse/textures/entity/arc_light_yagami.png` and `arc_light_yagami_glow.png` (the fallback skin)
 
-(`LightYagamiDataTest.theSkinIsTheOriginalDarkSuitWithTheNotebookMotif` checks the generated look; if you swap in your own skin, relax or delete that one test.) The display name is only the lang key `entity.nusmp.light_yagami` plus the `"Light Yagami"` string in `TierRosterGag`, so renaming him is one line each.
+(`LightYagamiDataTest.theSkinIsTheOriginalDarkSuitWithTheNotebookMotif` checks the generated look; if you swap in your own skin, relax or delete that one test.) The display name is only the lang key `entity.anime_multiverse.light_yagami` plus the `"Light Yagami"` string in `TierRosterGag`, so renaming him is one line each.
 
 ## Files and ids
 
-- Damage type: `data/nusmp/damage_type/death_note.json`; tags `bypasses_armor`, `bypasses_cooldown`, `bypasses_effects`, `bypasses_enchantments`, `bypasses_shield`, `bypasses_resistance`.
-- Sounds (events `light_yagami.chip_line`, `.death_just_as_planned`, `.death_i_am_justice`): `assets/nusmp/sounds/light_chip_line.ogg`, `light_death_just_as_planned.ogg`, `light_death_i_am_justice.ogg`. Played server side as level sounds in `SoundSource.VOICE`.
-- Packet `nusmp:light_scene` (optional, server to client only): op, Light's entity id, target's entity id, role. No client to server packet exists, so there is no sender to trust; the receiver re-validates every field.
+- Damage type: `data/anime_multiverse/damage_type/death_note.json`; tags `bypasses_armor`, `bypasses_cooldown`, `bypasses_effects`, `bypasses_enchantments`, `bypasses_shield`, `bypasses_resistance`.
+- Sounds (events `light_yagami.chip_line`, `.death_just_as_planned`, `.death_i_am_justice`): `assets/anime_multiverse/sounds/light_chip_line.ogg`, `light_death_just_as_planned.ogg`, `light_death_i_am_justice.ogg`. Played server side as level sounds in `SoundSource.VOICE`.
+- Packet `anime_multiverse:light_scene` (optional, server to client only): op, Light's entity id, target's entity id, role. No client to server packet exists, so there is no sender to trust; the receiver re-validates every field.
 - Tests: pure JUnit `LightSceneTest`, `LightScenesTest`, `LightFrameTest`, `LightYagamiDataTest`; self-tests `tier.light.data`, `tier.light.scene`, `tier.light.cleanup` (they fall under the `tier` prefix already in the smoke list, so `smoke.yml` needs no change).
 
 ## Worst-case cost (rule 11)

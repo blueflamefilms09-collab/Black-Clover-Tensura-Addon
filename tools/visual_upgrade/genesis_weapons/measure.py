@@ -35,7 +35,7 @@ BASELINE_EFFECTS = {
 ELSDOCIA_EXTRA_AMBIENT = ["held_glitter (ElsdociaGlitterClient)"]
 ELSDOCIA_EXTRA_PASS = ["elsdocia_halo (a wider, fainter copy of the glow that breathes against the main pulse)"]
 
-SRC = os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "anime_multiverse", "relics", "wave")
+SRC = os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "nusmp", "relics", "wave")
 
 
 def act_shapes(item_id):

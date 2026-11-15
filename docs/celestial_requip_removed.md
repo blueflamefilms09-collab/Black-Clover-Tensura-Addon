@@ -9,13 +9,13 @@ This continues `docs/skill_books_removed.md` and `docs/fairy_tail_celestial_book
 |---|---|
 | Celestial Gate, Spirit World and Spirit King | the Gate entity / ritual, the three King phases (`celestial_king_p1..p3`), the Spirit World dimension and dimension type, the 20 spirit and gate geo files, animations, textures (entity and glow), tools under `tools/celestial/**`, `docs/celestial_keys.md` |
 | Keys and the Spirit King gate key | the golden / silver keys, the `spirit_king_gate_key` item and its models, the key collection logic and Curios slot data |
-| Requip skill `nusmp:erza_requip` | the skill, the armoury, loadouts, blade, barrage, strike, partial armour and finishers, the six Requip weapons with their meshes, models, weapon textures and attributes, the Erza armour sets (`erza_*` entity and armour textures), `docs/erza_requip.md`, `docs/requip_magic.md`, `docs/previews/erza/**`, the `/requip` command |
+| Requip skill `anime_multiverse:erza_requip` | the skill, the armoury, loadouts, blade, barrage, strike, partial armour and finishers, the six Requip weapons with their meshes, models, weapon textures and attributes, the Erza armour sets (`erza_*` entity and armour textures), `docs/erza_requip.md`, `docs/requip_magic.md`, `docs/previews/erza/**`, the `/requip` command |
 
 About 1,250 files in total (mostly textures, geo files and animations), roughly 67,000 lines.
 
 ## Kept on purpose (save compatibility, append-only rules)
 
-* `core/magic/profile/RetiredAttachments`: the attachment ids `nusmp:celestial` (key masks) and `nusmp:requip_armoury` (the pocket armoury) stay registered as **inert pass-through holders**. Nothing reads or writes them any more, but a world and its players load without an unknown-attachment error and the raw data (including any items stored in an armoury) survives a save, so it can be restored if the owner ever brings the feature back.
+* `core/magic/profile/RetiredAttachments`: the attachment ids `anime_multiverse:celestial` (key masks) and `anime_multiverse:requip_armoury` (the pocket armoury) stay registered as **inert pass-through holders**. Nothing reads or writes them any more, but a world and its players load without an unknown-attachment error and the raw data (including any items stored in an armoury) survives a save, so it can be restored if the owner ever brings the feature back.
 * `Aura.REQUIP_KNIGHT` and the other aura enum entries (ordinals are sent over the network, enums are append-only).
 * `particle/fx/FxThemes.SKILL_REQUIP` and its row in the particle theme files (unused theme key).
 * `skilltree/unique/LegacyIds`: the retired skill ids (`erza_requip_knight`, `requip_gunslinger`, `requip_titania`, `celestial_spirit_magic`, ...) so `LegacyMigration` clears them from players at login and respawn.

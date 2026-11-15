@@ -118,7 +118,7 @@ For scale: the existing `gui/theme` circle set is 18 PNGs and a 256x256 `circle_
 5. Clover plates around skill art: only inside the mod's own screens (recommended first), or also pre-composited copies of the ~160 skill PNGs for **Tensura's** windows (a generator step, off by default, needs a client-only icon holder because `getSkillIcon` is also called on the server side by common code).
 6. Five-leaf covers: `BLACK_MAGIC` and `GOD_TIER` are tier 5 too; suggest a gold-glow variant for `GOD_TIER` (appended later).
 7. Whether the book should get true 3D tilt (pose-matrix quads) instead of the flat bob; it costs nothing in quads but needs care with the existing GUI Size scaling and was not mocked.
-8. Wording: `[Notice... Great Sage has ...]` versus today's "Notice:" / "Result:" lines; propose one voice, all in lang keys (`nusmp.ui.*`, new `nusmp.gs.*`).
+8. Wording: `[Notice... Great Sage has ...]` versus today's "Notice:" / "Result:" lines; propose one voice, all in lang keys (`anime_multiverse.ui.*`, new `anime_multiverse.gs.*`).
 
 ## What was not seen
 
@@ -126,4 +126,4 @@ Nothing in this document was seen in a running game. Motion (ripple, compile lin
 
 ## Phase 2 order (after the owner picks)
 
-1. `UiThemeMode.GREAT_SPIRIT` + `UiTheme.greatSpirit()` + options + tests. 2. Move `tools/gui_redesign` generators into a `tools/gen_gs_gui_textures.py` that writes `assets/nusmp/textures/gui/gs/` (additive). 3. Frame corners in `UiPanel` behind the switch. 4. Gauge layer + feed. 5. Grimoire menu skin + `CompileTimeline`. 6. Clover frames. 7. Alert widget + `GreatSageNotice`. 8. Ripple in `ThemedButton`. Each step: lang fragment, GUI Size/GUI Move registration, perf note, tests, release notes (NEW / REPLACED / KEPT).
+1. `UiThemeMode.GREAT_SPIRIT` + `UiTheme.greatSpirit()` + options + tests. 2. Move `tools/gui_redesign` generators into a `tools/gen_gs_gui_textures.py` that writes `assets/anime_multiverse/textures/gui/gs/` (additive). 3. Frame corners in `UiPanel` behind the switch. 4. Gauge layer + feed. 5. Grimoire menu skin + `CompileTimeline`. 6. Clover frames. 7. Alert widget + `GreatSageNotice`. 8. Ripple in `ThemedButton`. Each step: lang fragment, GUI Size/GUI Move registration, perf note, tests, release notes (NEW / REPLACED / KEPT).

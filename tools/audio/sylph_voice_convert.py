@@ -21,7 +21,7 @@ ROOT = os.path.abspath(os.path.join(HERE, "..", ".."))
 OUT = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse", "sounds", "voice", "sylph")
 SOUNDS_JSON = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse", "sounds.json")
 LANG = os.path.join(ROOT, "tools", "lang", "sylph_voice.json")
-JAVA = os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "anime_multiverse", "sylph", "SylphVoiceLines.java")
+JAVA = os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "nusmp", "sylph", "SylphVoiceLines.java")
 REPORT = os.path.join(HERE, "sylph_voice_report.json")
 MANIFEST = os.path.join(HERE, "sylph_lines.json")
 CHAIN = ("silenceremove=start_periods=1:start_threshold=-45dB:start_silence=0.04,areverse,"

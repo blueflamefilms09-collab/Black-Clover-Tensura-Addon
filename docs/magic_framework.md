@@ -43,7 +43,7 @@ Where the effects of a magic come from (`MagicShapes`, pure): its own `<NAME>_FX
 2. **Book**: register `book_<name>` in `NUSkills` (add it to `allBooks()` or, for a wiki attribute, to `WikiBooks.NEW_ATTRIBUTES`). Without one the grimoire falls
    back to the legacy skill with no pages: the audit says `NO_BOOK`.
 3. **Icon**: `textures/skill/grimoire/<name>.png`. Missing: audit `NO_ICON` (the profile's `icon()` is still defined).
-4. **Lang**: `nusmp.skill.book_<name>`, `.description`, and `nusmp.page.book_<name>.<pageId>` per page. Missing: `NO_LANG_NAME`, `NO_LANG_DESC`, `NO_LANG_PAGES`.
+4. **Lang**: `anime_multiverse.skill.book_<name>`, `.description`, and `anime_multiverse.page.book_<name>.<pageId>` per page. Missing: `NO_LANG_NAME`, `NO_LANG_DESC`, `NO_LANG_PAGES`.
 5. **Effects**: nothing is required. To give it its own look add `<NAME>_FX1..3` to `VfxShape` (append) and a layer; the profile finds them by name.
    A colour for a wiki attribute needs no `WikiBooks.color` case any more (a generated palette is used instead of throwing).
 6. **Armour layer**: add an `Aura` constant of the same name (append) and a painter; without it a merge overlays a tinted shell for this parent.

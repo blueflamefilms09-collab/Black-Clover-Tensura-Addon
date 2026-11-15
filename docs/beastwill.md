@@ -9,7 +9,7 @@ Status: implemented, unit tested and typechecked. **Nothing has been seen in a g
 | Piece | Where | Notes |
 |---|---|---|
 | Rules (pure) | `beastwill/BeastRank`, `BeastWillRules`, `BeastWillState`, `BeastWillDef`, `BeastWillSchema` | No Minecraft types, unit tested. Every number and hard bound lives here. |
-| Data-driven wills | `data/nusmp/beast_will/*.json`, read by `BeastWillLoader` / `BeastWillCatalog` | Server-side reload listener. A bad file is skipped and logged; it never stops the load. |
+| Data-driven wills | `data/anime_multiverse/beast_will/*.json`, read by `BeastWillLoader` / `BeastWillCatalog` | Server-side reload listener. A bad file is skipped and logged; it never stops the load. |
 | Progress + persistence | `BeastWillStore` (attachment `beast_will`), `BeastWillLedger` (SavedData `nusmp_beastwill_ledger`) | Per player (UUID). The ledger records used offers so one beast gives one will to one player once. |
 | Acquisition | `BeastWillDrops`, `BeastWillCoreItem`, `BeastWillItems`, `BeastWillAcquire`, `BeastWillApi` | Rank is worked out from Existence Points, so no new rank system was invented. |
 | Execution | `BeastWillManager` (upkeep, forms, strain), `BeastWillAbilities`, `BeastWillStealth`, `BeastWillAttributes` | One tick of upkeep per second per player, staggered by `tickCount % 20`. |
@@ -49,7 +49,7 @@ One chance per kill, one core at most. The chance is the will's own (`dropChance
 | Elderwood Guardian Will | treant / dryad / elderwood type | A | 2 % | 5 |
 | Lion Will | lion / leonid type | A | 2 % | 5 |
 
-The core is a **rare, distinct item** (`nusmp:beast_will_core`, glowing, with the will and the beast on its tooltip), not an ordinary Tensura core. It is in the creative tab (one of each will) and `/beastwill core` gives it.
+The core is a **rare, distinct item** (`anime_multiverse:beast_will_core`, glowing, with the will and the beast on its tooltip), not an ordinary Tensura core. It is in the creative tab (one of each will) and `/beastwill core` gives it.
 
 **Using the core**: right-click it. Nothing is consumed yet. A confirm screen opens first and shows:
 
@@ -141,7 +141,7 @@ Controls (rebindable, category "Multiverse of Anime"): **[** toggle Acquire, **]
 
 ## 7. The four wills
 
-Numbers below are generated from the data files (`data/nusmp/beast_will/<id>.json`); change the JSON, not the Java. Energy is a share of the player's energy pool. Cooldown is before `cooldownScale`.
+Numbers below are generated from the data files (`data/anime_multiverse/beast_will/<id>.json`); change the JSON, not the Java. Energy is a share of the player's energy pool. Cooldown is before `cooldownScale`.
 
 ### Dragon Will (Aether Dragon, Sylvia-inspired, Aether affinity, legendary)
 
@@ -266,7 +266,7 @@ Death or other loss never gives or removes duplicate benefits: the core is consu
 | rules | `abilitiesHitPlayers` | true | Abilities may hit players (still PvP/team/protection rules); false = creatures only |
 | rules | `stealth` | true | Shadow Panther stealth on/off |
 
-Per-will data: `data/nusmp/beast_will/<id>.json` (a data pack can override or add one; `/reload` re-reads them, rebuilds the client's info and ends nothing).
+Per-will data: `data/anime_multiverse/beast_will/<id>.json` (a data pack can override or add one; `/reload` re-reads them, rebuilds the client's info and ends nothing).
 
 ## 11. Commands
 

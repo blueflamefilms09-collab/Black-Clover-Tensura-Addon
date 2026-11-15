@@ -42,7 +42,7 @@ forge sound (`book/SpiritDiveForge`, `SpiritDiveSound`), the look option `look =
 
 ## 4. The sets
 
-Pieces are `assets/nusmp/geo/entity/sdj_<element>_<s|c>_arm_<piece>.geo.json` (+ `textures/entity/<id>.png`, `<id>_glow.png`, `animations/entity/<id>.animation.json` for the pieces that move). Common to every
+Pieces are `assets/anime_multiverse/geo/entity/sdj_<element>_<s|c>_arm_<piece>.geo.json` (+ `textures/entity/<id>.png`, `<id>_glow.png`, `animations/entity/<id>.animation.json` for the pieces that move). Common to every
 full set: helm, chest, backplate, belt, pauldron r/l, vambrace r/l, gauntlet r/l, cuisse r/l, greave r/l, sabaton r/l. Character sets add gorget and skirt.
 
 | Element | Colours | Standard set (every mage) | Character set |
@@ -83,7 +83,7 @@ Edits to existing files (additions only): `SpiritDiveLook` (the `Look` option; t
 
 ## 7. Budgets (rule 11): the worst case, with numbers
 
-The reference is the Djinn Full Equip, counted from its mesh files (`assets/nusmp/djinn/u_*`, 36 unique sets, body plus glow quads): the largest set has **4351 quads = 17,404 vertices** (`u_vepar`), the
+The reference is the Djinn Full Equip, counted from its mesh files (`assets/anime_multiverse/djinn/u_*`, 36 unique sets, body plus glow quads): the largest set has **4351 quads = 17,404 vertices** (`u_vepar`), the
 smallest **2856 quads = 11,424 vertices** (`u_marchosias`); the shared rigs go up to 4856 quads. A dive may submit at most that many vertices.
 
 | | Standard set | Character set |

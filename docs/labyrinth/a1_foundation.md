@@ -1,7 +1,7 @@
 # Labyrinth A1: foundation (template toolchain, masonry, dimension and gate plumbing)
 
 Part of the Labyrinth (1.35.0, `docs/labyrinth.md`). This section covers the generated-template toolchain, the six masonry blocks,
-the `nusmp:labyrinth` dimension, the two structures' placement JSON and the two Dungeon Gate pieces. Nothing here was run in game;
+the `anime_multiverse:labyrinth` dimension, the two structures' placement JSON and the two Dungeon Gate pieces. Nothing here was run in game;
 the Python tools have `--check` modes and `tools/labyrinth/test_nbt.py`, and `LabyrinthBlocks.java` was type-checked against the
 1.21.1 / NeoForge 21.1 stubs.
 
@@ -10,7 +10,7 @@ the Python tools have `--check` modes and `tools/labyrinth/test_nbt.py`, and `La
 **What.** `nbt.py` is a dependency-free writer and reader of the Java-edition NBT format (gzip, big-endian, modified UTF-8, all
 thirteen tag types). `template.py` is a small DSL over it: `Template(name, sx, sy, sz)`, `.set`, `.fill`, `.hollow_box`, `.column`,
 `.stamp`, `.jigsaw`, `.chest`, `.be`, `.save(root)`, `load(path)`, `ascii_layers()`, and a CLI (`--check`, `--preview NAME`, `--list`).
-`save` writes `root/data/nusmp/structure/<name>.nbt` as `{DataVersion:3955, size, palette, blocks, entities}` with a deduplicated
+`save` writes `root/data/anime_multiverse/structure/<name>.nbt` as `{DataVersion:3955, size, palette, blocks, entities}` with a deduplicated
 palette (one entry per block id + property set), blocks sorted by (y, z, x) and a gzip mtime of 0, so the same script always
 produces the same bytes. Cells that were never set are not written: the world keeps its own block there.
 
@@ -19,7 +19,7 @@ jigsaw rows and block ids to the block (the vertical chain only works when the u
 are the jigsaw rows). A hand-saved `.nbt` cannot be reviewed in a pull request, cannot be regenerated when a block id or the palette
 convention changes, and silently drifts (a stray torch, an off-by-one jigsaw). A generated template is deterministic, reviewable in a diff
 (`--preview` prints the layers, so a review sees what changed), regenerated with one command (`python tools/labyrinth/gen_gate.py`)
-and validated in CI by `python tools/labyrinth/template.py --check`, which round-trips every `.nbt` under `data/nusmp/structure`
+and validated in CI by `python tools/labyrinth/template.py --check`, which round-trips every `.nbt` under `data/anime_multiverse/structure`
 through the reader and writer, checks DataVersion and bounds, and checks every jigsaw's orientation (one of the twelve),
 `name`/`target`/`pool` (namespaced ids), `joint` (rollable/aligned), `final_state` (a block state string) and that it does not face
 into a solid cell of its own piece. `nbtlib` is not used because the CI image has no third-party Python, and the format is 200 lines.
@@ -40,21 +40,21 @@ light comes from `lightLevel` on the state, so no block entity or tick. Block it
 other block of the mod, which is why `LabyrinthBlocks.init(modBus)` must run before `NUItems.ITEMS.register(modEventBus)`.
 
 **Why own blocks instead of deepslate.** The spire and the gate are built from a signature palette so that (1) the biome palette
-processor (`nusmp:biome_palette`, builder B) can swap "the pillar", "the floor" and "the accent" by block tag (`nusmp:labyrinth/swap_*`)
-without touching deepslate a player built next to a gate, (2) the vein processor targets `#nusmp:labyrinth/veinable` without
+processor (`anime_multiverse:biome_palette`, builder B) can swap "the pillar", "the floor" and "the accent" by block tag (`anime_multiverse:labyrinth/swap_*`)
+without touching deepslate a player built next to a gate, (2) the vein processor targets `#anime_multiverse:labyrinth/veinable` without
 lighting up every deepslate cave, and (3) the Overworld arch and the Boss Peak read as one place.
 
 **Files.**
-* `assets/nusmp/textures/block/labyrinth_bricks.png`, `labyrinth_tiles.png`, `labyrinth_pillar_side.png`, `labyrinth_pillar_top.png`,
+* `assets/anime_multiverse/textures/block/labyrinth_bricks.png`, `labyrinth_tiles.png`, `labyrinth_pillar_side.png`, `labyrinth_pillar_top.png`,
   `labyrinth_glyph.png`, `labyrinth_lantern.png`, `magicule_vein.png`: 16x16 RGBA, drawn by Pillow from seeded random (idempotent).
   The stone is a dark blue-black with faint gold in the seams (running-bond bricks with a highlight on each brick's top edge; four
   tiles with gold corner studs; fluted pillar sides with one gold flute and a gold-ringed cap); the glyph is a brick face with a
   cyan diamond-and-bars sigil; the lantern a gold-barred cage round a warm flame; the vein is the stone with three thin cyan-white
   random walks and a dim halo. No animation: these are static so the vein processor can place thousands without an animated
   texture per face costing anything.
-* `assets/nusmp/blockstates/<id>.json`, `models/block/<id>.json`, `models/item/<id>.json`: vanilla `cube_all`; the pillar uses
+* `assets/anime_multiverse/blockstates/<id>.json`, `models/block/<id>.json`, `models/item/<id>.json`: vanilla `cube_all`; the pillar uses
   `cube_column` / `cube_column_horizontal` with the three `axis` variants like a log so `RotatedPillarBlock` rotates visibly.
-* `data/nusmp/loot_table/blocks/<id>.json`: self-drops with `survives_explosion` (quarried masonry is reusable; `noLootTable` is
+* `data/anime_multiverse/loot_table/blocks/<id>.json`: self-drops with `survives_explosion` (quarried masonry is reusable; `noLootTable` is
   reserved for the unbreakable gate/door blocks of other builders).
 * `data/minecraft/tags/block/mineable/pickaxe.json`: new file; `requiresCorrectToolForDrops` drops nothing unless the block is in a
   mineable tag. Other builders append to it (the generator keeps what is already there).
@@ -63,13 +63,13 @@ lighting up every deepslate cave, and (3) the Overworld arch and the Boss Peak r
 
 **Why a NEW dimension and not the legacy one.** A datapack cannot change the chunk generator of a dimension that an existing world
 already has: `level.dat` keeps the generator of every dimension it has created, so an updated `dimension/living_dungeon.json`
-would be ignored by every old world. A new id (`nusmp:labyrinth`) is created fresh on first use, in old worlds too. Rule 2 also
+would be ignored by every old world. A new id (`anime_multiverse:labyrinth`) is created fresh on first use, in old worlds too. Rule 2 also
 wants the legacy dungeon left alive (`labyrinth.engine = "legacy"`).
 
 **Why `minecraft:flat` with `layers: []` and `structure_overrides`.** A flat generator with no layers is a void: no terrain fights the
 Jigsaw bounding boxes, no cave carver cuts through a tier, no surface rule paints grass on a floor, and the view is the "sea of
 clouds" of the owner's spec (the sky is all there is). A flat generator places ONLY the structure sets named in
-`structure_overrides`, so `["nusmp:labyrinth_spires"]` is what makes spires exist at all and what keeps vanilla structure sets
+`structure_overrides`, so `["anime_multiverse:labyrinth_spires"]` is what makes spires exist at all and what keeps vanilla structure sets
 (villages, strongholds) out. `features: false, lakes: false` so the biome's (empty) feature list and the flat generator's lake
 decoration never run.
 
@@ -79,17 +79,17 @@ that do not belong on a floating spire; `has_skylight true` + `has_ceiling false
 tiers are lit by their lanterns and veins inside; `ambient_light 0.1` keeps the shadows readable; `fixed_time 18000` (midnight)
 keeps the night palette of the biome permanently; `bed_works`/`respawn_anchor_works` false so a bed explodes like in the Nether
 (a run must be left through the exit, not slept through); `coordinate_scale 1.0` so a map position means the same thing;
-`effects "nusmp:labyrinth"` is the `DimensionSpecialEffects` builder C registers through `RegisterDimensionSpecialEffectsEvent`.
+`effects "anime_multiverse:labyrinth"` is the `DimensionSpecialEffects` builder C registers through `RegisterDimensionSpecialEffectsEvent`.
 
-**Why the biome.** Structure placement is biome-driven, so a labyrinth-only biome (`nusmp:labyrinth_sky`, the flat generator's single
-biome) is the lever: `#nusmp:has_structure/labyrinth_spire` lists only it, which is what keeps spires out of the Overworld and any
+**Why the biome.** Structure placement is biome-driven, so a labyrinth-only biome (`anime_multiverse:labyrinth_sky`, the flat generator's single
+biome) is the lever: `#anime_multiverse:has_structure/labyrinth_spire` lists only it, which is what keeps spires out of the Overworld and any
 other dimension. It is a valid 1.21.1 biome with every spawner list empty (nothing spawns naturally on the spire; the Sealed
 Archways spawn), `carvers: {}` and `features: []` (vanilla `the_void` uses the same empty shapes), deep violet-blue fog/sky/water
 colours and the cave mood sound. `has_precipitation false` so no rain renders over the void.
 
 ## 4. The structures (`worldgen/structure/*.json`, `structure_set/*.json`, `tags/worldgen/**`)
 
-**`nusmp:dungeon_gate`.** Jigsaw, `start_pool nusmp:gate/base`, `size 2`, `max_distance_from_center 48` (a single piece, the budget is
+**`anime_multiverse:dungeon_gate`.** Jigsaw, `start_pool anime_multiverse:gate/base`, `size 2`, `max_distance_from_center 48` (a single piece, the budget is
 irrelevant but legal), `step surface_structures`, `terrain_adaptation beard_thin`, `start_height {"absolute": 0}`,
 `project_start_to_heightmap WORLD_SURFACE_WG`.
 
@@ -107,19 +107,19 @@ the gap on slopes) without carving above it, so the ruin keeps its vines and the
 foundation rows of the template cover the seam where the beard meets the platform. `surface_structures` is the decoration step
 whose pieces are placed after the surface rules and before vegetation, so the flagstones replace grass instead of being covered by it.
 
-**`nusmp:dungeon_gates` structure set.** `random_spread`, `spacing 40, separation 16`: one attempt per 40x40-chunk cell with at least
+**`anime_multiverse:dungeon_gates` structure set.** `random_spread`, `spacing 40, separation 16`: one attempt per 40x40-chunk cell with at least
 16 chunks between neighbours, i.e. a gate roughly every 500 to 1000 blocks: rarer than a village (34/8), common enough that a
 player who walks a thousand blocks finds one. `salt 2026015` seeds the per-cell random so the gate grid never coincides with
 another set's grid (two sets with the same salt and spacing put their structures in the same chunks). `exclusion_zone
 {minecraft:villages, 6}` skips a cell whose chunk is within 6 chunks of a village placement, so a gate never cuts through a village
 or sits on its well (vanilla uses the same mechanism for pillager outposts).
 
-**`nusmp:labyrinth_spire`.** Jigsaw, `start_pool nusmp:labyrinth/base`, `size 20` (the maximum: base + 8 chained levels + side
+**`anime_multiverse:labyrinth_spire`.** Jigsaw, `start_pool anime_multiverse:labyrinth/base`, `size 20` (the maximum: base + 8 chained levels + side
 rooms + caps), `max_distance_from_center 128` (the vertical budget of the contract: base 16 + levels and halls under 128),
 `start_height {"absolute": 40}` and NO heightmap projection (there is no terrain; the base island floats at y 40 so the fall from a
 walkway is long but the void rescue has room), `terrain_adaptation none` (nothing to adapt), `use_expansion_hack false` (the hack is
 the village "expand box upward" fix that breaks exact vertical stacking).
-**`nusmp:labyrinth_spires` structure set.** `spacing 24, separation 12, salt 1935104`: a spire every 300 to 600 blocks so several
+**`anime_multiverse:labyrinth_spires` structure set.** `spacing 24, separation 12, salt 1935104`: a spire every 300 to 600 blocks so several
 can exist for several parties, far enough apart that two 128-block jigsaw boxes never touch.
 
 **Biome tags.** `has_structure/dungeon_gate` is built from explicit vanilla lists: `#minecraft:is_forest`, `is_taiga`, `is_mountain`,
@@ -131,8 +131,8 @@ entries `{"id": "#c:is_magical", "required": false}`, `#c:is_wasteland`, `is_dea
 what Biomes O' Plenty, Terralith, Regions Unexplored and NeoForge's own `Tags.Biomes` fill with their biomes, so the gate spawns in
 modded biomes natively with no compat code. `required: false` is the tag-loader flag that makes a missing tag a no-op instead of a
 datapack load failure, which is what makes it safe to name a tag a mod that is not installed would provide.
-`has_structure/labyrinth_spire` = `[nusmp:labyrinth_sky]` only (see section 3). The structure tags `nusmp:dungeon_gate` and
-`nusmp:labyrinth_spire` exist for `ServerLevel.findNearestMapStructure(TagKey<Structure>, ...)` (the locate command and the
+`has_structure/labyrinth_spire` = `[anime_multiverse:labyrinth_sky]` only (see section 3). The structure tags `anime_multiverse:dungeon_gate` and
+`anime_multiverse:labyrinth_spire` exist for `ServerLevel.findNearestMapStructure(TagKey<Structure>, ...)` (the locate command and the
 compass logic of other builders take a tag, not a structure).
 
 ## 5. The gate pieces (`tools/labyrinth/gen_gate.py`, `structure/gate/ruin_a.nbt`, `ruin_b.nbt`, `template_pool/gate/base.json`,
@@ -142,7 +142,7 @@ compass logic of other builders take a tag, not a structure).
 the one below: row y=0 replaces the surface block, see section 4) and the walkable top at y=2, surrounded at y=1 by a crumbling ring
 of stone-brick stairs and slabs (the stairs' high half toward the platform) so the platform is climbed in two hops rather than a
 two-block wall. About a fifth of the rim flagstones are left unset so the terrain shows through, like a ruin half swallowed by the
-ground. Both are start pieces with no jigsaw: the gate is one piece. The `nusmp:labyrinth_gate` plane (builder C's portal block)
+ground. Both are start pieces with no jigsaw: the gate is one piece. The `anime_multiverse:labyrinth_gate` plane (builder C's portal block)
 is 3 wide x 4 tall, standing on the platform in the middle of the opening.
 
 * `gate/ruin_a` (weight 3), the Black Clover arch: 9 wide x 9 tall x 5 deep of `labyrinth_bricks` with `labyrinth_pillar` corner
@@ -157,7 +157,7 @@ is 3 wide x 4 tall, standing on the platform in the middle of the opening.
   obelisks (pillar columns on their own footing, a lantern under a glyph cap, a chain above) at the corners.
 
 **`template_pool/gate/base.json`.** `fallback minecraft:empty`, both pieces `single_pool_element`, `projection rigid`,
-`processors nusmp:gate_weathering`. Rigid, not `terrain_matching`: terrain-matching pieces are re-projected per piece onto the
+`processors anime_multiverse:gate_weathering`. Rigid, not `terrain_matching`: terrain-matching pieces are re-projected per piece onto the
 heightmap and would lift the arch off its platform; the start piece is already projected by the structure.
 
 **`processor_list/gate_weathering.json`.** Vanilla `minecraft:rule` processors so the weathering is random per placement rather than

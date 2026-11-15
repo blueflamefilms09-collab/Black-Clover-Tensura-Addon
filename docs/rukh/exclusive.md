@@ -3,12 +3,12 @@
 ## The owner's decision
 "Magoi should be a Djinn user exclusive particle, besides maybe use them in dungeons", and "you can make custom particles instead of just using magoi". So:
 
-* The Dark Rukh and Light Rukh (`nusmp:dark_rukh`, `nusmp:light_rukh`, `particle/rukh`) are now used by exactly two groups: the Djinn users (everything of `relics/djinn/**`
+* The Dark Rukh and Light Rukh (`anime_multiverse:dark_rukh`, `anime_multiverse:light_rukh`, `particle/rukh`) are now used by exactly two groups: the Djinn users (everything of `relics/djinn/**`
   and `client/relics/djinn/**`: equip, assimilation, acts, weapons, screen FX, GUI) and the dungeons (`labyrinth/**`, `client/labyrinth/**`, `dungeon/**`, `client/dungeon/**`:
   the Rukh flow, floors, System, safe rooms, rifts and pockets, ambience, bosses inside the dungeons). `relics/Fx.java` is the one shared helper (ring, burst, align, dust) the Djinn
   code calls; it keeps its Rukh, and every other caller was moved to `particle/fx/FxRelic` (same job, custom particles, picked by the hue of the colour).
 * Everything else that used the Rukh since 1.36.0 (relic waves, worn relic FX, magics, songs, skills, corpses, grimoires, sword draws, hero weapons, the Spatial portal, the arena
-  items) has its own custom particles: `docs/custom_particles.md`, `data/nusmp/particle_themes.json`.
+  items) has its own custom particles: `docs/custom_particles.md`, `data/anime_multiverse/particle_themes.json`.
 * Nothing was deleted: the Rukh types, textures, emitters (`RukhFx`, `RukhClientFx`), the purge scope and its test all stay. The Rukh is also the fallback of the facade when
   `particles.custom` is off for a call site that used to spawn it.
 

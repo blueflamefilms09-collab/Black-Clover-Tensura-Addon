@@ -1,7 +1,7 @@
-# Vassal Axe (`nusmp:vassal_axe`, `HeroKind.AXE`, class Seven Star, style SWING)
+# Vassal Axe (`anime_multiverse:vassal_axe`, `HeroKind.AXE`, class Seven Star, style SWING)
 
 Builder `hva`. Code: `heroweapon/weapon/axe/**` (+ the shared helpers of the four striking weapons in `heroweapon/weapon/strike/**`), forms file
-`data/nusmp/hero/forms/vassal_axe.json`, lang fragment `hva.lang.json`. This page is written in the order the art builder needs it: the look first.
+`data/anime_multiverse/hero/forms/vassal_axe.json`, lang fragment `hva.lang.json`. This page is written in the order the art builder needs it: the look first.
 
 ## 1. Look (for the art builder `hart2`)
 
@@ -13,7 +13,7 @@ Tornado Axe, Bedrock Breaker, Shine Axe Burst, Accelerator Smash and (curse) Gui
 * **Silhouette.** A broad single-bit battle axe: a heavy steel head with a long, slightly curved cutting edge (-x) that drops into a pronounced beard (the lower
   corner hooks down), a thick squared poll on the back (+x) with a short back spike, on a straight haft. A woodcutter's silhouette made noble: the blade is
   the largest shape and the edge is the first thing you see.
-* **Size.** Class `battleaxe` of `assets/nusmp/weapon_classes.json` (1.6 to 2.0 blocks apparent; aim for 1.8), head at least 0.75 tall (aim 0.85) and 0.5 wide at
+* **Size.** Class `battleaxe` of `assets/anime_multiverse/weapon_classes.json` (1.6 to 2.0 blocks apparent; aim for 1.8), head at least 0.75 tall (aim 0.85) and 0.5 wide at
   the edge. The class `greataxe` (2.4 to 3.0) is too big for a weapon swung one-handed at speed.
 * **Parts (8 to 14 named parts).** `butt_cap`, `grip_wrap`, `haft`, `haft_ring_low`, `haft_ring_high`, `socket_collar`, `head_blade` (the crescent-bearded blade),
   `edge_bevel` (the bright cutting edge as its own strip), `poll_block`, `back_spike`, `gem_bezel`, `gem`, `cheek_inlay` (an etched channel across the blade's cheek).
@@ -54,7 +54,7 @@ Five forms: a line `base` -> `timber_axe` -> `pipe_axe` -> `shine_axe` (4 ordina
 Pipe Axe are canon names; the Timber Axe (logs, flint: the woodcutter) and the Shine Axe (the light of the Shine Axe Burst) are design. The brief asks for forms from wood and iron:
 logs for tier 1, iron for tier 2. Every form has the passive `muscle_enhancement` (Brawn).
 
-The table is generated from `data/nusmp/hero/forms/vassal_axe.json`:
+The table is generated from `data/anime_multiverse/hero/forms/vassal_axe.json`:
 
 | form (id) | tier | parents | requirements | mastery | stats | ability bonus | skills (slot: id) | passives |
 |---|---|---|---|---|---|---|---|---|
@@ -209,7 +209,7 @@ All in `src/main/java/com/newuniverse/nusmp/heroweapon/weapon/`. The package `st
 * **Commands:** none of its own.
 * **Quest hooks:** none of its own (the dispatcher fires `hero.skill`).
 * **Lang:** `hero.skill.axe.<id>.name` / `.desc` for the nine techniques and `hero.passive.axe.<id>` / `.desc` for the five passives, in the lang fragment `hva.lang.json` (the lead merges it into `en_us.json`). Messages to the wielder are plain strings.
-* **Saved data:** on the wielder `nusmp_ax_bn`, `nusmp_ax_bt` (Brawn); the attribute modifier ids `nusmp:hero_axe_brawn_melee`, `nusmp:hero_axe_brawn_knock`, `nusmp:hero_axe_brawn_speed` (transient).
+* **Saved data:** on the wielder `nusmp_ax_bn`, `nusmp_ax_bt` (Brawn); the attribute modifier ids `anime_multiverse:hero_axe_brawn_melee`, `anime_multiverse:hero_axe_brawn_knock`, `anime_multiverse:hero_axe_brawn_speed` (transient).
 
 ## 11. Tests, the self-test, judgement calls
 

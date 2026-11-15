@@ -29,7 +29,7 @@ Install Simple Voice Chat 2.5+ for NeoForge 1.21.1 on the server (clients too, t
 (`SongMath.rms`), gates it and writes only a number into `SingingState`. All `de.maxhenkel` references are confined to `song/voice`.
 The mod runs without Simple Voice Chat (compileOnly dependency, the plugin class is never loaded by us).
 
-Fallback without Simple Voice Chat: hold the Sing key (default V, "key.nusmp.song_sing"): the server sets a steady level (`keyLevel`, 0.6).
+Fallback without Simple Voice Chat: hold the Sing key (default V, "key.anime_multiverse.song_sing"): the server sets a steady level (`keyLevel`, 0.6).
 Only when `ModList.isLoaded("voicechat")` is false and `keyFallback` is true. The client repeats the key every 4 ticks while held.
 
 ## Classes (the why of each is in its Javadoc)

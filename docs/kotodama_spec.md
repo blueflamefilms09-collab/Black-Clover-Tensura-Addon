@@ -199,7 +199,7 @@ Preview: `docs/vfx_previews/zagred_true_form.png`.
 
 **Rendering:**
 - a glow pass for the eyes, horn and hair tips and veins;
-- the fresnel aura shader `nusmp:rendertype_zagred_aura`: a rim pulsing violet to crimson, additive, with an eyes fallback;
+- the fresnel aura shader `anime_multiverse:rendertype_zagred_aura`: a rim pulsing violet to crimson, additive, with an eyes fallback;
 - a turning target reticle at its target's feet;
 - dark magenta and black embers.
 

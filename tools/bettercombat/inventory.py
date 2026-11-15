@@ -63,7 +63,7 @@ def class_table():
 
 def nuitems_ids():
     """Ids of the sword-like items NUItems registers, with the registering expression's class."""
-    t = read(os.path.join(JAVA, "com", "newuniverse", "anime_multiverse", "item", "NUItems.java"))
+    t = read(os.path.join(JAVA, "com", "newuniverse", "nusmp", "item", "NUItems.java"))
     out = {}
     for m in re.finditer(r'weapon\("([a-z0-9_]+)",\s*MagicWeaponItem\.Kind', t):
         out[m.group(1)] = "NUItems.weapon"
@@ -92,7 +92,7 @@ def relic_melee():
 
 def djinn_weapons():
     """{id: (kind, reach)} for the Djinn weapons, light and dark."""
-    base = os.path.join(JAVA, "com", "newuniverse", "anime_multiverse", "relics", "djinn")
+    base = os.path.join(JAVA, "com", "newuniverse", "nusmp", "relics", "djinn")
     rules = read(os.path.join(base, "weapon", "DjinnWeaponRules.java"))
     prefix = re.search(r'PREFIX\s*=\s*"([a-z_]+)"', rules).group(1)
     dark = re.search(r'DARK_SUFFIX\s*=\s*"([a-z_]+)"', rules).group(1)

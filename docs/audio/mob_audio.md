@@ -10,8 +10,8 @@ writes all of them from nothing (numpy plus ffmpeg), so they can be redone, retu
 
 | Part | Status | What |
 |---|---|---|
-| `audio/Cue`, `audio/MobSoundSet` (pure catalogue), `audio/ModSounds` (the `DeferredRegister<SoundEvent>`) | NEW | 25 families x 8 cues = 200 sound events `nusmp:mob.<family>.<cue>`, registered in a loop from the catalogue |
-| `assets/nusmp/sounds.json` (200 entries), `assets/nusmp/sounds/mob/**` (525 `.ogg`, 5.5 MB), `tools/lang/mob_audio.json` (200 subtitles) | NEW | several variants per event, `subtitle` keys, `stream` for files of 2.4 s or more, a longer `attenuation_distance` for the big families |
+| `audio/Cue`, `audio/MobSoundSet` (pure catalogue), `audio/ModSounds` (the `DeferredRegister<SoundEvent>`) | NEW | 25 families x 8 cues = 200 sound events `anime_multiverse:mob.<family>.<cue>`, registered in a loop from the catalogue |
+| `assets/anime_multiverse/sounds.json` (200 entries), `assets/anime_multiverse/sounds/mob/**` (525 `.ogg`, 5.5 MB), `tools/lang/mob_audio.json` (200 subtitles) | NEW | several variants per event, `subtitle` keys, `stream` for files of 2.4 s or more, a longer `attenuation_distance` for the big families |
 | `tools/gen_mob_sounds.py` | NEW | the reproducible synthesiser (python3 + numpy, ffmpeg libvorbis, mono, 32 or 44.1 kHz) |
 | `audio/MobVoice`, `audio/SoundFamilied`, `audio/MobSoundRemap` | NEW | the mob-class helpers and the server remap of vanilla mob voices in the dungeon |
 | `audio/BossSoundSets` + one line in `DndProfile.parse` | NEW | the optional `sound_set` key of a boss profile |

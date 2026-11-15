@@ -254,17 +254,17 @@ class AdvancementDataTest {
             collect(adv, "id", found);        // the icon
             collect(adv, "items", found);     // inventory_changed / consume_item predicates
             for (String it : found) {
-                if (it.startsWith("anime_multiverse:") && !items.contains(it.substring(6))) problems.add(id(p) + ": item " + it);
+                if (it.startsWith("anime_multiverse:") && !items.contains(it.substring(17))) problems.add(id(p) + ": item " + it);
             }
             List<String> types = new ArrayList<>();
             collect(adv, "type", types);
-            for (String t : types) if (t.startsWith("anime_multiverse:") && !entities.contains(t.substring(6))) problems.add(id(p) + ": entity " + t);
+            for (String t : types) if (t.startsWith("anime_multiverse:") && !entities.contains(t.substring(17))) problems.add(id(p) + ": entity " + t);
             List<String> to = new ArrayList<>();
             collect(adv, "to", to);
             for (String d : to) if (!DIMENSIONS.contains(d)) problems.add(id(p) + ": dimension " + d);
             for (Object o : crit(adv, "minecraft:effects_changed")) {
                 for (String eff : map(map(o).get("effects")).keySet())
-                    if (eff.startsWith("anime_multiverse:") && !lang.contains("effect.anime_multiverse." + eff.substring(6))) problems.add(id(p) + ": effect " + eff);
+                    if (eff.startsWith("anime_multiverse:") && !lang.contains("effect.anime_multiverse." + eff.substring(17))) problems.add(id(p) + ": effect " + eff);
             }
         }
         assertTrue(problems.isEmpty(), "unknown mod ids in advancements: " + problems);

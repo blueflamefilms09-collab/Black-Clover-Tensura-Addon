@@ -33,7 +33,7 @@ import djinn_parts as dp                   # noqa: E402
 
 ROOT = os.path.abspath(os.path.join(HERE, "..", ".."))
 ASSETS = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse")
-DJINN_JAVA = os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "anime_multiverse", "relics", "djinn", "Djinn.java")
+DJINN_JAVA = os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "nusmp", "relics", "djinn", "Djinn.java")
 
 ROW = re.compile(r'(\w+)\("(\w+)", "([^"]+)", Affinity\.(\w+), 0x([0-9A-Fa-f]+), 0x([0-9A-Fa-f]+), "([^"]+)",\s*'
                  r'new Look\(Look\.Horns\.(\w+), Look\.Wings\.(\w+), Look\.Tail\.(\w+), Look\.Halo\.(\w+), (true|false)\)')

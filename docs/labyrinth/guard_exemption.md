@@ -22,7 +22,7 @@ and the two spawn rules next to it.
 | `mixin/LevelGuardMixin` | KEPT + one injection | a `RETURN` injection on `Level.setBlock` calls `DungeonGuard.afterSet` (optional, `require = 0`, like the others) |
 | `labyrinth/mega/spawnfilter/SpawnBlacklist`, `FloorThemeMobFilter`, `SpawnFilterRules` (pure) | NEW | the list matching, the palette of a theme made from the faction weights, the one combined verdict |
 | `spawnfilter/SpawnFilterEvents`, `SpawnFilterConfig`, `SpawnFilterBoot` | NEW | the three event nets and the config `nusmp-labyrinth-mega-spawnfilter-server.toml` (`spawn.blacklist`, `blacklistAllowsAdmin`, `themeFilter`, `themeMinWeight`) |
-| tag `nusmp:dungeon/banned` | NEW | the datapack-extensible form of the ban (the Gorgon) |
+| tag `anime_multiverse:dungeon/banned` | NEW | the datapack-extensible form of the ban (the Gorgon) |
 | `iceandfire:gorgon` in `dungeon/tier3.json` and `mega/beast.json` | REPLACED (removed) | the owner's spec forbids it in the dungeon, so it leaves both tags. It is added to `dungeon/excluded.json` (the existing veto tag: no tier, no encounter pick) |
 | every dungeon block the generator made | KEPT | still unbreakable by any means; the exemption only covers a position a player placed |
 | the Sanctuary's own rules (`HubRules`), the arenas of the Final Hour and of the arcs | KEPT | not exempted; only the Labyrinth's two dimensions are |
@@ -61,11 +61,11 @@ and the two spawn rules next to it.
   are its replacements.)
 * **Where.** Every dungeon dimension: the Mega-Dungeon (its rift pockets live in it), the Spire, the Sanctuary, an old Living Dungeon. Not the Overworld.
 * **What is banned.** `spawn.blacklist` (default `["iceandfire:gorgon"]`; `namespace:path` exact, `namespace:*` a whole mod, a bare `path` in any namespace) plus the tag
-  `nusmp:dungeon/banned`. An operator's own `/summon` or egg is refused too ("never" means never), unless `spawn.blacklistAllowsAdmin` is turned on.
-* **The palette.** `FloorThemeMobFilter` takes the `themeWeights` the faction files already carry (`data/nusmp/mega/factions/*.json`, a weight per Region Theme, 0 =
+  `anime_multiverse:dungeon/banned`. An operator's own `/summon` or egg is refused too ("never" means never), unless `spawn.blacklistAllowsAdmin` is turned on.
+* **The palette.** `FloorThemeMobFilter` takes the `themeWeights` the faction files already carry (`data/anime_multiverse/mega/factions/*.json`, a weight per Region Theme, 0 =
   never native) and makes the palette of the floor's theme: the factions with a weight above zero and at least `spawn.themeMinWeight` (default 0). A fresh spawn of a
   creature whose faction is not in its floor's palette is refused (a drowned thing in a Necropolis). Never filtered: a creature with no faction (vanilla zombies, ...), a
-  boss (`c:bosses`, `nusmp:boss`), an owned creature, a named creature, an operator's creature, a creature loaded from a save, and any floor whose palette would be
+  boss (`c:bosses`, `anime_multiverse:boss`), an owned creature, a named creature, an operator's creature, a creature loaded from a save, and any floor whose palette would be
   empty (a typo must never empty a floor). `spawn.themeFilter` switches it off.
 
 ## WHY (the design decisions)

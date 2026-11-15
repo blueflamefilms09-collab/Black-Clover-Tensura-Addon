@@ -1,4 +1,4 @@
-# Quests (Java side): the `nusmp:event` trigger, fire points, quest installer
+# Quests (Java side): the `anime_multiverse:event` trigger, fire points, quest installer
 
 Release 1.49.0. Nothing here has been run in the game. The data side (advancement JSON, FTB Quests SNBT pack) is in `docs/quests.md` and
 `docs/advancements.md`; the contract between the two is `docs/quests.md` (event key table) and this file.
@@ -9,13 +9,13 @@ All NEW. Nothing was replaced or removed. Existing code only received one-line, 
 ## Files (package `com.newuniverse.nusmp.quests`, tests under `src/test/java/.../quests`)
 | File | Why it exists |
 |---|---|
-| `NusmpEventTrigger` | The advancement trigger type `nusmp:event` (codec: `key`, optional `count` default 1, optional `arg`, optional vanilla `player`). One trigger for everything vanilla cannot see. |
+| `NusmpEventTrigger` | The advancement trigger type `anime_multiverse:event` (codec: `key`, optional `count` default 1, optional `arg`, optional vanilla `player`). One trigger for everything vanilla cannot see. |
 | `NusmpEvents` | The door the game code calls: `fire`, `fireOnce`, `fireTeam`, `fireAll`, `count`, `futureBoss`, `init(modBus)`. Counters live in the player's persistent data (`nusmp_quest_counts`), copied on `PlayerEvent.Clone`. Server thread only (hops there otherwise), ignores null/fake/client players, swallows and logs its own failures once. |
 | `EventCounters` | Pure: which counters one event bumps (`key` always, `key|arg` when an arg is given) and copy-on-respawn. |
 | `TriggerRule` | Pure: the matching rule (key equal; criterion arg equal if present; counter >= count). |
-| `FutureBossIds` | Pure: `nusmp:future/<arc>_<boss>` id format shared by the generator and the game. |
+| `FutureBossIds` | Pure: `anime_multiverse:future/<arc>_<boss>` id format shared by the generator and the game. |
 | `QuestHooks` | Small logic behind a few fire points (cast hook, relic discovery, tier, boss participants) so every call in game code stays one line. |
-| `QuestWorldEvents` | Listeners that need no edit inside features: boss death (`boss.defeated`, `dungeon.floor_boss`, `labyrinth.warden_defeated`, peak boss `labyrinth.seal_opened`) and mirroring of the `nusmp:convergence/*` advancements (`convergence.stage`, `convergence.anomaly`). |
+| `QuestWorldEvents` | Listeners that need no edit inside features: boss death (`boss.defeated`, `dungeon.floor_boss`, `labyrinth.warden_defeated`, peak boss `labyrinth.seal_opened`) and mirroring of the `anime_multiverse:convergence/*` advancements (`convergence.stage`, `convergence.anomaly`). |
 | `QuestTeams` | FTB Teams by reflection (like `multiverse.Squads`): the player's team, member ids, online members nearby. Without FTB Teams everything is empty. |
 | `QuestsConfig` | `nusmp-quests-server.toml`: `autoInstallOnFirstRun`, `shareSquadCredit`, `shareSquadCreditRadius`. Plain `define`. |
 | `QuestsSetup` | One call registering all of it: `QuestsSetup.init(modEventBus, modContainer)`. |
@@ -23,10 +23,10 @@ All NEW. Nothing was replaced or removed. Existing code only received one-line, 
 | `pack/PackPlan` | Pure: install decision (fresh / over ours / forced backup / refuse), backup name, update plan, uninstall plan, path safety. |
 | `pack/PackInstaller` | The file operations on two `Path`s (so tests use a temp dir): install, update, uninstall, status, backups. |
 | `pack/QuestsInstall` | Glue: finds the jar's `quest_pack`, the `config/ftbquests/quests` folder, the mod version, asks FTB Quests to reload, the first-run install on `ServerAboutToStartEvent`. |
-| `pack/QuestsCommand` | `/nusmp quests status|install [force]|update|uninstall`, operator level 2. |
+| `pack/QuestsCommand` | `/anime_multiverse quests status|install [force]|update|uninstall`, operator level 2. |
 
 ## Trigger JSON and counters
-`{"trigger":"nusmp:event","conditions":{"key":"spell.cast","arg":"thread","count":10}}`
+`{"trigger":"anime_multiverse:event","conditions":{"key":"spell.cast","arg":"thread","count":10}}`
 * `key` required; `arg` optional (omit = any argument); `count` optional (default 1).
 * One event bumps the counter `key` and, when it has an arg, `key|arg`. A criterion without `arg` reads the plain key counter ("any spell"), one with `arg` reads `key|arg`.
 * The criterion completes on the event that makes the counter reach `count`. Counters are not reset by `/advancement revoke` (re-earning is instant if the count is already met) and survive death.
@@ -72,7 +72,7 @@ All NEW. Nothing was replaced or removed. Existing code only received one-line, 
 | `squad.captain` (`handover`) | `multiverse/Squads.java:275` | only when FTB accepted the transfer |
 | `squad.vice` | `multiverse/Squads.java:287` | |
 | `squad.joined`, once | `multiverse/Squads.java:342` | seen by the 5 s squad tick for a non-owner member of a flagged squad (so up to 5 s after joining; FTB's own join event is not hooked) |
-| `convergence.stage` (stage name), `convergence.anomaly` (name) | `QuestWorldEvents` | mirrors the earning of `nusmp:convergence/stage_*` (arg = text after `stage_`) and every other `nusmp:convergence/*` (arg = its name). The Convergence itself is not in this mod; its data pack grants those advancements. |
+| `convergence.stage` (stage name), `convergence.anomaly` (name) | `QuestWorldEvents` | mirrors the earning of `anime_multiverse:convergence/stage_*` (arg = text after `stage_`) and every other `anime_multiverse:convergence/*` (arg = its name). The Convergence itself is not in this mod; its data pack grants those advancements. |
 | `magic.merged` (merged id) | `core/magic/merge/MergeAccess.java:78` | |
 | `weapon.genesis` | `item/DemonSlayerSwordItem.java:149` | every Conceptual Severance of the Genesis Demon-Slayer, by a player |
 | `butoh.dance` | `butoh/ButohDance.java:101` | a dance begins (not the quiet resume) |
@@ -89,7 +89,7 @@ Not hooked on purpose: `boss.phase` for Dante, Vanica, Zenon, Devil Avatar (they
 No key from qst.md is unhooked.
 
 ## Future bosses
-`NusmpEvents.futureBoss(player, "<arc>", "<boss>")` awards every remaining criterion of the advancement `nusmp:future/<arc>_<boss>`
+`NusmpEvents.futureBoss(player, "<arc>", "<boss>")` awards every remaining criterion of the advancement `anime_multiverse:future/<arc>_<boss>`
 (`FutureBossIds` builds the id). A new boss calls it from its death hook for the players who took part, for example:
 ```java
 for (ServerPlayer p : QuestHooks.participants(boss, source)) NusmpEvents.futureBoss(p, "spade_raid", "dante");
@@ -102,7 +102,7 @@ Existing bosses are NOT given a call: they already report `boss.defeated`, and Q
 FTB Quests progress itself is per FTB team already; this makes the advancements (which are per player) agree.
 
 ## The installer
-`/nusmp quests <sub>` (operator level 2):
+`/anime_multiverse quests <sub>` (operator level 2):
 * `status`: FTB Quests loaded or not, quest folder state, bundled pack (files, hash, mod version), installed marker (hash, version, file count, up to date or not).
 * `install`: copies `quest_pack` from the jar into `<config>/ftbquests/quests`. Folder missing/empty: install. Folder has our marker: reinstall (copy backup first). Folder holds foreign files: REFUSED with a message; `install force` moves the old folder to `config/ftbquests/quests_backup_<UTC timestamp>` first. Writes `.nusmp_pack`.
 * `update`: only with our marker. Backup copy first, writes the pack, deletes only files our old marker listed that the new pack no longer has, never touches files the owner added. Says "Already up to date" when the hash and all files match.

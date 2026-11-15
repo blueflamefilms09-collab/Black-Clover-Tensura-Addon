@@ -6,7 +6,7 @@ Nothing here was run in the game. See "What was and was not checked" at the end.
 
 | | |
 |---|---|
-| **New** | Paladin Conversion (page), Paladin Recall / Dismiss (page), the Paladin marker effect, the Paladin stats and AI, the halo and wings, the follower limit, the config, the data tag `nusmp:paladin_immune`. |
+| **New** | Paladin Conversion (page), Paladin Recall / Dismiss (page), the Paladin marker effect, the Paladin stats and AI, the halo and wings, the follower limit, the config, the data tag `anime_multiverse:paladin_immune`. |
 | **Replacement** | None. Nothing the mod already had covers a permanent, player-owned conversion. |
 | **Kept untouched** | The 1.42.0 Soul Touch (`PaladinTurns`, the 20 second loan), Lucius's boss Soul Paladins (`SoulPaladins`, `ZogratisEffects.SOUL_PALADIN`), every Lucius boss file. A creature that is one of those is refused by the conversion. |
 
@@ -19,7 +19,7 @@ Both pages are appended to the generic Soul book through `book/ext/SoulExt` (mod
 
 ### Who can be purified (`PaladinRules`)
 
-Never: a player; a boss (BossIdentity, `Tags.EntityTypes.BOSSES`, or 300+ max health); a mob on the `nusmp:paladin_immune` entity tag (ender dragon, wither, warden, elder guardian, creeper, ghast, enderman, silverfish: bosses and the block-griefers); a named Tensura creature with 100+ health; a Zogratis family member; Lucius's boss Soul Paladins; something already your Paladin or another caster's; a tamed or called creature (`OwnableEntity` with an owner, a relic summon, a creature turned by the Soul Touch); something with more than ten times the caster's energy.
+Never: a player; a boss (BossIdentity, `Tags.EntityTypes.BOSSES`, or 300+ max health); a mob on the `anime_multiverse:paladin_immune` entity tag (ender dragon, wither, warden, elder guardian, creeper, ghast, enderman, silverfish: bosses and the block-griefers); a named Tensura creature with 100+ health; a Zogratis family member; Lucius's boss Soul Paladins; something already your Paladin or another caster's; a tamed or called creature (`OwnableEntity` with an owner, a relic summon, a creature turned by the Soul Touch); something with more than ten times the caster's energy.
 
 Chance (pure, tested): base 35% to 75% by mastery, up to +25% for a weakened target, +10% for a hostile creature, -35% to +15% from the energy gap (log scale), minus up to 50% for magic resistance, clamped to 5%..97%. A hostile creature at or below half health never goes under 90% (unless its resistance is 0.8 or more).
 
@@ -28,7 +28,7 @@ Chance (pure, tested): base 35% to 75% by mastery, up to +25% for a weakened tar
 An ordinary mob. Nothing is replaced. Four parts, all undone by a release:
 
 1. A compound `nusmp_paladin` in its persistent data: owner id, conversion game time, the follower cap at the time. This is what saves it.
-2. The marker effect `nusmp:paladin` (infinite, ambient, no icon, does nothing by itself). It is what the client reads to dress the creature, and the 10-tick drive puts it back if milk or a totem removes it.
+2. The marker effect `anime_multiverse:paladin` (infinite, ambient, no icon, does nothing by itself). It is what the client reads to dress the creature, and the 10-tick drive puts it back if milk or a totem removes it.
 3. Six permanent (saved) attribute modifiers: max health +100%, attack +60% (of the base), armour +8, toughness +4, speed +15%, knockback resistance +0.6, all scaled by `soul.paladinStrength`. A creature without one of those attributes skips it.
 4. A place in the pure `PaladinRoster` (the limit).
 
@@ -83,7 +83,7 @@ Client: `PaladinClient` (one registration line), `PaladinLayer`, `PaladinOverlay
 
 ## Commands
 
-None added. To test: give yourself Lucius's grimoire (`/multiverse grimoire canon <player> lucius`), learn Soul Magic, open the pages, summon the grimoire, cast on a weakened zombie. `/effect give <mob> nusmp:paladin infinite` dresses a creature (look only, no owner, no buffs).
+None added. To test: give yourself Lucius's grimoire (`/multiverse grimoire canon <player> lucius`), learn Soul Magic, open the pages, summon the grimoire, cast on a weakened zombie. `/effect give <mob> anime_multiverse:paladin infinite` dresses a creature (look only, no owner, no buffs).
 
 ## What was and was not checked
 

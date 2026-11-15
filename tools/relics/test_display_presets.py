@@ -80,7 +80,7 @@ class MathsTest(unittest.TestCase):
         self.assertGreater(s, exact - 0.001 - 1e-12)
 
     def test_the_java_guard_repeats_the_same_numbers(self):
-        java = os.path.join(dp.ROOT, "src", "main", "java", "com", "newuniverse", "anime_multiverse", "client", "relics", "item", "OversizeGuard.java")
+        java = os.path.join(dp.ROOT, "src", "main", "java", "com", "newuniverse", "nusmp", "client", "relics", "item", "OversizeGuard.java")
         with open(java, encoding="utf-8") as f:
             text = f.read()
         self.assertEqual(float(re.search(r"APPARENT_MAX = ([0-9.]+)f", text).group(1)), dp.APPARENT_MAX_BLOCKS)

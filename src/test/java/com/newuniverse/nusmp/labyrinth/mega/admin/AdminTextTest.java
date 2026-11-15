@@ -30,7 +30,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class AdminTextTest {
     private static final Path FRAGMENT = Path.of("tools", "lang", "dungeon_admin.json");
     private static final Path MAIN = Path.of("src", "main", "resources", "assets", "anime_multiverse", "lang", "en_us.json");
-    private static final Path SOURCES = Path.of("src", "main", "java", "com", "newuniverse", "anime_multiverse", "labyrinth", "mega", "admin");
+    private static final Path SOURCES = Path.of("src", "main", "java", "com", "newuniverse", "nusmp", "labyrinth", "mega", "admin");
     private static final Pattern PLACEHOLDER = Pattern.compile("%(\\d+)\\$s");
 
     private static JsonObject read(Path p) throws IOException { return JsonParser.parseString(Files.readString(p, StandardCharsets.UTF_8)).getAsJsonObject(); }

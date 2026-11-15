@@ -11,7 +11,7 @@ Nothing was run in Minecraft. See "Unverified in the game".
 |---|---|---|
 | Every number of the balance table below | **Replacement** of the defaults of 1.45.0 | The 1.42.0 final-arc fight is untouched (`luciusGodTier = false`); the god tier's old numbers can be had back by config where a config key exists (`luciusTrueDamageScale = 2`, `luciusAuraRadius = 20`, `luciusStarvationPctPerSec = 1`, `luciusStarvationPulsePct = 5`, `luciusMirrorPct = 6`, `luciusDifficulty = 1.5`); the rest are constants of the pure classes |
 | `luciusDifficulty`, `ArenaScaling`, `LuciusBalance` | **New** | - |
-| The dimension `nusmp:zogratis_arena`, its builder, the director | **New** | Nothing like it existed (the Labyrinth and the Living Dungeon are other places and are untouched) |
+| The dimension `anime_multiverse:zogratis_arena`, its builder, the director | **New** | Nothing like it existed (the Labyrinth and the Living Dungeon are other places and are untouched) |
 | The Hourglass of the Final Hour, the Return Sigil, `/zogratis_arena` | **New** | - |
 | The spawn gate (`luciusArenaOnly`) | **New** | `luciusArenaOnly = false` gives the old free spawning back; a Lucius already in a world (loaded from disk) is never removed |
 | `DungeonGuard.on` | **Extended** with one line for the arena | The Labyrinth and the Dungeon are held exactly as before |
@@ -71,7 +71,7 @@ moved constants. No fairness test was weakened (the telegraph minimum is still 1
 
 ### The dimension
 
-`data/nusmp/dimension/zogratis_arena.json` (a flat void, biome `minecraft:the_void`, no features, no structures) and `data/nusmp/dimension_type/zogratis_arena.json`
+`data/anime_multiverse/dimension/zogratis_arena.json` (a flat void, biome `minecraft:the_void`, no features, no structures) and `data/anime_multiverse/dimension_type/zogratis_arena.json`
 (no natural spawning: `monster_spawn_light_level 0`; fixed time 13000, dusk; `effects: minecraft:the_end`, which gives the black-purple void sky and the full-bright lightmap;
 no beds, no respawn anchors, no raids). The courtyard is **built in code the first time somebody arrives** (`ArenaBuilder`, from the formula of `ArenaLayout`, inside
 `DungeonGuard.internal`), and remembered in `ArenaSave` (`built`). `/zogratis_arena repair` puts back anything missing.
@@ -91,7 +91,7 @@ No natural spawning (`FinalizeSpawnEvent`). A player who falls below the courtya
 
 ### The Hourglass of the Final Hour (`zogratis_hourglass`)
 
-Epic, stack 1, craftable (`data/nusmp/recipe/zogratis_hourglass.json`: gold ingots, a nether star, amethyst shards, a clock, diamonds, an ender pearl) and in the creative tab.
+Epic, stack 1, craftable (`data/anime_multiverse/recipe/zogratis_hourglass.json`: gold ingots, a nether star, amethyst shards, a clock, diamonds, an ender pearl) and in the creative tab.
 Real 3D in hand (`tools/gen_weapon_models.py`, `zogratis_hourglass`, drawn by `WeaponRenderer`; preview `python tools/item_preview/preview_weapons.py zogratis_hourglass`),
 the old sprite (`tools/gen_zogratis_arena_assets.py`) as the inventory icon, a glowing sand and a violet crown gem. **Not a weapon, so no engravings** (rule 6 is about weapons).
 
@@ -141,5 +141,5 @@ Everything was type-checked against API stubs (with a negative control) and its 
 4. The `minecraft:the_end` sky and full-bright lightmap in a dimension with a fixed time of dusk; whether weather particles show (the void biome has no precipitation).
 5. `PlayerInteractEvent.RightClickBlock#setUseItem(FALSE)` stopping a block or a bucket from placing while the block under the cursor (the sigil) still opens.
 6. The use animation and the 200-tick duration on the server against the 60-tick animation on the client (the client cannot know that he is fighting).
-7. The arena player count at the start of the fight (`LuciusGod.arenaPlayers`: survival players within 60 blocks of the dais), the max-health modifier `nusmp:arena_scale`, and that removing it at the end of an abandoned fight clamps his health.
+7. The arena player count at the start of the fight (`LuciusGod.arenaPlayers`: survival players within 60 blocks of the dais), the max-health modifier `anime_multiverse:arena_scale`, and that removing it at the end of an abandoned fight clamps his health.
 8. The 3D model's scale and pose in hand (previewed with the headless rasteriser only).

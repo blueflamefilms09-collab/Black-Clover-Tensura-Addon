@@ -12,18 +12,18 @@ fail. Nothing in this feature is Java, and nothing is registered.
 ## How it works
 
 1. `tools/bettercombat/inventory.py` builds the list of melee weapons **from the sources**, so the list cannot rot:
-   - the `weapons` table of `assets/nusmp/weapon_classes.json` (and the `tools/relics` copy must agree),
+   - the `weapons` table of `assets/anime_multiverse/weapon_classes.json` (and the `tools/relics` copy must agree),
    - `NUItems` (`weapon(...)`, `MagicToolSword`, `DemonSlayerSwordItem`, `OtherworldTridentItem`),
    - every `RelicDef.of(...)` block that calls `.melee(...)`, and the `<id>_left` half of every `.pair(...)`,
    - the 24 Djinn weapons (`djinn_weapon_<name>` and `_dark`, kind from `DjinnWeaponRules`).
    It writes `tools/bettercombat/manifest.json`: id -> weapon class -> chosen profile, plus the excluded ids and why.
 2. `tools/bettercombat/profiles.py` holds the per-class numbers (parent, `range_bonus`, `two_handed`, combo) and the hand-written profiles.
-3. `tools/bettercombat/gen_attributes.py` writes `data/nusmp/weapon_attributes/<id>.json` for every manifest weapon. Deterministic, idempotent.
+3. `tools/bettercombat/gen_attributes.py` writes `data/anime_multiverse/weapon_attributes/<id>.json` for every manifest weapon. Deterministic, idempotent.
    `--check` exits 1 when a weapon has no file or a file differs; `--list` prints the weapons per class.
-4. `tools/bettercombat/gen_animations.py` writes `assets/nusmp/player_animations/<name>.json` from small keyframe tables (angles in degrees in the
+4. `tools/bettercombat/gen_animations.py` writes `assets/anime_multiverse/player_animations/<name>.json` from small keyframe tables (angles in degrees in the
    table, radians in the file). `--check` and `--list` as above.
 5. `WeaponAttributesTest` (JUnit, pure, hand-made JSON reader) runs in Gradle: every melee weapon (manifest, class table, relic defs) has a file; every
-   file parses, `parent` starts with `bettercombat:`, `range_bonus` is within -1..3, attack numbers are sane; every `nusmp:<x>` animation has its file;
+   file parses, `parent` starts with `bettercombat:`, `range_bonus` is within -1..3, attack numbers are sane; every `anime_multiverse:<x>` animation has its file;
    every animation has strictly ascending ticks and `beginTick <= endTick <= stopTick`.
 
 ### Adding a weapon (the "per-game fix for new ones")
@@ -41,7 +41,7 @@ and commit them. Give the weapon a class in `weapon_classes.json` first (that is
 
 ## Schema subset used (from memory, not loadable here)
 
-Weapon file (`data/nusmp/weapon_attributes/<id>.json`):
+Weapon file (`data/anime_multiverse/weapon_attributes/<id>.json`):
 
 ```json
 { "parent": "bettercombat:claymore",
@@ -49,7 +49,7 @@ Weapon file (`data/nusmp/weapon_attributes/<id>.json`):
     "range_bonus": 1.0,
     "two_handed": true,
     "attacks": [ { "hitbox": "HORIZONTAL_PLANE", "damage_multiplier": 1.0, "angle": 160, "upswing": 0.55,
-                   "animation": "nusmp:greatsword_sweep" } ] } }
+                   "animation": "anime_multiverse:greatsword_sweep" } ] } }
 ```
 
 - `parent`: only Better Combat's built-in names are used (sword, claymore, dagger, rapier, katana, axe, double_axe, mace, hammer, scythe, spear,
@@ -61,7 +61,7 @@ Weapon file (`data/nusmp/weapon_attributes/<id>.json`):
   Better Combat dual wields two one-handed weapons by itself, the twin pairs only need a combo that looks right in either hand.
 - Extra keys are not used. The existing 12 files keep their `parent` and `range_bonus` exactly (rule: keep the old, add the new).
 
-Animation file (`assets/nusmp/player_animations/<name>.json`, the Player Animator "emote" JSON that Better Combat 1.21 loads from `player_animations`):
+Animation file (`assets/anime_multiverse/player_animations/<name>.json`, the Player Animator "emote" JSON that Better Combat 1.21 loads from `player_animations`):
 
 ```json
 { "format_version": "1.0.0", "name": "x", "author": "Multiverse of Anime",
@@ -80,7 +80,7 @@ Each animation is a standalone file: if one fails to parse Better Combat logs it
 `range_bonus` follows the in-hand size; `two` is `two_handed`. "parent's combo" = no `attacks` written, the parent's animations are kept.
 The count is the number of weapons of the class in the manifest (116 in all; Djinn weapons count under their kind's class).
 
-| class | weapons | parent | range_bonus | two | combo (animation names are `nusmp:`) |
+| class | weapons | parent | range_bonus | two | combo (animation names are `anime_multiverse:`) |
 |---|---|---|---|---|---|
 | dagger | 7 | dagger | -0.25 | no | rapier_lunge(x0.8) > rapier_lunge(x0.8) > katana_rise(x1.1) |
 | shortsword | 14 | sword | 0.00 | no | parent's combo |
@@ -201,13 +201,13 @@ presets" to "Every melee weapon of the mod ships a profile and custom animations
 
 ## 1.46.0: Better Combat's own animations only
 
-Owner request: "fix the weapon animations for better combat, don't add custom ones". Since 1.39.0 the attacks pointed at our own `nusmp:*`
+Owner request: "fix the weapon animations for better combat, don't add custom ones". Since 1.39.0 the attacks pointed at our own `anime_multiverse:*`
 animations; the owner still saw wrong animations. This release removes every reference to them.
 
 ### Why the animations were wrong (root causes, checked against the Better Combat 2.4.0 source)
 
 1. **Our own animation files were the problem, not the plumbing.** Better Combat plays whatever `attacks[].animation` names. 1.39.0 named 10 hand-keyed
-   animations (`nusmp:greatsword_sweep`, ...) whose bone angles and signs were never seen in game (the docs said so: "the most likely thing to need a flip").
+   animations (`anime_multiverse:greatsword_sweep`, ...) whose bone angles and signs were never seen in game (the docs said so: "the most likely thing to need a flip").
    The built-in animations are authored and tuned together with the built-in presets' `upswing` and `angle`.
 2. **Our `attacks` lists replaced the parent's combo.** In `WeaponAttributesHelper.override`, a child `attacks` list is merged index by index with the
    parent's and its length wins, so a 3-attack greatsword combo laid our `angle`/`upswing`/`damage_multiplier` over the claymore's, and swapped the
@@ -220,18 +220,18 @@ animations; the owner still saw wrong animations. This release removes every ref
 5. **`pike` was in our parent list and does not exist** in Better Combat. No file used it, but the list now comes from the source
    (`builtin_animations.json`), not from memory.
 
-Not causes: namespaces (`bettercombat:<preset>` parents and `bettercombat:<animation>` ids are right), file location (`data/nusmp/weapon_attributes/<id>.json`
+Not causes: namespaces (`bettercombat:<preset>` parents and `bettercombat:<animation>` ids are right), file location (`data/anime_multiverse/weapon_attributes/<id>.json`
 is what Better Combat scans), and the item classes (see "Java" below).
 
 ### What changed (REPLACEMENT)
 
-- Every `data/nusmp/weapon_attributes/*.json` (153 files; 83 changed) is now `{ "parent": "bettercombat:<preset>", "attributes": { "range_bonus": r, "two_handed"?: true } }`.
-  **No `attacks`**, so combo, animations, hitboxes, sounds and poses are exactly the preset's. No `nusmp:` id appears anywhere.
+- Every `data/anime_multiverse/weapon_attributes/*.json` (153 files; 83 changed) is now `{ "parent": "bettercombat:<preset>", "attributes": { "range_bonus": r, "two_handed"?: true } }`.
+  **No `attacks`**, so combo, animations, hitboxes, sounds and poses are exactly the preset's. No `anime_multiverse:` id appears anywhere.
 - `tools/bettercombat/profiles.py`: new `CLASS_PROFILES` / `SPECIAL_PROFILES` (built-in presets only). The 1.39.0 tables are kept as
   `CUSTOM_CLASS_PROFILES` / `CUSTOM_SPECIAL_PROFILES`, and `python tools/bettercombat/gen_attributes.py --custom` still writes the 1.39.0 files
   (kept per the never-delete rule; not the default, not used by the game).
 - `tools/bettercombat/gen_attributes.py`: default mode as above, writes the 0.01 workaround, validates parents and animation ids against the source list.
-- `WeaponAttributesTest`: parents must be built-in presets, `animation` ids must be built-in, no file may contain `nusmp:`, the built-in list is sanity-checked;
+- `WeaponAttributesTest`: parents must be built-in presets, `animation` ids must be built-in, no file may contain `anime_multiverse:`, the built-in list is sanity-checked;
   the "every weapon has a file", manifest and animation-file tests are kept.
 
 ### NEW
@@ -242,7 +242,7 @@ is what Better Combat scans), and the item classes (see "Java" below).
 
 ### KEPT, unreferenced
 
-`src/main/resources/assets/nusmp/player_animations/*.json` and `tools/bettercombat/gen_animations.py` stay in the repo (nobody deleted them), but no
+`src/main/resources/assets/anime_multiverse/player_animations/*.json` and `tools/bettercombat/gen_animations.py` stay in the repo (nobody deleted them), but no
 weapon_attributes file points at them, so Better Combat never plays them. No new custom animation was added.
 
 ### Class -> built-in preset (1.46.0)

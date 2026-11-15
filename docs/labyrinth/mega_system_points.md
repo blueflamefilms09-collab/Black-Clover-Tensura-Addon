@@ -15,14 +15,14 @@ Nothing here has been run in the game (section 9 lists exactly what was and was 
 | Where a quest's stat reward goes: into the free pool in mode `choose` (`RewardRoller.rollChoose`, `RewardRoller.Kind.FREE`) | NEW; the old behaviour (the roller picks the stat) is KEPT as `pointMode = random` |
 | The Shadow Core reward and the 70 / 30 dice between a stat reward and a core, `stat give`, `stat` attribute modifiers, the Hub window | KEPT unchanged |
 | Command `/multiverse mega system free give|take <player> <n>` and a `Free stat points` line in `status` | NEW |
-| Stat screen (`SystemStatsScreen`, `StatScreenLayout`, `ClientPoints`), key `key.nusmp.system_points` (I) | NEW |
+| Stat screen (`SystemStatsScreen`, `StatScreenLayout`, `ClientPoints`), key `key.anime_multiverse.system_points` (I) | NEW |
 | Badge of waiting points in the window's header (`OverlayLayout.badge`) | NEW |
 | Edit screen (`SystemEditScreen`, `OverlayDrag`): drag, corner handles, wheel, nine anchors, reset, done | NEW |
 | Client config `centerX`, `centerY`; `scale` range 0.5 to 2.5 | NEW keys; the range of the existing `scale` is WIDENED (it was 0.5 to 2.0) |
 | Self-test `system.points`; `system.quest` and `system.cover` now accept a reward in the free pool | NEW; the two older tests are adjusted, not weakened |
 | The keys that moved the window (`system_left`, `_right`, `_up`, `_down`, `_reset`, `_corner`: arrows, Home, End), `SystemEditMode`, `KeyRepeat` | REMOVED on the owner's later order (section 5) |
 | The key edit mode with its pulsing frame and hint box on the HUD | REPLACED by the edit screen; the pure `OverlayLayout.edit` and its test are kept as library code |
-| The edit key `key.nusmp.system_edit` (U) | KEPT, the only key left for the window: it now toggles the edit screen |
+| The edit key `key.anime_multiverse.system_edit` (U) | KEPT, the only key left for the window: it now toggles the edit screen |
 | Config keys `anchor`, `offsetX`, `offsetY`, `scale` and their meaning | KEPT, so every saved layout loads |
 
 ## 2. Stat points you choose
@@ -78,7 +78,7 @@ pool, the mode and the respec switch.
 
 ## 3. The stat screen (`SystemStatsScreen`)
 
-Opened by `key.nusmp.system_points` (default **I**, category "Multiverse: System"; U, Y are the other two keys; O was taken by the Curse embrace key) or by the MOVE WINDOW
+Opened by `key.anime_multiverse.system_points` (default **I**, category "Multiverse: System"; U, Y are the other two keys; O was taken by the Curse embrace key) or by the MOVE WINDOW
 button of the edit screen. It does NOT open by clicking the HUD window: the window is not drawn while a screen is open and the cursor is captured the rest of the time, so
 there is nothing to click (the pattern the brief calls optional does not fit).
 
@@ -120,7 +120,7 @@ are in the window's own pixels, so a resize that keeps a point of the window fix
 
 ## 5. What was removed (the owner's later order) and why nothing else was
 
-"remove the key moving for the system only keep the toggle to turn on or off to move it." Removed: the key mappings `key.nusmp.system_left`, `_right`, `_up`, `_down`
+"remove the key moving for the system only keep the toggle to turn on or off to move it." Removed: the key mappings `key.anime_multiverse.system_left`, `_right`, `_up`, `_down`
 (arrows), `_reset` (Home) and `_corner` (End) from `SystemClient` and their English texts from `SystemText`; the class `SystemEditMode` (the HUD edit mode: nudging, reset,
 corner cycling, the drag over the chat and inventory); the class `KeyRepeat` and its test; the in-game hint that told players about the arrow keys (the one-time entry
 message now uses `PointsText.MSG_WINDOW_HINT_MOUSE`; the old `SystemText.MSG_WINDOW_HINT` is kept, unused, because a test pins it and the lang file has it).
@@ -131,8 +131,8 @@ in `en_us.json` (not edited; harmless).
 ## 6. Lang
 
 All new texts are in `PointsText` (the English the code falls back on, read through `SystemText.english`) and, identically, in `tools/system/lang_points.json` (flat key to
-text; `PointsTextTest` pins that the two say the same thing, key for key). `assets/nusmp/lang/en_us.json` is not edited. Code uses `Component.translatableWithFallback`.
-The key name `key.nusmp.system_points` is in the same fragment.
+text; `PointsTextTest` pins that the two say the same thing, key for key). `assets/anime_multiverse/lang/en_us.json` is not edited. Code uses `Component.translatableWithFallback`.
+The key name `key.anime_multiverse.system_points` is in the same fragment.
 
 ## 7. Files
 

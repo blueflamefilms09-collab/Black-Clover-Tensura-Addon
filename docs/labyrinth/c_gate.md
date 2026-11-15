@@ -7,20 +7,20 @@ dungeon players reach, while not one line, block, mob or dimension of the legacy
 
 ---------------------------------------------------------------------------------------------------------------------------
 
-## 1. Why a NEW dimension `nusmp:labyrinth`, not a new generator for `nusmp:living_dungeon`
+## 1. Why a NEW dimension `anime_multiverse:labyrinth`, not a new generator for `anime_multiverse:living_dungeon`
 
 * **An existing world keeps its generators.** When a world is created, every dimension's `generator` (noise settings, biome
   source, structure sets) is written into `level.dat` (`WorldGenSettings`). A later edit of
-  `data/nusmp/dimension/living_dungeon.json` in the mod jar changes nothing for that world: the save loads the generator it was
+  `data/anime_multiverse/dimension/living_dungeon.json` in the mod jar changes nothing for that world: the save loads the generator it was
   born with. Editing the old dimension would therefore split the player base into "old worlds: caves", "new worlds: spire" under
   one id, with one set of blocks and one guard trying to serve both. A dimension that did not exist when the world was created
-  is added on load from the datapack (`nusmp:labyrinth` is a datapack dimension, so an old world gains it the first time the
+  is added on load from the datapack (`anime_multiverse:labyrinth` is a datapack dimension, so an old world gains it the first time the
   1.35.0 jar starts), with its own generator. So: old worlds keep their caves AND gain the Spire.
 * **A flat void generator is the only one that gives Jigsaw total control.** `minecraft:flat` with `layers: []` places no
-  terrain at all; `structure_overrides: ["nusmp:labyrinth_spires"]` is the flat generator's own list of structure sets, so the
+  terrain at all; `structure_overrides: ["anime_multiverse:labyrinth_spires"]` is the flat generator's own list of structure sets, so the
   Spire is the only thing the chunk generator ever puts there. A noise generator would carve caves, place ores and run every
   feature of the biome through the Spire's rooms; a `features: false, lakes: false` flat world cannot.
-* **Save compatibility.** `nusmp:living_dungeon`, its blocks (`dungeon_maw`, `dungeon_gate`, `maw_root`, ...), its mobs, its
+* **Save compatibility.** `anime_multiverse:living_dungeon`, its blocks (`dungeon_maw`, `dungeon_gate`, `maw_root`, ...), its mobs, its
   attachments and its config stay registered exactly as before, so an old world's chunks, chests and persistent player NBT load
   without a missing-registry warning. New enum entries are only appended.
 * **`labyrinth.engine` decides where the doors lead.** `nusmp-labyrinth-server.toml`, `[labyrinth] engine = "labyrinth"`
@@ -30,7 +30,7 @@ dungeon players reach, while not one line, block, mob or dimension of the legacy
 ## 2. Why the legacy generation is "disabled" by routing, not by deletion
 
 Rule 2 says never delete. The legacy dimension still generates its caves if someone goes there (an admin's `/execute in
-nusmp:living_dungeon run tp`), its Maws still open in the Overworld when magic is overspent (that system is untouched), but a
+anime_multiverse:living_dungeon run tp`), its Maws still open in the Overworld when magic is overspent (that system is untouched), but a
 player who walks into a Maw is handed to `LabyrinthTravel.enterFromMaw` when the engine is the Labyrinth. The legacy code path
 is the `else` branch of the same `if`, byte for byte what it was. Nothing is lost for a server that prefers the caves, and the
 Maw economy (credit, closing, roots) keeps working for both.
@@ -39,8 +39,8 @@ Maw economy (credit, closing, roots) keeps working for both.
 
 | id | what | where it stands |
 |---|---|---|
-| `nusmp:labyrinth_gate` | the floating gate in the Overworld arch (A1's `nusmp:dungeon_gate` structure); walk into it | the arch template |
-| `nusmp:labyrinth_exit` | the golden-white gate back; walk into it | the Spire's base piece, three blocks east of the arrival pad centre |
+| `anime_multiverse:labyrinth_gate` | the floating gate in the Overworld arch (A1's `anime_multiverse:dungeon_gate` structure); walk into it | the arch template |
+| `anime_multiverse:labyrinth_exit` | the golden-white gate back; walk into it | the Spire's base piece, three blocks east of the arrival pad centre |
 
 * **Why bedrock-hard.** `strength(-1.0F, 3600000.0F)`: a destroy time of -1 is the game's "indestructible" (`Block.INDESTRUCTIBLE`):
   survival mining never starts the crack, pickaxes of any tier do nothing; 3,600,000 explosion resistance is bedrock's own, so
@@ -63,7 +63,7 @@ Maw economy (credit, closing, roots) keeps working for both.
   the portal hum once in a hundred ticks; the exit gate's motes rise (`REVERSE_PORTAL`) and it chimes.
 
 ### Assets (`tools/gen_labyrinth_gate_textures.py`, `--check` verifies them)
-* `assets/nusmp/textures/block/labyrinth_gate.png` and `labyrinth_exit.png` (16 x 128, RGBA): eight 16x16 frames of a three-armed
+* `assets/anime_multiverse/textures/block/labyrinth_gate.png` and `labyrinth_exit.png` (16 x 128, RGBA): eight 16x16 frames of a three-armed
   swirl that turns by exactly one arm per loop (the arm phase is `2*pi*f/8`, so frame 8 = frame 0 and the animation never
   jumps), opaque in the eye, translucent toward the rim (alpha down to 90) so the gate reads as a film of light in the arch, not
   a solid cube. Gate: navy core, violet arms; exit: cream core, gold arms. Six seeded sparks pulse once per loop. Only Pillow.
@@ -104,7 +104,7 @@ Maw economy (credit, closing, roots) keeps working for both.
 
 ## 5. Why the guard holds the whole dimension (`dungeon/DungeonGuard.java`, additive)
 
-`DungeonGuard.on(level)` is also true in `nusmp:labyrinth` while `labyrinth.unbreakable` is on (and `predictsClient` likewise, with
+`DungeonGuard.on(level)` is also true in `anime_multiverse:labyrinth` while `labyrinth.unbreakable` is on (and `predictsClient` likewise, with
 the same try/catch for a client that has not received the synced config). The guard's mixins then refuse every `setBlock` to
 air/fluid/fire and every `removeBlock`/`destroyBlock` in the dimension, plus explosions, pistons, mob griefing and tool actions.
 Why the WHOLE dimension and not just the doors: the Labyrinth is strict progression (Shadow Key -> Boss Peak -> Vault). A player
@@ -134,7 +134,7 @@ is the ordinary one (bed or world spawn) and nothing later "returns" a player wh
 
 ## 8. The sky (`client/labyrinth/gate/GateClient.java`)
 
-The dimension type names `effects: "nusmp:labyrinth"`; `RegisterDimensionSpecialEffectsEvent` (mod bus, the NeoForge hook
+The dimension type names `effects: "anime_multiverse:labyrinth"`; `RegisterDimensionSpecialEffectsEvent` (mod bus, the NeoForge hook
 `client/dungeon/DungeonSky` uses) registers a `DimensionSpecialEffects` under that id. Choices: `SkyType.NORMAL` keeps sun, moon,
 stars and the sunrise band (the Spire is meant to be seen against a sky); **cloud height 24**, UNDER the Spire's base at y = 40,
 so the clouds are a sea beneath the island, not a ceiling through the lower tiers; `hasGround = false` because the dark disc the
@@ -147,7 +147,7 @@ is dark violet, never black; `isFoggyAt` false so the crown is visible from the 
 
 Drop the zip into `world/datapacks/` (or `/datapack enable`). It switches the vanilla dungeons off so the Labyrinth is the only one:
 * `pack.mcmeta`: `pack_format: 48`, the data pack format of 1.21.1 (the number the game checks before it loads the pack).
-* `data/nusmp/neoforge/biome_modifier/remove_vanilla_dungeons.json`: type `neoforge:remove_features`, biomes `#minecraft:is_overworld`,
+* `data/anime_multiverse/neoforge/biome_modifier/remove_vanilla_dungeons.json`: type `neoforge:remove_features`, biomes `#minecraft:is_overworld`,
   features `minecraft:monster_room` and `minecraft:monster_room_deep` (the two placed features of the spawner dungeons), step
   `underground_structures` (the decoration step they are placed in; naming it keeps the removal from scanning the other nine steps).
   **Why a biome modifier:** monster rooms are FEATURES of the biome, not structures; vanilla gives no way to subtract a feature
@@ -185,8 +185,8 @@ on a bad value instead of throwing). `LabyrinthConfig.get(v)` answers the defaul
   items of every Labyrinth registry go on `NUItems.ITEMS`).
 * `modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.labyrinth.LabyrinthConfig.SPEC, "nusmp-labyrinth-server.toml");`
 * Client section: `com.newuniverse.nusmp.client.labyrinth.LabyrinthClient.init(modEventBus);`
-* Creative tab: `nusmp:labyrinth_gate`, `nusmp:labyrinth_exit`. Lang: `block.nusmp.labyrinth_gate` "Labyrinth Gate",
-  `block.nusmp.labyrinth_exit` "Labyrinth Exit Gate".
+* Creative tab: `anime_multiverse:labyrinth_gate`, `anime_multiverse:labyrinth_exit`. Lang: `block.anime_multiverse.labyrinth_gate` "Labyrinth Gate",
+  `block.anime_multiverse.labyrinth_exit` "Labyrinth Exit Gate".
 
 ## 11a. The pure rules and their test (`labyrinth/gate/GateRules.java`, `src/test/.../labyrinth/gate/GateRulesTest.java`)
 

@@ -10,13 +10,13 @@ Not touched: the Genesis Demon-Slayer (see "Cut" below), the worn Genesis items 
 
 ## What was built
 
-* **Meshes** `assets/nusmp/weapon_meshes_vu/<mesh id>.txt` and `<mesh id>_lod.txt` (the old `weapon_meshes/<id>.txt` stay untouched): a superset of the game's mesh dialect with five layers
+* **Meshes** `assets/anime_multiverse/weapon_meshes_vu/<mesh id>.txt` and `<mesh id>_lod.txt` (the old `weapon_meshes/<id>.txt` stay untouched): a superset of the game's mesh dialect with five layers
   (0 body, 1 void, 2 core glow, 3 energy veins, 4 halo cards), `g <group>` animation groups and `fl` flares. Same unit frame and the same `place` line as the old mesh (checked by
   `VuAssetsTest`), so every display transform, the oversize rule, the bow display and the two-hand poses fit unchanged.
 * **Skins** `textures/entity/weapon_vu/<id>.png` (2048 px, hand-authored look from maths: hammered / brushed / glassy materials, enamel inlays, engraved lore text and runes, caustics, wear),
   `<id>_glow.png` and `<id>_veins.png` (emissive maps at half size), `<id>_lod.png` for the LOD mesh and one shared `halo.png` (16 additive sprites).
-* **Effect data** `assets/nusmp/visual_upgrade/<id>.json`: the animation groups (spin, bob, sway, pulse, breathe, flicker with pivots), the ambient effect layers, the idle animations,
-  the draw animation, the swing trail and a signature burst for every act, and the looped sound id (a string only: `nusmp:item.genesis.<item>.<loop>`; the audio files are another task).
+* **Effect data** `assets/anime_multiverse/visual_upgrade/<id>.json`: the animation groups (spin, bob, sway, pulse, breathe, flicker with pivots), the ambient effect layers, the idle animations,
+  the draw animation, the swing trail and a signature burst for every act, and the looped sound id (a string only: `anime_multiverse:item.genesis.<item>.<loop>`; the audio files are another task).
 * **Renderer** `client/relics/item/vu/VuRenderer` (called once from `WeaponRenderer.renderByItem`): body, void, core glow, a vein wave flowing along the weapon, halo cards with their own
   tint and breathing alpha, camera-facing flares; groups posed by the pure `visual/genesis/VuPose`; a draw animation when a weapon first appears; LOD by distance; every matrix and
   vector is a scratch object. `client/relics/item/vu/VuFx` is the client tick: ambient particles, the swing trail and the signature burst of an act (from the cooldown packet).
@@ -27,19 +27,19 @@ Not touched: the Genesis Demon-Slayer (see "Cut" below), the worn Genesis items 
 ### Passes and effect layers per weapon
 | Weapon | emissive passes (before -> after) | ambient layers | idle animations | draw | swing trail | signature on acts / acts | looped sound id |
 |---|---|---|---|---|---|---|---|
-| Astralis - The Eye of the Universe | 2 -> 4 | 2 -> 10 | 1 -> 9 | yes | yes | 2 / 2 | `nusmp:item.genesis.astralis.hum_loop` |
-| Blackrazor | 3 -> 5 | 2 -> 8 | 1 -> 7 | yes | yes | 3 / 3 | `nusmp:item.genesis.blackrazor.hunger_loop` |
-| Cardinal Halo Chakram | 2 -> 4 | 2 -> 8 | 1 -> 7 | yes | yes | 3 / 3 | `nusmp:item.genesis.cardinal_halo.ring_loop` |
-| Fairy Glitter Gauntlets | 2 -> 4 | 2 -> 9 | 1 -> 8 | yes | yes | 3 / 3 | `nusmp:item.genesis.fairy_glitter.shimmer_loop` |
-| Gae Bolg, Heart-Seeker | 2 -> 4 | 2 -> 9 | 1 -> 8 | yes | yes | 3 / 3 | `nusmp:item.genesis.gae_bolg.heartbeat_loop` |
-| Magic Emperor's Black Halberd | 3 -> 5 | 2 -> 8 | 1 -> 7 | yes | yes | 3 / 3 | `nusmp:item.genesis.black_halberd.void_hum_loop` |
-| Primordial Hearth Blade | 2 -> 4 | 2 -> 9 | 1 -> 8 | yes | yes | 3 / 3 | `nusmp:item.genesis.hearth_blade.fire_loop` |
-| Starforged Aeon Bow | 2 -> 4 | 2 -> 8 | 1 -> 8 | yes | yes | 3 / 3 | `nusmp:item.genesis.aeon_bow.starsong_loop` |
-| Starsplitter Hammer | 3 -> 5 | 2 -> 10 | 1 -> 8 | yes | yes | 3 / 3 | `nusmp:item.genesis.starsplitter.night_loop` |
-| Sword of the First Dawn | 2 -> 4 | 2 -> 9 | 1 -> 8 | yes | yes | 3 / 3 | `nusmp:item.genesis.first_dawn.choir_loop` |
-| Void Origin Katana | 3 -> 5 | 2 -> 9 | 1 -> 8 | yes | yes | 3 / 3 | `nusmp:item.genesis.void_origin.absence_loop` |
-| Nekrathul's Pact Scythe | 3 -> 5 | 2 -> 10 | 1 -> 8 | yes | yes | 2 / 2 | `nusmp:item.genesis.pact_scythe.whisper_loop` |
-| Elsdocia | 3 -> 4 | 3 -> 8 | 1 -> 7 | yes | yes | 2 / 2 | `nusmp:item.genesis.elsdocia.crystal_hum_loop` |
+| Astralis - The Eye of the Universe | 2 -> 4 | 2 -> 10 | 1 -> 9 | yes | yes | 2 / 2 | `anime_multiverse:item.genesis.astralis.hum_loop` |
+| Blackrazor | 3 -> 5 | 2 -> 8 | 1 -> 7 | yes | yes | 3 / 3 | `anime_multiverse:item.genesis.blackrazor.hunger_loop` |
+| Cardinal Halo Chakram | 2 -> 4 | 2 -> 8 | 1 -> 7 | yes | yes | 3 / 3 | `anime_multiverse:item.genesis.cardinal_halo.ring_loop` |
+| Fairy Glitter Gauntlets | 2 -> 4 | 2 -> 9 | 1 -> 8 | yes | yes | 3 / 3 | `anime_multiverse:item.genesis.fairy_glitter.shimmer_loop` |
+| Gae Bolg, Heart-Seeker | 2 -> 4 | 2 -> 9 | 1 -> 8 | yes | yes | 3 / 3 | `anime_multiverse:item.genesis.gae_bolg.heartbeat_loop` |
+| Magic Emperor's Black Halberd | 3 -> 5 | 2 -> 8 | 1 -> 7 | yes | yes | 3 / 3 | `anime_multiverse:item.genesis.black_halberd.void_hum_loop` |
+| Primordial Hearth Blade | 2 -> 4 | 2 -> 9 | 1 -> 8 | yes | yes | 3 / 3 | `anime_multiverse:item.genesis.hearth_blade.fire_loop` |
+| Starforged Aeon Bow | 2 -> 4 | 2 -> 8 | 1 -> 8 | yes | yes | 3 / 3 | `anime_multiverse:item.genesis.aeon_bow.starsong_loop` |
+| Starsplitter Hammer | 3 -> 5 | 2 -> 10 | 1 -> 8 | yes | yes | 3 / 3 | `anime_multiverse:item.genesis.starsplitter.night_loop` |
+| Sword of the First Dawn | 2 -> 4 | 2 -> 9 | 1 -> 8 | yes | yes | 3 / 3 | `anime_multiverse:item.genesis.first_dawn.choir_loop` |
+| Void Origin Katana | 3 -> 5 | 2 -> 9 | 1 -> 8 | yes | yes | 3 / 3 | `anime_multiverse:item.genesis.void_origin.absence_loop` |
+| Nekrathul's Pact Scythe | 3 -> 5 | 2 -> 10 | 1 -> 8 | yes | yes | 2 / 2 | `anime_multiverse:item.genesis.pact_scythe.whisper_loop` |
+| Elsdocia | 3 -> 4 | 3 -> 8 | 1 -> 7 | yes | yes | 2 / 2 | `anime_multiverse:item.genesis.elsdocia.crystal_hum_loop` |
 
 Emissive passes after: core glow (additive, pulsing), energy veins (additive, a travelling wave of light along the weapon), halo cards (additive sprites: rings, shafts, arcs, runes), flares
 (camera-facing stars), and the dimensional void shader where the weapon has rifts (Blackrazor, the Black Halberd, the Starsplitter Hammer, the Void Origin Katana, Nekrathul's Scythe).

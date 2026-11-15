@@ -17,7 +17,7 @@ needs the game is type-checked against the API stubs and covered by the in-game 
 | `/multiverse mega ...` admin trees (`floors`, `lock`, `core`, `rift`, `party`, `hub`, `skillbook` ...) | KEPT, untouched (the repair tools; the `/dungeon` tree is the quick tester's handle on the same systems) |
 | `DungeonAdminHooks` with the interfaces `BossHook` and `RiftHook` and their DEFAULTS (the Labyrinth Guardian and the rift block the dungeon has today) | NEW; the Decennial boss facade and the rift facade of the parallel builders replace the defaults with one line each (section 6) |
 | `PlayerDungeonAlignment` attachment, `Waypoint` record in the player's persistent data, `MegaTravel` landing memory, `ExpansionQueue`, `HubTravel`, `LockPolicy`, `RoomGraph` | REUSED as they are |
-| Lang keys `message.nusmp.dungeon.admin.*` in `tools/lang/dungeon_admin.json` | NEW (flat fragment; `en_us.json` not edited) |
+| Lang keys `message.anime_multiverse.dungeon.admin.*` in `tools/lang/dungeon_admin.json` | NEW (flat fragment; `en_us.json` not edited) |
 | Self-test `dungeon.admin` | NEW |
 | `MegaSystem`: one appended line `AdminRegistry.register(bus)` | NEW (the only edit to an existing file) |
 | Replacements | NONE: nothing existed that this tree replaces |
@@ -139,7 +139,7 @@ them as they are:
 
 | Spec word | Where it really is | How the commands touch it |
 |---|---|---|
-| `PlayerDungeonAlignment` | data attachment `nusmp:dungeon_alignment` (`labyrinth.mega.floors.AlignmentAttachments`, value `PlayerDungeonAlignment`) | `reset alignment` -> `AlignmentRules.reset`, `AlignmentNet.send`; `skip` reads `chosen()` |
+| `PlayerDungeonAlignment` | data attachment `anime_multiverse:dungeon_alignment` (`labyrinth.mega.floors.AlignmentAttachments`, value `PlayerDungeonAlignment`) | `reset alignment` -> `AlignmentRules.reset`, `AlignmentNet.send`; `skip` reads `chosen()` |
 | `PlayerDungeonWaypoint` | record `Waypoint` in the player's persistent data, key `nusmp_mega_waypoint` (`labyrinth.mega.rift`) | `tp` writes it, `reset waypoint` and `WaypointService.clear` remove it |
 | Floor / dimension / chunk loading | `MegaTravel`, `ExpansionQueue`, portal ticket | section 3 `tp` |
 

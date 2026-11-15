@@ -40,7 +40,7 @@ box of the selected GUI at the asked and at the shown size inside a miniature wi
 ## Adding a new GUI
 
 Add one line to `GuiScaleRegistry` (screen: class name and design size; HUD: layer path and anchor, or `site` and call `GuiScale.begin` in its drawing),
-and one lang key `nusmp.gui_scale.gui.<id>` (the English name is also the fallback). The config entry, the list row and the preview appear by themselves.
+and one lang key `anime_multiverse.gui_scale.gui.<id>` (the English name is also the fallback). The config entry, the list row and the preview appear by themselves.
 `GuiScaleTest` checks that every listed class and layer exists in the sources.
 
 ## Not covered

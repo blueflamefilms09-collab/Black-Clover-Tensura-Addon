@@ -43,7 +43,7 @@ training"); True Magic as a page (see "True Magic").
   first grimoire that was a free, strong buff.
 * The Wizard King's Crown of Mana called `forceZone` (kept, see below).
 
-## The late-game gate (`mana/zone/ManaZoneGate`, `data/nusmp/mana_zone.json`)
+## The late-game gate (`mana/zone/ManaZoneGate`, `data/anime_multiverse/mana_zone.json`)
 
 Pure and unit tested. All six must hold (the Wizard King is open by right of the crown):
 
@@ -201,7 +201,7 @@ dungeon hook bound and released).
 | | Item |
 |---|---|
 | NEW | `mana/zone/*`: `ManaZoneGate`, `ManaZoneRules`, `ManaZoneMath`, `ManaZoneData`, `ManaZoneManager`, `ManaZoneActions` (Omni Volley, Pressure Space), `TrueMagic` and `TrueMagicRules`, `ManaZonePlayer`, `ManaZoneNet`, `ManaZoneClientGate`, `ManaZoneConfig`, `ManaZoneCommands`, `ManaZoneBoot`, `ManaZoneSelfTests`, `ManaZoneStyle`; `GrandZones`, `GrandZoneRegion`, `GrandZoneMath`, `GrandZoneCommands` |
-| NEW | `data/nusmp/mana_zone.json`, `data/nusmp/grand_magic_zones/*.json` (five zones) |
+| NEW | `data/anime_multiverse/mana_zone.json`, `data/anime_multiverse/grand_magic_zones/*.json` (five zones) |
 | NEW | `client/manazone/ManaZoneClient` (state, perception through walls, scenery, fog and screen tint); `vfx/client/layer/ManaZoneLayer`, `ManaZoneGeometry`; 5 appended `VfxShape` entries; 16 textures and their generator; preview scenes |
 | NEW | pages appended last to every grimoire: Omni Volley, Pressure Space, True Magic; `/multiverse mana zone`, `/multiverse zone list|info|tp|bind|unbind`; config `nusmp-mana-zone-server.toml`; lang fragment `tools/lang/mana_zone.json` |
 | REPLACED | the Mana Zone's mechanics: the 30 to 60 s toggle buff (slow falling, speed, 5% to open, "+20% cheaper, up to +40% stronger") became the late-game technique above; its early availability (the `instant(mode)` rule) is gone; the "Grand Magic Zone" announcement for dense biomes no longer claims a named zone ("The mana here is thick."); `ManaCommands info` says "dense mana" |

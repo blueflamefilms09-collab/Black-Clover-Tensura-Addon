@@ -6,13 +6,13 @@ Owner request: "make it so none of my skill can't be reroll with the basic tensu
 
 ## What it does
 
-- Every skill this mod registers lives in the namespace `nusmp` (grimoire books and pages, Shishou's skills, the five Ultimate skills, the Evolution and Unique skills, ...). A removal of one of them that comes out of Tensura's `ResetScrollItem` is **refused**; the player sees one action-bar line ("The skills of this world cannot be reset by a scroll.", at most one per 40 ticks).
+- Every skill this mod registers lives in the namespace `anime_multiverse` (grimoire books and pages, Shishou's skills, the five Ultimate skills, the Evolution and Unique skills, ...). A removal of one of them that comes out of Tensura's `ResetScrollItem` is **refused**; the player sees one action-bar line ("The skills of this world cannot be reset by a scroll.", at most one per 40 ticks).
 - Tensura's own skills and every other mod's skills are reset exactly as before.
 - **Not blocked** (they never run through the scroll class): this mod's own removals (a grimoire swap, `/multiverse ... take`, revoking Shishou, the Convergence), and the admin command `/tensura reset`.
 
 ## How it works (two layers)
 
-1. **The event.** ManasCore fires a cancellable `SkillEvents.REMOVE_SKILL` for every skill removal. `ResetGuard.onRemove` passes at once unless the owner is a server player and the skill is in namespace `nusmp` and the guard is on; only then does it walk the call stack once (`StackWalker`) looking for a frame of `ResetScrollItem` (or a class nested in it), and cancels the removal with `EventResult.interruptFalse()`. The pure decision is `ResetRules.refuses(guardOn, namespace, fromScroll)` (unit-tested).
+1. **The event.** ManasCore fires a cancellable `SkillEvents.REMOVE_SKILL` for every skill removal. `ResetGuard.onRemove` passes at once unless the owner is a server player and the skill is in namespace `anime_multiverse` and the guard is on; only then does it walk the call stack once (`StackWalker`) looking for a frame of `ResetScrollItem` (or a class nested in it), and cancels the removal with `EventResult.interruptFalse()`. The pure decision is `ResetRules.refuses(guardOn, namespace, fromScroll)` (unit-tested).
 2. **Tensura's list (best effort).** After the server starts, the ids of this mod's skills are added to `ResetScrollItem.NO_RESET`, the list Tensura keeps of skills a scroll leaves alone. If that list is immutable the attempt is logged and layer 1 still holds.
 
 ## Settings

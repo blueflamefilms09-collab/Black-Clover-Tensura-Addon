@@ -5,7 +5,7 @@ Group bc5 is ten looks: Dante, Vanica, Zenon and Lucius Zogratis, and Fana of th
 (`K.sibling`). The private kit is `tools/arc_hd/chars/_bc5.py` (a copy of the bc4 kit plus a thin trim band, a sibling loader, bandage wraps, stubble, jagged cracks, a bevelled plate, a
 spade, a glow eraser; the underscore keeps it out of the generator and the module test). The pipeline is the one of `docs/arc/hd_arc.md`: the 64x64 sheet is the blueprint (layout, colour
 blocking and the second-layer coverage stay), the front of the head and every body island are redrawn at 4x detail, the other faces of the head are repainted clean as skin and scalp.
-The hair sheets stay 64x64 (owner: no HD hair sheets). The old 64x64 skins are REPLACED under the same file names (`src/main/resources/assets/nusmp/textures/entity/playermodel/<look>.png`
+The hair sheets stay 64x64 (owner: no HD hair sheets). The old 64x64 skins are REPLACED under the same file names (`src/main/resources/assets/anime_multiverse/textures/entity/playermodel/<look>.png`
 and `_glow.png`), the generator keeps its 64 mode (`--size 64`).
 
 Preview: `docs/previews/arc_hd/bc5_front_back.png` (front and back of all ten), `docs/previews/arc_hd/bc5_close.png` (the bust of all ten).

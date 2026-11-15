@@ -32,11 +32,11 @@ hurt (0.45 s), death (2.0 s, held), sleep (4.0 s loop).
 | `tools/anime_hound_paint.py` | the cel painter (palette, materials, outlines, glow) used by the generator |
 | `tools/anime_hound_sheets.py` | PIL contact sheets into `docs/mobs/phaseE/` |
 | `tools/render_preview/scenes.d/anime_hound.json` | preview scenes (generated) |
-| `assets/nusmp/geo/entity/anime_hound.geo.json` | LOD0 |
-| `assets/nusmp/geo/entity/anime_hound_lod1.geo.json`, `_lod2.geo.json` | LOD1 / LOD2 (same skeleton, same texture) |
-| `assets/nusmp/geo/entity/anime_hound_fx.geo.json` | glow-only subset (eyes, flames) for a separate fx pass |
-| `assets/nusmp/textures/entity/anime_hound.png`, `anime_hound_glow.png` | base sheet and glow sheet |
-| `assets/nusmp/animations/entity/anime_hound.animation.json` | the clips |
+| `assets/anime_multiverse/geo/entity/anime_hound.geo.json` | LOD0 |
+| `assets/anime_multiverse/geo/entity/anime_hound_lod1.geo.json`, `_lod2.geo.json` | LOD1 / LOD2 (same skeleton, same texture) |
+| `assets/anime_multiverse/geo/entity/anime_hound_fx.geo.json` | glow-only subset (eyes, flames) for a separate fx pass |
+| `assets/anime_multiverse/textures/entity/anime_hound.png`, `anime_hound_glow.png` | base sheet and glow sheet |
+| `assets/anime_multiverse/animations/entity/anime_hound.animation.json` | the clips |
 | `docs/mobs/phaseE/hound_views.png`, `hound_faces.png`, `hound_clips.png`, `hound_lods.png`, `hound_old_vs_new.png` | the contact sheets |
 
 ## Measured numbers

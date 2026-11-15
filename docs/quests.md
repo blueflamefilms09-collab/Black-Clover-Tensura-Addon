@@ -37,25 +37,25 @@ Quest kinds (shape and default reward): `intro` (rounded square, the welcome nod
 
 ## Arc to boss table
 
-Existing bosses award their quest through `boss.defeated` (arg = entity path); a placeholder quest sits on a hidden advancement `nusmp:future/<arc>_<boss>` that nothing awards today. **To make an arc's boss real**: add the boss, then call `NusmpEvents.futureBoss(serverPlayer, "<arc>", "<boss>")` for the killer (and, with Teams credit on, the squad) in the boss' death hook (`BossHooks` style); the quest completes and the hidden advancement appears. Nothing in the pack changes.
+Existing bosses award their quest through `boss.defeated` (arg = entity path); a placeholder quest sits on a hidden advancement `anime_multiverse:future/<arc>_<boss>` that nothing awards today. **To make an arc's boss real**: add the boss, then call `NusmpEvents.futureBoss(serverPlayer, "<arc>", "<boss>")` for the killer (and, with Teams credit on, the squad) in the boss' death hook (`BossHooks` style); the quest completes and the hidden advancement appears. Nothing in the pack changes.
 
 | Arc chapter | Live boss quests (advancement) | Placeholder (advancement id) | Placeholder arguments for `futureBoss` | What to hook when the boss is made |
 | --- | --- | --- | --- | --- |
 | `arc01_hage` 1 Hage Village | none (no boss in this arc) | none | - | no boss in this arc |
 | `arc02_exam` 2 Magic Knights Entrance Exam | none (no boss in this arc) | none | - | no boss in this arc |
-| `arc03_dungeon` 3 The Dungeon Arc | Goliath (`nusmp:bosses/goliath`) | `nusmp:future/dungeon_arc_vetto` | `"dungeon_arc", "vetto"` | death hook of Vetto |
-| `arc04_triad` 4 Dark Triad: Royal Capital | none (no boss in this arc) | `nusmp:future/dark_triad_boss` | `"dark_triad", "boss"` | death hook of the Dark Triad arc's boss |
-| `arc05_eye` 5 Eye of the Midnight Sun | none (no boss in this arc) | `nusmp:future/eye_midnight_boss` | `"eye_midnight", "boss"` | death hook of the Eye of the Midnight Sun arc's boss |
-| `arc06_witches` 6 The Witches' Forest | none (no boss in this arc) | `nusmp:future/witches_forest_boss` | `"witches_forest", "boss"` | death hook of the Witch Queen |
-| `arc07_temple` 7 The Underwater Temple | Spawn of Charybdis (`nusmp:bosses/charybdis_spawn`) | `nusmp:future/underwater_temple_boss` | `"underwater_temple", "boss"` | death hook of the temple's guardian |
-| `arc08_selection` 8 Royal Knights Selection Exam | Floor Warden (`nusmp:bosses/floor_warden`) | `nusmp:future/royal_knights_boss` | `"royal_knights", "boss"` | death hook of the examiner |
-| `arc09_spade_raid` 9 Spade Kingdom Raid | Dante (`nusmp:bosses/dante_zogratis`); Vanica (`nusmp:bosses/vanica_zogratis`); Zenon (`nusmp:bosses/zenon_zogratis`) | none | - | nothing: the arc has all the bosses it needs |
-| `arc10_heart` 10 Heart Kingdom: Elf Reincarnation | Wind Spirit Lord (optional) (`nusmp:bosses/wind_spirit_lord`) | `nusmp:future/heart_elf_boss` | `"heart_elf", "boss"` | death hook of the reincarnated elf |
-| `arc11_diamond` 11 The Diamond Kingdom | none (no boss in this arc) | `nusmp:future/diamond_kingdom_boss` | `"diamond_kingdom", "boss"` | death hook of the Diamond Kingdom's champion |
-| `arc12_final` 12 Spade Kingdom Invasion and the Final Arc | Lucius (`nusmp:bosses/lucius_zogratis`) | none | - | nothing: the arc has all the bosses it needs |
-| `arc13_devil` 13 The Devil Arc | Zagred (`nusmp:bosses/zagred`); Devil Avatar (`nusmp:bosses/devil_avatar`) | `nusmp:future/devil_arc_megicula`; `nusmp:future/devil_arc_lucifero`; `nusmp:future/devil_arc_astaroth` | `"devil_arc", "megicula"`; `"devil_arc", "lucifero"`; `"devil_arc", "astaroth"` | death hook of Megicula; death hook of Lucifero; death hook of Astaroth |
+| `arc03_dungeon` 3 The Dungeon Arc | Goliath (`anime_multiverse:bosses/goliath`) | `anime_multiverse:future/dungeon_arc_vetto` | `"dungeon_arc", "vetto"` | death hook of Vetto |
+| `arc04_triad` 4 Dark Triad: Royal Capital | none (no boss in this arc) | `anime_multiverse:future/dark_triad_boss` | `"dark_triad", "boss"` | death hook of the Dark Triad arc's boss |
+| `arc05_eye` 5 Eye of the Midnight Sun | none (no boss in this arc) | `anime_multiverse:future/eye_midnight_boss` | `"eye_midnight", "boss"` | death hook of the Eye of the Midnight Sun arc's boss |
+| `arc06_witches` 6 The Witches' Forest | none (no boss in this arc) | `anime_multiverse:future/witches_forest_boss` | `"witches_forest", "boss"` | death hook of the Witch Queen |
+| `arc07_temple` 7 The Underwater Temple | Spawn of Charybdis (`anime_multiverse:bosses/charybdis_spawn`) | `anime_multiverse:future/underwater_temple_boss` | `"underwater_temple", "boss"` | death hook of the temple's guardian |
+| `arc08_selection` 8 Royal Knights Selection Exam | Floor Warden (`anime_multiverse:bosses/floor_warden`) | `anime_multiverse:future/royal_knights_boss` | `"royal_knights", "boss"` | death hook of the examiner |
+| `arc09_spade_raid` 9 Spade Kingdom Raid | Dante (`anime_multiverse:bosses/dante_zogratis`); Vanica (`anime_multiverse:bosses/vanica_zogratis`); Zenon (`anime_multiverse:bosses/zenon_zogratis`) | none | - | nothing: the arc has all the bosses it needs |
+| `arc10_heart` 10 Heart Kingdom: Elf Reincarnation | Wind Spirit Lord (optional) (`anime_multiverse:bosses/wind_spirit_lord`) | `anime_multiverse:future/heart_elf_boss` | `"heart_elf", "boss"` | death hook of the reincarnated elf |
+| `arc11_diamond` 11 The Diamond Kingdom | none (no boss in this arc) | `anime_multiverse:future/diamond_kingdom_boss` | `"diamond_kingdom", "boss"` | death hook of the Diamond Kingdom's champion |
+| `arc12_final` 12 Spade Kingdom Invasion and the Final Arc | Lucius (`anime_multiverse:bosses/lucius_zogratis`) | none | - | nothing: the arc has all the bosses it needs |
+| `arc13_devil` 13 The Devil Arc | Zagred (`anime_multiverse:bosses/zagred`); Devil Avatar (`anime_multiverse:bosses/devil_avatar`) | `anime_multiverse:future/devil_arc_megicula`; `anime_multiverse:future/devil_arc_lucifero`; `anime_multiverse:future/devil_arc_astaroth` | `"devil_arc", "megicula"`; `"devil_arc", "lucifero"`; `"devil_arc", "astaroth"` | death hook of Megicula; death hook of Lucifero; death hook of Astaroth |
 
-The same placeholders as a flat list: `nusmp:future/dungeon_arc_vetto`, `nusmp:future/dark_triad_boss`, `nusmp:future/eye_midnight_boss`, `nusmp:future/witches_forest_boss`, `nusmp:future/underwater_temple_boss`, `nusmp:future/royal_knights_boss`, `nusmp:future/heart_elf_boss`, `nusmp:future/diamond_kingdom_boss`, `nusmp:future/devil_arc_megicula`, `nusmp:future/devil_arc_lucifero`, `nusmp:future/devil_arc_astaroth`.
+The same placeholders as a flat list: `anime_multiverse:future/dungeon_arc_vetto`, `anime_multiverse:future/dark_triad_boss`, `anime_multiverse:future/eye_midnight_boss`, `anime_multiverse:future/witches_forest_boss`, `anime_multiverse:future/underwater_temple_boss`, `anime_multiverse:future/royal_knights_boss`, `anime_multiverse:future/heart_elf_boss`, `anime_multiverse:future/diamond_kingdom_boss`, `anime_multiverse:future/devil_arc_megicula`, `anime_multiverse:future/devil_arc_lucifero`, `anime_multiverse:future/devil_arc_astaroth`.
 
 ## Teams: how progress is shared, and how it relates to Squads
 
@@ -66,7 +66,7 @@ The same placeholders as a flat list: `nusmp:future/dungeon_arc_vetto`, `nusmp:f
 
 ## Event keys: the contract with the Java side
 
-The advancement trigger `nusmp:event` takes `key`, optional `count` (>= 1, compared with the per-player counter of the key, or of `key|arg` when `arg` is set) and optional `arg`. The keys the advancement tree uses, with the meaning of `arg` and the place to fire them from (the full agreement, including what the Java side really sends, is `docs/quests_java.md` and the shared note QST_TRG.md):
+The advancement trigger `anime_multiverse:event` takes `key`, optional `count` (>= 1, compared with the per-player counter of the key, or of `key|arg` when `arg` is set) and optional `arg`. The keys the advancement tree uses, with the meaning of `arg` and the place to fire them from (the full agreement, including what the Java side really sends, is `docs/quests_java.md` and the shared note QST_TRG.md):
 
 | Key | Argument | Fired from |
 | --- | --- | --- |
@@ -128,7 +128,7 @@ Keys marked *extra* are not in the original list: `spell.distinct` (counter of d
 
 ```python
 # tools/quests/spec_q_journey.py (or the arc / boss module)
-c.q("my_key", "Title", (col, row), "nusmp:magic_stone", "step", "Subtitle", "One paragraph.\nAnother.",
+c.q("my_key", "Title", (col, row), "anime_multiverse:magic_stone", "step", "Subtitle", "One paragraph.\nAnother.",
     deps=["earlier_key", "other_chapter/quest_key"], tasks=[T.adv("start/first_spell")], rewards=[R.xp(20)])
 ```
 then `python tools/quests/gen_quests.py && python tools/quests/validate_snbt.py`. An id is the hash of `quest/<chapter>/<key>`: never rename a key you have shipped (add a new quest instead).
@@ -148,7 +148,7 @@ python tools/quests/gen_quests.py --check    # CI: nothing out of date
 
 ## How the installer works (Java side, summary)
 
-The pack is bundled in the jar under `/quest_pack/` (FTB's files directly at its top level; `README.txt` is documentation and is not copied). `/nusmp quests install|status|update|uninstall` (operators) copies the files into `config/ftbquests/quests/`, writes a marker `.nusmp_pack` (pack version, hash, file list), and tells you to `/ftbquests reload`. Details and safety rules: `docs/quests_java.md`.
+The pack is bundled in the jar under `/quest_pack/` (FTB's files directly at its top level; `README.txt` is documentation and is not copied). `/anime_multiverse quests install|status|update|uninstall` (operators) copies the files into `config/ftbquests/quests/`, writes a marker `.nusmp_pack` (pack version, hash, file list), and tells you to `/ftbquests reload`. Details and safety rules: `docs/quests_java.md`.
 
 ## The format, derived from the FTB Quests source
 

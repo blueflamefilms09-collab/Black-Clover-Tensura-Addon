@@ -38,7 +38,7 @@ from template import Template, load  # noqa: E402
 
 ROOT = L.ROOT
 RES = L.RES
-JAVA_MEGA = os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "anime_multiverse", "labyrinth", "mega")
+JAVA_MEGA = os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "nusmp", "labyrinth", "mega")
 JAVA_FILES = (os.path.join(JAVA_MEGA, "HubLayout.java"), os.path.join(JAVA_MEGA, "hub", "HubPlazaLayout.java"), os.path.join(JAVA_MEGA, "hub", "HubProtect.java"))
 TEMPLATE_NAME = "hub/plaza"
 GATE = "anime_multiverse:labyrinth_gate"

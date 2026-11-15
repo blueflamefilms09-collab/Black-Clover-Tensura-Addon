@@ -7,7 +7,7 @@ wasteful and pinned the fixes with tests. **Behaviour is unchanged** (add the ne
 
 Nothing can be run here (no game, no profiler, no Gradle). Every figure is a **static cost model**: counts read from the source, quad counts taken from the real mesh builder (a small program
 that calls `CompassMesh`), allocations counted by reading. Where something is a guess it is on the list in section 9. The probe sections added by this audit turn the models into
-measurements on the owner's machine: `/multiverse perf on`, play, `/multiverse perf report` (server) and `/nusmp perf on|report` (client).
+measurements on the owner's machine: `/multiverse perf on`, play, `/multiverse perf report` (server) and `/anime_multiverse perf on|report` (client).
 
 ## 1. NEW / REPLACED / KEPT
 
@@ -109,7 +109,7 @@ did not change it; the registration runs once per resource load).
 * **Left as is.** `CompassBook.willfulCompass` scans `Projectile` entities in a 7-block box every tick for its 10 s (one query per tick per active caster, cooldown-gated, older than the rebuild).
 
 ### 3.6 The 69 datapack enchantments and the tooltip line
-* The 69 `nusmp:fr_*` enchantments are data only (`"effects": {}`, no components): **no runtime cost**. They add 69 small entries to the enchantment registry that is synced once at login. The cost
+* The 69 `anime_multiverse:fr_*` enchantments are data only (`"effects": {}`, no components): **no runtime cost**. They add 69 small entries to the enchantment registry that is synced once at login. The cost
   is in the code that reads them (3.1). The tooltip line is now built once per franchise; the unified tooltip's style once per item and rarity.
 
 ## 4. Tests and self-test
@@ -140,7 +140,7 @@ scan, the plan allocations of `RelicWornLayer.render0` (3.3), the full-catalog w
 
 * Server: `/multiverse perf on`, play for a few minutes with many players, `/multiverse perf report`. The sections of this audit: `s.franchise.tick`, `s.franchise.hit`, `s.relic.w101`, `s.relic.w102`,
   `s.curios.passives`, `s.engravings.weapon`, `s.engravings.armor`, `s.relic.scan`; budgets: `effect-packets`.
-* Client: `/nusmp perf on`, look at a crowd, `/nusmp perf report`. `c.compass.paint` is the compass painter, `c.relic.worn_layer` the worn layer; the budget `compass-quads` shows asked / granted / dropped.
+* Client: `/anime_multiverse perf on`, look at a crowd, `/anime_multiverse perf report`. `c.compass.paint` is the compass painter, `c.relic.worn_layer` the worn layer; the budget `compass-quads` shows asked / granted / dropped.
 * Settings that already follow the audit: `vfxQuality` (high / medium / low) sets the compass distances (x1, x0.75, x0.5) and the frame cap (4 000 / 1 400 / 600 quads); `relicScanInterval` the look lifetime;
   `entityScanInterval` the scans that follow the config.
 

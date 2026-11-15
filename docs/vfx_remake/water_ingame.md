@@ -51,7 +51,7 @@ The setting only changes what this client draws; the server never reads or regis
 ## 4. NEW / REPLACED / KEPT (rule 5)
 
 - **NEW:** `WaterBc` (rules), `WaterBcScene` (geometry), `WaterBcToon` (toon shading), `WaterBcMeshes` (loader), `WaterBcMeshBuffer`, `WaterBcBudget`, `WaterBcSelfTests` (`magic.water_bc`), the client
-  `WaterBcLayer`, `WaterBcFrame` (plan), `WaterBcDraw` (3 passes), `WaterBcConfig`; the first mesh path of the VFX layers; 22 mesh files `assets/nusmp/wbc_meshes/bc_*.txt` (11 pieces x full and `_lo`);
+  `WaterBcLayer`, `WaterBcFrame` (plan), `WaterBcDraw` (3 passes), `WaterBcConfig`; the first mesh path of the VFX layers; 22 mesh files `assets/anime_multiverse/wbc_meshes/bc_*.txt` (11 pieces x full and `_lo`);
   34 textures `wbc_*.png` (25 sprites, 8 grey twins, 1 solid cell); the Lance as its own look (it was the same thin spark as the Roar); the flat-sprite fall-back tier; the tests, the preview tool.
 - **REPLACED (look only, behind V1):** Roar, Lance (both `WATERFX_CAST`), Cradle, Nest (`WATERFX_ZONE`), Burst, Splash, Ring. The old code is not deleted or edited.
 - **KEPT:** `WaterFxLayer`, `WaterMagicLayer`, `WaterSpellLayer` (all six old shapes WATER_DRAGON .. WATER_DRESS, the Valkyrie Dress among them), every old texture, `VfxShape` (no new entry), the Valkyrie
@@ -101,7 +101,7 @@ layer: `c.vfx.layer.WaterBcLayer`. Textures: 34 PNGs, about 0.8 MB in the jar; m
 ## 6. Files
 
 New: `vfx/WaterBc.java`, `WaterBcScene.java`, `WaterBcToon.java`, `WaterBcMeshes.java`, `WaterBcMeshBuffer.java`, `WaterBcBudget.java`, `WaterBcSelfTests.java`, `vfx/client/WaterBcConfig.java`, `WaterBcFrame.java`,
-`WaterBcDraw.java`, `vfx/client/layer/WaterBcLayer.java`, `assets/nusmp/wbc_meshes/` (22), `assets/nusmp/textures/particle/wbc_*.png` (34), `tools/vfx_preview/water_bc_ingame.py`,
+`WaterBcDraw.java`, `vfx/client/layer/WaterBcLayer.java`, `assets/anime_multiverse/wbc_meshes/` (22), `assets/anime_multiverse/textures/particle/wbc_*.png` (34), `tools/vfx_preview/water_bc_ingame.py`,
 `tools/vfx_preview/scenes.d/water_bc.json`, `docs/previews/vfx_remake/water_new/water_ingame.png`, `water_ingame_budget.json`, this doc, the tests `WaterBcTest`, `WaterBcAssetTest`, `WaterBcSourceScanTest`.
 Appended to (shared files, small): `vfx/client/VfxManager.java` (one registration, one plan line after the manager's own plan, one mesh flush line before the sprite flush), `NUSMP.java` (two lines),
 `tools/gen_water_bc_meshes.py` and `tools/gen_water_bc_textures.py` (also write the game set; the preview output is byte for byte as before), `tools/vfx_preview/preview.py` and `Preview.java` (the water classes,

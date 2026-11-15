@@ -6,7 +6,7 @@ magic should raise zombies that do not burn in daylight. Nothing here was played
 ## What was built, how it is read, what is not included
 
 * Built: a fix of the real cause, a loud diagnosis, a safe fallback body, a real-grimoire self-test and sun-safety checks.
-* Read: server log lines starting `[nusmp] numbered undead` (server) and `[nusmp] numbered undead renderer` / `look` (client, `latest.log`); the self-test `magic.soul_corpse_cast` in the CI smoke test.
+* Read: server log lines starting `[anime_multiverse] numbered undead` (server) and `[anime_multiverse] numbered undead renderer` / `look` (client, `latest.log`); the self-test `magic.soul_corpse_cast` in the CI smoke test.
 * Not included: no new models, textures or spells; no change of any number (health, damage, caps, cooldowns); David and Michael were not found broken by reading (see Caveats).
 
 ## Root causes (traced end to end)

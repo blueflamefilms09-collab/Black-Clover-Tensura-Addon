@@ -1,6 +1,6 @@
 # The Relic Forge (1.41.0)
 
-A craftable table (`nusmp:relic_forge`) with a window that does, from menu buttons, what the relics' sneak-use flows do with a second item in the
+A craftable table (`anime_multiverse:relic_forge`) with a window that does, from menu buttons, what the relics' sneak-use flows do with a second item in the
 off hand: raise a relic's grade, bind a Spirit or Devil Core into it, draw a Core back out, and (new) set a Tensura engraving on a mod weapon.
 The sneak-use flows are untouched and still work; this is a second doorway, not a replacement.
 
@@ -70,14 +70,14 @@ Edits to existing files (additive): `relics/tier/TierRitual.java` (`Reason`, `Re
 
 Assets and data:
 
-* `assets/nusmp/blockstates/relic_forge.json`, `models/block/relic_forge.json` (a body with an anvil-like top plate), `models/item/relic_forge.json`
+* `assets/anime_multiverse/blockstates/relic_forge.json`, `models/block/relic_forge.json` (a body with an anvil-like top plate), `models/item/relic_forge.json`
   (parent: the block model).
-* `assets/nusmp/textures/block/relic_forge_{side,plate,top,bottom}.png`, made by `tools/gen_forge_textures.py` (dark metal, gold trim, violet rune on
+* `assets/anime_multiverse/textures/block/relic_forge_{side,plate,top,bottom}.png`, made by `tools/gen_forge_textures.py` (dark metal, gold trim, violet rune on
   top). The top carries the glow; the block also gives light level 7.
-* `data/nusmp/recipe/relic_forge.json`, `data/nusmp/loot_table/blocks/relic_forge.json` (drops itself), `data/minecraft/tags/block/mineable/pickaxe.json`
+* `data/anime_multiverse/recipe/relic_forge.json`, `data/anime_multiverse/loot_table/blocks/relic_forge.json` (drops itself), `data/minecraft/tags/block/mineable/pickaxe.json`
   (one value appended).
-* `assets/nusmp/codex/rules/relic_forge.json`: the Rules page that explains the table (the Codex's own stock list is another builder's).
-* Lang: `block.nusmp.relic_forge`, `container.nusmp.relic_forge`, `nusmp.forge.*` (the fragment is merged into `en_us.json` by the lead).
+* `assets/anime_multiverse/codex/rules/relic_forge.json`: the Rules page that explains the table (the Codex's own stock list is another builder's).
+* Lang: `block.anime_multiverse.relic_forge`, `container.anime_multiverse.relic_forge`, `anime_multiverse.forge.*` (the fragment is merged into `en_us.json` by the lead).
 
 ## Wiring (the lead)
 

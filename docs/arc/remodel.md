@@ -1,7 +1,7 @@
 # The remodel: every custom mob as a character of the art kit
 
 Why: the owner said "i want my mod designs based on player models besides the Old Witch mob the rest need remodeling". The Old Witch (`tools/arc/char_black_market_witch.py`, entity
-`nusmp:arc_npc`) is a humanoid on the player's proportions built with the art kit (`docs/arc/art_kit.md`): a painted face, hair, an outfit, props, accessories and a full set of clips. That
+`anime_multiverse:arc_npc`) is a humanoid on the player's proportions built with the art kit (`docs/arc/art_kit.md`): a painted face, hair, an outfit, props, accessories and a full set of clips. That
 is the standard. The other custom mobs of the mod were hand-built cube models, vanilla models in a re-tint, or nothing at all (a stub, an orb). This remodel rebuilds every one of them as a
 kit character: a humanoid mob is a kit character as it is, a creature is a kit character with its features as an anthropomorphic design (beastfolk ears, tail and muzzle, a serpent
 coiled under a humanoid body, a slime child of gel, an armoured giant ...), keeping its name, colours, lore and size class.
@@ -15,13 +15,13 @@ Section 8 lists what is unverified and what the remodel dropped.
 * Only the model, the texture, the animations and the renderer changed. The old models, textures, generators and renderer classes are all still on disk (owner rule: add the new, keep
   the old). The old renderers are still registered by the lines in `NUSMP.java`; the new ones are registered LAST (lowest priority) and NeoForge keeps the last renderer registered for a
   type, so the new look is the one drawn. To go back to an old look for a mob, delete its row from `client/remodel/RemodelTable.ENTRIES`.
-* Left as they are on purpose (they are meant to look like the player): `nusmp:mirror_double`, `nusmp:player_avatar`. Already kit characters before this work: `nusmp:arc_npc` (the Old
+* Left as they are on purpose (they are meant to look like the player): `anime_multiverse:mirror_double`, `anime_multiverse:player_avatar`. Already kit characters before this work: `anime_multiverse:arc_npc` (the Old
   Witch and every NPC of the arcs) and every boss registered through `ArcEntities.boss` (`char_zagred`, `char_minotaur`, `char_black_goliath`, `char_amphisbaena`, ...).
 * Not mobs, not remodelled: `thread_trap`, `magic_prop`, `magicule_scale`, `carriage`, the three named corpses (`jimmy`, `alfredo`, `carl`), the altars and archways of the Labyrinth.
 
 ## 2. The table: which entity wears which model
 
-`client/remodel/RemodelTable.java` is the one place (pure, tested). Models are `assets/nusmp/{geo,animations}/entity/arc_<model>.*` and `textures/entity/arc_<model>[_glow].png`; a
+`client/remodel/RemodelTable.java` is the one place (pure, tested). Models are `assets/anime_multiverse/{geo,animations}/entity/arc_<model>.*` and `textures/entity/arc_<model>[_glow].png`; a
 second form is `arc_<model>_form2`; a skin is a texture `arc_<model>_<skin>` over the same body.
 
 | entity | models it draws | renderer |
@@ -141,8 +141,8 @@ bat wings with lit veins, a long whip tail; form 2 (phase 4) carries the trident
 * Java, all new in `client/remodel/`: `RemodelTable` (pure), `RemodelLooks` (generated), `KitMath` (pure), `KitClips`, `KitBossRenderer<T extends ZogratisBoss>` (the framework bosses),
   `KitBossHooks` (Lucius's float and Julius glow, the Avatar's skin, the Goliath's rise, the God of Order's visit clips), `KitMobRenderer<T extends LivingEntity>` with a `Probe` per mob in `KitProbes`,
   `KitCloudRenderer`, `KitZagredRenderer`, `RemodelRenderers` (the one registration call, `RemodelRenderers.init(modEventBus)`, added to `NUSMP.java` after the old registrations).
-* Files per model `<m>`: `tools/arc/char_<m>.py` (the spec), `assets/nusmp/geo/entity/arc_<m>.geo.json`, `assets/nusmp/animations/entity/arc_<m>.animation.json`,
-  `assets/nusmp/textures/entity/arc_<m>.png` and `arc_<m>_glow.png`, `tools/render_preview/scenes.d/arc_<m>.json` (the preview scenes), and for a second form the same under `arc_<m>_form2`.
+* Files per model `<m>`: `tools/arc/char_<m>.py` (the spec), `assets/anime_multiverse/geo/entity/arc_<m>.geo.json`, `assets/anime_multiverse/animations/entity/arc_<m>.animation.json`,
+  `assets/anime_multiverse/textures/entity/arc_<m>.png` and `arc_<m>_glow.png`, `tools/render_preview/scenes.d/arc_<m>.json` (the preview scenes), and for a second form the same under `arc_<m>_form2`.
   The 33 characters: `dante_zogratis vanica_zogratis zenon_zogratis lucius_zogratis dark_disciple blood_beast devil_avatar god_of_order goliath charybdis_spawn floor_warden living_armor
   dungeon_direwolf basilisk dungeon_slime spirit_salamander spirit_undine spirit_sylph spirit_gnome spirit_black_devil grimoire_daemon grimoire_daemon_greater grimoire_daemon_arch
   grimoire_daemon_stone painted_beast painted_knight painted_giant rouge tower_wizard cotton_sheep cotton_sheep_cook cotton_cloud zagred_legacy`. The skins are

@@ -40,7 +40,7 @@ The side the spirit appears on (left or right of the wearer) comes from the play
 | pure rules (common, no Minecraft class) | `book/SpiritDiveMergeRules.java` (clock, path, strengths, budgets, tables, vertex counts), `book/SpiritDiveMergeMesh.java` (reads `sdm_meshes/*.txt` with the quad parser of `SpiritDiveWind3Mesh`) |
 | painter (client) | `client/aura/SpiritDiveMerge.java`; hook: one line in `client/aura/SpiritDiveAura.paint`; option mirror in `client/aura/DiveClientConfig` |
 | self-test | `book/SpiritDiveMergeSelfTests.java` (key `magic.spirit_dive_merge`, registered in `SpiritDiveBoot`) |
-| assets | `assets/nusmp/sdm_meshes/{wind,water,fire,earth}_{std,char,core}.txt` (11 files; Earth has no char), `textures/aura/sdm_skin.png`, `sdm_trail.png` |
+| assets | `assets/anime_multiverse/sdm_meshes/{wind,water,fire,earth}_{std,char,core}.txt` (11 files; Earth has no char), `textures/aura/sdm_skin.png`, `sdm_trail.png` |
 | generator | `tools/gen_sdm_models.py` (rebuilds the meshes and textures and `docs/previews/spirit_dive_merge/models.txt`; `--view out.png` for a debug contact sheet) |
 | previews | `tools/spirit_dive_merge_scenes.py` (56 scenes), `tools/spirit_dive_merge_sheets.py`, helpers `tools/render_preview/examples/SdmOn|SdmOff|SdmSolo.java` |
 | tests | `SpiritDiveMergeTest` (rules), `SpiritDiveMergeAssetTest` (files), `SpiritDiveMergeScanTest` (source) |

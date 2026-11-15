@@ -33,8 +33,8 @@ chooser stays as the fallback). Everything else is new.
   `sweep` (take forbidden skills off a boss). Never touches a player.
 * **`boss/rules/BossIdentity`** (glue). One answer to "is this a boss of this mod": the budgeted bosses (`BudgetedBoss`: the Zogratis
   family, Zagred), registry-listed bosses (`BossEntities`), the Floor Warden, the Blood-Red Commander (`MonarchBoss.is`), tagged
-  dungeon bosses (`nusmp_floor_boss`, `nusmp_juggernaut`, `nusmp_charybdis`) and the entity type tag `nusmp:boss` (new file
-  `data/nusmp/tags/entity_type/boss.json`, every entry `required: false`, so an addon can opt a type in and a missing id is harmless).
+  dungeon bosses (`nusmp_floor_boss`, `nusmp_juggernaut`, `nusmp_charybdis`) and the entity type tag `anime_multiverse:boss` (new file
+  `data/anime_multiverse/tags/entity_type/boss.json`, every entry `required: false`, so an addon can opt a type in and a missing id is harmless).
   Tensura's and vanilla bosses are never touched, the same isolation rule as the buff engine.
 * **`boss/rules/BossHealGuard`** (glue). Decides "drop this heal now". `allow(Runnable)` is the whitelist (a ThreadLocal depth so
   it cannot leak to another entity's heal and always unwinds).
@@ -43,7 +43,7 @@ chooser stays as the fallback). Everything else is new.
   SpellSeal already uses for players), and a sweep: on join, then every 100 ticks over the tracked bosses only (nothing scans the
   world). The sweep also strips the engine's old permanent Instant Regeneration effect from bosses saved under the old design.
 * **`boss/LuciusCombo`** (pure). Lucius's combo planner, see below.
-* **`data/nusmp/tags/entity_type/boss.json`**. The opt-in tag described above.
+* **`data/anime_multiverse/tags/entity_type/boss.json`**. The opt-in tag described above.
 
 ## Where the rules are enforced (all additive; each is a no-op with its switch off)
 

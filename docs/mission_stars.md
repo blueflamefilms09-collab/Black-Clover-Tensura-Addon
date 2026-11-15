@@ -1,6 +1,6 @@
 # Mission stars (3.67.0)
 
-Gold stars come from missions automatically. A mission is a questline advancement of this mod (`nusmp:` namespace, shown in the advancement tree, not on the exclude list).
+Gold stars come from missions automatically. A mission is a questline advancement of this mod (`anime_multiverse:` namespace, shown in the advancement tree, not on the exclude list).
 
 | Shown as | Gold stars (default) | Setting |
 |---|---|---|

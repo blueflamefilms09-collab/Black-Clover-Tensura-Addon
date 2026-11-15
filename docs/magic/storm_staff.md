@@ -6,7 +6,7 @@ Nothing here was seen in a game. Every picture is the project's headless rasteri
 
 ## 1. What it is now
 
-Storm Magic is a **Fairy Tail Caster magic tied to a staff**: the **Stormcaller Staff** (`nusmp:stormcaller_staff`), a real 3D weapon (a lacquered slate-blue staff wound with a silver wire of gust, a silver crown cup holding a thundercloud round a glowing storm core, four horns of wind, a lightning rod with fins and a glowing tip, six drops of rain crystal, a glowing bolt inlaid down the shaft). Hold it and **use** to cast the chosen storm spell, **sneak + use** to turn to the next spell. The spells come out of the staff's sky: each one is a **storm**.
+Storm Magic is a **Fairy Tail Caster magic tied to a staff**: the **Stormcaller Staff** (`anime_multiverse:stormcaller_staff`), a real 3D weapon (a lacquered slate-blue staff wound with a silver wire of gust, a silver crown cup holding a thundercloud round a glowing storm core, four horns of wind, a lightning rod with fins and a glowing tip, six drops of rain crystal, a glowing bolt inlaid down the shaft). Hold it and **use** to cast the chosen storm spell, **sneak + use** to turn to the next spell. The spells come out of the staff's sky: each one is a **storm**.
 
 A storm is not wind plus a spark. It is a small weather system with an area, a time and a slow drift:
 
@@ -47,7 +47,7 @@ Cost is paid from the Aura first and from the magicules when the Aura is short (
 | | |
 |---|---|
 | NEW | `fairytail/storm/*` (the staff item, the storm field, the spell table, the budgets, the config, the gate, the self-test); `vfx/client/layer/StormLayer`, `client/storm/StormClientFx`; five effect shapes `STORM_CLOUD, STORM_FALL, STORM_BOLT, STORM_FRONT, STORM_CANCEL` (appended to `VfxShape`); the textures `textures/particle/storm_{cloud,rain,bolt,hail,wave,funnel}.png` (`tools/gen_storm_staff_textures.py`); the 3D staff (`tools/gen_storm_staff_model.py`, mesh, skin, glow skin, icon, models); Better Combat staff file; server config `nusmp-storm-server.toml`; preview scenes `tools/vfx_preview/scenes.d/storm_staff.json`; this page; tests; lang fragment `tools/lang/storm_staff.json` |
-| REPLACED | where Storm Magic comes from: it is no longer rolled as a grimoire magic (Wind soul pool, starter pool, wizard tower) while `storm.staffOnly` is true (default). Its magic UI name is now "Storm Magic (Fairy Tail)" (profile override of the display name; lang override of `nusmp.skill.book_storm` / `grimoire_storm`). The old effect (`magic.STORM` lance + wind ring) is not used by the staff |
+| REPLACED | where Storm Magic comes from: it is no longer rolled as a grimoire magic (Wind soul pool, starter pool, wizard tower) while `storm.staffOnly` is true (default). Its magic UI name is now "Storm Magic (Fairy Tail)" (profile override of the display name; lang override of `anime_multiverse.skill.book_storm` / `grimoire_storm`). The old effect (`magic.STORM` lance + wind ring) is not used by the staff |
 | KEPT | the Storm grimoire `book_storm` with its four pages and `vortex_shield`, the `STORM` enum constant, the grimoire skill `grimoire_storm`, the creative-tab grimoire, the Kaiser Granvorka captain book and its lock (harmless), every old save and every grimoire already of Storm Magic. `storm.staffOnly = false` restores the old rolling exactly. `MagicKeys.RESTRICTED` is untouched |
 
 ## 5. Weapon (rules 6 and 7)
@@ -55,7 +55,7 @@ Cost is paid from the Aura first and from the magicules when the Aura is short (
 * Real 3D model drawn by `client/WeaponRenderer` (3,100 body quads and 1,900 glow quads, 42 named parts), the old-style 16 x 16 sprite rendered from the mesh is the inventory icon (`models/item/stormcaller_staff_icon.json`). Class `staff` (2.7 blocks in hand). Previews: `docs/previews/storm_staff/stormcaller_staff.png` (four views of the mesh) and `stormcaller_staff_in_hand.png` (icon, front, three-quarter, edge, back as placed in the hand).
 * Grip (docs/weapon_grip.md): the mesh states its own `gripxyz 0 68 0` (the middle of the wrapped grip), golden row refreshed with `tools/weapon_grip/grip_table.py --write`.
 * Tensura engravings (`item/WeaponEngravings`): elemental_boost 2, magic_weapon 1, barrier_piercing 1, swift 1. Franchise: Fairy Tail.
-* Better Combat: `data/nusmp/weapon_attributes/stormcaller_staff.json` (profile `staff`, same as the Wisp Staff); manifest row added by text insertion (the rest of the manifest is stale in the repo and was NOT regenerated).
+* Better Combat: `data/anime_multiverse/weapon_attributes/stormcaller_staff.json` (profile `staff`, same as the Wisp Staff); manifest row added by text insertion (the rest of the manifest is stale in the repo and was NOT regenerated).
 * Glow: an additive glow skin (storm core, rod tip, bolt inlay, cloud veins, rain drops), through the weapon renderer's own safe additive path; no new render type.
 
 ## 6. Server and multiplayer (rule 9)
@@ -100,7 +100,7 @@ Pictures (`docs/previews/storm_staff/`): the staff, the six storm effects (`pyth
 * No game was started: the look of the cloud, rain, bolts, front and surge, their scale against real blocks, the draw order of overlapping alpha billboards, the weapon in a real hand (third and first person), the glow skin in the weapon renderer and the inventory sprite are judged from the headless rasteriser only.
 * The cell is a flat disc at the ground height under the aim point: on a slope or under a roof the rain stops at that height and the cloud (9 blocks up) can clip through a ceiling in a cave. No block-aware placement.
 * The staff-only gate was written against the code paths that roll a magic (soul pool, starter pool, wizard tower, `STARTER_MAGICS` config); a mod or admin command that picks `MagicType.STORM` by name still can.
-* The "Storm Magic (Fairy Tail)" label shows wherever the profile's display name is used; text built straight from the enum's own `displayName` field, and the lang keys `nusmp.skill.book_storm` / `grimoire_storm` (the fragment must override the existing en_us entries when merged), are the other places. Old page descriptions of the grimoire still say "Storm Magic".
+* The "Storm Magic (Fairy Tail)" label shows wherever the profile's display name is used; text built straight from the enum's own `displayName` field, and the lang keys `anime_multiverse.skill.book_storm` / `grimoire_storm` (the fragment must override the existing en_us entries when merged), are the other places. Old page descriptions of the grimoire still say "Storm Magic".
 * `tools/bettercombat/manifest.json` and `weapon_classes.json` (tools copy) were already out of step with each other in the repo before this work; only the staff's rows were inserted.
 * `VfxShape` ordinals changed only by appending; the self-test `visual.deck_summon` used to demand that `DECK_SUMMON` be the LAST shape and now demands its shipped ordinal (439) instead.
 * Type-checked with the stub API dump (only the known "abstract" and `Direction.Axis` stub artefacts remain); not compiled by Gradle.

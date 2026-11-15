@@ -40,14 +40,14 @@ server are separate maps) and is built by `Relics#scan`:
 | PACK | `MobRelics.pack`: the persistent data of a named mob, an arc character or an Avatar | **never** (F1) |
 | SYNCED (new) | the list the server sends (`WornSync`) for what vanilla does not sync: CURIOS and PACK | yes, by `WornSync` |
 
-Changes 1.93..1.98 against this path (`git log` over `client/relics`, `Relics.java`, `CuriosLink.java`, `mixin`, `nusmp.mixins.json`, `data/nusmp/curios`, `data/curios`):
+Changes 1.93..1.98 against this path (`git log` over `client/relics`, `Relics.java`, `CuriosLink.java`, `mixin`, `anime_multiverse.mixins.json`, `data/anime_multiverse/curios`, `data/curios`):
 
 | Release | What touched it | Effect on drawing a worn relic |
 |---|---|---|
 | 1.94.0 | player-model kit (`client/playermodel/**`) | none for players: it registers renderers for entity types of NPCs and bosses only, never `EntityType.PLAYER` (`PlayerModelRegistry.register`), and the mixin it did not touch |
 | 1.95.0 | `KitRelicLayer`, default-look and floating-charm fallbacks, `relic.worn_render` | added; nothing removed. It could not show a pack (F1) |
 | 1.95.0 (also) | GUI Size touched `client/relics/djinn/gui/DjinnGui.java` | none: a scale hook of the Djinn screen |
-| 1.97.0 | data: new Curios slot `celestial_key` (slot, entity assignment, tag); code: one line in `client/relics/item/ItemStateVariants` (Elsdocia's state) | none; every file under `data/curios` and `data/nusmp/curios` parses as JSON and every required id of a tag is a registered item (checked by name against the sources) |
+| 1.97.0 | data: new Curios slot `celestial_key` (slot, entity assignment, tag); code: one line in `client/relics/item/ItemStateVariants` (Elsdocia's state) | none; every file under `data/curios` and `data/anime_multiverse/curios` parses as JSON and every required id of a tag is a registered item (checked by name against the sources) |
 | 1.93.0 .. 1.98.0 | `RelicWornLayer`, `RelicClient`, `Relics`, `CuriosLink` | **unchanged** (last changes: 1.30.0, 1.48.0, 1.50.0, 1.46.0). The 1.93 to 1.98 releases did not change the detection, the layer or its registration. If the symptom started in that window, the cause is outside these files: another layer, another mod, or the data (S1..S4) |
 
 ## 3. Layer registration (point 2)
@@ -62,7 +62,7 @@ Changes 1.93..1.98 against this path (`git log` over `client/relics`, `Relics.ja
 
 ## 4. Mixins and events (point 3)
 
-`nusmp.mixins.json` has one player mixin, `PlayerModelMixin`, which only appends poses at the tail of `PlayerModel#setupAnim` (`require = 0`). No code in the mod cancels `RenderPlayerEvent` (not used), `RenderLivingEvent`
+`anime_multiverse.mixins.json` has one player mixin, `PlayerModelMixin`, which only appends poses at the tail of `PlayerModel#setupAnim` (`require = 0`). No code in the mod cancels `RenderPlayerEvent` (not used), `RenderLivingEvent`
 (`HolderTracker` only records the entity) or a `RenderLayer`. Better Combat / PlayerAnimator change poses, not the layer list; the layer draws through `ModelPart#translateAndRotate`, which they leave alone. The
 first-person hand path (`client/relics/hand`) draws relics held in a hand and is a different path from the worn layer; vanilla never draws the own body in first person, so the worn layer does not run there
 (by design, `docs/relic_visuals.md`).
@@ -108,14 +108,14 @@ Curios read: every step passed        (or: A STEP FAILED, see below)
   step 1 class CuriosApi: found
   step 2 method getCuriosInventory(LivingEntity): found, returns Optional
   step 3 invoke: an inventory (...)
-  step 4 getEquippedCurios: ok, 20 slots, 2 worn [nusmp:amulet_of_the_coven, ...]
+  step 4 getEquippedCurios: ok, 20 slots, 2 worn [anime_multiverse:amulet_of_the_coven, ...]
   step 5 per-slot road: 7 slot types: necklace[1/12 eye=[true, ...]] ...
 Worn texture atlas in the jar: yes, shimmer: yes; catalog: every step passed
 1. amulet_of_the_coven (Legend): slot NECK, look AMULET, found in: curios, Curios slot "necklace"
      catalog route: SIGNATURE
      model amulet_coven: 312 quads, bone BODY, 2 animation groups, 14 glowing quads
      decision: amulet_of_the_coven: LIBRARY_MODEL (drawn)
-Worn list last sent to clients: nusmp:amulet_of_the_coven
+Worn list last sent to clients: anime_multiverse:amulet_of_the_coven
 Worn relics of Steve (client view, this machine)
 Worn layer added to 2 player renderers; refused: -
 Renderers that got the layer from the first-frame guard instead of the event: 0 (-)
@@ -132,14 +132,14 @@ How to read it: a step that says FAILED names the call to fix; `EMPTY` at step 3
 person, out of view, another renderer; see the guard line); "The server sees X but this client did not find it" means the client's own Curios read failed (it is then drawn from the server's list, and the line says
 when it is not); "model library: NO MODEL LOADED" means the client's resources do not hold the catalog entry.
 
-The report texts are `message.nusmp.relic_debug.*` (`tools/lang/relic_render2.json`, read with `translatableWithFallback`; a test pins every text in the code to the fragment).
+The report texts are `message.anime_multiverse.relic_debug.*` (`tools/lang/relic_render2.json`, read with `translatableWithFallback`; a test pins every text in the code to the fragment).
 
 ## 7. What was built
 
 | | NEW | REPLACED | KEPT |
 |---|---|---|---|
 | Decision | `WornPlan`, `WornExec`, `WornTrace`, `WornAssets` (client/relics/worn) | the decision loops inside `RelicWornLayer.render` and `KitRelicLayer.render` | every draw routine (boxes, library, custom renderers, armour glow), every model, texture, id, catalog line |
-| Data path | `WornSync` (packet `nusmp:relic_worn_sync`, server events, client store), `WornMerge`, `Relics.Located/Where/locatedList/scanExtra`, `MobRelics.hasPack` | `Relics#scan` is built from `scanExtra` plus hands, armour and the client merge | `Relics.wornList`, `Worn`, `Loadout`, the 10-tick cache, attunement rules |
+| Data path | `WornSync` (packet `anime_multiverse:relic_worn_sync`, server events, client store), `WornMerge`, `Relics.Located/Where/locatedList/scanExtra`, `MobRelics.hasPack` | `Relics#scan` is built from `scanExtra` plus hands, armour and the client merge | `Relics.wornList`, `Worn`, `Loadout`, the 10-tick cache, attunement rules |
 | Robustness | `RelicLayerGuard`, `CuriosProbe`, second Curios road, failure notes, the unreadable-catalog rule | the all-or-nothing Curios read, the permanent empty catalog | `CuriosLink` API (`equipped`, `flags`, `isRendered`, `carries`, `available`) |
 | Diagnostics | `/multiverse relic debug [player]`, `WornDebug`, `WornDebugPayload`, `WornDebugClient` | - | the other `relic` subcommands |
 | Drawing | `WornMesh.corner`, `WornLibDraw.draw(..., armInset)`, `HumanoidRelicLayer` | the emissive pass of mirrored pieces | the old `draw` signature (delegates) |

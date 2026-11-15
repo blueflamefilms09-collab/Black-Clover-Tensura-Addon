@@ -37,7 +37,7 @@ class BeastWillSourceScanTest {
 
     @Test
     void noClientClassAndNoMinecraftInstanceAnywhere() throws IOException {
-        Pattern client = Pattern.compile("net\\.minecraft\\.client\\.|com\\.mojang\\.blaze3d\\.|com\\.newuniverse\\.anime_multiverse\\.client\\.|net\\.neoforged\\.neoforge\\.client\\.|Minecraft\\.getInstance\\(");
+        Pattern client = Pattern.compile("net\\.minecraft\\.client\\.|com\\.mojang\\.blaze3d\\.|com\\.newuniverse\\.nusmp\\.client\\.|net\\.neoforged\\.neoforge\\.client\\.|Minecraft\\.getInstance\\(");
         for (String f : files()) assertFalse(client.matcher(code(f)).find(), f + " names a client-only class");
     }
 

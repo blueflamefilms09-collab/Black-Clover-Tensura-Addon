@@ -25,7 +25,7 @@ ROOT = SJ.ROOT
 OUT = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse", "sounds", "spirit_light", "voice")
 MANIFEST = os.path.join(HERE, "spirit_light_lines.json")
 REPORT = os.path.join(HERE, "spirit_light_voice_report.json")
-JAVA = os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "anime_multiverse", "spiritlight", "SpiritLightVoiceLines.java")
+JAVA = os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "nusmp", "spiritlight", "SpiritLightVoiceLines.java")
 CHAIN = ("silenceremove=start_periods=1:start_threshold=-45dB:start_silence=0.04,areverse,"
          "silenceremove=start_periods=1:start_threshold=-45dB:start_silence=0.12,areverse,"
          "loudnorm=I=-16:TP=-1.5:LRA=7")

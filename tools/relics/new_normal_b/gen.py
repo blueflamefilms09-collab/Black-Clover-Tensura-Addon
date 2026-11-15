@@ -23,7 +23,7 @@ from new_normal_b import weapons as WEAPONS_MOD  # noqa: E402
 
 ROOT = os.path.abspath(os.path.join(HERE, "..", "..", ".."))
 RES = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse")
-WAVE = os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "anime_multiverse", "relics", "wave", "Wave104.java")
+WAVE = os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "nusmp", "relics", "wave", "Wave104.java")
 LANG = os.path.join(ROOT, "tools", "lang", "normal_b.json")
 ROWS = ROWS_MOD.ROWS
 WEAPONS = WEAPONS_MOD.WEAPONS

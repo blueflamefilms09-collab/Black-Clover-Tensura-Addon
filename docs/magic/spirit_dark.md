@@ -107,7 +107,7 @@ A stronger pose is not interrupted by a weaker one (priorities in `Pose`); two l
 
 47 short lines of a smooth, mocking, aristocratic voice in 12 groups (the plan with every prompt: `tools/audio/spirit_dark_lines.json`; generator and converter: `tools/audio/spirit_dark_voice.py`). Voice: ElevenLabs library voice **"Oliver - Warm British Narrator"** (id `lo1O1Dz1Tu4FWVEPaxuT`, a library voice, not a clone of anyone; not one of the voices of the older lines: David, Final Boss, Justin, Obsidian), model `eleven_v4`, one take per line, converted to mono 32 kHz Ogg q3 with silence trimmed and loudness normalised. **Licence caveat for the owner:** library voices can carry their own conditions on top of the plan's licence; the commercial-use terms of this voice were **not** checked or cleared and must be checked before a public release.
 
-* The game reads `assets/nusmp/spirit_dark_voice.json` (id to text), written by `spirit_dark_voice.py sync` from the recordings that **exist**. A line without a recording is never registered, picked or played; a group with no spoken line falls back to a synthesised cue (link to the chime, hurt and feast to the siphon, cast and kill to the whisper, ...). Nothing is faked.
+* The game reads `assets/anime_multiverse/spirit_dark_voice.json` (id to text), written by `spirit_dark_voice.py sync` from the recordings that **exist**. A line without a recording is never registered, picked or played; a group with no spoken line falls back to a synthesised cue (link to the chime, hurt and feast to the siphon, cast and kill to the whisper, ...). Nothing is faked.
 * Played by the server to players within **32 blocks** only, one by one: each listener hears **at most one line per 4 seconds** (whoever speaks), the same line not again for 30 seconds, the server starts at most 4 lines per tick; per-event and per-owner gaps in 5.3; `magic.spiritDarkVoice` (server) switches the voice off. The text of a line also goes to the owner's action bar. The events are `spirit.dark.voice.<id>` in `sounds.json` (no subtitle, like the older voice lines), files `sounds/spirit/dark/voice/<id>.ogg`, the sound category `VOICE` (the client's own voice slider).
 * Recording status is in section 11.
 
@@ -134,7 +134,7 @@ A stronger pose is not interrupted by a weaker one (priorities in `Pose`); two l
 | REPLACED | nothing |
 | KEPT | the Dark book and every page id and number (`DarkBook`, `DarkArts`), the existing Dark lifesteal of Dark Cloaked Guard, `ElementalSpiritLordEntity`, `SpiritLordEntity` (incl. the Black Devil kind), `SpiritSlots`, the Dark props and layers, every older sound entry and the other builders' Spirit work |
 
-Existing files touched (append-only one-liners): `prop/PropKind` (+`SPIRITDARK_1`), `prop/PropRegistry`, `client/prop/PropPainterRegistry`, `NUSMP` (the boot line and the client line), `book/GrimoireBook.castPage` (one line after the cast), `assets/nusmp/sounds.json` (the `spirit.dark.*` block, inserted after `zagred_phase` so appends at the end do not collide), `tools/safe_additive/scan_textures.py` (one scope line).
+Existing files touched (append-only one-liners): `prop/PropKind` (+`SPIRITDARK_1`), `prop/PropRegistry`, `client/prop/PropPainterRegistry`, `NUSMP` (the boot line and the client line), `book/GrimoireBook.castPage` (one line after the cast), `assets/anime_multiverse/sounds.json` (the `spirit.dark.*` block, inserted after `zagred_phase` so appends at the end do not collide), `tools/safe_additive/scan_textures.py` (one scope line).
 
 ## 9. Tests
 
@@ -149,7 +149,7 @@ New: `src/main/java/com/newuniverse/nusmp/spiritdark/*` (SpiritDark, SpiritDarkR
 
 ## 11. Voice recording status
 
-**All 47 planned spoken lines exist (3.34.0).** They were generated with ElevenLabs (model `eleven_v4`, voice "Oliver - Warm British Narrator", library voice id `lo1O1Dz1Tu4FWVEPaxuT`). 24 were recorded earlier; the other 23 (idle, low, kill, died, power, power_end) were recorded in 3.34.0 after the first run had run out of credits. Only lines whose `.ogg` exists are listed in `assets/nusmp/spirit_dark_voice.json` and in `sounds.json`; a situation whose line is absent still falls back to the synthesised cue (`SpiritDarkVoiceCatalog.fallback`), which now only happens when the line pool is switched off.
+**All 47 planned spoken lines exist (3.34.0).** They were generated with ElevenLabs (model `eleven_v4`, voice "Oliver - Warm British Narrator", library voice id `lo1O1Dz1Tu4FWVEPaxuT`). 24 were recorded earlier; the other 23 (idle, low, kill, died, power, power_end) were recorded in 3.34.0 after the first run had run out of credits. Only lines whose `.ogg` exists are listed in `assets/anime_multiverse/spirit_dark_voice.json` and in `sounds.json`; a situation whose line is absent still falls back to the synthesised cue (`SpiritDarkVoiceCatalog.fallback`), which now only happens when the line pool is switched off.
 
 | Group | Recorded |
 |---|---|
@@ -174,7 +174,7 @@ Two takes are not single-line recordings. `hurt_3`, `hurt_4` and `feast_1..4` we
 
 (`missing` lists what is still missing, `sync` rewrites the voice json and the `sounds.json` entries, `check` verifies; the total stays far below 3 MB: 1.4 MB for all 47 lines).
 
-**Licence caveat.** The voice is a ready-made library voice of the ElevenLabs account, not a clone of a real person. Whether its terms allow shipping the generated audio inside a commercial mod was not cleared (it depends on the account's plan and on the voice's own licence in the voice library); the owner must check this before a release. All audio is in `assets/nusmp/sounds/spirit/dark/voice/`; deleting that folder, the json and the `spirit.dark.voice.*` block of `sounds.json` (or running `sync` after removing the oggs) turns the voice off without touching anything else.
+**Licence caveat.** The voice is a ready-made library voice of the ElevenLabs account, not a clone of a real person. Whether its terms allow shipping the generated audio inside a commercial mod was not cleared (it depends on the account's plan and on the voice's own licence in the voice library); the owner must check this before a release. All audio is in `assets/anime_multiverse/sounds/spirit/dark/voice/`; deleting that folder, the json and the `spirit.dark.voice.*` block of `sounds.json` (or running `sync` after removing the oggs) turns the voice off without touching anything else.
 
 ## 12. Not verified (honest list)
 

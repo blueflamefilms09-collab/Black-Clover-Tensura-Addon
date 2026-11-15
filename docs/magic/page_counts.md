@@ -45,7 +45,7 @@ How it was verified (all offline):
   `word(...)` pages), Wind (6 own + 9 Yuno + 6 basic = **21**), Bone (5 legacy + 2 remake = **7**), Song (5 generic + 4 mode pages + Crescendo + 4 own + 2 Kahono = **16**; the script first missed the 4 mode pages because
   their ids come from the `SongMode` enum, found through the lang cross-check below), Air (8, the javadoc of `AirBook` lists them), Memory (9, its javadoc says 9). `PageCountsTest` repeats six of these counts in plain Java without the script.
 * **Every page of every character spell set is found in its book**: 269 spells in 43 sets, 0 missing (`python3 -B tools/page_counts.py --check`). An extractor that lost pages would show here.
-* **Reverse check against the lang file**: every `nusmp.page.<book>.<id>` key of `en_us.json` (1041 keys) belongs to a page the script found (the only exceptions are the `spirit_dive` / `spirit_channeling` keys, which are universal pages).
+* **Reverse check against the lang file**: every `anime_multiverse.page.<book>.<id>` key of `en_us.json` (1041 keys) belongs to a page the script found (the only exceptions are the `spirit_dive` / `spirit_channeling` keys, which are universal pages).
   This is how the Song mode pages were found. 29 pages have no lang key at all (Bronze 13, Sealing 5, Thread 4, Song 5, Soul 2: the in-game audit `MagicAudit` already warns `NO_LANG_PAGES` for them).
 * The ORDER of the ids inside a book is exact for plain books and approximate where a book joins several lists; mode 0 is always right. The numbers do not depend on the order.
 * Not checked: nothing was run in a game, so a page that the sources define but a runtime condition removes (a config switch) would not show. The only such switches found are `magic.lightBoneJa` (Light and Bone: the table uses the
@@ -129,7 +129,7 @@ through `GrimoireBook.getMagiculeCost` (`BalanceLaw.cost`, cover multiplier, `Ma
 2. The cast: reuse `ElementBook` shapes (`bolt, volley, cone, nova, field, line, dash, bind, empower, constructs, wall, decoy, healAllies, copy`) and `TensuraShots.shot(...)` for ordinary pages, a custom lambda for a signature
    behaviour; damage ONLY through `GrimoireBook.hurt/hurtAs`; the book's own `VfxShape` / `PropKind` (listed per book in the plan below), so no new asset is needed. Bounds: every entity loop capped, `SpellRuntime.zone` at most 100 ticks
    at 4+ tick steps, at most about 10 effect packets (the `BasicGrimoiresTest.theCastsAreBounded` limits are a good template).
-3. A lang text: `nusmp.page.<book registry path>.<id>` in `en_us.json` (one or two sentences; a fragment file `tools/lang/<name>.json` is the repo's convention; there is no single merge script, each builder has its own, e.g.
+3. A lang text: `anime_multiverse.page.<book registry path>.<id>` in `en_us.json` (one or two sentences; a fragment file `tools/lang/<name>.json` is the repo's convention; there is no single merge script, each builder has its own, e.g.
    `tools/relics/new_wave101/lang.py`). No icon is needed: grimoire icons are per BOOK (`textures/skill/grimoire/<magic>.png`, `tools/gen_skill_icons.py`), not per page.
 4. The armour-policy line: the id in `armour_policy.json` -> `magics.<MAGIC>.new_pages` (4.6).
 5. Its place in a character set: a `{ "page", "name", "ja", "origin", "exclusive": false, "source", "acquire": {...}, "note" }` entry in each `character_spells/<canon>.json` that should list it (non-exclusive so the basic

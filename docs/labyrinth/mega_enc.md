@@ -2,7 +2,7 @@
 
 Builder ENC of the 1.54.0 "Singular, Expanding Mega-Dungeon", extended for the two roads of 1.55.0 (floor-banded threat, the `radiant` and `abyss` tables, the
 table fallback by road). Package `com.newuniverse.nusmp.labyrinth.mega.enc`, config
-`nusmp-labyrinth-mega-enc-server.toml` (section `[enc]`), data `data/nusmp/mega/encounters/*.json` and `data/nusmp/mega/wanderers.json`,
+`nusmp-labyrinth-mega-enc-server.toml` (section `[enc]`), data `data/anime_multiverse/mega/encounters/*.json` and `data/anime_multiverse/mega/wanderers.json`,
 admin tree `/multiverse mega dm ...`. Nothing here has been run in a game; section 12 is the honest list of what is therefore unverified.
 
 ## 1. What it does, in one page
@@ -54,7 +54,7 @@ Everything is data-driven where the owner will want to tune it (tables, roster, 
   players side by side must not be hit by four ambushes, and a scout far from the others is a party of his own with his own noise and cooldown.
   The party size scales the budget through a table (1.0, 1.6, 2.1, 2.5, then +0.3 each) that grows more slowly than the head count.
 * **Why toughness windows and tags for factions.** "A goblin patrol" must mean "some goblin-faction monsters" and the faction is an entity-type TAG
-  (`nusmp:mega/<faction>`, written by the ecology builder) so every mod that adds a goblin-ish creature can join it. Tags mix 20-health and 400-health
+  (`anime_multiverse:mega/<faction>`, written by the ecology builder) so every mod that adds a goblin-ish creature can join it. Tags mix 20-health and 400-health
   members, so a member is drawn only when its default maximum health lies between 12 percent of a cap and the cap, where the cap is `12 + 14 * threat`
   (26 on the first floor, 82 on the fifth, 152 on the tenth): "deeper is harder" and "the first floor is survivable" stay true without per-floor monster lists.
   When a room has a native faction (`Room.faction`) the faction monsters of an entry that names none come from it; the table's `defaultFaction` fills the gaps.
@@ -131,10 +131,10 @@ Pure classes (no `net.minecraft` import, JUnit tested) first, then the game glue
 
 ## 4. Data: the encounter tables
 
-Files: `data/nusmp/mega/encounters/default.json` and one per theme: `gravity blood spatial flame frost verdant storm shadow astral radiant abyss` (the last two
+Files: `data/anime_multiverse/mega/encounters/default.json` and one per theme: `gravity blood spatial flame frost verdant storm shadow astral radiant abyss` (the last two
 are the themes of the Holy and the Abyssal road, 1.55.0). A theme file REPLACES the default for sectors of that theme. A theme WITHOUT a file borrows the table of
 its road (`radiant` for a Holy sector, `abyss` for an Abyssal one) and only then `default`; see `TableChoice`. A datapack overrides a file by shipping the same
-path; the highest-priority pack wins. Only the `nusmp` namespace is read. The tables reload with `/reload`.
+path; the highest-priority pack wins. Only the `anime_multiverse` namespace is read. The tables reload with `/reload`.
 
 ```json
 {
@@ -164,7 +164,7 @@ An entry:
 | `cells` | 2 | 1..4, over how many different places the group is split. |
 | `hunt` | the band's | Ticks the monsters go looking for the party; 0 = they stay where they appear (shulker turrets); max 12000. |
 | `cue` | the band's | `{"sound": "<id>", "volume": 0.7, "pitch": 0.8, "particle": "<simple particle id>", "count": 12}`; any part may be missing. A cue with no sound plays only dust. |
-| `message` | none | A translation key shown on the action bar of the party. The shipped keys are `message.nusmp.mega.enc.<theme>.<entry id>`. |
+| `message` | none | A translation key shown on the action bar of the party. The shipped keys are `message.anime_multiverse.mega.enc.<theme>.<entry id>`. |
 | `comment` | none | Free text; the shipped files say WHY of every entry. |
 
 A monster is `{"type": "entity", "id": "minecraft:zombie", "count": "2-4"}` (a fixed body) or `{"type": "faction", "count": "3-5"}` with an optional
@@ -177,7 +177,7 @@ sector and the roll falls back to the next band down.
 
 The parser reports, for every file, each unknown key, each wrong type, each out-of-range number (clamped), each bad id or faction or band, each
 duplicate id; an entry with a meaningless core (no id, a bad band, no monsters) is dropped, the rest of the file survives, and every problem goes to the
-log as `[nusmp] <file>: <what>`. The shipped files must parse with zero problems (`EncounterDataTest`).
+log as `[anime_multiverse] <file>: <what>`. The shipped files must parse with zero problems (`EncounterDataTest`).
 
 ### What the shipped tables are made of
 
@@ -218,11 +218,11 @@ sharp, roll bonus -1, budget 1.2).
 
 ## 5. Data: the roster of wandering bosses
 
-`data/nusmp/mega/wanderers.json`:
+`data/anime_multiverse/mega/wanderers.json`:
 
 ```json
 { "comment": "Why: ...",
-  "entries": [ {"entity": "nusmp:floor_warden", "weight": 5, "minThreat": 1, "maxThreat": 100000, "name": "The Warden",
+  "entries": [ {"entity": "anime_multiverse:floor_warden", "weight": 5, "minThreat": 1, "maxThreat": 100000, "name": "The Warden",
                 "healthScale": 1.0, "speed": 0.9, "comment": "..."} ] }
 ```
 
@@ -296,9 +296,9 @@ All values are plain `define` / `defineInRange` read through `EncConfig.get(...)
   which the economy, the health buffer and the faction drops ask through `MegaDungeon.isDungeonMonster`) on every monster of an encounter,
   `nusmp_dm_<faction>` when a faction was involved, `nusmp_wanderer` on every wandering boss. Persistent data: `nusmp_dm_entry` (the table entry id),
   `nusmp_dm_born` (game time), `nusmp_wanderer_sector` (the sector id, which is how a boss saved with its chunk is adopted again).
-* **Attribute modifier ids** (permanent, multiplicative on the final value so they compose with the Labyrinth's health buffer): `nusmp:mega_dm_health`,
-  `nusmp:mega_dm_damage`, `nusmp:mega_wanderer_health`, `nusmp:mega_wanderer_speed`.
-* **Faction tags**: `nusmp:mega/<faction>`, written by the ecology builder. This system only reads them.
+* **Attribute modifier ids** (permanent, multiplicative on the final value so they compose with the Labyrinth's health buffer): `anime_multiverse:mega_dm_health`,
+  `anime_multiverse:mega_dm_damage`, `anime_multiverse:mega_wanderer_health`, `anime_multiverse:mega_wanderer_speed`.
+* **Faction tags**: `anime_multiverse:mega/<faction>`, written by the ecology builder. This system only reads them.
 * **Economy, health buffer, Vital Strike**: apply by themselves through `Labyrinth.in`; since the lead's integration they also accept a Tensura monster tagged
   `nusmp_dm`. Not duplicated here.
 * **Floors and roads (1.55.0)**: this system only READS them: `MegaDungeon.floorAt(level, pos)` for the floor of a party, `Sector.polarity` for the road,
@@ -327,7 +327,7 @@ Pure (JUnit 5, `src/test/java/.../mega/enc`, 200 tests in 18 classes at the last
 `WandererMindTest`, `WandererRosterTest`, `BurstRingTest`, `SanctuaryTest`, `ThreatInputTest` (the floor-banded threat), `TableChoiceTest` (the fallback by road) and
 `EncounterDataTest`, which reads the shipped JSON from the source tree.
 `EncounterDataTest` is the guard of the data: zero parser problems; twelve files, 8 to 14 entries, all four bands; every entity id exists (vanilla and
-the Tensura 2.0.1.3 entity list in `src/test/resources/mega/enc/known_ids.txt`, nusmp ids read from the registrations in the source tree); every cue sound
+the Tensura 2.0.1.3 entity list in `src/test/resources/mega/enc/known_ids.txt`, anime_multiverse ids read from the registrations in the source tree); every cue sound
 and particle exists; every message key is in the namespace and is translated once the language fragment is merged; at threat 1 nothing is harder than
 standard; no entry's first monster costs more than its band can pay; for every threat from 1 to 1000, party size 1 to 6 and state of the party, every band
 finds an entry; the roster parses and the Floor Warden is on it; the Holy road has at least four entries that need light and exactly one that needs the dark, the
@@ -421,7 +421,7 @@ stops at +5 (floor 10), after which the budget, the toughness cap, the table win
   the cooldown and the last roll are kept per player, a party's cooldown being the longest of its members' (so regrouping does not reset it) instead of per
   party id; no `LookAtPlayerGoal` is added (the boss's own look goals are kept); entries have the extra keys `range`, `cells`, `hunt`, `cue`, `minParty` and
   `comment`; wandering bosses are driven from a Director pass plus an optional goal, not by a goal alone.
-* **The language fragment** (`message.nusmp.mega.enc.*`, 61 keys: the 46 of the first delivery and 15 for the two road tables) must be merged into `en_us.json` by
+* **The language fragment** (`message.anime_multiverse.mega.enc.*`, 61 keys: the 46 of the first delivery and 15 for the two road tables) must be merged into `en_us.json` by
   the lead; until then the messages show their key. The fragment is one file with every key, so merging it again is idempotent.
 
 ## 13. New, replaced, kept

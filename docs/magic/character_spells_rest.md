@@ -33,7 +33,7 @@ Every other CanonBook id belongs to the other two builders (Black Bulls: Vanessa
 
 | Part | File |
 |---|---|
-| The 13 data files | `src/main/resources/data/nusmp/character_spells/{charlotte,jack,rill,dorothy,zenon,vanica,dante,lucius,rades,gadjah,mars,kahono,kiato}.json` |
+| The 13 data files | `src/main/resources/data/anime_multiverse/character_spells/{charlotte,jack,rill,dorothy,zenon,vanica,dante,lucius,rades,gadjah,mars,kahono,kiato}.json` |
 | The 15 new pages and their casts | `book/CharacterPagesRest.java`, `book/CharacterArtsRest.java` (new classes, the pilots' files are untouched) |
 | The flourish (section 5) | `charset/CharacterFlourishRest.java` (game side), `charset/FlourishTable.java` (pure table) |
 | The CI self-test | `charset/CharacterRestSelfTests.java`, prefix `magic.character_spells_rest` |
@@ -47,7 +47,7 @@ One-line (append-only) edits of existing files, each marked with a comment:
 * `charset/CharacterSetRegistry.java`: the 13 ids appended to `SHIPPED`.
 * `charset/CharacterSetBoot.java`: `CharacterRestSelfTests.register()`.
 * `grimoire/CanonBook.java`: three magic strings (7.1).
-* `data/nusmp/armour_policy.json`: `new_pages` added to BRIAR, PAINTING, BLOOD, LIGHTNING, MINERAL, SONG (the guard `ArmourPolicyTest` asks for every appended page).
+* `data/anime_multiverse/armour_policy.json`: `new_pages` added to BRIAR, PAINTING, BLOOD, LIGHTNING, MINERAL, SONG (the guard `ArmourPolicyTest` asks for every appended page).
 * `src/test/.../CharacterSetSourceScanTest.java`: the check "a source file is known for the book" became "skip the books of the later builders" (their own scan test covers them). The pilots' assertions are unchanged.
 
 ## 3. Research record (rule 10) and what could not be fetched

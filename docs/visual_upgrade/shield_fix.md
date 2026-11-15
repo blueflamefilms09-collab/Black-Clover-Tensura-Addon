@@ -103,4 +103,4 @@ no static player; no packet; no config. `ShieldClient` and the renderer branch a
   `Player#disableShield` is believed to do for a modded shield (I could not read it); it is idempotent.
 * The first-person oversize guard no longer applies to a shield (vanilla's first-person size 1.25 is the standard); a very large shield in first person fills the view as the vanilla one does.
 * Right-click now raises the Hero's Shield / Calamity Wave Aegis instead of firing their first act; the acts moved to sneak + use and the worn-relic key. The Hero's Shield tooltip text change is in the lang
-  fragment `tools/lang/shield_fix.json` (key `item.nusmp.heros_shield.desc`, overrides the `en_us.json` entry; the `Wave23.java` fallback text matches it).
+  fragment `tools/lang/shield_fix.json` (key `item.anime_multiverse.heros_shield.desc`, overrides the `en_us.json` entry; the `Wave23.java` fallback text matches it).

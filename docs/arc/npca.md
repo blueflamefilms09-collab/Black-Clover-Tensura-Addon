@@ -2,7 +2,7 @@
 
 Fourteen friendly characters of the saga `ALLIES`: **Yami Sukehiro, Asta, Noelle Silva, Finral Roulacase, Magna Swing, Luck Voltia, Charmy Pappitson, Vanessa
 Enoteca, Gordon Agrippa, Zora Ideale, Gauche Adlai, Grey, Secre Swallowtail, Nacht Faust.** They stand in the Sanctuary Hub (not on the floors), talk, point
-the player at the next arc and teach a little of the mod's own systems. Nobody can fight them. They are all the one shared entity `nusmp:arc_npc`; what makes
+the player at the next arc and teach a little of the mod's own systems. Nobody can fight them. They are all the one shared entity `anime_multiverse:arc_npc`; what makes
 each of them is a record (Java), a dialogue file (JSON) and a model (a spec of the art kit). Yami's model was made by the art-kit builder; the other thirteen
 models are new. Everything here is NEW (nothing existed for these characters, nothing was replaced, nothing was removed); the old Black Clover content (their
 grimoire books, the Dark book's Equinox, Asta's swords, Charmy's sheep ...) is untouched and is what the dialogue talks about.
@@ -15,9 +15,9 @@ the record's name only (the id is saved in worlds and in the dialogue file name)
 | File | Why it exists |
 |---|---|
 | `arc/npc/BlackBullsNpcs.java` | One pure class holding the fourteen `ArcCharacter.npc(...)` records, their order and the arrival gates. One place, one `registerAll()` call for the lead, and a pure class means the order, the gates and the colours are unit tested without a game. |
-| `data/nusmp/arc/dialogue/<id>.json` x14 | What each character says (443 lines in all). A datapack can replace any file by shipping the same path. Keys `arc.dialogue.<id>.<n>` come from the repo's tool. |
+| `data/anime_multiverse/arc/dialogue/<id>.json` x14 | What each character says (443 lines in all). A datapack can replace any file by shipping the same path. Keys `arc.dialogue.<id>.<n>` come from the repo's tool. |
 | `tools/arc/char_<id>.py` x13 | The model of each character as a spec of the art kit (Yami's file already existed). |
-| `assets/nusmp/{geo,animations}/entity/arc_<id>.*.json`, `textures/entity/arc_<id>.png`, `arc_<id>_glow.png` x13 | The generated output of those specs (`python3 -B tools/gen_arc_characters.py`; `--check` proves the files are what the specs make). |
+| `assets/anime_multiverse/{geo,animations}/entity/arc_<id>.*.json`, `textures/entity/arc_<id>.png`, `arc_<id>_glow.png` x13 | The generated output of those specs (`python3 -B tools/gen_arc_characters.py`; `--check` proves the files are what the specs make). |
 | `tools/render_preview/scenes.d/arc_<id>.json` x13 | The preview scenes the generator writes next to every model. |
 | `tools/arc/manifest.json` | Edited by the generator: 13 entries added (size, hitbox, stride, clips, bones). The four older entries are unchanged. Regenerate it after merging, never hand-merge it. |
 | `src/test/.../arc/npc/BlackBullsNpcsTest.java`, `BlackBullsDialogueTest.java` | 7 + 16 tests (section 6). |
@@ -101,7 +101,7 @@ Every file has 4 or 5 greetings, 22 to 26 hints and 3 farewells (69 / 332 / 42; 
 
 `TalkPlan` offers a quest as soon as a `quest_offer` line exists and then waits for something to complete the quest stage; no system in the mod does that for these
 characters yet, so a `quest_offer` would leave the stage at "offered" for ever and the player would hear it once and never be thanked. The same goes for
-`shop`. No file under `data/nusmp/arc/npcs/` exists in the core (no role data), so the small roles are carried by hint lines that name real pages and places (a
+`shop`. No file under `data/anime_multiverse/arc/npcs/` exists in the core (no role data), so the small roles are carried by hint lines that name real pages and places (a
 test checks that the names exist in the source tree). When a quest or shop system exists it adds `quest_offer`, `quest_done` and `shop` lines to these files;
 nothing here has to change.
 
@@ -251,8 +251,8 @@ Facts that shaped lines, with how sure they are:
 
 1. `arc/ArcCharacters.java`, in `bootstrap()`: `com.newuniverse.nusmp.arc.npc.BlackBullsNpcs.registerAll();` (after the boss lines; the order of the NPC lines
    fixes the Hub posts, so keep this block together).
-2. Lang: merge `$S/arc/frag/npca.lang.json` (443 keys `arc.dialogue.<id>.<n>`) into `assets/nusmp/lang/en_us.json`, then run
-   `python3 tools/gen_arc_dialogue_lang.py --check src/main/resources/assets/nusmp/lang/en_us.json` (it must print nothing and exit 0).
+2. Lang: merge `$S/arc/frag/npca.lang.json` (443 keys `arc.dialogue.<id>.<n>`) into `assets/anime_multiverse/lang/en_us.json`, then run
+   `python3 tools/gen_arc_dialogue_lang.py --check src/main/resources/assets/anime_multiverse/lang/en_us.json` (it must print nothing and exit 0).
 3. `tools/arc/manifest.json`: every builder's branch edits it; after the merge regenerate it with `python3 -B tools/gen_arc_characters.py` and confirm with
    `--check`. Do not hand-merge it.
 4. Nothing else: no config class, no command, no quest key, no creative-tab entry (the spawn egg comes from the record), no renderer registration, no mixin.

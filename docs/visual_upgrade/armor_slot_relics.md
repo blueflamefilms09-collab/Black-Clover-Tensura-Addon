@@ -6,7 +6,7 @@ Owner report: a crown relic sits in the helmet slot of the inventory, the player
 
 | Item | Slots | Worn through | Drawn by |
 |---|---|---|---|
-| 146 relic defs with slot HEAD (83), CHEST (40), FEET (23) (`relics/wave/Wave*`, `WaveBoss`), registered as `RelicArmorItem` | helmet, chestplate, boots (there is no LEGS relic slot) | `RelicArmorItem`, material `nusmp:relic_<id>`, layer `textures/models/armor/relic_<id>_layer_1/2.png` painted at run time by `client/relics/ArmorPainter` (older) or `ArmorPainterV2` (1.110.0) | the vanilla `HumanoidArmorLayer` (painted layer), plus the worn model library through `RelicWornLayer` (players), `KitRelicLayer` (player-model characters), `HumanoidRelicLayer` (armour stands, mobs): HEAD and FEET relics with a model are drawn as that model, CHEST relics keep the painted body and get the library ornaments on top; the glow channel by `ArmorGlow` |
+| 146 relic defs with slot HEAD (83), CHEST (40), FEET (23) (`relics/wave/Wave*`, `WaveBoss`), registered as `RelicArmorItem` | helmet, chestplate, boots (there is no LEGS relic slot) | `RelicArmorItem`, material `anime_multiverse:relic_<id>`, layer `textures/models/armor/relic_<id>_layer_1/2.png` painted at run time by `client/relics/ArmorPainter` (older) or `ArmorPainterV2` (1.110.0) | the vanilla `HumanoidArmorLayer` (painted layer), plus the worn model library through `RelicWornLayer` (players), `KitRelicLayer` (player-model characters), `HumanoidRelicLayer` (armour stands, mobs): HEAD and FEET relics with a model are drawn as that model, CHEST relics keep the painted body and get the library ornaments on top; the glow channel by `ArmorGlow` |
 | Adopted relics (`RelicDef.adopt`, an existing item of the mod given a relic def) | whatever the item is | their own item class and layer | their own renderer; the relic layer reads them through `Relics.defOf` |
 | Magic Knight robe sets (`NUItems.robe`, `RobeItem`, 11 sets x hood/chest/legs/boots) | all four | `RobeItem` (GeckoLib) | the library through `ArmorItems.collect` (`catalog.txt` `item` lines, else `ArmorLooks`), the GeckoLib renderer is replaced by an empty model (`RobeItem`) |
 | Dungeon armour (`LootArmorItem`, Drake-Scale and Shadowsteel) | all four | materials `loot_<set>`, layer_1 and layer_2 png on disk | the vanilla layer; `client/loot/LootClient` swaps in an empty model when the library draws it |
@@ -32,8 +32,8 @@ What could not be checked here: which of the frame-time conditions disagreed in 
 
 * JUnit `ArmorSlotRenderCoverageTest`: every armour-slot relic (derived from the wave sources) has a model that loads and hangs on its slot's body part (head / body and arms / legs), through the upgrade catalog first, as the library does; every robe piece and dungeon set has library models and layer files.
 * JUnit `ArmorSlotPlanTest`: over every combination of slot, model, own renderer, option, view and distance an armour relic keeps a model or a painted layer (except the two cases the player chose); the old failure (model not drawn, layer blank) is impossible.
-* Self-test `visual.armor_slot_relics` (`relics/ArmorSlotSelfTests`, runs on the dedicated server): the same over the loaded registries: each armour-slot relic is a registered `RelicArmorItem` with the layer `nusmp:relic_<id>`, resolves to a model on the right body part, has a painted layer that is not transparent, covers the same pixels in both painters, and is never invisible in any frame circumstance; every other `nusmp` armour item resolves to existing library models. It is a server-run test of the registries; it cannot see the client textures, so the pixel checks are done on the pure painters.
-* Debug command `/nusmp debug worn` (client): lists the four armour slots and the Curios relics of the local player with the way each is drawn right now and the reason when nothing of it reaches the body.
+* Self-test `visual.armor_slot_relics` (`relics/ArmorSlotSelfTests`, runs on the dedicated server): the same over the loaded registries: each armour-slot relic is a registered `RelicArmorItem` with the layer `anime_multiverse:relic_<id>`, resolves to a model on the right body part, has a painted layer that is not transparent, covers the same pixels in both painters, and is never invisible in any frame circumstance; every other `anime_multiverse` armour item resolves to existing library models. It is a server-run test of the registries; it cannot see the client textures, so the pixel checks are done on the pure painters.
+* Debug command `/anime_multiverse debug worn` (client): lists the four armour slots and the Curios relics of the local player with the way each is drawn right now and the reason when nothing of it reaches the body.
 
 ## 5. Better relic armour (owner addition, same release)
 
@@ -43,16 +43,16 @@ What could not be checked here: which of the frame-time conditions disagreed in 
 
 | | |
 |---|---|
-| NEW | `ArmorSlotPlan`, `ArmorSlotClient`, `ArmorSlotCoverage`, `ArmorPainterV2`, `WornDebugCommand` (`/nusmp debug worn`), self-test `visual.armor_slot_relics`, the tests above, the previews, lang fragment `tools/lang/armor_slot_relics.json` |
+| NEW | `ArmorSlotPlan`, `ArmorSlotClient`, `ArmorSlotCoverage`, `ArmorPainterV2`, `WornDebugCommand` (`/anime_multiverse debug worn`), self-test `visual.armor_slot_relics`, the tests above, the previews, lang fragment `tools/lang/armor_slot_relics.json` |
 | REPLACED | the blank armour texture of a helmet or boots relic with a worn model (a per-frame empty-model decision replaces it); the glow condition of the worn layer (now the `ArmorSlotPlan` verdict) |
 | KEPT | `ArmorPainter` (answers with `visual.upgrade` off, and is the base of the new painter), `ArmorPainter.blank()`, `WornLibrary.hidesArmor` (no longer used by the textures), every catalog, model and layer id, `WornPlan` and its reasons, the robes' and dungeon armour's paths |
 
 ## Unverified (nothing visual could be run)
 
-* In-game: that the crown now shows; which frame-time condition failed in the owner's world is unknown. After the fix the painted crown shows whenever the 3D model is not drawn, and `/nusmp debug worn` names the reason.
+* In-game: that the crown now shows; which frame-time condition failed in the owner's world is unknown. After the fix the painted crown shows whenever the 3D model is not drawn, and `/anime_multiverse debug worn` names the reason.
 * That `getHumanoidArmorModel` on `RelicArmorItem` is honoured by every renderer that draws armour (it is for the vanilla `HumanoidArmorLayer`, the player-model kit uses the same layer class); an armour layer of another mod that ignores it would draw the painted layer under a model.
 * A wearer farther than 32 blocks now shows the painted helmet and boots instead of nothing; the model replaces it when the wearer comes within range.
 * The quality of the repainted layers on a real body, in the game's lighting: only the unwrapped previews were seen.
 * The 3D add-on parts for armour (shoulder pieces, crests, cloak): not added; the worn library already hangs pauldrons and sleeves on CHEST looks and crowns and helmets on HEAD, and a new model pipeline for armour was out of reach in this pass.
-* Non-relic `nusmp` armour items that have both a library model and a real layer texture could draw twice for a player; not changed here (the robes and the dungeon armour already hand back an empty model).
+* Non-relic `anime_multiverse` armour items that have both a library model and a real layer texture could draw twice for a player; not changed here (the robes and the dungeon armour already hand back an empty model).
 * The existing `ArmorPainterTest` and `ArmorLooksTest` use `assertArrayEquals(int[])`, which the offline JUnit shim lacks; they were not run here, the painter's only change to them is one visibility modifier.

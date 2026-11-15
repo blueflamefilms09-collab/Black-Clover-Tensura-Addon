@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.84.1] — fixes for the id rename (the 3.84.0 build did not pass its tests)
+- FIXED: the rename of 3.84.0 shortened every `nusmp:` id by a hard-coded 6 letters in a few places (the id is now 17 letters): the relic, hero-kind, marker-kind and faction readers (`Relic`, `HeroKind`, `MarkerKind`, `FactionDef`, `FactionParser`) and the tests that read ids from data files now cut after the colon at the right place.
+- FIXED: the rename script had also rewritten the Java package inside test file paths (`"newuniverse", "nusmp"`, `newuniverse\\.nusmp` in patterns); those are back to the package name, so the source-scan tests find their files again (116 files).
+- FIXED: the data files under `docs/` that tests read (djinn roster, visual-upgrade lists, Rukh scope, the labyrinth wildcard example) use the new id; the wildcard example folder moved to `data/anime_multiverse`.
+- KEPT: everything of 3.84.0 (new id `anime_multiverse`, old ids and `/nusmp` still work).
+- Cost: none at run time.
+
 ## [3.84.0] — the mod id is now `anime_multiverse`
 - REPLACED (asked for: "this should be the new id anime_multiverse"): the mod id `nusmp` became `anime_multiverse`: the mod id in `neoforge.mods.toml`, every registry namespace (items, blocks, entities, skills, advancements ... `anime_multiverse:name`), the resource folders (`assets/anime_multiverse`, `data/anime_multiverse`), the language-key segment (`item.anime_multiverse.x`), the mixin config, the command root (`/anime_multiverse ...`) and the debug system properties. Done by `tools/rename_modid.py` (51,000 places in 7,000 files, repeatable).
 - NEW (so nothing saved is lost): `migrate/LegacyId` plus a `ResourceLocation` mixin read any id written with the old namespace as the new one, so saved items, skills, components and attributes, data packs and advancement progress still resolve. The old command root `/nusmp ...` still works as an alias of the new one.

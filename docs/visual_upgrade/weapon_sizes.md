@@ -10,7 +10,7 @@ Owner report: the dagger is tiny in first and third person, and the katanas look
 * The 36 dark Djinn weapons: valefor (daggers), glasya_labolas (claws) and seere (sabre) are 2.3 to 4 blocks long and 0.1 to 2 blocks wide, not slivers; unchanged. Demon-Slayer is a longsword-class mesh, unchanged.
 
 ## What was built
-`tools/relics/weapon_sizes.py` writes thickened COPIES (old files stay) into `weapon_meshes_sz/`, `weapon_meshes_sz/up/`, `weapon_meshes_vu_sz/` (with their level-of-detail meshes). The renderer prefers a copy when it exists (`WeaponSizeRule.szPath`, one hook each in `WeaponRenderer.read` and `VuRenderer.load`); deleting a copy restores the old look. Rule numbers: `assets/nusmp/weapon_sizes.json`.
+`tools/relics/weapon_sizes.py` writes thickened COPIES (old files stay) into `weapon_meshes_sz/`, `weapon_meshes_sz/up/`, `weapon_meshes_vu_sz/` (with their level-of-detail meshes). The renderer prefers a copy when it exists (`WeaponSizeRule.szPath`, one hook each in `WeaponRenderer.read` and `VuRenderer.load`); deleting a copy restores the old look. Rule numbers: `assets/anime_multiverse/weapon_sizes.json`.
 * Cross section scaled about each slice's own centre line (a curved katana stays curved) by a smooth profile handle, guard, blade with a short collar. Blade at least 1/8 block (0.125) wide in first person and 0.11 in third person, spine at least 0.05 (dagger) / 0.06 (katana) apparent, handle at least 0.10 / 0.11, guard at least 1.25 x the blade base. Quads crossing a knot are cut first. Body, void, glow and vein layers only; halos, flares and orbiting groups are untouched.
 * Daggers: length scaled about the grip to 0.68 blocks third person (was 0.50 to 0.62), first-person scale 0.775 with a re-anchored translation (first-person length 0.62 blocks, was 0.27 to 0.50).
 * 24 ids (the two fairy gauntlets are excluded: wide by design), 28 meshes: old, `up` (Kusanagi, twin fangs), `vu` (Void Origin Katana, primordial hearth blade).
@@ -18,7 +18,7 @@ Owner report: the dagger is tiny in first and third person, and the katanas look
 ## NEW / REPLACED / KEPT
 | | |
 |---|---|
-| NEW | `weapon_meshes_sz*` copies, `assets/nusmp/weapon_sizes.json`, `visual/sizes/WeaponSizeRule`, self-test `visual.weapon_sizes`, tests, tools, previews |
+| NEW | `weapon_meshes_sz*` copies, `assets/anime_multiverse/weapon_sizes.json`, `visual/sizes/WeaponSizeRule`, self-test `visual.weapon_sizes`, tests, tools, previews |
 | REPLACED (look) | the drawn mesh of every listed dagger/katana; first-person display of 12 dagger jsons (marker `nusmp_weapon_sizes`) |
 | KEPT | every old mesh, skin, id, stat, engraving, Better Combat file, class table, katana lengths and first-person scales, upgrade effects |
 

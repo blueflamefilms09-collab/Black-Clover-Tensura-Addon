@@ -20,7 +20,7 @@ import weapon_classes as wc          # noqa: E402
 import weapon_orientation as wo      # noqa: E402
 
 ROOT = wc.ROOT
-JAVA = os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "anime_multiverse", "client", "relics", "item", "WeaponClasses.java")
+JAVA = os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "nusmp", "client", "relics", "item", "WeaponClasses.java")
 SC = 0.02
 
 

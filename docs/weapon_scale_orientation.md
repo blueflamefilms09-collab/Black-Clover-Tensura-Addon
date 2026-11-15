@@ -4,7 +4,7 @@ The owner reported that many weapons, relics and items were smaller than they sh
 and that some weapons faced the wrong way (Sorrow's Edge: the crescent bulged toward the player). This page is the one rule for how a baked weapon mesh
 is sized and oriented, the tools that audit and fix every mesh, and the runtime safety net that catches any weapon added later.
 
-Everything here is about the 3D meshes in `assets/nusmp/weapon_meshes/<id>.txt` (the base weapons of `WeaponRenderer.BASE_WEAPONS` and every `model3d`
+Everything here is about the 3D meshes in `assets/anime_multiverse/weapon_meshes/<id>.txt` (the base weapons of `WeaponRenderer.BASE_WEAPONS` and every `model3d`
 relic, state meshes included). The inventory icon (the old 16 x 16 sprite) is untouched.
 
 ## 1. The orientation convention
@@ -35,7 +35,7 @@ Sizes are **apparent blocks**: the mesh length along its axis, `(ymax - ymin) * 
 (0.85 for most; some relics carry 1.3 to 1.6). 1 block = 1 metre, Steve is 1.8. The head size of an axe or hammer is the widest slice of the mesh across,
 also times that scale.
 
-The table (`tools/relics/weapon_classes.json`, the game's copy `assets/nusmp/weapon_classes.json`, the built-in fallback in `WeaponClasses.java`; one test
+The table (`tools/relics/weapon_classes.json`, the game's copy `assets/anime_multiverse/weapon_classes.json`, the built-in fallback in `WeaponClasses.java`; one test
 keeps the three equal):
 
 | class | length (blocks) | head min | grip |
@@ -156,7 +156,7 @@ If you forget, the runtime safety net (section 7) still catches the worst cases.
 
 ## 6. The other views of a corrected weapon
 
-* **Inventory / GUI**: the old icon (`nusmp:item/<id>_icon`), unchanged.
+* **Inventory / GUI**: the old icon (`anime_multiverse:item/<id>_icon`), unchanged.
 * **First person**: `display_presets.py` limits the apparent length to 1.0 block so the tip never goes through the camera, with the grip kept where a sprite
   sword's hilt is; `client/relics/item/OversizeGuard` is the render-time guard for a json the tool has not processed. The enlarged weapons are processed again
   (the manifest `tools/relics/display_presets_manifest.json` is rewritten). A head turned to -x now points away from the camera, so it no longer fills the screen.
@@ -169,13 +169,13 @@ If you forget, the runtime safety net (section 7) still catches the worst cases.
 
 `WeaponRenderer.mesh(id)` runs `WeaponNormaliser` once on every freshly loaded mesh (re-run after a resource reload):
 
-1. it reads the id's class from `assets/nusmp/weapon_classes.json` (else the keyword guess), the third-person display scale and the `"nusmp_display_preset": "manual"`
+1. it reads the id's class from `assets/anime_multiverse/weapon_classes.json` (else the keyword guess), the third-person display scale and the `"nusmp_display_preset": "manual"`
    marker from the item's model json (a state mesh reads its base id's);
 2. a mesh with `orient manual` or a manual model json is **never touched**; `orient <rotZ degrees> <flipX 0|1>` applies an explicit turn / mirror at load and the net still runs;
 3. **tip down** (the `place` angle points down, or a head-heavy class with its weight at the butt): turned over;
 4. **head toward the player** (a handed class with mass on +x): mirrored across its haft axis, quad winding reversed so the glow layer is not culled;
 5. **too small**: apparent length below 60 % of the class minimum (a held item: below 60 % of 0.40): scaled up to the minimum about the grip, at most 4 times;
-6. one log line per corrected mesh: `[nusmp] weapon mesh <id> (<class>) normalised: <what>`.
+6. one log line per corrected mesh: `[anime_multiverse] weapon mesh <id> (<class>) normalised: <what>`.
 
 It changes nothing on the shipped meshes (a test runs it over all of them). Fed the 1.28 meshes it would have mirrored Sorrow's Edge, Astralaria, the Exile
 axe, the Leviathan Axe, the Charity axe, Hunger and the Doom Hammer and raised the whips; it would not have enlarged the heads (it never invents a bigger head: the
@@ -249,7 +249,7 @@ generator's own `grip` line, if it wrote one, is replaced and restored on undo).
 flip in both places).
 
 **Runtime** (`WeaponNormaliser`): a mesh with `grip > 0.5`, or (no directive) the geometry rule above, is turned over along its length at load with one log line
-`[nusmp] weapon mesh <id> (<class>) normalised: grip at the far end: turned over along its length`. A mesh with a `grip` line at or below 0.5 is never judged by the geometry.
+`[anime_multiverse] weapon mesh <id> (<class>) normalised: grip at the far end: turned over along its length`. A mesh with a `grip` line at or below 0.5 is never judged by the geometry.
 `orient manual` still switches the whole net off. The log line, the `grip` directive parse and the new `normalise(..., gripDirective)` overload were type-checked against stubs only.
 
 ## 10.3 The new size table (apparent blocks: mesh length x the third-person scale)

@@ -87,7 +87,7 @@ public enum HeroKind {
     /** The weapon with this item id (registry path, with or without the {@code anime_multiverse:} prefix), or null. */
     public static HeroKind byItemId(String id) {
         if (id == null) return null;
-        String path = id.startsWith("anime_multiverse:") ? id.substring(6) : id;
+        String path = id.startsWith("anime_multiverse:") ? id.substring(17) : id;
         for (HeroKind k : values()) if (k.itemId.equals(path)) return k;
         return null;
     }

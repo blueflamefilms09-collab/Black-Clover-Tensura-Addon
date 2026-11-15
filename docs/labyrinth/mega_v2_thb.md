@@ -16,8 +16,8 @@ checks, the survival-rule checker). Section 7 lists exactly what is unverified. 
 | Crystal Geode | `CRYSTAL_GEODE(3, 3, Route.HOLY)` | #C9A0FF | 0.95 | +2 | 6 | 13 entries | 60 / 12 / 16 + 16 / 16 |
 | Sunken Temple | `SUNKEN_TEMPLE(3, 3, Route.HOLY)` | #3FB8B0 | 0.9 | 0 | 6 | 14 entries | 60 / 12 / 16 / 16 |
 
-Files (all new unless marked): `data/nusmp/mega/themes/<id>.json`, `data/nusmp/mega/encounters/<id>.json`, `data/nusmp/mega/template_themes/<id>.json`,
-`data/nusmp/structure/mega/{hall,set,puzzle,trial,treasure}/<id>_*.nbt` (24 templates), `tools/labyrinth/mega_theme_kit.py`, `tools/labyrinth/gen_mega_theme_<id>.py` (four generators),
+Files (all new unless marked): `data/anime_multiverse/mega/themes/<id>.json`, `data/anime_multiverse/mega/encounters/<id>.json`, `data/anime_multiverse/mega/template_themes/<id>.json`,
+`data/anime_multiverse/structure/mega/{hall,set,puzzle,trial,treasure}/<id>_*.nbt` (24 templates), `tools/labyrinth/mega_theme_kit.py`, `tools/labyrinth/gen_mega_theme_<id>.py` (four generators),
 `src/test/java/.../labyrinth/mega/gen/TemplateThemesDataTest.java`, the lang fragment (kept outside the repo for the lead to merge), this document. Edited: `RegionTheme.java` (four appended
 lines), eleven faction files (`themeWeights`), `relic_themes.json` (section 6.3), three data tests (lists of shipped themes), and the two generated files `worldgen/template_pool/mega/side.json`
 and `src/test/resources/mega/catalog.json` (regenerated; the lead regenerates once more after the merge).
@@ -39,7 +39,7 @@ tree, two flights and a bridge in the coral atrium, two curved stairs plus four 
 
 ### 1.2 What a theme is made of
 
-1. **Palette** (`themes/<id>.json`): the nine block-family slots the `nusmp:region_theme` processor swaps. Every room is built in the palette constants of `mega_lib` (deepslate family and dark oak
+1. **Palette** (`themes/<id>.json`): the nine block-family slots the `anime_multiverse:region_theme` processor swaps. Every room is built in the palette constants of `mega_lib` (deepslate family and dark oak
    family), so the same template is re-skinned per sector; a room therefore uses no architecture block outside the palette (`mega_check` warns about it). The character of a theme is the free vanilla
    blocks on top of the palette (glass, froglights, coral, amethyst, copper, lava behind glass ...), which the processor does not touch.
 2. **Rooms** (`structure/mega/<kind>/<id>_<room>.nbt`): built by `tools/labyrinth/gen_mega_theme_<id>.py`, claimed for the theme by `template_themes/<id>.json` (a template whose id starts with
@@ -160,7 +160,7 @@ Keywords (12): fairy, faerie, pixie, wisp, trickster, quickling, glimmer, twilig
 
 Default faction `beast`, budget scale 1.0, roll bonus 0 (lively, not hostile). The table is small, quick, bright things that are a nuisance alone and a danger in a crowd, with beasts and satyrs for
 the real fights and a hag, an illusioner and a Wild Hunt for the tricks. Light and dark steer it: wisps only come to a party with no light, the illusioner only to a bright one, the one brute to noise.
-Seven entries carry a message (lang keys `message.nusmp.mega.enc.feywild_grove.<id>`). Bands: minor 2, standard 7, hard 3, ambush 2.
+Seven entries carry a message (lang keys `message.anime_multiverse.mega.enc.feywild_grove.<id>`). Bands: minor 2, standard 7, hard 3, ambush 2.
 
 | entry | band | weight | creatures | when / where |
 |---|---|---|---|---|
@@ -169,7 +169,7 @@ Seven entries carry a message (lang keys `message.nusmp.mega.enc.feywild_grove.<
 | briar_wolves | standard | 12 | tensura:direwolf x2-4 | 1 side(s) |
 | giant_bees | standard | 10 | tensura:army_wasp x3-5 | threat >= 2; 2 side(s) |
 | satyr_revel (message) | standard | 10 | vindicator x2-3, vex x1-2 | threat >= 2 |
-| dryad_wardens | standard | 14 | nusmp:living_armor x2-3 | - |
+| dryad_wardens | standard | 14 | anime_multiverse:living_armor x2-3 | - |
 | will_o_wisps (message) | standard | 8 | vex x3-4 | threat >= 2; needs dark; 2 side(s) |
 | briar_snare (message) | standard | 8 | cave_spider x3-5, spider x1-2 | 3 side(s); range 10-22; hunt 500 |
 | mirror_court | standard | 8 | illusioner x1, vex x2-3 | threat >= 3; needs lit |
@@ -184,7 +184,7 @@ id exists; `EncounterDataTest` resolves the first creature of each entry.)
 
 ### 2.7 Weights (`template_themes/feywild_grove.json`)
 
-Claims `hall`, `set`, `puzzle`, `treasure` (`nusmp:mega/<folder>/feywild_grove_`), weights 60 / 12 / 16 / 16. WHY these numbers and what they mean: section 6.1.
+Claims `hall`, `set`, `puzzle`, `treasure` (`anime_multiverse:mega/<folder>/feywild_grove_`), weights 60 / 12 / 16 / 16. WHY these numbers and what they mean: section 6.1.
 
 ## 3. Dwarven Forgehold
 
@@ -272,17 +272,17 @@ that was never put out, raiders from the deeps, a rebel faction and the stone it
 | cave_bats | minor | 14 | tensura:giant_bat x2-3 | threat <= 8 |
 | hold_sentries | minor | 14 | #room faction x1-2 | - |
 | goblin_raiders | standard | 12 | #goblin x3-5 | - |
-| forge_armour | standard | 12 | nusmp:living_armor x2-3 | - |
+| forge_armour | standard | 12 | anime_multiverse:living_armor x2-3 | - |
 | ember_spirits | standard | 10 | #elemental x2-3 | threat >= 2 |
 | forge_salamanders | standard | 8 | tensura:salamander x1-2, magma_cube x2-3 | threat >= 2 |
 | rebel_duergar (message) | standard | 10 | vindicator x2-3, pillager x1 | threat >= 2 |
 | war_gnome_band | standard | 8 | tensura:war_gnome x2-3 | threat >= 3 |
 | infested_ore (message) | standard | 8 | silverfish x4-6, cave_spider x2-3 | 3 side(s); range 10-22; hunt 500 |
 | stone_giant | hard | 10 | iron_golem x1 | threat >= 3; needs noisy |
-| smithy_awakens (message) | hard | 8 | nusmp:living_armor x1-2, blaze x2-3 | threat >= 3; 2 side(s); range 10-18; hunt 300 |
+| smithy_awakens (message) | hard | 8 | anime_multiverse:living_armor x1-2, blaze x2-3 | threat >= 3; 2 side(s); range 10-18; hunt 300 |
 | dark_wings | hard | 6 | tensura:giant_bat x4-5, magma_cube x2 | threat >= 4; needs dark |
 | deeps_horde (message) | ambush | 10 | #goblin x6-10 | threat >= 3; 3 side(s) |
-| hold_in_arms (message) | ambush | 8 | iron_golem x1, nusmp:living_armor x2-3, #elemental x2 | threat >= 5; party >= 2; 2 side(s) |
+| hold_in_arms (message) | ambush | 8 | iron_golem x1, anime_multiverse:living_armor x2-3, #elemental x2 | threat >= 5; party >= 2; 2 side(s) |
 
 ### 3.7 Weights (`template_themes/dwarven_forgehold.json`)
 
@@ -373,7 +373,7 @@ brute, light draws the sprites. Seven entries carry a message. Thirteen entries:
 | echo_wings (message) | standard | 8 | tensura:giant_bat x3-4, bat x3-4 | threat >= 2; needs noisy |
 | prism_sprites | standard | 8 | vex x3-4 | needs lit; 2 side(s) |
 | umber_brute (message) | hard | 10 | ravager x1 | threat >= 3; needs noisy |
-| living_statues (message) | hard | 8 | iron_golem x1, nusmp:living_armor x1-2 | threat >= 3; 2 side(s); range 10-18; hunt 300 |
+| living_statues (message) | hard | 8 | iron_golem x1, anime_multiverse:living_armor x1-2 | threat >= 3; 2 side(s); range 10-18; hunt 300 |
 | cube_flood (message) | hard | 8 | #slime x5-7, #elemental x2 | threat >= 4; 2 side(s) |
 | shard_storm (message) | ambush | 10 | vex x5-7, silverfish x5-8 | threat >= 3; 3 side(s) |
 | geode_collapse (message) | ambush | 8 | ravager x1, #construct x2-3, #slime x3-4 | threat >= 5; party >= 2; 2 side(s) |
@@ -464,14 +464,14 @@ message.
 | drowned_acolytes | minor | 14 | drowned x1-2 | - |
 | pool_crawlers | minor | 12 | #aquatic x2-3 | threat <= 8 |
 | temple_drowned | standard | 14 | drowned x3-5 | - |
-| prismarine_sentinels | standard | 12 | nusmp:living_armor x2-3 | - |
+| prismarine_sentinels | standard | 12 | anime_multiverse:living_armor x2-3 | - |
 | reef_lizardmen | standard | 10 | tensura:lizardman x2-3 | threat >= 2 |
 | tide_spirits | standard | 8 | #elemental x2-3 | threat >= 2; needs lit |
 | lost_choir (message) | standard | 8 | #undead x2-3 | threat >= 2 |
 | sunken_priests | standard | 8 | evoker x1, vex x2-3 | threat >= 3 |
 | brine_slimes | standard | 8 | #slime x3-5 | 2 side(s) |
 | colossus_awakes (message) | hard | 10 | iron_golem x1 | threat >= 3; needs noisy |
-| guarded_shrine | hard | 8 | nusmp:living_armor x1-2, #aquatic x2-3 | threat >= 3; 2 side(s); range 10-18; hunt 300 |
+| guarded_shrine | hard | 8 | anime_multiverse:living_armor x1-2, #aquatic x2-3 | threat >= 3; 2 side(s); range 10-18; hunt 300 |
 | deep_hunt (message) | hard | 6 | #aquatic x3-4, drowned x2 | threat >= 4; needs dark |
 | flood_tide (message) | ambush | 10 | #aquatic x5-8, drowned x3-5 | threat >= 3; 3 side(s) |
 | drowned_choir (message) | ambush | 8 | evoker x1, vex x3-5, drowned x4-6 | threat >= 5; party >= 2; 2 side(s) |
@@ -557,8 +557,8 @@ Reverting any row is a one-line edit.
 
 ### 6.4 Lang fragment (`$S/arc/frag/thb.lang.json`, 32 keys, flat, ASCII)
 
-`message.nusmp.mega.mgd.theme.<id>` (the name, read by `LabyrinthGuardianEntity`), `message.nusmp.mega.mgd.theme.<id>.flavour` (one line each, the style of the other builders' fragments), and the 24
-encounter messages `message.nusmp.mega.enc.<table>.<entry>` named by the `message` fields of the encounter files (feywild 7, dwarven 5, crystal 7, sunken 5). The script that wrote it checks the keys
+`message.anime_multiverse.mega.mgd.theme.<id>` (the name, read by `LabyrinthGuardianEntity`), `message.anime_multiverse.mega.mgd.theme.<id>.flavour` (one line each, the style of the other builders' fragments), and the 24
+encounter messages `message.anime_multiverse.mega.enc.<table>.<entry>` named by the `message` fields of the encounter files (feywild 7, dwarven 5, crystal 7, sunken 5). The script that wrote it checks the keys
 against the encounter files, so a text without an encounter or an encounter without a text stops it. The lead merges the file into `en_us.json`; none of the 32 keys exists there or in another
 fragment.
 

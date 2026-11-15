@@ -10,8 +10,8 @@ loop per road, and their own loops for safe rooms, the Hub and rift pockets, all
 |---|---|
 | NEW | `audio/music/*` (pure catalogue, rules, cross-fade director, sound registry, state packet, server evaluation, self-test) |
 | NEW | `client/music/*` (the engine, the sound instance, the client state, the client config `nusmp-music-client.toml`) |
-| NEW | 25 sound events `nusmp:music.<...>` and their `sounds.json` entries (appended after the mob voices) |
-| NEW | 25 loops `assets/nusmp/sounds/music/*.ogg` (7,209,097 bytes = 6.87 MiB in total), the generator `tools/audio/gen_music.py` |
+| NEW | 25 sound events `anime_multiverse:music.<...>` and their `sounds.json` entries (appended after the mob voices) |
+| NEW | 25 loops `assets/anime_multiverse/sounds/music/*.ogg` (7,209,097 bytes = 6.87 MiB in total), the generator `tools/audio/gen_music.py` |
 | NEW | lang fragment `tools/lang/themed_music.json` (the track titles of the optional "now playing" line) |
 | REPLACED | nothing. The vanilla music is only held back while a themed loop plays, and only when the player leaves `stopVanilla` on |
 | KEPT | `ModSounds` (the mob voices), `NUSounds`, every older `sounds.json` entry, the theme ambience (`ThemeAmbient`) |
@@ -98,11 +98,11 @@ per loop, and the reverb is a circular convolution, so the last sample runs stra
 
 The tracks are plain files, so real music needs **no code change**:
 
-1. Make a resource pack (or edit the mod's assets) with `assets/nusmp/sounds/music/<track>.ogg` using the same names as below. Mono or stereo both work; mono is smaller.
+1. Make a resource pack (or edit the mod's assets) with `assets/anime_multiverse/sounds/music/<track>.ogg` using the same names as below. Mono or stereo both work; mono is smaller.
    A track is looped as a whole, so cut the file so that its end runs into its start (or accept a short gap).
-2. To use several files for one situation, or a different file name, ship your own `assets/nusmp/sounds.json` entry for the event (the entries of one event from several packs
+2. To use several files for one situation, or a different file name, ship your own `assets/anime_multiverse/sounds.json` entry for the event (the entries of one event from several packs
    are combined, so add `"replace": true` to yours to make it the only one). Keep `"stream": true` for anything longer than a few seconds. A looping instance picks one of the listed files each time it starts.
-3. Event names (`nusmp:<event>`): `music.<family>.explore`, `music.<family>.battle` for the ten families (stone, storm, blood, flame, frost, verdant, spatial, holy, deep,
+3. Event names (`anime_multiverse:<event>`): `music.<family>.explore`, `music.<family>.battle` for the ten families (stone, storm, blood, flame, frost, verdant, spatial, holy, deep,
    crypt), `music.boss.holy`, `music.boss.abyssal`, `music.safe`, `music.hub`, `music.rift`. File names are `<family>_explore`, `<family>_battle`, `boss_holy`, `boss_abyssal`,
    `safe`, `hub`, `rift`.
 4. To change which theme uses which family, edit the table in `audio/music/MusicCatalog.java` (`THEME_FAMILY`); to change the pieces themselves, edit the table at the top of
@@ -131,7 +131,7 @@ Nothing can be run in a game here, and nobody has listened to the loops.
 * **The sound engine re-reading the volume of a tickable instance every tick**, the start-silent behaviour, and the re-start after a sound reload (F3+S): written to the
   documented behaviour of the sound engine, not run.
 * **Server cost on a crowded floor.** One entity scan per player per second is the same order as the existing theme ambience; not measured.
-* **What counts as "a boss" and "hunting".** The boss test is `BossIdentity.isBoss` (the mod's bosses and the `nusmp:boss` tag); a Tensura or vanilla boss does not trigger the
+* **What counts as "a boss" and "hunting".** The boss test is `BossIdentity.isBoss` (the mod's bosses and the `anime_multiverse:boss` tag); a Tensura or vanilla boss does not trigger the
   boss loop. Hunters are monsters tagged as dungeon monsters (or `Enemy`) that have the player as their target; a mob without a target AI never counts.
 * **Rift pockets**: detected by their coordinates (`RiftRules.slotAt`); pockets built by other means would sound as the floor they are in.
 * **The dedicated server** needs no client class (the packet handler names the client class inside a lambda, like the floor card); this was written to that rule, not run.

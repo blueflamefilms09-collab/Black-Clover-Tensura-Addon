@@ -58,12 +58,12 @@ duelist, a wyrm-priest, a hell-hound handler or a golem built like a man are peo
 
 ## 4. The looks and the loader
 
-`assets/nusmp/playermodel/looks_dungeon.json` has the format of `looks.json` (skin, slim, glow, hair, hair_color, scale, extras, hold_r / hold_l) plus **`stance`** (new, optional, `PlayerLook.stance`).
+`assets/anime_multiverse/playermodel/looks_dungeon.json` has the format of `looks.json` (skin, slim, glow, hair, hair_color, scale, extras, hold_r / hold_l) plus **`stance`** (new, optional, `PlayerLook.stance`).
 
 | id | what | scale |
 |---|---|---|
 | `dg_<archetype>` (55) | the named families (section 5) | the kit's model height over 1.875 |
-| `foundry_<id>` (314) | one Foundry person | model height times the mob's size over 1.875 (`assets/nusmp/foundry/index.json`); the body divides the entity's SCALE attribute out (the hitbox follows the attribute, the look carries the height) |
+| `foundry_<id>` (314) | one Foundry person | model height times the mob's size over 1.875 (`assets/anime_multiverse/foundry/index.json`); the body divides the entity's SCALE attribute out (the hitbox follows the attribute, the look carries the height) |
 | `living_armor`, `floor_warden` | the armoured bodies; the Warden / Guardian size comes from the hitbox (`PlayerBodies.fit` over the attribute) | 1.95 / 3.2 high |
 | `goliath`, `goliath_form2` | the stone giant and the Gates open | 6.0 high, followed to the hitbox |
 | `corpse_<name>_s<stage>` (12) | Jimmy 1.95, Alfredo 2.55, Carl 1.9 blocks, four stages of decay (stage 0..3 as the Soul Corpse mark carries it) | from the entity's height |
@@ -72,7 +72,7 @@ duelist, a wyrm-priest, a hell-hound handler or a golem built like a man are peo
 **The loader.** `PlayerLookTables.FILES` lists the tables in merge order (`looks.json`, `looks_abyssal.json`, `looks_dungeon.json`, and `looks_decennial.json`, a name reserved for the 200 Decennial bosses of
 the next builder: the file is optional and is picked up when it exists); `PlayerAssets.loadLooks` reads each through the resource manager (the first is required, the others optional), and
 `PlayerLookTables.merge` adds a look only if its id is not there yet and reports a duplicate. `DungeonAudit`, the JUnit tests and `render.playermodel2` read the same files through the class path. A boss
-profile's `look` (`data/nusmp/mega/dnd_bosses/**`, the field of 1.94.0 that the Decennial builder reuses) reaches the screen like this: the server writes the id into the Guardian's synced data (`syncLook`), the
+profile's `look` (`data/anime_multiverse/mega/dnd_bosses/**`, the field of 1.94.0 that the Decennial builder reuses) reaches the screen like this: the server writes the id into the Guardian's synced data (`syncLook`), the
 body asks `DungeonLooks.guardian(lookId, phase)`, which answers `AbyssalLooks.kitId(look, phase)` for a humanoid look, the Warden's look for no look or an unknown one (the old behaviour), and "" for a creature
 look (the kit steps aside, `AbyssalRenderer` draws it). A new boss profile of the next builder that names one of the 22 looks needs nothing here; one that names a NEW humanoid look needs its three entries in
 `looks_abyssal.json` (or in any later table) and `render.playermodel2` fails until they are there.
@@ -182,7 +182,7 @@ the armour layers drawing the equipped armour (wide and slim models; a Living Ar
   creature goes into `foundry_class.LEGACY` with a reason). `render.playermodel2` fails until the mob is one or the other.
 * **A new family**: one line in `tools/dungeon_skins/archetypes.py` (the roster's language) and, if it needs its own wear, a recipe in `recipes.py`; run the `archetypes` step.
 * **A boss of the Decennial layer**: name an existing look in the profile's `look` (it is drawn as that boss). A NEW humanoid look is the three entries `abyssal_<look>_p1..p3` of the kit's format in
-  `playermodel/looks_abyssal.json` (or `looks_decennial.json`) plus the look's row in `assets/nusmp/abyssal/looks.json` (`kind: humanoid`); a new creature look is a geo model and needs nothing in the kit.
+  `playermodel/looks_abyssal.json` (or `looks_decennial.json`) plus the look's row in `assets/anime_multiverse/abyssal/looks.json` (`kind: humanoid`); a new creature look is a geo model and needs nothing in the kit.
 * **A switch back**: set `playermodel.dungeon = false` in `config/nusmp-playermodel-client.toml`.
 
 ## 12. Not verified (nothing visual could be run)

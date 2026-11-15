@@ -16,7 +16,7 @@ import sys
 sys.dont_write_bytecode = True
 HERE = os.path.dirname(os.path.abspath(__file__))
 REPO = os.path.abspath(os.path.join(HERE, "..", ".."))
-OUT = os.path.join(REPO, "src", "main", "java", "com", "newuniverse", "anime_multiverse", "client", "remodel", "RemodelLooks.java")
+OUT = os.path.join(REPO, "src", "main", "java", "com", "newuniverse", "nusmp", "client", "remodel", "RemodelLooks.java")
 MANIFEST = os.path.join(REPO, "tools", "arc", "manifest.json")
 ARC = os.path.join(REPO, "tools", "arc")
 

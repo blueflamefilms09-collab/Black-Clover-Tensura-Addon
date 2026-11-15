@@ -14,7 +14,7 @@ ROOT = os.path.abspath(os.path.join(HERE, "..", ".."))
 sys.path.insert(0, os.path.join(ROOT, "tools", "grimoire_preview"))
 import preview  # noqa: E402  (its render() draws the plan's quads with the real textures and tints)
 
-SRC = os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "anime_multiverse")
+SRC = os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "nusmp")
 OUT = os.path.join(ROOT, "build", "compat_codex")
 
 

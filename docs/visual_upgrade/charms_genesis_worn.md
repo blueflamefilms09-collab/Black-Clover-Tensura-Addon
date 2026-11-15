@@ -22,7 +22,7 @@ animation groups and ambient layers (`metrics.py`).
 
 | component | what is counted | before | after |
 |---|---|---|---|
-| mesh | quads of the models of the view | the library models: the shared parts of the older look | the upgrade models of `assets/nusmp/visual_upgrade/models` |
+| mesh | quads of the models of the view | the library models: the shared parts of the older look | the upgrade models of `assets/anime_multiverse/visual_upgrade/models` |
 | texture | painted texels | the atlas cells the quads' UVs touch x 32 x 32 (the shared 128 x 256 atlas, tinted by the palette) | the opaque texels of the item's own skin (God 512 x 512, Genesis 1024 x 1024) |
 | passes | draw passes the models use | solid, emissive (if a quad glows), shell rim (if a quad is shell) | skin, glow map, nebula/starfield (STAR quads), additive halo (HALO quads) |
 | ambient | ambient effect layers | none of the item's own; the grade layers every worn relic gets (rim, shimmer, motes, rune ring, particles, head halo, wearer shimmer; the halo band for Genesis) = 7 / 8 | those, plus the layers of the item's own fx file (geometry groups and particle layers) |
@@ -84,12 +84,12 @@ item, an fx file (ambient layers, ambient sound id), a line for each act in the 
   skies, voids) over the item's own tileable star texture, additive, scrolled by the clock. **Halo pass**: the HALO quads (rune rings, seals, ripples, flares, light shafts,
   portals; 16 soft-light shapes in the shared `textures/visual_upgrade/vu_fx.png`), additive, tinted by the colour slot of the quad, breathing. The tone of a halo quad is
   chosen by the generator from the palette so the sum of the layers does not burn white (`VU.tone`).
-* **Ambient layers** (`assets/nusmp/visual_upgrade/fx/<id>.json`): geometry layers are named animation groups of the model; particle layers are spawned by `VuFxClient`.
+* **Ambient layers** (`assets/anime_multiverse/visual_upgrade/fx/<id>.json`): geometry layers are named animation groups of the model; particle layers are spawned by `VuFxClient`.
   Every item has 9 to 16 (God) and 12 to 17 (Genesis); the tests require >= 3 (God) / >= 6 (Genesis), geometry and particles both.
 * **Idle animation**: 8 to 15 groups (God), 10 to 15 (Genesis) of the kinds bob, spin, sway, pulse, tumble (a new kind, `WornAnim`), orbit, wave.
 * **Equip (draw) animation**: the first-person model swells into the hand over 12 ticks (`VuFxClient.equipProgress`).
-* **Ambient sound id**: `nusmp:relic.ambient.<relic id>` in every fx file (a string only; the sound itself is another task).
-* **Signature act effect**: `data/nusmp/visual_upgrade/act_vfx.txt`, one line per act (or `*`), up to three effects of the mod's own VFX shapes with the item's colours,
+* **Ambient sound id**: `anime_multiverse:relic.ambient.<relic id>` in every fx file (a string only; the sound itself is another task).
+* **Signature act effect**: `data/anime_multiverse/visual_upgrade/act_vfx.txt`, one line per act (or `*`), up to three effects of the mod's own VFX shapes with the item's colours,
   fired by `RelicEngine.activate` after the act ran (`VuActVfx`; through `VfxSpawn`, so it is inside the effect-packet budget). Only shapes of a vetted list are allowed; none is a Time Magic
   or zone shape. The generator and the self-test check every key against the relic's real acts.
 * Swing trails do not apply: these are charms, a gauntlet, crowns and a crest, not weapons (Better Combat, engravings (rule 6) are weapon things).
@@ -98,7 +98,7 @@ item, an fx file (ambient layers, ambient sound id), a line for each act in the 
 
 | | |
 |---|---|
-| NEW | the 27 upgrade models x (hand, worn, lods) in `assets/nusmp/visual_upgrade/models`; 27 skins, glow maps, star textures and 54 lod skins in `textures/visual_upgrade`; the shared fx sheet; `overrides.txt`; the fx files; `act_vfx.txt`; the caps table; the client classes `client/relics/vu/*`, `relics/vu/*`; the draw passes of `WornLibDraw`; the `TUMBLE` animation; the options `visual.upgrade` and `visual.guiModel`; the generator `tools/visual_upgrade/charms_genesis_worn`; the tests; this doc |
+| NEW | the 27 upgrade models x (hand, worn, lods) in `assets/anime_multiverse/visual_upgrade/models`; 27 skins, glow maps, star textures and 54 lod skins in `textures/visual_upgrade`; the shared fx sheet; `overrides.txt`; the fx files; `act_vfx.txt`; the caps table; the client classes `client/relics/vu/*`, `relics/vu/*`; the draw passes of `WornLibDraw`; the `TUMBLE` animation; the options `visual.upgrade` and `visual.guiModel`; the generator `tools/visual_upgrade/charms_genesis_worn`; the tests; this doc |
 | REPLACED | the way these 27 relics are held and worn: the override table points them at the new models while `visual.upgrade` is on (default). The older models are not removed |
 | KEPT | every older model, the hand and worn catalogs (never edited by hand or by the new generator), the atlas, the hold-style table, ids, stats, acts, passives, the inventory sprites (the sprite stays the icon, rule 7), the item jsons. `visual.upgrade=false` is exactly the 1.101.x look |
 
@@ -121,7 +121,7 @@ item, an fx file (ambient layers, ambient sound id), a line for each act in the 
 | lod model | at most 15% of the vertices (measured 6% to 15%) | at most 15% (measured 6% to 14%) |
 | skin | 512 x 512 | 1024 x 1024 (lod skins 64 / 128) |
 
-The per-grade caps are `assets/nusmp/visual_upgrade/caps_charms_genesis_worn.txt` (this slice's own table; the shared 2600-vertex caps of `gen_worn_all.py` and `HandCatalogTest` are untouched
+The per-grade caps are `assets/anime_multiverse/visual_upgrade/caps_charms_genesis_worn.txt` (this slice's own table; the shared 2600-vertex caps of `gen_worn_all.py` and `HandCatalogTest` are untouched
 because the upgrade models live outside `relic_worn` and `relic_hand`; the other worn builder keeps its own table in its own file).
 
 ## Hooks in shared files (append-only)

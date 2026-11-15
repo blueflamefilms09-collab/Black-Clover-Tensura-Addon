@@ -11,12 +11,12 @@ Everything here is **new**, nothing replaces something that existed; no old file
 | | What | New or kept |
 |---|---|---|
 | New | `StockEntry.Kind.ITEM` (`"kind": "item"`), appended after `ROUTE_BOOK` and `SP_BOOK` (ordinal 2) | NEW |
-| New | `ShopType` (pure) and `data/nusmp/black_market/types.json` (the shop types) | NEW |
-| New | Per-shop files `data/nusmp/black_market/shops/<shop_id>.json` | NEW (no file ships in it yet; the witch's shelf stays in `stock.json`) |
+| New | `ShopType` (pure) and `data/anime_multiverse/black_market/types.json` (the shop types) | NEW |
+| New | Per-shop files `data/anime_multiverse/black_market/shops/<shop_id>.json` | NEW (no file ships in it yet; the witch's shelf stays in `stock.json`) |
 | New | `ShopPools` (server side pool cache), `ShopLoopGuard` (the no-profit-loop rule) | NEW |
 | New | The witch's 20 item lines in `stock.json`, with `"type": "general"` | NEW (the file existed with `"entries": []`) |
 | New | Self-tests `skillbook.shop.items` and `skillbook.shop.buy_item` | NEW |
-| New | Lang key `gui.nusmp.shop.blurb.stack` (appended) | NEW |
+| New | Lang key `gui.anime_multiverse.shop.blurb.stack` (appended) | NEW |
 | Kept | `ROUTE_BOOK` and `SP_BOOK` kinds, their parsing and every old key; an old stock file with book lines still loads (book lines still make no slot) | KEPT |
 | Kept | `stock.json` as the witch's file | KEPT |
 | Kept | `prices.json`, the sell side, the gold purse, the packets (`BuyPayload`, `ShopSnapshot` are unchanged on the wire) | KEPT |
@@ -61,7 +61,7 @@ A type allows an item when the item is **not** in `banned_ids` and one of these 
 ## 3. How a future NPC shop declares its type
 
 1. Add a type to `types.json` if none fits (or use one that exists).
-2. Create `data/nusmp/black_market/shops/<shop_id>.json` with `"type": "<type>"` and item lines. The shop id is the file name (lower-case snake_case, at most 32 characters). A line whose item or tag is outside the type is rejected at load with `... is not something a 'food' shop sells, skipped`, and it shows in `/multiverse skillbook shop status` and fails the self-test `skillbook.shop.stock` (which demands that the load had no problem).
+2. Create `data/anime_multiverse/black_market/shops/<shop_id>.json` with `"type": "<type>"` and item lines. The shop id is the file name (lower-case snake_case, at most 32 characters). A line whose item or tag is outside the type is rejected at load with `... is not something a 'food' shop sells, skipped`, and it shows in `/multiverse skillbook shop status` and fails the self-test `skillbook.shop.stock` (which demands that the load had no problem).
 3. The NPC asks `ShopService.shelf(server, "<shop_id>")` for its shelf. The slot ids of every shop except the witch carry the prefix `<shop_id>/`, so two shops never share a purchase counter; the roll also uses the prefixed id, so two shops with the same line stock different things.
 
 Not built here (the owner asked for data and the type system, not a second NPC): the NPC side that opens a shop other than the witch's (`ShopHook`, `witchNear`, and the buy/sell handlers still look for the Black Market witch). `shops/witch.json`, if a datapack adds one, takes the witch's place over `stock.json`.
@@ -105,7 +105,7 @@ The witch BUYS goods (`prices.json`) and now SELLS goods, so an item sold for le
 
 Flagships (gold frame): the high crystal and the nether star. Only vanilla and `c:` convention tags are named, never a guessed mod tag: Tensura has no item tags in this repo and its jar is not available here, so Tensura goods are explicit ids (all of them are already in `prices.json`, which the owner priced). Other mods' items arrive through the `c:` tags they fill.
 
-The upgrade-ritual catalysts (`tensura:low_magisteel_ingot`, `high_magisteel_ingot`, `mithril_ingot`, `adamantite_ingot`, `hihiirokane_ingot`, `nusmp:devils_core`, `nusmp:genesis_seed`) and the creative-only blocks (barrier, command blocks, spawners ...) are **banned** in the general type, so a broad tag can never put them on sale for gold.
+The upgrade-ritual catalysts (`tensura:low_magisteel_ingot`, `high_magisteel_ingot`, `mithril_ingot`, `adamantite_ingot`, `hihiirokane_ingot`, `anime_multiverse:devils_core`, `anime_multiverse:genesis_seed`) and the creative-only blocks (barrier, command blocks, spawners ...) are **banned** in the general type, so a broad tag can never put them on sale for gold.
 
 ## 7. Server friendliness (rule 9)
 
@@ -134,7 +134,7 @@ The perf budgets of the `perf` package do not apply (nothing is spawned, drawn i
 
 Pure JUnit (all pass): `ShopTypeTest`, `StockItemSchemaTest`, `StockItemBoardTest`, `ShopLoopGuardTest`, `ShopItemServerSafetyTest`, and the updated `ShopDataFilesTest`; the old `StockSchemaTest`, `StockBoardTest`, `StockRollTest`, `ShopRulesTest`, `PriceTableTest`, `BlackMarketWitchTest`, `WitchDialogueTest` and the client shop tests still pass untouched.
 
-Self-tests (real game, `/multiverse mega selftest`): `skillbook.shop.items` (every `minecraft:`, `c:` and `nusmp:` line has a non-empty pool, every pool item exists, is allowed, is not banned and sells above her buy price, the shelf is deterministic and moves with the period, no item twice, every offer is a legal stack) and `skillbook.shop.buy_item` (a moved price and a poor purse change nothing, a purchase hands over exactly the offer's stack and takes exactly its price, a sold-out offer is refused). The existing `skillbook.shop.stock` now also proves that `types.json` and the witch's file load with no problem. All three sit under the `skillbook` prefix that `SMOKE_EXPECT` already lists, so no new prefix is needed.
+Self-tests (real game, `/multiverse mega selftest`): `skillbook.shop.items` (every `minecraft:`, `c:` and `anime_multiverse:` line has a non-empty pool, every pool item exists, is allowed, is not banned and sells above her buy price, the shelf is deterministic and moves with the period, no item twice, every offer is a legal stack) and `skillbook.shop.buy_item` (a moved price and a poor purse change nothing, a purchase hands over exactly the offer's stack and takes exactly its price, a sold-out offer is refused). The existing `skillbook.shop.stock` now also proves that `types.json` and the witch's file load with no problem. All three sit under the `skillbook` prefix that `SMOKE_EXPECT` already lists, so no new prefix is needed.
 
 Caveats:
 

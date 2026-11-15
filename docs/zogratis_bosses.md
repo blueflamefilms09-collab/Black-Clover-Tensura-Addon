@@ -10,24 +10,24 @@ Sections: 0 platform note, 1 the four at a glance, 2 request-to-implementation m
 fight framework (Percentage Power System, Gates of Qliphoth, mana, Dark Disciples), 6 Dante, 7 Vanica, 8 Zenon (with Spatial Mana
 Domination), 9 Lucius, 10 world safety, 11 performance, 12 tuning guide, 13 wiring checklist, 14 unverified and not done.
 
-All Java paths below are relative to `src/main/java/com/newuniverse/nusmp/`, assets to `src/main/resources/assets/nusmp/`, tests to
+All Java paths below are relative to `src/main/java/com/newuniverse/nusmp/`, assets to `src/main/resources/assets/anime_multiverse/`, tests to
 `src/test/java/com/newuniverse/nusmp/`.
 
 ## 0. Platform note: the request was written for Bedrock, this repository is a NeoForge Java mod
 
 The request asked for "everything" in the shape of a Bedrock / Forge JSON addon (behaviour pack, resource pack, entity JSON, animation
 controllers, spawn rules, loot tables, a manifest, "where to place the files"). This repository is a **NeoForge 21.1.x / Minecraft 1.21.1 Java
-mod** (`modid nusmp`, Java 21), so there is no addon folder to drop files into: the "addon folder structure" **is this repository's own source
+mod** (`modid anime_multiverse`, Java 21), so there is no addon folder to drop files into: the "addon folder structure" **is this repository's own source
 tree**, and the deliverable is Java classes plus assets inside it. The equivalent of each Bedrock part:
 
 | Bedrock / JSON addon part | Where it is in this mod |
 |---|---|
 | Behaviour pack: entity definitions, components, events, AI goals | Java classes in `entity/zogratis/` (`ZogratisBoss` is the shared fight framework; one class per boss). Stats are `createAttributes()` in each boss class. |
 | Behaviour pack: scripts, animation controllers, state machines | The move scheduler and the state constants of `ZogratisBoss` (`STATE_COMBAT`, `STATE_CASTING`, `STATE_TRANSFORMING`, `STATE_RECOVERING`), plus the pure classes listed in section 3. |
-| Resource pack: geometry, animations, textures, render controllers | GeoLite assets `assets/nusmp/{geo,animations,textures}/entity/zogratis_*` built by `tools/gen_zogratis_triad.py` and `tools/gen_zogratis_lucius.py`, drawn by `client/zogratis/`. |
+| Resource pack: geometry, animations, textures, render controllers | GeoLite assets `assets/anime_multiverse/{geo,animations,textures}/entity/zogratis_*` built by `tools/gen_zogratis_triad.py` and `tools/gen_zogratis_lucius.py`, drawn by `client/zogratis/`. |
 | Spawn eggs, `spawn_rules` | Spawn eggs registered through `NUItems.ITEMS` (`ZogratisEntities`) and the command `/multiverse boss ...`. **No natural spawning** (there is no spawn rule). |
 | Loot tables | **None.** The bosses drop experience only (`xpReward = 1000` on the bosses). See section 14. |
-| `lang/*.lang` | 14 keys in `assets/nusmp/lang/en_us.json` (section 3.6). |
+| `lang/*.lang` | 14 keys in `assets/anime_multiverse/lang/en_us.json` (section 3.6). |
 | `manifest.json` | `META-INF/neoforge.mods.toml` and `gradle.properties` (`mod_version=1.20.0`), owned by the lead. |
 
 The two "reference image" sets supplied with the request (Lucius base and divine; the Triad close-ups and the Triad full body) were used only
@@ -144,7 +144,7 @@ framework.
 
 No `net.minecraft.client.*` import exists in `entity/zogratis/`.
 
-### 3.3 Assets: `assets/nusmp/`
+### 3.3 Assets: `assets/anime_multiverse/`
 
 | Path | What |
 |---|---|
@@ -173,7 +173,7 @@ No `net.minecraft.client.*` import exists in `entity/zogratis/`.
 
 ### 3.6 Lang keys
 
-The 14 keys were written as flat JSON fragments (in the session scratchpad, not in the repository) and are now merged into `assets/nusmp/lang/en_us.json`: `entity.nusmp.{dante_zogratis, vanica_zogratis, zenon_zogratis, lucius_zogratis, dark_disciple, blood_beast, zogratis_clone}`, `item.nusmp.{dante,vanica,zenon,lucius}_zogratis_spawn_egg`, `effect.nusmp.{megicula_decay, soul_paladin, purified}`. Boss speech, move names and chat warnings are literals in the code, not lang keys.
+The 14 keys were written as flat JSON fragments (in the session scratchpad, not in the repository) and are now merged into `assets/anime_multiverse/lang/en_us.json`: `entity.anime_multiverse.{dante_zogratis, vanica_zogratis, zenon_zogratis, lucius_zogratis, dark_disciple, blood_beast, zogratis_clone}`, `item.anime_multiverse.{dante,vanica,zenon,lucius}_zogratis_spawn_egg`, `effect.anime_multiverse.{megicula_decay, soul_paladin, purified}`. Boss speech, move names and chat warnings are literals in the code, not lang keys.
 
 ## 4. Spawning and server settings
 
@@ -597,7 +597,7 @@ The Zogratis package owns its own registrations; the shared files were edited by
 | `MultiverseCommands.java` | `ZogratisCommand.addTo(bossNode)` on the `boss` node (then `root.then(bossNode)`) |
 | `NUCreativeTab.java` | the four eggs from `ZogratisEntities.spawnEggs()` in the main tab |
 | `GrimoireBook.java` | In `castPage`: `SpellSeal.sealed(player)` refuses the cast with the seal's message (so the cube's refusal does not depend only on the `nusmp_sealed_until` flag it also writes). In the Devil Union entry: a player with `ZogratisEffects.PURIFIED` is refused ("Lucius's Soul Purge has stripped your devil's power for now.") |
-| `assets/nusmp/lang/en_us.json` | the 14 keys of section 3.6 |
+| `assets/anime_multiverse/lang/en_us.json` | the 14 keys of section 3.6 |
 
 Nothing else in the mod calls into the package. To find every hook, search the source for `entity.zogratis`.
 
@@ -620,7 +620,7 @@ Nothing else in the mod calls into the package. To find every hook, search the s
 **Not done / known gaps**
 
 - **Boss behaviour inside the game is unobserved.** The wiring of section 13 exists in the source, but nobody has spawned a boss in a running game yet.
-- **No loot, no advancement, no structure, no natural spawn.** The bosses give experience only; nothing was requested to drop, and nothing drops. A loot table (for example `data/nusmp/loot_table/entities/lucius_zogratis.json`) would be the next step.
+- **No loot, no advancement, no structure, no natural spawn.** The bosses give experience only; nothing was requested to drop, and nothing drops. A loot table (for example `data/anime_multiverse/loot_table/entities/lucius_zogratis.json`) would be the next step.
 - **Lucius has no Dark Disciples** (the request's shared "each boss can summon Dark Disciples" is met by the Triad; Lucius has Paladins and clones). The Astaroth-tinted Disciple skin and ability exist in the entity, but no boss summons it.
 - **The Soul Paladin model is not used.** `zogratis_soul_paladin` (geo, animation, textures) is generated and previewed, but a Paladin is the original mob with an effect, gold dust and a kneel; no client code redraws it in white and gold. The effect, its icon and the server-side particles are what the player sees.
 - **No sound events of their own:** the fights use vanilla sounds.

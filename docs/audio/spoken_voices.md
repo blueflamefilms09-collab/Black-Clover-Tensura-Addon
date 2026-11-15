@@ -25,7 +25,7 @@ The text of every message stays exactly as it was; the voice only adds sound.
 
 ## Files
 
-120 files under `assets/nusmp/sounds/voice/<role>/<id>.ogg`, 4,143,216 bytes in total (about 4.0 MB), 1.75 s to 7.0 s each. Chain: mono, 32 kHz, silence trimmed at both ends, `loudnorm` about -16 LUFS with true peak at or below -1.5 dB, libvorbis q3. `tools/audio/voice_report.json` lists seconds and bytes per line. The raw mp3 takes are not in the repository.
+120 files under `assets/anime_multiverse/sounds/voice/<role>/<id>.ogg`, 4,143,216 bytes in total (about 4.0 MB), 1.75 s to 7.0 s each. Chain: mono, 32 kHz, silence trimmed at both ends, `loudnorm` about -16 LUFS with true peak at or below -1.5 dB, libvorbis q3. `tools/audio/voice_report.json` lists seconds and bytes per line. The raw mp3 takes are not in the repository.
 
 ## Voices (ElevenLabs ids)
 

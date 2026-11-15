@@ -22,7 +22,7 @@ Everything is made by two Python files, deterministic and idempotent (a second r
 
 | file | why |
 |---|---|
-| `src/main/resources/assets/nusmp/weapon_meshes/<id>.txt` | The 3D model drawn in the hand by `WeaponRenderer`: quads with smoothed per-vertex normals (`qn` lines), the `place` line (where the butt sits on the item's diagonal and how big the mesh is), a `glow` line (white tint, slow pulse 0.45 to 1.0), an explicit `grip` line (the share of the length at which the hand holds it) and `# part` lines naming each part. |
+| `src/main/resources/assets/anime_multiverse/weapon_meshes/<id>.txt` | The 3D model drawn in the hand by `WeaponRenderer`: quads with smoothed per-vertex normals (`qn` lines), the `place` line (where the butt sits on the item's diagonal and how big the mesh is), a `glow` line (white tint, slow pulse 0.45 to 1.0), an explicit `grip` line (the share of the length at which the hand holds it) and `# part` lines naming each part. |
 | `textures/entity/weapon/<id>.png` | The painted skin, 512 x 512 (UVs are in the renderer's 128 space, so the file may be any multiple). |
 | `textures/entity/weapon/<id>_glow.png` | The second skin, drawn additively on top: the gem, the engraved lines, edge hairlines; this is what shines. Dark where nothing glows. |
 | `textures/item/<id>.png` | The 16 x 16 sprite (inventory icon), built by hand-written pixel code from primitives (no downscaled render), butt low left and tip up right, one dark outline pixel, the gem the most saturated spot. |
@@ -161,10 +161,10 @@ The seven weapons weigh about 4.2 MB in the repository (meshes 2.85 MB of text, 
 
 1. **Class table.** Merge `weapons` of `tools/heroweapon/classes_hart2.json` into the `weapons` map of `tools/relics/weapon_classes.json` (existing entries there are `{"class": "..."}` objects; the
    loaders `weapon_classes.py`, `audit_weapon_scale.py` and `tools/bettercombat/inventory.py` accept a bare string too, the game copy is flat strings), then run
-   `python tools/relics/audit_weapon_scale.py --write` (copies the table to `assets/nusmp/weapon_classes.json`) and `--check`. The `classes` map of the fragment is empty: no new class.
+   `python tools/relics/audit_weapon_scale.py --write` (copies the table to `assets/anime_multiverse/weapon_classes.json`) and `--check`. The `classes` map of the fragment is empty: no new class.
    Until it is merged, `audit_weapon_scale.py --check` and `tools/relics/test_weapon_scale.py::test_every_mesh_has_a_reviewed_class` list the seven ids as unreviewed (that is the expected state).
 2. **Better Combat tests.** Once the seven ids are in the class table, `WeaponAttributesTest` will ask for them: `manifestIsInSyncWithTheClassTable` (every id in the game's class table must be in
-   `tools/bettercombat/manifest.json` or its `excluded`) and `everyMeleeWeaponHasAFile` (a file in `data/nusmp/weapon_attributes/` for every id whose class is not `handitem`, `crossbow`, `bow`,
+   `tools/bettercombat/manifest.json` or its `excluded`) and `everyMeleeWeaponHasAFile` (a file in `data/anime_multiverse/weapon_attributes/` for every id whose class is not `handitem`, `crossbow`, `bow`,
    `shield` or `item`). The classes I chose (hammer, battleaxe, staff, coilwhip, shortsword, dagger) all have profiles in `tools/bettercombat/profiles.py`, so `python tools/bettercombat/inventory.py`
    and `gen_attributes.py` will generate them; if the Seven Star weapons are driven by their own attack logic and need no Better Combat file, exclude the ids in the manifest instead. The gauntlet
    is `handitem` (a non-melee class for Better Combat); if a fist or claw swing is wanted, the lead adds classes (`gauntlet`, `claw`) and profiles, with ranges that include 0.90 and 1.00.

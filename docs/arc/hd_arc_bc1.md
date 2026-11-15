@@ -3,7 +3,7 @@
 Five looks hand-painted at 256x256 (every model pixel is a 4x4 texel block). The painters are `tools/arc_hd/chars/{asta,yuno,noelle_silva,yami_sukehiro,mimosa_vermillion}.py`
 with the shared helpers in `tools/arc_hd/chars/_bc1_kit.py` (the underscore keeps the kit out of the generator and out of the module test; it is this group's own copy of the
 sds1 helpers plus `feather_pad`, `bare_arm`, `blob`, `head_rear`, so a change to another group's kit can never change these skins). Output:
-`src/main/resources/assets/nusmp/textures/entity/playermodel/<id>.png` and `tools/arc_hd/looks/<id>.json` for each id. None of the five has a `_form2` and none has a glow map
+`src/main/resources/assets/anime_multiverse/textures/entity/playermodel/<id>.png` and `tools/arc_hd/looks/<id>.json` for each id. None of the five has a `_form2` and none has a glow map
 (the look's only glow is on an extra: the grimoire of Yuno and Mimosa, the cigarette ember of Yami). `looks.json` is merged by the lead (`merge_looks.py`), not here.
 
 Previews: `docs/previews/arc_hd/bc1_front_back.png` (front and back of all five) and `docs/previews/arc_hd/bc1_close.png` (bust of all five).

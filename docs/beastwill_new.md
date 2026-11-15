@@ -6,7 +6,7 @@ Nine wills existed (Dragon, Shadow Panther, Elderwood Guardian, Lion, Thunder-Fa
 
 ## NEW / REPLACED / KEPT
 
-- NEW: 18 will files `data/nusmp/beast_will/<id>.json`; 3 ability kinds (`venom_spit`, `maelstrom`, `dread_gaze`); 18 look kinds (10..27) with 36 spirit textures `particle/bwspirit_<stem>_a/_b.png`; `BeastWillPictures` (the picture table); `tools/lang/beastwill_new.json`; `BeastWillNewTest`; this doc.
+- NEW: 18 will files `data/anime_multiverse/beast_will/<id>.json`; 3 ability kinds (`venom_spit`, `maelstrom`, `dread_gaze`); 18 look kinds (10..27) with 36 spirit textures `particle/bwspirit_<stem>_a/_b.png`; `BeastWillPictures` (the picture table); `tools/lang/beastwill_new.json`; `BeastWillNewTest`; this doc.
 - REPLACED: nothing. (Compare to rule 5: no existing will, kind, spirit or texture covers any of these 18.)
 - KEPT, only appended to: the nine wills and their tints, kinds 1..9, the twelve ability kinds, the nine spirits (their PNGs are byte-for-byte untouched: the generator has `--new-only`), the old painter look for unknown wills.
 

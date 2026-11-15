@@ -20,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * {@code blocking} property for every id of {@link ShieldSet}. Every relic of the shield look is in the set, so a shield added later must join the preset.
  */
 class ShieldClassesTest {
-    static final Path JAVA = Path.of("src", "main", "java", "com", "newuniverse", "anime_multiverse");
+    static final Path JAVA = Path.of("src", "main", "java", "com", "newuniverse", "nusmp");
 
     static String read(String rel) throws IOException { return Files.readString(JAVA.resolve(rel)); }
 

@@ -142,5 +142,5 @@ if __name__ == "__main__":
     if not sys.argv[1:]:
         open(os.path.join(HERE, "..", "..", "..", "docs", "beastwill_forms.txt"), "w", newline="\n").write("\n".join(rows) + "\n")
         ent = ",\n".join('            Map.entry("%s", "%s")' % tuple(r.split(": ")) for r in rows)
-        jp = os.path.join(HERE, "..", "..", "..", "src", "main", "java", "com", "newuniverse", "anime_multiverse", "beastwill", "BeastWillFormTable.java")
+        jp = os.path.join(HERE, "..", "..", "..", "src", "main", "java", "com", "newuniverse", "nusmp", "beastwill", "BeastWillFormTable.java")
         open(jp, "w", newline="\n").write(JAVA % ent)

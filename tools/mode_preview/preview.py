@@ -35,8 +35,8 @@ def build():
     vstub = os.path.join(ROOT, "tools", "vfx_preview", "stubs", "net", "minecraft")
     files += [os.path.join(vstub, "util", "Mth.java"), os.path.join(vstub, "resources", "ResourceLocation.java"),
               os.path.join(vstub, "world", "phys", "Vec3.java")]
-    files.append(os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "anime_multiverse", "client", "mode", "ModeArmorLayer.java"))
-    files.append(os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "anime_multiverse", "client", "mode", "ModeArmorWindV2.java"))     # Yuno's overlay v2 (the pure meshes and rules come from the sourcepath)
+    files.append(os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "nusmp", "client", "mode", "ModeArmorLayer.java"))
+    files.append(os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "nusmp", "client", "mode", "ModeArmorWindV2.java"))     # Yuno's overlay v2 (the pure meshes and rules come from the sourcepath)
     files.append(os.path.join(HERE, "Preview.java"))
     subprocess.run(["javac", "-nowarn", "-cp", JOML, "-sourcepath", os.path.join(ROOT, "src", "main", "java"), "-d", cls] + files, check=True)
     return cls

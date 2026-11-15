@@ -3,9 +3,9 @@
 Status: **written and type-checked against API stubs, NOT run in the game.** Every claim below that says "does" describes the code; none of it has been seen working
 in a world. Section 12 lists what is unverified.
 
-The owner's request: "remake Zagred over since he sucks, but leave his magic." So this is a new boss under the SAME entity id (`nusmp:zagred`), a new model from the art
+The owner's request: "remake Zagred over since he sucks, but leave his magic." So this is a new boss under the SAME entity id (`anime_multiverse:zagred`), a new model from the art
 kit, and a new fight on the shared boss framework, while the whole magic of Kotodama (`book/KotodamaBook*`, `book/KotodamaWords`, the counters, the skills players use)
-is untouched. The old boss stays in the tree and still loads, as `nusmp:zagred_legacy` (rule: never delete).
+is untouched. The old boss stays in the tree and still loads, as `anime_multiverse:zagred_legacy` (rule: never delete).
 
 ## 1. Canon used (and what it shaped)
 
@@ -218,7 +218,7 @@ Shatter dome, the verdict judging, the rule enforcement, the command, the reload
 * A cut Word's ring and ink bars (sent as one-shot effects) stay for up to a second after the Word is gone.
 * Spell bolts are not entities, so Shatter erases them but the AI does not count them as incoming shots.
 * The `setTarget` lock (five seconds after a threat swap) assumes the framework's goals only call `setTarget`; a goal that sets the target by another way would bypass it.
-* An old world's saved `nusmp:zagred` (the old class) loads as the new boss with the old saved attributes (its health and maximum), power 20%, and no fight; this was not tried.
+* An old world's saved `anime_multiverse:zagred` (the old class) loads as the new boss with the old saved attributes (its health and maximum), power 20%, and no fight; this was not tried.
 * The Tensura effect ids `paralysis`, `silence`, `burden` and `fear` are used as elsewhere in the mod; an id that does not exist is ignored.
 * `ArcBossRenderer` plays the clips by name (`idle`, `walk`, `run`, `attack`, `cast`, `cast_big`, `hurt`, `transform`, `death`, `spawn`); the kit guarantees them, the renderer was not run.
 * The manifest `tools/arc/manifest.json` is shared: the lead re-runs `python3 -B tools/gen_arc_characters.py` after merging every character.

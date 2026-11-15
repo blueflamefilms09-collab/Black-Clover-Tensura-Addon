@@ -10,15 +10,15 @@ Put a file at `assets/<any namespace>/codex/<section>/<name>.json` (in the mod, 
 ```json
 {
   "title": "Relics belong to the Labyrinth",
-  "text": "Plain text, or a lang key such as nusmp.codex.rule.relics.text.",
-  "keys": "item:nusmp:heart_of_words|mob:nusmp:zagred",
-  "icon": "item:nusmp:spirit_charm",
+  "text": "Plain text, or a lang key such as anime_multiverse.codex.rule.relics.text.",
+  "keys": "item:anime_multiverse:heart_of_words|mob:anime_multiverse:zagred",
+  "icon": "item:anime_multiverse:spirit_charm",
   "order": 10
 }
 ```
 
 * **Section = the directory.** `codex/rules/` is the Rules tab, `codex/lore/` would be a Lore tab. A new directory is a new tab, appended after the
-  stock tabs (sections are in alphabetical order). The tab title is the lang key `nusmp.codex.section.<dir>` if you translate it, else the
+  stock tabs (sections are in alphabetical order). The tab title is the lang key `anime_multiverse.codex.section.<dir>` if you translate it, else the
   directory name made pretty (`spirit_lords` -> `Spirit Lords`). The tab glyph is the first letter of the title.
 * **`title`, `text`**: text, or a lang key (lower case, dots, no spaces) that is translated when drawn. A key nobody translated is shown as written.
   A missing title falls back to the file name.
@@ -31,7 +31,7 @@ Put a file at `assets/<any namespace>/codex/<section>/<name>.json` (in the mod, 
   order, lowest priority first). Another namespace is another entry.
 * Press **F3+T** (or switch packs): the book re-reads everything. A screen that is already open keeps its tabs until it is reopened (the tab list is
   fixed for a screen's life); the content of an open tab refreshes.
-* A broken file is logged (`[nusmp] Codex file ... skipped`) and skipped; the rest still loads.
+* A broken file is logged (`[anime_multiverse] Codex file ... skipped`) and skipped; the rest still loads.
 
 ### A rule with a live value
 
@@ -48,10 +48,10 @@ Rebuilt each time the Codex opens, so new content appears with no list to edit. 
 | Tab | Source | Text |
 |---|---|---|
 | Spells | the player's learned grimoires | see below |
-| Blocks | every `nusmp:` block in the block registry | lang `nusmp.codex.block.<path>`, else "unbreakable" / hardness |
-| Entities | every `nusmp:` entity type | lang `nusmp.codex.entity.<path>`, else the registry name; hidden as `???` until the creature's `mob:` key is found |
-| Magic | every `MagicType` | lang `nusmp.magic.<id>.desc`, else a line from its soul and hit effect; `???` until the `magic:` key is found |
-| Effects | every `nusmp:` mob effect | lang `nusmp.codex.effect.<path>`, else its category |
+| Blocks | every `anime_multiverse:` block in the block registry | lang `anime_multiverse.codex.block.<path>`, else "unbreakable" / hardness |
+| Entities | every `anime_multiverse:` entity type | lang `anime_multiverse.codex.entity.<path>`, else the registry name; hidden as `???` until the creature's `mob:` key is found |
+| Magic | every `MagicType` | lang `anime_multiverse.magic.<id>.desc`, else a line from its soul and hit effect; `???` until the `magic:` key is found |
+| Effects | every `anime_multiverse:` mob effect | lang `anime_multiverse.codex.effect.<path>`, else its category |
 | Rules, and any other data section | the JSON files above | |
 
 If you add a lang line with the key in the table, it wins over the generated one.
@@ -60,10 +60,10 @@ If you add a lang line with the key in the table, it wins over the generated one
 
 The Spells tab lists the grimoire pages the player has opened, grouped by magic (magics alphabetical, spells in the book's own page order). Per spell:
 name, description, cost (% of magicule), cooldown and the mastery at which the page opens. Description: the page's written lang line
-`nusmp.page.<book>.<page>` if there is one, else a generated line from its cost and cooldown. Pages not yet opened are never named; each magic ends with
+`anime_multiverse.page.<book>.<page>` if there is one, else a generated line from its cost and cooldown. Pages not yet opened are never named; each magic ends with
 one `???` row that counts them. The tab re-reads the player every 2 seconds while open, so a page that mastery opens appears live.
 No new packet: the client already holds the grimoire skill instance (with its `Unlocked` page mask); the status summary's `Grimoire.PageList` is the fallback.
-The Overview page's "Your magic" list shows a second line with the skill's own description (`nusmp.skill.<id>.description`) when it has one.
+The Overview page's "Your magic" list shows a second line with the skill's own description (`anime_multiverse.skill.<id>.description`) when it has one.
 
 ## Why it is built this way
 
@@ -95,7 +95,7 @@ The Overview page's "Your magic" list shows a second line with the skill's own d
 | `client/ui/codex/CodexSources.java` | Registry walkers (blocks, entities, magic, effects) and the data-section bridge. |
 | `client/ui/codex/SpellModel.java` | Spell grouping / sorting / fallback lines (pure). |
 | `client/ui/codex/SpellSource.java` | Reads the learned grimoires (or the status summary) into `SpellModel`. |
-| `assets/nusmp/codex/rules/*.json` | The stock rules, written from the real rules of the mod (configs and docs named in each). |
+| `assets/anime_multiverse/codex/rules/*.json` | The stock rules, written from the real rules of the mod (configs and docs named in each). |
 | `CodexPage.opened()` (modified) | Lets a page that caches forget when the Codex opens. |
 | `CodexPages` / `CodexScreen` (modified) | Appended pages, data tabs in `all()`, a fixed page list per screen, scrolling tabs. |
 

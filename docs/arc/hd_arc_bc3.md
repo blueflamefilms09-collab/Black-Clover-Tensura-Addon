@@ -2,7 +2,7 @@
 
 Seven looks hand-painted at 256x256 (every model pixel is a 4x4 texel block). None of them has a `_form2`. The painters are `tools/arc_hd/chars/{vanessa_enoteca,klaus_lunettes,secre_swallowtail,zora_ideale,gauche_adlai,marx_francois,solid_silva}.py`
 plus the shared helpers in `tools/arc_hd/chars/_bc3_kit.py` (the underscore keeps the kit out of the generator and out of the module test; it is this group's own copy of the bc1 kit with
-extra helpers, so no group imports another). Output: `src/main/resources/assets/nusmp/textures/entity/playermodel/<id>.png` (+ `_glow.png` where the look glows: Vanessa, Secre, Gauche) and
+extra helpers, so no group imports another). Output: `src/main/resources/assets/anime_multiverse/textures/entity/playermodel/<id>.png` (+ `_glow.png` where the look glows: Vanessa, Secre, Gauche) and
 `tools/arc_hd/looks/<id>.json`. `looks.json` is merged by the lead (`merge_looks.py`), not here.
 
 Previews: `docs/previews/arc_hd/bc3_front_back.png` (front and back of all seven, extras on) and `docs/previews/arc_hd/bc3_close.png` (bust of all seven).

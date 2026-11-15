@@ -53,7 +53,7 @@ class UndineSourceScanTest {
         try (Stream<Path> w = Files.walk(COMMON)) {
             for (Path p : (Iterable<Path>) w.filter(x -> x.toString().endsWith(".java"))::iterator) {
                 String c = code(read(p));
-                assertFalse(Pattern.compile("net\\.minecraft\\.client\\.|com\\.mojang\\.blaze3d\\.|com\\.newuniverse\\.anime_multiverse\\.client\\.|net\\.neoforged\\.neoforge\\.client\\.").matcher(c).find(), p + " names a client class");
+                assertFalse(Pattern.compile("net\\.minecraft\\.client\\.|com\\.mojang\\.blaze3d\\.|com\\.newuniverse\\.nusmp\\.client\\.|net\\.neoforged\\.neoforge\\.client\\.").matcher(c).find(), p + " names a client class");
                 assertFalse(c.contains("Minecraft.getInstance()"), p + " asks for the client");
                 assertFalse(Pattern.compile("static\\s+(?:volatile\\s+)?(?:ServerPlayer|Player|LivingEntity)\\s+\\w+").matcher(c).find(), p + " keeps a static current player");
             }

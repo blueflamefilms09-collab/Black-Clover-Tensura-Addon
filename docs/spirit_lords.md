@@ -3,7 +3,7 @@
 Two kinds, as in the two source worlds.
 
 ## Black Clover Spirit Lords (exclusive, true bodies)
-`entity/ElementalSpiritLordEntity` (id `nusmp:elemental_spirit_lord`), drawn by `client/ElementalSpiritRenderer`.
+`entity/ElementalSpiritLordEntity` (id `anime_multiverse:elemental_spirit_lord`), drawn by `client/ElementalSpiritRenderer`.
 One mage per element on the server (`book/SpiritSlots`); only that mage can call it (Spirit Charm, sneak-use, after the Incarnation) and only one
 body of each element can exist. Admin: `/<grimoire command> spirit_body <player> <salamander|undine|sylph|gnome>`.
 
@@ -19,7 +19,7 @@ textures and glow). Undine's water and Sylph's wings are separate translucent mo
 Preview: `python3 -B tools/render_preview/preview.py spirit_salamander_idle spirit_undine_idle spirit_sylph_idle spirit_gnome_idle`.
 
 ## Tensura-style spirits (not exclusive, small orbs)
-`entity/SpiritLordEntity` (`nusmp:spirit_lord`), drawn by `client/SpiritOrbRenderer`: a small glowing orb in the spirit's colour that follows the player.
+`entity/SpiritLordEntity` (`anime_multiverse:spirit_lord`), drawn by `client/SpiritOrbRenderer`: a small glowing orb in the spirit's colour that follows the player.
 Without a Black Clover bond the Spirit Charm calls one: use to pick the element, sneak-use to call it. The Anti-Magic lord (Black Devil) is also an orb.
 
 ## Update 3.0.0: controls moved to the spirit control plane

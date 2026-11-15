@@ -130,7 +130,7 @@ New: `book/LightBoneJa` (pure tables, caps, math), `book/LightBoneJaKit` (props,
 
 Edited (additive): `NUConfig` (server config `magic.lightBoneJa`, default true), `PropKind` (two kinds appended), `PropRegistry` and `PropPainterRegistry` (two lines each), `LightBook` (the
 remake list beside the old one, switched by the config), `ElementBooks` (`bone()` now builds `BoneBook`; the old page list moved into `legacyBonePages()` unchanged),
-`data/nusmp/armour_policy.json` (`new_pages` of LIGHT and BONE), and the preview tool (`tools/render_preview/preview.py`: the pure perf classes added to the compiled set, two stub classes,
+`data/anime_multiverse/armour_policy.json` (`new_pages` of LIGHT and BONE), and the preview tool (`tools/render_preview/preview.py`: the pure perf classes added to the compiled set, two stub classes,
 `Preview.java`: an `xRot` scene field, `EntityRenderDispatcher` stub: `distanceToSqr`; the tool no longer compiled without them after the perf and safe-additive changes).
 
 Nothing was deleted: every old page, its code and its id stay; `LightBook.lightHit` and `lightSpeed` are shared by both lists.

@@ -11,7 +11,7 @@ From the wiki:
 - Dorothy reads minds and manifests her victims' thoughts.
 
 **In game:**
-- **The dimension:** `nusmp:dream` is a void with a fixed starry dusk sky and a pastel fog that shifts slowly between pink and sky blue (client `DreamSkyClient`).
+- **The dimension:** `anime_multiverse:dream` is a void with a fixed starry dusk sky and a pastel fog that shifts slowly between pink and sky blue (client `DreamSkyClient`).
 - **The arena:** every dream gets its own arena, 512 blocks apart, rebuilt each time:
   - a disc of pastel wool rings set with sea lanterns, on a white base;
   - flowers, cotton-candy trees and candle cakes;

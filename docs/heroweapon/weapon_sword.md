@@ -1,4 +1,4 @@
-# The Legendary Sword (`nusmp:legendary_sword`, `HeroKind.SWORD`, style SWING, curse series: Greed and Gluttony)
+# The Legendary Sword (`anime_multiverse:legendary_sword`, `HeroKind.SWORD`, style SWING, curse series: Greed and Gluttony)
 
 > Status: complete. Section 1 (the look) is what the art builder reads. Sections 2 to 12 are the research, the design, every form, skill and number, the engravings,
 > the files and an honest list of what is not verified. Nothing here has been run in the game.
@@ -412,7 +412,7 @@ The budget of design.md section 5, and how this weapon keeps it (every point is 
 | `weapon/sword/SwordSkills.java` | The list of skills with their names and texts; each takes its cooldown and cost from the table. |
 | `weapon/sword/SwordLogic.java` | The hooks: Tempo speed (`onTick`), the blow (`onHit`), the passives that act on damage taken (`onDamaged`), kills, cleanup. |
 | `weapon/sword/SwordSelfTest.java` | The in-game self-test `hero.weapon.sword`: table against registered skills, forms file against skills and passives, then a cast of every skill and a run of the hooks with a stand-in player. |
-| `data/nusmp/hero/forms/legendary_sword.json` | The forms: the base sword, ten ordinary forms and four curse forms (two Greed, two Gluttony). |
+| `data/anime_multiverse/hero/forms/legendary_sword.json` | The forms: the base sword, ten ordinary forms and four curse forms (two Greed, two Gluttony). |
 | `test/.../sword/SwordNumbersTest, HitLedgerTest, SwordGeoTest` | The budget of design.md section 5 as a test, and the pure parts (ledger, geometry, marks, caps). |
 | `test/.../sword/SwordFormsDataTest` | The rules of design.md section 6 applied to the shipped file with the shared checker, and negative controls. |
 
@@ -422,7 +422,7 @@ Every Java class opens with a Javadoc whose first paragraph starts with `Why:`. 
 
 * **Engravings:** the line in section 8.
 * **Lang fragment:** `$S/hero/frag/hsa.lang.json` (120 keys for both weapons). Generated from the source, ASCII only.
-* **Forms file:** `src/main/resources/data/nusmp/hero/forms/legendary_sword.json`. The first form is `base`, and its `use` slot is Blitz Strike.
+* **Forms file:** `src/main/resources/data/anime_multiverse/hero/forms/legendary_sword.json`. The first form is `base`, and its `use` slot is Blitz Strike.
 * **Constructors:** `HeroBootstrap` must construct `new SwordLogic()` once at start-up (the constructor hooks the events and registers the self-test).
 * **Curse engine:** the weapon calls `HeroCurse.addCorruption(ServerPlayer, int)` from Guillotine (+40), Strong Decline (+30) and Insatiable Maw (+100), only when the active form is a curse form.
   The sin downsides are the engine's.

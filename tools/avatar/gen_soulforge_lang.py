@@ -21,7 +21,7 @@ sys.dont_write_bytecode = True
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.normpath(os.path.join(HERE, "..", ".."))
-JAVA = os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "anime_multiverse")
+JAVA = os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "nusmp")
 EN_US = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse", "lang", "en_us.json")
 SCAN = [os.path.join(JAVA, "avatar"), os.path.join(JAVA, "client", "avatar")]
 

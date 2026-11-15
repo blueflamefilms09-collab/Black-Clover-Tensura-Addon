@@ -2,7 +2,7 @@
 
 Class SEVEN_STAR, style CAST. In the series the Vassal Staff is one of the seven Seven Star Weapons of Raphtalia's world; its special ability is accelerated magic casting and
 its power-up method is Magic Power-up Points (wiki summaries); its holder in the story is Aultcray Melromarc XXXII. The owner names no holder for it. Logic
-`heroweapon/weapon/staff/StaffLogic`, forms `data/nusmp/hero/forms/vassal_staff.json`.
+`heroweapon/weapon/staff/StaffLogic`, forms `data/anime_multiverse/hero/forms/vassal_staff.json`.
 This page is written in sections; the LOOK section comes first because the art builder (`hart2`) reads it first.
 
 ## 1. Look (for the art builder)
@@ -183,7 +183,7 @@ Map.entry("vassal_staff", List.of(e("magic_weapon", 1), e("swift", 1), e("magic_
   * `Timed`: the delayed half of a technique and a short repeating field, both re-checking that the wielder is still alive, in the same world and bonded to the same weapon when they run.
   * `Status`: the few mob effects the weapons use (slow, weakness, speed, resistance) and the removal of one harmful effect; `Tally`: the per-cast limits on how many foes and how many hits on one foe; `ExpiryTable`: a capped table of things that end by themselves (marks); `Fmt`: numbers in the texts.
   * `VbSkill`: builds the live skill from a Numbers row (cost, cooldown, ultimate flag are the row's) and catches a body that throws; `WeaponSelfTest`: the common half of the four self-tests; `FormsFileCheck`: the forms-file validator the data tests run.
-* Forms: `src/main/resources/data/nusmp/hero/forms/vassal_staff.json`.
+* Forms: `src/main/resources/data/anime_multiverse/hero/forms/vassal_staff.json`.
 * Lang: the builder's fragment (`hvb.lang.json`, keys `hero.skill.staff.*` and `hero.passive.staff.*`).
 * Tests: `StaffNumbersTest` (budget, strongest values, haste floors), `CastRhythmTest` (the chain), `StaffFormsTest` (the forms file against the validator, texts present, plain ASCII).
 

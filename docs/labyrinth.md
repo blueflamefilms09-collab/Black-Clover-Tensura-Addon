@@ -1,7 +1,7 @@
 # The Labyrinth — Hybrid Anime Dungeon Architecture (1.35.0)
 
-> **REMOVED in 1.58.0 (owner's request): the Spire.** The floating Spire of this document (system 4: the dimension `nusmp:labyrinth` as a place that
-> generates, the structure set `labyrinth_spires`, the pools `nusmp:labyrinth/*` and their templates, the biome-palette and vein processors, the
+> **REMOVED in 1.58.0 (owner's request): the Spire.** The floating Spire of this document (system 4: the dimension `anime_multiverse:labyrinth` as a place that
+> generates, the structure set `labyrinth_spires`, the pools `anime_multiverse:labyrinth/*` and their templates, the biome-palette and vein processors, the
 > `labyrinth/gen` code), the old Dungeon Gate arches (system 1's surface portal) and the switches `mega.layout`, `mega.legacyGates` and
 > `labyrinth.engine` are gone: the Mega-Dungeon is the only dungeon and its Gateway the only way in. What stayed, because the Mega-Dungeon builds on
 > it (the gate and exit blocks, trials, seals, vaults, traps, the economy, Vital Strike, the Guard, relic exclusivity, the void rescue), and
@@ -12,20 +12,20 @@ way it is, as the owner asked; the per-system documents in `docs/labyrinth/` car
 
 | System (owner's spec) | What exists now | Where |
 |---|---|---|
-| 1. Complete replacement + surface portal | new void dimension `nusmp:labyrinth`, the legacy cave dimension kept but routed off by `labyrinth.engine`; surface Gate structure placed by heightmap | `docs/labyrinth/c_gate.md`, `docs/labyrinth/a1_foundation.md` |
-| 2. Treasure vaults + relic exclusivity | the Vault piece behind two seals; `nusmp:chests/dungeon_relic_vault`, Relic Pedestals, `nusmp:relic` loot entry; loot-modifier and mob-drop gates; a test that keeps relics out of every other table and recipe | `docs/labyrinth/d_vault.md`, `docs/labyrinth/a2_spire.md` |
-| 3. Ecosystem integration | `#nusmp:has_structure/dungeon_gate` built from vanilla + optional `c:` biome tags; a NeoForge data map `nusmp:labyrinth_palette` over biomes read by the `nusmp:biome_palette` processor; the `nusmp:labyrinth/wildcard` pool for other mods' rooms | `docs/labyrinth/b_generation.md`, `docs/labyrinth/a1_foundation.md`, `docs/labyrinth/a2_spire.md` |
+| 1. Complete replacement + surface portal | new void dimension `anime_multiverse:labyrinth`, the legacy cave dimension kept but routed off by `labyrinth.engine`; surface Gate structure placed by heightmap | `docs/labyrinth/c_gate.md`, `docs/labyrinth/a1_foundation.md` |
+| 2. Treasure vaults + relic exclusivity | the Vault piece behind two seals; `anime_multiverse:chests/dungeon_relic_vault`, Relic Pedestals, `anime_multiverse:relic` loot entry; loot-modifier and mob-drop gates; a test that keeps relics out of every other table and recipe | `docs/labyrinth/d_vault.md`, `docs/labyrinth/a2_spire.md` |
+| 3. Ecosystem integration | `#anime_multiverse:has_structure/dungeon_gate` built from vanilla + optional `c:` biome tags; a NeoForge data map `anime_multiverse:labyrinth_palette` over biomes read by the `anime_multiverse:biome_palette` processor; the `anime_multiverse:labyrinth/wildcard` pool for other mods' rooms | `docs/labyrinth/b_generation.md`, `docs/labyrinth/a1_foundation.md`, `docs/labyrinth/a2_spire.md` |
 | 4. SAO Labyrinth Spire | the chained pools `base → ascent_1 → ascent_2 → warden → ascent_3 → ascent_4 → peak → vault → crown`, every piece centred on the axis, up/down jigsaws only on the centre column | `docs/labyrinth/a2_spire.md` |
-| 5. Magi trial chambers | `nusmp:sealed_archway` block entity + `nusmp:magic_barrier`, ward runes and spawn glyphs scanned at activation; caps pool = no dead ends | `docs/labyrinth/e1_trial.md`, `docs/labyrinth/a2_spire.md` |
-| 6. Magicule Veins | `nusmp:magicule_veins` processor: chance rises with height above the structure origin and with closeness to the axis | `docs/labyrinth/b_generation.md` |
-| 7. Boss seals | `nusmp:gatekeeper_door` (kind warden / boss), the Shadow Key dropped by the Floor Warden, the Peak Altar that spawns the floor boss and unseals the Vault | `docs/labyrinth/e2_seal.md` |
+| 5. Magi trial chambers | `anime_multiverse:sealed_archway` block entity + `anime_multiverse:magic_barrier`, ward runes and spawn glyphs scanned at activation; caps pool = no dead ends | `docs/labyrinth/e1_trial.md`, `docs/labyrinth/a2_spire.md` |
+| 6. Magicule Veins | `anime_multiverse:magicule_veins` processor: chance rises with height above the structure origin and with closeness to the axis | `docs/labyrinth/b_generation.md` |
+| 7. Boss seals | `anime_multiverse:gatekeeper_door` (kind warden / boss), the Shadow Key dropped by the Floor Warden, the Peak Altar that spawns the floor boss and unseals the Vault | `docs/labyrinth/e2_seal.md` |
 
 ## The shape of the whole thing, and why
 
-**A Gate on the surface, a Spire in its own sky.** The Overworld only ever receives the *Gate*: a small Jigsaw structure (`nusmp:dungeon_gate`)
-that the structure set `nusmp:dungeon_gates` scatters over surface biomes, pinned to the terrain by `project_start_to_heightmap: WORLD_SURFACE_WG`
-and `terrain_adaptation: beard_thin`. Everything else lives in `nusmp:labyrinth`, a dimension whose generator is `minecraft:flat` with no layers
-(a void) and `structure_overrides: ["nusmp:labyrinth_spires"]`. Why a void: a Jigsaw tower a hundred blocks tall has nothing to fight — no cave
+**A Gate on the surface, a Spire in its own sky.** The Overworld only ever receives the *Gate*: a small Jigsaw structure (`anime_multiverse:dungeon_gate`)
+that the structure set `anime_multiverse:dungeon_gates` scatters over surface biomes, pinned to the terrain by `project_start_to_heightmap: WORLD_SURFACE_WG`
+and `terrain_adaptation: beard_thin`. Everything else lives in `anime_multiverse:labyrinth`, a dimension whose generator is `minecraft:flat` with no layers
+(a void) and `structure_overrides: ["anime_multiverse:labyrinth_spires"]`. Why a void: a Jigsaw tower a hundred blocks tall has nothing to fight — no cave
 to cut it, no mountain to bury its vault, no water to flood a trial — and the "sea of clouds" is the SAO look for free. Why its own dimension
 rather than editing the legacy one: a world that already exists keeps its dimensions' generators in `level.dat`; a changed JSON would apply to new
 worlds only, and the owner's rule 2 says the old content stays loadable. So the legacy dimension, its blocks, mobs and systems stay registered and
@@ -70,7 +70,7 @@ Why one config file for it: `nusmp-labyrinth-dnd-server.toml` holds every switch
 
 ## The Mega-Dungeon (1.54.0) and its two roads (1.55.0)
 
-The Spire above stays registered, but the default dungeon is now ONE persistent dimension, `nusmp:mega_dungeon`, built from vanilla blocks as a tightly packed tabletop-style layout of sectors that grows when a sector's Labyrinth Guardian is cleared. 1.55.0 puts Floor 0 (a safe, buildable Sanctuary Hub, its own dimension `nusmp:sanctuary`) in front of it and splits the growth into two roads: Holy floors +1, +2 ... and Abyssal floors -1, -2 ..., with a Directional Lock once a road is chosen. Where to read:
+The Spire above stays registered, but the default dungeon is now ONE persistent dimension, `anime_multiverse:mega_dungeon`, built from vanilla blocks as a tightly packed tabletop-style layout of sectors that grows when a sector's Labyrinth Guardian is cleared. 1.55.0 puts Floor 0 (a safe, buildable Sanctuary Hub, its own dimension `anime_multiverse:sanctuary`) in front of it and splits the growth into two roads: Holy floors +1, +2 ... and Abyssal floors -1, -2 ..., with a Directional Lock once a road is chosen. Where to read:
 
 | What | Document |
 |---|---|

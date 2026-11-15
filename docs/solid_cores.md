@@ -19,7 +19,7 @@ Owner report: "the item should not be transparent" (answered: both the Beast Wil
 * **Beast Will Core = a solid 3D orb** (`tools/beastwill/gen_beast_core_model.py`, reusing the sphere / skin / mesh writer of the rank cores): rough dark stone (radius jittered up to 7 percent, facets of different grey), cut by a network of
   white-hot fissures that are widest round the equator (the glowing heart); opaque skin + glow skin; mesh `weapon_meshes/beast_will_core.txt`, `weapon_classes.json` "handitem", `models/item/beast_will_core.json` = `builtin/entity` with
   the display transforms of `core_e_beast.json`. Drawn through `BeastWillItems.renderables()` (a one-line list like `manacore/CoreItems.renderables()`) added to `WeaponRenderer.WEAPONS`.
-* **Per-will colour (chosen: a tint, not 9 skins)**: the skin is neutral, and `beastwill/BeastCoreLook` turns the will id on the stack into a colour (the `tint` of each `data/nusmp/beast_will/<id>.json`, equal-checked by a test;
+* **Per-will colour (chosen: a tint, not 9 skins)**: the skin is neutral, and `beastwill/BeastCoreLook` turns the will id on the stack into a colour (the `tint` of each `data/anime_multiverse/beast_will/<id>.json`, equal-checked by a test;
   an unknown data-pack will gets a stable colour from its id's hash, a bare core the old violet). `WeaponRenderer` multiplies it into the body vertex colour (60 percent toward the colour) and uses it as the glow colour; an item
   colour handler tints the flat icon the same way. One skin, one glow skin, no extra textures, works for all 9 shipped wills (the original four included) and any future one. The client has no will catalog, so the id on the
   stack (already synced) is the only input.

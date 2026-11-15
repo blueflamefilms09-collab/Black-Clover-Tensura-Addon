@@ -9,17 +9,17 @@ unit-tested (`PaletteSwapTest`, `VeinMathTest`), the rest is type-checked agains
 A Jigsaw piece is an NBT file. Making the Spire adapt to its biome by drawing one template per biome would mean one NBT per piece per
 look (nine pool levels times side rooms times a dozen looks), a second set for every new look, and no way for a datapack to add one
 without re-exporting our pieces. A `StructureProcessor` runs at PLACEMENT, once per block of a piece, with the template's block as input
-and whatever it returns as output; a processor list is attached to a template-pool element in JSON (`"processors": "nusmp:..."`).
-So A1/A2 build ONE set of templates in the default look (`nusmp:labyrinth_bricks/tiles/pillar`, glyphs, amethyst, dark oak) and the
+and whatever it returns as output; a processor list is attached to a template-pool element in JSON (`"processors": "anime_multiverse:..."`).
+So A1/A2 build ONE set of templates in the default look (`anime_multiverse:labyrinth_bricks/tiles/pillar`, glyphs, amethyst, dark oak) and the
 same NBT yields a packed-ice spire over the tundra, a mud-brick one over the swamp, with glowing veins that thicken towards the peak,
 all decided per block when the chunk generates. Vanilla's `minecraft:rule` processor cannot do either job: its output state is fixed in
 the JSON (no biome lookup) and its chance is a constant (no gradient over the structure).
 
 Two types are registered on `minecraft:worldgen/structure_processor` by a `DeferredRegister<StructureProcessorType<?>>`:
-`nusmp:biome_palette` and `nusmp:magicule_veins`. `StructureProcessorType` is a functional interface whose only method returns the
+`anime_multiverse:biome_palette` and `anime_multiverse:magicule_veins`. `StructureProcessorType` is a functional interface whose only method returns the
 processor's `MapCodec`, so the registry entry is literally `() -> CODEC`; the `processor_type` field of a processor JSON names it and
 the codec reads the rest of the object. Both codecs make EVERY field optional with the contract values as defaults, so A2's
-`labyrinth_interior.json` can be the bare `{"processor_type": "nusmp:biome_palette"}` / `{"processor_type": "nusmp:magicule_veins"}`
+`labyrinth_interior.json` can be the bare `{"processor_type": "anime_multiverse:biome_palette"}` / `{"processor_type": "anime_multiverse:magicule_veins"}`
 and still a datapack can re-point a tag or retune a chance. The exact JSON shapes are in the sections below (and were published early for
 A2 in the session's `B_PROCESSORS.md`).
 
@@ -27,10 +27,10 @@ Both processors NEVER throw: every `processBlock` is wrapped and returns the inc
 processor aborts the whole piece placement in `StructureTemplate.placeInWorld`, which would leave a hole in the Spire; a missing
 block id or a broken palette entry must cost at most one un-swapped block.
 
-## 2. The palette: a NeoForge data map (`nusmp:labyrinth_palette`)
+## 2. The palette: a NeoForge data map (`anime_multiverse:labyrinth_palette`)
 
 Value record `LabyrinthPalette(pillar, accent, floor, wood)`, every slot an optional block id. File:
-`data/nusmp/data_maps/worldgen/biome/labyrinth_palette.json`, keys are biome ids or `#biome_tags`.
+`data/anime_multiverse/data_maps/worldgen/biome/labyrinth_palette.json`, keys are biome ids or `#biome_tags`.
 
 Why a data map and not a `Map<ResourceKey<Biome>, Palette>` in Java or a set of biome tags: a NeoForge data map is a registry-attached
 VALUE (vanilla has nothing equivalent; tags can only say "in or out"). It is a datapack file, merged across packs, keyed by biome id OR
@@ -75,18 +75,18 @@ The entries, all real 1.21.1 block ids (there is no `pale_garden` in 1.21.1, so 
 | snowy_plains, snowy_taiga, snowy_slopes, snowy_beach, frozen_peaks, jagged_peaks, frozen_river, frozen_ocean, deep_frozen_ocean, ice_spikes, grove | packed_ice | blue_ice | snow_block | spruce_planks | the ice spire; explicit ids because no vanilla tag means "snowy" |
 
 Axis blocks (`polished_basalt`, `quartz_pillar`, `bamboo_block`) are chosen for the pillar slot where the theme has one, because the
-template pillar `nusmp:labyrinth_pillar` has an `axis` and the processor carries it over: a horizontal beam stays horizontal.
+template pillar `anime_multiverse:labyrinth_pillar` has an `axis` and the processor carries it over: a horizontal beam stays horizontal.
 
-### The swap tags (`data/nusmp/tags/block/labyrinth/`)
+### The swap tags (`data/anime_multiverse/tags/block/labyrinth/`)
 
 The processor only ever touches blocks in these four tags; everything else in a template is untouchable by design (walls, chests, doors,
 jigsaws, water). Our own blocks are listed as `{"id": ..., "required": false}` so the tag still loads if a block id changes name in a
 later version; the vanilla ids are plain strings.
 
-* `swap_pillar.json` = `nusmp:labyrinth_pillar`: the columns.
-* `swap_accent.json` = `nusmp:labyrinth_glyph`, `minecraft:amethyst_block`: the inlays; BOTH become the one accent block, so a palette
+* `swap_pillar.json` = `anime_multiverse:labyrinth_pillar`: the columns.
+* `swap_accent.json` = `anime_multiverse:labyrinth_glyph`, `minecraft:amethyst_block`: the inlays; BOTH become the one accent block, so a palette
   with a lit accent (`sea_lantern`, `shroomlight`) keeps the glyph's role as a light and a palette with a plain one quiets the room.
-* `swap_floor.json` = `nusmp:labyrinth_tiles`: the floors.
+* `swap_floor.json` = `anime_multiverse:labyrinth_tiles`: the floors.
 * `swap_wood.json` = dark oak planks, fence, stairs, slab, fence gate: the bridges and rails.
 
 ### Wood families: `PaletteSwap` (pure, tested)
@@ -112,14 +112,14 @@ among vanilla blocks; a modded planks block may declare its own `AXIS`-named pro
 
 Processor JSON (every field optional; shown with the defaults = the shipped `processor_list/magicule_veins.json`):
 ```json
-{ "processor_type": "nusmp:magicule_veins", "targets": "nusmp:labyrinth/veinable",
-  "vein": { "Name": "nusmp:magicule_vein" }, "base_chance": 0.01, "peak_chance": 0.12, "rise": 112, "pull": 0.6 }
+{ "processor_type": "anime_multiverse:magicule_veins", "targets": "anime_multiverse:labyrinth/veinable",
+  "vein": { "Name": "anime_multiverse:magicule_vein" }, "base_chance": 0.01, "peak_chance": 0.12, "rise": 112, "pull": 0.6 }
 ```
 `targets` is a block tag (no `#`), `vein` a vanilla block-state object. The shipped file OMITS `vein`: the default is resolved lazily by
-id to `nusmp:magicule_vein` (A1's block), because a block-state codec default would need the block at class-load and because a missing
+id to `anime_multiverse:magicule_vein` (A1's block), because a block-state codec default would need the block at class-load and because a missing
 block must make the processor a silent no-op, never a datapack load error that kills the whole pool.
 
-`veinable.json` = `nusmp:labyrinth_bricks`, `nusmp:labyrinth_tiles`, `minecraft:deepslate_bricks`, `minecraft:deepslate_tiles`,
+`veinable.json` = `anime_multiverse:labyrinth_bricks`, `anime_multiverse:labyrinth_tiles`, `minecraft:deepslate_bricks`, `minecraft:deepslate_tiles`,
 `minecraft:polished_deepslate`: the dark masonry a cyan vein reads on. The test is on the block AS PLACED SO FAR, so with the palette
 processor first in the list a snow-block floor is not veined and the walls (never swapped) always are.
 
@@ -133,7 +133,7 @@ With the defaults, on the axis: 1.2% at the base (`dy` 0), 6.7% at `dy` 56 (arou
 Peak and the Vault). At the rim of the base piece (`dxz` 20): 0.95% / 5.0% / 9.1%. At 64 blocks out (a far side room) the pull is fully
 applied and the chance is 40% of the axis value: 0.6% / 2.8% / 5.0%. Below the origin the base chance holds; the 0.002 floor means even
 the base rim shows one vein in 500 masonry blocks, so the first thing a player sees already hints at the colour of the climb. The numbers
-are deliberately modest: `nusmp:magicule_vein` is light 11, and at 12% of the peak's masonry the Boss Peak glows like a nebula without
+are deliberately modest: `anime_multiverse:magicule_vein` is light 11, and at 12% of the peak's masonry the Boss Peak glows like a nebula without
 turning into a lit ceiling.
 
 ### Why the STRUCTURE origin and not the piece origin
@@ -158,10 +158,10 @@ other processors' stream untouched, and makes a seed reproduce its veins. `VeinM
 
 ## 4. Biome mirroring: `BiomeMirror`
 
-The Labyrinth dimension has one biome (`nusmp:labyrinth_sky`), so "the biome at this block" would give every spire the same palette.
+The Labyrinth dimension has one biome (`anime_multiverse:labyrinth_sky`), so "the biome at this block" would give every spire the same palette.
 The dimension's `coordinate_scale` is 1.0, so the same x/z in the Overworld is the land the spire floats over, and the palette is
 resolved from the OVERWORLD biome at the block's x/z, sampled at sea level (y 64, the surface band of the 1.18+ multi-noise biomes).
-Outside the Labyrinth (an Overworld gate that chains `nusmp:labyrinth_palette`, a `/place` in a test world) the level's own biome is used,
+Outside the Labyrinth (an Overworld gate that chains `anime_multiverse:labyrinth_palette`, a `/place` in a test world) the level's own biome is used,
 so one processor serves both structures.
 
 Thread safety is the whole design of that class. Structure processors run on worldgen WORKER threads inside a `WorldGenRegion`.
@@ -208,16 +208,16 @@ Messages are literals, like `DungeonCommand`; the lang fragment for this part is
 
 ## 7. Every data file of this part
 
-* `data/nusmp/worldgen/processor_list/labyrinth_palette.json`: one `nusmp:biome_palette` processor with the four contract tags spelled
+* `data/anime_multiverse/worldgen/processor_list/labyrinth_palette.json`: one `anime_multiverse:biome_palette` processor with the four contract tags spelled
   out (documentation value; the defaults are the same). For pools that want only the palette (the gate's `gate_weathering` list can
   chain it).
-* `data/nusmp/worldgen/processor_list/magicule_veins.json`: one `nusmp:magicule_veins` processor with the tuned chances, `vein` omitted
+* `data/anime_multiverse/worldgen/processor_list/magicule_veins.json`: one `anime_multiverse:magicule_veins` processor with the tuned chances, `vein` omitted
   (lazy default, see section 3).
 * A2's `processor_list/labyrinth_interior.json` chains both, palette FIRST: processors run per block in list order and each sees the
   previous one's output, so the swap happens before the vein test (section 3).
-* `data/nusmp/tags/block/labyrinth/swap_pillar.json`, `swap_accent.json`, `swap_floor.json`, `swap_wood.json`, `veinable.json`: section 2
+* `data/anime_multiverse/tags/block/labyrinth/swap_pillar.json`, `swap_accent.json`, `swap_floor.json`, `swap_wood.json`, `veinable.json`: section 2
   and 3.
-* `data/nusmp/data_maps/worldgen/biome/labyrinth_palette.json`: section 2.
+* `data/anime_multiverse/data_maps/worldgen/biome/labyrinth_palette.json`: section 2.
 
 ## 8. Not done / to verify in game
 

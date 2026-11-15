@@ -10,7 +10,7 @@ import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.abspath(os.path.join(HERE, "..", ".."))
-SRC = os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "anime_multiverse", "relics", "wave", "Wave0.java")
+SRC = os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "nusmp", "relics", "wave", "Wave0.java")
 DEFAULT_OUT = "/tmp/claude-0/-home-user-Black-Clover-Tensura-Addon/2c8ee7c0-aec7-5d43-b651-54cec528bb71/scratchpad/frag_relics/relics_wave0.lang.json"
 
 CARDS = {

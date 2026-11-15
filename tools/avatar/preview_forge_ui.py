@@ -21,7 +21,7 @@ from PIL import Image, ImageDraw, ImageFont
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.normpath(os.path.join(HERE, "..", ".."))
-MENU = os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "anime_multiverse", "avatar", "menu")
+MENU = os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "nusmp", "avatar", "menu")
 ICONS = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse", "textures", "gui", "soulforge")
 PURE = ["ForgeLayout", "ForgeMotion", "DiceSpin", "SlotReel"]
 

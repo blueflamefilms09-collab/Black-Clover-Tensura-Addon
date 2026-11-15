@@ -20,7 +20,7 @@ It uses the owner's model method (`tools/relics/mesh_lib.py`: real cross-section
 skin, one UV atlas), the sprite helpers of `tools/relics/wave1_icons.py`, the draw-state rig of `tools/relics/ranged_meshes.py` and the display rule of
 `tools/relics/display_presets.py`. It edits no shared file.
 
-| file (under `src/main/resources/assets/nusmp/`) | what |
+| file (under `src/main/resources/assets/anime_multiverse/`) | what |
 |---|---|
 | `weapon_meshes/<id>.txt`, `<id>_curse.txt` | the eight meshes (`qn` lines, `orient manual`, `grip` where it is decidable) |
 | `weapon_meshes/legendary_bow[_curse]_pull1..3.txt` | the draw states of both bows (the limbs flex, the string is a V, an arrow of light rides the nock); see 6 |
@@ -103,7 +103,7 @@ skin, one UV atlas), the sprite helpers of `tools/relics/wave1_icons.py`, the dr
    `python tools/relics/audit_weapon_scale.py --write` for the game copy. The curse ids are listed on purpose (the id of a curse mesh is not a state suffix the table strips).
    With the fragment merged in memory the repo's `tools/relics/test_weapon_scale.py` passes all 35 tests except the one that compares the game copy with the tool table (which is
    exactly what the merge and `--write` fix).
-2. **The curse look**: the core's `WeaponRenderer` hook chooses the mesh id `<id>_curse` when the stack's `nusmp:hero_look` is `curse`; the skin of that id is its own
+2. **The curse look**: the core's `WeaponRenderer` hook chooses the mesh id `<id>_curse` when the stack's `anime_multiverse:hero_look` is `curse`; the skin of that id is its own
    (`textures/entity/weapon/<id>_curse.png`, `_glow`), nothing else is needed. The curse meshes have no model json of their own (the item's json supplies the display).
 3. **The bow's draw stages** (optional, made): `ItemStateVariants.stageOf` only knows relic bows (`RelicBearer`); add before its `return RangedStage.REST;`
 

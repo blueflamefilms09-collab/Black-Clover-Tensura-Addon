@@ -96,7 +96,7 @@
    "shape": "NOVA",
    "radius": 13.0,
    "damage": 32.0,
-   "effect": "nusmp:burn",
+   "effect": "anime_multiverse:burn",
    "ticks": 160,
    "amp": 0,
    "blurb": "A sun blooms over you and bursts outward in one white-hot wave."
@@ -498,7 +498,7 @@
    "shape": "BEAM",
    "radius": 22.0,
    "damage": 36.0,
-   "effect": "nusmp:burn",
+   "effect": "anime_multiverse:burn",
    "ticks": 160,
    "amp": 0,
    "blurb": "You become a streak of fire and run a straight line through everything in it."
@@ -1643,7 +1643,7 @@
   },
   "trait": {
    "special": "CINDER",
-   "effect": "nusmp:burn",
+   "effect": "anime_multiverse:burn",
    "ticks": 140,
    "amp": 0,
    "frac": 0.3,
@@ -1655,7 +1655,7 @@
    "shape": "IMPLODE",
    "radius": 14.0,
    "damage": 32.0,
-   "effect": "nusmp:burn",
+   "effect": "anime_multiverse:burn",
    "ticks": 160,
    "amp": 0,
    "blurb": "The air is dragged in towards you, and a moment later the hollow collapses in fire."
@@ -2317,7 +2317,7 @@
   },
   "trait": {
    "special": "TRIPLE",
-   "effect": "nusmp:burn",
+   "effect": "anime_multiverse:burn",
    "ticks": 100,
    "amp": 0,
    "frac": 0.25,
@@ -2329,7 +2329,7 @@
    "shape": "COLUMNS",
    "radius": 15.0,
    "damage": 28.0,
-   "effect": "nusmp:burn",
+   "effect": "anime_multiverse:burn",
    "ticks": 140,
    "amp": 0,
    "blurb": "Eight pillars of foretold flame rise from the ground, each marked before it strikes."

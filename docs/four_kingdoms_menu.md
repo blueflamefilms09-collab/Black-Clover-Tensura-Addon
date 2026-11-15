@@ -36,7 +36,7 @@ The menu takes over the grey **"?"** slot in Tensura's Magic tab (the hexagon of
 
 ## The logo
 
-- **Path:** `assets/nusmp/textures/gui/four_kingdoms_logo.png`. The slot icon and the menu header both draw it as a 256×256 square image.
+- **Path:** `assets/anime_multiverse/textures/gui/four_kingdoms_logo.png`. The slot icon and the menu header both draw it as a 256×256 square image.
 - **What ships now:** the image attached in chat couldn't be saved into the workspace, so the shipped file is a stand-in emblem drawn after it (`tools/gen_menu_textures.py`):
   - a stone ring with runes;
   - a four-leaf clover of heart leaves (Clover green, Diamond blue, Heart green, Spade red);

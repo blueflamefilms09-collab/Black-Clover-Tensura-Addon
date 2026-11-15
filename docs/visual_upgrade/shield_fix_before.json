@@ -129,7 +129,7 @@
   },
   "parent": "minecraft:builtin/entity",
   "textures": {
-   "particle": "nusmp:item/aegis_of_the_abyss"
+   "particle": "anime_multiverse:item/aegis_of_the_abyss"
   }
  },
  "aegis_of_the_abyss_blocking": null,
@@ -259,7 +259,7 @@
   "nusmp_display_preset": "manual",
   "parent": "minecraft:builtin/entity",
   "textures": {
-   "particle": "nusmp:item/calamity_wave_aegis"
+   "particle": "anime_multiverse:item/calamity_wave_aegis"
   }
  },
  "calamity_wave_aegis_blocking": null,
@@ -393,7 +393,7 @@
   },
   "parent": "minecraft:builtin/entity",
   "textures": {
-   "particle": "nusmp:item/celestial_support"
+   "particle": "anime_multiverse:item/celestial_support"
   }
  },
  "celestial_support_blocking": null,
@@ -527,7 +527,7 @@
   },
   "parent": "minecraft:builtin/entity",
   "textures": {
-   "particle": "nusmp:item/heros_shield"
+   "particle": "anime_multiverse:item/heros_shield"
   }
  },
  "heros_shield_blocking": null,
@@ -674,7 +674,7 @@
   "nusmp_display_preset": "manual",
   "overrides": [
    {
-    "model": "nusmp:item/legendary_shield_blocking",
+    "model": "anime_multiverse:item/legendary_shield_blocking",
     "predicate": {
      "blocking": 1
     }
@@ -682,7 +682,7 @@
   ],
   "parent": "minecraft:builtin/entity",
   "textures": {
-   "particle": "nusmp:item/legendary_shield"
+   "particle": "anime_multiverse:item/legendary_shield"
   }
  },
  "legendary_shield_blocking": {
@@ -827,7 +827,7 @@
   "gui_light": "front",
   "parent": "minecraft:builtin/entity",
   "textures": {
-   "particle": "nusmp:item/legendary_shield"
+   "particle": "anime_multiverse:item/legendary_shield"
   }
  },
  "magebane_shield": {
@@ -972,7 +972,7 @@
   "gui_light": "front",
   "overrides": [
    {
-    "model": "nusmp:item/magebane_shield_blocking",
+    "model": "anime_multiverse:item/magebane_shield_blocking",
     "predicate": {
      "blocking": 1
     }
@@ -980,7 +980,7 @@
   ],
   "parent": "minecraft:builtin/entity",
   "textures": {
-   "particle": "nusmp:item/magebane_shield"
+   "particle": "anime_multiverse:item/magebane_shield"
   }
  },
  "magebane_shield_blocking": {
@@ -1125,7 +1125,7 @@
   "gui_light": "front",
   "parent": "minecraft:builtin/entity",
   "textures": {
-   "particle": "nusmp:item/magebane_shield"
+   "particle": "anime_multiverse:item/magebane_shield"
   }
  },
  "thunder_shield": {
@@ -1258,7 +1258,7 @@
   },
   "parent": "minecraft:builtin/entity",
   "textures": {
-   "particle": "nusmp:item/thunder_shield"
+   "particle": "anime_multiverse:item/thunder_shield"
   }
  },
  "thunder_shield_blocking": null

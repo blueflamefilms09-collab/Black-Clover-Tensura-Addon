@@ -22,7 +22,7 @@ acts) to the list; nothing else in a wave changes. Then:
 1. **Meshes**: one blade per hand. Add a builder to `tools/relics/pair_models.py` (`PAIRS`): build ONE blade on its own axis, and the left half is the
    same build mirrored across x before the skin is laid out (`mirror_mesh`). `python tools/relics/pair_models.py <id>` writes `<id>.txt`,
    `<id>_left.txt`, both skins and glow skins, the left item models and the left inventory sprite (a copy of the pair's sprite; the old sprite stays the icon).
-2. **Lang** (`item.nusmp.<id>`, `.desc`, `.card` and the same for `<id>_left`); the tooltip line "Pair: needs <other half>" is automatic.
+2. **Lang** (`item.anime_multiverse.<id>`, `.desc`, `.card` and the same for `<id>_left`); the tooltip line "Pair: needs <other half>" is automatic.
 3. **Behaviour**: code that asks "which relic is in the main hand" must use `def.pairBaseId()` (both halves answer as the pair). Ask
    `PairHooks.active(player)` for "both halves in hand and working", and scale pair-only numbers with `PairRules.factor(active)`.
    A pair-specific second-blow effect (a flame, a chill) is registered once in the wave's `hooks()`:

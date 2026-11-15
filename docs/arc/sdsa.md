@@ -47,7 +47,7 @@ glue: the aim, the mark or the ring is LOCKED at the start of the wind-up and dr
 | `BanTable` (pure), `BanMoves`, `BanBoss` | his move numbers, strikes and rules | |
 
 Models: `tools/arc/char_meliodas.py`, `char_escanor.py`, `char_ban.py` (art kit specs; Escanor's Rhitta and Ban's Courechouse are props of their own, registered in the spec file
-as the kit's manual allows); generated assets `assets/nusmp/{geo,animations}/entity/arc_<id>[_form2].*`, `textures/entity/arc_<id>[_form2][_glow].png`, the preview scenes
+as the kit's manual allows); generated assets `assets/anime_multiverse/{geo,animations}/entity/arc_<id>[_form2].*`, `textures/entity/arc_<id>[_form2][_glow].png`, the preview scenes
 in `tools/render_preview/scenes.d/`, the three entries of `tools/arc/manifest.json`. Grimoire items: `models/item/charter_grimoire_<id>[_icon].json` and the two textures per boss
 (written by `tools/gen_arc_grimoire_assets.py`, which finds the three records in `SdsCharacters`).
 

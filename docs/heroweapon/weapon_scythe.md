@@ -1,6 +1,6 @@
 # Vassal Scythe (`vassal_scythe`): L'Arc Berg's scythe
 
-Class VASSAL, style SWING, canon holder L'Arc Berg Sickle (the Scythe Hero). Logic `heroweapon/weapon/scythe/ScytheLogic`, forms `data/nusmp/hero/forms/vassal_scythe.json`.
+Class VASSAL, style SWING, canon holder L'Arc Berg Sickle (the Scythe Hero). Logic `heroweapon/weapon/scythe/ScytheLogic`, forms `data/anime_multiverse/hero/forms/vassal_scythe.json`.
 This page is written in sections; the LOOK section comes first because the art builder (`hart3`) reads it first.
 
 ## 1. Look (for the art builder)
@@ -211,7 +211,7 @@ exactly 2400 ticks after the last gain. The texts (`ScytheText`) are built from 
 | `weapon/scythe/SoulLedger` | the pure counter of souls and their fading |
 | `weapon/scythe/ScytheText` | every name and description, built from the numbers; writes the lang entries |
 | `weapon/scythe/ScytheState` | the per-wielder memory (souls, the floating scythe, who was just stripped), bounded, cleared on logout, when the scythe is put away and on server stop |
-| `data/nusmp/hero/forms/vassal_scythe.json` | the five forms |
+| `data/anime_multiverse/hero/forms/vassal_scythe.json` | the five forms |
 | `weapon/glassworld/*` | the kit shared with the Fan, the Katana and the Book (see `docs/heroweapon/weapon_glassworld.md`) |
 
 Tests: `ScytheNumbersTest`, `ReapRulesTest`, `SoulLedgerTest`, `ScytheTextTest`, `ScytheFormsTest` (and the kit's tests). Self-test in the game: `hero.weapon.scythe`, run with `/multiverse mega selftest hero.weapon.scythe` (permission 2). Config keys: none.

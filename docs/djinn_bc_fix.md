@@ -41,7 +41,7 @@ longsword, mace) and its row regex `Djinn\.([A-Z]+)` skipped `GLASYA_LABOLAS`. T
 **Checked and fine (not causes).**
 * Better Combat does not add or change a data component on the stack: `WeaponRegistry.getAttributes` reads `bettercombat:preset_id` only if something put it there, else the item id. Nothing compares stacks with components in the binding.
 * `Relics.defOf` is by item (`RelicBearer` or the adopted-item map), so it cannot depend on Better Combat's data path.
-* Our `weapon_attributes` files use `bettercombat:<preset>` parents, no `nusmp:` namespace, and no weapon id appears twice.
+* Our `weapon_attributes` files use `bettercombat:<preset>` parents, no `anime_multiverse:` namespace, and no weapon id appears twice.
 * The overlay (`VesselOverlay`, `WeaponLoan`) keys on the `djinn_bound`/`djinn_serial` components and the item, not on a stack equality that Better Combat could change; the Djinn weapon never rewrites its own components while held, so Better Combat's "stack changed, cancel the swing" check (`MinecraftClientInject.cancelSwingIfNeeded`) does not trigger.
 * The Djinn weapons' `use` is main-hand only and already returns pass in the off hand; Better Combat's left-click swing does not call `use`.
 
@@ -55,7 +55,7 @@ longsword, mace) and its row regex `Djinn\.([A-Z]+)` skipped `GLASYA_LABOLAS`. T
   4. **`/multiverse djinn bind [main|off|slot <0-40>] [djinn]`** and the short alias **`/djinn bind ...`** (the whole `djinn` tree is registered at the root too). With no argument it finds the Seal (hand, then pack) and the first legal vessel (hands, then the inventory). Slots 0-35 are the pack, 36-39 armour, 40 the off hand;
   5. **the Djinn key (J)** while no Djinn is bound and a Seal is carried starts the same ritual.
   Gestures 3-5 have server switches in `serverconfig/nusmp-djinn-bind-server.toml` (`commandBind`, `guiBind`), **default ON**; right-clicking the Seal never depends on a switch. All of them run the same ritual and pay the same price (full bar, a quarter of the EP, three crystals, the trial).
-* **Refusals say why**, on the action bar and in chat (`BindGesture.Why`, `message.nusmp.djinn_bind.*`): no Seal, no vessel found, not a relic, not a Metal Vessel, below Legend grade, already holds a Djinn, not attuned to you, not in your inventory, this way is switched off.
+* **Refusals say why**, on the action bar and in chat (`BindGesture.Why`, `message.anime_multiverse.djinn_bind.*`): no Seal, no vessel found, not a relic, not a Metal Vessel, below Legend grade, already holds a Djinn, not attuned to you, not in your inventory, this way is switched off.
   The old Seal-specific messages (already owned, bond limits, bar not full, crystals) are unchanged.
 * **The vessel is judged by item + the ritual's two components only** (`BindGesture.look`, `VesselAccess.look`); extra components (Better Combat's preset id, attribute modifiers, other mods' data) change nothing.
 * **Better Combat files for the 1.93.0 Djinn kinds** (`profiles.py` `DJINN_KIND_CLASS.update(...)`, regex fixed, `manifest.json` regenerated, 30 files written): claymore->greatsword, harpoon->trident, daggers/fans->dagger, rapier, anchor->hammer, pincers->fist,
@@ -87,5 +87,5 @@ A Seal used from the off hand behind a two-handed main weapon remains impossible
 * The self-test and the Minecraft-facing code (`DjinnBinding.fromInventory`, `overrideStackedOnOther`, the command tree, the key path) were type-checked against the API stubs only; the JUnit shim cannot load Minecraft classes. `djinn.bc_bind` skips itself (and says so) when the stand-in cannot answer the bond or stage lookups.
 * Whether `overrideStackedOnOther` fires on every client menu (the creative inventory tab handles clicks on its own and was not covered) was not seen.
 * A hand-held Seal in the off hand behind a two-handed weapon cannot be fixed from our side, see above.
-* `tools/bettercombat/gen_attributes.py --check` still prints the older `PROBLEM: tools/relics/weapon_classes.json and assets/nusmp/weapon_classes.json disagree`: the two copies of the class table differ (not touched here), so `--check` exits 1 even though every weapon file is in sync.
+* `tools/bettercombat/gen_attributes.py --check` still prints the older `PROBLEM: tools/relics/weapon_classes.json and assets/anime_multiverse/weapon_classes.json disagree`: the two copies of the class table differ (not touched here), so `--check` exits 1 even though every weapon file is in sync.
 * The new Djinn weapon files use Better Combat's presets with the same range rule as the older ones; how those 30 weapons feel in game was not seen.

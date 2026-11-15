@@ -151,7 +151,7 @@ The framework law turns a base number into the real hit: x the power's multiplie
 ## 8. Config, effects, language, icons
 
 * `nusmp-spade-server.toml`, section `[spade]` (`SpadeConfig`, shared): `structuralTuning` (true), `tuningCut` (0.30, 0.05-0.40), `morrisDamage` (1.0, 0.25-3.0); Lucifero's: `flattenedAir`, `kneelSeconds`, `bowGraceTicks`, `luciferoDamage`.
-* Effect `nusmp:specimen` (speed -10%, harmful, orange). Language and icons as in `docs/arc/lucifero.md` section 8.
+* Effect `anime_multiverse:specimen` (speed -10%, harmful, orange). Language and icons as in `docs/arc/lucifero.md` section 8.
 
 * Trying it (operators, nothing here has been tried): `/multiverse arc summon morris_libardirt` at your feet, `/multiverse arc info morris_libardirt` for the record and its problems. He opens at power 20 and steps up as his health falls (40 under 85%, 60 under 65%, 80 under 45%, the Gates under 25%): Re-Structure shows from 40%, the Pin and the Theatre from 60%, Borrowed Weight from 80%, the Second Gate at the Gates; `morrisDamage` 0.25 makes it survivable while testing and `structuralTuning` false shows the fight without the tuning.
 

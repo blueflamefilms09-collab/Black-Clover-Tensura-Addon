@@ -15,7 +15,7 @@ The Legendary Bow is the weapon of the Bow Hero, Itsuki Kawasumi: the long-range
 longbow at the base look, and as the same bow made proud and monstrous at the curse look. It makes its own arrows of light, so it has no arrow rest
 for a real arrow and no quiver; the nocked arrow is a thing of light.
 
-**Size class.** `bow` of `assets/nusmp/weapon_classes.json` (1.3 to 1.6 blocks). Aim for 1.6 blocks tall (the top of the range). The grip is the
+**Size class.** `bow` of `assets/anime_multiverse/weapon_classes.json` (1.3 to 1.6 blocks). Aim for 1.6 blocks tall (the top of the range). The grip is the
 class grip (0.5, the middle of the riser). The bow is held upright, exactly as the wave 23 bows (`divine_mercy`, `the_dragons_spirit`, `embrasure`
 are the nearest examples); the string side faces the archer, the limbs curve forward (mesh -x).
 
@@ -286,7 +286,7 @@ Colours: gem yellow-gold `0xFFFFD84A`, white-gold light `0xFFFFE8A0`, the sniper
   `BowIds`, `DrawMath`, `ArmedMode`, `Volley` (pure), `BowShots` (the release of the string and the armed arrows), `BowRain` (the rains and the meteor), `BowDirect`
   (the squall, bird hunting, the retreat, Law Fanatic, the bull), `BowState` (the `bow` compound of the bond), `BowFx`, `BowSelfTest`.
 * `weapon/pierce/` (shared with the Spear): see the Spear page.
-* `src/main/resources/data/nusmp/hero/forms/legendary_bow.json` : 10 ordinary forms and 3 Pride forms.
+* `src/main/resources/data/anime_multiverse/hero/forms/legendary_bow.json` : 10 ordinary forms and 3 Pride forms.
 * Tests (`src/test/java/.../heroweapon/weapon/`): `bow/BowNumbersTest` (the budget, the table against the id list, the second arrow never above the ordinary budget, the
   ceiling on the plain arrow's damage per second), `bow/DrawMathTest` (the curve, a tap, range, cost, damage), `bow/VolleyTest`, `bow/ArmedModeTest`, `bow/BowFormsFileTest`, and the
   shared `pierce/` tests. CI runs them with JUnit; the builder ran them with the repo's small JUnit shim and mutation-checked one (the Starfall waves put back to 8 ticks apart fail

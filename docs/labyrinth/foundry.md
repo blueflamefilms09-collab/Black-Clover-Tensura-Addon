@@ -49,7 +49,7 @@ Tunnel Kobold | beast | small | rust sand iron | D&D: kobold | skin=red ears=poi
 **To add a mob:** write one row in the file of its road and tier (use a new file, e.g. `holy_t3d.txt`, for a batch), run `python3 -B tools/foundry/gen_foundry.py --partial` (the 40-per-tier rule is
 relaxed while a batch is unfinished), read what the guard says (a duplicate name, palette, look or ability set fails the run and names the pair), `--preview <id> front idle attack` to look at it
 (JDK 21, numpy, Pillow), commit the generated files. To change what a mob does, change its archetype or abilities in the row; to add an ability, add a row to
-`src/main/resources/data/nusmp/mega/foundry/_abilities.json` over one of the 25 kinds (or write a new kind in `FoundryAbilityRunner`).
+`src/main/resources/data/anime_multiverse/mega/foundry/_abilities.json` over one of the 25 kinds (or write a new kind in `FoundryAbilityRunner`).
 
 Commands of the generator: `gen_foundry.py` (everything), `--only a b` (some mobs), `--verify` (guard only), `--partial`, `--measure N` (how far the shared clips are from the mob's own),
 `--check` (rebuild into a temp folder, fail if a committed file differs), `--preview id [scene ...]`. `python3 -B tools/foundry/test_guard.py` tests the guard itself.
@@ -58,11 +58,11 @@ Commands of the generator: `gen_foundry.py` (everything), `--only a b` (some mob
 
 | file | what |
 |---|---|
-| `assets/nusmp/geo/entity/foundry_<id>.geo.json` | the mob's own geometry (kit model, minified): 20 KB average, 61 cubes average, 126 at most |
-| `assets/nusmp/textures/entity/foundry_<id>.png`, `_glow.png` | 8-bit palette PNGs (the kit's textures hold well under 256 colours, so this is lossless): 4.9 KB and 1.1 KB average |
-| `assets/nusmp/animations/entity/foundry_anim_<class>.animation.json` | the clips of an **animation class**, shared by all mobs of the class (107 classes for 400 mobs) |
-| `assets/nusmp/foundry/index.json` | what the client needs (animation class, glow colour, size, tier, height): a client never sees data packs |
-| `data/nusmp/mega/foundry/<id>.json` | the server definition: road, tier, faction, archetype, abilities, size, height, source |
+| `assets/anime_multiverse/geo/entity/foundry_<id>.geo.json` | the mob's own geometry (kit model, minified): 20 KB average, 61 cubes average, 126 at most |
+| `assets/anime_multiverse/textures/entity/foundry_<id>.png`, `_glow.png` | 8-bit palette PNGs (the kit's textures hold well under 256 colours, so this is lossless): 4.9 KB and 1.1 KB average |
+| `assets/anime_multiverse/animations/entity/foundry_anim_<class>.animation.json` | the clips of an **animation class**, shared by all mobs of the class (107 classes for 400 mobs) |
+| `assets/anime_multiverse/foundry/index.json` | what the client needs (animation class, glow colour, size, tier, height): a client never sees data packs |
+| `data/anime_multiverse/mega/foundry/<id>.json` | the server definition: road, tier, faction, archetype, abilities, size, height, source |
 
 **Sizes.** One Arc character is about 310 KB uncompressed (217 KB of animation). Four hundred of those would be 84.8 MB uncompressed (about 10.9 MB in the jar). The foundry's 400 mobs are
 17.4 MB uncompressed (geo 8.1, textures 2.4, shared animations 7.0) and **4.58 MB in the jar** (geo 1.26, textures 1.88, animations 1.55). How the saving works: the clips of a kit character depend
@@ -78,7 +78,7 @@ hash of the kit sources and the class, so a roster edit only rebuilds what chang
 
 | piece | where | what |
 |---|---|---|
-| entity | `labyrinth/mega/foundry/FoundryMobEntity` | ONE type `nusmp:foundry_mob`; identity is a synced string (pattern of `arc/ArcNpcEntity`); `Enemy`; tag `nusmp_dm` when the Director or the admin command makes it |
+| entity | `labyrinth/mega/foundry/FoundryMobEntity` | ONE type `anime_multiverse:foundry_mob`; identity is a synced string (pattern of `arc/ArcNpcEntity`); `Enemy`; tag `nusmp_dm` when the Director or the admin command makes it |
 | stats | `FoundryScaling`, `FoundryArchetype` | tier base (health 24, 40, 66, 110, 180; damage 3, 5, 8, 12, 18; armour 0 to 14) x growth inside the tier (at most +40 percent health, +30 percent damage by floor) x the archetype; the last floor of tier t is weaker than the first of tier t+1 (tested for all 10 archetypes); the Dungeon Master's threat scaling (up to +300 percent) is applied on top, as to every monster it spawns |
 | AI | `FoundryGoals` | six style goals that all exist on every mob and each switch themselves on for their style: melee, hit-and-run, ranged (a band of distance), support (stays by the allies), charge (telegraph and ram), air (hover and swoop); plus the ability goal and the turf-war rival goal |
 | abilities | `FoundryAbility` (pure rules), `FoundryBrain` (pure chooser), `FoundryAbilityRunner` (world adapter) | 53 abilities over 25 kinds (dash, leap, guard, volley, heal, summon, drain, root, blink, enrage, aura, slam, bolt, cleave, curse, ward, spit, pull, bash, rally, regen, thorns, mark, dive, burst); a cast stands through its wind-up (the cast clip plays, a Rukh gathers), then fires; ONLY Light or Dark Rukh particles (`RukhFx`) and sounds are shown |

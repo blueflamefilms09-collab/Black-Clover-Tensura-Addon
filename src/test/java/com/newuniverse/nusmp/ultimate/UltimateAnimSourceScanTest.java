@@ -34,7 +34,7 @@ class UltimateAnimSourceScanTest {
     void theChoiceIsPureAndNamesNoMinecraftOrClientClass() throws IOException {
         String c = code(SRC + "/ultimate/UltimateAnim.java");
         assertFalse(Pattern.compile("(?m)^import (net\\.minecraft|net\\.neoforged|io\\.github|com\\.mojang)").matcher(c).find(), "UltimateAnim is unit tested without a game");
-        assertFalse(Pattern.compile("com\\.newuniverse\\.anime_multiverse\\.client\\.|Minecraft\\.getInstance\\(").matcher(c).find());
+        assertFalse(Pattern.compile("com\\.newuniverse\\.nusmp\\.client\\.|Minecraft\\.getInstance\\(").matcher(c).find());
         assertFalse(c.contains("static ServerPlayer") || c.contains("static Player"), "no static player");
     }
 

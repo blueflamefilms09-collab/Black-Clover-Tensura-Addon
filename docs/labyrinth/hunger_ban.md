@@ -66,7 +66,7 @@ Fey Honey, Wave 16 chalk and saturation, Wave 17 meals, Wave 18 top-up, Wave 22 
 * A creature's own 0-100 hunger meter (not a player): `DungeonCreature`, `DungeonSlimeEntity`, `DungeonGoals`, the Warden's pinned hunger (`FloorWardenEntity`).
 * Names and flavour only: Lucius' Magicule Starvation (a magicule drain with a floor), the `STARVED` Tensura skill given to some bosses, the Hunger greataxe's name, the
   acts called "Hunger" in Waves 31, 32 and 45 (Wither drains), Vecna's Hunger (darkness and a spectral hand), the Aegis' Arcane Hunger (a spell shield), the Mad King's
-  "exhaustion" (Weakness and Mining Fatigue), skill-line names and descriptions (Orc Lord's Famine and the like), whisper lines, `message.nusmp.labyrinth_hunger` (no longer shown).
+  "exhaustion" (Weakness and Mining Fatigue), skill-line names and descriptions (Orc Lord's Famine and the like), whisper lines, `message.anime_multiverse.labyrinth_hunger` (no longer shown).
 * Not ours: vanilla Hunger from rotten flesh and husks, and effects of other mods. The ban covers this mod's systems.
 
 ## 4. How it is kept out

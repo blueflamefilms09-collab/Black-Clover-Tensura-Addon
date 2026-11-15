@@ -264,7 +264,7 @@ def catalog_ids():
 
 
 def magic_names():
-    src = os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "anime_multiverse", "blackclover", "MagicType.java")
+    src = os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "nusmp", "blackclover", "MagicType.java")
     names = re.findall(r"^    ([A-Z_0-9]+)\(\"", open(src, encoding="utf-8").read(), re.M)
     return names
 

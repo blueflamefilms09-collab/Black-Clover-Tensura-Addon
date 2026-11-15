@@ -29,9 +29,9 @@ brief's version is what is built; one line to change if the owner prefers the ot
 
 | item id | what | stack | rarity |
 |---|---|---|---|
-| `nusmp:calling_gem` | the Holy Calling Gem (a cut jewel in the four Holy colours) | 1 | epic |
-| `nusmp:gem_fragment` | a shard of a calling gem; every Seal is crafted from one | 64 | uncommon |
-| `nusmp:vassal_seal_<weapon>` (17) | `hammer claw axe whip staff gauntlet projectile` (Seven Star, amber rim), `carriage fan scythe katana book mirror instrument harpoon sewing_set chain` (Vassal, aqua rim) | 1 | rare |
+| `anime_multiverse:calling_gem` | the Holy Calling Gem (a cut jewel in the four Holy colours) | 1 | epic |
+| `anime_multiverse:gem_fragment` | a shard of a calling gem; every Seal is crafted from one | 64 | uncommon |
+| `anime_multiverse:vassal_seal_<weapon>` (17) | `hammer claw axe whip staff gauntlet projectile` (Seven Star, amber rim), `carriage fan scythe katana book mirror instrument harpoon sewing_set chain` (Vassal, aqua rim) | 1 | rare |
 
 All are listed by `GemSystem.creativeItems()`, which `HeroWeaponSystem.creativeItems()` already adds to the creative tab (no change to `NUCreativeTab` is needed).
 The three weapons with a canon holder name them in the Seal's tooltip (Carriage: Fitoaria, Fan: Glass, Scythe: L'Arc Berg).
@@ -71,7 +71,7 @@ boss effects' `DIVINE_SIGIL` for exactly the ritual's length: its closing ring i
 motes gathering each half second in the weapon's colour, and for the Holy gem walking through green, blue, red and yellow one colour a second (four weapons listening);
 at the end `DIVINE_PILLAR`, `LIGHT_FLARE` (and four flares in the four jewel colours for the Holy gem) and the title. The screen is never shaken.
 
-## 4. Recipes (19 files in `data/nusmp/recipe/`, written by `tools/heroweapon/gen_gem_recipes.py` from the table in `GemRecipes.java`)
+## 4. Recipes (19 files in `data/anime_multiverse/recipe/`, written by `tools/heroweapon/gen_gem_recipes.py` from the table in `GemRecipes.java`)
 
 Every ingredient is a vanilla item a survival player can always get (no Tensura item, nothing an operator must give). The Holy gem is the rarest thing in the route
 because it chooses among the four Legendary Weapons; a Seal is cheaper (a Gem Fragment plus one signature material), because the Vassal Weapons come to natives.
@@ -111,7 +111,7 @@ The table is `GemRecipes.java`; edit it and run `python3 -B tools/heroweapon/gen
 **The switch `recipes`.** A recipe is loaded before the server config is, so no recipe condition can read a server config reliably; the robust form is a runtime rule.
 `recipes = true` (default): anyone can use a gem. `recipes = false`: the gems still exist and still craft, but only operators (permission 2) and creative players can use
 them, so a crafted gem does nothing for a survival player; a player who crafts one is told so at once (`GemEvents.onCrafted`). To remove the recipes themselves, override
-`data/nusmp/recipe/calling_gem.json`, `gem_fragment.json` and `vassal_seal_*.json` in a data pack.
+`data/anime_multiverse/recipe/calling_gem.json`, `gem_fragment.json` and `vassal_seal_*.json` in a data pack.
 
 ## 5. Config (`nusmp-heroweapon-gem-server.toml`, section `[gem]`; plain `define` / `defineInRange`, read through `GemConfig.get`)
 

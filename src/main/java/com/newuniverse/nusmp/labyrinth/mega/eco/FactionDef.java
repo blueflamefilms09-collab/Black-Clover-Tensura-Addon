@@ -51,7 +51,7 @@ public record FactionDef(String id, String name, int color, String tag, List<Str
 
     /** The {@link EconomyMath} kind of a cut name, with or without the {@code anime_multiverse:} prefix. */
     public static int cutKindOf(String cut) {
-        String c = cut == null ? "" : (cut.startsWith("anime_multiverse:") ? cut.substring(6) : cut);
+        String c = cut == null ? "" : (cut.startsWith("anime_multiverse:") ? cut.substring(17) : cut);
         return switch (c) {
             case "raw_slime_jelly" -> EconomyMath.JELLY;
             case "raw_armor_flank" -> EconomyMath.FLANK;

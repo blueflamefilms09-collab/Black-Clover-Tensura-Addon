@@ -20,7 +20,7 @@ colours each class chose, and no banner, frame or footer.
 
 ## 2. What every other item of the mod gets now
 
-For every stack whose registry namespace is `nusmp`, except relics (they keep their own tooltip, the model) and spawn eggs (the owner excluded them):
+For every stack whose registry namespace is `anime_multiverse`, except relics (they keep their own tooltip, the model) and spawn eggs (the owner excluded them):
 
 | Part | Relic tooltip | Other items now |
 |---|---|---|
@@ -50,7 +50,7 @@ Trinket/Charm/Seal/Relic, Material/Gem/Fragment/Shard), then the registry path a
 
 | Part | Status |
 |---|---|
-| Generic tooltip for all `nusmp` items (banner, type row, hairlines, footer, frame, stat palette) | NEW |
+| Generic tooltip for all `anime_multiverse` items (banner, type row, hairlines, footer, frame, stat palette) | NEW |
 | Pure rules class + game-side reader + self-test `ui.unified_tooltips` + `UnifiedTooltipRulesTest` | NEW |
 | Lang fragment `tools/lang/unified_tooltips.json` (category labels, English fallback in code) | NEW |
 | The relic tooltip (`RelicTooltip`, `RelicTooltipLayout`, `RelicTooltipFallback`), the Djinn, socket and attunement lines, `HeroTooltip`, the skill-book "you know this" line, every `appendHoverText` | KEPT, unchanged (this lane did not touch `client/relics/**`) |
@@ -65,7 +65,7 @@ Wiring (append-only one-liners): `UiThemeClient.init` calls `UnifiedTooltip.init
   category default, negative and huge rarity handled), banner / type / footer shape, the attribute palette, the width rule, the lang fragment covers every category, and a scan
   of the sources: every id registered on a `DeferredRegister.Items` file resolves to a style (the scan sees the ids written as `X.register("id"`; items registered through helper
   loops are covered by the next point).
-* Self-test `ui.unified_tooltips` (dedicated server, common code): walks `BuiltInRegistries.ITEM` for `nusmp`, and for every item except eggs and relics checks style, banner
+* Self-test `ui.unified_tooltips` (dedicated server, common code): walks `BuiltInRegistries.ITEM` for `anime_multiverse`, and for every item except eggs and relics checks style, banner
   (contains the grade label), "Type:" row, footer and that the grade is never below the category default; reports the count per category.
 
 ## 5. What could NOT be verified (nothing was run in a game)

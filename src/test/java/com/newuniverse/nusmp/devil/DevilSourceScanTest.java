@@ -41,7 +41,7 @@ class DevilSourceScanTest {
 
     @Test
     void theCommonPackageNamesNoClientClassAndNoMinecraftInstance() throws IOException {
-        Pattern client = Pattern.compile("net\\.minecraft\\.client\\.|com\\.mojang\\.blaze3d\\.|com\\.newuniverse\\.anime_multiverse\\.client\\.|net\\.neoforged\\.neoforge\\.client\\.|Minecraft\\.getInstance\\(");
+        Pattern client = Pattern.compile("net\\.minecraft\\.client\\.|com\\.mojang\\.blaze3d\\.|com\\.newuniverse\\.nusmp\\.client\\.|net\\.neoforged\\.neoforge\\.client\\.|Minecraft\\.getInstance\\(");
         for (Path f : files(DIR)) assertFalse(client.matcher(code(f)).find(), f.getFileName() + " names a client-only class");
     }
 

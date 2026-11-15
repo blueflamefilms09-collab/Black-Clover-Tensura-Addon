@@ -2,7 +2,7 @@
 
 Class SEVEN_STAR, style THROW. In the series the Vassal Projectile is one of the seven Seven Star Weapons of Raphtalia's world; its base form is a semi-transparent knife that
 becomes chakrams, kunai, hatchets, boomerangs and short spears, its power-up method is Over Custom (customisation paid for with money) and its holder is Rishia Ivyred (wiki
-summaries). The owner calls it "Projectile (throwing weapon)". Logic `heroweapon/weapon/projectile/ProjectileLogic`, forms `data/nusmp/hero/forms/vassal_projectile.json`.
+summaries). The owner calls it "Projectile (throwing weapon)". Logic `heroweapon/weapon/projectile/ProjectileLogic`, forms `data/anime_multiverse/hero/forms/vassal_projectile.json`.
 This page is written in sections; the LOOK section comes first because the art builder (`hart2`) reads it first.
 
 ## 1. Look (for the art builder)
@@ -172,7 +172,7 @@ Map.entry("vassal_projectile", List.of(e("swift", 2), e("severance", 1), e("magi
 
 * Logic: `heroweapon/weapon/projectile/`: `ProjectileLogic`, `ProjectileSpells`, `ProjectileNumbers` (no game classes), `ProjectileText` (no game classes), `ProjectileState`.
 * Shared kit: `heroweapon/weapon/kit/`, described class by class in `weapon_staff.md` section 8 (`Tally` is this weapon's own idea).
-* Forms: `src/main/resources/data/nusmp/hero/forms/vassal_projectile.json`. Lang: the builder's fragment (`hero.skill.projectile.*`, `hero.passive.projectile.*`).
+* Forms: `src/main/resources/data/anime_multiverse/hero/forms/vassal_projectile.json`. Lang: the builder's fragment (`hero.skill.projectile.*`, `hero.passive.projectile.*`).
 * Tests: `ProjectileNumbersTest` (budget, strongest values, the cooldown rule of Over Custom), `ProjectileFormsTest`, and the kit's `TallyTest` (the per-foe and per-cast limits).
 
 ## 9. Tests and the self-test

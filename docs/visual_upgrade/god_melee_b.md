@@ -12,7 +12,7 @@ the slice `god_melee_a`, the Genesis weapons to `genesis_weapons`; none of their
 
 | | What |
 |---|---|
-| **NEW** | for each of the nine weapons: an upgraded mesh `weapon_meshes/up/<id>.txt`, its level-of-detail mesh `up/<id>_lod.txt`, the mesh of its one orbiting piece `up/<id>_orbit.txt`; skins `textures/entity/weapon/up/<id>.png` (1024 px, Paradox 1536 px), `_glow.png` (core glow, additive) and `_glow2.png` (energy veins, a separate emissive map); the effect table `assets/nusmp/visual_upgrade/<id>.json` |
+| **NEW** | for each of the nine weapons: an upgraded mesh `weapon_meshes/up/<id>.txt`, its level-of-detail mesh `up/<id>_lod.txt`, the mesh of its one orbiting piece `up/<id>_orbit.txt`; skins `textures/entity/weapon/up/<id>.png` (1024 px, Paradox 1536 px), `_glow.png` (core glow, additive) and `_glow2.png` (energy veins, a separate emissive map); the effect table `assets/anime_multiverse/visual_upgrade/<id>.json` |
 | **NEW** | client code: `client/GodMeleeBRender` (the extra passes), `client/vupgrade/godb/{UpgradeSpec, UpgradeMath, UpgradeSpecs, UpgradeConfig, UpgradeFx, GodBUpgrade}`; common `vupgrade/GodBSelfTests` (self-test `visual.god_melee_b`) |
 | **NEW** | client option file `config/nusmp-visualupgrade-god_melee_b-client.toml`: `visual.upgrade` (default **true**; false draws every one of the nine exactly as before), `visual.guiModel` (default false: the sprite stays the inventory icon; true shows the 3D model, tilted, in the slot), `visual.particles` |
 | **NEW** | generators `tools/visual_upgrade/god_melee_b/{lib, kit, items_a, items_b, build, preview, measure}.py`, the measurements `docs/visual_upgrade/god_melee_b_baseline.json` and `_after.json`, the before / after sheets in `docs/previews/visual_upgrade/god_melee_b/`, JUnit `UpgradeMathTest`, `UpgradeSpecTest`, `GodMeleeBBudgetTest`, `GodMeleeBRatioTest` |
@@ -50,7 +50,7 @@ an idle animation, a separate emissive glow map, a swing trail" targets for God 
 
 ## 3. What was built, per item
 
-All nine share the same effect set (data in `assets/nusmp/visual_upgrade/<id>.json`, drawn by `GodMeleeBRender`, ticked by `UpgradeFx`); the colours, the speeds, the particle types and the pieces are each weapon's own.
+All nine share the same effect set (data in `assets/anime_multiverse/visual_upgrade/<id>.json`, drawn by `GodMeleeBRender`, ticked by `UpgradeFx`); the colours, the speeds, the particle types and the pieces are each weapon's own.
 
 **Shared effect set**
 * **Core glow** (the old pass): now breathes with a second slow flicker (`core_flicker`).
@@ -117,4 +117,4 @@ JUnit: `UpgradeMathTest`, `UpgradeSpecTest`, `GodMeleeBBudgetTest`, `GodMeleeBRa
 * The additive and translucent passes of the new look depend on the render types behaving as they do for the existing Elsdocia halo and the socket pass (the same calls are used); not seen.
 * The particle positions (section 4, note 5) and their density; the level-of-detail meshes (vertex clustering) were only looked at in the software preview.
 * `visual.guiModel` (the tilted model in the inventory slot) was written from the item-space maths of the hand renderer and never drawn.
-* Frame-time: the cost model is by construction (one extra pass over at most 700 glow quads for the veins, 330 level-of-detail quads for the halo and the ghosts, at most 12 small pieces), not measured; `/nusmp perf` was not run.
+* Frame-time: the cost model is by construction (one extra pass over at most 700 glow quads for the veins, 330 level-of-detail quads for the halo and the ghosts, at most 12 small pieces), not measured; `/anime_multiverse perf` was not run.

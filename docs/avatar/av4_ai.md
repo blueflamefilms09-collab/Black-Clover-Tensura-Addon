@@ -110,7 +110,7 @@ not act on them.
 ## How each part works
 ### Weapon AI
 The watcher reads both hands into a `CombatStyle` as soon as a hand changes (`setItemSlot` marks it stale) and every two seconds: a bow or crossbow with ammunition -> BOW / CROSSBOW; a focus (grimoire, charter grimoire, summons
-grimoire, an item in the `nusmp:avatar_magic_focus` tag, or one whose id has the word staff / wand / scepter / tome / spellbook / codex) in either hand and something to cast -> MAGE; everything else -> MELEE. The goals only run in
+grimoire, an item in the `anime_multiverse:avatar_magic_focus` tag, or one whose id has the word staff / wand / scepter / tome / spellbook / codex) in either hand and something to cast -> MAGE; everything else -> MELEE. The goals only run in
 their own style, so they can never fight over the legs. Ranged: the band is `avatar.rangedMinRange` .. `rangedMaxRange` (6 and 18), a crossbow a little closer, a mage in between, Cowardly +3/+2, Aggressive -3/-4; it backs off inside the near
 edge, strafes inside the band, draws a bow for 20 ticks, loads a crossbow for its enchanted charge time, shoots through `ProjectileUtil.getMobArrow` with a spread from DEX and damage scaled by the Avatar's attack (1x to 4x).
 Ammunition: free by default; `avatar.consumeAmmo` takes arrows from the pockets or the off hand. Shield: up for 30 of every 50 ticks while the target is within 5.5 blocks (staggered by entity id); the melee goal does not swing while it is
@@ -195,8 +195,8 @@ New keys of the rebuild (the older chatter / cast / Yandere keys are unchanged e
 | `delveRoad` | "holy" | "holy" or "abyssal". |
 
 ## Commands
-`/avatar follow|stay|delve|recall|share [name]`, `/avatar party`, `/avatar release [name]` (no operator rights; only the caller's loaded Avatars). The operator command `/nusmp avatar ...` is unchanged.
-Item tag: `nusmp:avatar_magic_focus` (data pack: add staves, wands, tomes of other mods; empty by default).
+`/avatar follow|stay|delve|recall|share [name]`, `/avatar party`, `/avatar release [name]` (no operator rights; only the caller's loaded Avatars). The operator command `/anime_multiverse avatar ...` is unchanged.
+Item tag: `anime_multiverse:avatar_magic_focus` (data pack: add staves, wands, tomes of other mods; empty by default).
 
 ## Audit of the brief (sections 2, 3, 4, 5, 6, 8, 9)
 | Brief | State | Evidence / what was done |
@@ -248,7 +248,7 @@ Item tag: `nusmp:avatar_magic_focus` (data pack: add staves, wands, tomes of oth
 ## Integration notes (for the lead)
 * `NUSMP.java`: nothing is required. `AvatarAiConfig` was already registered. The menu type registers itself from `AvatarAi.registerEvents`; an explicit, harmless second call is
   `com.newuniverse.nusmp.avatar.inventory.AvatarInventoryMenus.init(modEventBus);` after `AvatarSystem.init(...)`.
-* Lang: merge `arc/frag/avai.lang.json` (five `nusmp.avatar.inv.*` keys) into `en_us.json`.
+* Lang: merge `arc/frag/avai.lang.json` (five `anime_multiverse.avatar.inv.*` keys) into `en_us.json`.
 * Version, README / LIBRARIES jar name and CHANGELOG are the lead's.
 * For the builders: `AvatarEntity.mobInteract` is public now (the animal parent requires it); the entity exposes `STORED_LUCK`, `OUTCOME_TIMER`, `SPECIAL`, `STANCE` accessors, `stance()`, `setStance`, `inventory()`, `combatStyle()`; the Avatar reads the Mega-Dungeon only through
   `MegaDungeon.level / in / isDungeonMonster`, `MegaData.get / chain / chainSector / sector`, `Sector.arrival / rooms / edges / state / chainIndex / firstFloor()` and `Room.center() / kind.isSafe()`; the creator's depth is the persistent int

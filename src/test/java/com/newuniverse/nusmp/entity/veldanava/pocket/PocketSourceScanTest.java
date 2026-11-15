@@ -39,7 +39,7 @@ class PocketSourceScanTest {
     @Test
     void theWorldCodeNamesNoClientClassAndNoStaticPlayer() throws IOException {
         String c = file("PocketLabyrinth");
-        assertFalse(Pattern.compile("net\\.minecraft\\.client\\.|com\\.mojang\\.blaze3d\\.|net\\.neoforged\\.neoforge\\.client\\.|com\\.newuniverse\\.anime_multiverse\\.client\\.|Minecraft\\.getInstance\\(").matcher(c).find());
+        assertFalse(Pattern.compile("net\\.minecraft\\.client\\.|com\\.mojang\\.blaze3d\\.|net\\.neoforged\\.neoforge\\.client\\.|com\\.newuniverse\\.nusmp\\.client\\.|Minecraft\\.getInstance\\(").matcher(c).find());
         assertFalse(c.contains("static ServerPlayer") || c.contains("static LivingEntity") || c.contains("static Player "), "no static current player: everything is keyed by UUID");
         assertTrue(c.contains("Map<UUID, Session> BY_CASTER") && c.contains("Map<UUID, Session> BY_MEMBER"));
     }

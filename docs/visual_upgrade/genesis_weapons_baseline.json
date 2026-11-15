@@ -10,7 +10,7 @@
       "kind": "staff",
       "meshes": {
         "astralis_the_eye_of_the_universe": {
-          "file": "src/main/resources/assets/nusmp/weapon_meshes/astralis_the_eye_of_the_universe.txt",
+          "file": "src/main/resources/assets/anime_multiverse/weapon_meshes/astralis_the_eye_of_the_universe.txt",
           "quads": {
             "body": 2124,
             "void": 0,
@@ -26,7 +26,7 @@
         }
       },
       "mesh": {
-        "file": "src/main/resources/assets/nusmp/weapon_meshes/astralis_the_eye_of_the_universe.txt",
+        "file": "src/main/resources/assets/anime_multiverse/weapon_meshes/astralis_the_eye_of_the_universe.txt",
         "quads": {
           "body": 2124,
           "void": 0,
@@ -82,7 +82,7 @@
       "kind": "greatsword",
       "meshes": {
         "blackrazor": {
-          "file": "src/main/resources/assets/nusmp/weapon_meshes/blackrazor.txt",
+          "file": "src/main/resources/assets/anime_multiverse/weapon_meshes/blackrazor.txt",
           "quads": {
             "body": 854,
             "void": 96,
@@ -98,7 +98,7 @@
         }
       },
       "mesh": {
-        "file": "src/main/resources/assets/nusmp/weapon_meshes/blackrazor.txt",
+        "file": "src/main/resources/assets/anime_multiverse/weapon_meshes/blackrazor.txt",
         "quads": {
           "body": 854,
           "void": 96,
@@ -159,7 +159,7 @@
       "kind": "handaxe",
       "meshes": {
         "cardinal_halo_chakram": {
-          "file": "src/main/resources/assets/nusmp/weapon_meshes/cardinal_halo_chakram.txt",
+          "file": "src/main/resources/assets/anime_multiverse/weapon_meshes/cardinal_halo_chakram.txt",
           "quads": {
             "body": 1224,
             "void": 0,
@@ -175,7 +175,7 @@
         }
       },
       "mesh": {
-        "file": "src/main/resources/assets/nusmp/weapon_meshes/cardinal_halo_chakram.txt",
+        "file": "src/main/resources/assets/anime_multiverse/weapon_meshes/cardinal_halo_chakram.txt",
         "quads": {
           "body": 1224,
           "void": 0,
@@ -236,7 +236,7 @@
       "kind": "dagger",
       "meshes": {
         "fairy_glitter_gauntlets": {
-          "file": "src/main/resources/assets/nusmp/weapon_meshes/fairy_glitter_gauntlets.txt",
+          "file": "src/main/resources/assets/anime_multiverse/weapon_meshes/fairy_glitter_gauntlets.txt",
           "quads": {
             "body": 1200,
             "void": 0,
@@ -252,7 +252,7 @@
         }
       },
       "mesh": {
-        "file": "src/main/resources/assets/nusmp/weapon_meshes/fairy_glitter_gauntlets.txt",
+        "file": "src/main/resources/assets/anime_multiverse/weapon_meshes/fairy_glitter_gauntlets.txt",
         "quads": {
           "body": 1200,
           "void": 0,
@@ -312,7 +312,7 @@
       "kind": "spear",
       "meshes": {
         "gae_bolg_heartseeker": {
-          "file": "src/main/resources/assets/nusmp/weapon_meshes/gae_bolg_heartseeker.txt",
+          "file": "src/main/resources/assets/anime_multiverse/weapon_meshes/gae_bolg_heartseeker.txt",
           "quads": {
             "body": 1202,
             "void": 0,
@@ -328,7 +328,7 @@
         }
       },
       "mesh": {
-        "file": "src/main/resources/assets/nusmp/weapon_meshes/gae_bolg_heartseeker.txt",
+        "file": "src/main/resources/assets/anime_multiverse/weapon_meshes/gae_bolg_heartseeker.txt",
         "quads": {
           "body": 1202,
           "void": 0,
@@ -388,7 +388,7 @@
       "kind": "glaive",
       "meshes": {
         "magic_emperors_black_halberd": {
-          "file": "src/main/resources/assets/nusmp/weapon_meshes/magic_emperors_black_halberd.txt",
+          "file": "src/main/resources/assets/anime_multiverse/weapon_meshes/magic_emperors_black_halberd.txt",
           "quads": {
             "body": 823,
             "void": 38,
@@ -404,7 +404,7 @@
         }
       },
       "mesh": {
-        "file": "src/main/resources/assets/nusmp/weapon_meshes/magic_emperors_black_halberd.txt",
+        "file": "src/main/resources/assets/anime_multiverse/weapon_meshes/magic_emperors_black_halberd.txt",
         "quads": {
           "body": 823,
           "void": 38,
@@ -466,7 +466,7 @@
       "kind": "dagger",
       "meshes": {
         "primordial_hearth_blade": {
-          "file": "src/main/resources/assets/nusmp/weapon_meshes/primordial_hearth_blade.txt",
+          "file": "src/main/resources/assets/anime_multiverse/weapon_meshes/primordial_hearth_blade.txt",
           "quads": {
             "body": 692,
             "void": 0,
@@ -482,7 +482,7 @@
         }
       },
       "mesh": {
-        "file": "src/main/resources/assets/nusmp/weapon_meshes/primordial_hearth_blade.txt",
+        "file": "src/main/resources/assets/anime_multiverse/weapon_meshes/primordial_hearth_blade.txt",
         "quads": {
           "body": 692,
           "void": 0,
@@ -542,7 +542,7 @@
       "kind": "bow",
       "meshes": {
         "starforged_aeon_bow": {
-          "file": "src/main/resources/assets/nusmp/weapon_meshes/starforged_aeon_bow.txt",
+          "file": "src/main/resources/assets/anime_multiverse/weapon_meshes/starforged_aeon_bow.txt",
           "quads": {
             "body": 1100,
             "void": 0,
@@ -557,7 +557,7 @@
           "named_parts": 9
         },
         "starforged_aeon_bow_pull1": {
-          "file": "src/main/resources/assets/nusmp/weapon_meshes/starforged_aeon_bow_pull1.txt",
+          "file": "src/main/resources/assets/anime_multiverse/weapon_meshes/starforged_aeon_bow_pull1.txt",
           "quads": {
             "body": 1202,
             "void": 0,
@@ -572,7 +572,7 @@
           "named_parts": 12
         },
         "starforged_aeon_bow_pull2": {
-          "file": "src/main/resources/assets/nusmp/weapon_meshes/starforged_aeon_bow_pull2.txt",
+          "file": "src/main/resources/assets/anime_multiverse/weapon_meshes/starforged_aeon_bow_pull2.txt",
           "quads": {
             "body": 1202,
             "void": 0,
@@ -587,7 +587,7 @@
           "named_parts": 12
         },
         "starforged_aeon_bow_pull3": {
-          "file": "src/main/resources/assets/nusmp/weapon_meshes/starforged_aeon_bow_pull3.txt",
+          "file": "src/main/resources/assets/anime_multiverse/weapon_meshes/starforged_aeon_bow_pull3.txt",
           "quads": {
             "body": 1202,
             "void": 0,
@@ -603,7 +603,7 @@
         }
       },
       "mesh": {
-        "file": "src/main/resources/assets/nusmp/weapon_meshes/starforged_aeon_bow.txt",
+        "file": "src/main/resources/assets/anime_multiverse/weapon_meshes/starforged_aeon_bow.txt",
         "quads": {
           "body": 1100,
           "void": 0,
@@ -664,7 +664,7 @@
       "kind": "hammer",
       "meshes": {
         "starsplitter_hammer": {
-          "file": "src/main/resources/assets/nusmp/weapon_meshes/starsplitter_hammer.txt",
+          "file": "src/main/resources/assets/anime_multiverse/weapon_meshes/starsplitter_hammer.txt",
           "quads": {
             "body": 840,
             "void": 12,
@@ -680,7 +680,7 @@
         }
       },
       "mesh": {
-        "file": "src/main/resources/assets/nusmp/weapon_meshes/starsplitter_hammer.txt",
+        "file": "src/main/resources/assets/anime_multiverse/weapon_meshes/starsplitter_hammer.txt",
         "quads": {
           "body": 840,
           "void": 12,
@@ -742,7 +742,7 @@
       "kind": "longsword",
       "meshes": {
         "sword_of_the_first_dawn": {
-          "file": "src/main/resources/assets/nusmp/weapon_meshes/sword_of_the_first_dawn.txt",
+          "file": "src/main/resources/assets/anime_multiverse/weapon_meshes/sword_of_the_first_dawn.txt",
           "quads": {
             "body": 1368,
             "void": 0,
@@ -758,7 +758,7 @@
         }
       },
       "mesh": {
-        "file": "src/main/resources/assets/nusmp/weapon_meshes/sword_of_the_first_dawn.txt",
+        "file": "src/main/resources/assets/anime_multiverse/weapon_meshes/sword_of_the_first_dawn.txt",
         "quads": {
           "body": 1368,
           "void": 0,
@@ -819,7 +819,7 @@
       "kind": "katana",
       "meshes": {
         "void_origin_katana": {
-          "file": "src/main/resources/assets/nusmp/weapon_meshes/void_origin_katana.txt",
+          "file": "src/main/resources/assets/anime_multiverse/weapon_meshes/void_origin_katana.txt",
           "quads": {
             "body": 842,
             "void": 30,
@@ -835,7 +835,7 @@
         }
       },
       "mesh": {
-        "file": "src/main/resources/assets/nusmp/weapon_meshes/void_origin_katana.txt",
+        "file": "src/main/resources/assets/anime_multiverse/weapon_meshes/void_origin_katana.txt",
         "quads": {
           "body": 842,
           "void": 30,
@@ -897,7 +897,7 @@
       "kind": "scythe",
       "meshes": {
         "nekrathuls_pact_scythe": {
-          "file": "src/main/resources/assets/nusmp/weapon_meshes/nekrathuls_pact_scythe.txt",
+          "file": "src/main/resources/assets/anime_multiverse/weapon_meshes/nekrathuls_pact_scythe.txt",
           "quads": {
             "body": 1144,
             "void": 36,
@@ -913,7 +913,7 @@
         }
       },
       "mesh": {
-        "file": "src/main/resources/assets/nusmp/weapon_meshes/nekrathuls_pact_scythe.txt",
+        "file": "src/main/resources/assets/anime_multiverse/weapon_meshes/nekrathuls_pact_scythe.txt",
         "quads": {
           "body": 1144,
           "void": 36,
@@ -973,7 +973,7 @@
       "kind": "greatsword",
       "meshes": {
         "elsdocia": {
-          "file": "src/main/resources/assets/nusmp/weapon_meshes/elsdocia.txt",
+          "file": "src/main/resources/assets/anime_multiverse/weapon_meshes/elsdocia.txt",
           "quads": {
             "body": 3896,
             "void": 0,
@@ -989,7 +989,7 @@
         }
       },
       "mesh": {
-        "file": "src/main/resources/assets/nusmp/weapon_meshes/elsdocia.txt",
+        "file": "src/main/resources/assets/anime_multiverse/weapon_meshes/elsdocia.txt",
         "quads": {
           "body": 3896,
           "void": 0,

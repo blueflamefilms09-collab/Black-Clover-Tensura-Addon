@@ -9,9 +9,9 @@ exercises the real thing. CI is the first real compile.
 
 | Part | Status | Notes |
 |---|---|---|
-| Eleven factions as data (`data/nusmp/mega/factions/*.json`) and as entity-type tags (`data/nusmp/tags/entity_type/mega/*.json`) | NEW | Nothing like it existed. |
+| Eleven factions as data (`data/anime_multiverse/mega/factions/*.json`) and as entity-type tags (`data/anime_multiverse/tags/entity_type/mega/*.json`) | NEW | Nothing like it existed. |
 | Native faction of every non-safe, non-circulation room (`Room.faction`), assigned when a sector is generated | NEW | Uses the field the contract added to `Room`; `Room.save/load` already persisted it. |
-| Turf wars (`TurfWarGoal`, priority 3) and the same-faction target guard | NEW | Only inside `nusmp:mega_dungeon`. |
+| Turf wars (`TurfWarGoal`, priority 3) and the same-faction target guard | NEW | Only inside `anime_multiverse:mega_dungeon`. |
 | Faction drops (`FactionDrops`, a second `LivingDropsEvent` listener) | NEW | Added NEXT TO the 1.36.0 `EconomyDrops`, which is untouched. |
 | Stones and meat economy (`EconomyDrops`, `EconomyMath`, `DungeonFood`, `StoneTable`) | KEPT | It already applies in the Mega-Dungeon because `Labyrinth.in(level)` is true there. Not edited, not duplicated. |
 | Cooking recipes of the five raw cuts (campfire, smoker, furnace) | KEPT | Verified: all five already have `campfire_cooking`, `smoking` and `smelting` recipes (1.19.0). **No recipe was missing, so none was added.** |
@@ -20,10 +20,10 @@ exercises the real thing. CI is the first real compile.
 
 ## 2. What it does, in one page
 
-* A **faction** is a group of creature types (an entity-type tag `nusmp:mega/<id>`) with rivals, allies, a notice range, a liking for each region theme
+* A **faction** is a group of creature types (an entity-type tag `anime_multiverse:mega/<id>`) with rivals, allies, a notice range, a liking for each region theme
   and a raw cut of meat. The eleven ids are fixed by the contract: `undead goblin ogre beast slime construct cultist demon elemental aquatic insect`.
 * When a **sector is generated**, every room that is not a Landing, a safe room or a corridor-like piece gets a **native faction**: the one its template
-  names with a `nusmp:faction;faction=<id>` marker, else a seeded draw weighted by the sector's theme. It is written to `Room.faction` and saved; the
+  names with a `anime_multiverse:faction;faction=<id>` marker, else a seeded draw weighted by the sector's theme. It is written to `Room.faction` and saved; the
   encounter director reads it to prefer "the room's own kind" when it spawns.
 * When a **mob joins** the Mega-Dungeon and its type is in a faction tag, a `TurfWarGoal` is added to its target selector at priority 3. About once a
   second, if the mob has no target and no player is within 12 blocks, it looks for the nearest mob of a rival faction in range and line of sight and
@@ -38,7 +38,7 @@ exercises the real thing. CI is the first real compile.
 
 ## 3. The WHY of the decisions
 
-* **Why entity-type tags are the membership.** The encounter director (another builder) spawns "faction X" from the tag `nusmp:mega/X`, so the tag is
+* **Why entity-type tags are the membership.** The encounter director (another builder) spawns "faction X" from the tag `anime_multiverse:mega/X`, so the tag is
   the shared contract. It also means a pack author adds a creature to a faction by editing a tag (mods that are missing are skipped because every entry
   is `required: false`), and never touches Java or the faction file.
 * **Why a goal at priority 3 and not a brain rewrite.** Almost every hostile mob of vanilla, Tensura and Ice and Fire picks targets with TARGET goals.
@@ -105,12 +105,12 @@ exercises the real thing. CI is the first real compile.
 
 ## 5. Data files (the WHY of each)
 
-### 5.1 `data/nusmp/mega/factions/<id>.json` (11 files)
+### 5.1 `data/anime_multiverse/mega/factions/<id>.json` (11 files)
 One file per faction because the owner wants the factions tunable without a mod update. The file name is the id. Every file carries a `why` string (JSON
 has no comments, and the owner's rule is a WHY for every file). Schema (all keys optional except what the parser defaults):
 
 ```json
-{ "why": "...", "id": "goblin", "name": "Goblin Warrens", "color": "#5C8A3A", "tag": "nusmp:mega/goblin",
+{ "why": "...", "id": "goblin", "name": "Goblin Warrens", "color": "#5C8A3A", "tag": "anime_multiverse:mega/goblin",
   "rivals": ["undead", "ogre", "beast"], "allies": [],
   "aggro": { "range": 14, "nativeBonus": 8 },
   "themeWeights": { "gravity": 5, "blood": 1, "spatial": 0, "flame": 2, "frost": 2, "verdant": 4, "storm": 3, "shadow": 1, "astral": 0 },
@@ -128,7 +128,7 @@ has no comments, and the owner's rule is a WHY for every file). Schema (all keys
   storm shadow astral`); a missing theme counts 1, 0 excludes the faction from that theme. 0..100.
 * `drops.meat`: one of `raw_slime_jelly raw_armor_flank raw_basilisk_fillet raw_direwolf_haunch raw_monster_meat` (the five items of `DungeonFood`);
   `drops.meatChance`: base chance per player kill, 0..1.
-* Unknown keys, bad colours, unknown themes, wrong types are reported in the log at reload (`[nusmp] Mega faction file ...`), never thrown.
+* Unknown keys, bad colours, unknown themes, wrong types are reported in the log at reload (`[anime_multiverse] Mega faction file ...`), never thrown.
 
 The relations of the shipped data (every row is mirrored; `slime` has none by design; `cultist` and `demon` are allied):
 
@@ -168,7 +168,7 @@ Theme weights (what a room of that region favours; the draw uses the weights of 
 
 A test requires every theme to let at least six factions in, and 600 draws per theme to use at least five factions with none above 45 percent.
 
-### 5.2 `data/nusmp/tags/entity_type/mega/<id>.json` (11 files)
+### 5.2 `data/anime_multiverse/tags/entity_type/mega/<id>.json` (11 files)
 The membership, as `{"replace": false, "values": [{"id": "...", "required": false}, ...]}`. `replace: false` so other packs can add to a faction;
 `required: false` on every entry so an absent mod never breaks the tag. 109 ids in all (each in exactly one tag, enforced by a test):
 
@@ -198,13 +198,13 @@ legendary dragons, named NPCs, neutral animals (wolf, polar bear), pets and mini
 where they belong; the encounter director should place them there.
 
 ### 5.3 `data/c/tags/item/foods/raw_meat.json` and `data/c/tags/item/raw_meats.json`
-Both list the five raw cuts (`nusmp:raw_slime_jelly`, `raw_armor_flank`, `raw_basilisk_fillet`, `raw_direwolf_haunch`, `raw_monster_meat`) with
+Both list the five raw cuts (`anime_multiverse:raw_slime_jelly`, `raw_armor_flank`, `raw_basilisk_fillet`, `raw_direwolf_haunch`, `raw_monster_meat`) with
 `replace: false`. WHY: so a recipe of another mod (Farmer's Delight's cutting board and cooking pot) that takes "raw meat" by tag can take them. **Both tag ids
 are guesses** of what those recipes consume (section 11); an unused tag is harmless. No `farmersdelight:*` recipe JSON was written: its formats cannot be
 verified here.
 
 ### 5.4 Cooking: what was checked
-The five raw cuts already have a `campfire_cooking`, a `smoking` and a `smelting` recipe each in `data/nusmp/recipe` (1.19.0: `candied_slime_jelly_*`,
+The five raw cuts already have a `campfire_cooking`, a `smoking` and a `smelting` recipe each in `data/anime_multiverse/recipe` (1.19.0: `candied_slime_jelly_*`,
 `grilled_armor_flank_*`, `roast_basilisk_fillet_*`, `roast_direwolf_haunch_*`, `seared_monster_meat_*`). Farmer's Delight's stove and skillet cook
 with the vanilla `minecraft:campfire_cooking` recipes, so the cuts cook there with no FD-specific file. `FactionDataTest.everyRawCutCooksOnACampfireAndInASmoker`
 keeps it true. **Missing recipes found: none. Recipes added: none.**
@@ -277,7 +277,7 @@ Numbers (default `stoneThreatBonus` 0.02, a faction with base 0.5, `maxExtraMeat
 * `faction set <faction|none>`: sets (or clears) the native faction of the room you stand in; saved at once. The way to test a quarrel is to make
   two rooms native to two rival factions and let the encounter director fill them, or to spawn two rival mobs in one hall.
 
-Text uses lang keys `message.nusmp.mega.mec.cmd.*` and `message.nusmp.mega.mec.faction.<id>` with English fallbacks in the code.
+Text uses lang keys `message.anime_multiverse.mega.mec.cmd.*` and `message.anime_multiverse.mega.mec.faction.<id>` with English fallbacks in the code.
 
 ## 10. Tests
 
@@ -293,7 +293,7 @@ The shared registry is `labyrinth/mega/SelfTests` (a lead contract file: brought
 
 | Key | What it drives and asserts |
 |---|---|
-| `eco.tags` | The eleven tags `nusmp:mega/<faction>` resolve in the real registry and each holds at least one registered creature; the detail lists the count per faction. |
+| `eco.tags` | The eleven tags `anime_multiverse:mega/<faction>` resolve in the real registry and each holds at least one registered creature; the detail lists the count per faction. |
 | `eco.factions` | The eleven faction files loaded through the real data reload; every rivalry is mirrored and every alliance mutual in the loaded graph; no graph problem; `factionOf(zombie)` is `undead`, `slime` is `slime`, spider `insect`, vindicator `goblin`, witch `cultist`, blaze `elemental`, a pig and the player have none. |
 | `eco.native` | After sector 0 was generated, every room that should have a native faction has a KNOWN one, a room whose template has a `faction` marker is native to exactly that faction, safe rooms and corridors have none, and a sector of 12 or more such rooms uses at least two factions. |
 | `eco.target_guard` | The real `LivingChangeTargetEvent`: `setTarget` zombie -> skeleton (one faction) and witch -> vex (allied) are cancelled; zombie -> vindicator (rivals), zombie -> player, clearing a target, and a servant zombie (`nusmp_shadow`) -> skeleton all pass. |

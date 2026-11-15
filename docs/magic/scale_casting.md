@@ -164,7 +164,7 @@ strongest caster holds it); entries lapse 24 ticks after the last scan that rene
 ## Where things are
 
 * Model: `src/main/java/com/newuniverse/nusmp/scalecast/ScaleMesh.java` (plain geometry, no Minecraft class; quads of 23 floats: four corners x y z u v, then the normal; layers GOLD, ENAMEL, CHAIN, GEM, RUNES).
-* Textures: `python3 -B tools/scalecast/gen_scale_textures.py` writes `assets/nusmp/textures/entity/scalecast/{gold,enamel,chain,gem,glow_runes,glow_halo,glow_ring}.png` (deterministic). The three `glow_*` are additive
+* Textures: `python3 -B tools/scalecast/gen_scale_textures.py` writes `assets/anime_multiverse/textures/entity/scalecast/{gold,enamel,chain,gem,glow_runes,glow_halo,glow_ring}.png` (deterministic). The three `glow_*` are additive
   and in the scope of `tools/safe_additive/scan_textures.py` (`--fix` found nothing to fix).
 * Preview without the game: `python3 -B tools/scalecast/preview_scale.py` (compiles `ScaleMesh` and `ScaleCastRules` with `tools/scalecast/ScaleMeshDump.java`, rasterises the real quads with the z-buffer of the
   compass preview; the tilts and reductions in the images come from the real rules) writes `docs/previews/scale_casting/`: `scale_views.png` (idle: front, three quarter, side, back), `scale_weighing.png`

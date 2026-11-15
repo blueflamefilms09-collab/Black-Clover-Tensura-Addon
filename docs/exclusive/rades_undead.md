@@ -12,15 +12,15 @@ The owner's request, in three parts:
 
 | what | status |
 |---|---|
-| `SoulZombieEntity` (`nusmp:soul_zombie`, a thin subclass of the vanilla zombie), `SoulZombies` (the one door that summons), `SoulZombieRules` (numbers) | NEW |
+| `SoulZombieEntity` (`anime_multiverse:soul_zombie`, a thin subclass of the vanilla zombie), `SoulZombies` (the one door that summons), `SoulZombieRules` (numbers) | NEW |
 | Marionette, Necropolis, Legion (generic Soul Corpse pages) raise zombies instead of puppet props | REPLACED, behind `corpse.zombiesInsteadOfPuppets` (default true; false = the old puppet props, code and props untouched) |
 | Reanimation (`corpse_reanimate`) and True Soul Corpse Magic's re-raising of fallen pets raise zombies instead of the dead creature's own kind | REPLACED, same flag (false = the old raise of the creature's kind) |
 | Corpse Swap decoy and the Grave Field / Legion hands (`SOUL_CORPSE_2`) | KEPT: a decoy and hands are not fighting summons |
 | Page ids `corpse_jimmy`, `corpse_alfredo`, `corpse_carl`, `true_soul_corpse`, `corpse_reanimate` and their positions (modes 5..9) | KEPT |
 | Page display names "No.4 - Jimmy", "No.2 - Alfredo", "No.1 - Carl" (were "Soul Corpse: Jimmy" ...) | REPLACED (names only) |
 | Pages `corpse_david` (No.3) and `corpse_michael_caesal` (No.0) | NEW, appended as the last two family pages of the book (after `corpse_legion`), see the note below |
-| `NamedCorpses` rows of Jimmy, Alfredo, Carl (stats, ids, registry ids `nusmp:corpse_*`) | KEPT |
-| `NamedCorpses` rows DAVID and MICHAEL_CAESAL, entity types `nusmp:corpse_david`, `nusmp:corpse_michael_caesal` | NEW (enum appended) |
+| `NamedCorpses` rows of Jimmy, Alfredo, Carl (stats, ids, registry ids `anime_multiverse:corpse_*`) | KEPT |
+| `NamedCorpses` rows DAVID and MICHAEL_CAESAL, entity types `anime_multiverse:corpse_david`, `anime_multiverse:corpse_michael_caesal` | NEW (enum appended) |
 | Looks of Jimmy, Alfredo, Carl | REPLACED by `RadesUndeadRenderer` (new models `rades_*`); old models, textures, animations and `NamedCorpseRenderer` stay on disk; client switch `corpse.classicLooks` (`nusmp-corpse-client.toml`, default false) brings the old look back |
 | Models, animations, 4 stage skins + glow maps of the five | NEW (`tools/corpse/gen_rades_undead.py`) |
 | Signature moves: Alfredo soul barrier, David ground slam, Michael Caesal soul barrage | NEW |
@@ -54,7 +54,7 @@ Roles are invented where the canon is silent (see `rs.md`). All are the one clas
 
 * Numbered undead per owner: at most `NamedCorpses.MAX_AT_ONCE` = 3 (the oldest is dismissed first; the old three still fit together), server-wide `corpse.namedGlobalCap` (default 30).
 * No move deals a percentage of anyone's maximum health. Against players every hit goes through `BalanceLaw.cap`. Each move waits 3 s after the summon.
-* Undead: they are in `minecraft:undead` and `minecraft:sensitive_to_smite` (what smite and the Soul Burial engraving read) and, being plain mobs, never burn in daylight. They are in `nusmp:corpse_immune` (never raised again).
+* Undead: they are in `minecraft:undead` and `minecraft:sensitive_to_smite` (what smite and the Soul Burial engraving read) and, being plain mobs, never burn in daylight. They are in `anime_multiverse:corpse_immune` (never raised again).
 * Look: GeoLite models built from boxes (28 to 47 boxes, 128 or 256 texture), clips idle / walk / run / attack / hurt / death (+ cast for David, Alfredo, Carl, Michael: the wind-up of the signature or the throw). Four skins per body (decay stage 0..3, each a little dirtier and more torn than the one before), each with a glow map (Jimmy's golden eyes, David's stitch light and violet eye, Alfredo's visor and aura, Carl's soul core and mitre gem, Michael's palms and mask rim) drawn with the geo drawer's additive pass (the safe additive helper), faded by 0.65 to 0.9 pulse and the death fade.
 
 ## 3. The character's name on the Unique Skill

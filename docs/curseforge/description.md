@@ -27,7 +27,7 @@ Needs to be installed on **both the client and the server**.
 ## Useful commands and keys
 
 - Devil Contract: key `N` (rebindable), `/devil status`, `/devilpact accept <price>`. Beast Will: `/beastwill status`.
-- Grant a skill: `/tensura edit <player> ability grant nusmp:<skill>` (for example `nusmp:nen`, `nusmp:ki`, `nusmp:gate_of_babylon`).
+- Grant a skill: `/tensura edit <player> ability grant anime_multiverse:<skill>` (for example `anime_multiverse:nen`, `anime_multiverse:ki`, `anime_multiverse:gate_of_babylon`).
 - Config files (in `config/`): `nusmp-devil-server.toml`, `nusmp-devil-client.toml`, `nusmp-beastwill-server.toml` and more; every gameplay feature has a setting that turns it off or restores the old behaviour.
 
 ## Installing

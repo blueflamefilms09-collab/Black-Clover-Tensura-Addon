@@ -41,7 +41,7 @@ flares, rings, light shafts; Elsdocia shows a giant white translucent column wit
 * `vfx/SafeAdditiveMathTest` (pure blend maths, classifier rule), `vfx/SafeAdditiveSourceScanTest` (no client class outside the allow-list builds an additive render type or names `ADDITIVE_TRANSPARENCY` / eyes shader),
   `vfx/SafeAdditiveTextureScanTest` (no colour under alpha 0 in the additive scope, halo sheet borders and solid card, Elsdocia textures), `visual/genesis/VuCardLimitsTest` (every Genesis mesh, Elsdocia explicitly, the clamp).
 * CI self-test: `visual.safe_additive` (`vfx/SafeAdditiveSelfTests`, registered with one line in `NUSMP`).
-* Lang fragment: `tools/lang/white_square_fix.json` (key prefix `nusmp.white_square_fix`).
+* Lang fragment: `tools/lang/white_square_fix.json` (key prefix `anime_multiverse.white_square_fix`).
 
 ## NEW / REPLACED / KEPT
 

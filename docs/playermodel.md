@@ -60,7 +60,7 @@ Public API (small and stable; everything else is internal):
   bow / crossbow / spyglass / block poses (`ArmPoses`, the player's own rule), sneak, riding, swimming and death animations, the vanilla armour layer (wide and slim models), held items, head
   items, elytra, then `HairLayer`, `ExtrasLayer`, `KitCapeLayer` (cape texture of the vanilla layout), `GlowLayer` (emissive skin pass + the power-up flash). Fade and tint go through `TintedBuffers`
   (a `MultiBufferSource` wrapper that multiplies every vertex colour, so armour, items and hair fade with the body); a fade needs the translucent render type, chosen automatically.
-* `PlayerLook` (record, plain values, parsed from `assets/nusmp/playermodel/looks.json`): `skin`, `slim`, `glow` (+`glowRgb`), `hair` (+`hairRgb`), `scale` (1 = 1.875 blocks, `scaleForHeight`),
+* `PlayerLook` (record, plain values, parsed from `assets/anime_multiverse/playermodel/looks.json`): `skin`, `slim`, `glow` (+`glowRgb`), `hair` (+`hairRgb`), `scale` (1 = 1.875 blocks, `scaleForHeight`),
   `alpha`, `extras` (`Extra{model, texture, tint, glow}`), `cape`, `holdR` / `holdL` (an arm raised while it holds an extra). `PlayerAssets.look(id)` resolves an id (default look on a miss, logged once).
 * Skins: `SkinPath.resolve("asta")` = `textures/entity/playermodel/asta.png`; a path under the assets is kept; anything that could leave the folder is refused. The glow map is `<skin>_glow.png`. A body
   can instead return a texture composed at run time from `skin(e)` (the Avatar).
@@ -75,7 +75,7 @@ Public API (small and stable; everything else is internal):
 
 ### Hair (`HairStyleData`, `HairDraw`, `HairLayer`, `HairSpring`, `HairPhysics`, `HairPalette`, `HairState`, `LegacyHair`)
 
-* 23 styles in `assets/nusmp/playermodel/hair_styles.json`, painted sheets `textures/entity/playermodel/hair/<style>.png` (both written by `tools/playermodel/gen_hair.py`): `bald`, `short`, `slick`,
+* 23 styles in `assets/anime_multiverse/playermodel/hair_styles.json`, painted sheets `textures/entity/playermodel/hair/<style>.png` (both written by `tools/playermodel/gen_hair.py`): `bald`, `short`, `slick`,
   `curtains`, `swept`, `messy`, `spiky`, `spiky_long`, `mohawk`, `bob`, `long`, `layered`, `hime`, `ponytail`, `high_ponytail`, `twin_tails`, `drills`, `braid`, `bun`, `pompadour`, `ahoge`, `mane`, `hood`.
 * 3.37 (appended, nothing above changed): the `anime_*` styles for the Tier List bosses (`anime_short`, `anime_short_open`, `anime_spiky`, `anime_swept`, `anime_long`, `anime_long_open`, `anime_afro`,
   `anime_topknot` with more volume: a jagged crown slab over the cap, a fringe of single-segment locks, side locks, a nape, leaning tufts; `anime_mane`, `anime_hood` are the classic cuts with the new sheet).

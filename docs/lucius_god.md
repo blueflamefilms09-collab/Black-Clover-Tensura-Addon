@@ -108,13 +108,13 @@ Within `luciusAuraRadius` (20) of him while the fight is on, players and the com
   only (not by the snapshot): a `setHealth` regeneration on a pet is not caught.
 * Julius's window lifts the aura (his blessing is a heal on purpose). The boss's own heals are not touched: this code looks only at players
   and their companions; his Time Reversal and the refill are whitelisted through `BossHealGuard`.
-* A ring on the ground (the existing `DIVINE_SIGIL`, radius = the aura, renewed every 50 ticks), an effect icon `nusmp:time_decay` on
+* A ring on the ground (the existing `DIVINE_SIGIL`, radius = the aura, renewed every 50 ticks), an effect icon `anime_multiverse:time_decay` on
   whoever stands in it, and one action-bar notice per entry.
 
 ## Relic nullification (the EMP)
 
 The chain `relic_emp` (stage 3, telegraph 24 ticks): a pale ring of 14 blocks closes; at the end every **player** inside it (not holding
-anti-magic, the designed counter) gets the effect `nusmp:relic_nullified` for `luciusEmpSeconds` (10). **One check function**,
+anti-magic, the designed counter) gets the effect `anime_multiverse:relic_nullified` for `luciusEmpSeconds` (10). **One check function**,
 `relics.RelicNullification.isNullified(entity)`, is asked in the shared places: `Relics.loadout` and `Relics.loadoutFresh` (everything the
 relic waves, the sockets and the once-a-second attribute pass read: the pass then removes the modifiers by itself and puts them back when
 the effect ends), `dungeon.nexus.relic.Worn.mask` and `Worn.stack` (the Treasury relics of the two `dungeon_relic` Curios slots), and
@@ -125,7 +125,7 @@ itself; switching them off needs a change in Tensura.
 ## Severance (Spirit / Djinn)
 
 The chain `severance_bind` (stages 2 and 3, telegraph 28 ticks): a ray and a vortex mark one player; at the end, if he is still in Lucius's
-line of sight and holds no anti-magic, he gets `nusmp:severed` for `luciusSeveranceSeconds` (12). `relics.Severance.isSevered` is asked by:
+line of sight and holds no anti-magic, he gets `anime_multiverse:severed` for `luciusSeveranceSeconds` (12). `relics.Severance.isSevered` is asked by:
 `DjinnEngine.onPlayerTick` (no upkeep, no skills lent, no sync) and `DjinnEngine.onKey` (refused with a message); `DjinnEngine.severed(p, on)`
 (new) which on the start lets go a running Rukh or an Extreme Magic charge (the Magoi is refunded), takes the Maso's attribute boosts and its
 flight off, and on the end puts them back and moves a Lesser Summon's clock on by the time lost; `SpiritBond.willAnswer` (the one door of the

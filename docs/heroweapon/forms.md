@@ -1,7 +1,7 @@
 # Hero weapons: forms, absorption, mastery and the Weapon Book (1.62.0, builder `hforms`)
 
 This is the system the owner described as "weapons absorb raw materials, monster parts or items into a central gem to unlock new specialised forms, stats and skills".
-It is the data (`data/nusmp/hero/forms/<itemId>.json`), the validator, the loader, the absorption, the learning of forms, the mastery, the stats that a form puts on the
+It is the data (`data/anime_multiverse/hero/forms/<itemId>.json`), the validator, the loader, the absorption, the learning of forms, the mastery, the stats that a form puts on the
 wielder, the packets and the screen (the Weapon Book), the config, the commands and the self-tests. The contract it plugs into is `docs/heroweapon/design.md` (sections 3,
 4, 6, 12 to 15); the rules for writing a forms file are in `docs/heroweapon/forms_authoring.md`.
 
@@ -41,7 +41,7 @@ Server and shared, `com.newuniverse.nusmp.heroweapon.forms`:
 | `FormText` | PURE: wording of numbers, stats, slots, ids |
 | `FormsWire` | PURE: the byte layout of a form and its checksum (the packet codec uses it) |
 | `FormsStore` | the immutable snapshots: loaded from the data pack (server), synced from the server (client); cleared when the server stops |
-| `FormsLoader` | the `ResourceManagerReloadListener` for `data/nusmp/hero/forms` |
+| `FormsLoader` | the `ResourceManagerReloadListener` for `data/anime_multiverse/hero/forms` |
 | `FormLoadout` | `refresh`: makes the player's attribute modifiers and the weapon stack match the bond |
 | `FormLearning` | learning a form (all four routes), the catch-up, reset |
 | `HeroAbsorb` | the gem's mouth: takes items, tells the wielder, fires the hook, opens forms |
@@ -57,7 +57,7 @@ Client, `com.newuniverse.nusmp.client.heroweapon.forms`: `FormsClient` (key, the
 
 ## 3. The data and how it is read
 
-One file per weapon: `data/nusmp/hero/forms/<itemId>.json` (the schema, with an example, is in `forms_authoring.md`). At each data reload `FormsLoader` reads every file,
+One file per weapon: `data/anime_multiverse/hero/forms/<itemId>.json` (the schema, with an example, is in `forms_authoring.md`). At each data reload `FormsLoader` reads every file,
 runs `FormsSchema` on it (the same code the unit test runs) with the registered weapon logics as the skill index, and swaps the result into `FormsStore` in one step.
 A bad FORM is logged and skipped together with every form built on it; a bad FILE (not JSON, wrong weapon, no base form, the form list malformed) leaves the weapon with its
 synthetic base form; a file that matches no weapon is reported; a weapon with no file has the synthetic base form (`HeroForm.base`). `/multiverse hero form report` shows
@@ -97,10 +97,10 @@ else, is caught within a second).
 
 | what | where | id | when |
 |---|---|---|---|
-| permanent `abilityBonus` of finished forms, summed over forms | player attribute, PERMANENT modifier | `nusmp:hero_bonus_<key>` | while the bond exists, summoned or not |
-| active form `stats` except attack | player attribute, TRANSIENT modifier | `nusmp:hero_form_<key>` | while the weapon is summoned |
-| active form `attack_damage`, `attack_speed` | the weapon stack's `ATTRIBUTE_MODIFIERS`, main hand only, beside whatever the core's item carries | `nusmp:hero_form_<key>` | while summoned |
-| the look | the stack's `nusmp:hero_look` component | | set from the active form's `look` |
+| permanent `abilityBonus` of finished forms, summed over forms | player attribute, PERMANENT modifier | `anime_multiverse:hero_bonus_<key>` | while the bond exists, summoned or not |
+| active form `stats` except attack | player attribute, TRANSIENT modifier | `anime_multiverse:hero_form_<key>` | while the weapon is summoned |
+| active form `attack_damage`, `attack_speed` | the weapon stack's `ATTRIBUTE_MODIFIERS`, main hand only, beside whatever the core's item carries | `anime_multiverse:hero_form_<key>` | while summoned |
+| the look | the stack's `anime_multiverse:hero_look` component | | set from the active form's `look` |
 
 Keys map to attributes: `attack_damage`, `attack_speed`, `armor`, `armor_toughness`, `max_health`, `movement_speed` (a share: ADD_MULTIPLIED_BASE, 0.05 is plus five
 percent), `knockback_resistance`, `reach` (`entity_interaction_range`), `luck`. Every other stat is ADD_VALUE.
@@ -113,7 +113,7 @@ records the bonus as given, `refresh` applies it, the player gets a title (the f
 
 ## 8. The Weapon Book
 
-Key `M` (`key.nusmp.hero_book`, category "Multiverse of Anime") or `/multiverse hero form book`. The key asks the server; the server answers with the forms (if the client
+Key `M` (`key.anime_multiverse.hero_book`, category "Multiverse of Anime") or `/multiverse hero form book`. The key asks the server; the server answers with the forms (if the client
 lacks them) and the state, and the screen opens on that answer (so a player with no weapon gets the server's message instead of an empty screen). While the book is open the
 server compares the state with the one it last showed every `bookRefreshTicks` ticks and pushes it when it differs, so the despair and corruption of the curse system, a summon or
 a form set by another system show up without that system calling anything here (`FormsSync.markDirty` only forces a push).
@@ -134,10 +134,10 @@ monospace stand-in font; the Java is the truth).
 
 | id | direction | content |
 |---|---|---|
-| `nusmp:hero_forms_open` | client to server | the weapon id and checksum of the forms the client holds ("" and 0 for none) |
-| `nusmp:hero_forms_act` | client to server | an action (0 use, 1 learn, 2 feed, 3 embrace, 4 close), a text argument (form id or item id), a flag (the whole stack) |
-| `nusmp:hero_forms_defs` | server to client | the weapon, the checksum, the forms (`FormsWire`) |
-| `nusmp:hero_forms_state` | server to client | open flag, weapon, active form, experience, summoned/locked/curse flags, despair, corruption, the offered sin, learned, mastery, mastered, absorbed, the unlocked series |
+| `anime_multiverse:hero_forms_open` | client to server | the weapon id and checksum of the forms the client holds ("" and 0 for none) |
+| `anime_multiverse:hero_forms_act` | client to server | an action (0 use, 1 learn, 2 feed, 3 embrace, 4 close), a text argument (form id or item id), a flag (the whole stack) |
+| `anime_multiverse:hero_forms_defs` | server to client | the weapon, the checksum, the forms (`FormsWire`) |
+| `anime_multiverse:hero_forms_state` | server to client | open flag, weapon, active form, experience, summoned/locked/curse flags, despair, corruption, the offered sin, learned, mastery, mastered, absorbed, the unlocked series |
 
 The server re-checks every action; a refusal is shown on the action bar with its reason.
 

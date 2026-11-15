@@ -11,7 +11,7 @@ Nothing here has been run in the game. Section 9 lists what is unverified.
 | Part | Status |
 |---|---|
 | The System covers every player in the dungeon on both roads (`SystemQuests.covers`, the sync, the extraction, the overlay) | REPLACEMENT of "Holy road only unless `abyssalToo`" |
-| The Hub (`nusmp:sanctuary`) shows the status window (stat points, no floor, no quest, no threat) | NEW |
+| The Hub (`anime_multiverse:sanctuary`) shows the status window (stat points, no floor, no quest, no threat) | NEW |
 | The stat bonus works only inside the dungeon dimensions, as transient modifiers (`BuffGate`, `SystemStats`) | REPLACEMENT of "permanent modifiers everywhere" (config `system.buffOnlyInDungeon`, default on; off restores the old always-on behaviour) |
 | Safety net, health across a relog, purge of the old permanent modifiers (`SystemStats.reconcile`, `stashHealth`, `restoreHealth`, `SystemQuests.refreshFresh`) | NEW |
 | Boss floor rule in floor numbers (`QuestFloors`) | REPLACEMENT of `FloorMap.isDecennial(floor, sector.perRegion)` inside the System (that test breaks when a sector is one floor) |
@@ -21,7 +21,7 @@ Nothing here has been run in the game. Section 9 lists what is unverified.
 | Self-tests `system.cover` and `system.buff` | NEW (the five of 1.55.0 are KEPT and pass unchanged in meaning) |
 | `abyssalToo` | KEPT in the config file, documented as ignored |
 | `SystemText.MSG_NOTHING_TO_EXTRACT` and `TIP_USE` (they said "Holy floors") | KEPT unused; the code uses the new keys `msg.nothing_to_extract_any` and `tip.use_any` (the lang merge never overwrites an existing key, so a new key is the only way a changed text reaches the game without a hand edit) |
-| The toggle key `key.nusmp.system_toggle` (Y) | KEPT, moved into the new Controls category; its id and default key are unchanged, so saved bindings load |
+| The toggle key `key.anime_multiverse.system_toggle` (Y) | KEPT, moved into the new Controls category; its id and default key are unchanged, so saved bindings load |
 | Shadows, the Shadow Core, quests, rewards, the wire format of `Sync` and `Toast`, every public method other packages call (`SystemRegistry.*`, `SystemQuests.LISTENER`, `covers`, `enter`, `state`, `lastFloor`, `currentFloor`) | KEPT, source compatible |
 
 ## 2. The System for every player in the dungeon
@@ -53,9 +53,9 @@ Nothing here has been run in the game. Section 9 lists what is unverified.
 
 ## 3. The buff only inside the dungeons
 
-* `BuffGate` (pure): `active(dimensionId, buffOnlyInDungeon)` is true for `nusmp:mega_dungeon` and `nusmp:sanctuary`, or always when the switch is off. `needsChange(applied,
+* `BuffGate` (pure): `active(dimensionId, buffOnlyInDungeon)` is true for `anime_multiverse:mega_dungeon` and `anime_multiverse:sanctuary`, or always when the switch is off. `needsChange(applied,
   wanted)` says when the modifiers must be touched. A self-test compares the two id strings with the real `Labyrinth` dimension keys.
-* `SystemStats.apply(p[, state])` puts the five fixed-id modifiers (`nusmp:system/<stat>`) on when the gate is open and takes them off when it is not;
+* `SystemStats.apply(p[, state])` puts the five fixed-id modifiers (`anime_multiverse:system/<stat>`) on when the gate is open and takes them off when it is not;
   `sync(p)` also takes them off when `system.enabled` is false; `applyActive` is the unconditional form (self-tests); `remove` takes them off by id.
 * **Transient, not saved.** `AttributeInstance.addOrUpdateTransientModifier`. A transient modifier is not written with the player, so nothing can be left behind by a crash,
   a killed server, a disconnect outside the dungeon or a missed event: the worst case is a bonus that the next look puts back. The stat POINTS (the attachment) are the truth and
@@ -78,20 +78,20 @@ Nothing here has been run in the game. Section 9 lists what is unverified.
 > a screen where the window is moved and resized with the mouse only. The client config keys `anchor`, `offsetX`, `offsetY`, `scale` and the pure placement maths are unchanged.
 > The text below is kept as the record of 1.58.0.
 
-### Keys (Controls, category "Multiverse: System", lang key `key.categories.nusmp.system`)
+### Keys (Controls, category "Multiverse: System", lang key `key.categories.anime_multiverse.system`)
 
 | Mapping id | Name (English) | Default | Notes |
 |---|---|---|---|
-| `key.nusmp.system_toggle` | Toggle the System window | Y | KEPT; hides or shows the window for the session (the client config `enabled` is the lasting switch) |
-| `key.nusmp.system_edit` | Toggle edit mode (move the window) | U | NEW |
-| `key.nusmp.system_left` / `_right` / `_up` / `_down` | Edit mode: nudge left / right / up / down | Left / Right / Up / Down arrows | NEW; Shift = 10 pixels, a held key repeats |
-| `key.nusmp.system_reset` | Edit mode: reset position | Home | NEW; top-left corner, no offset |
-| `key.nusmp.system_corner` | Edit mode: cycle the corner | End | NEW; clockwise top-left, top-right, bottom-right, bottom-left; the offset resets so the window visibly jumps to the corner |
+| `key.anime_multiverse.system_toggle` | Toggle the System window | Y | KEPT; hides or shows the window for the session (the client config `enabled` is the lasting switch) |
+| `key.anime_multiverse.system_edit` | Toggle edit mode (move the window) | U | NEW |
+| `key.anime_multiverse.system_left` / `_right` / `_up` / `_down` | Edit mode: nudge left / right / up / down | Left / Right / Up / Down arrows | NEW; Shift = 10 pixels, a held key repeats |
+| `key.anime_multiverse.system_reset` | Edit mode: reset position | Home | NEW; top-left corner, no offset |
+| `key.anime_multiverse.system_corner` | Edit mode: cycle the corner | End | NEW; clockwise top-left, top-right, bottom-right, bottom-left; the offset resets so the window visibly jumps to the corner |
 
 **Conflict check** (from the sources of this repo and vanilla 1.21.1): the mod binds V (sing, use worn relic), R (use relic), J, K, H (djinn), G (grimoire summon) and Y (this toggle);
 vanilla binds W A S D E Q F T / Tab Esc Shift Ctrl Space 1-9 L P C X B F1-F12 in the game. U, Home, End and the arrow keys are free (the arrows only matter in screens). **R was
 rejected for Reset** although the brief suggests it: NeoForge's `KeyMapping.click` gives a click to EVERY mapping on the key, so pressing R in edit mode would also fire the
-relic (`key.nusmp.use_relic`). **C was rejected for the corner**: vanilla's save-hotbar key. The mappings are rebindable and the hint box always shows the CURRENT keys. A player who
+relic (`key.anime_multiverse.use_relic`). **C was rejected for the corner**: vanilla's save-hotbar key. The mappings are rebindable and the hint box always shows the CURRENT keys. A player who
 moves with the arrow keys sees the conflict in Controls and rebinds; edit mode never opens a screen, so the keys stay free the rest of the time.
 
 ### Edit mode (client: `SystemEditMode`, `KeyRepeat`, `SystemOverlay`)

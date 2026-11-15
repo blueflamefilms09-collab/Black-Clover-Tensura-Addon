@@ -2,7 +2,7 @@
 
 Fifteen characters, each a **Unique** skill that evolves into an **Ultimate** once mastered (the same rule as the other Unique -> Ultimate pairs: mastered Unique plus the server's minimum EP, checked every 5 seconds; the older evolution table is untouched). All of it is data in `skill/rules/DbRules.java`; what a mode does is one of 13 active and 17 passive primitives (`DbMoves`, `DbPassives`).
 
-* **Obtain:** `/multiverse dragonball give <player> <id> [unique|ultimate]` (permission 2), `/multiverse dragonball list`, or `/tensura edit <player> ability grant nusmp:<id>_unique`.
+* **Obtain:** `/multiverse dragonball give <player> <id> [unique|ultimate]` (permission 2), `/multiverse dragonball list`, or `/tensura edit <player> ability grant anime_multiverse:<id>_unique`.
 * **Passives** sit under the skill's own ON/OFF toggle (the Unique form has only its first passive, at half strength). **Actives** are on the mode wheel; "Crouch + Press" modes need sneaking; the finisher answers only a mastered skill.
 * **Scaling** is by the Super Hero (2022) standing of the form each skill is based on (`scale`): Gohan Beast 1.00 (the top), Goku 0.97, Vegeta 0.95, Piccolo (Orange) 0.92, Future Trunks 0.80, Android 18 0.78, Android 17 0.76, Trunks 0.72, Goten 0.70, Tien 0.62, Krillin 0.60, Roshi 0.58, Yamcha 0.45, Chiaotzu 0.42, Bulma 0.30. A Unique is half an Ultimate. Damage then goes through the Balance Law and the boss cap like every other skill.
 * **Setting:** server `dragonBallEnabled` (default true); false = every mode refuses and the passives do nothing.

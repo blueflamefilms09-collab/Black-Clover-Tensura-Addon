@@ -23,7 +23,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class ManaMethodSourceScanTest {
     private static final Path SRC = Path.of("src/main/java/com/newuniverse/nusmp");
     private static final Path METHOD = SRC.resolve("mana/method"), CLIENT = SRC.resolve("client/manamethod");
-    private static final Pattern CLIENT_CLASS = Pattern.compile("net\\.minecraft\\.client\\.|com\\.mojang\\.blaze3d\\.|com\\.newuniverse\\.anime_multiverse\\.client\\.|net\\.neoforged\\.neoforge\\.client\\.");
+    private static final Pattern CLIENT_CLASS = Pattern.compile("net\\.minecraft\\.client\\.|com\\.mojang\\.blaze3d\\.|com\\.newuniverse\\.nusmp\\.client\\.|net\\.neoforged\\.neoforge\\.client\\.");
 
     private static String read(Path p) throws IOException { return Files.readString(p, StandardCharsets.UTF_8); }
 

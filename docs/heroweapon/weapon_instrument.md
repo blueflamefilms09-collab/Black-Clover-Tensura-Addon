@@ -1,6 +1,6 @@
 # Vassal Musical Instrument (`vassal_instrument`): the violin of Glass' world
 
-Builder `hvd`. Logic: `heroweapon/weapon/instrument/**`, forms: `data/nusmp/hero/forms/vassal_instrument.json`. Style CAST, class Vassal Weapon.
+Builder `hvd`. Logic: `heroweapon/weapon/instrument/**`, forms: `data/anime_multiverse/hero/forms/vassal_instrument.json`. Style CAST, class Vassal Weapon.
 Written in two passes: the LOOK section (1) first so the art builder could start, then the rest.
 
 ## 1. The look (for the art builder `hart4`)

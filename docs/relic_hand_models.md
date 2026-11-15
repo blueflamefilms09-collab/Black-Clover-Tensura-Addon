@@ -4,7 +4,7 @@ Owner request: "make 3D models for all my relics that can be seen in hand". Ever
 keeps its 16x16 sprite as the inventory icon (owner rule 7). Nothing was run in the game (see "What is unverified").
 
 Code: `client/relics/hand/*` (`HandItemRenderer`, `HandForms`, `HandModels`, `HandTransforms`, `HandCatalog`, `HandClient`), one factory in `client/relics/worn/lib/WornLibrary.ofPieces`, a branch in
-`ArmorItemRenderer`. Data: `assets/nusmp/relic_hand/` (`transforms.txt` hand written, `catalog.txt` and 109 `<model>.txt` written by `tools/relics/gen_hand_all.py`). Art: `tools/relics/gen_hand_*.py`.
+`ArmorItemRenderer`. Data: `assets/anime_multiverse/relic_hand/` (`transforms.txt` hand written, `catalog.txt` and 109 `<model>.txt` written by `tools/relics/gen_hand_all.py`). Art: `tools/relics/gen_hand_*.py`.
 Pictures: `docs/relic_hand/*.png`. Tests: `HandTransformsTest`, `HandCatalogTest`, `RelicHandCoverageTest`.
 
 ## What was flat, computed from the code
@@ -74,7 +74,7 @@ the item is 0.56 right, 0.52 down and 0.72 ahead of the camera, so `rx -20, ry -
 
 ## The models
 
-**109 hand models** (83 signature + 21 consumable + 5 garment) in `assets/nusmp/relic_hand/<name>.txt`, in the quad format of the worn models (`gen_worn_lib.write_model`: quads with a colour slot, a tile of the shared atlas, flags and animation
+**109 hand models** (83 signature + 21 consumable + 5 garment) in `assets/anime_multiverse/relic_hand/<name>.txt`, in the quad format of the worn models (`gen_worn_lib.write_model`: quads with a colour slot, a tile of the shared atlas, flags and animation
 groups), at most 2484 vertices each (the 2600 budget of an ensemble, tested for every relic including its ornaments). Built with the owner's method (`mesh_lib`: named parts, lofts, lathes, smoothed
 normals), authored Y up with the front at -Z, 1 unit = 1 model pixel.
 

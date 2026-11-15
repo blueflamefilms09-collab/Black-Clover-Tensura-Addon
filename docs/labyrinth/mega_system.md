@@ -2,8 +2,8 @@
 
 Part of the bidirectional Mega-Dungeon (`docs/labyrinth/mega_floors.md`). The owner's third brief, system 3 ("Holy Ascensions: the Solo Leveling System"), asks for a
 holographic status window, quests per floor, and a reward for a quest done before the next staircase: a permanent stat boost OR a Shadow Core that raises the souls of
-slain Holy enemies as minions. This builder owns packages `labyrinth/mega/system` and `client/mega/system`, the data in `data/nusmp/mega/system/`, the item
-`nusmp:shadow_core`, the tools in `tools/system/` and this document.
+slain Holy enemies as minions. This builder owns packages `labyrinth/mega/system` and `client/mega/system`, the data in `data/anime_multiverse/mega/system/`, the item
+`anime_multiverse:shadow_core`, the tools in `tools/system/` and this document.
 
 **State of this document.** Written without a game. CI compiles the Java and runs the pure JUnit tests; five in-game self-tests (`system.*`) run in the CI smoke test.
 The look of the window was rendered by running the REAL layout class through `tools/system/preview_overlay.py` (section 8): nobody has seen it in the game, and section 11
@@ -24,10 +24,10 @@ the Rukh particles (not touched). The overlay does not replace `ModBossBarOverla
 
 | Part | Status |
 |---|---|
-| Attachment `nusmp:system_state` (quest, stat points, counters), payloads `nusmp:system_sync` and `nusmp:system_toast` | NEW |
+| Attachment `anime_multiverse:system_state` (quest, stat points, counters), payloads `anime_multiverse:system_sync` and `anime_multiverse:system_toast` | NEW |
 | Five quest kinds as data (`quests.json`), pure roller and state machine, rewards, stat table (`stats.json`) | NEW |
-| Item `nusmp:shadow_core` + data component `nusmp:shadow_core_charges`, extraction of slain Holy creatures as shadows | NEW |
-| Client layer `nusmp:system_overlay`, toggle key, client config `nusmp-labyrinth-mega-system-client.toml` | NEW |
+| Item `anime_multiverse:shadow_core` + data component `anime_multiverse:shadow_core_charges`, extraction of slain Holy creatures as shadows | NEW |
+| Client layer `anime_multiverse:system_overlay`, toggle key, client config `nusmp-labyrinth-mega-system-client.toml` | NEW |
 | Server config `nusmp-labyrinth-mega-system-server.toml`, command `/multiverse mega system ...`, quest keys `mega.system_quest`, `mega.shadow` | NEW |
 | Tools: `tools/system/` (overlay preview, item model generator and preview, lang generator), `docs/labyrinth/mega_system.md` | NEW |
 
@@ -78,7 +78,7 @@ arrival itself: still ACTIVE there means the condition held. Idempotence matters
 fail an "unscathed" quest. `Post.getNewDamage()` is documented as "the amount of health this entity lost", which is the quest's meaning (source: NeoForge 1.21.1
 `LivingDamageEvent.java`). Friendly fire (a shadow and its owner) is still cancelled early on the incoming event.
 
-**Rewards are permanent attribute modifiers with fixed ids** (`nusmp:system/<stat>`): applying twice changes nothing, a changed table value replaces the old one instead of
+**Rewards are permanent attribute modifiers with fixed ids** (`anime_multiverse:system/<stat>`): applying twice changes nothing, a changed table value replaces the old one instead of
 stacking, they can be removed by id, no other system mistakes them for its own, and they are re-applied on login, respawn and dimension change because the points in the
 attachment are the truth. Every attribute id is resolved at run time and skipped if absent (Tensura's magicule pool only exists with Tensura).
 
@@ -131,8 +131,8 @@ player; a datapack quest title can be any length, so every text is clipped first
 | `ClientSystem`, `SystemClientConfig` | the last picture the server sent; the screen settings |
 
 ### Data, assets, tools
-`data/nusmp/mega/system/quests.json`, `stats.json`; `data/nusmp/tags/damage_type/mega_system_magic.json` (datapack widening of "magic damage"; default minecraft:magic and
-indirect_magic); `data/nusmp/tags/entity_type/shadow_immune.json` (the four vanilla bosses; a datapack adds more). `assets/nusmp/models/item/shadow_core{,_3d,_icon}.json`,
+`data/anime_multiverse/mega/system/quests.json`, `stats.json`; `data/anime_multiverse/tags/damage_type/mega_system_magic.json` (datapack widening of "magic damage"; default minecraft:magic and
+indirect_magic); `data/anime_multiverse/tags/entity_type/shadow_immune.json` (the four vanilla bosses; a datapack adds more). `assets/anime_multiverse/models/item/shadow_core{,_3d,_icon}.json`,
 `textures/item/shadow_core{,_model}.png`. Tools: `tools/system/preview_overlay.py` + `OverlayDump.java`, `gen_shadow_core_assets.py` + `preview_item_model.py`,
 `gen_system_lang.py` + `LangDump.java`.
 
@@ -142,7 +142,7 @@ indirect_magic); `data/nusmp/tags/entity_type/shadow_immune.json` (the four vani
 
 ### quests.json (`{"quests": [ ... ]}`; later rows of the same id replace earlier ones, so a datapack overrides by id)
 Row: `id` (a-z 0-9 _), `kind` (CLEAR_ROOMS KILL_N NO_DAMAGE_STRETCH SPEED SURVIVE_AMBUSH), `title` (English; `{n}` and `{t}` stand for the target; the lang key
-`message.nusmp.mega.system.quest.<id>` takes over where it exists), `base`, `perFloor`, `min`, `max` (target = `clamp(round(base + perFloor * threat), min, max)`), `weight`
+`message.anime_multiverse.mega.system.quest.<id>` takes over where it exists), `base`, `perFloor`, `min`, `max` (target = `clamp(round(base + perFloor * threat), min, max)`), `weight`
 (0 = off), optional `noMagic` (counting kinds only), `rewards {stats [..], points, shadowCore}`, `why`. Shipped: `clear_rooms_no_magic` (the brief's own example, pays INT),
 `clear_rooms` (INT or STR), `slay_hostiles` and `slay_no_magic` (STR or AGI), `unscathed` (2 VIT, hardest), `swift_ascent` (seconds on the floor, AGI), `survive_ambush` (SENSE).
 A SPEED quest's target is its length in seconds. A boss floor (`FloorMap.isDecennial`) has no quest.
@@ -161,21 +161,21 @@ per-stat limit of 30 points the best build is a strong player, not a god. The at
 `minionStrength` 0.7, `minionMinutes` 30.
 **Client** `nusmp-labyrinth-mega-system-client.toml`, `[system]`: `enabled` true, `scale` 1.0 (0.5 to 2), `anchor` 0 (0 top-left, 1 top-right, 2 bottom-left, 3 bottom-right), `alpha` 0.67
 (0.1 to 1), `showStats` true, `toasts` true.
-**Key** `key.nusmp.system_toggle`, default Y, category "Multiverse of Anime": hides or shows the window for the session (the config's `enabled` is the lasting switch).
+**Key** `key.anime_multiverse.system_toggle`, default Y, category "Multiverse of Anime": hides or shows the window for the session (the config's `enabled` is the lasting switch).
 **Command** (permission 2, attached by the lead under `/multiverse mega`): `system status [player]`, `system quest roll|complete|fail|clear [player]`,
 `system quest start <id> [player]`, `system stat give <player> <stat> <n>`, `system core give [player]`, `system minions clear [player]`.
 **Quest keys** (`NusmpEvents.fire`): `mega.system_quest` (arg: quest id, on success), `mega.shadow` (arg: entity type id, when a shadow is raised).
-**Lang**: 69 keys, all in `message.nusmp.mega.system.*` plus `item.nusmp.shadow_core` and `key.nusmp.system_toggle`; written from `SystemText` by
+**Lang**: 69 keys, all in `message.anime_multiverse.mega.system.*` plus `item.anime_multiverse.shadow_core` and `key.anime_multiverse.system_toggle`; written from `SystemText` by
 `tools/system/gen_system_lang.py`, so file and code cannot drift. Every server line is a `translatableWithFallback` with the English text, so it reads properly before the fragment is merged.
 
 ---------------------------------------------------------------------------------------------------------------------------------------------
 
 ## 7. The Shadow Core
 
-`nusmp:shadow_core`: one to a stack, epic, fire-resistant, three charges (data component `nusmp:shadow_core_charges`, absent = full). Right click within `extractWindowTicks`
+`anime_multiverse:shadow_core`: one to a stack, epic, fire-resistant, three charges (data component `anime_multiverse:shadow_core_charges`, absent = full). Right click within `extractWindowTicks`
 of a hostile non-boss creature you killed on a covered road, and within `extractRadius` of where it fell: a charge is spent and a shadow rises. A held core announces
 "EXTRACTION READY" once per kill. Never extractable: a boss (any of the mod's definitions, wandering bosses), anything already someone's servant (a shadow, Paladin, Soul
-Corpse, shadow soldier, relic summon, tamed pet), a named or persistent creature, a type in `#nusmp:shadow_immune`, a creature that cannot fight, a kill by anyone but a player.
+Corpse, shadow soldier, relic summon, tamed pet), a named or persistent creature, a type in `#anime_multiverse:shadow_immune`, a creature that cannot fight, a kill by anyone but a player.
 The last charge turns the core into nothing (a message, no leftover item); a quest reward recharges a held core first (`rechargeFirst`). Creative players spend no charge.
 
 **The held model.** A trinket, so no engravings. Following the Genesis Core of 1.51.0 (not the weapon mesh pipeline): a vanilla elements model with

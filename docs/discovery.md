@@ -6,8 +6,8 @@ icon or text. They show as a dark slot with a question mark and `???`. This docu
 
 ## One source of truth
 
-Each player has a **discovered set**: a set of short string keys, saved with the player (data attachment `nusmp:discovery`, copied on death
-and unioned on every clone), mirrored to the client by the packet `nusmp:discovery_sync` (the whole set at login and respawn, in chunks of at most
+Each player has a **discovered set**: a set of short string keys, saved with the player (data attachment `anime_multiverse:discovery`, copied on death
+and unioned on every clone), mirrored to the client by the packet `anime_multiverse:discovery_sync` (the whole set at login and respawn, in chunks of at most
 800 keys; later only the keys found just now; every packet also carries the viewer's show-all state).
 
 The client holds the mirror in `DiscoveryCache` (plain statics, no client classes, safe from common code). Every screen asks the cache, never the server.
@@ -17,11 +17,11 @@ Until the first sync of a session arrives the cache shows everything, so a serve
 
 | Key | Meaning | Found when |
 | --- | --- | --- |
-| `item:nusmp:<path>` | an item of the mod (relics and weapons included) | picked up, crafted, smelted, received, given by an operator, or ever seen in the inventory, armour, off-hand or Grimoire Slot |
+| `item:anime_multiverse:<path>` | an item of the mod (relics and weapons included) | picked up, crafted, smelted, received, given by an operator, or ever seen in the inventory, armour, off-hand or Grimoire Slot |
 | `page:<book>:<pageId>` | a grimoire page | unlocked (mastery, command), or a base page the book can use (Summon, Store, Mana Strike, Devil Union with a forbidden cover, signature spells of a fused book) |
-| `skill:nusmp:<path>` | a skill of the mod | learned |
+| `skill:anime_multiverse:<path>` | a skill of the mod | learned |
 | `magic:<name>` | a magic attribute | the player holds a grimoire of it |
-| `mob:nusmp:<path>` | a creature of the mod (boss, spirit lord) | the player hurt it, was hurt by it or killed it |
+| `mob:anime_multiverse:<path>` | a creature of the mod (boss, spirit lord) | the player hurt it, was hurt by it or killed it |
 | `spiritlord:<element>` | one of the four elemental Spirit Lords | fought one, or bonded to it |
 | `boss:<id>` | reserved for boss entries | not set by the tracker yet; a boss entry is also shown by its drops |
 
@@ -82,7 +82,7 @@ Not hidden on purpose: the counts in the status (`Pages 3/9`), the player's own 
 * Mod constructor, both sides: `com.newuniverse.nusmp.core.discovery.Discovery.init(modEventBus, modContainer);`
   (registers the attachment, the payload, the server config and the game-bus tracker).
 * Client-only block: `com.newuniverse.nusmp.client.discovery.DiscoveryClient.init();` (clears the cache when the player leaves a world).
-* Lang keys: `nusmp.discovery.hint`, `nusmp.discovery.undiscovered`.
+* Lang keys: `anime_multiverse.discovery.hint`, `anime_multiverse.discovery.undiscovered`.
 
 ## Tests
 

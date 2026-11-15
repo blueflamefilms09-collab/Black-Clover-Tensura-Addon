@@ -1,6 +1,6 @@
 # Soul Magic: the 1.93.0 rebuild
 
-Soul Magic (`MagicType.SOUL`, book `nusmp:book_soul`, colour 0xFF72D9CC teal) used to be the generic wiki attribute book plus Lucius Zogratis's two Paladin pages. It is now
+Soul Magic (`MagicType.SOUL`, book `anime_multiverse:book_soul`, colour 0xFF72D9CC teal) used to be the generic wiki attribute book plus Lucius Zogratis's two Paladin pages. It is now
 `book/SoulBook` with its own armour, summon models, effect layer and spells.
 
 ## 1. Canon and what could not be checked
@@ -77,4 +77,4 @@ other layers, the wisps' movement against terrain, the real size of Spiritual Da
 
 ## 1.99.0 armour policy
 
-Soul Magic has no armour in the anime, so since 1.99.0 **no cast puts the temporary armour of this document on the caster** (policy kind NONE). Everything described above as the armour (the render layer, its painter, geo models, textures and generator) is KEPT on disk and registered in `AuraRegistry`, so old saves and tests still resolve; it is simply never started by a page. What the pages did besides the armour (damage cut, thorns, resistance, constructs, effects) is unchanged. Where the armour carried the magic's look, every cast of a family page now sends a small `SOUL_FX2` glow that follows the caster instead (no armour piece is drawn). See `docs/rebuild/armour_policy.md` for the table and the canon reasons; the code is `book.ArmourPolicy` (data: `data/nusmp/armour_policy.json`).
+Soul Magic has no armour in the anime, so since 1.99.0 **no cast puts the temporary armour of this document on the caster** (policy kind NONE). Everything described above as the armour (the render layer, its painter, geo models, textures and generator) is KEPT on disk and registered in `AuraRegistry`, so old saves and tests still resolve; it is simply never started by a page. What the pages did besides the armour (damage cut, thorns, resistance, constructs, effects) is unchanged. Where the armour carried the magic's look, every cast of a family page now sends a small `SOUL_FX2` glow that follows the caster instead (no armour piece is drawn). See `docs/rebuild/armour_policy.md` for the table and the canon reasons; the code is `book.ArmourPolicy` (data: `data/anime_multiverse/armour_policy.json`).

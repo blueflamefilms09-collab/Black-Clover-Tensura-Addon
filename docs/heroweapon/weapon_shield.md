@@ -1,4 +1,4 @@
-# The Legendary Shield (`nusmp:legendary_shield`, `HeroKind.SHIELD`, style BLOCK, curse series: Wrath)
+# The Legendary Shield (`anime_multiverse:legendary_shield`, `HeroKind.SHIELD`, style BLOCK, curse series: Wrath)
 
 > Status: complete. Section 1 (the look) is what the art builder reads. Sections 2 to 12 are the research, the design, every form, skill and number, the engravings,
 > the files and an honest list of what is not verified. Nothing here has been run in the game.
@@ -442,7 +442,7 @@ The budget of design.md section 5, and how this weapon keeps it (every point is 
 | `weapon/shield/ShieldSkills.java` | The list of skills with their names and texts; each takes its cooldown and cost from the table. |
 | `weapon/shield/ShieldLogic.java` | The hooks: the guard (`onBlocked`), the passives (`onTick`, `onDamaged`), souls (`onKill`), cleanup (`onFormChanged`, `onDismiss`). |
 | `weapon/shield/ShieldSelfTest.java` | The in-game self-test `hero.weapon.shield`: table against registered skills, forms file against skills and passives, then a cast of every skill with a stand-in player. |
-| `data/nusmp/hero/forms/legendary_shield.json` | The forms: the base shield, ten ordinary forms and the four Wrath forms. |
+| `data/anime_multiverse/hero/forms/legendary_shield.json` | The forms: the base shield, ten ordinary forms and the four Wrath forms. |
 | `test/.../shield/ShieldNumbersTest, GuardMeterTest, CoverBookTest, PanelMathTest, ShieldSmallPartsTest` | The budget of design.md section 5 as a test, and the pure parts (guard, cover, panel, souls, caps, counter arithmetic). |
 | `test/.../shield/FormsFileCheck, ShieldFormsDataTest` | A checker for every rule of design.md section 6 applied to the shipped file, and negative controls proving the checker rejects broken copies. The Sword's test uses the same checker. |
 
@@ -452,7 +452,7 @@ Every Java class opens with a Javadoc whose first paragraph starts with `Why:`. 
 
 * **Engravings:** the line in section 8.
 * **Lang fragment:** `$S/hero/frag/hsa.lang.json` (120 keys for both weapons: name and text of every skill, name and text of every passive). Generated from the source, ASCII only.
-* **Forms file:** `src/main/resources/data/nusmp/hero/forms/legendary_shield.json`. The first form is `base`; no form uses the `use` slot (a blocking weapon has none).
+* **Forms file:** `src/main/resources/data/anime_multiverse/hero/forms/legendary_shield.json`. The first form is `base`; no form uses the `use` slot (a blocking weapon has none).
 * **Constructors:** `HeroBootstrap` must construct `new ShieldLogic()` once at start-up (the existing stub's constructor is replaced by one that hooks the events and registers the self-test).
 * **Curse engine:** the weapon calls `HeroCurse.addCorruption(ServerPlayer, int)` from Blood Sacrifice (+80) and Megiddo Burst (+150), only when the active form is a curse form. The sin downsides
   (burning, health loss, stronger blows) are the engine's.

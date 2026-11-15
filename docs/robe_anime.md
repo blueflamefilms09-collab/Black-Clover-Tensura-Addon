@@ -3,7 +3,7 @@
 Owner request: "remake the clover armor to look how it does in the black clover anime so that means it should only be the cloak part then maybe some custom part like asta's headband ect".
 
 ## What is new and what is kept
-- **New**: `anime:<id>` entries in `assets/nusmp/relic_worn/catalog.txt` for the 44 robe pieces (11 sets x 4), 14 new worn models (`anime_cloak_<set>` x11, `anime_headband`, `anime_hood_down`, `anime_horns_devil`), the client option `relicfx.robeAnime`, the contact sheets `docs/armor_build/anime_sets_a|b|c.png`.
+- **New**: `anime:<id>` entries in `assets/anime_multiverse/relic_worn/catalog.txt` for the 44 robe pieces (11 sets x 4), 14 new worn models (`anime_cloak_<set>` x11, `anime_headband`, `anime_hood_down`, `anime_horns_devil`), the client option `relicfx.robeAnime`, the contact sheets `docs/armor_build/anime_sets_a|b|c.png`.
 - **Kept (rule 2)**: every older `item <id>` line and model (hood, robe, sleeves, hip band, legs, boots). They are worn when `relicfx.robeAnime = false`. Items, stats, set bonus, recipes and the GeckoLib fallback (mobs, armour stands, `relicfx.models = false`) are unchanged. The transformation modes are untouched.
 - The Time Magic VFX files are not touched.
 

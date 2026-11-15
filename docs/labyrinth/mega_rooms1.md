@@ -2,7 +2,7 @@
 
 Twenty-two Jigsaw templates of the Mega-Dungeon (`docs/labyrinth/mega.md`, the connector contract in sections 4 and 5), written by
 `tools/labyrinth/gen_mega_rooms1.py` with the kit `tools/labyrinth/mega_decor_r1.py`. Vanilla blocks only, no Java, no custom block, no loot
-table of its own (the closets roll the existing `nusmp:chests/labyrinth_trial`).
+table of its own (the closets roll the existing `anime_multiverse:chests/labyrinth_trial`).
 
 ```
 python3 tools/labyrinth/gen_mega_rooms1.py                  # (re)writes the 22 templates, prints one status line each (ok / FAIL + the problems);
@@ -45,7 +45,7 @@ Nothing existing was replaced: no template of this name existed.
 
 Sizes are in modules (9 blocks) `mx x mz`; every piece is 48 high with the floor row at 8 (world floor y = 64). Doors are `side@offset`: for `n`/`s`
 the offset is the x of the doorway centre, for `e`/`w` its z (the module centres 4, 13, 22, 31, 40). Every door is a `MT.socket` (3 wide, 4 tall hole through
-both wall layers, polished frame, chiselled keystone, jigsaw `nusmp:mega_door`, pool `nusmp:mega/side`). "Light" is the block light at eye level over
+both wall layers, polished frame, chiselled keystone, jigsaw `anime_multiverse:mega_door`, pool `anime_multiverse:mega/side`). "Light" is the block light at eye level over
 the whole reachable floor, minimum of the kit's own model / minimum of the lead's `mega_shape_preview --lightreport` (the two models agree on every template; the
 second also lets a player stand on a table or on a ring of open trapdoors and counts a lit furnace as a light, the kit's does not) and the median of the kit's;
 the Gloom clock of 1.36.0 treats 4 or less as dark, so the minimum has to be 5. "Spawn 5 (2 x2)" is five spawn markers, two of them `;weight=2`. "Cells" are the
@@ -242,7 +242,7 @@ is a spawn position for archers and the hall's high ground; the dais at the far 
 
 ### 3.20 `closet_a`: the spiked cache (1x2, door n@4)
 An entrance hall with shelves under the west wall and crates under the east, then a one-block-deep pit with pointed-dripstone spikes across four of the five cells (a one-wide ledge runs along the east wall), a curtain
-of cobwebs behind it, and the chest (loot table `nusmp:chests/labyrinth_trial`) between two soul candelabras with two statues behind. *Plays:* the pit and the webs are the decoy (no
+of cobwebs behind it, and the chest (loot table `anime_multiverse:chests/labyrinth_trial`) between two soul candelabras with two statues behind. *Plays:* the pit and the webs are the decoy (no
 redstone, no trapped chest): the party can walk the ledge, fill the pit or cut the webs.
 
 ### 3.21 `closet_b`: the decoy chest (1x2, doors n@4 w@13)
@@ -347,8 +347,8 @@ a first-person view from the first doorway `<room>_view_door_*.png`, and `_ALL_R
 
 ## 7. For the pool builder and the lead
 
-* Templates: `nusmp:mega/hall/<name>` for the 19 halls (RoomKind HALL), `nusmp:mega/treasure/closet_{a,b,c}` (TREASURE). Every door's jigsaw is name `nusmp:mega_door`,
-  pool `nusmp:mega/side`, joint aligned, final state air (written by `MT.socket`; do not change them by hand: re-run the generator).
+* Templates: `anime_multiverse:mega/hall/<name>` for the 19 halls (RoomKind HALL), `anime_multiverse:mega/treasure/closet_{a,b,c}` (TREASURE). Every door's jigsaw is name `anime_multiverse:mega_door`,
+  pool `anime_multiverse:mega/side`, joint aligned, final state air (written by `MT.socket`; do not change them by hand: re-run the generator).
 * No Java, config, registration, quest key, lang entry or `build.gradle` change is needed for this builder. There are no config keys.
 * `catalog.json` is generated: after merging all builders run `python3 tools/labyrinth/mega_catalog.py` (done in this worktree; it differs only in these templates' markers).
 * The pools in the tree were generated before these templates existed: run `python3 tools/labyrinth/gen_mega_pools.py` after the merge (`mega_check` lists the 22 as orphans until then). Checked in a scratch
@@ -362,7 +362,7 @@ a first-person view from the first doorway `<room>_view_door_*.png`, and `_ALL_R
 * The markers use only kinds of `MarkerKind`: `spawn` (some `;weight=2`), `patrol`, `room_center`, `faction;faction=<id>`, `furniture;as=table|counter|storage|cutting_board|cooking_pot`,
   `seat;as=chair;facing=<dir>`, `hearth;as=stove`, `bed;as=bed`. No `arrival`, `expansion_socket`, `pedestal`, `guardian_spawn`, `gatekeeper` or `trap` markers.
 * Great hall: four doors, two in the west wall (z 22 and 40), one in the east wall (z 22), one in the south wall (x 13); it needs a sector with room for 3 x 5 modules.
-* Vanilla Block Primacy: no `nusmp:` block appears in any of these templates (checked by `mega_check`); everything is vanilla. The closets roll the existing `nusmp:chests/labyrinth_trial`.
+* Vanilla Block Primacy: no `anime_multiverse:` block appears in any of these templates (checked by `mega_check`); everything is vanilla. The closets roll the existing `anime_multiverse:chests/labyrinth_trial`.
 
 ---------------------------------------------------------------------------------------------------------------------------------------------
 

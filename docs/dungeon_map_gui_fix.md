@@ -36,7 +36,7 @@ overlap is gone because the screen now covers the window opaquely.
 
 | | |
 |---|---|
-| NEW | `DungeonMapMath` (pure maths), `DungeonMapSelfTests` (self-test `ui.dungeon_map`), title bar + Close button, legend wrapping + swatch outline + start/exit entries, hint row, keys C / F / + / -, zoom and pan limits, scissor clip, culling, `tools/lang/map_gui.json` (keys `gui.nusmp.dungeon_map.*`, all with English fallbacks in code), `DungeonMapMathTest`, two new tests in `ScreenBlurGuardTest`, this doc |
+| NEW | `DungeonMapMath` (pure maths), `DungeonMapSelfTests` (self-test `ui.dungeon_map`), title bar + Close button, legend wrapping + swatch outline + start/exit entries, hint row, keys C / F / + / -, zoom and pan limits, scissor clip, culling, `tools/lang/map_gui.json` (keys `gui.anime_multiverse.dungeon_map.*`, all with English fallbacks in code), `DungeonMapMathTest`, two new tests in `ScreenBlurGuardTest`, this doc |
 | REPLACED | `DungeonMapScreen.render` / `init` / input handlers (the blurred draw order, the fixed backdrop, the unbounded camera); the private `colour` / `dim` bodies moved into `DungeonMapMath` (`DungeonMapScreen.colour(int)` still exists and delegates) |
 | KEPT | The item (`DungeonMapItem`), `HubClient.map`, the `MapSync` packet and `MapView` (data unchanged), the registry id `dungeon_map` in `GuiScaleRegistry`, room colours, fog of war (dim unexplored rooms), markers S / E, the player marker with facing line, drag and wheel zoom, drawing nothing about room contents, not a pause screen |
 

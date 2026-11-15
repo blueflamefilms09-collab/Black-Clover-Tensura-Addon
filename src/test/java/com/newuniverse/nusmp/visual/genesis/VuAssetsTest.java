@@ -29,7 +29,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  */
 class VuAssetsTest {
     static final Path RES = Path.of("src", "main", "resources", "assets", "anime_multiverse");
-    static final Path SRC = Path.of("src", "main", "java", "com", "newuniverse", "anime_multiverse", "relics", "wave");
+    static final Path SRC = Path.of("src", "main", "java", "com", "newuniverse", "nusmp", "relics", "wave");
     static final Path DOCS = Path.of("docs", "visual_upgrade");
 
     static VuMesh mesh(String dir, String id) throws IOException {

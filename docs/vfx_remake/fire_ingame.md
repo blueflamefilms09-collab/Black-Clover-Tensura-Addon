@@ -88,7 +88,7 @@ Overdraw: the largest additive cards are the Spiral halo (6.2 x power blocks), t
 
 ## 6. Files
 
-New: `vfx/FireV2.java`, `vfx/FireV2SelfTests.java`, `vfx/client/FireV2Config.java`, `vfx/client/layer/FireV2Layer.java`, `assets/nusmp/textures/particle/fnw_*.png` (66), `tools/gen_fire_v2_textures.py`,
+New: `vfx/FireV2.java`, `vfx/FireV2SelfTests.java`, `vfx/client/FireV2Config.java`, `vfx/client/layer/FireV2Layer.java`, `assets/anime_multiverse/textures/particle/fnw_*.png` (66), `tools/gen_fire_v2_textures.py`,
 `tools/vfx_preview/fire_ingame.py`, `tools/vfx_preview/scenes.d/fire_v2.json`, `docs/previews/vfx_remake/fire_new/fire_ingame.png`, `fire_wild_closeup.png`, `fire_ingame_extras.png`, `fire_ingame_budget.json`, this doc,
 the tests `FireV2Test`, `FireV2AssetTest`, `FireV2SourceScanTest`.
 Appended to (shared files): `vfx/client/VfxManager.java` (one registration), `NUSMP.java` (two lines), `tools/vfx_preview/preview.py` and `Preview.java` (copy `FireV2.java`, `--fire-style`, `--reduced`), `PerfSourceScanTest` (the new

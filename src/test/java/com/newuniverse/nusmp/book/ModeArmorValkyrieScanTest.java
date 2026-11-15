@@ -30,7 +30,7 @@ class ModeArmorValkyrieScanTest {
 
     private static String code(String src) { return src.replaceAll("(?s)/\\*.*?\\*/", "").replaceAll("//[^\n]*", ""); }
 
-    private static final Pattern CLIENT = Pattern.compile("net\\.minecraft\\.client\\.|com\\.mojang\\.blaze3d\\.|com\\.newuniverse\\.anime_multiverse\\.client\\.|net\\.neoforged\\.neoforge\\.client\\.|Minecraft\\.getInstance\\(\\)");
+    private static final Pattern CLIENT = Pattern.compile("net\\.minecraft\\.client\\.|com\\.mojang\\.blaze3d\\.|com\\.newuniverse\\.nusmp\\.client\\.|net\\.neoforged\\.neoforge\\.client\\.|Minecraft\\.getInstance\\(\\)");
     private static final String[] PURE = {"book/ModeArmorValkyrieRules.java", "book/ModeArmorValkyrieMesh.java", "book/ModeArmorValkyrieBudget.java", "book/ModeArmorValkyrieSpin.java", "valkyrielance/ValkyrieLanceRules.java"};
     private static final String[] COMMON = {"book/ModeArmorValkyrieSelfTests.java", "valkyrielance/ValkyrieDrillLanceItem.java", "valkyrielance/ValkyrieLanceBoot.java"};
 

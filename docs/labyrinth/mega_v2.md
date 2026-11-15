@@ -18,7 +18,7 @@ together, so nothing ever feels like going down or up. From 1.58.0:
   (the room farthest from the Landing by walking distance). Between them is the explorable dungeon: halls, corridors, caverns, traps, puzzles, a Safe Zone.
   Floors are SMALLER than the old sectors (about 18 to 40 rooms; config `mega.floorRooms`), because there are now ten times as many of them.
 * **A stairwell is a real room** (template folder `structure/mega/stairwell/`, kind `RoomKind.STAIRWELL`, appended): a shaft with a staircase that visibly
-  climbs or drops, lit, with a landing at each end. Walking onto its last step (a marker `nusmp:stair_exit`, one sector link) takes the player to the
+  climbs or drops, lit, with a landing at each end. Walking onto its last step (a marker `anime_multiverse:stair_exit`, one sector link) takes the player to the
   linked floor's arrival stairwell, with a short fade, the way `ChainTravel` already moves players between Landings. The forward stairwell is usable only when
   the next floor is ACTIVE; until then it says so ("the stairs are still forming") and queues it.
 * **The next floor is generated when a party ENTERS a floor** (queue floor n+1 as soon as floor n is reached), so the stairs are normally ready by the time they are found.
@@ -43,7 +43,7 @@ together, so nothing ever feels like going down or up. From 1.58.0:
 
 ## 3. The System for everyone, and where its buff works (builder SYS2)
 
-* The System overlay (Solo Leveling window, floor quests, rewards) works for EVERY player inside the dungeon dimensions (`nusmp:mega_dungeon` and the Hub),
+* The System overlay (Solo Leveling window, floor quests, rewards) works for EVERY player inside the dungeon dimensions (`anime_multiverse:mega_dungeon` and the Hub),
   on both roads, not only the Holy road, and for every player of the party at once (a floor quest completes for all present).
 * The permanent stat rewards of the System are applied as attribute modifiers that are **active only while the player is inside the dungeon dimensions**; they
   are removed on leaving (dimension change, death, logout) and restored on entering. They are never lost, only dormant.
@@ -53,7 +53,7 @@ together, so nothing ever feels like going down or up. From 1.58.0:
 ## 4. Removing the old dungeon (builder PRUNE)
 
 "Remove the old dungeon completely but keep the blocks if the new one uses them." The old dungeon is: the Spire layout of 1.35.0 (dimension
-`nusmp:labyrinth`, its structure set, pools `nusmp:labyrinth/*`, `mega.layout = "spire"`), the Living Dungeon (`dungeon/**`: tiers, city, atmosphere, nexus zones, the
+`anime_multiverse:labyrinth`, its structure set, pools `anime_multiverse:labyrinth/*`, `mega.layout = "spire"`), the Living Dungeon (`dungeon/**`: tiers, city, atmosphere, nexus zones, the
 Maw, dens, floor arenas), the legacy Dungeon Gates and Maws, and the config switches that kept them (`labyrinth.engine`, `legacyGates`, `mega.layout`).
 What stays: everything the Mega-Dungeon, the Hub, the Gateway, the Guard, the D&D layer, the economy, quests, relics, bosses and any other system still
 reads. The builder first MAPS the dependencies (who uses what), then removes in steps, then proves the whole tree still type-checks (`tc_full.sh`).
@@ -85,18 +85,18 @@ Sixteen new themes, each BOUND TO A ROAD (`RegionTheme.Route`, `exclusive()`): a
 | D | `SPIDER_WARRENS` | Abyssal | a spider queen's webbed warren: cobweb tunnels, egg sacs, silk bridges |
 
 The builders research the themes on the internet (D&D 5e sources, the Forgotten Realms and Ravenloft settings, fantasy and horror dungeon design) and
-record the URLs and what each decided in their doc. Every theme is a COMPLETE data set: enum entry, `data/nusmp/mega/themes/<id>.json` (palette swaps and
-keywords), an encounter table `data/nusmp/mega/encounters/<id>.json`, at least five signature rooms (templates) restricted to the theme (section 5.1),
+record the URLs and what each decided in their doc. Every theme is a COMPLETE data set: enum entry, `data/anime_multiverse/mega/themes/<id>.json` (palette swaps and
+keywords), an encounter table `data/anime_multiverse/mega/encounters/<id>.json`, at least five signature rooms (templates) restricted to the theme (section 5.1),
 atmosphere (the existing theme data), the relic themes that lead to it (`RelicThemes` data) and lang entries.
 
 ### 5.1 Rooms that belong to a theme (`TemplateThemes`, pure, in `labyrinth/mega/gen`)
 
 A template whose id starts with a prefix listed in a theme file may only be drawn in sectors of that theme; every other template stays free for all themes.
-A theme file `data/nusmp/mega/template_themes/<theme>.json`:
+A theme file `data/anime_multiverse/mega/template_themes/<theme>.json`:
 
 ```json
 { "theme": "holy_church",
-  "templates": ["nusmp:mega/hall/holy_church_", "nusmp:mega/set/holy_church_"],
+  "templates": ["anime_multiverse:mega/hall/holy_church_", "anime_multiverse:mega/set/holy_church_"],
   "relative":  { "mega/hall/holy_church_": 8, "mega/set/holy_church_": 6 } }
 ```
 
@@ -110,7 +110,7 @@ reads the folder and the assembler asks `TemplateThemes.allows(templateId, secto
 `com.newuniverse.nusmp.arc` (contract in this commit): `ArcCharacter` (one pure record per character), `ArcRoster`, `ArcCharacters.bootstrap()` (the list), `ArcBoss` (a
 thin layer over the existing `ZogratisBoss` framework, so every boss has moves with telegraphs, power steps, an arena that resets, a damage budget, the second
 health bar and the Charter Grimoire drop for free), `ArcEntities.boss(...)` (one call registers type, attributes and look), `ArcLook`, and ONE shared NPC entity
-`nusmp:arc_npc` whose identity is a synced string. Bosses stand as floor bosses (the Mega-Dungeon picks one by road, floor and theme), in story arenas, and unlock
+`anime_multiverse:arc_npc` whose identity is a synced string. Bosses stand as floor bosses (the Mega-Dungeon picks one by road, floor and theme), in story arenas, and unlock
 each other in a story chain (`ArcCharacter.prerequisites`); NPCs live in the Sanctuary Hub and give the arc quests.
 
 ## 7. Release plan

@@ -18,7 +18,7 @@ here.
 | File | Job |
 |---|---|
 | `relics/tier/TierRules.java` | Pure numbers: the stat curves, the caps, the catalyst table, the success chances, the costs, the cooldowns. |
-| `relics/tier/TierComponents.java` | The data component `nusmp:tier`. |
+| `relics/tier/TierComponents.java` | The data component `anime_multiverse:tier`. |
 | `relics/tier/Tiers.java` | Read/write helpers: `tierOf`, `baseGrade`, `effectiveGrade`, `steps`, `multiplier`, `setTier`. The contract other systems use. |
 | `relics/tier/TierEvents.java` | The `ItemAttributeModifierEvent` handler. |
 | `relics/tier/ActPower.java` | The act-power multiplier of the relic act that is running. |
@@ -28,7 +28,7 @@ here.
 | `relics/tier/TierSystem.java` | The two registration entry points. |
 | `tools/gen_tier_assets.py` | The two 16x16 icons and item models. |
 
-### The component `nusmp:tier` (TierComponents)
+### The component `anime_multiverse:tier` (TierComponents)
 
 An integer, the **absolute grade ordinal** the stack has been raised to (0 Normal, 1 Special, 2 Rare, 3 Unique, 4 Legend, 5 God, 6 Genesis).
 Missing or 0 means "never raised". The effective grade is `max(def.grade(), tier)`. It is persistent (saved with the stack), network-synchronised
@@ -121,13 +121,13 @@ Sneak and use a catalyst with a relic in the other hand (or sneak and use the re
 | Rare | 2x `tensura:high_magisteel_ingot` | 4 | 95% | no | 10 s |
 | Unique | 3x `tensura:mithril_ingot` | 6 | 85% | yes | 20 s |
 | Legend | 3x `tensura:adamantite_ingot` | 10 | 70% | yes | 40 s |
-| God | 4x `tensura:hihiirokane_ingot` or 1x `nusmp:devils_core` | 15 | 55% | yes | 80 s |
-| Genesis | 1x `nusmp:genesis_seed` | 22 | 40% | yes | 120 s |
+| God | 4x `tensura:hihiirokane_ingot` or 1x `anime_multiverse:devils_core` | 15 | 55% | yes | 80 s |
+| Genesis | 1x `anime_multiverse:genesis_seed` | 22 | 40% | yes | 120 s |
 
 The Tensura ids were verified against the Tensura 2.0.1.3 id list. The ritual refuses before it takes anything if: the relic is not attuned, it is
 already Genesis, the catalyst is wrong or short, the cooldown has not passed, or the pool cannot pay. After that the pool is paid and the catalyst
 taken, then one roll. **The relic is never destroyed or lowered:** a failure sets a per-player cooldown (saved in the player's persisted data, so it
-survives relog and death) and, from the Unique jump up, costs the catalysts. A success writes `nusmp:tier` onto the very stack: its serial and
+survives relog and death) and, from the Unique jump up, costs the catalysts. A success writes `anime_multiverse:tier` onto the very stack: its serial and
 attunement are untouched, so the Order's ledger (which identifies a relic by serial) still knows it as the same copy.
 
 **Why a sneak-use event and not a Smithing Table recipe.** A recipe makes a new stack from ingredients, which is exactly the thing that would copy
@@ -141,7 +141,7 @@ too.** The use event repeats while the button is held; 2 s stops one click from 
 
 ### The two own catalysts (TierItems)
 
-`nusmp:devils_core` (stack of 16) and `nusmp:genesis_seed` (stack of 16), both glinting, with a short tooltip, a 16x16 icon and a flat item model.
+`anime_multiverse:devils_core` (stack of 16) and `anime_multiverse:genesis_seed` (stack of 16), both glinting, with a short tooltip, a 16x16 icon and a flat item model.
 **Why own items for the top two.** Tensura has Hihiirokane but nothing for a "genesis" step; the Devil's Core is the alternative to four Hihiirokane
 ingots for the God jump, so a world with no Hihiirokane source is not locked out. They are registered in their own `DeferredRegister.Items`, so no
 shared item file is touched.

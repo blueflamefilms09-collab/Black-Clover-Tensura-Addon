@@ -1,14 +1,14 @@
 # Writing a forms file that passes (for the weapon builders)
 
-Your weapon's forms live in ONE file: `src/main/resources/data/nusmp/hero/forms/<itemId>.json` (for example `legendary_shield.json`, `vassal_sewing_set.json`; the file name is the
+Your weapon's forms live in ONE file: `src/main/resources/data/anime_multiverse/hero/forms/<itemId>.json` (for example `legendary_shield.json`, `vassal_sewing_set.json`; the file name is the
 weapon's item id, see `HeroKind`). The same validator (`forms/FormsSchema`) runs on it in JUnit (`FormsDataTest`, which reads every shipped file), in the game at every data
 reload (a bad form is skipped and logged, a bad file leaves the weapon with its base form only) and in the game's `hero.forms` self-test (which also resolves every item, tag
 and skill in the real registries). Anything it reports as an error or a warning fails the build, so fix every line.
 
 ## How to check your file before you hand it over
 
-1. `bash $S/hero/forms_check.sh /home/user/<your worktree>/src/main/resources/data/nusmp/hero/forms/<itemId>.json` (`S` is the scratchpad of the job). It runs the real validator,
-   compares your skill ids with the string literals in `heroweapon/weapon/<pkg>/`, checks vanilla item and item-tag ids against the API dumps and `nusmp:` ids by text search,
+1. `bash $S/hero/forms_check.sh /home/user/<your worktree>/src/main/resources/data/anime_multiverse/hero/forms/<itemId>.json` (`S` is the scratchpad of the job). It runs the real validator,
+   compares your skill ids with the string literals in `heroweapon/weapon/<pkg>/`, checks vanilla item and item-tag ids against the API dumps and `anime_multiverse:` ids by text search,
    and prints the list as the Weapon Book will show it. Exit code 0 means clean. (Tensura ids and tags outside vanilla cannot be checked here: the game test does it.) The helper compiles the validator from the forms
    builder's worktree (`/home/user/hforms-wt`, or the folder in `HFORMS_SRC`), so it always has the latest rules.
 2. `WT=<worktree> KEY=<key> bash $S/mega/jt.sh com.newuniverse.nusmp.heroweapon.forms.FormsDataTest` from the worktree folder (the test reads `src/main/resources/...` relative to it).
@@ -56,8 +56,8 @@ requirements or no techniques. A key written twice in one object is a WARNING to
 7. `parents`: 1 to 4 ids of other forms of the file (all must be learned first), no loops, no self. Everything hangs off `base`. A form whose parent was rejected is rejected too.
 8. `mastery`: 40 to 400 points to finish the form (a point per hit, two per technique, one per block). Finishing pays the permanent `abilityBonus` once.
 9. `requires`: one to four entries `{ "item": "ns:id", "count": n }` or `{ "tag": "ns:tag", "count": n }` (exactly one of the two), no repeats. Only a CURSE form may have none (its
-   series is what opens it). `count` 4 to 64; above 64 (up to 256) only for a TOP form: tier 3 or deeper and nothing builds on it. Items are `minecraft:`, `tensura:` or `nusmp:`;
-   tags are `minecraft:`, `c:` or `nusmp:`. Items that cannot be had in survival (barrier, bedrock, command blocks, spawners, spawn eggs ...) are refused. Every id must exist in
+   series is what opens it). `count` 4 to 64; above 64 (up to 256) only for a TOP form: tier 3 or deeper and nothing builds on it. Items are `minecraft:`, `tensura:` or `anime_multiverse:`;
+   tags are `minecraft:`, `c:` or `anime_multiverse:`. Items that cannot be had in survival (barrier, bedrock, command blocks, spawners, spawn eggs ...) are refused. Every id must exist in
    the real registry (the game test resolves them; a tag must exist and hold at least one item). Tier 1 asks for common things, tier 2 for rarer, the top forms for rare ones.
 10. `stats` and `abilityBonus` use only the keys `attack_damage`, `attack_speed`, `armor`, `armor_toughness`, `max_health`, `movement_speed` (a share: 0.05 is plus five percent),
     `knockback_resistance`, `reach`, `luck`. Budget of `stats` (also as a negative number down to the same size, except attack speed): armor 8, armor_toughness 4, max_health 12,

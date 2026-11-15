@@ -319,7 +319,7 @@ Notes: Not in Secre's grimoire (kept in the basic Sealing book): Grand Seal, Sea
 
 | Part | Verdict |
 |---|---|
-| The twelve data files (`data/nusmp/character_spells/<id>.json`), `book.CharacterPagesBulls`, `book.CharacterArtsBulls` (20 pages and casts), `book.CharacterFlairBulls`, `charset.BullsFlairPalette`, the self-test `magic.character_spells_bulls`, the lang fragment `tools/lang/character_spells_bulls.json`, `CharacterSetBullsTest` | NEW |
+| The twelve data files (`data/anime_multiverse/character_spells/<id>.json`), `book.CharacterPagesBulls`, `book.CharacterArtsBulls` (20 pages and casts), `book.CharacterFlairBulls`, `charset.BullsFlairPalette`, the self-test `magic.character_spells_bulls`, the lang fragment `tools/lang/character_spells_bulls.json`, `CharacterSetBullsTest` | NEW |
 | A grimoire of one of the twelve showing only his pages and opening them by his rule | REPLACED (the old behaviour: the whole book opening by mastery order; with the switch off it is back) |
 | The basic grimoire hiding the signature pages of the twelve (Keraunos, Counter Trap Magic ...) | REPLACED (they were listed but locked or open to anyone); `basicBookHidesSignatures=false` restores it |
 | Every page id, name, order, cast, cost and unlock bit of the twelve shared books | KEPT |
@@ -340,7 +340,7 @@ Pages of a shared book that a character never used are only hidden from him, the
 | `charset/CharacterSetRegistry.java` | the twelve ids appended to `SHIPPED` |
 | `charset/CharacterSetBoot.java` | `CharacterSetBullsSelfTests.register()` |
 | `charset/CharacterSetSelfTests.java` | the pilot's "added pages follow the older pages" check finds the block by its first page instead of assuming it is last (Magna's pages follow the pilot's in the Fire book) |
-| `data/nusmp/armour_policy.json` | `new_pages` for COTTON, LIGHTNING, MIRROR, POISON, ASH, TRANSMUTATION, RECOMBINATION, SPATIAL, SHADOW, SEALING (new lines) and FLAME (three ids appended to the pilot's array) |
+| `data/anime_multiverse/armour_policy.json` | `new_pages` for COTTON, LIGHTNING, MIRROR, POISON, ASH, TRANSMUTATION, RECOMBINATION, SPATIAL, SHADOW, SEALING (new lines) and FLAME (three ids appended to the pilot's array) |
 | `test/.../charset/CharacterSetSourceScanTest.java` | `everyPageAFileNamesExistsInItsBook` skips books outside its four (the squads' books have their own test) and also reads the twin class's pages for the Fire book |
 
 No version bump, no CHANGELOG / README / LIBRARIES / en_us / `.github` edit (the lang text is the fragment). The self-test prefix `magic.character_spells_bulls` has to be added to the CI smoke list by whoever owns `.github`.

@@ -5,7 +5,7 @@
 > Luck and the armour rolls stay. The player-placed-block exemption of the Dungeon Guard (`dungeon/placed/PlayerPlaced`) stays: it still serves torches, crafting stations,
 > sleeping bags and other mods' backpacks (Sophisticated Backpacks); only the backpack's own wiring line in `PlacedBoot` went.
 >
-> **Saves.** The block, block entity, menu, item, upgrade items, the `nusmp:backpack_tier` component and the `nusmp:backpack_upgrade` recipe serializer are no longer registered, with
+> **Saves.** The block, block entity, menu, item, upgrade items, the `anime_multiverse:backpack_tier` component and the `anime_multiverse:backpack_upgrade` recipe serializer are no longer registered, with
 > no inert legacy registration: NeoForge loads a world with a missing block or item (the block becomes air, a stack with an unknown item is dropped from the inventory, a block entity
 > of an unknown type is skipped, an unknown component is ignored; the log lists the missing registry entries), so removal cannot crash a load. A backpack in an old world, chest or
 > inventory is lost; the contents of a placed pack go with it. Unknown `[backpack]` keys in `nusmp-labyrinth-loot-server.toml` are ignored and dropped by the config loader.
@@ -19,14 +19,14 @@ Release 1.107.0, lane "loot" of the dungeon gaps. Code in `com.newuniverse.nusmp
 | Part | Status | Where |
 |---|---|---|
 | Luck-scaled Gaussian counts (pure `LuckGauss`, clamped) | NEW | `labyrinth/loot/LuckGauss.java` |
-| Global loot modifier `nusmp:luck_loot` (counts, armour roll; the backpack drop was removed in 1.110.0) | NEW, switched on beside the older entries | `LuckLootModifier`, `LuckLoot`, `data/nusmp/loot_modifiers/luck_loot.json`, `global_loot_modifiers.json` (one entry appended) |
+| Global loot modifier `anime_multiverse:luck_loot` (counts, armour roll; the backpack drop was removed in 1.110.0) | NEW, switched on beside the older entries | `LuckLootModifier`, `LuckLoot`, `data/anime_multiverse/loot_modifiers/luck_loot.json`, `global_loot_modifiers.json` (one entry appended) |
 | Tensura coins scale with Luck (amount and a mob's chance to pay) | EXTENDED: new overload of `CoinLoot.roll`, the old overload kept and identical draw for draw at Luck 0 | `elite/hub/CoinLoot`, `CoinLootModifier`, `CoinMobDrops`, `CoinBossDrops` |
 | Randomised-NBT armour rolls for chests and lucky kills (`LootArmorItem`) | EXTENDED: the roll itself (`gear_roll` component, `GearRollMath`) already existed and is untouched; NEW is the chest / kill hand-out and the Luck-tilted rarity | `LuckArmour`, `LuckLoot.addArmour` |
 | Placeable, upgradable Backpack (block, block entity, menu, screen, 5 tiers) | REMOVED in 1.110.0 (owner's request) | `labyrinth/loot/backpack/**`, `client/loot/BackpackScreen` |
 | Backpack 3D model, 5 textures, 4 upgrade sprites, blockstate | REMOVED in 1.110.0 (owner's request) | `tools/gen_backpack_assets.py` |
-| Recipes: backpack, four upgrade items, and the "upgrade a pack, keep its contents" recipe | REMOVED in 1.110.0 (owner's request) | `data/nusmp/recipe/backpack*.json`, `BackpackUpgradeRecipe` |
+| Recipes: backpack, four upgrade items, and the "upgrade a pack, keep its contents" recipe | REMOVED in 1.110.0 (owner's request) | `data/anime_multiverse/recipe/backpack*.json`, `BackpackUpgradeRecipe` |
 | `PlacedHook` seam for the dungeon guard lane | REMOVED in 1.110.0 (owner's request) | `labyrinth/loot/backpack/PlacedHook.java` |
-| The anime loot modifier (`nusmp:anime_loot`), `KillLoot`, `GearRollMath`, the gear and food items, the Hub coin tables | KEPT, unchanged | |
+| The anime loot modifier (`anime_multiverse:anime_loot`), `KillLoot`, `GearRollMath`, the gear and food items, the Hub coin tables | KEPT, unchanged | |
 | Creative tab "Dungeon Loot" | KEPT; the backpack entries added in 1.107.0 were removed in 1.110.0 | `LootCreative` |
 | Nothing was REPLACED in 1.107.0. In 1.110.0 the Backpack rows above were removed on the owner's explicit request. | | |
 
@@ -88,7 +88,7 @@ The owner wants the lucky character to be the rich one, whatever they swing.
 
 ## 4. Randomised armour rolls
 
-The roll of the stat lines (`GearRollMath`, `nusmp:gear_roll`: rarity, seed, floor, two to four lines, armour first, each inside the range its rarity and depth give) is unchanged. New:
+The roll of the stat lines (`GearRollMath`, `anime_multiverse:gear_roll`: rarity, seed, floor, two to four lines, armour first, each inside the range its rarity and depth give) is unchanged. New:
 
 * `LuckArmour.pick`: WHICH piece (any piece of a set whose first depth band the floor has reached), HOW GOOD (the existing rarity weights at the band and Luck; a boss counts one band
   deeper) and the SEED (drawn from the dice, so two chests give different pieces; the same dice gives the same piece, which is what the tests use).
@@ -98,7 +98,7 @@ The roll of the stat lines (`GearRollMath`, `nusmp:gear_roll`: rarity, seed, flo
 
 At floor 50: kill 1.2% -> 10% (Luck 5) -> 37% (Luck 20); boss 30% -> 50%; chest 7% -> 43%.
 
-**Why chests.** The monsters already dropped `LootArmorItem` through `KillLoot`, but a chest never did; the dungeon's chests gave only the standard gear (`nusmp:gear_chests`).
+**Why chests.** The monsters already dropped `LootArmorItem` through `KillLoot`, but a chest never did; the dungeon's chests gave only the standard gear (`anime_multiverse:gear_chests`).
 Armour with a rolled line set is a reason to open chests on every floor.
 
 ## 5. The Backpack (removed in 1.110.0)
@@ -125,7 +125,7 @@ lang keys, config section, drop roll (`BackpackDrops`, `LuckGauss.backpackChance
 
 * No game run: the self-tests, the screen, the placed model, the item model overrides and the loot table copy were written against the API stubs (type-checked) and checked by pure tests and file
   tests only. The first CI smoke run is the first real test of `dungeon.loot_luck*` `dungeon.loot_luck*`.
-* Whether another global loot modifier runs before or after `nusmp:luck_loot` is the loader's order; the modifier only touches eligible stacks, so either order gives the same result, but a
+* Whether another global loot modifier runs before or after `anime_multiverse:luck_loot` is the loader's order; the modifier only touches eligible stacks, so either order gives the same result, but a
   modifier of another mod that adds a stackable item AFTER ours is not enlarged.
 * The numbers (0.06 per Luck, 0.5 depth, x3 cap, the armour chances) are a first pass nobody has played; every one is a config value.
 * Tensura's probability skills reach the character's Luck only if they modify `Attributes.LUCK`; the avatar-creation `LuckPoller` total (skills, fate, dice) is a different, creation-time figure and is not read here.

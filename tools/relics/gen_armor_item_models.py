@@ -15,7 +15,7 @@ import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.abspath(os.path.join(HERE, "..", ".."))
-JAVA = os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "anime_multiverse")
+JAVA = os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "nusmp")
 MODELS = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse", "models", "item")
 
 DISPLAY = {

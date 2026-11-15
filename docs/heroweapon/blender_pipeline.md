@@ -35,7 +35,7 @@ bvenv/bin/python -B tools/blender/legendary.py --only sword                     
 ```
 
 After writing: `python3 -B tools/weapon_grip/grip_table.py --write`, `python3 -B tools/safe_additive/scan_textures.py --fix`,
-`python3 -B tools/shrink_pngs.py src/main/resources/assets/nusmp/textures/entity/weapon` and, for the projectile,
+`python3 -B tools/shrink_pngs.py src/main/resources/assets/anime_multiverse/textures/entity/weapon` and, for the projectile,
 `python3 -B tools/relics/weapon_sizes.py --apply --ids vassal_projectile`.
 
 A bake takes about one minute per weapon on four CPU cores. The glyphs of the rune inlays come from GNU FreeMono (its runic block);

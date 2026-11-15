@@ -7,15 +7,15 @@ Part of the Labyrinth (1.35.0, `docs/labyrinth.md`). Package `com.newuniverse.nu
 
 ## What a trial is
 
-A chamber piece of the Spire holds one `nusmp:sealed_archway` keystone over its doorway, a `nusmp:ward_rune` tile in the floor of every
-doorway and a few `nusmp:spawn_glyph` tiles where mobs should appear. The template writes the keystone's settings into its block entity:
+A chamber piece of the Spire holds one `anime_multiverse:sealed_archway` keystone over its doorway, a `anime_multiverse:ward_rune` tile in the floor of every
+doorway and a few `anime_multiverse:spawn_glyph` tiles where mobs should appear. The template writes the keystone's settings into its block entity:
 
 ```
-{id:"nusmp:sealed_archway", radius:9, height:8, mobs:[{id:"minecraft:zombie", count:3}, {id:"nusmp:floor_warden", count:1}], reset:60}
+{id:"anime_multiverse:sealed_archway", radius:9, height:8, mobs:[{id:"minecraft:zombie", count:3}, {id:"anime_multiverse:floor_warden", count:1}], reset:60}
 ```
 
 When a survival or adventure player walks into the keystone's box (the keystone's column, `radius` to each side, `height` down, 2 up) through
-a doorway (see the armed rule below) and nobody is standing in a doorway now, the archway seals every doorway with a column of `nusmp:magic_barrier`, spawns the mobs on the glyphs
+a doorway (see the armed rule below) and nobody is standing in a doorway now, the archway seals every doorway with a column of `anime_multiverse:magic_barrier`, spawns the mobs on the glyphs
 (scaled by how many players are inside), plays the beacon chime and tells the party *"The archway seals. Nothing leaves until the trial
 is done."* When the last of those mobs is dead the barriers fall (*"The seal fades."*) and the room is cleared for good. If the party
 leaves (or dies) and nobody is inside for `reset` seconds, the trial resets: the leftover mobs are discarded, the barriers fall, and the
@@ -59,7 +59,7 @@ activation, and the glyph decides where the mob stands). Every mob gets the scor
 * persistent mobs are skipped by `NaturalSpawner`'s cap count, so a full chamber never starves the rest of the floor (or the Overworld
   chunks a player's friend is in) of natural spawns;
 * `STRUCTURE` is not `NATURAL`, so nothing that cancels natural spawns (the legacy Dungeon's ecology cancels `STRUCTURE` too, but only in
-  `nusmp:living_dungeon`) touches it.
+  `anime_multiverse:living_dungeon`) touches it.
 
 ## Counting the living
 
@@ -149,7 +149,7 @@ off an active keystone, motes drifting on a barrier, a rare spark over a rune, v
 ### Tests (`src/test/java/com/newuniverse/nusmp/labyrinth/trial/`)
 `TrialMathTest` (10) and `TrialStateTest` (12): every rule and transition above, no Minecraft classes.
 
-### Textures (`assets/nusmp/textures/block/`, 16x16, Pillow, deterministic seeds)
+### Textures (`assets/anime_multiverse/textures/block/`, 16x16, Pillow, deterministic seeds)
 | File | What and why |
 |---|---|
 | `sealed_archway_top.png` | Dark dressed stone with a faint carved ring and a teal centre dot: the keystone's top and bottom (one texture for both, there is no "up" on a keystone). |
@@ -160,7 +160,7 @@ off an active keystone, motes drifting on a barrier, a rare spark over a rune, v
 | `spawn_glyph_top.png` + `.png.mcmeta` | 16x64, four frames (`frametime` 8): a darker tile with a violet summoning circle, an inscribed triangle, four cardinal dots and a centre, pulsing in brightness over the cycle. |
 | `spawn_glyph_side.png` | The darker tile with a violet groove: sides and bottom. |
 
-### Models and blockstates (`assets/nusmp/`)
+### Models and blockstates (`assets/anime_multiverse/`)
 | File | What and why |
 |---|---|
 | `blockstates/sealed_archway.json` | `phase=idle/active/cleared` to the three keystone models. |
@@ -170,23 +170,23 @@ off an active keystone, motes drifting on a barrier, a rare spark over a rune, v
 | `blockstates/spawn_glyph.json`, `models/block/spawn_glyph.json` | Same for the glyph. |
 | `models/item/sealed_archway.json` (parent `block/sealed_archway_idle`), `magic_barrier.json`, `ward_rune.json`, `spawn_glyph.json` | Block items use their block model, the keystone its idle face. |
 
-### Data (`data/nusmp/`)
+### Data (`data/anime_multiverse/`)
 | File | What and why |
 |---|---|
-| `loot_table/blocks/sealed_archway.json`, `ward_rune.json`, `spawn_glyph.json` | Drop themselves (`survives_explosion`, `random_sequence nusmp:blocks/<id>`): a builder outside the Labyrinth gets the block back; inside, the guard never lets them break. No loot table for the barrier (`noLootTable`). No `requiresCorrectToolForDrops`, so no mineable tag is needed; the lead may add the three to `minecraft:mineable/pickaxe` for speed. |
+| `loot_table/blocks/sealed_archway.json`, `ward_rune.json`, `spawn_glyph.json` | Drop themselves (`survives_explosion`, `random_sequence anime_multiverse:blocks/<id>`): a builder outside the Labyrinth gets the block back; inside, the guard never lets them break. No loot table for the barrier (`noLootTable`). No `requiresCorrectToolForDrops`, so no mineable tag is needed; the lead may add the three to `minecraft:mineable/pickaxe` for speed. |
 
 ### Tooling
 `tools/gen_labyrinth_trial_assets.py` writes all 25 asset files above; `--check` regenerates them in memory and lists any repo file that
 differs (exit 1), so CI can prove the textures match the script.
 
 ## Lang (fragment `e1.lang.json`, merged by the lead)
-`block.nusmp.sealed_archway` Sealed Archway, `block.nusmp.magic_barrier` Magic Barrier, `block.nusmp.ward_rune` Ward Rune,
-`block.nusmp.spawn_glyph` Spawn Glyph, `message.nusmp.trial.sealed`, `message.nusmp.trial.fades`.
+`block.anime_multiverse.sealed_archway` Sealed Archway, `block.anime_multiverse.magic_barrier` Magic Barrier, `block.anime_multiverse.ward_rune` Ward Rune,
+`block.anime_multiverse.spawn_glyph` Spawn Glyph, `message.anime_multiverse.trial.sealed`, `message.anime_multiverse.trial.fades`.
 
 ## Registration
 `LabyrinthSystem.init` calls `com.newuniverse.nusmp.labyrinth.trial.TrialRegistry.init(modEventBus)` (blocks and the block entity
 type) and `LabyrinthClient.init` calls `com.newuniverse.nusmp.client.labyrinth.trial.TrialClient.init(modEventBus)`. The creative tab
-lists `TrialRegistry.creativeItems()` (`nusmp:sealed_archway`, `nusmp:magic_barrier`, `nusmp:ward_rune`, `nusmp:spawn_glyph`).
+lists `TrialRegistry.creativeItems()` (`anime_multiverse:sealed_archway`, `anime_multiverse:magic_barrier`, `anime_multiverse:ward_rune`, `anime_multiverse:spawn_glyph`).
 
 ## Not verified in game
 Everything. Specifically unverified: that `BlockEntityType.BlockEntitySupplier` is public under NeoForge's access transformer (the

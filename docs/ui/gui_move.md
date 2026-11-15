@@ -6,8 +6,8 @@ base of a framework, `client/ui/move/`, and every custom GUI of the mod goes thr
 
 ## How the player uses it
 
-* Press **F9** (rebindable: Controls > Multiverse of Anime > "Move GUIs (edit mode)") or type `/nusmp gui move`, or press **Move GUIs** on the GUI Size screen (F8).
-  (The command is `/nusmp gui ...` and not `/multiverse gui ...` on purpose: the word `multiverse` belongs to the server's command tree, see `RelicWearClient`.)
+* Press **F9** (rebindable: Controls > Multiverse of Anime > "Move GUIs (edit mode)") or type `/anime_multiverse gui move`, or press **Move GUIs** on the GUI Size screen (F8).
+  (The command is `/anime_multiverse gui ...` and not `/multiverse gui ...` on purpose: the word `multiverse` belongs to the server's command tree, see `RelicWearClient`.)
 * Every HUD element that was on screen gets a dashed outline and its name; the ones that are not on screen right now (a Djinn panel without a Djinn) are shown dimmed
   (the **Show all** switch), so they can be placed too.
 * **Drag** to move (snaps to the screen's edges and middle and to the other GUIs; **Snap** switch, hold **Alt** for free placement; pink guide lines show what it snapped to).
@@ -15,7 +15,7 @@ base of a framework, `client/ui/move/`, and every custom GUI of the mod goes thr
   shows it, **Tab** selects the next one, **Reset all** and **Done** below. A GUI can never be dragged off the screen: at least 24 GUI pixels always stay in reach.
 * Panels of the mod's screens (codex, forge ...) are all centred, so they are picked one at a time: turn **Panels** on (key P) and press Tab. The picked panel takes its
   place the next time its screen opens, at its own size times the GUI Size.
-* `/nusmp gui reset` puts every GUI back. Nothing moves unless the player moves it: an element without a saved place is drawn exactly as before.
+* `/anime_multiverse gui reset` puts every GUI back. Nothing moves unless the player moves it: an element without a saved place is drawn exactly as before.
 
 ## The framework
 
@@ -88,7 +88,7 @@ The GUI Size entry `arts_bar` has no layer behind it anywhere in the mod, so it 
 
 ## NEW / REPLACED / KEPT
 
-* NEW: the whole framework, the edit mode, the key, `/nusmp gui move|reset`, `nusmp-gui-layout-client.toml`, the Move GUIs button on the GUI Size screen, movability of every
+* NEW: the whole framework, the edit mode, the key, `/anime_multiverse gui move|reset`, `nusmp-gui-layout-client.toml`, the Move GUIs button on the GUI Size screen, movability of every
   element in the table, hide switch per HUD element, `lang` fragment `tools/lang/gui_move.json`, tests, preview tool.
 * REPLACED: nothing was removed. The System window's place and size are now stored in the layout file (it is one of the elements); the old keys stay in
   `nusmp-labyrinth-mega-system-client.toml` and are the fallback until the window is first placed, so every saved position still applies; Reset forgets them.

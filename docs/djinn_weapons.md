@@ -72,14 +72,14 @@ exists); `DjinnWeaponService` is its glue over the player's inventory.
   On death the Equip ends before the drops, so the original item is simply part of the normal drops (or stays under keepInventory); `LivingDropsEvent` is a second
   guard. On login and respawn `DjinnEngine.restore` releases again (a crash leaves a weapon and a stash behind; this cleans both).
 * **Creative / spectator**: no item swap (`apply` releases instead), the old render-only look stays. **Extreme Magic**: unchanged; the weapon is quiet while it charges.
-* **Admin weapons**: `/multiverse djinn weapon give [player [djinn [dark]]]` gives a weapon outside the loan (`nusmp:djinn_temp` with `admin: true`): it needs no Djinn
+* **Admin weapons**: `/multiverse djinn weapon give [player [djinn [dark]]]` gives a weapon outside the loan (`anime_multiverse:djinn_temp` with `admin: true`): it needs no Djinn
   Equip, is never taken back, can be dropped, acts as a Full Equip's. A bare stack (the creative tab) is adopted as an admin weapon by whoever holds it.
   `/multiverse djinn weapon clear [player]` removes every Djinn weapon and ends the loan. Both need permission level 2.
-* The component is **`nusmp:djinn_temp`** (a compound: `owner` uuid, `djinn` name, `expires` game time or 0, `admin`), registered in `DjinnComponents` (already on the mod bus).
+* The component is **`anime_multiverse:djinn_temp`** (a compound: `owner` uuid, `djinn` name, `expires` game time or 0, `admin`), registered in `DjinnComponents` (already on the mod bus).
 
 ## 3. The art
 
-The meshes are **derived from the Djinn armour set's own weapon pieces** (`assets/nusmp/djinn/u_<id>/weapon.txt` for the light look, `d_<id>/weapon.txt` for the dark
+The meshes are **derived from the Djinn armour set's own weapon pieces** (`assets/anime_multiverse/djinn/u_<id>/weapon.txt` for the light look, `d_<id>/weapon.txt` for the dark
 one): the same geometry, painted skin and glow, converted by `tools/relics/djinn_weapons.py` into WeaponRenderer's baked format (`qn` quads with smoothed normals,
 the weapon method's layers, `orient manual`). Each is scaled to its target apparent length under the size rule (long weapons 2.2 to 3.6 blocks): Baal's lance 3.3,
 Amon's greatsword 2.8, Vinea's trident 3.2, Focalor's glaive 3.4, Zagan's staff 2.8, Zepar's axe 2.7, Furfur's horn 2.3, Marchosias' claws 1.7 (a short weapon),

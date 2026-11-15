@@ -6,7 +6,7 @@ Owner: "i want custom skill based animes", Ultimates "2 at a time", "let me know
 
 Both are Ultimates in the skill wheel (the mode key cycles, the skill key presses the current mode). Windows are stored as the game time they end at in the skill tag of the one player who owns the skill, so nothing ticks for them and nothing has to be cleaned up on logout, death or a dimension change. A second press ends the windows marked "ends".
 
-### Gate of Babylon (`nusmp:gate_of_babylon`, NEW) — 10 modes
+### Gate of Babylon (`anime_multiverse:gate_of_babylon`, NEW) — 10 modes
 | # | Mode | What it does | Cost / cooldown (s) |
 |---|------|--------------|---------------------|
 | 0 | Gate | A gold gate opens above the creature you look at (32 blocks) and a weapon falls: 16. | 1200 / 6 |
@@ -20,9 +20,9 @@ Both are Ultimates in the skill wheel (the mode key cycles, the skill key presse
 | 8 | Ea | One great line (40 blocks, width 2.2): everything in it you may hurt (at most 24) is struck for 48. | 8000 / 120 |
 | 9 | Elixir | Heals 30 % of your maximum health (through `BalanceLaw.heal`), cleanses, Regeneration for 10 s. | 2500 / 60 |
 
-Numbers: `skill/rules/GateRules.java`. All damage goes through `SkillDamage.hit` (the balance law: a player is never one-shot; the PvP hit cap applies to Ea too). Obtain: `/tensura edit <player> ability grant nusmp:gate_of_babylon`. Switch: server setting `ultimates_3_47.gateEnabled`.
+Numbers: `skill/rules/GateRules.java`. All damage goes through `SkillDamage.hit` (the balance law: a player is never one-shot; the PvP hit cap applies to Ea too). Obtain: `/tensura edit <player> ability grant anime_multiverse:gate_of_babylon`. Switch: server setting `ultimates_3_47.gateEnabled`.
 
-### Ki (`nusmp:ki`, NEW) — 10 modes
+### Ki (`anime_multiverse:ki`, NEW) — 10 modes
 | # | Mode | What it does | Cost / cooldown (s) |
 |---|------|--------------|---------------------|
 | 0 | Ki Blast | A quick ball down your look (32 blocks): the first creature in its path takes 10. | 400 / 2 |
@@ -36,7 +36,7 @@ Numbers: `skill/rules/GateRules.java`. All damage goes through `SkillDamage.hit`
 | 8 | Ultra Instinct | 8 s: one blow a second is dodged outright, the others do 0.5x. A second press ends it. | 4000 / 90 |
 | 9 | Ki Sense | Every hostile creature within 32 blocks (at most 24) glows for 10 s; you are told how many. | 600 / 15 |
 
-Numbers: `skill/rules/KiRules.java`. The holds of Solar Flare and Chains share `skill/rules/ControlRules.controlTicks`. Obtain: `/tensura edit <player> ability grant nusmp:ki`. Switch: server setting `ultimates_3_47.kiEnabled`.
+Numbers: `skill/rules/KiRules.java`. The holds of Solar Flare and Chains share `skill/rules/ControlRules.controlTicks`. Obtain: `/tensura edit <player> ability grant anime_multiverse:ki`. Switch: server setting `ultimates_3_47.kiEnabled`.
 
 ## NEW / REPLACED / KEPT
 - NEW: Gate of Babylon and Ki (skills, rules, icons, lang, config, tests, self-tests `skill.gate.registry` and `skill.ki.registry`), `ControlRules`.

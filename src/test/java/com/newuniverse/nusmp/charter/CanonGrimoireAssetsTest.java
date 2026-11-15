@@ -45,7 +45,7 @@ class CanonGrimoireAssetsTest {
 
     private static String local(String ref) {
         assertTrue(ref.startsWith("anime_multiverse:"), "this mod's namespace: " + ref);
-        return ref.substring(6);
+        return ref.substring(17);
     }
 
     private static List<String> ids() throws Exception {

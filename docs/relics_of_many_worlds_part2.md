@@ -203,7 +203,7 @@ Tensura ids used (all in clean.json): skills tensura:magic_sense, tensura:though
 # Wave 14: heads and footwear (17 cards)
 
 Code: `relics/wave/Wave14*.java` (Wave14 defs+hooks, Wave14Rules pure, Wave14Util, Wave14Head, Wave14Feet, Wave14Zones, Wave14Events).
-Long card text per id: lang fragment `scratchpad/frag_relics2/relics_wave14.lang.json` (`item.nusmp.<id>.card`). Icons: `tools/relics/wave14_icons.py`.
+Long card text per id: lang fragment `scratchpad/frag_relics2/relics_wave14.lang.json` (`item.anime_multiverse.<id>.card`). Icons: `tools/relics/wave14_icons.py`.
 Charges, daily counters, marks and timers: plain data in the player's persistent data (`nusmp_w14`) or on the stack (`usesPerDay`): no new pool or meter.
 Tensura-run costs: breath = 3% existence points (`epPercent`), Siege Monster / Void Beam / Fire Jets = magicules (`mana`), Wind Walk = 3% EP.
 

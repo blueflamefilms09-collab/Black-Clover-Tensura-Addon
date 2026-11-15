@@ -18,7 +18,7 @@ glass to glass**. It is weak to Gel and Dark and counters Light.
 | Mirrors Slash | new | Blade mirrors spin out in an arc: 9 x power damage plus `tensura:fragility`. |
 | Mirrors Meteorite | new | A storm of mirrors falls where you aim: 8 x power each, plus blindness and `tensura:fragility`. |
 
-## Real Double (entity `nusmp:mirror_double`)
+## Real Double (entity `anime_multiverse:mirror_double`)
 
 - **Look:** it wears the owner's own skin, mirrored left to right (the wiki says the clone is the inverted reflection), holds the owner's weapon, and has a pulsing violet glass sheen (`client/MirrorDoubleRenderer`).
 - **Stats:** health is half the owner's max health x power, and attack is 3 + 3 x power. It copies the owner's active effects (`CloneEntity.copyEffects` when Tensura is present).

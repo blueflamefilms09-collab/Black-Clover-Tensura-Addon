@@ -1,6 +1,6 @@
 # Soul Corpse Magic: the 1.93.0 rebuild
 
-Soul Corpse Magic (`MagicType.SOUL_CORPSE`, book `nusmp:book_soul_corpse`, colour 0xFF6C7899 slate) used to be the generic wiki attribute book plus Rades Spirito's five pages
+Soul Corpse Magic (`MagicType.SOUL_CORPSE`, book `anime_multiverse:book_soul_corpse`, colour 0xFF6C7899 slate) used to be the generic wiki attribute book plus Rades Spirito's five pages
 (Reanimation, the three named puppets, True Soul Corpse Magic). It is now `book/SoulCorpseBook` with its own armour, summon models, effect layer and spells.
 
 ## 1. Canon and what could not be checked
@@ -82,4 +82,4 @@ mobs. Rades's pages keep their lock lines (`book.CharacterSpells`); the new page
 
 ## 1.99.0 armour policy
 
-Soul Corpse Magic has no armour in the anime, so since 1.99.0 **no cast puts the temporary armour of this document on the caster** (policy kind NONE). Everything described above as the armour (the render layer, its painter, geo models, textures and generator) is KEPT on disk and registered in `AuraRegistry`, so old saves and tests still resolve; it is simply never started by a page. What the pages did besides the armour (damage cut, thorns, resistance, constructs, effects) is unchanged. Where the armour carried the magic's look, every cast of a family page now sends a small `SOUL_CORPSE_FX2` glow that follows the caster instead (no armour piece is drawn). See `docs/rebuild/armour_policy.md` for the table and the canon reasons; the code is `book.ArmourPolicy` (data: `data/nusmp/armour_policy.json`).
+Soul Corpse Magic has no armour in the anime, so since 1.99.0 **no cast puts the temporary armour of this document on the caster** (policy kind NONE). Everything described above as the armour (the render layer, its painter, geo models, textures and generator) is KEPT on disk and registered in `AuraRegistry`, so old saves and tests still resolve; it is simply never started by a page. What the pages did besides the armour (damage cut, thorns, resistance, constructs, effects) is unchanged. Where the armour carried the magic's look, every cast of a family page now sends a small `SOUL_CORPSE_FX2` glow that follows the caster instead (no armour piece is drawn). See `docs/rebuild/armour_policy.md` for the table and the canon reasons; the code is `book.ArmourPolicy` (data: `data/anime_multiverse/armour_policy.json`).

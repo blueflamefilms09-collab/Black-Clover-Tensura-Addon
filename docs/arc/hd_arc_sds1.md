@@ -2,7 +2,7 @@
 
 Eight looks hand-painted at 256x256 (every model pixel is a 4x4 texel block), each with the glow map the look already had. The painters are
 `tools/arc_hd/chars/{meliodas,king,diane,ban}.py` plus the thin `*_form2.py` loaders, with the shared helpers in `tools/arc_hd/chars/_sds1_kit.py`
-(the underscore keeps the kit out of the generator and out of the module test). Output: `src/main/resources/assets/nusmp/textures/entity/playermodel/<id>.png`
+(the underscore keeps the kit out of the generator and out of the module test). Output: `src/main/resources/assets/anime_multiverse/textures/entity/playermodel/<id>.png`
 (+ `_glow.png`), and `tools/arc_hd/looks/<id>.json` for each id. `looks.json` is merged by the lead (`merge_looks.py`), not here.
 
 Previews: `docs/previews/arc_hd/sds1_front_back.png` (front and back of all eight) and `docs/previews/arc_hd/sds1_close.png` (bust of all eight).

@@ -5,7 +5,7 @@ Nothing here was run in game. Pure logic is unit-tested (ShadowLightTest, Shadow
 ## NEW
 - Pages appended to the Shadow book: `shadow_travel`, `unite_equus`, `unite_felis`, `unite_gallus_call` (the call needs a page of its own because the old Gallus page has a 45 s cooldown and cannot be "used twice").
 - `shadow/*`: ShadowLight (light rule), ShadowSearch (bounded candidate order), ShadowWorld/ShadowTravel (cast), UniteKind (stat table), UniteSlot/UniteState (mode bookkeeping, stats, overlay), UniteWatcher, UniteSignature, UniteEvents, UniteAbilities, ShadowSight, ShadowPackProps, DamageClass, CallMath, ShadowConfig, ShadowMana, ShadowDamage.
-- Overlays for all four modes: 20 GeoLite models (`assets/nusmp/geo/devils`), built by `tools/gen_devil_assets.py`, drawn by `client/shadow/DevilOverlay` from `ModeArmorLayer`. The pack wolf is `PropKind.SHADOW_PACK_1` (`client/shadow/ShadowPackPainter`).
+- Overlays for all four modes: 20 GeoLite models (`assets/anime_multiverse/geo/devils`), built by `tools/gen_devil_assets.py`, drawn by `client/shadow/DevilOverlay` from `ModeArmorLayer`. The pack wolf is `PropKind.SHADOW_PACK_1` (`client/shadow/ShadowPackPainter`).
 - `ModeArmor.Mode` appended: DEVIL_EQUUS, DEVIL_CANIS, DEVIL_FELIS, DEVIL_GALLUS.
 ## REPLACEMENT: none. KEPT: every old page and overlay; WikiSpells untouched.
 ## Changed shared files (appends only): PropKind, PropRegistry, PropPainterRegistry, ModeArmor, ModeArmorLayer (one switch case), ElementBooks.shadow(), tools/mode_preview (stubs fixed, devil modes added).

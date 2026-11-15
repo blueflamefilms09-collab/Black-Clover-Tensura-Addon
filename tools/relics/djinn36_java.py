@@ -9,7 +9,7 @@ sys.path.insert(0, HERE)
 import djinn36_roster as R                      # noqa: E402
 
 ROOT = os.path.abspath(os.path.join(HERE, "..", ".."))
-OUT = os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "anime_multiverse", "client", "relics", "djinn", "DjinnRoster36.java")
+OUT = os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "nusmp", "client", "relics", "djinn", "DjinnRoster36.java")
 
 # how the dust of each affinity moves and how much of it there is a second
 PROFILE = {"HEAT": ("RISE", 9), "WATER": ("FALL", 8), "WIND": ("SWIRL", 11), "LIFE": ("RISE", 7), "STRENGTH": ("HEAVY", 8), "SOUND": ("RING", 7), "LIGHT": ("TWINKLE", 9), "LIGHTNING": ("JITTER", 10)}

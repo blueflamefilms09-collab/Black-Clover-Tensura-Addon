@@ -20,9 +20,9 @@ import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.abspath(os.path.join(HERE, "..", ".."))
-JAVA = os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "anime_multiverse", "heroweapon", "gem", "GemRecipes.java")
+JAVA = os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "nusmp", "heroweapon", "gem", "GemRecipes.java")
 OUT = os.path.join(ROOT, "src", "main", "resources", "data", "anime_multiverse", "recipe")
-CATALOG = os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "anime_multiverse", "heroweapon", "HeroKind.java")
+CATALOG = os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "nusmp", "heroweapon", "HeroKind.java")
 
 FRAGMENT_ITEM = "anime_multiverse:gem_fragment"
 HOLY_ID = "calling_gem"

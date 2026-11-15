@@ -2,7 +2,7 @@
 
 The owner's rule: relics, equipment and active magical abilities spawn no vanilla particles, only the Magi "Rukh" (a flock of birds): Dark
 Rukh and Light Rukh, cheap to draw, short-lived, capped. This document is the WHY of every file R1 added. The owner's brief names the asset
-path `assets/tensura_black_clover/...`; this mod's id is `nusmp`, so everything lives under `assets/nusmp/`.
+path `assets/tensura_black_clover/...`; this mod's id is `anime_multiverse`, so everything lives under `assets/anime_multiverse/`.
 
 ## Server API: `particle/rukh/RukhFx.java`, `RukhMath.java`, `RukhBudget.java`
 `RukhFx` is the one way to emit Rukh from server code (`burst`, `stream`, `gather`, `aura`, plus `spray` as the drop-in for a raw
@@ -24,7 +24,7 @@ common code may call it behind `level.isClientSide()`; budget 64 per tick becaus
 protected, hence the anonymous subclass). `dark()` / `light()` never return null: the holder is only bound after registration; before that they hand
 back the vanilla type, which only happens if someone breaks the rule "look the type up lazily, never in a static initialiser". `RukhClient`
 listens to the mod-bus `RegisterParticleProvidersEvent` and uses `registerSpriteSet`, so the engine builds the SpriteSet from the JSON files
-(`{"textures": ["nusmp:dark_rukh_0", ... "_5"]}`: six wing-pose sprites stitched into the particle atlas, reloaded with resource packs).
+(`{"textures": ["anime_multiverse:dark_rukh_0", ... "_5"]}`: six wing-pose sprites stitched into the particle atlas, reloaded with resource packs).
 
 ## Particle classes: `RukhParticleBase`, `DarkRukhParticle`, `LightRukhParticle`
 Shared lifecycle in the base: lifetime 15..25 ticks, translucent particle sheet (batched with all vanilla particles), no gravity, no collision,

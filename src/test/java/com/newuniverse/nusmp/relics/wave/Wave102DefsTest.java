@@ -279,7 +279,7 @@ class Wave102DefsTest {
             String t = Files.readString(ASSETS.resolve("visual_upgrade/" + d.id() + ".json"));
             assertTrue(t.split("\"kind\":", -1).length - 1 >= 8, d.id() + " has at least eight ambient layers");
             Matcher m = tok.matcher(t);
-            while (m.find()) assertTrue(m.group(1).equals("fx") || (m.group(1).startsWith("anime_multiverse:") && catalogIds.contains(m.group(1).substring(6))), d.id() + " particle " + m.group(1) + " is not one of the mod's own");
+            while (m.find()) assertTrue(m.group(1).equals("fx") || (m.group(1).startsWith("anime_multiverse:") && catalogIds.contains(m.group(1).substring(17))), d.id() + " particle " + m.group(1) + " is not one of the mod's own");
             Matcher acts = Pattern.compile("Act\\.of\\(\"([a-z_]+)\"").matcher(d.block());
             while (acts.find()) assertTrue(t.contains("\"" + acts.group(1) + "\": ["), d.id() + " has no effect for the act " + acts.group(1));
         }

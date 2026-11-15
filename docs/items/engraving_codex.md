@@ -1,4 +1,4 @@
-# Engravement Codex (`nusmp:engraving_codex`)
+# Engravement Codex (`anime_multiverse:engraving_codex`)
 
 Owner request: "add a book/item that says what all the engravements do in my mod".
 
@@ -10,7 +10,7 @@ so it follows the data when a number is retuned or an engraving is added.
 
 | | What |
 |---|---|
-| NEW | the item `engraving_codex` (grimoire-geometry 3D book, sprite icon, creative-tab entry, shaped recipe), the client screen, the command `/multiverse engravings`, the pure entry builder / filter / layout (`engraving/codex`), the data files `data/nusmp/engraving_codex/*.json`, the lang fragment `tools/lang/engraving_codex.json`, the book textures + generator + previews, the tests, the self-test `item.engraving_codex` |
+| NEW | the item `engraving_codex` (grimoire-geometry 3D book, sprite icon, creative-tab entry, shaped recipe), the client screen, the command `/multiverse engravings`, the pure entry builder / filter / layout (`engraving/codex`), the data files `data/anime_multiverse/engraving_codex/*.json`, the lang fragment `tools/lang/engraving_codex.json`, the book textures + generator + previews, the tests, the self-test `item.engraving_codex` |
 | REPLACED | nothing. No engraving, enchantment, item, page or screen of the mod was removed or changed in behaviour. The request is new: nothing like an engraving list existed (the older Codex, `Multiverse Status` key, has no engraving tab; the Compatibility Codex is about other mods) |
 | KEPT | every engraving table and rule as it was. Appended only: `BookMotif.ENGRAVING` (enum, last), `emblem_engraving` in `GrimoireBookPlan.textures()`, a read-only `codexTable()` accessor in `WeaponEngravings` and `ArmorEngravings`, one line in `GrimoireBakedModel.Overrides`, one entry in `GuiScaleRegistry`, one-liners in `NUSMP`, `NUCreativeTab`, `MultiverseCommands`, one line in `docs/server_safe_allow.txt` |
 
@@ -18,9 +18,9 @@ so it follows the data when a number is retuned or an engraving is added.
 
 | Group in the contents list | Source of the entries | Name | Text |
 |---|---|---|---|
-| Mod enchantments (2) | the enchantment registry: every `nusmp:` enchantment that is not a franchise engraving (`anti_magic`, `legacy_of_the_wizard_kings`; a new one appears by itself) | lang `enchantment.nusmp.<id>` | lang `.desc` (`anti_magic.desc` is new, in the fragment) |
-| Tensura engravings (34 named by the item tables today) | the members of `#tensura:engraving` in the running registry (names and highest level come from there), plus every Tensura engraving id that the item tables name | Tensura's own lang name if the game has it, else made from the id | Tensura's `enchantment.tensura.<id>.desc` if the game has one, else one honest line from `data/nusmp/engraving_codex/tensura_engravings.json` (words only, no number), plus the line "From Tensura Reincarnated, exact numbers are Tensura's." |
-| 32 franchises (69 entries, 2 or 3 each) | `data/nusmp/franchise/engravings.json` (the numbers), the lang text generated from it by `tools/franchise/gen_engravings.py` | lang name | the lang description (its two generated closing sentences, "works while ..." and "effects are capped ...", come off: the scope line and the facts say the same with live numbers) |
+| Mod enchantments (2) | the enchantment registry: every `anime_multiverse:` enchantment that is not a franchise engraving (`anti_magic`, `legacy_of_the_wizard_kings`; a new one appears by itself) | lang `enchantment.anime_multiverse.<id>` | lang `.desc` (`anti_magic.desc` is new, in the fragment) |
+| Tensura engravings (34 named by the item tables today) | the members of `#tensura:engraving` in the running registry (names and highest level come from there), plus every Tensura engraving id that the item tables name | Tensura's own lang name if the game has it, else made from the id | Tensura's `enchantment.tensura.<id>.desc` if the game has one, else one honest line from `data/anime_multiverse/engraving_codex/tensura_engravings.json` (words only, no number), plus the line "From Tensura Reincarnated, exact numbers are Tensura's." |
+| 32 franchises (69 entries, 2 or 3 each) | `data/anime_multiverse/franchise/engravings.json` (the numbers), the lang text generated from it by `tools/franchise/gen_engravings.py` | lang name | the lang description (its two generated closing sentences, "works while ..." and "effects are capped ...", come off: the scope line and the facts say the same with live numbers) |
 
 Every entry shows: the name; the source (the franchise's full name) and the scope in plain words ("Main hand only", "Either hand", "Held or worn anywhere", "On the item itself");
 the effect text; facts (cooldown, window, duration, stack limit, hit count, radius, threshold, health floor, and the caps that apply: all damage bonuses together max +15% of the hit and
@@ -40,7 +40,7 @@ eggs and consumable relics are never engraved and are left out, like in `Franchi
 * A dark two-page book in the relic tooltip's palette: deep glass, a thin cyan edge, gold brackets, the tooltip's slate for secondary lines and its green for cap lines; drawn flat
   in `renderBackground` (no blur: `ScreenBlurGuardTest` passes), so the search box and the buttons sit on top.
 * Left: the title, a search box and the contents list (All, Mod enchantments, Tensura engravings, then one row per franchise with its colour and its count; scroll with the wheel).
-  Contents rows use short labels (`data/nusmp/engraving_codex/short_names.json`, e.g. "Tensura (Slime)"); every entry shows the full franchise name.
+  Contents rows use short labels (`data/anime_multiverse/engraving_codex/short_names.json`, e.g. "Tensura (Slime)"); every entry shows the full franchise name.
 * Right: a two-page spread. The page turn is a short leaf animation (12 ticks); arrows, PageUp / PageDown, the arrow keys (when the search box is not focused), Home / End, the
   wheel over the pages and the page corners turn it. ESC closes.
 * Search: every word must appear (case-insensitive) in the name, source, scope, text, facts or the item names of an entry; entries whose NAME matches come first. The query is cut at 64 characters.
@@ -48,20 +48,20 @@ eggs and consumable relics are never engraved and are left out, like in `Franchi
 
 ## The item
 
-* `nusmp:engraving_codex`, stack size 1, rare. Right-click opens the screen on the client; the server does nothing and sends nothing (`level.isClientSide()` guard, the call to the client
+* `anime_multiverse:engraving_codex`, stack size 1, rare. Right-click opens the screen on the client; the server does nothing and sends nothing (`level.isClientSide()` guard, the call to the client
   class is the only mention and is on `docs/server_safe_allow.txt` like `CompatCodexItem`).
 * 3D model: the grimoire's own geometry with a fixed look (`EngravingCodexLook`: steel-blue leather, gold frame, pale-gold rune ring cut by a blade, cyan glow while held; textures
   `*_engraving.png` in `textures/item/grimoire_book`, made by `tools/engraving_codex/gen_engraving_codex_assets.py`), model `models/item/engraving_codex.json` (display block of the
   grimoire), 16x16 sprite icon `textures/item/engraving_codex.png` and the flat variant `engraving_codex_icon.json`.
 * Tooltip: the three lines from `appendHoverText`, decorated by the unified tooltip like every item of the mod (category Book).
-* Creative tab: after the Compatibility Codex. Recipe `data/nusmp/recipe/engraving_codex.json`: a book in the middle, an amethyst shard above and below, an ink sac left and right.
+* Creative tab: after the Compatibility Codex. Recipe `data/anime_multiverse/recipe/engraving_codex.json`: a book in the middle, an amethyst shard above and below, an ink sac left and right.
 * `/multiverse engravings` (everyone, no argument, no permission): gives the player the book and says where else it comes from (craft or creative tab). From the console it says only
   a player can be handed it.
 
 ## Cost (CLAUDE.md rule 11) and worst case
 
 * Server: no tick handler, no packet, no per-player state, no config. The command adds one item stack to the caller's inventory. The CI self-test builds the whole book once.
-* Client, once per first open (and after a resource reload or leaving the world): one walk over the item registry (a map lookup per `nusmp:` item), the enchantment registry and the
+* Client, once per first open (and after a resource reload or leaving the world): one walk over the item registry (a map lookup per `anime_multiverse:` item), the enchantment registry and the
   item tables, then building about 105 entries. Measured with the real pure classes on this machine: the build of the entries ~90 ms cold, the layout of all entries at one page width ~35 ms
   cold (both once, JIT-cold; warm it is a few ms). Memory: the book is one cached reference, about 100 000 characters of search text and about 40 KB of wrapped lines (bounded by
   the data, never by play time).
@@ -73,7 +73,7 @@ eggs and consumable relics are never engraved and are left out, like in `Franchi
 
 ## Tests
 
-* `CodexEntriesTest`: every enchantment file of `data/nusmp/enchantment` is in the book exactly once and has a name and a text; the lang name and description exist and are used; the
+* `CodexEntriesTest`: every enchantment file of `data/anime_multiverse/enchantment` is in the book exactly once and has a name and a text; the lang name and description exist and are used; the
   lang text still carries the cooldowns, windows, percentages, stack limits and hit counts of the table; "Found on" lists come from the item tables and equal the franchise map; group
   order and counts; Tensura entries carry the credit line and contain no number; facts and number words; short labels.
 * `CodexFilterLayoutTest`: empty search, group filter, AND search, name-first order, query cut, pagination, oversize entries, word wrap, every entry fits its page at three page sizes,
@@ -98,7 +98,7 @@ the second spread and one frame of the page turn). It shows the layout, not the 
 * Seven franchises have engravings in the table but no item of the mod is mapped to them in `franchise_map.json` (Naruto, Bleach, One Piece, Dragon Ball, Hunter x Hunter, JoJo,
   The Exiled Heavy Knight): nothing carries those engravings yet, and the book says so ("Found on: no item of this mod carries it yet") instead of inventing items. The map is up to date
   (`tools/relics/franchise_map.py --check`), so this is the real state, not a stale file.
-* `nusmp:anti_magic` had no description. Its enchantment has no effects of its own and nothing in the code reads it; the new lang text says exactly that (a mark that the anti-magic
+* `anime_multiverse:anti_magic` had no description. Its enchantment has no effects of its own and nothing in the code reads it; the new lang text says exactly that (a mark that the anti-magic
   blades carry, no numbers of its own).
 * The franchise group id `tensura` (That Time I Got Reincarnated as a Slime) collides with a group named after Tensura Reincarnated's engravings: the two non-franchise groups
   use ids that start with an underscore.

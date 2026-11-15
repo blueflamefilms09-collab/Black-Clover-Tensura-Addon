@@ -1,8 +1,8 @@
 # Dimension Slash shader (owner spec, adapted)
 
-The owner supplied this as Forge code in a `crossover` namespace. In this mod (NeoForge 1.21.1, namespace `nusmp`) the equivalents are:
-`assets/nusmp/shaders/core/rendertype_dimension_slash.{json,vsh,fsh}`, registered in `client/NUShaders.java` (see how `demon_void` and `zagred_aura` are loaded)
-and a `RenderType` helper next to the other render types (`client/NURenderTypes.java`). Item tags use the 1.21 folder `data/nusmp/tags/item/`.
+The owner supplied this as Forge code in a `crossover` namespace. In this mod (NeoForge 1.21.1, namespace `anime_multiverse`) the equivalents are:
+`assets/anime_multiverse/shaders/core/rendertype_dimension_slash.{json,vsh,fsh}`, registered in `client/NUShaders.java` (see how `demon_void` and `zagred_aura` are loaded)
+and a `RenderType` helper next to the other render types (`client/NURenderTypes.java`). Item tags use the 1.21 folder `data/anime_multiverse/tags/item/`.
 
 Goal: a spatial fracture. A pitch-black core line, surrounded by chaotic jagged purple / magenta energy that shifts over time, the UV x jittered by a hash of y and time.
 

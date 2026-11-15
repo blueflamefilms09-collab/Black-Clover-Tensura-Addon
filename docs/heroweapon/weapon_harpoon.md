@@ -1,6 +1,6 @@
 # Vassal Harpoon (`vassal_harpoon`): the whaling harpoon of Glass' world
 
-Builder `hvd`. Logic: `heroweapon/weapon/harpoon/**`, forms: `data/nusmp/hero/forms/vassal_harpoon.json`. Style THROW, class Vassal Weapon.
+Builder `hvd`. Logic: `heroweapon/weapon/harpoon/**`, forms: `data/anime_multiverse/hero/forms/vassal_harpoon.json`. Style THROW, class Vassal Weapon.
 Written in two passes: the LOOK section (1) first so the art builder could start, then the rest.
 
 ## 1. The look (for the art builder `hart4`)

@@ -1,6 +1,6 @@
 # Mega-Dungeon: standard Normal / Special / Rare equipment, dropped without limit (`mega.gear`, 1.55.0, builder GEAR)
 
-Package `com.newuniverse.nusmp.labyrinth.mega.gear`, data `data/nusmp/mega/gear/tables.json`. **Nothing here was run in game.** The pure classes are
+Package `com.newuniverse.nusmp.labyrinth.mega.gear`, data `data/anime_multiverse/mega/gear/tables.json`. **Nothing here was run in game.** The pure classes are
 unit tested (JUnit, 86 tests, mutation checked), the game classes were type-checked against the project's API stubs (rebuilt from the API dump, so they
 know the 1.21 data-component classes), the shipped table is read and checked by `GearDataTest`, and five IN-GAME self-tests (`gear.*`, section 10) are
 registered with the shared `SelfTests` registry so the CI server smoke test exercises the real thing. CI is the first real compile. Three pictures of the
@@ -17,7 +17,7 @@ restricted"* (to the Crucible, another builder).
 
 | Part | Status | Notes |
 |---|---|---|
-| Standard gear: three grades of ordinary vanilla items stamped with the data component `nusmp:gear_grade` | NEW | Nothing like it existed. Not a relic, not a new item class. |
+| Standard gear: three grades of ordinary vanilla items stamped with the data component `anime_multiverse:gear_grade` | NEW | Nothing like it existed. Not a relic, not a new item class. |
 | `GearDrops`: a third `LivingDropsEvent` listener of the Mega-Dungeon | NEW | Added NEXT TO `EconomyDrops` (1.36.0) and `FactionDrops` (1.54.0), which are untouched and keep paying stones and meat. |
 | `GearEvents`: magic resistance on `LivingIncomingDamageEvent` | NEW | Works anywhere, for anything that wears or holds the gear. |
 | Drop tables as data (`tables.json`) and the reload listener | NEW | Same pattern as the faction files. |
@@ -26,9 +26,9 @@ restricted"* (to the Crucible, another builder).
 | Magic Stones and monster meat | KEPT | Not touched, not duplicated. |
 | The 236 low-grade relics, the Order's ledger (`UniqueLedger`), the Crucible's Unique-and-above relics | KEPT | Unchanged and **not used**: a test (`GearIsNotARelicTest`) fails the build if the gear package starts importing them. |
 | The relic `Grade` enum (names, colours, labels) | KEPT, REUSED | `GearLook` reads colour and label from it so the three tiers look exactly like the relic tiers. |
-| `item/WeaponEngravings`, `item/ArmorEngravings` | KEPT, unedited | They engrave `nusmp:` items only (their first lines return for any other namespace), so they cannot list a vanilla base. The engravings of the standard gear are listed in `tables.json` (owner rule 6, see section 6.3). |
-| 1.55.0, fourth brief: `ChestLootModifier`, a NeoForge global loot modifier `nusmp:gear_chests` with its JSON and the classes `ChestRules`, `ChestGear`, `ChestSelfTests` (section 14) | NEW | Gear also drops from standard chests of the Mega-Dungeon. |
-| `data/neoforge/loot_modifiers/global_loot_modifiers.json` (the list of global loot modifiers, which already named `nusmp:relic_chests`) | KEPT, one entry ADDED | The relic modifier stays listed; `nusmp:gear_chests` is appended. |
+| `item/WeaponEngravings`, `item/ArmorEngravings` | KEPT, unedited | They engrave `anime_multiverse:` items only (their first lines return for any other namespace), so they cannot list a vanilla base. The engravings of the standard gear are listed in `tables.json` (owner rule 6, see section 6.3). |
+| 1.55.0, fourth brief: `ChestLootModifier`, a NeoForge global loot modifier `anime_multiverse:gear_chests` with its JSON and the classes `ChestRules`, `ChestGear`, `ChestSelfTests` (section 14) | NEW | Gear also drops from standard chests of the Mega-Dungeon. |
+| `data/neoforge/loot_modifiers/global_loot_modifiers.json` (the list of global loot modifiers, which already named `anime_multiverse:relic_chests`) | KEPT, one entry ADDED | The relic modifier stays listed; `anime_multiverse:gear_chests` is appended. |
 | `caps` of `tables.json` (0.30 / 0.20 / 0.15 / 0.50 became 0.40 / 0.30 / 0.25 / 0.60) | CHANGED by me, my own file | Safety ceilings only; raised because the chest odds reached the old ones (section 14.5). No kill rate changes. |
 | Nothing else was replaced and nothing was removed. | | |
 
@@ -78,7 +78,7 @@ off. The relic `Grade` colours and names are reused only for the look.
   player's base 1), added as a flat amount, so it does not depend on what else the wearer has (Strength, other armour) and is easy to read: an iron sword
   (6) at +15 % is 6.9. Bows, crossbows and shields get no percentage: an attack-damage modifier on a bow changes nothing and a shield has no attribute;
   their strength is durability and enchantments.
-* **Why the modifier id is fixed per slot (`nusmp:mega_gear/<slot>`).** The brief asked for a fixed id. In 1.21 two equipment pieces that apply the same id
+* **Why the modifier id is fixed per slot (`anime_multiverse:mega_gear/<slot>`).** The brief asked for a fixed id. In 1.21 two equipment pieces that apply the same id
   to the same attribute replace each other (the later removes the earlier), so four armour pieces sharing one id would keep only one bonus. One fixed id per
   slot keeps each piece's bonus and still makes re-stamping idempotent (`withModifierAdded` replaces an entry with the same id).
 * **Why the magic resistance is an event and not an attribute.** (1) Vanilla armour does not reduce magic damage at all, so there is no vanilla attribute to
@@ -144,7 +144,7 @@ off. The relic `Grade` colours and names are reused only for the look.
 | `GearRoller` | pure | The chance of each grade at a floor and the whole roll of a piece. Everything draws from a `Dice`, so a seed replays it. |
 | `ResistMath` | pure | Which pieces count where, the sum held to the ceiling (hard cap 90), the percentage as a smaller hit. |
 | `MagicDamage` | pure | The rule for "is this damage a spell" over the damage-type id, plus the owner's extra list. |
-| `GearComponents` | | The one data component `nusmp:gear_grade` with its saved and network codecs. |
+| `GearComponents` | | The one data component `anime_multiverse:gear_grade` with its saved and network codecs. |
 | `GearConfig` | | The server config, section `[gear]`. |
 | `GearTablesReload` | | The `ResourceManagerReloadListener` that reads the JSON, with the jar fallback and a record of where the tables came from. |
 | `GearFactory` | | A `GearSpec` as an `ItemStack`: component, durability, attribute bonus (starting from the existing modifiers), enchantments, engravings, look. |
@@ -155,15 +155,15 @@ off. The relic `Grade` colours and names are reused only for the look.
 | `GearSelfTests` | | Four of the in-game self-tests (`gear.tables`, `gear.roll`, `gear.drop`, `gear.resist`) and the shared `carriesRelicMark`. |
 | `ChestRules` | pure | Which loot tables are chests that may hold a piece, which are treasure chests, which are never touched (the two relic tables, fixed in code). |
 | `ChestGear` | pure | The chest decision: the chest base chances through the kill roller's own curves and caps, the treasure factor, Luck; at most one piece. |
-| `ChestLootModifier` | | The NeoForge global loot modifier `nusmp:gear_chests` (a `LootModifier`): codec, registry entry, and the live decision that adds the stack. |
+| `ChestLootModifier` | | The NeoForge global loot modifier `anime_multiverse:gear_chests` (a `LootModifier`): codec, registry entry, and the live decision that adds the stack. |
 | `ChestSelfTests` | | The in-game self-test `gear.chest`. |
 | `GearRegistry` | | `init` (the component, the self-tests) and `register` (the listeners); `command()`. |
 
-## 6. The data file `data/nusmp/mega/gear/tables.json`
+## 6. The data file `data/anime_multiverse/mega/gear/tables.json`
 
 A data pack's file of the same path replaces it; `/reload` applies it. Every object carries a `why` string (JSON has no comments, and the owner's rule is a
 WHY for every file); a `why` key is ignored everywhere. Unknown keys, unknown slots and grades, ids that are not `namespace:path`, numbers out of range and
-reversed ranges are reported in the log at reload (`[nusmp] Gear tables file ...`) and fixed or skipped, never thrown.
+reversed ranges are reported in the log at reload (`[anime_multiverse] Gear tables file ...`) and fixed or skipped, never thrown.
 
 ```json
 { "curve":  { "normal": [[0.0, 1.0], [0.5, 0.64], [1.0, 0.40]], "special": [...], "rare": [...] },
@@ -224,7 +224,7 @@ Ids from the owner's Tensura reference (34 enchantments), every one checked agai
 | shield | sturdy | magic_interference, magicule_absorption (1-2), magic_protection, sturdy (1-2) |
 
 No curse (`enervation`, `lethargy`, `ruination`, `sealing`, `stagnation`) is ever offered; a test insists. `item/WeaponEngravings` cannot hold these (it only
-engraves `nusmp:` items), so this table is where owner rule 6 is met for the vanilla bases. The engravings are applied once, when the piece is made.
+engraves `anime_multiverse:` items), so this table is where owner rule 6 is met for the vanilla bases. The engravings are applied once, when the piece is made.
 
 ## 7. The numbers (first-pass: nobody has played them)
 
@@ -293,7 +293,7 @@ ceiling of 40 is reached by a full average set and not exceeded by anyone: a hun
 * `gear status`: the switches, the depth progress at your floor, and for each grade its configured base, its chance here, its chance with Looting III and its cap;
   and (1.55.0) a line with the standard and the treasure chest chances here.
 
-Text goes through `message.nusmp.mega.mgr.cmd.*` with English fallbacks in the code (the fragment `mgr.lang.json` carries the same texts).
+Text goes through `message.anime_multiverse.mega.mgr.cmd.*` with English fallbacks in the code (the fragment `mgr.lang.json` carries the same texts).
 
 ## 10. Tests
 
@@ -327,7 +327,7 @@ The chest classes (section 14) are pinned the same way: `ChestRulesTest` (a tabl
 with an empty data file or in another case, mobs', blocks' and unknown tables are nothing, the data file's additions are normalised), `ChestGearTest` (the floor-1 chances are the config, treasure
 multiplies only Special and Rare, the depth shift, Luck adds to the total and keeps the mix, the ceilings hold under an absurd config and do NOT bite under the defaults, a chest is more generous than a
 kill, one decision and one piece, a hundred thousand seeded chests per kind and floor within five standard deviations, a seed replays) and `GearChestDataTest` (the shipped list file keeps
-`nusmp:relic_chests` and names `nusmp:gear_chests` once with `replace` false; the modifier JSON's type equals the id the Java registers and its condition names the dimension that
+`anime_multiverse:relic_chests` and names `anime_multiverse:gear_chests` once with `replace` false; the modifier JSON's type equals the id the Java registers and its condition names the dimension that
 `Labyrinth.MEGA_DIMENSION` is built from, not the Sanctuary; every chest table of this mod is classified on purpose). Ten mutants of the chest code (treasure multiplying Normal too,
 `decide` and `chances` ignoring a non-chest table, the Luck ceiling and the Luck clamp lost, the relic tables not fixed in code, the `chests/` rule loosened to `chest`, the path's case
 mattering, the treasure test running before the exclusion, any string accepted as an excluded id) were applied: every one failed at least one test. The ceilings test was mutated by putting
@@ -348,8 +348,8 @@ the old ceilings back: it fails at the deep treasure chest, as intended.
 * **Nothing to register** for the component, the listeners, the reload listener and the self-tests: `MegaSystem` already calls `GearRegistry.init` and `register`.
 * **Config**: `modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.labyrinth.mega.gear.GearConfig.SPEC, "nusmp-labyrinth-mega-gear-server.toml");`
 * **Command**: attach `com.newuniverse.nusmp.labyrinth.mega.gear.GearRegistry.command()` under `/multiverse mega`.
-* **Lang**: merge `mgr.lang.json` (28 keys, `message.nusmp.mega.mgr.*`) into `en_us.json`; the three keys added for the chest output are `cmd.roll.chest.head`, `cmd.roll.chest.grade`, `cmd.status.chest`.
-* **Loot modifier list (1.55.0, chests)**: `data/neoforge/loot_modifiers/global_loot_modifiers.json` already existed (entry `nusmp:relic_chests`); this module appends `nusmp:gear_chests` to
+* **Lang**: merge `mgr.lang.json` (28 keys, `message.anime_multiverse.mega.mgr.*`) into `en_us.json`; the three keys added for the chest output are `cmd.roll.chest.head`, `cmd.roll.chest.grade`, `cmd.status.chest`.
+* **Loot modifier list (1.55.0, chests)**: `data/neoforge/loot_modifiers/global_loot_modifiers.json` already existed (entry `anime_multiverse:relic_chests`); this module appends `anime_multiverse:gear_chests` to
   its `entries` (the exact diff is in section 14.4). The type is registered by `GearRegistry.init`, nothing else to wire.
 * **GUARD**: the Labyrinth Guardian must carry the scoreboard tag `nusmp_sector_guardian` (`entity.addTag(...)`); the flow module reads the same tag for the Metal Vessel.
 * **No creative-tab entry**: there is no new item. `gear give` is the way to get a piece.
@@ -399,12 +399,12 @@ the old ceilings back: it fails at the deep treasure chest, as intended.
     needs to change.
 16. **The chest side never ran in game** (section 14): the codec, the registry entry, the JSON condition, the list entry and the loot-table wiring are checked by pure tests
     against the Java sources, by the type check, and by NeoForge's own source and docs read online, but only `gear.chest` in a booted game proves the chain.
-17. **The `location_check` condition's JSON shape** (`{"condition": "minecraft:location_check", "predicate": {"dimension": "nusmp:mega_dungeon"}}`) is the vanilla
+17. **The `location_check` condition's JSON shape** (`{"condition": "minecraft:location_check", "predicate": {"dimension": "anime_multiverse:mega_dungeon"}}`) is the vanilla
     condition as the NeoForge 1.21.1 loot-condition docs show it (found through a web search; the docs host itself could not be fetched here) and the vanilla
     `predicate.location.dimension` key is confirmed in the 1.21.1 data pack (`github.com/misode/mcmeta` `1.21.1-data`, an advancement). A wrong condition would make the whole modifier fail to
     load (a logged error), which `gear.chest` reports as "nothing at all".
 18. **Lootr and other containers** are expected to work (they roll the table through `LootTable`, which is where NeoForge applies the global modifiers) but were not tried.
-19. **No treasure table exists in the Mega-Dungeon yet.** Every chest its templates place uses `nusmp:chests/labyrinth_trial` (a standard chest); the two relic tables are excluded; the
+19. **No treasure table exists in the Mega-Dungeon yet.** Every chest its templates place uses `anime_multiverse:chests/labyrinth_trial` (a standard chest); the two relic tables are excluded; the
     treasure class is for tables a later builder or another mod adds (a boss room, a vault that is not a relic vault).
 20. **The owner's fourth brief calls the standard items "Farmable Standard Relics"** ("Relics of Many Worlds", "not bound by world limits"). This module keeps them ordinary vanilla items
     with a grade (they were never under a limit), which meets "drop infinitely". If the owner means that the mod's own 236 low-grade RELICS (Normal, Special and Rare, under the Order's
@@ -423,7 +423,7 @@ comment holds the three commands) and fails on any difference. It was run: 11 ch
 162 pieces, 0 differences, which is a second check that the chances in section 7 and the pieces the roller makes are what the code says. Vanilla numbers in the
 script (attack damage, durability) are from `github.com/misode/mcmeta` `1.21.1-summary/item_components`.
 
-## 14. Chests: the global loot modifier `nusmp:gear_chests` (1.55.0, owner's fourth brief)
+## 14. Chests: the global loot modifier `anime_multiverse:gear_chests` (1.55.0, owner's fourth brief)
 
 The fourth brief says the standard Normal, Special and Rare items "can drop infinitely from mobs and standard chests" and asks for "the `LivingDropsEvent` and Global Loot Modifier JSONs for
 the dungeon". Mobs are `GearDrops` (section 3). This is the chest side, everything NEW; nothing of the kill side was changed except that the safety ceilings of `tables.json` were raised (14.5).
@@ -438,10 +438,10 @@ the id of the table being rolled in the context (`getQueriedLootTableId`; `neofo
 ### 14.2 Which tables (`ChestRules`, pure, tested)
 * A table counts only if its path has a `chests/` segment (vanilla's and this mod's convention): a mob's, a block's, a fishing or an archaeology table never does; the unknown id never does.
 * **TREASURE**: a chest table whose path holds one of `treasureWords` (shipped: treasure, vault, boss, guardian, crucible, antechamber, reward). It rolls the better grades more often (14.3).
-* **Never touched**: `nusmp:chests/dungeon_relic_vault` and `nusmp:chests/labyrinth_pedestal`, the two tables the relic system and the Crucible's offer are built on. They are fixed IN THE CODE
+* **Never touched**: `anime_multiverse:chests/dungeon_relic_vault` and `anime_multiverse:chests/labyrinth_pedestal`, the two tables the relic system and the Crucible's offer are built on. They are fixed IN THE CODE
   (`ChestRules.ALWAYS_EXCLUDED`): a data pack can add exclusions through the `chests` section of `tables.json` but can never remove these two. WHY: the pedestal holds exactly the relic it was
   made for (a second stack in a one-item pedestal would break it), and the owner's rule is that the Crucible is the only source of the Unique-and-higher relics. The modifier never adds a relic
-  of any kind: the stack carries only `nusmp:gear_grade` and `gear.chest` asserts it.
+  of any kind: the stack carries only `anime_multiverse:gear_grade` and `gear.chest` asserts it.
 * Only inside the Mega-Dungeon dimension (`MegaDungeon.in`): the Overworld, the Spire and the Sanctuary Hub (a separate dimension, deliberately not a Labyrinth) get nothing. TWO gates: the JSON's
   `location_check` condition on the dimension id, and the same check in the code, so a data pack that edits the conditions still cannot make gear appear elsewhere.
 
@@ -471,10 +471,10 @@ the enchantments, the engravings and the resistance are the kills' and nothing i
   even though taking it from a container fires no pickup event.
 
 ### 14.4 The data files and the diff
-* `data/nusmp/loot_modifiers/gear_chests.json`, WHY each line: `type` is the id `ChestLootModifier` registers (a test holds the two together); `conditions` is required by NeoForge's codec (an empty
-  list would be legal) and carries one vanilla `minecraft:location_check` whose predicate names the dimension `nusmp:mega_dungeon` (a test reads `Labyrinth.MEGA_DIMENSION` and compares); no
+* `data/anime_multiverse/loot_modifiers/gear_chests.json`, WHY each line: `type` is the id `ChestLootModifier` registers (a test holds the two together); `conditions` is required by NeoForge's codec (an empty
+  list would be legal) and carries one vanilla `minecraft:location_check` whose predicate names the dimension `anime_multiverse:mega_dungeon` (a test reads `Labyrinth.MEGA_DIMENSION` and compares); no
   `neoforge:conditions` because nothing here depends on another mod.
-* `data/nusmp/mega/gear/tables.json`, new section `chests` (`excluded`, `treasureWords`, each documented by a `why`), parsed by `GearTablesParser`; a file without it gets the defaults, so an old data
+* `data/anime_multiverse/mega/gear/tables.json`, new section `chests` (`excluded`, `treasureWords`, each documented by a `why`), parsed by `GearTablesParser`; a file without it gets the defaults, so an old data
   pack behaves the same.
 * `data/neoforge/loot_modifiers/global_loot_modifiers.json` ALREADY EXISTED (the relic modifier's entry), so it was merged into, not replaced:
 
@@ -482,9 +482,9 @@ the enchantments, the engravings and the resistance are the kills' and nothing i
  {
    "replace": false,
    "entries": [
--    "nusmp:relic_chests"
-+    "nusmp:relic_chests",
-+    "nusmp:gear_chests"
+-    "anime_multiverse:relic_chests"
++    "anime_multiverse:relic_chests",
++    "anime_multiverse:gear_chests"
    ]
  }
 ```
@@ -496,7 +496,7 @@ mistyped config and no kill rate ever came near them, but the deepest treasure c
 have noticed changes: every kill chance is the same.
 
 ### 14.6 The self-test `gear.chest`
-It builds a MADE-UP chest table (one bread per roll, an id of its own: `nusmp:chests/gear_selftest`, and `..._treasure`) and rolls it through the game's WHOLE loot pipeline, so the type is found by
+It builds a MADE-UP chest table (one bread per roll, an id of its own: `anime_multiverse:chests/gear_selftest`, and `..._treasure`) and rolls it through the game's WHOLE loot pipeline, so the type is found by
 its JSON, the list entry and the dimension condition are evaluated for real. In the Mega-Dungeon the number of pieces and of each grade must match the chest chances within six standard deviations,
 never more than one per chest, the bread is never replaced, never a relic; the treasure table must match the treasure chances; the same rolls in the Overworld and (where it exists) the Hub must give
 nothing. Then the modifier is called ALONE with no JSON conditions: nothing in the Overworld, nothing for the two relic tables, a mob's table, a block's table, a non-chest table or the unknown id in the

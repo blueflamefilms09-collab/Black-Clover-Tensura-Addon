@@ -12,7 +12,7 @@ Everything in this file was written without being able to run the game. What was
 | --- | --- |
 | The boss class, its numbers, its pure math, its tests | NEW (nothing like it existed: the mod had Lucifero only as a devil STYLE, `Devil.LUCIFERO`, and Dante's borrowed gravity) |
 | `Devil.LUCIFERO`, Dante's `GravityMath` / `DanteMoves` | KEPT and reused (the violet colour, `gravityField`, `stompWave`, `antiMagicHeld`, the Tensura gravity damage types) |
-| The avatar command literal `lucifero` (`AvatarCommand`, the Devil Avatar boss) and the relic socket id `lucifero` | KEPT; untouched. The new entity id `lucifero` is an entity-type id (`nusmp:lucifero`), a different registry, so nothing collides |
+| The avatar command literal `lucifero` (`AvatarCommand`, the Devil Avatar boss) and the relic socket id `lucifero` | KEPT; untouched. The new entity id `lucifero` is an entity-type id (`anime_multiverse:lucifero`), a different registry, so nothing collides |
 | Three mob effects (`flattened_air`, `kneeling`, `specimen`) | NEW (shared with Morris: `SpadeEffects`) |
 | Model `arc_lucifero` + `arc_lucifero_form2` | NEW (art kit, `tools/arc/char_lucifero.py`) |
 
@@ -154,8 +154,8 @@ the chat speaks a line at each step. The opening Bow is forced through `chooseMo
 ## 8. Config, effects, language, icons
 
 * Config file `nusmp-spade-server.toml`, section `[spade]` (`SpadeConfig`, shared with Morris): `flattenedAir` (true), `kneelSeconds` (2.5, range 0.5-3.0), `bowGraceTicks` (4, range 0-20), `luciferoDamage` (1.0, range 0.25-3.0); `structuralTuning`, `tuningCut`, `morrisDamage` are Morris's.
-* Mob effects (`SpadeEffects`, registered by the lead): `nusmp:flattened_air` (jump strength -100%, gravity +100%), `nusmp:kneeling` (speed -100%, jump -100%, and the tick takes the sideways drift away), `nusmp:specimen` (Morris's). Icons: `textures/mob_effect/{flattened_air,kneeling,specimen}.png`, made by `tools/gen_spade_effect_icons.py`.
-* Language (22 keys, delivered to the lead as a fragment and merged into `en_us.json`): `entity.nusmp.morris_libardirt`, `entity.nusmp.lucifero`, `effect.nusmp.{flattened_air,kneeling,specimen}` and their `.description`, and the 14 action-bar lines `message.nusmp.spade.{bow_order,bowed,unbowed,crushed,kneel_order,kneel_ultimate,pocket,parried,flatten,horizon_order,specimen,tendril_cut,cage_order,cage_wall}`. Every hint also carries its English text as the fallback in the code, so a missing key still reads right.
+* Mob effects (`SpadeEffects`, registered by the lead): `anime_multiverse:flattened_air` (jump strength -100%, gravity +100%), `anime_multiverse:kneeling` (speed -100%, jump -100%, and the tick takes the sideways drift away), `anime_multiverse:specimen` (Morris's). Icons: `textures/mob_effect/{flattened_air,kneeling,specimen}.png`, made by `tools/gen_spade_effect_icons.py`.
+* Language (22 keys, delivered to the lead as a fragment and merged into `en_us.json`): `entity.anime_multiverse.morris_libardirt`, `entity.anime_multiverse.lucifero`, `effect.anime_multiverse.{flattened_air,kneeling,specimen}` and their `.description`, and the 14 action-bar lines `message.anime_multiverse.spade.{bow_order,bowed,unbowed,crushed,kneel_order,kneel_ultimate,pocket,parried,flatten,horizon_order,specimen,tendril_cut,cage_order,cage_wall}`. Every hint also carries its English text as the fallback in the code, so a missing key still reads right.
 
 * Trying it (operators, nothing here has been tried): `/multiverse arc summon lucifero` at your feet, `/multiverse arc info lucifero` for the record and its problems. He opens at power 20 and steps up as his health falls (40 under 85%, 60 under 65%, 80 under 45%, the Gates under 25%), so the later moves (the comb, the kneel, the well, the six limbs) show only in a long fight; `luciferoDamage` 0.25 makes it survivable while testing, and `kneelSeconds` / `flattenedAir` are the levers for the two harshest rules. The story gate does not apply to operators.
 

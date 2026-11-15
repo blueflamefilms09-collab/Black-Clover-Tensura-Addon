@@ -3,7 +3,7 @@
 Six looks hand-painted at 256x256 (every model pixel is a 4x4 texel block). None has a `_form2`. The painters are
 `tools/arc_hd/chars/{fuegoleon_vermillion,mereoleona_vermillion,leopold_vermillion,julius_novachrono,william_vangeance,nacht_faust}.py` with the shared helpers in
 `tools/arc_hd/chars/_bc4.py` (a copy of `_bc2.py` plus `each`, `cap`, `fur_band`, `scar` and `muscle`; the underscore keeps the kit out of the generator and the module test). Output:
-`src/main/resources/assets/nusmp/textures/entity/playermodel/<id>.png` (+ `william_vangeance_glow.png`, which existed, and `nacht_faust_glow.png`, which is new) and
+`src/main/resources/assets/anime_multiverse/textures/entity/playermodel/<id>.png` (+ `william_vangeance_glow.png`, which existed, and `nacht_faust_glow.png`, which is new) and
 `tools/arc_hd/looks/<id>.json` for each id. `looks.json` is merged by the lead (`merge_looks.py`), not here.
 
 Previews: `docs/previews/arc_hd/bc4_front_back.png` (front and back of all six, extras on) and `docs/previews/arc_hd/bc4_close.png` (bust of all six).

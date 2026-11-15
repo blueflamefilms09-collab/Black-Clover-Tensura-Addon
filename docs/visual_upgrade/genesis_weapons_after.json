@@ -10,7 +10,7 @@
       "kind": "staff",
       "meshes": {
         "astralis_the_eye_of_the_universe": {
-          "file": "src/main/resources/assets/nusmp/weapon_meshes_vu/astralis_the_eye_of_the_universe.txt",
+          "file": "src/main/resources/assets/anime_multiverse/weapon_meshes_vu/astralis_the_eye_of_the_universe.txt",
           "quads": {
             "body": 5360,
             "void": 0,
@@ -26,7 +26,7 @@
           "flares": 3,
           "animation_groups": 10,
           "lod": {
-            "file": "src/main/resources/assets/nusmp/weapon_meshes_vu/astralis_the_eye_of_the_universe_lod.txt",
+            "file": "src/main/resources/assets/anime_multiverse/weapon_meshes_vu/astralis_the_eye_of_the_universe_lod.txt",
             "quads": {
               "body": 724,
               "void": 0,
@@ -45,7 +45,7 @@
         }
       },
       "mesh": {
-        "file": "src/main/resources/assets/nusmp/weapon_meshes_vu/astralis_the_eye_of_the_universe.txt",
+        "file": "src/main/resources/assets/anime_multiverse/weapon_meshes_vu/astralis_the_eye_of_the_universe.txt",
         "quads": {
           "body": 5360,
           "void": 0,
@@ -61,7 +61,7 @@
         "flares": 3,
         "animation_groups": 10,
         "lod": {
-          "file": "src/main/resources/assets/nusmp/weapon_meshes_vu/astralis_the_eye_of_the_universe_lod.txt",
+          "file": "src/main/resources/assets/anime_multiverse/weapon_meshes_vu/astralis_the_eye_of_the_universe_lod.txt",
           "quads": {
             "body": 724,
             "void": 0,
@@ -136,7 +136,7 @@
         "astral_cast",
         "astral_pick"
       ],
-      "sound_loop": "nusmp:item.genesis.astralis.hum_loop",
+      "sound_loop": "anime_multiverse:item.genesis.astralis.hum_loop",
       "lod": {
         "mesh": "astralis_the_eye_of_the_universe_lod",
         "near": 12.0,
@@ -150,7 +150,7 @@
       "kind": "greatsword",
       "meshes": {
         "blackrazor": {
-          "file": "src/main/resources/assets/nusmp/weapon_meshes_vu/blackrazor.txt",
+          "file": "src/main/resources/assets/anime_multiverse/weapon_meshes_vu/blackrazor.txt",
           "quads": {
             "body": 4822,
             "void": 42,
@@ -166,7 +166,7 @@
           "flares": 7,
           "animation_groups": 4,
           "lod": {
-            "file": "src/main/resources/assets/nusmp/weapon_meshes_vu/blackrazor_lod.txt",
+            "file": "src/main/resources/assets/anime_multiverse/weapon_meshes_vu/blackrazor_lod.txt",
             "quads": {
               "body": 604,
               "void": 12,
@@ -185,7 +185,7 @@
         }
       },
       "mesh": {
-        "file": "src/main/resources/assets/nusmp/weapon_meshes_vu/blackrazor.txt",
+        "file": "src/main/resources/assets/anime_multiverse/weapon_meshes_vu/blackrazor.txt",
         "quads": {
           "body": 4822,
           "void": 42,
@@ -201,7 +201,7 @@
         "flares": 7,
         "animation_groups": 4,
         "lod": {
-          "file": "src/main/resources/assets/nusmp/weapon_meshes_vu/blackrazor_lod.txt",
+          "file": "src/main/resources/assets/anime_multiverse/weapon_meshes_vu/blackrazor_lod.txt",
           "quads": {
             "body": 604,
             "void": 12,
@@ -275,7 +275,7 @@
         "hunger_eternal",
         "void_cleave"
       ],
-      "sound_loop": "nusmp:item.genesis.blackrazor.hunger_loop",
+      "sound_loop": "anime_multiverse:item.genesis.blackrazor.hunger_loop",
       "lod": {
         "mesh": "blackrazor_lod",
         "near": 12.0,
@@ -289,7 +289,7 @@
       "kind": "handaxe",
       "meshes": {
         "cardinal_halo_chakram": {
-          "file": "src/main/resources/assets/nusmp/weapon_meshes_vu/cardinal_halo_chakram.txt",
+          "file": "src/main/resources/assets/anime_multiverse/weapon_meshes_vu/cardinal_halo_chakram.txt",
           "quads": {
             "body": 4560,
             "void": 0,
@@ -305,7 +305,7 @@
           "flares": 6,
           "animation_groups": 5,
           "lod": {
-            "file": "src/main/resources/assets/nusmp/weapon_meshes_vu/cardinal_halo_chakram_lod.txt",
+            "file": "src/main/resources/assets/anime_multiverse/weapon_meshes_vu/cardinal_halo_chakram_lod.txt",
             "quads": {
               "body": 550,
               "void": 0,
@@ -324,7 +324,7 @@
         }
       },
       "mesh": {
-        "file": "src/main/resources/assets/nusmp/weapon_meshes_vu/cardinal_halo_chakram.txt",
+        "file": "src/main/resources/assets/anime_multiverse/weapon_meshes_vu/cardinal_halo_chakram.txt",
         "quads": {
           "body": 4560,
           "void": 0,
@@ -340,7 +340,7 @@
         "flares": 6,
         "animation_groups": 5,
         "lod": {
-          "file": "src/main/resources/assets/nusmp/weapon_meshes_vu/cardinal_halo_chakram_lod.txt",
+          "file": "src/main/resources/assets/anime_multiverse/weapon_meshes_vu/cardinal_halo_chakram_lod.txt",
           "quads": {
             "body": 550,
             "void": 0,
@@ -412,7 +412,7 @@
         "halo_throw",
         "judgement_ring"
       ],
-      "sound_loop": "nusmp:item.genesis.cardinal_halo.ring_loop",
+      "sound_loop": "anime_multiverse:item.genesis.cardinal_halo.ring_loop",
       "lod": {
         "mesh": "cardinal_halo_chakram_lod",
         "near": 12.0,
@@ -426,7 +426,7 @@
       "kind": "dagger",
       "meshes": {
         "fairy_glitter_gauntlets": {
-          "file": "src/main/resources/assets/nusmp/weapon_meshes_vu/fairy_glitter_gauntlets.txt",
+          "file": "src/main/resources/assets/anime_multiverse/weapon_meshes_vu/fairy_glitter_gauntlets.txt",
           "quads": {
             "body": 5184,
             "void": 0,
@@ -442,7 +442,7 @@
           "flares": 2,
           "animation_groups": 8,
           "lod": {
-            "file": "src/main/resources/assets/nusmp/weapon_meshes_vu/fairy_glitter_gauntlets_lod.txt",
+            "file": "src/main/resources/assets/anime_multiverse/weapon_meshes_vu/fairy_glitter_gauntlets_lod.txt",
             "quads": {
               "body": 640,
               "void": 0,
@@ -461,7 +461,7 @@
         }
       },
       "mesh": {
-        "file": "src/main/resources/assets/nusmp/weapon_meshes_vu/fairy_glitter_gauntlets.txt",
+        "file": "src/main/resources/assets/anime_multiverse/weapon_meshes_vu/fairy_glitter_gauntlets.txt",
         "quads": {
           "body": 5184,
           "void": 0,
@@ -477,7 +477,7 @@
         "flares": 2,
         "animation_groups": 8,
         "lod": {
-          "file": "src/main/resources/assets/nusmp/weapon_meshes_vu/fairy_glitter_gauntlets_lod.txt",
+          "file": "src/main/resources/assets/anime_multiverse/weapon_meshes_vu/fairy_glitter_gauntlets_lod.txt",
           "quads": {
             "body": 640,
             "void": 0,
@@ -551,7 +551,7 @@
         "glitter_barrage",
         "law_of_the_guild"
       ],
-      "sound_loop": "nusmp:item.genesis.fairy_glitter.shimmer_loop",
+      "sound_loop": "anime_multiverse:item.genesis.fairy_glitter.shimmer_loop",
       "lod": {
         "mesh": "fairy_glitter_gauntlets_lod",
         "near": 12.0,
@@ -565,7 +565,7 @@
       "kind": "spear",
       "meshes": {
         "gae_bolg_heartseeker": {
-          "file": "src/main/resources/assets/nusmp/weapon_meshes_vu/gae_bolg_heartseeker.txt",
+          "file": "src/main/resources/assets/anime_multiverse/weapon_meshes_vu/gae_bolg_heartseeker.txt",
           "quads": {
             "body": 3865,
             "void": 0,
@@ -581,7 +581,7 @@
           "flares": 3,
           "animation_groups": 6,
           "lod": {
-            "file": "src/main/resources/assets/nusmp/weapon_meshes_vu/gae_bolg_heartseeker_lod.txt",
+            "file": "src/main/resources/assets/anime_multiverse/weapon_meshes_vu/gae_bolg_heartseeker_lod.txt",
             "quads": {
               "body": 443,
               "void": 0,
@@ -600,7 +600,7 @@
         }
       },
       "mesh": {
-        "file": "src/main/resources/assets/nusmp/weapon_meshes_vu/gae_bolg_heartseeker.txt",
+        "file": "src/main/resources/assets/anime_multiverse/weapon_meshes_vu/gae_bolg_heartseeker.txt",
         "quads": {
           "body": 3865,
           "void": 0,
@@ -616,7 +616,7 @@
         "flares": 3,
         "animation_groups": 6,
         "lod": {
-          "file": "src/main/resources/assets/nusmp/weapon_meshes_vu/gae_bolg_heartseeker_lod.txt",
+          "file": "src/main/resources/assets/anime_multiverse/weapon_meshes_vu/gae_bolg_heartseeker_lod.txt",
           "quads": {
             "body": 443,
             "void": 0,
@@ -690,7 +690,7 @@
         "thirty_barbs",
         "wound_that_will_not_close"
       ],
-      "sound_loop": "nusmp:item.genesis.gae_bolg.heartbeat_loop",
+      "sound_loop": "anime_multiverse:item.genesis.gae_bolg.heartbeat_loop",
       "lod": {
         "mesh": "gae_bolg_heartseeker_lod",
         "near": 12.0,
@@ -704,7 +704,7 @@
       "kind": "glaive",
       "meshes": {
         "magic_emperors_black_halberd": {
-          "file": "src/main/resources/assets/nusmp/weapon_meshes_vu/magic_emperors_black_halberd.txt",
+          "file": "src/main/resources/assets/anime_multiverse/weapon_meshes_vu/magic_emperors_black_halberd.txt",
           "quads": {
             "body": 3534,
             "void": 28,
@@ -720,7 +720,7 @@
           "flares": 4,
           "animation_groups": 4,
           "lod": {
-            "file": "src/main/resources/assets/nusmp/weapon_meshes_vu/magic_emperors_black_halberd_lod.txt",
+            "file": "src/main/resources/assets/anime_multiverse/weapon_meshes_vu/magic_emperors_black_halberd_lod.txt",
             "quads": {
               "body": 462,
               "void": 10,
@@ -739,7 +739,7 @@
         }
       },
       "mesh": {
-        "file": "src/main/resources/assets/nusmp/weapon_meshes_vu/magic_emperors_black_halberd.txt",
+        "file": "src/main/resources/assets/anime_multiverse/weapon_meshes_vu/magic_emperors_black_halberd.txt",
         "quads": {
           "body": 3534,
           "void": 28,
@@ -755,7 +755,7 @@
         "flares": 4,
         "animation_groups": 4,
         "lod": {
-          "file": "src/main/resources/assets/nusmp/weapon_meshes_vu/magic_emperors_black_halberd_lod.txt",
+          "file": "src/main/resources/assets/anime_multiverse/weapon_meshes_vu/magic_emperors_black_halberd_lod.txt",
           "quads": {
             "body": 462,
             "void": 10,
@@ -829,7 +829,7 @@
         "dimensional_rift",
         "emperors_sweep"
       ],
-      "sound_loop": "nusmp:item.genesis.black_halberd.void_hum_loop",
+      "sound_loop": "anime_multiverse:item.genesis.black_halberd.void_hum_loop",
       "lod": {
         "mesh": "magic_emperors_black_halberd_lod",
         "near": 12.0,
@@ -843,7 +843,7 @@
       "kind": "dagger",
       "meshes": {
         "primordial_hearth_blade": {
-          "file": "src/main/resources/assets/nusmp/weapon_meshes_vu/primordial_hearth_blade.txt",
+          "file": "src/main/resources/assets/anime_multiverse/weapon_meshes_vu/primordial_hearth_blade.txt",
           "quads": {
             "body": 3338,
             "void": 0,
@@ -859,7 +859,7 @@
           "flares": 3,
           "animation_groups": 6,
           "lod": {
-            "file": "src/main/resources/assets/nusmp/weapon_meshes_vu/primordial_hearth_blade_lod.txt",
+            "file": "src/main/resources/assets/anime_multiverse/weapon_meshes_vu/primordial_hearth_blade_lod.txt",
             "quads": {
               "body": 478,
               "void": 0,
@@ -878,7 +878,7 @@
         }
       },
       "mesh": {
-        "file": "src/main/resources/assets/nusmp/weapon_meshes_vu/primordial_hearth_blade.txt",
+        "file": "src/main/resources/assets/anime_multiverse/weapon_meshes_vu/primordial_hearth_blade.txt",
         "quads": {
           "body": 3338,
           "void": 0,
@@ -894,7 +894,7 @@
         "flares": 3,
         "animation_groups": 6,
         "lod": {
-          "file": "src/main/resources/assets/nusmp/weapon_meshes_vu/primordial_hearth_blade_lod.txt",
+          "file": "src/main/resources/assets/anime_multiverse/weapon_meshes_vu/primordial_hearth_blade_lod.txt",
           "quads": {
             "body": 478,
             "void": 0,
@@ -968,7 +968,7 @@
         "goddess_blessing",
         "hearth_dash"
       ],
-      "sound_loop": "nusmp:item.genesis.hearth_blade.fire_loop",
+      "sound_loop": "anime_multiverse:item.genesis.hearth_blade.fire_loop",
       "lod": {
         "mesh": "primordial_hearth_blade_lod",
         "near": 12.0,
@@ -982,7 +982,7 @@
       "kind": "bow",
       "meshes": {
         "starforged_aeon_bow": {
-          "file": "src/main/resources/assets/nusmp/weapon_meshes_vu/starforged_aeon_bow.txt",
+          "file": "src/main/resources/assets/anime_multiverse/weapon_meshes_vu/starforged_aeon_bow.txt",
           "quads": {
             "body": 4282,
             "void": 0,
@@ -998,7 +998,7 @@
           "flares": 4,
           "animation_groups": 5,
           "lod": {
-            "file": "src/main/resources/assets/nusmp/weapon_meshes_vu/starforged_aeon_bow_lod.txt",
+            "file": "src/main/resources/assets/anime_multiverse/weapon_meshes_vu/starforged_aeon_bow_lod.txt",
             "quads": {
               "body": 411,
               "void": 0,
@@ -1016,7 +1016,7 @@
           }
         },
         "starforged_aeon_bow_pull1": {
-          "file": "src/main/resources/assets/nusmp/weapon_meshes_vu/starforged_aeon_bow_pull1.txt",
+          "file": "src/main/resources/assets/anime_multiverse/weapon_meshes_vu/starforged_aeon_bow_pull1.txt",
           "quads": {
             "body": 4426,
             "void": 0,
@@ -1032,7 +1032,7 @@
           "flares": 4,
           "animation_groups": 5,
           "lod": {
-            "file": "src/main/resources/assets/nusmp/weapon_meshes_vu/starforged_aeon_bow_pull1_lod.txt",
+            "file": "src/main/resources/assets/anime_multiverse/weapon_meshes_vu/starforged_aeon_bow_pull1_lod.txt",
             "quads": {
               "body": 522,
               "void": 0,
@@ -1050,7 +1050,7 @@
           }
         },
         "starforged_aeon_bow_pull2": {
-          "file": "src/main/resources/assets/nusmp/weapon_meshes_vu/starforged_aeon_bow_pull2.txt",
+          "file": "src/main/resources/assets/anime_multiverse/weapon_meshes_vu/starforged_aeon_bow_pull2.txt",
           "quads": {
             "body": 4426,
             "void": 0,
@@ -1066,7 +1066,7 @@
           "flares": 4,
           "animation_groups": 5,
           "lod": {
-            "file": "src/main/resources/assets/nusmp/weapon_meshes_vu/starforged_aeon_bow_pull2_lod.txt",
+            "file": "src/main/resources/assets/anime_multiverse/weapon_meshes_vu/starforged_aeon_bow_pull2_lod.txt",
             "quads": {
               "body": 522,
               "void": 0,
@@ -1084,7 +1084,7 @@
           }
         },
         "starforged_aeon_bow_pull3": {
-          "file": "src/main/resources/assets/nusmp/weapon_meshes_vu/starforged_aeon_bow_pull3.txt",
+          "file": "src/main/resources/assets/anime_multiverse/weapon_meshes_vu/starforged_aeon_bow_pull3.txt",
           "quads": {
             "body": 4426,
             "void": 0,
@@ -1100,7 +1100,7 @@
           "flares": 4,
           "animation_groups": 5,
           "lod": {
-            "file": "src/main/resources/assets/nusmp/weapon_meshes_vu/starforged_aeon_bow_pull3_lod.txt",
+            "file": "src/main/resources/assets/anime_multiverse/weapon_meshes_vu/starforged_aeon_bow_pull3_lod.txt",
             "quads": {
               "body": 522,
               "void": 0,
@@ -1119,7 +1119,7 @@
         }
       },
       "mesh": {
-        "file": "src/main/resources/assets/nusmp/weapon_meshes_vu/starforged_aeon_bow.txt",
+        "file": "src/main/resources/assets/anime_multiverse/weapon_meshes_vu/starforged_aeon_bow.txt",
         "quads": {
           "body": 4282,
           "void": 0,
@@ -1135,7 +1135,7 @@
         "flares": 4,
         "animation_groups": 5,
         "lod": {
-          "file": "src/main/resources/assets/nusmp/weapon_meshes_vu/starforged_aeon_bow_lod.txt",
+          "file": "src/main/resources/assets/anime_multiverse/weapon_meshes_vu/starforged_aeon_bow_lod.txt",
           "quads": {
             "body": 411,
             "void": 0,
@@ -1208,7 +1208,7 @@
         "meteor_arrow",
         "starfall"
       ],
-      "sound_loop": "nusmp:item.genesis.aeon_bow.starsong_loop",
+      "sound_loop": "anime_multiverse:item.genesis.aeon_bow.starsong_loop",
       "lod": {
         "mesh": "starforged_aeon_bow_lod",
         "near": 12.0,
@@ -1222,7 +1222,7 @@
       "kind": "hammer",
       "meshes": {
         "starsplitter_hammer": {
-          "file": "src/main/resources/assets/nusmp/weapon_meshes_vu/starsplitter_hammer.txt",
+          "file": "src/main/resources/assets/anime_multiverse/weapon_meshes_vu/starsplitter_hammer.txt",
           "quads": {
             "body": 4286,
             "void": 28,
@@ -1238,7 +1238,7 @@
           "flares": 2,
           "animation_groups": 6,
           "lod": {
-            "file": "src/main/resources/assets/nusmp/weapon_meshes_vu/starsplitter_hammer_lod.txt",
+            "file": "src/main/resources/assets/anime_multiverse/weapon_meshes_vu/starsplitter_hammer_lod.txt",
             "quads": {
               "body": 447,
               "void": 28,
@@ -1257,7 +1257,7 @@
         }
       },
       "mesh": {
-        "file": "src/main/resources/assets/nusmp/weapon_meshes_vu/starsplitter_hammer.txt",
+        "file": "src/main/resources/assets/anime_multiverse/weapon_meshes_vu/starsplitter_hammer.txt",
         "quads": {
           "body": 4286,
           "void": 28,
@@ -1273,7 +1273,7 @@
         "flares": 2,
         "animation_groups": 6,
         "lod": {
-          "file": "src/main/resources/assets/nusmp/weapon_meshes_vu/starsplitter_hammer_lod.txt",
+          "file": "src/main/resources/assets/anime_multiverse/weapon_meshes_vu/starsplitter_hammer_lod.txt",
           "quads": {
             "body": 447,
             "void": 28,
@@ -1350,7 +1350,7 @@
         "meteor_smash",
         "starsplit"
       ],
-      "sound_loop": "nusmp:item.genesis.starsplitter.night_loop",
+      "sound_loop": "anime_multiverse:item.genesis.starsplitter.night_loop",
       "lod": {
         "mesh": "starsplitter_hammer_lod",
         "near": 12.0,
@@ -1364,7 +1364,7 @@
       "kind": "longsword",
       "meshes": {
         "sword_of_the_first_dawn": {
-          "file": "src/main/resources/assets/nusmp/weapon_meshes_vu/sword_of_the_first_dawn.txt",
+          "file": "src/main/resources/assets/anime_multiverse/weapon_meshes_vu/sword_of_the_first_dawn.txt",
           "quads": {
             "body": 4388,
             "void": 0,
@@ -1380,7 +1380,7 @@
           "flares": 4,
           "animation_groups": 7,
           "lod": {
-            "file": "src/main/resources/assets/nusmp/weapon_meshes_vu/sword_of_the_first_dawn_lod.txt",
+            "file": "src/main/resources/assets/anime_multiverse/weapon_meshes_vu/sword_of_the_first_dawn_lod.txt",
             "quads": {
               "body": 546,
               "void": 0,
@@ -1399,7 +1399,7 @@
         }
       },
       "mesh": {
-        "file": "src/main/resources/assets/nusmp/weapon_meshes_vu/sword_of_the_first_dawn.txt",
+        "file": "src/main/resources/assets/anime_multiverse/weapon_meshes_vu/sword_of_the_first_dawn.txt",
         "quads": {
           "body": 4388,
           "void": 0,
@@ -1415,7 +1415,7 @@
         "flares": 4,
         "animation_groups": 7,
         "lod": {
-          "file": "src/main/resources/assets/nusmp/weapon_meshes_vu/sword_of_the_first_dawn_lod.txt",
+          "file": "src/main/resources/assets/anime_multiverse/weapon_meshes_vu/sword_of_the_first_dawn_lod.txt",
           "quads": {
             "body": 546,
             "void": 0,
@@ -1489,7 +1489,7 @@
         "daybreak",
         "first_light"
       ],
-      "sound_loop": "nusmp:item.genesis.first_dawn.choir_loop",
+      "sound_loop": "anime_multiverse:item.genesis.first_dawn.choir_loop",
       "lod": {
         "mesh": "sword_of_the_first_dawn_lod",
         "near": 12.0,
@@ -1503,7 +1503,7 @@
       "kind": "katana",
       "meshes": {
         "void_origin_katana": {
-          "file": "src/main/resources/assets/nusmp/weapon_meshes_vu/void_origin_katana.txt",
+          "file": "src/main/resources/assets/anime_multiverse/weapon_meshes_vu/void_origin_katana.txt",
           "quads": {
             "body": 3302,
             "void": 36,
@@ -1519,7 +1519,7 @@
           "flares": 3,
           "animation_groups": 5,
           "lod": {
-            "file": "src/main/resources/assets/nusmp/weapon_meshes_vu/void_origin_katana_lod.txt",
+            "file": "src/main/resources/assets/anime_multiverse/weapon_meshes_vu/void_origin_katana_lod.txt",
             "quads": {
               "body": 442,
               "void": 12,
@@ -1538,7 +1538,7 @@
         }
       },
       "mesh": {
-        "file": "src/main/resources/assets/nusmp/weapon_meshes_vu/void_origin_katana.txt",
+        "file": "src/main/resources/assets/anime_multiverse/weapon_meshes_vu/void_origin_katana.txt",
         "quads": {
           "body": 3302,
           "void": 36,
@@ -1554,7 +1554,7 @@
         "flares": 3,
         "animation_groups": 5,
         "lod": {
-          "file": "src/main/resources/assets/nusmp/weapon_meshes_vu/void_origin_katana_lod.txt",
+          "file": "src/main/resources/assets/anime_multiverse/weapon_meshes_vu/void_origin_katana_lod.txt",
           "quads": {
             "body": 442,
             "void": 12,
@@ -1630,7 +1630,7 @@
         "void_step",
         "world_sever"
       ],
-      "sound_loop": "nusmp:item.genesis.void_origin.absence_loop",
+      "sound_loop": "anime_multiverse:item.genesis.void_origin.absence_loop",
       "lod": {
         "mesh": "void_origin_katana_lod",
         "near": 12.0,
@@ -1644,7 +1644,7 @@
       "kind": "scythe",
       "meshes": {
         "nekrathuls_pact_scythe": {
-          "file": "src/main/resources/assets/nusmp/weapon_meshes_vu/nekrathuls_pact_scythe.txt",
+          "file": "src/main/resources/assets/anime_multiverse/weapon_meshes_vu/nekrathuls_pact_scythe.txt",
           "quads": {
             "body": 4225,
             "void": 40,
@@ -1660,7 +1660,7 @@
           "flares": 6,
           "animation_groups": 6,
           "lod": {
-            "file": "src/main/resources/assets/nusmp/weapon_meshes_vu/nekrathuls_pact_scythe_lod.txt",
+            "file": "src/main/resources/assets/anime_multiverse/weapon_meshes_vu/nekrathuls_pact_scythe_lod.txt",
             "quads": {
               "body": 489,
               "void": 12,
@@ -1679,7 +1679,7 @@
         }
       },
       "mesh": {
-        "file": "src/main/resources/assets/nusmp/weapon_meshes_vu/nekrathuls_pact_scythe.txt",
+        "file": "src/main/resources/assets/anime_multiverse/weapon_meshes_vu/nekrathuls_pact_scythe.txt",
         "quads": {
           "body": 4225,
           "void": 40,
@@ -1695,7 +1695,7 @@
         "flares": 6,
         "animation_groups": 6,
         "lod": {
-          "file": "src/main/resources/assets/nusmp/weapon_meshes_vu/nekrathuls_pact_scythe_lod.txt",
+          "file": "src/main/resources/assets/anime_multiverse/weapon_meshes_vu/nekrathuls_pact_scythe_lod.txt",
           "quads": {
             "body": 489,
             "void": 12,
@@ -1771,7 +1771,7 @@
         "pact_breaking_reap",
         "soul_tithe"
       ],
-      "sound_loop": "nusmp:item.genesis.pact_scythe.whisper_loop",
+      "sound_loop": "anime_multiverse:item.genesis.pact_scythe.whisper_loop",
       "lod": {
         "mesh": "nekrathuls_pact_scythe_lod",
         "near": 12.0,
@@ -1785,7 +1785,7 @@
       "kind": "greatsword",
       "meshes": {
         "elsdocia": {
-          "file": "src/main/resources/assets/nusmp/weapon_meshes_vu/elsdocia.txt",
+          "file": "src/main/resources/assets/anime_multiverse/weapon_meshes_vu/elsdocia.txt",
           "quads": {
             "body": 5014,
             "void": 0,
@@ -1801,7 +1801,7 @@
           "flares": 4,
           "animation_groups": 5,
           "lod": {
-            "file": "src/main/resources/assets/nusmp/weapon_meshes_vu/elsdocia_lod.txt",
+            "file": "src/main/resources/assets/anime_multiverse/weapon_meshes_vu/elsdocia_lod.txt",
             "quads": {
               "body": 408,
               "void": 0,
@@ -1820,7 +1820,7 @@
         }
       },
       "mesh": {
-        "file": "src/main/resources/assets/nusmp/weapon_meshes_vu/elsdocia.txt",
+        "file": "src/main/resources/assets/anime_multiverse/weapon_meshes_vu/elsdocia.txt",
         "quads": {
           "body": 5014,
           "void": 0,
@@ -1836,7 +1836,7 @@
         "flares": 4,
         "animation_groups": 5,
         "lod": {
-          "file": "src/main/resources/assets/nusmp/weapon_meshes_vu/elsdocia_lod.txt",
+          "file": "src/main/resources/assets/anime_multiverse/weapon_meshes_vu/elsdocia_lod.txt",
           "quads": {
             "body": 408,
             "void": 0,
@@ -1907,7 +1907,7 @@
         "legacy_gate",
         "legacy_release"
       ],
-      "sound_loop": "nusmp:item.genesis.elsdocia.crystal_hum_loop",
+      "sound_loop": "anime_multiverse:item.genesis.elsdocia.crystal_hum_loop",
       "lod": {
         "mesh": "elsdocia_lod",
         "near": 12.0,

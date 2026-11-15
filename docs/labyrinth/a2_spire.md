@@ -36,9 +36,9 @@ each level and cap themselves.
 
    one level, seen from above (the same on every ascent piece):
 
-        +-----------------------------+            S = side doorway (nusmp:side_out, 3 wide x 4 tall)
-        |                             |            o = the axis: floor hole + nusmp:down at the bottom row,
-        S   hall: 2 doors (E, W)      S                nusmp:up at the top row, the stair beside it
+        +-----------------------------+            S = side doorway (anime_multiverse:side_out, 3 wide x 4 tall)
+        |                             |            o = the axis: floor hole + anime_multiverse:down at the bottom row,
+        S   hall: 2 doors (E, W)      S                anime_multiverse:up at the top row, the stair beside it
         |   gallery: 3 (E, W, S)      |            side rooms attach to S and cap after one more hop:
         |   shrine: 1 (S)      o      |
         |                             |               level --S--> trial_a | trial_b | treasury_small | balcony
@@ -47,8 +47,8 @@ each level and cap themselves.
                                                               +-> wild_adapter --W--> wildcard pool (foreign room | plug)
 ```
 
-The vertical join is exact: the level below ends with its `nusmp:up` jigsaw in its **top row** on the axis, the level above begins with
-its `nusmp:down` jigsaw in its **bottom row** on the axis, directly above (a source jigsaw places the next piece so that ITS jigsaw lands
+The vertical join is exact: the level below ends with its `anime_multiverse:up` jigsaw in its **top row** on the axis, the level above begins with
+its `anime_multiverse:down` jigsaw in its **bottom row** on the axis, directly above (a source jigsaw places the next piece so that ITS jigsaw lands
 on the cell in front of the source). The two boxes touch and never overlap, which is what Jigsaw needs.
 
 ### Why the heights are 16 / 12 / 16 / 18 / 14 / 16
@@ -73,7 +73,7 @@ use it to keep a house from growing a street. Here:
  (start_pool)  hall_1|gallery_1|shrine_1   (3 variants)  hall_2|...   warden/hall   hall_3|...    hall_4|...    boss_peak   treasury    spire_top
 ```
 
-* Every level piece is generated **per level** with its `nusmp:up` jigsaw pointing at the next pool of the chain, so there are
+* Every level piece is generated **per level** with its `anime_multiverse:up` jigsaw pointing at the next pool of the chain, so there are
   twelve ascent templates (3 kinds x 4 levels) instead of three that could repeat. The cost is 12 small files; the gain is that the
   tower is exactly: 2 ascent levels, the Warden, 2 ascent levels, the Peak, the Vault, the Crown, whatever the seed.
 * Randomness is kept where it is wanted: inside a level the three variants are weighted 4 : 3 : 2 (halls favoured), the side rooms
@@ -97,15 +97,15 @@ use it to keep a house from growing a street. Here:
 ## 3. Why dead ends are impossible
 
 A doorway is a 3 x 4 opening in a wall with a jigsaw in its bottom-centre cell. If nothing is attached the player would see a hole into
-the void. Every branch pool therefore sets `fallback: nusmp:labyrinth/caps`, and the **fallback is evaluated when no element of the
+the void. Every branch pool therefore sets `fallback: anime_multiverse:labyrinth/caps`, and the **fallback is evaluated when no element of the
 pool fits** (no candidate has a matching jigsaw, or every candidate's box collides, or the depth limit is reached). The caps pool
 holds plugs that carry the matching jigsaw name:
 
 | doorway (source jigsaw)       | target name   | cap the fallback can place              |
 |-------------------------------|---------------|-----------------------------------------|
-| `nusmp:side_out` (side)       | `nusmp:side_in`  | `caps/sealed_arch` (glyph), `caps/window` |
-| `nusmp:wild_out` (wildcard)   | `nusmp:wild_in`  | `caps/wild_sealed_arch`                  |
-| `nusmp:up` (the stair's top)  | `nusmp:down`     | `caps/roof_plug` (a sealed closet over the landing) |
+| `anime_multiverse:side_out` (side)       | `anime_multiverse:side_in`  | `caps/sealed_arch` (glyph), `caps/window` |
+| `anime_multiverse:wild_out` (wildcard)   | `anime_multiverse:wild_in`  | `caps/wild_sealed_arch`                  |
+| `anime_multiverse:up` (the stair's top)  | `anime_multiverse:down`     | `caps/roof_plug` (a sealed closet over the landing) |
 
 A cap is 3 wide x 4 tall x 1 deep (the roof plug is 5 x 4 x 5), a solid brick plane whose jigsaw (final state `labyrinth_bricks`) is
 its bottom-centre cell, placed flush outside the doorway: the wall reads as a sealed arch with a glyph, or as a window. Because the
@@ -144,7 +144,7 @@ the spine prioritised, the full 9-piece column is placed first, always, and side
 ## 5. The templates (what each one is and why it is built that way)
 
 Common to all: gzip NBT, DataVersion 3955, unset cells are omitted so the world keeps its block (in the void that is air).
-Palette = the contract's: `nusmp:labyrinth_bricks` walls, `labyrinth_tiles` floors, `labyrinth_pillar[axis=y]` columns,
+Palette = the contract's: `anime_multiverse:labyrinth_bricks` walls, `labyrinth_tiles` floors, `labyrinth_pillar[axis=y]` columns,
 `labyrinth_glyph`, `gold_block`, `amethyst_block` accents, `labyrinth_lantern` / `sea_lantern` light, dark oak planks/fence for
 bridges and rails. B's palette processor swaps the pillar / glyph / amethyst / tiles / dark-oak blocks for the biome's look; the
 bricks are never swapped, so the magicule veins (which grow in bricks, tiles and deepslate) always have somewhere to grow.
@@ -153,12 +153,12 @@ bricks are never swapped, so the magicule veins (which grow in bricks, tiles and
 
 All of them share one helper (`stairwell`), so the spine contract holds by construction:
 
-* a 3 x 3 **floor hole** around the axis with the `nusmp:down` jigsaw (`down_north`, target `nusmp:up`, joint rollable) in the bottom
+* a 3 x 3 **floor hole** around the axis with the `anime_multiverse:down` jigsaw (`down_north`, target `anime_multiverse:up`, joint rollable) in the bottom
   centre; rows 1-3 around it stay air (the **emergence zone**, because the piece below may be rotated any of four ways and the player
   must come up out of the hole whichever way it faces);
 * a **switchback stair** beside the axis: flight A climbs out in +x, a turn landing, flight B climbs back, and its last rises are
   taken inside the hole zone of the piece above;
-* the `nusmp:up` jigsaw (`up_north`, target `nusmp:down`, joint rollable, final state air) in the **top row** at the centre.
+* the `anime_multiverse:up` jigsaw (`up_north`, target `anime_multiverse:down`, joint rollable, final state air) in the **top row** at the centre.
 
 Why the stair ends the way it does (found by a flood-fill test, not by looking): a full-block staircase is climbed by jumping, and a
 jump needs three free cells above the block you take off from. The next piece's floor starts directly above this piece's top row, so a
@@ -170,14 +170,14 @@ that every side doorway and every chest / pedestal / altar of each piece can be 
 
 | file | size | what it is |
 |---|---|---|
-| `labyrinth/base` | 41x16x41 | The floating island and the start piece. A deepslate/tuff **underside** (y 0-3, tapering to a point as a disc), the **arrival pad** (tiles with a glyph ring and gold cross inlays) with its floor at y=4 and the contract's air column above the centre to y=12, `nusmp:labyrinth_exit` at (centre.x+3, 5, centre.z) framed by two pillars and a glyph lintel, a parapet, a 16-pillar **colonnade** with lantern and gold capitals joined by an entablature ring at y=11, eight tall pillars around the stair, and **four stairways** (one from each side, three wide, arcaded from d=5 outward) that meet a ring road at y=12 and climb through the hole zone to the landing under the up jigsaw (`nusmp:up`, pool `nusmp:labyrinth/ascent_1`, joint rollable, final state tiles). The Java arrival logic puts the player at (bbox.minX + 20, bbox.minY + 5, bbox.minZ + 20), the pad centre. |
+| `labyrinth/base` | 41x16x41 | The floating island and the start piece. A deepslate/tuff **underside** (y 0-3, tapering to a point as a disc), the **arrival pad** (tiles with a glyph ring and gold cross inlays) with its floor at y=4 and the contract's air column above the centre to y=12, `anime_multiverse:labyrinth_exit` at (centre.x+3, 5, centre.z) framed by two pillars and a glyph lintel, a parapet, a 16-pillar **colonnade** with lantern and gold capitals joined by an entablature ring at y=11, eight tall pillars around the stair, and **four stairways** (one from each side, three wide, arcaded from d=5 outward) that meet a ring road at y=12 and climb through the hole zone to the landing under the up jigsaw (`anime_multiverse:up`, pool `anime_multiverse:labyrinth/ascent_1`, joint rollable, final state tiles). The Java arrival logic puts the player at (bbox.minX + 20, bbox.minY + 5, bbox.minZ + 20), the pad centre. |
 | `labyrinth/ascent_N/hall_N` (N=1..4) | 25x12x25 | The great hall: bricks with pilasters, four lantern-and-gold columns, a glyph and a gold ring in the floor, glyph/lantern accents in the walls, **two** side doorways (E and W). |
 | `labyrinth/ascent_N/gallery_N` | 25x12x25 | A ring balcony of dark-oak planks at y=6 round a light well (four sea lanterns in the roof), railed on the inner edge, on four pillars; **three** side doorways (E, W, S). The planks and fences adapt to the biome. |
-| `labyrinth/ascent_N/shrine_N` | 25x12x25 | A statue of nine pillars of three heights crowned with gold and a sea lantern, amethyst and glyph at the feet, a glyph and gold floor round it; a `nusmp:chests/labyrinth_trial` chest at its foot (two on even levels); **one** side doorway (S). |
+| `labyrinth/ascent_N/shrine_N` | 25x12x25 | A statue of nine pillars of three heights crowned with gold and a sea lantern, amethyst and glyph at the feet, a glyph and gold floor round it; a `anime_multiverse:chests/labyrinth_trial` chest at its foot (two on even levels); **one** side doorway (S). |
 | `labyrinth/warden/hall` | 31x16x31 | The Floor Warden's hall. See 5.2. |
 | `labyrinth/peak/boss_peak` | 31x18x31 | The Boss Peak. See 5.3. |
 | `labyrinth/vault/treasury` | 31x14x31 | The Treasure Vault. See 5.4. |
-| `labyrinth/crown/spire_top` | 15x16x15 | The pinnacle: an open-air tiled terrace with a rail, four pillars with amethyst capitals, a ring and cross of beams carrying a gold collar and a glyph spire with a sea-lantern tip. Only a `nusmp:down` jigsaw: nothing goes above it. |
+| `labyrinth/crown/spire_top` | 15x16x15 | The pinnacle: an open-air tiled terrace with a rail, four pillars with amethyst capitals, a ring and cross of beams carrying a gold collar and a glyph spire with a sea-lantern tip. Only a `anime_multiverse:down` jigsaw: nothing goes above it. |
 
 The three variants per level are the same `stairwell` plus different furniture, so a level is always the same climb: variety is in
 the room, never in the way up.
@@ -185,12 +185,12 @@ the room, never in the way up.
 ### 5.2 `labyrinth/warden/hall` (31 x 16 x 31)
 
 The arrival from the stair below ends in a small walled **vestibule** (7 x 7 outside, 5 x 5 inside, roof at y=5, a lantern in each inner
-corner). Its one exit, on the west side, is a 3 x 4 doorway whose floor row is `nusmp:ward_rune` and whose keystone, in the roof cell
+corner). Its one exit, on the west side, is a 3 x 4 doorway whose floor row is `anime_multiverse:ward_rune` and whose keystone, in the roof cell
 above it, is the **Sealed Archway** block entity. The up stair sits in the south-east of the hall in a walled **stair foot** whose
-entrance (also 3 x 4) has its own ward runes. Three `nusmp:spawn_glyph` floor tiles stand in the hall, and the rest is the usual
+entrance (also 3 x 4) has its own ward runes. Three `anime_multiverse:spawn_glyph` floor tiles stand in the hall, and the rest is the usual
 glyph / gold floor rings, four columns with lanterns and wall accents.
 
-Sealed Archway NBT: `{id:"nusmp:sealed_archway", radius:14, height:12, mobs:[{id:"nusmp:floor_warden",count:1},{id:"nusmp:living_armor",count:2}], reset:90}`.
+Sealed Archway NBT: `{id:"anime_multiverse:sealed_archway", radius:14, height:12, mobs:[{id:"anime_multiverse:floor_warden",count:1},{id:"anime_multiverse:living_armor",count:2}], reset:90}`.
 
 How it plays, and why the runes are placed at both doorways: the archway watches a box of ±14 around the keystone. The player
 walks out of the vestibule through the rune doorway (standing in a rune column does **not** start the trial: the barrier could not
@@ -203,22 +203,22 @@ only the stair foot is sealed.
 
 ### 5.3 `labyrinth/peak/boss_peak` (31 x 18 x 31)
 
-The same vestibule, but its west doorway is closed by a **2 wide x 3 tall wall of `nusmp:gatekeeper_door[kind=warden,open=false]`**
+The same vestibule, but its west doorway is closed by a **2 wide x 3 tall wall of `anime_multiverse:gatekeeper_door[kind=warden,open=false]`**
 (`half=lower` on the bottom row, `half=upper` on the rows above; a brick column fills the third cell of the doorway, a glyph keystone
 sits above). The door opens with the Shadow Key. On top of the vestibule roof, at the **exact centre of the hall**, stands the
-`nusmp:peak_altar` block entity on a gold block, ringed by four glyphs, reached by a three-wide stair on its north face. Altar NBT:
-`{id:"nusmp:peak_altar", radius:16, bosses:[dante_zogratis w3, vanica_zogratis w3, zenon_zogratis w3, floor_warden w2]}`. Behind it
+`anime_multiverse:peak_altar` block entity on a gold block, ringed by four glyphs, reached by a three-wide stair on its north face. Altar NBT:
+`{id:"anime_multiverse:peak_altar", radius:16, bosses:[dante_zogratis w3, vanica_zogratis w3, zenon_zogratis w3, floor_warden w2]}`. Behind it
 in the south-east is the **stair foot** to the vault, closed by a second 2 x 3 door wall of `gatekeeper_door[kind=boss]` that the altar
 opens within 40 blocks when its boss dies. The hall has four amethyst-capped columns, lanterns, and glyph / gold floor rings.
 
 ### 5.4 `labyrinth/vault/treasury` (31 x 14 x 31)
 
-The grand vault: a gold-inlaid floor, a raised **dais** (gold rim) at the west with **six `nusmp:relic_pedestal`** block entities
-(`{id:"nusmp:relic_pedestal", LootTable:"nusmp:chests/labyrinth_pedestal", LootTableSeed:0L}`) round a **glyph spire** (an amethyst ring
-with clusters, a glyph column, a sea-lantern tip), **four `nusmp:chests/dungeon_relic_vault` chests** in the corners under amethyst
-pillars, **two `nusmp:chests/labyrinth_trial` chests** by the east wall, four lantern columns. The up jigsaw goes to `crown`.
+The grand vault: a gold-inlaid floor, a raised **dais** (gold rim) at the west with **six `anime_multiverse:relic_pedestal`** block entities
+(`{id:"anime_multiverse:relic_pedestal", LootTable:"anime_multiverse:chests/labyrinth_pedestal", LootTableSeed:0L}`) round a **glyph spire** (an amethyst ring
+with clusters, a glyph column, a sea-lantern tip), **four `anime_multiverse:chests/dungeon_relic_vault` chests** in the corners under amethyst
+pillars, **two `anime_multiverse:chests/labyrinth_trial` chests** by the east wall, four lantern columns. The up jigsaw goes to `crown`.
 
-### 5.5 The side pieces (the entrance jigsaw of each is `nusmp:side_in`, target `nusmp:side_out`, pool `caps`)
+### 5.5 The side pieces (the entrance jigsaw of each is `anime_multiverse:side_in`, target `anime_multiverse:side_out`, pool `caps`)
 
 All doorways are 3 wide x 4 tall in the wall plane, with the jigsaw in the bottom centre cell, facing out, `final_state` air, joint
 `aligned` (a horizontal join keeps the room upright and only allows the four rotations). A pool element's entrance pool is irrelevant
@@ -227,20 +227,20 @@ for a target jigsaw; it is `caps` so that an unmatched one simply caps.
 | file | size | what it is |
 |---|---|---|
 | `labyrinth/side/trial_a` | 17x12x17 | Trial chamber: zombies x3 and skeletons x2 (`radius:8, height:11, reset:60`). The Sealed Archway sits in the **ceiling centre**, so the box it watches (±8, 12 tall) is exactly the chamber's footprint: the approach corridor outside is never "inside", and the doorway runes, on the box edge, are. Ward runes in the doorway floor, four `spawn_glyph` tiles, four corner pillars with lanterns, a glyph ring, one `labyrinth_trial` chest. |
-| `labyrinth/side/trial_b` | 17x12x17 | Variant with `nusmp:living_armor` x2 and `nusmp:dungeon_direwolf` x1 (ids from `dungeon/DungeonEntities`), a central pillar with a glyph, a gold ring, the chest on the east wall. |
+| `labyrinth/side/trial_b` | 17x12x17 | Variant with `anime_multiverse:living_armor` x2 and `anime_multiverse:dungeon_direwolf` x1 (ids from `dungeon/DungeonEntities`), a central pillar with a glyph, a gold ring, the chest on the east wall. |
 | `labyrinth/side/treasury_small` | 11x8x11 | A small treasury: two `labyrinth_trial` chests, a gold and glyph runner, a sea lantern. No trial, so the player may take it at once: a reward for finding the door. |
-| `labyrinth/side/corridor` | 7x7x13 | A corridor with a `nusmp:side_out` jigsaw (pool `labyrinth/side_end`) at its far end: depth, once. |
-| `labyrinth/side/wild_adapter` | 7x7x9 | A corridor ending in a `nusmp:wild_out` jigsaw (pool `labyrinth/wildcard`): the socket for other mods' rooms (section 8). |
+| `labyrinth/side/corridor` | 7x7x13 | A corridor with a `anime_multiverse:side_out` jigsaw (pool `labyrinth/side_end`) at its far end: depth, once. |
+| `labyrinth/side/wild_adapter` | 7x7x9 | A corridor ending in a `anime_multiverse:wild_out` jigsaw (pool `labyrinth/wildcard`): the socket for other mods' rooms (section 8). |
 | `labyrinth/side/balcony` | 9x7x7 | An open-air balcony (floor, rail, two lantern posts, no roof): a view of the sky. |
 
 ### 5.6 The caps
 
 | file | size | what it is |
 |---|---|---|
-| `labyrinth/caps/sealed_arch` | 3x4x1 | Brick plug with a glyph and a gold keystone: reads as a sealed arch. Jigsaw `nusmp:side_in` (final state bricks). |
+| `labyrinth/caps/sealed_arch` | 3x4x1 | Brick plug with a glyph and a gold keystone: reads as a sealed arch. Jigsaw `anime_multiverse:side_in` (final state bricks). |
 | `labyrinth/caps/window` | 3x4x1 | Brick plug with a two-block glass window. |
-| `labyrinth/caps/wild_sealed_arch` | 3x4x1 | The plug for `wild_out` doorways (amethyst and glyph); jigsaw `nusmp:wild_in`. It is the only element of the in-jar wildcard pool. |
-| `labyrinth/caps/roof_plug` | 5x4x5 | The vertical cap: a closed brick closet with a 3 x 3 floor hole and a `nusmp:down` jigsaw, placed over a stair's landing if the next level could not be placed, so the stair never leads into the sky. |
+| `labyrinth/caps/wild_sealed_arch` | 3x4x1 | The plug for `wild_out` doorways (amethyst and glyph); jigsaw `anime_multiverse:wild_in`. It is the only element of the in-jar wildcard pool. |
+| `labyrinth/caps/roof_plug` | 5x4x5 | The vertical cap: a closed brick closet with a 3 x 3 floor hole and a `anime_multiverse:down` jigsaw, placed over a stair's landing if the next level could not be placed, so the stair never leads into the sky. |
 
 ---------------------------------------------------------------------------------------------------------------------------
 
@@ -250,7 +250,7 @@ Jigsaw rotates a piece by changing the placed block states and **not** the numbe
 "the door is at +3,0,0" would point the wrong way in a rotated piece. The three kinds of NBT here therefore hold no positions:
 
 * **Sealed Archway** (`radius`, `height`, `mobs`, `reset`): a scalar box around the keystone, and the keystone SCANS that box for
-  `nusmp:ward_rune` (a barrier column rises over each) and `nusmp:spawn_glyph` (a spawn point). The rune and glyph blocks are in the
+  `anime_multiverse:ward_rune` (a barrier column rises over each) and `anime_multiverse:spawn_glyph` (a spawn point). The rune and glyph blocks are in the
   template as ordinary blocks, so rotation moves them with everything else. A rotation of 90 degrees maps the square box onto
   itself, so the same scalars remain right.
 * **Peak Altar** (`radius`, `bosses`): scalar; the doors it opens are found by scanning for `gatekeeper_door[kind=boss]`.
@@ -265,7 +265,7 @@ Mobs are not spawned by spawner blocks: the archway spawns them when the trial a
 ## 7. The pools and the processor list (what each file is)
 
 All elements are `minecraft:single_pool_element`, `projection: rigid` (the Spire floats: no terrain to conform to), `processors:
-nusmp:labyrinth_interior`. Files under `data/nusmp/worldgen/template_pool/labyrinth/`:
+anime_multiverse:labyrinth_interior`. Files under `data/anime_multiverse/worldgen/template_pool/labyrinth/`:
 
 | pool | elements (weight) | fallback | purpose |
 |---|---|---|---|
@@ -283,8 +283,8 @@ nusmp:labyrinth_interior`. Files under `data/nusmp/worldgen/template_pool/labyri
 | `wildcard` | `caps/wild_sealed_arch` (1) | `caps` | Where other mods' rooms snap in (section 8). |
 | `caps` | sealed_arch (3), window (2), wild_sealed_arch (1), roof_plug (1) | `minecraft:empty` | The end of every chain. |
 
-`data/nusmp/worldgen/processor_list/labyrinth_interior.json` chains `{"processor_type":"nusmp:biome_palette"}` and then
-`{"processor_type":"nusmp:magicule_veins"}`, the bare forms B documented. **A processor list cannot include another list by
+`data/anime_multiverse/worldgen/processor_list/labyrinth_interior.json` chains `{"processor_type":"anime_multiverse:biome_palette"}` and then
+`{"processor_type":"anime_multiverse:magicule_veins"}`, the bare forms B documented. **A processor list cannot include another list by
 reference**, so the two single-processor lists B ships (`labyrinth_palette`, `magicule_veins`) cannot be composed in JSON; this file
 repeats the two processors in order. Order matters: processors run per block in list order and each sees the previous one's output,
 so the palette swaps first and the veins grow only in masonry that is still masonry (a snow-block floor of a snowy palette gets no
@@ -294,15 +294,15 @@ veins; the never-swapped bricks always do). Every pool element, the crown includ
 
 ## 8. The wildcard pool and the example datapack
 
-`nusmp:labyrinth/wildcard` is where **other mods' and packs' rooms** snap into the Spire. Three facts make that safe:
+`anime_multiverse:labyrinth/wildcard` is where **other mods' and packs' rooms** snap into the Spire. Three facts make that safe:
 
-1. **A datapack replaces one JSON.** Pool files are plain data; a pack that ships `data/nusmp/worldgen/template_pool/labyrinth/wildcard.json`
+1. **A datapack replaces one JSON.** Pool files are plain data; a pack that ships `data/anime_multiverse/worldgen/template_pool/labyrinth/wildcard.json`
    replaces ours (last pack wins). Ours has one element, the plug, and the fallback `caps`: so a pack's file only has to list its rooms
    and keep the fallback line, and a pack that removes the plug still has no dead end because the fallback is `caps`.
 2. **Jigsaw's box test keeps foreign rooms from overlapping ours.** Every piece, ours or foreign, has to fit the free space the
    structure still has; a room that collides is simply not chosen and the doorway is capped.
-3. **Only the adapter's far end is a socket.** The adapter (`side/wild_adapter`) ends in a `nusmp:wild_out` jigsaw. Our rooms are never
-   touched by the pack; the pack's room only has to carry a jigsaw named `nusmp:wild_in`.
+3. **Only the adapter's far end is a socket.** The adapter (`side/wild_adapter`) ends in a `anime_multiverse:wild_out` jigsaw. Our rooms are never
+   touched by the pack; the pack's room only has to carry a jigsaw named `anime_multiverse:wild_in`.
 
 `docs/labyrinth/wildcard_example/` (and the same files zipped as `docs/labyrinth/labyrinth_wildcard_example.zip`) is a working
 datapack (pack_format 48):
@@ -310,18 +310,18 @@ datapack (pack_format 48):
 | file | purpose |
 |---|---|
 | `pack.mcmeta` | pack_format 48 (1.21.1). |
-| `data/nusmp/worldgen/template_pool/labyrinth/wildcard.json` | Overrides our wildcard pool: one element, `labyrinth_example:wild/chapel`, fallback `nusmp:labyrinth/caps`. |
-| `data/labyrinth_example/structure/wild/chapel.nbt` | A 9 x 8 x 9 chapel: bricks, gold pillars, an amethyst altar with a cluster, a sea lantern; its doorway jigsaw is named `nusmp:wild_in`. Generated by `gen_spire.py` too. |
+| `data/anime_multiverse/worldgen/template_pool/labyrinth/wildcard.json` | Overrides our wildcard pool: one element, `labyrinth_example:wild/chapel`, fallback `anime_multiverse:labyrinth/caps`. |
+| `data/labyrinth_example/structure/wild/chapel.nbt` | A 9 x 8 x 9 chapel: bricks, gold pillars, an amethyst altar with a cluster, a sea lantern; its doorway jigsaw is named `anime_multiverse:wild_in`. Generated by `gen_spire.py` too. |
 
 ### How a pack author snaps YUNG's (or any other mod's) rooms in
 
 1. Take the room, and add an **adapter template** of your own: a short corridor or a door frame whose entrance jigsaw is
-   `name: nusmp:wild_in`, `target: nusmp:wild_out`, `pool: nusmp:labyrinth/caps` (rotation: the jigsaw is horizontal, joint `aligned`)
+   `name: anime_multiverse:wild_in`, `target: anime_multiverse:wild_out`, `pool: anime_multiverse:labyrinth/caps` (rotation: the jigsaw is horizontal, joint `aligned`)
    and whose far side carries **their** jigsaw (their `name`, `target` and `pool` unchanged), so the foreign room attaches to the
    adapter exactly the way it attaches in its own structure. The adapter is the only thing that knows both vocabularies.
 2. List the adapter (not the foreign room) as an element in your `wildcard.json`. The foreign room's own jigsaws then expand from
    their own pools, and anything that does not fit falls back through THEIR pools' fallbacks.
-3. Keep `"fallback": "nusmp:labyrinth/caps"` in the file.
+3. Keep `"fallback": "anime_multiverse:labyrinth/caps"` in the file.
 4. Keep the adapter's doorway 3 wide x 4 tall in the wall plane with the jigsaw in its bottom centre cell: that is what the Spire's
    `wild_out` doorway looks like.
 
@@ -331,8 +331,8 @@ datapack (pack_format 48):
 
 | file | purpose |
 |---|---|
-| `tools/labyrinth/gen_spire.py` | The generator and checker described above. Deterministic (a seeded `random.Random` per piece name), idempotent (it rewrites a file only if its bytes change). `--check` verifies: files on disk equal the script's output; every jigsaw's `pool` names an existing pool; every pool element has a template; every `fallback` is a pool or `minecraft:empty`; every `nusmp:up` is on the top row at the centre, facing up, rollable, aimed at `nusmp:down`; every `nusmp:down` on the bottom row at the centre facing down; side jigsaws on an outer wall at floor level facing out with a fully open 3 x 4 doorway; level pieces fit 25x12x25; no two blocks share a cell (the `Piece` helper refuses a conflicting `put`); the height budget; the 3x3 hole and emergence zone; the base's arrival pad and exit gate; a **flood-fill walk** of each piece and of the stacked tower in four rotation sets. |
-| `src/test/java/com/newuniverse/nusmp/labyrinth/LabyrinthDataTest.java` | A pure JUnit test (java.nio and regex; no Minecraft, no JSON library on the test classpath): every pool element has an nbt, every fallback exists, every branch pool falls back to caps, the wildcard pool is non-empty, every processor list a pool names exists, every structure's `start_pool` exists, `labyrinth_interior` names only the palette and vein types in that order, and every `nusmp:labyrinth/...` pool string inside a gzip template exists. |
+| `tools/labyrinth/gen_spire.py` | The generator and checker described above. Deterministic (a seeded `random.Random` per piece name), idempotent (it rewrites a file only if its bytes change). `--check` verifies: files on disk equal the script's output; every jigsaw's `pool` names an existing pool; every pool element has a template; every `fallback` is a pool or `minecraft:empty`; every `anime_multiverse:up` is on the top row at the centre, facing up, rollable, aimed at `anime_multiverse:down`; every `anime_multiverse:down` on the bottom row at the centre facing down; side jigsaws on an outer wall at floor level facing out with a fully open 3 x 4 doorway; level pieces fit 25x12x25; no two blocks share a cell (the `Piece` helper refuses a conflicting `put`); the height budget; the 3x3 hole and emergence zone; the base's arrival pad and exit gate; a **flood-fill walk** of each piece and of the stacked tower in four rotation sets. |
+| `src/test/java/com/newuniverse/nusmp/labyrinth/LabyrinthDataTest.java` | A pure JUnit test (java.nio and regex; no Minecraft, no JSON library on the test classpath): every pool element has an nbt, every fallback exists, every branch pool falls back to caps, the wildcard pool is non-empty, every processor list a pool names exists, every structure's `start_pool` exists, `labyrinth_interior` names only the palette and vein types in that order, and every `anime_multiverse:labyrinth/...` pool string inside a gzip template exists. |
 
 ## 10. Regenerating, and what is not verified
 

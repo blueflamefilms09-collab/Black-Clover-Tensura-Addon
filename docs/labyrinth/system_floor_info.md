@@ -17,7 +17,7 @@ nothing opened a seal around a player who was still inside).
 
 | Part | Status |
 |---|---|
-| The floor report: payloads `nusmp:system_floor_card` / `nusmp:system_floor_request`, the window, the key, the chat copy, the mid-floor watcher | NEW |
+| The floor report: payloads `anime_multiverse:system_floor_card` / `anime_multiverse:system_floor_request`, the window, the key, the chat copy, the mid-floor watcher | NEW |
 | `/dungeon floor`, `/dungeon status`, `/dungeon release`, `/dungeon unstuck [party]`, `/dungeon help`; `/multiverse mega system floor`, `/multiverse mega lock ...` | NEW |
 | The escape rules: `EscapeRules`, `UnstuckRules`, `LockCase`, `LockBook`, `LockRunes`, `MechLock`, `UnstuckService`, `SectorReach` | NEW |
 | `StairReach` (the flood fill) and its call in `SectorAudit` | NEW (the audit's old "unreachable rooms" check is KEPT) |
@@ -88,14 +88,14 @@ mechanic going from waiting to active is not news (the report listed it), and a 
 * The theme comes from the sector's `RegionTheme` and its `ThemeDef` (name, danger, catastrophe table). The one-line description is `FloorInfoText.themeDesc(id)` for the 27
   themes that exist; a theme added later falls back to a line made from its data ("Its Crucible leans towards: collapse"), so it needs no edit here (`FloorInfoTextTest` proves
   both).
-* The mechanics come from the plan (`MechanicsDirector.planFor(sector)`), their names and descriptions from the library, their lang keys `mechanic.nusmp.<id>.name / .desc`; the
-  counter's hint is the existing `message.nusmp.mega.mech.hint.<kind>`. A mechanic added tomorrow is covered the moment it is in the library.
+* The mechanics come from the plan (`MechanicsDirector.planFor(sector)`), their names and descriptions from the library, their lang keys `mechanic.anime_multiverse.<id>.name / .desc`; the
+  counter's hint is the existing `message.anime_multiverse.mega.mech.hint.<kind>`. A mechanic added tomorrow is covered the moment it is in the library.
 * Fallbacks everywhere: the card carries the English; the reader asks the lang file first (`translatableWithFallback`), so a key with no text, a datapack mechanic, a lang file not
   merged yet all still read. A mechanic with no name reads as its id made readable.
 
 ### Commands, key, config
 * `/dungeon floor` (every player): the window and the chat lines. `/multiverse mega system floor [player]` (permission 2): the same for another player, printed to the operator.
-* Key `key.nusmp.system_floor`, default period, category "Multiverse: System": asks the server again (so a mechanic that changed since is in it); pressed while the report is up it
+* Key `key.anime_multiverse.system_floor`, default period, category "Multiverse: System": asks the server again (so a mechanic that changed since is in it); pressed while the report is up it
   dismisses it.
 * Server `nusmp-labyrinth-mega-floorinfo-server.toml` `[floorinfo]`: `enabled`, `arriveCooldownSeconds`, `mechanicUpdates`, `updateCooldownSeconds`, `chatCopy`. Client
   `nusmp-labyrinth-mega-system-client.toml` `[system]`: `floorCard`, `floorCardSeconds`.
@@ -120,7 +120,7 @@ data and a test demands that anything that can hold a person has an automatic wa
 
 | # | Case | Can it hold a person | What was done |
 |---|---|---|---|
-| 1 | **Trial chamber** (`nusmp:sealed_archway`, 12 templates in `structure/mega/trial`): Magic Barrier over every doorway until the wave is dead | yes | Already reset when nobody was inside for `reset` seconds. New: with a player alive inside the seal now ALSO opens by the escape rules: release rune after 60 s, open after 600 s whatever is happening (a mob stuck in a wall or out of reach no longer keeps the room shut), `/dungeon release`, `/dungeon unstuck`. Opening is the same reset (mobs removed, barriers down, chamber back to idle). The chamber's own `reset` seconds stay the "nobody inside" time. |
+| 1 | **Trial chamber** (`anime_multiverse:sealed_archway`, 12 templates in `structure/mega/trial`): Magic Barrier over every doorway until the wave is dead | yes | Already reset when nobody was inside for `reset` seconds. New: with a player alive inside the seal now ALSO opens by the escape rules: release rune after 60 s, open after 600 s whatever is happening (a mob stuck in a wall or out of reach no longer keeps the room shut), `/dungeon release`, `/dungeon unstuck`. Opening is the same reset (mobs removed, barriers down, chamber back to idle). The chamber's own `reset` seconds stay the "nobody inside" time. |
 | 2 | **Mechanic `seal_doors`** (198 of the 1000: bars across every doorway until a puzzle or fight is beaten) | yes | The big one: 204 room, 7 boss, 2 zone and 1 floor mechanics. Found by `Instance.sealsPlayers()`. Timers and rune as in 1; nobody inside for 10 s opens it; an idle room (no hostile alive) shows the rune after 15 s and is rescued after 5 minutes. Opening ENDS the mechanic (every block put back, its monsters removed) and remembers it as done so it cannot re-arm and shut the next party in (it pays no reward). |
 | 3 | **Mechanic `cage`** (16: a ring of bars round the party, e.g. the Sure-Hit Domain) | yes | As 2. |
 | 4 | **Seals nobody can beat**: 34 sealing mechanics have counter `none` ("survive it or leave", but the doors stay shut), and 16 plate puzzles need several players at once | yes | Unbeatable for the party present: rune after 15 s, the seal opens by itself after 30 s (`EscapeRules.solvable`). |

@@ -47,7 +47,7 @@ room TARGET is re-read from the config, its region is not (see the unverified li
 
 **The arrival stairwell is the start piece, and its only door is free.** The old Landing's single entry door led OUT to the tunnel, so its socket was marked used. The
 stairwell's only door leads INTO the floor; marking it used left the first room nowhere to attach and every floor failed ("no extra safe room fits") until the start
-piece was placed with `ownSocket = -1`. The first room is drawn from `nusmp:mega/stair_door` (corridors, junctions and halls, which all have several doors), so a floor never
+piece was placed with `ownSocket = -1`. The first room is drawn from `anime_multiverse:mega/stair_door` (corridors, junctions and halls, which all have several doors), so a floor never
 begins in a dead end.
 
 **The forward stairs are a search, and the walk is real.** After every room exists and before the door caps, the assembler lists the free doors of all rooms with their
@@ -67,7 +67,7 @@ previous, road)`) or takes the Crucible's override; otherwise it keeps `previous
 and a relic taken at floor 10 cannot restyle floor 12.
 
 **Theme-restricted templates.** `TemplateThemes` (the contract's pure rule: longest prefix wins, a template nobody claims is free) is filled from
-`data/nusmp/mega/template_themes/*.json` by `TemplateThemeFiles.parse` (pure; reports every mistake as a sentence). The assembler asks it at every pool draw (`shapeOf`),
+`data/anime_multiverse/mega/template_themes/*.json` by `TemplateThemeFiles.parse` (pure; reports every mistake as a sentence). The assembler asks it at every pool draw (`shapeOf`),
 for old-model sectors too, so a room reserved for the Holy Church is never drawn in a Spider Warren. `gen_mega_pools.py` already merges the files' `relative` weights into the
 pools; `mega_catalog.py` exports `themes` per template into the test catalog; `mega_check.py` flags a file whose prefix matches no template or whose theme is not an enum id.
 
@@ -84,7 +84,7 @@ block light never drops below 6 on a walked cell, and the survival rules of `meg
 
 `tools/labyrinth/gen_mega_stairwell.py` writes `structure/mega/stairwell/*.nbt` (10 templates), builds on `mega_lib.py`, verifies each one (above) and renders it
 (`--render DIR`). Frame: x east, z south, floor row 8, standing row 9; a small stairwell is one module (9 x 48 x 9), a grand one 18 x 48 x 18. Every stairwell has ONE door (a
-`nusmp:mega_door` socket on the east face at offset 4, pool `nusmp:mega/stair_door`), an ARRIVAL marker on the platform inside the door, and a STAIR_EXIT marker (`dir=up|down`)
+`anime_multiverse:mega_door` socket on the east face at offset 4, pool `anime_multiverse:mega/stair_door`), an ARRIVAL marker on the platform inside the door, and a STAIR_EXIT marker (`dir=up|down`)
 above the middle of the pad.
 
 | template | size | what it is | light min |
@@ -140,8 +140,8 @@ the shipped templates with `mega_preview.py --plan`.
 * `src/test/.../enc/SanctuaryTest`: the stairwell is a sanctuary now.
 
 ### New data
-* `data/nusmp/mega/recipe/floor.json`: the recipe of a floor as data (the numbers of `Recipe.forFloors`; `FloorRecipeTest` fails if they drift).
-* `data/nusmp/structure/mega/stairwell/*.nbt` (10) and `data/nusmp/worldgen/template_pool/mega/{stair_door,stairwell_up,stairwell_down,stairwell_grand_up,stairwell_grand_down}.json`.
+* `data/anime_multiverse/mega/recipe/floor.json`: the recipe of a floor as data (the numbers of `Recipe.forFloors`; `FloorRecipeTest` fails if they drift).
+* `data/anime_multiverse/structure/mega/stairwell/*.nbt` (10) and `data/anime_multiverse/worldgen/template_pool/mega/{stair_door,stairwell_up,stairwell_down,stairwell_grand_up,stairwell_grand_down}.json`.
 * `src/test/resources/mega/catalog.json` regenerated (132 templates, 20 pools).
 
 ## 5. Stair travel, exactly
@@ -168,7 +168,7 @@ A player who steps off a stair into the pit of a descending stairwell lands on t
 | `floors.perSector` | `nusmp-labyrinth-mega-floors-server.toml`, `[floors]` | 1 | 1..20 | floors per sector for a road that is being opened; 1 = the floor model, more = the old banding (`floors.perRegion` and `floors.banding` then apply) |
 | `mega.floorRooms` | `nusmp-labyrinth-mega-server.toml`, `[mega]` | 28 | 18..40 | rooms of an ordinary floor (a boss floor +8) |
 | `mega.maxSectors` | `nusmp-labyrinth-mega-server.toml`, `[mega]` | 1000 (was 500) | 1..10000 | the dungeon stops growing at this many sectors, now floors of both roads together; an existing config file that saved 500 keeps it |
-| `stairMinWalk` | `data/nusmp/mega/recipe/floor.json` | 4 | 0..60 | least doorways between the arrival stairs and the forward stairs |
+| `stairMinWalk` | `data/anime_multiverse/mega/recipe/floor.json` | 4 | 0..60 | least doorways between the arrival stairs and the forward stairs |
 
 Unchanged and still read: `mega.expansion`, `mega.expandAfterVault` (boss floors), `mega.lastLanding`, `mega.maxPiecesPerSector`, `mega.assembleTries`, the floors lock keys.
 
@@ -240,7 +240,7 @@ In CI (written, not run): the real server loads the ten templates and five pools
   merge of the two branches is textually clean: tried here file by file). Consequence in MY tree alone: `Labyrinth.java:60` (not mine, PRUNE deletes `layoutIsMega`) no longer
   compiles until PRUNE is merged; nothing of mine uses a removed API. `LabyrinthTravel.arrive`, `leave`, `leaveAny`, `arrivalPad` and `forget`, which `StairTravel` uses, are still in PRUNE's tree.
   `server_smoke.py`: my floor phases are new methods, `main` has one new call.
-* **Theme builders**: ship `data/nusmp/mega/template_themes/<theme>.json` as `{"theme": "<enum id>", "templates": ["mega/hall/<prefix>"], "relative": {...}}`; `mega_check.py`
+* **Theme builders**: ship `data/anime_multiverse/mega/template_themes/<theme>.json` as `{"theme": "<enum id>", "templates": ["mega/hall/<prefix>"], "relative": {...}}`; `mega_check.py`
   tells you when a prefix matches no template or the theme is not an enum id; `gen_mega_pools.py` merges `relative` into the pools; a room reserved for a theme is drawn only there.
   Stairwells are free for every theme (the Region Theme restyles them); `RoomKind.isSafe()` includes `STAIRWELL`.
 * **Self-tests of other modules that assume sector 0 holds the boss chain or a Landing** (found by reading them; none of them was run). With one floor per sector, sector 0 is floor

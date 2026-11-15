@@ -1,6 +1,6 @@
 # The Living Dungeon (Tensura x Black Clover x Delicious in Dungeon)
 
-> **REMOVED in 1.58.0 (owner's request).** The Living Dungeon described below (the cave dimension `nusmp:living_dungeon` with its ecosystem, tiers,
+> **REMOVED in 1.58.0 (owner's request).** The Living Dungeon described below (the cave dimension `anime_multiverse:living_dungeon` with its ecosystem, tiers,
 > atmosphere, the Golden City, the Variable Core zones, vaults and collapse, the sentient rooms and immune system, the Maw, the wild food web, the
 > Goliath pit and the Charybdis basin, `/multiverse dungeon ...` and `DungeonConfig`) was removed. Kept: the creatures, the two floor bosses, the
 > meals and their skills, the Guard, the Treasury relics, the economy's dice and stone tables and the synthesis materials, because other systems
@@ -16,7 +16,7 @@ Status per stage is at the bottom. Nothing here has been run in game yet; CI com
 
 ## 1. The closed-loop ecosystem
 
-The Dungeon (`nusmp:living_dungeon`) is an enclosed cave world. Vanilla spawning is bypassed in it: nothing is placed by the
+The Dungeon (`anime_multiverse:living_dungeon`) is an enclosed cave world. Vanilla spawning is bypassed in it: nothing is placed by the
 chunk generator or the natural spawner (`FinalizeSpawnEvent` of type `NATURAL`, `CHUNK_GENERATION`, `STRUCTURE`, `PATROL`,
 `REINFORCEMENT` is cancelled when the level is the Dungeon). Every creature in it is there because the ecosystem put it there.
 
@@ -118,7 +118,7 @@ Poisoning** (maximum health -10% per level, 5 levels), **Magicule Sickness** (na
 | `IEcosystemData` capability on `LevelChunk` | `EcosystemData` data attachment (codec) on `LevelChunk`, `LivingDungeon.ECOSYSTEM` |
 | `AttachCapabilitiesEvent<LevelChunk>` | none needed: `chunk.getData(type)` creates the default on first use |
 | Entity capability for hunger | entity data attachment `LivingDungeon.HUNGER` (stage 2) |
-| `BiomeModifier` JSON for an enclosed dimension | a real dimension: `data/nusmp/dimension/living_dungeon.json` (vanilla `minecraft:caves` noise settings, so it is a stone cave world with a bedrock roof and floor and sea-level water) and `dimension_type/living_dungeon.json`; natural mob spawning is cancelled in code instead of by biome spawner lists |
+| `BiomeModifier` JSON for an enclosed dimension | a real dimension: `data/anime_multiverse/dimension/living_dungeon.json` (vanilla `minecraft:caves` noise settings, so it is a stone cave world with a bedrock roof and floor and sea-level water) and `dimension_type/living_dungeon.json`; natural mob spawning is cancelled in code instead of by biome spawner lists |
 | `MobSpawnEvent` | `FinalizeSpawnEvent` (cancel by spawn type) |
 | `LivingDropsEvent` | same event name in `net.neoforged.neoforge.event.entity.living` |
 | `Goal` subclasses | same (`net.minecraft.world.entity.ai.goal.Goal`), registered from `registerGoals()` of the entity |
@@ -168,7 +168,7 @@ public class HuntForSustenanceGoal extends Goal {
 
 Done: everything in sections 1 to 5, and the 1.19.0 polish (see the stage table). Never run in game; CI compiles it.
 
-The roster: `data/nusmp/tags/entity_type/dungeon/*.json` (tier1, tier2, tier3, legendary, grazers, aquatic, excluded) lists the entity types that live in the Dungeon; every entry is optional, so a mod that is not installed (Tensura, Ice and Fire) is simply skipped, and a modpack can edit the tags. The custom 1.18.0 creatures stay registered (old worlds may hold them) but nothing spawns them any more.
+The roster: `data/anime_multiverse/tags/entity_type/dungeon/*.json` (tier1, tier2, tier3, legendary, grazers, aquatic, excluded) lists the entity types that live in the Dungeon; every entry is optional, so a mod that is not installed (Tensura, Ice and Fire) is simply skipped, and a modpack can edit the tags. The custom 1.18.0 creatures stay registered (old worlds may hold them) but nothing spawns them any more.
 
 Unbreakable: `dungeon/DungeonGuard` (config `unbreakable`, default true) refuses every break, explosion, mob grief, piston, tool change and fire/fluid/air replacement of a Dungeon block, and a mixin on `Level`/`LevelChunk` catches mods that call `destroyBlock`, `removeBlock` or `setBlock` directly. The mod's own builders run inside `DungeonGuard.internal(...)`. Carcasses and mycelium are exempt on purpose (the ecosystem eats them).
 
@@ -201,7 +201,7 @@ Admin: `/multiverse dungeon nexus where | build | zone <monarch|underworld|mirag
 Illusion Stone and Illusion Deepslate (no collision, block light, water cannot pass) hide Puzzle Vaults, Nutrient Gardens, Guardian Vaults and Descent Shrines. A Descent Gate sends the player to the next floor at the same x/z (Upper y 24 and up, Deep 24 to -40, Core below); Deep to Core only above a built Nexus. Warp Traps throw the player 8 to 24 blocks; gravity pulses lift or slam without damage; blocks placed in a pocket are refused. The Band of the Spatial Anchor ignores all of it; `dungeon.hazards = false` switches it off. Admin: `dungeon vault where | build`, `dungeon gate where`.
 
 ### 8.3 Navigation and organs
-Ki-Resonance Lantern: off-hand, fuelled (tag `nusmp:lantern_fuel`), amber / blue (illusion wall within 14 blocks) / red (descent gate within 96 blocks). Anti-Bird Compass: rare drop of avian creatures in the Upper Catacombs; points at the nearest cluster of life, spins in distortions. Butcher Cleaver organ cuts by click height: Venom Gland (basilisk, spider), Magic Stone (anything above tier 1).
+Ki-Resonance Lantern: off-hand, fuelled (tag `anime_multiverse:lantern_fuel`), amber / blue (illusion wall within 14 blocks) / red (descent gate within 96 blocks). Anti-Bird Compass: rare drop of avian creatures in the Upper Catacombs; points at the nearest cluster of life, spins in distortions. Butcher Cleaver organ cuts by click height: Venom Gland (basilisk, spider), Magic Stone (anything above tier 1).
 
 ### 8.4 Relics
 Five Relics, worn (Curios, else off-hand) and attuned (sneak 10 s holding it; max 3; death breaks them), each with a curse: Glutton's Chalice (Symbiotic Hunger), Mantle of the Scavenger (Prey's Weakness), Band of the Spatial Anchor (none), Devil-Bound Weapon Sheath (Mana Siphon), Gambler's Grimoire Page (Wild Magic Surge). Commands: `dungeon relic give | attune | release | status`.
@@ -226,7 +226,7 @@ Switch `dungeon.sentient` (server config, default on). Off: the 1.21.0 ecosystem
 - **Floors.** A Upper Catacombs (Goblins, slimes, hound dogs as Kobolds; boss Goliath, 1.23.0), B Deep Waterways (lizardmen, aqua slimes, water spirits; boss Charybdis Spawn, 1.23.0), C Underworld Gate (lesser devils, Dark Disciples; boss Devil Avatar), D Monarch's Vault (boss only: the Blood-Red Commander).
 - **Immune system.** Threat per player: refused wall blow 4, refused blast block 1, massive spell (cost c percent) c*c/10; decays 1.5 a second; warnings at 50 and 80 percent; at the limit a Juggernaut is born near the player; the Amulet masks spells; the Wild Magic Surge aggroes it on purpose.
 - **Ash and stones.** Death turns the creature to ash; stones by tier (floor bosses and Juggernauts more); a kill by anything but a player leaves a stone one time in four; the 12 materials drop 4 percent.
-- **Relics.** Two `dungeon_relic` Curios slots (data in `data/nusmp/curios`); code cap of two; Use Relic key R; attunement needs 10 s of sneaking and standing still (0.25 block drift) and is reset by damage.
+- **Relics.** Two `dungeon_relic` Curios slots (data in `data/anime_multiverse/curios`); code cap of two; Use Relic key R; attunement needs 10 s of sneaking and standing still (0.25 block drift) and is reset by damage.
 - **The Blood-Red Commander.** Lunge (a marked lane, 18-tick wind-up), Cross (20), Executioner's Arc (two cuts); summons 3 then 4 soldiers at 50 and 25 percent and refills; caps 4/6/8.
 - **The Devil Avatar.** 900 health, speed 0.34; Ceiling Pull, Floor Crush, Inversion Field, Hex Volley, Dread Brand, Curse Nova, Shadow Step, Call the Disciples; Abyssal Collapse at 60 percent power; Gates form at 25 percent.
 - **Collapse v2.** Six waves of a frenzied horde born from the walls (24/6/56 caps); Spatial Surge every 12-20 s per player, never lethal.

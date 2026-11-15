@@ -11,10 +11,10 @@ A character of the arcs is **one python file** `tools/arc/char_<id>.py` with a d
 
 | written to | what |
 |---|---|
-| `src/main/resources/assets/nusmp/geo/entity/arc_<id>.geo.json` | the model (bones, cubes, uv) |
-| `src/main/resources/assets/nusmp/animations/entity/arc_<id>.animation.json` | the clips: `idle walk run attack cast cast_big hurt transform death` and, when the spec asks, `spawn` and `chest_gem_reveal` |
-| `src/main/resources/assets/nusmp/textures/entity/arc_<id>.png` | the texture (512 px wide, painted by the kit: cloth, leather, metal, hair, skin, face) |
-| `src/main/resources/assets/nusmp/textures/entity/arc_<id>_glow.png` | the glow layer (drawn fully bright and additive: eyes, magic, emblems, a glowing blade) |
+| `src/main/resources/assets/anime_multiverse/geo/entity/arc_<id>.geo.json` | the model (bones, cubes, uv) |
+| `src/main/resources/assets/anime_multiverse/animations/entity/arc_<id>.animation.json` | the clips: `idle walk run attack cast cast_big hurt transform death` and, when the spec asks, `spawn` and `chest_gem_reveal` |
+| `src/main/resources/assets/anime_multiverse/textures/entity/arc_<id>.png` | the texture (512 px wide, painted by the kit: cloth, leather, metal, hair, skin, face) |
+| `src/main/resources/assets/anime_multiverse/textures/entity/arc_<id>_glow.png` | the glow layer (drawn fully bright and additive: eyes, magic, emblems, a glowing blade) |
 | `tools/render_preview/scenes.d/arc_<id>.json` | the preview scenes (section 10) |
 | `tools/arc/manifest.json` | the facts of every model: height, hitbox, the numbers of `ArcLook`, clips, bones, glow bones, how a two-handed prop is held |
 

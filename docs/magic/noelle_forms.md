@@ -33,7 +33,7 @@ Nothing here was run in a game. Every picture below is a render of the preview h
 
 ## How a form is entered and read
 
-1. The form is a page of the Water book. The armour policy (`data/nusmp/armour_policy.json`, WATER entry) lists the page as an ARMOUR page with a style: `valkyrie_dress` 1, `mermaid_form` 2,
+1. The form is a page of the Water book. The armour policy (`data/anime_multiverse/armour_policy.json`, WATER entry) lists the page as an ARMOUR page with a style: `valkyrie_dress` 1, `mermaid_form` 2,
    `sea_dragon_god_form` 3, `black_dragon_form` 4 (`scale_mail` stays 0). Casting it puts the armour layer on (`ArmourCast` / `ArmourState`, unchanged); casting it again takes it off, free.
 2. The policy entry has `style_by: "character"` (new, appended to the allowed values): `ArmourRules.style(..., character)` adds the character bit (16) when the caster's bound grimoire is Noelle
    Silva's (`CharacterSpells.characterOf == NOELLE`). So the style byte is `form + 16 * tier`: 1 / 17, 2 / 18, 3 / 19, 4 / 20. Everybody else gets the standard tier of the same silhouette.

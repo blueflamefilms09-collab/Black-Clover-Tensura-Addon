@@ -11,11 +11,11 @@ blending. Section 8 lists what is not verified.
 
 | | What |
 |---|---|
-| **NEW** | the slim spirit meshes (`assets/nusmp/sdm2_meshes/{wind,water,fire}_{char,std,core}.txt`, `earth_{std,core}.txt`, 11 files, `tools/gen_sdm2_models.py`); the small element crowns (`sdm2_meshes/crown_*.txt`, 9 files, `tools/gen_sdm2_crowns.py`); the first person merge (`SpiritDiveMergeFirstPerson` draws, `DiveMergeFirstPerson` is the event hook); the pure rules `SpiritDiveMerge2Rules`; the client option holder and crown painter `SpiritDiveMerge2`; the options `mergeModels`, `calmEntry`, `mergeFirstPerson`, `crownDistinct`; the self-test `magic.spirit_dive_merge2`; 3 tests; the preview scenes, sheets and harness helpers |
+| **NEW** | the slim spirit meshes (`assets/anime_multiverse/sdm2_meshes/{wind,water,fire}_{char,std,core}.txt`, `earth_{std,core}.txt`, 11 files, `tools/gen_sdm2_models.py`); the small element crowns (`sdm2_meshes/crown_*.txt`, 9 files, `tools/gen_sdm2_crowns.py`); the first person merge (`SpiritDiveMergeFirstPerson` draws, `DiveMergeFirstPerson` is the event hook); the pure rules `SpiritDiveMerge2Rules`; the client option holder and crown painter `SpiritDiveMerge2`; the options `mergeModels`, `calmEntry`, `mergeFirstPerson`, `crownDistinct`; the self-test `magic.spirit_dive_merge2`; 3 tests; the preview scenes, sheets and harness helpers |
 | **REPLACED** (the new thing is the default, the old one is one option away) | the boxy merge spirits (now slim; BOXY brings them back); the loud look entry during the merge window (calm; `calmEntry=false` brings it back); the Wind A 3D crown, the REEL cube crown (every element of the REEL look) (the new element crowns; `crownDistinct=false` brings them back); the size of the B / C / PACK / ANIME crowns (about 62 percent; same option) |
 | **KEPT** | the old merge meshes `sdm_meshes/*` and their loader, the old crown meshes `sdw4_meshes/*` and `SpiritDiveWind4Rules`, the cube crown code of the REEL look, the sprite crowns, every look, the first merge's rules, budgets and self-test. Shared files only **appended to or hooked in one place**: `SpiritDiveMerge` (mesh choice and a shared draw method), `SpiritDiveReel` (entry and ribbons), `SpiritDiveReelPieces` / `SpiritDiveWind4` (crown hook at the top), `SpiritDiveWind` / `SpiritDiveWind3` (one `fit(pose)` line each), `SpiritDiveAnime` (the crown size), `DiveClientConfig` (4 options), `DiveClient` (one listener), `SpiritDiveBoot` (one line), `tools/render_preview/preview.py` (an optional scene key `bg` = dark / bright) |
 
-## 2. Slim spirit models (`tools/gen_sdm2_models.py`, `assets/nusmp/sdm2_meshes`)
+## 2. Slim spirit models (`tools/gen_sdm2_models.py`, `assets/anime_multiverse/sdm2_meshes`)
 
 Hand authored low-poly SMOOTH meshes (a tube along a spline with a transported frame for limbs, bodies and tails; ellipsoids for heads; leaf-shaped lofted sheets for wings, fluke and hair ribbons), not cubes.
 The same quad line format as the other meshes (`SpiritDiveWind3Mesh`, loaded with `getIn("sdm2_meshes", name)`), two layers: **0 the solid body**, **1 the soft glow shell** (wing margins, the fluke, the flame, the crystals),
@@ -93,7 +93,7 @@ Previews: `crowns_<element>_<tier>.png`: front, three quarters and side, BEFORE 
 |---|---|
 | pure rules (common, no Minecraft class) | `book/SpiritDiveMerge2Rules.java` (options, mesh names, budgets, calm numbers, first person path and coverage clamp, crown numbers) |
 | client | `client/aura/SpiritDiveMerge2.java` (options + the new crown painter + `fit`), `SpiritDiveMergeFirstPerson.java` (drawing), `DiveMergeFirstPerson.java` (event), `SpiritDiveMerge.java` (mesh choice, shared `draw`) |
-| assets | `assets/nusmp/sdm2_meshes/*.txt` (20 files), generators `tools/gen_sdm2_models.py`, `tools/gen_sdm2_crowns.py` |
+| assets | `assets/anime_multiverse/sdm2_meshes/*.txt` (20 files), generators `tools/gen_sdm2_models.py`, `tools/gen_sdm2_crowns.py` |
 | self-test | `book/SpiritDiveMerge2SelfTests.java` (`magic.spirit_dive_merge2`, registered in `SpiritDiveBoot`) |
 | tests | `SpiritDiveMerge2Test` (rules), `SpiritDiveMerge2AssetTest` (files), `SpiritDiveMerge2ScanTest` (source) |
 | previews | `tools/spirit_dive_merge2_scenes.py` (63 scenes), `tools/spirit_dive_merge2_sheets.py`, helpers `tools/render_preview/examples/Sdm2*.java` |

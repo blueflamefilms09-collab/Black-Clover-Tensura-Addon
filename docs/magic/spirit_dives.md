@@ -182,4 +182,4 @@ Iteration against the owner's two screenshots (each round = changes, a render of
 * **Alex (slim) arms:** the molten arm is narrowed to 80 percent about the arm's pivot like the other arm pieces; not looked at.
 * **Spirit contracts by other means:** the arm follows `SpiritLordSkill.bondedType` and `FireCasting.salamanderOut`; a player given the Salamander by another route that sets neither is not covered.
 * **Light, Darkness and Space spirits** have no Spirit Dive in the mod (their packages have links and abilities only), so there is nothing to remake for them.
-* The file `src/main/resources/data/nusmp/particle_themes.json` is written by `tools/particles/gen_themes.py` (seven themes appended); if another change also edits the generator, re-run it after the merge.
+* The file `src/main/resources/data/anime_multiverse/particle_themes.json` is written by `tools/particles/gen_themes.py` (seven themes appended); if another change also edits the generator, re-run it after the merge.

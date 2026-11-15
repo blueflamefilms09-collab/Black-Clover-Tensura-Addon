@@ -1,7 +1,7 @@
-# Vassal Whip (`nusmp:vassal_whip`, `HeroKind.WHIP`, class Seven Star, style SWING)
+# Vassal Whip (`anime_multiverse:vassal_whip`, `HeroKind.WHIP`, class Seven Star, style SWING)
 
 Builder `hva`. Code: `heroweapon/weapon/whip/**` (+ the shared helpers of the four striking weapons in `heroweapon/weapon/strike/**`), forms file
-`data/nusmp/hero/forms/vassal_whip.json`, lang fragment `hva.lang.json`. This page is written in the order the art builder needs it: the look first.
+`data/anime_multiverse/hero/forms/vassal_whip.json`, lang fragment `hva.lang.json`. This page is written in the order the art builder needs it: the look first.
 
 ## 1. Look (for the art builder `hart2`)
 
@@ -54,7 +54,7 @@ Five forms, all ordinary (the brief asks for 3 to 5, the base form counts): `bas
 needs both. Names: Small Whip, Vine Whip (the brief's string, leather and vines), Storm Whip (design: the Lightning Whip and its charge),
 Morning Star Whip and Hourglass Sand Whip (canon). The top form has two parents, and so a tier one deeper than the deepest of them.
 
-The table is generated from `data/nusmp/hero/forms/vassal_whip.json`:
+The table is generated from `data/anime_multiverse/hero/forms/vassal_whip.json`:
 
 | form (id) | tier | parents | requirements | mastery | stats | ability bonus | skills (slot: id) | passives |
 |---|---|---|---|---|---|---|---|---|

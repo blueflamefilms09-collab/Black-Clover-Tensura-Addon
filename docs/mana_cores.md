@@ -2,7 +2,7 @@
 
 Inspired by *The Beginning After the End*: mana cores and beast cores ranked **E, D, C, B, A, AA, S, SS**. Each rank has three variants (24 items): **standard** (a human-style core), **beast** (taken from a mana beast) and **ancient** (crossover relic). Each core has one passive and two actives. **Right-click** is the first active, **sneak + right-click** the second. The passive works while the core is held in either hand or worn in a Curios slot (one core at a time: main hand, off hand, then Curios).
 
-Status: written, unit tested and typechecked. **Nothing has been seen in a game.** Sources and caveats are at the end. The sector-key `nusmp:mana_core` (Labyrinth Guardians) is a different item and is untouched; the new items are `nusmp:core_<rank>_<variant>` (`core_e_standard` ... `core_ss_ancient`).
+Status: written, unit tested and typechecked. **Nothing has been seen in a game.** Sources and caveats are at the end. The sector-key `anime_multiverse:mana_core` (Labyrinth Guardians) is a different item and is untouched; the new items are `anime_multiverse:core_<rank>_<variant>` (`core_e_standard` ... `core_ss_ancient`).
 
 ## How it fits the mod
 
@@ -43,7 +43,7 @@ The gate is the Existence Points a wielder needs (`requireEp`, on by default). T
 The spec's Acquire / Integrate phases already exist as the Beast Will system (3.45.0, `docs/beastwill.md`), so nothing was duplicated:
 
 - Shadow Panther Core -> `shadow_panther_will`, Elderwood Guardian Core -> `elderwood_guardian_will`, Nihil Dragon Core -> `dragon_will` (all three existed).
-- **New:** `thunder_fang_chimera_will` (data file `data/nusmp/beast_will/thunder_fang_chimera_will.json`, rank A, 30,000 EP, built on the lion will's two abilities) for the AA Chimera core.
+- **New:** `thunder_fang_chimera_will` (data file `data/anime_multiverse/beast_will/thunder_fang_chimera_will.json`, rank A, 30,000 EP, built on the lion will's two abilities) for the AA Chimera core.
 - **Sneak + right-click** on such a core: with no will of that kind, it opens the normal Beast Will preview (nothing is taken or given until the player says yes); with the will active, it starts or ends the Integrate form through `BeastWillManager` (assimilation, mastery, strain and the form's energy are the Beast Will system's). If another will is active the player is told to swap first.
 - The **Acquire phase** is the Beast Will system's own (its key); the core's passive only adds a small carried bonus (night vision and speed for the panther, regeneration for the guardian, lightning resistance and thorns for the chimera, a quarter-health heal per kill for the dragon).
 - The core is not consumed. The ledger of the Beast Will system still decides that one will binds once per player.

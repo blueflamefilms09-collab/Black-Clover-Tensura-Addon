@@ -74,7 +74,7 @@ distances).
 
 **The world border.** In vanilla every dimension follows the Overworld's border. A server that keeps a small border (`/worldborder set 10000`) has always cut off the Abyssal road at
 z = 300 000 (an issue of 1.55.0, not new); with parties the lanes reach further. `PartyRegistry` logs the lane range at every start and WARNS when the border of
-`nusmp:mega_dungeon` does not contain it. Lower `party.maxParties` or widen the border.
+`anime_multiverse:mega_dungeon` does not contain it. Lower `party.maxParties` or widen the border.
 
 **The old ten-floor sectors (`floors.perSector` above 1) are not instanced.** Their chains wind through the dimension by the planner's choice and can wander thousands of blocks, so
 nothing would keep one party's chain out of the next lane. `PartyPolicy.instanced` is false there, every answer is party 0, and the dungeon is shared exactly as in 1.57.0.

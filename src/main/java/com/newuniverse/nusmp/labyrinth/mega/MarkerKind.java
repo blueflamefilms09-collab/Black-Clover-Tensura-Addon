@@ -65,7 +65,7 @@ public enum MarkerKind {
     public static MarkerKind byId(String id) {
         if (id == null) return null;
         String s = id.trim();
-        if (s.startsWith("anime_multiverse:")) s = s.substring(6);
+        if (s.startsWith("anime_multiverse:")) s = s.substring(17);
         for (MarkerKind k : values()) if (k.id().equalsIgnoreCase(s)) return k;
         return null;
     }

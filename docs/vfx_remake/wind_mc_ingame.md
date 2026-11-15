@@ -62,7 +62,7 @@ Textures: 32 PNGs of 16x16 to 32x32, about 12 KB in total.
 
 ## 5. Files
 
-New: `vfx/WindMc.java`, `vfx/WindMcSelfTests.java`, `vfx/client/WindMcConfig.java`, `vfx/client/layer/WindMcLayer.java`, `assets/nusmp/textures/particle/wmc_*.png` (32),
+New: `vfx/WindMc.java`, `vfx/WindMcSelfTests.java`, `vfx/client/WindMcConfig.java`, `vfx/client/layer/WindMcLayer.java`, `assets/anime_multiverse/textures/particle/wmc_*.png` (32),
 `tools/vfx_preview/wind_mc_ingame.py`, `tools/vfx_preview/scenes.d/wind_mc.json`, `docs/previews/vfx_remake/mc/wind_mc_ingame.png`, `wind_mc_ingame_budget.json`, this doc, the tests
 `WindMcTest`, `WindMcAssetTest`, `WindMcSourceScanTest`.
 Appended to (shared files): `vfx/client/AbstractVfxLayer.java` (`handles`), `vfx/client/VfxManager.java` (one registration, one `handles` line), `vfx/client/VfxVertexBuffer.java` (nearest filter for

@@ -51,7 +51,7 @@ class DemonSlayerAssetsTest {
         for (String f : new String[]{"textures/entity/demon_slayer_sword.png", "textures/entity/demon_slayer_bloom.png", "textures/entity/demon_slayer_bloom_glow.png", "models/item/demon_slayer_sword.json",
                 "models/item/demon_slayer_sword_icon.json", "textures/item/demon_slayer_sword.png"})
             if (!Files.exists(RES.resolve(f))) bad.add(f + ": the old look was removed (it must stay: visual.upgrade = false draws it)");
-        assertTrue(Files.exists(Path.of("src", "main", "java", "com", "newuniverse", "anime_multiverse", "client", "DemonSlayerMesh.java")), "the old pixel model stays");
+        assertTrue(Files.exists(Path.of("src", "main", "java", "com", "newuniverse", "nusmp", "client", "DemonSlayerMesh.java")), "the old pixel model stays");
         assertEquals(List.of(), bad);
     }
 

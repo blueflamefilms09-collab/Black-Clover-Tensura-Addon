@@ -250,7 +250,7 @@ def registered_books():
     """[(registry path, class, factory or '')] in NUSkills order, then the generic wiki attributes (MagicType names)."""
     t = read(os.path.join(SRC, 'skill/NUSkills.java'))
     out = []
-    for m in re.finditer(r'book\("(book_[a-z_]+|forbidden_magic)",\s*com\.newuniverse\.anime_multiverse\.book\.(\w+)(?:::(\w+))?\)', t):
+    for m in re.finditer(r'book\("(book_[a-z_]+|forbidden_magic)",\s*com\.newuniverse\.nusmp\.book\.(\w+)(?:::(\w+))?\)', t):
         out.append((m.group(1), m.group(2), m.group(3) or ''))
     return out
 

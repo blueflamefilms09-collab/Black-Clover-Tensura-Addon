@@ -213,7 +213,7 @@ class ModeArmorValkyrieAssetTest {
         assertEquals("bettercombat:spear", json(RES.resolve("data/anime_multiverse/weapon_attributes/" + ID + ".json")).get("parent").getAsString());
         assertTrue(read(Path.of("tools", "bettercombat", "manifest.json")).contains("\"" + ID + "\": {"), "the lance is in the Better Combat inventory");
         assertEquals("black_clover", json(RES.resolve("data/anime_multiverse/relics/franchise_map.json")).getAsJsonObject("items").get(ID).getAsString());
-        String eng = read(Path.of("src", "main", "java", "com", "newuniverse", "anime_multiverse", "item", "WeaponEngravings.java"));
+        String eng = read(Path.of("src", "main", "java", "com", "newuniverse", "nusmp", "item", "WeaponEngravings.java"));
         int at = eng.indexOf("Map.entry(\"" + ID + "\"");
         assertTrue(at > 0);
         String line = eng.substring(at, eng.indexOf('\n', at));
@@ -227,7 +227,7 @@ class ModeArmorValkyrieAssetTest {
 
     @Test
     void theLanceIsCreativeOnlyNothingHandsItOut() throws IOException {
-        String tab = read(Path.of("src", "main", "java", "com", "newuniverse", "anime_multiverse", "NUCreativeTab.java"));
+        String tab = read(Path.of("src", "main", "java", "com", "newuniverse", "nusmp", "NUCreativeTab.java"));
         assertTrue(tab.contains("ValkyrieLanceBoot.creativeItems()"), "in the creative tab");
         List<String> hits = new ArrayList<>();
         try (var s = Files.walk(Path.of("src", "main", "resources", "data"))) {
@@ -239,7 +239,7 @@ class ModeArmorValkyrieAssetTest {
             });
         }
         assertTrue(hits.isEmpty(), "the lance appears in a loot table, recipe or trade: " + hits);
-        String boot = read(Path.of("src", "main", "java", "com", "newuniverse", "anime_multiverse", "valkyrielance", "ValkyrieLanceBoot.java"));
+        String boot = read(Path.of("src", "main", "java", "com", "newuniverse", "nusmp", "valkyrielance", "ValkyrieLanceBoot.java"));
         assertFalse(boot.toLowerCase().contains("loot") && boot.contains("LootTable"), "no loot");
     }
 }

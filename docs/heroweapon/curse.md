@@ -67,7 +67,7 @@ Everything below that is not in this table is **design** for Minecraft, not cano
 | `causes` | compound | cause key to the game time it was last counted (the pauses); pruned when older than the longest pause |
 
 The state belongs to the bond: it is kept through death (the bond is copied to the new body), wiped when the weapon is released or re-bound. An old save, a save with a
-missing key or a hand-edited one loads as "nothing". The max-health tax is a TRANSIENT attribute modifier (`nusmp:hero_curse_tax`, re-applied from the saved `tax` on login,
+missing key or a hand-edited one loads as "nothing". The max-health tax is a TRANSIENT attribute modifier (`anime_multiverse:hero_curse_tax`, re-applied from the saved `tax` on login,
 respawn and every few seconds), so removing this mod or releasing the weapon can never leave a permanent modifier behind.
 
 ## 4. Despair: causes, numbers, pauses
@@ -106,7 +106,7 @@ weapon's forms file carries as a curse form (the Vassal Mirror's Envy, a Chain's
 offer with nothing behind it would take hearts and give nothing). The first candidate not yet embraced is offered.
 
 **Accept** (four doors, all end in `CurseSystem.embrace(ServerPlayer)`, which re-checks everything):
-1. hold **Sneak** and the **Embrace key** (`key.nusmp.hero_embrace`, default **O**) for 3 seconds: a gauge under the crosshair fills; the client sends one `nusmp:hero_curse_act` packet;
+1. hold **Sneak** and the **Embrace key** (`key.anime_multiverse.hero_embrace`, default **O**) for 3 seconds: a gauge under the crosshair fills; the client sends one `anime_multiverse:hero_curse_act` packet;
 2. the Weapon Book's Embrace button (the forms system calls `CurseSystem.embrace(ServerPlayer)` by reflection);
 3. `/multiverse hero curse embrace`;
 4. hold **Sneak** and the core's **third hero key** for 3 seconds (the design's own gesture), when the core's key bookkeeping is there: every ten ticks the server asks
@@ -180,7 +180,7 @@ At corruption 1000 the weapon takes over for **10 to 20 seconds** (a whole numbe
 1. **By itself**: corruption falls 2 a second while no curse form is worn.
 2. **Resting** at a Safe Zone of the Mega-Dungeon: a finished rest (`labyrinth/mega/safe/RestEvents` writes `RestState.lastRest`; the curse reads that once a second, so no edit to the Safe Zone code was needed)
    clears **half** the corruption. A rest seen more than 5 seconds after it ended (a login) is remembered but not honoured, and a rest never reaches a wielder the weapon holds.
-3. **The Purification Charm** (`nusmp:purification_charm`): right click. Clears **all** corruption and, **the first time** a wielder ever uses one while they owe tax, gives back **2 hearts** of it
+3. **The Purification Charm** (`anime_multiverse:purification_charm`): right click. Clears **all** corruption and, **the first time** a wielder ever uses one while they owe tax, gives back **2 hearts** of it
    (config: `charmRefundHearts`, `charmRefundUses`). It does nothing for a player without a hero weapon, nothing while the weapon holds them, and is not used up in those cases or when there is nothing to clean.
    Recipe (shaped): `AGA / LTL / AGA` with A = amethyst shard, G = gold ingot, L = lapis lazuli, T = ghast tear (the tear is the nether trip that keeps it a late-early-game item). Icon: a white pearl and gold shield pendant
    with an aqua gem, drawn by `tools/heroweapon/gen_curse_icons.py`.
@@ -248,11 +248,11 @@ All of them refuse a player with no hero weapon with that reason.
 
 ## 12. Network, client
 
-* `nusmp:hero_curse_sync` (server to the wielder only; `CurseSyncPayload`): despair, corruption (varints 0..1000), the wire numbers of the offered sin and of the sin of the ACTIVE form when it is a curse form, the weapon out or not (0 none, enum position + 1; so `HeroCurse.active` and `activeSin` answer the same on both sides), the ticks the Overrun and
+* `anime_multiverse:hero_curse_sync` (server to the wielder only; `CurseSyncPayload`): despair, corruption (varints 0..1000), the wire numbers of the offered sin and of the sin of the ACTIVE form when it is a curse form, the weapon out or not (0 none, enum position + 1; so `HeroCurse.active` and `activeSin` answer the same on both sides), the ticks the Overrun and
   the offer have left, the series bit mask. Numbers only, no text. Sent on login, respawn, dimension change, bind, release, every transition, every second while something counts down, otherwise only on change and every 10 s.
-* `nusmp:hero_curse_act` (client to server; `CurseActPayload`): 0 embrace, 1 decline. The server re-validates everything.
+* `anime_multiverse:hero_curse_act` (client to server; `CurseActPayload`): 0 embrace, 1 decline. The server re-validates everything.
 * Both registered optional, version "1". Client state: `CurseView` (common package, no Minecraft types), so `HeroCurse.active/locked/corruption/despair` also answer for the local player of a client.
-* `CurseClient`: the key, the GUI layer `nusmp:hero_curse_overlay` above everything, the heartbeat (from 600 corruption, 60 beats a minute rising to 150), the client config.
+* `CurseClient`: the key, the GUI layer `anime_multiverse:hero_curse_overlay` above everything, the heartbeat (from 600 corruption, 60 beats a minute rising to 150), the client config.
 * `CurseOverlay` (plain `fill` calls, no textures): the tint at the edges in the sin's colour (up to 0.8 opacity; Pride's is heavier and reaches further in; an open offer glows faintly; an Overrun floods the screen). It is drawn as
   nested rectangular frames, a hundred or so thin ones in one batch (`GuiGraphics.drawManaged`), so it falls off smoothly; `VignetteMath.layout` keeps the frames from ever going past the middle of the screen (frames that did would leave a bare strip across it, a line),
   the bar at the left, stacked above the core's HUD panel, with a mark at 60% (where the heartbeat starts) and the despair line under it, the offer panel under the crosshair with the hold gauge and the seconds left, the whisper lines in the
@@ -293,7 +293,7 @@ All of them refuse a player with no hero weapon with that reason.
 | `CurseSelfTests.java` | `hero.curse`, the in-game self-test |
 | `HeroCurse.java`, `CurseSystem.java` | the door and the entry point (replace the stubs of the contract; every public signature kept) |
 | `client/heroweapon/curse/CurseClient.java`, `CurseOverlay.java`, `CurseClientConfig.java`, `VignetteMath.java` | the client |
-| `tools/heroweapon/gen_curse_icons.py`, `assets/.../textures/item/purification_charm.png`, `models/item/purification_charm.json`, `data/nusmp/recipe/purification_charm.json` | the charm's art and recipe |
+| `tools/heroweapon/gen_curse_icons.py`, `assets/.../textures/item/purification_charm.png`, `models/item/purification_charm.json`, `data/anime_multiverse/recipe/purification_charm.json` | the charm's art and recipe |
 
 ## 15. Tests
 

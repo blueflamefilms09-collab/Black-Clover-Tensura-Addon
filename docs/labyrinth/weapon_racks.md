@@ -16,7 +16,7 @@ view" of "Space-Time Fracture Rift Engine". Lang fragment: `tools/lang/weapon_ra
 |---|---|
 | NEW | `labyrinth/props/`: `WeaponRackBlock`, `WeaponRackBlockEntity`, `PropsRegistry`, `PropsConfig`, `RackConverter`, the pure `RackLayout`, `RackMode`, `RackFamilies`, `RackPlacement`, `PropsSelfTests` |
 | NEW | `client/labyrinth/props/`: `WeaponRackRenderer` (the block entity renderer), `PropsClient` |
-| NEW | block + item `nusmp:weapon_rack` (block state with 4 facings, a 26-pixel-tall frame model, a generated 16x16 texture, recipe, drop, axe tag), six themed loot tables `data/nusmp/loot_table/racks/<family>.json` |
+| NEW | block + item `anime_multiverse:weapon_rack` (block state with 4 facings, a 26-pixel-tall frame model, a generated 16x16 texture, recipe, drop, axe tag), six themed loot tables `data/anime_multiverse/loot_table/racks/<family>.json` |
 | NEW | rift extras: `client/labyrinth/rift/ShardMath` (pure), `RealityShards`, `ParallaxMath` (pure), `RiftParallax` |
 | REPLACED (behind a flag) | the armour stands the dungeon's templates carry: with `props.rackInsteadOfArmourStand` = true (default) the generator's stands become racks; false = the stands as before |
 | KEPT | every template NBT file (not one was rewritten), the armour stands they carry (they are what the flag turns back on), the generator scripts (`mega_lib.armor_stand`), `SectorPlacer.clearDecor` (it still clears stands and frames on a repair), every existing rift look (the lens, the rim, the arcs, the glow, the mega-rare core: the shards and the parallax layers are drawn in addition) |

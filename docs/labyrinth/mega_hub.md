@@ -6,7 +6,7 @@ strictly to Floor 0. Floor 0 generation: the NeoForge dimension/biome code for F
 modifiers and event handlers to ensure 1) only passive mobs spawn, 2) players can break/place blocks to build a base, 3) absolutely zero structures from other
 installed mods are allowed to generate here."* This builder owns the dimension data, the biome, the rules, the travel (in, across, out), the plaza and the
 admin command. The terrain, the Holy Spire and the Abyssal Chasm are drawn by the MACRO builder's chunk generator (`docs/labyrinth/mega_macro.md`); the
-Overworld Gateway structure is the 1.54.0 one (`nusmp:mega_gateway`), only the place its gate leads to changes.
+Overworld Gateway structure is the 1.54.0 one (`anime_multiverse:mega_gateway`), only the place its gate leads to changes.
 
 **State of this document.** Written without a game. CI compiles the Java, runs the pure JUnit tests and the headless server smoke test (`/multiverse mega
 selftest`, the six `hub.*` tests below). The plaza was checked by scripts and looked at as voxel pictures (flat colours, no textures, no sign text); section 14
@@ -20,10 +20,10 @@ lists exactly what that leaves unverified. Every class, data file and strategy b
 
 | Part | Status | Notes |
 |---|---|---|
-| Dimension `nusmp:sanctuary`, its type, the biome `nusmp:sanctuary_plains`, the biome modifier | NEW | Nothing like it existed. The Labyrinth (1.35.0) and the Mega-Dungeon (1.54.0) are void worlds under the Dungeon Guard; Floor 0 is the opposite. |
+| Dimension `anime_multiverse:sanctuary`, its type, the biome `anime_multiverse:sanctuary_plains`, the biome modifier | NEW | Nothing like it existed. The Labyrinth (1.35.0) and the Mega-Dungeon (1.54.0) are void worlds under the Dungeon Guard; Floor 0 is the opposite. |
 | Sanctuary Rules: passive mobs only, building with protected volumes, the structure alarm (`HubRules`) | NEW | The Dungeon Guard deliberately does not hold this dimension (`Labyrinth.in` is false there). |
 | Travel (`HubTravel`): Overworld to Floor 0, the three gates, home, back from the dungeon | NEW, REPLACES the destination of the 1.54.0 Gateway | The old route (gate straight into sector 0) stays behind `hub.enabled = false`. The lead's three-branch routing is in section 11. |
-| The plaza template `structure/hub/plaza.nbt` and its generator | NEW | The only `nusmp:` block in it is the existing `nusmp:labyrinth_gate` (the home gate). Everything else is vanilla. |
+| The plaza template `structure/hub/plaza.nbt` and its generator | NEW | The only `anime_multiverse:` block in it is the existing `anime_multiverse:labyrinth_gate` (the home gate). Everything else is vanilla. |
 | `/multiverse mega hub ...` (tp, status, plaza, gates) | NEW | |
 | Config `nusmp-labyrinth-mega-hub-server.toml` (section `[hub]`, 5 keys) | NEW | |
 | In-game self-tests `hub.*` (six) | NEW | |
@@ -37,11 +37,11 @@ No old model, texture, effect, shape, page or skill was touched. The only existi
 
 | File | What and why |
 |---|---|
-| `data/nusmp/dimension/sanctuary.json` | The level stem: type `nusmp:sanctuary`, generator `nusmp:sanctuary` (MACRO's codec, exactly one field `biome_source`) over a `minecraft:fixed` biome source. **Why a separate dimension:** the Dungeon Guard makes every block of a Labyrinth dimension unbreakable, which is the opposite of a base-building world; a dimension of its own needs no exception in the guard, and a flat fallback is one file away (section 13). |
-| `data/nusmp/dimension_type/sanctuary.json` | `min_y -64`, `height 384`, `logical_height 384` (the highest block is y 319: `HubLayout` is designed for it), the Overworld's sky and effects, `natural true`, beds work, no raids, no respawn anchors. **Why a copy of the Overworld's fields and not the Overworld's type:** a type of its own can change later (a fixed time, a different sky) without touching the Overworld, and the Mega-Dungeon's types (`has_ceiling`, `min_y 0`) cannot hold a plains world. The field set was compared with vanilla's `dimension_type/overworld.json` of 1.21.1. |
-| `data/nusmp/worldgen/biome/sanctuary_plains.json` | A copy of vanilla plains (temperature 0.8, downfall 0.4, its colours, its cave mood sound) with no monster, no ambient (bats), no water or misc spawner, only seven passive land creatures in `creature` (sheep, pig, chicken, cow, horse, donkey, rabbit), `carvers {}` and four vegetation features (tall grass, plains trees, plains flowers, grass patches) on the vegetal step. **Why a clone with its OWN id and not `minecraft:plains`:** structure placement and mod spawns are keyed by biome tags and ids; vanilla plains puts villages and pillager outposts in and many mods add spawns to it, while a new id is in none of those tags. That is the first of the three layers of "no foreign structures" (section 5). |
-| `data/nusmp/neoforge/biome_modifier/sanctuary_peace.json` | The biome modifier that uses `SanctuaryPeaceModifier` on `nusmp:sanctuary_plains` and nothing else. **Why:** this is the "use of biome modifiers" the brief asks to be explained (section 4); it strips, in the last phase, whatever another mod added to this biome. |
-| `data/nusmp/structure/hub/plaza.nbt` | The 33 x 20 x 33 plaza (section 7), written by `tools/labyrinth/gen_mega_hub.py`. **Why a template and not blocks written by the chunk generator:** the plaza is authored (a fountain, stalls, signposts, a castle gate); a noise field cannot draw those, a template can, and a template is stamped ONCE, when the first player arrives, so the terrain generator stays a pure function of the seed. It lives under `structure/hub/`, not `structure/mega/`, so the Mega checker (grid and jigsaw rules) ignores it. |
+| `data/anime_multiverse/dimension/sanctuary.json` | The level stem: type `anime_multiverse:sanctuary`, generator `anime_multiverse:sanctuary` (MACRO's codec, exactly one field `biome_source`) over a `minecraft:fixed` biome source. **Why a separate dimension:** the Dungeon Guard makes every block of a Labyrinth dimension unbreakable, which is the opposite of a base-building world; a dimension of its own needs no exception in the guard, and a flat fallback is one file away (section 13). |
+| `data/anime_multiverse/dimension_type/sanctuary.json` | `min_y -64`, `height 384`, `logical_height 384` (the highest block is y 319: `HubLayout` is designed for it), the Overworld's sky and effects, `natural true`, beds work, no raids, no respawn anchors. **Why a copy of the Overworld's fields and not the Overworld's type:** a type of its own can change later (a fixed time, a different sky) without touching the Overworld, and the Mega-Dungeon's types (`has_ceiling`, `min_y 0`) cannot hold a plains world. The field set was compared with vanilla's `dimension_type/overworld.json` of 1.21.1. |
+| `data/anime_multiverse/worldgen/biome/sanctuary_plains.json` | A copy of vanilla plains (temperature 0.8, downfall 0.4, its colours, its cave mood sound) with no monster, no ambient (bats), no water or misc spawner, only seven passive land creatures in `creature` (sheep, pig, chicken, cow, horse, donkey, rabbit), `carvers {}` and four vegetation features (tall grass, plains trees, plains flowers, grass patches) on the vegetal step. **Why a clone with its OWN id and not `minecraft:plains`:** structure placement and mod spawns are keyed by biome tags and ids; vanilla plains puts villages and pillager outposts in and many mods add spawns to it, while a new id is in none of those tags. That is the first of the three layers of "no foreign structures" (section 5). |
+| `data/anime_multiverse/neoforge/biome_modifier/sanctuary_peace.json` | The biome modifier that uses `SanctuaryPeaceModifier` on `anime_multiverse:sanctuary_plains` and nothing else. **Why:** this is the "use of biome modifiers" the brief asks to be explained (section 4); it strips, in the last phase, whatever another mod added to this biome. |
+| `data/anime_multiverse/structure/hub/plaza.nbt` | The 33 x 20 x 33 plaza (section 7), written by `tools/labyrinth/gen_mega_hub.py`. **Why a template and not blocks written by the chunk generator:** the plaza is authored (a fountain, stalls, signposts, a castle gate); a noise field cannot draw those, a template can, and a template is stamped ONCE, when the first player arrives, so the terrain generator stays a pure function of the seed. It lives under `structure/hub/`, not `structure/mega/`, so the Mega checker (grid and jigsaw rules) ignores it. |
 | `labyrinth/mega/hub/HubRegistry.java` | Registration entry point (`MegaSystem` already calls it): mod bus (the biome modifier serializer, the self-tests) and game bus (the rules). No block, no item, so no ordering constraint against `NUItems.ITEMS`. |
 | `.../HubConfig.java` | Server config, its own file (the pattern of `DndConfig`, `MegaConfig`, `EcoConfig`) so a server owner can switch the Hub off or relax a rule without touching the dungeon's file. Plain `define` / `defineInRange` only, read through `get()` which answers the default while the spec is not loaded (a chunk can ask the spawn filter before the config is read). |
 | `.../HubKeys.java` | The strings stored in player data and saved data, spelled ONCE. Two of them are not ours (the gate cooldown keys belong to `LabyrinthTravel`, package-private there); a unit test reads `LabyrinthTravel.java` to prove the copies are still true. |
@@ -62,7 +62,7 @@ No old model, texture, effect, shape, page or skill was touched. The only existi
 
 ## 3. The dimension, the type and the biome
 
-* **Dimension** `nusmp:sanctuary` is the id the contract fixed (`Labyrinth.SANCTUARY_DIMENSION`). `Labyrinth.in(level)` stays FALSE there on purpose, so every
+* **Dimension** `anime_multiverse:sanctuary` is the id the contract fixed (`Labyrinth.SANCTUARY_DIMENSION`). `Labyrinth.in(level)` stays FALSE there on purpose, so every
   system written for "the Labyrinth" (the Dungeon Guard, the economy, the gloom clock, the relic exclusivity, the void rescue) leaves it alone.
 * **Type**: the Overworld's sky (`effects minecraft:overworld`, day and night, weather), `ambient_light 0.0`, `monster_spawn_light_level 0` (no monster may spawn
   anyway), `bed_works true` (a player may sleep in the base they build and the bed sets their respawn there), `has_raids false`, `respawn_anchor_works false`,
@@ -108,7 +108,7 @@ block, a command, a mod's code) never meets it. And the stock `neoforge:remove_s
 that is installed next year is on nobody's list. So `SanctuaryPeaceModifier` removes by CATEGORY, in the phase that runs last (`AFTER_EVERYTHING`): every spawner
 list except `creature` is emptied, a monster registered in the creature list is removed from it, and every placed feature whose id is not in a kept namespace
 (default only `minecraft`) is removed, which is what keeps a mod's ruins, towers and ores, added to "every overworld biome", out of Floor 0 when they arrive as
-features. It applies to `nusmp:sanctuary_plains` and to no other biome (a modifier on all biomes would strip the Overworld).
+features. It applies to `anime_multiverse:sanctuary_plains` and to no other biome (a modifier on all biomes would strip the Overworld).
 
 **What an event handler is, and why it is the guarantee for mobs.** `FinalizeSpawnEvent` fires for every mob that goes through `Mob.finalizeSpawn`: natural
 spawns, chunk generation, spawners, eggs, commands, structures. In NeoForge 21.1 there are TWO ways to refuse, and they do different things (read in the
@@ -129,7 +129,7 @@ interface still has the category.
 
 ## 5. Sanctuary Rules, part 3: zero structures from other mods (three layers)
 
-1. **The biome** (data). Structure sets are filtered by the biomes the biome source can produce; `nusmp:sanctuary_plains` is in no structure's biome list or tag,
+1. **The biome** (data). Structure sets are filtered by the biomes the biome source can produce; `anime_multiverse:sanctuary_plains` is in no structure's biome list or tag,
    so no structure of any mod is possible here unless that mod names this biome explicitly.
 2. **The generator** (MACRO). `SanctuaryGenerator` overrides `createStructures` to do nothing: even a structure that did name the biome is never started.
 3. **The alarm and the test** (this builder). `HubRules.onChunkLoad` looks at `chunk.getAllStarts()` of every Sanctuary chunk that loads and logs ONE warning per
@@ -174,7 +174,7 @@ entities, not blocks). Lightning is handled by the plaza itself: the two towers 
 a lightning rod draws every strike within 128 blocks of it, so a thunderstorm does not set the wooden stalls alight. If the square is ever damaged, an admin
 restores it with `/multiverse mega hub plaza`.
 
-The message the player sees (action bar, at most once per two seconds, so a held mouse button does not flood it) is `message.nusmp.mega.mhb.protected`, or
+The message the player sees (action bar, at most once per two seconds, so a held mouse button does not flood it) is `message.anime_multiverse.mega.mhb.protected`, or
 `...readonly` when building is switched off.
 
 ---------------------------------------------------------------------------------------------------------------------------------------------
@@ -185,7 +185,7 @@ The message the player sees (action bar, at most once per two seconds, so a held
 
 A town square, 33 x 33 blocks and 20 high, centred on `HubLayout.PLAZA_X/Z`, its paving on the ground of the plains (`SURFACE_Y - 1`, so feet stand on
 `SURFACE_Y`; MACRO flattens a disc of `PLAZA_RADIUS` 40 to exactly that height). 17,782 cells are written (3,837 solid blocks and the air that clears the disc),
-67 distinct ids: air, 65 other vanilla blocks and the one `nusmp:labyrinth_gate`. It is deterministic (two runs write byte-identical files).
+67 distinct ids: air, 65 other vanilla blocks and the one `anime_multiverse:labyrinth_gate`. It is deterministic (two runs write byte-identical files).
 
 | Part | What it is and why |
 |---|---|
@@ -207,7 +207,7 @@ A town square, 33 x 33 blocks and 20 high, centred on `HubLayout.PLAZA_X/Z`, its
 
 A small castle gate, 15 wide and 12 high with its rods, that reads from across the square and says "the way home" without a sign. From the north: a plain
 brick REAR face (so nobody walking round it sees the dark backing); a BACK layer behind the plane of dark deepslate tiles (so the swirling gate block reads
-against something dark); the PLANE layer: the 3 x 4 plane of `nusmp:labyrinth_gate` whose centre is exactly `HubLayout.HOME_GATE_*` once the template is placed,
+against something dark); the PLANE layer: the 3 x 4 plane of `anime_multiverse:labyrinth_gate` whose centre is exactly `HubLayout.HOME_GATE_*` once the template is placed,
 framed by polished andesite, chiselled bricks and a sea lantern on each side; the TUNNEL layer: a pointed arch five blocks wide at the foot, three a row higher,
 one at the apex, built from upside-down stairs and closed by a chiselled keystone, with a lantern hanging on a chain at the apex. The wall is crenellated
 over a cornice of upside-down stairs; two banners (white, black) hang on the piers; the sign "Overworld / (home)" hangs on the keystone. A tower stands on each
@@ -313,7 +313,7 @@ dimension loaded, how many players, the plaza record and build version, the rule
 `hub gates` (the three gate centres, and what `gateNear` says about the sender's position: how a gate that does not answer is diagnosed). Every text is a lang key
 with an English fallback, so the command reads fine before the lang fragment is merged.
 
-**Lang** prefix `message.nusmp.mega.mhb.*`, 23 keys, in the fragment `mega/frag/mhb.lang.json` (the texts are the Java fallbacks, checked equal).
+**Lang** prefix `message.anime_multiverse.mega.mhb.*`, 23 keys, in the fragment `mega/frag/mhb.lang.json` (the texts are the Java fallbacks, checked equal).
 
 **Quest key** `mega.hub` (arrived in Floor 0), fired through `NusmpEvents.fire(player, "mega.hub")` on every arrival.
 
@@ -352,10 +352,10 @@ if (Labyrinth.inMega(p.level()) && com.newuniverse.nusmp.labyrinth.mega.hub.HubT
 ```
 
 5. Lang: merge `mega/frag/mhb.lang.json` (`python3 .../mega/merge_frags.py`). Quest: the key `mega.hub`.
-6. Nothing else: no client class, no creative-tab entry, no item or block (the gates are the existing `nusmp:labyrinth_gate`), no mixin, no change to `labyrinth/gate/*`
+6. Nothing else: no client class, no creative-tab entry, no item or block (the gates are the existing `anime_multiverse:labyrinth_gate`), no mixin, no change to `labyrinth/gate/*`
    other than the two edits above.
 
-**Order dependency.** `data/nusmp/dimension/sanctuary.json` names the chunk generator `nusmp:sanctuary`, which MACRO registers
+**Order dependency.** `data/anime_multiverse/dimension/sanctuary.json` names the chunk generator `anime_multiverse:sanctuary`, which MACRO registers
 (`MacroRegistry.init` runs before `HubRegistry.init` in `MegaSystem`). A tree that has the Hub's data but not MACRO's codec does not boot (the dimension fails to
 parse): merge MACRO with or before this builder, or use the fallback of section 13.
 
@@ -369,11 +369,11 @@ event handlers use; none teleports a player, a fake player has no connection; ev
 | Key | Checks |
 |---|---|
 | `hub.dimension` | The level exists; the chunk at the arrival cell generates; the raw terrain under it is solid; once the plaza is stamped, the three cells above it are free. |
-| `hub.plaza` | `ensurePlaza` leaves a `nusmp:labyrinth_gate` in all 12 cells of the plane, at `HOME_GATE`, the arrival column clear, and the record says it was stamped. |
+| `hub.plaza` | `ensurePlaza` leaves a `anime_multiverse:labyrinth_gate` in all 12 cells of the plane, at `HOME_GATE`, the arrival column clear, and the record says it was stamped. |
 | `hub.no_hostile` | The spawn decision cancels a zombie, passes a cow, a command-spawned zombie and an owned one; the REAL handler, driven with constructed events, cancels a natural zombie spawn, lets a cow through and marks the command zombie; the sweep removes a stray zombie and keeps a named one, an admin's, a servant and a cow. |
 | `hub.no_structures` | A 5 x 5 chunk square round the plaza has no structure start. |
 | `hub.gates` | The three centres classify as themselves, open ground as nothing; the protection follows the config; `useGate` at open ground leaves the player where they are and stamps the cooldown. |
-| `hub.biome` | The LIVE biome (after every mod's modifiers ran) is `nusmp:sanctuary_plains`, has no spawner but `creature`, no monster in it, at least one creature, only `minecraft:` features, and at least one. |
+| `hub.biome` | The LIVE biome (after every mod's modifiers ran) is `anime_multiverse:sanctuary_plains`, has no spawner but `creature`, no monster in it, at least one creature, only `minecraft:` features, and at least one. |
 
 **Pure JUnit tests** (33; no Minecraft import; also run locally with the `jt.sh` shim): `HubProtectTest` (every face of the box, the spheres and their radius, the
 margin, the switch matrix, the message rate), `HubSpawnPolicyTest` (the whole truth tables), `HubKeysTest` (the key names, and that the gate cooldown keys and
@@ -388,17 +388,17 @@ sign, the floor row and the gate width each fails at least one test.
 
 ## 13. If the generator misbehaves: the flat fallback
 
-The dimension is one file. If MACRO's chunk generator is not available or ever misbehaves, replace `data/nusmp/dimension/sanctuary.json` by this (a flat plains
+The dimension is one file. If MACRO's chunk generator is not available or ever misbehaves, replace `data/anime_multiverse/dimension/sanctuary.json` by this (a flat plains
 world with the grass at y 67, so every number of `HubLayout` for the plaza still holds; there is no Spire and no Chasm, so the Hub's only gate is the home gate,
 and the roads are reached with `/multiverse mega` commands; `structure_overrides []` keeps every structure out):
 
 ```json
 {
-  "type": "nusmp:sanctuary",
+  "type": "anime_multiverse:sanctuary",
   "generator": {
     "type": "minecraft:flat",
     "settings": {
-      "biome": "nusmp:sanctuary_plains",
+      "biome": "anime_multiverse:sanctuary_plains",
       "features": true,
       "lakes": false,
       "structure_overrides": [],

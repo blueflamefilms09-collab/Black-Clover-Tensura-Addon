@@ -17,7 +17,7 @@ The verdict of a row is "OK" / "WATCH" by rule; FIXED and REVIEWED below carry t
 import os, re, sys
 
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..')
-SRC = os.path.join(ROOT, 'src', 'main', 'java', 'com', 'newuniverse', 'anime_multiverse')
+SRC = os.path.join(ROOT, 'src', 'main', 'java', 'com', 'newuniverse', 'nusmp')
 DOC = os.path.join(ROOT, 'docs', 'performance_1_99.md')
 BEGIN, END = '<!-- inventory:begin -->', '<!-- inventory:end -->'
 

@@ -9,8 +9,8 @@ a treasury door sealed with condensed mana (a magic, a key, or sheer force), Mag
 | Part | Status | Where |
 |---|---|---|
 | Rarity table (common / rare / mega-rare), depth + Luck + per-player pity | NEW | `labyrinth/mega/rift/pocket/RiftTier`, `RiftTiers`, hook in `RiftService.rollNow` |
-| 13 pocket tombs as data (biome, gravity, palette, layout knobs, traps, 4-5 mobs, boss, seal, relics) | NEW | `data/nusmp/mega/pockets/*.json` (+ `bosses/`), made by `tools/rift/gen_pockets.py` from `pocket_roster.py` |
-| Datapack biome per tomb | NEW | `data/nusmp/worldgen/biome/pocket_<id>.json` |
+| 13 pocket tombs as data (biome, gravity, palette, layout knobs, traps, 4-5 mobs, boss, seal, relics) | NEW | `data/anime_multiverse/mega/pockets/*.json` (+ `bosses/`), made by `tools/rift/gen_pockets.py` from `pocket_roster.py` |
+| Datapack biome per tomb | NEW | `data/anime_multiverse/worldgen/biome/pocket_<id>.json` |
 | Seeded layout generator, build plan, collapse, traps, gravity, seal, mobs, boss bridge | NEW | `labyrinth/mega/rift/pocket/*`, `labyrinth/mega/guard/PocketBossBridge` |
 | Instancing | REUSED + EXTENDED | the pocket field of `PocketRealm` (192-block cells, 64 slots); exclusive tombs add fields to `Pocket` and a cap (`[rift.mega] maxTombs`, 4) |
 | Old pockets (boss / puzzle), shortcuts, return and exit rifts, `PocketRealm.leaveForRescue` | KEPT | unchanged behaviour |
@@ -43,7 +43,7 @@ Nothing existing was replaced or removed.
 * **Collapse.** Taking the primary relic starts a timer (`collapseSeconds`, 60-900). Rooms fall deepest first between 18% and 85% of it (so the way out is always through standing rooms), each warned 5 s ahead with dust and shaking; delvers in a falling room
   are carried to the entry hall with 20% of their health taken (never lethal); telegraphed stones (the Crucible's catastrophe clocks, capped at 60% of max health per person); corridors are cleared and the standing side re-walled. At the end everyone is
   thrown out and a sliced sweep (section by section, empty sections skipped) clears the cell, resets the biome and frees the slot.
-* **Hard loot gate.** Two layers: the loot condition `nusmp:in_pocket {pocket, stage}` on every pool of every table under `loot_table/pocket/`, and the entry `nusmp:pocket_relic {relic, pocket}`. Both ask `PocketGate`: the roll must be inside the cell of a LIVE
+* **Hard loot gate.** Two layers: the loot condition `anime_multiverse:in_pocket {pocket, stage}` on every pool of every table under `loot_table/pocket/`, and the entry `anime_multiverse:pocket_relic {relic, pocket}`. Both ask `PocketGate`: the roll must be inside the cell of a LIVE
   tomb with that id, the roller in the same cell, the boss dead for the `boss` stage, the seal open for the `treasury` stage. Unique relics go through the God of Order's ledger; a copy alive elsewhere falls back to magic crystals. The 26 relics are also
   kept out of every random relic roll (`RelicLoot.candidates`, `PocketRelics`) and are not Djinn vessels.
 
@@ -75,7 +75,7 @@ oneIn 250 (min 20), pityStart 150, pityHard 600, depthBoost 1.0, luckStep 0.08, 
 Renderer: at most 1,536 vertices a frame (`TearGeometry.BUDGET`; the full level uses 1,484), levels of detail under 18 / 40 / 84 blocks, nothing beyond; the mesh is cached by seed (24 entries).
 
 ## 5. Sound ids for the audio builder (soft strings, vanilla fallback until real)
-`nusmp:rift.crackle` (the tear's ambient crackle, played by the rift's client tick) and `nusmp:pocket.<tomb>.ambient` per tomb (13). Biome JSONs use vanilla ids only (an unknown id in a biome would break world load).
+`anime_multiverse:rift.crackle` (the tear's ambient crackle, played by the rift's client tick) and `anime_multiverse:pocket.<tomb>.ambient` per tomb (13). Biome JSONs use vanilla ids only (an unknown id in a biome would break world load).
 
 ## 6. Admin
 `/multiverse mega rift open pocket mega [id]`, `rift pocket types | make <id> | seal <slot> | fall <slot> | list`, `rift tier`, `rift pity`. Facade `RiftAdmin`: `spawnRift(level, at, pocket)`, `pocketIds()`, `enter(player, id)`, `collapseAll(level)`.

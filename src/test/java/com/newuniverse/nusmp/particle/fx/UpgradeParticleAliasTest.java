@@ -134,7 +134,7 @@ class UpgradeParticleAliasTest {
             String token = w.substring(w.indexOf('|') + 1);
             String id = UpgradeParticleAlias.resolve(token);
             boolean themed = token.equals("fx");
-            boolean catalog = token.startsWith("anime_multiverse:") && custom.contains(token.substring(6));
+            boolean catalog = token.startsWith("anime_multiverse:") && custom.contains(token.substring(17));
             if (!themed && !catalog) bad.add(w + " (a vanilla or unknown token: run tools/visual_upgrade/custom_particles.py)");
             if (!themed && (id == null || !custom.contains(id))) bad.add(w + " resolves to " + id);
         }

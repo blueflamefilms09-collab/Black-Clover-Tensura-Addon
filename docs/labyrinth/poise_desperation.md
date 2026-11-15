@@ -17,11 +17,11 @@ abilities and brain, the squads and their captains, the eco turf wars), so this 
 |------|------|-------|
 | Poise bar: capacity, drain, regeneration, stagger, immune window | NEW | `mega/poise/PoiseMath`, `PoiseState`, `PoiseTuning` (pure) |
 | Who carries a bar (elite / captain), never a boss, servant or minion | NEW | `PoiseBearers` (pure), `PoiseSystem.classify` |
-| The attached data `nusmp:mega_poise` (saved with the mob) | NEW | `PoiseData`, `PoiseRegistry` |
+| The attached data `anime_multiverse:mega_poise` (saved with the mob) | NEW | `PoiseData`, `PoiseRegistry` |
 | Super armor: blows drain the bar and lose 35 percent, no knockback; the breaking blow staggers | NEW | `PoiseSystem.onIncomingDamage`, `onKnockBack` |
 | Desperation rule (enter under 30 percent, leave over 45) | NEW | `Desperation` (pure), `PoiseSystem.step` |
 | Desperation cue: dark burst, ring, roar, embers, action-bar line | NEW | `PoiseCue` (only the `Fx` facade) |
-| Archetype ultimates (10, one per archetype) | NEW | `data/nusmp/mega/poise/telegraphs.json` ("abilities" rows, the format of `_abilities.json`) |
+| Archetype ultimates (10, one per archetype) | NEW | `data/anime_multiverse/mega/poise/telegraphs.json` ("abilities" rows, the format of `_abilities.json`) |
 | Shockwave for desperate captains that are not foundry mobs | NEW | `DesperationShockwaveGoal` |
 | Telegraph table (kind / ability -> shape, armor, minimum wind-up) | NEW | `telegraphs.json`, `TelegraphLibrary`, `TelegraphDef`, `TelegraphData` (reload listener) |
 | Telegraph geometry, one arithmetic for the outline and the hit test | NEW | `TelegraphGeometry` (pure) |
@@ -77,7 +77,7 @@ older version still says `true` for both and nobody chose that value. To get the
 
 ## Why (the spec's "why" for each decision)
 
-* **A data attachment instead of a vanilla capability class.** NeoForge 1.21 has attachments, not capabilities, for per-entity state: `nusmp:mega_poise` is attached only to bearers (a plain zombie
+* **A data attachment instead of a vanilla capability class.** NeoForge 1.21 has attachments, not capabilities, for per-entity state: `anime_multiverse:mega_poise` is attached only to bearers (a plain zombie
   stores nothing), saved with the mob, and not synced (the client does not need the bar).
 * **Poise as a state machine with no clock.** `PoiseState` takes the tick as an argument, so the whole cycle (armor, absorb, break, stagger, recover, immune window) is one unit-tested object, and
   the self-test drives time by hand.

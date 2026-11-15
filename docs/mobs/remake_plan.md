@@ -268,7 +268,7 @@ Today's mobs for comparison (cubes x 6, an upper bound; the previewer draws fewe
 * `cel.py` (flat-band painter, outline pass at 4x, palette ramps from `arc_kit/color.py`, PNG8 quantiser with a colour cap), `face.py` (expression plates: generalises `sylph_art.face`), `hair.py` (card styles, 32 existing style names re-implemented as cards),
   `outfit.py` (coats, capes, robes, armour plate sets as cards + boxes), `wings.py` (membrane wing from `gen_salamander_geo`).
 * `tables/<lane>.json`: one entry per entity: `{id, rig, build, height, palette{...}, face{set, eye_color, marks}, hair{style, color}, outfit{...}, props{...}, glow{...}, forms[...], lod_class, clips}`; the arc kit's `SPEC` dicts are converted by a one-time script (the sheets `tools/arc/char_*.py` already carry skin, hair, outfit, colours: no re-authoring of 94 characters from nothing).
-* `build.py <lane|id>` writes `geo/entity/anime_<id>[_lod1|_lod2|_glow].geo.json`, `textures/entity/anime_<id>*.png`, rig-family `animations/entity/anime_rig_<family>.animation.json`, `assets/nusmp/anime/looks_<lane>.json`, scenes for the previewer; `--check` regenerates to a temp folder and fails on any difference (as the arc kit).
+* `build.py <lane|id>` writes `geo/entity/anime_<id>[_lod1|_lod2|_glow].geo.json`, `textures/entity/anime_<id>*.png`, rig-family `animations/entity/anime_rig_<family>.animation.json`, `assets/anime_multiverse/anime/looks_<lane>.json`, scenes for the previewer; `--check` regenerates to a temp folder and fails on any difference (as the arc kit).
 * New names only (`anime_*`): nothing existing is touched; old `arc_*`, `foundry_*`, `pmx_*`, `abyssal_*` stay (rule 2).
 
 ### 6.3 What is generated from tables, per population
@@ -289,15 +289,15 @@ add `render.anime` to `SMOKE_EXPECT` in `smoke.yml`), `PerfSourceScanTest` (no a
 * `client/anime/AnimeMobRenderer<T>`: reads a look id from a `AnimeBody` (like `PlayerBody`: `look(e)`, `form(e)`, `expression(e)`, `size(e)`), picks LOD from distance and the `AnimeLod` budget, draws body + glow-only through `GeoDraw` with `FlatLit`, per-bone tint, bone mask for plates,
   held item at locators `item_r` / `item_l`, death fade, hurt flash. Hit boxes untouched.
 * Registered through a `Split` per entity type (existing `PlayerModelRegistry.Split`): anime renderer when `client.anime.<group>` is true (default true once a lane ships), otherwise the type's previous renderer (kit or art kit): the old stays and switches back without a new jar.
-* `AnimeLookTables` (merge add-only of `assets/nusmp/anime/looks_*.json`), `AnimeLod` (pure: bands, frame budget, own form), `FacePlates` (pure: state to plate id, blink seed), `AnimeOptions` (client config `nusmp-anime-client.toml`: `enabled`, per-group switches, `detailDistance`, `frameQuads`; looks only, so a CLIENT config, rule 9).
+* `AnimeLookTables` (merge add-only of `assets/anime_multiverse/anime/looks_*.json`), `AnimeLod` (pure: bands, frame budget, own form), `FacePlates` (pure: state to plate id, blink seed), `AnimeOptions` (client config `nusmp-anime-client.toml`: `enabled`, per-group switches, `detailDistance`, `frameQuads`; looks only, so a CLIENT config, rule 9).
 * Appends to `GeoDraw` / `GeoModelData`: `Predicate`-free bone mask (a `long`), per-bone colour multiplier, nothing that changes existing callers. `FlatLit` made public in a shared `client/render` package (copy, not move, so the prop painters are untouched).
 * Self-test `render.anime`, `PerfProbe` counter `anime.quads`.
 
 ## 8. Phased plan
 
-Lane rule: at most about 40 entities per lane; a lane writes only `tools/anime_kit/tables/<lane>.json`, `anime_<its ids>.*` assets, `assets/nusmp/anime/looks_<lane>.json`, `docs/mobs/<lane>.md`, `tools/lang/anime_<lane>.json`;
+Lane rule: at most about 40 entities per lane; a lane writes only `tools/anime_kit/tables/<lane>.json`, `anime_<its ids>.*` assets, `assets/anime_multiverse/anime/looks_<lane>.json`, `docs/mobs/<lane>.md`, `tools/lang/anime_<lane>.json`;
 nothing else, so lanes never overlap. The lead adds the one-line registrations in shared files (`PlayerModelRegistry.extend`-style hook, `SelfTests`, `NUSMP`), append-only. Concurrency: the disk has about 5 GB free and a full worktree is about 1 GB
-(`src` 947 MB): run at most 3 lanes at once or use sparse worktrees (`git worktree add --no-checkout`, then sparse-checkout `src/main/java`, `tools`, `docs`, `src/main/resources/assets/nusmp/anime` and only the lane's own asset names).
+(`src` 947 MB): run at most 3 lanes at once or use sparse worktrees (`git worktree add --no-checkout`, then sparse-checkout `src/main/java`, `tools`, `docs`, `src/main/resources/assets/anime_multiverse/anime` and only the lane's own asset names).
 
 ### Phase E: engine, kit and 3 pilots (must come first; 3 builders; about 1 round)
 

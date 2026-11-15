@@ -61,7 +61,7 @@ class StormAssetsTest {
     void theStaffIsFairyTailAndEngraved() throws IOException {
         assertTrue(read(RES.resolve("data/anime_multiverse/relics/franchise_map.json")).contains("\"" + ID + "\": \"fairy_tail\""));
         assertTrue(read(Path.of("tools", "relics", "franchise_overrides.json")).contains("\"" + ID + "\": \"fairy_tail\""));
-        String eng = read(Path.of("src", "main", "java", "com", "newuniverse", "anime_multiverse", "item", "WeaponEngravings.java"));
+        String eng = read(Path.of("src", "main", "java", "com", "newuniverse", "nusmp", "item", "WeaponEngravings.java"));
         int at = eng.indexOf("Map.entry(\"" + ID + "\"");
         assertTrue(at > 0);
         String line = eng.substring(at, eng.indexOf('\n', at));
@@ -94,7 +94,7 @@ class StormAssetsTest {
 
     @Test
     void theLayerNamesOnlyTexturesThatExist() throws IOException {
-        String layer = read(Path.of("src", "main", "java", "com", "newuniverse", "anime_multiverse", "vfx", "client", "layer", "StormLayer.java"));
+        String layer = read(Path.of("src", "main", "java", "com", "newuniverse", "nusmp", "vfx", "client", "layer", "StormLayer.java"));
         java.util.regex.Matcher m = java.util.regex.Pattern.compile("byName\\(\"(storm_[a-z]+)\"\\)").matcher(layer);
         int n = 0;
         while (m.find()) {

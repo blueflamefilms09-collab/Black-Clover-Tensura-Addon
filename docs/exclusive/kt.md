@@ -12,7 +12,7 @@ session): see "Verified / unverified" at the end.
 | Page `butoh_dash_deflect` (dash + missile deflection) | `book/ButohBook.java` (appended), `book/ButohArts.dashDeflect`, `butoh/ButohDash` |
 | Evasion, shifting hitbox, sidestep | `butoh/ButohEvents.onIncomingDamage`, `butoh/ButohDance.slip`, `butoh/DanceScale` |
 | Dance-cast +15% | `ButohBook.onDamageEntity` (additive block at the end; Trance Dance logic untouched) |
-| Eight looping dance clips | `tools/gen_cast_animations.py` (`DANCE_CLIPS`), `assets/nusmp/animations/player/cast.animation.json` |
+| Eight looping dance clips | `tools/gen_cast_animations.py` (`DANCE_CLIPS`), `assets/anime_multiverse/animations/player/cast.animation.json` |
 | Dance sequence sync (seed once) | `butoh/DanceChoreographer`, `butoh/DanceStatePayload`, `client/butoh/DanceClient` |
 | VFX `BUTOH_DANCE_RIPPLE`, `BUTOH_AFTERIMAGE` | `vfx/client/layer/ButohLayer.java` (additions only) |
 | Preview scenes | `tools/vfx_preview/scenes.d/butoh_dance.json` |
@@ -51,7 +51,7 @@ Song books when ExclusiveExt appends pages. Page ids do not change.
 * Sidestep (`butoh.danceSidestep`): the dancer slips one step (1.0, 0.7 or 0.4 block) at right angles to the blow, alternating sides, only to a spot
   with free space, no liquid and ground within 1.5 blocks; the same-side step is tried first, then the other side. Otherwise the hit is only cancelled.
   An ink after-image (`BUTOH_AFTERIMAGE`, client only, no entity) is left where the blow would have landed.
-* Hitbox: a transient modifier `nusmp:butoh_dance_scale` (ADD_VALUE) on `Attributes.SCALE`, -0.15 to -0.25 by move (crouch-wave and fold are smallest), so
+* Hitbox: a transient modifier `anime_multiverse:butoh_dance_scale` (ADD_VALUE) on `Attributes.SCALE`, -0.15 to -0.25 by move (crouch-wave and fold are smallest), so
   the hitbox and the body shrink together. The pure `DanceScale` gate says "set X / clear / nothing" and remembers what it applied; the game side does only
   that. It is removed on every exit (stop, death, logout, server stop). Growing back needs room: if the bigger body would stand inside a block (a
   low tunnel) the modifier stays until it fits, forced after 10 s. The modifier is transient (never saved), so a crash cannot leave a shrunken player.

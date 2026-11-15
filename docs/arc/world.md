@@ -20,13 +20,13 @@ Commands: `root.then(ArcWorldCommand.node())` beside `root.then(ArcCommand.node(
 
 | id | entity | saga | tier | floors | after | arena |
 |---|---|---|---|---|---|---|
-| `goliath` | `nusmp:goliath` | DanMachi | 2 | 10 to 30, both roads | - | the pit |
-| `charybdis_spawn` | `nusmp:charybdis_spawn` | DanMachi | 2 | 10 to 30, both roads | - | the pit |
-| `devil_avatar` | `nusmp:devil_avatar` | Spade Raid | 3 | 20 to 50, Abyssal | goliath, charybdis_spawn | the throne room |
-| `dante` | `nusmp:dante_zogratis` | Spade Raid | 4 | 50 to 90 | `zagred` | the throne room |
-| `vanica` | `nusmp:vanica_zogratis` | Spade Raid | 4 | 50 to 90, Abyssal | `zagred` | the throne room |
-| `zenon` | `nusmp:zenon_zogratis` | Spade Raid | 4 | 50 to 90, Holy | `zagred` | the throne room |
-| `lucius` | `nusmp:lucius_zogratis` | Wizard King | 5 | none | dante, vanica, zenon | the Final Hour's own courtyard |
+| `goliath` | `anime_multiverse:goliath` | DanMachi | 2 | 10 to 30, both roads | - | the pit |
+| `charybdis_spawn` | `anime_multiverse:charybdis_spawn` | DanMachi | 2 | 10 to 30, both roads | - | the pit |
+| `devil_avatar` | `anime_multiverse:devil_avatar` | Spade Raid | 3 | 20 to 50, Abyssal | goliath, charybdis_spawn | the throne room |
+| `dante` | `anime_multiverse:dante_zogratis` | Spade Raid | 4 | 50 to 90 | `zagred` | the throne room |
+| `vanica` | `anime_multiverse:vanica_zogratis` | Spade Raid | 4 | 50 to 90, Abyssal | `zagred` | the throne room |
+| `zenon` | `anime_multiverse:zenon_zogratis` | Spade Raid | 4 | 50 to 90, Holy | `zagred` | the throne room |
+| `lucius` | `anime_multiverse:lucius_zogratis` | Wizard King | 5 | none | dante, vanica, zenon | the Final Hour's own courtyard |
 
 They are not `ArcBoss` subclasses and nothing about their fights changed: they are spawned by id. Each record's Charter skills are read from `CharterTable` (only the
 seven that have a row declare one), so the roster never disagrees with the table. **Not in the roster, on purpose:** the God of Order (it is a relic's summon, not a
@@ -55,14 +55,14 @@ The hosted boss keeps the Guardian's whole contract so nothing downstream can te
   and 1.6) applied as attribute modifiers before it fights;
 * it is carried back to its altar when led more than 28 blocks away (the Guardian's own hall leash), once a second.
 
-**Wanderers.** `data/nusmp/mega/wanderers_arc.json` is an additive file listing the first characters (tier 1 and 2: `revchi_salik`, `heath_grice`, `lotus_whomalt`, `mars`,
+**Wanderers.** `data/anime_multiverse/mega/wanderers_arc.json` is an additive file listing the first characters (tier 1 and 2: `revchi_salik`, `heath_grice`, `lotus_whomalt`, `mars`,
 `vetto`, `fana`, `patolli`, `rades_spirito`) with floor windows and weights; `EncData.Reload` reads it after `wanderers.json` and `WandererRoster.merge` adds its kinds without ever
 changing an entry of the main file; an id that is not installed is never drawn. A framework boss that wanders has its fight arena moved to where it stands every second while
 it is not fighting (the framework otherwise pulls a boss back to the spot it was made at).
 
 ## 4. The story arenas (`arc/arena/*`)
 
-One dimension, `nusmp:arc_arena` (a flat world of the void biome, fixed at noon, `min_y 0`, height 256), holds every arena on a grid of sites 256 blocks apart (sixteen to a row, 256 sites).
+One dimension, `anime_multiverse:arc_arena` (a flat world of the void biome, fixed at noon, `min_y 0`, height 256), holds every arena on a grid of sites 256 blocks apart (sixteen to a row, 256 sites).
 A character is given a site the first time its arena is needed and keeps it for ever (the save holds it), so a growing roster never moves an arena under a party.
 
 An arena is a **formula**, not a file: `ArenaShape.column(dx, dz)` gives the cells of a column (`dy` 0 is the topmost floor block, a player stands at 1), `ArenaShape.palette()`
@@ -97,7 +97,7 @@ where every death of these bosses is heard (`ArcStory`, `CharterEvents`, `ArcWor
 
 ## 5. The Chronicle and the Sigil (`ChronicleSigilItem`, `ChronicleSigilRules`, `ChronicleView`, `ChroniclePick`, `ChronicleLectern`)
 
-`nusmp:chronicle_sigil` is the Hourglass of the Final Hour built for the whole story. At the Chronicle (within 9 blocks of the lectern) a three-second hold carries the user and every player
+`anime_multiverse:chronicle_sigil` is the Hourglass of the Final Hour built for the whole story. At the Chronicle (within 9 blocks of the lectern) a three-second hold carries the user and every player
 within eight blocks (party members first, then the nearest, the Hourglass's own `HourglassRules.pickTravellers`) to the arena of the boss the user chose; inside an arena the same hold
 takes them home (ten seconds mid-fight); sneaking and right clicking cycles the choice. It refuses away from the Hub and the arenas, while hurt in the last five seconds, while the chosen arena
 fights or rests, and when the arenas are switched off. **The lectern** lists the player's story: one page per saga (only sagas with a boss), each boss as done, open or locked with the names it still
@@ -148,7 +148,7 @@ credit and messages as the core gives. For every boss, arc or older, the saga re
 
 ## 10. Advancements and quest keys
 
-`tools/quests/spec_arc.py` (imported by two lines at the end of `spec_adv.py`) reads `tools/quests/arc_roster.txt` and writes, under `data/nusmp/advancement/arc/`: a root, `arc/arena`,
+`tools/quests/spec_arc.py` (imported by two lines at the end of `spec_adv.py`) reads `tools/quests/arc_roster.txt` and writes, under `data/anime_multiverse/advancement/arc/`: a root, `arc/arena`,
 `arc/saga_<saga>` (challenge, one per saga that has a boss), `arc/defeated_<id>` (one per boss) and `arc/met_<id>` (one per friend). Ids never change. After a merge: `/multiverse arc dump`, copy the file to
 `tools/quests/arc_roster.txt`, `python tools/quests/gen_arc_adv.py`, `python tools/quests/merge_lang.py`. Keys (all in `AdvancementDataTest.EVENT_KEYS` and in the table of `docs/quests.md`): `arc.defeated` and
 `arc.met` (the core fires them, the older bosses through `ArcWorldCredit`), `arc.saga_clear` (arg: saga id), `arc.arena` (arg: boss id).
@@ -185,5 +185,5 @@ Looked at: previews of all six arenas (plan, section, isometric, cut) and of the
 | `labyrinth/mega/guard/GuardianAltarBlockEntity` | the SUMMON branch asks `ArcFloorBosses.host` first; a new `adopt` method | a boss of the arcs may take the Guardian's place; `summon` and `summonNow` are untouched, so the Guardian self-tests are unaffected |
 | `labyrinth/mega/enc/WandererRoster`, `EncData` | `WandererRoster.merge`; `EncData.Reload` also lists `mega/wanderers_arc.json` and merges it after the main file | the additive wanderers file |
 | `client/WeaponRenderer.BASE_WEAPONS` | `ArcWorldItems.CHRONICLE_SIGIL` | the 3D sigil in hand |
-| `tools/gen_weapon_models.py`, `tools/relics/weapon_classes.json`, `assets/nusmp/weapon_classes.json`, `tools/bettercombat/manifest.json` | the sigil's builder, class row (hand item) and exclusion | the owner's 3D-in-hand pipeline |
+| `tools/gen_weapon_models.py`, `tools/relics/weapon_classes.json`, `assets/anime_multiverse/weapon_classes.json`, `tools/bettercombat/manifest.json` | the sigil's builder, class row (hand item) and exclusion | the owner's 3D-in-hand pipeline |
 | `tools/quests/spec_adv.py`, `gen_advancements.py`, `gen_docs.py`, `AdvancementDataTest` | two lines importing `spec_arc`, the owned folder `arc`, four docs rows, the folder and four keys in the test | the advancements of the characters |

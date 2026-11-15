@@ -65,7 +65,7 @@ class BasicGrimoiresTest {
     /** book registry path -> (class, ElementBooks method) from NUSkills. */
     private static Map<String, String[]> bookClasses() throws IOException {
         Map<String, String[]> out = new LinkedHashMap<>();
-        Matcher m = Pattern.compile("book\\(\"(book_[a-z_]+)\",\\s*com\\.newuniverse\\.anime_multiverse\\.book\\.([A-Za-z]+)(?:::|\\.)?([A-Za-z]*)").matcher(read(SRC.resolve("skill/NUSkills.java")));
+        Matcher m = Pattern.compile("book\\(\"(book_[a-z_]+)\",\\s*com\\.newuniverse\\.nusmp\\.book\\.([A-Za-z]+)(?:::|\\.)?([A-Za-z]*)").matcher(read(SRC.resolve("skill/NUSkills.java")));
         while (m.find()) out.put(m.group(1), new String[]{m.group(2), m.group(3)});
         return out;
     }

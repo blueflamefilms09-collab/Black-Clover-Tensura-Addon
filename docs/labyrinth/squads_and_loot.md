@@ -17,7 +17,7 @@ Dungeon Master rolls an encounter  ->  the old plan (which monsters, where)     
   every 10 ticks Squad.think: target, ward, leader, morale                             [new]
   goals: intercept (tank) / flank / support-retreat / formation / focus fire / flee    [new, added beside the mob's own]
 
-a monster dies to a player  ->  AnimeLootModifier (global loot modifier, nusmp:anime_loot)
+a monster dies to a player  ->  AnimeLootModifier (global loot modifier, anime_multiverse:anime_loot)
   KillLoot (pure): family x depth band x luck x rates x caps  ->  parts, a meal or elixir, pre-rolled gear
   LootDrops: turns the answer into stacks (gear rolled once, stats written as vanilla attribute modifiers)
   then: foods are eaten, parts are crafted / worked at the anvil / sold to the Hub Merchant, gear is worn, wielded or put in a Curios slot
@@ -87,12 +87,12 @@ tilts the mix (ogres bring tanks, goblins bring flankers and archers, cultists b
 ### 3.1 Why each decision
 
 * **Why one roster.** Eighty items are each named in a dozen places (registry, drop tables, sell prices, recipes, icons, models, lang, tests). Writing them in a dozen
-  places is how one gets lost. `tools/loot/roster.py` is the one list; `tools/loot/gen_data.py` writes `data/nusmp/loot/roster.json`, the recipes, the tag, the flat item
+  places is how one gets lost. `tools/loot/roster.py` is the one list; `tools/loot/gen_data.py` writes `data/anime_multiverse/loot/roster.json`, the recipes, the tag, the flat item
   models, the lang fragment and the generated `LootText.java`; the Java reads `roster.json` from the class path (like `GradeDamage` reads its table), so it works when the
   registry is built at mod construction, long before a data pack loads. Add a row to the python and every consumer gets it.
 * **Why a global loot modifier.** It works on loot that has ALREADY been rolled, whatever rolled it: a monster of another mod, one whose table a data pack edited, one with no
   table, a Foundry mob. It adds beside what the table gave (add the new, keep the old). The place rules are code, not a condition list, because a condition list cannot say
-  "a monster of ours". Registered as `nusmp:anime_loot`, switched on in `data/neoforge/loot_modifiers/global_loot_modifiers.json`.
+  "a monster of ours". Registered as `anime_multiverse:anime_loot`, switched on in `data/neoforge/loot_modifiers/global_loot_modifiers.json`.
 * **Why the kill rule.** Only a kill whose last blow was a player's counts (the vanilla `LAST_DAMAGE_PLAYER` parameter), so a mob grinder nobody fights drops nothing extra;
   tamed pets, players and Foundry summons never drop. The place counts: the mod's dungeon dimensions (not the Hub), or, by `oursOutsideDungeon`, the mod's own monsters
   anywhere.
@@ -101,7 +101,7 @@ tilts the mix (ogres bring tanks, goblins bring flankers and archers, cultists b
   generic rows, a hard ceiling of 50 percent on any row, deeper floors and luck a little richer. A boss ALWAYS leaves two rare parts, a piece of gear one tier better and a
   strong tonic or elixir.
 * **Why families and bands.** The dungeon has 2000 floors and a table cannot have 2000 rows, so depth is cut into five bands (floors 1-10, to 30, to 100, to 300, deeper).
-  The family comes from the Dungeon Master's faction tag first, then the entity-type tag `nusmp:mega/<faction>`, then the words of the registry path (`ghoul` is undead);
+  The family comes from the Dungeon Master's faction tag first, then the entity-type tag `anime_multiverse:mega/<faction>`, then the words of the registry path (`ghoul` is undead);
   anything else is `any` and only the generic rows serve it. Eleven families: goblin, ogre, undead, beast, slime, construct, cultist, demon, elemental, aquatic, insect.
 * **Why gear is pre-rolled.** The stats are decided once, when the piece is made, and are the same forever. `GearRollMath` is one pure function of (seed, floor, rarity,
   kind, primary stat, damage headroom): two to four lines by rarity, a primary stat first, the others distinct, each inside the range for the rarity and depth, rounded to the
@@ -136,7 +136,7 @@ tilts the mix (ogres bring tanks, goblins bring flankers and archers, cultists b
 | Armour | 8 | Drake-Scale and Shadowsteel sets, helm / chest / legs / boots each |
 | Trinkets | 8 | Goblin Ear Ward, Orc Tusk Ring, Lich Dust Pendant, Wisp Lantern, Golem Core Belt, Wraith Cloak, Cultist Sigil Ring, Tide Pearl Amulet |
 
-Thirty-seven recipes in `data/nusmp/recipe/loot_*.json`. The stat kinds a roll can produce: attack damage, attack speed, armour, max health, movement speed, critical
+Thirty-seven recipes in `data/anime_multiverse/recipe/loot_*.json`. The stat kinds a roll can produce: attack damage, attack speed, armour, max health, movement speed, critical
 chance, maximum magicules, magicule regeneration. Five rarities (common to legendary), two to four lines.
 
 The one part that shares a word with an older item: the System's `shadow_core` is kept, and the monster part is "Shadow Core Shard". A first draft named a slime part
@@ -169,7 +169,7 @@ model, texture, mesh, lang key and registry string of the mod.
 | Client | `src/main/java/com/newuniverse/nusmp/client/loot/LootClient.java` |
 | Tests | `src/test/java/com/newuniverse/nusmp/labyrinth/squad/` (4 classes), `src/test/java/com/newuniverse/nusmp/labyrinth/loot/` (4 classes) |
 | Tools | `tools/loot/roster.py`, `tools/loot/gen_data.py`, `tools/gen_loot_icons.py`, `tools/gen_loot_models.py` |
-| Generated data | `data/nusmp/loot/roster.json`, `data/nusmp/recipe/loot_*.json`, `data/nusmp/tags/item/loot/shadow_cores.json`, `data/nusmp/loot_modifiers/anime_loot.json`, `data/nusmp/weapon_attributes/` (8 files) |
+| Generated data | `data/anime_multiverse/loot/roster.json`, `data/anime_multiverse/recipe/loot_*.json`, `data/anime_multiverse/tags/item/loot/shadow_cores.json`, `data/anime_multiverse/loot_modifiers/anime_loot.json`, `data/anime_multiverse/weapon_attributes/` (8 files) |
 | Generated assets | 80 flat item models and icons, 16 meshes with skins, glow skins, sprites and `_icon` models, 4 armour layer textures, the `mana_surge` effect icon |
 | Lang | `tools/lang/squad_loot.json` (merge into `en_us.json` at integration) |
 
@@ -184,16 +184,16 @@ model, texture, mesh, lang key and registry string of the mod.
 | `item/WeaponEngravings.java` | eight map entries appended (and a comma on the line before) |
 | `client/WeaponRenderer.java` | `LootItems.renderables().stream()` appended to the `WEAPONS` stream |
 | `client/relics/worn/lib/ArmorItemRenderer.java` | the loot armour is left out of its extension registration (one condition), because NeoForge allows one extension per item and `LootClient` registers the loot armour's own |
-| `data/neoforge/loot_modifiers/global_loot_modifiers.json` | `"nusmp:anime_loot"` appended |
+| `data/neoforge/loot_modifiers/global_loot_modifiers.json` | `"anime_multiverse:anime_loot"` appended |
 | `data/curios/tags/item/{ring,necklace,charm,belt,back}.json` | the eight trinkets and the eight weapons appended |
-| `assets/nusmp/weapon_classes.json`, `tools/relics/weapon_classes.json`, `tools/relics/display_presets_manifest.json`, `tools/bettercombat/manifest.json` | sixteen class rows, the display presets and the Better Combat rows appended |
+| `assets/anime_multiverse/weapon_classes.json`, `tools/relics/weapon_classes.json`, `tools/relics/display_presets_manifest.json`, `tools/bettercombat/manifest.json` | sixteen class rows, the display presets and the Better Combat rows appended |
 | `tools/gen_weapon_models.py` | a four-line branch at the top of `main` for the `loot` argument |
 
 ## 6. NEW / REPLACED / KEPT
 
 | | What |
 | --- | --- |
-| NEW | the squads (all of `labyrinth/squad`, `SquadBridge`, the config, the System line, the tests, the self-test `enc.squads`); the global loot modifier and everything under `labyrinth/loot`; 30 foods and elixirs, 24 monster parts, 2 crafted items, 8 weapons, 8 armour pieces, 8 trinkets (80 items); the `nusmp:gear_roll` data component, the `nusmp:mana_surge` effect, two armour materials, the "Dungeon Loot" creative tab; 37 recipes; the anvil uses, critical-chance lines, trinket bridge and Hub sale; the self-test `loot.functional` |
+| NEW | the squads (all of `labyrinth/squad`, `SquadBridge`, the config, the System line, the tests, the self-test `enc.squads`); the global loot modifier and everything under `labyrinth/loot`; 30 foods and elixirs, 24 monster parts, 2 crafted items, 8 weapons, 8 armour pieces, 8 trinkets (80 items); the `anime_multiverse:gear_roll` data component, the `anime_multiverse:mana_surge` effect, two armour materials, the "Dungeon Loot" creative tab; 37 recipes; the anvil uses, critical-chance lines, trinket bridge and Hub sale; the self-test `loot.functional` |
 | REPLACED | nothing. The owner's spec asked for squads "instead of random horde spam"; the random path is not removed, it is behind `squads.enabled = false` |
 | KEPT | the Director's planning, tables, faction picker, spawner, hunt and sweep; the old spawn path; the System's `shadow_core` item and the sentient dungeon's `slime_core` (my slime part is `gel_core`); the existing chest, relic, skill-book, rift and Hub-coin loot modifiers; the Hub shop; every existing weapon, engraving, class row, Better Combat file and Curios tag entry; the Time Magic VFX (untouched) |
 

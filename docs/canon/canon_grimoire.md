@@ -96,7 +96,7 @@ Player-visible "Charter Grimoire" is "Canon Grimoire" everywhere the player can 
 and packages, asset file names, config keys and the config file, NBT keys, advancement ids, and the command word `charter` (the alias `canon` was added in `CharterCommand`). The skill book "Charter of the First Master" (Fairy Tail route) is a different thing and keeps its name.
 
 Edited in place: `CharterGrimoireItem.getName` fallback ("Canon Grimoire of <name>", used for all 23 arc books, which have no lang entry), `CharterCommand` (messages, alias), `CharterEvents` (the first-claim broadcast), `CharterMirror` (the lender name in "<lender> lends you X"), `CharterConfig` (comments), `CharterTable` and `ArcCharterRules` (lore lines), `ArcCommand`, `ArcSelfTests`,
-`ArcWorldSelfTests`, `ExistingBosses`, `ArcStory`, `ModWorldDropData` (admin and log text), `data/nusmp/arc/dialogue/marx_francois.json`, `quest_pack/lang/en_us.snbt`, the quest and advancement generators `tools/quests/spec_*.py`, `lang/qst.lang.json`, `gen_docs.py`.
+`ArcWorldSelfTests`, `ExistingBosses`, `ArcStory`, `ModWorldDropData` (admin and log text), `data/anime_multiverse/arc/dialogue/marx_francois.json`, `quest_pack/lang/en_us.snbt`, the quest and advancement generators `tools/quests/spec_*.py`, `lang/qst.lang.json`, `gen_docs.py`.
 `en_us.json` is NOT edited: its 12 entries are in `tools/canon/lang_canon.json` (flat key -> full new text; regenerate with `tools/canon/gen_lang_canon.py`) for the lead to merge: 7 item names, 4 advancement lines, `arc.dialogue.marx_francois.11`.
 `python3 tools/canon/check_names.py` greps for what is left (Java string literals, data, quests, dialogue, en_us outside the fragment) and checks the fragment; it exits 1 on a leftover.
 

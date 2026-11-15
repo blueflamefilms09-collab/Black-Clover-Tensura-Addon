@@ -19,7 +19,7 @@ UP_SKIN_DIR = os.path.join(SKIN_DIR, "up")
 SPEC_DIR = os.path.join(ASSETS, "visual_upgrade")
 DOCS = os.path.join(ROOT, "docs", "visual_upgrade")
 PREVIEWS = os.path.join(ROOT, "docs", "previews", "visual_upgrade", "god_melee_a")
-WAVE71 = os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "anime_multiverse", "relics", "wave", "Wave71.java")
+WAVE71 = os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "nusmp", "relics", "wave", "Wave71.java")
 
 SLICE = "god_melee_a"
 IDS = ["staff_of_the_magi", "wizard_kings_vow", "wand_of_the_wisdom_king", "hammer_of_thunderbolts", "gungnir_the_unerring", "kusanagi_the_grass_cutter",

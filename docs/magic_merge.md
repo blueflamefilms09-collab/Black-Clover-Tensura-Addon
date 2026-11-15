@@ -1,6 +1,6 @@
 > **REMOVED in 1.93.0 (owner's request).** The merge generator (the "custom" magic a player received when they held the grimoires of two attributes that have no hybrid of their own) is gone:
 > `core/magic/merge/**`, `client/merge/**`, `MergedMagicLayer`, the `/multiverse magic merge|list|info|remove|grant|revoke` commands, the sync and the combined armour and effects. Two attributes now
-> simply stay two attributes, each with its own grimoire skill, pages, effects and armour; nothing combines them. For saves: the 64 skill ids `nusmp:merged_00..63` stay registered as inert
+> simply stay two attributes, each with its own grimoire skill, pages, effects and armour; nothing combines them. For saves: the 64 skill ids `anime_multiverse:merged_00..63` stay registered as inert
 > `core/magic/profile/RetiredMagic.RetiredBook` placeholders and a player who still holds one has it forgotten at login; `SavedData nusmp_merged_magic` is simply never read again; the enum constants
 > `Aura.MERGED` and `VfxShape.MERGED_*` stay so no ordinal moves; `MagicKeys`/`MagicAlignments` still tolerate a stale `merged:` id. The startup audit that used to ride on `MergeEvents` is now
 > `core/magic/profile/MagicAuditEvents`. The text below is the historical design.
@@ -35,7 +35,7 @@ Example: `/multiverse magic merge flame water Steam Lord`.
   `merged:flame+water`, name `Flame-Water Magic`, the same dominant parent (the first in that order: Flame), the same slot logic. Merging a set that exists changes
   nothing (a different name is ignored).
 * A custom name is 3-32 letters, digits, spaces, `-` `'` `.`; it must be unique among merged magics and not the name of one of the game's magics.
-* **At most 64 merged magics per world.** Each is cast by one of 64 pre-registered skills (`nusmp:merged_00` .. `merged_63`); a new one takes the lowest slot never used, and
+* **At most 64 merged magics per world.** Each is cast by one of 64 pre-registered skills (`anime_multiverse:merged_00` .. `merged_63`); a new one takes the lowest slot never used, and
   only when all 64 were used once is a freed slot reused (the skill remembers the id it was granted for, so a reused slot never gives an old holder the new magic).
 
 ## What a merged magic is
@@ -73,7 +73,7 @@ The merged book needs no grimoire of its own: any summoned grimoire of the caste
 ## Persistence and sync
 
 `MergedMagicData` (SavedData `nusmp_merged_magic`) holds the `MergeStore` as lines (`id|slot|custom|name|PARENT,PARENT`, plus the used-slot mask); decoding never throws and
-enforces the limits. After every change the server publishes a copy to `MergedRegistry` and sends `nusmp:merged_magic_sync` (`MergedSync`) to everyone; it is also sent on login. The
+enforces the limits. After every change the server publishes a copy to `MergedRegistry` and sends `anime_multiverse:merged_magic_sync` (`MergedSync`) to everyone; it is also sent on login. The
 client publishes it to the same registry, so profiles, the skill's name and pages, the layers and the armour all read one source.
 
 ## Offline preview

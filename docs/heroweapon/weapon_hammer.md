@@ -1,7 +1,7 @@
-# Vassal Hammer (`nusmp:vassal_hammer`, `HeroKind.HAMMER`, class Seven Star, style SWING)
+# Vassal Hammer (`anime_multiverse:vassal_hammer`, `HeroKind.HAMMER`, class Seven Star, style SWING)
 
 Builder `hva`. Code: `heroweapon/weapon/hammer/**` (+ the shared helpers of the four striking weapons in `heroweapon/weapon/strike/**`), forms file
-`data/nusmp/hero/forms/vassal_hammer.json`, lang fragment `hva.lang.json`. This page is written in the order the art builder needs it: the look first.
+`data/anime_multiverse/hero/forms/vassal_hammer.json`, lang fragment `hva.lang.json`. This page is written in the order the art builder needs it: the look first.
 
 ## 1. Look (for the art builder `hart2`)
 
@@ -11,7 +11,7 @@ shield is weak against impact. The wiki lists only one form, the **Small Hammer*
 
 * **Silhouette.** A big two-handed war hammer that reads at arm's length: a square block head on a straight haft, slightly flared at the faces, a short
   collar under the head and a flat pommel cap. Nothing curved, nothing thin: it is the heaviest-looking of the four striking weapons.
-* **Size.** Class `hammer` of `assets/nusmp/weapon_classes.json` (1.3 to 1.8 blocks apparent length; aim for 1.6). The head is about 0.55 long across
+* **Size.** Class `hammer` of `assets/anime_multiverse/weapon_classes.json` (1.3 to 1.8 blocks apparent length; aim for 1.6). The head is about 0.55 long across
   the swing and 0.34 square on the face (the class asks for a head of at least 0.5); the haft carries the rest. Grip share 0.25 of the length from the butt.
 * **Parts (8 to 14 named parts).** `pommel_cap`, `grip_wrap` (leather, spiral), `haft`, `haft_band_low`, `haft_band_high`, `neck_collar`, `head_core`,
   `face_plate_front` (the striking face, -x), `face_plate_back` (the blunt peen, +x), `head_rim_band_a`, `head_rim_band_b`, `gem_bezel`, `gem`, four `rivets`.
@@ -52,7 +52,7 @@ unless argued (section 7). The names Stone, Anvil and Synthesis are design: the 
 third is the canon power-up. Mastery needed is 100, 180 and 300 (the forms system accepts 40 to 400). Every form keeps `use` on the Overhead Smash, so the hammer always
 feels like the hammer; a higher form adds slots and swaps the other two.
 
-The table is generated from `data/nusmp/hero/forms/vassal_hammer.json` (stat keys are the forms system's closed set; `abilityBonus` is the extra per bond level):
+The table is generated from `data/anime_multiverse/hero/forms/vassal_hammer.json` (stat keys are the forms system's closed set; `abilityBonus` is the extra per bond level):
 
 | form (id) | tier | parents | requirements | mastery | stats | ability bonus | skills (slot: id) | passives |
 |---|---|---|---|---|---|---|---|---|
@@ -200,7 +200,7 @@ blow and the budget are the same four times); only the Hammer's own files are li
 * **Commands:** none of its own. The `/multiverse hero ...` commands of the core and the forms system handle every weapon.
 * **Quest hooks:** none of its own. The dispatcher fires `hero.skill` with the skill id after every cast.
 * **Lang:** `hero.skill.hammer.<id>.name` and `.desc` for the seven techniques and `hero.passive.hammer.<id>` and `.desc` for the five passives, in the lang fragment `hva.lang.json` (the lead merges it into `en_us.json`) (shared by the four weapons; 108 keys in all). The forms carry their own English names and descriptions. Messages to the wielder are plain strings in the code (no `hero.msg.*` keys).
-* **Saved data:** on the foe `nusmp_hv_pz`, `nusmp_hv_pt`, `nusmp_hv_pb`, `nusmp_hv_pl` (the gauge); on the wielder `nusmp_hv_sw` (the count of full swings for Crushing Weight, harmless if lost); the attribute modifier ids `nusmp:hero_hammer_crack` and `nusmp:hero_hammer_crack_t` (transient, never saved).
+* **Saved data:** on the foe `nusmp_hv_pz`, `nusmp_hv_pt`, `nusmp_hv_pb`, `nusmp_hv_pl` (the gauge); on the wielder `nusmp_hv_sw` (the count of full swings for Crushing Weight, harmless if lost); the attribute modifier ids `anime_multiverse:hero_hammer_crack` and `anime_multiverse:hero_hammer_crack_t` (transient, never saved).
 
 ## 11. Tests and the self-test
 

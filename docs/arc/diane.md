@@ -71,7 +71,7 @@ A Diane who cannot grow still has six moves of her own (rush rock, hammer swing,
   as big on both sides and `refreshDimensions()` follows the flag. The renderer already scales the model by the hitbox over `ArcLook.height` (clamped to 0.25 to 4), so the same model is drawn 1.95 times as big.
 * `ArcLook("diane", 2.0, 1.21, 2.15, 1.0, 2.6, 1.8, glow)`: the first three numbers are `tools/arc/manifest.json` (human size); the shadow and the two culling numbers are the manifest's times the giant's scale (0.5, 1.22, 0.92 become 1.0, 2.6, 1.8), so a giant is neither culled at the edge of the screen nor given a human shadow.
 * The growth first asks whether the box of 1.4 x 3.9 fits (`Level.noCollision`), so she can never end up in a wall.
-* Her walking speed carries a 15% modifier (id `nusmp:diane_giant_speed`) while she is a giant, removed when she is human.
+* Her walking speed carries a 15% modifier (id `anime_multiverse:diane_giant_speed`) while she is a giant, removed when she is human.
 
 ## 6. Rules kept
 

@@ -1,6 +1,6 @@
 # Song Magic: the 1.93.0 rebuild
 
-Song Magic (`MagicType.SONG`, book `nusmp:book_song`, colour 0xFFFFB4E8 rose) used to be the generic wiki attribute book (a bolt, a line, a field, a domain, a guard) plus
+Song Magic (`MagicType.SONG`, book `anime_multiverse:book_song`, colour 0xFFFFB4E8 rose) used to be the generic wiki attribute book (a bolt, a line, a field, a domain, a guard) plus
 Kahono's five singing pages. It is now its own book, `book/SongBook`, with its own armour, summon models, effect layer and spells.
 
 ## 1. Canon and what could not be checked
@@ -99,4 +99,4 @@ timing of the props, the choir's movement against real terrain. The page names a
 
 ## 1.99.0 armour policy
 
-Song Magic has no armour in the anime, so since 1.99.0 **no cast puts the temporary armour of this document on the caster** (policy kind NONE). Everything described above as the armour (the render layer, its painter, geo models, textures and generator) is KEPT on disk and registered in `AuraRegistry`, so old saves and tests still resolve; it is simply never started by a page. What the pages did besides the armour (damage cut, thorns, resistance, constructs, effects) is unchanged. Where the armour carried the magic's look, every cast of a family page now sends a small `SONG_FX2` glow that follows the caster instead (no armour piece is drawn). See `docs/rebuild/armour_policy.md` for the table and the canon reasons; the code is `book.ArmourPolicy` (data: `data/nusmp/armour_policy.json`).
+Song Magic has no armour in the anime, so since 1.99.0 **no cast puts the temporary armour of this document on the caster** (policy kind NONE). Everything described above as the armour (the render layer, its painter, geo models, textures and generator) is KEPT on disk and registered in `AuraRegistry`, so old saves and tests still resolve; it is simply never started by a page. What the pages did besides the armour (damage cut, thorns, resistance, constructs, effects) is unchanged. Where the armour carried the magic's look, every cast of a family page now sends a small `SONG_FX2` glow that follows the caster instead (no armour piece is drawn). See `docs/rebuild/armour_policy.md` for the table and the canon reasons; the code is `book.ArmourPolicy` (data: `data/anime_multiverse/armour_policy.json`).

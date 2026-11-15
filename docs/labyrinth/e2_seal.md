@@ -15,7 +15,7 @@ survival player comes near, rolls a boss from the roster written into the templa
   rotates templates and offsets stored as data must be rotated with them. The door has no facing property at all: the closed face is drawn on
   all four sides, so a doorway reads the same from both approaches whatever rotation the piece got, and nothing has to be rotated.
 * **The kind is data in the template.** `kind=warden` vs `kind=boss` is a block property, so the template builder (A2) decides which
-  doorway is which, with no Java. A1/A2 place columns of `nusmp:gatekeeper_door[kind=warden,half=lower,open=false]` + `[half=upper]`.
+  doorway is which, with no Java. A1/A2 place columns of `anime_multiverse:gatekeeper_door[kind=warden,half=lower,open=false]` + `[half=upper]`.
 * **It opens as one door by a flood** (`DoorFlood`, pure, tested): from the clicked block, 6-connected (faces only) over "closed door of the
   same kind", at most 64 positions. The halves are NOT linked to each other (no `updateShape` that removes an orphan half, unlike vanilla
   doors), so a column of 2, 3 or 4 blocks all works and `half` is only a texture selector (the upper half shows the arch-and-chain top, the
@@ -61,7 +61,7 @@ fire immune, 1.4 x 3.2, persistent (`setPersistenceRequired` + `removeWhenFarAwa
 Abilities: **Ground Slam** every 120 ticks when the target is within 5: 8 damage + knockback to everything but armour (and creative /
 spectator players) within 4 blocks, anvil crash, an explosion puff and a ring of smoke. **Shadow Step** every 160 ticks when the target is
 8..24 away: teleports to a free spot beside it (behind it first, then the sides, then in front; needs a floor and `noCollision` for its box)
-with smoke at both ends and the enderman sound pitched down. At <50% health, once per life, it summons two `nusmp:living_armor`
+with smoke at both ends and the enderman sound pitched down. At <50% health, once per life, it summons two `anime_multiverse:living_armor`
 (MOB_SUMMONED, persistent, given its target). Cooldowns and the summon flag are saved.
 Not a weapon: no Tensura engravings (rule 6 applies to weapons).
 
@@ -73,7 +73,7 @@ Not a weapon: no Tensura engravings (rule 6 applies to weapons).
   config to read. Spawning when the first survival/adventure player comes within `radius` (default 16; creative and spectators do not
   wake it) means the boss is chosen at that moment, from the roster in the template's NBT, so **the roster is data**.
 * **IDLE -> ACTIVE:** `BossRoster.pickOrFallback(bosses, seed, id -> EntityType.byString(id).isPresent())`: weighted, seeded by the
-  altar's position + the game time, unknown ids and non-positive weights skipped, empty -> `nusmp:floor_warden`. With
+  altar's position + the game time, unknown ids and non-positive weights skipped, empty -> `anime_multiverse:floor_warden`. With
   `labyrinth.bossRosterEnabled = false` the roster is skipped and the Warden is always called (C's config comment). The entity is created by
   `EntityType.byString`, `moveTo(pos.above())`, `finalizeSpawn(..., MobSpawnType.STRUCTURE, null)`, `setPersistenceRequired`, tagged
   `nusmp_peak_boss`, `addFreshEntity`; end-rod + reverse-portal particles, ender-dragon growl at 0.6 pitch (no lightning: it strikes
@@ -97,15 +97,15 @@ has no colour hook, and a second 64x64 texture is cheaper than a tinted render t
 Registered through `EntityRenderersEvent.RegisterRenderers` in `SealClient`.
 
 ## Every data file
-* `assets/nusmp/blockstates/gatekeeper_door.json`: 8 variants `kind x open x half`; closed -> the kind+half model, open -> the one
+* `assets/anime_multiverse/blockstates/gatekeeper_door.json`: 8 variants `kind x open x half`; closed -> the kind+half model, open -> the one
   frame model for every kind and half (an open frame has no seal to colour).
-* `assets/nusmp/models/block/gatekeeper_door_{warden,boss}_{lower,upper}.json`: `minecraft:block/cube` with the door face on all four sides
+* `assets/anime_multiverse/models/block/gatekeeper_door_{warden,boss}_{lower,upper}.json`: `minecraft:block/cube` with the door face on all four sides
   (no facing property, see above) and `gatekeeper_door_end` up/down (what you see from the stairs above a doorway).
-* `assets/nusmp/models/block/gatekeeper_door_open.json`: four 2x16x2 corner posts textured `gatekeeper_door_frame`; matches the outline
+* `assets/anime_multiverse/models/block/gatekeeper_door_open.json`: four 2x16x2 corner posts textured `gatekeeper_door_frame`; matches the outline
   shape in Java; nothing between the posts, so it reads as an open doorway.
-* `assets/nusmp/models/block/peak_altar.json`: three stacked elements (full 0-5, inset 2 at 5-10, inset 4 at 10-16) = the stepped plinth
+* `assets/anime_multiverse/models/block/peak_altar.json`: three stacked elements (full 0-5, inset 2 at 5-10, inset 4 at 10-16) = the stepped plinth
   the Java shape mirrors; `peak_altar_side` on the sides, `peak_altar_top` on every up face, polished blackstone below.
-* `assets/nusmp/models/item/gatekeeper_door.json` (parent: the warden lower model), `peak_altar.json` (the altar model),
+* `assets/anime_multiverse/models/item/gatekeeper_door.json` (parent: the warden lower model), `peak_altar.json` (the altar model),
   `shadow_key.json` (`item/generated`, layer0 `item/shadow_key`), `floor_warden_spawn_egg.json` (`template_spawn_egg`, coloured by the
   `DeferredSpawnEggItem` 0x1A1026 / 0x8A4DE0).
 * Textures (`tools/gen_labyrinth_seal_assets.py`, Pillow, deterministic, `--check` verifies sizes): `block/gatekeeper_door_warden_bottom.png`
@@ -114,11 +114,11 @@ Registered through `EntityRenderersEvent.RegisterRenderers` in `SealClient`.
   `gatekeeper_door_end.png` dark brick with gold corners; `gatekeeper_door_frame.png` plain dark stone; `peak_altar_top.png` obsidian-dark
   with a violet rune ring; `peak_altar_side.png` dark brick with a gold band; `item/shadow_key.png` a black-violet key whose bow holds a
   glowing eye; `entity/floor_warden.png` the Living Armor sheet re-tinted (alpha kept).
-* `data/nusmp/loot_table/entities/floor_warden.json`: type `minecraft:entity`, two pools: emerald 2-4 and gold ingot 3-6, each with
+* `data/anime_multiverse/loot_table/entities/floor_warden.json`: type `minecraft:entity`, two pools: emerald 2-4 and gold ingot 3-6, each with
   `minecraft:enchanted_count_increase` (+0..1 per Looting level; the 1.21 name of `looting_enchant`). The Shadow Key is NOT in the table
   (see above). Experience is the entity's `xpReward`, not loot.
 * Lang fragment `$S/frag_lab/e2.lang.json` (lead merges into `en_us.json`): block/item/entity names, the tooltip, the boss bar name
-  (`entity.nusmp.floor_warden.bar`), the door and altar messages (`message.nusmp.gatekeeper.*`, `message.nusmp.peak_altar.*`).
+  (`entity.anime_multiverse.floor_warden.bar`), the door and altar messages (`message.anime_multiverse.gatekeeper.*`, `message.anime_multiverse.peak_altar.*`).
 
 ## Tests
 `src/test/java/com/newuniverse/nusmp/labyrinth/seal/DoorFloodTest.java` (pack round trip, a 2x4 doorway opens whole from any block, faces

@@ -36,9 +36,9 @@ Every hostile mob that is born, or loaded, in the Mega-Dungeon gets two things f
 
 ## Who is touched, and who is not
 - Touched: every `Enemy` mob that joins the Mega-Dungeon level on a known floor: the Dungeon Master's encounters, the Mob Foundry's 400, Tensura's and vanilla's own monsters, mechanic summons.
-- Not touched: bosses (`BossIdentity`: Guardians, Floor Wardens, the wandering bosses, anything in the `nusmp:boss` tag), pets and summons that have an owner, non-hostile animals, the Hub and the gaps between sectors (floor 0).
+- Not touched: bosses (`BossIdentity`: Guardians, Floor Wardens, the wandering bosses, anything in the `anime_multiverse:boss` tag), pets and summons that have an owner, non-hostile animals, the Hub and the gaps between sectors (floor 0).
 - Mobs of the Dungeon Master and the Foundry already scale with the floor by their own rules, so they take only half of the strength bonus (config `shareForScaledMobs`). Their minds are not shared down: they get the full mind.
-- The floor a mob was BORN on is saved on it (`nusmp_depth_floor`), so a mob that wanders keeps its strength and a reload does not re-roll it. The modifiers have fixed ids (`nusmp:mega_depth_*`), so applying twice replaces and never stacks.
+- The floor a mob was BORN on is saved on it (`nusmp_depth_floor`), so a mob that wanders keeps its strength and a reload does not re-roll it. The modifiers have fixed ids (`anime_multiverse:mega_depth_*`), so applying twice replaces and never stacks.
 
 ## Config (`[depth]`)
 `enabled` (true), `strength` (true), `smarts` (true), `strengthScale` (1.0, 0 to 5), `shareForScaledMobs` (0.5), `mindFloors` ("6,16,40,100,250,500").

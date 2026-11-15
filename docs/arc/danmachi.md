@@ -96,7 +96,7 @@ Every value is a plain `define`/`defineInRange` (never `defineInList`) read thro
 
 ## 6. The friends (see [`danmachi_npcs.md`](danmachi_npcs.md))
 
-Six records (`DanMachiNpcs`), six models (`tools/arc/char_<id>.py`), six dialogue files (`data/nusmp/arc/dialogue/<id>.json`, 125 language keys with the four entity names).
+Six records (`DanMachiNpcs`), six models (`tools/arc/char_<id>.py`), six dialogue files (`data/anime_multiverse/arc/dialogue/<id>.json`, 125 language keys with the four entity names).
 Their **roles are their dialogue**: the shared NPC entity has no shop or quest system, so the smith's and the supporter's `shop` lines wait for one (they are never said otherwise)
 and the four requests are driven by `DanMachiQuests` through the arc system's quest stage: the friend offers it once (stage 0 to 1, only to a player who has not yet beaten the
 monster), the monster's fall sets stage 2 for every credited fighter (`ArcStory.credited`, FTB teammates included), the friend thanks them once (stage 3). Eina asks for the

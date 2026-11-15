@@ -15,7 +15,7 @@ import re
 import sys
 
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..")
-SRC = os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "anime_multiverse", "skill")
+SRC = os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "nusmp", "skill")
 FRAGMENT = os.path.join(ROOT, "tools", "skills", "lang_fragment.json")
 EN_US = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse", "lang", "en_us.json")
 

@@ -192,7 +192,7 @@ Known soft spots in the previews (nothing was seen in a real game): additive glo
 
 ## The pocket dimension (Dimensional Labyrinth, 3.14.0)
 
-Code: `entity/veldanava/pocket/PocketMaze` (pure: the grid, the walls, the shift) and `PocketLabyrinth` (the world: the dimension `nusmp:trial`, sessions, events). Data: `dimension/trial.json`, `dimension_type/trial.json` (a void, roofed, no sky, fixed night, 128 high). Server setting `pocketDimension` (default on; off = the old cage).
+Code: `entity/veldanava/pocket/PocketMaze` (pure: the grid, the walls, the shift) and `PocketLabyrinth` (the world: the dimension `anime_multiverse:trial`, sessions, events). Data: `dimension/trial.json`, `dimension_type/trial.json` (a void, roofed, no sky, fixed night, 128 high). Server setting `pocketDimension` (default on; off = the old cage).
 
 - **The maze**: 9 x 9 cells (11 x 11 mastered), a corridor 3 blocks wide and 4 high, walls and ceiling of black stone, floor of checkered deepslate with a sea lantern in every fourth cell (dim on purpose). It starts as a random perfect maze (depth-first, one way between two cells).
 - **The shift**: every 60 ticks (36 mastered) a closed wall is picked; opening it makes one loop; one wall of that loop closes. The flash `TRIAL_SHIFT` runs between the two walls 16 ticks before they change. A wall is never closed while anyone stands in it or within a body's width of it (then that shift is skipped). The maze therefore stays one connected maze with a single way between two cells, whatever happens (`PocketMazeTest` runs 2,000 shifts and checks it).

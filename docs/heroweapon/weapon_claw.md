@@ -1,7 +1,7 @@
-# Vassal Claw (`nusmp:vassal_claw`, `HeroKind.CLAW`, class Seven Star, style SWING)
+# Vassal Claw (`anime_multiverse:vassal_claw`, `HeroKind.CLAW`, class Seven Star, style SWING)
 
 Builder `hva`. Code: `heroweapon/weapon/claw/**` (+ the shared helpers of the four striking weapons in `heroweapon/weapon/strike/**`), forms file
-`data/nusmp/hero/forms/vassal_claw.json`, lang fragment `hva.lang.json`. This page is written in the order the art builder needs it: the look first.
+`data/anime_multiverse/hero/forms/vassal_claw.json`, lang fragment `hva.lang.json`. This page is written in the order the art builder needs it: the look first.
 
 ## 1. Look (for the art builder `hart2`)
 
@@ -52,7 +52,7 @@ Names follow the canon list where it has one (Small Claw, Rope Claw, Dragon Head
 five slots (`use`, `sneak`, `key1`, `key2`, `key3`); the Dragon Head Claws trade the Pounce and the Shredding Rush for Predator's Instinct and the ultimate, so a player who wants
 the leaps keeps the lower forms (and `rope_hook` therefore sits only on the Rope Claws, where the Pounce is).
 
-The table is generated from `data/nusmp/hero/forms/vassal_claw.json`:
+The table is generated from `data/anime_multiverse/hero/forms/vassal_claw.json`:
 
 | form (id) | tier | parents | requirements | mastery | stats | ability bonus | skills (slot: id) | passives |
 |---|---|---|---|---|---|---|---|---|
@@ -199,7 +199,7 @@ All in `src/main/java/com/newuniverse/nusmp/heroweapon/weapon/`. The package `st
 * **Commands:** none of its own.
 * **Quest hooks:** none of its own (the dispatcher fires `hero.skill`).
 * **Lang:** `hero.skill.claw.<id>.name` / `.desc` for the eight techniques and `hero.passive.claw.<id>` / `.desc` for the six passives, in the lang fragment `hva.lang.json` (the lead merges it into `en_us.json`). Messages to the wielder are plain strings.
-* **Saved data:** on the foe `nusmp_cl_bn`, `nusmp_cl_bu`, `nusmp_cl_bc` (wounds); on the wielder `nusmp_cl_combo` (the tick of the last landed Air Strike Slash); in the bond `extra("claw")` (uses per technique); the attribute modifier id `nusmp:hero_claw_shred` (transient).
+* **Saved data:** on the foe `nusmp_cl_bn`, `nusmp_cl_bu`, `nusmp_cl_bc` (wounds); on the wielder `nusmp_cl_combo` (the tick of the last landed Air Strike Slash); in the bond `extra("claw")` (uses per technique); the attribute modifier id `anime_multiverse:hero_claw_shred` (transient).
 
 ## 11. Tests, the self-test, judgement calls
 

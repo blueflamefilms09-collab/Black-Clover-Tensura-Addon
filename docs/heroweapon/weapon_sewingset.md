@@ -1,6 +1,6 @@
 # Vassal Sewing Set (`vassal_sewing_set`): the needle and thread of S'yne's world
 
-Builder `hvd`. Logic: `heroweapon/weapon/sewingset/**`, forms: `data/nusmp/hero/forms/vassal_sewing_set.json`. Style CAST, class Vassal Weapon.
+Builder `hvd`. Logic: `heroweapon/weapon/sewingset/**`, forms: `data/anime_multiverse/hero/forms/vassal_sewing_set.json`. Style CAST, class Vassal Weapon.
 Written in two passes: the LOOK section (1) first so the art builder could start, then the rest.
 
 ## 1. The look (for the art builder `hart4`)

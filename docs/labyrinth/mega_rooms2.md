@@ -7,7 +7,7 @@ pit, dark, puzzle and trial rooms of the 1.36.0 Spire, redrawn on the 9-grid so 
 lang keys.
 
 All of them follow the connector contract of `mega.md` (9-block modules, 48 rows, floor row 8, two-thick walls, a 3 x 4 doorway hole with a frame and a
-jigsaw on the outer layer at a module centre, `nusmp:mega/side` / `nusmp:mega_door`, markers as data structure blocks). The file name of every template is
+jigsaw on the outer layer at a module centre, `anime_multiverse:mega/side` / `anime_multiverse:mega_door`, markers as data structure blocks). The file name of every template is
 its place in the generator's registry; the folder sets the `RoomKind` (`set` SET_PIECE, `hall` HALL, `cavern` CAVERN, `trap` TRAP, `puzzle` PUZZLE,
 `trial` TRIAL).
 
@@ -17,7 +17,7 @@ its place in the generator's registry; the folder sets the `RoomKind` (`set` SET
 |---|---|
 | `tools/labyrinth/gen_mega_rooms2.py` | the generator: one builder function per template, the checks, the command line |
 | `tools/labyrinth/mega_decor_r2.py` | the helper module: geometry, columns, arches, wall dressing, the cavern engine, the analysis model |
-| `src/main/resources/data/nusmp/structure/mega/{set,hall,cavern,trap,puzzle,trial}/*.nbt` | the 21 generated templates |
+| `src/main/resources/data/anime_multiverse/structure/mega/{set,hall,cavern,trap,puzzle,trial}/*.nbt` | the 21 generated templates |
 | `docs/labyrinth/mega_rooms2.md` | this file |
 
 Commands (Python 3 and Pillow, no game):
@@ -181,20 +181,20 @@ route between the doors it is **tried on the real analysis and rolled back** whe
 
 These are the 1.36.0 Spire traps (`docs/labyrinth/f1_traps.md`), redrawn on the grid and with the same blocks and block states.
 
-* **`pit_hall_a` (goblin)**: a 5-wide ledge round a 13 x 13 field of `nusmp:pitfall_tile` (169 tiles: 50 safe, 119 pits, all looking the same) with a treasure
+* **`pit_hall_a` (goblin)**: a 5-wide ledge round a 13 x 13 field of `anime_multiverse:pitfall_tile` (169 tiles: 50 safe, 119 pits, all looking the same) with a treasure
   island in the middle (a chest, candles, a skeleton). One thin zig-zag of safe tiles (a self-avoiding walk, at least 16 long) leads to it, and a lantern hangs over
   every turn of it (look up). A wrong step drops the party three blocks (the Spire's fall) into a dark chamber of pointed dripstone on a lattice (26 spikes)
   with a **ladder** out, so the trap costs health and time but never traps anyone. Four `trap;type=pit` markers sit on the route.
 * **`pit_hall_b` (construct)**: a disc of radius 7 (177 tiles: 42 safe, 135 pits) with a different clue: the route is traced overhead as a trail of sea
   lanterns in the ceiling over every second safe tile; eight pillars on the rim, caged skulls over the corners, the ladder at the east rim.
-* **`dark_room` (undead, 18 x 18)**: a crypt with two `nusmp:snuffer_glyph` (they put out torches, lanterns and candles near them, forbid placing new ones and
+* **`dark_room` (undead, 18 x 18)**: a crypt with two `anime_multiverse:snuffer_glyph` (they put out torches, lanterns and candles near them, forbid placing new ones and
   darken the screen), pillars, sarcophagi, sculk, skulls and webs; **not one light source** in the room (the generator proves it) and a chest in an arched alcove
   behind a cobweb curtain, within six blocks of a glyph. The doors are on opposite corners, so crossing the room means crossing the glyphs' reach.
 
 ### Puzzle halls (`puzzle/sigil_hall_a`, `sigil_hall_b`, 27 x 18, two doors)
 
-The Spire's puzzle room (four sigil plates, a Riddle Stone, a puzzle door) as a two-door hall that can be walked through. Four `nusmp:sigil_plate` of the four
-colours, one `nusmp:riddle_stone` with the order to step on them, and a `nusmp:gatekeeper_door[kind=puzzle]` (2 wide, 3 tall) in a partition that closes a
+The Spire's puzzle room (four sigil plates, a Riddle Stone, a puzzle door) as a two-door hall that can be walked through. Four `anime_multiverse:sigil_plate` of the four
+colours, one `anime_multiverse:riddle_stone` with the order to step on them, and a `anime_multiverse:gatekeeper_door[kind=puzzle]` (2 wide, 3 tall) in a partition that closes a
 4 x 6 closet with **two chests**. Everything the stone scans for (plates and door within 12 cells) is in its reach, and the closet cannot be entered while the
 door is shut (both are checked, with the door shut and open).
 
@@ -204,9 +204,9 @@ door is shut (both are checked, with the door shut and open).
 
 ### Trial halls (`trial/trial_hall_a`, `trial_hall_b`, 27 x 27, two doors)
 
-The Spire's trial chamber (`docs/labyrinth/e1_trial.md`): walk through a doorway and the `nusmp:sealed_archway` seals both doors, the glyphs spawn the wave
+The Spire's trial chamber (`docs/labyrinth/e1_trial.md`): walk through a doorway and the `anime_multiverse:sealed_archway` seals both doors, the glyphs spawn the wave
 (scaled by the party), the barriers fall when the last one dies. The archway keystone hangs in the ceiling centre (`radius 13`, `height 13`, `reset 60`), so the
-box it watches is the whole hall and the doorway runes on the edge are inside it; `nusmp:ward_rune` fills the sill of each doorway and `nusmp:spawn_glyph` the
+box it watches is the whole hall and the doorway runes on the edge are inside it; `anime_multiverse:ward_rune` fills the sill of each doorway and `anime_multiverse:spawn_glyph` the
 floor.
 
 * **A (undead)**: a round dais with a chiselled sigil in the middle (the party's anchor), eight glyphs on a ring, twelve pillars with lanterns for cover, a
@@ -221,13 +221,13 @@ Only the mechanics are custom (the Vanilla Block Primacy Rule); architecture, de
 
 | custom block | used in | copied from |
 |---|---|---|
-| `nusmp:pitfall_tile` (`safe`, `open=false`) | both pit halls | `gen_spire.py` `build_pit_room()`: the whole floor of the field is the tile, `safe=true` on the route and island, `safe=false` elsewhere; below it a dark chamber of dripstone and a ladder. `docs/labyrinth/f1_traps.md` |
-| `nusmp:snuffer_glyph` (`active=false`) | `dark_room` | `gen_spire.py` `build_dark_room()`: the glyph in the middle of a ring of polished blackstone, the chest within its darkness |
-| `nusmp:sigil_plate` (`color`, `lit=false`), `nusmp:riddle_stone` (block entity `{id, sequence: [int]}`), `nusmp:gatekeeper_door` (`kind=puzzle`, `half`, `open=false`) | both sigil halls | `gen_spire.py` `build_puzzle_room()` and `gatekeeper_door()`; the door is two columns of `half=lower` with `half=upper` above (3 tall) |
-| `nusmp:sealed_archway` (block entity `{id, radius, height, mobs: [{id, count}], reset}`), `nusmp:ward_rune`, `nusmp:spawn_glyph` | both trial halls | `gen_spire.py` `build_trial()` and `archway_nbt()`; the mobs and `reset 60` are the Spire's trial_a / trial_b |
+| `anime_multiverse:pitfall_tile` (`safe`, `open=false`) | both pit halls | `gen_spire.py` `build_pit_room()`: the whole floor of the field is the tile, `safe=true` on the route and island, `safe=false` elsewhere; below it a dark chamber of dripstone and a ladder. `docs/labyrinth/f1_traps.md` |
+| `anime_multiverse:snuffer_glyph` (`active=false`) | `dark_room` | `gen_spire.py` `build_dark_room()`: the glyph in the middle of a ring of polished blackstone, the chest within its darkness |
+| `anime_multiverse:sigil_plate` (`color`, `lit=false`), `anime_multiverse:riddle_stone` (block entity `{id, sequence: [int]}`), `anime_multiverse:gatekeeper_door` (`kind=puzzle`, `half`, `open=false`) | both sigil halls | `gen_spire.py` `build_puzzle_room()` and `gatekeeper_door()`; the door is two columns of `half=lower` with `half=upper` above (3 tall) |
+| `anime_multiverse:sealed_archway` (block entity `{id, radius, height, mobs: [{id, count}], reset}`), `anime_multiverse:ward_rune`, `anime_multiverse:spawn_glyph` | both trial halls | `gen_spire.py` `build_trial()` and `archway_nbt()`; the mobs and `reset 60` are the Spire's trial_a / trial_b |
 
 Deliberate differences from the Spire: the puzzle closets hold two chests and no relic pedestal (the brief asks for a chest; relics are earned elsewhere in the
-Mega-Dungeon); the trial halls place no `nusmp:magic_barrier` (the archway writes the barriers into the doorways at run time, exactly as in the Spire).
+Mega-Dungeon); the trial halls place no `anime_multiverse:magic_barrier` (the archway writes the barriers into the doorways at run time, exactly as in the Spire).
 
 ## The analysis (why the generator can say "this room works" without the game)
 
@@ -284,12 +284,12 @@ for that kind.
 
 ## For the lead
 
-* **Block-state schema bug in `mega_lib.py` (not mine to edit)**: `_SCHEMA` lists `(r".*_door", {...})` before `(r"nusmp:.*", None)`, and the path of
-  `nusmp:gatekeeper_door` matches `.*_door`, so `mega_check` rejects the puzzle door's `kind` property (12 errors in the two sigil halls). Fix: move the line
-  `(r"nusmp:.*", None),` to the first position of `_SCHEMA`, or start `_check_cached` with `if block.startswith("nusmp:"): return None`. `mega_decor_r2.py`
+* **Block-state schema bug in `mega_lib.py` (not mine to edit)**: `_SCHEMA` lists `(r".*_door", {...})` before `(r"anime_multiverse:.*", None)`, and the path of
+  `anime_multiverse:gatekeeper_door` matches `.*_door`, so `mega_check` rejects the puzzle door's `kind` property (12 errors in the two sigil halls). Fix: move the line
+  `(r"anime_multiverse:.*", None),` to the first position of `_SCHEMA`, or start `_check_cached` with `if block.startswith("anime_multiverse:"): return None`. `mega_decor_r2.py`
   applies the first fix to its own copy at import time so the generator can run today; the file on disk is identical either way.
 * **Pools**: the pool builder must pick up the folders `set`, `hall`, `cavern`, `trap`, `puzzle`, `trial` (the weights above). `mega_check` reports 74
-  "pool nusmp:mega/side does not exist" errors for these templates until that pool exists; nothing else is wrong.
+  "pool anime_multiverse:mega/side does not exist" errors for these templates until that pool exists; nothing else is wrong.
 * **Catalog**: run `python3 tools/labyrinth/mega_catalog.py` after the merge (this builder did not write `src/test/resources/mega/catalog.json`; it exports
   these templates without error: sizes, 2 to 6 sockets each, the markers above).
 * **The attachment rules are reusable**: they found 43 defects in this builder's first version (floating lanterns, a backwards ladder, torches on lightning
@@ -300,7 +300,7 @@ for that kind.
   import sys; sys.path.insert(0, "tools/labyrinth")
   import glob, mega_decor_r2 as D
   from template import load
-  for p in sorted(glob.glob("src/main/resources/data/nusmp/structure/mega/**/*.nbt", recursive=True)):
+  for p in sorted(glob.glob("src/main/resources/data/anime_multiverse/structure/mega/**/*.nbt", recursive=True)):
       t = load(p, p)
       for pos, c in sorted(t.cells.items()):
           r = D.attachment_problem(t.cells, pos, c)
@@ -324,7 +324,7 @@ for that kind.
   slab steps, ladders and the curved stairs of the rotunda are walkable in the model but were not walked.
 * The pit fall (three blocks into a spiked chamber), the snuffer glyphs' real radius, the Riddle Stone's scan box and the sealed archway's box are checked
   against the numbers read from the Java classes and the Spire docs; the behaviour itself was not run. Both trial rooms use the Spire's mob rosters
-  (`nusmp:living_armor` and `nusmp:dungeon_direwolf` are registered in `DungeonEntities`; the chest loot table `nusmp:chests/labyrinth_trial` exists).
+  (`anime_multiverse:living_armor` and `anime_multiverse:dungeon_direwolf` are registered in `DungeonEntities`; the chest loot table `anime_multiverse:chests/labyrinth_trial` exists).
 * The rendered pictures are made by a scratch viewer and the lead's `mega_preview.py`; both draw colours from a keyword table, so a block's real texture and
   shading were never seen.
 * Structure size: every template is below 120 KB compressed; the placement cost of the biggest ones (the rotunda at 40 thousand cells, the cisterns with five

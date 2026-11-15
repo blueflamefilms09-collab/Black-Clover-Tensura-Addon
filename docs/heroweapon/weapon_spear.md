@@ -14,7 +14,7 @@ was and was not checked.
 The Legendary Spear is the weapon of the Spear Hero, Motoyasu Kitamura. It is the longest melee weapon of the four Holy Weapons and the fastest to
 move with. It must read as noble, plain and strong at the base look, and as the same weapon made monstrous at the curse look.
 
-**Size class.** `spear` of `assets/nusmp/weapon_classes.json` (2.8 to 3.6 blocks). Aim for 3.3 blocks of apparent length, butt to tip. The grip
+**Size class.** `spear` of `assets/anime_multiverse/weapon_classes.json` (2.8 to 3.6 blocks). Aim for 3.3 blocks of apparent length, butt to tip. The grip
 (hand position) is the class grip, 0.33 of the length from the butt. Held like every other long weapon (mesh -x forward, tip up-forward on the icon
 diagonal, see `docs/weapon_scale_orientation.md`).
 
@@ -303,7 +303,7 @@ bar, the overrun, anything it does to the wielder's body each second) belongs to
 | Lust Spear IV | 6 | Lust's Embrace (the ultimate); attack speed +0.3 |
 
 * **Blows grow (Fervor).** Every melee blow of the spear adds one stack of 6 percent melee damage, up to 5 (30 percent); the stacks last 6 seconds after the last
-  blow. It is one transient attribute modifier (`nusmp:spear_fervor`, never saved), replaced only when the number of stacks changes, removed when the form
+  blow. It is one transient attribute modifier (`anime_multiverse:spear_fervor`, never saved), replaced only when the number of stacks changes, removed when the form
   changes, the weapon is put away or the time runs out.
 * **Restraint is lost (Ravenous Aim).** The direction of the thrust, the throw, the lunge, the meteor and the beams snaps to the nearest foe the wielder can see
   within 9 blocks and 75 degrees of their look. The wielder cannot aim away from prey. It never reaches through a wall or across a room.
@@ -347,7 +347,7 @@ Colours: gem red `0xFFFF5C4D`, white-gold light `0xFFFFE8A0`, silver `0xFFE4E8F0
   `SpearAim`, `SpearState` (the `spear` compound of the bond), `SpearFx`, `SpearSelfTest`.
 * `weapon/pierce/` (shared with the Bow; named for the thing both do): `Geo`, `SafeSpot`, `SkillRow` (pure), `Foes` (who a technique may strike), `Hits` (one
   blow per foe with the sum of a cast's pieces, because vanilla hurt immunity would otherwise keep only the strongest), `Rays`, `Moves`, `Tasks`.
-* `src/main/resources/data/nusmp/hero/forms/legendary_spear.json` : 10 ordinary forms and 4 Lust forms.
+* `src/main/resources/data/anime_multiverse/hero/forms/legendary_spear.json` : 10 ordinary forms and 4 Lust forms.
 * Tests (`src/test/java/.../heroweapon/weapon/`): `pierce/GeoTest`, `pierce/SafeSpotTest`, `pierce/FormsFileCheck` (the checker of design.md section 6),
   `spear/RewindBufferTest`, `spear/RewindPlannerTest`, `spear/SpearNumbersTest`, `spear/SpearFormsFileTest`. CI runs them with JUnit; the builder ran them with the
   repo's small JUnit shim and mutation-checked two of them (a lowered Time Reversal cooldown, a window edge moved by one tick: both fail the intended test).

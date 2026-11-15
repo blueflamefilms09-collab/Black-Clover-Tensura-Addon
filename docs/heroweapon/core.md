@@ -8,7 +8,7 @@ Why: the design fixed the shape of the system (21 weapons, one bond per player, 
 
 | | what |
 |---|---|
-| NEW | config `nusmp-heroweapon-server.toml` and `nusmp-heroweapon-client.toml`; the world register `nusmp_hero_registry.dat`; the loan glue (summon, dismiss, restore, shutdown, adoption, the container and cursor checks); the four payloads and the client copy of the bond; the dispatcher's cooldown book, payment receipt and key handling; the three restrictions and the experience rule; the HUD; the five keys; the tooltip; the base-stats and colour tables; the item tag `#nusmp:hero_allowed`; three self-tests (`hero.bond`, `hero.use`, `hero.rules`); 10 unit-test classes (56 tests) |
+| NEW | config `nusmp-heroweapon-server.toml` and `nusmp-heroweapon-client.toml`; the world register `nusmp_hero_registry.dat`; the loan glue (summon, dismiss, restore, shutdown, adoption, the container and cursor checks); the four payloads and the client copy of the bond; the dispatcher's cooldown book, payment receipt and key handling; the three restrictions and the experience rule; the HUD; the five keys; the tooltip; the base-stats and colour tables; the item tag `#anime_multiverse:hero_allowed`; three self-tests (`hero.bond`, `hero.use`, `hero.rules`); 10 unit-test classes (56 tests) |
 | REPLACEMENT | the contract's stubs, with every public signature kept: `HeroWeaponItem`, `HeroItems` (registers the real item class), `HeroSummon` (now the door to the real loan, plus `stack(player)`), `HeroUse`, `HeroInterference`, `HeroXp`, `HeroCommand` (core nodes added, the forms, curse and gem nodes kept), `HeroCore`, `HeroClient` (the forms and curse calls kept) |
 | KEPT | everything else. The Djinn weapons' `WeaponLoan` is reused as it is; `MagicWeaponItem`, the Magebane Shield, `HeroKind`, `HeroBond(s)`, `HeroCtx`, `HeroForm`, `HeroSkill`, `HeroLogic(s)`, `HeroLevels`, `HeroComponents` are not touched. Three shared files got one small edit each (the renderer hook, the class-lookup suffix in Java and in its Python mirror; section 9) |
 
@@ -27,7 +27,7 @@ Why: "one holder per Holy Weapon" has to hold across logouts (the holder may be 
 Why: the owner wants the weapon "permanently bound to the user's body", but a Minecraft item can be dropped, put in a chest, handed over, burnt and lost. The answer is the Djinn weapons' answer (already built and tested with random events): the bond is the truth, the item in the hand is a projection of it.
 
 * **State.** The pure `WeaponLoan<ItemStack>` machine of the Djinn weapons does the slot work (which hotbar slot is home, which item it displaced, the stash of items that found no room). The core's record of it is `bond.extra("loan")`: `home` (int), `moved` (int) and `movedItem` (item NBT), `stash` (list of item NBT). The bond's own `summoned` flag says whether the weapon is out. The loan reads 42 places: the 36 main slots, the off hand, the four armour slots and the cursor.
-* **The projection** is a `HeroWeaponItem` stack with a non-empty `nusmp:hero_owner` (the owner's uuid) and `nusmp:hero_look` (`curse` when the active form says so), engraved once through `WeaponEngravings.engrave` if the lead's table has lines for it. A stack with no owner (creative tab, `/give`) is "bare".
+* **The projection** is a `HeroWeaponItem` stack with a non-empty `anime_multiverse:hero_owner` (the owner's uuid) and `anime_multiverse:hero_look` (`curse` when the active form says so), engraved once through `WeaponEngravings.engrave` if the lead's table has lines for it. A stack with no owner (creative tab, `/give`) is "bare".
 * **Doors.** `HeroSummon.summon/dismiss/isSummoned/stack` for everyone else; `HeroLoan.summon/dismiss(player, explain)` return an `Outcome` (`OK, NO_BOND, ALREADY, NOT_OUT, EXEMPT, LOCKED, DISABLED, DEAD`) so a key can say why. Summon puts the weapon in the selected hotbar slot and the displaced item goes to the first free slot (or the stash), never deleted; dismiss gives it back. A dismiss is refused while `HeroCurse.locked(player)`; a curse system that throws does not trap the wielder.
 * **What is checked, and when.**
 
@@ -52,7 +52,7 @@ Why: the owner wants the weapon "permanently bound to the user's body", but a Mi
 
 Why: what a weapon DOES is in its logic and forms; what the item must do is common.
 
-* **Properties.** One in a stack, Epic, fire-proof, unbreakable (`Unbreakable(false)`: no durability, no tooltip line). Melee numbers come from the pure `HeroBaseStats` table, turned into the item's attribute modifiers with the vanilla ids `base_attack_damage` and `base_attack_speed` (so the tooltip reads like any weapon) and, when the row has reach, an `ENTITY_INTERACTION_RANGE` modifier `nusmp:hero_weapon_reach`. The forms system adds its own modifiers on top.
+* **Properties.** One in a stack, Epic, fire-proof, unbreakable (`Unbreakable(false)`: no durability, no tooltip line). Melee numbers come from the pure `HeroBaseStats` table, turned into the item's attribute modifiers with the vanilla ids `base_attack_damage` and `base_attack_speed` (so the tooltip reads like any weapon) and, when the row has reach, an `ENTITY_INTERACTION_RANGE` modifier `anime_multiverse:hero_weapon_reach`. The forms system adds its own modifiers on top.
 
 | weapon | damage | attacks/s | reach | | weapon | damage | attacks/s | reach |
 |---|---|---|---|---|---|---|---|---|
@@ -92,13 +92,13 @@ Why: one entry point turns an input into a cast, so the owner's balance rules ar
 
 | key | id | default | what |
 |---|---|---|---|
-| technique 1 | `key.nusmp.hero_skill_1` | Z | press: fire `KEY_1` of the active form; held: heartbeat |
-| technique 2 | `key.nusmp.hero_skill_2` | X | `KEY_2` |
-| technique 3 | `key.nusmp.hero_skill_3` | C | `KEY_3` |
-| summon / put away | `key.nusmp.hero_summon` | B | toggles the weapon (`HeroLoan.summon/dismiss`) |
-| change form | `key.nusmp.hero_cycle` | N | `HeroForms.cycle`, shows "Form: X" |
+| technique 1 | `key.anime_multiverse.hero_skill_1` | Z | press: fire `KEY_1` of the active form; held: heartbeat |
+| technique 2 | `key.anime_multiverse.hero_skill_2` | X | `KEY_2` |
+| technique 3 | `key.anime_multiverse.hero_skill_3` | C | `KEY_3` |
+| summon / put away | `key.anime_multiverse.hero_summon` | B | toggles the weapon (`HeroLoan.summon/dismiss`) |
+| change form | `key.anime_multiverse.hero_cycle` | N | `HeroForms.cycle`, shows "Form: X" |
 
-Category `key.categories.nusmp`. The keys the mod already uses are V, R, G, J, K, H, Y, U, the arrow keys, Home and End (checked by grep: no use of Z, X, C, B, N or M anywhere else); M is the Weapon Book (forms builder). The keys do nothing and send nothing without a bond, with a screen open, or in spectator mode.
+Category `key.categories.anime_multiverse`. The keys the mod already uses are V, R, G, J, K, H, Y, U, the arrow keys, Home and End (checked by grep: no use of Z, X, C, B, N or M anywhere else); M is the Weapon Book (forms builder). The keys do nothing and send nothing without a bond, with a screen open, or in spectator mode.
 
 ## 7. The three restrictions
 
@@ -108,7 +108,7 @@ Why: canon says a hero is shocked when they try to fight with a weapon of anothe
 
 * **The class of an item** is decided by the pure `WeaponClassifier` from facts that `HeroRules.classOf` reads off the stack: the allow tag first, then a class the item declares, then how it is used (raised: SHIELD; drawn: BOW; thrown: SPEAR), then its Java class and tags (sword, axe, mace), then "a tool is not a weapon", and last "adds 4 or more attack damage: OTHER_WEAPON". Classes: SWORD, AXE, SPEAR, BOW, SHIELD, BLUNT, OTHER_WEAPON, NONE.
   * Declared classes: the 21 hero weapons (Shield, Sword, Spear, Bow have their own class; the other seventeen are NONE, so always allowed); this mod's Magebane Shield (SHIELD), Bolt Thrower and Crossbow of Swift Death (BOW), Club of Rot and Doom Hammer (BLUNT), Butcher Cleaver (AXE), Hand of Providence and Quickling's Ivy (OTHER_WEAPON); the Otherworld Trident (SPEAR); the Djinn weapons by their table row (lance, trident, glaive: SPEAR; greatsword: SWORD; axe: AXE; bow: BOW; staff: BLUNT; the rest OTHER_WEAPON); ranged relics (BOW); and two kinds of Tensura weapon whose Java class would say "sword": its spears (SPEAR) and scythes (OTHER_WEAPON).
-  * Tags read: `#minecraft:swords`, `#minecraft:axes`, `#c:tools/spear`, `#c:tools/bow`, `#c:tools/crossbow`, `#c:tools/shield`, `#c:tools/mace`, and this mod's `#nusmp:hero_allowed` (ships empty; a datapack adds to it, and anything in it is never rejected).
+  * Tags read: `#minecraft:swords`, `#minecraft:axes`, `#c:tools/spear`, `#c:tools/bow`, `#c:tools/crossbow`, `#c:tools/shield`, `#c:tools/mace`, and this mod's `#anime_multiverse:hero_allowed` (ships empty; a datapack adds to it, and anything in it is never rejected).
 * **Who is shocked:** a bonded Holy wielder (not creative, not spectator), for an item whose class is not NONE and not their own. A Seven Star or Vassal wielder is never shocked. Holding something is harmless; using it to fight is not.
 * **Where it bites** (all server side, all cancelled before the damage): `AttackEntityEvent` (a blow), `LivingIncomingDamageEvent` for a physical hit that reached the damage step by another route (a mod item's right-click technique), `LivingEntityUseItemEvent.Start` and `ArrowLooseEvent` (drawing or loosing a bow, crossbow or trident of another class), `PlayerInteractEvent.RightClickItem` (a loaded crossbow fires at once). Tools used as tools are never affected: breaking blocks raises none of these events.
 * **The shock** (`HeroRules.shock`): magic damage `shockDamage` (4 = two hearts), never lethal (`ShockRules.damage` leaves at least half a heart; a last-word damage listener caps it again after every other mod's multiplier), at most once a second; Slowness II for `shockSlowTicks` (20); a barrier ring and a shield-block sound in the weapon's colour; and the line "The Legendary X rejects the weapon" at most once every three seconds.
@@ -141,7 +141,7 @@ All of it is multiplied by `weaponExpMultiplier` and stops at `maxLevel`. The cu
 
 ## 9. Client: HUD, tooltip, model predicates, the curse look
 
-* **HUD** (`HeroHud`, layer `nusmp:hero_hud`, above everything): bottom left, in the weapon's colour and the mod's panel theme: gem diamond, name, level, an experience bar; while the weapon is out also the active form and one row per technique (input, name, and a bar with the seconds left while it recharges); while away "Put away: press B"; a red line while repelled. Moved and scaled by `nusmp-heroweapon-client.toml`. It reads `ClientHeroBond` only. Its drawing and the key tick run inside `SafeCast.client`, so a fault is logged once and never reaches the frame. The curse system draws its own bar below it.
+* **HUD** (`HeroHud`, layer `anime_multiverse:hero_hud`, above everything): bottom left, in the weapon's colour and the mod's panel theme: gem diamond, name, level, an experience bar; while the weapon is out also the active form and one row per technique (input, name, and a bar with the seconds left while it recharges); while away "Put away: press B"; a red line while repelled. Moved and scaled by `nusmp-heroweapon-client.toml`. It reads `ClientHeroBond` only. Its drawing and the key tick run inside `SafeCast.client`, so a fault is logged once and never reaches the frame. The curse system draws its own bar below it.
 * **`ClientHeroBond`** is the client's copy of the last `Sync` plus the cooldown bars. It imports nothing of the game's client, so the common tooltip may read it and a dedicated server never loads anything it cannot. The cooldown clock stops while a single-player game is paused. It is forgotten at logout.
 * **Model predicates.** `blocking` on the Legendary Shield (1 while the guard is up) and `pull` / `pulling` on the Legendary Bow, with vanilla's names and formulas, so an item model JSON may switch display transforms with an `overrides` entry. Bow `_pull` meshes are not wired (the mod's state-variant logic ignores bows that are not relics).
 * **The curse look.** The one edit in `client/WeaponRenderer.meshId`: a hero weapon whose stack says `look = curse` is drawn from the mesh `<id>_curse` (and its skins) when that mesh exists; otherwise it keeps the base look. The second edit, in `client/relics/item/WeaponClasses`, adds `curse` to `STATE_SUFFIX` so `<id>_curse` takes its base weapon's class and model info (the same rule as `_pull1`, `_charged`). The Python mirror `tools/relics/weapon_classes.py` has its own `STATE_SUFFIX`; it got the same token, so `test_weapon_scale.py` (35 tests, run: OK) and the shipped-mesh check treat a `<id>_curse` mesh as its base weapon. Both are edits outside the core's own files, made because the curse look cannot work without them; if the lead prefers, revert them and add the four `<id>_curse` entries to `weapon_classes.json` instead.
@@ -195,10 +195,10 @@ The weapon argument suggests the 21 item ids and also accepts a short name (`Her
 
 | id | direction | fields | server checks |
 |---|---|---|---|
-| `nusmp:hero_key` | to server | slot 0..2, phase 0 press / 1 hold / 2 release | slot range, alive, enabled, spacing |
-| `nusmp:hero_act` | to server | action 0 toggle / 1 cycle / 2 summon / 3 dismiss | bond, spacing |
-| `nusmp:hero_sync` | to client | weapon id (empty = none), exp, form id and name, summoned, flags (1 repelled, 2 cursed, 4 locked), learned forms, mastery map, absorbed-kinds count, absorbed total, the largest 24 absorbed items, the five technique ids of the active form (use, sneak, key 1, 2, 3) | lists capped at 512 on read |
-| `nusmp:hero_cooldown` | to client | skill id, ticks | |
+| `anime_multiverse:hero_key` | to server | slot 0..2, phase 0 press / 1 hold / 2 release | slot range, alive, enabled, spacing |
+| `anime_multiverse:hero_act` | to server | action 0 toggle / 1 cycle / 2 summon / 3 dismiss | bond, spacing |
+| `anime_multiverse:hero_sync` | to client | weapon id (empty = none), exp, form id and name, summoned, flags (1 repelled, 2 cursed, 4 locked), learned forms, mastery map, absorbed-kinds count, absorbed total, the largest 24 absorbed items, the five technique ids of the active form (use, sneak, key 1, 2, 3) | lists capped at 512 on read |
+| `anime_multiverse:hero_cooldown` | to client | skill id, ticks | |
 
 The sync is built from the bond as a record. It is sent at once on login, respawn, dimension change, bind and release, and otherwise polled once a second per bonded player and sent only if it differs from the last one sent (so a quiet second costs one comparison and no packet, and "every change, at most once a second" holds by construction). Stand-in players (self-tests) have no connection and are skipped.
 
@@ -265,7 +265,7 @@ Nothing ran in the game. The whole project cannot be compiled here; my files wer
 6. **Client drawing.** The HUD, the key list, the tooltip and the model predicates were never rendered or opened. The panel helper `UiPanel.panel`'s two alpha arguments are taken from their names.
 7. **Interactions cancelled** for item frames, armour stands and allays: `EntityInteract` and `EntityInteractSpecific` are assumed to cover every route by which a held item is hung or handed over.
 8. **Melee detection.** A technique's damage uses `HeroCtx.hit` (damage type `playerAttack`), indistinguishable from a melee blow in the damage events; blows are therefore detected through the item (`onLeftClickEntity` + `hurtEnemy`), which reports only the primary target of a sweep.
-9. **Classification coverage.** Other mods' weapons are classified by Java class, vanilla and common tags and the attack-damage catch-all. A weapon from a mod that is none of these and adds less than 4 damage is "not a weapon" and never rejected; a sword-class weapon of a third mod with an unusual Java class may be OTHER_WEAPON and so rejected by every Holy hero, including the Sword hero. The fix is the tag `#nusmp:hero_allowed` or a line in `HeroRules.declared`. The Tensura spear and scythe mapping was written from the class names in the API dump and not run against the real items (their registry ids are not in my dumps), so `hero.rules` does not cover it.
+9. **Classification coverage.** Other mods' weapons are classified by Java class, vanilla and common tags and the attack-damage catch-all. A weapon from a mod that is none of these and adds less than 4 damage is "not a weapon" and never rejected; a sword-class weapon of a third mod with an unusual Java class may be OTHER_WEAPON and so rejected by every Holy hero, including the Sword hero. The fix is the tag `#anime_multiverse:hero_allowed` or a line in `HeroRules.declared`. The Tensura spear and scythe mapping was written from the class names in the API dump and not run against the real items (their registry ids are not in my dumps), so `hero.rules` does not cover it.
 10. **Economy.** The experience rates, the speeds of the table and the 48-block radius are first guesses.
 11. Canon: see section 18. The "bound to the body" restriction is the owner's text; my searches found no canon statement of it. The wiki summaries I used were search summaries, not the pages.
 
@@ -290,6 +290,6 @@ Nothing ran in the game. The whole project cannot be compiled here; my files wer
 
 
 ## Crystal of Release, the equip question, anime strength (3.73.0)
-* **Release for regular players:** `nusmp:gneiss_crystal` (quartz corners, polished deepslate edges, amethyst shard centre) sits in the MIDDLE of the Crystal of Release (`nusmp:release_crystal`): `HMH / MGM / HMH` with `H` = `tensura:high_quality_magic_crystal`, `M` = `tensura:medium_quality_magic_crystal`. First right click asks, the second within 30 s (`HeroAbandonRules.CONFIRM_TICKS`) calls `HeroBonds.release` and spends one crystal; the curse refuses it. `HeroAbandon.ask/confirm(p, crystal=true)` skips only the `abandonAllowed` check.
+* **Release for regular players:** `anime_multiverse:gneiss_crystal` (quartz corners, polished deepslate edges, amethyst shard centre) sits in the MIDDLE of the Crystal of Release (`anime_multiverse:release_crystal`): `HMH / MGM / HMH` with `H` = `tensura:high_quality_magic_crystal`, `M` = `tensura:medium_quality_magic_crystal`. First right click asks, the second within 30 s (`HeroAbandonRules.CONFIRM_TICKS`) calls `HeroBonds.release` and spends one crystal; the curse refuses it. `HeroAbandon.ask/confirm(p, crystal=true)` skips only the `abandonAllowed` check.
 * **Equip question:** `GemChoosing.finish` with `[gem] confirmEquip` (default true) hands the finished ritual to `GemOffer.make`; `/multiverse hero accept` runs `GemChoosing.complete` (gates re-checked, one gem spent, weapon bound and summoned), `decline` only closes the question. The gem stays in the inventory throughout.
 * **Strength:** `HeroBuff.damageFactor(kind, level)` = old factor x `animeDamageFactor` x `(1 + animeLevelBonus * level / 100)`; `HeroBuff.taken` is also multiplied by `animeDamageTakenFactor`. Worst case per hit: one multiplication; the boss damage cap still applies.

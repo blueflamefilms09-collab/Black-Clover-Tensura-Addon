@@ -2,7 +2,7 @@
 
 Class SEVEN_STAR, style SWING. In the series the Vassal Gauntlet is one of the seven Seven Star Weapons of Raphtalia's world; its power-up method is Skill Power-up Points and its
 holder in the story is Fohl Fayon, the Hakuko (white tiger demi-human) Gauntlet Hero (wiki summaries). The owner names no holder for it. Logic
-`heroweapon/weapon/gauntlet/GauntletLogic`, forms `data/nusmp/hero/forms/vassal_gauntlet.json`.
+`heroweapon/weapon/gauntlet/GauntletLogic`, forms `data/anime_multiverse/hero/forms/vassal_gauntlet.json`.
 This page is written in sections; the LOOK section comes first because the art builder (`hart2`) reads it first.
 
 ## 1. Look (for the art builder)
@@ -165,7 +165,7 @@ Map.entry("vassal_gauntlet", List.of(e("crushing", 2), e("barrier_piercing", 1),
 
 * Logic: `heroweapon/weapon/gauntlet/`: `GauntletLogic`, `GauntletSpells`, `GauntletNumbers` (no game classes), `GauntletText` (no game classes), `GauntletState`, `PointPool` (no game classes).
 * Shared kit (also used by the staff, the projectile and the carriage): `heroweapon/weapon/kit/`, described class by class in `weapon_staff.md` section 8.
-* Forms: `src/main/resources/data/nusmp/hero/forms/vassal_gauntlet.json`. Lang: the builder's fragment (`hero.skill.gauntlet.*`, `hero.passive.gauntlet.*`).
+* Forms: `src/main/resources/data/anime_multiverse/hero/forms/vassal_gauntlet.json`. Lang: the builder's fragment (`hero.skill.gauntlet.*`, `hero.passive.gauntlet.*`).
 * Tests: `PointPoolTest` (cap, spend, fade, re-anchoring), `GauntletNumbersTest` (budget, the formula behind every strongest value, the ultimate's minimum), `GauntletFormsTest`.
 
 ## 9. Tests and the self-test

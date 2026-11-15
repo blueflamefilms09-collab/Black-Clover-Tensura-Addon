@@ -23,7 +23,7 @@ Suggested locks: `corpse_reanimate` open to anyone with the magic; jimmy/alfredo
 - `NamedCorpses` (pure): stat table of the three puppets.
 - `Corpses`: what a body IS (persistent tag `nusmp_corpse`), ledger, raising, the half-second sweep (foe pick, path, blow in reach, bleed, stage, wisps, end of life), foe rules.
 - `Pacts`: the death interception (LivingDeathEvent, HIGH), revive, decay, mana at payout (`CorpseMana`).
-- `CorpseHooks`: all event listeners. `CorpseEffects`: marker effect `nusmp:soul_corpse` (amplifier = decay stage, so no packet; the server also rebroadcasts the vanilla effect packet on a change). `CorpseEntities`/`NamedCorpseEntity`: the three puppets. `CorpseTags`: `nusmp:corpse_immune`.
+- `CorpseHooks`: all event listeners. `CorpseEffects`: marker effect `anime_multiverse:soul_corpse` (amplifier = decay stage, so no packet; the server also rebroadcasts the vanilla effect packet on a change). `CorpseEntities`/`NamedCorpseEntity`: the three puppets. `CorpseTags`: `anime_multiverse:corpse_immune`.
 - Client: `CorpseDecayLayer` (every living renderer, overlay textures per stage + additive wisp pass, render types cached), `NamedCorpseRenderer` (GeoLite, stage skins), `CorpseClient`.
 - VFX: `CorpseLayer` (CORPSE_RAISE, CORPSE_PACT), same INFERNAL palette as WikiMagicLayer.
 

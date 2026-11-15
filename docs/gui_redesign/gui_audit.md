@@ -58,17 +58,17 @@ Common machinery: `ui/GuiScale` + `ui/scale/*` (per-screen and per-HUD size, "fi
 
 | Layer id | File | What it draws | Reads |
 |---|---|---|---|
-| `nusmp:system_overlay` | `mega/system/SystemClient`, `SystemOverlay`, `OverlayLayout` (pure), `OverlayStyle` | holographic dungeon window (floor, threat, quest bar, five stats), toast column (`[SYSTEM] ...`, kinds info/success/failure/reward/shadow), typed title; only in the dungeon dimensions; fills + one gradient kind + default font, no textures | `ClientSystem` (server pushes) |
-| `nusmp:system_floor_card` | `mega/system/FloorCardClient`, `FloorCardLayout` | floor report card on arrival | `FloorCard` packet |
-| `nusmp:page_unlock` | `ui/theme/PageUnlockOverlay`, `PageUnlockTracker`, `ToastTimeline` | "Notice: a new page has opened." panel with a building rune circle, typed description, "Result: cost ..., cooldown ...", mastery bar; queued | synced Multiverse status (`MultiverseStatusClient.status()`), diff of the grimoire `PageList` |
-| `nusmp:hero_hud` | `heroweapon/HeroHud` | hero weapon gem, level bar, form, technique cooldowns (bottom left) | hero sync |
-| `nusmp:hero_curse_overlay` | `heroweapon/curse/CurseOverlay` | edge vignette, corruption bar, curse offer panel | curse sync |
-| `nusmp:djinn_hud` | `relics/djinn/DjinnScreenFx`, `djinn/gui/DjinnGui` | vignette + fringe + FOV squeeze, the bar above the hotbar: 4 phase pips, **Magoi (magicule percent)**, assimilation, trust, timers. Style `NEW` or `CLASSIC` (`DjinnGuiConfig.style()`, a precedent for a style setting) | `DjinnNet.Sync` (magoi percent) |
-| `nusmp:relic_hud` | `relics/RelicClient`, `RelicActKeys` | key-hint chip for worn relics | local |
-| `nusmp:shishou_hud` | `shishou/ShishouHud` | sword panel: level, **mana gauge** (`AkashicTheme.gauge`), selected skill, appraisal readout | Shishou sync (own pool) |
-| `nusmp:song_meter` | `song/SongClient` | voice level meter near the hotbar | local mic level |
-| `nusmp:scale_weights` | `scalecast/ScaleHud` | plate over the hotbar (scale casting weights) | prop word |
-| `nusmp:hub_quest_tracker` | `elite/hub/HubClient`, `QuestOverlay` | quest progress, top right | hub sync |
+| `anime_multiverse:system_overlay` | `mega/system/SystemClient`, `SystemOverlay`, `OverlayLayout` (pure), `OverlayStyle` | holographic dungeon window (floor, threat, quest bar, five stats), toast column (`[SYSTEM] ...`, kinds info/success/failure/reward/shadow), typed title; only in the dungeon dimensions; fills + one gradient kind + default font, no textures | `ClientSystem` (server pushes) |
+| `anime_multiverse:system_floor_card` | `mega/system/FloorCardClient`, `FloorCardLayout` | floor report card on arrival | `FloorCard` packet |
+| `anime_multiverse:page_unlock` | `ui/theme/PageUnlockOverlay`, `PageUnlockTracker`, `ToastTimeline` | "Notice: a new page has opened." panel with a building rune circle, typed description, "Result: cost ..., cooldown ...", mastery bar; queued | synced Multiverse status (`MultiverseStatusClient.status()`), diff of the grimoire `PageList` |
+| `anime_multiverse:hero_hud` | `heroweapon/HeroHud` | hero weapon gem, level bar, form, technique cooldowns (bottom left) | hero sync |
+| `anime_multiverse:hero_curse_overlay` | `heroweapon/curse/CurseOverlay` | edge vignette, corruption bar, curse offer panel | curse sync |
+| `anime_multiverse:djinn_hud` | `relics/djinn/DjinnScreenFx`, `djinn/gui/DjinnGui` | vignette + fringe + FOV squeeze, the bar above the hotbar: 4 phase pips, **Magoi (magicule percent)**, assimilation, trust, timers. Style `NEW` or `CLASSIC` (`DjinnGuiConfig.style()`, a precedent for a style setting) | `DjinnNet.Sync` (magoi percent) |
+| `anime_multiverse:relic_hud` | `relics/RelicClient`, `RelicActKeys` | key-hint chip for worn relics | local |
+| `anime_multiverse:shishou_hud` | `shishou/ShishouHud` | sword panel: level, **mana gauge** (`AkashicTheme.gauge`), selected skill, appraisal readout | Shishou sync (own pool) |
+| `anime_multiverse:song_meter` | `song/SongClient` | voice level meter near the hotbar | local mic level |
+| `anime_multiverse:scale_weights` | `scalecast/ScaleHud` | plate over the hotbar (scale casting weights) | prop word |
+| `anime_multiverse:hub_quest_tracker` | `elite/hub/HubClient`, `QuestOverlay` | quest progress, top right | hub sync |
 | (hook) boss bars | `gui/bossbar/ModBossBarOverlay`, `CustomBarOverlay`, `BossBarPainter`, textures `gui/bossbar/*.png` (bg, edge, fill, flame, frame, glow, pips, shine) | replaces vanilla boss layer on `RenderGuiLayerEvent.Pre`, vanilla layout, mod bosses get styled bars | boss events |
 | (hook) Grand Magic Zone tint | `manazone/ManaZoneClient.onGuiLayer` | one translucent fill on `CAMERA_OVERLAYS` | region sync |
 | (hook) Tensura menus | `FourKingdomsSlot`, `MultiverseStatusClient.onScreenRender`, `TensuraScreenTheme` | slot, compact panel, optional overlay on `ScreenEvent.Render.Post` | - |
@@ -93,7 +93,7 @@ Vanilla events only: `UI_BUTTON_CLICK` (Hub screens, Weapon Book), `BOOK_PAGE_TU
 | Prompt feature | What the mod has | Verdict | Where it lands |
 |---|---|---|---|
 | 1a Neon borders + ornate filigree corners | cyan edge + 6 px plain brackets (`UiPanel.panel`, `OverlayStyle`) | **REPLACEMENT of the corner part** (brackets stay in anime/classic); neon line = KEPT | new corner texture at the 4 corners of `UiPanel`, behind the theme switch |
-| 1b Concentric gauge (outer Mana particles, inner Magicule slime) | nothing in the mod HUD (Tensura draws its own; Djinn has a flat magoi bar) | **NEW** | new HUD layer `nusmp:great_spirit_gauge`; Djinn/Shishou bars stay |
+| 1b Concentric gauge (outer Mana particles, inner Magicule slime) | nothing in the mod HUD (Tensura draws its own; Djinn has a flat magoi bar) | **NEW** | new HUD layer `anime_multiverse:great_spirit_gauge`; Djinn/Shishou bars stay |
 | 2a Floating holographic Grimoire menu | Four Kingdoms open-book menu + Codex (2D, anime glass, runes) | **REPLACEMENT (new skin)** of the Four Kingdoms / Codex drawing; behaviour, hit boxes, page flip logic kept | third theme value, same screens |
 | 2b Ink script to matrix compile | typed `SageBlock` text (typewriter), no ink font | **NEW** (extends `SageBlock`/`SageLayout`) | new pure `CompileTimeline` + a custom font provider for the ink |
 | 3 Clover skill icons | square 32 px art, tier only in text/frame colour | **NEW** (frames are added around the old art; old PNGs stay registered) | clover frame textures + drawing in mod screens; optional pre-composited copies for Tensura's windows |

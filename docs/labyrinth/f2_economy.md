@@ -22,7 +22,7 @@ hunger are the clock that makes you need both.
 * **EconomyDrops**. The two global NeoForge events: `LivingDropsEvent` adds item entities, `LivingExperienceDropEvent` sets the orbs to 0 (config
   `noExperience`). Global events, not per-mob code, so a monster from any mod standing in a Spire side chamber pays the same. Scope: level is the
   Labyrinth, the mob is a `Mob` and an `Enemy`, and not a boss. Boss = `BudgetedBoss`, the `nusmp_peak_boss` tag the Peak Altar sets, the
-  `nusmp:floor_warden` id, or the `c:bosses` entity tag (other mods' bosses follow it), so bosses keep their own loot (relics, Shadow Key).
+  `anime_multiverse:floor_warden` id, or the `c:bosses` entity tag (other mods' bosses follow it), so bosses keep their own loot (relics, Shadow Key).
   Toughness is read from the BASE max-health attribute, so F3's health buffer (a modifier) cannot inflate the payout. Drops are added to
   the vanilla list, never replace it. Items: Tensura `tensura:magic_stone`, `low/medium/high_quality_magic_crystal` (looked up by id at drop
   time; a missing crystal falls back to the stone, a missing stone to nothing, nothing throws) and `DungeonFood.rawFor(kind)` (the mod's own

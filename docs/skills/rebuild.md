@@ -118,7 +118,7 @@ a player is killed, never silently removed), passive **death becomes fiction** o
 ### REMOVED in 3.44.0: Six Eyes, Limitless, Gold Experience, Gold Experience Requiem, Vector Manipulation
 The owner removed Six Eyes (and its Ultimate Limitless), Gold Experience (and Gold Experience Requiem) and Vector Manipulation. Their ids stay registered as inert stubs (`LegacyIds.REMOVED_SKILLS`, `LegacySkills`),
 and `LegacyMigration` forgets a stub a player still holds at the next login or respawn, so an old world loads. The evolution paths Six Eyes -> Limitless, Gold Experience -> Requiem and Vector Manipulation -> Black Wings are gone from `SkillEvolution`.
-Their 32x32 icons stay in the jar. `GojoRules` and `JoJoRules` are deleted; `AuraRules`' Six Eyes numbers and `VectorRules` stay as pure rules. **Black Wings stays** (grant only now, through `/tensura edit <player> ability grant nusmp:black_wings`); it keeps
+Their 32x32 icons stay in the jar. `GojoRules` and `JoJoRules` are deleted; `AuraRules`' Six Eyes numbers and `VectorRules` stay as pure rules. **Black Wings stays** (grant only now, through `/tensura edit <player> ability grant anime_multiverse:black_wings`); it keeps
 the shared reflection engine, which lives on as the abstract `VectorManipulationSkill` base class:
 
 ### Black Wings (`black_wings`, grant only since 3.44.0)
@@ -134,7 +134,7 @@ Black Wings adds no fall damage at all, projectiles return 1.6x faster **as your
 ## What changed everywhere
 - Area effects hit foes only; heals and buffs reach players and the caster's own creatures only.
 - Hard control (slows, freezes, pins) goes through `BalanceLaw.controlTicks`; damage through `BalanceLaw.damage`; heals through `BalanceLaw.heal`.
-- All text is translatable (`nusmp.skill.*`, `.msg.*`, `.mode.*`, `.chant.*`); mode keys that existed keep their names.
+- All text is translatable (`anime_multiverse.skill.*`, `.msg.*`, `.mode.*`, `.chant.*`); mode keys that existed keep their names.
 - The chants are now actually chanted (hold, lines, release). The old text said "Instant cast"; the new descriptions replace it.
 - The Time Magic effects, `TimePages`, `Grimoire*` skills and all grimoire code are untouched.
 

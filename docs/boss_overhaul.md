@@ -6,7 +6,7 @@ Written without a compiler; nothing was run in game. Each section is the package
 
 # Boss overhaul, part 1: Lucius configuration and the Mod Boss Global Buff Engine
 
-Package `com.newuniverse.nusmp.boss`. Everything here applies only to this mod's own bosses (namespace `nusmp` AND a row in
+Package `com.newuniverse.nusmp.boss`. Everything here applies only to this mod's own bosses (namespace `anime_multiverse` AND a row in
 `BossRegistry`): dante, vanica, zenon, lucius, devil_avatar, goliath, charybdis_spawn. The God of Order, the Gatekeeper, Dark
 Disciples, Blood Beasts, clones and every vanilla or base-Tensura entity are never touched (guard test: `BossRegistryTest`).
 
@@ -70,10 +70,10 @@ re-checked every refresh (a modifier already there with the same amount is left 
 
 | Attribute | Modifier | Why |
 |---|---|---|
-| `tensura:max_magicule` | +50,000,000 (id `nusmp:lucius_max_magicule`) | "maximized": Tensura clamps to its energy config's maximum, the pool is filled once |
-| `tensura:max_aura` | +50,000,000 (`nusmp:lucius_max_aura`) | same |
-| `tensura:spiritual_health_regeneration` | +400 (`nusmp:lucius_spiritual_regen`) | extreme (base 2): spirit damage does not last on him |
-| `tensura:dodge_invulnerability` | +0 to +8, never past 20 ticks in total (`nusmp:lucius_dodge_invulnerability`) | capped: a dodge never gives more than one second |
+| `tensura:max_magicule` | +50,000,000 (id `anime_multiverse:lucius_max_magicule`) | "maximized": Tensura clamps to its energy config's maximum, the pool is filled once |
+| `tensura:max_aura` | +50,000,000 (`anime_multiverse:lucius_max_aura`) | same |
+| `tensura:spiritual_health_regeneration` | +400 (`anime_multiverse:lucius_spiritual_regen`) | extreme (base 2): spirit damage does not last on him |
+| `tensura:dodge_invulnerability` | +0 to +8, never past 20 ticks in total (`anime_multiverse:lucius_dodge_invulnerability`) | capped: a dodge never gives more than one second |
 
 Side effect to know about: the balance law scales a boss's hit by its max EP (x1 at 1k EP up to x12). Lucius already had 2M magicules
 (x9.3); maxed pools put him at the x12 cap, about +29% before the per-hit cap. The framework's pvp cap (40% of a player's max health
@@ -138,19 +138,19 @@ Seven world-exclusive books, one per boss of this mod: Dante, Vanica, Zenon, Luc
 Each can be won once per world, by the first player whose kill rolls it; while held it lends that boss's Tensura skills on loan and takes nothing.
 
 ## The three laws, where they live
-1. **Isolation.** `CharterTable.byEntity(namespace, path)` only matches the registry namespace `nusmp`. Vanilla and base Tensura entities (even with a boss's path) are never bosses. Dark Disciples, clones and Blood Beasts are not bosses either.
+1. **Isolation.** `CharterTable.byEntity(namespace, path)` only matches the registry namespace `anime_multiverse`. Vanilla and base Tensura entities (even with a boss's path) are never bosses. Dark Disciples, clones and Blood Beasts are not bosses either.
 2. **Non-destructive.** The only way skills are touched is `MealSkills.grant(player, id, 60, "Charter Grimoire")`, the existing lease system: a skill the player owns is left alone, a lent one is only extended, the lease is written before the skill is, it expires by itself about three seconds after the book is put away, and it survives relog and death without ever becoming permanent. `MirrorPolicy.plan(owned, wanted)` is the pure planner and can only return additions; `tensura:usurper` is on the never-lent list.
 3. **Immutable lock.** `ModWorldDropData` (SavedData `nusmp_charter_drops`, Overworld storage) keeps `has_dropped_charter_grimoire_<bossId>` booleans (all seven keys always present) plus who/when. The class has no public clear; the single door is the package-private `adminClear`, reached only by `/multiverse charter reset` (op level 4), which logs a warning.
 
 ## The drop (`CharterEvents.onDeath`, game bus, `LivingDeathEvent` at LOWEST)
-1. A boss of namespace `nusmp` dies (a death another mod cancelled never reaches the handler).
+1. A boss of namespace `anime_multiverse` dies (a death another mod cancelled never reaches the handler).
 2. The lock is read; if set, nothing else happens.
 3. The killer: the player who dealt the killing blow (a pet or summon counts for its owner), else the last player to hurt the boss within 30 s. A killer in creative or spectator gets nothing and nobody takes their place. No player at all: no drop, lock untouched.
 4. The roll (`DropRoll`): base chance 25% for the four Zogratis, 40% for the three floor bosses, times the config `charter.dropChance`, capped at 100%. A miss leaves the lock untouched; the next kill rolls again.
 5. On a hit the lock is set in the same call that checks it (all on the server thread: two kills in one tick, first wins), the book is given to the killer (a full inventory: an indestructible, never-despawning item at their feet), the server announces `[Server] <name> is the first to claim the Charter Grimoire of <boss>.`, and every client is synced. The book is a separate item, so bosses that clear their drops do not matter.
 
 ## Sync and tooltips
-`nusmp:charter_sync` (server to client, optional channel): the whole claimed set (boss id, name, day), at login and on every change. The client keeps it in the static `CharterClaims`; tooltips show `Unclaimed` or `Claimed by <name> on day N`, the grade, the lore and the lent skills.
+`anime_multiverse:charter_sync` (server to client, optional channel): the whole claimed set (boss id, name, day), at login and on every change. The client keeps it in the static `CharterClaims`; tooltips show `Unclaimed` or `Claimed by <name> on day N`, the grade, the lore and the lent skills.
 
 ## Mirroring
 Once a second per player (staggered by entity id): if a Charter Grimoire is in the main hand, the off hand or any Curios slot (it is meant for the `charm` slot), the union of the held books' skills is planned and leased for 60 ticks. Several books merge. Skills the player owns for good are never touched. Chat shows the lend line of the lease system once per skill when it first applies.
@@ -183,7 +183,7 @@ Nothing ran in the game. The hand and GUI display transforms are the stock gener
 
 * The book item is built before the lock is set, and the world data is written to disk at once after a claim (`DimensionDataStorage.save()`), so a crash cannot leave a book in an inventory with the lock unset.
 * `DropLedger` is synchronized (exactly one of any number of racing claims wins) and `all()` returns a snapshot copy.
-* Curios: add the seven `nusmp:charter_grimoire_*` ids to `data/curios/tags/item/charm.json` (and to `tools/relics/gen_curios_tags.py` extras if that script rewrites the file) so they can be worn in the charm slot.
+* Curios: add the seven `anime_multiverse:charter_grimoire_*` ids to `data/curios/tags/item/charm.json` (and to `tools/relics/gen_curios_tags.py` extras if that script rewrites the file) so they can be worn in the charm slot.
 
 ---
 
@@ -200,9 +200,9 @@ The mod's bosses (Dante, Vanica, Zenon, Lucius, the Devil Avatar, Goliath, Chary
 **Options** (client, `config/nusmp-bossbar-client.toml`, section `bossbar`): `animations` (default true; false = vanilla draws every boss bar and the mod cancels nothing), `shake` (default true; false = no shake / glitch / flash / shatter, the rest stays), `percent` (default true; the health percentage at the right end of the name line).
 
 **How it works.**
-- Server (`boss/bar`): `ZogratisBoss.refreshBar()` calls `BossBarSync.update(this, bar)`, which works out the style (tints from `BossBarThemes`, phase from `PowerCurve.stage(power)`, rage flag) and sends `nusmp:boss_bar_style` {bar uuid, boss id, primary, secondary, phase, rage} to the players who can see the vanilla bar. A per-tick check tells late joiners. `ZogratisBoss.remove` calls `BossBarSync.remove(bar)`, which sends `nusmp:boss_bar_clear`. Any other boss with a `ServerBossEvent` can opt in with `BossBarSync.update(entity, bar, bossId, primary, secondary, phase, rage)` and `BossBarSync.remove(bar)`.
+- Server (`boss/bar`): `ZogratisBoss.refreshBar()` calls `BossBarSync.update(this, bar)`, which works out the style (tints from `BossBarThemes`, phase from `PowerCurve.stage(power)`, rage flag) and sends `anime_multiverse:boss_bar_style` {bar uuid, boss id, primary, secondary, phase, rage} to the players who can see the vanilla bar. A per-tick check tells late joiners. `ZogratisBoss.remove` calls `BossBarSync.remove(bar)`, which sends `anime_multiverse:boss_bar_clear`. Any other boss with a `ServerBossEvent` can opt in with `BossBarSync.update(entity, bar, bossId, primary, secondary, phase, rage)` and `BossBarSync.remove(bar)`.
 - Client (`client/gui/bossbar`): `ModBossBarOverlay` listens to `RenderGuiLayerEvent.Pre` of vanilla's boss layer, reads the client's bar list from `BossHealthOverlay.events` by reflection (found once, cached; there is no access transformer), draws every bar and cancels the vanilla layer. If the list cannot be read the layer is left alone and one warning is logged; if drawing ever throws, the mod stops drawing and vanilla takes over again. `BossBarAnim` is the pure state machine behind the shake, glitch, morph and shatter (unit tested). At most two bars shatter in the same frame.
-- Textures: `assets/nusmp/textures/gui/bossbar/` (frame, bg, fill, flame, shine, glow, pips, edge), generated by `tools/gen_bossbar_textures.py` (original pixel art, neutral grey, tinted in game).
+- Textures: `assets/anime_multiverse/textures/gui/bossbar/` (frame, bg, fill, flame, shine, glow, pips, edge), generated by `tools/gen_bossbar_textures.py` (original pixel art, neutral grey, tinted in game).
 
 **What the health text shows.** The percentage only (the client does not know the boss's health points, only the bar's progress).
 
@@ -326,8 +326,8 @@ Nothing deletes a skill, an item or the bond. No new pool or meter exists: each 
 | Stat | Runs on |
 |---|---|
 | Magoi upkeep, Extreme price | Tensura magicules (and Aura as the second pool), as before: only the factor changes |
-| Trust (capped at 60) | the persistent `ABILITY_MASTERY_GAIN` modifier `nusmp:djinn_trust`, as before: the cap is applied when it is written |
-| Assimilation (x2) | the persistent `ABILITY_LEARNING_GAIN` modifier `nusmp:djinn_assimilation` plus the transient element resistance, as before |
+| Trust (capped at 60) | the persistent `ABILITY_MASTERY_GAIN` modifier `anime_multiverse:djinn_trust`, as before: the cap is applied when it is written |
+| Assimilation (x2) | the persistent `ABILITY_LEARNING_GAIN` modifier `anime_multiverse:djinn_assimilation` plus the transient element resistance, as before |
 | Maso speed/attack/element | the same transient attribute modifiers (ids `djinn_maso_*`), values from DarkRules |
 | Dark skills | `MealSkills.grant` leases through `Fx.lendSkills` (5 s, renewed each second), ids from the Tensura id reference |
 | Unease | the `tensura:fear` effect, and a vanilla Darkness effect for allies |
@@ -338,7 +338,7 @@ Nothing deletes a skill, an item or the bond. No new pool or meter exists: each 
 * Lucius: the same 15% on his death (`LivingDeathEvent`, lowest priority, skipped if the death is cancelled; his fall posts no collapse event).
 * A vault chest: `DjinnSources.vaultSeal` returns a Seal at 3% as before; when it returns nothing, a further 2% for a shard in the same slot (no change at the call site).
 * The chance is a constant (`DarkRules.BOSS_CHANCE`, `VAULT_CHANCE`); no config entry was added.
-* Admin: `/give @s nusmp:dark_rukh_shard`, or the creative tab once the lead adds the entry.
+* Admin: `/give @s anime_multiverse:dark_rukh_shard`, or the creative tab once the lead adds the entry.
 
 ## 7. How the client reads it (the contract with the visuals)
 `DjinnNet.Sync.flags` gets bit 3, value 8 (`DjinnNet.FLAG_DARK`); the existing bits are 1 lent, 2 marked, 4 vessel missing (set by the client). The packet layout is unchanged. The server sets bit 8 in the sync of the owner and of every watcher (`DjinnEngine.flags`) whenever the player's Djinn is dark; a household member never carries it. It is sent on every change (the signature includes the flags), on login, respawn and dimension change, and to a player who starts tracking a dark player even if no phase is out. The client reads `(flags & 8) != 0`.

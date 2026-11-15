@@ -26,9 +26,9 @@ small view distance, no mob or animal spawning), waits for `Done`, logs into RCO
 
 1. the boot reaches "Done" (every registry of the mod initialised, every datapack JSON decoded);
 2. no ERROR or exception that names this mod in the boot log (other mods' noise is ignored on purpose: the script fails on what this repo owns);
-3. the dimension `nusmp:mega_dungeon` exists and takes blocks;
-4. `/locate structure` answers for the old arches (`nusmp:dungeon_gate`) and the singular Gateway (`nusmp:mega_gateway`);
-5. the vanilla Jigsaw machinery places each of our pools with its processors (`/place jigsaw nusmp:mega/<pool> nusmp:mega_door 3 x 64 z`);
+3. the dimension `anime_multiverse:mega_dungeon` exists and takes blocks;
+4. `/locate structure` answers for the old arches (`anime_multiverse:dungeon_gate`) and the singular Gateway (`anime_multiverse:mega_gateway`);
+5. the vanilla Jigsaw machinery places each of our pools with its processors (`/place jigsaw anime_multiverse:mega/<pool> anime_multiverse:mega_door 3 x 64 z`);
 6. the generator: `/multiverse mega expand` creates sector 0, `status` reaches ACTIVE, `audit 0` is OK; `unseal k` grows sector k+1 up to `--sectors`
    (default 3 in CI), every audit is OK, regions are never closer than the 12 block region gap; `regen 0` reproduces the same plan (determinism);
 7. the in-game self-tests below (`/multiverse mega selftest`);

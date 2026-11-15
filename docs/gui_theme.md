@@ -64,7 +64,7 @@ Cheap: at most eight textured quads per circle, one reused rotation quaternion, 
 
 ### The Great Sage voice
 
-Terse and analytical, like Tensura's Great Sage / Raphael: a header ("Analysis complete.", "Analyzing..."), a body, a result ("Result: ...") and now and then "Notice: ..." or "Warning: ...". All of it is lang keys (`nusmp.ui.*`, see the lang fragment); code never writes the lines literally. A Codex page gets its footer line from `nusmp.ui.codex.sage.<page title as a slug>` (`UiMath.slug`), and a page without its own key gets `nusmp.ui.codex.sage.default`, so a page registered later needs no change in the code.
+Terse and analytical, like Tensura's Great Sage / Raphael: a header ("Analysis complete.", "Analyzing..."), a body, a result ("Result: ...") and now and then "Notice: ..." or "Warning: ...". All of it is lang keys (`anime_multiverse.ui.*`, see the lang fragment); code never writes the lines literally. A Codex page gets its footer line from `anime_multiverse.ui.codex.sage.<page title as a slug>` (`UiMath.slug`), and a page without its own key gets `anime_multiverse.ui.codex.sage.default`, so a page registered later needs no change in the code.
 
 ## Writing a screen in the theme
 
@@ -76,7 +76,7 @@ Terse and analytical, like Tensura's Great Sage / Raphael: a header ("Analysis c
 
 ## Textures and previews
 
-* `python3 tools/gen_ui_theme_textures.py [--sheet out.png]` writes `assets/nusmp/textures/gui/theme/circle_{outer,star,poly,inner,arcs}{,_128,_64}.png`, `circle_glow.png` and their `.mcmeta` (idempotent; the runes come from a fixed seed, an invented script).
+* `python3 tools/gen_ui_theme_textures.py [--sheet out.png]` writes `assets/anime_multiverse/textures/gui/theme/circle_{outer,star,poly,inner,arcs}{,_128,_64}.png`, `circle_glow.png` and their `.mcmeta` (idempotent; the runes come from a fixed seed, an invented script).
 * `python3 tools/ui_preview/preview_ui.py OUT_DIR [--scale N]` renders mock-ups of every restyled screen (Codex pages, Multiverse Status, Four Kingdoms, Grimoire Slot with and without a book, questionnaire, the page-unlock panel at four moments, the overlay on Tensura's ability window, a relic tooltip and key line) with PIL. It is a re-implementation of the draw calls and the layout numbers, over a fake world backdrop, with a monospace stand-in font; it is not the game, and the Java is the truth.
 
 ## Tests

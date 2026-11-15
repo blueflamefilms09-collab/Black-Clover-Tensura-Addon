@@ -16,15 +16,15 @@ requirement); per-module details are in `docs/labyrinth/mega_<key>.md`.
 
 | Brief item | Status | Notes |
 |---|---|---|
-| 1. Overworld Gateway: unbreakable, one per world | KEPT (1.54.0 `nusmp:mega_gateway`, reinforced deepslate, concentric ring) | Its destination CHANGES: with `hub.enabled` (default true) it leads to Floor 0 instead of straight into sector 0. `hub.enabled = false` restores the 1.54.0 behaviour. |
-| 1. Floor 0 Sanctuary Hub, locked to a plains biome, buildable, passive mobs only, no foreign structures | NEW | Dimension `nusmp:sanctuary`, biome `nusmp:sanctuary_plains` (a plains copy in no structure tag), a spawn filter, no chunk-generator structures at all. Deliberately not a Labyrinth dimension, so the Dungeon Guard does not hold it. |
+| 1. Overworld Gateway: unbreakable, one per world | KEPT (1.54.0 `anime_multiverse:mega_gateway`, reinforced deepslate, concentric ring) | Its destination CHANGES: with `hub.enabled` (default true) it leads to Floor 0 instead of straight into sector 0. `hub.enabled = false` restores the 1.54.0 behaviour. |
+| 1. Floor 0 Sanctuary Hub, locked to a plains biome, buildable, passive mobs only, no foreign structures | NEW | Dimension `anime_multiverse:sanctuary`, biome `anime_multiverse:sanctuary_plains` (a plains copy in no structure tag), a spawn filter, no chunk-generator structures at all. Deliberately not a Labyrinth dimension, so the Dungeon Guard does not hold it. |
 | 2. 3D-noise `ChunkGenerator` (spires, chasms) | NEW | Writes the Hub: rolling plains, the Holy Spire (a hollow white tower) and the Abyssal Chasm (a pit with caverns). It does NOT write the dungeon floors (see 3). |
 | 2. 3D Wave Function Collapse | NEW | A pure, deterministic 3D WFC solver populates the Spire (trial chambers upward) and the Chasm (caverns downward) around a guaranteed stair path. |
 | 2. Directional Lock `PlayerDungeonAlignment` | NEW | A NeoForge data attachment (the 1.21 form of a capability) with a sync payload; enforced at the Hub's gates, at chain travel and by a hard guard. |
 | Bidirectional floors, boss every 10th floor | NEW, built on the 1.54.0 sectors | A sector is ten floors (section 3). Sector Guardians are the decennial bosses. |
 | 3. Solo Leveling "System" overlay, floor quests, stat rewards, Shadow Core | NEW | Client `LayeredDraw` layer (the 1.21 form of `IGuiOverlay`), server quests, permanent stat boosts, minions extracted from slain Holy enemies. |
 | 4. Strict vanilla-particle purge | KEPT (1.36.0, 731 files, guarded by a build test) | Not redone. |
-| 4. Custom Rukh particles (`light_rukh`) | KEPT (1.36.0 `nusmp:light_rukh`, `RukhFx`, `RukhClientFx`) | The brief's `tensura_black_clover:light_rukh` is `nusmp:light_rukh` here (the mod id is `nusmp`). |
+| 4. Custom Rukh particles (`light_rukh`) | KEPT (1.36.0 `anime_multiverse:light_rukh`, `RukhFx`, `RukhClientFx`) | The brief's `tensura_black_clover:light_rukh` is `anime_multiverse:light_rukh` here (the mod id is `anime_multiverse`). |
 | 4. Combat flow (Light multiplies, Dark is rejected) | NEW | `LivingIncomingDamageEvent` + a tick drain, per-sector. |
 | 4. Decennial Holy boss drops a guaranteed Metal Vessel | NEW drop of an EXISTING item (the Legend-and-above Djinn vessels of 1.24) | The single, owner-requested exception to "Unique+ only from Crucibles". |
 | 5. Abyssal living ecology: dark organic palettes, factions that fight over territory | KEPT/NEW | Factions, turf wars: 1.54.0. The dark organic palette is the NEW `abyss` theme (and `radiant` for Holy). |
@@ -44,7 +44,7 @@ Old behaviour stays behind switches (rule 2): `hub.enabled`, `floors.lockEnabled
 ## 2. The shape of the whole thing
 
 ```
- Overworld                         nusmp:sanctuary (Floor 0)                       nusmp:mega_dungeon
+ Overworld                         anime_multiverse:sanctuary (Floor 0)                       anime_multiverse:mega_dungeon
  +---------+  gate    +----------------------------------------------+      +--------------------------------------+
  | Gateway |--------->|   Chasm (west)    PLAZA (home gate)  Spire   |      |  lane z = 0       : the HOLY chain   |
  | (1/world)|          |   gate at bottom <--- paths --->  (east)     |----->|     sector 0 (+1..+10) -> sector 1 ..|
@@ -77,7 +77,7 @@ and the two colossal landmarks of Floor 0, whose interiors are populated by a re
 **Floor 0 is a separate dimension, not a region of the Mega-Dungeon.** The Dungeon Guard holds `Labyrinth.in` dimensions (nothing can be broken or placed), which is the opposite of what a Sanctuary needs.
 A separate dimension needs no exceptions in the guard, and a flat/plains fallback is one datapack file away if the custom generator ever misbehaves.
 
-**The Hub's gates are the existing `nusmp:labyrinth_gate` block.** A custom block would add a registry entry, model, texture and loot table for nothing: the gate already is a walk-in portal that calls
+**The Hub's gates are the existing `anime_multiverse:labyrinth_gate` block.** A custom block would add a registry entry, model, texture and loot table for nothing: the gate already is a walk-in portal that calls
 `LabyrinthTravel.enter`. Which road a gate leads to is decided by its POSITION (`HubLayout.gateNear`), because the three gates stand at fixed places the chunk generator and the plaza agree on. (Vanilla Block
 Primacy: no custom block where an existing one does the job.)
 
@@ -112,12 +112,12 @@ generated only after the Crucible is resolved or the player reaches the Way Onwa
 | `Labyrinth.SANCTUARY_DIMENSION`, `inSanctuary(level)` | Floor 0. `Labyrinth.in(level)` stays FALSE there on purpose. |
 | `RegionTheme` (extended) | `RADIANT`, `ABYSS` appended; every theme offers exactly 3 relics. |
 
-Ids fixed by the contract: dimension `nusmp:sanctuary` (type `nusmp:sanctuary`), biome `nusmp:sanctuary_plains`, chunk generator codec `nusmp:sanctuary`, attachments `nusmp:dungeon_alignment` and
-`nusmp:system_state`, data component `nusmp:gear_grade`, item `nusmp:shadow_core`, payloads `nusmp:alignment_sync`, `nusmp:system_sync`, `nusmp:system_toast`, entity tags `nusmp_servant` (minions).
+Ids fixed by the contract: dimension `anime_multiverse:sanctuary` (type `anime_multiverse:sanctuary`), biome `anime_multiverse:sanctuary_plains`, chunk generator codec `anime_multiverse:sanctuary`, attachments `anime_multiverse:dungeon_alignment` and
+`anime_multiverse:system_state`, data component `anime_multiverse:gear_grade`, item `anime_multiverse:shadow_core`, payloads `anime_multiverse:alignment_sync`, `anime_multiverse:system_sync`, `anime_multiverse:system_toast`, entity tags `nusmp_servant` (minions).
 Quest keys (call `NusmpEvents.fire(player, key, args...)`): `mega.hub` (arrived in Floor 0), `mega.aligned` (arg: polarity id, when the lock closes), `mega.floor` (arg: signed floor, first time),
 `mega.system_quest` (arg: quest id, on success), `mega.shadow` (a minion was extracted), `mega.vessel` (arg: relic id, the decennial Metal Vessel), `mega.gear` (arg: grade, first drop of a grade).
 Config files: `nusmp-labyrinth-mega-{floors,hub,macro,system,flow,gear}-server.toml` (section = the key), the System overlay also `nusmp-labyrinth-mega-system-client.toml`.
-Lang prefixes: `message.nusmp.mega.<key>.*`. Commands: each module offers `public static LiteralArgumentBuilder<CommandSourceStack> command()` (permission 2) that the lead attaches under `/multiverse mega`.
+Lang prefixes: `message.anime_multiverse.mega.<key>.*`. Commands: each module offers `public static LiteralArgumentBuilder<CommandSourceStack> command()` (permission 2) that the lead attaches under `/multiverse mega`.
 
 ---------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -130,7 +130,7 @@ Lang prefixes: `message.nusmp.mega.<key>.*`. Commands: each module offers `publi
 | `mmc` MACRO | `mega.macro` | 3D simplex noise, 3D WFC, the Spire and Chasm shapes, the plains, `SanctuaryGenerator` (a `ChunkGenerator`) and its codec, slice previews |
 | `msy` SYSTEM | `mega.system`, `client` | the holographic overlay, floor quests, stat rewards, the Shadow Core and the extraction of minions, `/mega system` |
 | `mfw` FLOW | `mega.flow` | the Rukh flow (alignment of magic, multiplier, rejection drain), the decennial Metal Vessel, `/mega flow` |
-| `mgr` GEAR | `mega.gear` | grades, the `nusmp:gear_grade` component, drop tables, tooltips, `/mega gear` |
+| `mgr` GEAR | `mega.gear` | grades, the `anime_multiverse:gear_grade` component, drop tables, tooltips, `/mega gear` |
 
 Follow-ups for the wave-1 builders (they keep their context): CORE (chains, lanes, per-polarity first sector, `ChainTravel`, deferring the next sector until the Crucible), THEME (`RelicThemes`, the two new themes),
 GUARD (the colossal decennial scaling and the Holy Metal Vessel hook), ENC and ECO (per-polarity tables and faction weights).

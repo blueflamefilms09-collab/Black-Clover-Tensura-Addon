@@ -88,8 +88,8 @@ change there.
 * `client/ShishouMeshDraw.java`: the glow colour/texture and one extras call guarded by the option (a Shishou-owned draw bridge; the Shishou builder's files were not otherwise touched).
 * `client/relics/RelicClient.java`: one line `ExSingularityClient.init(modBus)`.
 * `NUSMP.java`: one line registering `nusmp-ex-singularity-client.toml`.
-* `tools/lang/unified_tooltips.json`: one key (`tooltip.nusmp.unified.cat.akashic_relic`): `UnifiedTooltipRulesTest.langFragmentCoversEveryCategory` demands every category key in that fragment.
-* `tools/particles/gen_themes.py` + `data/nusmp/particle_themes.json`: theme `relic.grade.AKASHIC`.
+* `tools/lang/unified_tooltips.json`: one key (`tooltip.anime_multiverse.unified.cat.akashic_relic`): `UnifiedTooltipRulesTest.langFragmentCoversEveryCategory` demands every category key in that fragment.
+* `tools/particles/gen_themes.py` + `data/anime_multiverse/particle_themes.json`: theme `relic.grade.AKASHIC`.
 * Tests: `GradeTest.theOrderIsTheTensuraOrder` (7 became 8 grades, `g[7] == AKASHIC`): the only existing test that had to change.
 
 New files: `relics/ExSingularity.java`, `relics/ExSingularitySelfTests.java`, `client/ExSingularityFx.java`, `client/ex/ExSingularityClient.java`, `client/ex/ExSingularityOptions.java`,
@@ -123,5 +123,5 @@ the halo pass was replaced by the blade veil because the veil reads far better a
 * The hotbar's floating item name still uses Shishou's own name colour (`ShishouItem.NAME_RGB`, in the Shishou builder's file; it is common code and cannot reach the client text helper). One line there would fix it if wanted.
 * The brief asked for a theme named `grade.ex_singularity`; the existing theme test needs `relic.grade.AKASHIC`, which is what was added.
 * Shishou's attack numbers were not moved onto the grade table (see Power).
-* `tools/lang/ex_singularity.json` holds the prismatic line's text (`nusmp.ex_singularity.line`, the tooltip reads it, falling back to Shishou's own `shishou.grade`); the category label is in `unified_tooltips.json` because a test requires it there. The generated `en_us.json` was not refreshed (lead's merge step).
+* `tools/lang/ex_singularity.json` holds the prismatic line's text (`anime_multiverse.ex_singularity.line`, the tooltip reads it, falling back to Shishou's own `shishou.grade`); the category label is in `unified_tooltips.json` because a test requires it there. The generated `en_us.json` was not refreshed (lead's merge step).
 * Decision for the owner: whether other items should ever carry EX-Singularity (add their registry path to `ExSingularity.AKASHIC_PATHS`).

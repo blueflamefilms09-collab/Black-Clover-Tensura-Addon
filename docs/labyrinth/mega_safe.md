@@ -3,7 +3,7 @@
 > **1.99.0, THE HUNGER BAN.** A rest recovers health, mana and the debuffs only; it never feeds or starves: the long rest no longer resets the food exhaustion (`safe.rest_short` and `safe.rest_long` assert the food bar is exactly as it was). See `docs/labyrinth/hunger_ban.md`.
 
 
-Part of the Mega-Dungeon (`docs/labyrinth/mega.md`). This builder owns four things: the **mod-compat structure processor** `nusmp:mod_compat`, the
+Part of the Mega-Dungeon (`docs/labyrinth/mega.md`). This builder owns four things: the **mod-compat structure processor** `anime_multiverse:mod_compat`, the
 **rest system** (short and long rests at the marked seats, hearths and beds), the **end of easy passive regeneration** outside the safe rooms, and the
 **eight templates** that every sector starts and rests in (two Landings and six Safe Zones).
 
@@ -22,8 +22,8 @@ the Vital Strike are untouched.
 
 | Part | Status |
 |---|---|
-| Structure processor `nusmp:mod_compat` + `data/nusmp/mega/compat/*.json` (Farmer's Delight, MrCrayfish's Furniture Mod: Refurbished) | NEW |
-| Rest system: attachment `nusmp:mega_rest`, short / long rests, ambush hook, admin command `rest` | NEW |
+| Structure processor `anime_multiverse:mod_compat` + `data/anime_multiverse/mega/compat/*.json` (Farmer's Delight, MrCrayfish's Furniture Mod: Refurbished) | NEW |
+| Rest system: attachment `anime_multiverse:mega_rest`, short / long rests, ambush hook, admin command `rest` | NEW |
 | Passive regeneration throttle (health, magicule, aura) outside Landings and Safe Zones | NEW |
 | Config `nusmp-labyrinth-mega-safe-server.toml` (section `[safe]`, 14 keys) | NEW |
 | In-game self-tests `safe.*` (nine) registered with the lead's `SelfTests` | NEW |
@@ -56,7 +56,7 @@ for loaded / absent / unknown id / empty / tokens / flip / merge order. `CompatJ
 `CompatLoader` is the reload listener (`data/<namespace>/mega/compat/*.json`, reload-safe, installs the merged table atomically) and answers
 `modLoaded` through `ModList`.
 
-**The data files** (`src/main/resources/data/nusmp/mega/compat/<mod>.json`, editable with no rebuild):
+**The data files** (`src/main/resources/data/anime_multiverse/mega/compat/<mod>.json`, editable with no rebuild):
 
 ```json
 {
@@ -156,7 +156,7 @@ place to catch your breath even before you rest. Creative and spectator players 
   Regeneration effect is treated as natural and scaled; a result under 0.005 is cancelled. Bigger heals (potions, spells, food, rests) are not touched, and
   the Regeneration effect is exempt. A mod that heals a player by a tiny amount for another reason is scaled too; there is no way to tell them apart.
 * **Magicule and aura** cannot be intercepted that way, so a **transient attribute modifier** (`ADD_MULTIPLIED_TOTAL`, amount `scale - 1`, the fixed ids
-  `nusmp:mega_regen_magicule` and `nusmp:mega_regen_aura`) goes on Tensura's `MAGICULE_REGENERATION_MULTIPLIER` and `AURA_REGENERATION_MULTIPLIER` while the
+  `anime_multiverse:mega_regen_magicule` and `anime_multiverse:mega_regen_aura`) goes on Tensura's `MAGICULE_REGENERATION_MULTIPLIER` and `AURA_REGENERATION_MULTIPLIER` while the
   player is in the dimension outside a safe room, and comes off when they enter one, leave the dimension or the config changes. A transient modifier is not
   saved, so a crash or a logout can never leave a player throttled in the Overworld. The check runs once a second per player.
 
@@ -189,7 +189,7 @@ during world generation, before SERVER configs are read).
 ## 6. The templates
 
 All eight are 48 high with the floor row at y=8, every wall two blocks thick, doors as the connector contract demands (3 wide, 4 tall, a jigsaw in the outer
-layer at a module-centre offset, pool `nusmp:mega/side`, name `nusmp:mega_door`), no spawn or faction marker, and the data markers of the rest anchors in the
+layer at a module-centre offset, pool `anime_multiverse:mega/side`, name `anime_multiverse:mega_door`), no spawn or faction marker, and the data markers of the rest anchors in the
 cell ABOVE the thing they describe (a seat above its stair, a hearth above its fire, a bed marker above the bed FOOT). Architecture uses the palette of
 `mega_lib` (so the Region Theme restyles it); furniture and decoration use any vanilla block.
 
@@ -204,7 +204,7 @@ cell ABOVE the thing they describe (a seat above its stair, a hearth above its f
 | `safe/refectory` | 18 x 18 | E S S | 11 | 3 | 2 | 1 | the kitchen and the long table: a range (smoker, campfire, pot, furnace), counters with cutting boards and skillets, the pantry, the cook's two cots, the buttery |
 | `safe/chapel` | 18 x 18 | E S W | 26 | 2 | 3 | 1 | a nave with eighteen pew seats, a chancel on a dais with a quartz altar, two soul-fire braziers, a rose window and tall windows of glowing glass, three pilgrims' cots in wall alcoves |
 
-Both Landings also carry an **exit gate** (a 3 x 3 plane of `nusmp:labyrinth_exit` in a framed alcove with a sign, the way home) and one `arrival` marker three
+Both Landings also carry an **exit gate** (a 3 x 3 plane of `anime_multiverse:labyrinth_exit` in a framed alcove with a sign, the way home) and one `arrival` marker three
 blocks in front of it. Every door of every room has a **raised portcullis** (iron bars above the lintel in the inner wall layer, a chiselled keystone) so it
 reads as a door you could bar. The chapel's windows are glass in the outer wall layer with an invisible `light` block hiding in the carved slit, which is what
 makes the coloured glass glow. Furnaces, smokers and blast furnaces are authored **lit** so the forge and the kitchens glow, but the verifier does **not** count them as
@@ -230,7 +230,7 @@ step of one block only onto a stair, slab or bed, ladders, drops of at most 3. I
 
 It found real mistakes while the rooms were written: a balcony nobody could climb to (the stair was one block short), lanterns hanging at head height over the
 only corridor of a gallery, a marker buried under a lamp, chains that ended in air, a door whose approach a pilaster blocked. Run it before trusting a
-change. After a change run `mega_check.py` (only "pool nusmp:mega/side does not exist" and "not referenced by any pool" may remain for these rooms until the
+change. After a change run `mega_check.py` (only "pool anime_multiverse:mega/side does not exist" and "not referenced by any pool" may remain for these rooms until the
 pools exist) and `mega_catalog.py`.
 
 ---------------------------------------------------------------------------------------------------------------------------------------------
@@ -268,7 +268,7 @@ arrival and a spawn marker in a copy of the catalog each made a test fail).
 they pass the fake player into the public entry points explicitly and advance the game time by argument, so they do not depend on the player list or on
 waiting): `safe.zone`, `safe.rest_short`, `safe.rest_long`, `safe.rest_interrupt`, `safe.no_rest_outside`, `safe.regen_throttle`, `safe.processor`,
 `safe.processor_list`, `safe.compat_data`. They need the smoke test's sector 0 (created by `/multiverse mega expand`) with a Landing, and
-`safe.processor_list` needs `nusmp:mod_compat` in the processor list `nusmp:mega_interior`.
+`safe.processor_list` needs `anime_multiverse:mod_compat` in the processor list `anime_multiverse:mega_interior`.
 
 ---------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -277,9 +277,9 @@ waiting): `safe.zone`, `safe.rest_short`, `safe.rest_long`, `safe.rest_interrupt
 * Config: `modContainer.registerConfig(ModConfig.Type.SERVER, SafeConfig.SPEC, "nusmp-labyrinth-mega-safe-server.toml");`
 * Registrations: `SafeRegistry.init(modEventBus)` (mod bus: two DeferredRegisters) and `SafeRegistry.register(NeoForge.EVENT_BUS)` (game bus).
 * Command: attach `SafeRegistry.command()` under `/multiverse mega`.
-* The processor list `data/nusmp/worldgen/processor_list/mega_interior.json` must contain `{"processor_type": "nusmp:mod_compat"}` after the Region Theme
+* The processor list `data/anime_multiverse/worldgen/processor_list/mega_interior.json` must contain `{"processor_type": "anime_multiverse:mod_compat"}` after the Region Theme
   processor (theme first: it changes the wood the swap then replaces), and every pool that places these rooms must use that list.
-* Lang: `message.nusmp.mega.safe.*` (17 keys, fragment `mega/frag/safe.lang.json` of the scratchpad).
+* Lang: `message.anime_multiverse.mega.safe.*` (17 keys, fragment `mega/frag/safe.lang.json` of the scratchpad).
 * The quest key `mega.rested` is fired with the argument `short` or `long`. No client registration, no creative-tab entry.
 * Nothing else of this builder is shared: `SafeRegistry.addAmbushListener` is the one hook the Encounter Director may use.
 

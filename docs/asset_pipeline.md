@@ -74,14 +74,14 @@ The server fires the damage 12 ticks (0.6 s) after the cast, which is on the sna
 2. Use axis-aligned boxes (GeoLite draws cubes, not meshes): each box becomes `m.cube(bone, origin=(x0, y0, z0), size=(sx, sy, sz), uv=(u, v), inflate=...)` (origin is the minimum corner in file px). A turned cube carries `rotation=(rx, ry, rz)` and `pivot=...`.
 3. Textures: the vanilla box-UV layout (the unfolded cube, width 2(sx + sz), height sz + sy; `faces()` in `waveboss_mimic_geo.py` shows the rectangles). Cubes of one kind and size may share one rectangle. A second PNG named `<model>_glow.png` is the emissive layer (drawn additive, full bright).
 4. Animation: sample the Blender action at the key times and write `a.rot(clip, bone, {time: (rx, ry, rz)})`, `a.pos(...)`, `a.scale(...)` (`Anim` in `geo_builder.py`); angles are degrees about the bone's pivot, the rotation signs are those of the file frame (right-handed, y up): flip a sign in the script if Blender's differs, and look at `tools/relics/waveboss_preview.py`, which draws the rest, jaw-open and bite poses next to the body's boxes.
-5. `m.save(anim)` writes `assets/nusmp/geo/entity/<key>_<name>.geo.json` and `animations/entity/<key>_<name>.animation.json`; `m.save_texture(img, glow)` the PNGs; then `python3 -B tools/geo_check.py <key>_<name>` (bones linked, uvs inside the sheet, animation bones exist).
+5. `m.save(anim)` writes `assets/anime_multiverse/geo/entity/<key>_<name>.geo.json` and `animations/entity/<key>_<name>.animation.json`; `m.save_texture(img, glow)` the PNGs; then `python3 -B tools/geo_check.py <key>_<name>` (bones linked, uvs inside the sheet, animation bones exist).
 6. In code: `GeoSpec.of(key, name)` names the four files and `GeoDraw.paint(pose, buffers, spec, clip, seconds, Space.PLAYER, Layer.CUTOUT, light, 0xFFFFFFFF, glowArgb)` draws it from the pose of the part it hangs on.
 <!-- m4 end -->
 
 <!-- m5 begin -->
 ## Oversized weapons
 
-Every 3D hand weapon is a baked mesh (`assets/nusmp/weapon_meshes/<id>.txt`, drawn by `client/WeaponRenderer`) under the display transforms of its model json (`assets/nusmp/models/item/<id>.json`, parent `minecraft:builtin/entity`, because only a builtin/entity model is handed to the renderer). The transforms the first weapons were given are vanilla's `handheld` ones: scale 0.68 about the middle of the item's one-block cube. They suit a sprite sword (a diagonal 1.41 blocks long). A 2.5-block polearm at 0.68 is 1.7 blocks long in the hand, and because the hand pose turns the item's +x axis toward the viewer, the blade rises **toward the camera**: the tip passes through the near plane and the weapon is cut off. The prompt's rule is: **large in third person, reduced and re-anchored in first person**.
+Every 3D hand weapon is a baked mesh (`assets/anime_multiverse/weapon_meshes/<id>.txt`, drawn by `client/WeaponRenderer`) under the display transforms of its model json (`assets/anime_multiverse/models/item/<id>.json`, parent `minecraft:builtin/entity`, because only a builtin/entity model is handed to the renderer). The transforms the first weapons were given are vanilla's `handheld` ones: scale 0.68 about the middle of the item's one-block cube. They suit a sprite sword (a diagonal 1.41 blocks long). A 2.5-block polearm at 0.68 is 1.7 blocks long in the hand, and because the hand pose turns the item's +x axis toward the viewer, the blade rises **toward the camera**: the tip passes through the near plane and the weapon is cut off. The prompt's rule is: **large in third person, reduced and re-anchored in first person**.
 
 ### Attachment rules for parts that are not curios
 
@@ -180,7 +180,7 @@ The chain, step by step (the Curio section has the file-by-file conventions of t
 
 1. **Blender.** Model the part with one object (or empty) per bone, origins on the pivots; 1 Blender unit = 16 px; the file frame is y up, feet (or the weapon's grip) at the origin, front on -z (`file.x = -Blender.x`, `file.y = Blender.z`, `file.z = Blender.y`). Box the parts: GeoLite draws cubes. For a weapon, put the **grip at the origin** and the long axis on +y.
 2. **`.geo.json` (format 1.12.0).** `Model(key, name, tex_w, tex_h)`, one `m.bone(name, parent=, pivot=)` per hinge and one `m.cube(bone, origin=, size=, uv=, rotation=, pivot=)` per box. A hinge bone's pivot is **on the hinge line**; a chain's child pivot is at the end of its parent's cube.
-3. **Texture + glow layer.** `assets/nusmp/textures/entity/<key>_<name>.png` (box-UV like a vanilla model) and optionally `<key>_<name>_glow.png`: drawn additive and full bright, tinted by the colour handed to `GeoDraw.paint`. Pixels that glow go on the glow PNG only (the body PNG keeps the dark material under them). In Blender bake the emission to a second image; in Blockbench paint it on a second texture.
+3. **Texture + glow layer.** `assets/anime_multiverse/textures/entity/<key>_<name>.png` (box-UV like a vanilla model) and optionally `<key>_<name>_glow.png`: drawn additive and full bright, tinted by the colour handed to `GeoDraw.paint`. Pixels that glow go on the glow PNG only (the body PNG keeps the dark material under them). In Blender bake the emission to a second image; in Blockbench paint it on a second texture.
 4. **`.animation.json` (format 1.8.0).** Keyframes per bone: `rotation` (degrees, **added** to the bone's own), `position` (px, added), `scale` (multiplied); `Anim.clip(name, length, loop)` then `a.rot / a.pos / a.scale(clip, bone, {time: (x, y, z)})`. Sample the Blender action at the key times. Values are linearly interpolated, clamped before the first and after the last key; a clip that does not loop holds its last frame.
 5. **Check.** `m.save(anim)`, `m.save_texture(img, glow)`, `python3 -B tools/geo_check.py <key>_<name>` (bones linked, uvs inside the sheet, animation bones exist).
 6. **Draw.** `GeoDraw.paint(pose, buffers, GeoSpec.of(key, name), clip, seconds, Space.PROP, Layer.CUTOUT, light, argb, glowArgb)`.
@@ -250,7 +250,7 @@ To add a third variant, extend `VariantRules.Decision` and `candidates` (the ord
 <!-- dv begin -->
 ## Djinn armour: the unique and the Dark Djinn looks
 
-The Djinn's Half Equip and Full Equip are a render layer (`client/relics/djinn/DjinnArmorLayer`), never an item. Each of the twelve Djinn has three mesh sets under `assets/nusmp/djinn/`:
+The Djinn's Half Equip and Full Equip are a render layer (`client/relics/djinn/DjinnArmorLayer`), never an item. Each of the twelve Djinn has three mesh sets under `assets/anime_multiverse/djinn/`:
 
 | Set | Folder | Made by | Used |
 |---|---|---|---|

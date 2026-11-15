@@ -16,13 +16,13 @@ everything between them and around them:
 | Door caps | 22 small alcoves that end every doorway nothing was attached to | `structure/mega/cap` |
 | Link pieces | the straight tunnel module and a waystation (CORE chains them between sectors) | `structure/mega/link` |
 | Pools | all 15 template pools of the contract, filled from the folders | `worldgen/template_pool/mega/*.json` |
-| Processor list | `nusmp:mega_interior` = region theme, then mod compat | `worldgen/processor_list/mega_interior.json` |
+| Processor list | `anime_multiverse:mega_interior` = region theme, then mod compat | `worldgen/processor_list/mega_interior.json` |
 | The Gateway | the ONE entrance on the Overworld surface, placed once per world | `structure/mega_gateway`, `worldgen/structure*`, `worldgen/template_pool/mega_gateway`, tags |
 
 * **NEW:** everything above. Nothing of it existed before, so by rule 5 there is no replacement.
 * **REPLACEMENT:** none.
 * **KEPT:** every old arch, gate, structure, tag and template. The only edit to an existing file is ONE appended value in
-  `data/nusmp/tags/worldgen/structure/dungeon_gate.json` (`"nusmp:mega_gateway"`, so `/multiverse labyrinth locate` finds the new Gateway too).
+  `data/anime_multiverse/tags/worldgen/structure/dungeon_gate.json` (`"anime_multiverse:mega_gateway"`, so `/multiverse labyrinth locate` finds the new Gateway too).
   The old Root Gates and arches (`dungeon_gates` structure set) are not touched and still lead in.
 
 Files (all generated, all deterministic: every random choice comes from a generator seeded with the template's own name, so the same script writes the same
@@ -47,12 +47,12 @@ bytes; `--check` of each generator proves it):
   up whatever their rotation.
 * **Floor row 8 in every piece, height 48, walls 2 thick.** The interior is left unset (air). World floor is y = 64, the template origin y = 56.
 * **A socket** = a 3 x 4 hole (rows 9..12) through both wall layers, a frame (polished columns, chiselled lintel), and a jigsaw block in the OUTER layer at row 9,
-  `joint: aligned`, name = target = `nusmp:mega_door`, `final_state` air. `MT.socket()` of the lead's `mega_lib.py` writes all of it, so every piece obeys
+  `joint: aligned`, name = target = `anime_multiverse:mega_door`, `final_state` air. `MT.socket()` of the lead's `mega_lib.py` writes all of it, so every piece obeys
   the contract by construction; `mega_check.py` agrees (section 11).
 * **Palette.** Architecture uses only the palette constants of `mega_lib` (the deepslate family and the dark-oak family for timber), which the Region Theme
   processor swaps per sector. Everything else (lanterns, chains, candles, iron bars, banners, skulls, glass, wool, barrels, bookshelves ...) is left alone by
-  the theme. The only custom block anywhere in this part is `nusmp:labyrinth_gate` (the portal, Gateway only).
-* **Markers** are vanilla structure blocks in DATA mode (`nusmp:<kind>;k=v`). The game never places them, so a marker OCCUPIES its cell as far as the template
+  the theme. The only custom block anywhere in this part is `anime_multiverse:labyrinth_gate` (the portal, Gateway only).
+* **Markers** are vanilla structure blocks in DATA mode (`anime_multiverse:<kind>;k=v`). The game never places them, so a marker OCCUPIES its cell as far as the template
   is concerned: nothing else may share the cell. That is why the red runners of the corridors are WOOL BLOCKS in the floor row (a carpet in the standing
   cell would have a hole under every marker), and why `marker_standing()` raises when a cell is taken.
 * **Rotation.** The assembler rotates pieces freely; every `facing`, `rotation` and `axis` in a template is rotated with the piece by the game.
@@ -88,8 +88,8 @@ Markers: P patrol, S spawn, F faction, C room_center.
 | `junction/plaza_2x2_a/b/c` | 18 x 48 x 18 | 8: 2 per side | 2 P, 2 S, C (F in c) | fountain / fire pit / statue ring |
 | `junction/plaza_3x3_a/b/c` | 27 x 48 x 27 | 12: 3 per side | 2 P, 2 S, C (F in c) | round fountain / well with canopy / ring of eight statues |
 | `junction/crossroads_hall_3x3` | 27 x 48 x 27 | 12: 3 per side (the middle ones prio 1) | 2 P, 2 S, F(cultist) | cross of arcades, dais, four chapels |
-| `link/straight_a`, `straight_b` | 9 x 48 x 9 | N, S (pool `nusmp:mega/link`) | P | plain module: stone / timber |
-| `link/waystation` | 9 x 48 x 9 | N, S (pool `nusmp:mega/link`) | P | bench, fire basket in a niche, lanterns |
+| `link/straight_a`, `straight_b` | 9 x 48 x 9 | N, S (pool `anime_multiverse:mega/link`) | P | plain module: stone / timber |
+| `link/waystation` | 9 x 48 x 9 | N, S (pool `anime_multiverse:mega/link`) | P | bench, fire basket in a niche, lanterns |
 | `cap/*` (22) | 3 x 6 x 2..5 | 1 (the jigsaw at (1,1,0) `north_up`, pool `minecraft:empty`) | none | section 4 |
 
 Interior heights: corridors 6 rows, junction chambers 7, 2x2 plazas 10, 3x3 plazas 12, hall 12, gallery 12 (rows 9 and up; the floor is row 8).
@@ -186,7 +186,7 @@ where there is no room behind the wall, and the tight dungeon never shows its em
 
 **Geometry** (cap-local cells; x across 0..2, y 0..5, z 0..depth-1): y = 0 is the floor row (it lines up with room row 8), y = 1..4 the four open rows (rooms'
 rows 9..12), y = 5 the roof row. z = 0 is the layer that touches the room's outer wall layer. The jigsaw is at (1,1,0), `north_up`, name = target =
-`nusmp:mega_door`, pool `minecraft:empty`, `joint: aligned`. Its `final_state` is air for an open alcove or a plain full block for a bricked-up one. The state is NOT
+`anime_multiverse:mega_door`, pool `minecraft:empty`, `joint: aligned`. Its `final_state` is air for an open alcove or a plain full block for a bricked-up one. The state is NOT
 rotated with the piece (the game's jigsaw replacement does not rotate it), so it is never a block with a facing.
 
 **Why every cap is a one-block-wide slot between two walls.** The brief (and the contract wording "same 3x4 as the hole") would leave the cap's cavity 3 wide, but
@@ -208,14 +208,14 @@ wall, so no void is ever visible.
 | `alcove_window_a` / `_b` | 4 | a stained-glass pane (purple / cyan) in front of a `light` block and a froglight: a window that glows | 2 / 2 |
 | `alcove_snake` | 4 | a miniature snake portal: waxed oxidised copper frame, purple glass in front of a froglight, a blackstone head with an end-rod tongue | 1 |
 | `alcove_cell` | 5 | a grille of iron bars one block in, behind it a skull on a bone block and a chain from the roof | 1 |
-| `alcove_chest` | 3 | a loot chest (`nusmp:chests/labyrinth_trial`) under a lantern, a cobweb in the corner | 1 |
+| `alcove_chest` | 3 | a loot chest (`anime_multiverse:chests/labyrinth_trial`) under a lantern, a cobweb in the corner | 1 |
 | `alcove_barrels` | 3 | two stacked barrels with a lantern on top | 2 |
 | `alcove_bones` | 3 | a heap of bones with a skull and cobwebs | 2 |
 | `alcove_cobweb` | 3 | choked with cobwebs round a lone skull | 2 |
 | `alcove_rack` | 3 | an armour stand in a helmet and chain mail holding an axe, a lantern over its head | 2 |
 
 Notes: the lead's `mega_lib.cage` (3x3x4) and `mega_lib.snake_portal` (7 wide) do not fit a one-block slot, so the cell and the snake are written for it. The `light` block
-in the window caps is invisible in survival and counts as real light for the gloom clock. The loot table `nusmp:chests/labyrinth_trial` exists in the repo (iron, gold, arrows,
+in the window caps is invisible in survival and counts as real light for the gloom clock. The loot table `anime_multiverse:chests/labyrinth_trial` exists in the repo (iron, gold, arrows,
 bread, golden apple, experience bottles, magic stones).
 
 ---------------------------------------------------------------------------------------------------------------------------------------------
@@ -223,7 +223,7 @@ bread, golden apple, experience bottles, magic stones).
 ## 5. Link pieces (`structure/mega/link/*`)
 
 `straight_a` (stone) and `straight_b` (timber) are plain five-wide corridor modules with a coved rib, two lanterns, a lit niche in each side wall and sockets N
-and S with pool `nusmp:mega/link`. `waystation` is the same module with a bench of stairs along the west wall, a fire basket in a tall niche in the east wall and
+and S with pool `anime_multiverse:mega/link`. `waystation` is the same module with a bench of stairs along the west wall, a fire basket in a tall niche in the east wall and
 mixed lanterns. Why a module of their own: when the next sector's region would collide with an old one, CORE chains these between the two (a waystation every eighth),
 so a tunnel of any length is built from pieces that line up on the grid and cost no new rules.
 
@@ -242,10 +242,10 @@ The output is sorted and idempotent.
 
 | Pool | Elements today | Total weight | Fallback | Notes |
 |---|---|---|---|---|
-| `side` | 27 templates + 1 empty | 160 | `nusmp:mega/cap` | folder shares: corridor 5, junction 3, hall 3, trap 1, puzzle 1, trial 1, treasure 1, cavern 1, set 1, safe 1; inside `corridor`: straight_1x2 3, 1x3 3, 1x4 2, bend 2, tee 2, cross 1, gallery 1; inside `junction`: plaza_2x2 3, plaza_3x3 2, crossroads_hall 2; one empty element of weight 2 |
+| `side` | 27 templates + 1 empty | 160 | `anime_multiverse:mega/cap` | folder shares: corridor 5, junction 3, hall 3, trap 1, puzzle 1, trial 1, treasure 1, cavern 1, set 1, safe 1; inside `corridor`: straight_1x2 3, 1x3 3, 1x4 2, bend 2, tee 2, cross 1, gallery 1; inside `junction`: plaza_2x2 3, plaza_3x3 2, crossroads_hall 2; one empty element of weight 2 |
 | `cap` | 22 | 52 | `minecraft:empty` | absolute weights (table in section 4) |
-| `link` | 3 | 9 | `nusmp:mega/cap` | `straight_a` 4, `straight_b` 4, `waystation` 1 |
-| `landing`, `safe`, `arena`, `antechamber`, `vault`, `vault_1`, `vault_2`, `vault_3`, `onward`, `onward_straight`, `onward_left`, `onward_right` | 0 | 0 | `nusmp:mega/cap` | EMPTY today: their folders belong to other builders; the files are written with no elements and `mega_check.py` reports the 12 "no elements" errors until they arrive |
+| `link` | 3 | 9 | `anime_multiverse:mega/cap` | `straight_a` 4, `straight_b` 4, `waystation` 1 |
+| `landing`, `safe`, `arena`, `antechamber`, `vault`, `vault_1`, `vault_2`, `vault_3`, `onward`, `onward_straight`, `onward_left`, `onward_right` | 0 | 0 | `anime_multiverse:mega/cap` | EMPTY today: their folders belong to other builders; the files are written with no elements and `mega_check.py` reports the 12 "no elements" errors until they arrive |
 
 Today only the corridor and junction folders exist, so the 160 of `side` is what those two shares scale to (corridor 5 x 20 = 100 and junction 3 x 20 = 60, which rounding turns into 97 and 61)
 plus 2 for the empty element. When the other folders fill, `side` grows to 18 shares x 20 = 360 and the corridors fall from about 61% to about 28% of it, as designed.
@@ -255,7 +255,7 @@ element only thins out connectivity; weight 2 of 160 keeps the dungeon tight.
 
 **Why the `cap` pool has fallback `minecraft:empty`:** the cap's own jigsaw has pool `minecraft:empty`, and a cap that cannot be placed leaves the niche backed by the wall.
 
-**Processor list `nusmp:mega_interior`** = `[nusmp:region_theme, nusmp:mod_compat]`, in that order (the theme swaps the wood and stone families first; the compat swap then replaces
+**Processor list `anime_multiverse:mega_interior`** = `[anime_multiverse:region_theme, anime_multiverse:mod_compat]`, in that order (the theme swaps the wood and stone families first; the compat swap then replaces
 furniture). Both processor types are registered by other builders (`mega_check.py` knows them as contract types). Every pool element points at it, with `projection: rigid`
 (a template has a fixed floor row, so nothing needs terrain matching).
 
@@ -273,19 +273,19 @@ furniture). Both processor types are registered by other builders (`mega_check.p
 * a 39-wide round platform of three terraces (each one step up) on a foundation that runs from the bottom of the box up to the paving (buried on flat ground, a retaining skirt
   on a slope), a curb ring of reinforced deepslate round it with four gaps for approach steps;
 * in the middle two stout pylons (6 wide, 7 deep) with setback towers and a crenellated top, joined by a bridge over a NINE-wide pointed arch;
-* the arch opening is a single plane of `nusmp:labyrinth_gate` blocks (9 wide at the base, the pointed top above it, rows 10..23) in the middle layer of the tunnel;
+* the arch opening is a single plane of `anime_multiverse:labyrinth_gate` blocks (9 wide at the base, the pointed top above it, rows 10..23) in the middle layer of the tunnel;
 * rose windows (stained glass in front of froglights) and banners on both faces of the bridge, arrow slits, brackets with hanging lanterns beside the opening, soul lanterns hanging in front of the crown;
 * four 14-tall obelisks (crying obsidian tip with an end rod) and four fire baskets on the outer court, eight armoured statues on plinths (four at the feet of the pylons on the third court,
   four guarding the processional path on the second), glyph studs on the jambs, a ring of chiselled blocks and crying obsidian on the dais round the gate;
 * weathering: moss carpet, rubble at the pylon feet, vines on the north faces, bites out of the crenellation, cracked bricks.
 
-Vanilla blocks only; the portal block is the one custom block. The placement uses the existing processor list `nusmp:gate_weathering` (moss and cracks on stone and deepslate families).
+Vanilla blocks only; the portal block is the one custom block. The placement uses the existing processor list `anime_multiverse:gate_weathering` (moss and cracks on stone and deepslate families).
 
 ### 7.2 Why three kinds of hard block, and what "unbreakable" honestly means
 
 The Overworld is not held by the Dungeon Guard (the Mega-Dungeon's dimension is), so only the blocks themselves protect the Gateway.
 
-1. **The portal blocks** (`nusmp:labyrinth_gate`) are indestructible by their own properties (`labyrinth/gate/GateBlock`: destroy time -1, explosion resistance 3,600,000, documented in `c_gate.md`).
+1. **The portal blocks** (`anime_multiverse:labyrinth_gate`) are indestructible by their own properties (`labyrinth/gate/GateBlock`: destroy time -1, explosion resistance 3,600,000, documented in `c_gate.md`).
 2. **The cores of the pylons and towers**, hidden behind a brick shell (976 blocks), are `minecraft:bedrock`. Nobody mines bedrock in survival and no explosion breaks it, so a griefer who digs into a
    pylon reaches a wall he cannot pass. The cores are never visible: the cells behind the arrow slits are brick and the tower roof is polished stone (checked: no bedrock cell has an exposed face).
 3. **Everything visible that touches the portal plane** (tunnel faces, arch, bridge) **and the curb ring** (1451 blocks) are `minecraft:reinforced_deepslate`. It is not obtainable in survival (no drops).
@@ -300,24 +300,24 @@ If the owner wants the visible frame to be survival-proof too, change `REINFORCE
 ### 7.3 Why a concentric-rings structure set of its own
 
 `worldgen/structure_set/mega_gateway.json` places the structure with `minecraft:concentric_rings`, `distance` 5, `spread` 1, `count` 1, `salt` 1540154 and `preferred_biomes`
-`#nusmp:has_structure/mega_gateway_preferred`:
+`#anime_multiverse:has_structure/mega_gateway_preferred`:
 
 * **Concentric rings is the vanilla way to say "exactly this many per world"** (strongholds use it with count 128). With count 1 the world gets one Gateway. The first ring lies at about
   4 x `distance` chunks from the world origin, +- 1.25 x `distance` chunks, so with distance 5 the one Gateway is 14 to 26 chunks (about 220 to 420 blocks) from the origin.
 * **A fresh structure set** (not an edit of `dungeon_gates`) keeps the old arches untouched (rule 2); they still lead into the Mega-Dungeon (config `mega.legacyGates`).
 * **`preferred_biomes`** nudges the ring position to the nearest preferred biome within 112 blocks, so the Gateway is not drawn on the sea floor when land is near. The brief named the tag
-  `#nusmp:has_structure/mega_gateway` for this field, but that tag is `#minecraft:is_overworld` (it includes every ocean), so preferring it would prefer nothing; a second tag,
+  `#anime_multiverse:has_structure/mega_gateway` for this field, but that tag is `#minecraft:is_overworld` (it includes every ocean), so preferring it would prefer nothing; a second tag,
   `has_structure/mega_gateway_preferred`, lists land biomes (forest, taiga, mountain, hill, jungle, savanna and badlands tags, plains, sunflower plains, snowy plains, ice spikes, desert, swamp,
   mangrove swamp, meadow, cherry grove). The structure itself may still START in any Overworld biome (`has_structure/mega_gateway` = `#minecraft:is_overworld`), so it always generates, as a stronghold does.
   If no land lies within 112 blocks of the ring point it is built on the water surface on its own foundation: a platform standing in the sea.
 * **In an existing world** the chunks around the ring position may have been generated before this version; no Gateway appears there. The old arches and `/multiverse labyrinth enter` still work.
 
-`worldgen/structure/mega_gateway.json` is a jigsaw structure of size 1: `start_pool` `nusmp:mega_gateway/base` (one rigid element, the template, with `nusmp:gate_weathering`),
+`worldgen/structure/mega_gateway.json` is a jigsaw structure of size 1: `start_pool` `anime_multiverse:mega_gateway/base` (one rigid element, the template, with `anime_multiverse:gate_weathering`),
 `step` `surface_structures`, `terrain_adaptation` `beard_thin`, `project_start_to_heightmap` `WORLD_SURFACE_WG`, `start_height` `{"absolute": -6}`, `max_distance_from_center` 48
 (vanilla requires max_distance_from_center + 12 <= 128). Why -6: the rigid element's ground-level delta is 1, so template row 6 then lands on the surface block, the six rows under it are foundation
 and everything above stands on the terrain; `beard_thin` pulls the terrain up under the foundation and carves hills out of the box, like a village.
 
-Tags: `tags/worldgen/structure/mega_gateway.json` (`nusmp:mega_gateway`), `tags/worldgen/biome/has_structure/mega_gateway.json` (`#minecraft:is_overworld`),
+Tags: `tags/worldgen/structure/mega_gateway.json` (`anime_multiverse:mega_gateway`), `tags/worldgen/biome/has_structure/mega_gateway.json` (`#minecraft:is_overworld`),
 `tags/worldgen/biome/has_structure/mega_gateway_preferred.json` (above), and the ONE appended value in `tags/worldgen/structure/dungeon_gate.json`.
 
 **What was verified, and against what.** In the API dump (`net.minecraft.world.level.levelgen.structure.placement.ConcentricRingsStructurePlacement`): the accessors `distance()`, `spread()`, `count()`,
@@ -418,7 +418,7 @@ Run offline, all passing (final state):
 * `gen_mega_arch.py --check` (52 pieces, 0 stale), `gen_mega_gateway.py --check` (0 stale), `gen_mega_pools.py --check` (0 stale): determinism and "the files on disk are what the script writes".
 * `mega_check.py`: 52 templates, 15 pools, 0 warnings and exactly 12 errors, all "no elements" for the pools of other builders' folders (`landing safe arena antechamber vault vault_1..3 onward onward_straight/left/right`).
 * `template.py --check`: all templates in the repo load and have valid NBT (85, 0 failed).
-* Every block of every template of this part (and the Gateway) is in the vanilla block list of 1.21.1 (`tools/labyrinth/vanilla_blocks_1_21_1.txt`) or `nusmp:labyrinth_gate`; block states are checked on every `set` (`MT.set` / `check_state`).
+* Every block of every template of this part (and the Gateway) is in the vanilla block list of 1.21.1 (`tools/labyrinth/vanilla_blocks_1_21_1.txt`) or `anime_multiverse:labyrinth_gate`; block states are checked on every `set` (`MT.set` / `check_state`).
 * `mega_arch_check.py`: 53 templates, 0 problems. `gen_mega_arch.py --light`: 0 pieces below the light or walkability bar.
 * Every piece was LOOKED AT (isometric with the near walls cut, cross-sections, first-person views, light plans) and fixed until it read as hand-built; the 22 caps and the Gateway too.
 * The pool JSON, structure and structure-set JSON are well-formed (parsed); the ConcentricRings accessors, the biome tags and ids were looked up in the API dump.

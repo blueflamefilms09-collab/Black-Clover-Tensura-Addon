@@ -54,7 +54,7 @@ repeating technique of the five weapons is at 12 ticks or more and each numbers 
 
 Registered from each weapon's logic constructor (`WeaponSelfTest.register(kind, expect)`) so it exists as soon as the mod starts. When `/multiverse mega selftest` (the CI server smoke test) runs it:
 
-1. reads `data/nusmp/hero/forms/<itemId>.json` from the jar and runs `FormsFile.check` with the weapon's expectation (skill ids from its numbers table, its ultimates, its sins, the count of ordinary and curse forms);
+1. reads `data/anime_multiverse/hero/forms/<itemId>.json` from the jar and runs `FormsFile.check` with the weapon's expectation (skill ids from its numbers table, its ultimates, its sins, the count of ordinary and curse forms);
 2. resolves every item id and tag of the requirements against the real registries (a wrong id fails CI here as well as in `hero.forms`);
 3. checks that the logic registered exactly the skills of its table, that each form's skills exist, that cooldowns and costs are inside the budget, and, when more than the base form is loaded, that the forms the
    game loaded are the file's forms in the file's order;

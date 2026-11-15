@@ -1,6 +1,6 @@
 # Vassal Mirror (`vassal_mirror`): the hand mirror of Glass' world, Envy by design
 
-Builder `hvd`. Logic: `heroweapon/weapon/mirror/**`, forms: `data/nusmp/hero/forms/vassal_mirror.json`. Style CAST, class Vassal Weapon.
+Builder `hvd`. Logic: `heroweapon/weapon/mirror/**`, forms: `data/anime_multiverse/hero/forms/vassal_mirror.json`. Style CAST, class Vassal Weapon.
 Written in two passes: the LOOK section (1) first so the art builder could start, then the rest.
 
 ## 1. The look (for the art builder `hart4`)

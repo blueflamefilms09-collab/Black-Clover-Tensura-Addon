@@ -8,7 +8,7 @@ import os
 import re
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
-J = os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "anime_multiverse")
+J = os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "nusmp")
 FILES = glob.glob(os.path.join(J, "labyrinth", "mega", "rift", "pocket", "*.java")) + [os.path.join(J, "labyrinth", "mega", "rift", "RiftCommand.java"), os.path.join(J, "labyrinth", "mega", "rift", "RiftService.java")]
 STR = r'"((?:[^"\\]|\\.)*)"'
 TWF = re.compile(r'translatableWithFallback\(\s*' + STR + r'\s*,\s*' + STR)

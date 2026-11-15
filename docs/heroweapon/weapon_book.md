@@ -1,7 +1,7 @@
 # Vassal Book (`vassal_book`): the living spellbook
 
 Class VASSAL, style CAST, canon holder Ethnobalt (the Book Hero; the owner names no holder for the Book). Logic `heroweapon/weapon/book/BookLogic`, forms
-`data/nusmp/hero/forms/vassal_book.json`.
+`data/anime_multiverse/hero/forms/vassal_book.json`.
 This page is written in sections; the LOOK section comes first because the art builder (`hart3`) reads it first.
 
 ## 1. Look (for the art builder)
@@ -206,7 +206,7 @@ volume rebuilds only when the pages change. The texts (`BookText`) are built fro
 | `weapon/book/PageDeck`, `BookDecks`, `Volume` | the pure loop: one deck, the pages a form holds, the two-chapter volume |
 | `weapon/book/BookText` | every name and description (and the six page names), built from the numbers; writes the lang entries |
 | `weapon/book/BookState` | the per-wielder volume, bounded, cleared on logout and server stop (kept when the book is put away) |
-| `data/nusmp/hero/forms/vassal_book.json` | the five forms |
+| `data/anime_multiverse/hero/forms/vassal_book.json` | the five forms |
 | `weapon/glassworld/*` | the kit shared with the Fan, the Scythe and the Katana (see `docs/heroweapon/weapon_glassworld.md`) |
 
 Tests: `PageDeckTest`, `BookDecksTest`, `VolumeTest`, `BookNumbersTest`, `BookTextTest`, `BookFormsTest` (and the kit's tests). Self-test in the game: `hero.weapon.book` (with a library round that reads a whole volume and casts Libraria), run with `/multiverse mega selftest hero.weapon.book` (permission 2).

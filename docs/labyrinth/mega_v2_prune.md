@@ -11,14 +11,14 @@ was redesigned: five files had a reference to a removed thing fixed (section 6.4
 
 ## 1. What "the old dungeon" was
 
-1. **The Spire layout of 1.35.0.** The floating Spire in the dimension `nusmp:labyrinth`: structure set `labyrinth_spires`, structure
-   `labyrinth_spire`, thirteen pools `nusmp:labyrinth/*`, thirty templates, the biome-palette and vein processors, the generator code
+1. **The Spire layout of 1.35.0.** The floating Spire in the dimension `anime_multiverse:labyrinth`: structure set `labyrinth_spires`, structure
+   `labyrinth_spire`, thirteen pools `anime_multiverse:labyrinth/*`, thirty templates, the biome-palette and vein processors, the generator code
    `labyrinth/gen`, the routing `mega.layout = "spire"` and the switch `MegaConfig.LAYOUT`.
-2. **The Living Dungeon (1.17.0 to 1.23.0).** The cave dimension `nusmp:living_dungeon` and everything that fed it: tiers, atmosphere, the
+2. **The Living Dungeon (1.17.0 to 1.23.0).** The cave dimension `anime_multiverse:living_dungeon` and everything that fed it: tiers, atmosphere, the
    ecology and its saves, the Golden City, the Variable Core (zones, vaults, collapse, navigation), the sentient rooms and the immune system, the
    Maw, the wild food web, the two floor arenas (Goliath's pit, the Charybdis basin), `DungeonConfig`, `/multiverse dungeon ...` and
    `labyrinth.engine = "legacy"`.
-3. **The legacy gates and maws.** The Dungeon Gate arches (structure `nusmp:dungeon_gate`), the Dungeon Maw, `MegaConfig.LEGACY_GATES`, and the
+3. **The legacy gates and maws.** The Dungeon Gate arches (structure `anime_multiverse:dungeon_gate`), the Dungeon Maw, `MegaConfig.LEGACY_GATES`, and the
    parts of `labyrinth/gate` that only served them.
 
 What stays is what the Mega-Dungeon, the Hub, the Gateway, the Guard, the D&D layer, the economy, quests, relics, charter grimoires, bosses, the
@@ -37,11 +37,11 @@ from live code or from a registration (section 5.1).
 | Object | Decision | Who uses it / why |
 | --- | --- | --- |
 | Spire: structure set `labyrinth_spires`, structure `labyrinth_spire`, 13 pools `labyrinth/*`, 30 templates `structure/labyrinth/**`, biome tag `has_structure/labyrinth_spire`, structure tag `labyrinth_spire` | REMOVE | Only the Spire's dimension generated them. No kept pool, template or processor names any of them (`LabyrinthDataTest`, and the template scan below). |
-| Spire: processors `labyrinth_palette`, `labyrinth_interior`, `magicule_veins`, block tags `labyrinth/swap_floor/pillar/wood/accent` and `labyrinth/veinable`, data map `labyrinth_palette` | REMOVE | Read only by `BiomePaletteProcessor` / `MagiculeVeinProcessor`, which are removed. The processors the Mega-Dungeon uses (`nusmp:mod_compat`, `nusmp:region_theme`) are untouched. |
+| Spire: processors `labyrinth_palette`, `labyrinth_interior`, `magicule_veins`, block tags `labyrinth/swap_floor/pillar/wood/accent` and `labyrinth/veinable`, data map `labyrinth_palette` | REMOVE | Read only by `BiomePaletteProcessor` / `MagiculeVeinProcessor`, which are removed. The processors the Mega-Dungeon uses (`anime_multiverse:mod_compat`, `anime_multiverse:region_theme`) are untouched. |
 | Spire: `labyrinth/gen` (`BiomeMirror`, `BiomePaletteProcessor`, `GenRegistry`, `LabyrinthPalette`, `MagiculeVeinProcessor`, `PaletteSwap`, `VeinMath`) and their 2 tests | REMOVE | The Spire's generator. `GenRegistry` registered only those processor types. |
 | `labyrinth/gen/StateCarry` | NEW | The one method of `BiomePaletteProcessor` that live code needs (`ModCompatProcessor` copies block-state properties by name). Extracted unchanged in behaviour so the processor could go. |
 | `labyrinth/gen/LabyrinthLocate`, `LabyrinthCommand`, `LabyrinthSystem` | KEEP, slimmed | `/multiverse labyrinth locate / enter / leave / here` still work for the Gateway; `LabyrinthSystem` lost only `GenRegistry.init`. |
-| Dimension `nusmp:labyrinth`: `dimension/labyrinth.json`, `dimension_type/labyrinth.json`, biome `labyrinth_sky`, the client effects `nusmp:labyrinth` | KEEP-ORPHAN (inert) | A world that ever loaded the dimension names it in `level.dat`; a missing dimension type there could make the whole save fail to decode. Its generator has `structure_overrides: []` now, so nothing generates. `Labyrinth.DIMENSION` is still compared by `Labyrinth.in`, so the Guard, the economy, the gloom and the void rescue still hold an old Spire sky. |
+| Dimension `anime_multiverse:labyrinth`: `dimension/labyrinth.json`, `dimension_type/labyrinth.json`, biome `labyrinth_sky`, the client effects `anime_multiverse:labyrinth` | KEEP-ORPHAN (inert) | A world that ever loaded the dimension names it in `level.dat`; a missing dimension type there could make the whole save fail to decode. Its generator has `structure_overrides: []` now, so nothing generates. `Labyrinth.DIMENSION` is still compared by `Labyrinth.in`, so the Guard, the economy, the gloom and the void rescue still hold an old Spire sky. |
 | `MegaConfig.LAYOUT` (+ `LAYOUT_MEGA`, `LAYOUT_SPIRE`, `DEFAULT_LAYOUT`), `Labyrinth.layoutIsMega()`, `Labyrinth.engineIsLabyrinth()`, `Labyrinth.ENGINE_*`, `Labyrinth.BIOME`, `Labyrinth.SPIRE_TAG` | REMOVE | The Mega-Dungeon is the only layout; every branch is now the Mega-Dungeon branch. |
 | Living Dungeon core: `LivingDungeon`, `DungeonTier`, `DungeonAtmosphere`, `DungeonAmbience`, `DungeonSave`, `EcosystemData`, `DungeonEcology`, `DungeonConfig`, `DungeonCommand`, `DungeonHooks`, `Harvest`, `CarcassBlock`, `LegacySeal`, `RadiationShield`, `RadiationCount` (15 of the 25 files removed from `dungeon/`; the Maw files and `DungeonBlocks` are in their own rows) | REMOVE | Only the removed dungeon asked "is this the Living Dungeon" (`LivingDungeon.in`). Callers that did were edited (section 6). |
 | Maw: `DungeonMaw`, `MawReward`, `MawCredit`, `MawFit`, `MawFruitMath`, `MawManifest`, `MawShapes`, `MawStyle`, `MawText` | REMOVE | The legacy way in. Blocks and items below. |
@@ -51,11 +51,11 @@ from live code or from a registration (section 5.1).
 | `dungeon/sentient/Dice`, `StoneTable` | KEEP | The economy rolls every drop with them: `EconomyDrops`, `EconomyMath`, `FactionLoot`, `FactionDrops`, the whole `mega/gear` package and the tests `EconomyMathTest`, `FactionLootTest`. |
 | `dungeon/sentient/SentientItems`, `MaterialItem`, `MaterialTable` | KEEP | The twelve synthesis materials are registered items named by the tag `synthesis_materials`, the quest chapter `gauntlet` (direwolf pelt, disciple sigil) and three advancements (devil horn). |
 | `dungeon/wild` (7 of 8 files): `Dweller`, `Roster`, `WildDriver`, `WildRules`, `WildSpawn`, `Appetite`, `HuntPlan` | REMOVE | The food web of the Living Dungeon. |
-| `dungeon/wild/Wildlife` | KEEP, rewritten | `EconomyDrops` asks it for the tier of a mob by the entity tags `nusmp:dungeon/tier1..3`, `legendary`, `excluded`. The decision itself moved into the new pure `TierRule`. |
+| `dungeon/wild/Wildlife` | KEEP, rewritten | `EconomyDrops` asks it for the tier of a mob by the entity tags `anime_multiverse:dungeon/tier1..3`, `legendary`, `excluded`. The decision itself moved into the new pure `TierRule`. |
 | Entity tags `tags/entity_type/dungeon/` `tier1`, `tier2`, `tier3`, `legendary`, `excluded` | KEEP | `Wildlife` (the economy's tiers) and `FactionDataTest` read them. |
 | Entity tag `tags/entity_type/dungeon/grazers` | KEEP-ORPHAN | No game code reads it; the Mega-Dungeon's `FactionDataTest` (`everyCreatureOfTheToughnessTiersHasAFactionUnlessItIsAGrazer`) does. It was removed first by mistake and put back when the test run caught it. |
 | Entity tags `dungeon/aquatic`, `avian`, `born_catacombs`, `born_underworld`, `born_waterways`, `juggernaut_catacombs`, `juggernaut_underworld`, `juggernaut_waterways` | REMOVE | Read only by the born-mob and immune-system code of the Living Dungeon. |
-| `dungeon/DungeonEntities`, `DungeonCreature`, `DungeonGoals`, `DungeonSlimeEntity`, `LivingArmorEntity`, `DirewolfEntity`, `BasiliskEntity` | KEEP, cut | The creatures are in the entity tags of the Mega-Dungeon (`tags/entity_type/mega/construct`, `beast`, `slime`), in `data/nusmp/mega/encounters/*.json`, in the quest chapter `gauntlet` (kill counts) and in the renderers; `FloorWardenEntity` extends `LivingArmorEntity`. The ecology (hunger-driven breeding, carcasses, the `Dressed` flag) is gone from them. |
+| `dungeon/DungeonEntities`, `DungeonCreature`, `DungeonGoals`, `DungeonSlimeEntity`, `LivingArmorEntity`, `DirewolfEntity`, `BasiliskEntity` | KEEP, cut | The creatures are in the entity tags of the Mega-Dungeon (`tags/entity_type/mega/construct`, `beast`, `slime`), in `data/anime_multiverse/mega/encounters/*.json`, in the quest chapter `gauntlet` (kill counts) and in the renderers; `FloorWardenEntity` extends `LivingArmorEntity`. The ecology (hunger-driven breeding, carcasses, the `Dressed` flag) is gone from them. |
 | `dungeon/DungeonGuard`, `DungeonGuardRules` | KEEP, cut | The Guard holds the whole Mega-Dungeon and the arena of the Final Hour (mixins `LevelGuardMixin` and `LevelChunkGuardMixin`, `SpellRuntime`, `TreeRestore`, `UnderworldMatter`, the Wave relics, `GatekeeperDoorBlock`, ...). Lost: the Living Dungeon branch, the immune system, the fixture exemption. |
 | `dungeon/DungeonFood`, `MealTable`, `MealPerks`, `MealBuffs`, `MealSkills`, `MealAttunement`, `SkillLease`, `SkillsData`, `Cooldowns`, `DungeonEffects` | KEEP | The cooking system and its effects: the economy's meat (`EconomyDrops`, `FactionDrops`, `EcoSelfTests`), `ManaLaw`, `CharterMirror`, `Lucius`, the crucible self-tests, quests ("Delicious in Dungeon"). |
 | `dungeon/floor/goliath` and `charybdis`: the arenas (`GoliathPitPlan/Site/Gates/Ways`, `PitRng`, `CharybdisBasinPlan/Site`, `CharybdisGates`, `CharybdisWays`, `CharybdisRng`, `CharybdisSurface`) | REMOVE | The pit and the basin were Living Dungeon floors. |
@@ -64,16 +64,16 @@ from live code or from a registration (section 5.1).
 | Blocks `dungeon_gate`, `dungeon_maw`, `maw_root`, `dungeon_mycelium`, `carcass`, `aurelian_altar`, `descent_gate`, `illusion_stone`, `illusion_deepslate`, `nutrient_bloom`, `warp_trap`, `artifact_block`, `mana_gate`, `golden_leaves` (14) | REMOVE | None of them appears in the block palette of any of the 124 templates left (`structure/mega/**`, `hub`, `mega_gateway`), in a pool, a processor, a loot table, a recipe, a tag, a quest or an advancement. This is the check behind "keep the blocks if the new one uses them": the new dungeon uses none of them. |
 | Items `dungeon_gate`, `dungeon_maw`, `maw_root`, `dungeon_mycelium`, `aurelian_altar`, `aurelian_core`, `descent_gate`, `illusion_stone`, `illusion_deepslate`, `nutrient_bloom`, `nutrient_nectar`, `warp_trap`, `artifact_block`, `mana_gate`, `golden_leaves`, `maw_fruit`, `ki_resonance_lantern`, `anti_bird_compass`, `venom_gland` (19) | REMOVE | Obtainable only in the removed dungeon (the lantern and the compass only found its Variable Core). Referenced by nothing that stays. |
 | Blocks of `labyrinth/*` (`labyrinth_gate`, `labyrinth_exit`, `gatekeeper_door`, `guardian_altar`, `sealed_archway`, `ward_rune`, `spawn_glyph`, `pitfall_tile`, `snuffer_glyph`, `sigil_plate`, `riddle_stone`, `relic_pedestal`, `peak_altar`, ...) and `labyrinth/gate` (`GateBlock`, `ExitGateBlock`, `GateRegistry`, `GateRules`, `LabyrinthTravel`, `LabyrinthEvents`) | KEEP | In the templates of the Mega-Dungeon (the palette scan lists them) and the exit gate and the Gatekeeper door are rooms of the new dungeon. |
-| Structure `nusmp:dungeon_gate`, structure set `dungeon_gates`, pool `gate/base`, templates `gate/ruin_a`, `ruin_b`, biome tag `has_structure/dungeon_gate` | REMOVE | The legacy arches. |
-| Structure **tag** `nusmp:dungeon_gate` | KEEP, now only the Gateway | `Labyrinth.GATE_TAG` and `LabyrinthLocate` ask it where the way in is. Renaming it would touch `labyrinth/mega/**`; the file now lists `nusmp:mega_gateway` only. |
+| Structure `anime_multiverse:dungeon_gate`, structure set `dungeon_gates`, pool `gate/base`, templates `gate/ruin_a`, `ruin_b`, biome tag `has_structure/dungeon_gate` | REMOVE | The legacy arches. |
+| Structure **tag** `anime_multiverse:dungeon_gate` | KEEP, now only the Gateway | `Labyrinth.GATE_TAG` and `LabyrinthLocate` ask it where the way in is. Renaming it would touch `labyrinth/mega/**`; the file now lists `anime_multiverse:mega_gateway` only. |
 | `MegaConfig.LEGACY_GATES` and its check in `MegaTravel` | REMOVE | Nothing is left to refuse. |
-| Dimension `nusmp:living_dungeon`: dimension, dimension_type, biome `dungeon_depths`, effects id `nusmp:living_dungeon` | KEEP-ORPHAN (inert) | Same reason as the Spire's. In addition the dimension type of the **Mega-Dungeon** names `"effects": "nusmp:living_dungeon"`, so `DungeonSky.EFFECTS_ID` and its `registerEffects` stay (the rest of `DungeonSky`, the mood layer, went). |
-| Data attachments `nusmp:ecosystem`, `nusmp:dweller` | REMOVE | Only the removed ecology read them. See the old-world section for what a save with them does. |
-| Data components `nusmp:fuel`, `nusmp:flame`, `nusmp:target` (`NavComponents`) | REMOVE | Only the lantern and compass carried them; their items are removed with them. |
+| Dimension `anime_multiverse:living_dungeon`: dimension, dimension_type, biome `dungeon_depths`, effects id `anime_multiverse:living_dungeon` | KEEP-ORPHAN (inert) | Same reason as the Spire's. In addition the dimension type of the **Mega-Dungeon** names `"effects": "anime_multiverse:living_dungeon"`, so `DungeonSky.EFFECTS_ID` and its `registerEffects` stay (the rest of `DungeonSky`, the mood layer, went). |
+| Data attachments `anime_multiverse:ecosystem`, `anime_multiverse:dweller` | REMOVE | Only the removed ecology read them. See the old-world section for what a save with them does. |
+| Data components `anime_multiverse:fuel`, `anime_multiverse:flame`, `anime_multiverse:target` (`NavComponents`) | REMOVE | Only the lantern and compass carried them; their items are removed with them. |
 
 ### 2.1 The template scan
 
-`python3 -I` over every `.nbt` under `data/nusmp/structure` (a small NBT reader, palette names only) after the cut: 124 templates, the nusmp blocks
+`python3 -I` over every `.nbt` under `data/anime_multiverse/structure` (a small NBT reader, palette names only) after the cut: 124 templates, the anime_multiverse blocks
 that appear are `gatekeeper_door`, `guardian_altar`, `labyrinth_exit`, `labyrinth_gate`, `pitfall_tile`, `relic_pedestal`, `riddle_stone`,
 `sealed_archway`, `sigil_plate`, `snuffer_glyph`, `spawn_glyph`, `ward_rune`. None of the 14 removed blocks is among them. (Before the cut: 156
 templates; the 32 that went are the 30 under `structure/labyrinth/**` and the 2 under `structure/gate/`.)
@@ -106,23 +106,23 @@ Unused lang entries are left (harmless, as the brief says).
 
 ## 4. The data files removed
 
-* `data/minecraft/tags/block/mineable/axe.json` (it listed only `nusmp:maw_root`).
-* `data/nusmp/advancement/dungeon/` `descent`, `labyrinth`, `living_dungeon`, `maw`, `maw_item` (the generator no longer writes them).
-* `data/nusmp/data_maps/worldgen/biome/labyrinth_palette.json`, `data/nusmp/recipe/ki_resonance_lantern.json`.
-* `data/nusmp/structure/gate/` `ruin_a`, `ruin_b`; `structure/labyrinth/`: `base`, `ascent_1..4/` (`hall_n`, `gallery_n`, `shrine_n`: 12), `caps/` (4),
+* `data/minecraft/tags/block/mineable/axe.json` (it listed only `anime_multiverse:maw_root`).
+* `data/anime_multiverse/advancement/dungeon/` `descent`, `labyrinth`, `living_dungeon`, `maw`, `maw_item` (the generator no longer writes them).
+* `data/anime_multiverse/data_maps/worldgen/biome/labyrinth_palette.json`, `data/anime_multiverse/recipe/ki_resonance_lantern.json`.
+* `data/anime_multiverse/structure/gate/` `ruin_a`, `ruin_b`; `structure/labyrinth/`: `base`, `ascent_1..4/` (`hall_n`, `gallery_n`, `shrine_n`: 12), `caps/` (4),
   `crown/spire_top`, `peak/boss_peak`, `side/` (9), `vault/treasury`, `warden/hall` (30 in all).
-* `data/nusmp/tags/block/` `illusion_stones`, `labyrinth/swap_accent`, `swap_floor`, `swap_pillar`, `swap_wood`, `labyrinth/veinable`.
-* `data/nusmp/tags/entity_type/dungeon/` `aquatic`, `avian`, `born_catacombs`, `born_underworld`, `born_waterways`, `juggernaut_catacombs`,
+* `data/anime_multiverse/tags/block/` `illusion_stones`, `labyrinth/swap_accent`, `swap_floor`, `swap_pillar`, `swap_wood`, `labyrinth/veinable`.
+* `data/anime_multiverse/tags/entity_type/dungeon/` `aquatic`, `avian`, `born_catacombs`, `born_underworld`, `born_waterways`, `juggernaut_catacombs`,
   `juggernaut_underworld`, `juggernaut_waterways` (`tier1..3`, `legendary`, `excluded` stay: `Wildlife` reads them; `grazers` stays: `FactionDataTest` reads it).
-* `data/nusmp/tags/item/` `butchering_blades`, `lantern_cores`, `lantern_fuel`.
-* `data/nusmp/tags/worldgen/biome/has_structure/` `dungeon_gate`, `labyrinth_spire`; `tags/worldgen/structure/labyrinth_spire`.
-* `data/nusmp/worldgen/processor_list/` `labyrinth_interior`, `labyrinth_palette`, `magicule_veins`.
-* `data/nusmp/worldgen/structure/` `dungeon_gate`, `labyrinth_spire`; `structure_set/` `dungeon_gates`, `labyrinth_spires`.
-* `data/nusmp/worldgen/template_pool/` `gate/base`; `labyrinth/` `ascent_1..4`, `base`, `caps`, `crown`, `peak`, `side`, `side_end`, `vault`, `warden`, `wildcard`.
+* `data/anime_multiverse/tags/item/` `butchering_blades`, `lantern_cores`, `lantern_fuel`.
+* `data/anime_multiverse/tags/worldgen/biome/has_structure/` `dungeon_gate`, `labyrinth_spire`; `tags/worldgen/structure/labyrinth_spire`.
+* `data/anime_multiverse/worldgen/processor_list/` `labyrinth_interior`, `labyrinth_palette`, `magicule_veins`.
+* `data/anime_multiverse/worldgen/structure/` `dungeon_gate`, `labyrinth_spire`; `structure_set/` `dungeon_gates`, `labyrinth_spires`.
+* `data/anime_multiverse/worldgen/template_pool/` `gate/base`; `labyrinth/` `ascent_1..4`, `base`, `caps`, `crown`, `peak`, `side`, `side_end`, `vault`, `warden`, `wildcard`.
 
 Data files **edited** (not removed): `dimension/labyrinth.json` (`structure_overrides` is `[]`), `tags/worldgen/structure/dungeon_gate.json` (only
-`nusmp:mega_gateway`), and the advancements `arcs/dungeon_arc`, `dungeon/archway`, `charybdis`, `entered`, `goliath`, `labyrinth_event`, `meat`,
-`traps`, `warden` (regenerated, section 9). `assets/nusmp/weapon_classes.json` lost the lantern and compass lines.
+`anime_multiverse:mega_gateway`), and the advancements `arcs/dungeon_arc`, `dungeon/archway`, `charybdis`, `entered`, `goliath`, `labyrinth_event`, `meat`,
+`traps`, `warden` (regenerated, section 9). `assets/anime_multiverse/weapon_classes.json` lost the lantern and compass lines.
 
 ## 5. What stayed
 
@@ -138,7 +138,7 @@ unreachable.
 
 | What | Why it stays |
 | --- | --- |
-| Dimensions `nusmp:labyrinth` and `nusmp:living_dungeon` (dimension, dimension type, biome files; the client effects) | Old saves name them. They are data only and generate nothing. |
+| Dimensions `anime_multiverse:labyrinth` and `anime_multiverse:living_dungeon` (dimension, dimension type, biome files; the client effects) | Old saves name them. They are data only and generate nothing. |
 | The six Treasury relics and their handlers | Relics stay by the brief. The Treasury room that gave them is gone, so they are now obtainable by `/multiverse dungeon relic give` and the creative tab only. Adding them to the Mega-Dungeon's vault tables is a design call for the lead. |
 | The twelve synthesis materials | Tag, quests and advancements name them; the sentient drop table that produced them is gone, so they too come by command and creative tab until the economy adds them to a table. `MaterialTable.materialFor` stays and is tested. |
 | `GoliathRise.triggers`, `TRIGGER_RANGE`, `TRIGGER_HEIGHT` (who wakes the Goliath in its pit), `GoliathText.fallen` and `CharybdisText.fallen` (the lines that promised a pit or basin would come down), `GoliathText.woken` | Pure helpers of the removed arenas. The three tests that pin them (`GoliathRiseTest`, `GoliathTextTest`, `CharybdisTextTest`) stay. Harmless; a later clean-up can remove them with their tests. |
@@ -203,7 +203,7 @@ unreachable.
 * `Labyrinth` keeps `DIMENSION`, `MEGA_DIMENSION`, `SANCTUARY_DIMENSION`, `MEGA_GATEWAY_TAG`, `GATE_TAG`, `in`, `inMega`, `inSanctuary` and gains
   `REMOVED_DUNGEON_DIMENSION` / `inRemovedDungeon`. Gone: `SPIRE_TAG`, `BIOME`, `ENGINE_LABYRINTH`, `ENGINE_LEGACY`, `layoutIsMega()`, `engineIsLabyrinth()`.
 * `LabyrinthTravel.enter` is the Hub when the Hub is on, else `MegaTravel.enter`. `evacuate(player)` (new) carries a player found in
-  `nusmp:living_dungeon` back to where the Maw took them from (the persistent key `nusmp_dungeon_origin`, kept on purpose) or to their bed or the world
+  `anime_multiverse:living_dungeon` back to where the Maw took them from (the persistent key `nusmp_dungeon_origin`, kept on purpose) or to their bed or the world
   spawn, then says so. `LabyrinthEvents.onPlayerTick` calls it in its ten-tick check. `GateRules.cooldownHolds(now, stamp)` replaced the two-stamp
   version (`GateRulesTest` updated). `LabyrinthTravel.LEGACY_GATE_USED` stays as a constant (section 5.2).
 * `NUSMP.java`: only deletions of registrations, plus one added line, `CharybdisMinions::onServerStopping` (the replacement of the basin site's
@@ -246,10 +246,10 @@ nothing; `validate_snbt.py`: 22 chapters, 333 quests, 464 tasks, 0 errors, 0 war
   (it stays in the criteria and in `AdvancementDataTest.EVENT_KEYS`); `dungeon.maw` is gone from the test and the docs.
 * Quests removed: "The Maw Opens", "Down the Living Dungeon" (arc 3), the chapter `dungeon_labyrinth`'s "The Maw", "Into the Living Dungeon",
   "Dungeon Maw", "Descent Gate". Arc 3 now has Rumours, Delicious in Dungeon, Pit Guardian and the final. Arc 8's gate task asks for the dimension
-  `nusmp:mega_dungeon`.
+  `anime_multiverse:mega_dungeon`.
 * Lang: four existing keys need their text replaced (the lead merges them; `merge_lang.py` never overwrites): see `$S/arc/frag/prune.lang.json`
-  (`advancement.nusmp.bosses.goliath.desc`, `advancement.nusmp.dungeon.entered.desc`, `advancement.nusmp.dungeon.goliath.desc`,
-  `advancement.nusmp.dungeon.labyrinth_event.title`).
+  (`advancement.anime_multiverse.bosses.goliath.desc`, `advancement.anime_multiverse.dungeon.entered.desc`, `advancement.anime_multiverse.dungeon.goliath.desc`,
+  `advancement.anime_multiverse.dungeon.labyrinth_event.title`).
 
 ## 10. Old worlds
 
@@ -259,19 +259,19 @@ What the owner accepted ("unknown blocks become air, unknown entities vanish") a
   arch or Maw that stands in the Overworld loses its portal block and root blocks; the stone around stays. The structure start in the chunk is
   logged as unknown and ignored; `/locate` no longer finds it.
 * **Items.** The 19 removed items (lantern, compass, Maw Fruit, Variable Core blocks ...) vanish from inventories and chests with a log line.
-* **Players inside `nusmp:living_dungeon`.** The dimension stays registered so the world decodes; on the first ten-tick check the player is carried
-  out (`LabyrinthTravel.evacuate`). `nusmp:labyrinth` (the Spire's sky) is still a Labyrinth dimension for the Guard and the void rescue; `/multiverse
+* **Players inside `anime_multiverse:living_dungeon`.** The dimension stays registered so the world decodes; on the first ten-tick check the player is carried
+  out (`LabyrinthTravel.evacuate`). `anime_multiverse:labyrinth` (the Spire's sky) is still a Labyrinth dimension for the Guard and the void rescue; `/multiverse
   labyrinth leave` and the exit gate lead out of it.
 * **Saved data.** `nusmp_dungeon.dat`, `nusmp_golden_city.dat`, `nusmp_nexus.dat`, `nusmp_collapse.dat`, `nusmp_gates.dat`, `nusmp_vaults.dat` and
   `nusmp_rooms.dat` in the Overworld's `data/` folder are no longer read. They can be deleted by hand; nothing deletes them.
-* **Entities.** No entity type was removed: the creatures and both floor bosses keep their ids. A creature that carried the `nusmp:dweller` attachment
+* **Entities.** No entity type was removed: the creatures and both floor bosses keep their ids. A creature that carried the `anime_multiverse:dweller` attachment
   loses it (see section 12).
-* **Untouched.** The Mega-Dungeon (`nusmp:mega_dungeon`), the Hub (`nusmp:sanctuary`), the Gateway, player data, the economy ledgers, the Djinn
+* **Untouched.** The Mega-Dungeon (`anime_multiverse:mega_dungeon`), the Hub (`anime_multiverse:sanctuary`), the Gateway, player data, the economy ledgers, the Djinn
   ledgers and the relic ledgers are not changed.
 
 ## 11. Tools, CI and tests
 
-* `tools/ci/server_smoke.py` and `tools/ci/mock_server.py`: the `locate-old-gate` check and the mocked answer for `nusmp:dungeon_gate` are gone; the
+* `tools/ci/server_smoke.py` and `tools/ci/mock_server.py`: the `locate-old-gate` check and the mocked answer for `anime_multiverse:dungeon_gate` are gone; the
   `locate-gateway` check stays. `.github/workflows/smoke.yml` named no old-dungeon check (`SMOKE_EXPECT` lists only Mega-Dungeon phases), so it is
   unchanged.
 * Generators that also drew the removed lantern and compass were trimmed so that running them cannot bring the deleted assets back:
@@ -312,10 +312,10 @@ Run here:
 
 Not run, and assumptions that could be wrong (nothing of this was started in a game):
 
-* That NeoForge 21.1.259 **skips** a data attachment whose type is no longer registered (`nusmp:dweller` on entities, `nusmp:ecosystem`) instead of
+* That NeoForge 21.1.259 **skips** a data attachment whose type is no longer registered (`anime_multiverse:dweller` on entities, `anime_multiverse:ecosystem`) instead of
   failing to load the entity or chunk. I believe it logs and skips; I did not read the loader in this environment.
-* That a world whose `level.dat` names `nusmp:labyrinth` and `nusmp:living_dungeon` decodes with the inert dimension files present, and that the
-  generator of `nusmp:labyrinth` with `structure_overrides: []` and no structure set generates nothing.
+* That a world whose `level.dat` names `anime_multiverse:labyrinth` and `anime_multiverse:living_dungeon` decodes with the inert dimension files present, and that the
+  generator of `anime_multiverse:labyrinth` with `structure_overrides: []` and no structure set generates nothing.
 * That an unknown structure start in old chunk data is only logged.
 * That the evacuation really lands a player home (the teleport call is the one `LabyrinthTravel.leave` has always used; this branch never ran).
 * The extended relic-wave protections (they now count the Mega-Dungeon as the place they hold) change balance in a way nobody has played.

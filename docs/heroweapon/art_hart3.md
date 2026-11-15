@@ -22,12 +22,12 @@ For each id `<id>` the script writes the six files `HeroAssetsTest` asks for, de
 
 | file | what |
 |---|---|
-| `assets/nusmp/weapon_meshes/<id>.txt` | the 3D model (per-vertex smoothed normals, the part list as comments, the `grip` directive, the `glow` line) |
-| `assets/nusmp/textures/entity/weapon/<id>.png` | the painted skin, 512 px |
-| `assets/nusmp/textures/entity/weapon/<id>_glow.png` | the additive glow skin, 512 px |
-| `assets/nusmp/textures/item/<id>.png` | the 16 x 16 sprite, the inventory icon (drawn by hand as a pixel map, never scaled down from a render) |
-| `assets/nusmp/models/item/<id>.json` | the in-hand model (`builtin/entity`, the display transforms) |
-| `assets/nusmp/models/item/<id>_icon.json` | the flat inventory model (`item/handheld`, or `item/generated` for the upright book and carriage) |
+| `assets/anime_multiverse/weapon_meshes/<id>.txt` | the 3D model (per-vertex smoothed normals, the part list as comments, the `grip` directive, the `glow` line) |
+| `assets/anime_multiverse/textures/entity/weapon/<id>.png` | the painted skin, 512 px |
+| `assets/anime_multiverse/textures/entity/weapon/<id>_glow.png` | the additive glow skin, 512 px |
+| `assets/anime_multiverse/textures/item/<id>.png` | the 16 x 16 sprite, the inventory icon (drawn by hand as a pixel map, never scaled down from a render) |
+| `assets/anime_multiverse/models/item/<id>.json` | the in-hand model (`builtin/entity`, the display transforms) |
+| `assets/anime_multiverse/models/item/<id>_icon.json` | the flat inventory model (`item/handheld`, or `item/generated` for the upright book and carriage) |
 
 and `tools/heroweapon/classes_hart3.json` (the size class of each id, for the lead to merge into `tools/relics/weapon_classes.json`).
 
@@ -210,7 +210,7 @@ web search returned for the page. Colours and shapes marked "design" are not fro
 ## 8. For the lead
 
 * Merge `tools/heroweapon/classes_hart3.json` (its `weapons` map) into `tools/relics/weapon_classes.json`, then `python3 tools/relics/audit_weapon_scale.py --write` (it also rewrites
-  the game copy `assets/nusmp/weapon_classes.json`). Until then `test_every_mesh_has_a_reviewed_class` fails for these five ids.
+  the game copy `assets/anime_multiverse/weapon_classes.json`). Until then `test_every_mesh_has_a_reviewed_class` fails for these five ids.
 * `python3 tools/relics/display_presets.py --apply --include-excluded` changes nothing for the five (the model files were written with the same rule applied). The carriage's
   first person entry is hand-set but its mesh is 1.0 block long, under the 1.4 limit, so the tool keeps it.
 * Engravings (rule 6) come from the logic pages' sections (`e("soul_eater", 2) ...`); the art needs nothing more.

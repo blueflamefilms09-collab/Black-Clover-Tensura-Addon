@@ -6,16 +6,16 @@ with a beam, a camera shake and a first ability. This part builds all of it on t
 screen and networking) without removing any of it.
 
 Nothing was run in the game. What was checked is in "What was checked" below; the first run in the game is the real test.
-Namespace note: the real mod id is `nusmp` (the brief says `multiverse_mod`), so ids and datapack paths use `nusmp`.
+Namespace note: the real mod id is `anime_multiverse` (the brief says `multiverse_mod`), so ids and datapack paths use `anime_multiverse`.
 
 ## NEW / REPLACES / KEPT
 | | What |
 |---|---|
-| NEW | the block `nusmp:soul_forge` (altar, reusable), its item with a 3D in-hand model and the old-style 16x16 inventory sprite, loot table, blockstate, textures |
+| NEW | the block `anime_multiverse:soul_forge` (altar, reusable), its item with a 3D in-hand model and the old-style 16x16 inventory sprite, loot table, blockstate, textures |
 | NEW | the recipes `soul_forge` and `genesis_core` (until now a Genesis Core could only be given by command or dropped by a boss) |
 | NEW | the ritual (`avatar/ritual/`): crash-safe player lock, circle, the screen opening, the cancel paths, the birth spectacle |
 | NEW | the full-screen creator `SoulForgeScreen` with five round category buttons and five pages (Identity with a 3D die, Race & Appearance, Traits with a sample line, Skills, Aptitudes with a slot-machine reel) |
-| NEW | Magic Aptitudes as data (`data/nusmp/avatar_aptitudes/*.json`, 30 files) with a reload listener; the chosen-skill list (`data/nusmp/avatar_skills/*.json`, 42 files) with its own reload listener |
+| NEW | Magic Aptitudes as data (`data/anime_multiverse/avatar_aptitudes/*.json`, 30 files) with a reload listener; the chosen-skill list (`data/anime_multiverse/avatar_skills/*.json`, 42 files) with its own reload listener |
 | NEW | six payloads, the server-side validator and the cost maths, `AvatarSoulForgeConfig` (own file), the Instant Skill Awakening, in-game self-tests, quest keys |
 | REPLACES | the creation FLOW: the Genesis Core no longer opens a screen when used alone (`avatar.coreUse = "forge"`), and the Soul Forge screen is the default creation screen (`avatar.creationUi = "soulforge"`) |
 | KEPT | the 1.51.0 four-page screen `AvatarBuilderScreen` and its menu, behind `avatar.creationUi = "classic"`; every classic payload and handler (`C2S_RequestStatRollPayload` is shared: the stat roll of page 1 serves both screens); the stat roll, reroll rules, races, personalities, appearance engine, entity, outcomes, naming, chatter |
@@ -45,7 +45,7 @@ Namespace note: the real mod id is `nusmp` (the brief says `multiverse_mod`), so
 
 ## Recipes and economics
 * `genesis_core` (shaped `IBI / HNT / EAR`): 2 netherite ingots, diamond block, heart of the sea, nether star, totem of undying, echo shard, enchanted golden apple,
-  `nusmp:dark_rukh_shard`. Every Avatar eats one, so this is the price of one Avatar.
+  `anime_multiverse:dark_rukh_shard`. Every Avatar eats one, so this is the price of one Avatar.
 * `soul_forge` (shaped `CNC / IGI / CAC`): 4 crying obsidian, nether star, 2 netherite ingots, one Genesis Core, enchanted golden apple. The forge is never used up.
 * Both ship unconditionally (no `neoforge:conditions`): a server that does not want them removes the recipe with a datapack, and `avatar.enabled = false` already stops every
   use. No recipe-book advancement is shipped (the recipes work in a crafting table whether or not they are unlocked in the book).
@@ -74,20 +74,20 @@ that falls back to the default while the spec is not loaded (copied from `DndCon
 ## Payloads (`AvatarNet.register`, `optional()`, all handlers on the main thread)
 | id | direction | content | guards |
 |---|---|---|---|
-| `nusmp:forge_finalize` | C2S | race id, primary, secondary, look NBT, name, stat token, unique id, ultimate id, <= 8 aptitude ids, roll token, paid flag | menu + ritual token match, `finalizeGapMillis`, every string cleaned, then the validator on fresh reserves |
-| `nusmp:forge_roll` | C2S | the hand-picked ids only | menu + ritual, `rollGapMillis`, `aptitudeRolls` per ritual, slots not full |
-| `nusmp:forge_bark` | C2S | primary and secondary personality names | menu + ritual, `actionGapMillis` |
-| `nusmp:forge_state` | S2C | rules, reserves, rolls left, aptitude rows, skill rows | sent by the server when the screen opens |
-| `nusmp:forge_roll_result` | S2C | aptitude id, token, rolls left, reel seed | the result is the server's; Finalize refers to the TOKEN |
-| `nusmp:forge_birth` | S2C | position, power, ticks of the camera shake | players within 48 blocks |
+| `anime_multiverse:forge_finalize` | C2S | race id, primary, secondary, look NBT, name, stat token, unique id, ultimate id, <= 8 aptitude ids, roll token, paid flag | menu + ritual token match, `finalizeGapMillis`, every string cleaned, then the validator on fresh reserves |
+| `anime_multiverse:forge_roll` | C2S | the hand-picked ids only | menu + ritual, `rollGapMillis`, `aptitudeRolls` per ritual, slots not full |
+| `anime_multiverse:forge_bark` | C2S | primary and secondary personality names | menu + ritual, `actionGapMillis` |
+| `anime_multiverse:forge_state` | S2C | rules, reserves, rolls left, aptitude rows, skill rows | sent by the server when the screen opens |
+| `anime_multiverse:forge_roll_result` | S2C | aptitude id, token, rolls left, reel seed | the result is the server's; Finalize refers to the TOKEN |
+| `anime_multiverse:forge_birth` | S2C | position, power, ticks of the camera shake | players within 48 blocks |
 The classic payloads are unchanged. `AvatarNetServer` now lets the stat roll serve both screens, and the classic Finalize requires the classic menu.
 The sample line travels as an ordinary `S2C_CreationResultPayload` of kind `bark` with the message `EVENT|words`.
 
 ## Data
-* `data/nusmp/avatar_aptitudes/<id>.json` (30): `name`, `rarity`, `tax_percent`, `magic` (a real `MagicType` name or empty), `skills` (real Tensura skill ids), `tint`, `icon`, `description`.
+* `data/anime_multiverse/avatar_aptitudes/<id>.json` (30): `name`, `rarity`, `tax_percent`, `magic` (a real `MagicType` name or empty), `skills` (real Tensura skill ids), `tint`, `icon`, `description`.
   Generated from `tools/avatar/forge_tables.py` by `tools/avatar/gen_forge_data.py` (which checks every magic name against `MagicType.java` and every skill id against the Tensura id
   reference `src/test/resources/com/newuniverse/nusmp/charter/tensura_skill_ids.txt`, and refuses to write otherwise; `--check` verifies the files on disk).
-* `data/nusmp/avatar_skills/<id>.json` (42): `id`, `kind` (a HINT), `name`, `ep_tax_percent`, `min_ep`, `tint`, `icon`, `description`.
+* `data/anime_multiverse/avatar_skills/<id>.json` (42): `id`, `kind` (a HINT), `name`, `ep_tax_percent`, `min_ep`, `tint`, `icon`, `description`.
 * Finding: Tensura 2.0.1.3 registers no Ultimate skill of its own (only the `SkillType.ULTIMATE` category), so the Ultimate slot is filled from the Tensura sins that are
   Ultimate in the series (the server reads the real category at runtime and the registry wins over the file's hint) and from this mod's own Ultimates (`NUSkills`).
   `ForgeSkillResolver` leaves out any id that is not registered, logging it once, and puts every skill in the slot its real category says.
@@ -139,7 +139,7 @@ once per aptitude the Avatar was given), `avatar.skill_bound` (argument: the ski
   `SoulForgeBlocks` loads).
 * `NUSMP`: `modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.avatar.AvatarSoulForgeConfig.SPEC, "nusmp-avatar-soulforge-server.toml");`
 * `NUCreativeTab`: `output.accept(com.newuniverse.nusmp.avatar.item.SoulForgeBlocks.SOUL_FORGE_ITEM.get());`
-* optional: `"nusmp:soul_forge"` in `data/minecraft/tags/block/mineable/pickaxe.json` (not edited here; the block drops without a tool requirement).
+* optional: `"anime_multiverse:soul_forge"` in `data/minecraft/tags/block/mineable/pickaxe.json` (not edited here; the block drops without a tool requirement).
 * the language fragment: `python3 -B tools/avatar/gen_soulforge_lang.py --out <fragment.json>` (keys already in `en_us.json` are never written).
 * CI smoke: add `avatar` to `SMOKE_EXPECT` (the self-tests `avatar.forge_registry`, `forge_data`, `forge_recipes`, `forge_skills`, `forge_validator`, `forge_lock`, `forge_ritual`).
 

@@ -25,7 +25,7 @@ OUT = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse
 SOUNDS_JSON = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse", "sounds.json")
 LINES_JSON = os.path.join(HERE, "voice_lines.json")
 REPORT = os.path.join(HERE, "voice_report.json")
-CATALOG = os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "anime_multiverse", "audio", "voice", "VoiceCatalog.java")
+CATALOG = os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "nusmp", "audio", "voice", "VoiceCatalog.java")
 
 # suffix -> prompt. The group (the part before the number) is the situation of GnomeMoodRules.
 LINES = {

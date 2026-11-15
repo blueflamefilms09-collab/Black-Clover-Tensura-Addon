@@ -4,7 +4,7 @@ Owner request (1.34.0): every armour item, old and new, gets the same build as t
 
 ## What each thing is
 - **Robe sets (11 sets x 4 pieces)**: catalog `item <id>` lines (models, `ipal` palette, `itier` grade tier, `fx` particle theme). Worn as lofted 3D garments (hood/hat/crest, robe/coat/mantle with sleeves and a set badge, hip band and legs, boots) in place of the GeckoLib model for players.
-- **Generic fallback** (`ArmorLooks`, pure, tested): any future `ArmorItem` of the `nusmp` namespace with no catalog entry gets a model from its slot and name words (robe/plate/cloth) and a stable palette from its path.
+- **Generic fallback** (`ArmorLooks`, pure, tested): any future `ArmorItem` of the `anime_multiverse` namespace with no catalog entry gets a model from its slot and name words (robe/plate/cloth) and a stable palette from its path.
 - **Armour relics**: the 16 chest/boot relics that only had the model of their look now have signature models (13 chests, 3 boots).
 - **Modes** (`mode_<name>` entries): 3D wings, crowns, horns and a skirt replace the flat cards of the overlays; the painted plates stay.
 - **Curios items that are not relics** (6 dungeon relics, 7 charter grimoires): `item` + `islot` entries reuse library models.

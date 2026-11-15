@@ -100,13 +100,13 @@ touched (he steps in, up to 6 blocks, with a safe blink); whoever left it is not
 A touch that lands does 26 base magic damage through `LuciusBoss.strike` (the balance law's cap of 40% of a player's health per hit applies
 and the arc's pressure cap below), then:
 
-1. **Soul Corruption** (`entity/zogratis/LuciusEffects`, own `DeferredRegister<MobEffect>`, id `nusmp:soul_corruption`): level 1 on the first
+1. **Soul Corruption** (`entity/zogratis/LuciusEffects`, own `DeferredRegister<MobEffect>`, id `anime_multiverse:soul_corruption`): level 1 on the first
    touch, one more level for each new touch (three at most): maximum health -10%, -20%, -30% for **60 seconds**, never below **four
    hearts** (`boss/arc/SoulCorruptionMath.reduction`), recomputed every two seconds against the current base maximum, removed with the
    effect by milk, a Totem of Undying, death or expiry. It is not damage and cannot kill: the lowest maximum is 8 health, and health above
    the new maximum is clamped by the game when the attribute changes. Why one transient `ADD_VALUE` modifier computed by hand and not the stock
    attribute template: the template cannot honour the floor. Icon: `textures/mob_effect/soul_corruption.png` (`tools/gen_lucius_arc_icons.py`);
-   lang `effect.nusmp.soul_corruption` and `.description`.
+   lang `effect.anime_multiverse.soul_corruption` and `.description`.
 2. **Turned companions** (`entity/zogratis/PaladinTurns`, bookkeeping in pure `boss/arc/PaladinTurn`): for 20 seconds, at most 6 at once,
    the victim's tamed animals and other `OwnableEntity` mobs, and the creatures called by relics (`Fx.summon`, the persistent tag
    `nusmp_relic_owner`) fight for Lucius against their original owner. **Djinn are skipped: in this mod they are armour-only effect data
@@ -133,7 +133,7 @@ and a word on the attacker's action bar (at most every 2 seconds). It does **not
 |---|---|
 | Multi-attacker | two different attackers' blows within 6 ticks of each other (a player's pets and relic summons count as the player) |
 | Rapid | one attacker lands 4 blows within 20 ticks; from the fourth on, every blow lands while the pace holds |
-| Anti-magic | `LuciusFx.antiMagicHit` (demon swords, the Anti-Magic Lord, the Anti-Magic grimoire) **or** the main hand is in the item tag `nusmp:anti_magic_weapons` (Demon-Slayer, Demon-Dweller, Demon-Destroyer, the Licht swords and Elsdocia; every entry optional) |
+| Anti-magic | `LuciusFx.antiMagicHit` (demon swords, the Anti-Magic Lord, the Anti-Magic grimoire) **or** the main hand is in the item tag `anime_multiverse:anti_magic_weapons` (Demon-Slayer, Demon-Dweller, Demon-Destroyer, the Licht swords and Elsdocia; every entry optional) |
 | Synchronized relics | the attacker has **at least 2 working relics of grade Unique or better** at once (`Relics.loadout(p).active()`) |
 | No attacker | poison, fire, a field nobody stands in: nothing to read, it lands (as before) |
 | Off | he channels Time Reversal, is staggered, the gem is out, he is transforming or exposed after an ultimate, or Julius holds the body |
@@ -239,7 +239,7 @@ hysteresis, once-only events, save/restore; LuciusChains: fairness, Checkmate or
 rule; TimeReversalMath: window, channel, interrupt, restore bounds, cooldown; CloneScheduler: counts, staggering, pressure cap; PaladinTurn:
 cap, loans, release, restore; CoreGemMath: window, crit, classification, shatter, burn; SoulCorruptionMath; HoverMath).
 
-Other files and what each is: `data/nusmp/tags/item/anti_magic_weapons.json` (the registered anti-magic weapons, every entry optional, so a
+Other files and what each is: `data/anime_multiverse/tags/item/anti_magic_weapons.json` (the registered anti-magic weapons, every entry optional, so a
 build without one of them still loads; an addon adds its own), `textures/mob_effect/soul_corruption.png` (18x18 icon: a cracked violet heart
 with a soul leaving it, drawn by `tools/gen_lucius_arc_icons.py` so the palette lives in one place), `tools/vfx_preview/scenes.d/lucius_arc.json`
 (the gem preview), the lang entries (`frag_lucius/lu1.lang.json`).

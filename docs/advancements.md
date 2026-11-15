@@ -1,13 +1,13 @@
 # Advancements: the tab "Multiverse of Anime" (1.49.0)
 
-Why: the owner asked for advancements next to a full FTB Quests line. The quest book is built on top of these advancements (an FTB advancement task completes when a team member has the advancement), so the tree is also the progress model of the book. Everything here is **new**: nothing like it existed. The 25 hidden files under `data/nusmp/advancement/convergence` (from the removed Convergence system) are **kept untouched**.
+Why: the owner asked for advancements next to a full FTB Quests line. The quest book is built on top of these advancements (an FTB advancement task completes when a team member has the advancement), so the tree is also the progress model of the book. Everything here is **new**: nothing like it existed. The 25 hidden files under `data/anime_multiverse/advancement/convergence` (from the removed Convergence system) are **kept untouched**.
 
 Nothing was run in Minecraft. See "Unverified in the game".
 
 ## Where it comes from
 
-- `tools/quests/spec_adv.py` is the single source of truth (ids, titles, descriptions, parents, icons, criteria). `python tools/quests/gen_advancements.py` writes `src/main/resources/data/nusmp/advancement/**` and the lang fragment `tools/quests/lang/qst.lang.json`; `--check` fails if anything is out of date.
-- The lang fragment must be merged into `assets/nusmp/lang/en_us.json` (`python tools/quests/merge_lang.py`, idempotent). `AdvancementDataTest` fails while a key is missing.
+- `tools/quests/spec_adv.py` is the single source of truth (ids, titles, descriptions, parents, icons, criteria). `python tools/quests/gen_advancements.py` writes `src/main/resources/data/anime_multiverse/advancement/**` and the lang fragment `tools/quests/lang/qst.lang.json`; `--check` fails if anything is out of date.
+- The lang fragment must be merged into `assets/anime_multiverse/lang/en_us.json` (`python tools/quests/merge_lang.py`, idempotent). `AdvancementDataTest` fails while a key is missing.
 - `src/test/java/com/newuniverse/nusmp/quests/AdvancementDataTest.java` checks every file: parses, parent exists, one root, no cycle, translations exist, triggers are known, event keys are in the contract, mod items / entities / effects / dimensions exist, every criterion is used by a requirement.
 
 ## The tree (452 advancements)
@@ -32,16 +32,16 @@ Nothing was run in Minecraft. See "Unverified in the game".
 
 Frames: 248 task, 144 goal, 60 challenge. Goals and challenges announce in chat, tasks do not. Every advancement grants experience (5 to 2000 points, more for challenges).
 
-The tab background is `textures/gui/advancements/multiverse_weave.png` (3.44.0, a seamless 32x32 tile made by `tools/quests/gen_tab_background.py`; the advancement screen tiles it in 16x16 cells). Two other candidates, `sigil_tiles.png` and `grimoire_pages.png`, are in the same folder; the old altar tile (`textures/block/grimoire_altar_top.png`) is kept for the altar block. To switch, change the `background` string in `data/nusmp/advancement/root.json` and `ROOT_BG` in `tools/quests/spec_adv.py`.
+The tab background is `textures/gui/advancements/multiverse_weave.png` (3.44.0, a seamless 32x32 tile made by `tools/quests/gen_tab_background.py`; the advancement screen tiles it in 16x16 cells). Two other candidates, `sigil_tiles.png` and `grimoire_pages.png`, are in the same folder; the old altar tile (`textures/block/grimoire_altar_top.png`) is kept for the altar block. To switch, change the `background` string in `data/anime_multiverse/advancement/root.json` and `ROOT_BG` in `tools/quests/spec_adv.py`.
 
 ## Triggers
 
 Vanilla triggers are used wherever the game can see the thing itself: `minecraft:tick` (the root), `inventory_changed` (carry a mod item), `changed_dimension` (the five mod dimensions), `player_killed_entity` (bosses, together with the event), `player_interacted_with_entity` (the Tower Wizard, a Spirit Lord), `consume_item` (cooked monster meat), `effects_changed` (mod effects), `minecraft:impossible` (the future-boss placeholders).
 
-Everything else is the mod's own trigger `nusmp:event` (implemented in `quests/NusmpEventTrigger`, fired by `NusmpEvents.fire`, see `docs/quests_java.md`):
+Everything else is the mod's own trigger `anime_multiverse:event` (implemented in `quests/NusmpEventTrigger`, fired by `NusmpEvents.fire`, see `docs/quests_java.md`):
 
 ```json
-{"trigger": "nusmp:event", "conditions": {"key": "spell.cast", "count": 10, "arg": "thread"}}
+{"trigger": "anime_multiverse:event", "conditions": {"key": "spell.cast", "count": 10, "arg": "thread"}}
 ```
 
 `key` is required; `count` (default 1, written only when above 1) is compared with the per-player counter of the key (or of `key|arg` when `arg` is given) with `>=`; `arg` is an exact string match. Boss kills use an OR of the event and the vanilla kill, so they work whichever one the Java side delivers. The keys:
@@ -117,13 +117,13 @@ Keys of the original brief that no advancement uses: , plus `convergence.stage` 
 
 ```python
 # tools/quests/spec_adv.py
-add("dungeon/new_thing", "dungeon/mega", "Title", "What to do.", "nusmp:labyrinth_gate", ev("mega.entered", 3), xp=20)
+add("dungeon/new_thing", "dungeon/mega", "Title", "What to do.", "anime_multiverse:labyrinth_gate", ev("mega.entered", 3), xp=20)
 ```
 then `python tools/quests/gen_advancements.py` and `python tools/quests/merge_lang.py`.
 
 ## The future-boss placeholders
 
-`nusmp:future/<arc>_<boss>` (hidden, criterion `impossible`). They are awarded by `NusmpEvents.futureBoss(player, arc, boss)`. The table is in `docs/quests.md`.
+`anime_multiverse:future/<arc>_<boss>` (hidden, criterion `impossible`). They are awarded by `NusmpEvents.futureBoss(player, arc, boss)`. The table is in `docs/quests.md`.
 
 ## Unverified in the game
 

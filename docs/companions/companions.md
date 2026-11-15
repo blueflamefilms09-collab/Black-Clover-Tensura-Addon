@@ -58,8 +58,8 @@ AGGRESSIVE any hostile within 16 blocks of her.
 
 ## The sample companion
 
-**Charmy Pappitson** (Cotton and Food Mage, an existing roster NPC) as `nusmp:arc_companion`, a subclass of `ArcNpcEntity` (her model, name, colours and talk clip;
-the 30 shared NPCs are untouched). Creative spawn egg `nusmp:companion_charmy_spawn_egg`, nothing places her in the world. Right click opens the talk screen. Talk tab:
+**Charmy Pappitson** (Cotton and Food Mage, an existing roster NPC) as `anime_multiverse:arc_companion`, a subclass of `ArcNpcEntity` (her model, name, colours and talk clip;
+the 30 shared NPCs are untouched). Creative spawn egg `anime_multiverse:companion_charmy_spawn_egg`, nothing places her in the world. Right click opens the talk screen. Talk tab:
 who she is, what she likes to eat, her magic. Interact tab: walk with me (needs acquaintance; limited by `companions.maxFollowersPerPlayer`), wait here, high five. Bond tab:
 gifts, what she likes, stance. Pouch tab. She follows (walks to you beyond 6 blocks, is put beside you beyond 24), comes through dimension changes, fights by her stance
 using `Bond.wants`, says her answers in bubbles. With `companions.enabled` off a right click does the old arcs' chat talk.

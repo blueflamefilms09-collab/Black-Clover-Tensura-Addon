@@ -13,12 +13,12 @@ inside the game. Section 11 is the honest list of what is unverified.
 
 | Part | Status | Notes |
 |---|---|---|
-| The Hub's terrain generator (`SanctuaryGenerator`, codec `nusmp:sanctuary`) | NEW | nothing like it existed; the dungeon floors stay Jigsaw (floors doc, section 3) |
+| The Hub's terrain generator (`SanctuaryGenerator`, codec `anime_multiverse:sanctuary`) | NEW | nothing like it existed; the dungeon floors stay Jigsaw (floors doc, section 3) |
 | 3D simplex noise (`Simplex3D`) | NEW | |
 | 3D Wave Function Collapse (`Wfc3D`, `SpireTiles`, `ChasmTiles`) | NEW | the 1.54.0 socket-matching assembler is KEPT and untouched: it is the same idea specialised for doorways and it builds the dungeon floors |
 | The Holy Spire and the Abyssal Chasm | NEW | the 1.54.0 "Spire" (the old Labyrinth tower, `layout = "spire"`) is KEPT; this is a different building with a different job (the road to the Holy floors) |
 | The Hub's plains, roads and lamp posts | NEW | the plaza template is the HUB builder's (`mega.hub`) and lies on top of the flat disc this generator prepares |
-| The gate blocks | KEPT | the existing `nusmp:labyrinth_gate` is the only block of this mod used; the position decides which road a gate is (`HubLayout.gateNear`) |
+| The gate blocks | KEPT | the existing `anime_multiverse:labyrinth_gate` is the only block of this mod used; the position decides which road a gate is (`HubLayout.gateNear`) |
 | Anything else in the repo | KEPT | no file outside this package was edited; `MacroRegistry` was the contract stub and is filled in |
 
 ---------------------------------------------------------------------------------------------------------------------------------------------
@@ -118,7 +118,7 @@ outside is moved by 3D simplex noise (`spireNoise`, default 2.0) so it is not a 
   door's landing and makes 2.78 turns (346 blocks of arc) to the crown. Landings every 24 blocks of height (the brief says "about 20": 24 matches the gold band spacing it also names, and leaves 12 blocks of
   collar and 12 of window band between landings). Rails start 4 half steps up, so the first steps can be entered from the hall floor.
 * **The crown**: a floating disc of radius 9 at `PLATFORM_TOP` (three blocks thick, gold rings inlaid), joined to the wall by a 5 wide bridge at the angle where the stair arrives (railed), with the Holy gate at
-  `HOLY_GATE_*`: a 3 wide, 4 high plane of `nusmp:labyrinth_gate` in a frame of gold blocks. The gap between the disc and the wall is open, so from the hall floor you see the underside of the crown and the sky
+  `HOLY_GATE_*`: a 3 wide, 4 high plane of `anime_multiverse:labyrinth_gate` in a frame of gold blocks. The gap between the disc and the wall is open, so from the hall floor you see the underside of the crown and the sky
   round it. WHY a floating disc and not a full floor: a full floor needs the stair to tunnel through its rim over the last turn (a slot a player could fall into). The parapet rows above carry twelve
   openings, a gold cornice and battlements, and eight slender pinnacles (a quartz pillar nine blocks tall with a gold cap and a lantern) rise above the crown; the tower proper ends at
   `SPIRE_HEIGHT` as the layout says, the pinnacles are decoration above it (the top lantern is at y 227, far under the build limit of 319). A great chandelier (a chain with a lantern every 20 blocks and one at its foot) hangs from the underside of the disc on the axis.
@@ -218,7 +218,7 @@ both `_WG` heightmaps, `ProtoChunk.setBlockState`'s heightmap handling, and that
 
 | Member | What this generator does and WHY |
 |---|---|
-| `CODEC` / `codec()` | `MapCodec<SanctuaryGenerator>` with exactly one field, `BiomeSource.CODEC.fieldOf("biome_source")` (the hub's dimension JSON is `{"type": "nusmp:sanctuary", "biome_source": ...}`). Registered under `nusmp:sanctuary` in `Registries.CHUNK_GENERATOR` by `MacroRegistry.init` on the MOD bus. |
+| `CODEC` / `codec()` | `MapCodec<SanctuaryGenerator>` with exactly one field, `BiomeSource.CODEC.fieldOf("biome_source")` (the hub's dimension JSON is `{"type": "anime_multiverse:sanctuary", "biome_source": ...}`). Registered under `anime_multiverse:sanctuary` in `Registries.CHUNK_GENERATOR` by `MacroRegistry.init` on the MOD bus. |
 | `fillFromNoise` | Asks `HubModel` for every column of the chunk and places non-air blocks with `chunk.setBlockState(pos, state, false)` and updates `OCEAN_FLOOR_WG` and `WORLD_SURFACE_WG` (the pattern of `FlatLevelSource`; vegetation features and mob spawning read those heightmaps). Returns a completed future (like the flat and debug generators). A throwable is caught: ONE warning, and that chunk is drawn as plain plains (the safety net: a bug must never stop chunk generation). |
 | `buildSurface`, `applyCarvers` | No-ops: the surface, strata and bedrock are part of `fillFromNoise`, and nothing else may cut the landmarks. |
 | `spawnOriginalMobs` | Calls `NaturalSpawner.spawnMobsForChunkGeneration` like the vanilla generators, so the biome's passive animals exist at the first visit. |
@@ -229,7 +229,7 @@ both `_WG` heightmaps, `ProtoChunk.setBlockState`'s heightmap handling, and that
 | `createStructures`, `createReferences`, `findNearestMapStructure` | Do NOTHING / return null. WHY: "absolutely zero structures from other mods". A vanilla noise generator asks every structure set of the registry, and mods add theirs there; this generator never asks. It is the second of three layers (the cloned biome that is in no structure tag; this; the hub's self-test that loads chunks and asserts no start exists). |
 | `applyBiomeDecoration` | NOT overridden: the biome's vegetation features (grass, flowers, plains trees) run through the superclass on valid ground, and the landmarks are drawn first so features do not overwrite them (they only place on grass or dirt). |
 
-The world seed is `randomState.getOrCreateRandomFactory("nusmp:sanctuary").at(0, 0, 0).nextLong()`: a function of the world seed alone (verified in the decompiled 1.21 `RandomState`: the constructor builds `random = settings.getRandomSource().newInstance(seed).forkPositional()` and `getOrCreateRandomFactory(id)` is `random.fromHashOf(id).forkPositional()`, cached; a non-noise generator is given the dummy settings, so the source type is fixed), so every chunk of a
+The world seed is `randomState.getOrCreateRandomFactory("anime_multiverse:sanctuary").at(0, 0, 0).nextLong()`: a function of the world seed alone (verified in the decompiled 1.21 `RandomState`: the constructor builds `random = settings.getRandomSource().newInstance(seed).forkPositional()` and `getOrCreateRandomFactory(id)` is `random.fromHashOf(id).forkPositional()`, cached; a non-noise generator is given the dummy settings, so the source type is fixed), so every chunk of a
 world agrees on the Hub in any order and on any thread, and after every restart. The model is cached per `(seed, MacroParams)` in a `ConcurrentHashMap` (at most 6 entries; cleared on server stop); two threads may race to build the same model
 (about 60 ms) and one wins, which is safe because the model is immutable.
 
@@ -246,7 +246,7 @@ from then on (a changed config over existing chunks would leave a seam).
 **Command** `/multiverse mega macro` (permission 2): `info` (the hub seed, the landmark switch, the numbers, how long the model took to build, the solver's restarts / fallbacks / collapses / backtracks / time), `sample <x> <y> <z>`
 (what the model says is there, what the world has there if the chunk is loaded, never loads a chunk).
 
-**Self-tests** (`SelfTests.register`, run by `/multiverse mega selftest`; each prints OK "skipped" when the level `nusmp:sanctuary` does not exist, i.e. a build without the hub):
+**Self-tests** (`SelfTests.register`, run by `/multiverse mega selftest`; each prints OK "skipped" when the level `anime_multiverse:sanctuary` does not exist, i.e. a build without the hub):
 
 | key | what it asserts |
 |---|---|

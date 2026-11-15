@@ -90,7 +90,7 @@ class LabyrinthDataTest {
         for (Path pool : files(GATEWAY_POOLS, ".json")) {
             for (String proc : all(PROCESSORS, read(pool))) {
                 if (proc.equals("minecraft:empty")) continue;
-                assertTrue(proc.startsWith("anime_multiverse:") && Files.exists(PROCESSOR_LISTS.resolve(proc.substring(6) + ".json")), pool.getFileName() + " uses processor list " + proc + " which does not exist");
+                assertTrue(proc.startsWith("anime_multiverse:") && Files.exists(PROCESSOR_LISTS.resolve(proc.substring(17) + ".json")), pool.getFileName() + " uses processor list " + proc + " which does not exist");
             }
         }
     }

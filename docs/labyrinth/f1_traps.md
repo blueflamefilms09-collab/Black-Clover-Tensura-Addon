@@ -10,10 +10,10 @@ gaps), the pure state machines were run as JUnit tests, the generator's `--check
 ## The Jigsaw logic: how a resource drain is injected into the Spire
 
 A Jigsaw structure has no "traps" layer; it has pieces, pools and jigsaw connectors. The Spire already hangs optional side rooms off every
-level piece: each level has `nusmp:side_out` jigsaws in its walls (name `nusmp:side_out`, target `nusmp:side_in`, pool `nusmp:labyrinth/side`,
-fallback `nusmp:labyrinth/caps`). A D&D drain is therefore just another element of the `side` pool:
+level piece: each level has `anime_multiverse:side_out` jigsaws in its walls (name `anime_multiverse:side_out`, target `anime_multiverse:side_in`, pool `anime_multiverse:labyrinth/side`,
+fallback `anime_multiverse:labyrinth/caps`). A D&D drain is therefore just another element of the `side` pool:
 
-1. **A side room is a template whose entrance jigsaw is named `nusmp:side_in`** (target `nusmp:side_out`, pool `nusmp:labyrinth/caps`). The
+1. **A side room is a template whose entrance jigsaw is named `anime_multiverse:side_in`** (target `anime_multiverse:side_out`, pool `anime_multiverse:labyrinth/caps`). The
    level's doorway draws from `side` by weight, finds a piece with a `side_in` jigsaw that faces back, and places it so the two jigsaw cells
    coincide. Nothing about the level changes: the drain is chosen by the pool, so adding a trap room is adding a pool element and nothing else.
 2. **Low weights make it a surprise, not a toll.** The pool now holds trial_a 4, trial_b 3, treasury 3, corridor 3, wild adapter 2, balcony 2
@@ -32,8 +32,8 @@ fallback `nusmp:labyrinth/caps`). A D&D drain is therefore just another element 
    own `--check` honours (the doorway test, the walk test).
 6. **Each room drains something different.** The pit room drains health and progress (a fall, damage, a climb back); the dark room drains
    the party's light, which is the resource of the dungeon (see F2's gloom clock); the puzzle room drains time and patience and gates the
-   best loot behind thinking, not fighting. Treasure in each is the existing `nusmp:chests/labyrinth_trial` table (mundane: no relics)
-   and, in the puzzle alcove only, ONE `nusmp:relic_pedestal` (the pedestal rolls `nusmp:chests/labyrinth_pedestal`, so relics stay
+   best loot behind thinking, not fighting. Treasure in each is the existing `anime_multiverse:chests/labyrinth_trial` table (mundane: no relics)
+   and, in the puzzle alcove only, ONE `anime_multiverse:relic_pedestal` (the pedestal rolls `anime_multiverse:chests/labyrinth_pedestal`, so relics stay
    exclusive to vault chests, pedestals and boss drops; the puzzle room is the "creative problem-solving" source of a pedestal).
 
 ## What a player meets
@@ -80,7 +80,7 @@ fallback `nusmp:labyrinth/caps`). A D&D drain is therefore just another element 
 
 * `doorway(..., y0=1)`: a new optional parameter, default = every old call. The pit room passes `y0=4`.
 * **pit_room 13x12x22.** Row 3 is the floor. Rows 1-2 under the 11x10 field are a carved chamber (air written explicitly: a template must
-  carve what it replaces); everything under the corridor, landing and alcove stays brick. The floor is `nusmp:pitfall_tile` EVERYWHERE
+  carve what it replaces); everything under the corridor, landing and alcove stays brick. The floor is `anime_multiverse:pitfall_tile` EVERYWHERE
   (safe on landing, alcove and the route): the whole floor is one block, so the Spire's biome palette (which swaps `labyrinth_tiles` for the
   local stone) cannot make the safe tiles look different from the traps. `pit_route` is a seeded one-wide snake: a sideways run continues
   the direction of the run above or goes straight down, never back over it, so two rows of the route are never beside each other.
@@ -102,14 +102,14 @@ fallback `nusmp:labyrinth/caps`). A D&D drain is therefore just another element 
 
 | File | What and why |
 |---|---|
-| `structure/labyrinth/side/pit_room.nbt`, `dark_room.nbt`, `puzzle_room.nbt` | The three templates, generated (gzip NBT, DataVersion 3955). Generated so the jigsaw geometry, the route and the colour shuffle are reproducible and `--check`ed; entrance jigsaws name `nusmp:side_in` with the `caps` pool. |
-| `worldgen/template_pool/labyrinth/side.json`, `side_end.json` | The two pools that list side rooms, regenerated with the three new elements appended (weights 2/2/2, processor list `nusmp:labyrinth_interior`: the palette and the veins; the pit room's floor is a block neither touches, so it stays camouflaged). |
-| `blockstates/pitfall_tile.json`, `models/block/pitfall_tile.json`, `pitfall_tile_open.json`, `models/item/pitfall_tile.json` | The tile has NO texture of its own: its model is `cube_all` of `nusmp:block/labyrinth_tiles`, the very file of the real floor, so no resource pack or model inspection tells the traps from the floor. The open model is a 3-pixel rim of the same texture round the cell's top, open in the middle. |
+| `structure/labyrinth/side/pit_room.nbt`, `dark_room.nbt`, `puzzle_room.nbt` | The three templates, generated (gzip NBT, DataVersion 3955). Generated so the jigsaw geometry, the route and the colour shuffle are reproducible and `--check`ed; entrance jigsaws name `anime_multiverse:side_in` with the `caps` pool. |
+| `worldgen/template_pool/labyrinth/side.json`, `side_end.json` | The two pools that list side rooms, regenerated with the three new elements appended (weights 2/2/2, processor list `anime_multiverse:labyrinth_interior`: the palette and the veins; the pit room's floor is a block neither touches, so it stays camouflaged). |
+| `blockstates/pitfall_tile.json`, `models/block/pitfall_tile.json`, `pitfall_tile_open.json`, `models/item/pitfall_tile.json` | The tile has NO texture of its own: its model is `cube_all` of `anime_multiverse:block/labyrinth_tiles`, the very file of the real floor, so no resource pack or model inspection tells the traps from the floor. The open model is a 3-pixel rim of the same texture round the cell's top, open in the middle. |
 | `textures/block/snuffer_glyph_top.png` (+`.mcmeta`), `snuffer_glyph_side.png`, `blockstates/snuffer_glyph.json`, `models/block/snuffer_glyph.json`, `models/item/snuffer_glyph.json` | A dark floor glyph: a cold violet ring of eight notches round a hollow, ash-grey snuffed flame whose smoke curl climbs one pixel a frame (4 frames, `frametime` 10, interpolated). It gives no light, and the picture says so. `cube_bottom_top` so the animation is only on top. |
 | `textures/block/sigil_plate_0..3.png`, `sigil_plate_0..3_lit.png`, `sigil_plate_side.png`, `blockstates/sigil_plate.json`, `models/block/sigil_plate_<c>[_lit].json`, `models/item/sigil_plate.json` | Four colours, each with its OWN shape (red triangle, blue disc, gold diamond, green cross-in-square) so the four also read apart for a colour-blind player; lit versions flood the shape and the ring. The model is a 14x2x14 slab (elements, not a cube) matching the block's collision shape. Eight models and eight state variants because a state-property-to-model map is the vanilla way (no client code). |
 | `textures/block/riddle_stone_side.png`, `riddle_stone_top.png`, `blockstates/riddle_stone.json`, `models/block/riddle_stone.json`, `models/item/riddle_stone.json` | A dressed dark stone with a carved eye above the four sigil colours in order (the hint that the puzzle is about those four), a gold-rimmed top with the four studs round a dark core. |
 | `textures/block/gatekeeper_door_puzzle_bottom.png` (+`.mcmeta`), `gatekeeper_door_puzzle_top.png`, `models/block/gatekeeper_door_puzzle_lower.json`, `_upper.json` | The third door face: the E2 door art (`tools/gen_labyrinth_seal_assets.py`'s `door_bottom` / `door_top`) in teal, so warden = violet, boss = crimson, puzzle = teal. Same `frametime` 6 animation. |
-| `assets/nusmp/blockstates/gatekeeper_door.json` (edited, additive) | Four variants for `kind=puzzle` appended (closed lower/upper use the new models, open uses the shared frame). Nothing removed. |
+| `assets/anime_multiverse/blockstates/gatekeeper_door.json` (edited, additive) | Four variants for `kind=puzzle` appended (closed lower/upper use the new models, open uses the shared frame). Nothing removed. |
 | `loot_table/blocks/pitfall_tile.json`, `snuffer_glyph.json`, `sigil_plate.json`, `riddle_stone.json` | The same self-drop table every labyrinth block has (`survives_explosion`): the blocks are guarded in the Labyrinth, and elsewhere an admin who breaks one gets it back. |
 | `tags/block/mineable/pickaxe.json` (edited, additive) | The four ids appended so a pickaxe breaks them at normal speed (and `needs_tool` is not set, so any tool works). |
 
@@ -129,7 +129,7 @@ vanilla skips it for a sneaking player was not verified in game; the design does
 
 * **F2's gloom clock** (darkness, no light in hand): the dark room's Darkness is a separate vanilla-effect refresh; they stack harmlessly.
 * **Trial chambers** (E1): pitfall tiles only trigger for players, so a trial's mobs never fall.
-* **Relic exclusivity** (D): the puzzle alcove's pedestal is a normal `nusmp:relic_pedestal` (`labyrinth_pedestal` table); the chest is
+* **Relic exclusivity** (D): the puzzle alcove's pedestal is a normal `anime_multiverse:relic_pedestal` (`labyrinth_pedestal` table); the chest is
   `labyrinth_trial` (no relics).
 * **Rukh** (R1): all sparks go through `RukhFx` (dark for the pit and the glyph and a wrong order, light for the riddle and a right order);
   no vanilla particle type appears anywhere in the package.

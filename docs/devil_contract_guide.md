@@ -10,7 +10,7 @@ from this session (rule 10: the English and Japanese wiki hosts are not reachabl
 | Part of the prompt | In the mod today | Verdict |
 |---|---|---|
 | A devil bound to a player | `book/ForbiddenMagic.bind`: four original devils picked from the grimoire's magic (`PactDevil.forMagic`), one per player in `SavedData` `nusmp_devil_pacts`, one bond at a time (`Bonds.refuse`) | **kept**; the new data points at it |
-| `ContractSacrifice` (price) | three prices chosen at bind time: `maxhp` (-2 hearts per bind, permanent `AttributeModifier` `nusmp:devil_price_hp`, count in `nusmp_devil_hp`), `seal` (a page sealed for good), `tax` (+15% cost) | **kept**; new sacrifices are added beside them |
+| `ContractSacrifice` (price) | three prices chosen at bind time: `maxhp` (-2 hearts per bind, permanent `AttributeModifier` `anime_multiverse:devil_price_hp`, count in `nusmp_devil_hp`), `seal` (a page sealed for good), `tax` (+15% cost) | **kept**; new sacrifices are added beside them |
 | Devil Union | `book/DevilFormLimit` + `AntiMagicBook.setForm`: the Anti-Magic Black Form (Asta + Liebe), strict 5 minutes (`armour.devilFormLimitSeconds` = 300), then ~30 minutes of muscle pain (`devilFormAftermathSeconds` = 1800), no mana cost | **kept**; the new union is a separate, generic one for any devil (decision 1 below) |
 | `DevilTier`, `DevilAttribute`, `AssimilationLevel` 0-100 | nothing | **new** |
 | Assimilation key + scaling mana drain | nothing (the Beast Will assimilation of 3.45.0 is a different system and a different file set) | **new** |
@@ -24,7 +24,7 @@ from this session (rule 10: the English and Japanese wiki hosts are not reachabl
 1. **No Forge Capabilities for player data.** In NeoForge 1.21.1 the tool is a **Data Attachment** (`AttachmentType`). The repo already does exactly this
    in `beastwill/BeastWillStore` (`.serialize(codec, nonEmpty).copyOnDeath()`), so the devil data copies this pattern.
 2. **`V` is taken.** `client/relics/RelicActKeys.USE` defaults to `V`; `G` = grimoire summon, `B` = hero weapon, `J`/`K` = djinn, and `L`/`Q`/`T` are vanilla keys. I would
-   default the new key to **`N`** (rebindable, category `key.categories.nusmp`), after checking its one existing use at build time.
+   default the new key to **`N`** (rebindable, category `key.categories.anime_multiverse`), after checking its one existing use at build time.
 3. **`RenderPlayerEvent` is the wrong tool for horns and wings.** It wraps the whole player render (good for scaling or cancelling it) but gives no handle on the head and body bones.
    Attach with a **`RenderLayer`** added in `EntityRenderersEvent.AddLayers`; the layer's pose stack is already in player space, and `getParentModel().head.translateAndRotate(pose)` puts
    you on the head bone, animated and sneaking included. The repo already does this in `client/aura/PlayerAuraClient` + `PlayerAuraLayer`.
@@ -82,7 +82,7 @@ public final class DevilStore {                          // the registration, sa
 ```java
 // common code, no client class named (the BeastWillNet rule)
 public record Toggle() implements CustomPacketPayload {
-    public static final Type<Toggle> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("nusmp", "devil_toggle"));
+    public static final Type<Toggle> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("anime_multiverse", "devil_toggle"));
     public static final StreamCodec<FriendlyByteBuf, Toggle> CODEC = StreamCodec.unit(new Toggle());
     @Override public Type<Toggle> type() { return TYPE; }
 }
@@ -96,8 +96,8 @@ event.registrar("1").optional().playToServer(Toggle.TYPE, Toggle.CODEC, (p, ctx)
 
 ```java
 // client/devil/DevilClient.java (client only)
-public static final KeyMapping ASSIMILATE = new KeyMapping("key.nusmp.devil_assimilate",
-        InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_N, "key.categories.nusmp");
+public static final KeyMapping ASSIMILATE = new KeyMapping("key.anime_multiverse.devil_assimilate",
+        InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_N, "key.categories.anime_multiverse");
 modBus.addListener((RegisterKeyMappingsEvent e) -> e.register(ASSIMILATE));
 NeoForge.EVENT_BUS.addListener((ClientTickEvent.Post e) -> {
     while (ASSIMILATE.consumeClick()) PacketDistributor.sendToServer(new Toggle());   // an ask, never a value

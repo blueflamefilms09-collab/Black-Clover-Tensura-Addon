@@ -10,7 +10,7 @@ The existing server switch `magic.characterSpellSets` (`nusmp-character-spells-s
 
 | Part | Verdict |
 |---|---|
-| 13 character files (`data/nusmp/character_spells/<id>.json`), 13 ids appended to `CharacterSetRegistry.SHIPPED` | NEW |
+| 13 character files (`data/anime_multiverse/character_spells/<id>.json`), 13 ids appended to `CharacterSetRegistry.SHIPPED` | NEW |
 | 26 pages appended to 7 books (Fire 6, Plant 4, World Tree 3, Steel 4, Spatial 3, Light 5, Storm 1) with their casts, texts and policy lines | NEW |
 | Grimoires bound to these twelve characters show their own spells and open them by their rule | REPLACED (the whole book in mastery order; with the switch off it is back) |
 | The basic grimoire hides the pages marked exclusive here (see section 6) | REPLACED (they were listed; `basicBookHidesSignatures` false restores it) |
@@ -330,11 +330,11 @@ With `magic.lightBoneJa` off (default on), the Light book shows its old five pag
 | `book/TreeSelfTests.java` | one line: the Plant page check ignores the pages appended for Mimosa (the self-test `magic.tree_rebuild` compared the exact page list and would have failed) |
 | `book/LightBoneJaSelfTests.java` | `familyCount() != want` became `< want` (the self-test `magic.light_bone_ja` compared the exact count; Karna's five pages follow the ten) |
 | `grimoire/CanonBook.java` | REPLACED one word: `KIRSCH` magic `PLANT` to `CHERRY_BLOSSOM` |
-| `data/nusmp/armour_policy.json` | `new_pages` lines for PLANT, WORLD_TREE, STEEL, STORM; ids appended to the existing FLAME, LIGHT and SPATIAL `new_pages` arrays |
+| `data/anime_multiverse/armour_policy.json` | `new_pages` lines for PLANT, WORLD_TREE, STEEL, STORM; ids appended to the existing FLAME, LIGHT and SPATIAL `new_pages` arrays |
 | `src/test/.../CharacterSetRegistryTest.java` | three lines: the "character without a set" checks used `mereoleona` and `kaiser`, who now have sets; they use `nobody_with_a_set` |
 | `src/test/.../CharacterSetSourceScanTest.java` | `everyPageAFileNamesExistsInItsBook` skips books it has no source file for (checked by `CharacterSetGoldTest`) and also accepts the ids of `CharacterPagesGold` (helper `addedGold`) |
 
-New files: `book/CharacterPagesGold.java`, `book/CharacterArtsGold.java`, `charset/CharacterSetGoldSelfTests.java`, twelve `data/nusmp/character_spells/*.json`, `tools/lang/character_spells_gold.json` (26 page texts), `src/test/.../charset/CharacterSetGoldTest.java`, this document. The shared-file hooks for `CharacterSetSourceScanTest.BOOK_FILES` were not needed: the books are checked by the new test instead of by adding seven entries to a `Map.of` that would pass its ten-pair limit.
+New files: `book/CharacterPagesGold.java`, `book/CharacterArtsGold.java`, `charset/CharacterSetGoldSelfTests.java`, twelve `data/anime_multiverse/character_spells/*.json`, `tools/lang/character_spells_gold.json` (26 page texts), `src/test/.../charset/CharacterSetGoldTest.java`, this document. The shared-file hooks for `CharacterSetSourceScanTest.BOOK_FILES` were not needed: the books are checked by the new test instead of by adding seven entries to a `Map.of` that would pass its ten-pair limit.
 
 ## 9. Decisions for the owner
 
@@ -352,6 +352,6 @@ New files: `book/CharacterPagesGold.java`, `book/CharacterArtsGold.java`, `chars
 * Ran in the offline shim, class by class, before the merge with the Bulls and Rest builders: 309 test classes of the packages charset, book, grimoire, perf, core, firecast, multiverse, vfx, particle, prop, tooltip, gnome, sylph, undine, scalecast, spiritlight, spiritdark, spiritspace, client, skilltree, balance, anim, corpse, engraving: 289 pass, 20 cannot compile against the shim (they need Minecraft classes or hit shim limits: CanonBookMagicTest, FusionDesignTest, GrimoireBookPlanTest, GrimoireDesignGeneratorTest, GrimoireCarryTest, GrimoireShelfLayoutTest, MagicAuditTest, MagicEnumAuditTest, UnifiedTooltipRulesTest, LightMoodRulesTest, SpiritLightRulesTest, EquipAnimationTest, ArmorPainterTest, DjinnLookTest, HandWrapTest, WornMathTest, ArmorLooksTest, WornMeshTest, WornPlacerTest, EngravingCodexAssetsTest). After merging the branch of the other builders (`claude/new-session-hn036o`) into this one: the whole charset package (including the Bulls and Rest tests) and `ArmourPolicyTest` pass. Tests that need Minecraft classes (`MagicEnumAuditTest`, `GrimoireBookPlanTest`, `CanonBookMagicTest` ...) cannot run offline.
 * Type check against the API stubs: 0 real errors in the new and edited files (negative control: two wrong calls were reported).
 * Self-test for the CI smoke list: `magic.character_spells_gold` (the twelve sets load, resolve against the real books and `CanonBook`, the added pages follow the older ones in order, are owned, cast and cheap, the late spells wait for the early ones, Mereoleona's and Leopold's grimoires hide what they never used and the basic grimoire hides their signatures).
-* Lang: fragment `tools/lang/character_spells_gold.json` (26 keys `nusmp.page.<book>.<id>`) must be merged into `en_us.json` by the release step; the page names themselves are in code.
+* Lang: fragment `tools/lang/character_spells_gold.json` (26 keys `anime_multiverse.page.<book>.<id>`) must be merged into `en_us.json` by the release step; the page names themselves are in code.
 
 NOT verified: anything visual or audible; that the fire casting styles (fist, spiral) wrap the new Fire pages the way they wrap the old (they hook every family page, read from source); that Karna's and Mimosa's new pages fit the free-slot and rank-gate rules of `MasteryPages` for the books' new page counts (read, not run); the Japanese names (read from search summaries, a few are back-translations and are marked as translations in the notes); the first appearance of every spell (so every order); the effect of Mistilteinn Blade, Archangel's Annihilation, Bewitching Moonlight and the Purgatory buffs (the sources name them but do not describe them closely); that `PlantBook` / `SteelBook` ... with seven more family pages keep a stable `pagesVersion` for old saves (the pages are appended after the old ones, the unlock bits of old pages do not move).

@@ -347,7 +347,7 @@ class FireCastAssetsTest {
     @Test
     void theBatIsBlackCloverAndEngravedWithTensuraEngravings() throws IOException {
         assertTrue(read(RES.resolve("data/anime_multiverse/relics/franchise_map.json")).contains("\"" + BAT + "\": \"black_clover\""));
-        String eng = read(Path.of("src", "main", "java", "com", "newuniverse", "anime_multiverse", "item", "WeaponEngravings.java"));
+        String eng = read(Path.of("src", "main", "java", "com", "newuniverse", "nusmp", "item", "WeaponEngravings.java"));
         int at = eng.indexOf("Map.entry(\"" + BAT + "\"");
         assertTrue(at > 0);
         String line = eng.substring(at, eng.indexOf('\n', at));

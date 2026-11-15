@@ -59,7 +59,7 @@ class UpgradeParticleNamesTest {
                     names++;
                     if (n.equals("fx") || UpgradeParticleNames.isDust(n)) continue;
                     if (n.startsWith("anime_multiverse:")) {                                          // 1.110.0: the shipped tables name the mod's own particles directly
-                        assertTrue(com.newuniverse.nusmp.particle.fx.FxCatalog.has(n.substring(6)), f.getFileName() + ": '" + n + "' is not a particle of the catalog");
+                        assertTrue(com.newuniverse.nusmp.particle.fx.FxCatalog.has(n.substring(17)), f.getFileName() + ": '" + n + "' is not a particle of the catalog");
                         continue;
                     }
                     assertTrue(UpgradeParticleNames.isVanilla(n), f.getFileName() + ": '" + n + "' names another namespace; the tables use vanilla names, dust or fx");

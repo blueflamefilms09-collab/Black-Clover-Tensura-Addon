@@ -18,8 +18,8 @@ import static org.junit.jupiter.api.Assertions.*;
  * touches no client class, scans no world, spawns nothing, loads no chunk; every particle call is a bounded one; the client painter skips far weapons and allocates nothing per frame.
  */
 class SpiritBladesSourceScanTest {
-    private static final Path PKG = Path.of("src", "main", "java", "com", "newuniverse", "anime_multiverse", "spiritblades");
-    private static final Path FX = Path.of("src", "main", "java", "com", "newuniverse", "anime_multiverse", "client", "SpiritBladesFx.java");
+    private static final Path PKG = Path.of("src", "main", "java", "com", "newuniverse", "nusmp", "spiritblades");
+    private static final Path FX = Path.of("src", "main", "java", "com", "newuniverse", "nusmp", "client", "SpiritBladesFx.java");
 
     private static String strip(String s) {
         return s.replaceAll("(?s)/\\*.*?\\*/", "").replaceAll("(?m)//.*$", "");

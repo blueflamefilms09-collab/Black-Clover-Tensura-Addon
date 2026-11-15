@@ -26,7 +26,7 @@ The method is the owner's (`tools/relics/mesh_lib.py`, worked examples `wave23_m
 parts as their own named parts, normals smoothed by angle per part (written as `qn` lines), UVs projected on the dominant axis or unrolled along a ring, painted materials,
 one 512 px skin and a second additive glow skin. Nothing in `tools/relics` or any shared file was edited.
 
-| file (under `src/main/resources/assets/nusmp/`) | what |
+| file (under `src/main/resources/assets/anime_multiverse/`) | what |
 |---|---|
 | `weapon_meshes/<id>.txt` | the mesh: `qn` lines, `place` on the sprite's 45 degree diagonal, `glow` (colour, pulse speed, low, high), `grip` where a part name decides it |
 | `textures/entity/weapon/<id>.png`, `<id>_glow.png` | the painted 512 px skin and the additive glow skin (the gem is on it, in the weapon's colour) |
@@ -125,7 +125,7 @@ reads as a point; the scissors on the cord and the spool are the nod to the othe
 ## 4. For the lead: integration
 
 1. Merge `tools/heroweapon/classes_hart4.json` (flat id -> class) into BOTH copies of the class table, under `"weapons"`: `tools/relics/weapon_classes.json` and
-   `src/main/resources/assets/nusmp/weapon_classes.json` (the game's copy, plain strings; `python3 tools/relics/audit_weapon_scale.py --write` makes it from the first one, `--check` proves
+   `src/main/resources/assets/anime_multiverse/weapon_classes.json` (the game's copy, plain strings; `python3 tools/relics/audit_weapon_scale.py --write` makes it from the first one, `--check` proves
    the two equal and that every mesh has a reviewed class). The lines:
 
        "vassal_mirror": "shield",

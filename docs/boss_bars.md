@@ -8,9 +8,9 @@ mock-up from the same textures and json files (`docs/previews/boss_bars/`, see t
 | Part | Status |
 |---|---|
 | Custom client-drawn bar (`client/gui/bossbar/Custom*`, `BarStyles`), 35 styles, atlas art, emblems, fill effects | NEW |
-| Style data `assets/nusmp/boss_bars/*.json` + strict reader `boss/bars/BarStyle`, resolver `BarStyleResolver` | NEW |
+| Style data `assets/anime_multiverse/boss_bars/*.json` + strict reader `boss/bars/BarStyle`, resolver `BarStyleResolver` | NEW |
 | `BossBarSource` (one interface) + adapters `BossBarSources` (Zogratis family and arcs, Labyrinth Guardian = Decennial / D&D / pocket, Spirit King, old Zagred, generic entity) | NEW |
-| `BossBarState` + `BossBarStatePayload` (+ `Preview`), `BossBarHub` (diff-based, 5/s), `/multiverse bossbar`, `/nusmp bossbar`, self-test `boss.bars` | NEW |
+| `BossBarState` + `BossBarStatePayload` (+ `Preview`), `BossBarHub` (diff-based, 5/s), `/multiverse bossbar`, `/anime_multiverse bossbar`, self-test `boss.bars` | NEW |
 | Config keys `bossbar.custom / scale / showPhaseMarkers / showHp / portrait / showDps` | NEW (appended to `nusmp-bossbar-client.toml`) |
 | The animated bar of 1.25.0 (`ModBossBarOverlay`, `BossBarPainter`, `BossBarAnim`, `BossBarSync`, `Style` / `Clear` packets, `BossBarThemes`) | KEPT, now the fallback: it draws every bar that has no custom style, and everything when `bossbar.custom=false` |
 | Vanilla boss bar look for other mods' and vanilla bosses | KEPT (drawn by the old overlay's `paintVanilla`, inside the custom stack when one is shown) |
@@ -112,7 +112,7 @@ Roster column = how many of the 200 Decennial bosses wear it.
 * Art generator: `tools/gen_boss_bar_textures.py` (+ `tools/boss_bar_art/{lib,styles,motifs,emblems}.py`). Deterministic. `--json` rewrites the style
   json files from the table; the committed json is the source of truth after that (edit it by hand). Output: `textures/gui/boss_bar/frame_<id>.png`
   (+ `.mcmeta` blur; 512x268: back / frame / glow layers of 512x84 = the 256x42 widget at 2x), `emblems.png` (32x32 x 36), `fillfx.png` (13 tileable
-  effects), `chains.png`; data `assets/nusmp/boss_bars/<id>.json` and `_index.json` (ids, emblem names, effect names, layout numbers).
+  effects), `chains.png`; data `assets/anime_multiverse/boss_bars/<id>.json` and `_index.json` (ids, emblem names, effect names, layout numbers).
 * Pure Java (`boss/bars`): `BarStyleIds`, `BarStyle`, `BarStyleResolver`, `BossBarState` (+ byte layout), `BossBarSource`, `GhostBar`, `PhaseMarkers`,
   `BarLayoutMath`, `DpsMeter`. Server: `BossBarHub`, `BossBarSources`, `BossBarStatePayload`, `BossBarCommands`, `BossBarSelfTests`.
 * Client (`client/gui/bossbar`): `BarStyles` (reload listener), `CustomBarClient`, `CustomBarState`, `CustomBarOverlay`, `CustomBarPainter`.
@@ -146,7 +146,7 @@ Self-test `boss.bars` (server smoke): styles load from the jar, the roster of 20
 `config/nusmp-bossbar-client.toml`, group `bossbar`: `custom` (true; false = the animated bar / vanilla), `scale` (0.5-2.0), `showPhaseMarkers`, `showHp`,
 `portrait`, `showDps`, plus the 1.25.0 keys `animations`, `shake` (also switches the hit shake of the custom bar), `percent`.
 `/multiverse bossbar styles` and `/multiverse bossbar preview <style> [hp%] [phase]` (operators, sends a preview to the caller);
-`/nusmp bossbar styles` and `/nusmp bossbar preview <style> [hp%] [phase]` (client side, no rights needed). A preview lasts 12 seconds and shows three
+`/anime_multiverse bossbar styles` and `/anime_multiverse bossbar preview <style> [hp%] [phase]` (client side, no rights needed). A preview lasts 12 seconds and shows three
 phases, a 30 % shield, a wind-up, a looping lair warning, three adds and three fighters.
 
 ## Honest list: not verified

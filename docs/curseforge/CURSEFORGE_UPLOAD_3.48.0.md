@@ -19,7 +19,7 @@ Everything below is copy-paste. Files in this folder: `description.md` (project 
 | License | **All Rights Reserved** (this is what `neoforge.mods.toml` says) |
 | Description | paste `description.md` (use the editor's Markdown mode, or paste and let it convert) |
 | Source / Issues / Wiki links | optional; add your GitHub repository link only if you want it public (the repo may be private) |
-| Mod ID (internal, not asked) | `nusmp`: never change it, saves depend on it |
+| Mod ID (internal, not asked) | `anime_multiverse`: never change it, saves depend on it |
 
 ## 3. Upload the file (Files -> Upload File)
 | Field | Value |

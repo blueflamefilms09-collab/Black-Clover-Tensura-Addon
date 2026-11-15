@@ -13,7 +13,7 @@ from PIL import Image
 
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")
 TEX = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse", "textures", "entity", "rouge_cat.png")
-MODEL = os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "anime_multiverse", "client", "RougeCatModel.java")
+MODEL = os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "nusmp", "client", "RougeCatModel.java")
 S = 32
 # name, parent, pivot, rotation, boxes (u, v, x, y, z, w, h, d, mirror, material)
 PARTS = [

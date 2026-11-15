@@ -11,7 +11,7 @@ The whole feature is one **server** config switch: `magic.spiritLight` in `nusmp
 | | What |
 |---|---|
 | **NEW** | Everything of the Spirit of Light: the link, the cub, the seraph, the piercing beam, the Glowing pulse, Swiftness III while linked, the mood rules (poses and faces), the sound set, the spoken lines of the seraph, the key bindings, the config file, the self-test, the previews. Two prop kinds (`SPIRIT_LIGHT_1`, `SPIRIT_LIGHT_2`) appended at the end of `PropKind`. |
-| **REPLACED** | Nothing. No Light spirit creature existed in the mod. The only older mention is a relic socket gem called "the Spirit of Light" (`relics/socket/SocketCatalog`, lang `socket.nusmp.spirit_light`): it is an item socket, a different feature, so it is kept as it is and the new spirit is added next to it. |
+| **REPLACED** | Nothing. No Light spirit creature existed in the mod. The only older mention is a relic socket gem called "the Spirit of Light" (`relics/socket/SocketCatalog`, lang `socket.anime_multiverse.spirit_light`): it is an item socket, a different feature, so it is kept as it is and the new spirit is added next to it. |
 | **KEPT** | Light Magic (`book/LightBook`), all its pages, the old Light VFX, the other spirits (Salamander, Sylph, Undine, Gnome, Darkness, Space), the voice catalogue (`VoiceCatalog`, 120 lines, 4 roles) and its asset test, the Time Magic VFX (not touched, `FlatPropsSourceScanTest.theTimeMagicFilesAreUntouched` passes). |
 
 ## 1. What the player gets
@@ -151,7 +151,7 @@ Worst case for one spirit is therefore 244 quads (cub) or 305 quads (seraph) in 
 * Server: `spiritlight/` (`SpiritLightRules`, `SpiritLightLod`, `SpiritLightLedger`, `LightMoodRules`, `SpiritLight`, `SpiritLightEvents`, `SpiritLightProps`, `SpiritLightNet`, `SpiritLightSounds`, `SpiritLightVoice`, `SpiritLightVoiceLines` (generated), `SpiritLightConfig`, `SpiritLightBoot`, `SpiritLightSelfTests`), `book/LightSpiritBridge`.
 * Client: `client/spiritlight/SpiritLightClient`, `SpiritLightVoiceClient`; `client/prop/SpiritLightPropPainter`, `SpiritLightDraw`.
 * Tools: `tools/spirit_light_lib.py`, `gen_spirit_light_art.py`, `gen_spirit_light_anim.py`, `gen_spirit_light_geo.py`, `gen_spirit_light_sounds.py`, `tools/audio/spirit_light_lines.py|json`, `spirit_light_voice.py`, `sl_sounds_json.py`, `tools/render_preview/gen_spirit_light_scenes.py` and the example `examples/SpiritLightProp.java`.
-* Shared files touched, each by an appended one-liner only: `prop/PropKind.java`, `prop/PropRegistry.java`, `client/prop/PropPainterRegistry.java`, `NUSMP.java` (two lines), `assets/nusmp/sounds.json` (one block of new `spirit_light.*` entries after `zagred_word`), `tools/safe_additive/scan_textures.py` and `SafeAdditiveTextureScanTest.java` (scope entries).
+* Shared files touched, each by an appended one-liner only: `prop/PropKind.java`, `prop/PropRegistry.java`, `client/prop/PropPainterRegistry.java`, `NUSMP.java` (two lines), `assets/anime_multiverse/sounds.json` (one block of new `spirit_light.*` entries after `zagred_word`), `tools/safe_additive/scan_textures.py` and `SafeAdditiveTextureScanTest.java` (scope entries).
 
 ## 7. Sources and what could not be fetched
 

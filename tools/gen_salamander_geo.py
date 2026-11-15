@@ -761,7 +761,7 @@ def animations(form):
 
 
 # ====================================================================================================================== main
-LOD_JAVA = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "src", "main", "java", "com", "newuniverse", "anime_multiverse", "firecast", "FireCastLod.java")
+LOD_JAVA = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "src", "main", "java", "com", "newuniverse", "nusmp", "firecast", "FireCastLod.java")
 
 
 def sync_java(counts):

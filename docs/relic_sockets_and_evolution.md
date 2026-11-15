@@ -9,9 +9,9 @@ and the Minecraft-facing classes were type-checked against the API stubs only.
 
 ## Adaptations to this repo (and why)
 
-* **Data components, not NBT.** Minecraft 1.21.1 / NeoForge 21.1 stores item state in data components. The socket is the component `nusmp:socket`.
+* **Data components, not NBT.** Minecraft 1.21.1 / NeoForge 21.1 stores item state in data components. The socket is the component `anime_multiverse:socket`.
   *Why:* components are saved, synced and diffed by the game; the prompt's "NBT on the ItemStack" does not exist any more in this version.
-* **No GeckoLib for weapons.** Weapons here are baked meshes (`assets/nusmp/weapon_meshes/<id>.txt`) drawn by `client/WeaponRenderer`, with variants chosen by
+* **No GeckoLib for weapons.** Weapons here are baked meshes (`assets/anime_multiverse/weapon_meshes/<id>.txt`) drawn by `client/WeaponRenderer`, with variants chosen by
   `client/relics/item/ItemStateVariants` (+ `VariantRules`), and worn relics by `RelicWornLayer`. *Why:* the whole weapon pipeline (display presets, the
   oversize guard, Genesis/five-leaf variants, bows' draw stages) is built on that mesh renderer; a GeoRenderer would fork it and lose all of that. The
   prompt's "swap texture / emissive layer / ambient particles" is exactly what the variant resolver already does, so sockets plug into it.
@@ -24,7 +24,7 @@ and the Minecraft-facing classes were type-checked against the API stubs only.
 |---|---|
 | Socket table (6 Spirits, 9 Devils) | `relics/socket/SocketCatalog`, `SocketDef`, `SocketElement`, `SocketFxKind`, `Boon`, `ActSpec` |
 | Rules (slots, insert checks, cast trigger, life steal, power) | `relics/socket/SocketRules`, `SocketData` |
-| The component | `relics/socket/SocketComponents` (`nusmp:socket`) |
+| The component | `relics/socket/SocketComponents` (`anime_multiverse:socket`) |
 | Effective tier | `relics/socket/SocketGrades` |
 | Core items | `relics/socket/SocketItems`, `SocketCoreItem`; icons `tools/relics/gen_core_icons.py` |
 | Socketing, drawing out | `relics/socket/SocketService`, `SocketEngine` (sneak-use) |
@@ -96,7 +96,7 @@ Devils are even. `/multiverse relic socket core <player> <key>` gives any.
 * **`SocketRules` (pure).** Every decision that could be argued (how many slots, whether a Core goes in, which socket a sneak-use fires, how much life steal
   returns) is a function with a table-driven test. The hard caps (4 health per hit, 15% of max health per second for life steal; a 1.6x ceiling on ability
   power; resistances multiply but never keep less than 10%) exist because the relics' own rule is that nothing may one-shot or trivialise a boss.
-* **`nusmp:socket` data component (a compound of `{id, t}` entries).** Components are the 1.21 way to carry per-stack state, saved and synced, so the tooltip
+* **`anime_multiverse:socket` data component (a compound of `{id, t}` entries).** Components are the 1.21 way to carry per-stack state, saved and synced, so the tooltip
   and the client particles read it without a packet. A compound (like `relic_uses`) lets the shape grow without a new component id; the bound-at game time is
   kept for lore and future rules. Reads that run every few ticks (`firstId`, `hasAny`) never build a list, so the render path allocates nothing.
 * **`SocketGrades` (reflective tier).** The socket count must follow the *effective* tier but must not break if the ascension system is absent or renamed; a

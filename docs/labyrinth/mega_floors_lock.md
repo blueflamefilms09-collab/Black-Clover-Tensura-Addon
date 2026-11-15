@@ -14,8 +14,8 @@ section 14.
 | Floor numbers of the rooms of a sector (`Room.floor`), computed from the room graph | NEW | The contract added the field; this module is the only one that writes it. |
 | Two ways to cut a sector into floors (`floors.banding`: `even` default, `arena`) | NEW | `arena` is the brief's literal rule and stays available; `even` is the default because of what the generated sectors look like (section 4). |
 | The floor tracker (which floor a player stands on, `FloorListener` events) | NEW | The contract added the listener interface and the `MegaDungeon.fire*` hooks; this module fires them. |
-| `PlayerDungeonAlignment` (the Directional Lock's data) | NEW | A NeoForge data attachment `nusmp:dungeon_alignment`, the 1.21 form of the brief's "capability". |
-| The sync packet `nusmp:alignment_sync` and the client holder | NEW | |
+| `PlayerDungeonAlignment` (the Directional Lock's data) | NEW | A NeoForge data attachment `anime_multiverse:dungeon_alignment`, the 1.21 form of the brief's "capability". |
+| The sync packet `anime_multiverse:alignment_sync` and the client holder | NEW | |
 | The lock policy (`AlignmentPolicy`) and the hard guard | NEW | The interface is the contract's; nothing existed behind it. |
 | The start-up pass that numbers sectors saved before floors existed | NEW | Old 1.54.0 worlds. |
 | `/multiverse mega floors ...` | NEW | Attached by the lead. |
@@ -28,7 +28,7 @@ section 14.
 
 | The owner wrote (brief 3, system 2 and the introduction) | Where it is |
 |---|---|
-| "Write the capability `PlayerDungeonAlignment`." | `PlayerDungeonAlignment` + `AlignmentAttachments` (attachment `nusmp:dungeon_alignment`). |
+| "Write the capability `PlayerDungeonAlignment`." | `PlayerDungeonAlignment` + `AlignmentAttachments` (attachment `anime_multiverse:dungeon_alignment`). |
 | "Once a player clears Floor +1 or -1, their alignment locks." | `FloorTracker` asks `AlignmentRules.clearsPrevious` / `onFloorCleared` when a player moves on from a floor; at `floors.lockAtFloor` (default 1) the lock closes. |
 | "They cannot enter the opposite polarity's staircases/portals." | `LockPolicy`, registered behind `MegaDungeon.mayEnter`: the Hub's gates and the chain travel ask it; `HardLock` catches everything that does not. |
 | "once they begin ascending or descending, a dimensional lock prevents them from switching directions (though they can always retreat to Floor 0)" | The lock never blocks Floor 0 (it is not a road: `mayEnter` is true for a null polarity) and retreating changes no state. |
@@ -57,7 +57,7 @@ section 14.
   block, item or entity for behaviour (`IItemHandler`); data that belongs to a player, must be saved and must survive death is a data attachment
   (`copyOnDeath`). WHY a codec with every field optional: an older, hand-edited or damaged save must still load. WHY the default state is not saved: a
   world of players who never touched the dungeon stays small.
-* **`AlignmentNet`** (`nusmp:alignment_sync`). Server-to-client packet with the road, the lock and the two deepest values. WHY our own packet: NeoForge
+* **`AlignmentNet`** (`anime_multiverse:alignment_sync`). Server-to-client packet with the road, the lock and the two deepest values. WHY our own packet: NeoForge
   sends no attachment to the client by itself, and the contract fixed the id and the sync points (login, respawn, dimension change, every change).
   WHY `optional()`: a client without the mod can still join. WHY it skips stand-in players: they have no connection.
 * **`ClientAlignment`** (+ optional **`FloorsClient`**). Plain-Java client holder, swapped in whole as one immutable snapshot. WHY: a future gate hint or window
@@ -153,8 +153,8 @@ section 14.
 |---|---|---|
 | `Room` (saved with the sector, `MegaData`) | `fl` | The signed floor (`+1..+10` Holy, `-1..-10` Abyssal, +11.. for the next sector). Absent = never numbered. |
 | `Sector` (saved) | `fpr` | Floors per sector, fixed at the first numbering. |
-| Player attachment `nusmp:dungeon_alignment` (saved with the player, copied on death) | `chosen`, `locked`, `holy`, `abyssal`, `lockedAt` | Road id (`holy` / `abyssal`, omitted when none), lock, deepest distance on each road (0 omitted), game time of the lock. Every key optional; the whole attachment is omitted while still the default. |
-| Packet `nusmp:alignment_sync` (server to client) | utf(<=16) road id or "", bool locked, var-int holy, var-int abyssal | The lock time is not sent. |
+| Player attachment `anime_multiverse:dungeon_alignment` (saved with the player, copied on death) | `chosen`, `locked`, `holy`, `abyssal`, `lockedAt` | Road id (`holy` / `abyssal`, omitted when none), lock, deepest distance on each road (0 omitted), game time of the lock. Every key optional; the whole attachment is omitted while still the default. |
+| Packet `anime_multiverse:alignment_sync` (server to client) | utf(<=16) road id or "", bool locked, var-int holy, var-int abyssal | The lock time is not sent. |
 | Runtime only (never saved, cleared on logout, dimension change, respawn and server stop) | UUID to floor in `FloorTracker`; UUID to tick in `LockPolicy` and `HardLock` | |
 
 ## 6. The state table of the lock
@@ -258,7 +258,7 @@ road, an open road, the own road and the other road, and that a player about to 
 * Config (NUSMP.java, next to the other mega configs): `modContainer.registerConfig(ModConfig.Type.SERVER, com.newuniverse.nusmp.labyrinth.mega.floors.FloorsConfig.SPEC, "nusmp-labyrinth-mega-floors-server.toml");`
 * Command: attach `com.newuniverse.nusmp.labyrinth.mega.floors.FloorsRegistry.command()` under `/multiverse mega` (`megaNode.then(FloorsRegistry.command())`).
 * Client (optional): `com.newuniverse.nusmp.labyrinth.mega.floors.FloorsClient.init();` in the `Dist.CLIENT` block.
-* Lang: merge `scratchpad/mega/frag/mfl.lang.json` into `en_us.json` (39 keys under `message.nusmp.mega.mfl.*`).
+* Lang: merge `scratchpad/mega/frag/mfl.lang.json` into `en_us.json` (39 keys under `message.anime_multiverse.mega.mfl.*`).
 * The attachment and the payload register themselves in `FloorsRegistry.init` (called by `MegaSystem`): no line in `NUSMP.java` is needed for them.
 * The generator must call `MegaDungeon.generated(level, sector)` after every generation and every `regen` (the numbering runs from it; CORE does). If it
   does not, the server numbers the sectors when it starts and the tracker numbers one on first contact anyway.

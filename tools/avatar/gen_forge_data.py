@@ -25,9 +25,9 @@ import forge_tables as T  # noqa: E402
 REPO = os.path.abspath(os.path.join(HERE, "..", ".."))
 OUT_APT = os.path.join(REPO, "src", "main", "resources", "data", "anime_multiverse", "avatar_aptitudes")
 OUT_SKL = os.path.join(REPO, "src", "main", "resources", "data", "anime_multiverse", "avatar_skills")
-IDS = os.path.join(REPO, "src", "test", "resources", "com", "newuniverse", "anime_multiverse", "charter", "tensura_skill_ids.txt")
-MAGIC = os.path.join(REPO, "src", "main", "java", "com", "newuniverse", "anime_multiverse", "blackclover", "MagicType.java")
-NUSKILLS = os.path.join(REPO, "src", "main", "java", "com", "newuniverse", "anime_multiverse", "skill", "NUSkills.java")
+IDS = os.path.join(REPO, "src", "test", "resources", "com", "newuniverse", "nusmp", "charter", "tensura_skill_ids.txt")
+MAGIC = os.path.join(REPO, "src", "main", "java", "com", "newuniverse", "nusmp", "blackclover", "MagicType.java")
+NUSKILLS = os.path.join(REPO, "src", "main", "java", "com", "newuniverse", "nusmp", "skill", "NUSkills.java")
 RARITY = ["COMMON", "UNCOMMON", "RARE", "EPIC", "LEGENDARY"]
 
 

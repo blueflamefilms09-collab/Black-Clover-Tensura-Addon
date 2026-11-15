@@ -224,7 +224,7 @@ class QuestPackTest {
                     adv++;
                     String a = (String) t.get("advancement");
                     assertTrue(a != null && a.startsWith("anime_multiverse:"), p.getFileName() + ": advancement " + a);
-                    String path = a.substring(6);
+                    String path = a.substring(17);
                     assertTrue(Files.exists(ADV.resolve(path + ".json")), p.getFileName() + ": advancement file " + a + " does not exist");
                     used.add(path);
                 }

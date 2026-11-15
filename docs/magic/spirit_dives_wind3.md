@@ -35,7 +35,7 @@ more than the clips (calmer, paler, thin crown); C is the most original and the 
 
 ## The real 3D models (rule 7)
 
-Authored by `tools/gen_sdw3_models.py` (deterministic; the loft / box / ring vocabulary of `tools/gen_weapon_models.py`), written to `assets/nusmp/sdw3_meshes/<piece>.txt` (`q <layer> 4 x (x y z u v) normal
+Authored by `tools/gen_sdw3_models.py` (deterministic; the loft / box / ring vocabulary of `tools/gen_weapon_models.py`), written to `assets/anime_multiverse/sdw3_meshes/<piece>.txt` (`q <layer> 4 x (x y z u v) normal
 r g b`; layers: 0 solid body, 1 soft glow shell drawn additive, 2 rings and ornaments) and the atlas `textures/aura/sdw3_skin.png` (+ the round `sdw3_soft.png` glow sprite). Face shade is baked, the solid
 layers are drawn full bright through the emissive type, the glow layer additive, both through `SafeAdditive`. They are **worn aura pieces drawn by the dive painter for the diver** (shared mesh instances read by
 `book/SpiritDiveWind3Mesh`, drawn by `client/aura/SpiritDiveWind3Draw`), not items; registering them as creative display items was optional and is not done.

@@ -22,7 +22,7 @@ from PIL import Image
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.abspath(os.path.join(HERE, "..", ".."))
 ASSETS = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multiverse")
-SOCK = os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "anime_multiverse", "relics", "socket")
+SOCK = os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "nusmp", "relics", "socket")
 
 
 def table():

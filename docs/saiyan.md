@@ -95,7 +95,7 @@ Frieza and other non-Saiyan lines stay **separate racial evolutions**, not Saiya
 
 ## Caveats (honest)
 - Nothing was seen in a game and Gradle was not run locally; CI is the compile and the smoke test.
-- Tensura's magicule HUD layer id is unknown: the client hides layers in the `tensura` namespace whose path contains "magicule" and writes every Tensura layer name to the log once (`[nusmp] Saiyan: Tensura HUD layer …`). If Tensura draws its bar another way, both bars show until the id is added.
+- Tensura's magicule HUD layer id is unknown: the client hides layers in the `tensura` namespace whose path contains "magicule" and writes every Tensura layer name to the log once (`[anime_multiverse] Saiyan: Tensura HUD layer …`). If Tensura draws its bar another way, both bars show until the id is added.
 - The spec's "Ki 100 / 2 per second" is read as a flat +100 capacity and +2% of the maximum per second, because Ki is Tensura's magicule pool and its size varies enormously.
 - Balance numbers are starting values (the spec's table, a log-scale growth, a 1%-per-kill gain, a 10% daily cap).
 - The Ki attacks are raycasts, not projectile entities, so they hit instantly and cannot be dodged by moving; this is the price of costing nothing to spawn or clean up.

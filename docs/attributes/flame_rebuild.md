@@ -80,7 +80,7 @@ Every successful cast puts the Flame armour on for 5 s (`WaterArmour.wrap`). Dam
 ## Files
 
 New: `client/aura/FlameAura.java`, `prop/FlameProps.java`, `client/prop/FlamePropPainter.java`, `book/FlameArts.java`, `vfx/client/layer/FlameFxLayer.java`, `tools/gen_flame_aura_geo.py`, `tools/gen_flame_summon_geo.py`,
-`tools/gen_flame_fx_textures.py`, `tools/lang/flame_rebuild.json` (keys `nusmp.page.book_fire.*`: the Flame book's key is `book_fire`), preview scenes `flame_*.json`. Shared: see water_rebuild.md.
+`tools/gen_flame_fx_textures.py`, `tools/lang/flame_rebuild.json` (keys `anime_multiverse.page.book_fire.*`: the Flame book's key is `book_fire`), preview scenes `flame_*.json`. Shared: see water_rebuild.md.
 Edited (additions only): `book/FireBook.java` (the page list, the import and the blow hook), shared registries.
 
 ## Not verified
@@ -92,4 +92,4 @@ Edited (additions only): `book/FireBook.java` (the page list, the import and the
 
 ## 1.99.0 armour policy
 
-Flame Magic is policy kind FORM (Flame Armour). The armour is put on **only** by `flame_armour` (cast it to forge the armour in with the Djinn equip animation; cast it again to take it off, free of cost). It stays until it is toggled off, the mana runs out (a little mana is paid every second), the wearer is knocked out or dies, and shatters out with the same animation; while it is on it gives the stats of the policy table. A cast of any other page never puts it on and never resets it. The form is `spirit_dive`: Spirit Dive. It is held as long as the mana upkeep is paid; the spirit's ambient intake pays most of it; speed, attack and senses are raised while it lasts. See `docs/rebuild/armour_policy.md` for the table and the canon reasons; the code is `book.ArmourPolicy` (data: `data/nusmp/armour_policy.json`).
+Flame Magic is policy kind FORM (Flame Armour). The armour is put on **only** by `flame_armour` (cast it to forge the armour in with the Djinn equip animation; cast it again to take it off, free of cost). It stays until it is toggled off, the mana runs out (a little mana is paid every second), the wearer is knocked out or dies, and shatters out with the same animation; while it is on it gives the stats of the policy table. A cast of any other page never puts it on and never resets it. The form is `spirit_dive`: Spirit Dive. It is held as long as the mana upkeep is paid; the spirit's ambient intake pays most of it; speed, attack and senses are raised while it lasts. See `docs/rebuild/armour_policy.md` for the table and the canon reasons; the code is `book.ArmourPolicy` (data: `data/anime_multiverse/armour_policy.json`).

@@ -103,7 +103,7 @@ Rounds: (1) first mesh, camera too close, wings short and thin, petals as thorns
 
 ## 6. How it would plug in (not done, the owner said preview only)
 
-* **Layer.** A new client class `client/mode/ModeArmorValkyrieV2` following `ModeArmorWindV2` exactly: static meshes built once from `assets/nusmp/valkyrie_meshes/valk_*.txt` by a pure `ModeArmorValkyrieMesh`
+* **Layer.** A new client class `client/mode/ModeArmorValkyrieV2` following `ModeArmorWindV2` exactly: static meshes built once from `assets/anime_multiverse/valkyrie_meshes/valk_*.txt` by a pure `ModeArmorValkyrieMesh`
   (loader + sway weights from the hinge distance), one captured `PoseStack.Pose` per part (body, head, arms, legs, the two wing hinges), pass-by-pass draw, a mirrored second copy for paired pieces.
 * **Hook.** `ModeArmorLayer.render0` already has `if (ModeArmorWindV2.active(mode))` before its `switch`; add the same line for `ModeArmor.Mode.VALKYRIE` (`ModeArmorValkyrieV2.active(mode)`).
   `ModeArmorLayer.valkyrie()` stays as the CLASSIC look. The Spirit Dive path (`SpiritDivePieces.WATER_VALKYRIE`, `client.aura.WaterAura`) would use a `replacesAuraPieces`-style check (as

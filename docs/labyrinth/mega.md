@@ -1,6 +1,6 @@
 # The Mega-Dungeon (1.54.0)
 
-One persistent dungeon that grows. A single Overworld Gateway leads into ONE dimension, `nusmp:mega_dungeon`, built from vanilla blocks
+One persistent dungeon that grows. A single Overworld Gateway leads into ONE dimension, `anime_multiverse:mega_dungeon`, built from vanilla blocks
 only, divided into **Sectors** (Regions). Each sector is a tightly packed, tabletop-style maze of rooms, corridors, safe zones, a boss and a
 vault. Clearing a sector's Guardian and opening its Gatekeeper door with the Guardian's Mana Core makes the dungeon **generate the next
 sector off the previous one's dead end**, for ever.
@@ -17,9 +17,9 @@ Every class, JSON file and strategy below says WHY it is built that way (the own
 
 | Part | Status | Notes |
 |---|---|---|
-| Dimension `nusmp:mega_dungeon` (flat void, no sky, 128 high), its dimension type and biome | NEW | A new id, not an edit of `nusmp:labyrinth`: a world keeps the dimension generators written into its level.dat, so editing the old one would leave every existing world on the Spire. |
-| Mega-Dungeon layout (sectors, assembler, expansion, Landings, links) | **REPLACES the Spire as the default** | The Spire (1.35.0, `nusmp:labyrinth`, pools `nusmp:labyrinth/*`, the structure set `labyrinth_spires`) stays registered and generates exactly as before; `mega.layout = "spire"` routes Gates and Maws back to it (rule 2). |
-| Gateway structure (`nusmp:mega_gateway`, one per world) | NEW | Added to the `nusmp:dungeon_gate` structure tag, so every existing locate/enter code finds it. |
+| Dimension `anime_multiverse:mega_dungeon` (flat void, no sky, 128 high), its dimension type and biome | NEW | A new id, not an edit of `anime_multiverse:labyrinth`: a world keeps the dimension generators written into its level.dat, so editing the old one would leave every existing world on the Spire. |
+| Mega-Dungeon layout (sectors, assembler, expansion, Landings, links) | **REPLACES the Spire as the default** | The Spire (1.35.0, `anime_multiverse:labyrinth`, pools `anime_multiverse:labyrinth/*`, the structure set `labyrinth_spires`) stays registered and generates exactly as before; `mega.layout = "spire"` routes Gates and Maws back to it (rule 2). |
+| Gateway structure (`anime_multiverse:mega_gateway`, one per world) | NEW | Added to the `anime_multiverse:dungeon_gate` structure tag, so every existing locate/enter code finds it. |
 | Old Dungeon Gate arches and Dungeon Maws | KEPT | They now lead into the Mega-Dungeon too (`mega.legacyGates`, default true). Already generated worlds keep every arch they have. |
 | Labyrinth Guardian, Mana Core, `kind=sector` Gatekeeper door | NEW (the door KIND is appended to the existing `GatekeeperDoorBlock`) | |
 | Encounter Director, noise and light tracking, Wandering Bosses | NEW | |
@@ -28,10 +28,10 @@ Every class, JSON file and strategy below says WHY it is built that way (the own
 | Factions, turf wars | NEW | |
 | Magic Stone + Monster Meat economy | KEPT (1.36.0 `EconomyDrops`, now also active here because `Labyrinth.in` covers the new dimension) + NEW: faction drops, Farmer's Delight recipes | |
 | Vital Strike / HP buffer | KEPT (1.36.0, applies in the new dimension through `Labyrinth.in`) | The brief's system 6 already exists. |
-| Region themes (`nusmp:region_theme` processor, 9 themes) | NEW | |
+| Region themes (`anime_multiverse:region_theme` processor, 9 themes) | NEW | |
 | Crucible of Choice (1-3 relic pedestals, one pick, a catastrophe) | NEW (extends the existing Relic Pedestal) | Relics stay 100 % unobtainable by normal play. |
 | Sealed Archway trials, trap blocks, puzzle doors, Relic Pedestal, Gatekeeper door, exit gate | KEPT and reused as rooms of the new layout | |
-| Living Dungeon (`nusmp:living_dungeon`), `labyrinth.engine = "legacy"` | KEPT | `engine = "legacy"` still wins over both layouts. |
+| Living Dungeon (`anime_multiverse:living_dungeon`), `labyrinth.engine = "legacy"` | KEPT | `engine = "legacy"` still wins over both layouts. |
 
 ---------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -39,7 +39,7 @@ Every class, JSON file and strategy below says WHY it is built that way (the own
 
 | # | System | Where | Why this way |
 |---|---|---|---|
-| 1 | One gateway, one dimension, sectors, tabletop layout | `mega.gen` (assembler, generator), `mega.travel`, `nusmp:mega_gateway`, dimension JSONs, `tools/labyrinth/gen_mega_*.py` | One dimension so progress is shared and persistent; sectors so the world is generated in bounded, testable units; our own assembler so the layout is dense, guaranteed to contain its boss chain, and unit-testable (section 8). |
+| 1 | One gateway, one dimension, sectors, tabletop layout | `mega.gen` (assembler, generator), `mega.travel`, `anime_multiverse:mega_gateway`, dimension JSONs, `tools/labyrinth/gen_mega_*.py` | One dimension so progress is shared and persistent; sectors so the world is generated in bounded, testable units; our own assembler so the layout is dense, guaranteed to contain its boss chain, and unit-testable (section 8). |
 | 2 | Expansion tracker, live Jigsaw appending | `MegaData` (SavedData), `Sector`, `Expander`, `SectorGenerator`, `ExpansionQueue` | The tracker is saved data in the overworld's storage; a new sector is attached at the previous sector's Way Onward with the same assembler, run over several ticks. |
 | 3 | D&D encounters, wandering bosses | `mega.enc` | A Dungeon Master tick rolls a data-driven table from threat, party size, noise and light; a boss patrols the room graph. |
 | 4 | Safe zones, vanilla interiors, mod compat, rest | `mega.safe`, templates `structure/mega/safe/*`, `landing/*` | Interiors are templates (references: the stone-brick workshop, the 2-storey checkerboard vault); compat is a processor that reads markers; rest is an attachment fed by right-clicks on marked seats, hearths and beds. |
@@ -53,7 +53,7 @@ Every class, JSON file and strategy below says WHY it is built that way (the own
 ## 3. Architecture and ownership
 
 ```
- Overworld                                                  nusmp:mega_dungeon (flat void, no sky)
+ Overworld                                                  anime_multiverse:mega_dungeon (flat void, no sky)
  +---------+  LabyrinthTravel.enter  +-----------+  wakes   +-----------------------------------------------+
  | Gateway |------------------------>| MegaTravel|--------->| Sector 0  (Landing -> filler rooms -> arena   |
  | (1 per  |   mega.layout = "mega"  +-----------+          |   -> [Gatekeeper] -> antechamber -> vault     |
@@ -94,7 +94,7 @@ All numbers are in `MegaGrid.java` and `tools/labyrinth/mega_lib.py` (identical)
 * **Walls are 2 thick.** Floor row 8, walls rows 9 and up, a 2-thick ceiling. The interior is left UNSET (the void is air): a room is a shell plus furniture.
 * **A doorway ("socket")** = a 3 wide x 4 tall hole through BOTH wall layers, a frame (polished pillars, chiselled lintel), and a jigsaw block in the bottom-centre
   cell of the OUTER layer (row 9), at a module centre along its face (offset 4, 13, 22 ...), orientation = the face it sits on (`north_up` on the north face ...),
-  `joint: aligned`, `name = target = nusmp:mega_door`, `final_state = minecraft:air`. `MT.socket()` writes all of it.
+  `joint: aligned`, `name = target = anime_multiverse:mega_door`, `final_state = minecraft:air`. `MT.socket()` writes all of it.
   * **Connected:** two touching pieces with sockets facing each other make a 4-thick tunnel through both walls.
   * **Unused:** the jigsaw becomes air and the hole is a 2-deep **niche**. Where free space lies outside, a **door cap** fills it (below).
   * **Loops for free:** two rooms that touch and have sockets that face each other at the same position were never "connected" by the assembler, but their open
@@ -104,8 +104,8 @@ All numbers are in `MegaGrid.java` and `tools/labyrinth/mega_lib.py` (identical)
   `minecraft:empty`. They continue the niche outwards (an alcove with a lantern, a chest, a statue, a bookcase, a cell with a skull, banners ...) and end in a
   back wall. The cap's own jigsaw becomes air (open alcove) or the wall block. If a cap does not fit (a neighbour's wall is in the way) none is placed and the niche is
   backed by that wall.
-* **Special sockets** (names the checker allows): `nusmp:mega_door` (ordinary), `nusmp:mega_chain` (arena exit to antechamber entry), `nusmp:mega_vault`
-  (antechamber to vault), `nusmp:mega_onward` (antechamber to the Way Onward corridor). A socket whose pool is `minecraft:empty` is a sealed end (the generator
+* **Special sockets** (names the checker allows): `anime_multiverse:mega_door` (ordinary), `anime_multiverse:mega_chain` (arena exit to antechamber entry), `anime_multiverse:mega_vault`
+  (antechamber to vault), `anime_multiverse:mega_onward` (antechamber to the Way Onward corridor). A socket whose pool is `minecraft:empty` is a sealed end (the generator
   neither fills nor caps it); then `final_state` is the seal block and `hole=False` (the template fills the hole itself).
 
 ### Palette and the Vanilla Block Primacy Rule
@@ -116,7 +116,7 @@ alone. **No custom block** except those in `mega_lib.CUSTOM`: the Gatekeeper doo
 Guardian Altar. WHY: vanilla blocks light, collide, path and break correctly with no code, and the owner wants a vanilla-plus look; every custom block is code that must work.
 
 ### Data markers
-Markers are vanilla **structure blocks in DATA mode** whose metadata is `nusmp:<kind>[;key=value]*` (kinds: `MarkerKind.java`). The game never places a DATA structure
+Markers are vanilla **structure blocks in DATA mode** whose metadata is `anime_multiverse:<kind>[;key=value]*` (kinds: `MarkerKind.java`). The game never places a DATA structure
 block (the Jigsaw pool element ignores it) and `SinglePoolElement.getDataMarkers(templateManager, pos, rotation, false)` returns them with the piece's position
 and rotation already applied, so a marker costs no custom block, leaves no trace, and is read BEFORE placement (no world scan). The marker stands in the AIR cell
 above what it describes. A `facing` argument is rotated with the piece. A `;as=<hint>` argument asks the mod-compat processor to swap the block below
@@ -124,7 +124,7 @@ the marker (chair, sofa, table, counter, cutting_board, storage, stove, skillet,
 
 ### Folders = room kinds, pools
 `structure/mega/<folder>/<name>.nbt`; the folder is the `RoomKind` (`landing safe corridor junction hall set cavern trial trap puzzle treasure arena antechamber vault
-onward link cap`). Pools (`data/nusmp/worldgen/template_pool/mega/*.json`) are generated by `tools/labyrinth/gen_mega_pools.py` from the folders and the weights in
+onward link cap`). Pools (`data/anime_multiverse/worldgen/template_pool/mega/*.json`) are generated by `tools/labyrinth/gen_mega_pools.py` from the folders and the weights in
 `tools/labyrinth/mega_pools.json`: dropping a template in the right folder registers it.
 
 | Pool | Used for | Filled from |
@@ -138,7 +138,7 @@ onward link cap`). Pools (`data/nusmp/worldgen/template_pool/mega/*.json`) are g
 | `onward`, `onward_straight`, `onward_left`, `onward_right` | the Way Onward | `onward/*`: files named `straight_*`, `left_*`, `right_*` |
 | `link` | straight tunnel segments | `link/*` (`straight*`, `waystation*`) |
 
-Processor list `nusmp:mega_interior` = `[nusmp:region_theme, nusmp:mod_compat]` (theme first: it changes the wood the compat swap then replaces).
+Processor list `anime_multiverse:mega_interior` = `[anime_multiverse:region_theme, anime_multiverse:mod_compat]` (theme first: it changes the wood the compat swap then replaces).
 
 ---------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -162,7 +162,7 @@ Algorithm (CORE implements it exactly; the numbers are config):
    pool (the door caps), so a doorway that faces free space is always capped and can never open onto the void; empties only thin out the connectivity.
 3. **Ensure (the Sector Recipe).** After the fill, force what must exist: the **boss chain** (an `arena` attached to an unused socket at least 8 modules from the Landing and next to the reserved zone
    at the far side; then the antechamber, the vault chosen by `relicCount`, the Way Onward variant that points to free space) by running step 2 on that socket with the pool forced; at least one extra
-   `safe` room 5-12 modules from the Landing; at least one `trial`; at least two `treasure`; at most one `set` piece. The recipe is data (`data/nusmp/mega/recipe/default.json`).
+   `safe` room 5-12 modules from the Landing; at least one `trial`; at least two `treasure`; at most one `set` piece. The recipe is data (`data/anime_multiverse/mega/recipe/default.json`).
 4. **Loops.** Two UNUSED sockets that face each other on adjacent cells of different pieces are a loop: an edge in the room graph (no block changes: their open holes already line up).
 5. **Audit.** The plan must contain exactly one arena, its antechamber, a vault with `relicCount` PEDESTAL markers, an onward corridor whose EXPANSION_SOCKET marker faces free space, at least one extra
    safe room, at least `minRooms` (40) rooms and `minLoops` (3) loops, every piece inside the region, no overlaps, every room reachable from the Landing in the edge graph. A failed audit retries with the next
@@ -204,7 +204,7 @@ the previous sector's Way Onward is removed so the two tunnels join.
 ## 7. Encounters and the Dungeon Master (`mega.enc`)
 A tick handler (every `rollEveryTicks`) per group of players in the dimension, outside safe zones, mimics a DM: it computes an encounter budget from the **region threat** (`Sector.threat`), the **party size**
 (players within 48 blocks), the **noise** (a decaying sum of recent noise events near the party: sprinting, combat, block interaction, explosions, via GameEvents) and the **light** (block light at the party and light
-items carried), rolls a d20 plus modifiers on a data-driven **encounter table** (`data/nusmp/mega/encounters/<id>.json`, one default and one per theme), and spawns the result out of sight on `SPAWN` markers (or valid cells
+items carried), rolls a d20 plus modifiers on a data-driven **encounter table** (`data/anime_multiverse/mega/encounters/<id>.json`, one default and one per theme), and spawns the result out of sight on `SPAWN` markers (or valid cells
 chosen from rooms of the sector). It never spawns inside a safe zone or within sight of a player, caps live mobs per party, and cools down. **Wandering bosses** are an entry type: a big mob (roster in JSON) that
 walks the room graph of its sector between patrol nodes (`Sector.edges`, room centres, `PATROL` markers), investigates loud noise, loses interest in a player who is out of sight, in the dark and sneaking, and gives chase otherwise,
 so the party hides or flees. It stays in its sector, drops no relic, and despawns when no player is in the sector.
@@ -215,21 +215,21 @@ so the party hides or flees. It stays in its sector, drops no relic, and despawn
   and mana and refreshes short-rest uses; right-clicking a `BED` starts a **long rest** (30 s): full health and mana, clears gloom, hunger penalty and fatigue, refills short-rest uses, sets the dungeon respawn Landing.
   `RestState` is an attachment. Long rests have a threat-scaled chance to bring an ambush while the party defends the zone.
 * **No easy passive regeneration** in the Mega-Dungeon: natural regeneration and the mana regeneration are scaled by `passiveRegenScale` (default 0.25) outside safe zones (0 inside a rest channel's own rules).
-* **Mod compat**: `ModCompatProcessor` reads the markers' `as=` hints from `RegionContext` and swaps the block below for a candidate id from `data/nusmp/mega/compat/*.json` if the mod is loaded and the id exists in the
+* **Mod compat**: `ModCompatProcessor` reads the markers' `as=` hints from `RegionContext` and swaps the block below for a candidate id from `data/anime_multiverse/mega/compat/*.json` if the mod is loaded and the id exists in the
   registry (Farmer's Delight stove / skillet / cutting board / cooking pot; MrCrayfish Refurbished chair / sofa / table / counter / storage / bed). Unverified ids simply do not swap.
 
 ## 9. Factions and economy (`mega.eco`)
-`data/nusmp/mega/factions/*.json` define factions (member entity ids and tags, rivals, colour). Goals are injected on `EntityJoinLevelEvent` in the dimension (the 1.44 `PaladinGoals` reflection pattern): a mob
+`data/anime_multiverse/mega/factions/*.json` define factions (member entity ids and tags, rivals, colour). Goals are injected on `EntityJoinLevelEvent` in the dimension (the 1.44 `PaladinGoals` reflection pattern): a mob
 attacks members of rival factions that enter its room or come within range, never its own faction; the room's native faction (`Room.faction`, assigned at generation from the theme's ecology) gets a defending
 bonus. The economy is the 1.36.0 event pair (stones and meat) plus faction-flavoured drops and conditional Farmer's Delight recipes.
 
 ## 10. Gatekeeper, Guardian, Mana Core (`mega.guard`)
-`GatekeeperDoorBlock.Kind.SECTOR` (appended): blind to the Shadow Key, opens only to a `nusmp:mana_core` whose component names this sector, then calls `MegaDungeon.unseal`. The **Labyrinth Guardian** is a Floor
+`GatekeeperDoorBlock.Kind.SECTOR` (appended): blind to the Shadow Key, opens only to a `anime_multiverse:mana_core` whose component names this sector, then calls `MegaDungeon.unseal`. The **Labyrinth Guardian** is a Floor
 Warden subclass scaled by threat and theme, spawned by the **Guardian Altar** on approach (the Peak Altar state machine), with the boss rules of the mod; on death it drops the Mana Core (indestructible, glowing,
 never despawns) and calls `MegaDungeon.guardianDefeated`. A lost core can be re-forged at the altar after 5 minutes while the door is still sealed.
 
 ## 11. Themes and the Crucible (`mega.theme`, `mega.crucible`)
-`ThemeDef` (`data/nusmp/mega/themes/<id>.json`): the family swaps (deepslate to something else, with every stair, slab and wall variant and the blockstate properties kept), the wood swap, ambient particle,
+`ThemeDef` (`data/anime_multiverse/mega/themes/<id>.json`): the family swaps (deepslate to something else, with every stair, slab and wall variant and the blockstate properties kept), the wood swap, ambient particle,
 ecology tags, the catastrophe weights and the relic pool (ids, grades, tags). The Crucible: on first entry the vault rolls `relicCount` DISTINCT unissued relics of the theme without issuing them; taking one issues it
 through the relic ledger, marks the Crucible CHOSEN in the sector and fires the catastrophe; the other pedestals are emptied in the same tick (a second click cannot take two) and their relics stay unissued.
 
@@ -240,7 +240,7 @@ through the relic ledger, marks the Crucible CHOSEN in the sector and fires the 
 (`nusmp-labyrinth-mega-<key>-server.toml`). `/multiverse mega ...` (permission 2): `status`, `sector [id]`, `tp <id>`, `expand`, `regen <id>`, `audit <id>`, `core give`, `unseal <id>`, `plan <id>`.
 `/multiverse mega ...` also has one sub-command per builder (`dm`, `faction`, `rest`, `selftest`, ...; see each `docs/labyrinth/mega_<key>.md`).
 
-**The Gateway ruin is held (1.55.0, `GatewayGuard`).** The Gateway stands in an ordinary Overworld, where the Dungeon Guard (which holds the whole Labyrinth dimension) does not reach. Since it is the only way in once `legacyGates` is off, a survival or adventure player cannot mine any block inside a Gateway structure piece and an explosion drops those blocks from its list (WHY: one creeper or one digger must not shut every other player of a server out of the dungeon). A creative-mode operator can still edit it. Switch: `gatewayUnbreakable` in `nusmp-labyrinth-server.toml` (default on). The check is the structure manager's piece lookup (`getStructureWithPieceAt(pos, #nusmp:mega_gateway)`), so the rest of the world pays nothing. Not guarded on purpose: fire, pistons and mob griefing (stone and deepslate; an effort nobody makes by accident). Unverified in game.
+**The Gateway ruin is held (1.55.0, `GatewayGuard`).** The Gateway stands in an ordinary Overworld, where the Dungeon Guard (which holds the whole Labyrinth dimension) does not reach. Since it is the only way in once `legacyGates` is off, a survival or adventure player cannot mine any block inside a Gateway structure piece and an explosion drops those blocks from its list (WHY: one creeper or one digger must not shut every other player of a server out of the dungeon). A creative-mode operator can still edit it. Switch: `gatewayUnbreakable` in `nusmp-labyrinth-server.toml` (default on). The check is the structure manager's piece lookup (`getStructureWithPieceAt(pos, #anime_multiverse:mega_gateway)`), so the rest of the world pays nothing. Not guarded on purpose: fire, pistons and mob griefing (stone and deepslate; an effort nobody makes by accident). Unverified in game.
 
 **Shared template tools (1.55.0).** `tools/labyrinth/mega_lib.check_state` validates every vanilla block state against the game's own table (`vanilla_block_states_1_21_1.json`, taken from the public mcmeta "summary" data of 1.21.1) instead of a hand-written schema, so a wrong or missing property fails the generator, not the game (it found `minecraft:moss_carpet` has no `bottom` property in 1.21.1). `mega_arch_check.py` applies the game's survival rules (a standing lantern needs a full top face, a hanging one needs a chain, a wall torch needs a solid back ...), `mega_shape_preview.py` and `mega_walk_preview.py` draw a template as cutaway and first-person pictures, `mega_compose.py` stitches a whole sector plan.
 

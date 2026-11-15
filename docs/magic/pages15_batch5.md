@@ -146,7 +146,7 @@ Every page is one server cast of the kit (`Pages15Kit`) or a custom cast that us
 
 All 94 pages are NEW; nothing is replaced and nothing is removed. Every page is appended after the older pages of its book (the kit's hook), no id, name or mode number moves, and the setting `magic.pagesFifteen` (server, default true) brings every list back to what it was.
 
-Character grimoires (the files under `data/nusmp/character_spells/` were only appended to, no entry was changed; the "planned" lists were left as they were): `zenon` +10, `yami` +4 (his four "planned" spells, now real pages, exclusive), `nacht` +4 (Doppelganger, Grasping Hands, and the exclusive Canis x Equus and Walpurgis Night), `zora` +10, `vanica` +11, `karna` +9 (Gibbous Ray and Moon Trap exclusive), `lemiel` +11, `asta` +7. Each of these grimoires now shows 15 pages (`tools/page_counts.py` prints 15 for every one of them).
+Character grimoires (the files under `data/anime_multiverse/character_spells/` were only appended to, no entry was changed; the "planned" lists were left as they were): `zenon` +10, `yami` +4 (his four "planned" spells, now real pages, exclusive), `nacht` +4 (Doppelganger, Grasping Hands, and the exclusive Canis x Equus and Walpurgis Night), `zora` +10, `vanica` +11, `karna` +9 (Gibbous Ray and Moon Trap exclusive), `lemiel` +11, `asta` +7. Each of these grimoires now shows 15 pages (`tools/page_counts.py` prints 15 for every one of them).
 
 Honest caveats:
 

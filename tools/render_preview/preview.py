@@ -34,7 +34,7 @@ from PIL import Image, ImageDraw, ImageFont
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.abspath(os.path.join(HERE, "..", ".."))
-SRC = os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "anime_multiverse")
+SRC = os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "nusmp")
 MOD_ASSETS = os.path.join(ROOT, "src", "main", "resources", "assets")
 BUILD = os.path.abspath(os.environ.get("RENDER_PREVIEW_BUILD") or os.path.join(ROOT, "build", "render_preview"))
 
@@ -188,7 +188,7 @@ def build(scenes, need_geo):
         for real in sc.get("realFiles", []):                                     # 1.99.0: real mod sources (relative to src/main/java/com/newuniverse/nusmp) an example needs
             files.append(os.path.join(SRC, real.replace("/", os.sep)))
     real_rel = {os.path.relpath(f, SRC).replace(os.sep, "/") for f in files if f.startswith(SRC)}                   # a stub of a class the real sources already provide would be a duplicate class
-    files = [f for f in files if not (f.startswith(os.path.join(HERE, "stubs")) and os.path.relpath(f, os.path.join(HERE, "stubs", "com", "newuniverse", "anime_multiverse")).replace(os.sep, "/") in real_rel)]
+    files = [f for f in files if not (f.startswith(os.path.join(HERE, "stubs")) and os.path.relpath(f, os.path.join(HERE, "stubs", "com", "newuniverse", "nusmp")).replace(os.sep, "/") in real_rel)]
     files = sorted(set(files))
     missing = [f for f in files if not os.path.isfile(f)]
     if missing:

@@ -15,7 +15,7 @@ on `NUItems.ITEMS`). It does, in this order, and nothing else needs wiring:
 
 1. `ArcCharacters.bootstrap()`: fills the roster and loads every boss class (which registers its entity type).
 2. `ArcEntities.init(modBus)`: the boss types, the NPC type, their attributes.
-3. `ArcItems.init(modBus)`: the data component `nusmp:arc_character` (item `nusmp:arc_spawn_egg` registers on `NUItems.ITEMS` when the class loads).
+3. `ArcItems.init(modBus)`: the data component `anime_multiverse:arc_character` (item `anime_multiverse:arc_spawn_egg` registers on `NUItems.ITEMS` when the class loads).
 4. `ArcStory.init(modBus)`: the story attachment, then for every boss: the boss registry entry, the buff row, the Charter row and item; and the defeat listener.
 5. `registerConfig(SERVER, ArcConfig.SPEC, "nusmp-arc-server.toml")`: the config registers itself, there is no separate line for it.
 6. Game-bus: the dialogue reload listener, the clear at server stop.
@@ -44,7 +44,7 @@ Commands: `root.then(ArcCommand.node())` under `/multiverse`.
 | `arc/dialogue/DialogueSender`, `ArcDialogue` | the chat line in the character's colour; the glue from "right-click" to a line |
 | `arc/story/StoryData` | pure: one player's story (defeated, met, quest stage per NPC, saga) |
 | `arc/story/StoryRules` | pure: stage, saga, unlock, gate, what a victory opens, closure, loops |
-| `arc/story/StoryAttachments` | the player attachment `nusmp:arc_story` with its codec |
+| `arc/story/StoryAttachments` | the player attachment `anime_multiverse:arc_story` with its codec |
 | `arc/story/ArcStory` | the game-side door: credit on defeat, the gate, the quest hook keys, the boot wiring of every boss |
 | `client/arc/ArcClient` | renderer registration loop, egg tint |
 | `client/arc/stubs_for_core/*` | signature-only stand-ins for ARC-ART's two renderers so that this code type-checks alone. **The lead deletes the folder when ARC-ART is merged.** |
@@ -52,14 +52,14 @@ Commands: `root.then(ArcCommand.node())` under `/multiverse`.
 | `boss/BossRegistry.addArc`, `BossBuffTable.addArc` | additive entries (copy-on-write; the old rows cannot be overwritten) |
 | `boss/bar/BossBarSync` | the bar tint now asks the boss for `styleColor()/styleAccent()`: a devil's colours for the Zogratis family (unchanged), the character's own for the arcs |
 | `charter/CharterNet` | the claim packet reader capped the list at 64 entries while the writer had no cap (a longer list would have corrupted the stream); both are capped at 256 now |
-| `data/nusmp/arc/dialogue/_fallback.json` | the generic lines (greeting, hint, farewell) of every character that has no file of its own, so a character that is merged before its writer finishes still talks; it holds no quest lines on purpose (a generic offer would start a quest that does not exist) |
-| `assets/nusmp/models/item/arc_spawn_egg.json` | the vanilla spawn-egg template model; the two layers are tinted per character by `ArcClient`, so the egg needs no texture of its own |
+| `data/anime_multiverse/arc/dialogue/_fallback.json` | the generic lines (greeting, hint, farewell) of every character that has no file of its own, so a character that is merged before its writer finishes still talks; it holds no quest lines on purpose (a generic offer would start a quest that does not exist) |
+| `assets/anime_multiverse/models/item/arc_spawn_egg.json` | the vanilla spawn-egg template model; the two layers are tinted per character by `ArcClient`, so the egg needs no texture of its own |
 | `tools/gen_arc_dialogue_lang.py` | keeps dialogue JSON, language keys and the language file in step (section 3) |
 | `tools/gen_arc_grimoire_assets.py` | draws the model and texture of every arc boss's grimoire from its record (section 4) |
 
 ## 3. Dialogue
 
-`data/nusmp/arc/dialogue/<character_id>.json` (a datapack replaces a file by shipping the same path). The file `_fallback.json` is what any character without a
+`data/anime_multiverse/arc/dialogue/<character_id>.json` (a datapack replaces a file by shipping the same path). The file `_fallback.json` is what any character without a
 file says (so none is mute); if even that is missing a one-line book built into the code is used.
 
 ```json
@@ -105,7 +105,7 @@ file says (so none is mute); if even that is missing a one-line book built into 
 ## 4. The Charter Grimoires of the arc bosses
 
 A boss declares `.charter(chance, skills...)` in its `ArcCharacter`. `ArcStory.init` turns it into a Charter row (`ArcCharterRules.toBoss`) and an item
-`nusmp:charter_grimoire_<id>`. The drop, the world lock (`has_dropped_charter_grimoire_<id>`), the mirroring and the tooltips are the existing ones. Skills that
+`anime_multiverse:charter_grimoire_<id>`. The drop, the world lock (`has_dropped_charter_grimoire_<id>`), the mirroring and the tooltips are the existing ones. Skills that
 the Charter forbids (`tensura:usurper`), duplicates and anything beyond 12 are dropped (and the in-game test `arc.charter` names them); the test also checks every skill id
 against the Tensura skill registry. The item name is "Charter Grimoire of <name>" (no language entry per character is needed).
 

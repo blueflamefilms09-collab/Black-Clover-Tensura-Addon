@@ -21,7 +21,7 @@ ASSETS = os.path.join(ROOT, "src", "main", "resources", "assets", "anime_multive
 OUT = os.path.join(ASSETS, "sounds", "voice", "shishou")
 SOUNDS_JSON = os.path.join(ASSETS, "sounds.json")
 LANG = os.path.join(ROOT, "tools", "lang", "shishou_voice.json")
-JAVA = os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "anime_multiverse", "shishou", "ShishouVoiceLines.java")
+JAVA = os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "nusmp", "shishou", "ShishouVoiceLines.java")
 REPORT = os.path.join(HERE, "shishou_voice_report.json")
 CHAIN = ("silenceremove=start_periods=1:start_threshold=-45dB:start_silence=0.04,areverse,"
          "silenceremove=start_periods=1:start_threshold=-45dB:start_silence=0.12,areverse,"

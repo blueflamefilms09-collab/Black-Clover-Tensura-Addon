@@ -5,7 +5,7 @@ mechanism room that existed before, (2) describes the 29 new puzzles, each a rea
 anybody, a reward through the existing loot path and a scaling with party size and depth, (3) explains how the room generator now chooses among old and new puzzles by theme and depth with
 weights in one data file, and (4) lists exactly what was added to existing files and what could not be verified (nothing here has been run in a game).
 
-Code: `labyrinth/mega/puzzle/**` (pure rules in `puzzle/rules/**`), one small bridge class `labyrinth/mega/mechanics/PuzzleBridge.java`. Data: `data/nusmp/mega/puzzles/weights.json`, two room
+Code: `labyrinth/mega/puzzle/**` (pure rules in `puzzle/rules/**`), one small bridge class `labyrinth/mega/mechanics/PuzzleBridge.java`. Data: `data/anime_multiverse/mega/puzzles/weights.json`, two room
 templates `structure/mega/puzzle/gallery_a.nbt` and `gallery_b.nbt` (generator `tools/labyrinth/gen_mega_puzzle_rooms.py`). Lang fragment: `tools/lang/puzzles_v2.json` (282 lines, generated
 from `PuzzleText`). Tests: `src/test/java/com/newuniverse/nusmp/labyrinth/mega/puzzle/*` (45 JUnit tests, all run). In-game self-tests: `puzzle.*` (32).
 
@@ -15,8 +15,8 @@ from `PuzzleText`). Tests: `src/test/java/com/newuniverse/nusmp/labyrinth/mega/p
 |---|---|---|
 | The 29 puzzles (`plate_sequence` ... `chain_reaction`, section 3) | NEW | Nothing like them existed: the old puzzles are the four-sigil room, the library's puzzle mechanics and the pocket puzzle vault. |
 | The puzzle engine (`PuzzleRule`, `PuzzleBase`, `PuzzleInstance`, `PuzzleDirector`, `PuzzleStage`, `PuzzlePlanner`, `PuzzleWeights`) | NEW | Sibling of the mechanics Director, built from the same pieces (`Journal`, `Area`, the loot table, the safety rule). |
-| `data/nusmp/mega/puzzles/weights.json` | NEW | The one file that chooses among old and new puzzles. |
-| Open puzzle rooms `puzzle/gallery_a`, `gallery_b` and the marker `nusmp:puzzle` | NEW | Added to the `puzzle/` folder next to the old puzzle rooms; the pool `side` got one weight line. |
+| `data/anime_multiverse/mega/puzzles/weights.json` | NEW | The one file that chooses among old and new puzzles. |
+| Open puzzle rooms `puzzle/gallery_a`, `gallery_b` and the marker `anime_multiverse:puzzle` | NEW | Added to the `puzzle/` folder next to the old puzzle rooms; the pool `side` got one weight line. |
 | Sealed Archway trials, Gatekeeper doors, Shadow Key, Floor Warden, Peak Altar, sigil rooms, Riddle Stone, pitfall / snuffer rooms, relic pedestals, the Crucible, the rift pocket vault, the Mana Core door | KEPT, untouched | Section 1. |
 | The mechanics library (1000 mechanics, 20 puzzle bases) | KEPT, untouched | One added guard line (section 6): in a room that the new plan gives a puzzle, the library's puzzle-category mechanic is not armed (the draw above decides which of the two kinds the room gets; a library puzzle in a room the draw left alone is as before). |
 | Nothing was replaced and nothing was removed. | | |
@@ -24,8 +24,8 @@ from `PuzzleText`). Tests: `src/test/java/com/newuniverse/nusmp/labyrinth/mega/p
 ## 1. Everything that existed before (the inventory)
 
 ### 1.1 Trials (a fight that locks the room until it is won)
-* **Sealed Archway** (`labyrinth/trial`, `docs/labyrinth/e1_trial.md`): a keystone `nusmp:sealed_archway` with `nusmp:ward_rune` tiles in every doorway and `nusmp:spawn_glyph` tiles for the
-  wave. A survival player walking in seals every doorway with `nusmp:magic_barrier`, the glyphs spawn the roster (scaled by the players inside), the barriers fall when the last monster dies,
+* **Sealed Archway** (`labyrinth/trial`, `docs/labyrinth/e1_trial.md`): a keystone `anime_multiverse:sealed_archway` with `anime_multiverse:ward_rune` tiles in every doorway and `anime_multiverse:spawn_glyph` tiles for the
+  wave. A survival player walking in seals every doorway with `anime_multiverse:magic_barrier`, the glyphs spawn the roster (scaled by the players inside), the barriers fall when the last monster dies,
   and an empty room resets after `reset` seconds. State machine `TrialState`, arithmetic in `TrialMath`. Mega rooms: `trial/trial_hall_a`, `trial_hall_b` and ten themed ones
   (`celestial_court_tribunal`, `crystal_geode_shatter_trial`, `drowned_crypt_drowned_font`, `dwarven_forgehold_anvil_trial`, `infernal_foundry_cage_arena`, `haunted_manor_ballroom`,
   `mountain_monastery_duel_ring`, `vampire_castle_blood_court`, `spider_warrens_brood_hatch`, `sky_citadel_thunder_court`).
@@ -41,7 +41,7 @@ from `PuzzleText`). Tests: `src/test/java/com/newuniverse/nusmp/labyrinth/mega/p
   order lifts the bars, a wrong press resets and wakes two vexes) and its secret-boss variant.
 
 ### 1.3 Puzzles
-* **Sigil puzzle** (`labyrinth/trap`, `f1_traps.md`): four `nusmp:sigil_plate` (colour 0 to 3, a click not a step), a `nusmp:riddle_stone` that reads out the order, the `kind=puzzle` door; `PuzzleState`
+* **Sigil puzzle** (`labyrinth/trap`, `f1_traps.md`): four `anime_multiverse:sigil_plate` (colour 0 to 3, a click not a step), a `anime_multiverse:riddle_stone` that reads out the order, the `kind=puzzle` door; `PuzzleState`
   keeps order, progress and the wrong-order lock. Rooms: the Spire's `puzzle_room`, Mega `puzzle/sigil_hall_a`, `sigil_hall_b` and seven themed rooms (`crystal_geode_resonance_hall`,
   `cursed_archive_card_catalogue`, `drowned_crypt_tide_gate`, `holy_church_confessional`, `feywild_grove_fairy_ring`, `infernal_foundry_contract_hall`, `sunken_temple_tidal_gate`).
 * **Pitfall field** (`PitfallTileBlock`, the Spire's pit room, Mega `trap/pit_hall_a`, `pit_hall_b` and the themed trap rooms `cursed_archive_burning_stacks`, `fungal_underdark_chasm_ledges`,
@@ -55,7 +55,7 @@ from `PuzzleText`). Tests: `src/test/java/com/newuniverse/nusmp/labyrinth/mega/p
 
 ### 1.4 Vaults and rewards
 * **Relic Pedestal** (`labyrinth/vault`), the **hidden caches** of treasure rooms (`hidden_caches.md`), the **Crucible of Choice** (`mega/crucible`: three relics, exactly one pick per region, the rest
-  forfeit, a catastrophe follows) and the trial loot table `nusmp:chests/labyrinth_trial` that every puzzle reward rolls.
+  forfeit, a catastrophe follows) and the trial loot table `anime_multiverse:chests/labyrinth_trial` that every puzzle reward rolls.
 
 ## 2. How a new puzzle is built (the architecture)
 
@@ -99,7 +99,7 @@ weights.json --PuzzleWeights--> PuzzlePlanner.plan(floor, rooms, theme, road, de
   (self-test `puzzle.restore`).
 
 ### 2.2 Reward, party scaling, depth scaling
-* **Reward**: through the existing path. Each affected player present gets a roll of `nusmp:chests/labyrinth_trial` (never a relic) popped at the room, two rolls and double experience for a flawless
+* **Reward**: through the existing path. Each affected player present gets a roll of `anime_multiverse:chests/labyrinth_trial` (never a relic) popped at the room, two rolls and double experience for a flawless
   solve (no mistakes), plus experience that grows with depth (`14 + 9 x s` per player, `s` the mechanics' depth coordinate). Solved puzzles are remembered (`MechanicsData.markSolved("puzzle:<sector>:<room>:<id>")`),
   so they do not re-arm; a given-up or wound-down puzzle is only cooled down.
 * **Party**: `Params.party` is the number of affected players inside when the puzzle arms (1 to 8), and the board is rebuilt for a changed party size until the first action. Boards get bigger (more cells,
@@ -157,7 +157,7 @@ Cells are shown for one delver at tier 1 / a full party at tier 5 (`StatsDump`-s
 
 ## 4. How the generator chooses among old and new puzzles
 
-`data/nusmp/mega/puzzles/weights.json` (a datapack may replace it; `/reload` re-reads it; keys starting with `_` are comments):
+`data/anime_multiverse/mega/puzzles/weights.json` (a datapack may replace it; `/reload` re-reads it; keys starting with `_` are comments):
 
 | key | meaning |
 |---|---|
@@ -175,14 +175,14 @@ every player and after a restart. Unless a room is a sigil room, is "busy" (the 
 puzzles; determinism and caps; protected rooms stay protected; a marker room always gets one; tiers; the old puzzles keep their stated share within 5 points; a liking theme draws a puzzle more often;
 depth changes the menu; a broken file never breaks the game).
 
-**Templates.** The gallery rooms (`structure/mega/puzzle/gallery_a`, `gallery_b`, 27 x 18, three doors, lit to block light 7+, no spawn markers, one `nusmp:puzzle` marker in the middle) are puzzle-kind
+**Templates.** The gallery rooms (`structure/mega/puzzle/gallery_a`, `gallery_b`, 27 x 18, three doors, lit to block light 7+, no spawn markers, one `anime_multiverse:puzzle` marker in the middle) are puzzle-kind
 rooms with a clear floor. They join the `side` pool as templates of the `puzzle/` folder (relative weight 4 each, the sigil halls 3) and the folder's share in that pool was raised from 1 to 2, so the old puzzle rooms keep nearly their old weight (sigil halls 10 to 9) and the galleries add about twice as many puzzle rooms as there were; they are drawn like the other puzzle rooms. The marker is in `MarkerKind` (appended), the template
 checker's list (`tools/labyrinth/mega_lib.py` `MARKER_KINDS`) and the catalog (`src/test/resources/mega/catalog.json`, regenerated). A future template can carry the marker with `type=<id>` to force one
 puzzle. `PuzzleGeometryTest` proves that every puzzle at every tier and party size fits a 23 x 14 interior (what a 27 x 18 room leaves two blocks clear of its walls).
 
 ## 5. Lang, config, commands, self-tests
 
-* **Lang**: every string is `Component.translatableWithFallback` with the English from `PuzzleText`, so nothing is needed to run. `tools/lang/puzzles_v2.json` (flat, 282 lines, keys `message.nusmp.mega.puzzle.*`)
+* **Lang**: every string is `Component.translatableWithFallback` with the English from `PuzzleText`, so nothing is needed to run. `tools/lang/puzzles_v2.json` (flat, 282 lines, keys `message.anime_multiverse.mega.puzzle.*`)
   is generated from the same table (`PuzzleTextDump`) and a JUnit test fails when it drifts. Per puzzle: `<id>.name`, `<id>.hint`, its lines; `theme.<theme id>` (the flavour), `riddle.<id>.q/a0..a2`,
   `item.<token>.q`, `token.<token>`, `colour.<name>`, `compound.<n>`, `common.*`, `cmd.*`. No `en_us.json` edit.
 * **Config**: none; the weights file is the configuration.
@@ -204,7 +204,7 @@ puzzle. `PuzzleGeometryTest` proves that every puzzle at every tier and party si
 | `tools/labyrinth/mega_lib.py` | `"puzzle"` added to `MARKER_KINDS` |
 | `tools/labyrinth/mega_pools.json` | `"mega/puzzle/gallery": 4` in `relative`, the `puzzle` folder share in the `side` pool 1 to 2; `side.json` regenerated by `gen_mega_pools.py` |
 | `src/test/resources/mega/catalog.json` | regenerated by `mega_catalog.py` (244 templates) |
-| New files only otherwise | `labyrinth/mega/puzzle/**`, `labyrinth/mega/mechanics/PuzzleBridge.java`, `data/nusmp/mega/puzzles/weights.json`, the two templates, `tools/labyrinth/gen_mega_puzzle_rooms.py`, `tools/lang/puzzles_v2.json`, this document, the tests |
+| New files only otherwise | `labyrinth/mega/puzzle/**`, `labyrinth/mega/mechanics/PuzzleBridge.java`, `data/anime_multiverse/mega/puzzles/weights.json`, the two templates, `tools/labyrinth/gen_mega_puzzle_rooms.py`, `tools/lang/puzzles_v2.json`, this document, the tests |
 
 ## 7. How to add a puzzle
 

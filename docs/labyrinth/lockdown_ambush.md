@@ -11,10 +11,10 @@ answers players who bypass a room. Everything lives in `labyrinth/mega/lockdown/
 | NEW | `RoomLockdownEvent` (NeoForge event, cancellable, band and waves mutable) and `RoomLockdownClearedEvent` | `lockdown/RoomLockdownEvent.java`, `RoomLockdownClearedEvent.java` |
 | NEW | `LockdownBarrierBlock` + `LockdownBarrierBlockEntity` (the amber wall; the first barrier of a room is its brain, the rest remember where it is) | `lockdown/LockdownBarrierBlock*.java` |
 | NEW | `LockdownDirector` (watches the players, decides, finds the doorways, spawns the wave, places the barriers), `LockdownWaves`, `OpeningScan`, `WaveCells` | `lockdown/` |
-| NEW | Room data flagging the challenge rooms: `data/nusmp/mega/lockdown/rooms.json`, parsed by `LockdownTable`, held by `LockdownRooms` (reload listener, built-in minimum) | `lockdown/LockdownTable.java`, `LockdownRooms.java`, the json |
+| NEW | Room data flagging the challenge rooms: `data/anime_multiverse/mega/lockdown/rooms.json`, parsed by `LockdownTable`, held by `LockdownRooms` (reload listener, built-in minimum) | `lockdown/LockdownTable.java`, `LockdownRooms.java`, the json |
 | NEW | `DynamicAmbushDirector` + pure `AmbushRules`, `AmbushLedger`, `SpeedTracker`, `AmbushGeometry` | `lockdown/` |
 | NEW | `LockdownData` (saved set of cleared rooms), `LockdownConfig` (`nusmp-labyrinth-mega-lockdown-server.toml`), `LockdownText` + `tools/lang/lockdown.json`, `/multiverse mega lockdown ...` | `lockdown/`, `tools/lang/` |
-| NEW | The block's art: `tools/gen_lockdown_assets.py` (amber diamond lattice, four animated frames), blockstate, model, item model | `tools/`, `assets/nusmp/...` |
+| NEW | The block's art: `tools/gen_lockdown_assets.py` (amber diamond lattice, four animated frames), blockstate, model, item model | `tools/`, `assets/anime_multiverse/...` |
 | NEW | Self-test `dungeon.lockdown`, nine JUnit classes | `LockdownSelfTests.java`, `src/test/.../mega/lockdown/` |
 | EXTENDED (append-only) | `EncounterDirector.spawnAt(...)` and `liveNearParty(...)`: the Dungeon Master's own spawn with the cells given by the caller (the place search is skipped, everything else runs) | `mega/enc/EncounterDirector.java` |
 | EXTENDED (append-only) | `SealedArchwayBlockEntity.activate` posts `RoomLockdownEvent` (source TRIAL, informational) so a listener sees every challenge room | `trial/SealedArchwayBlockEntity.java`, one line |
@@ -39,7 +39,7 @@ own encounter for the sector's table, sized by the band, the party and the depth
 When the wave is dead the next appears after `wavePauseTicks` (60); after the last the barriers fall, each cell gets back the block it replaced, the room is marked cleared
 **for good** (`nusmp_lockdown.dat` in the overworld's data storage) and `RoomLockdownClearedEvent` is posted.
 
-### The room data (`data/nusmp/mega/lockdown/rooms.json`)
+### The room data (`data/anime_multiverse/mega/lockdown/rooms.json`)
 
 A room's rule is its exact template, else the first matching name pattern, else its kind's folder; the first match wins whole. Shipped: `treasure` and `set` always lock
 (set pieces: hard, two waves); about a third of the ordinary `hall` rooms lock from floor 2 (chance 0.35); fifteen name patterns (barracks, armory, great hall, grand

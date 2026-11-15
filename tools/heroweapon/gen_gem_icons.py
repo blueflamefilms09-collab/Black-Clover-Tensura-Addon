@@ -26,7 +26,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(HERE, "..", "relics"))
 from wave1_icons import Canvas, rgb, shade, mix, ICONS, MODELS, ROOT, S   # noqa: E402
 
-JAVA_DIR = os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "anime_multiverse", "heroweapon")
+JAVA_DIR = os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "nusmp", "heroweapon")
 HOLY_ID = "calling_gem"
 FRAGMENT_ID = "gem_fragment"
 SEAL_PREFIX = "vassal_seal_"

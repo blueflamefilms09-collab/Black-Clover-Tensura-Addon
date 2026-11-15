@@ -52,7 +52,7 @@ gen_tier_looks.py <id>
 * An HD module normally starts from its own 64x64 remake as a **blueprint**: `H.blueprint(cid, spec, masks)` runs `remake/<id>.py`. The bridge `from64` upscales it smoothly (so layout and colour
   blocking stay the owner-approved ones), and the module then **redraws the things that must be crisp** (face, trims, gems, frills) at 4x detail. Anything the module does not redraw still
   looks better than a plain upscale.
-* Output: `assets/nusmp/textures/entity/playermodel/<id>.png` (+ `<id>_glow.png`), and `looks_tier.json` (`glow: true` when there is a glow map; the hair id comes from the module).
+* Output: `assets/anime_multiverse/textures/entity/playermodel/<id>.png` (+ `<id>_glow.png`), and `looks_tier.json` (`glow: true` when there is a glow map; the hair id comes from the module).
 
 Run: `python3 -B tools/tier_bosses/gen_tier_looks.py charlos mr_2_bon_clay` (about 1.2 s per character, numpy and Pillow).
 Preview: `python3 -B tools/tier_bosses/preview_tier.py out.png --trio charlos mr_2_bon_clay` (front, back, three-quarter bust; `--close`, `--back`, `--aa N` supersample, default 2 for an HD skin;
@@ -174,7 +174,7 @@ Hair: return the hair id you want (a style of `hair_styles.json`); Bon Clay does
 ## 6. Files
 
 New: `tools/tier_bosses/hd/{hdlib,hd_core,hd_detail,hd_bridge,charlos,mr_2_bon_clay,test_hdlib}.py`, `docs/bosses/hd_outfits.md`, `docs/previews/tier_hd/*`,
-`assets/nusmp/textures/entity/playermodel/mr_2_bon_clay_glow.png`.
+`assets/anime_multiverse/textures/entity/playermodel/mr_2_bon_clay_glow.png`.
 Changed: `gen_tier_looks.py` (`load_hd`, `--size`, `--auto-hd`), `preview_tier.py` (`--trio`, `--aa`, `--skin-dir`), `tools/playermodel/pmrender.py`, `SkinPath.java`, `PlayerModelAudit.java`,
 `PlayerModelSelfTests.java` (comment), the three Java test classes, the PNGs `charlos.png`, `charlos_glow.png`, `mr_2_bon_clay.png` (now 256x256), `looks_tier.json` (Bon Clay: `glow`, hair).
 Kept: every `tools/tier_bosses/remake/*.py`, all other skins (64x64).

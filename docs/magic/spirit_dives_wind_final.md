@@ -11,7 +11,7 @@ Previews (all renders of the repo's software harness `tools/render_preview`, **n
 **Built**
 1. **A_ANIME is the default Wind**, both tiers. `spiritDive.windLook` now defaults to `A_ANIME` (`SpiritDiveWindRules.DEFAULT_LOOK`). PACK, REEL, B_CLIP and C_SAINT stay selectable (rule 2). A client that already has
    `windLook = "B_CLIP"` written in its `nusmp-spiritdive-client.toml` keeps B until the line is changed or deleted (a config default only applies to a fresh file).
-2. **The crown is a real 3D render layer.** Four meshes (`assets/nusmp/sdw4_meshes/crown_yuno|crown_std|crown_yuno_half|crown_std_half.txt`, made by `tools/gen_sdw4_models.py`, same quad-line format and same loader as
+2. **The crown is a real 3D render layer.** Four meshes (`assets/anime_multiverse/sdw4_meshes/crown_yuno|crown_std|crown_yuno_half|crown_std_half.txt`, made by `tools/gen_sdw4_models.py`, same quad-line format and same loader as
    `sdw3_meshes`, same atlas `aura/sdw3_skin`): a thin ring with tall arrow-tip bars of uneven height (Yuno: **14 bars** and a **second, lower ring**; standard: **8 bars**, one ring), each bar a triangular shaft
    with an arrow head wider than the shaft, a glow shell (a haze band on the ring and two crossed haze planes a bar). It floats **12.6 px (about 4 px, a hand's width, above the hat layer)** above the head, **turns
    slowly** (0.021 rad a tick, one revolution in about 15 s), bobs 0.45 px, **follows the head's yaw fully and its pitch by half** (so it floats instead of wobbling with every nod; no per-player state needed),

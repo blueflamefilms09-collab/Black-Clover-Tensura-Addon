@@ -6,7 +6,7 @@ puffs (the white-square render type is another builder's lane and is not touched
 
 ## 1. Findings (audit of every particle the upgraded items spawn)
 
-Five client emitters read five kinds of table; the tables hold **829 `particle` tokens in 122 files** (`assets/nusmp/visual_upgrade/*.json` and `fx/*.json`). Before this release:
+Five client emitters read five kinds of table; the tables hold **829 `particle` tokens in 122 files** (`assets/anime_multiverse/visual_upgrade/*.json` and `fx/*.json`). Before this release:
 
 | token | count | where it went |
 |---|---|---|
@@ -28,7 +28,7 @@ sprite covers about half the view width, and a few of them overlap. The custom `
 ## 2. What changed
 
 * **Every token resolves to a custom particle.** New pure `particle/fx/UpgradeParticleAlias`: `fx`, `dust`, empty -> the hue-themed custom mote dyed with the layer colour (`FxRelic.dust`); a catalog id
-  (`flame_tongue`, `nusmp:ember`) -> itself; a vanilla name (all 107 vanilla particle names of 1.21.1 are in the table, with and without `minecraft:`) -> the nearest custom particle
+  (`flame_tongue`, `anime_multiverse:ember`) -> itself; a vanilla name (all 107 vanilla particle names of 1.21.1 are in the table, with and without `minecraft:`) -> the nearest custom particle
   (`end_rod` -> `mote`, `glow` -> `mote_soft`, `flame` -> `flame_tongue`, `soul_fire_flame` -> `flame_soul`, `cloud`/`smoke` -> `smoke_wisp`, `witch` -> `mana_mote`, `enchant` -> `rune_sol`,
   `electric_spark` -> `electric_orb`, `crit` -> `spark`, `lava` -> `lava_blob`, `portal` -> `void_speck`, ...); anything unknown -> `mote`. It never answers a vanilla particle and never reads the
   vanilla registry. New `particle/fx/UpgradeParticleOptions` builds the `TintedParticleOptions` (dyed with the layer colour when the particle is tintable; the vanilla colour of the particle - a witch
@@ -37,7 +37,7 @@ sprite covers about half the view width, and a few of them overlap. The custom `
   (worn charms), `client/relics/fx/UpgradeFxClient` (worn relics), `relics/upgrade/UpgradeActFx` (act bursts, server: also half the count, at most 48 instead of 120), `client/relics/djinn/tiny/TinyDjinnFx`,
   `client/ElsdociaGlitterClient`. `UpgradeParticleNames` (1.108.0) stays, unused by the two classes now.
 * **The tables say it too.** `tools/visual_upgrade/custom_particles.py` (alias table `tools/visual_upgrade/particle_alias.json`, kept identical to the Java table by a test) rewrote the 577 vanilla
-  and `dust` tokens of 86 tables in place (`dust` -> `fx`, `minecraft:flame` -> `nusmp:flame_tongue`; only the token strings change, the layout is untouched). Seven generators call it right before
+  and `dust` tokens of 86 tables in place (`dust` -> `fx`, `minecraft:flame` -> `anime_multiverse:flame_tongue`; only the token strings change, the layout is untouched). Seven generators call it right before
   they write a table (`god_melee_a/specs.py`, `god_melee_b/build.py`, `genesis_weapons/build_item.py`, `demon_slayer/ds_build.py`, `djinn_dark_weapons/build.py`, `god_worn/fx.py`,
   `charms_genesis_worn/build.py`), so a re-run keeps the fix. `python3 -B tools/visual_upgrade/custom_particles.py --check` fails while a table holds a vanilla token.
 * **Size near the camera.** New pure `particle/fx/ParticleNearCap`, used by `FxParticle.getQuadSize` for every ambient-sized custom particle (profile width <= 0.7; the rings, bursts and flashes of the
@@ -59,9 +59,9 @@ sprite covers about half the view width, and a few of them overlap. The custom `
   | still applied afterwards | `PerfBudgets.clientParticles` (the per-tick client allowance) |
 
   Rates after, per item and second (density 0.5, cap 16): God melee b / dark Djinn mean **16** (was 122), God melee a 16 (61), worn relics 16 (63), Genesis 15 (35), worn charms 6 (12). `VuFx`
-  also emits one particle per due layer instead of up to two and three trail steps instead of four. `/nusmp perf report` prints a line (`upgrade particles: live n/cap, granted x of y asked`, fps).
+  also emits one particle per due layer instead of up to two and three trail steps instead of four. `/anime_multiverse perf report` prints a line (`upgrade particles: live n/cap, granted x of y asked`, fps).
 * **Tests changed on purpose:** `UpgradeCoreTest.theParticleBudgetIsTakenBeforeAnythingIsSpawned` and `UpgradeParticleNamesTest` (two tests) asserted the 1.108.0 route (`PerfBudgets` before `level.addParticle`,
-  `FxRelic.dust` + `Fx.options`); they now assert the new one (`UpgradeGate.take` before `UpgradeGate.add`, the gate calls `PerfBudgets.clientParticles`; shipped tokens are `fx` or `nusmp:<catalog id>`).
+  `FxRelic.dust` + `Fx.options`); they now assert the new one (`UpgradeGate.take` before `UpgradeGate.add`, the gate calls `PerfBudgets.clientParticles`; shipped tokens are `fx` or `anime_multiverse:<catalog id>`).
 
 ## 3. NEW / REPLACED / KEPT
 

@@ -7,7 +7,7 @@ copy of the bc4 kit plus a sibling loader, a chain painter along a path, bandage
 the generator and the module test). The pipeline is the one of `docs/arc/hd_arc.md`: the 64x64 sheet is the blueprint (layout, colour blocking and the second-layer coverage stay), the front of the
 head and every body island are redrawn at 4x detail on both layers (the game drops the second layer and the hair beyond 24 blocks, `PlayerLod`), the other faces of the head are repainted clean
 as skin and scalp. The hair sheets stay 64x64 (owner: no HD hair sheets). The old 64x64 skins are REPLACED under the same file names
-(`src/main/resources/assets/nusmp/textures/entity/playermodel/<look>.png` and `_glow.png`), the generator keeps its 64 mode (`--size 64`).
+(`src/main/resources/assets/anime_multiverse/textures/entity/playermodel/<look>.png` and `_glow.png`), the generator keeps its 64 mode (`--size 64`).
 
 Preview: `docs/previews/arc_hd/bc6_front_back.png` (front and back of all ten), `docs/previews/arc_hd/bc6_close.png` (the bust of all ten).
 

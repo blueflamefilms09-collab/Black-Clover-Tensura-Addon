@@ -10,7 +10,7 @@ and a few drifting sparks; the rest of the body keeps its normal clothes. What t
 
 ## 1. The style, defined (what was studied and what was kept)
 
-Studied: `docs/djinn_weapons.md`, `client/relics/djinn/` (`DjinnArmorLayer`, `DjinnMeshes`, `DjinnDraw`, `DjinnLook`, `DjinnFirstPerson`), the mesh files `assets/nusmp/djinn/u_*/` and the forge-in
+Studied: `docs/djinn_weapons.md`, `client/relics/djinn/` (`DjinnArmorLayer`, `DjinnMeshes`, `DjinnDraw`, `DjinnLook`, `DjinnFirstPerson`), the mesh files `assets/anime_multiverse/djinn/u_*/` and the forge-in
 (`client/aura/EquipAnimation`, the Djinn's own arithmetic). The Djinn Equip is:
 
 1. **A set of pieces**, each its own mesh anchored on the model part it was built for (pauldron, vambrace, gauntlet ...), drawn with the part's pose so it follows every swing and crouch.

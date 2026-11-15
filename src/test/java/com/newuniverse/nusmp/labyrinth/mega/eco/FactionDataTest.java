@@ -264,7 +264,7 @@ class FactionDataTest {
                 boolean ok = switch (id.substring(0, id.indexOf(':'))) {
                     case "minecraft" -> vanilla.contains(id);
                     case "tensura" -> tensura.contains(id);
-                    case "anime_multiverse" -> ours.contains(id.substring(6));
+                    case "anime_multiverse" -> ours.contains(id.substring(17));
                     case "iceandfire" -> iceAndFire.contains(id);
                     default -> false;
                 };

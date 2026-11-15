@@ -1,6 +1,6 @@
 # Vassal Fan (`vassal_fan`): Glass' war fan
 
-Class VASSAL, style SWING, canon holder Glass (the Fan Hero). Logic `heroweapon/weapon/fan/FanLogic`, forms `data/nusmp/hero/forms/vassal_fan.json`.
+Class VASSAL, style SWING, canon holder Glass (the Fan Hero). Logic `heroweapon/weapon/fan/FanLogic`, forms `data/anime_multiverse/hero/forms/vassal_fan.json`.
 This page is written in sections; the LOOK section comes first because the art builder (`hart3`) reads it first.
 
 ## 1. Look (for the art builder)
@@ -220,7 +220,7 @@ renewed because it is already gliding, not because it is still falling fast), an
 | `weapon/fan/FanText` | every name and description, built from the numbers; writes the lang entries |
 | `weapon/fan/ResidueLedger` | the pure counter of magic residue |
 | `weapon/fan/FanState` | the per-wielder memory (residue, veil, glide), bounded, cleared on logout, when the fan is put away and on server stop |
-| `data/nusmp/hero/forms/vassal_fan.json` | the five forms |
+| `data/anime_multiverse/hero/forms/vassal_fan.json` | the five forms |
 | `weapon/glassworld/*` | the kit shared with the Scythe, the Katana and the Book (see `docs/heroweapon/weapon_glassworld.md`) |
 
 Tests: `FanNumbersTest`, `ResidueLedgerTest`, `FanTextTest`, `FanFormsTest` (and the kit's tests). Self-test in the game: `hero.weapon.fan` (binds a stand-in player, casts every

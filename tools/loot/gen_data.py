@@ -188,7 +188,7 @@ final class LootText {
 
 
 def main():
-    java = os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "anime_multiverse", "labyrinth", "loot", "LootText.java")
+    java = os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "nusmp", "labyrinth", "loot", "LootText.java")
     with open(java, "w", encoding="utf-8", newline="\n") as f:
         f.write(java_text())
     dump(os.path.join(DATA, "loot", "roster.json"), roster())

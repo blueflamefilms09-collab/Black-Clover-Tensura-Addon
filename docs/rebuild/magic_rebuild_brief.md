@@ -47,7 +47,7 @@ local verification tools), `docs/magic_framework.md`, `docs/geo_models.md`, `doc
 
 ## 1.99.0: the temporary armour is no longer a side effect of a cast
 
-Part 2 above ("the 5 second armour after a cast") is superseded by the armour policy (`docs/rebuild/armour_policy.md`, `book.ArmourPolicy`, data `data/nusmp/armour_policy.json`): only
+Part 2 above ("the 5 second armour after a cast") is superseded by the armour policy (`docs/rebuild/armour_policy.md`, `book.ArmourPolicy`, data `data/anime_multiverse/armour_policy.json`): only
 the magics the table calls TOGGLE or FORM have an armour, and it is put on and taken off by its own explicit page (or by Spirit Dive), through `book.ArmourState`; no other page of any
 book equips anything. The armour painters, models and textures of the other magics stay on disk and in `AuraRegistry`. A new magic gets a row in `tools/gen_armour_policy.py`; a test
 fails until every `MagicType` has one.

@@ -19,7 +19,7 @@ sys.path.insert(0, HERE)
 from new197_roster import ROSTER                                    # noqa: E402
 
 ROOT = os.path.abspath(os.path.join(HERE, "..", ".."))
-JAVA = os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "anime_multiverse", "relics", "wave")
+JAVA = os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "nusmp", "relics", "wave")
 RES = os.path.join(ROOT, "src", "main", "resources")
 
 RANGES = {"LEGEND": (130, 175), "GOD": (190, 240), "GENESIS": (260, 350)}

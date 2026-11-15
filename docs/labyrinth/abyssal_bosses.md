@@ -12,7 +12,7 @@ local JUnit shim. Nothing here has run in the game.** Section 9 lists what could
 | part | NEW / REPLACED / KEPT |
 |---|---|
 | 22 looks (creature models), three phases each, with clips, glow layers and previews | NEW (nothing like them existed; the Guardian had one body) |
-| the `look` field of a boss profile; `AbyssalLooks`, the table `assets/nusmp/abyssal/looks.json`; the humanoids as `assets/nusmp/playermodel/looks_abyssal.json` for the player-model kit (skins, extras) | NEW |
+| the `look` field of a boss profile; `AbyssalLooks`, the table `assets/anime_multiverse/abyssal/looks.json`; the humanoids as `assets/anime_multiverse/playermodel/looks_abyssal.json` for the player-model kit (skins, extras) | NEW |
 | `AbyssalRenderer`, the Guardian's renderer | NEW class; it REPLACES the Floor Warden body **only for a Guardian that has a look**. A Guardian with no look is drawn by the very code it was before (`AbyssalRenderer extends KitMobRenderer` and calls it), so the old look is KEPT for every profile without a `look` |
 | the twenty ordinary profiles | KEPT, except `evil_t1a` (the Umbral Catacomb Lich-Djinn), which now says `look: lich` (the owner asked for "a generic lich") |
 | the 17 famous profiles | each gains `look` (an addition to its file, the generator `tools/labyrinth/gen_dnd_famous.py` writes it) |
@@ -20,7 +20,7 @@ local JUnit shim. Nothing here has run in the game.** Section 9 lists what could
 
 ## 2. How the Guardian was drawn, and how it is now
 
-* Before: `RemodelRenderers` registered `KitMobRenderer(ctx, "floor_warden", Size.fit(), KitProbes.ARMOUR)` for `nusmp:labyrinth_guardian` (the art-kit body `arc_floor_warden`).
+* Before: `RemodelRenderers` registered `KitMobRenderer(ctx, "floor_warden", Size.fit(), KitProbes.ARMOUR)` for `anime_multiverse:labyrinth_guardian` (the art-kit body `arc_floor_warden`).
 * Now: the same `case` of `RemodelRenderers` registers `AbyssalRenderer` (`client/remodel/AbyssalRenderer`). It reads three synced values of the entity (`LabyrinthGuardianEntity`: the look id, the
   phase 1 to 3, the game time and kind of the last cast), chooses `abyssal_<look>_p<phase>` from `AbyssalLooks`, plays the clip the pose clock (`ZogratisPose`) picks (idle, walk and run paced by the ground
   covered, attack on the swing, cast on the boss's cast cue, hurt, death), scales it so the model's reference height is the hitbox height (which grows with the Guardian's size attribute) times the look's
@@ -29,10 +29,10 @@ local JUnit shim. Nothing here has run in the game.** Section 9 lists what could
 
 ## 3. The data
 
-* A profile (`data/nusmp/mega/dnd_bosses/**`) may say `"look": "<id>"` (lower-case words). No `look`: the Guardian keeps the look it had, except an **evil boss of a demon sector** (`abyss`, `blood`,
-  `flame`, `infernal_foundry`: the sectors where `data/nusmp/mega/factions/demon.json` weights the demon faction at 5) which wears the demon of its tier: quasit, vrock, hezrou, balor, balor.
+* A profile (`data/anime_multiverse/mega/dnd_bosses/**`) may say `"look": "<id>"` (lower-case words). No `look`: the Guardian keeps the look it had, except an **evil boss of a demon sector** (`abyss`, `blood`,
+  `flame`, `infernal_foundry`: the sectors where `data/anime_multiverse/mega/factions/demon.json` weights the demon faction at 5) which wears the demon of its tier: quasit, vrock, hezrou, balor, balor.
   (`AbyssalLooks.resolve`, the table `theme_defaults`.) A holy boss, and a boss of any other sector, is never a demon.
-* The table `assets/nusmp/abyssal/looks.json` (written by `tools/abyssal/gen_abyssal.py` next to the models it describes) holds, per look: name, kind (`humanoid` or `geo`), the reference height, the
+* The table `assets/anime_multiverse/abyssal/looks.json` (written by `tools/abyssal/gen_abyssal.py` next to the models it describes) holds, per look: name, kind (`humanoid` or `geo`), the reference height, the
   ground a walk and a run cycle cover, the shadow, the culling box, the boost, the glow colour, `dust`, the three phases (model, caption, and for a humanoid its skin, its extras model and the extras),
   the clips file, and for a humanoid `slim` and `part_scale`.
 * `data/.../famous/*.json` and `evil_t1a.json` are written by the generators `tools/labyrinth/gen_dnd_famous.py` / `gen_dnd_bosses.py` (they now carry the look map), so a re-run keeps the field.
@@ -41,7 +41,7 @@ local JUnit shim. Nothing here has run in the game.** Section 9 lists what could
 
 Humanoid = the vanilla **player body** with a real 64x64 player skin (box UV, a glow skin next to it) plus separate GeoLite **extras** keyed by the look id (the owner's rule for human-shaped bosses).
 Geo = a full GeoLite body (the non-humanoids). Every look has three phases: the model of phase 2 and 3 differs from phase 1 (glow, extra parts, a cracked or broken piece), and each change of phase is
-announced above the hotbar with the caption of that look (`message.nusmp.mega.dnd.look.<id>.p2` / `.p3`, lang fragment `tools/lang/abyssal_bosses.json`) and plays the cast clip once.
+announced above the hotbar with the caption of that look (`message.anime_multiverse.mega.dnd.look.<id>.p2` / `.p3`, lang fragment `tools/lang/abyssal_bosses.json`) and plays the cast clip once.
 
 | look | worn by | built as | phase 1 | phase 2 adds | phase 3 adds |
 |---|---|---|---|---|---|
@@ -75,7 +75,7 @@ floats its staff forward in `cast`; every look's `death` falls or collapses and 
 
 The owner decided that human-shaped bosses are player-model characters (`docs/playermodel.md`, `client/playermodel/**`). The nine humanoids are delivered in the kit's own format:
 
-* **`assets/nusmp/playermodel/looks_abyssal.json`**: the same entry format as `playermodel/looks.json` (fields `skin`, `slim`, `glow`, `hair`, `hair_color`, `scale`, `extras`, `hold_r` / `hold_l`; `alpha`, `cape` and
+* **`assets/anime_multiverse/playermodel/looks_abyssal.json`**: the same entry format as `playermodel/looks.json` (fields `skin`, `slim`, `glow`, `hair`, `hair_color`, `scale`, `extras`, `hold_r` / `hold_l`; `alpha`, `cape` and
   `glow_color` are left out: not needed). One entry per look and phase, id `abyssal_<look>_p<n>` (27 entries). `scale` is the look's height over 1.875 (a boss's real size comes from the entity, the table
   only says how tall the model was drawn). `hold_r` / `hold_l` -0.42 raises the arm that holds a weapon (Zariel's flame sword, Asmodeus' Ruby Rod, Orcus' Wand, the Lich King's runeblade, the Solar's bow).
 * **Skins**: `textures/entity/playermodel/abyssal_<look>_p<n>.png` + `_glow.png`: real 64x64 classic skins (`slim` for Zariel). The robes, hoods, helms and plate are on the second layer, the base layer is
@@ -104,7 +104,7 @@ repo's preview harness (`tools/render_preview`) into `docs/previews/abyssal/` (`
 * `DndProfiles.all()`; `LabyrinthGuardianEntity`: synced data (look, phase, cast time and kind), `lookId() lookPhase() castAt() castKind()`, `syncLook()` after the profile is set and after a load,
   the phase and its caption in `refreshDndName`; `DndBoss`: `g.noteCast(1)` in `legendary()` and `lair()`.
 * `client/remodel/AbyssalRenderer` (new) and one `case` of `RemodelRenderers` pointing at it.
-* Lang: `tools/lang/abyssal_bosses.json` (the look names `entity.nusmp.abyssal.<id>` and the captions); the captions are read with `translatableWithFallback`, so the English text of the table shows without the merge.
+* Lang: `tools/lang/abyssal_bosses.json` (the look names `entity.anime_multiverse.abyssal.<id>` and the captions); the captions are read with `translatableWithFallback`, so the English text of the table shows without the merge.
 
 ## 8. Tests
 

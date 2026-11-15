@@ -141,12 +141,12 @@ class LootAssetsTest {
                 n++;
                 JsonObject r = json(p);
                 String result = r.getAsJsonObject("result").get("id").getAsString();
-                if (!result.startsWith("anime_multiverse:") || !mine.contains(result.substring(6))) bad.add(p.getFileName() + " makes " + result);
+                if (!result.startsWith("anime_multiverse:") || !mine.contains(result.substring(17))) bad.add(p.getFileName() + " makes " + result);
                 List<String> items = new ArrayList<>(), tags = new ArrayList<>();
                 ingredients(r, items, tags);
                 for (String item : items) if (!exists(item, mine)) bad.add(p.getFileName() + " ingredient " + item);
                 for (String tag : tags) {
-                    if (tag.startsWith("anime_multiverse:") && !Files.exists(DATA.resolve("anime_multiverse/tags/item/" + tag.substring(6) + ".json"))) bad.add(p.getFileName() + " tag " + tag);
+                    if (tag.startsWith("anime_multiverse:") && !Files.exists(DATA.resolve("anime_multiverse/tags/item/" + tag.substring(17) + ".json"))) bad.add(p.getFileName() + " tag " + tag);
                 }
             }
         }
@@ -157,7 +157,7 @@ class LootAssetsTest {
     private static boolean exists(String item, Set<String> mine) {
         if (item.startsWith("minecraft:")) return true;
         if (!item.startsWith("anime_multiverse:")) return false;
-        String id = item.substring(6);
+        String id = item.substring(17);
         return mine.contains(id) || Files.exists(ASSETS.resolve("models/item/" + id + ".json"));
     }
 
@@ -182,13 +182,13 @@ class LootAssetsTest {
             for (Path p : files.filter(f -> f.getFileName().toString().startsWith("loot_")).toList()) {
                 List<String> items = new ArrayList<>(), tags = new ArrayList<>();
                 ingredients(json(p), items, tags);
-                for (String item : items) if (item.startsWith("anime_multiverse:")) used.add(item.substring(6));
+                for (String item : items) if (item.startsWith("anime_multiverse:")) used.add(item.substring(17));
                 for (String tag : tags) {
                     Path tp = DATA.resolve("anime_multiverse/tags/item/" + tag.substring(tag.indexOf(':') + 1) + ".json");
                     if (!tag.startsWith("anime_multiverse:") || !Files.exists(tp)) continue;
                     for (JsonElement v : json(tp).getAsJsonArray("values")) {
                         String id = v.isJsonObject() ? v.getAsJsonObject().get("id").getAsString() : v.getAsString();
-                        if (id.startsWith("anime_multiverse:")) used.add(id.substring(6));
+                        if (id.startsWith("anime_multiverse:")) used.add(id.substring(17));
                     }
                 }
             }

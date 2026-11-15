@@ -5,7 +5,7 @@ Tensura's casting, from Blockbench to in-game. Written for **this** mod: NeoForg
 (already a dependency), the existing chant / Mana Zone / release flow in `book/GrimoireBook.java`, and the VFX layers that
 already draw the magic circles.
 
-> Status (0.59): built, without Player Animator. Clips live in `assets/nusmp/animations/player/cast.animation.json` (made by `tools/gen_cast_animations.py`), the server picks them in `anim/CastAnim`, `client/CastAnimClient` plays them from `PlayerModelMixin`. Chant and Mana Zone loop; releases include thrust, side, up, sweep, slam, the signature finisher, the fail flinch, sealing's two-handed crush, and weapon-specific motions. A page can pick its own with `BookPage.withAnim(...)`; `BookPage.withWeapon(...)` gates it on a held tagged weapon and overrides that ordinary release with the matching weapon clip.
+> Status (0.59): built, without Player Animator. Clips live in `assets/anime_multiverse/animations/player/cast.animation.json` (made by `tools/gen_cast_animations.py`), the server picks them in `anim/CastAnim`, `client/CastAnimClient` plays them from `PlayerModelMixin`. Chant and Mana Zone loop; releases include thrust, side, up, sweep, slam, the signature finisher, the fail flinch, sealing's two-handed crush, and weapon-specific motions. A page can pick its own with `BookPage.withAnim(...)`; `BookPage.withWeapon(...)` gates it on a held tagged weapon and overrides that ordinary release with the matching weapon clip.
 
 ---
 
@@ -41,7 +41,7 @@ Every cast has five beats. The mod already has the server-side moments for each 
 release animation's contact frame at **0-2 ticks**. Never delay the damage to wait for the animation. If a pose needs a longer
 release, start it *before* release, in the chant's last 4 ticks.
 
-The generated attribute-specific rune overlays are stored under `assets/nusmp/textures/particle/magic_runes/`; regenerate them after
+The generated attribute-specific rune overlays are stored under `assets/anime_multiverse/textures/particle/magic_runes/`; regenerate them after
 adding a `MagicType` with `node tools/gen_magic_runes.mjs`. High-detail ring and band textures are also available for selected attributes;
 generate them with `python tools/gen_magic_runes.py <output-directory>` (requires Pillow). Open-book page flips prefer the high-detail ring
 when one is available and keep the base overlay for the other attributes.
@@ -69,7 +69,7 @@ forward.** Check the sign of each axis once in the preview before keying a whole
 The summoned grimoire floats at the **right hand**, so the **left arm does the gestures** and the right arm stays within about 30° of rest.
 Otherwise the hand drifts away from the book (see 4.1).
 
-#### `nusmp:cast_chant` (loop, 1.0 s / 20 ticks): every page while the key is held
+#### `anime_multiverse:cast_chant` (loop, 1.0 s / 20 ticks): every page while the key is held
 | t (s) | body | left_arm | right_arm | notes |
 |---|---|---|---|---|
 | 0.00 | X 0 | X −20, Z 15 | X −25 | from rest |
@@ -79,7 +79,7 @@ Otherwise the hand drifts away from the book (see 4.1).
 
 Legs: knees bent with `left_leg` X −8 and `right_leg` X 6 (a combat stance). Add a body **position** Y of −0.5 px to sink the weight.
 
-#### `nusmp:cast_release_thrust` (0.8 s / 16 ticks): bolts, rays, spears (starter and mid pages)
+#### `anime_multiverse:cast_release_thrust` (0.8 s / 16 ticks): bolts, rays, spears (starter and mid pages)
 | t (s) | body | left_arm | notes |
 |---|---|---|---|
 | 0.00 | X 6, Y 25 | X −110, Z −10 | the end of the chant, twisted away |
@@ -88,27 +88,27 @@ Legs: knees bent with `left_leg` X −8 and `right_leg` X 6 (a combat stance). A
 | 0.25 | X 4, Y −8 | X −70, Z 10 | **recoil**: the arm kicks up and back |
 | 0.80 | X 0, Y 0 | X 0 | settle (ease-out) |
 
-#### `nusmp:cast_release_sweep` (0.9 s): slashes and arcs (Mirrors Slash, Wind Blade, anti-magic slashes)
+#### `anime_multiverse:cast_release_sweep` (0.9 s): slashes and arcs (Mirrors Slash, Wind Blade, anti-magic slashes)
 - Wind-up: the left arm goes across the chest (Y 60, X −80) and the body twists Y +30.
 - Contact (2 ticks): the arm sweeps to Y −70 and the body to Y −25.
 - After the contact, hold for 3 ticks, then recoil and settle.
 - If a slash spell sends a VFX arc, spawn it at the contact frame with its start angle matching the wind-up side.
 
-#### `nusmp:cast_release_slam` (1.1 s): zone pages (meteorites, pillars, domes)
+#### `anime_multiverse:cast_release_slam` (1.1 s): zone pages (meteorites, pillars, domes)
 - Both arms go up (X −170), the body arches back (X −12), and it **rises 2 px** (body position Y +2).
 - Contact: both arms drive down to X −40, the body to X 20 and position Y −2 (a crouch). Spawn `MAGIC_CIRCLE_EXPLOSION` on this frame.
 - Recoil is small; the weight stays down for 6 ticks, then the body rises.
 
-#### `nusmp:cast_mana_zone` (loop, 1.6 s): the overcharge hold (sustained floating stance)
+#### `anime_multiverse:cast_mana_zone` (loop, 1.6 s): the overcharge hold (sustained floating stance)
 - Arms spread (Z ±70, X −30), palms open. The chest lifts (body X −8). Legs hang: X 10 / 4, toes pointing down.
 - **Visual hover:** a body position Y bob between +1 and +3 px, a sine wave over the 1.6 s loop.
 - A real hover (moving the hitbox off the ground) must be done on the server, e.g. a short `slow_falling` + small upward velocity in `onHeld`. Never fake gameplay height with the animation alone.
 
-#### `nusmp:cast_signature` (1.6 s): signature pages (Real Double, Full Reflection, captain spells)
+#### `anime_multiverse:cast_signature` (1.6 s): signature pages (Real Double, Full Reflection, captain spells)
 - Pattern: chant pose → a 4-tick "breath in" (body X −10, arms half-open) → a 2-tick explosive spread (arms Z ±95) → a 6-tick hold → a slow 12-tick settle.
 - The longer hold is what makes it feel like a finisher. Pair it with the page's own big VFX.
 
-#### `nusmp:cast_fail` (0.5 s): the chant broke off, sealed, or out of magicules
+#### `anime_multiverse:cast_fail` (0.5 s): the chant broke off, sealed, or out of magicules
 - The off hand drops sharply (2 ticks), the body flinches back (X −6), then a slow recovery. It tells the player the cast fizzled without a chat message.
 
 ### 1.3 Which page plays which release
@@ -140,12 +140,12 @@ The circle is already spawned by the server (`castCircle`, `MANA_CHARGE`, `MAGIC
    - **Don't rename bones, move pivots or add bones.** The library maps the bone names to the vanilla model parts, so a renamed bone just doesn't move.
    - Pivots are already at the shoulders, hips and neck.
 2. Format: animate in the template's format and **export the animation as JSON** (Animation → Export Animations). Player Animator reads Blockbench/GeckoLib-style animation JSON. Put the files at
-   `src/main/resources/assets/nusmp/player_animation/<name>.json` (one animation per file is easiest to manage).
+   `src/main/resources/assets/anime_multiverse/player_animation/<name>.json` (one animation per file is easiest to manage).
 3. **Elbows and knees:** the vanilla player has no elbow or knee bones. Player Animator can *bend* limbs only with its optional bend add-on, and armor and overlays won't bend with it. **Recommendation: don't depend on bends.** Build the poses from shoulder, hip and torso rotation, which is how Tensura's poses read too.
-4. Name animations `nusmp.cast_chant` and so on, so they are easy to grep, and keep one Blockbench project (`tools/blockbench/cast_animations.bbmodel`) for the whole set so poses stay consistent.
+4. Name animations `anime_multiverse.cast_chant` and so on, so they are easy to grep, and keep one Blockbench project (`tools/blockbench/cast_animations.bbmodel`) for the whole set so poses stay consistent.
 
 ### 2.2 For GeckoLib mobs and summons (Spirit Lords, beasts, a future GeckoLib Real Double)
-Follow the existing layout: `assets/nusmp/geo/<group>/<name>.geo.json` and `assets/nusmp/animations/<group>/<name>.animation.json` (like `geo/armor/robe.geo.json` and `RobeModel`).
+Follow the existing layout: `assets/anime_multiverse/geo/<group>/<name>.geo.json` and `assets/anime_multiverse/animations/<group>/<name>.animation.json` (like `geo/armor/robe.geo.json` and `RobeModel`).
 
 1. **Bone tree:** `root` → `body` → (`head`, `arm_left` → `hand_left` → `grimoire`, `arm_right` → …, `leg_left`, `leg_right`), plus a separate `fx` bone for glow cards.
    - Parent everything under `root`, so one key can lift the whole mob into a float.
@@ -200,7 +200,7 @@ Register it next to the others (`r.playToClient(...)`, as in `GrimoireSummon.reg
 ### 3.3 Client: one animation layer per player
 ```java
 // client/CastAnimClient.java (new, client only)
-static final ResourceLocation LAYER = ResourceLocation.fromNamespaceAndPath("nusmp", "cast");
+static final ResourceLocation LAYER = ResourceLocation.fromNamespaceAndPath("anime_multiverse", "cast");
 
 static void init(FMLClientSetupEvent e) {
     // priority 42: above Better Combat's held-weapon poses (layers 1-4), below its attack swings (2000), so a swing always wins
@@ -213,7 +213,7 @@ static void handle(CastAnimPayload msg, IPayloadContext ctx) {
     var layer = (ModifierLayer<IAnimation>) PlayerAnimationAccess.getPlayerAssociatedData(pl).get(LAYER);
     if (layer == null) return;
     if (msg.anim().equals("stop")) { layer.replaceAnimationWithFade(AbstractFadeModifier.standardFadeIn(3, Ease.INOUTSINE), null); return; }
-    var anim = PlayerAnimationRegistry.getAnimation(ResourceLocation.fromNamespaceAndPath("nusmp", msg.anim()));
+    var anim = PlayerAnimationRegistry.getAnimation(ResourceLocation.fromNamespaceAndPath("anime_multiverse", msg.anim()));
     if (anim == null) return;
     var player = new KeyframeAnimationPlayer(anim);
     layer.replaceAnimationWithFade(AbstractFadeModifier.standardFadeIn(msg.anim().startsWith("cast_release") ? 1 : 3, Ease.INOUTSINE),
@@ -290,7 +290,7 @@ For any new caster mob:
    - Emission shaders on the circle and VFX cards in the magic colour.
    - A low-key rim light behind the caster.
    - One camera push-in timed to the wind-up and a 2-frame camera shake on the contact frame.
-4. Magic circles for the trailer: reuse the in-game circle textures (`assets/nusmp/textures/particle/*`) on emissive planes, so the trailer matches what players see.
+4. Magic circles for the trailer: reuse the in-game circle textures (`assets/anime_multiverse/textures/particle/*`) on emissive planes, so the trailer matches what players see.
 
 ---
 

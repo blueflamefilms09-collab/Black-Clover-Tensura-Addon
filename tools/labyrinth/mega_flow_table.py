@@ -23,7 +23,7 @@ import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.abspath(os.path.join(HERE, "..", ".."))
-SRC = os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "anime_multiverse")
+SRC = os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "nusmp")
 DATA = os.path.join(ROOT, "src", "main", "resources", "data", "anime_multiverse", "mega", "flow", "alignments.json")
 
 # ----------------------------------------------------------------------------------------------------------------------------- the rules (a port of MagicAlignments)
@@ -142,7 +142,7 @@ def pages(names):
 
 
 def numbers():
-    t = read(os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "anime_multiverse", "labyrinth", "mega", "flow", "FlowRules.java"))
+    t = read(os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "nusmp", "labyrinth", "mega", "flow", "FlowRules.java"))
 
     def num(name):
         m = re.search(name + r"\s*=\s*([0-9.]+)", t)

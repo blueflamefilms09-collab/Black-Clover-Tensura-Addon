@@ -16,7 +16,7 @@ The record (stacks, Severance hits, the immunity flag) lives in the skill instan
 
 ## Getting it
 
-`/multiverse adaptability give <player>` (operators), or Tensura's own `/tensura edit <player> ability grant nusmp:adaptability`. Press the skill's key to toggle it. Skill id `nusmp:adaptability`, icon `textures/skill/adaptability.png` (`tools/skills/gen_adaptability_icon.py`).
+`/multiverse adaptability give <player>` (operators), or Tensura's own `/tensura edit <player> ability grant anime_multiverse:adaptability`. Press the skill's key to toggle it. Skill id `anime_multiverse:adaptability`, icon `textures/skill/adaptability.png` (`tools/skills/gen_adaptability_icon.py`).
 
 ## Settings
 

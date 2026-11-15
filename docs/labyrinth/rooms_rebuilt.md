@@ -6,7 +6,7 @@ decoration it should be a rare one."
 Three parts, one change:
 
 1. **Rooms and hallways are rebuilt on the same footprint.** 115 shipped templates (71 halls, 14 treasure rooms, 7 junctions, 20 corridors, 3 links) get four new designs each
-   (460 files under `data/nusmp/structure/mega_r/`). A server switch `gen.roomsRebuilt` (default on) picks the new set; off gives the shipped rooms.
+   (460 files under `data/anime_multiverse/structure/mega_r/`). A server switch `gen.roomsRebuilt` (default on) picks the new set; off gives the shipped rooms.
 2. **Weapon racks are no longer generated.** The block, item, block entity, renderer and loot tables stay registered (old worlds, players' own racks).
 3. **Armour stands are back, as a rare prop** (about 6 percent of armoury, barracks, guard, training, vault and treasure rooms, at most 2 per floor, wearing a set of the right
    grade for the depth, breakable and lootable).
@@ -21,11 +21,11 @@ template id of a piece after the plan exists (`RoomVariants.variantId`). What gu
 
 | Guard | Where | What it proves |
 |---|---|---|
-| Python contract check, per file, at generation time | `tools/labyrinth/rr_check.py` | same size; same jigsaw sockets (position, orientation, every data field); same data markers; every container, mechanism and `nusmp:` block of the shipped room at the same cell; vanilla blocks only; no row above 46; at most one armour stand |
+| Python contract check, per file, at generation time | `tools/labyrinth/rr_check.py` | same size; same jigsaw sockets (position, orientation, every data field); same data markers; every container, mechanism and `anime_multiverse:` block of the shipped room at the same cell; vanilla blocks only; no row above 46; at most one armour stand |
 | `RoomsRebuiltFilesTest` | JUnit | for all 460 files: size, sockets and markers equal the shipped template's; functional blocks stand where they did; no rack; stands only as the one slot; the variants differ from each other and from the shipped room; kept kinds untouched; cost |
 | `RoomsRebuiltPlanTest` | JUnit | 96 real-catalog floors (5152 pieces, 2202 built from a rebuilt room): every variant has the size and sockets of the shape the plan placed |
 | `RoomsRebuiltClearanceTest` | JUnit | the real `Clearance7` cut applied to every variant: 1788 doorways and 84 lane cuts, all 7 x 7, no lane cut removes anything (the one exception is the shipped fungus farm's own chest, which the shipped room has too) |
-| `GeometryCheck.rebuiltRooms` | in game (`/nusmp ... verify`, `dungeon.rooms_rebuilt`) | a piece built from a variant must be a rebuilt room of its own shape with the same size; the existing box, jigsaw and marker comparison runs against the template the piece was really built from |
+| `GeometryCheck.rebuiltRooms` | in game (`/anime_multiverse ... verify`, `dungeon.rooms_rebuilt`) | a piece built from a variant must be a rebuilt room of its own shape with the same size; the existing box, jigsaw and marker comparison runs against the template the piece was really built from |
 | `dungeon.rooms_rebuilt` | server self-test | the switch and the table, every variant against its shipped template, probe plans built with variants through `GeometryCheck`, determinism |
 | `python tools/labyrinth/gen_rooms_rebuilt.py --verify` and `template.py --check` | tools | `mega_check` contract on all 460 files (0 errors) and the NBT round trip of all 706 templates |
 
@@ -34,7 +34,7 @@ Footprint, floor height 48, module grid 9, floors, spawn points, safe zones, the
 ## 2. How a rebuilt room is made
 
 The generator (`tools/labyrinth/gen_rooms_rebuilt.py`, helpers `rr_*.py`) starts from the shipped room and keeps everything that does something (sockets, markers, spawners,
-chests, mechanisms, `nusmp:` blocks, and their stand-clear rings) and redraws the architecture around it, with palette blocks so the theme swap still restyles it per sector theme:
+chests, mechanisms, `anime_multiverse:` blocks, and their stand-clear rings) and redraws the architecture around it, with palette blocks so the theme swap still restyles it per sector theme:
 
 1. the old roof is stripped and a height-field roof is built (groin, barrel, dome, gable, hip, or the old height coffered), closed against the walls, with bevel stairs and ribs;
 2. chains, pillars and hangers are carried up to the new roof;
@@ -138,7 +138,7 @@ The generic rooms (crypts, libraries, shrines, cisterns, labs, plazas, corridors
 
 | | What |
 |---|---|
-| NEW | 460 rebuilt template files `structure/mega_r/**` and the manifest `data/nusmp/mega/rooms_rebuilt.json`; the generator tools `tools/labyrinth/rr_*.py`, `gen_rooms_rebuilt.py` |
+| NEW | 460 rebuilt template files `structure/mega_r/**` and the manifest `data/anime_multiverse/mega/rooms_rebuilt.json`; the generator tools `tools/labyrinth/rr_*.py`, `gen_rooms_rebuilt.py` |
 | NEW | `RoomVariants`, `RoomsSettings` (`gen.roomsRebuilt`), `RoomsSelfTests` (`dungeon.rooms_rebuilt`), the saved flag `rr` on a sector |
 | NEW | the rare armour stand: `ArmourStandRarity`, `RareStandSet`, `ArmourStandGate`, `RareStands`; config `props.armourStandRarity` and `props.armourStandFloorCap`; self-test `dungeon.props.stands` |
 | NEW | tests: `RoomVariantsTest`, `RoomsRebuiltFilesTest`, `RoomsRebuiltClearanceTest`, `RoomsRebuiltPlanTest`, `RoomsConfigSourceTest`, `ArmourStandRarityTest`, `RareStandSetTest`, `NoRackPlacementTest` |

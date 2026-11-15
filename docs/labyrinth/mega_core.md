@@ -21,9 +21,9 @@ against stubs regenerated from the real API dump (see "How it was checked"), nev
 | `MegaTravel` | REPLACEMENT of the contract stub body (`enter` returned false) | The signature is unchanged. |
 | `MegaGenRegistry` | REPLACEMENT of the contract stub bodies | `MegaSystem` already calls `init` and `register`. |
 | `MegaConfig` | KEPT, one key APPENDED (`genBudgetMs`) | No key renamed or removed. |
-| `data/nusmp/mega/recipe/default.json` | NEW (1.54.0) | The Sector Recipe (section 6). Unchanged in 1.55.0. |
+| `data/anime_multiverse/mega/recipe/default.json` | NEW (1.54.0) | The Sector Recipe (section 6). Unchanged in 1.55.0. |
 | `LabyrinthTravel`, the Spire, the old Gates and Maws, `MegaDungeon`, `Sector`, `MegaData`, every other contract class | KEPT, not touched | |
-| The Gateway structure (`nusmp:mega_gateway`) | NOT BUILT here | Built by the architecture builder. `MegaTravel` honours its structure tag. |
+| The Gateway structure (`anime_multiverse:mega_gateway`) | NOT BUILT here | Built by the architecture builder. `MegaTravel` honours its structure tag. |
 | **1.55.0** Two roads: `Expander.requestFirst(server, Polarity)`, the lane origins, `SectorDraft`, `SectorThreat`, the per-road obstacle rule (`WorldObstacles`), `ExpandRule.refusalForNext` | NEW | Section 14. |
 | **1.55.0** `MegaTravel.enterChain` (the generator's `ChainTravel`), the per-road memory of the deepest Landing | NEW | `MegaTravel.enter` is KEPT and now means "up the Holy road". |
 | **1.55.0** `MegaCommand`: `expand [holy\|abyssal]`, `status` per road, the road and floors on every sector line, `unseal` that does not wait for the vault | REPLACEMENT of the single-chain `expand` and `status` | The words the CI script reads are kept as the prefix of every line. |
@@ -105,7 +105,7 @@ anything is pure Java under JUnit; the game classes only read data in, turn the 
 
 ## 4. The assembler, step by step (what differs from or adds to the design doc)
 
-1. **Start.** The Landing is drawn from `nusmp:mega/landing`, and for each candidate socket the unique rotation that makes it attach is computed
+1. **Start.** The Landing is drawn from `anime_multiverse:mega/landing`, and for each candidate socket the unique rotation that makes it attach is computed
    (`origin = parentSocketCell + dir(parentFacing) - rotate(r, candidateSocketCell)`; the facings must be opposite). The tunnel pieces of the request (a later sector) are installed first.
 2. **Regions (model B).** A region is 171 blocks square (19 modules), 48 high, centred on the Landing's door and growing forward; consecutive regions are at least
    `GAP = max(REGION_GAP, 2 * CAP_MARGIN) = 16` blocks apart, and the tunnel between two sectors is a run of whole 9-block segments from the old seal to the new Landing door
@@ -148,7 +148,7 @@ A regeneration keeps the sector's progress state (ACTIVE, GUARDIAN_DEAD, UNSEALE
 
 ---------------------------------------------------------------------------------------------------------------------------------------------
 
-## 6. The Sector Recipe: `data/nusmp/mega/recipe/default.json`
+## 6. The Sector Recipe: `data/anime_multiverse/mega/recipe/default.json`
 
 Keys that start with an underscore are comments. A key the loader does not know is logged and ignored (a typo must not silently keep a default); a value of the wrong type or range is clamped and logged.
 `RecipeTest` fails if this file and the defaults compiled into `Recipe` drift apart. Distances are in modules (9 blocks) between box centres in the horizontal plane. Reload with `/reload`.
@@ -165,14 +165,14 @@ Keys that start with an underscore are comments. A key the loader does not know 
 | `safeMinDistance` / `safeMaxDistance` | 5 / 12 | >= 0 | |
 | `min` | `{"trial": 1, "treasure": 2}` | object | Least rooms per kind; keys are `RoomKind` folder names (`trial`, `treasure`, `hall`, ...). |
 | `max` | `{"set": 1, "trial": 2, "trap": 2, "puzzle": 2}` | object | Most rooms per kind. The room builders meant the trap, puzzle and trial rooms to be about one per sector: at most two of each (the dark room is a trap). |
-| `shapeMax` | `{"nusmp:mega/hall/great_hall": 1, "nusmp:mega/set/cathedral_rotunda": 1, "nusmp:mega/trap/dark_room": 1}` | object | Most uses of one template id per sector (a template's own `max` also applies; 0 lifts a default). The two landmarks (3 x 5 and 5 x 5 modules) and the dark room never repeat inside a sector. |
+| `shapeMax` | `{"anime_multiverse:mega/hall/great_hall": 1, "anime_multiverse:mega/set/cathedral_rotunda": 1, "anime_multiverse:mega/trap/dark_room": 1}` | object | Most uses of one template id per sector (a template's own `max` also applies; 0 lifts a default). The two landmarks (3 x 5 and 5 x 5 modules) and the dark room never repeat inside a sector. |
 | `chainSockets` | 120 | 1..5000 | Candidate doorways tried for the Guardian's hall before a seed is given up. |
 | `chainLeaves` | 10 | 1..200 | Complete boss chains compared before the best Way Onward is installed. |
 | `stepBudget` | 600000 | >= 1000 | Runaway guard on attach attempts in the boss-chain and extras search (not a tuning knob). |
 | `capReserve` | 60 | 0..1000 | Pieces kept out of the first fill for the chain, the extras and the caps. |
 | `requireMarkers` | true | boolean | Does the audit demand ARRIVAL, exactly one GUARDIAN_SPAWN, GATEKEEPER, VAULT_CENTER, EXPANSION_SOCKET? |
 
-**A promise the pools cannot keep is waived (1.55.0).** `min` names kinds of room the door pool (`nusmp:mega/side`) must supply and `extraSafe` needs the `nusmp:mega/safe` pool. When the pool holds no
+**A promise the pools cannot keep is waived (1.55.0).** `min` names kinds of room the door pool (`anime_multiverse:mega/side`) must supply and `extraSafe` needs the `anime_multiverse:mega/safe` pool. When the pool holds no
 readable template of a kind that `min` asks for (the treasure closets are drawn by another builder than the halls and arrive in a later merge), no seed can ever keep the promise, and failing every try
 would turn every sector into the 7-piece fallback layout. `SectorRequests.effective` therefore drops that one promise for the plan (on a copy: the recipe itself is never changed) and `SectorGenerator.plan` logs
 a WARN per sector; the audit is held to the effective recipe. A kind that IS offered keeps its promise. `/multiverse mega pools` shows which pool is thin.
@@ -186,7 +186,7 @@ the Hub's polarity gates call through `MegaDungeon.enterChain`. `enter(player, f
 use (`LabyrinthTravel.enter` routes here while `mega.layout` is `"mega"`); it leads up the Holy road, which is what 1.54.0's single chain became. Both do the same, in order:
 
 1. The dimension must exist (else a message). A player already waiting for THIS road is accepted silently (a gate calls the entry every tick the player stands in it).
-2. For the old gates only: with `legacyGates` off a player who is not already in a Labyrinth dimension must stand inside a `nusmp:mega_gateway` structure
+2. For the old gates only: with `legacyGates` off a player who is not already in a Labyrinth dimension must stand inside a `anime_multiverse:mega_gateway` structure
    (`level.structureManager().getStructureWithPieceAt(pos, Labyrinth.MEGA_GATEWAY_TAG)`), else a message points at the Gateway (at most one message per player every three seconds).
 3. The Directional Lock: `MegaDungeon.mayEnter(player, road)`. The lock tells the player why when it refuses. Asked again when a waiting player is finally released, because the lock may have closed meanwhile.
 4. The Landing is chosen by `LandingRule` over the CHAIN INDICES of the road: the first finished sector when sneaking or `lastLanding` is off, else the deepest Landing the player ever stood in ON THIS ROAD,
@@ -195,7 +195,7 @@ use (`LabyrinthTravel.enter` routes here while `mega.layout` is `"mega"`); it le
    Sector ids are global and interleave the two roads, so an id says nothing about depth, which is why the memory is the chain index. `rememberLanding` raises both every two seconds while the player stands in a LANDING room,
    so reaching a Landing by any road counts.
 5. With no finished sector on the road: the road's first sector is queued (`ExpansionQueue.tryFirst(server, road)`) and the player WAITS: an action-bar line every two seconds
-   (`message.nusmp.mega.core.waking`), automatic entry the moment the first sector is playable. A player who walks more than 64 blocks away, changes dimension, dies or logs out stops waiting, a failed first sector tells the
+   (`message.anime_multiverse.mega.core.waking`), automatic entry the moment the first sector is playable. A player who walks more than 64 blocks away, changes dimension, dies or logs out stops waiting, a failed first sector tells the
    player which sector to `regen` and drops the wait, and a wait never lasts more than ten minutes.
 6. The teleport is `LabyrinthTravel.arrive(p, level, pad, message)` with the sector's ARRIVAL marker cell as the pad (else the middle of its first Landing room). From a Hub gate the player is not in a Labyrinth dimension,
    so `arrive` remembers the gate as the way home. The quest keys `labyrinth.entered` and `mega.entered` (argument: the sector id) are fired.
@@ -317,7 +317,7 @@ record constructor, `BlockPos` being generated abstract, and `getPersistentData(
   (the decision part of each test is checked first).
 * **Real templates.** The repository's catalog (81 templates today) has no Guardian's hall, antechamber, vault or Way Onward yet (other builders draw them), so `MegaCatalogTest` and `MegaSim` say "cannot make whole sectors yet" and pass.
   The engine WAS run on a local composite of everything that exists in the builders' worktrees (section 14.1); re-run `python3 tools/labyrinth/mega_catalog.py` and `MegaSim` on the merged tree before trusting any number.
-* **The two roads never ran in a game.** The first sector at z 300 000 (chunk generation, the tickets, placement), `enterChain` from a real Hub gate (the way home, the Directional Lock) and a server whose world border in `nusmp:mega_dungeon` is
+* **The two roads never ran in a game.** The first sector at z 300 000 (chunk generation, the tickets, placement), `enterChain` from a real Hub gate (the way home, the Directional Lock) and a server whose world border in `anime_multiverse:mega_dungeon` is
   smaller than 300 000 blocks (the Abyssal road would lie outside it; vanilla's default border is +-29 999 984. Whether a dimension shares the Overworld's border in 1.21.1 was NOT settled: a web search found the
   Minecraft Wiki saying `/worldborder` affects the dimension it is run in, https://minecraft.wiki/w/Commands/worldborder, which could not be fetched here) are the first things to watch.
 * **The default layout is still `"spire"`** (contract), so nothing here runs until the integration commit flips `mega.layout`; `/multiverse mega expand [holy|abyssal]` works regardless.

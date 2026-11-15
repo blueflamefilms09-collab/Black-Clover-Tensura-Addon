@@ -23,7 +23,7 @@ Now: a character with a data file has his own SET: the pages he used (in the ord
 
 ## 2. The data format
 
-One file per character: `src/main/resources/data/nusmp/character_spells/<canon_id>.json` (the id is the `CanonBook` id in lower case). A new file is listed in `CharacterSetRegistry.SHIPPED` (one line; a test fails if a file and the list disagree). A file with ANY problem is skipped as a whole (that character keeps today's grimoire) and the problems are listed in the log and in the self-test result, so a typo can never hide a page by accident.
+One file per character: `src/main/resources/data/anime_multiverse/character_spells/<canon_id>.json` (the id is the `CanonBook` id in lower case). A new file is listed in `CharacterSetRegistry.SHIPPED` (one line; a test fails if a file and the list disagree). A file with ANY problem is skipped as a whole (that character keeps today's grimoire) and the problems are listed in the log and in the self-test result, so a typo can never hide a page by accident.
 
 ```json
 {
@@ -76,7 +76,7 @@ Invalid JSON, a missing field, a schema other than 1, a bad id, a duplicate page
 | Server config, boot, CI self-test | `charset/CharacterSetConfig`, `CharacterSetBoot`, `CharacterSetSelfTests` |
 | Pages added for the pilots (appended after the shared pages) and their casts | `book/CharacterPages`, `book/CharacterArts` |
 | Hooks (one line each) | `GrimoireBook.isUnlocked` (hidden), `GrimoireBook.getModeName` (hidden shows "-"), `GrimoireBook.castPage` (count the cast), `MasteryPages.tryUnlock` (the character's rule), `CharacterSpells.owners/block` (added pages belong to their character; a listed page is not blocked), `MultiverseSync` ("Pages" counts only the visible pages), `SpellSource` (hidden pages are not "still sealed"), `NUSMP` (one boot line), `WindBook` / `WaterBook` / `FireBook` / `DarkBook` (the `familyPages()` appends the added pages) |
-| Armour policy table | `data/nusmp/armour_policy.json`: the added page ids in `new_pages` of WIND, WATER, FLAME, DARK (the existing guard `ArmourPolicyTest` asks for it) |
+| Armour policy table | `data/anime_multiverse/armour_policy.json`: the added page ids in `new_pages` of WIND, WATER, FLAME, DARK (the existing guard `ArmourPolicyTest` asks for it) |
 
 ## 4. The five pilots
 
@@ -245,11 +245,11 @@ Pages of a shared book that a pilot never used are only hidden from that pilot, 
 ## 8. How a content builder adds a character (10 lines)
 
 1. Research (rule 10: English wiki first, Japanese as the fallback) and record the sources in the file.
-2. Copy `data/nusmp/character_spells/yuno.json` to `<canon_id>.json`; set `canon`, `magic`, `book` (the character's `CanonBook` entry and its book registry path).
+2. Copy `data/anime_multiverse/character_spells/yuno.json` to `<canon_id>.json`; set `canon`, `magic`, `book` (the character's `CanonBook` entry and its book registry path).
 3. List his spells in the order he got them: `page` = an existing family page id of that book (the pages he never used simply are not listed); `acquire` = a rule of section 2.1; `exclusive` = true for his signature spells.
 4. A canon spell with no page yet: add a `BookPage` line to the right list in `book/CharacterPages` and its cast to `book/CharacterArts` (or the book's own arts class); a book that is not Wind / Water / Fire / Dark needs the same three-line `withCharacters` wrapper in its `familyPages()` and a `register("book_x", ...)` list.
 5. Add one line `"<canon_id>"` to `CharacterSetRegistry.SHIPPED`.
-6. Page text: `nusmp.page.<book>.<page_id>` in your lang fragment; added page ids in `new_pages` of the magic in `armour_policy.json`; a new book in the `BOOK_FILES` map of `CharacterSetSourceScanTest`.
+6. Page text: `anime_multiverse.page.<book>.<page_id>` in your lang fragment; added page ids in `new_pages` of the magic in `armour_policy.json`; a new book in the `BOOK_FILES` map of `CharacterSetSourceScanTest`.
 7. Run `CharacterSetRegistryTest` and `CharacterSetSourceScanTest` (the file loads, every page resolves, every added page is owned and has text); the self-test `magic.character_spells` does the same in the real game.
 8. Put the character in the docs table of this file. Do not touch `CharacterSpells` for the new character's pages: an added page is locked to its owner by the data.
 

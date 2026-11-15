@@ -39,7 +39,7 @@ def act_keys(rid):
     import glob
     alias = {"hand_of_vecna": "Wave30Tune.ID_HAND", "eye_of_vecna": "Wave30Tune.ID_EYE"}
     ident = '"%s"' % rid if rid not in alias else alias[rid]
-    for f in glob.glob(os.path.join(M.ROOT, "src", "main", "java", "com", "newuniverse", "anime_multiverse", "relics", "wave", "*.java")):
+    for f in glob.glob(os.path.join(M.ROOT, "src", "main", "java", "com", "newuniverse", "nusmp", "relics", "wave", "*.java")):
         t = open(f, encoding="utf8").read()
         m = re.search(r'RelicDef\.of\(%s,.*?(?=out\.accept|\Z)' % re.escape(ident), t, re.S)
         if m:

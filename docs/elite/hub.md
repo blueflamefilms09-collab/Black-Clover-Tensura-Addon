@@ -18,7 +18,7 @@ Package `com.newuniverse.nusmp.elite.hub` (server and shared), `com.newuniverse.
 ## What the repo had (why the seam is where it is)
 * The Mega-Dungeon PAYS Magic Stones from three places: `labyrinth/dnd/economy/EconomyDrops` (the 1.36.0 economy, every hostile non-boss monster of a Labyrinth dimension, stones and crystals graded by
   tier), `labyrinth/mega/eco/FactionDrops` (a threat-scaled stone bonus) and `labyrinth/mega/foundry/FoundryDrops` (the same bonus for the 400 foundry mobs). Chest tables
-  (`data/nusmp/loot_table/chests/labyrinth_trial.json`, `dungeon_relic_vault.json`) also contain Magic Stones.
+  (`data/anime_multiverse/loot_table/chests/labyrinth_trial.json`, `dungeon_relic_vault.json`) also contain Magic Stones.
 * Nothing in the Mega-Dungeon CHARGES Magic Stones: there are no "Merchant Oases" in the code (safe rooms are rest areas with anchors, `labyrinth/mega/safe`), and the Dungeon Master (`mega/enc`) is the
   encounter director, not a merchant. The Black Market (`skilltree/shop`) uses an abstract "gold" purse stored in the skill tree and never touches coin items.
 * The one place the mod already pays Tensura coins is `relics/wave/Wave16Wallet`: "a gold coin is a hundred" silver coins. That is the only existing coin rule, so the coin table extends it.
@@ -48,33 +48,33 @@ master switch at every call (0 / false when the economy is off). Coins inside Te
   `base x tierGrowth^(tier-1) x (1 + floorGrowth x depth in tier) x scale`, jittered 0.6 to 1.4 (boss 0.9 to 1.1), x `(1 + lootingBonus x Looting)` for mobs and chests. Mobs pay on `mobChance` (+5 points per Looting
   level); chests and bosses always pay. Floor 0 (the Hub) pays nothing: the modifier and the listeners only run in the Mega-Dungeon dimension and the roll itself returns 0 for floor 0. Defaults: mob 6 bronze, chest 80, boss 1500,
   x3 per tier, up to +50 percent over a tier (always below the step to the next tier), a rift-pocket chest x3.
-* `CoinLootModifier` (global loot modifier `nusmp:hub_coins`, `data/nusmp/loot_modifiers/hub_coins.json`, listed in `data/neoforge/loot_modifiers/global_loot_modifiers.json`): pays an ordinary hostile monster killed by a
+* `CoinLootModifier` (global loot modifier `anime_multiverse:hub_coins`, `data/anime_multiverse/loot_modifiers/hub_coins.json`, listed in `data/neoforge/loot_modifiers/global_loot_modifiers.json`): pays an ordinary hostile monster killed by a
   player (via `LootVictims.kindOf`: no pet, shadow, summon or boss) and every `chests/...` table rolled in the Mega-Dungeon (in a Secret Rift pocket the rift multiplier and the pocket's own floor).
   In coin mode the chest roll loses its Magic Stones and crystals (the economy is replaced) unless `keepStoneDrops`.
-* `CoinMobDrops` (`LivingDropsEvent`, LOW): the same payout for creatures that roll no loot table at all. The 400 `nusmp:foundry_mob` are exactly that (`FoundryMobEntity.dropFromLootTable` does nothing; their loot comes from
+* `CoinMobDrops` (`LivingDropsEvent`, LOW): the same payout for creatures that roll no loot table at all. The 400 `anime_multiverse:foundry_mob` are exactly that (`FoundryMobEntity.dropFromLootTable` does nothing; their loot comes from
   the economy listeners), so a modifier alone would never pay them. The modifier stamps a creature it has decided for with `nusmp_hub_coin_decided`, so the two never pay twice.
 * `CoinBossDrops` (`LivingDropsEvent`, LOW): the decennial Guardian (also table-less) pays the BOSS amount at the boss floor of the sector it guards.
 * Not from the Hub; not from a monster another monster killed (a turf war), a summoner's minion or a servant.
 
 ## Hub NPCs
-`QuestGiverNPC` and `MerchantNPC` are `PathfinderMob`s (`HubNpcBase`), registered as `nusmp:quest_giver_npc` and `nusmp:merchant_npc` (MISC category, fire immune, spawn eggs). They persist, never despawn, are invulnerable
+`QuestGiverNPC` and `MerchantNPC` are `PathfinderMob`s (`HubNpcBase`), registered as `anime_multiverse:quest_giver_npc` and `anime_multiverse:merchant_npc` (MISC category, fire immune, spawn eggs). They persist, never despawn, are invulnerable
 (except the void, `/kill` and a creative player's hand), cannot be pushed, leashed or poisoned, look at the nearest player and stay within two blocks of their post. A right click opens the server menu
 (`HubMenus.QuestMenu` / `ShopMenu`, slotless, valid while the NPC is alive and within 8 blocks). `HubNpcSpawner` looks after them every five seconds in the Sanctuary dimension, only when the plaza is stamped, a player is within 96 blocks and the
 plaza chunks are entity-ticking (so an NPC saved with the chunk is never mistaken for a missing one): it places a missing NPC on the walkable ground of its spot (`HubNpcLayout`: the Quest Giver in front of the notice pavilion, facing the arrival dais; the Merchant behind the
 counter of the red stall) and removes duplicates. `npcs.spawn = false` switches the placing off.
 
 Look: a clean VILLAGER-model renderer with a skin of its own each (`textures/entity/hub/*.png`, painted by `tools/elite/gen_hub_textures.py`). The arc-kit characters were not used on purpose: they are all ONE shared entity type
-(`nusmp:arc_npc`) wired through the kit's roster, model specs and renderer registry, and the brief asks for two entity classes of their own.
+(`anime_multiverse:arc_npc`) wired through the kit's roster, model specs and renderer registry, and the brief asks for two entity classes of their own.
 
 ## Quests
-* Data: `data/nusmp/elite/hub/quests/*.json` (73 templates: daily kill hunts for each of the five tiers and both roads, Corrupted Foundations hunts, floor clearing, faction kin, deliveries; progression chains of
+* Data: `data/anime_multiverse/elite/hub/quests/*.json` (73 templates: daily kill hunts for each of the five tiers and both roads, Corrupted Foundations hunts, floor clearing, faction kin, deliveries; progression chains of
   reach-floor goals for each road, hunts, Guardians, Foundry hunters, floor clearers and faction wardens, deliveries). A quest has `type` (`daily` | `progression`), `kind` (`kill` | `clear_floors` | `deliver` | `reach_floor`),
   `target`, filters (`tier` 0 to 5, `road`, `faction`, `mob` = any | foundry | boss), `item`, `floor` (signed), `reward` (bronze), `minFloor` (deepest floor the player must have reached), `requires` (quest ids), `weight`.
   `QuestParser` skips a bad row with a sentence and keeps the rest; a later quest with the same id (a datapack) replaces an earlier one.
 * State machine (`PlayerQuestData`, pure, tested): ACTIVE, then READY when the objective is met, then handed in at the Quest Giver, once. Daily: the board is `QuestRules.dailyBoard(day, ...)`, the same for every player with the same unlocks,
   new every world day; done-today is cleared and an unfinished daily of an earlier day is dropped when the day changes. The day is the overworld's day count (`dayTime / 24000`), "the real day count of the world".
   Progression: done for good, unlocked by `requires` and `minFloor`. Deliveries are counted from the inventory at hand-in and the items are taken before the reward is paid.
-* The IPlayerQuestData of the brief is the data attachment `nusmp:hub_quests` (`HubAttachments`, the 1.21 form of a capability, saved with the player, copied on death), exactly how `SystemState` does it. `nusmp:hub_map` keeps the
+* The IPlayerQuestData of the brief is the data attachment `anime_multiverse:hub_quests` (`HubAttachments`, the 1.21 form of a capability, saved with the player, copied on death), exactly how `SystemState` does it. `anime_multiverse:hub_map` keeps the
   rooms seen and the floors mapped.
 * Feeds: `QuestEvents` (death of a monster killed by a player, `FloorListener` entered/cleared, login, respawn, dimension change). Reward: coins (or Magic Stones in the old mode) through `Currency`, `quests.rewardScale`.
 * Overlay: `QuestOverlay`, a GUI layer above everything, top right under the potion effects, "12/50 Tier 1 Abyssal Kills" and a bar per quest (a green "hand in" line when ready), at most five, hidden by F1, while a screen is open,
@@ -83,13 +83,13 @@ Look: a clean VILLAGER-model renderer with a skin of its own each (`textures/ent
 * Not done: party-shared progress (a kill counts for the killer only), a live overlay refresh when the inventory changes for a delivery (it refreshes on the next sync and when the dialogue opens).
 
 ## Shop
-Data `data/nusmp/elite/hub/shop.json`: 45 offers in four categories (gear, food, utility, map: the Dungeon Map costs 15 silver). Every price is coins. `ShopService.purchase` is the only purchase path: the menu must be
+Data `data/anime_multiverse/elite/hub/shop.json`: 45 offers in four categories (gear, food, utility, map: the Dungeon Map costs 15 silver). Every price is coins. `ShopService.purchase` is the only purchase path: the menu must be
 open next to a living Merchant, the price is read from the table (times `shop.priceScale`), the verdict (`ShopRules.decide`: shop off, unknown offer, locked by floor, sold out for today, cannot afford) is pure and tested, the money is
 charged through the seam, the goods go into the inventory (or onto the ground when it is full: a purchase never fails after the coins left), the counter is bumped and the screen gets a whole fresh picture.
 The stock is PER PLAYER and PER WORLD DAY (`dailyLimit` stacks): the Hub is shared, a global stock would let one player buy out the Dungeon Map for everybody, and a per-player counter needs no shared state to save or sync, resets with
 the same day clock as the dailies, and is the rule a player can predict.
 
-## Dungeon Map (`nusmp:dungeon_map`)
+## Dungeon Map (`anime_multiverse:dungeon_map`)
 A real item (stacks to 16; 3D rolled map in the hand through `neoforge:separate_transforms`, the flat sprite as the icon, the pattern of the removed Skill Book; `tools/elite/gen_hub_models.py`). Using it inside the Mega-Dungeon asks `HubMap` to flatten
 the player's sector into a `MapView` (pure): only the rooms of the CURRENT floor, only the doors (the generator's `Sector.edges`) between kept rooms, the first rooms by id up to `map.maxRooms`, a visited flag per room from the
 player's `MapMemory` (the room they stand in is recorded every half second). `DungeonMapScreen` draws every room at true size, coloured by its `RoomKind`, doors as lines, unexplored rooms dim, S for the arrival stair, E for the

@@ -23,7 +23,7 @@ The Fire book (24 family pages now, 18 hidden from the basic grimoire) ends with
 ## 2. Files a batch builder touches (and nothing else)
 
 1. `src/main/java/com/newuniverse/nusmp/book/pages15/BatchN.java`: the pages (one `register("book_x", List.of(...))` per book).
-2. `tools/lang/pages15_batchN.json`: flat `{ "nusmp.page.<book registry path>.<page id>": "one or two sentences" }` (what it does and what scales with EP; the existing fragments such as `tools/lang/basic_spells.json` are the model).
+2. `tools/lang/pages15_batchN.json`: flat `{ "anime_multiverse.page.<book registry path>.<page id>": "one or two sentences" }` (what it does and what scales with EP; the existing fragments such as `tools/lang/basic_spells.json` are the model).
 3. `src/test/resources/armour_policy/pages15_batchN_new_pages.json`: `{ "FLAME": ["page_id", ...], "STAR": [...] }`, the ids you appended, grouped by `MagicType` name (the same key as `armour_policy.json` -> `magics.<MAGIC>`). `ArmourPolicyTest` reads every `pages15_batch*_new_pages.json` IN ADDITION to the shared `new_pages`, so eight builders never edit one file.
 4. `docs/magic/pages15_batchN.md`: one table row per page (section 5) plus the research sources and the worst case.
 

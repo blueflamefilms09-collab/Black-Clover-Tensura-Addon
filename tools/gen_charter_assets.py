@@ -20,7 +20,7 @@ from PIL import Image
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 RES = os.path.join(HERE, "..", "src", "main", "resources", "assets", "anime_multiverse")
-TABLE = os.path.join(HERE, "..", "src", "main", "java", "com", "newuniverse", "anime_multiverse", "charter", "CharterTable.java")
+TABLE = os.path.join(HERE, "..", "src", "main", "java", "com", "newuniverse", "nusmp", "charter", "CharterTable.java")
 
 # ---- the book, in model units (a 16 unit cube space; the book stands upright, front toward +z)
 X0, X1 = 2.5, 13.5          # width 11: from the spine to the fore-edge

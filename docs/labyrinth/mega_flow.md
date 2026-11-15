@@ -17,7 +17,7 @@ and the Holy boss of every tenth floor drops a guaranteed Metal Vessel, "a uniqu
 | Flow rules, cast tracker, damage multiplier, rejection, ambient Rukh | NEW | Per road of the Mega-Dungeon. |
 | Decennial Metal Vessel (`DecennialReward`, `FlowData`, `VesselRules`, `RewardLog`) | NEW drop of an EXISTING item class | The vessel relics of 1.24 (Legend and above, flagged `vessel()`); nothing new is registered. The one owner-requested exception to "Unique-or-higher relics come only from Crucibles". |
 | `/multiverse mega flow` (`status`, `classify`, `vessel list`, `vessel give`) | NEW | The lead attaches it. |
-| Rukh particles (`nusmp:light_rukh`, `nusmp:dark_rukh`, `RukhFx`, the 731-file purge and its build test) | KEPT, untouched | Only CALLED through `RukhFx`, which budgets the density. No vanilla particle, no new particle type, no texture. |
+| Rukh particles (`anime_multiverse:light_rukh`, `anime_multiverse:dark_rukh`, `RukhFx`, the 731-file purge and its build test) | KEPT, untouched | Only CALLED through `RukhFx`, which budgets the density. No vanilla particle, no new particle type, no texture. |
 | The 1.36.0 `EconomyDrops`, the Guardian's own empty loot, `RelicLoot`, `UniqueLedger`, the Djinn system | KEPT, untouched | Used through their public methods. |
 | Two lines in `GrimoireBook.castPage` | SHARED FILE, for the lead | Section 8. |
 | Nothing was replaced and nothing was removed. | | |
@@ -140,7 +140,7 @@ player 80 HP. At 4 HP a rejection takes 2; at 2 HP it takes 1; at 1 HP it takes 
 | `Alignment` | pure | The three words (LIGHT, DARK, NEUTRAL) every part speaks; separate from `RukhFx.Alignment`, which has only the two particle colours. |
 | `MagicAlignments` | pure | The reader of the table: exact entry, whole-word keyword, dark-wins, neutral; merged magics part by part; `explain` says which rule spoke; `parse` never throws and returns the problems. |
 | `AlignmentRegistry` | | The one volatile reference to the table the last reload installed (the empty table before the first). |
-| `AlignmentReload` | | The `ResourceManagerReloadListener` that reads `data/nusmp/mega/flow/alignments.json`, hands the tree to the parser, logs every complaint and installs the table in one step. |
+| `AlignmentReload` | | The `ResourceManagerReloadListener` that reads `data/anime_multiverse/mega/flow/alignments.json`, hands the tree to the parser, logs every complaint and installs the table in one step. |
 | `FlowRules` | pure | Every number and decision: flow of a road, outcome of a cast against a flow, the multiplier and its clamp, the boss-budget charge, the player cap, the drain and its non-lethal floor, the cooldown. |
 | `FlowTracker` | pure | Per player: the last cast and its tick, the running spell of this tick, and the stamps that keep the effects from nagging. Cleared on logout and server stop. |
 | `FlowCasts` | | The two doors that hear casts (the grimoire hook and the ManasCore skill listener), the classification, the tracker and the rejection. |
@@ -155,7 +155,7 @@ player 80 HP. At 4 HP a rejection takes 2; at 2 HP it takes 1; at 1 HP it takes 
 | `FlowSelfTests` | | The in-game self-tests. |
 | `FlowRegistry` | | `init` (self-tests), `register` (game-bus handlers), `command()`. |
 
-## 6. The data file `data/nusmp/mega/flow/alignments.json`
+## 6. The data file `data/anime_multiverse/mega/flow/alignments.json`
 
 Why a file: the owner can retune a family, add a word or move a magic to neutral without a mod update, and a datapack that ships the same path replaces the whole file. It
 carries a `why` string (JSON has no comments).
@@ -188,7 +188,7 @@ Ids are normalised (lower case, spaces and dashes as underscores), and a merged 
 * `flow vessel give <player>`: runs the reward logic for the sector the sender stands in and gives the stack to the player. It skips the once-per-sector memory and the switch and never
   writes to the memory: an admin hand-over, for tests and for making good a lost vessel.
 
-All text goes through `message.nusmp.mega.mfw.*` keys with an English fallback in the call, so the command reads fine before the lang fragment is merged.
+All text goes through `message.anime_multiverse.mega.mfw.*` keys with an English fallback in the call, so the command reads fine before the lang fragment is merged.
 
 ## 8. What hears a cast (the hook coverage), and the two lines for the lead
 

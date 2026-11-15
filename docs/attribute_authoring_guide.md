@@ -28,7 +28,7 @@ Where things are:
   for it (written in your doc, section 8); (4) assign explicit render layers (translucent / cutout / additive) to every visual manifestation.
 * **Models (Custom Model Creation directive).** Whenever an ability needs a visual model (a creature, summon, construct, weapon, tool, key, chain, eye, dice,
   shield, projectile body, armour or overlay piece), generate the model and its textures yourself, to the standard of the existing assets or better:
-  GeckoLib / Blockbench-style `.geo.json` + `.animation.json` with emissive `_glow.png` layers, box UV and pivots like `assets/nusmp/geo/armor/*.geo.json`. If plain
+  GeckoLib / Blockbench-style `.geo.json` + `.animation.json` with emissive `_glow.png` layers, box UV and pivots like `assets/anime_multiverse/geo/armor/*.geo.json`. If plain
   boxes are not enough for the ability, build a real animated geo structure with a glow map. Section 5c: GeoLite + `tools/geo_builder.py`.
 * **Weapons.** A real weapon ITEM needs Tensura engravings (`item/WeaponEngravings.java`) and a 3D model: **do not add items** in this expansion. Weapons in
   spells (blood blades, bone spears, iron swords, bronze shields) are PROP CONSTRUCTS (section 5b) with geo models.
@@ -73,7 +73,7 @@ Where things are:
 | VFX | `vfx/client/layer/<Layer>.java` (+ helpers whose names start with the layer's stem next to it); `tools/gen_<key>_textures.py` -> `textures/particle/<key>_*.png`; `tools/vfx_preview/scenes.d/<key>.json` |
 | AURA (player layer) | `client/aura/<Pascal>Aura.java` (+ helpers); `tools/gen_<key>_aura_textures.py` -> `textures/aura/<key>_*.png`; `tools/gen_<key>_aura_geo.py` -> its geo models; `tools/render_preview/scenes.d/<key>_aura.json` |
 | PROPS | `client/prop/<Pascal>PropPainter.java` (+ helpers); `tools/gen_<key>_prop_textures.py` -> `textures/prop/<key>_*.png`; `tools/gen_<key>_geo.py` -> geo models; `tools/render_preview/scenes.d/<key>_props.json` |
-| geo models (AURA or PROPS) | `assets/nusmp/geo/entity/<key>_<name>.geo.json`, `animations/entity/<key>_<name>.animation.json`, `textures/entity/<key>_<name>.png` + `_glow.png` |
+| geo models (AURA or PROPS) | `assets/anime_multiverse/geo/entity/<key>_<name>.geo.json`, `animations/entity/<key>_<name>.animation.json`, `textures/entity/<key>_<name>.png` + `_glow.png` |
 | ICON (new magics only) | `tools/icons/g_<key>.py` |
 | REVIEW | `tools/lang/<key>.json`, `docs/attributes/<key>.md` (the designer writes the first half), and fixes anywhere in the attribute's files |
 
@@ -108,7 +108,7 @@ and the book appends the special pages after the family pages (spirit dive, spir
 (`ElementBooks.java` / `<X>Book.java` / `PaintingBook.java`) and add at most `32 - existing`. The "15 spells for every grimoire" pages are not written in the book files at all: see `docs/magic/pages15_recipe.md`.
 
 Page ids are lower-case snake_case and unique in the book; they are save keys: **never rename an id you wrote**. Lang key per page:
-`nusmp.page.book_<key>.<id>`: one sentence, what it does and what scales with EP.
+`anime_multiverse.page.book_<key>.<id>`: one sentence, what it does and what scales with EP.
 
 Helpers you can rely on (read their source; all are in this repo):
 * `GrimoireBook`: `hurt(i, p, target, mode, raw)` and `hurtAs(i, p, target, mode, raw, damageTypeKey)` (the ONLY way to damage: it goes through
@@ -185,7 +185,7 @@ Read `vfx/client/layer/TimeMagicLayer.java` first, then `ElementFx.java`, `FireS
 * Buffer calls: `billboard(ctx, tex, blend, centre, size, rotation, argb)`, `plane(tex, blend, pose, halfSize, argb)`, `ring(tex, blend, pose, inner, outer, segments, ...)`,
   `beam(ctx, tex, blend, a, b, ...)`, `arc(tex, blend, pose, radius, width, ...)`, `quad(...)`; colour helpers `withAlpha`, `lerpColor`, `whiten`. Blends: `VfxBlend.ADD`
   (glows, light, energy), `ALPHA` (solid-ish, dark, smoke, petals), `WATER` (tinted translucent), `NEGATIVE` (inverted palettes). `VfxPose` / `VfxAnim` helpers give you rotation and easing.
-* Textures: `VfxTextures.byName("<key>_something")` -> `assets/nusmp/textures/particle/<key>_something.png`. **Write them with your own `tools/gen_<key>_textures.py`**
+* Textures: `VfxTextures.byName("<key>_something")` -> `assets/anime_multiverse/textures/particle/<key>_something.png`. **Write them with your own `tools/gen_<key>_textures.py`**
   (Pillow + numpy, deterministic seeds; copy the style of `tools/gen_time_vfx_textures.py` / `tools/gen_element_vfx_textures.py` / `tools/gen_attr_vfx_textures.py`; white or
   grey-scale with alpha so the vertex colour tints them, except where the colour is the point). Power-of-two sizes (64/128/256), at least 4 distinct textures per attribute
   (not just glow blobs: shaped sprites such as claw marks, runes, petals, shards, spores, keys, eyes).
@@ -238,7 +238,7 @@ The mod draws `.geo.json` models (Bedrock format 1.12.0, the files Blockbench an
 `client/geo/GeoDraw` (read `GeoModelData`, `GeoAnim`, `GeoSpec`, `GeoDraw`, `docs/geo_models.md`). It works everywhere a pose stack exists, so the same model can be a prop, an aura piece
 on the player, or a boss. Build models with `tools/geo_builder.py` (cubes, bones, automatic box-UV layout, texture painting helpers, animation keyframes, `tools/geo_check.py` validator).
 Files, by the convention of `GeoSpec.of("<key>", "<name>")`:
-`assets/nusmp/geo/entity/<key>_<name>.geo.json`, `animations/entity/<key>_<name>.animation.json`, `textures/entity/<key>_<name>.png` (the size the model's texture_width / texture_height says)
+`assets/anime_multiverse/geo/entity/<key>_<name>.geo.json`, `animations/entity/<key>_<name>.animation.json`, `textures/entity/<key>_<name>.png` (the size the model's texture_width / texture_height says)
 and `textures/entity/<key>_<name>_glow.png` (same size; only the glowing parts). A CI unit test (`GeoAssetsTest`) fails the whole build for every model with a missing parent bone, uvs
 outside the texture, a missing or differently sized texture / glow map, or an animation that names a bone the model does not have: run `python3 -B tools/geo_check.py` before you finish.
 ```java
@@ -254,7 +254,7 @@ GeoDraw.paint(c.pose(), c.buffers(), ARMOR, "idle", c.age() / 20f, GeoDraw.Space
 * `Layer.CUTOUT` = solid with alpha test (entityCutoutNoCull: no fading), `TRANSLUCENT` = alpha blended (fading, glass, ghosts), `ADDITIVE` = light. The glow map is drawn additive and full bright
   in the colour you pass as `glowArgb` (alpha 0 = no glow pass); pulse it with a sine for living glow. One model = one render type: split a model that needs two (a solid body and glass wings)
   into two geo files drawn with two calls.
-* Space.PLAYER models are authored to the humanoid's proportions (feet at y 0, shoulders at y 24, head origin y 24..32, arms at x +-5..8; `assets/nusmp/geo/armor/robe.geo.json` is a
+* Space.PLAYER models are authored to the humanoid's proportions (feet at y 0, shoulders at y 24, head origin y 24..32, arms at x +-5..8; `assets/anime_multiverse/geo/armor/robe.geo.json` is a
   working example) and are laid over the player's own body: give overlay cubes `inflate` >= 0.3 so they do not z-fight with the skin.
 * Animation clocks are seconds: `age / 20f`. Loops close (first keyframe == last). Bones that an animation moves must exist in the model.
 * Budget: a prop model 30 to 150 cubes, a creature up to ~250, texture 64 to 256 px. A model that is a creature, construct, weapon, tool, key, chain, eye, dice, shield, projectile body,
@@ -272,10 +272,10 @@ GeoDraw.paint(c.pose(), c.buffers(), ARMOR, "idle", c.age() / 20f, GeoDraw.Space
 * Icon: `tools/icons/g_<key>.py` (new magics only). `ENTRY = (display, glow RGB, body RGB, colour words, signature spell)` and `glyph(d)` which draws a bold, readable, centred symbol of the
   magic (key, eye, chain, crystal, bubble, bronze shield, ...) with `d` an `ImageDraw` on a 256 px "L" canvas: `d.polygon(G.P([(x, y), ...]), fill=255)` with `G.P` in glyph units (origin at
   the centre, y down, roughly +-11), 255 = body, ~150 = facet detail. Look at `g_*` in `tools/gen_skill_icons.py` for the style. Preview with `python3 -B tools/gen_attribute_icons.py <key>`
-  (it writes the four PNGs), look at `src/main/resources/assets/nusmp/textures/skill/grimoire/<key>.png` (32 px; view it enlarged) and iterate.
-* Lang: `tools/lang/<key>.json`, a flat JSON object `{"key": "text"}`, English only, plain ASCII quotes, no `\n`. New magics: `nusmp.skill.book_<key>` (name) and `.description` (2 to 4 sentences:
-  what the magic is, its signature look and mechanic), `nusmp.skill.grimoire_<key>` (+ `.description`), and one `nusmp.page.book_<key>.<pageId>` per page. Upgrades and audits: only the new
-  pages' keys, `nusmp.page.book_<magic>.<pageId>` where `<magic>` is the lower-case key of the EXISTING book (look at how that magic's pages are keyed in `en_us.json`: Seal is `sealing`,
+  (it writes the four PNGs), look at `src/main/resources/assets/anime_multiverse/textures/skill/grimoire/<key>.png` (32 px; view it enlarged) and iterate.
+* Lang: `tools/lang/<key>.json`, a flat JSON object `{"key": "text"}`, English only, plain ASCII quotes, no `\n`. New magics: `anime_multiverse.skill.book_<key>` (name) and `.description` (2 to 4 sentences:
+  what the magic is, its signature look and mechanic), `anime_multiverse.skill.grimoire_<key>` (+ `.description`), and one `anime_multiverse.page.book_<key>.<pageId>` per page. Upgrades and audits: only the new
+  pages' keys, `anime_multiverse.page.book_<magic>.<pageId>` where `<magic>` is the lower-case key of the EXISTING book (look at how that magic's pages are keyed in `en_us.json`: Seal is `sealing`,
   Imitation is `copy`, Ice is `ice` ...). One or two sentences per page: what it does, what scales with EP, which status condition.
 
 ## 7. Verification you must run (CI compiles later; there are no Minecraft jars here)
@@ -296,7 +296,7 @@ GeoDraw.paint(c.pose(), c.buffers(), ARMOR, "idle", c.age() / 20f, GeoDraw.Space
 tier, what it does, cost tier, what scales with EP, status condition, VFX shape / aura style / prop); 4 VFX shapes (what each of the three looks like, the from / to / power / colour encoding);
 5 Render layers (table: every pass of every aura style and prop: what, render type, scale / order, why); 6 Models (every geo model: file, bones, animations, textures, render layer, cube count);
 7 BLENDER ASSET SPEC (how to rebuild every model as a high-poly Blender asset: meshes, rig / bones, materials, UV, export to geo/fbx) and PHOTON PIPELINE SPEC (for every effect: emitters, textures,
-blend mode, lifetime curves, the shader / distortion / refraction recipe that the in-game version approximates); 8 Files; 9 How to test in game (page order, `nusmp:book_<key>` skill, commands);
+blend mode, lifetime curves, the shader / distortion / refraction recipe that the in-game version approximates); 8 Files; 9 How to test in game (page order, `anime_multiverse:book_<key>` skill, commands);
 10 NOT VERIFIED (honest).
 
 Your final message is machine read: return the JSON the workflow asks for (files written, what you verified and how, what you could not verify, `needsSharedChange` = anything required in a file you

@@ -9,7 +9,7 @@ Previews (made with the headless renderer, `python tools/render_preview/preview.
 
 ## What she is in the game
 
-* **Companion.** The key `]` (`key.nusmp.undine_link`, rebindable) links or unlinks her for a caster whose bound canon book is Noelle's. She floats beside the caster's right shoulder (about 1.9 blocks tall)
+* **Companion.** The key `]` (`key.anime_multiverse.undine_link`, rebindable) links or unlinks her for a caster whose bound canon book is Noelle's. She floats beside the caster's right shoulder (about 1.9 blocks tall)
   and every spell of Noelle's Water grimoire leaves her open palm. Water breathing while she is near, as the Spirit Lord of Water gives.
 * **Full form.** A page of cost tier 20 or more (the zone and signature pages) calls her full form: about 3.2 blocks, arms spread, standing on a ring of waves behind the caster for 5 seconds, casting from her raised hands.
   One per caster, at most one every 30 seconds, at most 6 on the whole server.
@@ -51,7 +51,7 @@ is more important, and a farewell is never cut short.
 40 short lines in nine groups: link 4, farewell 3, cast 8, wave (the big cast) 4, hurt 5, idle 6, low health 4, win 4, died 2. The manifest is `tools/audio/undine_lines.json` (made by `tools/audio/undine_lines.py`: id,
 group, voice id, model, prompt with its audio tags). They go through the project's voice system: `audio.voice.VoiceCatalog` appends the registered ids under the role `undine`, `VoiceSounds` registers `voice.undine_*`,
 `Voice.say` applies the voice limiter and `voice.maxPerSecond`, the packet is `VoiceNet.Say`, the client switch for voices still works. On top of that `UndineSpeech` applies her own limits: one cooldown per owner and group
-(`UndineLines.Group`), **at most one spoken line per listener every 4 seconds**, and only players **within 32 blocks** are told. The lines have subtitles (`subtitles.nusmp.voice.undine_*`, text in `tools/lang/undine.json`).
+(`UndineLines.Group`), **at most one spoken line per listener every 4 seconds**, and only players **within 32 blocks** are told. The lines have subtitles (`subtitles.anime_multiverse.voice.undine_*`, text in `tools/lang/undine.json`).
 A moment whose group has no recorded line is not silent: her sung hum (`undine.hum`, three synthesised phrases of watery choir and a bell) plays through the sound budget.
 
 Voice: the ElevenLabs library voice **"Julie I"** (`g12yXXabMWeFoLMzxPrF`, professional, described as mature, warm, soft, reflective, calm), model `eleven_v4`. It is a library voice, not a clone of anyone. **Licence:** the API
@@ -66,7 +66,7 @@ and the converter's report to each other; the set must stay under 3 MB).
 
 ## Sounds
 
-`UndineSoundSet` is the catalogue (pure data), `UndineSounds` registers one event per cue (`nusmp:undine.ambient`, `link`, `unlink`, `cast`, `full`, `crash`, `hurt`, `death`, `hum`), `tools/gen_undine_sounds.py` synthesises the
+`UndineSoundSet` is the catalogue (pure data), `UndineSounds` registers one event per cue (`anime_multiverse:undine.ambient`, `link`, `unlink`, `cast`, `full`, `crash`, `hurt`, `death`, `hum`), `tools/gen_undine_sounds.py` synthesises the
 files from nothing with numpy (flowing water with bubbles, glass bells in D major pentatonic, a watery choir hum, a wave crash, a synthetic reverb) and writes the `sounds.json` entries and subtitles. 20 files, about 0.5 MB.
 Server side only: `UndineAudio` applies a cooldown per cue and owner, a gap between any two, a cap per second across the server (12), and sends one sound packet to the players within the cue's range (at most 48 blocks).
 

@@ -36,12 +36,12 @@ Nothing in `src/`, `assets/`, version, changelog, README, lang files or workflow
 
 | System | What exists | Source file |
 |---|---|---|
-| The attribute | `MagicType.STAR` ("Star Magic", parent attribute WIND, hit effect PIERCE, theme `magic.STAR`, speed buff). A normal attribute any mage can roll. | `blackclover/MagicType.java`, `data/nusmp/particle_themes.json` |
+| The attribute | `MagicType.STAR` ("Star Magic", parent attribute WIND, hit effect PIERCE, theme `magic.STAR`, speed buff). A normal attribute any mage can roll. | `blackclover/MagicType.java`, `data/anime_multiverse/particle_themes.json` |
 | How a player gets a grimoire | one roll after the soul type (`GrimoireAcceptance`: 1 percent five-leaf, 2 percent four-leaf, 10 percent three-leaf); the questionnaire gives the attribute (`wizard/MagicFlavors`: Star = GUST + BRIGHT, blend HOT + BRIGHT -> Star); two close attributes FUSE into one grimoire (`dualAttributeChance`), there is no real second grimoire. | `blackclover/GrimoireAcceptance.java`, `wizard/*` |
 | The Spade suit | `Kingdom.SPADE` and the covers Spade / Double Spade / Triple Spade exist (the kingdom that accepts a mage decides the suit; Spade: +8 percent attack and spell power, -2 health). Nothing ties Star Magic to the Spade kingdom. | `blackclover/Kingdom.java`, `GrimoireCover.java`, `docs/mana_system.md` |
 | The Spade story | `ArcSaga.SPADE_RAID`: bosses Dante, Vanica, Zenon (Dark Triad), then Morris Libardirt and Lucifero (`arc/spade/SpadeRoster`); clearing the saga pays `SagaRewards` and fires the quest event `arc.saga_clear` (`docs/quests.md`). The saga is the killers of the royal house, so it is the natural story gate. | `arc/world/SagaRewards.java` |
 | Late game gates | Mana Zone: six requirements incl. rank 14, 15 boss kills, floor 40, a 30-minute attunement (`mana/zone/ManaZoneGate`). Character sets have acquire rules (`start`, `mastery`, `flag`, `page_uses`, `page_open`, `all`, `docs/magic/character_spells.md`); Yuno's Wind set already uses the flag `spirit_bond` (Sylph). | `charset/SpellRule` |
-| Yuno | `data/nusmp/character_spells/yuno.json` (magic WIND) lists Never-Never Land and Star Magic only as NOTES ("needs Star Magic, a second attribute and a different book"). There is **no Star character set** and no Star-specific lineage flag. | `character_spells/yuno.json` |
+| Yuno | `data/anime_multiverse/character_spells/yuno.json` (magic WIND) lists Never-Never Land and Star Magic only as NOTES ("needs Star Magic, a second attribute and a different book"). There is **no Star character set** and no Star-specific lineage flag. | `character_spells/yuno.json` |
 
 ### 1.3 Grimoire acquisition in the mod (recommendation; owner decides, section 7)
 
@@ -271,7 +271,7 @@ Mana and cooldown pacing: about 5 star placements and 3 quartile spells in 20 se
 |---|---|---|
 | Book | `book/ElementBooks.star()` -> `ElementBook(MagicType.STAR, 0xFFFFF0A0, LIGHT_ELEMENTAL, ...)` | 6 own pages (star_shot, starfall, constellation, comet, star_shield, supernova) |
 | Added pages | `book/pages15/Batch1.java` (`STAR = register("book_star", ...)`), spec in `docs/magic/pages15_batch1.md` | 9 pages added: quartile_flagellum, twinkle_dart, star_conjunction, never_never_land, star_beam, star_chain, orbit_barrage, stardust_field, meteor_swarm. Total **15** (`python3 -B tools/page_counts.py --ids book_star`: own 6, char 0, rest 0, basic_added 0). Room left: 20 new per book and 64 family pages (`Pages15Rules`), one signature per book (meteor_swarm uses it). |
-| Character set | none for Star (`data/nusmp/character_spells/`: only `yuno.json`, book `book_wind`, mentions Star as a note) | no canon spell is bound to an owner |
+| Character set | none for Star (`data/anime_multiverse/character_spells/`: only `yuno.json`, book `book_wind`, mentions Star as a note) | no canon spell is bound to an owner |
 | Wiki text | `.github/wiki/spell_*` has `spell_sekke_shooting_star.txt` (bronze creation, not Star Magic) and `spell_silver_star_of_execution.txt` (not Star Magic); **no Star Magic wiki page text exists in the repo** | |
 | VFX shape | `VfxShape.STAR_MAGIC` ("starlight projectiles and constellations from 'from' to 'to'") drawn by `vfx/client/layer/ElementIdentityLayer` (it also draws SAND_MAGIC and MIST_MAGIC) | one beam + a spiral of sparks, 12 sparks max (`ctx.seg(12, 5)`); peak **104 vertices** per activation, engine cap 400 |
 | Routing | `ElementBook.vfx()`: for `MagicType.STAR` EVERY shape a page asks for is rewritten to `STAR_MAGIC`; `empower()` (Star Shield) bypasses it and sends `SPIRIT_AURA` | so the book has exactly one visual |

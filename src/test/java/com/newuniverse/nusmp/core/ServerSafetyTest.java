@@ -24,7 +24,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  */
 class ServerSafetyTest {
     private static final Path SRC = Paths.get("src/main/java/com/newuniverse/nusmp");
-    private static final Pattern CLIENT = Pattern.compile("net\\.minecraft\\.client\\.|com\\.mojang\\.blaze3d\\.|com\\.newuniverse\\.anime_multiverse\\.client\\.|net\\.neoforged\\.neoforge\\.client\\.");
+    private static final Pattern CLIENT = Pattern.compile("net\\.minecraft\\.client\\.|com\\.mojang\\.blaze3d\\.|com\\.newuniverse\\.nusmp\\.client\\.|net\\.neoforged\\.neoforge\\.client\\.");
     private static final Pattern GET_INSTANCE = Pattern.compile("\\bMinecraft\\.getInstance\\(\\)");
 
     private static Set<String> allowed() throws IOException {

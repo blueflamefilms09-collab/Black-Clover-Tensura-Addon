@@ -77,7 +77,7 @@ means CLASSIC; `characterEffects = false` draws every dive as the standard tier;
 | pure rules (common, no client class) | `book/SpiritDiveAnimeRules.java` (look parsing, tiers, specs, budgets, timeline, palettes, texture names), `book/SpiritDiveAnimeGeometry.java` (plume / lock / trail tables, profiles, spines, strip edges, winding rule) |
 | painters (client) | `client/aura/SpiritDiveAnime.java` (the painter), `SpiritDiveAnimeShell.java` (the inflating, flipping consumer and the shell passes), `SpiritDiveAnimeRibbon.java` (the strips), `DiveAnimeFirstPerson.java` (first person arms), `DiveHead.java` (the helmet question) |
 | self-test | `book/SpiritDiveAnimeSelfTests.java` (key `magic.spirit_dive_anime`) |
-| textures | `tools/gen_spirit_dive_anime_textures.py` writes `assets/nusmp/textures/aura/sda_*.png` (36 files: swirl, plume, plume glow, lock, lock glow, halo, crown, hair x 4 elements + rim, soft, eye, burst) |
+| textures | `tools/gen_spirit_dive_anime_textures.py` writes `assets/anime_multiverse/textures/aura/sda_*.png` (36 files: swirl, plume, plume glow, lock, lock glow, halo, crown, hair x 4 elements + rim, soft, eye, burst) |
 | previews | `tools/spirit_dive_anime_scenes.py` (43 scenes), `tools/spirit_dive_anime_previews.py` (the sheets), stubs `tools/render_preview/stubs/.../NURenderTypes.java`, `DiveHead.java` |
 | tests | `SpiritDiveAnimeTest`, `SpiritDiveAnimeScanTest`, `SpiritDiveAnimeAssetTest` |
 

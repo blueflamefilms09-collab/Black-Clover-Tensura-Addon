@@ -29,7 +29,7 @@ class WaterBcSourceScanTest {
 
     private static String code(String src) { return src.replaceAll("(?s)/\\*.*?\\*/", "").replaceAll("//[^\n]*", ""); }
 
-    private static final Pattern CLIENT = Pattern.compile("net\\.minecraft\\.client\\.|com\\.mojang\\.blaze3d\\.|com\\.newuniverse\\.anime_multiverse\\.client\\.|net\\.neoforged\\.neoforge\\.client\\.|Minecraft\\.getInstance\\(\\)");
+    private static final Pattern CLIENT = Pattern.compile("net\\.minecraft\\.client\\.|com\\.mojang\\.blaze3d\\.|com\\.newuniverse\\.nusmp\\.client\\.|net\\.neoforged\\.neoforge\\.client\\.|Minecraft\\.getInstance\\(\\)");
     private static final String[] PURE = {"vfx/WaterBc.java", "vfx/WaterBcMeshes.java", "vfx/WaterBcMeshBuffer.java", "vfx/WaterBcToon.java", "vfx/WaterBcScene.java", "vfx/WaterBcBudget.java", "vfx/WaterBcSelfTests.java"};
 
     /** The body of a method: from its signature to the matching closing brace. */
@@ -153,7 +153,7 @@ class WaterBcSourceScanTest {
         int fx = mgr.indexOf("register(new com.newuniverse.nusmp.vfx.client.layer.WaterFxLayer())"), magic = mgr.indexOf("register(new WaterMagicLayer())"), spell = mgr.indexOf("register(new WaterSpellLayer())"),
                 bc = mgr.indexOf("register(new com.newuniverse.nusmp.vfx.client.layer.WaterBcLayer())");
         assertTrue(fx > 0 && magic > 0 && spell > 0 && bc > fx && bc > magic && bc > spell, "WaterBcLayer is registered after the old water layers (the manager keeps the last one registered for a shape)");
-        assertEquals(1, mgr.split("register\\(new com\\.newuniverse\\.anime_multiverse\\.vfx\\.client\\.layer\\.WaterBcLayer\\(\\)\\)", -1).length - 1, "registered once");
+        assertEquals(1, mgr.split("register\\(new com\\.newuniverse\\.nusmp\\.vfx\\.client\\.layer\\.WaterBcLayer\\(\\)\\)", -1).length - 1, "registered once");
         String c = code(read("vfx/client/layer/WaterBcLayer.java"));
         String render = method(c, "render");
         assertTrue(render.indexOf("!WaterBc.bcLook()") >= 0 && render.indexOf("old(inst.shape).render(inst, ctx, buf)") > render.indexOf("!WaterBc.bcLook()"), "V1: the old layer draws");

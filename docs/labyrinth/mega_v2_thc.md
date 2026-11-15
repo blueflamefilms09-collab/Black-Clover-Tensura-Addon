@@ -19,7 +19,7 @@ tables, 6 factions and relic roads, 7 files and tools, 8 how the rooms are check
 | Vampire Castle | Abyssal | 6 | 2 halls, 2 set pieces, 1 trial, 1 treasure | 12 entries | grey andesite (crimson trim) |
 | Haunted Manor | Abyssal | 6 | 2 halls, 1 set piece, 1 trial, 1 trap, 1 safe | 12 entries | diorite plaster (spruce timber) |
 
-25 new templates, all in `data/nusmp/structure/mega/<kind>/<theme>_<room>.nbt`; four generators `tools/labyrinth/gen_mega_theme_<theme>.py` that write
+25 new templates, all in `data/anime_multiverse/structure/mega/<kind>/<theme>_<room>.nbt`; four generators `tools/labyrinth/gen_mega_theme_<theme>.py` that write
 them byte for byte (`--check` proves it); one kit `tools/labyrinth/mega_thc_kit.py`; four theme files, four template-theme files, four encounter tables,
 44 faction weights (four in each of eleven faction files), 24 explicit relic roads and 4 ruleset names, 37 lang keys, one data test.
 
@@ -67,7 +67,7 @@ weak (fan reports, product pages, a CAD blog, an unfamiliar PDF host); where tha
 
 ## 3. The four themes
 
-Every theme file is `data/nusmp/mega/themes/<id>.json` in the format of the existing ones (`families`, `explicit`, `color`, `relics.keywords`,
+Every theme file is `data/anime_multiverse/mega/themes/<id>.json` in the format of the existing ones (`families`, `explicit`, `color`, `relics.keywords`,
 `catastrophes`, `ambient`, `light`, `sound`, `danger`, `_why`). Every block id is vanilla and in `tools/labyrinth/vanilla_blocks_1_21_1.txt`
 (`ThemeDataTest.everyBlockIdIsAVanillaBlock`). The `_why` of each file says the same as the "palette" paragraph here.
 
@@ -190,9 +190,9 @@ Grove claims it.)
 | `master_bedroom` | safe, 2 x 2 | The one room where nothing is wrong: a four-poster under a canopy, a fire with two armchairs, a wardrobe, a dressing table with a mirror, a rug, candles, a footlocker, a window with the moon in it. Rest anchors are the bed, the armchairs and the hearth. Why: the calm room, and the safest looking. | 2474 blocks, 2 doors, min 5 median 10 |
 | `attic` | trap, 3 x 3 | A long room under a pitched roof with tie beams and a skylight of moon-green glass, trunks along the walls, a dressmaker's dummy, a spinning wheel, a crib with a doll in it, dust sheets. The floorboards are the trap: a field of boards that look alike (the mod's pitfall tiles, the same spiked chamber and ladder and checks as ROOMS-2's pit halls), one thin zig-zag of them sound and leading to a trunk on an island in the middle, a lantern on a chain over every turn of the safe way. Why: the brief's attic of sheets and trunks, with the floor as the danger. | 9676 blocks, 3 doors, 4 trap markers |
 
-## 4. The weights (`data/nusmp/mega/template_themes/<theme>.json`)
+## 4. The weights (`data/anime_multiverse/mega/template_themes/<theme>.json`)
 
-**Format.** `templates` are the prefixes `nusmp:mega/<kind>/<theme>_` of every kind folder the theme uses (a template with such a prefix may only be drawn
+**Format.** `templates` are the prefixes `anime_multiverse:mega/<kind>/<theme>_` of every kind folder the theme uses (a template with such a prefix may only be drawn
 in sectors of that theme: the rule is `TemplateThemes.allows`, and the assembler's use of it is GEN2's work, which I have not seen); `relative` are the
 weights `tools/labyrinth/gen_mega_pools.py` puts on them. They are shipped as:
 
@@ -239,10 +239,10 @@ them every few rooms; trap, puzzle, trial 6 to 10 (they cost the party time and 
 wanted but a safe room every other room would empty the danger of the road). The Archive's three halls are 110, 100, 100 (not 150 each) so that its share
 under reading 2 (49 percent) is the same as the others' despite having one hall more.
 
-## 5. Encounter tables (`data/nusmp/mega/encounters/<theme>.json`)
+## 5. Encounter tables (`data/anime_multiverse/mega/encounters/<theme>.json`)
 
 The format and the rules are those of `radiant.json` and `EncounterDataTest` (8 to 14 entries, every band present, ids unique across all files, message
-keys `message.nusmp.mega.enc.<theme>.<entry id>` and ASCII, only `minecraft:`, `tensura:` and `nusmp:` entity ids, cue sounds and particles from
+keys `message.anime_multiverse.mega.enc.<theme>.<entry id>` and ASCII, only `minecraft:`, `tensura:` and `anime_multiverse:` entity ids, cue sounds and particles from
 `src/test/resources/mega/enc/known_ids.txt`, the first monster of every entry affordable at the entry's threat). Entry ids are prefixed (`ca_`,
 `nc_`, `vc_`, `hm_`) so they cannot clash with another builder's; the check of the four worktrees found no duplicate id and no duplicate lang key.
 Faction entries are used sparingly (a faction tag is shared by all themes), and each table's default faction is the one of its theme.
@@ -259,7 +259,7 @@ witch); they are not drawn from these tables.
 
 ## 6. Faction weights and relic roads
 
-**Faction weights** (`data/nusmp/mega/factions/*.json`, key `themeWeights`; four keys added after `"shadow"` in each of the eleven files, because
+**Faction weights** (`data/anime_multiverse/mega/factions/*.json`, key `themeWeights`; four keys added after `"shadow"` in each of the eleven files, because
 `FactionDataTest` wants every file to cover every theme, at least six factions liking each theme, and a 600-room pick with at least five factions where
 none exceeds 45 percent). Order of the columns: Archive, Necropolis, Castle, Manor.
 
@@ -279,7 +279,7 @@ none exceeds 45 percent). Order of the columns: Archive, Necropolis, Castle, Man
 
 Each theme is liked by seven or eight factions.
 
-**Relic roads** (`data/nusmp/mega/relic_themes.json`, key `explicit`; relics whose name or lore leads to the theme; the six of each theme are relics
+**Relic roads** (`data/anime_multiverse/mega/relic_themes.json`, key `explicit`; relics whose name or lore leads to the theme; the six of each theme are relics
 that were not in the table before and that no other builder claims):
 
 * Cursed Archive: `the_librarians_maul`, `spellbook_of_concentration`, `book_of_mispells`, `scroll_of_unreadable_spells`,
@@ -296,12 +296,12 @@ least five explicit relics per theme, and explicit lines are what makes a themed
 | File | Why it exists |
 |---|---|
 | `labyrinth/mega/RegionTheme.java` (four enum lines at the end) | the themes must exist in the enum; appended, never reordered (saved data and JSON use the id, not the ordinal), each `(3, 3, Route.ABYSSAL)`: the Crucible of the sector offers exactly three relics, like every other theme, and the theme belongs to the evil road, so (being entry 12 or later) it is `exclusive()` there and never drawn on the Holy road |
-| `data/nusmp/mega/themes/{cursed_archive,necropolis,vampire_castle,haunted_manor}.json` | palette, light, mood, danger, keywords (section 3) |
-| `data/nusmp/mega/template_themes/<theme>.json` | which rooms belong to the theme and how often (section 4) |
-| `data/nusmp/mega/encounters/<theme>.json` | what lives in the sector (section 5) |
-| `data/nusmp/mega/factions/*.json`, `relic_themes.json` | who lives there and which relics lead there (section 6) |
-| `data/nusmp/structure/mega/<kind>/<theme>_<room>.nbt` (25) | the signature rooms, written by the generators |
-| `data/nusmp/worldgen/template_pool/mega/side.json`, `safe.json`, `src/test/resources/mega/catalog.json` | generated by `gen_mega_pools.py` and `mega_catalog.py`; they will conflict with the other builders' versions, the lead regenerates once after the merge |
+| `data/anime_multiverse/mega/themes/{cursed_archive,necropolis,vampire_castle,haunted_manor}.json` | palette, light, mood, danger, keywords (section 3) |
+| `data/anime_multiverse/mega/template_themes/<theme>.json` | which rooms belong to the theme and how often (section 4) |
+| `data/anime_multiverse/mega/encounters/<theme>.json` | what lives in the sector (section 5) |
+| `data/anime_multiverse/mega/factions/*.json`, `relic_themes.json` | who lives there and which relics lead there (section 6) |
+| `data/anime_multiverse/structure/mega/<kind>/<theme>_<room>.nbt` (25) | the signature rooms, written by the generators |
+| `data/anime_multiverse/worldgen/template_pool/mega/side.json`, `safe.json`, `src/test/resources/mega/catalog.json` | generated by `gen_mega_pools.py` and `mega_catalog.py`; they will conflict with the other builders' versions, the lead regenerates once after the merge |
 | `tools/labyrinth/gen_mega_theme_<theme>.py` (4) | one generator per theme; `python3 tools/labyrinth/gen_mega_theme_<theme>.py` writes, `--check` compares with the files on disk and runs every check, `--list` lists, `--force` writes a room that fails a check so it can be looked at |
 | `tools/labyrinth/mega_thc_kit.py` | the common command line of the four generators and the props and checks that only these themes need (below) |
 | `src/test/java/.../labyrinth/mega/gen/TemplateThemesDataTest.java` | the data test of the template-theme files (section 9) |
@@ -347,15 +347,15 @@ What ran (with the shim `jt.sh`, one class at a time at the end, because the lea
   were restored from git after every run (`git status` shows only the regenerated catalog and my new test).
 * After the last changes to the weights and the encounter text: my `TemplateThemesDataTest` 7/7, `MegaCatalogTest` 2/2 (200 random sectors from the 147
   real templates, all 200 pass the audit) and `EncounterDataTest` 18/18 again (lists widened, restored afterwards).
-* **Mutation check** (one test, as asked): in `template_themes/necropolis.json` the prefix `nusmp:mega/set/necropolis_` was changed to
-  `nusmp:mega/set/necropolis_x_`; `TemplateThemesDataTest` went from 7 passes to 3 passes and 4 failures (the prefix must end with the theme's name; it
+* **Mutation check** (one test, as asked): in `template_themes/necropolis.json` the prefix `anime_multiverse:mega/set/necropolis_` was changed to
+  `anime_multiverse:mega/set/necropolis_x_`; `TemplateThemesDataTest` went from 7 passes to 3 passes and 4 failures (the prefix must end with the theme's name; it
   matches no template; the room `necropolis_bone_bridges` is no longer claimed; the theme has only four signature rooms), then the file was restored and
   checked by its checksum.
 * **Not run:** 31 classes of the stopped sweep that had not started (macro, system, seal, trap, trial, vault, safe math, quest parsing, theme parsing:
   they test logic, not my data), the tests that need game classes (CI), the whole project build, anything in the game.
 
 `TemplateThemesDataTest` (my own, pure, Gson and `java.nio` only, reads the source tree) holds the template-theme files to section 5.1 of the contract:
-the `theme` field is the file name and a theme file of `themes/` exists; every prefix starts with `nusmp:mega/` and ends with `/<theme>_`; every prefix
+the `theme` field is the file name and a theme file of `themes/` exists; every prefix starts with `anime_multiverse:mega/` and ends with `/<theme>_`; every prefix
 matches real templates and only rooms of its own theme; every template that carries a theme's name is claimed by that theme's file and none by two; at
 least five signature rooms in at least three kinds per theme; weights are whole positive numbers that address real rooms of the same theme; every
 signature room is listed by a pool (so it can be drawn at all); the files are ASCII with at least two prefixes.
@@ -399,8 +399,8 @@ signature room is listed by a pool (so it can be drawn at all); the files are AS
 4. **Collisions between other builders** that I found while checking mine (the Feywild Grove and the Underdark both use `mud_bricks` for their walls, which
    `ThemeDataTest` refuses; the keywords `anvil`, `brine` and `siren` are each listed by two themes, which `RelicThemesDataTest` refuses). Mine are clean against
    every theme of the four worktrees as they stood.
-5. **Lang**: merge `$S/arc/frag/thc.lang.json` (37 keys: the four theme names `message.nusmp.mega.mgd.theme.<id>`, their flavour lines `...<id>.flavour`, and the 29
-   encounter messages `message.nusmp.mega.enc.<theme>.<entry id>`). Until it is merged `EncounterDataTest.messagesAreTranslatedOnceTheFragmentIsMerged` prints a
+5. **Lang**: merge `$S/arc/frag/thc.lang.json` (37 keys: the four theme names `message.anime_multiverse.mega.mgd.theme.<id>`, their flavour lines `...<id>.flavour`, and the 29
+   encounter messages `message.anime_multiverse.mega.enc.<theme>.<entry id>`). Until it is merged `EncounterDataTest.messagesAreTranslatedOnceTheFragmentIsMerged` prints a
    note and skips the translation check for the four tables; after the merge it checks all 29 keys.
 6. **After the merge**: `python3 tools/labyrinth/gen_mega_pools.py` and `python3 tools/labyrinth/mega_catalog.py`; decide the weight reading (section 4: without
    the absolute patch the themed rooms take weight away from the generic rooms of every other sector, 364 to 241 with my four themes alone); rerun

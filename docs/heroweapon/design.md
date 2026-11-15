@@ -81,8 +81,8 @@ and its own events, payloads and self-tests, so the shared start-up never change
 
 | builder key | owns (create or replace these; nobody else edits them) |
 |---|---|
-| `hcore` | `HeroCore`, `HeroCommand`, `HeroWeaponItem`, `HeroItems` (properties only), `skill/HeroUse`, `rules/**`, `bond/*Loan*`/sync/net, the config `nusmp-heroweapon-server.toml`, `client/heroweapon/HeroClient` + HUD + keybinds, the renderer hook for the look (`WeaponRenderer`: choose `<id>_curse` when the stack's `nusmp:hero_look` is `curse`), docs/heroweapon/core.md |
-| `hforms` | `forms/**` (replacing `HeroForms`, `FormsSystem`, `FormsCommands`), the loader of `data/nusmp/hero/forms/*.json`, absorption, the Weapon Book (screen, packets, key), mastery, bonuses, `client/heroweapon/forms/**`, config `nusmp-heroweapon-forms-server.toml`, docs/heroweapon/forms.md |
+| `hcore` | `HeroCore`, `HeroCommand`, `HeroWeaponItem`, `HeroItems` (properties only), `skill/HeroUse`, `rules/**`, `bond/*Loan*`/sync/net, the config `nusmp-heroweapon-server.toml`, `client/heroweapon/HeroClient` + HUD + keybinds, the renderer hook for the look (`WeaponRenderer`: choose `<id>_curse` when the stack's `anime_multiverse:hero_look` is `curse`), docs/heroweapon/core.md |
+| `hforms` | `forms/**` (replacing `HeroForms`, `FormsSystem`, `FormsCommands`), the loader of `data/anime_multiverse/hero/forms/*.json`, absorption, the Weapon Book (screen, packets, key), mastery, bonuses, `client/heroweapon/forms/**`, config `nusmp-heroweapon-forms-server.toml`, docs/heroweapon/forms.md |
 | `hcurse` | `curse/**` (replacing `HeroCurse`, `CurseSystem`, `CurseCommands`), `client/heroweapon/curse/**`, config `nusmp-heroweapon-curse-server.toml`, docs/heroweapon/curse.md |
 | `hgem` | `gem/**` (replacing `GemSystem`, `GemCommands`), the Calling Gem items, the ritual, recipes, config `nusmp-heroweapon-gem-server.toml`, docs/heroweapon/gem.md |
 | `hsa` | `weapon/shield/**`, `weapon/sword/**`, the forms files `legendary_shield.json`, `legendary_sword.json`, docs |
@@ -98,7 +98,7 @@ If a builder needs a change in a lead-owned class it does NOT edit it; it states
 `HeroBond.extra(<system>)` is the open area for a system's own saved state (keys `loan` for the core, `curse` for the curse, `book` and `gem` for their systems), and
 the weapon logics find everything through `HeroCtx`.
 
-## 4. The bond (`bond/HeroBond`, attachment `nusmp:hero_bond`)
+## 4. The bond (`bond/HeroBond`, attachment `anime_multiverse:hero_bond`)
 
 The bond is the TRUTH; the item in the hand is a projection. It holds: the weapon (`HeroKind` or none), the experience (the level is derived), the active form id,
 the forms learned, the mastery of each, the forms whose permanent bonus was given, the absorbed items (item id -> count), whether the weapon is summoned, and the
@@ -129,7 +129,7 @@ interference rule can refuse it): +1 per melee hit (+3 on a full swing), +2 per 
   Effects: only `VfxSpawn` shapes (the `VfxShape` enum has 238), `Tells`, sounds; never vanilla `ParticleTypes` for abilities. Never edit the Time Magic VFX (CLAUDE.md rule 3).
 * Every technique must be readable in play: a visible windup or tell for anything above 8 raw damage, and a way for an opponent to answer it.
 
-## 6. Forms: the data (`data/nusmp/hero/forms/<itemId>.json`) and the rules
+## 6. Forms: the data (`data/anime_multiverse/hero/forms/<itemId>.json`) and the rules
 
 One file per weapon, owned by the weapon's logic builder. Schema (the record is `forms/HeroForm`; unknown keys are ignored, a malformed form is skipped and logged, a file
 that cannot be parsed leaves the weapon with its base form only; the forms builder writes the loader and the validation test):
@@ -151,7 +151,7 @@ that cannot be parsed leaves the weapon with its base form only; the forms build
 
 * The FIRST form is the base form: id `base`, tier 0, no parents, no requirements, always learned. Its `name` is the weapon's starting shape ("Small Shield").
 * `requires`: one to four entries of `{ "item": "<registry id>", "count": n }` or `{ "tag": "<item tag>", "count": n }`, `n` in 4..64 (an entry above 64 is allowed for a top form up to
-  256). Every item id must exist (vanilla, `tensura:` or `nusmp:`; check against the id dumps `bash $S/apigrep.sh`; a test resolves them); tags must be vanilla or `c:`/`nusmp:` tags that
+  256). Every item id must exist (vanilla, `tensura:` or `anime_multiverse:`; check against the id dumps `bash $S/apigrep.sh`; a test resolves them); tags must be vanilla or `c:`/`anime_multiverse:` tags that
   exist. Tier 1 forms ask for common things (leaves, leather, iron, bones), tier 2 for rarer (blaze rods, ender pearls, Tensura monster parts), the top forms for rare (Tensura
   materials, nether star, dragon parts). Nothing may need an item that cannot be obtained in survival.
 * `parents`: all must be learned first. Depth up to tier 5. Holy Weapons: 8 to 10 ordinary forms; Seven Star and Vassal weapons: 3 to 5 forms. Curse forms are extra (section 7).
@@ -171,7 +171,7 @@ that cannot be parsed leaves the weapon with its base form only; the forms build
   "Feed" buttons, (b) hold the weapon, hold the material in the OFF hand, sneak + right click (the core's item calls `HeroForms.absorbOffhand`; when it returns true the sneak technique is NOT fired): the whole off-hand stack is absorbed, (c) `/multiverse hero form absorb`.
 * **Active form**: chosen in the Weapon Book, by the hero key "cycle form" (core keybind, calls the forms API) or `/multiverse hero form set`. Changing form is refused while the
   weapon is on cooldown from a technique (global 2 s lock) and inside a Curse Overrun. The forms system keeps the projection in the hand in step: attribute modifiers while summoned,
-  the `nusmp:hero_look` component, the tooltip.
+  the `anime_multiverse:hero_look` component, the tooltip.
 * The Weapon Book (forms builder): a screen opened with a key (default `K`, or a free key the builder verifies) and by `/multiverse hero form book`: the form tree, per form the
   requirements with progress bars, the stats, skills and passives, mastery, the curse state; "Feed", "Learn", "Use" buttons. It must work with the mod's GUI theme (`docs/gui_theme.md`).
 
@@ -202,7 +202,7 @@ that cannot be parsed leaves the weapon with its base form only; the forms build
    small magic hit (2 hearts at most, never lethal) and are slowed for 1 s; one message per 3 s. Weapon classes: SWORD (swords, katanas, rapiers, this mod's sword kinds), AXE, SPEAR (tridents,
    spear items), BOW (bows, crossbows), SHIELD (vanilla and this mod's shields), BLUNT (maces, hammers, clubs), OTHER_WEAPON (anything with an attack damage modifier of 4 or more not above).
    A Holy wielder's own class is allowed (the Sword hero may use any sword, the Shield hero any shield); tools used as tools (pickaxe, shovel, hoe, axe on a block) are never affected; a
-   Seven Star / Vassal weapon in the other hand is allowed. Items tagged `#nusmp:hero_allowed` are always allowed. Creative players are exempt.
+   Seven Star / Vassal weapon in the other hand is allowed. Items tagged `#anime_multiverse:hero_allowed` are always allowed. Creative players are exempt.
 2. **Bound to the body**: the weapon exists in the world only as a projection of the bond. It cannot be dropped, thrown out, stored in a chest or other container, put in an item frame, traded,
    or taken by another player; it never drops on death and the bond survives death; it is not lost to void, fire, cactus or a creeper. Anything that leaves the owner's inventory dissolves and
    the bond re-summons on request. The loan machine of the Djinn weapons (`relics/djinn/weapon/WeaponLoan`, a pure state machine tested with random events) is the model; the core may reuse it.
@@ -214,7 +214,7 @@ that cannot be parsed leaves the weapon with its base form only; the forms build
 ## 9. Summon, dismiss, the projection
 
 Key "Summon / put away hero weapon" (core, a free default key it verifies; also sneak + use with the weapon's stowed icon? no: the key and the command only). Summon puts the weapon in the SELECTED
-hotbar slot (the item that stood there goes to the first free slot, remembered) exactly as the Djinn weapon does, with the components `nusmp:hero_owner` and `nusmp:hero_look`;
+hotbar slot (the item that stood there goes to the first free slot, remembered) exactly as the Djinn weapon does, with the components `anime_multiverse:hero_owner` and `anime_multiverse:hero_look`;
 dismiss gives the displaced item back. The weapon is also summoned automatically by the Calling Gem's ritual. Unbreakable, no durability. Creative-tab or `/give` stacks are adopted by their
 first holder if that holder has a free bond slot of that kind, else dissolve.
 
@@ -230,12 +230,12 @@ first holder if that holder has a free bond slot of that kind, else dissolve.
 
 For each weapon id `<id>` (the `itemId`) the art builder delivers, deterministically, from `tools/heroweapon/art_<key>.py`:
 
-* `src/main/resources/assets/nusmp/weapon_meshes/<id>.txt`, `textures/entity/weapon/<id>.png`, `<id>_glow.png`: the 3D model in hand, its painted skin and its additive glow skin. A Holy Weapon
+* `src/main/resources/assets/anime_multiverse/weapon_meshes/<id>.txt`, `textures/entity/weapon/<id>.png`, `<id>_glow.png`: the 3D model in hand, its painted skin and its additive glow skin. A Holy Weapon
   also `weapon_meshes/<id>_curse.txt`, `<id>_curse.png`, `<id>_curse_glow.png`: the cursed look (the same weapon corrupted: spikes, flames, chains, red-black glow; the renderer picks it when the stack's
-  `nusmp:hero_look` is `curse`).
+  `anime_multiverse:hero_look` is `curse`).
 * `models/item/<id>.json` (the in-hand model, `builtin/entity` with the display transforms), `models/item/<id>_icon.json` (inventory icon model, handheld) and `textures/item/<id>.png` (16x16 sprite, the
   inventory icon) exactly like `brooch_pin`.
-* a fragment `tools/heroweapon/classes_<key>.json` mapping each id to a size class of `assets/nusmp/weapon_classes.json` (the lead merges it; add a new class only if no existing one fits, with the
+* a fragment `tools/heroweapon/classes_<key>.json` mapping each id to a size class of `assets/anime_multiverse/weapon_classes.json` (the lead merges it; add a new class only if no existing one fits, with the
   min/max length as the owner's rule "real-life sizes" requires).
 * Method and tools: `tools/relics/mesh_lib.py` (the owner's model method: lofts, sweeps, lathes, named parts, painted materials, a glow skin; read `tools/relics/wave23_models.py` as the worked
   example and `docs/weapon_scale_orientation.md`, `docs/asset_pipeline.md`), the icon builder pattern of `tools/relics/wave23_icons.py`, the preview `python tools/item_preview/preview_weapons.py` and the mesh
@@ -277,13 +277,13 @@ without `net.minecraft` imports and has JUnit tests, mutation-checked once (run 
 
 Every weapon gets Tensura engravings that fit its lore, applied once by `item/WeaponEngravings` (the lead integrates the lines from each builder's report). Use only ids that exist in Tensura or this mod; the ids the
 table already uses are: `severance`, `barrier_piercing`, `holy_weapon`, `magic_interference`, `swift`, `enervation`, `magic_weapon`, `crushing`, `sturdy`, `energy_steal`, `magicule_absorption`, `soul_eater`,
-`elemental_boost`, `restoration`, `vitality`, `magic_protection` and `nusmp:anti_magic`, `nusmp:legacy_of_the_wizard_kings`. Format: `Map.entry("<itemId>", List.of(e("<id>", level), ...))`, 2 to 4 engravings. (A Shield:
+`elemental_boost`, `restoration`, `vitality`, `magic_protection` and `anime_multiverse:anti_magic`, `anime_multiverse:legacy_of_the_wizard_kings`. Format: `Map.entry("<itemId>", List.of(e("<id>", level), ...))`, 2 to 4 engravings. (A Shield:
 magic_protection, sturdy, magic_interference; a Bow: swift, barrier_piercing...) The weapon builder gives the lines and one sentence of WHY per engraving.
 
 ## 17. Lang
 
-Item names are already in `en_us.json` (`item.nusmp.<itemId>`). Everything else a builder writes goes into `$S/hero/frag/<key>.lang.json` (a flat JSON object, keys such as `hero.skill.<id>.name`,
-`hero.skill.<id>.desc`, `hero.passive.<kind>.<id>`, `hero.msg.<what>`, `tooltip.nusmp.hero.<what>`; ASCII-escaped). Forms carry their English `name` and `desc` inside the JSON. The lead merges the fragments.
+Item names are already in `en_us.json` (`item.anime_multiverse.<itemId>`). Everything else a builder writes goes into `$S/hero/frag/<key>.lang.json` (a flat JSON object, keys such as `hero.skill.<id>.name`,
+`hero.skill.<id>.desc`, `hero.passive.<kind>.<id>`, `hero.msg.<what>`, `tooltip.anime_multiverse.hero.<what>`; ASCII-escaped). Forms carry their English `name` and `desc` inside the JSON. The lead merges the fragments.
 
 ## 18. Choices the lead made and the owner may change (to be listed in the hand-over)
 

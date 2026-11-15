@@ -1,6 +1,6 @@
 # Vassal Chain (`vassal_chain`): the war chain of S'yne's world, Sloth by design
 
-Builder `hvd`. Logic: `heroweapon/weapon/chain/**`, forms: `data/nusmp/hero/forms/vassal_chain.json`. Style SWING (reach), class Vassal Weapon.
+Builder `hvd`. Logic: `heroweapon/weapon/chain/**`, forms: `data/anime_multiverse/hero/forms/vassal_chain.json`. Style SWING (reach), class Vassal Weapon.
 Written in two passes: the LOOK section (1) first so the art builder could start, then the rest.
 
 ## 1. The look (for the art builder `hart4`)

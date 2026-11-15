@@ -1,7 +1,7 @@
 # Vassal Katana (`vassal_katana`): the duelist's blade
 
 Class VASSAL, style SWING. In the series the Vassal Katana chose Raphtalia (the Katana Hero) and, per the wiki's list for Glass' World, it is one of the eight Vassal
-Weapons there. The owner names no holder for it. Logic `heroweapon/weapon/katana/KatanaLogic`, forms `data/nusmp/hero/forms/vassal_katana.json`.
+Weapons there. The owner names no holder for it. Logic `heroweapon/weapon/katana/KatanaLogic`, forms `data/anime_multiverse/hero/forms/vassal_katana.json`.
 This page is written in sections; the LOOK section comes first because the art builder (`hart3`) reads it first.
 
 ## 1. Look (for the art builder)
@@ -213,7 +213,7 @@ within 6 ticks, tempo grows only on a different technique and lapses after 80 ti
 | `weapon/katana/KatanaSession` | the pure short windows and counters of one wielder |
 | `weapon/katana/KatanaText` | every name and description, built from the numbers; writes the lang entries |
 | `weapon/katana/KatanaState` | the per-wielder memory (tempo, the parry and evade windows, the phantom blade), bounded, cleared on logout, when the katana is put away and on server stop |
-| `data/nusmp/hero/forms/vassal_katana.json` | the five forms |
+| `data/anime_multiverse/hero/forms/vassal_katana.json` | the five forms |
 | `weapon/glassworld/*` | the kit shared with the Fan, the Scythe and the Book (see `docs/heroweapon/weapon_glassworld.md`) |
 
 Tests: `KatanaNumbersTest`, `TempoChainTest`, `ParryRulesTest`, `KatanaSessionTest`, `KatanaTextTest`, `KatanaFormsTest` (and the kit's tests). Self-test in the game: `hero.weapon.katana` (with a parry round), run with `/multiverse mega selftest hero.weapon.katana` (permission 2).

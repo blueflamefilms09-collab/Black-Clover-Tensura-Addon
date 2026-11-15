@@ -12,7 +12,7 @@ Status: pilot only. Nothing here is wired into the game yet. The pilot takes wer
 
 ## How the files get into the mod
 1. Download the takes you like from the canvas (mp3 or wav).
-2. Name them `<category>_<id>.mp3` (ids below) and give them to the build session; they are converted to mono Ogg Vorbis (`ffmpeg -ac 1 -ar 32000 -q:a 3`), placed in `assets/nusmp/sounds/voice/<category>/<id>.ogg`, and registered in `sounds.json` / `ModSounds` (`voice.<category>.<id>`).
+2. Name them `<category>_<id>.mp3` (ids below) and give them to the build session; they are converted to mono Ogg Vorbis (`ffmpeg -ac 1 -ar 32000 -q:a 3`), placed in `assets/anime_multiverse/sounds/voice/<category>/<id>.ogg`, and registered in `sounds.json` / `ModSounds` (`voice.<category>.<id>`).
 3. Playback hooks (a later change): System lines on the existing System messages, boss lines on spawn / phase change / death (boss bar events), NPC lines on interact, Djinn lines on summon / equip.
 4. Every voice line is optional for the player: client option `voice.enabled` and `voice.volume`, and the text of the line is always still shown.
 

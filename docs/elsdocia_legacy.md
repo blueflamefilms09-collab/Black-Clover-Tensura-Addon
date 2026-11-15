@@ -14,7 +14,7 @@ Base damage 400 (`ElsdociaMath`/`ElsdociaRules`), +25 for each pass to a new, di
 This is an explicit exception to the generic Genesis range of `relics/GradeDamage`, which is untouched; that clamp must skip a stack for which
 `ElsdociaRules.isLegacyException(ItemStack)` is true.
 
-## Lineage (data component `nusmp:elsdocia_lineage`, saved, synced, copied)
+## Lineage (data component `anime_multiverse:elsdocia_lineage`, saved, synced, copied)
 Ordered owners (uuid, name, Black Clover magic type, Knight rank step at the time, whether the pass gave +25), the learned magics and the active ability slot, stored
 as text lines (`ElsdociaLineage.encode/decode`; damaged lines are skipped).
 - Detection of "passed": the stack is found in another player's inventory or on their cursor (every 5 ticks, `ElsdociaEvents.scan`), which covers trades, chests,

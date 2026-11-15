@@ -12,7 +12,7 @@ import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.abspath(os.path.join(HERE, "..", "..", ".."))
-JAVA = os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "anime_multiverse", "relics", "wave", "Wave101.java")
+JAVA = os.path.join(ROOT, "src", "main", "java", "com", "newuniverse", "nusmp", "relics", "wave", "Wave101.java")
 OUT = os.path.join(ROOT, "tools", "lang", "genesis_new.json")
 
 SLOT = {"NECK": "worn in the Neck slot", "HEAD": "worn as a helmet", "HANDS": "worn in the Hands slot", "BELT": "worn in the Belt slot", "CHARM": "worn in the Charm slot",

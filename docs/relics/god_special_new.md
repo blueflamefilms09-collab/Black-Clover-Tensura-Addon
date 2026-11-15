@@ -77,7 +77,7 @@ Owner request: "JUST ADD MORE TO balance IT OUT": the relics of the mod were top
 * **Anneal Blade** (`anneal_blade`): A straight blue-grey single-edged short sword with a simple cross guard, a brown wrapped grip and a plain round pommel.
 * **Thorn Princess Stiletto** (`thorn_princess_stiletto`): A long, very thin black stiletto with a red rose-bud guard, a thorn-wrapped grip and a small ruby pommel.
 
-**God gear** (`worn102.py`, the worn relic library): each has its own multi-part signature model with emissive and pulsing glow parts and animated groups, a table of nine ambient particle layers and a visual for each act (`assets/nusmp/visual_upgrade/<id>.json`, `fx102.py`; every particle is one of the mod's own).
+**God gear** (`worn102.py`, the worn relic library): each has its own multi-part signature model with emissive and pulsing glow parts and animated groups, a table of nine ambient particle layers and a visual for each act (`assets/anime_multiverse/visual_upgrade/<id>.json`, `fx102.py`; every particle is one of the mod's own).
 
 * **Perfect Susanoo Plate** (`perfect_susanoo_plate`): a violet plated cuirass with a glowing ribcage over chest and back, a spiked gorget with a sigil, tassets, horned layered pauldrons and chakra motes circling (3 pieces, 2600 vertices).
 * **Joyboy's Straw Hat** (`joyboys_straw_hat`): a woven wide-brim straw hat with a red band, knot and cord, and behind it a sun halo with twelve turning rays and sparks drifting round the head.
@@ -90,8 +90,8 @@ Owner request: "JUST ADD MORE TO balance IT OUT": the relics of the mod were top
 
 * Weapons: the acts are the shapes of `Wave71Acts` (cone, line, nova, rush, blink strike, execution, ward, rally, pull, volley, storm, bolster), run inside `SafeCast.tick`, take foes only from `Fx.foesAround`, deal every blow through `Fx.damage` / `Fx.damageHeavy` (the balance law) and are multiples of the weapon's own base damage (`DMG_<ID> * k`). Each weapon's passive is a `Wave71Rules.Rule` in `Wave102Passives`, applied by `Wave102Events` on the blow being dealt (the arrow for the bow), only while the weapon is in the main hand and its flag is on (attuned for God). The shield raises like vanilla's (`ShieldSet`, `<id>_blocking.json`).
 * Gear: attribute / resistance / lent-skill passives and acts from the vocabulary of `Wave31Acts` (heal, regeneration, buff, shield, area damage, bolt, dash, blink, cleanse, allies, mark, second wind, gale, pull). God gear needs attunement; Special never does (`AttuneRules`). Nothing here touches hunger or exhaustion.
-* Loot: by grade through the existing relic pools (vault, pedestals, the Crucible, the God of Order's ledger), so the new relics enter every source that rolls God and Special. Each God relic is also placed on a dungeon road in `data/nusmp/mega/relic_themes.json`.
-* Better Combat: a file in `data/nusmp/weapon_attributes/<id>.json` for each melee weapon (the bow and the shield have none).
+* Loot: by grade through the existing relic pools (vault, pedestals, the Crucible, the God of Order's ledger), so the new relics enter every source that rolls God and Special. Each God relic is also placed on a dungeon road in `data/anime_multiverse/mega/relic_themes.json`.
+* Better Combat: a file in `data/anime_multiverse/weapon_attributes/<id>.json` for each melee weapon (the bow and the shield have none).
 * Everything is server-side logic (rule 9): the client only draws; no new packet; per-player state is the engine's own; effects go through the existing particle and effect budgets.
 
 ## 5. Tests and tools
@@ -117,8 +117,8 @@ Previews (a software rasteriser, not the game): `docs/previews/god_special_new/s
 
 * `relics/RelicCatalog.java`: one `guard("Wave102", ...)` line in `init()` and one in `hooks()` (plus the import).
 * `visual/shields/ShieldSet.java` (the id of the new shield appended), `tools/gen_shield_models.py` (the same id).
-* `assets/nusmp/weapon_classes.json`, `tools/relics/weapon_classes.json`: 9 class rows appended. `data/nusmp/mega/relic_themes.json`: 9 God rows appended.
-* `tools/relics/gen_worn_all.py`: two append-only hook lines (`worn102.register`, `worn102.catalog`); `assets/nusmp/relic_worn/catalog.txt`: 24 lines appended by that generator.
+* `assets/anime_multiverse/weapon_classes.json`, `tools/relics/weapon_classes.json`: 9 class rows appended. `data/anime_multiverse/mega/relic_themes.json`: 9 God rows appended.
+* `tools/relics/gen_worn_all.py`: two append-only hook lines (`worn102.register`, `worn102.catalog`); `assets/anime_multiverse/relic_worn/catalog.txt`: 24 lines appended by that generator.
 * `data/curios/tags/item/{necklace,back,belt,hands,charm}.json`: the new Curios relics appended by `gen_curios_tags.py`.
 * `tools/bettercombat/manifest.json` and the Better Combat attribute files, `tools/relics/display_presets_manifest.json`: rows for the new melee weapons.
 * Not touched, as asked: the version, the changelog, the README, LIBRARIES, `en_us.json` (the lead merges `tools/lang/god_special_new.json`), `.github`, the Time Magic VFX.

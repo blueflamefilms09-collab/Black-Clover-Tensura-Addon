@@ -84,7 +84,7 @@ asymmetrically, ours are symmetric; the manga armour is segmented plate, ours re
 
 ## 7. How it would plug in (not done: preview only)
 
-* **Layer.** New client class `client/mode/ModeArmorValkyrieV2` modelled on `ModeArmorWindV2`: static arrays built once by a pure `ModeArmorValkyrieMesh` (loads `assets/nusmp/valkyrie_meshes/valk2_*.txt`),
+* **Layer.** New client class `client/mode/ModeArmorValkyrieV2` modelled on `ModeArmorWindV2`: static arrays built once by a pure `ModeArmorValkyrieMesh` (loads `assets/anime_multiverse/valkyrie_meshes/valk2_*.txt`),
   one captured `PoseStack.Pose` per bone (body, head, arms, legs, two wing hinges), pass by pass draw, a mirrored second copy of paired pieces; only wing vertices do per-frame maths.
 * **Hook.** `ModeArmorLayer.render0` already has `if (ModeArmorWindV2.active(mode))` before its `switch`: add the same line for `ModeArmor.Mode.VALKYRIE`; the old `ModeArmorLayer.valkyrie()` stays as CLASSIC.
   In the Spirit Dive, `SpiritDivePieces.WATER_VALKYRIE` / `WATER_SAINT` (`water:wing_*`, `helm`, `halo`, `saint_wing_*`) would be skipped through a `replacesAuraPieces`-style check while the layer is on.
@@ -200,14 +200,14 @@ Not done: the twin tails are the stand-in's hair (no armour), no wrist bands bey
 
 Name proposal: **Valkyrie Drill Lance** (id `valkyrie_drill_lance`), a Water-magic spear-class weapon, also what Noelle's Valkyrie Dress / Mermaid Form puts in the hand.
 * **In-hand model** (as the Genesis Demon-Slayer): a builder `valkyrie_drill_lance(m, a)` in `tools/gen_weapon_models.py` appended to its weapon list, built from `lance_A` (the mesh frame is already the weapon frame: +y axis, butt at 0),
-  written to `assets/nusmp/weapon_meshes/valkyrie_drill_lance.txt` and drawn by `client/WeaponRenderer.java`; textures `textures/entity/weapon/valkyrie_drill_lance.png` and the glow `_glow.png` (the second texture: needle tip,
+  written to `assets/anime_multiverse/weapon_meshes/valkyrie_drill_lance.txt` and drawn by `client/WeaponRenderer.java`; textures `textures/entity/weapon/valkyrie_drill_lance.png` and the glow `_glow.png` (the second texture: needle tip,
   ribbons, belt: additive, pulsing through the `glow` line); the model json `models/item/valkyrie_drill_lance.json` (parent `builtin/entity`) gets its display transforms from the preset tool (length about 2.8 blocks: the
   1st-person scale about 0.35 to 0.4, apparent length at most 1.0, grip on the anchor); preview with `python tools/item_preview/preview_weapons.py`.
 * **Moving part**: the drill cone is the one part that turns; `docs/asset_pipeline.md` rule 3 wants moving parts as separate named parts: name it `drill*` and add a spin to the renderer: decided yes (section 19), idle 60 degrees per second, up to 720 while charging, a small
   new `WeaponRenderer` feature.
 * **Inventory icon** (rule 7): the old 16 x 16 sprite stays the icon (`valkyrie_drill_lance_icon.json`): concept = a diagonal drill, white / blue banded cone with a spiky white fringe in the middle, a blue grip bottom-left, a 2 px
   cyan glint at the tip, 1 px dark outline.
-* **Grip entry**: `assets/nusmp/weapon_classes.json` lists `valkyrie_drill_lance` as class `spear`; `weapon_grips.json` `fractions`: `"valkyrie_drill_lance": 0.25` (the guard sits at the quarter), `GripTableTest` then passes.
+* **Grip entry**: `assets/anime_multiverse/weapon_classes.json` lists `valkyrie_drill_lance` as class `spear`; `weapon_grips.json` `fractions`: `"valkyrie_drill_lance": 0.25` (the guard sits at the quarter), `GripTableTest` then passes.
 * **Size**: `SIZE` in the generator about 1.9 to 2.0 (3rd person), long-weapon preset for first person.
 * **Engravings** (`item/WeaponEngravings.java`, the `#tensura:engraving` ids that the file already uses): `barrier_piercing` 3 (a drill bores through wards, as the Legendary Spear), `elemental_boost` 2 (water),
   `crushing` 1 (it bores and breaks), `magic_weapon` 1 (a spell-made weapon); the Saint variant (smooth lance) would add `holy_weapon` 1 and drop `crushing`. The trident of the Sea Empress has `elemental_boost 2, barrier_piercing 1,

@@ -122,7 +122,7 @@ reachable from the arrival. In a world with the guard on (its default) they cann
 ## What could not be verified
 
 * Nothing could be run in the game (no Gradle offline). The type check passes (only the known stub artefacts), 130+ JUnit tests pass, but `rift.pocket_fix` itself has not run.
-* That the Dungeon Guard's mixin is applied in the shipped jar is read from `nusmp.mixins.json` (`LevelGuardMixin`, `LevelChunkGuardMixin`, `require = 0`); the fix is correct whether it is applied or not.
+* That the Dungeon Guard's mixin is applied in the shipped jar is read from `anime_multiverse.mixins.json` (`LevelGuardMixin`, `LevelChunkGuardMixin`, `require = 0`); the fix is correct whether it is applied or not.
 * How the lever, the lanterns and the glowing signs look, and whether four 16-character lines fit the board in the game's font (the limit is a rule of thumb).
 * Whether the first block-by-block placement of a tomb into 144 unloaded chunks is smooth on a real server (the arrival is now held, so a slow build is a wait with a percent, not a closed hall).
 * Timings (120 s lever, 420 s self-opening) are my choice; both are config.
