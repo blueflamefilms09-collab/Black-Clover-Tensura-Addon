@@ -38,7 +38,7 @@ PLACE = {
     "black_sword_greed_scythe": (-0.32086, -0.32086, 45.0, 0.0105, 0.0),     # 240 cm -> 2.52 blocks
     "black_sword_greed_shield": (0.5, -0.0075, 90.0, 0.0145, -35.0),         # a shield mesh is upright (90) and centred on the item cube
     "black_sword_greed_staff": (-0.31331, -0.31331, 45.0, 0.008735, -9.0),   # the place line of the Vassal Staff: 2.5 blocks
-    "black_sword_greed_gauntlets": (0.20, 0.18, 45.0, 0.0145, 0.0),          # a pair held by the wrists: 0.8 blocks
+    "black_sword_greed_gauntlets": (0.20, 0.18, 45.0, 0.0135, 0.0),          # a pair held by the wrists: 0.87 blocks
     "black_sword_greed_spear": (-0.62, -0.62, 45.0, 0.0115, 0.0),            # 290 cm -> 3.3 blocks
     "black_sword_greed_dual_blades": (0.15, 0.13, 45.0, 0.012, 0.0),         # 100 cm -> 1.2 blocks
 }
@@ -265,7 +265,7 @@ def sword(out):
         a = math.radians(45 + 90 * k)
         fang("pommel_thorn%d" % k, (3.4 * math.cos(a), 4.6, 3.4 * math.sin(a)), (7.4 * math.cos(a), 3.4, 7.4 * math.sin(a)), 1.0, M["black"], part="pommel", bend=(0, 1.0, 0), sides=4)
     for s in (1, -1):
-        bl.lathe("pommel_eye%d" % s, [(0.001, 0.0), (1.5, 0.0)], M["hot"], sides=12, axis="z", origin=(0, 4.8, 4.5 * s), caps=(False, False), detail=True)
+        bl.lathe("pommel_eye%d" % s, [(0.001, 0.0), (1.5, 0.0)], M["vein"], sides=12, axis="z", origin=(0, 4.8, 4.5 * s), caps=(False, False), detail=True)
     return done(iid, out)
 
 
@@ -290,8 +290,8 @@ def flame_mat(y0, y1, name="bsg_flame"):
     nz.inputs["Scale"].default_value = 0.35
     nz.inputs["Detail"].default_value = 3.0
     L.new(tc.outputs["Object"], nz.inputs["Vector"])
-    lick = bl._clamp(nt, bl._math(nt, "MULTIPLY_ADD", nz.outputs["Fac"], 5.0, -1.8))
-    L.new(bl._math(nt, "MULTIPLY", bl._math(nt, "POWER", h, 1.3), bl._math(nt, "MULTIPLY_ADD", lick, 0.8, 0.35)), bs.inputs["Emission Strength"])
+    lick = bl._clamp(nt, bl._math(nt, "MULTIPLY_ADD", nz.outputs["Fac"], 6.0, -2.7))
+    L.new(bl._math(nt, "MULTIPLY", bl._math(nt, "POWER", h, 2.0), bl._math(nt, "MULTIPLY_ADD", lick, 0.9, 0.12)), bs.inputs["Emission Strength"])
     m["glow"] = True
     return m
 
@@ -406,7 +406,7 @@ def scythe(out):
 
 
 # ================================================================ 4. the shield: a black kite shield with a maw emblem (70 cm tall, face +z, straps -z)
-KITE = [(0.0, 31.0), (6.0, 33.8), (14.0, 35.0), (20.5, 33.0), (23.4, 26.5), (23.0, 13.0), (19.5, -3.0), (12.0, -20.5), (0.0, -35.0)]
+KITE = [(0.0, 34.0), (8.0, 34.9), (15.0, 35.0), (21.0, 32.6), (23.4, 26.5), (23.0, 13.0), (19.5, -3.0), (12.0, -20.5), (0.0, -35.0)]
 
 
 def shield(out):
@@ -452,7 +452,7 @@ def shield(out):
     bl.lathe("strap_grip", [(1.9, -4.0), (2.2, -2.0), (2.2, 2.0), (1.9, 4.0)], M["wrap"], sides=8, axis="x", origin=(0, 2.0, -4.6), part="straps")
     # ---- the light: a border, a second line, rays and forks from the emblem, runes below it
     rng = random.Random(9)
-    for rr, w in ((0.88, 0.5), (0.80, 0.22)):
+    for rr, w in ((0.88, 0.32), (0.80, 0.14)):
         pts = [at(k, rr) + Vector((0, 0, 0.03)) for k in range(n)] + [at(0, rr) + Vector((0, 0, 0.03))]
         lay("border%.2f" % rr, pts, 1, w, M["vein"])
     for j in range(11):
@@ -475,7 +475,7 @@ def staff(out):
     M = metals()
     iid = "black_sword_greed_staff"
     shaft = bl.mat("bsg_shaft", rgb(26, 26, 34), metallic=0.6, rough=0.5, bump="grain", bstr=0.4, groove=rgb(10, 10, 14), gamount=0.6, bevel=0.0)
-    fire = flame_mat(232.0, 286.0)
+    fire = flame_mat(238.0, 290.0)
     bl.lathe("foot", [(0.01, -9.0), (1.4, -5.0), (2.8, 0.0), (4.6, 3.0), (4.6, 6.0), (3.6, 9.0), (3.4, 12.0)], M["black"], sides=10)
     bl.lathe("shaft", [(3.4, 10.0), (3.7, 100.0), (3.4, 202.0)], shaft, sides=10)
     bl.lathe("grip_wrap", [(3.7, 80.0), (4.15, 83.0), (4.15, 137.0), (3.7, 140.0)], M["wrap"], sides=10)
@@ -508,9 +508,9 @@ def gauntlets(out):
     iid = "black_sword_greed_gauntlets"
     before = set(o.name for o in objs())
     # ---- one gauntlet, axis y (wrist at 0, fingers toward +y), the back of the hand toward +z
-    cuff = [(0.0, 7.0, 6.2), (4.0, 8.2, 7.2), (20.0, 9.4, 8.0), (26.0, 9.0, 7.8)]
-    bl.loft("bracer", [bl.ring(y, bl.rrect(w, t, 2.4)) for y, w, t in cuff], M["black"], caps=(False, True), part="bracer")
-    fist = [(26.0, 9.0, 7.8), (32.0, 10.2, 8.4), (40.0, 9.8, 8.0), (46.0, 8.0, 6.6), (48.0, 7.0, 5.4)]
+    cuff = [(0.0, 8.6, 7.6), (5.0, 7.4, 6.6), (12.0, 6.9, 6.2), (18.0, 7.6, 6.8), (26.0, 9.6, 7.8)]
+    bl.loft("bracer", [bl.ring(y, bl.rrect(w, t, 2.4)) for y, w, t in cuff], M["black"], caps=(True, False), part="bracer")
+    fist = [(26.0, 9.6, 7.8), (32.0, 10.4, 8.2), (38.0, 10.0, 7.6), (41.0, 9.0, 6.4)]
     bl.loft("fist", [bl.ring(y, bl.rrect(w, t, 2.6)) for y, w, t in fist], M["black"], part="fist")
     for i, y in enumerate((8.0, 14.0, 20.0)):                                   # three raised rings round the bracer
         rows = []
@@ -518,20 +518,22 @@ def gauntlets(out):
             w, t = interp_cuff(cuff, y + d)
             rows.append(bl.ring(y + d, bl.rrect(w + e, t + e, 2.4)))
         bl.loft("bracer_ring%d" % i, rows, M["blade"], caps=(False, False), part="bracer_rings")
-    bl.loft("knuckles", [bl.ring(y, bl.rrect(w, t, 1.4)) for y, w, t in ((43.0, 9.0, 7.0), (45.0, 9.6, 7.4), (47.4, 9.4, 7.0), (48.6, 8.2, 6.0))], M["blade"], part="knuckles")
-    for k, x in enumerate((-5.6, -1.9, 1.9, 5.6)):                              # four claws, curling toward the palm
-        L = 12.0 - 1.4 * abs(x) / 5.6
-        pts = [(x, 46.5, -0.5), (x * 1.08, 46.5 + L * 0.5, -1.4), (x * 1.14, 46.5 + L * 0.85, -3.6), (x * 1.18, 46.5 + L, -6.4)]
-        bl.sweep("claw%d" % k, bl.smooth_path(pts, 3), bl.lozenge(1.0, 1.0), M["blade"], up=(1, 0, 0), scale=lambda t: (1.7 * (1 - t) ** 0.7 + 0.12, 1.7 * (1 - t) ** 0.7 + 0.12), part="claws")
-    th = [(10.0, 34.0, 0.0), (13.2, 39.0, -0.5), (15.4, 46.0, -2.0), (15.9, 51.0, -4.0)]
-    bl.sweep("thumb_claw", bl.smooth_path(th, 3), bl.lozenge(1.0, 1.0), M["blade"], up=(0, 0, 1), scale=lambda t: (1.6 * (1 - t) ** 0.7 + 0.12, 1.6 * (1 - t) ** 0.7 + 0.12), part="claws")
-    maw_eye("maw", 0.0, 36.5, 8.3, 4.2, M, teeth=9, part="fist", faces=(1,))
+    bl.loft("knuckles", [bl.ring(y, bl.rrect(w, t, 1.4)) for y, w, t in ((36.5, 10.2, 7.8), (38.5, 11.0, 8.2), (41.0, 10.6, 7.6), (42.0, 9.4, 6.4))], M["blade"], part="knuckles")
+    for k, x in enumerate((-6.3, -2.1, 2.1, 6.3)):                              # four fingers reaching out, each ending in a claw that curls toward the palm
+        L = 55.0 + 2.0 * (1.0 - abs(x) / 6.3)
+        fp = bl.smooth_path([(x, 41.0, 3.4), (x, 46.5, 3.6), (x * 1.05, 52.0, 2.6), (x * 1.08, L, 0.4)], 2)
+        bl.sweep("finger%d" % k, fp, bl.rrect(1.0, 1.0, 0.4, n=1), M["black"], up=(0, 0, 1), scale=lambda t: (2.0 - 0.5 * t, 1.9 - 0.5 * t), part="fingers")
+        cp = bl.smooth_path([(x * 1.08, L - 1.0, 0.6), (x * 1.1, L + 4.5, -0.8), (x * 1.12, L + 8.0, -4.2)], 3)
+        bl.sweep("claw%d" % k, cp, bl.lozenge(1.0, 1.0), M["blade"], up=(0, 0, 1), scale=lambda t: (1.5 * (1 - t) ** 0.7 + 0.1, 1.5 * (1 - t) ** 0.7 + 0.1), part="claws")
+    th = [(10.0, 33.0, 0.0), (13.2, 38.0, -0.4), (15.4, 45.0, -1.6), (15.9, 50.0, -3.6)]
+    bl.sweep("thumb_claw", bl.smooth_path(th, 3), bl.lozenge(1.0, 1.0), M["blade"], up=(0, 0, 1), scale=lambda t: (1.7 * (1 - t) ** 0.7 + 0.12, 1.7 * (1 - t) ** 0.7 + 0.12), part="claws")
+    maw_eye("maw", 0.0, 33.0, 8.25, 4.2, M, teeth=9, part="fist", faces=(1,))
     rng = random.Random(13)
 
     def zb(x, y):
         return interp_cuff(cuff + fist[1:], y)[1] + 0.02
     for i, (x0, y0) in enumerate(((-3.0, 22.0), (3.0, 24.0), (-4.5, 12.0), (4.5, 14.0), (0.0, 5.0))):
-        veins("gv%d" % i, rng, (x0, y0), 90 + rng.uniform(-20, 20), 10.0, 1.6, 20, zb, lambda x, y: abs(x) < 6.0 and y < 45.0, 1, 0.3, M["vein"], depth=1, spawn=0.25)
+        veins("gv%d" % i, rng, (x0, y0), 90 + rng.uniform(-20, 20), 10.0, 1.6, 20, zb, lambda x, y: abs(x) < 6.0 and y < 39.0, 1, 0.3, M["vein"], depth=1, spawn=0.25)
     for k in range(3):
         yy = 11.0 + 6.0 * k
         bl.text("grune%d" % k, RUNES[(k * 4) % len(RUNES)], 2.6, M["hot"], (0.0, yy, interp_cuff(cuff, yy)[1] + 0.04), rot=(0, 0, 90), extrude=0.03, font=lg.rune_font())
@@ -553,7 +555,7 @@ def interp_cuff(st, y):
 
 
 # ================================================================ 7. the spear: a long black lance with a leaf blade (290 cm)
-SPEAR_ST = [(238.0, 2.6, 1.4), (246.0, 6.4, 1.7), (258.0, 8.8, 1.8), (270.0, 7.6, 1.6), (282.0, 4.4, 1.1), (290.0, 0.12, 0.1)]
+SPEAR_ST = [(238.0, 2.6, 1.4), (246.0, 7.0, 1.7), (258.0, 10.0, 1.8), (270.0, 8.6, 1.6), (282.0, 4.8, 1.1), (290.0, 0.12, 0.1)]
 
 
 def spear(out):
@@ -599,7 +601,7 @@ def spear(out):
 
 
 # ================================================================ 8. Level Zero: two slim black blades on one hilt, a thin crimson edge (100 cm)
-DUAL_ST = [(34.0, 2.7, 1.0), (42.0, 3.2, 1.0), (62.0, 3.0, 0.95), (82.0, 2.5, 0.85), (94.0, 1.6, 0.6), (101.5, 0.1, 0.12)]
+DUAL_ST = [(34.0, 2.3, 0.95), (42.0, 2.7, 0.95), (62.0, 2.5, 0.9), (82.0, 2.1, 0.8), (94.0, 1.3, 0.55), (101.5, 0.1, 0.12)]
 
 
 def dual_blades(out):
@@ -612,7 +614,7 @@ def dual_blades(out):
         bl.lathe("ring%d" % i, [(2.0, y - 0.9), (2.8, y - 0.55), (2.8, y + 0.55), (2.0, y + 0.9)], M["black"], sides=10, squash=0.92, part="grip_rings")
     bl.lathe("pommel", [(0.01, 0.0), (2.4, 0.6), (3.8, 2.4), (4.0, 4.6), (3.4, 6.6), (2.3, 7.8), (2.0, 8.6)], M["black"], sides=12)
     for s in (1, -1):
-        bl.lathe("pommel_eye%d" % s, [(0.001, 0.0), (1.4, 0.0)], M["hot"], sides=12, axis="z", origin=(0, 4.4, 4.0 * s), caps=(False, False), detail=True)
+        bl.lathe("pommel_eye%d" % s, [(0.001, 0.0), (1.4, 0.0)], M["vein"], sides=12, axis="z", origin=(0, 4.4, 4.0 * s), caps=(False, False), detail=True)
     bl.lathe("guard_boss", [(5.8, -3.0), (6.4, -1.5), (6.4, 1.5), (5.8, 3.0)], M["black"], sides=16, axis="z", origin=(0, 31.0, 0), part="guard")
     maw_eye("maw", 0.0, 31.0, 3.0, 4.6, M, teeth=8, part="guard")
     for nm, pts, w, t in (("jaw_a", [(5.0, 32.0), (10.0, 33.0), (14.0, 30.5), (15.0, 25.5)], 2.5, 1.7), ("jaw_b", [(4.5, 29.5), (8.5, 27.5), (11.0, 23.5), (11.5, 19.5)], 2.0, 1.4)):
@@ -633,19 +635,138 @@ def dual_blades(out):
         return s * (t * (1.0 if abs(x) <= fl else max(0.0, (w - abs(x)) / (w - fl))) + 0.02)
     for s in (1, -1):
         for sx in (1, -1):                                                         # the edge: a thin line of light a little in from each cutting edge
-            pts = [(sx * (wt(y)[0] - 0.55), y, z(s, sx * (wt(y)[0] - 0.55), y)) for y in [36.0 + 3.0 * i for i in range(21)] if y < 96.0]
-            lay("edge%d%d" % (s, sx), pts, s, 0.26, M["vein"], taper=0.5)
-        lg.crack("mid%d" % s, [(0.0, 38.0 + 3.0 * i) for i in range(19)], lambda x, y, s=s: z(s, x, y) + 0.04 * s, s, 0.3, M["vein"])
+            pts = [(sx * (wt(y)[0] - 0.45), y, z(s, sx * (wt(y)[0] - 0.45), y)) for y in [36.0 + 3.0 * i for i in range(21)] if y < 96.0]
+            lay("edge%d%d" % (s, sx), pts, s, 0.17, M["vein"], taper=0.4)
         bl.text("brune%d" % s, RUNES[:3] if s > 0 else RUNES[3:6], 2.0, M["hot"], (0.0, 37.0, 1.04 * s), rot=(0, 0 if s > 0 else 180, 90), extrude=0.03, font=lg.rune_font())
     bl.bevel(bl.loft("blade_collar", [bl.ring(y, bl.rrect(w, 1.5, 0.5)) for y, w in ((32.0, 3.2), (33.5, 3.9), (36.0, 3.7), (37.0, 3.0))], M["black"], part="guard"), 0.2)
     mine = [o for o in objs() if o.name not in before]
     for o in mine:
         bl.move(o, (3.4, 0, 0))
-    tilt(mine, (3.4, 31.0), -6.0)
+    tilt(mine, (3.4, 31.0), -4.0)
     for o in mine:
         c = bl.mirror(o, "x")
         c["part"] = o["part"]
     return done(iid, out)
+
+
+# ================================================================ the 16 x 16 inventory sprites: a black blade with a crimson accent
+COL = {'k': (12, 12, 16), 'g': (40, 40, 52), 'h': (86, 86, 108), 'r': (200, 16, 46), 'R': (255, 70, 66), 'w': (64, 24, 30), 'd': (24, 24, 32)}
+
+def line(a, b):
+    (x0, y0), (x1, y1) = a, b
+    n = max(abs(x1 - x0), abs(y1 - y0), 1)
+    return [(round(x0 + (x1 - x0) * i / n), round(y0 + (y1 - y0) * i / n)) for i in range(n + 1)]
+
+def shift(pts, dx, dy):
+    return [(x + dx, y + dy) for x, y in pts]
+
+def sprite(layers):
+    from PIL import Image
+    g = {}
+    for c, pts in layers:
+        for p in pts:
+            if 0 <= p[0] < 16 and 0 <= p[1] < 16:
+                g[p] = c
+    out = dict(g)
+    for (x, y) in list(g):
+        for dx in (-1, 0, 1):
+            for dy in (-1, 0, 1):
+                q = (x + dx, y + dy)
+                if q not in g and 0 <= q[0] < 16 and 0 <= q[1] < 16:
+                    out[q] = 'k'
+    im = Image.new('RGBA', (16, 16), (0, 0, 0, 0))
+    for (x, y), c in out.items():
+        im.putpixel((x, y), COL[c] + (255,))
+    return im
+
+def rect(x0, y0, x1, y1):
+    return [(x, y) for x in range(x0, x1 + 1) for y in range(y0, y1 + 1)]
+
+def make_icons():
+    S = {}
+    blade = line((13, 2), (7, 8))
+    S['black_sword_greed'] = sprite([
+        ('g', blade), ('h', shift(blade, 1, 0)), ('g', [(14, 1), (13, 1)]),
+        ('r', [(12, 3), (10, 5), (8, 7)]), ('R', [(11, 4)]),
+        ('g', line((4, 7), (8, 11))), ('h', [(5, 8), (7, 10)]), ('R', [(6, 9)]),
+        ('w', line((5, 10), (3, 12))), ('g', [(2, 13), (1, 14), (2, 14), (1, 13)]), ('r', [(2, 13)])])
+    S['black_sword_greed_bow'] = sprite([
+        ('g', line((12, 1), (8, 1)) + line((8, 1), (4, 3)) + line((4, 3), (2, 7)) + line((2, 7), (2, 11)) + line((2, 11), (4, 14))),
+        ('h', line((8, 2), (5, 4)) + [(3, 8)]), ('g', [(13, 2), (14, 3)]),
+        ('r', line((14, 3), (4, 14))), ('R', [(9, 9)]), ('w', [(2, 8), (2, 9), (2, 10)])])
+    shaft = line((2, 14), (11, 5))
+    S['black_sword_greed_scythe'] = sprite([
+        ('w', shaft), ('g', line((11, 5), (13, 3))), ('g', line((11, 3), (6, 1)) + line((6, 1), (2, 3)) + line((2, 3), (1, 7))),
+        ('h', line((10, 3), (6, 2))), ('g', line((12, 4), (12, 2)) + [(12, 1)]), ('r', [(9, 3), (7, 2), (4, 3)]), ('R', [(11, 5)]), ('g', [(1, 15), (2, 15)])])
+    kite = []
+    for y, hw in zip(range(1, 15), (6, 6, 6, 6, 6, 5, 5, 4, 4, 3, 3, 2, 1, 1)):
+        kite += [(x, y) for x in range(8 - hw, 8 + hw)]
+    S['black_sword_greed_shield'] = sprite([
+        ('g', kite), ('h', [(2, 2), (2, 3), (3, 2), (4, 2)]), ('r', line((3, 3), (12, 3)) + [(3, 4), (12, 4), (3, 5)]),
+        ('d', rect(6, 5, 9, 8)), ('R', [(7, 6), (8, 6)]), ('r', [(7, 7), (8, 7)]), ('r', [(7, 10), (8, 10), (7, 11), (8, 12)])])
+    sh2 = line((2, 14), (11, 5))
+    S['black_sword_greed_staff'] = sprite([
+        ('w', sh2), ('g', [(1, 15), (2, 15)]), ('g', line((11, 5), (12, 4))),
+        ('g', line((9, 5), (10, 2)) + line((13, 7), (14, 4)) + line((9, 3), (11, 1)) + line((14, 5), (14, 3))),
+        ('d', [(12, 3), (12, 2), (11, 4), (13, 5)]), ('r', [(12, 1), (12, 2), (13, 3)]), ('R', [(12, 1)])])
+    def fist(x0):
+        return [('g', rect(x0, 7, x0 + 4, 14)), ('h', [(x0, 8), (x0, 9), (x0, 10)]), ('g', [(x0, 6), (x0 + 1, 5), (x0 + 2, 6), (x0 + 3, 4), (x0 + 4, 6)]),
+                ('r', [(x0 + 2, 9), (x0 + 2, 10)]), ('R', [(x0 + 2, 9)]), ('r', [(x0 + 1, 12), (x0 + 3, 12), (x0 + 2, 13)]), ('w', [(x0 + 1, 14), (x0 + 2, 14), (x0 + 3, 14)])]
+    S['black_sword_greed_gauntlets'] = sprite(fist(1) + fist(10))
+    sp = line((1, 14), (11, 4))
+    S['black_sword_greed_spear'] = sprite([
+        ('w', sp), ('g', [(0, 15), (1, 15)]), ('g', line((10, 5), (13, 2))), ('g', rect(11, 1, 14, 4)), ('g', [(14, 0), (13, 0), (15, 1)]),
+        ('h', [(12, 1), (13, 1)]), ('r', [(12, 3), (13, 2), (13, 3)]), ('R', [(13, 2)]), ('g', [(9, 6), (8, 7), (10, 7), (7, 8), (11, 6)])])
+    a, b = line((14, 3), (8, 9)), line((10, 0), (4, 6))
+    S['black_sword_greed_dual_blades'] = sprite([
+        ('g', a), ('g', b), ('r', shift(a, 1, 0)[1:-1]), ('r', shift(b, 1, 0)[1:-1]), 
+        ('g', line((3, 8), (8, 13))), ('h', [(4, 9), (7, 12)]), ('R', [(5, 10)]), ('w', [(3, 12), (2, 13)]), ('g', [(1, 14), (2, 14)])])
+    return S
+
+
+
+# ================================================================ the item models: the 3D model (builtin/entity, the display of its kind) and the flat icon model
+def write_models(item_id, outdir):
+    """models/item/<id>.json (the display block of a hero weapon of the same kind, first person fitted to the length by tools/relics/display_presets.py)
+    and <id>_icon.json (the flat sprite). A shield also gets its _blocking model."""
+    sys.path.insert(0, os.path.join(ROOT, "tools", "relics"))
+    import display_presets as dp
+    src = {"black_sword_greed_bow": "legendary_bow", "black_sword_greed_shield": "legendary_shield"}.get(item_id, "legendary_sword")
+    md = os.path.join(ASSETS, "models", "item")
+    with open(os.path.join(md, src + ".json")) as fh:
+        model = json.load(fh)
+    model["textures"] = {"particle": "anime_multiverse:item/" + item_id}
+    for k in ("nusmp_weapon_sizes",):
+        model.pop(k, None)
+    if "nusmp_display_preset" in model and model["nusmp_display_preset"] != "manual":                    # fitted again below
+        model.pop("nusmp_display_preset")
+        for k in dp.FIRST:
+            model["display"][k] = {"rotation": list(dp.BASE_ROTATION[k]), "translation": list(dp.BASE_TRANSLATION), "scale": [dp.BASE_SCALE] * 3}
+    if "overrides" in model:
+        model["overrides"] = [{"predicate": o["predicate"], "model": o["model"].replace(src, item_id)} for o in model["overrides"]]
+    meshdir = outdir if os.path.isabs(outdir) and outdir != md else None
+    mesh = dp.read_mesh(os.path.join(meshdir or bl.MESH_DIR, item_id + ".txt"))
+    if mesh is not None and model.get("nusmp_display_preset") != "manual":
+        plan = dp.plan_for(item_id, model, mesh)
+        model = dp.apply_plan(model, plan)
+    os.makedirs(outdir, exist_ok=True)
+    with open(os.path.join(outdir, item_id + ".json"), "w", newline="\n") as fh:
+        fh.write(json.dumps(model, indent=2))
+    icon = {"parent": "minecraft:item/generated" if item_id.endswith("_shield") else "minecraft:item/handheld", "textures": {"layer0": "anime_multiverse:item/" + item_id}}
+    with open(os.path.join(outdir, item_id + "_icon.json"), "w", newline="\n") as fh:
+        fh.write(json.dumps(icon, indent=2))
+    if item_id.endswith("_shield"):                                                                  # the raised-shield model
+        with open(os.path.join(md, "legendary_shield_blocking.json")) as fh:
+            blk = json.load(fh)
+        blk["textures"] = {"particle": "anime_multiverse:item/" + item_id}
+        with open(os.path.join(outdir, item_id + "_blocking.json"), "w", newline="\n") as fh:
+            fh.write(json.dumps(blk, indent=2))
+
+
+def write_icons(outdir):
+    os.makedirs(outdir, exist_ok=True)
+    for iid, im in make_icons().items():
+        im.save(os.path.join(outdir, iid + ".png"), optimize=True)
 
 
 # ================================================================ the builders, in the order of the release
@@ -676,6 +797,9 @@ def main(argv):
         if quick:
             out["bake"] = 512
         fn(out)
+        write_models(IDS[name], trial or os.path.join(ASSETS, "models", "item"))
+    if "--no-icons" not in argv:
+        write_icons(os.path.join(trial, "icons") if trial else os.path.join(ASSETS, "textures", "item"))
 
 
 if __name__ == "__main__":

@@ -199,6 +199,70 @@
   "y": 53.0,
   "z": -4.723
  },
+ "black_sword_greed": {
+  "class": "longsword",
+  "fraction": 0.1,
+  "source": "directive",
+  "x": 0.0,
+  "y": 13.5,
+  "z": 0.0
+ },
+ "black_sword_greed_bow": {
+  "class": "bow",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 20.636,
+  "y": 0.0,
+  "z": 0.0
+ },
+ "black_sword_greed_dual_blades": {
+  "class": "shortsword",
+  "fraction": 0.12,
+  "source": "directive",
+  "x": 0.0,
+  "y": 12.16,
+  "z": 0.0
+ },
+ "black_sword_greed_gauntlets": {
+  "class": "handitem",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 0.0,
+  "y": 32.205,
+  "z": 0.994
+ },
+ "black_sword_greed_scythe": {
+  "class": "scythe",
+  "fraction": 0.13,
+  "source": "directive",
+  "x": 0.0,
+  "y": 31.2,
+  "z": 0.0
+ },
+ "black_sword_greed_shield": {
+  "class": "shield",
+  "fraction": 0.5,
+  "source": "class",
+  "x": 0.0,
+  "y": 0.053,
+  "z": 1.124
+ },
+ "black_sword_greed_spear": {
+  "class": "spear",
+  "fraction": 0.26,
+  "source": "directive",
+  "x": 0.0,
+  "y": 75.4,
+  "z": 0.0
+ },
+ "black_sword_greed_staff": {
+  "class": "staff",
+  "fraction": 0.38,
+  "source": "directive",
+  "x": 0.0,
+  "y": 103.108,
+  "z": 0.0
+ },
  "blackrazor": {
   "class": "greatsword",
   "fraction": 0.127,

@@ -937,7 +937,15 @@
     "core_ss_standard": "handitem",
     "core_ss_beast": "handitem",
     "core_ss_ancient": "handitem",
-    "beast_will_core": "handitem"
+    "beast_will_core": "handitem",
+    "black_sword_greed": "longsword",
+    "black_sword_greed_bow": "bow",
+    "black_sword_greed_scythe": "scythe",
+    "black_sword_greed_shield": "shield",
+    "black_sword_greed_staff": "staff",
+    "black_sword_greed_gauntlets": "handitem",
+    "black_sword_greed_spear": "spear",
+    "black_sword_greed_dual_blades": "shortsword"
   },
   "_excluded_was": {
     "elsdocia": "rebuilt by the Elsdocia agent",

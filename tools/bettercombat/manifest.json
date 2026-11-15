@@ -61,6 +61,31 @@
       "profile": "club",
       "source": "relic"
     },
+    "black_sword_greed": {
+      "class": "longsword",
+      "profile": "longsword",
+      "source": "table"
+    },
+    "black_sword_greed_dual_blades": {
+      "class": "shortsword",
+      "profile": "shortsword",
+      "source": "table"
+    },
+    "black_sword_greed_scythe": {
+      "class": "scythe",
+      "profile": "scythe",
+      "source": "table"
+    },
+    "black_sword_greed_spear": {
+      "class": "spear",
+      "profile": "spear",
+      "source": "table"
+    },
+    "black_sword_greed_staff": {
+      "class": "staff",
+      "profile": "staff",
+      "source": "table"
+    },
     "blackrazor": {
       "class": "greatsword",
       "profile": "greatsword",
@@ -1494,6 +1519,9 @@
     "arashs_stella_bow": "ranged (bow): Better Combat only handles melee",
     "beast_will_core": "hand item / charm / book / key: not a weapon",
     "bianca": "ranged (crossbow): Better Combat only handles melee",
+    "black_sword_greed_bow": "ranged (bow): Better Combat only handles melee",
+    "black_sword_greed_gauntlets": "hand item / charm / book / key: not a weapon",
+    "black_sword_greed_shield": "shield: no swing",
     "bolt_thrower": "ranged (crossbow): Better Combat only handles melee",
     "bond_thread": "hand item / charm / book / key: not a weapon",
     "book_of_mispells": "hand item / charm / book / key: not a weapon",

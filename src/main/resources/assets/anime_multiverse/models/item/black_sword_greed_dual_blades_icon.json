@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/handheld",
+  "textures": {
+    "layer0": "anime_multiverse:item/black_sword_greed_dual_blades"
+  }
+}
